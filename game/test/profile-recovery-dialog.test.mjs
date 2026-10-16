@@ -85,6 +85,7 @@ function fixture(options = {}) {
     document: doc,
     window: win,
     currentVersion: 'v0.42.0',
+    editionId: options.editionId,
     packaged: options.packaged ?? true,
     resolveSourceVersion: options.resolveSourceVersion,
     unavailable: options.unavailable,
@@ -305,4 +306,13 @@ test('closing while source-version resolution is pending prevents late reader cr
   assert.equal(h.calls.loads, 0);
   assert.equal(h.calls.readers.length, 0);
   assert.equal(h.dialog.open, false);
+});
+
+test('edition recovery binds its reader without fetching unrelated historical catalogs', async () => {
+  const h = fixture({ editionId: 'coupa-all' });
+  await h.host.open();
+  assert.equal(h.calls.readers[0].editionId, 'coupa-all');
+  assert.deepEqual(h.calls.readers[0].recoveryCatalogs, []);
+  assert.deepEqual(h.calls.catalogs, []);
+  await h.host.close();
 });

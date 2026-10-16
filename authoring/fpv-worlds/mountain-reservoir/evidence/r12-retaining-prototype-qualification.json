@@ -1,0 +1,2258 @@
+{
+  "format": "FPVReservoirRetainingQualification.v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "Exact visually accepted r11 source",
+      "passed": true
+    },
+    {
+      "name": "Unchanged source budget",
+      "passed": true
+    },
+    {
+      "name": "nodes ownership exact",
+      "passed": true
+    },
+    {
+      "name": "scenes ownership exact",
+      "passed": true
+    },
+    {
+      "name": "materials ownership exact",
+      "passed": true
+    },
+    {
+      "name": "meshes ownership exact",
+      "passed": true
+    },
+    {
+      "name": "textures ownership exact",
+      "passed": true
+    },
+    {
+      "name": "samplers ownership exact",
+      "passed": true
+    },
+    {
+      "name": "Image 0 exact",
+      "passed": true
+    },
+    {
+      "name": "Image 1 exact",
+      "passed": true
+    },
+    {
+      "name": "Image 2 exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/COLOR_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/COLOR_0 no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/TEXCOORD_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/TEXCOORD_0 no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/COLOR_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/COLOR_0 no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/TEXCOORD_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/TEXCOORD_0 no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/COLOR_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/TEXCOORD_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/COLOR_0 original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/COLOR_0 no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "water-current/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "water-current/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "water-current/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "water-current/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "fir-light/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "fir-light/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "fir-light/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "fir-light/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/NORMAL original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/NORMAL no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/POSITION original bytes exact",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/POSITION no extra geometry",
+      "passed": true
+    },
+    {
+      "name": "Bounded appended triangles only",
+      "passed": true
+    },
+    {
+      "name": "Distinct candidate revision",
+      "passed": true
+    },
+    {
+      "name": "Eight exact physical courses except revision",
+      "passed": true
+    },
+    {
+      "name": "spawnBindings exact",
+      "passed": true
+    },
+    {
+      "name": "routeBindings exact",
+      "passed": true
+    },
+    {
+      "name": "overrides exact",
+      "passed": true
+    },
+    {
+      "name": "themes exact",
+      "passed": true
+    },
+    {
+      "name": "campaigns exact",
+      "passed": true
+    },
+    {
+      "name": "playlists exact",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 0 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 0 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 1 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 1 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 2 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 2 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 3 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 3 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 4 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 4 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 5 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 5 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 6 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 6 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 7 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 7 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 8 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 8 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 9 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 9 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 10 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 10 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 11 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 11 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 12 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 12 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 13 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 13 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 14 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 14 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 15 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 15 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 16 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 16 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 17 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 17 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 18 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 18 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 19 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 19 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 20 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 20 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 21 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 21 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 22 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 22 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 23 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 23 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 24 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 24 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 25 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 25 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 26 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 26 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 27 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 27 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 28 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 28 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 29 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 29 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 30 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 30 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 31 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 31 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 32 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 32 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 33 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 33 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 34 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 34 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 35 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 35 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 36 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 36 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 37 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 37 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 38 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 38 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 39 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 39 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 40 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 40 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 41 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 41 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 42 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 42 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 43 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 43 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 44 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 44 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 45 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 45 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 46 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 46 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 47 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 47 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 48 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 48 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 49 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 49 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 50 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 50 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 51 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 51 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 52 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 52 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 53 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 53 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 54 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 54 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 55 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 55 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 56 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 56 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 57 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 57 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 58 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 58 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 59 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 59 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 60 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 60 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 61 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 61 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 62 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 62 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 63 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 63 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 64 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 64 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 65 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 65 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 66 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 66 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 67 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 67 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 68 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 68 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 69 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 69 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 70 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 70 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 71 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 71 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 72 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 72 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 73 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 73 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 74 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 74 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 75 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 75 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 76 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 76 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 77 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 77 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 78 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 78 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 79 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 79 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 80 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 80 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 81 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 81 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 82 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 82 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 83 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 83 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 84 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 84 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 85 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 85 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 86 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 86 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 87 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 87 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 88 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 88 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 89 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 89 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 90 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 90 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 91 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 91 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 92 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 92 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 93 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 93 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 94 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 94 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 95 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 95 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 96 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 96 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 97 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 97 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 98 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 98 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 99 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 99 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 100 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 100 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 101 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 101 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 102 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 102 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 103 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 103 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 104 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 104 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 105 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 105 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 106 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 106 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 107 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 107 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 108 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 108 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 109 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 109 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 110 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 110 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 111 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 111 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 112 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 112 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 113 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 113 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 114 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 114 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 115 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 115 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 116 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 116 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 117 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 117 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 118 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 118 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 119 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 119 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 120 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 120 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 121 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 121 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 122 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 122 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 123 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 123 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 124 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 124 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 125 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 125 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 126 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 126 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 127 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 127 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 128 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 128 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 129 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 129 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 130 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 130 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 131 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 131 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 132 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 132 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 133 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 133 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 134 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 134 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 135 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 135 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 136 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 136 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 137 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 137 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 138 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 138 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 139 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 139 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 140 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 140 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 141 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 141 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 142 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 142 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 143 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 143 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 144 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 144 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 145 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 145 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 146 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 146 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 147 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 147 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 148 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 148 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 149 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 149 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 150 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 150 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 151 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 151 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 152 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 152 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 153 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 153 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 154 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 154 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 155 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 155 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 156 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 156 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 157 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 157 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 158 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 158 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 159 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 159 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 160 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 160 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 161 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 161 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 162 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 162 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 163 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 163 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 164 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 164 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 165 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 165 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 166 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 166 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 167 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 167 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 168 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 168 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 169 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 169 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 170 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 170 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 171 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 171 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 172 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 172 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 173 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 173 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 174 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 174 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 175 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 175 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 176 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 176 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 177 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 177 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 178 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 178 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 179 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 179 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 180 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 180 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 181 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 181 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 182 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 182 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 183 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 183 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 184 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 184 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 185 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 185 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 186 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 186 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 187 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 187 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 188 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 188 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 189 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 189 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 190 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 190 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 191 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 191 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 192 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 192 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 193 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 193 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 194 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 194 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 195 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 195 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 196 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 196 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 197 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 197 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 198 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 198 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 199 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 199 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 200 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 200 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 201 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 201 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 202 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 202 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 203 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 203 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 204 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 204 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 205 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 205 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 206 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 206 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 207 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 207 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 208 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 208 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 209 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 209 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 210 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 210 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 211 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 211 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 212 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 212 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 213 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 213 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 214 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 214 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 215 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 215 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 216 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 216 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 217 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 217 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 218 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 218 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 219 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 219 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 220 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 220 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 221 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 221 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 222 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 222 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 223 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 223 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 224 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 224 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 225 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 225 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 226 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 226 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 227 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 227 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 228 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 228 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 229 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 229 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 230 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 230 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 231 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 231 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 232 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 232 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 233 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 233 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 234 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 234 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 235 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 235 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 236 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 236 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 237 lies on one named canonical face",
+      "passed": true
+    },
+    {
+      "name": "Finish triangle 237 has nondegenerate outward winding",
+      "passed": true
+    },
+    {
+      "name": "Exactly the five existing terrace owners",
+      "passed": true
+    }
+  ],
+  "before": {
+    "bytes": 1210776,
+    "sha256": "503c49b5e29a3cb486272ca2d328b4d50b69fda82ba90d45bd76c37d2b29343a"
+  },
+  "after": {
+    "bytes": 1236484,
+    "sha256": "5998eeff3018fb0e32cfb67003d4b6da9e3bcd18efcdc2b89762778b486680fd"
+  },
+  "addedTriangles": 238,
+  "greatestOffsetMetres": 0.0015016376144143528,
+  "addedMaterials": 0,
+  "addedTextures": 0,
+  "addedMeshes": 0,
+  "collisionChanges": 0,
+  "routeChanges": 0,
+  "limits": "Static source/collision-face contracts only; grazing overlap, shadows, visual benefit, flight and hardware acceptance are separate."
+}

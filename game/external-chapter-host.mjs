@@ -18,6 +18,7 @@ import {
   PACK_LIMITS,
   emptyPackLibrary,
   exportPackLibrary,
+  packLibrarySnapshot,
   importPackLibrary,
   resolvePackCampaign,
 } from './packs.mjs';
@@ -331,8 +332,8 @@ export function createExternalChapterHost({
       rawIndex === null ? emptyExternalChapterIndex() : validateExternalChapterIndex(rawIndex);
     required(
       bytes(exportPackLibrary(packs)) + (rawIndex === null ? 0 : bytes(index)) <=
-        PACK_LIMITS.libraryBytes,
-      'Packs plus descriptor index exceed the unchanged 48 MiB budget.',
+        PACK_LIMITS.libraryBytes + 1024 * 1024,
+      'Imported packs and the separate official descriptor index exceed their storage budgets.',
     );
     for (const descriptor of known.values()) {
       if (packs.packs.some((pack) => pack.id === descriptor.id))
@@ -584,7 +585,7 @@ export function createExternalChapterHost({
       });
     },
     prepareMutation(snapshot, nextPacks, { signal } = {}) {
-      const owned = own(nextPacks);
+      const owned = own(packLibrarySnapshot(nextPacks));
       return operation(signal, true, async (s) => {
         const before = await current(snapshot, s);
         const proposed = await catalog(owned, before.raw.index, s);

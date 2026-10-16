@@ -1,0 +1,66 @@
+{
+  "sourceRevision": "d6c0ac7f7414abe00c887289bdd75dcd38c986ba",
+  "artifact": 11996360836,
+  "run": 38779645257,
+  "packageRevision": "4fcc5933c64b19eb6190a784ca84b2c36afb21a1695aa40cfea3466cb79c52e3",
+  "origin": 9176,
+  "scope": "Bounded pre-integration native player observation only. Catalogue contains twenty offers with nineteen prior rows. This does not qualify the later b0625e6f integrated twenty-one-offer candidate.",
+  "observations": {
+    "normalDownloadR3MiB": 2.0,
+    "normalDownloadR2MiB": 1.9,
+    "bothSavedTogether": true,
+    "r3FirstFly": {
+      "heightM": 25.9,
+      "state": "Ready/disarmed",
+      "view": "FPV",
+      "shelterAppearanceObserved": true
+    },
+    "chaseOverviewControlsSelectedWhilePaused": true,
+    "acroChangePaused": true,
+    "enUkSixStartLabels": true,
+    "localeAndBothDownloadsPersistAfterReload": true,
+    "r3EditionUk": "\u0414\u0435\u0442\u0430\u043b\u0456\u0437\u043e\u0432\u0430\u043d\u0456 \u0443\u043a\u0440\u0438\u0442\u0442\u044f",
+    "r2RevisionRetained": "composition-r2",
+    "r2CachedFly": {
+      "actualState": "Paused",
+      "armResumeControlAvailable": true,
+      "readyStateEstablished": false
+    },
+    "explicitArmTested": false
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-shelter-r3-fpv-native-20261015.png",
+      "bytes": 30838,
+      "sha256": "df0bd827b72582e959e1a75a843e10d185946926a1fceeaa095148ee5fa6b60a"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-shelter-r3-retained-native-20261015.txt",
+      "bytes": 7317,
+      "sha256": "0b057ada629e76c216e82608536780324d6a6ab7e39295bfe72237c28226371f"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-shelter-r3-menu-uk-native-20261015.txt",
+      "bytes": 2830,
+      "sha256": "bc5494d5ac5ceb80a740d0c8f9087b2c5942e9f6bad3acc18127024a2dd27aed"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-shelter-r3-retained-uk-native-20261015.txt",
+      "bytes": 13791,
+      "sha256": "6fd8eef2413a44c152145191e6387b1ce5d034caa5bc1d5d165e85a0c4cbbbe4"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-shelter-r2-retained-ready-native-20261015.txt",
+      "bytes": 1028,
+      "sha256": "dedbaf7f3cd3765c11d04e1f78d9047fe3083355d733eedca1502a2ab8f7ae0c"
+    }
+  ],
+  "filenameWarning": "lunar-shelter-r2-retained-ready-native-20261015.txt is a historical filename. Its observed status is Paused; it does not prove Ready.",
+  "nativeCandidateBoundaryAccepted": true,
+  "integratedB062Accepted": false,
+  "remaining": [
+    "fresh exact b0625e6f package qualification",
+    "fresh combined catalogue/player native gate",
+    "responsive/full-start/physical/offline/final-art qualification where not otherwise established"
+  ]
+}

@@ -1,0 +1,80 @@
+- button "Game menu":
+  - img "FPV / LINE"
+- generic: ARCADE EDITION
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - progressbar "Picture revealed": 0.0%
+    - emphasis: TARGET 30%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 0:00
+    - generic: SCORE
+    - strong: "00000"
+    - region "Enemies defeated":
+      - generic: Enemies
+      - generic: Lifetime
+      - strong: "0"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; change craft G; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again."
+    - region "Mission details":
+      - paragraph: MISSION 01
+      - heading "First return" [level=1]
+      - paragraph: Reveal 30%. Closing a cut stops your craft. Tap a fresh direction to fly again. Line hit? Close your cut before the travelling spark reaches you.
+      - paragraph: Journey Standard. 3 starting lives; no failing countdown. 1 enemies · 8.8 craft cells/s.
+    - region "Enemies defeated":
+      - generic "Lifetime 0 Enemy details +":
+        - generic: Lifetime
+        - strong: "0"
+        - generic: Enemy details +
+    - button "Start mission ↗"
+    - button "Learn by playing"
+    - region "Missions"
+    - button "Home"
+    - text: ▾
+    - paragraph: Tap a direction to fly. Bonuses activate on contact. Esc / P pauses.
+    - strong: Ready for launch
+    - generic: Close a line to reveal the picture
+    - status: Choose your route. Open Missions → Mission brief for guidance.
+    - status
+    - status
+- text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ Ⅱ ⏭ ▶ ☰ ⛶ ×
+- dialog "FPV / LINE":
+  - heading "FPV / LINE" [level=1]:
+    - generic: FPV / LINE
+  - navigation "Game mode":
+    - button "1P Solo":
+      - strong: Solo
+      - generic: 1P
+    - link "2P Team":
+      - /url: couch/relay-rescue.html?return=solo&journey-return=whole-spatial-v25
+      - strong: Team
+      - generic: 2P
+    - link "2P VS":
+      - /url: couch/?journey=whole-spatial-v25&return=solo
+      - strong: VS
+      - generic: 2P
+    - link "Snake":
+      - /url: http://127.0.0.1:8894/game/snake/play.html?mode=solo&lang=en
+      - strong: Snake
+    - link "Overflight":
+      - /url: http://127.0.0.1:8894/game/overflight/play.html?lang=en
+      - strong: Overflight
+    - button "SIM beta":
+      - strong: SIM
+      - generic: beta
+  - navigation "Main menu":
+    - button "Start" [active]:
+      - generic: Start
+      - generic: →
+    - button "Select Mission"
+    - button "Settings"
+  - 'button "Sound: on" [pressed]'
+  - button "Enter fullscreen": Full screen
+  - contentinfo:
+    - generic "Signal Afterglow · RevealLine"
+    - paragraph: Version v0.142.4
+- text: + + + + + + + + +

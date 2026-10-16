@@ -1,0 +1,80 @@
+TAP version 13
+# Subtest: actual Raid bodies use finite velocity and contact semantics in warning escape
+ok 1 - actual Raid bodies use finite velocity and contact semantics in warning escape
+  ---
+  duration_ms: 24.062875
+  ...
+# Subtest: committed motion prediction stops at the end of a leg
+ok 2 - committed motion prediction stops at the end of a leg
+  ---
+  duration_ms: 0.273375
+  ...
+# Subtest: split groups preserve different approach lanes at equal speed and legacy rules stay straight
+ok 3 - split groups preserve different approach lanes at equal speed and legacy rules stay straight
+  ---
+  duration_ms: 139.385542
+  ...
+# Subtest: crosscut announces its snapshot then commits without tracking later player movement
+ok 4 - crosscut announces its snapshot then commits without tracking later player movement
+  ---
+  duration_ms: 42.467833
+  ...
+# Subtest: standoff relocation moves laterally and halts during a real attack warning
+ok 5 - standoff relocation moves laterally and halts during a real attack warning
+  ---
+  duration_ms: 21.10975
+  ...
+# Subtest: a new committed leg cannot take the final warned exit
+ok 6 - a new committed leg cannot take the final warned exit
+  ---
+  duration_ms: 8.117416
+  ...
+# Subtest: Raid convoy reaches a firing stop, warns, recovers and leaves for another stop
+ok 7 - Raid convoy reaches a firing stop, warns, recovers and leaves for another stop
+  ---
+  duration_ms: 208.946458
+  ...
+# Subtest: same coordinated inputs preserve deterministic trajectories without consuming gameplay RNG
+ok 8 - same coordinated inputs preserve deterministic trajectories without consuming gameplay RNG
+  ---
+  duration_ms: 145.402916
+  ...
+# Subtest: a timed bent escape is admitted around cover when straight rays are body-blocked
+ok 9 - a timed bent escape is admitted around cover when straight rays are body-blocked
+  ---
+  duration_ms: 33.8355
+  ...
+# Subtest: a shield cannot turn its protected half into the only live warned exit
+ok 10 - a shield cannot turn its protected half into the only live warned exit
+  ---
+  duration_ms: 14.146708
+  ...
+# Subtest: resting against cover still admits an outward escape with the physical hull
+ok 11 - resting against cover still admits an outward escape with the physical hull
+  ---
+  duration_ms: 11.060416
+  ...
+# Subtest: a finite eight-member Raid split pack sends its two coordinated members to opposite sides
+ok 12 - a finite eight-member Raid split pack sends its two coordinated members to opposite sides
+  ---
+  duration_ms: 43.439291
+  ...
+# Subtest: review steering routes around cover to collect salvage through public movement input
+ok 13 - review steering routes around cover to collect salvage through public movement input
+  ---
+  duration_ms: 49.050625
+  ...
+# Subtest: review avoidance predicts the actual V4 crossing, independently of obsolete pursuit steering
+ok 14 - review avoidance predicts the actual V4 crossing, independently of obsolete pursuit steering
+  ---
+  duration_ms: 39.35975
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1409.238459

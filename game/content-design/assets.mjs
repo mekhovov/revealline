@@ -1,7 +1,7 @@
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { freezeDesign } from './catalogs.mjs';
-import { CONTENT_ASSET_MAX_BYTES } from './limits.mjs';
+import { CONTENT_ARTWORK_LOAD_TIMEOUT_MS, CONTENT_ASSET_MAX_BYTES } from './limits.mjs';
 
 const verified = new WeakMap();
 export function compileAssetRevision(source) {
@@ -33,9 +33,11 @@ export function compileAssetRevision(source) {
   );
   required(
     typeof asset.path === 'string' &&
-      /^content-design\/assets\/[a-z0-9/_-]+\.png$/.test(asset.path) &&
+      /^(?:content-design\/assets|editions\/assets)\/[a-z0-9/_-]+\.(?:png|jpe?g|webp)$/.test(
+        asset.path,
+      ) &&
       !asset.path.includes('//'),
-    'Asset must be a local versioned PNG path.',
+    'Asset must be a local versioned PNG, JPEG or WebP path.',
   );
   required(
     typeof asset.sha256 === 'string' && /^[a-f0-9]{64}$/.test(asset.sha256),
@@ -57,6 +59,17 @@ export function compileAssetRevision(source) {
   return freezeDesign(asset);
 }
 
+/** MIME is derived from the immutable local path, so historical PNG records
+ * keep their original schema and identity. The byte inspector enforces it. */
+export function assetRevisionMime(source) {
+  const asset = compileAssetRevision(source);
+  return asset.path.endsWith('.png')
+    ? 'image/png'
+    : asset.path.endsWith('.webp')
+      ? 'image/webp'
+      : 'image/jpeg';
+}
+
 export function verifiedPreviewBackground(asset, media) {
   const pin = compileAssetRevision(asset);
   required(
@@ -74,12 +87,12 @@ export async function loadPreviewArtwork(
     signal,
     fetchAsset = (path, options) => fetch(new URL(path, new URL('../', import.meta.url)), options),
     digest = (bytes) => crypto.subtle.digest('SHA-256', bytes),
-    timeoutMs = 20000,
+    timeoutMs = CONTENT_ARTWORK_LOAD_TIMEOUT_MS,
   } = {},
 ) {
   const asset = compileAssetRevision(source);
   required(
-    Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 20000,
+    Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= CONTENT_ARTWORK_LOAD_TIMEOUT_MS,
     'Invalid artwork timeout.',
   );
   const controller = new AbortController();
@@ -139,11 +152,15 @@ export async function loadPreviewArtwork(
         let binary = '';
         for (let start = 0; start < bytes.length; start += 16384)
           binary += String.fromCharCode(...bytes.subarray(start, start + 16384));
-        const media = { dataUrl: `data:image/png;base64,${btoa(binary)}` };
+        const mime = assetRevisionMime(asset);
+        const media = { dataUrl: `data:${mime};base64,${btoa(binary)}` };
         const image = inspectImageDataUrl(media.dataUrl);
         required(
-          image.valid && image.width === asset.width && image.height === asset.height,
-          'Artwork dimensions or PNG header differ from its revision.',
+          image.valid &&
+            image.mime === mime &&
+            image.width === asset.width &&
+            image.height === asset.height,
+          'Artwork dimensions or raster header differ from its revision.',
         );
         verified.set(media, dataIdentity(asset));
         return Object.freeze(media);

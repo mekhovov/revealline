@@ -8,7 +8,7 @@ Use these with the [community authoring guide](../community/README.md). Replace 
 
 ## Produce a complete community presentation brief
 
-> Design [community name]'s Reveal Line presentation from [authorized brandbook and original asset paths] for [supported modes and content identities]. Record which references are accessible, their rights and which details remain unknown. Preserve supplied originals. Keep global interface appearance distinct from the complete game theme. Inventory every applicable actor, HUD, terrain, effect, objective, reveal picture, font, sound and shared component slot. For each specify exact dimensions/geometry, native play scale, palette and contrast, alpha, pixel construction, pivot/rotor anchors, animation or procedural recipe, budget, dependencies and output names. Preserve player number/shape identity and warning counterplay. Include English/Ukrainian glyph requirements and reduced-effects variants. Use original artwork consistent with the approved pixel field-kit style; community-specific threat meanings must match its Support/Combat or noncombat framing. Produce slot-specific generation/edit prompts and a mode/screen review matrix. Do not invent access to inaccessible brand assets, treat a palette change as a complete theme, or mark uninspected artwork reviewed.
+> Design [community name]'s Reveal Line presentation from [authorized brandbook and original asset paths] for [supported modes and content identities]. Record which references are accessible, their rights and which details remain unknown. Preserve supplied originals. Keep global interface appearance distinct from the complete game theme. Declare the semantic presentation family separately from the unique theme ID so shared FPV craft-loss, debris and accessibility language remain correct for community variants. Inventory every applicable actor, HUD, terrain, effect, objective, reveal picture, font, sound and shared component slot. For each specify exact dimensions/geometry, native play scale, palette and contrast, alpha, pixel construction, pivot/rotor anchors, animation or procedural recipe, budget, dependencies and output names. Preserve player number/shape identity and warning counterplay. Include English/Ukrainian glyph requirements and reduced-effects variants. Use original artwork consistent with the approved pixel field-kit style; community-specific threat meanings must match its Support/Combat or noncombat framing. Produce slot-specific generation/edit prompts and a mode/screen review matrix. Do not invent access to inaccessible brand assets, treat a palette change as a complete theme, or mark uninspected artwork reviewed.
 
 ## Replace one asset without losing history
 
@@ -21,3 +21,22 @@ Use these with the [community authoring guide](../community/README.md). Replace 
 ## Qualify a community release
 
 > Qualify [candidate source SHA, version, content identities and presentation revisions] against the original community brief and whole-game plan. First enumerate missing production assets, route/fairness checks and mode/input coverage. Verify ordinary discovery/download/play without a file picker, retained Retry and saved/earned originals, clear Next/campaign endings, all selected offline dependencies, backup/restore and recovery after failed preparation. Test keyboard, touch and physical controllers separately; include portrait, short landscape, handheld, Large/Plain text and reduced effects. Keep simulation identities separate from cosmetics. Run all six source gates and applicable build, production and artifact checks on the exact committed source. Freeze and deploy through the established release workflow, verify public bytes and actual play, then record acceptance with precise limitations. Do not close the community phase on source tests, a greybox export or a theme manifest alone; do not overwrite existing frozen releases.
+
+## Prepare retained board candidates
+
+> In Asset Studio, import [collection JSON and exact files, or .rlart]. Select the
+> retained reveal [ID], prepare [wide1152×576 / classic768×576] with [contain /
+> > center crop], and inspect the native output. Reject upscale and invalid capacity;
+> preserve originals, creator/rights, parent identity and exact fit/sampling/hash.
+> Export and reimport the actual downloaded packet, checking every original byte.
+> Record cultural and native-grid corrections separately from mechanical resizing;
+> do not mark candidates approved or bind them to runtime slots without that review.
+
+## Review an existing moving part
+
+> Select [character and existing wing/thruster/pulse/blink component] in Motion
+> Lab. Edit one existing anchor or base rate, commit with keyboard Tab, pause and
+> enable reduced effects, then inspect the actual shared rendering. Reject invalid
+> JSON without losing the accepted draft. Switch away/back, export/reimport, and
+> Restore. Preserve source component IDs, simulation rules and historical recipes;
+> name unsupported new states as remaining work.

@@ -1,0 +1,116 @@
+{
+  "course": "beginner-13",
+  "mode": "acro",
+  "recordedTicks": 654,
+  "samples": 98,
+  "steps": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "viewport": [
+    1280,
+    720
+  ],
+  "dpr": 2,
+  "timestamp": "2026-10-05T05:47:18.404Z",
+  "elapsedMs": 9264,
+  "sampleSpacingMs": {
+    "n": 98,
+    "mean": 94.521,
+    "p50": 93.4,
+    "p95": 100,
+    "max": 101.9
+  },
+  "domChecks": [
+    {
+      "name": "Range target band is fixed middle third",
+      "pass": true
+    },
+    {
+      "name": "Full duration alone does not award completion",
+      "pass": true
+    },
+    {
+      "name": "Blocking check is visible, groups bounded at four",
+      "pass": true
+    },
+    {
+      "name": "Guided value is nonnumeric",
+      "pass": true
+    },
+    {
+      "name": "One-sided target range is half of track",
+      "pass": true
+    },
+    {
+      "name": "Zero-width range has safe binary marker",
+      "pass": true
+    },
+    {
+      "name": "Occlusion gives direction only",
+      "pass": true
+    },
+    {
+      "name": "All display preferences persist",
+      "pass": true
+    },
+    {
+      "name": "Detailed numbers occupy one bounded row",
+      "pass": true
+    },
+    {
+      "name": "Paused explanation opens separately",
+      "pass": true
+    },
+    {
+      "name": "Default card obeys bounded dimensions",
+      "pass": true
+    }
+  ],
+  "results": {
+    "new": {
+      "callbackMs": {
+        "n": 98,
+        "mean": 0.089,
+        "p50": 0.1,
+        "p95": 0.2,
+        "max": 0.2
+      },
+      "forcedLayoutMs": {
+        "n": 98,
+        "mean": 0.093,
+        "p50": 0.1,
+        "p95": 0.2,
+        "max": 0.3
+      },
+      "mutations": 913
+    },
+    "old": {
+      "callbackMs": {
+        "n": 98,
+        "mean": 0.108,
+        "p50": 0.1,
+        "p95": 0.2,
+        "max": 0.5
+      },
+      "forcedLayoutMs": {
+        "n": 98,
+        "mean": 0.154,
+        "p50": 0.1,
+        "p95": 0.3,
+        "max": 0.7
+      },
+      "mutations": 1787
+    }
+  },
+  "limitations": [
+    "Same recorded snapshots, at >=90ms spacing; old 80ms throttle untouched.",
+    "New callback includes feedback adapter; old coach includes its own feedback calculation.",
+    "Forced layout charges style/layout flush, not paint/compositor/GPU.",
+    "No FPS, gameplay latency, hardware-radio, sustained memory or audible-sound claim."
+  ]
+}

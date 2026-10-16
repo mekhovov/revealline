@@ -1,0 +1,165 @@
+{
+  "format": "fpv-sim-entry-working-source-verification.v1",
+  "parentHead": "23c790154dfe35f11c4c7a7b239c7c8ead61c03a",
+  "sourceFiles": [
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 26162,
+      "sha256": "4299a755c3eee38141c15d650c1167d83a8e2366a88eae4996ee33aa8fc14245"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 238456,
+      "sha256": "7c45a810e8b2e7c0a175bd38a7d4d42dc77024de383d2fd8d1c697f5372691ed"
+    },
+    {
+      "path": "game/fpv-entry.mjs",
+      "bytes": 1911,
+      "sha256": "264aed5590d128d87e33b06892f7df5e69e5289a96ae7d5f93e6839385e2eb01"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1085715,
+      "sha256": "fc6c3209d2f31e873757fbc746a886382ce0f5b884f1013adcd9ef4747f79ebf"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "bytes": 488612,
+      "sha256": "e56c7ce21581aae14e76748cba76a9227dc07eb1c8a95dd8d31609131a533145"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 795025,
+      "sha256": "56322ad7e3aa161b71db91ed1e0cf175909c5b6070eef136b3ed3e4be47a5dec"
+    },
+    {
+      "path": "game/optional-practice-catalog.mjs",
+      "bytes": 4168,
+      "sha256": "dd07e384e117d38cec2297bf7ebc9e8af1a5636d6c15dd1eb527ecdff711cce3"
+    },
+    {
+      "path": "game/optional-practice-preview.mjs",
+      "bytes": 1523,
+      "sha256": "dc5495017b7d0b3d35e62d5f65f389239f661ae973e59102239e115912aa33d4"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 30179,
+      "sha256": "46168322ca0587e95d365b7fc2156123c807428e47ce89d3af6d6a7508990154"
+    },
+    {
+      "path": "game/test/manual/native-landing-whitelist-workflow.mjs",
+      "bytes": 12232,
+      "sha256": "47768ae57deab0978d03441889e30351b1a9d0ce78cec2d82ce62ff7023ce80d"
+    },
+    {
+      "path": "game/test/native-landing-whitelist.test.mjs",
+      "bytes": 10080,
+      "sha256": "91ecdd8eb3c816734dc9833057862db464ca88b40caadcf7e3480c009589ab10"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 31778,
+      "sha256": "6fad49ac7d985c52b3b6e82c77ea2b086375a065e5a81fc554b24cdacf5651b9"
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "bytes": 1711,
+      "sha256": "c876d5e70da0bc2abc598567196f1fe560f8f635ced4a5c092411d3004cb7f35"
+    },
+    {
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 2996,
+      "sha256": "3bfff024c1cdf214fdaf0b441711043c08f40c18d416277ee8dbe404b30d9795"
+    },
+    {
+      "path": "game/ui/native-menu-icons.mjs",
+      "bytes": 1866,
+      "sha256": "d710daff089fbbfe262ed0738b89e31f2494789b02c326f130e6eb32d248b731"
+    },
+    {
+      "path": "game/ui/native-menu.css",
+      "bytes": 29450,
+      "sha256": "7df464249578f90f0910d29015ef567d13f32d07c58992ef8bf91723e243c195"
+    },
+    {
+      "path": "game/ui/optional-practice-panel.mjs",
+      "bytes": 8702,
+      "sha256": "9b0cae07633e4dfd9261710ae0803cf82be7a240b2f82aec34fdf46b8418fee3"
+    }
+  ],
+  "fixtureFiles": [
+    {
+      "path": "dist/fpv-sim-entry-verification/index.html",
+      "bytes": 924,
+      "sha256": "f80933377e4ec273be39fa63b5a1c3837edff85efd42faf029b4130ce35011a1"
+    },
+    {
+      "path": "dist/fpv-sim-entry-verification/run.mjs",
+      "bytes": 5681,
+      "sha256": "41634cc27e572c112243013579f615d6c494d3b59f110630b54e13cdffca2726"
+    },
+    {
+      "path": "dist/fpv-sim-entry-verification/style.css",
+      "bytes": 294,
+      "sha256": "67d03da641f691380a14626ae7f2b4a8bdc8d9c8a916d7e51ca7771d823b148a"
+    },
+    {
+      "path": "dist/fpv-sim-entry-verification/controller.mjs",
+      "bytes": 5053,
+      "sha256": "19a094f6a38c927a5bc76cda67bd6332a696511cc590326be4b60157bed03c09"
+    }
+  ],
+  "verification": {
+    "existingChecks": {
+      "passed": 62,
+      "newUnitCasesAdded": 0
+    },
+    "functionalDomBoundaryChecks": {
+      "passed": 28,
+      "receipt": "/tmp/fpv-sim-entry-functional-20261002.json",
+      "qualification": "Rerun after same-window checked bundled launch change."
+    },
+    "focusedActualBrowser": {
+      "passed": 6,
+      "total": 6,
+      "host": "versus",
+      "width": 390,
+      "locales": [
+        "en",
+        "uk"
+      ],
+      "repeats": 3,
+      "reportedBy": "root",
+      "qualification": "Unchanged production source; explicit host readiness and per-case cleanup added to ignored fixture."
+    },
+    "fullActualBrowser": {
+      "passed": 12,
+      "total": 12,
+      "reportedBy": "root",
+      "qualification": "Actual Solo/Versus/Team pages, EN/UK, 390/1280 widths, fourth destination, modal availability/focus/Back, and bundled link target=_self."
+    },
+    "buildReceipt": "/tmp/fpv-sim-entry-build-receipt-20261002.json",
+    "affectedChecksAfterSameWindowChange": {
+      "passed": 12,
+      "total": 12,
+      "files": [
+        "game/test/optional-practice-panel.test.mjs",
+        "game/test/fpv-entry.test.mjs"
+      ],
+      "newUnitCasesAdded": 0
+    },
+    "virtualControllerActualBrowser": {
+      "status": "rerun pending",
+      "previousFailure": "Ignored fixture assumed press-A-to-join; main game autoJoin:true joins on neutral, so its first A validly activated Play. Fixture now waits for neutral join then uses D-pad before first A. Production controller code unchanged."
+    },
+    "buildReceiptQualification": "Prior full working-tree build passed; it predates target=_self and localized same-window copy. Final current-source frozen build is pending publication owner."
+  },
+  "limitations": [
+    "Not physical controller/device acceptance.",
+    "No merged/public/live claim.",
+    "Local browser used isolated fixture access metadata; production access configuration and code unchanged."
+  ],
+  "capturedAt": "2026-10-02T04:21:57.536084+00:00",
+  "behavior": "Only verified same-build simulator link uses same-window navigation so Gamepad-poll confirm does not depend on popup permission. Legacy optional-package links retain their existing target behavior."
+}

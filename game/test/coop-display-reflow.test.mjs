@@ -32,6 +32,7 @@ async function paused(t, { after = clipped, denySave = false } = {}) {
   f.tick(180);
   f.$('coop-pause').click();
   f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-accessibility').click();
   f.choose('coop-text-face', 'plain');
   const target = f.$('coop-text-size'),
     panel = f.$('coop-options');

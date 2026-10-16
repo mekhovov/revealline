@@ -1,0 +1,237 @@
+TAP version 13
+# Subtest: complete chapter snapshots retain every preset execution and campaign identity
+ok 1 - complete chapter snapshots retain every preset execution and campaign identity
+  ---
+  duration_ms: 7181.393625
+  ...
+# Subtest: the nine-mission Horizon starter excludes the remix and other modes
+ok 2 - the nine-mission Horizon starter excludes the remix and other modes
+  ---
+  duration_ms: 103.096417
+  ...
+# Subtest: archive package mapping keeps exact old route ownership
+ok 3 - archive package mapping keeps exact old route ownership
+  ---
+  duration_ms: 4.414292
+  ...
+# Subtest: published current and historical source snapshots keep complete routes byte for byte
+ok 4 - published current and historical source snapshots keep complete routes byte for byte
+  ---
+  duration_ms: 8754.173959
+  ...
+# Subtest: fresh Team missing package offers one Download & play action and starts only after exact verified readiness
+not ok 5 - fresh Team missing package offers one Download & play action and starts only after exact verified readiness
+  ---
+  duration_ms: 6663.647084
+  location: '/private/tmp/revealline-overflight-pacing-20261013/game/test/offline-download-play-host.test.mjs:172:1'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture ready. Start remains a separate action.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///private/tmp/revealline-overflight-pacing-20261013/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///private/tmp/revealline-overflight-pacing-20261013/game/test/helpers/coop-presentation-fixture.mjs:42:5)
+    async TestContext.<anonymous> (file:///private/tmp/revealline-overflight-pacing-20261013/game/test/offline-download-play-host.test.mjs:175:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Team Download & play never reclaims focus or starts after a newer lobby choice
+not ok 6 - Team Download & play never reclaims focus or starts after a newer lobby choice
+  ---
+  duration_ms: 6435.17925
+  location: '/private/tmp/revealline-overflight-pacing-20261013/game/test/offline-download-play-host.test.mjs:234:1'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture ready. Start remains a separate action.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///private/tmp/revealline-overflight-pacing-20261013/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///private/tmp/revealline-overflight-pacing-20261013/game/test/helpers/coop-presentation-fixture.mjs:42:5)
+    async TestContext.<anonymous> (file:///private/tmp/revealline-overflight-pacing-20261013/game/test/offline-download-play-host.test.mjs:236:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fresh Versus missing package offers one Download & play action and admits that exact race once ready
+not ok 7 - fresh Versus missing package offers one Download & play action and admits that exact race once ready
+  ---
+  duration_ms: 10561.580125
+  location: '/private/tmp/revealline-overflight-pacing-20261013/game/test/offline-download-play-host.test.mjs:272:1'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Ready. First clear wins.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///private/tmp/revealline-overflight-pacing-20261013/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///private/tmp/revealline-overflight-pacing-20261013/game/test/helpers/coop-presentation-fixture.mjs:42:5)
+    async TestContext.<anonymous> (file:///private/tmp/revealline-overflight-pacing-20261013/game/test/offline-download-play-host.test.mjs:344:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: every public community owns complete mode dependencies with shared hash reuse
+ok 8 - every public community owns complete mode dependencies with shared hash reuse
+  ---
+  duration_ms: 1.461541
+  ...
+# Subtest: SIM follows admitted dependencies outside its directory and fails for a missing dependency
+ok 9 - SIM follows admitted dependencies outside its directory and fails for a missing dependency
+  ---
+  duration_ms: 0.389458
+  ...
+# Subtest: all gameplay preserves explicit SIM and community choices through an update without music
+ok 10 - all gameplay preserves explicit SIM and community choices through an update without music
+  ---
+  duration_ms: 0.201667
+  ...
+# Subtest: native Overflight and Snake use the main PWA core and share one recorded-effects download
+ok 11 - native Overflight and Snake use the main PWA core and share one recorded-effects download
+  ---
+  duration_ms: 0.268375
+  ...
+# Subtest: native experience admission rejects partial or optional player hosts and omits absent modes
+ok 12 - native experience admission rejects partial or optional player hosts and omits absent modes
+  ---
+  duration_ms: 0.145
+  ...
+# Subtest: legacy flight-practice selections do not silently acquire unrelated native modes
+ok 13 - legacy flight-practice selections do not silently acquire unrelated native modes
+  ---
+  duration_ms: 0.072625
+  ...
+# Subtest: Survivor: Settings tools preserve edition, language and art context without forwarding gameplay hints
+ok 14 - Survivor: Settings tools preserve edition, language and art context without forwarding gameplay hints
+  ---
+  duration_ms: 4.642375
+  ...
+# Subtest: Survivor: Studio controls live inside the real Settings slot
+ok 15 - Survivor: Studio controls live inside the real Settings slot
+  ---
+  duration_ms: 13.990625
+  ...
+# Subtest: Raid: Settings tools preserve edition, language and art context without forwarding gameplay hints
+ok 16 - Raid: Settings tools preserve edition, language and art context without forwarding gameplay hints
+  ---
+  duration_ms: 1.245167
+  ...
+# Subtest: Raid: Studio controls live inside the real Settings slot
+ok 17 - Raid: Studio controls live inside the real Settings slot
+  ---
+  duration_ms: 5.430709
+  ...
+# Subtest: Overflight stick preserves proportional diagonal movement and its central dead zone
+ok 18 - Overflight stick preserves proportional diagonal movement and its central dead zone
+  ---
+  duration_ms: 5.506708
+  ...
+# Subtest: Overflight swipe uses main-game turn interpretation and releases cleanly
+ok 19 - Overflight swipe uses main-game turn interpretation and releases cleanly
+  ---
+  duration_ms: 0.937292
+  ...
+# Subtest: Overflight dpad uses main-game turn interpretation and releases cleanly
+ok 20 - Overflight dpad uses main-game turn interpretation and releases cleanly
+  ---
+  duration_ms: 0.486292
+  ...
+# Subtest: one finger steers while another boosts; foreign and steering releases cannot cancel Boost
+ok 21 - one finger steers while another boosts; foreign and steering releases cannot cancel Boost
+  ---
+  duration_ms: 0.6075
+  ...
+# Subtest: pause and upgrade clearing cannot rearm a finger held through the menu
+ok 22 - pause and upgrade clearing cannot rearm a finger held through the menu
+  ---
+  duration_ms: 0.747791
+  ...
+# Subtest: surface pointercancel interrupts once and stale notifications cannot pause a new gesture
+ok 23 - surface pointercancel interrupts once and stale notifications cannot pause a new gesture
+  ---
+  duration_ms: 1.24275
+  ...
+# Subtest: surface lostpointercapture interrupts once and stale notifications cannot pause a new gesture
+ok 24 - surface lostpointercapture interrupts once and stale notifications cannot pause a new gesture
+  ---
+  duration_ms: 1.015375
+  ...
+# Subtest: boost pointercancel interrupts once and stale notifications cannot pause a new gesture
+ok 25 - boost pointercancel interrupts once and stale notifications cannot pause a new gesture
+  ---
+  duration_ms: 0.793458
+  ...
+# Subtest: boost lostpointercapture interrupts once and stale notifications cannot pause a new gesture
+ok 26 - boost lostpointercapture interrupts once and stale notifications cannot pause a new gesture
+  ---
+  duration_ms: 0.657917
+  ...
+# Subtest: failed pointer capture still observes outside release before stopped propagation
+ok 27 - failed pointer capture still observes outside release before stopped propagation
+  ---
+  duration_ms: 0.791125
+  ...
+# Subtest: resize pauses an owned gesture while idle resize is harmless; blur forgets missed releases
+ok 28 - resize pauses an owned gesture while idle resize is harmless; blur forgets missed releases
+  ---
+  duration_ms: 0.502083
+  ...
+# Subtest: keyboard controls wait for physical key release across a menu and ignore trailing pointer clicks
+ok 29 - keyboard controls wait for physical key release across a menu and ignore trailing pointer clicks
+  ---
+  duration_ms: 0.82925
+  ...
+# Subtest: click-only assistive controls toggle intent and modified activation cannot change flight
+ok 30 - click-only assistive controls toggle intent and modified activation cannot change flight
+  ---
+  duration_ms: 0.380083
+  ...
+# Subtest: visibilitychange drops logical actions and physical captures before the page can resume
+ok 31 - visibilitychange drops logical actions and physical captures before the page can resume
+  ---
+  duration_ms: 0.365916
+  ...
+# Subtest: pagehide drops logical actions and physical captures before the page can resume
+ok 32 - pagehide drops logical actions and physical captures before the page can resume
+  ---
+  duration_ms: 0.273417
+  ...
+# Subtest: shared settings restore unchanged and changes cancel current input without writing a game profile
+ok 33 - shared settings restore unchanged and changes cancel current input without writing a game profile
+  ---
+  duration_ms: 0.693042
+  ...
+# Subtest: denied storage keeps controls playable and announces a session-only settings change
+ok 34 - denied storage keeps controls playable and announces a session-only settings change
+  ---
+  duration_ms: 0.491667
+  ...
+# Subtest: touch shows controls on a hybrid device, keyboard hides them, and disposal removes listeners
+ok 35 - touch shows controls on a hybrid device, keyboard hides them, and disposal removes listeners
+  ---
+  duration_ms: 0.317333
+  ...
+# Subtest: Survivor: actual flight core accepts touch steering and exactly one Boost per fresh press
+ok 36 - Survivor: actual flight core accepts touch steering and exactly one Boost per fresh press
+  ---
+  duration_ms: 19.063042
+  ...
+# Subtest: Raid: actual flight core accepts touch steering and exactly one Boost per fresh press
+ok 37 - Raid: actual flight core accepts touch steering and exactly one Boost per fresh press
+  ---
+  duration_ms: 17.424916
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 34
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 24503.203416

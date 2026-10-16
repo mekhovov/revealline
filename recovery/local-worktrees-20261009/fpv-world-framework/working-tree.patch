@@ -1,0 +1,142 @@
+diff --git a/docs/fpv-continuous-delivery.md b/docs/fpv-continuous-delivery.md
+index b1ef40462..b3e8ead99 100644
+--- a/docs/fpv-continuous-delivery.md
++++ b/docs/fpv-continuous-delivery.md
+@@ -4270,3 +4270,137 @@ decision above. Keep unfinished catalog/world work out of ready #1063 and #1060.
+ Do not advertise the initial Reservoir checkpoint as a finished eight-course world.
+ The concise published priority review is `docs/fpv-delivery-review-2026-10-04.md`
+ on main, merged through #1062; deferred unit coverage remains D6.
++
++### 4 October — researched parallel continuation and final Reservoir candidate
++
++The owner resumed continuous implementation after review. Current execution order
++is `docs/fpv-parallel-delivery-2026-10-04.md`, published/attached as #1064 and merged
++normally at `ade4bfc2dd2934668889bf622e87a48cf1b52c03`. It prioritizes a controlled
++current-player performance baseline, complete Reservoir, bounded Library world
++discovery and the remaining Festival/Harbor/Canals worlds in parallel. The
++14-world/196-challenge/58-lesson delivered baseline and final D5 target remain
++honest; initial world scenes are not completed worlds. Unit coverage stays in D6.
++Primary-source simulator/handheld/rendering research is linked in that plan.
++
++Imported exact-pack demonstrations #1060 merged at
++`a90fc81807dd43c4d5ee873cd0028daff1bc3a6e`; multi-course editor #1063 merged at
++`0a587fb2ea2ed7dbb15f2f0b8b74cabb0fef2ae6` after integration against that parent.
++The public marker was read at a90 and a fresh public SIM tab launched Read the
++solar lanes through Continue, armed at zero throttle (Flight active/time advance)
++and paused normally. Screenshot `/tmp/fpv-public-a90-launch.png`. This establishes
++#1060 deployment plus player entry, not #1063 public deployment or new physical
++radio/mobile/sustained-performance acceptance.
++
++Reservoir accepted r7 visual/collision geometry is frozen at `f27225db0`.
++Root inspected Shore, intake gallery, spillway side/upper approach and wide
++composition, including sampled low/balanced/high presentation. Retain
++`/tmp/fpv-reservoir-r7-static-views.json` and matching intake/spillway/descent-high/
++wide-low screenshots. The bounded visual increment is accepted for qualification;
++commercial parity and broader artist/device acceptance are not claimed. Static
++clearance caught six route issues in passage05/terrace06; r8 corrects only paths,
++keeping source/prepared GLB bytes and all 48 colliders exact. Static462 checks pass.
++Final575 CPU checks pass all eight courses in both modes: ordinary-control
++completions, zero contacts/full health, intended landings, exact independent replay
++and archive reimport/replay. Pack `e76fd8aa7c2d1ae1b24daacc98a06cc8e78c137204aca68464de0415f158c0fa`,
++archive `a4390166600173c3bdbeef3bcd107680865d87418c3387d345c7eb2f8f7ac9c9`.
++Preserve route-failure and authoring-serializer failure receipts. Full admitted
++browser import/editor/16 Watch/offline qualification remains before publication.
++Art checkpoint `03ce00049c` is isolated in `/private/tmp/fpv-mountain-reservoir-20261004`.
++
++Library discovery is preserved locally at `e0fdf9e5f7` on
++`codex/fpv-optional-world-discovery`, not mixed into a ready PR. Its bounded
++immutable index/hash/download/cancellation/native-install draft exceeds current
++combined source space by1,656 bytes. Separate shell source-projection prerequisite
++uses the established lossless lexical projection on the generated shared shell,
++retaining canonical shell, AST/tokens/comments/line terminators and all limits.
++It recovers3,562 bytes; projected discovery reserve1,906 bytes. Frozen admission
++`248b8d9af1b082c283a2cbd9501ea8d906f83374` passes full validation, all three optional
++policies, two identical builds and committed-input/ZIP verification. Native shell
++smoke and focused publication remain. D1 owns this lane and #1063 evidence.
++
++Current-player profiling is an explicitly audited a90 source overlay on the d41
++admitted player, not a relabelled new admission. Device Apple M4 Pro48GiB,
++macOS26.7.1, Chromium154; viewport1280x654/DPR2. Preserve raw r1/r2/r3 receipts in
++`/tmp/fpv-current-performance-a90-r1.json`, `...a90-r2.json`, and
++`/tmp/fpv-current-performance-977-r3.json`. R1 School draw attribution was invalid
++and operator idle was included; r2 corrects those observer limitations. R2/r3 each
++pass143 checks,18 correct-course windows and matching state/resources. Candidate
++`977d7b8db` only gates scene drawing on existing readiness; input, clocks and pause
++lifecycle remain. Pending-load/prepare draws26/28 become0/0, but timing outcomes
++are mixed: initial load and maximum draw submission improve while some quality
++switch/RAF observations worsen. This is not yet a general latency/FPS improvement.
++Bounded repeated comparison and first-ready/recovery/error functional verification
++remain before admission or PR. Creator owner retains independent candidate work.
++
++Disk pressure requires serial heavy admissions/proof work and timing-sensitive
++browser runs. Obsolete generated FPV previews were losslessly archived, every
++member SHA verified before removing expanded copies; source/worktrees/handoffs
++and failure receipts remain. Five root-dist previews have manifests/ZIPs under
++`/private/tmp/*-preserved-20261004`; twelve older generated players are under
++`/private/tmp/fpv-superseded-generated-receipts/`. Current artifacts remain intact.
++Do not bulk-delete unknown previews to make room or change capacity limits.
++
++### 4 October — Reservoir publication and integrated continuation
++
++The public marker now identifies `ade4bfc2dd2934668889bf622e87a48cf1b52c03`.
++Root reloaded a fresh public SIM, continued into a rendered flight, armed at zero
++throttle, observed active time advance and paused normally. Evidence:
++`/tmp/fpv-public-ade4-launch.json` and `...-flight.png`. This verifies deployment
++and entry for #1063 as well as #1060; editor qualification remains its separate
++bounded evidence. No physical-device or sustained-performance claim follows.
++
++Reservoir is now ready/attached **#1066**, exact head
++`34baeb4e2447993996ee65c95b15019714edf077`. Root's admitted 102-file player
++qualification passes304 assertions and all16 Watch replays:
++`/tmp/fpv-reservoir-full8-package-r8.json`. Its native Library imported the exact
++pack and examples, prepared offline, then reopened after the local server was
++stopped and connection refusal confirmed. Offline Dry spillway flight rendered
++and armed; course08 Acro edit/Undo/Redo/revert persisted correctly. Evidence:
++`/tmp/fpv-reservoir-r8-offline-native.json` and matching screenshots. These checks
++do not constitute a new interrupted-install/rollback or hardware qualification.
++All immutable published pack/ZIP/proof URLs return exact bytes. Merge, production
++Library registration and public entry remain pending. Keep the ready PR frozen.
++
++Festival continues independently at `codex/fpv-festival-grounds`, initial scene
++`4ea2f570c56c24840f5105e2606a9e9e9703df9d`, from current main `feeaf4d`.
++The original event grounds contain a stage, closed market kiosks, a clock tower
++and open lawn; one orientation route is authored. Static123 checks, 8,340 triangles,
++32 colliders and zero glTF errors are initial-scene evidence, not a finished world.
++Preview `http://127.0.0.1:8912/` awaits actual art review before seven further
++courses and all16 final demonstrations. No runtime/physics changes are needed.
++
++Shell source capacity repair **#1065** passes all three admissions on frozen
++`248b8d9af`, plus native Worlds and Academy menu/start/arm/pause/resume checks
++(`/tmp/fpv-generated-shell-{worlds,academy}-248-smoke.json`). Its ordinary
++server-side update against unrelated main changes produced `6a677397b`;
++all95 original input Git blobs still match the qualified head. Fresh protected
++CI remains required; do not fight controller-managed auto-merge state.
++
++Library discovery remains isolated on `codex/fpv-optional-world-discovery`.
++Initial source fixture passes189; final response-body cancellation repair
++`74bd1b1a53325be1a7661bc876df0890b4153a18` passes192 in
++`/tmp/fpv-world-library-source-r2.json`, using real pinned first-party HTTPS for
++success and explicit named fault injections for failures. Production index stays
++empty until eligible finished content is registered. Native visual review found
++unlabelled count/raw byte metadata needing small presentation correction before
++admission. Separate existing shared-menu issues were reproduced: hidden language
++selection, sticky navigation overlapping scrolled content, and crowded 390px
++mission footer labels. Retain these for the player-integration lane. Imported
++course cards also still hardcode activity/difficulty/duration; add a bounded
++optional metadata contract separately, preserving old-pack defaults and identities.
++
++Rendering readiness candidate only skips scene draws while existing readiness is
++false. Corrected native loss/restore/retry/recovery fixture passes141; clean warm
++ABBA comparison `/tmp/fpv-warm-quality-abba-r2.json` passes587 assertions across96
++observations and48 equal logical state/resource comparisons. Earlier ABBA r1 was
++contaminated by Git/disk work: retain its functional evidence but exclude all its
++timings. Clean r2 outcomes remain mixed: five of six sampled course/preset medians
++improve, Woodland-low regresses. Do not claim universal latency/FPS gains. Frozen
++`53d3364fe29ced8a4ee22a4a32a96662877d336b` passes full validation and all three
++admissions/two identical builds; actual admitted readiness verification is next.
++Known pre-arm appearance-focus diagnostic still fails on the unchanged baseline.
++
++Heavy admissions and timing observations remain serialized for local disk pressure.
++Additional obsolete generated receipts were losslessly archived with every-file
++SHA verification under `/private/tmp/fpv-superseded-generated-receipts/`; source,
++worktrees, handoffs and failures remain preserved. No unknown Git pack was removed.

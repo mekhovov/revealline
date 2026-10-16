@@ -1,0 +1,23 @@
+{
+  "schema": "OverflightNativeRiyStudioReviewV1",
+  "sourceRevision": "821df0aed48ca3491b97c9d1c2d9a09e728e3854",
+  "runtimeFix": "524496c756ff93c075a816290f37738c9c61a059",
+  "url": "http://127.0.0.1:8911/game/studio/overflight.html?operation=riy&lang=en",
+  "method": "Native Studio loaded through CUA; read the named formation group and activated Validate. No private application or browser-storage access.",
+  "observed": {
+    "formationControls": 27,
+    "sections": [
+      "Introduction \u00b7 rear formation",
+      "Introduction \u00b7 front formation",
+      "Sweeper \u00b7 group impact",
+      "Breaker \u00b7 focused impact"
+    ],
+    "modernFields": [
+      "Maximum focus approach (seconds)",
+      "Follow firing arc (degrees)",
+      "Attack range"
+    ],
+    "status": "Validated \u00b7 20 encounters \u00b7 28461a2416e2f430"
+  },
+  "boundary": "UI visibility and validation only; no additional edit/export/import cycle claimed."
+}

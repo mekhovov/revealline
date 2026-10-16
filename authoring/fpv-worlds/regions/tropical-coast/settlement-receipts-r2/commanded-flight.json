@@ -1,0 +1,1669 @@
+{
+  "passed": true,
+  "sourcePins": {
+    "terrain": "3946fc2ffed922dadc171e609753c63590ef3daade337c04395b6356612448a5",
+    "scenery": "ba0339e6e3f8285169a4f10fe1dc456de2fab36632496412b9a7104a6e1ae4c9"
+  },
+  "records": [
+    {
+      "mode": "self-level",
+      "route": "shoreline-crossings",
+      "ticks": 16709,
+      "contacts": 0,
+      "recentres": 3,
+      "commandSha256": "b28676b0048a87f9022c1385994fd33487ca8d7ccdfd86fca7231513fc808e84",
+      "segments": [
+        {
+          "from": [
+            40,
+            36,
+            232
+          ],
+          "to": [
+            220,
+            36,
+            232
+          ],
+          "ticks": 4377,
+          "position": {
+            "x": 220518,
+            "y": 35916,
+            "z": 232000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000318
+        },
+        {
+          "from": [
+            220,
+            36,
+            232
+          ],
+          "to": [
+            400,
+            36,
+            232
+          ],
+          "ticks": 4349,
+          "position": {
+            "x": 400523,
+            "y": 35908,
+            "z": 232000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999875
+        },
+        {
+          "from": [
+            400,
+            36,
+            232
+          ],
+          "to": [
+            580,
+            36,
+            232
+          ],
+          "ticks": 4349,
+          "position": {
+            "x": 580524,
+            "y": 35908,
+            "z": 232000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999875
+        },
+        {
+          "from": [
+            580,
+            36,
+            232
+          ],
+          "to": [
+            730,
+            36,
+            232
+          ],
+          "ticks": 3634,
+          "position": {
+            "x": 730512,
+            "y": 35908,
+            "z": 232000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999875
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "covered-harbour-bay",
+      "ticks": 806,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "cda49822d3bb69f79d93c63f50d2181283557762b24903a433cc093ceca5aeb1",
+      "segments": [
+        {
+          "from": [
+            81,
+            4.4,
+            150
+          ],
+          "to": [
+            111,
+            4.4,
+            150
+          ],
+          "ticks": 806,
+          "position": {
+            "x": 111523,
+            "y": 4316,
+            "z": 150000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000052
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "under-harbour-pier",
+      "ticks": 806,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "104d82a69fabb333317cdfed1a7ccda67ac48e0b68da64596c761d06df32cbad",
+      "segments": [
+        {
+          "from": [
+            81,
+            0.7,
+            150
+          ],
+          "to": [
+            111,
+            0.7,
+            150
+          ],
+          "ticks": 806,
+          "position": {
+            "x": 111523,
+            "y": 616,
+            "z": 150000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999996
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "harbour-headland-contour",
+      "ticks": 1732,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "04b3c75baddc381ca6b4dec9b3ef23c6ed959bd5bb0881e897815c1cc90910dc",
+      "segments": [
+        {
+          "from": [
+            150,
+            20,
+            203
+          ],
+          "to": [
+            183,
+            24,
+            214
+          ],
+          "ticks": 903,
+          "position": {
+            "x": 183507,
+            "y": 23923,
+            "z": 214164
+          },
+          "maxCrossTrackM": 0.07368106948193352,
+          "maxHeightErrorM": 0.12838181818182193
+        },
+        {
+          "from": [
+            183,
+            24,
+            214
+          ],
+          "to": [
+            215,
+            20,
+            210
+          ],
+          "ticks": 829,
+          "position": {
+            "x": 215513,
+            "y": 19910,
+            "z": 209910
+          },
+          "maxCrossTrackM": 0.36218142500047656,
+          "maxHeightErrorM": 0.2798000000000016
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "lagoon-pier-approach",
+      "ticks": 3331,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "3298b236e1dcc1a56c63cf18bf41bd7197134dc06bf5cd5e94beb8040df06c3c",
+      "segments": [
+        {
+          "from": [
+            325,
+            10,
+            145
+          ],
+          "to": [
+            375,
+            10,
+            145
+          ],
+          "ticks": 1282,
+          "position": {
+            "x": 375522,
+            "y": 9916,
+            "z": 145000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            375,
+            10,
+            145
+          ],
+          "to": [
+            405,
+            10,
+            155
+          ],
+          "ticks": 805,
+          "position": {
+            "x": 405509,
+            "y": 9907,
+            "z": 155207
+          },
+          "maxCrossTrackM": 0.26373395685803486,
+          "maxHeightErrorM": 0.09299999999999997
+        },
+        {
+          "from": [
+            405,
+            10,
+            155
+          ],
+          "to": [
+            450,
+            10,
+            175
+          ],
+          "ticks": 1244,
+          "position": {
+            "x": 450455,
+            "y": 9907,
+            "z": 175235
+          },
+          "maxCrossTrackM": 0.08051695089510819,
+          "maxHeightErrorM": 0.09299999999999997
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "reef-bluff-traverse",
+      "ticks": 4131,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "9dee73fafbe6da8e743373ef8e473a918514e317c27890a39cb293e51b347548",
+      "segments": [
+        {
+          "from": [
+            585,
+            34,
+            220
+          ],
+          "to": [
+            640,
+            40,
+            240
+          ],
+          "ticks": 1470,
+          "position": {
+            "x": 640498,
+            "y": 39912,
+            "z": 240192
+          },
+          "maxCrossTrackM": 0.07919895487035523,
+          "maxHeightErrorM": 0.09121897810219082
+        },
+        {
+          "from": [
+            640,
+            40,
+            240
+          ],
+          "to": [
+            700,
+            40,
+            240
+          ],
+          "ticks": 1493,
+          "position": {
+            "x": 700515,
+            "y": 39906,
+            "z": 239981
+          },
+          "maxCrossTrackM": 0.30299999999999727,
+          "maxHeightErrorM": 0.0940000000000012
+        },
+        {
+          "from": [
+            700,
+            40,
+            240
+          ],
+          "to": [
+            735,
+            32,
+            210
+          ],
+          "ticks": 1168,
+          "position": {
+            "x": 735363,
+            "y": 31906,
+            "z": 209653
+          },
+          "maxCrossTrackM": 0.57334720001473,
+          "maxHeightErrorM": 0.3594423529411799
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "palm-valley-slalom",
+      "ticks": 4682,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "55b41ee71225a8b71b0537f0fb1b5507db8fdea666751a19d05ae82f696a87c5",
+      "segments": [
+        {
+          "from": [
+            55,
+            12,
+            330
+          ],
+          "to": [
+            70,
+            12,
+            321
+          ],
+          "ticks": 507,
+          "position": {
+            "x": 70435,
+            "y": 11915,
+            "z": 320703
+          },
+          "maxCrossTrackM": 0.08403430671983089,
+          "maxHeightErrorM": 0.08500000000000085
+        },
+        {
+          "from": [
+            70,
+            12,
+            321
+          ],
+          "to": [
+            100,
+            12,
+            355
+          ],
+          "ticks": 1163,
+          "position": {
+            "x": 100327,
+            "y": 11887,
+            "z": 355408
+          },
+          "maxCrossTrackM": 0.830864451853655,
+          "maxHeightErrorM": 0.11299999999999955
+        },
+        {
+          "from": [
+            100,
+            12,
+            355
+          ],
+          "to": [
+            130,
+            12,
+            325
+          ],
+          "ticks": 1098,
+          "position": {
+            "x": 130388,
+            "y": 11887,
+            "z": 324621
+          },
+          "maxCrossTrackM": 0.8273149339882718,
+          "maxHeightErrorM": 0.11299999999999955
+        },
+        {
+          "from": [
+            130,
+            12,
+            325
+          ],
+          "to": [
+            178,
+            12,
+            385
+          ],
+          "ticks": 1914,
+          "position": {
+            "x": 178326,
+            "y": 11887,
+            "z": 385425
+          },
+          "maxCrossTrackM": 0.8523963923880383,
+          "maxHeightErrorM": 0.11299999999999955
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "dune-pass",
+      "ticks": 3726,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "51bcf7f9f456e9d761438d032ff166c0d72b6e9c1c9ecddb12bc78abe8b2a9bd",
+      "segments": [
+        {
+          "from": [
+            130,
+            26,
+            530
+          ],
+          "to": [
+            130,
+            26,
+            600
+          ],
+          "ticks": 1758,
+          "position": {
+            "x": 130000,
+            "y": 25916,
+            "z": 600517
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            130,
+            26,
+            600
+          ],
+          "to": [
+            130,
+            26,
+            680
+          ],
+          "ticks": 1968,
+          "position": {
+            "x": 130000,
+            "y": 25908,
+            "z": 680521
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999875
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "hillside-village-street",
+      "ticks": 2656,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "174eeb34de17e1ee3b299bae1f57c5367b85b0c61876f8d70bfe194ed3c8049d",
+      "segments": [
+        {
+          "from": [
+            380,
+            20,
+            315
+          ],
+          "to": [
+            380,
+            20,
+            365
+          ],
+          "ticks": 1282,
+          "position": {
+            "x": 380000,
+            "y": 19916,
+            "z": 365522
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            380,
+            20,
+            365
+          ],
+          "to": [
+            385,
+            20,
+            420
+          ],
+          "ticks": 1374,
+          "position": {
+            "x": 385072,
+            "y": 19908,
+            "z": 420529
+          },
+          "maxCrossTrackM": 0.07704591988218833,
+          "maxHeightErrorM": 0.09199999999999875
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "cargo-square-braking",
+      "ticks": 2129,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "f7b6e7a98f557d6f6aace85a1c69ccafef67985ce40f5711fef5e3e8ac79a1f9",
+      "segments": [
+        {
+          "from": [
+            349,
+            16,
+            665
+          ],
+          "to": [
+            373,
+            16,
+            672
+          ],
+          "ticks": 681,
+          "position": {
+            "x": 373516,
+            "y": 15916,
+            "z": 672151
+          },
+          "maxCrossTrackM": 0.02927999999995791,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            373,
+            16,
+            672
+          ],
+          "to": [
+            402,
+            16,
+            672
+          ],
+          "ticks": 754,
+          "position": {
+            "x": 402516,
+            "y": 15908,
+            "z": 672033
+          },
+          "maxCrossTrackM": 0.25099999999997635,
+          "maxHeightErrorM": 0.09200000000000053
+        },
+        {
+          "from": [
+            402,
+            16,
+            672
+          ],
+          "to": [
+            416,
+            16,
+            650
+          ],
+          "ticks": 694,
+          "position": {
+            "x": 416249,
+            "y": 15896,
+            "z": 649543
+          },
+          "maxCrossTrackM": 0.7082921672005694,
+          "maxHeightErrorM": 0.1039999999999992
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "bamboo-grove-corridor",
+      "ticks": 3025,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "34e9515fa4b2f7dd040de7d995ebf8c19ed47687596106d2fb1e1179fea35826",
+      "segments": [
+        {
+          "from": [
+            580,
+            33,
+            350
+          ],
+          "to": [
+            610,
+            33,
+            340
+          ],
+          "ticks": 830,
+          "position": {
+            "x": 610502,
+            "y": 32916,
+            "z": 339795
+          },
+          "maxCrossTrackM": 0.07368106948190654,
+          "maxHeightErrorM": 0.08400000000000318
+        },
+        {
+          "from": [
+            610,
+            33,
+            340
+          ],
+          "to": [
+            640,
+            33,
+            360
+          ],
+          "ticks": 933,
+          "position": {
+            "x": 640406,
+            "y": 32900,
+            "z": 360316
+          },
+          "maxCrossTrackM": 0.6806171407683426,
+          "maxHeightErrorM": 0.10000000000000142
+        },
+        {
+          "from": [
+            640,
+            33,
+            360
+          ],
+          "to": [
+            690,
+            33,
+            355
+          ],
+          "ticks": 1262,
+          "position": {
+            "x": 690520,
+            "y": 32900,
+            "z": 354943
+          },
+          "maxCrossTrackM": 0.5385141273416609,
+          "maxHeightErrorM": 0.10000000000000142
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "ridge-overlook",
+      "ticks": 4282,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "5bc5c8f2d0df19dad6ea5e318f9d9cf3401fdae57b41cc5d41de24355966a41d",
+      "segments": [
+        {
+          "from": [
+            590,
+            44,
+            580
+          ],
+          "to": [
+            620,
+            50,
+            615
+          ],
+          "ticks": 1187,
+          "position": {
+            "x": 620359,
+            "y": 49918,
+            "z": 615404
+          },
+          "maxCrossTrackM": 0.0738648208873061,
+          "maxHeightErrorM": 0.14045411764705307
+        },
+        {
+          "from": [
+            620,
+            50,
+            615
+          ],
+          "to": [
+            660,
+            53,
+            675
+          ],
+          "ticks": 1777,
+          "position": {
+            "x": 660298,
+            "y": 52926,
+            "z": 675420
+          },
+          "maxCrossTrackM": 0.1131588400300141,
+          "maxHeightErrorM": 0.11038846153846293
+        },
+        {
+          "from": [
+            660,
+            53,
+            675
+          ],
+          "to": [
+            710,
+            44,
+            690
+          ],
+          "ticks": 1318,
+          "position": {
+            "x": 710484,
+            "y": 43911,
+            "z": 690156
+          },
+          "maxCrossTrackM": 0.5512290271447831,
+          "maxHeightErrorM": 0.35351192660550623
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "shoreline-crossings",
+      "ticks": 16709,
+      "contacts": 0,
+      "recentres": 3,
+      "commandSha256": "34e232461d422a0f6b4b505e111ae8fe9c889fbe93734c43a154f12b18020d61",
+      "segments": [
+        {
+          "from": [
+            40,
+            36,
+            232
+          ],
+          "to": [
+            220,
+            36,
+            232
+          ],
+          "ticks": 4377,
+          "position": {
+            "x": 220518,
+            "y": 35916,
+            "z": 232000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000318
+        },
+        {
+          "from": [
+            220,
+            36,
+            232
+          ],
+          "to": [
+            400,
+            36,
+            232
+          ],
+          "ticks": 4349,
+          "position": {
+            "x": 400525,
+            "y": 35908,
+            "z": 232000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999875
+        },
+        {
+          "from": [
+            400,
+            36,
+            232
+          ],
+          "to": [
+            580,
+            36,
+            232
+          ],
+          "ticks": 4349,
+          "position": {
+            "x": 580527,
+            "y": 35908,
+            "z": 232000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999875
+        },
+        {
+          "from": [
+            580,
+            36,
+            232
+          ],
+          "to": [
+            730,
+            36,
+            232
+          ],
+          "ticks": 3634,
+          "position": {
+            "x": 730512,
+            "y": 35908,
+            "z": 232000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999875
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "covered-harbour-bay",
+      "ticks": 806,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "96336acc49dbd5670012514d3bd75c284cf449a5fcae3a3fb25e670dc9bddcb9",
+      "segments": [
+        {
+          "from": [
+            81,
+            4.4,
+            150
+          ],
+          "to": [
+            111,
+            4.4,
+            150
+          ],
+          "ticks": 806,
+          "position": {
+            "x": 111523,
+            "y": 4316,
+            "z": 150000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000052
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "under-harbour-pier",
+      "ticks": 806,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "f606ef0374b90695f2fcc1d7f4bc1242b3057a1cf37c5a7939901bdc0fbb2e48",
+      "segments": [
+        {
+          "from": [
+            81,
+            0.7,
+            150
+          ],
+          "to": [
+            111,
+            0.7,
+            150
+          ],
+          "ticks": 806,
+          "position": {
+            "x": 111523,
+            "y": 616,
+            "z": 150000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999996
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "harbour-headland-contour",
+      "ticks": 1732,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "bed22d95cc85cbd933297985f3aa417de097e28daefe8d383f07a0ba3fbbf4a8",
+      "segments": [
+        {
+          "from": [
+            150,
+            20,
+            203
+          ],
+          "to": [
+            183,
+            24,
+            214
+          ],
+          "ticks": 903,
+          "position": {
+            "x": 183514,
+            "y": 23918,
+            "z": 214206
+          },
+          "maxCrossTrackM": 0.08633018012259552,
+          "maxHeightErrorM": 0.1291272727272741
+        },
+        {
+          "from": [
+            183,
+            24,
+            214
+          ],
+          "to": [
+            215,
+            20,
+            210
+          ],
+          "ticks": 829,
+          "position": {
+            "x": 215511,
+            "y": 19909,
+            "z": 209906
+          },
+          "maxCrossTrackM": 0.38512785089949103,
+          "maxHeightErrorM": 0.2814461538461508
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "lagoon-pier-approach",
+      "ticks": 3331,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "04e6cc861cac8369a014e2da8aa07919e31fa83111a706249e8d2dba312cbe3d",
+      "segments": [
+        {
+          "from": [
+            325,
+            10,
+            145
+          ],
+          "to": [
+            375,
+            10,
+            145
+          ],
+          "ticks": 1282,
+          "position": {
+            "x": 375522,
+            "y": 9916,
+            "z": 145000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            375,
+            10,
+            145
+          ],
+          "to": [
+            405,
+            10,
+            155
+          ],
+          "ticks": 804,
+          "position": {
+            "x": 405511,
+            "y": 9907,
+            "z": 155203
+          },
+          "maxCrossTrackM": 0.26373395685803486,
+          "maxHeightErrorM": 0.09299999999999997
+        },
+        {
+          "from": [
+            405,
+            10,
+            155
+          ],
+          "to": [
+            450,
+            10,
+            175
+          ],
+          "ticks": 1245,
+          "position": {
+            "x": 450468,
+            "y": 9907,
+            "z": 175237
+          },
+          "maxCrossTrackM": 0.08833511636663109,
+          "maxHeightErrorM": 0.09299999999999997
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "reef-bluff-traverse",
+      "ticks": 4130,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "3ae2232b6ab3edcf4739d313918078bc4a5bea9d8ecce2151ee4d38d4c529647",
+      "segments": [
+        {
+          "from": [
+            585,
+            34,
+            220
+          ],
+          "to": [
+            640,
+            40,
+            240
+          ],
+          "ticks": 1470,
+          "position": {
+            "x": 640496,
+            "y": 39914,
+            "z": 240149
+          },
+          "maxCrossTrackM": 0.09466282847503592,
+          "maxHeightErrorM": 0.09121897810219082
+        },
+        {
+          "from": [
+            640,
+            40,
+            240
+          ],
+          "to": [
+            700,
+            40,
+            240
+          ],
+          "ticks": 1493,
+          "position": {
+            "x": 700518,
+            "y": 39909,
+            "z": 239952
+          },
+          "maxCrossTrackM": 0.2880000000000109,
+          "maxHeightErrorM": 0.09100000000000108
+        },
+        {
+          "from": [
+            700,
+            40,
+            240
+          ],
+          "to": [
+            735,
+            32,
+            210
+          ],
+          "ticks": 1167,
+          "position": {
+            "x": 735384,
+            "y": 31909,
+            "z": 209676
+          },
+          "maxCrossTrackM": 0.5236701251742241,
+          "maxHeightErrorM": 0.35621882352941014
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "palm-valley-slalom",
+      "ticks": 4673,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "a04e09ee314d691f34df9dcab30d01c995c5cbb07c922439bf1d560df9fc25e1",
+      "segments": [
+        {
+          "from": [
+            55,
+            12,
+            330
+          ],
+          "to": [
+            70,
+            12,
+            321
+          ],
+          "ticks": 503,
+          "position": {
+            "x": 70451,
+            "y": 11915,
+            "z": 320722
+          },
+          "maxCrossTrackM": 0.021780320313096607,
+          "maxHeightErrorM": 0.08500000000000085
+        },
+        {
+          "from": [
+            70,
+            12,
+            321
+          ],
+          "to": [
+            100,
+            12,
+            355
+          ],
+          "ticks": 1162,
+          "position": {
+            "x": 100366,
+            "y": 11886,
+            "z": 355377
+          },
+          "maxCrossTrackM": 0.8397301817906128,
+          "maxHeightErrorM": 0.11400000000000077
+        },
+        {
+          "from": [
+            100,
+            12,
+            355
+          ],
+          "to": [
+            130,
+            12,
+            325
+          ],
+          "ticks": 1098,
+          "position": {
+            "x": 130386,
+            "y": 11886,
+            "z": 324626
+          },
+          "maxCrossTrackM": 0.8365073221437006,
+          "maxHeightErrorM": 0.11400000000000077
+        },
+        {
+          "from": [
+            130,
+            12,
+            325
+          ],
+          "to": [
+            178,
+            12,
+            385
+          ],
+          "ticks": 1910,
+          "position": {
+            "x": 178347,
+            "y": 11886,
+            "z": 385383
+          },
+          "maxCrossTrackM": 0.8534896087212416,
+          "maxHeightErrorM": 0.11400000000000077
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "dune-pass",
+      "ticks": 3726,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "bb9fe8ea1f62965252a778cf7d9d95f54c7dae9427c83b479bf65b8b16cbd4d8",
+      "segments": [
+        {
+          "from": [
+            130,
+            26,
+            530
+          ],
+          "to": [
+            130,
+            26,
+            600
+          ],
+          "ticks": 1758,
+          "position": {
+            "x": 130000,
+            "y": 25916,
+            "z": 600518
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            130,
+            26,
+            600
+          ],
+          "to": [
+            130,
+            26,
+            680
+          ],
+          "ticks": 1968,
+          "position": {
+            "x": 130000,
+            "y": 25908,
+            "z": 680524
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999875
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "hillside-village-street",
+      "ticks": 2656,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "bc6f58f45c555216c5c3bf36d98501141ac6b9138bb1ad75222e1b3d8dbe858c",
+      "segments": [
+        {
+          "from": [
+            380,
+            20,
+            315
+          ],
+          "to": [
+            380,
+            20,
+            365
+          ],
+          "ticks": 1282,
+          "position": {
+            "x": 380000,
+            "y": 19916,
+            "z": 365522
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            380,
+            20,
+            365
+          ],
+          "to": [
+            385,
+            20,
+            420
+          ],
+          "ticks": 1374,
+          "position": {
+            "x": 385083,
+            "y": 19908,
+            "z": 420531
+          },
+          "maxCrossTrackM": 0.07740806286634469,
+          "maxHeightErrorM": 0.09199999999999875
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "cargo-square-braking",
+      "ticks": 2129,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "e035c2f8d8d5b30374a75e3b698913edaab7cb8358ec1a957c509fb6893b8e40",
+      "segments": [
+        {
+          "from": [
+            349,
+            16,
+            665
+          ],
+          "to": [
+            373,
+            16,
+            672
+          ],
+          "ticks": 681,
+          "position": {
+            "x": 373520,
+            "y": 15916,
+            "z": 672151
+          },
+          "maxCrossTrackM": 0.026279999999944723,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            373,
+            16,
+            672
+          ],
+          "to": [
+            402,
+            16,
+            672
+          ],
+          "ticks": 754,
+          "position": {
+            "x": 402512,
+            "y": 15908,
+            "z": 672045
+          },
+          "maxCrossTrackM": 0.25099999999997635,
+          "maxHeightErrorM": 0.09200000000000053
+        },
+        {
+          "from": [
+            402,
+            16,
+            672
+          ],
+          "to": [
+            416,
+            16,
+            650
+          ],
+          "ticks": 694,
+          "position": {
+            "x": 416254,
+            "y": 15894,
+            "z": 649537
+          },
+          "maxCrossTrackM": 0.7247819144607729,
+          "maxHeightErrorM": 0.10599999999999987
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "bamboo-grove-corridor",
+      "ticks": 3025,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "7168e1901b6d84f945cf6175e988ab77bcda30f0f60853bfa89b55c273d313f2",
+      "segments": [
+        {
+          "from": [
+            580,
+            33,
+            350
+          ],
+          "to": [
+            610,
+            33,
+            340
+          ],
+          "ticks": 830,
+          "position": {
+            "x": 610512,
+            "y": 32916,
+            "z": 339801
+          },
+          "maxCrossTrackM": 0.08569772459054985,
+          "maxHeightErrorM": 0.08400000000000318
+        },
+        {
+          "from": [
+            610,
+            33,
+            340
+          ],
+          "to": [
+            640,
+            33,
+            360
+          ],
+          "ticks": 933,
+          "position": {
+            "x": 640412,
+            "y": 32900,
+            "z": 360316
+          },
+          "maxCrossTrackM": 0.6856094425343934,
+          "maxHeightErrorM": 0.10000000000000142
+        },
+        {
+          "from": [
+            640,
+            33,
+            360
+          ],
+          "to": [
+            690,
+            33,
+            355
+          ],
+          "ticks": 1262,
+          "position": {
+            "x": 690517,
+            "y": 32900,
+            "z": 354917
+          },
+          "maxCrossTrackM": 0.5549322409801334,
+          "maxHeightErrorM": 0.10000000000000142
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "ridge-overlook",
+      "ticks": 4282,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "92c6ca5e14383a535699fd11bd03e23e3cf43c0152df76c8ad23d14a38aaa94c",
+      "segments": [
+        {
+          "from": [
+            590,
+            44,
+            580
+          ],
+          "to": [
+            620,
+            50,
+            615
+          ],
+          "ticks": 1186,
+          "position": {
+            "x": 620359,
+            "y": 49920,
+            "z": 615403
+          },
+          "maxCrossTrackM": 0.08698911358522175,
+          "maxHeightErrorM": 0.14045411764705307
+        },
+        {
+          "from": [
+            620,
+            50,
+            615
+          ],
+          "to": [
+            660,
+            53,
+            675
+          ],
+          "ticks": 1778,
+          "position": {
+            "x": 660314,
+            "y": 52925,
+            "z": 675430
+          },
+          "maxCrossTrackM": 0.11094003924510258,
+          "maxHeightErrorM": 0.1084576923076952
+        },
+        {
+          "from": [
+            660,
+            53,
+            675
+          ],
+          "to": [
+            710,
+            44,
+            690
+          ],
+          "ticks": 1318,
+          "position": {
+            "x": 710491,
+            "y": 43912,
+            "z": 690143
+          },
+          "maxCrossTrackM": 0.5379152417801427,
+          "maxHeightErrorM": 0.3520422018348697
+        }
+      ]
+    }
+  ],
+  "authoredStarts": [
+    {
+      "mode": "self-level",
+      "id": "covered-harbour",
+      "position": {
+        "x": 96000,
+        "y": 13000,
+        "z": 150000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "lagoon-piers",
+      "position": {
+        "x": 350000,
+        "y": 14500,
+        "z": 145000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "reef-rocks",
+      "position": {
+        "x": 650000,
+        "y": 27286,
+        "z": 182000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "palm-valley",
+      "position": {
+        "x": 100000,
+        "y": 21000,
+        "z": 350000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "hillside-huts",
+      "position": {
+        "x": 380000,
+        "y": 30000,
+        "z": 365000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "bamboo-grove",
+      "position": {
+        "x": 630000,
+        "y": 40000,
+        "z": 355000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "covered-harbour",
+      "position": {
+        "x": 96000,
+        "y": 13000,
+        "z": 150000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "lagoon-piers",
+      "position": {
+        "x": 350000,
+        "y": 14500,
+        "z": 145000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "reef-rocks",
+      "position": {
+        "x": 650000,
+        "y": 27286,
+        "z": 182000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "palm-valley",
+      "position": {
+        "x": 100000,
+        "y": 21000,
+        "z": 350000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "hillside-huts",
+      "position": {
+        "x": 380000,
+        "y": 30000,
+        "z": 365000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "bamboo-grove",
+      "position": {
+        "x": 630000,
+        "y": 40000,
+        "z": 355000
+      }
+    }
+  ],
+  "contacts": [
+    {
+      "mode": "self-level",
+      "scenario": "palm-trunk",
+      "ticks": 154,
+      "position": {
+        "x": 70049,
+        "y": 7828,
+        "z": 330508
+      },
+      "contacts": 1
+    },
+    {
+      "mode": "self-level",
+      "scenario": "cargo-box",
+      "ticks": 119,
+      "position": {
+        "x": 358683,
+        "y": 14524,
+        "z": 649996
+      },
+      "contacts": 1
+    },
+    {
+      "mode": "self-level",
+      "scenario": "covered-pier-roof",
+      "ticks": 300,
+      "position": {
+        "x": 91154,
+        "y": 6359,
+        "z": 149999
+      },
+      "contacts": 254
+    },
+    {
+      "mode": "acro",
+      "scenario": "palm-trunk",
+      "ticks": 154,
+      "position": {
+        "x": 70049,
+        "y": 7828,
+        "z": 330507
+      },
+      "contacts": 1
+    },
+    {
+      "mode": "acro",
+      "scenario": "cargo-box",
+      "ticks": 119,
+      "position": {
+        "x": 358682,
+        "y": 14523,
+        "z": 649996
+      },
+      "contacts": 1
+    },
+    {
+      "mode": "acro",
+      "scenario": "covered-pier-roof",
+      "ticks": 300,
+      "position": {
+        "x": 91154,
+        "y": 6359,
+        "z": 149999
+      },
+      "contacts": 254
+    }
+  ],
+  "playerReady": false,
+  "claim": "Production regional-session controlled command evidence; no native player/device FPS or default admission claim."
+}

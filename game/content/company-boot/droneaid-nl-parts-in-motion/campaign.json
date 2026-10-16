@@ -1,0 +1,479 @@
+{
+  "id": "droneaid-nl-parts-in-motion",
+  "levels": [
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 8, "y": 7 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 6, "x": 9, "y": 7 },
+        { "h": 5, "w": 10, "x": 30, "y": 13 },
+        { "h": 3, "w": 6, "x": 55, "y": 25 }
+      ],
+      "goal": { "coverage": 0.554 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 28.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-01",
+      "name": "Six Little Stations",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 6.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 28.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 9 },
+        { "h": 10, "w": 2, "x": 49, "y": 17 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 9, "y": 7 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 6, "x": 10, "y": 7 },
+        { "h": 5, "w": 10, "x": 29, "y": 14 },
+        { "h": 3, "w": 6, "x": 54, "y": 25 }
+      ],
+      "goal": { "coverage": 0.6040000000000001 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 29.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-02",
+      "name": "Frame Courtyard",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 6.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 29.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 10 },
+        { "h": 10, "w": 2, "x": 49, "y": 16 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 10, "y": 7 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 6, "x": 11, "y": 7 },
+        { "h": 5, "w": 10, "x": 30, "y": 13 },
+        { "h": 3, "w": 6, "x": 53, "y": 25 }
+      ],
+      "goal": { "coverage": 0.6340000000000001 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 30.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-03",
+      "name": "Eyes on the Shelf",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 6.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 30.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 9 },
+        { "h": 10, "w": 2, "x": 49, "y": 17 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 7.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 11, "y": 7 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 6, "x": 12, "y": 7 },
+        { "h": 5, "w": 10, "x": 29, "y": 14 },
+        { "h": 3, "w": 6, "x": 52, "y": 25 }
+      ],
+      "goal": { "coverage": 0.654 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 31.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-04",
+      "name": "Power Corner",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 11.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 31.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 10 },
+        { "h": 10, "w": 2, "x": 49, "y": 16 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 13.5, "y": 7.5 }],
+        "terrain": [{ "h": 2, "id": "slow-1", "kind": "slow", "w": 19, "x": 26, "y": 25 }],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 12, "y": 7 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 6, "x": 13, "y": 7 },
+        { "h": 5, "w": 10, "x": 30, "y": 13 },
+        { "h": 3, "w": 6, "x": 51, "y": 25 }
+      ],
+      "goal": { "coverage": 0.674 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 32.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-05",
+      "name": "The Parts Parade",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 32.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 9 },
+        { "h": 10, "w": 2, "x": 49, "y": 17 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 7.5 }],
+        "terrain": [{ "h": 2, "id": "slow-1", "kind": "slow", "w": 20, "x": 26, "y": 25 }],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 11, "y": 7 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        },
+        {
+          "id": "second-drifter",
+          "type": "bouncer",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 13.5,
+          "y": 26.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 6, "x": 12, "y": 7 },
+        { "h": 5, "w": 10, "x": 29, "y": 14 },
+        { "h": 3, "w": 6, "x": 53, "y": 25 }
+      ],
+      "goal": { "coverage": 0.7140000000000001 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 33.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-parts-in-motion-06",
+      "name": "Everything in Place",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 11.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 33.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 10, "w": 2, "x": 19, "y": 10 },
+        { "h": 10, "w": 2, "x": 49, "y": 16 }
+      ],
+      "width": 72
+    }
+  ],
+  "revision": "2",
+  "title": "Parts in Motion",
+  "version": "xonix-campaign.v1"
+}

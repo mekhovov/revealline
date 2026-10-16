@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
@@ -41,12 +42,15 @@ export async function acquireCouchReleasePicture({
       onStatus: ({ stage, message }) => report(stage, message),
     });
     check(signal);
-    required(same(original?.asset, asset), 'The selected release picture identity changed.');
-    required(original.blob?.size === file.bytes, 'The selected release original size differs.');
+    required(same(original?.asset, asset), t('interface:theSelectedReleasePictureIdentityChanged'));
+    required(
+      original.blob?.size === file.bytes,
+      t('interface:theSelectedReleaseOriginalSizeDiffers'),
+    );
     const bytes = new Uint8Array(await original.blob.arrayBuffer());
     required(
       (await hashPresentationBytes(bytes)) === file.sha256,
-      'Release picture SHA-256 differs.',
+      t('interface:releasePictureSha256Differs'),
     );
     check(signal);
     let binary = '';
@@ -55,14 +59,14 @@ export async function acquireCouchReleasePicture({
     const header = inspectImageDataUrl(`data:${file.mime};base64,${btoa(binary)}`);
     required(
       header.valid && header.width === file.width && header.height === file.height,
-      'The release picture header differs from its selected original.',
+      t('interface:theReleasePictureHeaderDiffersFromItsSelectedOriginal'),
     );
     required(
       typeof URLImpl?.createObjectURL === 'function' &&
         typeof URLImpl?.revokeObjectURL === 'function',
-      'Picture object URLs are unavailable.',
+      t('interface:pictureObjectUrlsAreUnavailable'),
     );
-    report('decoding', 'Opening one original for both boards…');
+    report('decoding', t('interface:openingOneOriginalForBothBoards'));
     url = URLImpl.createObjectURL(original.blob);
     image = await decode(url, signal);
     check(signal);
@@ -71,7 +75,7 @@ export async function acquireCouchReleasePicture({
         image.naturalHeight === file.height &&
         image.width === file.width &&
         image.height === file.height,
-      'The decoded release picture dimensions differ.',
+      t('interface:theDecodedReleasePictureDimensionsDiffer'),
     );
     return { image, fit: 'contain', sampling: 'nearest', release };
   } catch (error) {

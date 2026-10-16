@@ -1,0 +1,10 @@
+{
+  "format": "FPVFestivalLibraryHarnessFailure.v1",
+  "date": "2026-10-05",
+  "command": "node authoring/fpv-worlds/published/qualify-festival-row.mjs authoring/fpv-worlds/published/evidence/festival-r5-library-row.json",
+  "failure": "spawnSync git ENOBUFS",
+  "stage": "Comparing immutable HTTP pack with its Git blob, before pack import qualification",
+  "cause": "The verifier used Node child_process's default 1 MiB output buffer for a 1,256,875-byte published pack.",
+  "repair": "Bound the verifier's Git output buffer at 4 MiB, matching its artifact size bound. Runtime, package limits, catalogue data and assertions are unchanged.",
+  "qualificationClaim": false
+}

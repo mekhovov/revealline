@@ -1,0 +1,2800 @@
+{
+  "format": "FPVAuthoredRegionalElapsedReview.v1",
+  "scope": "Real elapsed-time immutable Urban road/court workload; production regional flight and renderer. Commanded test pilot, no player input or game progress writes.",
+  "runtimeLabel": "34b8bb17 authoring attribution · da5df483 production · package6a092df1 · 9185 · 10-second native smoke",
+  "runtimeLabelVerified": false,
+  "directSourceHashes": [
+    {
+      "path": "renderer.mjs",
+      "bytes": 157444,
+      "sha256": "f6e6fd9eaeb094e1bd2544dda9b15abc3ebee384cc9192fa2e9062d9dac0acba"
+    },
+    {
+      "path": "model.mjs",
+      "bytes": 20087,
+      "sha256": "0015640581f58a2fb86dca985cda5b9e519b78962c6a1ee816741d3ad21fb52c"
+    },
+    {
+      "path": "flight-contact.mjs",
+      "bytes": 2482,
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+    },
+    {
+      "path": "flight-support.mjs",
+      "bytes": 1815,
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+    },
+    {
+      "path": "regional/flight-prototype.mjs",
+      "bytes": 15458,
+      "sha256": "c65e6a34d858b92e4b38ed3490efe5eb93472139ce111a42af47699cdabb43cb"
+    },
+    {
+      "path": "regional/verified-mixed-window.mjs",
+      "bytes": 15600,
+      "sha256": "c9d8e075f143efe6455007c762caf2575eade3a426859f6c06d4cd29ec48fc86"
+    },
+    {
+      "path": "regional/terrain-admission.mjs",
+      "bytes": 8808,
+      "sha256": "80de02224acf14df00f40e152ea8cfedb981579af5fd5360a534d9e008a2829e"
+    },
+    {
+      "path": "regional/scenery-admission.mjs",
+      "bytes": 15259,
+      "sha256": "4e20557b6fa2b0002e974732bbe5bb0ee2b83298c1ef508efcddbbde7fff0113"
+    },
+    {
+      "path": "authoring/endurance.mjs",
+      "bytes": 26527,
+      "sha256": "ca9ce9b3c34ac778f3c4cc1e6ec7734bf037ee6a70267db3a5ba92c2426a66fb"
+    },
+    {
+      "path": "authoring/endurance-clock.mjs",
+      "bytes": 2454,
+      "sha256": "9c3e9f9ae37e25f5f68408fbe4774a7ef7021b7f2d08523054a9265bb7716678"
+    },
+    {
+      "path": "authoring/endurance-observation.mjs",
+      "bytes": 1800,
+      "sha256": "71c213cfe9cd83395b3c3c1aeb09ea96a9421acdfa9b9a843d39e714cad779f2"
+    },
+    {
+      "path": "authoring/endurance-lifecycle.mjs",
+      "bytes": 3809,
+      "sha256": "fc2610cbbfca018f8f5536c2e2a96ab885029c5303331a3dbf152a049f7a401b"
+    },
+    {
+      "path": "authoring/endurance-report-display.mjs",
+      "bytes": 1601,
+      "sha256": "c5e90e78efb1729ff5ee3f7e2711951940ee1176570d380307176fe153870f93"
+    },
+    {
+      "path": "authoring/endurance-attribution.mjs",
+      "bytes": 10704,
+      "sha256": "4f73a1882e964382d6d8ea39931a6bc96a41001a4d7fac9802102b4342d7f14e"
+    },
+    {
+      "path": "authoring/authored-endurance-fixture.mjs",
+      "bytes": 6422,
+      "sha256": "ce3cab50afd9475f4e38cd5e32f86880a3640257ced99f8d2dfa6a98795fb712"
+    }
+  ],
+  "wholeRuntimeClosureVerified": false,
+  "fixture": {
+    "descriptor": {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json",
+      "bytes": 6603,
+      "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+    },
+    "terrainManifestSHA256": "66ef229f0812c31432bb8b3daac6f16e3dcaea19f44be00395a614bfa587afd7",
+    "sceneryManifestSHA256": "9ae41033e9a73261eeee3ff2339ceaa0e2f6b47367b212fc1f2de470ca8dacb6",
+    "verifiedPayloadFiles": 38,
+    "verifiedPayloadBytes": 2268846,
+    "source": "Immutable admitted Urban review-r2; road/court circuit, no geometry or spawn edits",
+    "route": [
+      {
+        "id": "mill-road",
+        "position": {
+          "x": 64000,
+          "y": 12000,
+          "z": 16000
+        }
+      },
+      {
+        "id": "container-road",
+        "position": {
+          "x": 320000,
+          "y": 12000,
+          "z": 16000
+        }
+      },
+      {
+        "id": "tower-court",
+        "position": {
+          "x": 320000,
+          "y": 12000,
+          "z": 200000
+        }
+      },
+      {
+        "id": "parking-approach",
+        "position": {
+          "x": 64000,
+          "y": 12000,
+          "z": 200000
+        }
+      },
+      {
+        "id": "west-service-road",
+        "position": {
+          "x": 16000,
+          "y": 12000,
+          "z": 200000
+        }
+      },
+      {
+        "id": "mill-west-approach",
+        "position": {
+          "x": 16000,
+          "y": 12000,
+          "z": 16000
+        }
+      }
+    ],
+    "solidScenerySurfaces": 115,
+    "colliderUpperBound": 248,
+    "id": "urban-earthworks-study",
+    "revision": "mixed-r4"
+  },
+  "startedUTC": "2026-10-15T18:50:40.830Z",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "dimensions": {
+    "basis": "visualViewport",
+    "width": 1280,
+    "height": 720,
+    "dpr": 2,
+    "cssWidth": 1280,
+    "cssHeight": 417.59375,
+    "backingWidth": 1920,
+    "backingHeight": 627
+  },
+  "quality": "balanced",
+  "camera": "chase",
+  "mode": "self-level",
+  "clock": {
+    "status": "completed",
+    "reason": null,
+    "targetMs": 10000,
+    "elapsedMs": 10005.10000000894,
+    "wallElapsedMs": 10004,
+    "simulationMs": 10000,
+    "ticks": 500,
+    "remainingAccumulatorMs": 5.100000008940697
+  },
+  "observation": {
+    "policy": "strict-focus",
+    "input": "Commanded test pilot only; no player input",
+    "scope": "Visible document with continuous window focus required",
+    "events": [
+      {
+        "elapsedMs": 0,
+        "type": "start",
+        "visible": true,
+        "focused": true
+      }
+    ],
+    "failure": null
+  },
+  "lifecycleDiagnostics": {
+    "scope": "Diagnostic correlation only; focus/lifecycle/long-task timing cannot identify the cause of a rendering gap. Clock, visibility and safety acceptance are unchanged.",
+    "events": [
+      {
+        "elapsedMs": 1,
+        "type": "start",
+        "visible": true,
+        "focused": true
+      },
+      {
+        "elapsedMs": 10007.40000000596,
+        "type": "stop",
+        "visible": true,
+        "focused": true
+      }
+    ],
+    "lastFrames": [
+      {
+        "elapsedMs": 9455.60000000894,
+        "intervalMs": 8.5
+      },
+      {
+        "elapsedMs": 9463.5,
+        "intervalMs": 7.899999991059303
+      },
+      {
+        "elapsedMs": 9471.70000000298,
+        "intervalMs": 8.200000002980232
+      },
+      {
+        "elapsedMs": 9479.70000000298,
+        "intervalMs": 8
+      },
+      {
+        "elapsedMs": 9488.60000000894,
+        "intervalMs": 8.900000005960464
+      },
+      {
+        "elapsedMs": 9496.60000000894,
+        "intervalMs": 8
+      },
+      {
+        "elapsedMs": 9505.5,
+        "intervalMs": 8.899999991059303
+      },
+      {
+        "elapsedMs": 9512.800000011921,
+        "intervalMs": 7.300000011920929
+      },
+      {
+        "elapsedMs": 9518.800000011921,
+        "intervalMs": 6
+      },
+      {
+        "elapsedMs": 9530.10000000894,
+        "intervalMs": 11.299999997019768
+      },
+      {
+        "elapsedMs": 9538.60000000894,
+        "intervalMs": 8.5
+      },
+      {
+        "elapsedMs": 9546.90000000596,
+        "intervalMs": 8.299999997019768
+      },
+      {
+        "elapsedMs": 9555.300000011921,
+        "intervalMs": 8.400000005960464
+      },
+      {
+        "elapsedMs": 9563.300000011921,
+        "intervalMs": 8
+      },
+      {
+        "elapsedMs": 9572.40000000596,
+        "intervalMs": 9.099999994039536
+      },
+      {
+        "elapsedMs": 9579.60000000894,
+        "intervalMs": 7.200000002980232
+      },
+      {
+        "elapsedMs": 9588.10000000894,
+        "intervalMs": 8.5
+      },
+      {
+        "elapsedMs": 9596.5,
+        "intervalMs": 8.399999991059303
+      },
+      {
+        "elapsedMs": 9605.40000000596,
+        "intervalMs": 8.900000005960464
+      },
+      {
+        "elapsedMs": 9613.20000000298,
+        "intervalMs": 7.799999997019768
+      },
+      {
+        "elapsedMs": 9618.5,
+        "intervalMs": 5.299999997019768
+      },
+      {
+        "elapsedMs": 9630.5,
+        "intervalMs": 12
+      },
+      {
+        "elapsedMs": 9638.800000011921,
+        "intervalMs": 8.300000011920929
+      },
+      {
+        "elapsedMs": 9647.20000000298,
+        "intervalMs": 8.399999991059303
+      },
+      {
+        "elapsedMs": 9654.70000000298,
+        "intervalMs": 7.5
+      },
+      {
+        "elapsedMs": 9663.800000011921,
+        "intervalMs": 9.100000008940697
+      },
+      {
+        "elapsedMs": 9672.300000011921,
+        "intervalMs": 8.5
+      },
+      {
+        "elapsedMs": 9676.5,
+        "intervalMs": 4.199999988079071
+      },
+      {
+        "elapsedMs": 9688.60000000894,
+        "intervalMs": 12.100000008940697
+      },
+      {
+        "elapsedMs": 9696.800000011921,
+        "intervalMs": 8.200000002980232
+      },
+      {
+        "elapsedMs": 9705.300000011921,
+        "intervalMs": 8.5
+      },
+      {
+        "elapsedMs": 9713.800000011921,
+        "intervalMs": 8.5
+      },
+      {
+        "elapsedMs": 9722.300000011921,
+        "intervalMs": 8.5
+      },
+      {
+        "elapsedMs": 9730.5,
+        "intervalMs": 8.199999988079071
+      },
+      {
+        "elapsedMs": 9738.5,
+        "intervalMs": 8
+      },
+      {
+        "elapsedMs": 9746.70000000298,
+        "intervalMs": 8.200000002980232
+      },
+      {
+        "elapsedMs": 9755.60000000894,
+        "intervalMs": 8.900000005960464
+      },
+      {
+        "elapsedMs": 9763.10000000894,
+        "intervalMs": 7.5
+      },
+      {
+        "elapsedMs": 9772,
+        "intervalMs": 8.899999991059303
+      },
+      {
+        "elapsedMs": 9778.10000000894,
+        "intervalMs": 6.100000008940697
+      },
+      {
+        "elapsedMs": 9788.40000000596,
+        "intervalMs": 10.299999997019768
+      },
+      {
+        "elapsedMs": 9796.90000000596,
+        "intervalMs": 8.5
+      },
+      {
+        "elapsedMs": 9805.5,
+        "intervalMs": 8.599999994039536
+      },
+      {
+        "elapsedMs": 9813.60000000894,
+        "intervalMs": 8.100000008940697
+      },
+      {
+        "elapsedMs": 9821.90000000596,
+        "intervalMs": 8.299999997019768
+      },
+      {
+        "elapsedMs": 9828.10000000894,
+        "intervalMs": 6.200000002980232
+      },
+      {
+        "elapsedMs": 9838.10000000894,
+        "intervalMs": 10
+      },
+      {
+        "elapsedMs": 9846.70000000298,
+        "intervalMs": 8.599999994039536
+      },
+      {
+        "elapsedMs": 9855.60000000894,
+        "intervalMs": 8.900000005960464
+      },
+      {
+        "elapsedMs": 9862.90000000596,
+        "intervalMs": 7.299999997019768
+      },
+      {
+        "elapsedMs": 9872.20000000298,
+        "intervalMs": 9.299999997019768
+      },
+      {
+        "elapsedMs": 9879,
+        "intervalMs": 6.799999997019768
+      },
+      {
+        "elapsedMs": 9888.90000000596,
+        "intervalMs": 9.900000005960464
+      },
+      {
+        "elapsedMs": 9896.60000000894,
+        "intervalMs": 7.700000002980232
+      },
+      {
+        "elapsedMs": 9905.20000000298,
+        "intervalMs": 8.599999994039536
+      },
+      {
+        "elapsedMs": 9913.60000000894,
+        "intervalMs": 8.400000005960464
+      },
+      {
+        "elapsedMs": 9921.800000011921,
+        "intervalMs": 8.200000002980232
+      },
+      {
+        "elapsedMs": 9929.800000011921,
+        "intervalMs": 8
+      },
+      {
+        "elapsedMs": 9937.60000000894,
+        "intervalMs": 7.799999997019768
+      },
+      {
+        "elapsedMs": 9964,
+        "intervalMs": 26.399999991059303
+      },
+      {
+        "elapsedMs": 9970.70000000298,
+        "intervalMs": 6.700000002980232
+      },
+      {
+        "elapsedMs": 9987.90000000596,
+        "intervalMs": 17.200000002980232
+      },
+      {
+        "elapsedMs": 9996.800000011921,
+        "intervalMs": 8.900000005960464
+      },
+      {
+        "elapsedMs": 10005.10000000894,
+        "intervalMs": 8.299999997019768
+      }
+    ],
+    "longTasks": {
+      "capability": "observed",
+      "count": 0,
+      "totalMs": 0,
+      "maxMs": 0,
+      "last": []
+    },
+    "dropped": {
+      "events": 0,
+      "longTasks": 0,
+      "frames": 1130
+    },
+    "stopped": true
+  },
+  "attributionDiagnostics": {
+    "scope": "Bounded synchronous authoring phase spans and supported long-animation-frame caller attribution. Overlap, maxima and script entry points do not identify a slow descendant, garbage collection, browser scheduling or GPU completion. No acceptance changes.",
+    "capability": "observed",
+    "entries": 0,
+    "callbackCPU": {
+      "count": 1,
+      "totalMs": 0,
+      "maxMs": 0
+    },
+    "phases": [
+      {
+        "phase": "observer-checks",
+        "count": 1194,
+        "totalMs": 65.50000014901161,
+        "maxMs": 0.30000001192092896
+      },
+      {
+        "phase": "snapshot-before-step",
+        "count": 500,
+        "totalMs": 96.00000008940697,
+        "maxMs": 0.5
+      },
+      {
+        "phase": "pilot-command",
+        "count": 500,
+        "totalMs": 2.2999999970197678,
+        "maxMs": 0.10000000894069672
+      },
+      {
+        "phase": "flight-step",
+        "count": 500,
+        "totalMs": 224.29999989271164,
+        "maxMs": 1.5
+      },
+      {
+        "phase": "snapshot-for-draw",
+        "count": 1194,
+        "totalMs": 173.19999998807907,
+        "maxMs": 0.5
+      },
+      {
+        "phase": "renderer-draw",
+        "count": 1194,
+        "totalMs": 678.1999998539686,
+        "maxMs": 1.5
+      },
+      {
+        "phase": "sample-collection",
+        "count": 10,
+        "totalMs": 3.600000023841858,
+        "maxMs": 0.7000000029802322
+      },
+      {
+        "phase": "live-display",
+        "count": 9,
+        "totalMs": 1.4999999850988388,
+        "maxMs": 0.20000000298023224
+      },
+      {
+        "phase": "prepare-renderer-submit",
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      }
+    ],
+    "lastSpans": [
+      {
+        "id": 4974,
+        "frame": 1166,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9746.800000011921,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 4975,
+        "frame": 1166,
+        "phase": "pilot-command",
+        "elapsedMs": 9746.800000011921,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 4976,
+        "frame": 1166,
+        "phase": "flight-step",
+        "elapsedMs": 9746.90000000596,
+        "durationMs": 0.29999999701976776,
+        "completed": true
+      },
+      {
+        "id": 4977,
+        "frame": 1166,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9747.20000000298,
+        "durationMs": 0.10000000894069672,
+        "completed": true
+      },
+      {
+        "id": 4978,
+        "frame": 1166,
+        "phase": "renderer-draw",
+        "elapsedMs": 9747.300000011921,
+        "durationMs": 0.3999999910593033,
+        "completed": true
+      },
+      {
+        "id": 4979,
+        "frame": 1167,
+        "phase": "observer-checks",
+        "elapsedMs": 9755.60000000894,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 4980,
+        "frame": 1167,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9755.70000000298,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 4981,
+        "frame": 1167,
+        "phase": "renderer-draw",
+        "elapsedMs": 9755.90000000596,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 4982,
+        "frame": 1168,
+        "phase": "observer-checks",
+        "elapsedMs": 9763.10000000894,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 4983,
+        "frame": 1168,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9763.20000000298,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 4984,
+        "frame": 1168,
+        "phase": "pilot-command",
+        "elapsedMs": 9763.40000000596,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 4985,
+        "frame": 1168,
+        "phase": "flight-step",
+        "elapsedMs": 9763.40000000596,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 4986,
+        "frame": 1168,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9763.90000000596,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 4987,
+        "frame": 1168,
+        "phase": "renderer-draw",
+        "elapsedMs": 9764,
+        "durationMs": 0.4000000059604645,
+        "completed": true
+      },
+      {
+        "id": 4988,
+        "frame": 1169,
+        "phase": "observer-checks",
+        "elapsedMs": 9772,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 4989,
+        "frame": 1169,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9772,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 4990,
+        "frame": 1169,
+        "phase": "renderer-draw",
+        "elapsedMs": 9772.20000000298,
+        "durationMs": 0.6000000089406967,
+        "completed": true
+      },
+      {
+        "id": 4991,
+        "frame": 1170,
+        "phase": "observer-checks",
+        "elapsedMs": 9778.10000000894,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 4992,
+        "frame": 1170,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9778.10000000894,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 4993,
+        "frame": 1170,
+        "phase": "renderer-draw",
+        "elapsedMs": 9778.300000011921,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 4994,
+        "frame": 1171,
+        "phase": "observer-checks",
+        "elapsedMs": 9788.5,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 4995,
+        "frame": 1171,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9788.5,
+        "durationMs": 0.30000001192092896,
+        "completed": true
+      },
+      {
+        "id": 4996,
+        "frame": 1171,
+        "phase": "pilot-command",
+        "elapsedMs": 9788.800000011921,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 4997,
+        "frame": 1171,
+        "phase": "flight-step",
+        "elapsedMs": 9788.800000011921,
+        "durationMs": 0.699999988079071,
+        "completed": true
+      },
+      {
+        "id": 4998,
+        "frame": 1171,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9789.5,
+        "durationMs": 0.10000000894069672,
+        "completed": true
+      },
+      {
+        "id": 4999,
+        "frame": 1171,
+        "phase": "renderer-draw",
+        "elapsedMs": 9789.60000000894,
+        "durationMs": 0.3999999910593033,
+        "completed": true
+      },
+      {
+        "id": 5000,
+        "frame": 1172,
+        "phase": "observer-checks",
+        "elapsedMs": 9796.90000000596,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5001,
+        "frame": 1172,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9796.90000000596,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5002,
+        "frame": 1172,
+        "phase": "renderer-draw",
+        "elapsedMs": 9797.10000000894,
+        "durationMs": 0.8999999910593033,
+        "completed": true
+      },
+      {
+        "id": 5003,
+        "frame": 1173,
+        "phase": "observer-checks",
+        "elapsedMs": 9805.5,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5004,
+        "frame": 1173,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9805.5,
+        "durationMs": 0.30000001192092896,
+        "completed": true
+      },
+      {
+        "id": 5005,
+        "frame": 1173,
+        "phase": "pilot-command",
+        "elapsedMs": 9805.800000011921,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5006,
+        "frame": 1173,
+        "phase": "flight-step",
+        "elapsedMs": 9805.800000011921,
+        "durationMs": 0.3999999910593033,
+        "completed": true
+      },
+      {
+        "id": 5007,
+        "frame": 1173,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9806.20000000298,
+        "durationMs": 0.10000000894069672,
+        "completed": true
+      },
+      {
+        "id": 5008,
+        "frame": 1173,
+        "phase": "renderer-draw",
+        "elapsedMs": 9806.300000011921,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 5009,
+        "frame": 1174,
+        "phase": "observer-checks",
+        "elapsedMs": 9813.60000000894,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5010,
+        "frame": 1174,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9813.70000000298,
+        "durationMs": 0.10000000894069672,
+        "completed": true
+      },
+      {
+        "id": 5011,
+        "frame": 1174,
+        "phase": "renderer-draw",
+        "elapsedMs": 9813.90000000596,
+        "durationMs": 0.4000000059604645,
+        "completed": true
+      },
+      {
+        "id": 5012,
+        "frame": 1175,
+        "phase": "observer-checks",
+        "elapsedMs": 9821.90000000596,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5013,
+        "frame": 1175,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9822,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5014,
+        "frame": 1175,
+        "phase": "pilot-command",
+        "elapsedMs": 9822.20000000298,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5015,
+        "frame": 1175,
+        "phase": "flight-step",
+        "elapsedMs": 9822.20000000298,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 5016,
+        "frame": 1175,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9822.70000000298,
+        "durationMs": 0.10000000894069672,
+        "completed": true
+      },
+      {
+        "id": 5017,
+        "frame": 1175,
+        "phase": "renderer-draw",
+        "elapsedMs": 9822.800000011921,
+        "durationMs": 0.5999999940395355,
+        "completed": true
+      },
+      {
+        "id": 5018,
+        "frame": 1176,
+        "phase": "observer-checks",
+        "elapsedMs": 9828.10000000894,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5019,
+        "frame": 1176,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9828.10000000894,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5020,
+        "frame": 1176,
+        "phase": "renderer-draw",
+        "elapsedMs": 9828.300000011921,
+        "durationMs": 0.5999999940395355,
+        "completed": true
+      },
+      {
+        "id": 5021,
+        "frame": 1177,
+        "phase": "observer-checks",
+        "elapsedMs": 9838.10000000894,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5022,
+        "frame": 1177,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9838.10000000894,
+        "durationMs": 0.29999999701976776,
+        "completed": true
+      },
+      {
+        "id": 5023,
+        "frame": 1177,
+        "phase": "renderer-draw",
+        "elapsedMs": 9838.40000000596,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 5024,
+        "frame": 1178,
+        "phase": "observer-checks",
+        "elapsedMs": 9846.70000000298,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5025,
+        "frame": 1178,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9846.800000011921,
+        "durationMs": 0.19999998807907104,
+        "completed": true
+      },
+      {
+        "id": 5026,
+        "frame": 1178,
+        "phase": "pilot-command",
+        "elapsedMs": 9847,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5027,
+        "frame": 1178,
+        "phase": "flight-step",
+        "elapsedMs": 9847,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 5028,
+        "frame": 1178,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9847.60000000894,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5029,
+        "frame": 1178,
+        "phase": "renderer-draw",
+        "elapsedMs": 9847.70000000298,
+        "durationMs": 0.4000000059604645,
+        "completed": true
+      },
+      {
+        "id": 5030,
+        "frame": 1179,
+        "phase": "observer-checks",
+        "elapsedMs": 9855.60000000894,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5031,
+        "frame": 1179,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9855.70000000298,
+        "durationMs": 0.29999999701976776,
+        "completed": true
+      },
+      {
+        "id": 5032,
+        "frame": 1179,
+        "phase": "renderer-draw",
+        "elapsedMs": 9856,
+        "durationMs": 0.6000000089406967,
+        "completed": true
+      },
+      {
+        "id": 5033,
+        "frame": 1180,
+        "phase": "observer-checks",
+        "elapsedMs": 9862.90000000596,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5034,
+        "frame": 1180,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9862.90000000596,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5035,
+        "frame": 1180,
+        "phase": "pilot-command",
+        "elapsedMs": 9863.10000000894,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5036,
+        "frame": 1180,
+        "phase": "flight-step",
+        "elapsedMs": 9863.10000000894,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5037,
+        "frame": 1180,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9863.300000011921,
+        "durationMs": 0.19999998807907104,
+        "completed": true
+      },
+      {
+        "id": 5038,
+        "frame": 1180,
+        "phase": "renderer-draw",
+        "elapsedMs": 9863.5,
+        "durationMs": 0.30000001192092896,
+        "completed": true
+      },
+      {
+        "id": 5039,
+        "frame": 1181,
+        "phase": "observer-checks",
+        "elapsedMs": 9872.20000000298,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5040,
+        "frame": 1181,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9872.20000000298,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5041,
+        "frame": 1181,
+        "phase": "renderer-draw",
+        "elapsedMs": 9872.40000000596,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 5042,
+        "frame": 1182,
+        "phase": "observer-checks",
+        "elapsedMs": 9879,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5043,
+        "frame": 1182,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9879,
+        "durationMs": 0.30000001192092896,
+        "completed": true
+      },
+      {
+        "id": 5044,
+        "frame": 1182,
+        "phase": "renderer-draw",
+        "elapsedMs": 9879.300000011921,
+        "durationMs": 0.699999988079071,
+        "completed": true
+      },
+      {
+        "id": 5045,
+        "frame": 1183,
+        "phase": "observer-checks",
+        "elapsedMs": 9888.90000000596,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5046,
+        "frame": 1183,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9889,
+        "durationMs": 0.30000001192092896,
+        "completed": true
+      },
+      {
+        "id": 5047,
+        "frame": 1183,
+        "phase": "pilot-command",
+        "elapsedMs": 9889.300000011921,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5048,
+        "frame": 1183,
+        "phase": "flight-step",
+        "elapsedMs": 9889.300000011921,
+        "durationMs": 0.29999999701976776,
+        "completed": true
+      },
+      {
+        "id": 5049,
+        "frame": 1183,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9889.60000000894,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5050,
+        "frame": 1183,
+        "phase": "renderer-draw",
+        "elapsedMs": 9889.70000000298,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 5051,
+        "frame": 1184,
+        "phase": "observer-checks",
+        "elapsedMs": 9896.60000000894,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5052,
+        "frame": 1184,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9896.70000000298,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5053,
+        "frame": 1184,
+        "phase": "renderer-draw",
+        "elapsedMs": 9896.90000000596,
+        "durationMs": 0.9000000059604645,
+        "completed": true
+      },
+      {
+        "id": 5054,
+        "frame": 1185,
+        "phase": "observer-checks",
+        "elapsedMs": 9905.20000000298,
+        "durationMs": 0.10000000894069672,
+        "completed": true
+      },
+      {
+        "id": 5055,
+        "frame": 1185,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9905.300000011921,
+        "durationMs": 0.19999998807907104,
+        "completed": true
+      },
+      {
+        "id": 5056,
+        "frame": 1185,
+        "phase": "pilot-command",
+        "elapsedMs": 9905.5,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5057,
+        "frame": 1185,
+        "phase": "flight-step",
+        "elapsedMs": 9905.5,
+        "durationMs": 0.30000001192092896,
+        "completed": true
+      },
+      {
+        "id": 5058,
+        "frame": 1185,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9905.90000000596,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5059,
+        "frame": 1185,
+        "phase": "renderer-draw",
+        "elapsedMs": 9905.90000000596,
+        "durationMs": 0.7000000029802322,
+        "completed": true
+      },
+      {
+        "id": 5060,
+        "frame": 1186,
+        "phase": "observer-checks",
+        "elapsedMs": 9913.60000000894,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5061,
+        "frame": 1186,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9913.60000000894,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5062,
+        "frame": 1186,
+        "phase": "renderer-draw",
+        "elapsedMs": 9913.800000011921,
+        "durationMs": 0.29999999701976776,
+        "completed": true
+      },
+      {
+        "id": 5063,
+        "frame": 1187,
+        "phase": "observer-checks",
+        "elapsedMs": 9921.800000011921,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5064,
+        "frame": 1187,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9921.800000011921,
+        "durationMs": 0.19999998807907104,
+        "completed": true
+      },
+      {
+        "id": 5065,
+        "frame": 1187,
+        "phase": "pilot-command",
+        "elapsedMs": 9922,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5066,
+        "frame": 1187,
+        "phase": "flight-step",
+        "elapsedMs": 9922,
+        "durationMs": 0.30000001192092896,
+        "completed": true
+      },
+      {
+        "id": 5067,
+        "frame": 1187,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9922.300000011921,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5068,
+        "frame": 1187,
+        "phase": "renderer-draw",
+        "elapsedMs": 9922.40000000596,
+        "durationMs": 0.5999999940395355,
+        "completed": true
+      },
+      {
+        "id": 5069,
+        "frame": 1188,
+        "phase": "observer-checks",
+        "elapsedMs": 9929.800000011921,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5070,
+        "frame": 1188,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9929.800000011921,
+        "durationMs": 0.19999998807907104,
+        "completed": true
+      },
+      {
+        "id": 5071,
+        "frame": 1188,
+        "phase": "renderer-draw",
+        "elapsedMs": 9930,
+        "durationMs": 0.5,
+        "completed": true
+      },
+      {
+        "id": 5072,
+        "frame": 1189,
+        "phase": "observer-checks",
+        "elapsedMs": 9937.60000000894,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5073,
+        "frame": 1189,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9937.70000000298,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5074,
+        "frame": 1189,
+        "phase": "renderer-draw",
+        "elapsedMs": 9937.90000000596,
+        "durationMs": 0.7999999970197678,
+        "completed": true
+      },
+      {
+        "id": 5075,
+        "frame": 1190,
+        "phase": "observer-checks",
+        "elapsedMs": 9964,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5076,
+        "frame": 1190,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9964,
+        "durationMs": 0.4000000059604645,
+        "completed": true
+      },
+      {
+        "id": 5077,
+        "frame": 1190,
+        "phase": "pilot-command",
+        "elapsedMs": 9964.40000000596,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5078,
+        "frame": 1190,
+        "phase": "flight-step",
+        "elapsedMs": 9964.40000000596,
+        "durationMs": 0.4000000059604645,
+        "completed": true
+      },
+      {
+        "id": 5079,
+        "frame": 1190,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9964.800000011921,
+        "durationMs": 0.19999998807907104,
+        "completed": true
+      },
+      {
+        "id": 5080,
+        "frame": 1190,
+        "phase": "pilot-command",
+        "elapsedMs": 9965,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5081,
+        "frame": 1190,
+        "phase": "flight-step",
+        "elapsedMs": 9965,
+        "durationMs": 0.7000000029802322,
+        "completed": true
+      },
+      {
+        "id": 5082,
+        "frame": 1190,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9965.70000000298,
+        "durationMs": 0.10000000894069672,
+        "completed": true
+      },
+      {
+        "id": 5083,
+        "frame": 1190,
+        "phase": "renderer-draw",
+        "elapsedMs": 9965.800000011921,
+        "durationMs": 0.3999999910593033,
+        "completed": true
+      },
+      {
+        "id": 5084,
+        "frame": 1191,
+        "phase": "observer-checks",
+        "elapsedMs": 9970.70000000298,
+        "durationMs": 0.10000000894069672,
+        "completed": true
+      },
+      {
+        "id": 5085,
+        "frame": 1191,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9970.800000011921,
+        "durationMs": 0.19999998807907104,
+        "completed": true
+      },
+      {
+        "id": 5086,
+        "frame": 1191,
+        "phase": "renderer-draw",
+        "elapsedMs": 9971,
+        "durationMs": 0.7000000029802322,
+        "completed": true
+      },
+      {
+        "id": 5087,
+        "frame": 1192,
+        "phase": "observer-checks",
+        "elapsedMs": 9987.90000000596,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5088,
+        "frame": 1192,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 9987.90000000596,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5089,
+        "frame": 1192,
+        "phase": "pilot-command",
+        "elapsedMs": 9988.10000000894,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5090,
+        "frame": 1192,
+        "phase": "flight-step",
+        "elapsedMs": 9988.10000000894,
+        "durationMs": 0.29999999701976776,
+        "completed": true
+      },
+      {
+        "id": 5091,
+        "frame": 1192,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9988.40000000596,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5092,
+        "frame": 1192,
+        "phase": "renderer-draw",
+        "elapsedMs": 9988.5,
+        "durationMs": 0.6000000089406967,
+        "completed": true
+      },
+      {
+        "id": 5093,
+        "frame": 1193,
+        "phase": "observer-checks",
+        "elapsedMs": 9996.800000011921,
+        "durationMs": 0.09999999403953552,
+        "completed": true
+      },
+      {
+        "id": 5094,
+        "frame": 1193,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 9996.90000000596,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5095,
+        "frame": 1193,
+        "phase": "renderer-draw",
+        "elapsedMs": 9997.10000000894,
+        "durationMs": 0.3999999910593033,
+        "completed": true
+      },
+      {
+        "id": 5096,
+        "frame": 1194,
+        "phase": "observer-checks",
+        "elapsedMs": 10005.10000000894,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5097,
+        "frame": 1194,
+        "phase": "snapshot-before-step",
+        "elapsedMs": 10005.10000000894,
+        "durationMs": 0.20000000298023224,
+        "completed": true
+      },
+      {
+        "id": 5098,
+        "frame": 1194,
+        "phase": "pilot-command",
+        "elapsedMs": 10005.300000011921,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5099,
+        "frame": 1194,
+        "phase": "flight-step",
+        "elapsedMs": 10005.300000011921,
+        "durationMs": 1.3999999910593033,
+        "completed": true
+      },
+      {
+        "id": 5100,
+        "frame": 1194,
+        "phase": "snapshot-for-draw",
+        "elapsedMs": 10006.70000000298,
+        "durationMs": 0,
+        "completed": true
+      },
+      {
+        "id": 5101,
+        "frame": 1194,
+        "phase": "renderer-draw",
+        "elapsedMs": 10006.70000000298,
+        "durationMs": 0.5,
+        "completed": true
+      }
+    ],
+    "lastLongAnimationFrames": [],
+    "bounds": {
+      "spans": 128,
+      "longAnimationFrames": 16,
+      "scriptsPerFrame": 8,
+      "scriptsScannedPerFrame": 64,
+      "overlapExamplesPerFrame": 12
+    },
+    "dropped": {
+      "spans": 4973,
+      "longAnimationFrames": 0,
+      "scripts": 0,
+      "unscannedScripts": 0
+    },
+    "malformed": 0,
+    "readFailures": 0,
+    "stopped": true,
+    "limitations": [
+      "No sampled JS call stacks, allocation or GC events; use a native browser performance trace to attribute a descendant or GC.",
+      "LoAF observes same-origin main-thread entry points only; worker/extension/cross-origin work may be absent.",
+      "The terminal frame may not have reached the observer queue at stop; takeRecords drains only entries already available.",
+      "Nested or asynchronous work may share a frame. Phase durations are synchronous wall spans, not exclusive CPU.",
+      "No raw invoker strings, foreign origins/paths, query/hash credentials or window references retained."
+    ]
+  },
+  "commandedRoute": {
+    "target": "mill-road",
+    "acceptedWaypoints": 0,
+    "completedCircuits": 0,
+    "visits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "cellCrossings": 0,
+  "frames": 1194,
+  "collisionAndReservationPeaks": {
+    "geometryBytes": 563724,
+    "textureBytes": 0,
+    "sourceBytes": 1186465,
+    "reservedGeometryBytes": 563724,
+    "reservedSourceBytes": 1186465,
+    "worlds": 2,
+    "colliders": 79,
+    "rigidBodies": 0,
+    "renderergeometries": 114,
+    "renderertextures": 6,
+    "rendererprograms": 10
+  },
+  "frameIntervalsMs": {
+    "count": 1193,
+    "meanMs": 8.382984073768617,
+    "maxMs": 26.299999997019768,
+    "histogramMs": [
+      0,
+      1,
+      1,
+      5,
+      13,
+      59,
+      62,
+      214,
+      616,
+      130,
+      22,
+      18,
+      21,
+      9,
+      9,
+      3,
+      5,
+      2,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "physicsSubmissionCPU": {
+    "count": 1194,
+    "meanMs": 0.2783082077650968,
+    "maxMs": 1.7999999970197678
+  },
+  "drawSubmissionCPU": {
+    "count": 1194,
+    "meanMs": 0.7170016749994439,
+    "maxMs": 1.7000000029802322
+  },
+  "observerCPU": {
+    "frameChecks": {
+      "count": 1194,
+      "meanMs": 0.05929648250940457,
+      "maxMs": 0.30000001192092896
+    },
+    "sampleCollection": {
+      "count": 11,
+      "meanMs": 0.3363636393438686,
+      "maxMs": 0.7000000029802322
+    },
+    "liveDisplay": {
+      "count": 9,
+      "meanMs": 0.06666666766007741,
+      "maxMs": 0.10000000894069672
+    },
+    "scope": "Synchronous frame checks, sample collection and bounded live JSON/text submission only. Excludes asynchronous observer callbacks, final/export serialization, browser layout, GPU completion and garbage collection attribution."
+  },
+  "preparation": {
+    "initial": {
+      "sequence": 1,
+      "status": "prepared",
+      "objects": 79,
+      "batches": 10,
+      "submittedBytes": 563724,
+      "maxBatchBytes": 206880,
+      "compileWaitMs": 158.00000002980232,
+      "uploadCpuMs": 88.6000000089407,
+      "elapsedMs": 337.1000000089407,
+      "gpuCompletionMeasured": false
+    },
+    "completedStages": 1,
+    "maximumElapsedMs": 337.1000000089407
+  },
+  "last120SecondSamples": [
+    {
+      "elapsedMs": 0,
+      "ticks": 0,
+      "position": {
+        "x": 64000,
+        "y": 3000,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 1006.9000000059605,
+      "ticks": 50,
+      "position": {
+        "x": 64000,
+        "y": 3462,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 2005.1000000089407,
+      "ticks": 100,
+      "position": {
+        "x": 64000,
+        "y": 4351,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 3008.800000011921,
+      "ticks": 150,
+      "position": {
+        "x": 64000,
+        "y": 5301,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 4000.5,
+      "ticks": 200,
+      "position": {
+        "x": 64000,
+        "y": 6197,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 5004.5,
+      "ticks": 250,
+      "position": {
+        "x": 64000,
+        "y": 7000,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 6004.600000008941,
+      "ticks": 300,
+      "position": {
+        "x": 64000,
+        "y": 7706,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 7005.300000011921,
+      "ticks": 350,
+      "position": {
+        "x": 64000,
+        "y": 8315,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 8004.600000008941,
+      "ticks": 400,
+      "position": {
+        "x": 64000,
+        "y": 8832,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 9005.40000000596,
+      "ticks": 450,
+      "position": {
+        "x": 64000,
+        "y": 9286,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 10005.10000000894,
+      "ticks": 500,
+      "position": {
+        "x": 64000,
+        "y": 9678,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    }
+  ],
+  "minuteSamples": [
+    {
+      "elapsedMs": 0,
+      "ticks": 0,
+      "position": {
+        "x": 64000,
+        "y": 3000,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    }
+  ],
+  "final": {
+    "beforeDisposal": {
+      "position": {
+        "x": 64000,
+        "y": 9678,
+        "z": 16000
+      },
+      "velocity": {
+        "x": 0,
+        "y": 362,
+        "z": 0
+      },
+      "orientation": [
+        0,
+        0,
+        0,
+        1000000
+      ],
+      "angular": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0
+      },
+      "ticks": 500,
+      "grounded": false,
+      "support": null,
+      "landingSpeed": 0,
+      "landingTilt": 0,
+      "mode": "self-level",
+      "status": "active",
+      "reason": null,
+      "contacts": 0,
+      "recentres": 1,
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "localPositionMm": {
+        "x": 0,
+        "y": 9678,
+        "z": -48000
+      },
+      "pendingTargetMm": null,
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "resourceBytes": 563724,
+        "sourceBytes": 1186465,
+        "reservedSourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "provenance": {
+          "regionId": "urban-earthworks-study",
+          "revision": "mixed-r4",
+          "positionMm": {
+            "x": 64000,
+            "y": 3000,
+            "z": 16000
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "urban-0-0",
+              "terrain": {
+                "chunkId": "urban-0-0",
+                "collision": {
+                  "id": "urban-0-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-0-0.json",
+                  "bytes": 7826,
+                  "sha256": "5092461f2f7e5e1404c078b5ed09ecc7846a993f206562d4bcef5d35ad8e01e9"
+                },
+                "scene": {
+                  "id": "urban-0-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-0-0.glb",
+                  "bytes": 38404,
+                  "sha256": "ef72d57cd102a17c63c8dd390b79a6369666741bc814c93a76830018d50cb82d"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-0-0",
+                "collision": {
+                  "id": "urban-0-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-0-0.json",
+                  "bytes": 47621,
+                  "sha256": "bfdf16df8d6b5f204e54961ef1886bcdc0c7c644b351835fb6c390250ad3651a"
+                },
+                "scene": {
+                  "id": "urban-0-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-0-0.glb",
+                  "bytes": 24396,
+                  "sha256": "ea88472d836bdfbfeeecf2b26c9e33b340c6d4390a8532818de4169414eea3bf"
+                }
+              }
+            },
+            {
+              "chunkId": "urban-0-1",
+              "terrain": {
+                "chunkId": "urban-0-1",
+                "collision": {
+                  "id": "urban-0-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-0-1.json",
+                  "bytes": 8088,
+                  "sha256": "fac844c2a8946b181af11881607bfdcebf404771db79e5e2330744a3778f7bda"
+                },
+                "scene": {
+                  "id": "urban-0-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-0-1.glb",
+                  "bytes": 38388,
+                  "sha256": "c099282cf60bda2cb84e30051e675fd11656e1ac43dec362fde0ebcdf26ccdff"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-0-1",
+                "collision": {
+                  "id": "urban-0-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-0-1.json",
+                  "bytes": 101940,
+                  "sha256": "1dc117b144137dde8b17c14b992407d92345c1370ad9124d423366dd035bb9b6"
+                },
+                "scene": {
+                  "id": "urban-0-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-0-1.glb",
+                  "bytes": 40288,
+                  "sha256": "ad827ea8e11bc107cb7a5b1a55f9b2d6bcb14fc0180ed4258f3d99fd3a43da51"
+                }
+              }
+            },
+            {
+              "chunkId": "urban-1-0",
+              "terrain": {
+                "chunkId": "urban-1-0",
+                "collision": {
+                  "id": "urban-1-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-1-0.json",
+                  "bytes": 7775,
+                  "sha256": "184d28f0bc7bd63f2e4661447f79708d158be579c42e90dcde18667d69cf652c"
+                },
+                "scene": {
+                  "id": "urban-1-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-1-0.glb",
+                  "bytes": 38404,
+                  "sha256": "7b9ac0bb3725eec3fddb839700feb7270981c5bc11094043148f0e9264e74e13"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-1-0",
+                "collision": {
+                  "id": "urban-1-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-1-0.json",
+                  "bytes": 459529,
+                  "sha256": "8756a17022fe503dcf49e33414260f6e63b3f88a47bff99eac031eaa975c0e4c"
+                },
+                "scene": {
+                  "id": "urban-1-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-1-0.glb",
+                  "bytes": 142132,
+                  "sha256": "ac2c79051fbe6c590a1c75c1b5f230d445dc0a5049b83526de0e0a0767df6e5e"
+                }
+              }
+            },
+            {
+              "chunkId": "urban-1-1",
+              "terrain": {
+                "chunkId": "urban-1-1",
+                "collision": {
+                  "id": "urban-1-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-1-1.json",
+                  "bytes": 8021,
+                  "sha256": "cdc8276a907dc303e981b5632a3e6c678b68903406694e28538ccc7bee531f84"
+                },
+                "scene": {
+                  "id": "urban-1-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-1-1.glb",
+                  "bytes": 38404,
+                  "sha256": "fbef12c0f0eacb34d2b2f940fa8783890907ce1b0aa703e5b448cdb745aa8acc"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-1-1",
+                "collision": {
+                  "id": "urban-1-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-1-1.json",
+                  "bytes": 141661,
+                  "sha256": "3f20fe48dee5493e209dbf01770073455ed439c022fa55b29c31f7da545e36aa"
+                },
+                "scene": {
+                  "id": "urban-1-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-1-1.glb",
+                  "bytes": 43588,
+                  "sha256": "0d8c6e43c8963d8ae8fdf7fdbd61170c586d7040b6bdd4b61cddc08ae8375e4d"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      },
+      "geometryProfile": "terrain-scenery-v1",
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "model": "regional-authoring-flight-prototype.v1",
+      "unscored": true,
+      "playerReady": false
+    },
+    "afterDisposal": {
+      "collision": {
+        "worlds": 0,
+        "colliders": 0,
+        "rigidBodies": 0
+      },
+      "geometryBytes": 0,
+      "reservedGeometryBytes": 0,
+      "reservedSourceBytes": 0,
+      "rootChildren": 0,
+      "renderer": {
+        "available": true,
+        "disposed": true,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 82,
+          "triangles": 8416,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "verifiedCache": {
+        "files": 0,
+        "bytes": 0,
+        "reads": 16,
+        "released": true
+      }
+    },
+    "disposalZero": true
+  },
+  "priorSegments": [],
+  "limitations": [
+    "Repeated authored Urban road/court circuit, not all worlds, indoor routes or player behavior",
+    "CPU submission is not GPU completion or physical-device FPS",
+    "Resource counters exclude opaque engine/GPU allocations",
+    "Imported segments are unverified history and never extend an uninterrupted pass",
+    "No persistence, browser-restart or all-network-offline claim",
+    "Source payload is fully verified before timing; no network latency is exercised during the measured segment"
+  ],
+  "routeCoverageQualified": false,
+  "accepted": true
+}

@@ -1,0 +1,39 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-86",
+  "infrastructureCommit": "8ef336f5931aa25f07d52d98e60445d652cf188a",
+  "deploymentId": 6669047317,
+  "deploymentStatusId": 18853028648,
+  "versions": [
+    "v0.116.1"
+  ],
+  "surface": "Codex in-app Chromium automation",
+  "sequence": [
+    "Opened the exact Archive86 v0.116.1 game route and observed the REVEAL / LINE menu with Continue, Missions, Collection, Settings, More and Sound controls.",
+    "Opened More and observed Version v0.116.1 plus controller-practice, About and Releases destinations.",
+    "Opened About and observed Start playing v0.116.1.",
+    "Expanded Build Information and observed v0.116.1 marked current and preserved with the historical build list."
+  ],
+  "observed": {
+    "gameDocumentTitle": "Reveal / Line",
+    "titleHeading": "REVEAL / LINE",
+    "moreVersionLabel": "Version v0.116.1",
+    "aboutStartLabel": "Start playing v0.116.1",
+    "aboutCurrentLabel": "v0.116.1 \u00b7 current",
+    "aboutPreservedLabel": "v0.116.1 \u00b7 preserved",
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Historical online preservation: complete exact-byte public audit plus fresh bounded title, More and About navigation through the archived UI. This does not claim physical-device/controller, comprehensive offline, every gameplay mode, or balance acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-86-v01161/public-acceptance.json",
+      "sha256": "bd3231f992044c0ed080212b8b2aa7a7564f220868a02f40844a5e4435ca2534"
+    }
+  ],
+  "limitations": [
+    "No renewed physical touch/controller or comprehensive offline acceptance is claimed.",
+    "This admission preserves v0.116.1; v0.130.0 is the separate immutable release selected by this controller change."
+  ]
+}

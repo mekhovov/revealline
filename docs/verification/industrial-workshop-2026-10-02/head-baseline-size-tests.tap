@@ -1,0 +1,38 @@
+TAP version 13
+# Subtest: actual solo host passes 306px visible width into its detached legacy and Classic textures
+ok 1 - actual solo host passes 306px visible width into its detached legacy and Classic textures
+  ---
+  duration_ms: 71556.574542
+  ...
+# The explicitly selected Classic chapter and its original picture must be ready.: settled in 21711 ms
+# Subtest: actual solo host passes 600px visible width into its detached legacy and Classic textures
+not ok 2 - actual solo host passes 600px visible width into its detached legacy and Classic textures
+  ---
+  duration_ms: 29560.613959
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/host-presentation-size.test.mjs:142:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(firstEnemySpan(current, width) < (width >= 480 ? 18 : 12))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/host-presentation-size.test.mjs:219:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# The explicitly selected Classic chapter and its original picture must be ready.: settled in 13481 ms
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 111779.119583

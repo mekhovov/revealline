@@ -1,0 +1,65 @@
+{
+  "sourceVisualIdentity": "ee4099ab32f993b261ee316235f407aaad7ea6b8",
+  "qualifiedSourceHead": "084564ca1a39d06bb077cae34fb2bdc1c3afbaee",
+  "followupBoundary": "Child commit changes receipts, backward-compatible support verifier and metadata placement only; source generator/views/manifests/materials unchanged.",
+  "runtimeSupportSource": "65e92d124b4232bf9d1450ac8cac47c82961cf21",
+  "origin": 9173,
+  "observations": {
+    "balanced": [
+      "shelter approach",
+      "shelter interior",
+      "ready gallery interior"
+    ],
+    "performance": [
+      "shelter interior"
+    ],
+    "quality": [
+      "ready gallery interior"
+    ],
+    "supportedRoutesClear": true,
+    "missingSurfacesObserved": false,
+    "qualityGallery": {
+      "residentCells": 4,
+      "meshes": 62,
+      "geometryBytes": 308352
+    },
+    "releasedNoLiveSceneryOrCollision": true
+  },
+  "evidence": [
+    {
+      "path": "lunar-shelter-r3-interior-native-20261015.png",
+      "bytes": 81662,
+      "sha256": "619c503e0deb72726ac9d0fa0f9c0b3f2d31b070a92ce34e46797f1f036a094f"
+    },
+    {
+      "path": "lunar-shelter-r3-approach-native-20261015.png",
+      "bytes": 76329,
+      "sha256": "1c055a853753cffbefa9f3d0cba707f26979fd589141d7f62c3208b9ff627673"
+    },
+    {
+      "path": "lunar-shelter-r3-performance-native-20261015.png",
+      "bytes": 80285,
+      "sha256": "d1e510fcb70e113aeaa1ccff8da1f535b813fa1424818fdda1d723f669aff4ca"
+    },
+    {
+      "path": "lunar-gallery-r3-interior-ready-native-20261015.png",
+      "bytes": 90134,
+      "sha256": "778abc4ae337d98fbc69f18f00bf0ca0733dd30ee42c985e56e792c726e3b1f3"
+    },
+    {
+      "path": "lunar-gallery-r3-quality-native-20261015.png",
+      "bytes": 90105,
+      "sha256": "2cf0c799d3907e28f2e1b8b09d8bfcda02b6c5d028f10f6724a0e6e1de2d94bb"
+    }
+  ],
+  "excludedTransitionalEvidence": "lunar-gallery-r3-interior-native-20261015.png was taken before ready; not acceptance evidence.",
+  "boundedSourceAppearanceAccepted": true,
+  "representativeArtAccepted": false,
+  "remaining": [
+    "new immutable composition-r3 delivery",
+    "exact Library package/player admission",
+    "offline/browser restart/physical devices",
+    "final representative art"
+  ],
+  "scope": "Root serial CUA source appearance review; no imported history, runtime benchmark, device acceptance or final-art claim."
+}

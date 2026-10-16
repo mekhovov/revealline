@@ -1,0 +1,13 @@
+{
+  "buildResult": {
+    "out": "/private/tmp/snake-expansion-final-20261014",
+    "version": "snake-expansion-review",
+    "files": 3262,
+    "sha256": "39b79f44a7ee58692b525081c0c653c4e385a49378a49fc96c305f3c54e68e10",
+    "sourceRevision": null
+  },
+  "verifiedCleanSourceCommit": "d55b9b83f8f3ec014b9d777a66984b0a23e6433f",
+  "manifestSha256": "b7e05cf7edd3ddaac67a8e1932bba849373ab0b00d68bc88c40572b8d066f180",
+  "distribution": "39b79f44a7ee58692b525081c0c653c4e385a49378a49fc96c305f3c54e68e10  distribution.zip\n",
+  "note": "Built from a clean committed checkout; sourceRevision was not supplied to the development build command and is null in the embedded manifest. The source commit above was verified independently before and after the build. Subsequent parent integration changes only compatibility test fixtures; report updates do not alter gameplay."
+}

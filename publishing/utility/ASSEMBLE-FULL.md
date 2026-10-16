@@ -43,14 +43,22 @@ Replace every placeholder with actual independently checked values:
   "format": "revealline-full-qualification-inputs.v1",
   "reviewed": true,
   "repository": "mekhovov/revealline",
-  "source": { "commit": "FULL_FROZEN_SHA", "tree": "FULL_FROZEN_TREE", "version": "v0.98.0" },
+  "source": {
+    "commit": "FULL_FROZEN_SHA",
+    "tree": "FULL_FROZEN_TREE",
+    "version": "v0.98.0"
+  },
   "prSource": { "commit": "FULL_PR_HEAD", "tree": "FULL_PR_TREE" },
   "sourcePR": 320,
   "prRun": 1,
   "manualRun": 2,
   "inspectionRun": 3,
   "prWorkflowCommit": "FULL_ACTUAL_PR_AUTOMATION_SHA",
-  "inspectionArtifact": { "id": 4, "bytes": 123, "sha256": "FULL_INSPECTION_ARTIFACT_SHA256" }
+  "inspectionArtifact": {
+    "id": 4,
+    "bytes": 123,
+    "sha256": "FULL_INSPECTION_ARTIFACT_SHA256"
+  }
 }
 ```
 
@@ -94,7 +102,7 @@ large frozen originals. The evidence record binds the other eight attachments;
 it does not recursively claim its own hash.
 
 The release owner can then create the immutable tag/draft, upload the seven
-reviewed small files unchanged and dispatch existing `upload-originals` with
+reviewed small files unchanged and dispatch `upload-release-originals.yml` with
 the exact nine-descriptor binding. That utility downloads the original outer ZIP
 on the runner and streams only missing original members after independent
 reverification. Keep its one-POST/no-overwrite and ambiguous-upload recovery

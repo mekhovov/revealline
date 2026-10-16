@@ -6,6 +6,7 @@ const search = document.querySelector('#search');
 const genre = document.querySelector('#genre');
 const shuffle = document.querySelector('#shuffle');
 const pause = document.querySelector('#pause');
+const { localizedAttribute, localizedMessage, localizedText } = globalThis.RevealLineI18n;
 let current = null;
 let queue = [];
 let generation = 0;
@@ -18,7 +19,10 @@ function refresh() {
       (genre.value && !row.dataset.genres.split(' ').includes(genre.value));
   }
   const count = visible().length;
-  document.querySelector('#count').textContent = `${count} recording${count === 1 ? '' : 's'}`;
+  localizedText(
+    document.querySelector('#count'),
+    localizedMessage('website:musicArchive.recordingsCount', { count }),
+  );
   document.querySelector('#empty').hidden = count > 0;
   queue = [];
 }
@@ -44,21 +48,23 @@ async function play(row) {
   queue = queue.filter((candidate) => candidate !== row);
   audio.pause();
   audio.src = row.querySelector('a[download]').href;
-  now.textContent = `${row.querySelector('h2').textContent} · ${row.querySelector('.artist').textContent}`;
-  status.textContent = '';
+  localizedText(
+    now,
+    () => `${row.querySelector('h2').textContent} · ${row.querySelector('.artist').textContent}`,
+  );
+  localizedText(status, () => '');
   try {
     await audio.play();
   } catch {
     if (request === generation)
-      status.textContent =
-        'Press Play in the audio controls to start, or choose another recording.';
+      localizedText(status, localizedMessage('website:musicArchive.pressPlayOrChooseAnother'));
   }
 }
 function next() {
   if (!queue.length) refill();
   const row = queue.shift();
   if (row) void play(row);
-  else status.textContent = 'No recordings match the current filters.';
+  else localizedText(status, localizedMessage('website:musicArchive.noRecordingsCurrentFilters'));
 }
 for (const row of rows)
   row.querySelector('button').addEventListener('click', () => {
@@ -67,6 +73,14 @@ for (const row of rows)
     refill();
     queue = queue.filter((candidate) => candidate !== row);
   });
+for (const row of rows)
+  localizedAttribute(
+    row.querySelector('button'),
+    'aria-label',
+    localizedMessage('website:musicArchive.playTrack', {
+      title: row.querySelector('h2').textContent,
+    }),
+  );
 search.addEventListener('input', refresh);
 genre.addEventListener('change', refresh);
 shuffle.addEventListener('change', () => {
@@ -79,19 +93,19 @@ pause.addEventListener('click', () => {
     const request = generation;
     void audio.play().catch(() => {
       if (request === generation)
-        status.textContent =
-          'Playback could not start. Choose another recording or its MP3 download link.';
+        localizedText(status, localizedMessage('website:musicArchive.playbackCouldNotStart'));
     });
   }
 });
 audio.addEventListener('play', () => {
-  pause.textContent = 'Pause music';
-  status.textContent = '';
+  localizedText(pause, localizedMessage('interface:pauseMusic'));
+  localizedText(status, () => '');
 });
 audio.addEventListener('pause', () => {
-  pause.textContent = 'Resume music';
+  localizedText(pause, localizedMessage('website:musicArchive.resumeMusic'));
 });
 audio.addEventListener('ended', next);
 audio.addEventListener('error', () => {
-  status.textContent = 'This recording could not load. Try Next or its MP3 download link.';
+  localizedText(status, localizedMessage('website:musicArchive.recordingLoadFailed'));
 });
+refresh();

@@ -1,7 +1,29 @@
+import { createActorDefeatPresentation } from './actor-defeat-presentation.mjs';
+import {
+  sharedBattlefieldGround,
+  createBattlefieldGroundSurface,
+  battlefieldGroundAllowed,
+  paintBattlefieldGroundSpan,
+} from '../presentation/battlefield-ground.mjs';
+import { requireAcceptedAttemptAppearance } from '../presentation/attempt-appearance.mjs';
+import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
+import { createHuntDestruction } from '../hunt/destruction.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { preparedRotorRecipe } from './rotor-presentation.mjs';
+import {
+  createArcadeAdapter,
+  getArcadeCollection,
+  selectedArcadeCollection,
+} from '../presentation/industrial-arcade.mjs';
+import { contactCueUnderstroke } from './contact-cue.mjs';
+import { t } from '../i18n/index.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
+import { createDemoPictureFilter } from './demo-picture.mjs';
+import { createJammerPictureFilter, jammerPictureStrength } from './jammer-picture.mjs';
+import { createSignalReception } from './signal-reception.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
 import { drawLaneAttack } from './lane-presentation.mjs';
 import {
@@ -12,12 +34,21 @@ import {
   drawLineImpacts,
   drawEnemyPressure,
 } from './classic-view.mjs';
+import { combatView } from './combat-view.mjs';
+import { drawSnakeBody, drawSnakeTargetOrder } from './snake-view.mjs';
+import {
+  createCombatPresentation,
+  drawCombatScrap,
+  drawCombatWarnings,
+  drawCombatProjectiles,
+} from './combat-presentation.mjs';
 import { foundationCompatibleView as classicView } from './foundation-view.mjs';
 import { drawRelayGates, drawRelayTriggers, relayView } from './relay-view.mjs';
 import { drawDirectionalFields, directionalView } from './directional-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { playerBodyOffset } from './player-body-layout.mjs';
+import { bodyMotionPose } from './body-motion.mjs';
 import { createSceneArt } from './scene-art.mjs';
 import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import {
@@ -101,19 +132,33 @@ const imageLoad = (src) =>
   new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error('Artwork could not be loaded.'));
+    image.onerror = () => reject(new Error(t('interface:artworkCouldNotBeLoaded')));
     image.src = src;
   });
 
 export class BoardPainter {
-  constructor(presets, { onAsset = () => {}, onAssetStatus = () => {} } = {}) {
+  constructor(
+    presets,
+    {
+      onAsset = () => {},
+      onAssetStatus = () => {},
+      pictureCanvasFactory,
+      jammerCanvasFactory,
+      signalCanvasFactory,
+    } = {},
+  ) {
     this.presets = presets;
+    this.battlefieldGround = createBattlefieldGroundSurface();
     this.onAsset = onAsset;
     this.onAssetStatus = onAssetStatus;
     this.lookWarning = '';
     this.enemyBodies = createEnemyBodyAssets({ changed: () => this.reportAssets() });
     this.animation = createAnimationState();
     this.actorPresentation = createActorPresentation();
+    this.actorDefeats = createActorDefeatPresentation({ kind: 'capture' });
+    this.actorFinishBodies = new Map();
+    this.combatPresentation = createCombatPresentation();
+    this.huntDestruction = createHuntDestruction();
     this.heading = 0;
     this.time = 0;
     this.effects = [];
@@ -127,13 +172,61 @@ export class BoardPainter {
     this._winState = null;
     this._celebrationPrepared = false;
     this.presentation = null;
+    this.artRevision = runtimeActorArtRevision();
+    this.arcadeAdapter = createArcadeAdapter({ reviewRevision: this.artRevision });
+    this.arcadeProvider = () => null;
+    this.interfaceProvider = () => null;
+    this.arcadeCollection = null;
+    this.pictureFilter = createDemoPictureFilter({ canvasFactory: pictureCanvasFactory });
+    this.jammerPictureFilter = createJammerPictureFilter({ canvasFactory: jammerCanvasFactory });
+    this.signalReception = createSignalReception({ canvasFactory: signalCanvasFactory });
+  }
+  dispose() {
+    this.battlefieldGround.clear();
+    this.arcadeAdapter.clear();
+    // Retired scenes cannot adopt a late decode or retain shared enemy leases.
+    ++this.loadToken;
+    this.enemyBodies.clear();
+    this.pictureFilter.clear();
+    this.jammerPictureFilter.clear();
+    this.signalReception.dispose();
+    this.huntDestruction.reset();
+    this.combatPresentation.reset();
+    this.images = {};
+    this.overrides = {};
+    this.image = null;
+    this.background = null;
+    this.theme = null;
+    this.presentation = null;
+    this.effects = [];
+    this.celebration = null;
+    this._winState = null;
+    this.actorPresentation.reset();
+    this.actorDefeats.reset();
+    this.actorFinishBodies.clear();
   }
   // A read-only compiled release snapshot is cosmetic. It never replaces the
   // source theme, picture, body preset or any simulation-owned reference.
   setPresentation(snapshot = null) {
+    if (snapshot !== this.presentation) {
+      this.arcadeAdapter.clear();
+      this.actorDefeats.reset();
+      this.actorFinishBodies.clear();
+    }
     this.presentation = snapshot;
   }
+  setInterfaceProvider(provider) {
+    this.interfaceProvider = typeof provider === 'function' ? provider : () => null;
+  }
+  setArcadeProvider(provider) {
+    this.arcadeProvider = typeof provider === 'function' ? provider : () => null;
+  }
+  get artSnapshot() {
+    return this.arcadeAdapter.resolve(this.presentation, this.arcadeCollection);
+  }
   async setLook(theme, bodyId, overrides = {}) {
+    this.pictureFilter.clear();
+    this.jammerPictureFilter.clear();
     const token = ++this.loadToken;
     this.enemyBodies.clear();
     this.lookWarning = '';
@@ -144,6 +237,10 @@ export class BoardPainter {
     this.background = this.makeArt(theme);
     this.animation = createAnimationState();
     this.actorPresentation.reset();
+    this.actorDefeats.reset();
+    this.actorFinishBodies.clear();
+    this.combatPresentation.reset();
+    this.huntDestruction.reset();
     const knownBody = Object.hasOwn(this.presets.characters, bodyId)
         ? this.presets.characters[bodyId]
         : null,
@@ -178,7 +275,7 @@ export class BoardPainter {
         });
       } catch {}
     };
-    if (requested.length) report('preparing', 'Loading craft and scene artwork…');
+    if (requested.length) report('preparing', t('interface:loadingCraftAndSceneArtwork'));
     const settled = await Promise.allSettled(
       requested.map(async ([role, src]) => [role, await imageLoad(src)]),
     );
@@ -190,9 +287,9 @@ export class BoardPainter {
         if (role === 'player') this.image = img;
       }
     this.lookWarning = [
-      !knownBody ? 'The requested body is not registered; a neutral fallback rig is shown.' : '',
+      !knownBody ? t('interface:theRequestedBodyIsNotRegisteredANeutralFallbackRig') : '',
       settled.some((x) => x.status === 'rejected')
-        ? 'Some artwork is unavailable; a clear fallback is shown.'
+        ? t('interface:someArtworkIsUnavailableAClearFallbackIsShown')
         : '',
     ]
       .filter(Boolean)
@@ -201,7 +298,7 @@ export class BoardPainter {
     // A procedural look also completes any status from the look it superseded.
     report(
       settled.some((item) => item.status === 'rejected') ? 'error' : 'ready',
-      this.lookWarning || 'Craft and scene artwork are ready.',
+      this.lookWarning || t('interface:craftAndSceneArtworkAreReady'),
     );
   }
   reportAssets() {
@@ -222,7 +319,39 @@ export class BoardPainter {
   makeArt(theme, level = this.levelInfo, seed = this.artSeed) {
     return createSceneArt(theme, level, seed, () => makeCanvas(384, 288));
   }
-  setLevel(level = {}, { seed = 0 } = {}) {
+  // Only the host's first activation or new-attempt preparation calls this.
+  // Resume never rereads the menu choices for an already accepted attempt.
+  setAttemptAppearance(appearance) {
+    if (this.acceptedAttemptAppearance === appearance) return;
+    const accepted = requireAcceptedAttemptAppearance(appearance);
+    this.acceptEnemyArtwork({
+      artRevision: accepted?.artRevision ?? null,
+      arcadeCollection: accepted?.collection
+        ? getArcadeCollection(accepted.collection.id, accepted.collection.revision)
+        : null,
+    });
+    this.arcadeAdapter.setEnvironment(accepted?.environmentPin ?? null);
+    this.acceptedAttemptAppearance = appearance;
+  }
+  acceptEnemyArtwork({ artRevision = runtimeActorArtRevision(), arcadeCollection } = {}) {
+    this.acceptedAttemptAppearance = undefined;
+    this.arcadeAdapter.setEnvironment(null);
+    this.artRevision = artRevision;
+    this.arcadeAdapter.setReviewRevision(artRevision);
+    this.combatPresentation.setArtRevision(artRevision);
+    this.huntDestruction.setArtRevision(artRevision);
+    this.arcadeCollection =
+      arcadeCollection === undefined
+        ? selectedArcadeCollection(this.arcadeProvider())
+        : arcadeCollection;
+  }
+  setLevel(
+    level = {},
+    { seed = 0, arcadeCollection = undefined, artRevision = runtimeActorArtRevision() } = {},
+  ) {
+    this.acceptEnemyArtwork({ artRevision, arcadeCollection });
+    this.pictureFilter.clear();
+    this.jammerPictureFilter.clear();
     this.levelInfo = { id: level.id || 'gallery', revision: level.revision || '1' };
     this.artSeed = seed;
     if (this.theme) this.background = this.makeArt(this.theme);
@@ -235,6 +364,10 @@ export class BoardPainter {
     this.speedRatio = 0;
     this.time = 0;
     this.actorPresentation.reset();
+    this.actorDefeats.reset();
+    this.actorFinishBodies.clear();
+    this.combatPresentation.reset();
+    this.huntDestruction.reset();
   }
   startCelebration({
     levelId = this.levelInfo.id || '',
@@ -263,16 +396,24 @@ export class BoardPainter {
       height = ctx.canvas?.height || 576,
       image = null,
       fit = 'cover',
+      pictureVisibility = 'clear',
     } = {},
   ) {
     if (!theme) return;
-    const source = image || this.makeArt(theme, level, seed);
+    const source = this.pictureFilter.select(
+      image || this.makeArt(theme, level, seed),
+      pictureVisibility,
+    );
     ctx.save();
     ctx.imageSmoothingEnabled = false;
     ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = theme.palette.field;
     ctx.fillRect(0, 0, width, height);
+    if (!source) {
+      ctx.restore();
+      return;
+    }
     const ratio =
       fit === 'contain'
         ? Math.min(width / source.width, height / source.height)
@@ -287,6 +428,7 @@ export class BoardPainter {
     ctx.restore();
   }
   effectsFor(events = [], run = null) {
+    this.actorDefeats.observe(run, events, (id) => this.actorFinishBodies.get(id));
     for (const event of events) {
       const effect = presentationEvent(event, run);
       if (effect) this.effects.push(effect);
@@ -304,6 +446,9 @@ export class BoardPainter {
       showGrid = false,
       debug = false,
       fullReveal = false,
+      showCombatScrap = true,
+      brutal = false,
+      blood = true,
       celebrationPaused = false,
       defeatEffectsRunning = false,
       actorScale = 1,
@@ -313,27 +458,57 @@ export class BoardPainter {
       actorSkins = {},
       actorAppearance = null,
       backdrop = null,
+      feedbackComparison = null,
+      pictureVisibility = 'clear',
+      demoTransition = 0,
+      pictureInterference = true,
+      signalReception = 'off',
+      signalEffectsRunning = false,
     } = {},
   ) {
     if (!this.theme || !state) return;
+    const combat = combatView(state);
+    if (combat && !combat.valid) {
+      throw new Error(`Cannot render optional combat: ${combat.error}`);
+    }
+    // Developer comparison only: omit these flags for the accepted presentation.
+    // Hide only additive decoration; functional cues and all effect clocks stay.
+    const captureAccent = feedbackComparison?.captureAccent !== false,
+      eventAccents = feedbackComparison?.eventAccents !== false;
     const presentation =
-      this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.presentation : null;
+      this.theme.id === 'fpv' ||
+      this.theme.family === 'fpv' ||
+      this.arcadeCollection?.id === 'military-field'
+        ? this.artSnapshot
+        : null;
     if (
       actorAppearance !== null &&
       (!['fpv', 'campaign'].includes(actorAppearance?.style) ||
         (actorAppearance.style === 'fpv' && typeof actorAppearance.snapshot?.image !== 'function'))
     )
-      throw new TypeError('Actor appearance requires a supported style and prepared FPV assets.');
+      throw new TypeError(
+        t('interface:actorAppearanceRequiresASupportedStyleAndPreparedFpvAssets'),
+      );
     // The host owns and verifies this separate lease. Its canvas, fonts and
     // theme are deliberately ignored: changing actors must not change a world.
     const fpvActors = actorAppearance?.style === 'fpv';
-    const actorPresentation = fpvActors ? actorAppearance.snapshot : presentation;
-    const fonts = canvasTextFonts(textFace, presentation?.fonts);
+    const actorPresentation = fpvActors
+      ? this.arcadeAdapter.resolve(actorAppearance.snapshot, this.arcadeCollection)
+      : presentation;
+    const interfaceFonts = canvasInterfaceFonts(this.interfaceProvider());
+    const fonts = canvasTextFonts(textFace, interfaceFonts ?? presentation?.fonts, {
+      useThemeFont: !!interfaceFonts || !!presentation?.appearance,
+    });
     reduced = reduced || presentation?.canvas.motionScale === 0;
     const motionDt = dt * (presentation?.canvas.motionScale ?? 1);
     const { width: columns, height: rows } = geometryForRun(state);
     const W = columns * CELL,
       H = rows * CELL;
+    const reception = this.signalReception.advance(state, dt, {
+      mode: fullReveal ? 'off' : signalReception,
+      running: signalEffectsRunning,
+      reduced,
+    });
     if (fullReveal && state.status === 'won') {
       if (this._winState !== state) {
         if (!this._celebrationPrepared)
@@ -352,7 +527,7 @@ export class BoardPainter {
     const finale = fullReveal ? celebrationFrame(this.celebration) : null;
     const revealAlpha = fullReveal ? 1 - finale.reveal : 1;
     const p = presentation?.canvas.palette || this.theme.palette,
-      t = state.time;
+      time = state.time;
     const classic = fullReveal ? null : classicView(state);
     const canvasCSSWidth =
       Number.isFinite(displayCSSWidth) && displayCSSWidth > 0
@@ -360,6 +535,16 @@ export class BoardPainter {
         : Number.isFinite(ctx.canvas?.clientWidth) && ctx.canvas.clientWidth > 0
           ? ctx.canvas.clientWidth
           : W;
+    const combatOptions = {
+      artRevision: this.artRevision,
+      reduced,
+      screenScale: canvasCSSWidth / W,
+      canvasCSSWidth,
+      scale: actorScale,
+      showScrap: showCombatScrap,
+      brutal,
+      blood,
+    };
     const images = { ...this.images, presentationSprites: {} };
     const enemySprites = {};
     if (presentation) {
@@ -416,7 +601,7 @@ export class BoardPainter {
       const sprite = role && actorPresentation.image(`player.${role}.${treatment}`);
       const body = fpvActors ? this.presets.characters[set?.classBodies[role]] : this.body;
       if (fpvActors && (!sprite || !body))
-        throw new TypeError('Actor appearance is missing the prepared player role.');
+        throw new TypeError(t('interface:actorAppearanceIsMissingThePreparedPlayerRole'));
       if (sprite) {
         playerImage = sprite.image;
         playerGeometry = sprite.geometry;
@@ -426,7 +611,10 @@ export class BoardPainter {
           rotors: sprite.geometry.rotors,
           presentationPivot: sprite.geometry.pivot,
         };
-        playerRecipe = this.presets.animationRecipes[body.animationRecipe];
+        playerRecipe = preparedRotorRecipe(
+          this.presets.animationRecipes[body.animationRecipe],
+          sprite.geometry,
+        );
       }
     }
     const actorFrames = this.actorPresentation.sample(fullReveal ? [] : state.enemies, {
@@ -443,7 +631,26 @@ export class BoardPainter {
       canvasCSSWidth,
       scale: actorScale,
       actorSkins,
+      bodyRecipes: this.theme.actorRecipes ?? {},
     });
+    if (this.actorFinishSource !== actorPresentation || !this.actorDefeats.bind(state)) {
+      this.actorDefeats.reset();
+      this.actorDefeats.bind(state);
+      this.actorFinishBodies.clear();
+      this.actorFinishSource = actorPresentation;
+    }
+    const actorFinishes = this.actorDefeats.advance(state, {
+      dt,
+      paused: state.status === 'won' ? celebrationPaused : paused,
+      reduced,
+      concealed: fullReveal,
+    });
+    for (const enemy of state.enemies) {
+      if (enemy.type !== 'relay-sentinel' || state.encounter?.defeated) continue;
+      const frame = actorFrames.get(enemy.id),
+        sprite = this.enemyBody(frame, enemySprites[enemy.type]);
+      if (sprite?.geometry?.animation) this.actorFinishBodies.set(enemy.id, { frame, sprite });
+    }
     // A compiled default owns its bitmap; do not acquire the old full original too.
     // Keep every frame in the metadata request so the compiled bitmap can still
     // use the catalog's bounded surface-motion accents.
@@ -464,11 +671,45 @@ export class BoardPainter {
     // The host owns a fully decoded binding and its lifetime. Select its image
     // and fit together for this frame; never reset rigs/effects or replace the
     // authored fallback. Sampling remains nearest throughout this pixel painter.
-    const picture = backdrop?.image || this.images.background || this.background;
+    // Filter only the picture before masks, terrain and actors are composited.
+    // Pending or unreadable artwork paints the neutral field until protected.
+    const protectedPicture = this.pictureFilter.select(
+      backdrop?.image || this.images.background || this.background,
+      pictureVisibility,
+      { time: this.time, animate: !reduced },
+    );
+    // Reception affects only the picture. The covered-cell mask and every
+    // terrain, trail, enemy and player cue are painted sharply afterward.
+    // Demo transitions receive only the protected picture. Their 300ms clock
+    // belongs to the host; this normalized envelope cannot sample raw artwork.
+    const transitionStrength =
+      !reduced && Number.isFinite(demoTransition)
+        ? Math.max(0, Math.min(1, demoTransition)) * 0.35
+        : 0;
+    const picture = this.jammerPictureFilter.select(protectedPicture, {
+      // Picture-preview preferences control concealment/decorative reception,
+      // never the authoritative jammer mechanic. Apply it to protected pixels
+      // too, so hiding artwork cannot disable the level's warning feedback.
+      strength: Math.max(
+        pictureInterference ? transitionStrength : 0,
+        jammerPictureStrength(state, { fullReveal }) * (reduced ? 0.65 : 1),
+      ),
+      time: this.time,
+      animate: !reduced,
+    });
     const fit = backdrop?.image ? backdrop.fit : this.overrides.background?.fit || 'cover';
     ctx.fillStyle = p.field;
     ctx.fillRect(0, 0, W, H);
-    if (fit === 'contain') {
+    // A tiny arrival ease gives the earned artwork a gentle landing. It ends
+    // at its exact original fit; reduced effects and the settled picture never zoom.
+    const pictureScale = fullReveal && !reduced ? finale.pictureScale || 1 : 1;
+    ctx.save();
+    if (pictureScale !== 1) {
+      ctx.translate(W / 2, H / 2);
+      ctx.scale(pictureScale, pictureScale);
+      ctx.translate(-W / 2, -H / 2);
+    }
+    if (picture && fit === 'contain') {
       const r = Math.min(W / picture.width, H / picture.height);
       ctx.drawImage(
         picture,
@@ -477,7 +718,7 @@ export class BoardPainter {
         picture.width * r,
         picture.height * r,
       );
-    } else {
+    } else if (picture) {
       const r = Math.max(W / picture.width, H / picture.height);
       ctx.drawImage(
         picture,
@@ -487,8 +728,19 @@ export class BoardPainter {
         picture.height * r,
       );
     }
+    ctx.restore();
     if (!fullReveal || revealAlpha > 0) {
-      ctx.fillStyle = '#000000';
+      const ground = this.battlefieldGround.prepare(
+        sharedBattlefieldGround().snapshot().world,
+        W,
+        H,
+        battlefieldGroundAllowed({
+          environmentPin: this.acceptedAttemptAppearance?.environmentPin,
+          presentation: this.presentation,
+          overrides: this.overrides,
+        }),
+      );
+      ctx.fillStyle = this.theme.coverColor ?? '#000000';
       ctx.globalAlpha = revealAlpha;
       // Horizontal runs keep the reveal mask cheap and deterministic.
       for (let y = 0; y < rows; y++) {
@@ -497,20 +749,49 @@ export class BoardPainter {
           const covered = x < columns && state.cells[y * columns + x] === 0;
           if (covered && start < 0) start = x;
           if (!covered && start >= 0) {
-            ctx.fillRect(start * CELL, y * CELL, (x - start) * CELL, CELL);
+            if (
+              !paintBattlefieldGroundSpan(
+                ctx,
+                ground,
+                start * CELL,
+                y * CELL,
+                (x - start) * CELL,
+                CELL,
+                W,
+                H,
+              )
+            )
+              ctx.fillRect(start * CELL, y * CELL, (x - start) * CELL, CELL);
             start = -1;
           }
         }
       }
       ctx.globalAlpha = 1;
     }
+    // Degrade only the already-masked feed. Covered pixels stay secret;
+    // terrain, live cuts and actors below remain sharp from the first tick.
+    if (reception.kind === 'acquire') this.signalReception.draw(ctx, W, H, reception);
     drawClassicTerrain(ctx, classic, p, images);
+    this.huntDestruction.advance(combat, dt, {
+      key: state,
+      sources: [state.player],
+      paused: state.status === 'won' ? celebrationPaused : paused,
+      brutal,
+      blood,
+      reduced,
+      concealed: fullReveal,
+    });
+    if (combat && !fullReveal) drawCombatScrap(ctx, combat, p, combatOptions);
+    this.huntDestruction.draw(ctx, { unit: 1 / (canvasCSSWidth / W), color: p.accent });
+    this.actorDefeats.draw(ctx, actorFinishes, (count) =>
+      this.huntDestruction.reserveTransientPieces(count),
+    );
     // Reveal decoration belongs below current hazards, actors and live cuts.
     // An old capture pulse must never wash over a newly opened live line.
-    if (!fullReveal)
+    if (!fullReveal && captureAccent)
       for (const effect of this.effects)
-        if (effect.type === 'cells.claimed')
-          drawCapturePulse(ctx, effect, columns, state.cells, p, reduced);
+        if (['cells.claimed', 'relay.opened'].includes(effect.type))
+          drawCapturePulse(ctx, effect, columns, state.cells, p, reduced, this.theme.family);
     for (let y = 0; y < rows; y++)
       for (let x = 0; x < columns; x++) {
         const v = state.cells[y * columns + x],
@@ -607,7 +888,7 @@ export class BoardPainter {
     }
     if (!fullReveal) {
       for (const zone of state.signalZones || []) {
-        const suppressed = zone.suppressedUntil > t,
+        const suppressed = zone.suppressedUntil > time,
           xx = zone.x * CELL,
           yy = zone.y * CELL,
           ww = zone.w * CELL,
@@ -658,6 +939,7 @@ export class BoardPainter {
           boardHeight: H,
         });
       }
+      drawSnakeBody(ctx, state, { palette: p });
       drawEncounterLane(ctx, state, p);
       drawClassicPickups(ctx, classic, p, images, {
         screenScale: canvasCSSWidth / W,
@@ -712,7 +994,7 @@ export class BoardPainter {
           ctx.strokeStyle = p.accent;
           ctx.globalAlpha = 0.2;
           ctx.beginPath();
-          ctx.arc(x, y, 12 + Math.sin(t * 3) * 3, 0, TAU);
+          ctx.arc(x, y, 12 + Math.sin(time * 3) * 3, 0, TAU);
           ctx.stroke();
           ctx.globalAlpha = 1;
         }
@@ -730,7 +1012,7 @@ export class BoardPainter {
         if (f.kind === 'impact-pulse' && !reduced) {
           const phase = Math.max(
             0,
-            Math.min(1, 1 - (f.until - t) / (state.classRecipe?.duration || 1)),
+            Math.min(1, 1 - (f.until - time) / (state.classRecipe?.duration || 1)),
           );
           ctx.beginPath();
           ctx.arc(f.x * CELL, f.y * CELL, (f.radius || 3) * CELL * phase, 0, TAU);
@@ -742,7 +1024,7 @@ export class BoardPainter {
       // gets a compact marker in the ordinary actor pass afterward.
       for (const e of state.enemies) {
         if (e.type !== 'relay-sentinel' || state.encounter?.defeated) continue;
-        const stunned = (e.stunnedUntil || 0) > t;
+        const stunned = (e.stunnedUntil || 0) > time;
         ctx.globalAlpha = stunned ? 0.4 : 1;
         const body = this.enemyBody(actorFrames.get(e.id), enemySprites[e.type]);
         drawPresentedActor(
@@ -756,11 +1038,14 @@ export class BoardPainter {
         ctx.globalAlpha = 1;
         drawEncounterCore(ctx, state, e, p, reduced);
       }
+      if (combat) this.combatPresentation.drawActors(ctx, combat, p, combatOptions);
       drawEnemyPressure(ctx, classic, p, {
         screenScale: canvasCSSWidth / W,
         frames: actorFrames,
         fonts,
       });
+      drawSnakeTargetOrder(ctx, state, combat?.actors, { palette: p, font: fonts.numeric });
+      if (combat) drawCombatWarnings(ctx, combat, p, combatOptions);
       drawActiveTrail(ctx, state.trailSegments, state.trail, state.player, p, {
         time: this.time,
         reduced,
@@ -798,8 +1083,8 @@ export class BoardPainter {
           }
           continue;
         }
-        const stunned = (e.stunnedUntil || 0) > t,
-          slowed = (e.slowUntil || 0) > t;
+        const stunned = (e.stunnedUntil || 0) > time,
+          slowed = (e.slowUntil || 0) > time;
         ctx.globalAlpha = stunned ? 0.4 : 1;
         const body = this.enemyBody(actorFrames.get(e.id), enemySprites[e.type]);
         drawPresentedActor(
@@ -811,7 +1096,7 @@ export class BoardPainter {
           body?.record,
         );
         ctx.globalAlpha = 1;
-        if ((state.ability.scanUntil || 0) > t && e.type === 'bouncer' && !stunned) {
+        if ((state.ability.scanUntil || 0) > time && e.type === 'bouncer' && !stunned) {
           ctx.strokeStyle = p.accent;
           ctx.setLineDash([3, 5]);
           ctx.beginPath();
@@ -829,6 +1114,7 @@ export class BoardPainter {
           ctx.strokeRect(e.x * CELL - 13, e.y * CELL - 13, 26, 26);
         }
       }
+      if (combat) drawCombatProjectiles(ctx, combat, p, combatOptions);
       drawClassicStatus(ctx, classic, p, {
         screenScale: canvasCSSWidth / W,
         canvasCSSWidth,
@@ -866,8 +1152,13 @@ export class BoardPainter {
         recipe: playerRecipe,
         animation: this.animation,
         scale: playerSize.scale,
-        heading: this.heading,
-        bank: reduced ? 0 : this.bank || 0,
+        ...bodyMotionPose(playerBody, {
+          seconds: state.time,
+          heading: this.heading,
+          bank: this.bank || 0,
+          speedRatio: this.speedRatio || 0,
+          reduced,
+        }),
         speedRatio: this.speedRatio || 0,
         reducedMotion: reduced,
         pixel: 1 / CELL,
@@ -900,10 +1191,9 @@ export class BoardPainter {
         colors: { body: p.safe, accent: p.accent },
         x: state.player.x + bodyOffset.x,
         y: state.player.y + bodyOffset.y,
-        // Approved player sprites already contain their motor hubs. The old
-        // procedural blades read as four detached white corner brackets at
-        // gameplay scale, so keep the authored silhouette unobstructed.
-        showRotors: false,
+        // Only prepared bodies declare separate rotor geometry. Uploaded and
+        // historical originals may contain baked blades and keep their path.
+        showRotors: Boolean(playerGeometry),
       });
       ctx.restore();
       // This ring stays at the simulation contact radius, independent of body
@@ -919,13 +1209,13 @@ export class BoardPainter {
         TAU,
       );
       ctx.strokeStyle = PRESENTATION_PLATE;
-      ctx.lineWidth = 3;
+      ctx.lineWidth = playerGeometry ? contactCueUnderstroke(feedbackComparison?.contactStyle) : 3;
       ctx.stroke();
       ctx.strokeStyle = debug ? '#ffffff' : PRESENTATION_INK;
       ctx.lineWidth = 1;
       ctx.stroke();
       ctx.restore();
-      if ((state.ability.shieldUntil || 0) > t || state.player.graceUntil > t) {
+      if ((state.ability.shieldUntil || 0) > time || state.player.graceUntil > time) {
         ctx.strokeStyle = p.safe;
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -952,13 +1242,14 @@ export class BoardPainter {
       if (!fullReveal)
         drawEventFeedback(ctx, f, p, {
           themeId: this.theme.id,
+          themeFamily: this.theme.family,
           reduced,
           screenScale: canvasCSSWidth / W,
           width: W,
           height: H,
           fonts,
         });
-      if (!fullReveal && !reduced && f.type === 'craft.redeployed' && f.age < 0.6) {
+      if (!fullReveal && !reduced && eventAccents && f.type === 'craft.redeployed' && f.age < 0.6) {
         ctx.save();
         ctx.strokeStyle = p.accent;
         ctx.globalAlpha = (1 - f.age / 0.6) * 0.6;
@@ -974,7 +1265,7 @@ export class BoardPainter {
         ctx.stroke();
         ctx.restore();
       }
-      if (!fullReveal && !reduced && f.type === 'player.failed' && f.age < 0.6) {
+      if (!fullReveal && !reduced && eventAccents && f.type === 'player.failed' && f.age < 0.6) {
         ctx.strokeStyle = f.type === 'player.failed' ? p.danger : p.accent;
         ctx.globalAlpha = (1 - f.age / 0.6) * 0.55;
         ctx.lineWidth = 4;
@@ -990,6 +1281,9 @@ export class BoardPainter {
       });
     this.effects = this.effects.filter((f) => f.age < 0.7);
     if (fullReveal) drawCelebration(ctx, finale, p, W, H);
+    // A terminal loss degrades the completed, already-masked feed. DOM results
+    // and controls sit outside this canvas; raw concealed art is never sampled.
+    if (reception.kind === 'lost') this.signalReception.draw(ctx, W, H, reception);
   }
   drawActor(c, shape, x, y, size, color, img, t, reduced) {
     if (img) {

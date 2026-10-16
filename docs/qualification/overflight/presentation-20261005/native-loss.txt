@@ -1,0 +1,44 @@
+- main:
+  - button "Menu"
+  - generic: Overflight
+  - button "Pause" [disabled]
+  - region "Overflight battlefield":
+    - complementary:
+      - 'generic "Now playing: Carol of the Bells (Metal Version) · Alexander Nakarada"'
+      - 'generic "File: Carol of the Bells (Metal Version).mp3"'
+      - link "Visit Alexander Nakarada — opens in a new tab":
+        - /url: https://creatorchords.com/music/carol-of-the-bells-metal-version/
+        - text: Creator source ↗
+    - generic: Hull 0 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 0
+    - generic: Sortie
+    - strong: 00:16
+    - generic: Level 1
+    - generic: 9 Cleared
+    - generic: Overflight payload 1
+    - generic: Boost Ready
+    - generic "Diagnostics"
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+  - dialog "Results":
+    - heading "Results" [active] [level=1]
+    - generic: ✦
+    - paragraph: Signal lost
+    - heading "Sortie ended" [level=2]
+    - paragraph: Every pass made a difference. Take what you learned into the next sortie.
+    - term: Cleared
+    - definition: "9"
+    - term: Time
+    - definition: 00:16
+    - term: Salvage
+    - definition: "8"
+    - term: Upgrades earned
+    - definition: "0"
+    - heading "Your build" [level=3]
+    - strong: Overflight payload
+    - generic: Level 1
+    - generic: Engineer — No airframes remain. The sortie is over.
+    - paragraph: Try another combination on the same battlefield.
+    - button "Back"
+    - button "Retry"
+- text: + + + + + + + + +

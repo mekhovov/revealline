@@ -1,0 +1,155 @@
+{
+  "format": "FPVLegacyReplayVerification.v1",
+  "source": {
+    "model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6"
+  },
+  "passed": 24,
+  "results": [
+    {
+      "course": "flight-01",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 239
+    },
+    {
+      "course": "flight-01",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 239
+    },
+    {
+      "course": "flight-02",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 383
+    },
+    {
+      "course": "flight-02",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 383
+    },
+    {
+      "course": "flight-03",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 433
+    },
+    {
+      "course": "flight-03",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 433
+    },
+    {
+      "course": "flight-04",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 433
+    },
+    {
+      "course": "flight-04",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 433
+    },
+    {
+      "course": "flight-05",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 435
+    },
+    {
+      "course": "flight-05",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 435
+    },
+    {
+      "course": "flight-06",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 899
+    },
+    {
+      "course": "flight-06",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 900
+    },
+    {
+      "course": "flight-07",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 498
+    },
+    {
+      "course": "flight-07",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 488
+    },
+    {
+      "course": "flight-08",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 491
+    },
+    {
+      "course": "flight-08",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 491
+    },
+    {
+      "course": "flight-09",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 638
+    },
+    {
+      "course": "flight-09",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 638
+    },
+    {
+      "course": "flight-10",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 610
+    },
+    {
+      "course": "flight-10",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 610
+    },
+    {
+      "course": "flight-11",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 1243
+    },
+    {
+      "course": "flight-11",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1243
+    },
+    {
+      "course": "flight-12",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 1126
+    },
+    {
+      "course": "flight-12",
+      "mode": "acro",
+      "status": "complete",
+      "ticks": 1126
+    }
+  ]
+}

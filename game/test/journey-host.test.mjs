@@ -61,6 +61,9 @@ function win(p) {
   p.key('ArrowDown', false);
   for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
   assert.equal(p.rendered.run.status, 'won');
+  assert.equal(p.$('game-overlay').hidden, true, 'The earned picture waits for the player.');
+  if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  p.$('show-result').click();
   assert.equal(p.$('game-overlay').dataset.kind, 'won');
   assert.equal(p.$('next-button').hidden, false);
   assert.equal(p.$('skip-celebration').hidden, true);
@@ -128,7 +131,7 @@ test('Historical Journey backup restoration updates chooser progress without rep
   assert.deepEqual(p.errors, []);
 });
 
-test('Journey ten consecutive mission clears need only Next and retain exact progress', async (t) => {
+test('Journey ten consecutive clears retain exact progress through picture Continue and Next', async (t) => {
   const { p, backend } = await setup(t);
   for (let i = 1; i <= 10; i++) {
     win(p);
@@ -297,7 +300,7 @@ for (const cancel of ['button', 'Escape', 'new chooser'])
     p.$('journey-search').emit('input');
     p.$('journey-cards').children[0].click();
     await settle(() => !!resolveDownload);
-    assert.equal(p.$('flight-preparation-cancel').hidden, false);
+    assert.equal(p.$('flight-preparation-cancel').hidden, true);
     if (cancel === 'button') p.$('flight-preparation-cancel').click();
     else if (cancel === 'Escape') {
       p.key('Escape');

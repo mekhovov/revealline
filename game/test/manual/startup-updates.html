@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-boot-state="loading">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Startup updates — component preview</title>
+    <link rel="stylesheet" href="../../boot.css" />
+    <link rel="stylesheet" href="../../ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../../ui/field-kit-tokens.css" />
+    <script src="../../vendor/i18next-26.4.2.min.js"></script>
+    <script src="../../i18n/catalogs.mjs"></script>
+    <script src="../../i18n/bootstrap.mjs"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #070b12;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      // Isolated visual preview of the real startup markup/controller. No game,
+      // access gate, stored profile or actual updater runs in this fixture.
+      import { attachBootUpdates } from '../../boot-updates.mjs';
+      const source = new DOMParser().parseFromString(
+        await (await fetch('../../index.html')).text(),
+        'text/html',
+      );
+      const screen = source.getElementById('boot-screen');
+      for (const image of screen.querySelectorAll('img[src]'))
+        image.src = new URL('../../' + image.getAttribute('src'), location.href).href;
+      document.body.append(screen);
+      const marker = document.createElement('meta');
+      marker.name = 'revealline-offline';
+      marker.content = JSON.stringify({
+        version: '0.142.4',
+        scope: '../',
+        buildId: 'a'.repeat(64),
+      });
+      document.head.append(marker);
+      const scenario = new URL(location.href).searchParams.get('state') || 'available';
+      const view = {
+        location: new URL('../../', location.href),
+        navigator: { standalone: scenario !== 'browser' },
+        DOMParser,
+        matchMedia: () => ({ matches: false }),
+        setTimeout: window.setTimeout.bind(window),
+        clearTimeout: window.clearTimeout.bind(window),
+        addEventListener: window.addEventListener.bind(window),
+        removeEventListener: window.removeEventListener.bind(window),
+        fetch: async (_url, { signal }) => {
+          if (scenario === 'offline') throw new TypeError('Offline preview');
+          if (scenario === 'slow')
+            return new Promise((_resolve, reject) =>
+              signal.addEventListener('abort', () => reject(signal.reason)),
+            );
+          return new Response(
+            `<meta name="revealline-update" content='${JSON.stringify({ format: 'revealline-app-update.v1', scope: '../', buildId: (scenario === 'current' ? 'a' : 'b').repeat(64) })}'>`,
+          );
+        },
+      };
+      attachBootUpdates({ document, window: view });
+      for (const a of screen.querySelectorAll('a'))
+        a.addEventListener('click', (event) => event.preventDefault());
+    </script>
+  </body>
+</html>

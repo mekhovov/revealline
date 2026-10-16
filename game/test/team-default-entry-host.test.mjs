@@ -6,6 +6,13 @@ import { page } from './helpers/coop-host.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
 import { createModeReturn } from '../mode-return.mjs';
+import { createJourneyBackend } from '../journey/profile.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { playTeamEditionRoute } from './helpers/team-edition-host-route.mjs';
+import {
+  createTeamSpatialOriginalCandidates,
+  TEAM_SPATIAL_PROFILE_KEY,
+} from '../content-design/team-spatial-originals.mjs';
 
 const base = 'http://localhost/game/couch/relay-rescue.html';
 const source = createTeamImpactOriginalCandidates();
@@ -24,12 +31,13 @@ const enter = (f, id) => {
 };
 
 async function fresh(t, href = base, extra = {}) {
+  const { journeyIndexedDB = null, ...pageOptions } = extra;
   return page(t, {
     href,
     nativeFocus: true,
     nativeVisibility: true,
     retainInitialDifficulty: true,
-    ...extra,
+    ...pageOptions,
     beforeImport({ install }) {
       const BaseImage = globalThis.Image,
         actorFetch = globalThis.fetch;
@@ -45,6 +53,7 @@ async function fresh(t, href = base, extra = {}) {
       }
       install('Image', { value: OriginalImage });
       install('crypto', { value: webcrypto });
+      if (journeyIndexedDB) install('indexedDB', { value: journeyIndexedDB });
       install('fetch', {
         value: async (url) => {
           const asset = source.assets.find((row) => new URL(url).pathname.endsWith('/' + row.path));
@@ -55,6 +64,53 @@ async function fresh(t, href = base, extra = {}) {
     },
   });
 }
+
+test('a current Team win retains only its exact accepted Team original', async (t) => {
+  const memory = managedIndexedDB(),
+    rewardSource = createTeamSpatialOriginalCandidates(),
+    f = await fresh(t, `${base}?journey=team-spatial-originals-1`, {
+      journeyIndexedDB: memory.indexedDB,
+    }),
+    mission = rewardSource.missions[0];
+  enter(f, 'coop-start');
+  playTeamEditionRoute(f, rewardSource, mission.id, 'standard');
+  const backend = createJourneyBackend({
+    ...memory,
+    profileKey: TEAM_SPATIAL_PROFILE_KEY,
+  });
+  let state;
+  for (let attempt = 0; attempt < 400; attempt++) {
+    state = await backend.readState();
+    if (state.pictures.records.length) break;
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  }
+  assert.equal(
+    state.pictures.records.length,
+    1,
+    `Expected one Team original after the legal win: ${JSON.stringify(state.profile.clears)}`,
+  );
+  const record = state.pictures.records[0],
+    asset = rewardSource.assets.find((item) => item.id === mission.presentation.backgroundAssetId);
+  assert.equal(record.mode, 'team');
+  assert.equal(record.editionId, TEAM_SPATIAL_PROFILE_KEY);
+  assert.equal(record.missionId.endsWith('/' + mission.id), true);
+  assert.deepEqual(record.asset, asset);
+  assert.deepEqual(state.profile.clears.solo, {});
+  assert.deepEqual(state.profile.clears.versus, {});
+  assert(state.profile.clears.team[record.missionId]);
+  f.$('coop-journey-pictures').focus();
+  f.$('coop-journey-pictures').click();
+  await waitFor(
+    () =>
+      f.$('team-journey-pictures')?.open &&
+      f.$('team-journey-pictures').querySelectorAll('.journey-mode-picture-card').length === 1,
+  );
+  assert.match(f.$('team-journey-pictures').textContent, /1 earned Team original/);
+  assert.match(f.$('team-journey-pictures').textContent, new RegExp(mission.name, 'i'));
+  assert.doesNotMatch(f.$('team-journey-pictures').textContent, /earned Solo|earned Versus/);
+  f.$('team-journey-pictures').querySelector('header').querySelector('button').click();
+  assert.equal(f.doc.activeElement, f.$('coop-journey-pictures'));
+});
 
 test('queryless Team offers all twelve original missions across five campaigns and starts directly', async (t) => {
   const f = await fresh(t);
