@@ -1,0 +1,31 @@
+{
+  "format": "GitHubHostedOriginalSourceHistoryColdRestore.v1",
+  "createdUTC": "2026-10-16T06:14:30.271276+00:00",
+  "runId": "38860055058",
+  "runURL": "https://github.com/mekhovov/revealline/actions/runs/38860055058",
+  "assetId": 646261949,
+  "assetBytes": 389261798,
+  "assetSHA256": "d21fd37f7ca6231ce0b6622e5591b3db4dac282f9f62520f024620d797292636",
+  "manifestGitBlob": "fa480ab2e044215378bc580d1e5eb2bb611596d5",
+  "manifestSHA256": "f0c47c80d5798f186a15573330cbdcbd033b250dfeb3086653e6cdb1a81a3477",
+  "declaredPublicPrerequisites": 555,
+  "bundleVerify": true,
+  "unbundle": true,
+  "nativeFsckConnectivity": true,
+  "actualPackIDsExactlyAllowlist": true,
+  "all17824NewRawGitObjectSHA1Readbacks": true,
+  "all2790SelectedCommitsReachable": true,
+  "allExcludedPrivateObjectsAbsent": true,
+  "newObjectTypes": {
+    "blob": 4677,
+    "tree": 10340,
+    "commit": 2807
+  },
+  "newObjectBodyBytes": 988614745,
+  "sortedObjectReadbackRowsSHA256": "65ff9c9dade88c6bc0261cde9b78f8718349b6bdcdfe0cd62eb347ad8a4daa9b",
+  "noAlexOrOriginalSourceStoreInputs": true,
+  "noAlternatesOrObjectDirectorySymlinks": true,
+  "verificationRemoteDisabledAfterGitHubFetch": true,
+  "localPublicPrerequisiteSupportRecreated": true,
+  "scope": "Original16-store checkpoint only. Expanded all-volume and private companion preservation remain separate. Sparse public prerequisites require GitHub for omitted public bodies/older ancestry; no app persistence/offline/endurance qualification."
+}
