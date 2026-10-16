@@ -1,0 +1,266 @@
+name: Temporary Solo remaining regression evidence
+
+# Task-only source evidence. Remove this workflow and its manifest after the
+# original artifacts have been retained; this is not release qualification.
+on:
+  push:
+    branches: [codex/solo-performance]
+    paths:
+      - '.github/workflows/solo-performance-regression-temporary.yml'
+      - 'docs/performance/solo-regression-remaining.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: solo-remaining-regression-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  remaining:
+    if: github.repository == 'mekhovov/revealline' && github.ref == 'refs/heads/codex/solo-performance'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [1, 2, 3, 4]
+    env:
+      CI: '1'
+      SOLO_SHARD: ${{ matrix.shard }}
+      SOLO_EVIDENCE: .cache/solo-remaining-regression
+      SOLO_MANIFEST: docs/performance/solo-regression-remaining.json
+    steps:
+      - name: Check out the exact branch source without persisted credentials
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Use the same pinned Node version as the local inventory
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.22.2'
+          package-manager-cache: false
+
+      - name: Verify the exact remaining partition and retain source identity
+        run: |
+          set -euo pipefail
+          mkdir -p "$SOLO_EVIDENCE"
+          node scripts/run-test-shard.mjs --shard 1/1 --list > "$SOLO_EVIDENCE/full-inventory.txt"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, re, subprocess
+          root = pathlib.Path.cwd()
+          out = root / os.environ['SOLO_EVIDENCE']
+          manifest_path = root / os.environ['SOLO_MANIFEST']
+          raw = manifest_path.read_bytes()
+          manifest = json.loads(raw)
+          digest = lambda data: hashlib.sha256(data).hexdigest()
+          assert manifest['format'] == 'SoloRemainingRegressionManifestV1'
+          assert manifest['shardCount'] == 4
+          head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          assert head == os.environ['GITHUB_SHA']
+          assert subprocess.check_output(['node', '--version'], text=True).strip() == 'v22.22.2'
+          listed = (out / 'full-inventory.txt').read_text().splitlines()
+          assert re.fullmatch(r'Running \d+/\d+ test files in shard 1/1\.', listed[0])
+          full = listed[1:]
+          assert full == sorted(set(full))
+          assert len(full) == manifest['completeCurrentInventory']['count']
+          assert digest(('\n'.join(full) + '\n').encode()) == manifest['completeCurrentInventory']['pathsSHA256']
+          original = manifest['partition']['originalFiles']
+          completed = manifest['partition']['completedFiles']
+          assert original == sorted(set(original)) and completed == sorted(set(completed))
+          assert len(original) == manifest['derivation']['originalCount'] == 1948
+          assert len(completed) == manifest['derivation']['completedCount'] == 1233
+          assert set(completed) <= set(original) <= set(full)
+          entries = manifest['files']
+          remaining = [entry['path'] for entry in entries]
+          assert remaining == sorted(set(original) - set(completed))
+          assert len(remaining) == manifest['derivation']['remainingCount'] == 715
+          assert sorted(set(full) - set(original)) == manifest['separateAdditions']['files']
+          for entry in entries:
+              name = entry['path']
+              assert name in full and not name.startswith('/') and '..' not in name.split('/')
+              assert re.fullmatch(r'[a-zA-Z0-9_./-]+\.mjs', name)
+              file = root / name
+              assert file.is_file() and not file.is_symlink() and root in file.resolve().parents
+              assert re.fullmatch(r'[a-f0-9]{64}', entry['sha256'])
+              assert digest(file.read_bytes()) == entry['sha256'], name
+          shard = int(os.environ['SOLO_SHARD'])
+          assert 1 <= shard <= 4
+          selection = entries[shard - 1::4]
+          receipt = {
+              'format': 'SoloRemoteRemainingSelectionV1', 'sourceRevision': head,
+              'sourceTree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+              'runtimeRevision': manifest['runtimeRevision'], 'manifestSHA256': digest(raw),
+              'derivation': manifest['derivation'], 'shard': shard, 'shards': 4,
+              'selected': selection, 'currentInventory': manifest['completeCurrentInventory'],
+              'nodeVersion': 'v22.22.2', 'platform': 'ubuntu-latest',
+              'environment': {'CI': '1', 'localReference': 'macOS, Node22.22.2, CI=1',
+                              'scope': 'Node and CI mode match the local inventory; operating system, runner resources and network differ. This is not timing-equivalent evidence.'},
+              'runId': os.environ['GITHUB_RUN_ID'], 'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'scope': 'Only the exact unstarted715-file continuation. Previous local failures, later additions and changed-completed-file retests remain separate evidence.',
+              'dependencyHashes': {name: digest((root / name).read_bytes()) for name in [
+                  'package.json', 'package-lock.json', 'authoring/fpv-worlds/package.json',
+                  'authoring/fpv-worlds/package-lock.json', 'scripts/run-test-shard.mjs',
+                  'publishing/test-policy.json']},
+          }
+          (out / 'manifest.json').write_bytes(raw)
+          (out / 'selection.json').write_text(json.dumps(receipt, indent=2) + '\n')
+          print(json.dumps({'shard': shard, 'files': len(selection), 'sourceRevision': head}))
+          PY
+          node scripts/check-source-identity.mjs --root . > "$SOLO_EVIDENCE/source-before.json"
+
+      - name: Install the root lockfile using the existing CI installation
+        run: npm ci
+
+      - name: Install the pinned optional SIM fixture dependencies
+        # Matches the existing source/industrial CI dependency installation.
+        # The remaining set includes SIM host fixtures using fake-indexeddb.
+        run: npm ci --prefix authoring/fpv-worlds --ignore-scripts --include=dev
+
+      - name: Run every selected file serially and preserve each outcome
+        timeout-minutes: 150
+        run: |
+          python3 - <<'PY'
+          import datetime, hashlib, json, os, pathlib, re, signal, subprocess, time
+          root = pathlib.Path.cwd()
+          out = root / os.environ['SOLO_EVIDENCE']
+          selection = json.loads((out / 'selection.json').read_text())
+          now = lambda: datetime.datetime.now(datetime.timezone.utc).isoformat()
+          digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+          head = lambda: subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          started = now()
+          deadline = time.monotonic() + 145 * 60
+          rows, fatal = [], []
+          child = None
+          interrupted = False
+          def stop_child(kind):
+              if child is not None:
+                  try: os.killpg(child.pid, kind)
+                  except ProcessLookupError: pass
+          def interrupt(_signum, _frame):
+              global interrupted
+              interrupted = True
+              stop_child(signal.SIGTERM)
+          signal.signal(signal.SIGTERM, interrupt)
+          signal.signal(signal.SIGINT, interrupt)
+          try:
+              for entry in selection['selected']:
+                  if interrupted or time.monotonic() >= deadline: break
+                  name = entry['path']
+                  assert head() == selection['sourceRevision']
+                  assert digest(root / name) == entry['sha256'], name
+                  log = out / (str(len(rows)).zfill(3) + '-' + pathlib.Path(name).name + '.tap')
+                  command = ['node', '--test', '--test-concurrency=1', '--test-reporter=tap', name]
+                  row = {'file': name, 'startedAt': now(), 'command': command,
+                         'sourceRevision': selection['sourceRevision'], 'testSHA256Before': entry['sha256'],
+                         'log': log.name, 'timedOut': False}
+                  (out / 'active.json').write_text(json.dumps(row, indent=2) + '\n')
+                  stamp = time.monotonic()
+                  with log.open('xb') as stream:
+                      child = subprocess.Popen(command, cwd=root, stdout=stream, stderr=subprocess.STDOUT,
+                                               start_new_session=True, env={**os.environ, 'CI': '1'})
+                      try:
+                          while True:
+                              try:
+                                  code = child.wait(timeout=min(1, max(0.001, deadline - time.monotonic())))
+                                  break
+                              except subprocess.TimeoutExpired:
+                                  if not interrupted and time.monotonic() < deadline: continue
+                                  row['timedOut'] = time.monotonic() >= deadline
+                                  stop_child(signal.SIGTERM)
+                                  try: code = child.wait(timeout=5)
+                                  except subprocess.TimeoutExpired:
+                                      stop_child(signal.SIGKILL)
+                                      code = child.wait(timeout=5)
+                                  break
+                      finally:
+                          if row['timedOut'] or interrupted: stop_child(signal.SIGKILL)
+                  child = None
+                  text = log.read_text(errors='replace')
+                  counts = {}
+                  for key in ['tests', 'suites', 'pass', 'fail', 'cancelled', 'skipped', 'todo', 'duration_ms']:
+                      match = re.search(r'^# ' + key + r' ([0-9.]+)$', text, re.M)
+                      if match: counts[key] = float(match[1]) if key == 'duration_ms' else int(match[1])
+                  complete = all(key in counts for key in ['tests', 'pass', 'fail', 'duration_ms'])
+                  row.update({'finishedAt': now(), 'elapsedSeconds': time.monotonic() - stamp,
+                              'exitCode': code, 'interrupted': interrupted, 'completeTap': complete,
+                              'counts': counts, 'failureNames': re.findall(r'^\s*not ok \d+ - (.+)$', text, re.M),
+                              'logBytes': log.stat().st_size, 'logSHA256': digest(log),
+                              'testSHA256After': digest(root / name), 'sourceRevisionAfter': head()})
+                  row['passed'] = (code == 0 and complete and not row['timedOut'] and not interrupted
+                                   and counts.get('fail') == 0 and counts.get('cancelled', 0) == 0
+                                   and row['testSHA256After'] == entry['sha256']
+                                   and row['sourceRevisionAfter'] == selection['sourceRevision'])
+                  rows.append(row)
+                  with (out / 'results.jsonl').open('a') as stream:
+                      stream.write(json.dumps(row) + '\n')
+                  (out / 'active.json').write_text('null\n')
+                  print(json.dumps({'file': name, 'exitCode': code, 'completeTap': complete,
+                                    'counts': counts, 'passed': row['passed']}), flush=True)
+          except BaseException as error:
+              fatal.append(repr(error))
+              stop_child(signal.SIGKILL)
+              if child is not None:
+                  try: child.wait(timeout=5)
+                  except subprocess.TimeoutExpired: fatal.append('Child did not settle after SIGKILL')
+          finally:
+              observed = {row['file'] for row in rows}
+              unobserved = [entry for entry in selection['selected'] if entry['path'] not in observed]
+              complete = not unobserved and not fatal and not interrupted
+              passed = complete and all(row['passed'] for row in rows)
+              summary = {'format': 'SoloRemoteRemainingResultV1', 'startedAt': started, 'finishedAt': now(),
+                         'sourceRevision': selection['sourceRevision'], 'manifestSHA256': selection['manifestSHA256'],
+                         'shard': selection['shard'], 'selectedFiles': len(selection['selected']),
+                         'observedFiles': len(rows), 'complete': complete, 'passed': passed,
+                         'failedFiles': [row['file'] for row in rows if not row['passed']],
+                         'unobserved': unobserved, 'interrupted': interrupted, 'fatal': fatal,
+                         'unobservedScope': 'No complete per-file result receipt. active.json and TAP may retain partial execution.',
+                         'skippedTests': sum(row['counts'].get('skipped', 0) for row in rows),
+                         'todoTests': sum(row['counts'].get('todo', 0) for row in rows),
+                         'scope': 'Source-regression evidence only; skips, failures and partial observations remain explicit. This is not release qualification, browser timing or physical-device acceptance.'}
+              (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
+          raise SystemExit(0 if passed else 1)
+          PY
+
+      - name: Verify tracked source after execution even on failure
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p "$SOLO_EVIDENCE"
+          python3 - <<'PY'
+          import json, os, pathlib
+          out = pathlib.Path(os.environ['SOLO_EVIDENCE'])
+          if not (out / 'summary.json').exists():
+              selection_path = out / 'selection.json'
+              selection = json.loads(selection_path.read_text()) if selection_path.exists() else None
+              rows, errors = [], []
+              results_path = out / 'results.jsonl'
+              for line in results_path.read_text().splitlines() if results_path.exists() else []:
+                  try: rows.append(json.loads(line))
+                  except ValueError as error: errors.append(str(error))
+              observed = {row['file'] for row in rows}
+              result = {'format': 'SoloRemoteRemainingResultV1', 'sourceRevision': os.environ['GITHUB_SHA'],
+                        'shard': int(os.environ['SOLO_SHARD']), 'complete': False, 'passed': False,
+                        'failure': 'Setup or execution ended without a final execution receipt; original logs are retained.',
+                        'observedFiles': len(rows), 'receiptErrors': errors,
+                        'unobserved': [entry for entry in selection['selected'] if entry['path'] not in observed] if selection else None,
+                        'unobservedScope': 'No complete per-file result receipt. active.json and TAP may retain partial execution.',
+                        'scope': 'Missing evidence is not a passing or completed test result.'}
+              (out / 'summary.json').write_text(json.dumps(result, indent=2) + '\n')
+          PY
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          node scripts/check-source-identity.mjs --root . > "$SOLO_EVIDENCE/source-after.json"
+
+      - name: Retain original manifests, per-file TAP, hashes and incomplete outcomes
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-remaining-${{ matrix.shard }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .cache/solo-remaining-regression/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
