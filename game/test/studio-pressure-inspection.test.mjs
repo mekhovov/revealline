@@ -9,7 +9,7 @@ import { createContentDraftSession } from '../content-design/session.mjs';
 test('Studio pressure action clearly scopes all missions and only prepares explicit inspection', async () => {
   const host = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
-  assert.match(html, /id="pressure-edition" aria-describedby="pressure-edition-help"/);
+  assert.match(html, /id="pressure-edition"\s+aria-describedby="pressure-edition-help"/);
   assert(html.includes('Inspect pressure-v2 copy of current draft'));
   assert(html.includes('for all missions in the current draft'));
   assert(html.replace(/\s+/g, ' ').includes('nothing is published'));

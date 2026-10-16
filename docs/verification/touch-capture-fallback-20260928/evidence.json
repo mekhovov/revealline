@@ -1,0 +1,26 @@
+{
+  "baseline": "6fe52474b5b395a5c416bd388555d488db33f287",
+  "runtime": "v20.19.5",
+  "red": {
+    "tests": 67,
+    "pass": 57,
+    "fail": 10
+  },
+  "green": {
+    "tests": 143,
+    "pass": 143,
+    "fail": 0
+  },
+  "files": [
+    {
+      "path": "red.tap",
+      "bytes": 23691,
+      "sha256": "03fa74647355d216be7f670f3897e02f3b4777b7884cbaa562aebd832699bcfa"
+    },
+    {
+      "path": "green.tap",
+      "bytes": 31349,
+      "sha256": "ebc6f14886cb8927c1d6baf810d509d9a4d59709b145adce25afc185d1c07086"
+    }
+  ]
+}

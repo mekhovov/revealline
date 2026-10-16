@@ -1,0 +1,210 @@
+TAP version 13
+# Subtest: selected localization pins exact English records and rejects foreign, stale and tampered text
+ok 1 - selected localization pins exact English records and rejects foreign, stale and tampered text
+  ---
+  duration_ms: 800.034291
+  ...
+# Subtest: scoped contentText translates authoring, Journey, runtime and exact custom pressure records without changing gameplay
+ok 2 - scoped contentText translates authoring, Journey, runtime and exact custom pressure records without changing gameplay
+  ---
+  duration_ms: 403.87775
+  ...
+# Subtest: compiler excludes other campaign languages and preserves exact selected sidecars through Studio and retained snapshots
+ok 3 - compiler excludes other campaign languages and preserves exact selected sidecars through Studio and retained snapshots
+  ---
+  duration_ms: 834.67425
+  ...
+# Subtest: actual edition launch switches names and ready briefs between Ukrainian and English with unchanged run bytes
+ok 4 - actual edition launch switches names and ready briefs between Ukrainian and English with unchanged run bytes
+  ---
+  duration_ms: 1756.052542
+  ...
+# Subtest: localization apply retains an identity edit made while its hash is pending
+ok 5 - localization apply retains an identity edit made while its hash is pending
+  ---
+  duration_ms: 149.174834
+  ...
+# Subtest: localization apply does not erase newer unapplied text during hashing
+ok 6 - localization apply does not erase newer unapplied text during hashing
+  ---
+  duration_ms: 125.846291
+  ...
+# Subtest: localization apply is cancelled when its source files are replaced during hashing
+ok 7 - localization apply is cancelled when its source files are replaced during hashing
+  ---
+  duration_ms: 111.598625
+  ...
+# Subtest: unchanged localization apply commits its verified pin and source together
+ok 8 - unchanged localization apply commits its verified pin and source together
+  ---
+  duration_ms: 108.569333
+  ...
+# Subtest: compact raster editions retain exact selected dependencies, source admission and Studio round trips
+ok 9 - compact raster editions retain exact selected dependencies, source admission and Studio round trips
+  ---
+  duration_ms: 1203.581125
+  ...
+# Subtest: compiler checks raster headers against approved path and dimensions, not merely matching hashes
+ok 10 - compiler checks raster headers against approved path and dimensions, not merely matching hashes
+  ---
+  duration_ms: 149.888542
+  ...
+# Subtest: retained compact artwork stays in the exact approved historical closure after a new picture revision
+ok 11 - retained compact artwork stays in the exact approved historical closure after a new picture revision
+  ---
+  duration_ms: 497.896125
+  ...
+# Subtest: compiler retains the selected logo and projects shared fallback resources without default artwork
+ok 12 - compiler retains the selected logo and projects shared fallback resources without default artwork
+  ---
+  duration_ms: 402.768459
+  ...
+# Subtest: final offline edition budget counts every generated worker and manifest
+ok 13 - final offline edition budget counts every generated worker and manifest
+  ---
+  duration_ms: 1468.534917
+  ...
+# Subtest: compacted engine bytes keep candidate provenance, offline hashes and authored content exact
+ok 14 - compacted engine bytes keep candidate provenance, offline hashes and authored content exact
+  ---
+  duration_ms: 355.650125
+  ...
+# Subtest: lazy shared panel styles retain exact bytes through selected compilation, archives and offline inventory
+ok 15 - lazy shared panel styles retain exact bytes through selected compilation, archives and offline inventory
+  ---
+  duration_ms: 321.903416
+  ...
+# Subtest: selected retained presentation media stays exact in runtime, source and offline archives
+ok 16 - selected retained presentation media stays exact in runtime, source and offline archives
+  ---
+  duration_ms: 1257.811333
+  ...
+# Subtest: retained packaging rejects altered originals, foreign audiences and unselected snapshots
+ok 17 - retained packaging rejects altered originals, foreign audiences and unselected snapshots
+  ---
+  duration_ms: 395.557042
+  ...
+# Subtest: whole-source eligibility includes registered historical-only originals before freezing candidates
+ok 18 - whole-source eligibility includes registered historical-only originals before freezing candidates
+  ---
+  duration_ms: 258.588708
+  ...
+# Subtest: source admission retains an earlier campaign subset after expansion but rejects removed or duplicate permissions
+ok 19 - source admission retains an earlier campaign subset after expansion but rejects removed or duplicate permissions
+  ---
+  duration_ms: 231.147167
+  ...
+# Subtest: sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts
+ok 20 - sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts
+  ---
+  duration_ms: 208.016042
+  ...
+# Subtest: catalog validates generic brands, immutable selections and strict allowlist lookup
+ok 21 - catalog validates generic brands, immutable selections and strict allowlist lookup
+  ---
+  duration_ms: 3.036125
+  ...
+# Subtest: repeated asset reads reuse only fully validated immutable edition closures
+ok 22 - repeated asset reads reuse only fully validated immutable edition closures
+  ---
+  duration_ms: 1.3845
+  ...
+# Subtest: mutable imports, copied catalogues and caller-frozen data cannot inherit admission
+ok 23 - mutable imports, copied catalogues and caller-frozen data cannot inherit admission
+  ---
+  duration_ms: 5.046417
+  ...
+# Subtest: shared-brand audience editions retain separate cached asset permissions
+ok 24 - shared-brand audience editions retain separate cached asset permissions
+  ---
+  duration_ms: 1.549459
+  ...
+# Subtest: dependency closure rejects cycles, undeclared assets and cross-brand campaigns
+ok 25 - dependency closure rejects cycles, undeclared assets and cross-brand campaigns
+  ---
+  duration_ms: 3.279167
+  ...
+# Subtest: standalone HTML binds its real version in both attributes and text and rejects unsafe versions
+ok 26 - standalone HTML binds its real version in both attributes and text and rejects unsafe versions
+  ---
+  duration_ms: 97.178
+  ...
+# Subtest: compilation excludes every omitted brand file and hashes exact selected media
+ok 27 - compilation excludes every omitted brand file and hashes exact selected media
+  ---
+  duration_ms: 104.833542
+  ...
+# Subtest: unselected restricted sources stay out, selected restricted and engine bypasses fail
+ok 28 - unselected restricted sources stay out, selected restricted and engine bypasses fail
+  ---
+  duration_ms: 53.764958
+  ...
+# Subtest: transitive assets are copied once and a boot file cannot sneak in omitted levels
+ok 29 - transitive assets are copied once and a boot file cannot sneak in omitted levels
+  ---
+  duration_ms: 93.879166
+  ...
+# Subtest: static dependency validation catches omitted imports and CSS images
+ok 30 - static dependency validation catches omitted imports and CSS images
+  ---
+  duration_ms: 0.9765
+  ...
+# Subtest: web editions reject external or computed code dependencies except the exact staged iOS bridge
+ok 31 - web editions reject external or computed code dependencies except the exact staged iOS bridge
+  ---
+  duration_ms: 0.972167
+  ...
+# Subtest: bootstrap preserves optional default and fetches only selected sources
+ok 32 - bootstrap preserves optional default and fetches only selected sources
+  ---
+  duration_ms: 44.862542
+  ...
+# Subtest: project merging rejects mismatched or conflicting immutable gameplay
+ok 33 - project merging rejects mismatched or conflicting immutable gameplay
+  ---
+  duration_ms: 133.044542
+  ...
+# Subtest: hub and compiled edition share progress and presentation pins including transitive and edition assets
+ok 34 - hub and compiled edition share progress and presentation pins including transitive and edition assets
+  ---
+  duration_ms: 263.562458
+  ...
+# Subtest: compiled first-paint and error shell uses only the selected brand and escapes HTML text
+ok 35 - compiled first-paint and error shell uses only the selected brand and escapes HTML text
+  ---
+  duration_ms: 74.766417
+  ...
+# Subtest: actual canonical and tool HTML brand first paint without replacing loader or localized recovery hooks
+ok 36 - actual canonical and tool HTML brand first paint without replacing loader or localized recovery hooks
+  ---
+  duration_ms: 48.091959
+  ...
+# Subtest: edition admission rejects mismatched themes and artwork outside the selected brand closure
+ok 37 - edition admission rejects mismatched themes and artwork outside the selected brand closure
+  ---
+  duration_ms: 275.722291
+  ...
+# Subtest: audience editions project primary and selected mission themes without other campaign labels
+ok 38 - audience editions project primary and selected mission themes without other campaign labels
+  ---
+  duration_ms: 411.822583
+  ...
+# Subtest: approved original-derived install icons ship both square sizes and the selected font only
+ok 39 - approved original-derived install icons ship both square sizes and the selected font only
+  ---
+  duration_ms: 2706.828334
+  ...
+# Subtest: canonical public edition selector compiles one stable identity and canonical standalone launcher
+ok 40 - canonical public edition selector compiles one stable identity and canonical standalone launcher
+  ---
+  duration_ms: 149.569292
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12064.289959

@@ -50,7 +50,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Check out exact qualified source
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ inputs.source_commit }}
           fetch-depth: 0
@@ -115,7 +115,7 @@ jobs:
           sha256sum small-package/* > small-package.sha256
 
       - name: Retain assembled package for independent review
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: v097-small-package
           path: |

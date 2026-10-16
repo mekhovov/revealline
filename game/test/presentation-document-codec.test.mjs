@@ -47,8 +47,8 @@ function maximumEnvelopeDocument() {
   }
   document.padding = [];
   let count = nodeCount(document);
-  while (count < 100000) {
-    const length = Math.min(4096, 100000 - count - 1);
+  while (count < LIMITS.nodes) {
+    const length = Math.min(4096, LIMITS.nodes - count - 1);
     document.padding.push(Array(length).fill(null));
     count += length + 1;
   }
@@ -56,16 +56,18 @@ function maximumEnvelopeDocument() {
 }
 
 test('a maximum logical document admits only the bounded dictionary and wrapper overhead', () => {
-  assert.equal(LIMITS.nodes, 100000);
+  assert.equal(LIMITS.nodes, 125000);
+  assert.equal(LIMITS.legacyNodes, 100000);
+  assert.equal(LIMITS.legacyEnvelopeNodes, 110000);
   assert.equal(LIMITS.records, 4096);
   const document = maximumEnvelopeDocument();
-  assert.equal(nodeCount(document), 100000);
+  assert.equal(nodeCount(document), LIMITS.nodes);
   const before = canonicalJSON(document);
   const encoded = encodePresentationDocument(document);
   const wire = JSON.parse(encoded);
   assert.equal(wire.format, PRESENTATION_METADATA_FORMAT);
   assert.equal(wire.strings.length, 4096);
-  assert.equal(nodeCount(wire), 104099);
+  assert.equal(nodeCount(wire), LIMITS.nodes + 4099);
   assert.deepEqual(decodePresentationDocument(encoded), document);
   assert.deepEqual(decodePresentationDocument(wire), document);
   assert.equal(encodePresentationDocument(decodePresentationDocument(encoded)), encoded);
@@ -75,11 +77,11 @@ test('a maximum logical document admits only the bounded dictionary and wrapper 
 test('envelope overhead cannot authorize another logical node or another dictionary entry', () => {
   const document = maximumEnvelopeDocument();
   document.padding.at(-1).push(null);
-  assert.equal(nodeCount(document), 100001);
+  assert.equal(nodeCount(document), LIMITS.nodes + 1);
   assert.throws(() => ownPresentationDocument(document), /structural budget/);
   assert.throws(() => encodePresentationDocument(document), /structural budget/);
   const overEnvelope = envelope(document);
-  assert.equal(nodeCount(overEnvelope), 104100);
+  assert.equal(nodeCount(overEnvelope), LIMITS.nodes + 4100);
   for (const input of [overEnvelope, canonicalJSON(overEnvelope)])
     assert.throws(() => decodePresentationDocument(input), /structural budget/);
 
@@ -90,7 +92,7 @@ test('envelope overhead cannot authorize another logical node or another diction
     asset.provenance.prompt = 'Prompt';
   }
   const overLogical = envelope(document);
-  assert.equal(nodeCount(overLogical), 100006);
+  assert.equal(nodeCount(overLogical), LIMITS.nodes + 6);
   for (const input of [overLogical, canonicalJSON(overLogical)])
     assert.throws(() => decodePresentationDocument(input), /structural budget/);
 
@@ -215,7 +217,7 @@ test('small wire dictionaries cannot bypass expanded bytes, strings, nodes or de
   const longString = envelope(fixture(1, 'x'.repeat(8193)));
   assert.throws(() => decodePresentationDocument(longString), /string exceeds/);
   const nodes = fixture(4096);
-  for (const asset of nodes.assets) asset.detail = Array(20).fill(null);
+  for (const asset of nodes.assets) asset.detail = Array(30).fill(null);
   assert.throws(() => decodePresentationDocument(envelope(nodes)), /structural budget/);
   const deep = fixture();
   let at = deep;

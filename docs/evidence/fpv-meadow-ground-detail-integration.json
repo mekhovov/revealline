@@ -1,0 +1,14 @@
+{
+  "format": "FPVMeadowGroundDetailIntegration.v1",
+  "baseline": "ea596d80ba26decc4e7691e4a5c34bd3461fcda6",
+  "candidate": "9e25a9674d54ff37a2e47dccf0fe121e44dbea1a",
+  "originalCandidate": "7dc2e5eca8226dbdab34889c82b80d1ef98d030b",
+  "exactOriginalMeadowPatch": true,
+  "exactFieldAndPreviewSceneRecords": 285,
+  "exactAllOtherSceneRecordsExceptIncomingHangar": 321,
+  "exactImmutableRuntimeFiles": 71,
+  "exactRecordingResults": 51,
+  "originalVisualSha256": "9e8cb61d40010cbc76a2f72358b47000c4d4b2d9d03174eccf0d26efcb371a80",
+  "integratedVisualSha256": "5202f048a9fc6bf7ea53ced7fdea52833ddf9af9e508010654763b0873fd78f4",
+  "integrationScope": "Only the already reviewed Hangar113-line patch and its evidence entered from main; original Meadow maps, scene hashes, all immutable inputs and recordings remain exact. Original source/package384-check190-pair browser runs bind the unchanged Meadow rendering; a final integrated player observation is separate."
+}

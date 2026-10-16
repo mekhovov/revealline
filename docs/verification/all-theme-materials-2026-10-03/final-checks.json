@@ -1,0 +1,61 @@
+{
+  "node": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+  "checks": [
+    {
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --test game/test/fpv-theme-family-controls.test.mjs game/test/fpv-world-editor-appearance.test.mjs game/test/material-state-semantics.test.mjs game/test/theme-bootstrap.test.mjs game/test/theme-collection-expansion.test.mjs game/test/theme-preview.test.mjs game/test/theme-system.test.mjs scripts/test-curated-appearance-package.mjs > docs/verification/all-theme-materials-2026-10-03/tests.tap 2>&1",
+      "chunk_id": "0fc6a4",
+      "wall_time_seconds": 0.00000725,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    {
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node node_modules/eslint/bin/eslint.js game/test/fixtures/appearance-materials.mjs game/test/material-state-semantics.test.mjs game/test/theme-system.test.mjs optional-practice/civilian-fpv/sim-presentation.mjs --max-warnings 0",
+      "chunk_id": "22e40e",
+      "wall_time_seconds": 0.000004834,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    {
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node node_modules/prettier/bin/prettier.cjs --check game/presentation/industrial-workshop.css game/test/fixtures/appearance-materials.css game/test/fixtures/appearance-materials.html game/test/fixtures/appearance-materials.mjs game/test/material-state-semantics.test.mjs game/test/theme-system.test.mjs optional-practice/civilian-fpv/sim-presentation.mjs",
+      "chunk_id": "9b3e1f",
+      "wall_time_seconds": 0.000008708,
+      "exit_code": 0,
+      "original_token_count": 11,
+      "output": "All matched files use Prettier code style!\n"
+    },
+    {
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node scripts/refresh-fpv-presentation-assets.mjs --check",
+      "chunk_id": "729eca",
+      "wall_time_seconds": 0.127808041,
+      "exit_code": 0,
+      "original_token_count": 314,
+      "output": "{\"status\":\"verified-byte-identical\",\"assets\":{\"ui\":{\"source\":\"game/ui/fonts/field-kit/exo2-ui-400-600.woff2\",\"bytes\":76652,\"sha256\":\"fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef\",\"license\":\"OFL-1.1\"},\"pixel\":{\"source\":\"game/ui/fonts/departure-mono/DepartureMono-Regular.woff2\",\"bytes\":22496,\"sha256\":\"5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb\",\"license\":\"OFL-1.1\"},\"mono\":{\"source\":\"game/ui/fonts/field-kit/ibm-plex-mono-500.woff2\",\"bytes\":40080,\"sha256\":\"0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8\",\"license\":\"OFL-1.1\"},\"display\":{\"source\":\"game/ui/fonts/field-kit/handjet-display-600.woff2\",\"bytes\":38120,\"sha256\":\"4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145\",\"license\":\"OFL-1.1\"},\"focus\":{\"source\":\"game/audio/effects/focus.wav\",\"bytes\":2924,\"sha256\":\"0eb2a24d7e17e79c6d2b4dc4c1be57ba0622d2e3e8e177999c12eb18c54d3256\",\"license\":\"CC0-1.0\"},\"confirm\":{\"source\":\"game/audio/effects/confirm.wav\",\"bytes\":5864,\"sha256\":\"52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1\",\"license\":\"CC0-1.0\"},\"cancel\":{\"source\":\"game/audio/effects/cancel.wav\",\"bytes\":3948,\"sha256\":\"d59b933dbe794b9d36f962c8505513f3a85a30a6c2c3e2ed1d6895769d0a2616\",\"license\":\"CC0-1.0\"}}}\n"
+    },
+    {
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node scripts/refresh-interface-material-grain.mjs --check",
+      "chunk_id": "2e14ce",
+      "wall_time_seconds": 0.060743042,
+      "exit_code": 0,
+      "original_token_count": 30,
+      "output": "{\"tiles\":[\"powder\",\"brush\",\"thread\",\"timber\",\"stone\",\"fiber\",\"machining\",\"edge-wear\",\"vent\",\"bulkhead\"],\"bytes\":11086}\n"
+    },
+    {
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node scripts/refresh-theme-bootstrap.mjs --check",
+      "chunk_id": "70bc90",
+      "wall_time_seconds": 0.000007625,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    {
+      "command": "git diff --check",
+      "chunk_id": "493e0a",
+      "wall_time_seconds": 0.039361541,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ]
+}

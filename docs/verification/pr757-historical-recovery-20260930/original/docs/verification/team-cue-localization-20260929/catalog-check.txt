@@ -1,0 +1,3 @@
+en: exactly three new compact templates; all prior keys/values unchanged.
+uk: exactly three new compact templates; all prior keys/values unchanged.
+Catalog bytes exactly equal authoritative catalogBundle(readCatalogs()). No content registry generation or production/build checks.

@@ -1,12 +1,24 @@
-import { boundedJSON, dataIdentity, exactKeys, required } from './data-json.mjs';
+import { pursuitPopulation } from './hunt/pursuit-goals.mjs';
+import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from './data-json.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { foundationGeometry } from './core/foundations.mjs';
 import { validateCoopLevel } from './coop/core.mjs';
-import { compileCoopFoundationGeometry, isJourneyTeamLevel } from './coop/foundations.mjs';
+import {
+  compileCoopFoundationGeometry,
+  hasTeamLineImpacts,
+  isJourneyTeamLevel,
+} from './coop/foundations.mjs';
 import * as historical from './gameplay-tuning-v1.mjs';
 import * as v2 from './gameplay-tuning-v2.mjs';
 import * as v3 from './gameplay-tuning-v3.mjs';
 import { COLLISION_COURSE_VERSION } from './core/field-course.mjs';
+import { CLASSES } from './core/registry.mjs';
+import { huntTargetKind } from './hunt/rules.mjs';
+import { prepareRunningEnemyLevel, runningEnemyBaseLevel } from './hunt/running-enemies.mjs';
+import {
+  prepareTeamRunningEnemies,
+  teamRunningEnemyBaseLevel,
+} from './hunt/team-running-enemies.mjs';
 
 export const GAMEPLAY_TUNING_VERSION = 'gameplay-pressure.v4';
 // The preference format is unchanged; historical recipes have separate dispatch.
@@ -45,6 +57,21 @@ const freeze = (value) => {
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const fields = Object.keys(GAMEPLAY_TUNING_DEFAULTS);
 const copySmall = (value) => boundedJSON(value, { maxBytes: 4096, maxNodes: 40, maxDepth: 3 });
+
+// Published v4 levels use V8's scaled two-component norm. Native Math.hypot
+// differs by one ULP in other engines, changing both velocities and reward IDs.
+// Keep the exact division, multiplication and addition order for already
+// validated finite vectors; this does not change historical tuning dispatch.
+// Reference: v8/src/builtins/math.tq, FastMathHypot (two-argument branch).
+function publishedVectorMagnitude(x, y) {
+  const a = Math.abs(x),
+    b = Math.abs(y),
+    scale = Math.max(a, b);
+  if (scale === 0) return 0;
+  const nx = a / scale,
+    ny = b / scale;
+  return Math.sqrt(nx * nx + ny * ny) * scale;
+}
 
 function checkedOverrides(value) {
   const copy = copySmall(value);
@@ -294,6 +321,13 @@ function addKeepers(level, tuning, team) {
   const count = Math.min(
     6,
     (team ? 16 : 24) - level.enemies.length,
+    ...(level.classic?.hunt || level.hunt
+      ? [
+          24 -
+            level.enemies.length -
+            (team ? level.combatPatrols : level.classic.combatPatrols).actors.length,
+        ]
+      : []),
     Math.ceil(originals.length * tuning.enemyDensity),
   );
   if (!originals.length || count <= 0) return;
@@ -304,6 +338,7 @@ function addKeepers(level, tuning, team) {
   const occupied = [
     ...level.enemies,
     ...(level.classic?.combatPatrols?.actors ?? []),
+    ...(level.combatPatrols?.actors ?? []),
     ...(level.objectives ?? []),
     ...(level.classic?.powerups ?? []),
     ...(level.supplies ?? []),
@@ -377,8 +412,55 @@ function addKeepers(level, tuning, team) {
  * but must compare the entire result to the verified saved level before adopt.
  * The level embeds every change for recorder and paired-board determinism. */
 export function applyGameplayTuning(source, snapshot) {
+  return tuneGameplay(source, snapshot, publishedVectorMagnitude);
+}
+
+/** Match a recorded level against its installed authored source, not just its
+ * recipe tag. Replay/receipt verification remains the caller's responsibility.
+ * Pre-fix gp4 records can retain this runtime's original native arithmetic;
+ * fresh attempts and reward bindings always use applyGameplayTuning instead.
+ */
+export function matchRecordedGameplayTuning(source, recordedLevel, { classes = CLASSES } = {}) {
+  const recorded = boundedJSON(recordedLevel),
+    tuning = recoverGameplayTuning(recorded);
+  if (!tuning) return null;
+  const exact = canonicalJSON(recorded);
+  const accepted = (level) =>
+    recorded.runningEnemies
+      ? recorded.version.startsWith('revealline-coop-level.')
+        ? prepareTeamRunningEnemies(level, {
+            style: recorded.pursuit ? 'varied' : 'original',
+            generation: recorded.pursuit?.version ?? 'pursuit-goals.v1',
+          })
+        : prepareRunningEnemyLevel(level, {
+            classes,
+            style: recorded.pursuit ? 'varied' : 'original',
+            generation: recorded.pursuit?.version ?? 'pursuit-goals.v1',
+          })
+      : level;
+  const current = accepted(applyGameplayTuning(source, tuning));
+  if (canonicalJSON(current) === exact) return current;
+  if (tuning.version !== GAMEPLAY_TUNING_VERSION) return null;
+  const historicalNative = accepted(tuneGameplay(source, tuning, Math.hypot));
+  return canonicalJSON(historicalNative) === exact ? historicalNative : null;
+}
+
+function tuneGameplay(source, snapshot, vectorMagnitude) {
   const tuning = validateGameplayTuning(snapshot);
   const owned = boundedJSON(source);
+  if (owned.pursuit) {
+    const team = owned.version.startsWith('revealline-coop-level.');
+    const base = team ? teamRunningEnemyBaseLevel(owned) : runningEnemyBaseLevel(owned);
+    const tuned = tuneGameplay(base, snapshot, vectorMagnitude);
+    const options = {
+      style: 'varied',
+      population: pursuitPopulation(owned),
+      generation: owned.pursuit.version,
+    };
+    return team
+      ? prepareTeamRunningEnemies(tuned, options)
+      : prepareRunningEnemyLevel(tuned, options);
+  }
   required(
     !/^gp[1234][gse]-/.test(String(owned?.revision)),
     'Gameplay tuning must apply exactly once per attempt.',
@@ -410,7 +492,7 @@ export function applyGameplayTuning(source, snapshot) {
   };
   for (const enemy of level.enemies) {
     if (Number.isFinite(enemy.vx) && Number.isFinite(enemy.vy)) {
-      const magnitude = Math.hypot(enemy.vx, enemy.vy);
+      const magnitude = vectorMagnitude(enemy.vx, enemy.vy);
       // Arbitrary valid vector angles can otherwise round to more than 20 and
       // fail the strict Team cap. Keep a sub-nanocell numerical margin.
       const keeper = enemy.type === (team ? 'drifter' : 'bouncer');
@@ -445,13 +527,25 @@ export function applyGameplayTuning(source, snapshot) {
       1,
       7200,
     );
-  if (team && level.enemies.some((enemy) => enemy.type === 'hunter'))
+  // Team v6/v7 allow Hunters but forbid encounter overrides. Keep their native
+  // attack timing/speed instead of making an accepted import invalid at Start.
+  // Earlier successful outputs and frozen tuning adapters stay unchanged.
+  if (team && !hasTeamLineImpacts(level) && level.enemies.some((enemy) => enemy.type === 'hunter'))
     level.encounter = {
       ...level.encounter,
       hunterAttackSpeed: clamp((level.encounter?.hunterAttackSpeed ?? 8) * unmeasuredSpeed, 6, 14),
     };
-  for (const actor of level.classic?.combatPatrols?.actors ?? []) {
-    actor.speed = clamp(actor.speed * unmeasuredSpeed, 0.25, 8);
+  const optional = team ? level.combatPatrols : level.classic?.combatPatrols;
+  const hunt = team ? level.hunt : level.classic?.hunt;
+  for (const actor of optional?.actors ?? []) {
+    // A Hunt runner remains catchable after the explicit player-speed recipe.
+    // Existing patrols retain their historical pressure scaling and speed caps.
+    actor.speed =
+      huntTargetKind(hunt, actor.id) === 'runner'
+        ? level.rules.moveSpeed *
+          (team ? 1 : Math.min(...CLASSES.map((recipe) => recipe.moveSpeedMultiplier ?? 1))) *
+          0.7
+        : clamp(actor.speed * unmeasuredSpeed, 0.25, 8);
     if (actor.role === 'sentry') actor.shotSpeed = clamp(actor.shotSpeed * unmeasuredSpeed, 4, 12);
   }
   if (level.classic?.lineImpact)

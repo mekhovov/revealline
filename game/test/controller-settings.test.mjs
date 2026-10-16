@@ -2,6 +2,7 @@ import test from 'node:test';
 import { Element as DOMElement, Events } from './helpers/couch-dom.mjs';
 import assert from 'node:assert/strict';
 import { attachControllerSettings } from '../ui/controller-settings.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import {
   CONTROLLER_BINDING_ACTIONS,
   resolveControllerBindings,
@@ -174,6 +175,100 @@ const deferred = () => {
   });
   return { promise, resolve, reject };
 };
+
+test('language changes preserve unsaved controller fields, options and focus through Cancel and Apply', async (context) => {
+  const locale = getLocale();
+  setLocale('en', { persist: false });
+  const f = fixture();
+  context.after(() => {
+    f.api.destroy();
+    setLocale(locale, { persist: false });
+  });
+  await f.click('edit');
+  await f.set('flight.stick.xAxis', 2);
+  await f.set('flight.stick.yAxis', 3);
+  await f.set('flight.stick.invertX', true);
+  await f.set('deadZone.press', 0.42);
+  const field = f.field('flight.stick.xAxis');
+  const options = [...field.options];
+  field.focus();
+  const draftValues = f.all
+    .filter((node) => node.dataset.controllerSetting)
+    .map((node) => [node, node.value, node.checked]);
+  for (const language of ['uk', 'en', 'uk']) {
+    setLocale(language, { persist: false });
+    assert.equal(
+      field.getAttribute('aria-label'),
+      language === 'uk' ? 'Горизонтальна вісь' : 'Horizontal axis',
+    );
+    assert.match(
+      f.field('flight.buttons.ability').getAttribute('aria-label'),
+      language === 'uk' ? /здібність/i : /Use ability/,
+    );
+    assert.match(field.options[2].textContent, language === 'uk' ? /Вісь 2/ : /Axis 2/);
+    assert.equal(f.current, null);
+    assert.equal(f.calls.length, 0);
+    assert.equal(f.before, 1);
+    assert.equal(f.doc.activeElement, field);
+    assert.deepEqual([...field.options], options);
+    for (const [node, value, checked] of draftValues) {
+      assert.equal(node.value, value);
+      assert.equal(node.checked, checked);
+    }
+    assert.equal(
+      f.all.find((node) => node.getAttribute('for') === f.field('deadZone.press').id).textContent,
+      language === 'uk' ? '0,42' : '0.42',
+    );
+    assert.match(f.status.textContent, language === 'uk' ? /чернетк/i : /Draft changed/);
+  }
+  await f.click('cancel');
+  assert.doesNotThrow(
+    () => setLocale('en', { persist: false }),
+    'Hidden options must not reference a discarded draft.',
+  );
+  assert.match(f.status.textContent, /Draft cancelled/);
+  assert.equal(f.current, null);
+  await f.click('edit');
+  await f.set('glyphFamily', 'xbox');
+  await f.click('apply');
+  const accepted = JSON.stringify(f.current);
+  assert.doesNotThrow(() => setLocale('uk', { persist: false }));
+  assert.equal(JSON.stringify(f.current), accepted);
+  assert.equal(f.calls.length, 1);
+  assert.doesNotMatch(f.status.textContent, /Controller settings applied/);
+});
+
+test('switching language during controller Apply retains its operation and adopts only once', async (context) => {
+  const locale = getLocale();
+  setLocale('en', { persist: false });
+  const f = fixture(),
+    gate = deferred();
+  context.after(() => {
+    f.api.destroy();
+    setLocale(locale, { persist: false });
+  });
+  f.setWriter(async (candidate, guard) => {
+    await gate.promise;
+    assert.equal(guard.isCurrent(), true);
+    f.setCurrent(candidate);
+    return { ok: true };
+  });
+  await f.click('edit');
+  await f.set('glyphFamily', 'playstation');
+  const pending = f.click('apply');
+  setLocale('uk', { persist: false });
+  assert.equal(f.current, null);
+  assert.equal(f.calls.length, 1);
+  assert.equal(f.action('apply').disabled, true);
+  assert.doesNotMatch(f.status.textContent, /Applying controller/);
+  assert.match(f.status.textContent, /керування|контролер/i);
+  gate.resolve();
+  await pending;
+  assert.equal(f.current.glyphFamily, 'playstation');
+  assert.equal(f.calls.length, 1);
+  assert.doesNotThrow(() => setLocale('en', { persist: false }));
+  assert.match(f.status.textContent, /Controller settings applied/);
+});
 
 test('mount is inert and renders every button map with sixteen explicit options', () => {
   const f = fixture();

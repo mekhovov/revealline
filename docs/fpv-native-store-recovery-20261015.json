@@ -1,0 +1,47 @@
+{
+  "sourceRevision": "f5411438367b5bf3cadefdad55a775e6a8f0c2c6",
+  "packageRevision": "81ae2dc1403c0b3f8309503c70fb644a23917d59308b198e02460063717debf8",
+  "store": {
+    "path": "optional-practice/civilian-fpv/world-store.mjs",
+    "bytes": 14207,
+    "sha256": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0"
+  },
+  "url": "http://127.0.0.1:9040/",
+  "files": {
+    "index.html": {
+      "bytes": 1085,
+      "sha256": "c2f447be0d074bdb94505150e600a52041c2c1cbbbc6c989a22a882de4712fdb"
+    },
+    "review.mjs": {
+      "bytes": 6319,
+      "sha256": "319bd0cabedcdeeb018b3a742e274ce6251e9e57a2129977d026a44a8caffea4"
+    }
+  },
+  "scope": "Manual native transaction rollback fixture; unique database and connection-local synchronous QuotaExceededError injection; tiny logical payload, database engine overhead unspecified; no user storage or actual quota exhaustion",
+  "status": "native-pass",
+  "database": "codex-fpv-isolated-recovery-be088910-ec73-4623-98f0-8193915ac834",
+  "logicalPayloadBytes": 182,
+  "observations": [
+    "A installed at generation 1",
+    "Connection-local modeled QuotaExceededError rejected B; exact A retained; B absent",
+    "Valid retry installed B at generation 2 and retained A",
+    "Stale generation rejected without mutation",
+    "Rollback activated A at generation 3 with both revisions retained",
+    "Connection reopen preserved A at generation 3",
+    "Page reload with same database hash and explicit Reopen preserved exact A at generation 3 and both revisions"
+  ],
+  "evidence": {
+    "source": "Parent agent native CUA observations, 2026-10-15",
+    "screenshot": {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/native-store-recovery.png",
+      "bytes": 90038,
+      "sha256": "5d42e3704af3f89ce763a722bde358ebf5b8a2df98eba35d1f635cfbd3afc576"
+    }
+  },
+  "limitations": [
+    "Modeled synchronous QuotaExceededError, not actual quota exhaustion",
+    "Page reload and connection reopen, not browser-process restart",
+    "Tiny synthetic payload; database engine disk overhead unspecified",
+    "Unique isolated database; production player storage and caches untouched"
+  ]
+}

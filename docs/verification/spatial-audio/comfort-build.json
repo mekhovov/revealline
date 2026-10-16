@@ -1,0 +1,23 @@
+{
+  "implementationCommit": "d43f86e59d3a2eb15b3b74920311b8c0f4e65540",
+  "sourceRevision": null,
+  "distributionSha256": "40c688e89fcd02a4169888f5fb1b61d704bc16847bb6f79cdb991be0f1012a23",
+  "offlineBuildId": "dc0d5edde2eecfbcfbf3906549dae718a8051e9548a77a21ad3cc8fc71cfd5e5",
+  "files": 1833,
+  "effectEntriesInCore": 57,
+  "runtimeWavCount": 52,
+  "runtimeWavBytes": 1453856,
+  "effectsMatchSource": true,
+  "licenseHtml": "Source retained verbatim after the standard offline installer prefix.",
+  "moduleChecks": {
+    "game/ui/feedback-director.mjs": true,
+    "game/ui/feedback-cues.mjs": true,
+    "game/ui/audio.mjs": true,
+    "game/ui/menu-audio.mjs": true,
+    "game/ui/radio-audio.mjs": true,
+    "game/couch/couch.mjs": true,
+    "game/couch/relay-rescue.mjs": true
+  },
+  "audition": "Source-only authoring fixture; not part of player distribution.",
+  "qualification": "Local distribution packaging check. Not an immutable release certificate; full-suite and physical listening gates remain open."
+}

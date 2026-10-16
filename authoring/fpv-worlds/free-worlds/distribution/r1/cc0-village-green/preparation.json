@@ -1,0 +1,160 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-village-green",
+  "title": [
+    "Village Green",
+    "Сільський парк"
+  ],
+  "kit": "city-kit-suburban",
+  "sourceURL": "https://kenney.nl/assets/city-kit-suburban",
+  "downloadURL": "https://kenney.nl/media/pages/assets/city-kit-suburban/2c871b7af2-1745479373/kenney_city-kit-suburban_20.zip",
+  "archiveSha256": "5869c35cf30b1c87bdb2d197b6d325eebadd2ef08ea27f04797e8e08d77a9a39",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 264228,
+  "modelSha256": "f8006c45fa30ccc15eeb6542f86e04b368d08e674af0ad5177177616a89a5a53",
+  "packBytes": 620228,
+  "packSha256": "3ca6c466023b6b764c47c70c15013b64d0af7ca4577104ff777707527d4192af",
+  "collisionSurfaces": 10,
+  "collisionTriangles": 8246,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/building-type-a.glb",
+      "sha256": "49f32e20b9dcd24b1c8f6d6488807b8c8cb684cbb595bfb0bb36ad903e470faa",
+      "placement": {
+        "model": "building-type-a",
+        "x": -22,
+        "z": 20,
+        "size": 13,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 10.000000366797828
+    },
+    {
+      "model": "Models/GLB format/building-type-a.glb",
+      "sha256": "49f32e20b9dcd24b1c8f6d6488807b8c8cb684cbb595bfb0bb36ad903e470faa",
+      "placement": {
+        "model": "building-type-a",
+        "x": 22,
+        "z": 20,
+        "size": 13,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 10.000000366797828
+    },
+    {
+      "model": "Models/GLB format/building-type-e.glb",
+      "sha256": "9ec43994c8c332b1ae5b058d8b9646255831fd91047c1a35b1fc1ecae4c082fc",
+      "placement": {
+        "model": "building-type-e",
+        "x": -22,
+        "z": 0,
+        "size": 13,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 10.000000366797828
+    },
+    {
+      "model": "Models/GLB format/building-type-e.glb",
+      "sha256": "9ec43994c8c332b1ae5b058d8b9646255831fd91047c1a35b1fc1ecae4c082fc",
+      "placement": {
+        "model": "building-type-e",
+        "x": 22,
+        "z": 0,
+        "size": 13,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 10.000000366797828
+    },
+    {
+      "model": "Models/GLB format/building-type-k.glb",
+      "sha256": "c1b819a526bbcf9663bc40c98e22337cded7fff7c50c14679132d5d98d75f583",
+      "placement": {
+        "model": "building-type-k",
+        "x": -22,
+        "z": -20,
+        "size": 13,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 12.745098277542606
+    },
+    {
+      "model": "Models/GLB format/building-type-k.glb",
+      "sha256": "c1b819a526bbcf9663bc40c98e22337cded7fff7c50c14679132d5d98d75f583",
+      "placement": {
+        "model": "building-type-k",
+        "x": 22,
+        "z": -20,
+        "size": 13,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 12.745098277542606
+    },
+    {
+      "model": "Models/GLB format/tree-large.glb",
+      "sha256": "16d1f95c149bc727a953a473cf20bf21de9bf1a88747c4f9d2eeb4ac7d43e291",
+      "placement": {
+        "model": "tree-large",
+        "x": -30,
+        "z": -34,
+        "size": 9,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 37.03703919919315
+    },
+    {
+      "model": "Models/GLB format/tree-small.glb",
+      "sha256": "5f63359e5f392609d7617cc98070855ca1ffd4f4b4bc3978a5ff56ece88a58d6",
+      "placement": {
+        "model": "tree-small",
+        "x": 30,
+        "z": -34,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 24.69135946612877
+    },
+    {
+      "model": "Models/GLB format/planter.glb",
+      "sha256": "a876e87d908f0397dcaf94b7705835447825c4c5b39195319535415386542c17",
+      "placement": {
+        "model": "planter",
+        "x": -13,
+        "z": 30,
+        "size": 3,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.499999888241293
+    },
+    {
+      "model": "Models/GLB format/planter.glb",
+      "sha256": "a876e87d908f0397dcaf94b7705835447825c4c5b39195319535415386542c17",
+      "placement": {
+        "model": "planter",
+        "x": 13,
+        "z": 30,
+        "size": 3,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.499999888241293
+    }
+  ]
+}

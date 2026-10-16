@@ -1,3 +1,28 @@
+import { requireAcceptedAttemptAppearance } from '../presentation/attempt-appearance.mjs';
+import {
+  sharedBattlefieldGround,
+  createBattlefieldGroundSurface,
+  battlefieldGroundAllowed,
+  paintBattlefieldGroundSpan,
+} from '../presentation/battlefield-ground.mjs';
+import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
+import { coopCombatView } from '../coop/combat-patrols.mjs';
+import { teamPictureArenaLevel } from '../coop/picture-source.mjs';
+import {
+  createCombatPresentation,
+  drawCombatWarnings,
+  drawCombatProjectiles,
+  drawCombatScrap,
+} from '../ui/combat-presentation.mjs';
+import { createHuntDestruction } from '../hunt/destruction.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { drawSnakeBody, drawSnakeTargetOrder } from '../ui/snake-view.mjs';
+import { t } from '../i18n/index.mjs';
+import {
+  createArcadeAdapter,
+  getArcadeCollection,
+  selectedArcadeCollection,
+} from '../presentation/industrial-arcade.mjs';
 import {
   createTeamOutcomeFeedback,
   prepareTeamOutcomes,
@@ -21,18 +46,23 @@ import {
 import { prepareTeamCores, drawTeamCoreCue } from './coop-core-presentation.mjs';
 import { prepareTeamAnchors, drawTeamAnchor } from './coop-anchor-presentation.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
+import { drawTrailImpactFront } from '../ui/actor-presentation.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
-import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
+import { drawPreparedPilotContact } from './coop-pilot-cues.mjs';
+import { coopCueScale, layoutCoopCues, placeCoopCue } from './coop-actor-layout.mjs';
 import {
   createCoopCaptureFeedback,
   drawCoopActiveTrail,
   drawCoopCaptureFeedback,
   drawCoopWall,
   prepareCoopWall,
+  prepareCoopMaterialSample,
 } from './coop-terrain-trail.mjs';
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
 import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
+import { coopBonusActive } from '../coop/timed-bonuses.mjs';
+import { drawCoopExpedition } from '../ui/team-expedition-view.mjs';
 import {
   TEAM_PILOT_SLOTS,
   TEAM_ENEMY_SLOTS,
@@ -64,7 +94,7 @@ export const TEAM_ACTOR_APPEARANCE_SLOTS = Object.freeze([
  * data before painting; never borrow its palette, fonts, terrain or picture. */
 function prepareActorAppearance(snapshot) {
   if (typeof snapshot?.image !== 'function')
-    throw new TypeError('Team actor appearance needs a prepared FPV snapshot.');
+    throw new TypeError(t('interface:teamActorAppearanceNeedsAPreparedFpvSnapshot'));
   for (const slot of TEAM_ACTOR_APPEARANCE_SLOTS)
     if (!(snapshot.resolved?.assets?.[slot] ?? snapshot.canvas?.assets?.[slot]))
       throw new TypeError(`Team actor appearance is missing ${slot}.`);
@@ -110,16 +140,31 @@ function prepareActorAppearance(snapshot) {
 
 /** Draw the authoritative board once. Rendering never advances game state. */
 export function createCoopPainter(canvas) {
+  const battlefieldGround = createBattlefieldGroundSurface(),
+    arcadeAdapter = createArcadeAdapter(),
+    runAcceptedAppearances = new WeakMap(),
+    runCollections = new WeakMap(),
+    runArtRevisions = new WeakMap();
+  let interfaceProvider = () => null;
+  let arcadeProvider = () => null,
+    artSnapshot = null;
   const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Relay Rescue needs a browser with Canvas 2D support.');
+  if (!ctx) throw new Error(t('interface:relayRescueNeedsABrowserWithCanvas2dSupport'));
   let actors = createCoopActorPresentation(),
     actorPresentation = null,
     actorAppearanceStyle = null;
   const outcomes = createTeamOutcomeFeedback(),
-    captures = createCoopCaptureFeedback();
+    captures = createCoopCaptureFeedback(),
+    combatPresentation = createCombatPresentation(),
+    destruction = createHuntDestruction();
+  let combatOwner = null,
+    combatTime = 0;
   let presentation = null,
+    cueLayout = null,
+    cueLayoutCache = null,
     look = null,
     wall = null,
+    materialSample = Object.freeze({}),
     anchors = Object.freeze({}),
     coreFrames = Object.freeze({}),
     supportFrames = Object.freeze({}),
@@ -127,6 +172,11 @@ export function createCoopPainter(canvas) {
     rescueFrames = Object.freeze({}),
     outcomeFrames = Object.freeze({});
   function setPresentation(snapshot) {
+    prepareArt(snapshot);
+    if (snapshot !== presentation) arcadeAdapter.clear();
+    presentation = snapshot ?? null;
+  }
+  function prepareArt(snapshot) {
     let next = null;
     if (snapshot != null) {
       const palette = {};
@@ -144,24 +194,25 @@ export function createCoopPainter(canvas) {
       ]) {
         const value = snapshot.canvas?.palette?.[key];
         if (typeof value !== 'string' || !/^#[a-f0-9]{6}$/i.test(value))
-          throw new TypeError('Team presentation needs a validated canvas palette.');
+          throw new TypeError(t('interface:teamPresentationNeedsAValidatedCanvasPalette'));
         palette[key] = value;
       }
       const motionScale = snapshot.canvas?.motionScale;
       if (!Number.isFinite(motionScale) || motionScale < 0 || motionScale > 1)
-        throw new TypeError('Team presentation needs a bounded motion scale.');
+        throw new TypeError(t('interface:teamPresentationNeedsABoundedMotionScale'));
       const fonts = {};
       for (const key of ['ui', 'numeric']) {
         const value = snapshot.fonts?.[key];
         if (typeof value !== 'string' || !value.length || value.length > 512)
-          throw new TypeError('Team presentation needs its prepared font roles.');
+          throw new TypeError(t('interface:teamPresentationNeedsItsPreparedFontRoles'));
         fonts[key] = value;
       }
-      next = { palette, motionScale, fonts };
+      next = { palette, motionScale, fonts, useThemeFont: !!snapshot.appearance };
     }
     // Keep the page lease's exact snapshot identity while capturing its display
     // values. The painter never changes or disposes shared presentation assets.
     const nextWall = prepareCoopWall(snapshot);
+    const nextMaterialSample = prepareCoopMaterialSample(snapshot);
     const nextAnchors = prepareTeamAnchors(snapshot);
     const nextCoreFrames = prepareTeamCores(snapshot);
     const nextSupportFrames = prepareTeamSupport(snapshot);
@@ -171,33 +222,63 @@ export function createCoopPainter(canvas) {
     actors.setPresentation(snapshot ?? null);
     actorPresentation = snapshot ?? null;
     actorAppearanceStyle = null;
-    presentation = snapshot ?? null;
+    artSnapshot = snapshot ?? null;
     look = next;
     wall = nextWall;
+    materialSample = nextMaterialSample;
     anchors = nextAnchors;
     coreFrames = nextCoreFrames;
     supportFrames = nextSupportFrames;
     emitterFrames = nextEmitterFrames;
     rescueFrames = nextRescueFrames;
     outcomeFrames = nextOutcomes;
+    cueLayout = null;
+    cueLayoutCache = null;
   }
   function paint(
     run,
     {
       reduced = false,
+      showRemains = true,
+      brutal = false,
+      blood = true,
+      encounterLevel = null,
+      runtimeLevel = null,
       textFace = 'pixel',
+      textSize = 'standard',
       picture = null,
       pictureLevel = run.level,
       actorStyle = 'hybrid',
       actorAppearance = null,
       feedback = null,
       previousRun = null,
+      feedbackComparison = null,
     } = {},
   ) {
+    // Historical/unregistered painters do not infer a new opted-in appearance.
+    const artRevision = runArtRevisions.has(run) ? runArtRevisions.get(run) : null;
+    arcadeAdapter.setReviewRevision(artRevision);
+    arcadeAdapter.setEnvironment(runAcceptedAppearances.get(run)?.environmentPin ?? null);
+    combatPresentation.setArtRevision(artRevision);
+    destruction.setArtRevision(artRevision);
+    const selectedArt = arcadeAdapter.resolve(presentation, runCollections.get(run) ?? null);
+    const ground = battlefieldGround.prepare(
+      sharedBattlefieldGround().snapshot().world,
+      run.width * 16,
+      run.height * 16,
+      battlefieldGroundAllowed({
+        environmentPin: runAcceptedAppearances.get(run)?.environmentPin,
+        presentation,
+      }),
+    );
+    if (selectedArt !== artSnapshot) prepareArt(selectedArt);
+    const cueScale = coopCueScale(canvas.clientWidth, run.width, textSize);
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
-      throw new TypeError('Team actor appearance needs a supported style.');
+      throw new TypeError(t('interface:teamActorAppearanceNeedsASupportedStyle'));
     const selectedActors =
-      actorAppearance?.style === 'fpv' ? actorAppearance.snapshot : presentation;
+      actorAppearance?.style === 'fpv'
+        ? arcadeAdapter.resolve(actorAppearance.snapshot, runCollections.get(run) ?? null)
+        : artSnapshot;
     let nextActors = actors;
     if (
       actorAppearance?.style === 'fpv' &&
@@ -216,23 +297,28 @@ export function createCoopPainter(canvas) {
       // The host keeps the authenticated authored picture edition separately
       // from a derived pressure recipe. Geometry and the actual simulation stay
       // owned by the run; no alternate picture edition is inferred by ID.
+      const arenaLevel = teamPictureArenaLevel(run, {
+        runtimeLevel,
+        sourceLevel: encounterLevel ?? pictureLevel,
+      });
       if (
-        pictureLevel.id !== run.level.id ||
-        pictureLevel.version !== run.level.version ||
+        (encounterLevel
+          ? encounterLevel.id !== arenaLevel.id || encounterLevel.version !== arenaLevel.version
+          : pictureLevel.id !== arenaLevel.id || pictureLevel.version !== arenaLevel.version) ||
         pictureLevel.width !== run.width ||
         pictureLevel.height !== run.height
       )
-        throw new TypeError('Team picture source does not match this arena.');
+        throw new TypeError(t('interface:teamPictureSourceDoesNotMatchThisArena'));
       if (picture.choice?.sourceKind === 'candidate-original') {
         const frame = candidateTeamPictureFrame(picture, pictureLevel, presentation);
-        if (!frame) throw new TypeError('Team candidate picture has no live verified owner.');
+        if (!frame) throw new TypeError(t('interface:teamCandidatePictureHasNoLiveVerifiedOwner'));
         pictureWidth = frame.width;
         pictureHeight = frame.height;
       }
       if (
         picture.snapshot !== presentation ||
         !presentation ||
-        picture.choice?.levelId !== run.level.id ||
+        picture.choice?.levelId !== pictureLevel.id ||
         picture.choice?.levelRevision !== pictureLevel.revision ||
         picture.fit !== 'contain' ||
         picture.sampling !== 'nearest' ||
@@ -241,7 +327,7 @@ export function createCoopPainter(canvas) {
         !['image', 'procedural'].includes(picture.choice.kind) ||
         (picture.choice.kind === 'procedural' ? picture.image !== null : !picture.image)
       )
-        throw new TypeError('Team picture does not match this prepared arena presentation.');
+        throw new TypeError(t('interface:teamPictureDoesNotMatchThisPreparedArenaPresentation'));
       if (
         picture.image &&
         ((picture.image.naturalWidth ?? picture.image.width) !== pictureWidth ||
@@ -251,13 +337,22 @@ export function createCoopPainter(canvas) {
           `Team picture must retain its complete ${pictureWidth}×${pictureHeight} decoded frame.`,
         );
     }
+    cueLayout = null;
+    if (actors !== nextActors) actors.reset();
     actors = nextActors;
     actorPresentation = selectedActors;
     actorAppearanceStyle = actorAppearance?.style ?? null;
     const recentOutcomes = feedback ?? outcomes.observe(run),
       recentCaptures = captures.observe(run);
-    const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
-    const bonuses = coopBonusView(run);
+    const interfaceFonts = canvasInterfaceFonts(interfaceProvider());
+    const fonts = canvasTextFonts(textFace, interfaceFonts ?? look?.fonts ?? THEME_FONTS, {
+      useThemeFont: !!interfaceFonts || look?.useThemeFont,
+    });
+    const bonuses = coopBonusView(run),
+      // Pickups scale motion separately from Support's stored velocity. Both
+      // own the same visible state; neither the painter nor pause extends it.
+      bonusSlowed = coopBonusActive(run, 'enemy-slow'),
+      enemySlowed = (enemy) => bonusSlowed || (enemy.speedScale < 1 && enemy.slowUntil > run.time);
     const palette = look?.palette;
     const colors = palette ? [palette.accent, palette.safe] : COLORS;
     const motionScale = reduced ? 0 : (look?.motionScale ?? 1);
@@ -268,10 +363,34 @@ export function createCoopPainter(canvas) {
       canvasCSSWidth: canvas.clientWidth,
       style: actorStyle,
       previousRun,
+      concealed: run.status === 'won' && !!picture?.image,
     });
     const unit = canvas.width / run.width;
-    const cueScale = coopCueScale(canvas.clientWidth, run.width),
-      cssCell = cueScale.cell,
+    const combat = coopCombatView(run),
+      combatOptions = {
+        artRevision,
+        screenScale: canvas.clientWidth / 1152,
+        reduced,
+        showScrap: showRemains,
+        brutal,
+        blood,
+      };
+    destruction.advance(combat, combatOwner === run ? Math.max(0, run.time - combatTime) : 0, {
+      key: run,
+      sources: run.players,
+      paused: run.status !== 'running',
+      brutal,
+      blood,
+      reduced,
+      concealed: run.status === 'won' && !!picture?.image,
+    });
+    combatOwner = run;
+    combatTime = run.time;
+    const cssCell = cueScale.cell,
+      compactCues = cueScale.width < 320,
+      cueRequests = [],
+      cuePaint = [],
+      optionalCues = [],
       occupied = [],
       heads = run.players.map((player) => {
         const radius = player.radius * cssCell + 2;
@@ -282,19 +401,53 @@ export function createCoopPainter(canvas) {
           bottom: player.y * cssCell + radius,
         };
       });
-    const place = (x, y, width, height) => {
-      const rect = placeCoopCue({
+    // Functional contact points and locked destinations take precedence over
+    // compact text. Body art may overlap a plate; collision geometry may not.
+    if (compactCues)
+      for (const enemy of run.enemies) {
+        if (enemy.active === false) continue;
+        const radius = enemy.radius * cssCell + 2;
+        heads.push({
+          left: enemy.x * cssCell - radius,
+          right: enemy.x * cssCell + radius,
+          top: enemy.y * cssCell - radius,
+          bottom: enemy.y * cssCell + radius,
+        });
+        if (enemy.type === 'hunter' && enemy.phase === 'warning' && enemy.targetPoint) {
+          const radius = 0.8 * cssCell;
+          heads.push({
+            left: enemy.targetPoint.x * cssCell - radius,
+            right: enemy.targetPoint.x * cssCell + radius,
+            top: enemy.targetPoint.y * cssCell - radius,
+            bottom: enemy.targetPoint.y * cssCell + radius,
+          });
+        }
+      }
+    const place = (x, y, width, height, priority = 1, optional = false) => {
+      const request = {
         x: x * cssCell,
         y: y * cssCell,
         width,
         height,
-        arenaWidth: cueScale.width,
-        arenaHeight: run.height * cssCell,
-        heads,
-        occupied,
-      });
+        priority,
+      };
+      const rect =
+        compactCues && optional
+          ? null
+          : placeCoopCue({
+              ...request,
+              arenaWidth: cueScale.width,
+              arenaHeight: run.height * cssCell,
+              heads,
+              occupied,
+            });
       if (rect) occupied.push(rect);
-      return rect;
+      // The holder is also retained when the greedy placement failed. A later
+      // complete group packing can recover that cue without losing its draw.
+      const position = { rect };
+      if (compactCues)
+        (optional ? optionalCues : cueRequests).push({ ...request, original: rect, position });
+      return position;
     };
     ctx.save();
     try {
@@ -322,6 +475,27 @@ export function createCoopPainter(canvas) {
         // cells and score intact while retiring the live arena's concealment/cues.
         if (run.status === 'won') return;
       }
+      if (ground)
+        for (let y = 0; y < run.height; y++) {
+          let start = -1;
+          for (let x = 0; x <= run.width; x++) {
+            const covered = x < run.width && run.cells[y * run.width + x] === 0;
+            if (covered && start < 0) start = x;
+            if (!covered && start >= 0) {
+              paintBattlefieldGroundSpan(
+                ctx,
+                ground,
+                start,
+                y,
+                x - start,
+                1,
+                run.width,
+                run.height,
+              );
+              start = -1;
+            }
+          }
+        }
       for (let y = 0; y < run.height; y++) {
         for (let x = 0; x < run.width; x++) {
           const cell = run.cells[y * run.width + x];
@@ -346,8 +520,8 @@ export function createCoopPainter(canvas) {
               ctx.fill();
             }
           } else {
-            if (picture?.image) {
-              // Required picture concealment is opaque black in every theme.
+            if (!ground && picture?.image) {
+              // Without explicit decorative ground, keep the original opaque concealment.
               ctx.fillStyle = '#000000';
               ctx.fillRect(x, y, 1, 1);
             }
@@ -355,6 +529,8 @@ export function createCoopPainter(canvas) {
             ctx.fillRect(x + 0.46, y + 0.46, 0.08, 0.08);
             const material = run.terrain?.[y * run.width + x];
             if (material === 1 || material === 2) {
+              // Cosmetic pixels remain beneath native active-material symbols.
+              drawCoopWall(ctx, materialSample[material], x, y);
               ctx.save();
               ctx.scale(1 / 16, 1 / 16);
               paintMaterialMarker(ctx, material, x * 16, y * 16, 16);
@@ -366,7 +542,17 @@ export function createCoopPainter(canvas) {
       // Newly revealed cells illuminate below every current hazard, actor and
       // active cut, matching Solo/Versus without obscuring live danger.
       drawCoopCaptureFeedback(ctx, recentCaptures, run, palette ?? ACTOR_FALLBACK_PALETTE, reduced);
+      ctx.save();
+      ctx.scale(1 / 16, 1 / 16);
+      drawCombatScrap(ctx, combat, palette, combatOptions);
+      destruction.draw(ctx, {
+        unit: 1 / Math.max(0.25, canvas.clientWidth / 1152),
+        color: palette?.accent,
+      });
+      ctx.restore();
+      actors.drawDefeats(ctx, (count) => destruction.reserveTransientPieces(count));
       drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
+      drawSnakeBody(ctx, run, { unit: 1, palette, colors });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
       for (const effect of run.supportEffects || [])
         drawTeamSupportPulse(ctx, supportFrames, effect, colors, reduced);
@@ -384,21 +570,50 @@ export function createCoopPainter(canvas) {
         for (const actor of list)
           if (actors.draw(ctx, kind, actor.id, palette ?? ACTOR_FALLBACK_PALETTE))
             bodies.add(`${kind}:${actor.id}`);
+      ctx.save();
+      ctx.scale(1 / 16, 1 / 16);
+      combatPresentation.drawActors(ctx, combat, palette, combatOptions);
+      drawSnakeTargetOrder(ctx, run, combat?.actors, { palette, font: fonts.numeric });
+      drawCombatWarnings(ctx, combat, palette, combatOptions);
+      drawCombatProjectiles(ctx, combat, palette, combatOptions);
+      ctx.restore();
+      drawCoopExpedition(ctx, run, { palette, frames: emitterFrames, anchorFrames: anchors });
+      for (const actor of combat?.actors ?? []) {
+        if (!bonusSlowed && actor.slowUntil <= run.time) continue;
+        ctx.save();
+        ctx.translate(actor.x, actor.y);
+        drawTeamSlowed(ctx, supportFrames, palette);
+        ctx.restore();
+      }
       const clearance = (kind, id, minimum) =>
         body(kind, id)
-          ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + 9 / cssCell)
+          ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + cueScale.px(9) / cssCell)
           : minimum;
-      function cue(text, x, y, size, font, backed = false, color = '#f1f7ed', minimum = 12) {
+      function cue(
+        text,
+        x,
+        y,
+        size,
+        font,
+        backed = false,
+        color = '#f1f7ed',
+        minimum = 12,
+        priority = 1,
+      ) {
         ctx.save();
         size = cueScale.font(size, minimum, 18);
-        ctx.font = `600 ${size}px ${font}`;
+        const labelFont = `600 ${size}px ${font}`;
+        ctx.font = labelFont;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         const measured = ctx.measureText(text)?.width;
         const width =
-          (Number.isFinite(measured) ? measured : size * text.length * 0.7) * cssCell + 6;
-        const rect = place(x, y, width, size * cssCell * 1.4);
-        if (rect) {
+          (Number.isFinite(measured) ? measured : size * text.length * 0.7) * cssCell +
+          cueScale.px(6);
+        const position = place(x, y, width, size * cssCell * 1.4, priority);
+        const draw = () => {
+          const rect = position.rect;
+          if (!rect) return;
           if (backed) {
             ctx.fillStyle = '#07111c';
             ctx.fillRect(
@@ -410,7 +625,17 @@ export function createCoopPainter(canvas) {
           }
           ctx.fillStyle = color;
           ctx.fillText(text, rect.x / cssCell, rect.y / cssCell);
-        }
+        };
+        if (compactCues)
+          cuePaint.push(() => {
+            ctx.save();
+            ctx.font = labelFont;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            draw();
+            ctx.restore();
+          });
+        else draw();
         ctx.restore();
       }
       function pilotBadge(player, pilotBody) {
@@ -418,83 +643,102 @@ export function createCoopPainter(canvas) {
           offset = frame?.bodyOffset,
           x = player.x + (offset?.x ?? 0) / 16,
           y = player.y + (offset?.y ?? 0) / 16,
-          shape = player.id === 0 ? 20 : 24,
+          shape = cueScale.px(player.id === 0 ? 20 : 24),
           downed = player.status === 'downed',
-          width = shape + (downed ? 10 : 0),
-          rect = place(
+          width = shape + (downed ? cueScale.px(10) : 0),
+          position = place(
             x,
-            y - (frame ? frame.diameter / 32 : 0.7) - (shape / 2 + 3) / cssCell,
+            y - (frame ? frame.diameter / 32 : 0.7) - (shape / 2 + cueScale.px(3)) / cssCell,
             width,
             shape,
+            3,
           );
-        if (!rect) return;
-        const cx = (rect.left + shape / 2) / cssCell,
-          cy = rect.y / cssCell,
-          radius = shape / 2 / cssCell;
-        ctx.save();
-        ctx.fillStyle = '#07111c';
-        ctx.strokeStyle = colors[player.id];
-        ctx.lineWidth = 1.5 / cssCell;
-        if (!downed && player.graceUntil > run.time) ctx.setLineDash([2 / cssCell, 2 / cssCell]);
-        ctx.beginPath();
-        if (player.id === 0) ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-        else {
-          ctx.moveTo(cx, cy - radius);
-          ctx.lineTo(cx + radius, cy);
-          ctx.lineTo(cx, cy + radius);
-          ctx.lineTo(cx - radius, cy);
-          ctx.closePath();
-        }
-        ctx.fill();
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.font = `600 ${cueScale.font(0.66, 14, 18)}px ${fonts.numeric}`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = '#f1f7ed';
-        ctx.fillText(String(player.id + 1), cx, cy);
-        if (downed) {
+        if (!compactCues && !position.rect) return;
+        const drawTether = () => {
+          if (pilotBody && offset && (offset.x !== 0 || offset.y !== 0)) {
+            // Dashed cosmetic tether ends at the true cutting head; it is not a trail.
+            ctx.strokeStyle = '#07111c';
+            ctx.lineWidth = 3 / cssCell;
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.strokeStyle = '#f1f7ed';
+            ctx.lineWidth = 1 / cssCell;
+            ctx.setLineDash([2 / cssCell, 2 / cssCell]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
+        };
+        const drawBadge = () => {
+          const rect = position.rect;
+          if (!rect) return;
+          const cx = (rect.left + shape / 2) / cssCell,
+            cy = rect.y / cssCell,
+            radius = shape / 2 / cssCell;
+          ctx.save();
           ctx.fillStyle = '#07111c';
-          ctx.fillRect(
-            (rect.right - 10) / cssCell,
-            (rect.y - 8) / cssCell,
-            10 / cssCell,
-            16 / cssCell,
-          );
-          ctx.fillStyle = '#f1f7ed';
-          ctx.font = `600 ${12 / cssCell}px ${fonts.numeric}`;
-          ctx.fillText('+', (rect.right - 5) / cssCell, cy);
-        }
-        if (pilotBody && offset && (offset.x !== 0 || offset.y !== 0)) {
-          // Dashed cosmetic tether ends at the true cutting head; it is not a trail.
-          ctx.strokeStyle = '#07111c';
-          ctx.lineWidth = 3 / cssCell;
+          ctx.strokeStyle = colors[player.id];
+          ctx.lineWidth = 1.5 / cssCell;
+          if (!downed && player.graceUntil > run.time) ctx.setLineDash([2 / cssCell, 2 / cssCell]);
           ctx.beginPath();
-          ctx.moveTo(player.x, player.y);
-          ctx.lineTo(x, y);
-          ctx.stroke();
-          ctx.strokeStyle = '#f1f7ed';
-          ctx.lineWidth = 1 / cssCell;
-          ctx.setLineDash([2 / cssCell, 2 / cssCell]);
+          if (player.id === 0) ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+          else {
+            ctx.moveTo(cx, cy - radius);
+            ctx.lineTo(cx + radius, cy);
+            ctx.lineTo(cx, cy + radius);
+            ctx.lineTo(cx - radius, cy);
+            ctx.closePath();
+          }
+          ctx.fill();
           ctx.stroke();
           ctx.setLineDash([]);
+          ctx.font = `600 ${cueScale.font(0.66, 14, 18)}px ${fonts.numeric}`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#f1f7ed';
+          ctx.fillText(String(player.id + 1), cx, cy);
+          if (downed) {
+            ctx.fillStyle = '#07111c';
+            ctx.fillRect(
+              (rect.right - cueScale.px(10)) / cssCell,
+              (rect.y - cueScale.px(8)) / cssCell,
+              cueScale.px(10) / cssCell,
+              cueScale.px(16) / cssCell,
+            );
+            ctx.fillStyle = '#f1f7ed';
+            ctx.font = `600 ${cueScale.px(12) / cssCell}px ${fonts.numeric}`;
+            ctx.fillText('+', (rect.right - cueScale.px(5)) / cssCell, cy);
+          }
+          if (!compactCues) drawTether();
+          ctx.restore();
+        };
+        if (compactCues) cuePaint.push(drawBadge);
+        else drawBadge();
+        if (compactCues) {
+          ctx.save();
+          drawTether();
+          ctx.restore();
         }
-        ctx.restore();
         const rescue = rescueFrames['team.rescue.progress']
           ? teamRescueProgress(run, player)
           : null;
         if (rescue || (frame?.pilotState === 'rescuing' && Number.isInteger(frame.rescueTarget)))
           cue(
             rescue
-              ? `RESCUE ${rescue.target + 1} · ${Math.floor(rescue.progress * 100)}%`
-              : `RESCUE ${frame.rescueTarget + 1}`,
+              ? t('interface:team.cueRescueProgressCompact', {
+                  player: rescue.target + 1,
+                  percent: Math.floor(rescue.progress * 100),
+                })
+              : t('interface:team.cueRescueCompact', { player: frame.rescueTarget + 1 }),
             x,
-            (rect.bottom + 12) / cssCell,
+            ((position.rect?.bottom ?? y * cssCell) + cueScale.px(12)) / cssCell,
             0.66,
             fonts.ui,
             true,
             '#f1f7ed',
             14,
+            3,
           );
       }
       for (const stronghold of run.strongholds || []) {
@@ -505,7 +749,7 @@ export function createCoopPainter(canvas) {
           const decorated = drawTeamAnchor(ctx, anchors, anchor, palette);
           // Keep a 12px readable label outside replacement artwork, including
           // small Studio/handheld canvases. Legacy cue placement stays exact.
-          const labelOffset = 0.7 + 12 / cssCell;
+          const labelOffset = 0.7 + cueScale.px(12) / cssCell;
           const labelY = decorated
             ? anchor.y + labelOffset < run.height - 0.6
               ? anchor.y + labelOffset
@@ -528,7 +772,7 @@ export function createCoopPainter(canvas) {
         const core = stronghold.core;
         const coreColor = drawTeamCoreCue(ctx, coreFrames, stronghold, palette);
         cue(
-          `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELD' : 'CAPTURE'}`,
+          `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? t('interface:secured') : stronghold.shielded ? t('interface:shield2') : t('interface:capture')}`,
           core.x,
           Math.max(0.6, core.y - clearance('core', stronghold.id, 1.75)),
           0.64,
@@ -566,13 +810,15 @@ export function createCoopPainter(canvas) {
         ctx.font = `600 0.65px ${fonts.ui}`;
         ctx.textAlign = 'center';
         cue(
-          `LOCK ${enemy.target + 1}`,
+          `${t('interface:team.cueLockCompact', { player: enemy.target + 1 })}${compactCues && enemySlowed(enemy) ? ' ↓' : ''}`,
           enemy.x,
           Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.1)),
           0.65,
           fonts.ui,
           body('enemy', enemy.id),
           '#ffd279',
+          12,
+          3,
         );
       }
       for (const [i, spawn] of run.level.spawns.entries()) {
@@ -582,6 +828,7 @@ export function createCoopPainter(canvas) {
         ctx.arc(spawn.x, spawn.y, 0.9, 0, Math.PI * 2);
         ctx.stroke();
       }
+      const preparedPilotContacts = new Map();
       for (const player of run.players) {
         ctx.strokeStyle = colors[player.id];
         ctx.fillStyle = colors[player.id];
@@ -625,23 +872,36 @@ export function createCoopPainter(canvas) {
           ctx.fill();
           ctx.globalAlpha = 1;
         }
-        ctx.fillStyle = '#172c34';
-        ctx.lineWidth = 0.12;
-        ctx.beginPath();
-        if (player.id === 0) ctx.arc(0, 0, 0.58, 0, Math.PI * 2);
-        else {
-          ctx.moveTo(0, -0.72);
-          ctx.lineTo(0.67, 0);
-          ctx.lineTo(0, 0.72);
-          ctx.lineTo(-0.67, 0);
-          ctx.closePath();
+        if (!pilotBody) {
+          ctx.fillStyle = '#172c34';
+          ctx.lineWidth = 0.12;
+          ctx.beginPath();
+          if (player.id === 0) ctx.arc(0, 0, 0.58, 0, Math.PI * 2);
+          else {
+            ctx.moveTo(0, -0.72);
+            ctx.lineTo(0.67, 0);
+            ctx.lineTo(0, 0.72);
+            ctx.lineTo(-0.67, 0);
+            ctx.closePath();
+          }
+          ctx.fill();
+          ctx.stroke();
         }
-        if (!pilotBody) ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = colors[player.id];
-        ctx.beginPath();
-        ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
-        ctx.fill();
+        if (pilotBody) {
+          // Retain exact physical geometry for the final foreground pass. A
+          // filled marker here or later would hide the prepared battery/camera.
+          preparedPilotContacts.set(player.id, {
+            x: player.x,
+            y: player.y,
+            radius: player.radius,
+            color: colors[player.id],
+          });
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
+          ctx.fillStyle = colors[player.id];
+          ctx.fill();
+        }
         ctx.restore();
         pilotBadge(player, pilotBody);
       }
@@ -697,13 +957,22 @@ export function createCoopPainter(canvas) {
           ctx.fillStyle = '#521f2a';
           ctx.fillRect(-0.1, -0.1, 0.2, 0.2);
         }
-        if (enemy.type === 'hunter' && enemy.phase !== 'warning') {
+        const slowed = enemySlowed(enemy);
+        // On compact boards, an active state replaces the redundant idle role
+        // caption. Charge/lock/recovery keep their full caption with the Help-
+        // labelled slowdown glyph; the existing dashed slow ring also remains.
+        const idleSlowed = compactCues && slowed && enemy.phase === 'patrol';
+        if (enemy.type === 'hunter' && enemy.phase !== 'warning' && !idleSlowed) {
           ctx.fillStyle = '#eee7c8';
           ctx.font = `600 0.57px ${fonts.ui}`;
           ctx.textAlign = 'center';
           ctx.restore();
           cue(
-            enemy.phase === 'commit' ? 'CHARGE' : enemy.phase === 'recovery' ? 'RECOVER' : 'HUNTER',
+            (enemy.phase === 'commit'
+              ? t('interface:charge')
+              : enemy.phase === 'recovery'
+                ? t('interface:recover')
+                : t('interface:hunter')) + (compactCues && slowed ? ' ↓' : ''),
             enemy.x,
             Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.05)),
             0.57,
@@ -718,10 +987,10 @@ export function createCoopPainter(canvas) {
           ctx.restore();
           cue(
             enemy.rover?.mode === 'warning'
-              ? 'WAKING'
+              ? t('interface:waking')
               : enemy.rover?.mode === 'active'
-                ? 'ROAMER'
-                : 'DORMANT',
+                ? t('interface:roamer')
+                : t('interface:dormant'),
             enemy.x,
             Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.05)),
             0.57,
@@ -733,31 +1002,48 @@ export function createCoopPainter(canvas) {
           ctx.translate(enemy.x, enemy.y);
         }
         // Authoritative active time keeps this cue visible through pause and reduced effects.
-        if (enemy.speedScale < 1 && enemy.slowUntil > run.time) {
+        if (slowed) {
           const slowedColor = drawTeamSlowed(ctx, supportFrames, palette);
           ctx.restore();
-          cue(
-            'SLOWED',
-            enemy.x,
-            Math.min(run.height - 0.6, enemy.y + clearance('enemy', enemy.id, 1.25)),
-            0.6,
-            fonts.ui,
-            enemyBody,
-            slowedColor,
-          );
+          if (!(compactCues && enemy.type === 'hunter' && enemy.phase !== 'patrol'))
+            cue(
+              t('interface:slowed'),
+              enemy.x,
+              Math.min(run.height - 0.6, enemy.y + clearance('enemy', enemy.id, 1.25)),
+              0.6,
+              fonts.ui,
+              enemyBody,
+              slowedColor,
+            );
           ctx.save();
           ctx.translate(enemy.x, enemy.y);
         }
         ctx.restore();
       }
       for (const player of run.players) {
-        ctx.fillStyle = colors[player.id];
-        ctx.strokeStyle = '#07111c';
-        ctx.lineWidth = 1 / cssCell;
-        ctx.beginPath();
-        ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
+        const contact = preparedPilotContacts.get(player.id);
+        if (contact) {
+          // Keep the unfilled pilot footprint above every actor and enemy cue.
+          // The separate number/shape badge and recovery ring retain their roles.
+          ctx.save();
+          ctx.translate(contact.x, contact.y);
+          drawPreparedPilotContact(
+            ctx,
+            contact.radius,
+            contact.color,
+            cssCell,
+            feedbackComparison?.contactStyle,
+          );
+          ctx.restore();
+        } else {
+          ctx.fillStyle = colors[player.id];
+          ctx.strokeStyle = '#07111c';
+          ctx.lineWidth = 1 / cssCell;
+          ctx.beginPath();
+          ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
       }
       for (const [index, outcome] of recentOutcomes.entries()) {
         if (!['running', 'paused'].includes(run.status)) break;
@@ -765,39 +1051,112 @@ export function createCoopPainter(canvas) {
           outcome.slot === 'team.capture.joint' ? '1 + 2 · JOINT CUT' : '1 + 2 · TEAM RECOVERY';
         const size = cueScale.font(0.75, 12, 18);
         ctx.font = `600 ${size}px ${fonts.ui}`;
-        const width = (ctx.measureText(label)?.width ?? size * label.length * 0.7) * cssCell + 38;
-        const rect = place(run.width / 2, (18 + index * 34) / cssCell, width, 28);
-        if (!rect) continue;
-        drawTeamOutcomeBadge(
-          ctx,
-          outcomeFrames[outcome.slot],
-          rect,
-          cssCell,
-          colors,
-          reduced,
-          run.time - outcome.time,
+        const width =
+          (ctx.measureText(label)?.width ?? size * label.length * 0.7) * cssCell + cueScale.px(38);
+        const position = place(
+          run.width / 2,
+          cueScale.px(18 + index * 34) / cssCell,
+          width,
+          cueScale.px(28),
+          0,
+          true,
         );
-        ctx.save();
-        ctx.fillStyle = '#07111c';
-        ctx.fillRect(
-          (rect.left + 28) / cssCell,
-          rect.top / cssCell,
-          (rect.width - 28) / cssCell,
-          rect.height / cssCell,
-        );
-        ctx.fillStyle = palette?.ink ?? '#f3f0db';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(label, (rect.left + 32) / cssCell, rect.y / cssCell);
-        ctx.restore();
+        if (!compactCues && !position.rect) continue;
+        const outcomeFont = ctx.font;
+        const drawOutcome = () => {
+          const rect = position.rect;
+          if (!rect) return;
+          drawTeamOutcomeBadge(
+            ctx,
+            outcomeFrames[outcome.slot],
+            rect,
+            cssCell,
+            colors,
+            reduced,
+            run.time - outcome.time,
+          );
+          ctx.save();
+          ctx.fillStyle = '#07111c';
+          ctx.fillRect(
+            (rect.left + cueScale.px(28)) / cssCell,
+            rect.top / cssCell,
+            (rect.width - cueScale.px(28)) / cssCell,
+            rect.height / cssCell,
+          );
+          ctx.fillStyle = palette?.ink ?? '#f3f0db';
+          ctx.font = outcomeFont;
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(label, (rect.left + cueScale.px(32)) / cssCell, rect.y / cssCell);
+          ctx.restore();
+        };
+        if (compactCues) cuePaint.push(drawOutcome);
+        else drawOutcome();
       }
+      if (compactCues) {
+        const geometry = { arenaWidth: cueScale.width, arenaHeight: run.height * cssCell, heads },
+          measurements = cueRequests.map(({ position: _position, ...request }) => request),
+          key = JSON.stringify([geometry, measurements]),
+          cached = cueLayoutCache?.key === key;
+        const layout = cached ? cueLayoutCache.layout : layoutCoopCues(measurements, geometry);
+        if (!cached) cueLayoutCache = { key, layout };
+        // Apply a complete packing atomically. Partial placement must not move
+        // one warning underneath another still using its visible fallback.
+        if (!layout.unplaced.length)
+          cueRequests.forEach((request, index) => {
+            request.position.rect = layout.placements[index];
+          });
+        const required = cueRequests.map((request) => request.position.rect).filter(Boolean);
+        // Celebration banners are optional. They never enter the required cue
+        // packing and may occupy only space left by functional labels/contacts.
+        for (const request of optionalCues) {
+          const rect = placeCoopCue({ ...request, ...geometry, occupied: required });
+          if (
+            rect &&
+            !required.some(
+              (other) =>
+                rect.left < other.right &&
+                rect.right > other.left &&
+                rect.top < other.bottom &&
+                rect.bottom > other.top,
+            )
+          ) {
+            request.position.rect = rect;
+            required.push(rect);
+          }
+        }
+        cueLayout = Object.freeze({
+          requested: cueRequests.length,
+          painted: cueRequests.filter((request) => request.position.rect).length,
+          unplaced: Object.freeze([...layout.unplaced]),
+          exhausted: layout.exhausted,
+          strategy: layout.unplaced.length ? 'visible-fallback' : 'packed',
+          cached,
+          optionalOmitted: optionalCues.filter((request) => !request.position.rect).length,
+          compact: true,
+        });
+        for (const draw of cuePaint) draw();
+      } else cueLayoutCache = null;
       for (const impact of run.impacts || []) {
         const x = Number.isFinite(impact.x) ? impact.x : (impact.cellIndex % run.width) + 0.5;
         const y = Number.isFinite(impact.y)
           ? impact.y
           : Math.floor(impact.cellIndex / run.width) + 0.5;
         if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
-        drawTeamEmitterSpark(ctx, emitterFrames, { x, y }, palette);
+        if (impact.version === 'team-line-impact.v2') {
+          ctx.save();
+          ctx.scale(1 / 16, 1 / 16);
+          drawTrailImpactFront(
+            ctx,
+            { x, y, direction: impact.direction },
+            {
+              time: run.time * motionScale,
+              reduced,
+              screenScale: cssCell / 16,
+            },
+          );
+          ctx.restore();
+        } else drawTeamEmitterSpark(ctx, emitterFrames, { x, y }, palette);
       }
     } finally {
       ctx.restore();
@@ -806,13 +1165,58 @@ export function createCoopPainter(canvas) {
   return {
     paint,
     observe(run) {
+      actors.observe(run);
       outcomes.observe(run);
       captures.observe(run);
     },
     setPresentation,
+    setInterfaceProvider(provider) {
+      interfaceProvider = typeof provider === 'function' ? provider : () => null;
+    },
+    setArcadeProvider(provider) {
+      arcadeProvider = typeof provider === 'function' ? provider : () => null;
+    },
+    setAttemptAppearance(run, appearance) {
+      if (runAcceptedAppearances.has(run) && runAcceptedAppearances.get(run) === appearance) return;
+      const accepted = requireAcceptedAttemptAppearance(appearance);
+      runArtRevisions.set(run, accepted?.artRevision ?? null);
+      runCollections.set(
+        run,
+        accepted?.collection
+          ? getArcadeCollection(accepted.collection.id, accepted.collection.revision)
+          : null,
+      );
+      // Keep the original accepted object: projected room views may be rebound
+      // every paint, without repeatedly copying metadata or flushing caches.
+      runAcceptedAppearances.set(run, appearance);
+    },
+    acceptEnemyArtwork(run) {
+      if (run.status !== 'ready') return false;
+      runAcceptedAppearances.delete(run);
+      runArtRevisions.set(run, runtimeActorArtRevision());
+      runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
+      return true;
+    },
+    captureArcadeCollection(run, { artRevision = runtimeActorArtRevision() } = {}) {
+      if (!runArtRevisions.has(run)) runArtRevisions.set(run, artRevision);
+      if (!runCollections.has(run))
+        runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
+    },
+    dispose() {
+      battlefieldGround.clear();
+      actors.reset();
+      destruction.reset();
+      arcadeAdapter.clear();
+    },
+    get artSnapshot() {
+      return artSnapshot;
+    },
     actorFrame: (kind, id) => actors.frame(kind, id),
     get presentation() {
       return presentation;
+    },
+    get cueLayout() {
+      return cueLayout;
     },
   };
 }

@@ -1,0 +1,11 @@
+{
+  "format": "FPVAdventureCatalogueCompatibility.v1",
+  "legacyWorldIdentity": true,
+  "legacyCourses": true,
+  "school": true,
+  "originalCatalogue": true,
+  "curatedPlaylists": true,
+  "newWorlds": 6,
+  "newChallenges": 30,
+  "total": 148
+}

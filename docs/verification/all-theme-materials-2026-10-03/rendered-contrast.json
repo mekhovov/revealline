@@ -1,0 +1,5912 @@
+{
+  "method": "Textless runtime twins; every JPEG pixel in reading area, including grain; 0.2 JPEG qualification margin. Not lossless certification.",
+  "count": 738,
+  "failures": [],
+  "marginFailures": [],
+  "results": [
+    {
+      "family": "copper-observatory",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 10.7792,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 7.1208,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 8.5663,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 8.5663,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 7.2103,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 7.1266,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 7.2103,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 7.2946,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 7.2946,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 7.2103,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 8.439,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 8.626,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 8.5322,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 8.2811,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 8.2811,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 8.2811,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 8.5663,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 8.4349,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 7.1266,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 7.2103,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 8.7205,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 8.5663,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 8.2811,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 13.1574,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 13.3188,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 8.2811,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 13.1574,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 13.3188,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 13.4794,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 13.639,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 13.3188,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 8.2811,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 9.8243,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 9.8243,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 9.8243,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 9.8243,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 9.8243,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 9.8243,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 9.8243,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 15.0054,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "copper-observatory",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 15.0054,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 12.5352,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 7.9492,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 10.9775,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 10.6622,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 9.6332,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 9.8387,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 9.6332,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 9.8387,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 9.6332,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 9.6332,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 7.8622,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 7.8622,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 7.8622,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 9.07,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 9.07,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 9.07,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 10.5064,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 10.7865,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 9.7356,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 9.6332,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 7.7745,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 10.8193,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 9.07,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 15.3673,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 15.0722,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 9.07,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 15.3673,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 15.221,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 15.221,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 15.3673,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 15.3673,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 9.07,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 12.276,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 12.276,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 12.276,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 12.276,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 12.276,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 12.276,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 12.276,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 16.5397,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "deep-space",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 16.5397,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 12.8776,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 5.9635,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 15.0052,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 14.8747,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 6.1686,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 6.3465,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 6.3465,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 6.3465,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 6.2568,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 6.1686,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 7.2023,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 7.1632,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 7.0061,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 6.4133,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 6.4133,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 6.4133,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 15.0052,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 14.856,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 6.3465,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 6.3465,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 7.1632,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 15.0052,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 6.4133,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 13.822,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 13.822,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 6.4133,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 13.9468,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 13.822,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 13.822,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 13.9468,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 13.822,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 6.4133,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 16.0752,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 16.0752,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 16.0752,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 16.0752,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 16.0752,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 16.0752,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 16.0752,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 14.9703,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dnipro-porcelain",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 14.9703,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 19.7137,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 12.2756,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 16.5916,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 16.5839,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 16.5916,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 16.5916,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 16.5916,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 16.5916,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 16.5916,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 9.5495,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 9.5495,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 9.5495,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 12.2756,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 12.2756,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 12.2756,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 18.1337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 16.5916,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 16.5916,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 9.5495,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 12.2756,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 20.6135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 20.6135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 12.2261,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 20.6135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 20.6135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 20.6135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 20.6135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 20.6135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 12.2756,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 18.189,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 20.6135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "dos",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 20.6135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 10.2242,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 7.6145,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 9.5721,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 6.9397,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 6.9397,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 6.7786,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 6.9397,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 6.7786,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 7.1033,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 6.7786,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 7.1287,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 7.295,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 7.4376,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 8.4721,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 8.4721,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 8.4721,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 8.8606,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 9.2822,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 6.7786,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 6.9397,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 7.3791,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 9.4263,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 8.4721,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 14.0095,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 14.1715,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 8.4721,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 14.6483,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 13.8464,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 14.0095,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 14.491,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 14.1715,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 8.4721,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 10.7954,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 10.7954,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 10.7954,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 10.7954,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 10.7954,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 10.7954,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 10.7954,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 12.656,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "ember-foundry",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 12.823,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "panel",
+      "minimum": 7,
+      "observed": 21.0,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "muted-panel",
+      "minimum": 7,
+      "observed": 15.4611,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "default",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "hover",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "pressed",
+      "minimum": 7,
+      "observed": 18.3308,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected",
+      "minimum": 7,
+      "observed": 18.3308,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-hover",
+      "minimum": 7,
+      "observed": 18.3308,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-pressed",
+      "minimum": 7,
+      "observed": 18.3308,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "primary",
+      "minimum": 7,
+      "observed": 18.3308,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "primary-hover",
+      "minimum": 7,
+      "observed": 18.3308,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "danger",
+      "minimum": 7,
+      "observed": 11.2924,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "danger-hover",
+      "minimum": 7,
+      "observed": 11.2924,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "danger-pressed",
+      "minimum": 7,
+      "observed": 11.2924,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "disabled",
+      "minimum": 7,
+      "observed": 15.4611,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "primary-disabled",
+      "minimum": 7,
+      "observed": 15.4611,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-disabled",
+      "minimum": 7,
+      "observed": 15.4611,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "focus",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "loading",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-loading",
+      "minimum": 7,
+      "observed": 18.3178,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-focus",
+      "minimum": 7,
+      "observed": 18.3308,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "danger-focus",
+      "minimum": 7,
+      "observed": 11.2924,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "loading-focus",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "loading-disabled",
+      "minimum": 7,
+      "observed": 15.4611,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input",
+      "minimum": 7,
+      "observed": 21.0,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input-hover",
+      "minimum": 7,
+      "observed": 21.0,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input-disabled",
+      "minimum": 7,
+      "observed": 15.4611,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input-invalid",
+      "minimum": 7,
+      "observed": 21.0,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input-invalid-focus",
+      "minimum": 7,
+      "observed": 21.0,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "select",
+      "minimum": 7,
+      "observed": 20.9729,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "select-hover",
+      "minimum": 7,
+      "observed": 20.9092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "select-focus",
+      "minimum": 7,
+      "observed": 21.0,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "select-disabled",
+      "minimum": 7,
+      "observed": 15.4611,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "checkbox",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "checkbox-checked",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "checkbox-focus",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "checkbox-disabled",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "radio-checked",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "radio-focus",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "switch",
+      "minimum": 7,
+      "observed": 18.7337,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "range",
+      "minimum": 7,
+      "observed": 21.0,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "range-disabled",
+      "minimum": 7,
+      "observed": 21.0,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 9.6731,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 6.6638,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 8.0413,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 7.933,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 7.8439,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 7.6678,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 7.8439,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 7.8439,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 7.9272,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 7.8439,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 6.6994,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 6.9381,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 6.9381,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 7.9188,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 7.9188,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 7.9188,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 7.7923,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 7.9159,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 7.7555,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 7.933,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 6.7783,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 8.1687,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 7.9188,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 13.126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 13.126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 7.9188,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 13.7878,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 12.9593,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 13.2924,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 13.6235,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 13.126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 7.9188,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 9.5435,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 9.5435,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 9.5435,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 9.5435,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 9.5435,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 9.5435,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 9.5435,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 11.9727,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "industrial-workshop",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 11.9727,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 16.7033,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 9.7963,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 12.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 12.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 12.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 12.4447,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 12.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 12.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 6.4741,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 6.4741,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 6.4741,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 9.8213,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 9.8456,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 9.8456,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 14.5533,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 12.452,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 12.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 6.4741,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 9.8456,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 18.2126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 18.2126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 9.8456,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 18.2126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 18.2126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 18.2113,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 18.2126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 18.2126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 9.8456,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 14.6202,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 18.2126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "legacy",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 18.2126,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 12.6554,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 8.1898,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 10.2081,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 10.0575,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 8.6041,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 8.6041,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 8.6041,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 8.6041,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 8.6998,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 8.6041,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 8.5383,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 8.4444,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 8.4444,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 8.7067,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 8.7067,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 8.7067,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 9.9083,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 10.0575,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 8.5091,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 8.6041,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 8.5383,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 10.0575,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 8.7067,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 15.0793,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 15.0793,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 8.7067,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 15.215,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 14.9406,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 15.1953,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 15.215,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 15.0793,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 8.7067,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 10.8227,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 10.8227,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 10.8227,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 10.8227,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 10.8227,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 10.8227,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 10.8227,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 15.8448,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "moonlit-grove",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 15.8448,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 10.7692,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 7.364,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 8.9882,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 8.9882,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 9.5555,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 9.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 9.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 9.5555,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 9.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 9.5555,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 7.4464,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 7.4464,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 7.6184,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 8.2429,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 8.2429,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 8.2429,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 8.9882,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 8.7142,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 9.401,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 9.4553,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 7.5321,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 8.7142,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 8.2429,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 13.7269,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 13.7269,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 8.2429,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 13.888,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 13.7269,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 13.888,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 13.7269,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 14.0478,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 8.2429,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 9.8512,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 9.8512,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 9.8512,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 9.8512,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 9.8512,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 9.8512,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 9.8512,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 14.9715,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "neon-ruins",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 14.9715,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 13.233,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 8.0395,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 11.7014,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 11.7014,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 7.8215,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 7.7328,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 7.8215,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 7.7328,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 7.9109,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 7.8215,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 7.1055,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 7.1055,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 7.1883,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 8.5452,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 8.5452,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 8.5452,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 11.3904,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 11.7014,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 7.7328,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 7.7328,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 7.1055,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 11.5458,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 8.5452,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 14.7135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 14.7135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 8.5452,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 14.7135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 14.7135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 14.8399,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 14.7135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 14.7135,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 8.5452,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 12.634,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 12.634,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 12.634,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 12.634,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 12.634,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 12.634,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 12.634,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 15.7259,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "obsidian-reliquary",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 15.7259,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 8.7204,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 5.3591,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 10.8258,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 10.9277,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 8.3097,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 8.3097,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 8.3097,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 8.1813,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 8.3097,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 8.3097,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 7.1599,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 7.1599,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 7.1556,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 5.8436,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 5.8436,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 5.8436,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 10.9277,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 10.8674,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 8.3097,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 8.1813,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 7.0601,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 10.8258,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 5.8436,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 10.5012,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 10.6012,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 5.8436,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 10.4019,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 10.4019,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 10.6012,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 10.5012,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 10.5012,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 5.8436,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 11.8714,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 11.8714,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 11.8714,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 11.8714,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 11.8714,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 11.8714,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 11.8714,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 11.3173,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "orchard-workshop",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 11.3173,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 8.8009,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 5.4628,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 9.4781,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 9.4781,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 9.4781,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 9.3997,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 9.4781,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 9.4781,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 8.2576,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 8.2576,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 8.2576,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 5.5726,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 5.5726,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 5.5726,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 9.4781,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 9.4781,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 8.2576,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 5.5726,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 9.3508,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 9.4424,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 5.5726,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 9.3508,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 9.3508,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 9.4424,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 9.4424,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 9.3508,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 5.5726,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 7.6422,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 10.3786,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "pocket-lcd",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 10.3786,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 10.2404,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 7.2538,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 8.1314,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 9.6464,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 9.5448,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 9.5448,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 9.5448,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 9.5448,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 9.4438,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 9.5448,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 8.0399,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 8.2205,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 8.129,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 8.3902,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 8.3902,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 8.3902,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 8.2598,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 8.1314,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 9.5448,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 9.6464,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 8.3118,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 8.1314,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 8.3902,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 13.7438,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 13.5737,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 8.3902,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 14.4164,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 13.51,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 13.7438,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 14.186,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 13.8495,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 8.3902,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 9.3546,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 9.3546,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 9.3546,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 9.3546,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 9.3546,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 9.3546,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 9.3546,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 12.3186,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "polar-relay",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 12.1495,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 10.2667,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 5.285,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 12.3073,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 12.1988,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 6.5302,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 6.6225,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 6.7162,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 6.7162,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 6.6225,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 6.5302,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 6.6043,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 6.6043,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 6.4239,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 5.6946,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 5.6946,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 5.6946,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 12.1988,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 12.2375,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 6.7162,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 6.7162,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 6.6043,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 12.3073,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 5.6946,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 11.7562,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 11.7562,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 5.6946,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 11.8622,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 11.7562,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 11.7562,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 11.8622,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 11.7562,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 5.6946,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 13.1962,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 13.1962,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 13.1962,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 13.1962,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 13.1962,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 13.1962,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 13.1962,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 12.7314,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "sakura-station",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 12.7314,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 10.8412,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 7.3908,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 8.916,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 8.4408,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 8.461,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 8.1858,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 8.5541,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 8.461,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 8.6569,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 8.461,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 7.9706,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 8.2371,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 8.1461,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 8.4095,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 8.4095,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 8.4095,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 8.6047,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 8.4408,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 8.461,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 8.6569,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 8.1461,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 8.828,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 8.4095,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 12.5347,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 12.3846,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 8.4095,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 12.684,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 12.3846,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 12.5347,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 12.684,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 12.5347,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 8.4095,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 10.1984,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 10.1984,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 10.1984,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 10.1984,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 10.1984,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 10.1984,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 10.1984,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 14.2271,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "tryzub",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 14.2271,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 14.3204,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 8.8715,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 13.2926,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 13.0454,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 5.1112,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 5.0492,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 5.1112,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 5.0492,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 5.1112,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 4.9274,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 7.556,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 7.6419,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 7.6419,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 9.6706,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 9.6706,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 9.6706,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 13.3703,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 13.3179,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 5.0492,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 4.9274,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 7.6419,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 13.2082,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 9.6706,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 16.2173,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 15.9857,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 9.6706,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 15.9857,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 15.9857,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 16.1035,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 16.1035,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 15.9857,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 9.6706,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 14.1656,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 14.1656,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 14.1656,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 14.1656,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 14.1656,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 14.1656,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 14.1656,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 16.7277,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "vyshyvanka",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 16.7277,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "panel",
+      "minimum": 4.5,
+      "observed": 11.5423,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "muted-panel",
+      "minimum": 4.5,
+      "observed": 8.1034,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "default",
+      "minimum": 4.5,
+      "observed": 15.5879,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "hover",
+      "minimum": 4.5,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "pressed",
+      "minimum": 4.5,
+      "observed": 16.3931,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "selected",
+      "minimum": 4.5,
+      "observed": 16.3931,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "selected-hover",
+      "minimum": 4.5,
+      "observed": 16.3931,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "selected-pressed",
+      "minimum": 4.5,
+      "observed": 16.2496,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "primary",
+      "minimum": 4.5,
+      "observed": 16.3931,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "primary-hover",
+      "minimum": 4.5,
+      "observed": 16.3931,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "danger",
+      "minimum": 4.5,
+      "observed": 9.7258,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "danger-hover",
+      "minimum": 4.5,
+      "observed": 9.7258,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "danger-pressed",
+      "minimum": 4.5,
+      "observed": 9.7258,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "disabled",
+      "minimum": 3,
+      "observed": 8.1034,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "primary-disabled",
+      "minimum": 3,
+      "observed": 8.1034,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "selected-disabled",
+      "minimum": 3,
+      "observed": 8.1034,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "focus",
+      "minimum": 4.5,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "loading",
+      "minimum": 4.5,
+      "observed": 15.5565,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "selected-loading",
+      "minimum": 4.5,
+      "observed": 16.2496,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "selected-focus",
+      "minimum": 4.5,
+      "observed": 16.3931,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "danger-focus",
+      "minimum": 4.5,
+      "observed": 9.7258,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "loading-focus",
+      "minimum": 4.5,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "loading-disabled",
+      "minimum": 3,
+      "observed": 8.1034,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "input",
+      "minimum": 4.5,
+      "observed": 4.92,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "input-hover",
+      "minimum": 4.5,
+      "observed": 5.0014,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "input-disabled",
+      "minimum": 3,
+      "observed": 8.1034,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "input-invalid",
+      "minimum": 4.5,
+      "observed": 5.0014,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "input-invalid-focus",
+      "minimum": 4.5,
+      "observed": 5.0014,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "select",
+      "minimum": 4.5,
+      "observed": 4.9894,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "select-hover",
+      "minimum": 4.5,
+      "observed": 5.0014,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "select-focus",
+      "minimum": 4.5,
+      "observed": 5.0014,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "select-disabled",
+      "minimum": 3,
+      "observed": 8.1034,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "checkbox",
+      "minimum": 4.5,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "checkbox-checked",
+      "minimum": 4.5,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "checkbox-focus",
+      "minimum": 4.5,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "checkbox-disabled",
+      "minimum": 3,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "radio-checked",
+      "minimum": 4.5,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "radio-focus",
+      "minimum": 4.5,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "switch",
+      "minimum": 4.5,
+      "observed": 15.6092,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "range",
+      "minimum": 4.5,
+      "observed": 5.0014,
+      "passed": true,
+      "marginPassed": true
+    },
+    {
+      "family": "windows-classic",
+      "case": "range-disabled",
+      "minimum": 3,
+      "observed": 5.0014,
+      "passed": true,
+      "marginPassed": true
+    }
+  ]
+}

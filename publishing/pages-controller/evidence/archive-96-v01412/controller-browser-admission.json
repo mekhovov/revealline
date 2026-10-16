@@ -1,0 +1,57 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-96",
+  "infrastructureCommit": "63b6d2f4e3fa1b8a5726e0d13ebc6425a26c5b64",
+  "deploymentId": 6681224868,
+  "deploymentStatusId": 18880461115,
+  "versions": ["v0.141.2"],
+  "surface": "bounded browser interaction",
+  "sequence": [
+    "RevealLine archive 96 / original v0.141.2 build",
+    "v0.141.2 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+    "Complete library; 285 missions \u00b7 Solo; first card focused; playable and downloadable entries visible",
+    "No warnings or errors"
+  ],
+  "observed": {
+    "sourceObservations": [
+      {
+        "observed": "RevealLine archive 96 / original v0.141.2 build",
+        "result": "PASS",
+        "surface": "archive index"
+      },
+      {
+        "observed": "v0.141.2 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+        "result": "PASS",
+        "surface": "Play -> archived Home"
+      },
+      {
+        "observed": "Complete library; 285 missions \u00b7 Solo; first card focused; playable and downloadable entries visible",
+        "result": "PASS",
+        "surface": "Missions"
+      },
+      {
+        "observed": "No warnings or errors",
+        "result": "PASS",
+        "surface": "mission-library console"
+      }
+    ],
+    "observedAt": "2026-09-26T16:24:49.673666Z"
+  },
+  "scope": "Archive96 index, archived Home, mission library, and console acceptance for the preserved v0.141.2 route.",
+  "limitations": [
+    "Browser interaction is not physical touch certification.",
+    "Browser interaction is not physical-controller certification.",
+    "No full mission playthrough was performed during this bounded archive admission check."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-96-v01412/browser-admission.json",
+      "sha256": "f3bb9d5d94aaa7ca3b2095ee23d0621975222fda95e005380ef831ce18387b4a"
+    },
+    {
+      "path": "evidence/archive-96-v01412/public-acceptance.json",
+      "sha256": "9cb0646ba8f9bac5416e4abe80e04e5208c6c6421b01be99916c9265445a7d6d"
+    }
+  ]
+}

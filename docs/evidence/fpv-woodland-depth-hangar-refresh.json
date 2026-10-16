@@ -1,0 +1,26 @@
+{
+  "format": "FPVWoodlandDepthHangarRefresh.v1",
+  "candidate": "039be4e7c776734dedcaa724a7e2d9821220406b",
+  "priorBrowserCandidate": "fabb417ec23e1fcaaabf90cd0c102a9f9335efed",
+  "integratedMain": "ea596d80ba26decc4e7691e4a5c34bd3461fcda6",
+  "unchangedFiles": {
+    "authoring/fpv-worlds/scenery-runtime.template.mjs": {
+      "unchanged": true,
+      "sha256": "574790f70842b3c221abef230970dfb21151f84004d5e9ad20c4216a65b118fb"
+    },
+    "optional-practice/civilian-fpv/world-assets.mjs": {
+      "unchanged": true,
+      "sha256": "1f2ff71886eb61b9a87dbcefd7ce41b01f632e599785e5cb1ac22aa28d0b5f79"
+    },
+    "optional-practice/civilian-fpv/renderer.mjs": {
+      "unchanged": true,
+      "sha256": "d284d5f7bc27a6441232a129cf90657949adb0e1c551f417ac9a2d2706736f7d"
+    }
+  },
+  "visualModuleAudit": "The sole inherited runtime delta is Hangar wall construction inside the indoor branch and the new buildHangarBayGeometry helper. Woodland is not indoor; the Hangar branch is restricted to environment gym. No Woodland rendering path changes. Prior browser evidence keeps its original candidate identity.",
+  "existingChecks": {
+    "passed": 30,
+    "failed": 0
+  },
+  "additionalUnitCoverage": false
+}

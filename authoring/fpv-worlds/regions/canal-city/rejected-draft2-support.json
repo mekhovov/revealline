@@ -1,0 +1,6 @@
+{
+  "rejectedBaseline": "district-r1-draft2",
+  "expectedFailure": "Missing supported bridge mass",
+  "exitCode": 1,
+  "stderr": "node:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Missing supported bridge mass\n+ actual - expected\n\n+ 'terrain-clear'\n- 'terrain-hit'\n           ^\n    at file:///Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city/verify-preparation.mjs:171:12 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 'terrain-clear',\n  expected: 'terrain-hit',\n  operator: 'strictEqual'\n}\n\nNode.js v20.19.5\n"
+}

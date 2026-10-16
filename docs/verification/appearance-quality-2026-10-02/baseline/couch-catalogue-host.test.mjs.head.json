@@ -1,0 +1,30 @@
+{
+  "file": "game/test/couch-catalogue-host.test.mjs",
+  "kind": "head",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-name-pattern=Couch main All missions and Back",
+    "game/test/couch-catalogue-host.test.mjs"
+  ],
+  "cwd": "/tmp/appearance-head-f4545d6-8ng8t16s",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 45.57,
+  "failures": [
+    {
+      "test": "Couch main All missions and Back retain the ready boards and restore the exact keyboard opener",
+      "location": "/privategame/test/couch-catalogue-host.test.mjs:63:33",
+      "detail": "\n  ---\n  duration_ms: 45277.963375\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/couch-catalogue-host.test.mjs:63:33'\n  failureType: 'testCodeFailure'\n  error: 'The real All missions chooser must expose the exact indexed chapter mission.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async settled (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/couch-catalogue-host.test.mjs:211:3)\n    async openCatalogue (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/couch-catalogue-host.test.mjs:273:3)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/couch-catalogue-host.test.mjs:371:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 20",
+    "# pass 0",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 19",
+    "# duration_ms 45544.759833"
+  ]
+}

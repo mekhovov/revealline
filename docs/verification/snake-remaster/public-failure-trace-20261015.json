@@ -1,0 +1,80 @@
+{
+  "format": "snake-public-dom-transition-observation.v1",
+  "source": "018bd53a09f1366b918f1184605fab215ccab1df",
+  "levelId": "classic-field-signal-check",
+  "fixture": false,
+  "observations": [
+    {
+      "ms": 487,
+      "clock": "0:00",
+      "phase": "playing",
+      "status": "",
+      "visible": false
+    },
+    {
+      "ms": 1480,
+      "clock": "0:01",
+      "phase": "playing",
+      "status": "",
+      "visible": false
+    },
+    {
+      "ms": 2085,
+      "clock": "0:02",
+      "phase": "playing",
+      "status": "",
+      "visible": false
+    },
+    {
+      "ms": 2987,
+      "clock": "0:03",
+      "phase": "playing",
+      "status": "",
+      "visible": false
+    },
+    {
+      "ms": 3873,
+      "clock": "0:03",
+      "phase": "results",
+      "status": "",
+      "visible": true
+    },
+    {
+      "ms": 4558,
+      "clock": "0:03",
+      "phase": "results",
+      "status": "Final 8 moves",
+      "visible": true
+    },
+    {
+      "ms": 6402,
+      "clock": "0:03",
+      "phase": "results",
+      "status": "Ready…",
+      "visible": true
+    },
+    {
+      "ms": 6802,
+      "clock": "0:00",
+      "phase": "playing",
+      "status": "",
+      "visible": false
+    },
+    {
+      "ms": 7837,
+      "clock": "0:01",
+      "phase": "playing",
+      "status": "",
+      "visible": false
+    },
+    {
+      "ms": 8915,
+      "clock": "0:02",
+      "phase": "playing",
+      "status": "",
+      "visible": false
+    }
+  ],
+  "measuredDefeatToPlayingMs": 2929,
+  "limits": "DOM sampling from desktop browser; not physical input latency or a statistical timing benchmark."
+}

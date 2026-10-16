@@ -1,0 +1,33 @@
+buttons [
+  'New industrial theme',
+  'Duplicate current appearance',
+  'Choose a source',
+  'Export compact runtime',
+  'Continue',
+  'Back',
+  'Default',
+  'Hover',
+  'Focus',
+  'Pressed',
+  '✓ Selected',
+  '— Unavailable',
+  '… Loading',
+  '× Error',
+  'Open actual board preview',
+  'Compare industrial arcade art',
+  'Export inspection report'
+]
+tokens [
+  { name: 'amber', type: 'color', value: '#ebc879' },
+  { name: 'borderWidth', type: 'number', value: '2' },
+  { name: 'controlLine', type: 'color', value: '#d9b665' },
+  { name: 'cornerSize', type: 'number', value: '0' }
+]
+forms [ 'Validate and stage tokens' ]
+runtime {
+  bytes: 3444497,
+  source: { id: 'theme-5b87bc1e-d4c0-4eff-bcad-580e0cac945e', revision: 2 },
+  text: '#252d27'
+}
+arcade 35 native sprite comparisons · original on the left, industrial on the right. Both boards use the same initial state. Pixel geometry and source pictures stay unchanged; this is a visual specimen, not a recorded playtest. · Workshop verification · theme-5b87bc1e-d4c0-4eff-bcad-580e0cac945e@2
+{"workspace":"theme-5b87bc1e-d4c0-4eff-bcad-580e0cac945e","export":{"name":"revealline-theme-5b87bc1e-d4c0-4eff-bcad-580e0cac945e-r2.rltheme","bytes":8471687},"errors":[]}

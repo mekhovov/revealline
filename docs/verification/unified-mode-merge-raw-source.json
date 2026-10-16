@@ -1,0 +1,10 @@
+{
+  "format": "revealline-source-identity.v1",
+  "sourceRevision": "613ab6dce7ba57e0167927af63c7e5f2ed0d39fd",
+  "sourceTree": "6bae8fddd9193dcc808f1c00ed2ea0297dad371f",
+  "files": 25021,
+  "bytes": 2357645544,
+  "aggregateSha256": "eb7772351a9c7bc818cc823dbeb22eca7f8220ade8847b7bd1900f12f3ad04dd",
+  "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+  "allTrackedSourceContentsAndModesMatch": true
+}

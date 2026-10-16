@@ -20,7 +20,8 @@ const decodedOriginals = new WeakSet();
 const currentImage = (f) => f.drawImages.findLast((image) => decodedOriginals.has(image));
 
 function environment(install, failures) {
-  const BaseImage = globalThis.Image;
+  const BaseImage = globalThis.Image,
+    actorFetch = globalThis.fetch;
   class CandidateImage extends BaseImage {
     releases = 0;
     async decode() {
@@ -39,8 +40,16 @@ function environment(install, failures) {
   install('Image', { value: CandidateImage });
   install('crypto', { value: webcrypto });
   install('fetch', {
-    value: async (url) => {
-      const asset = source.assets.find((row) => new URL(url).pathname.endsWith('/' + row.path));
+    value: async (url, options = {}) => {
+      const pathname = new URL(url).pathname;
+      const asset = source.assets.find((row) => pathname.endsWith('/' + row.path));
+      if (
+        !asset &&
+        /\/presentation\/compiled\/(?:runtime(?:\.[a-f0-9]{64})?\.json|assets\/[a-f0-9]{64}\.(?:png|jpg|webp|ttf|otf|woff2))$/.test(
+          pathname,
+        )
+      )
+        return actorFetch(url, options);
       assert(asset, 'Only registered candidate image paths may be fetched in this fixture');
       if (failures.has(asset.id)) throw new Error('Modeled original offline');
       return new Response(originals.get(asset.path));
@@ -61,7 +70,14 @@ test('twelve real-host Team clears reveal exact originals through eleven Next ha
     retainInitialDifficulty: true,
     beforeImport: ({ install }) => environment(install, failures),
   });
-  assert.match(f.$('coop-boot').textContent, /original-art test.*human validation pending/);
+  assert.ok(
+    f.actorTransport.requests.some(({ relative }) => relative.startsWith('runtime')),
+    'Team uses the current compiled actor presentation authority',
+  );
+  assert.match(
+    f.$('coop-advanced-note').textContent,
+    /original-art test.*human validation pending/,
+  );
   assert.doesNotMatch(f.$('coop-preview-caption').textContent, /not authored/);
   f.$('coop-start').focus();
   f.tap('Enter');

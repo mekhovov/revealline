@@ -1,0 +1,24 @@
+{
+  "baseBefore": "3162f03df0688323b333d6464f3afc5ef3dbeedf",
+  "main": "0e708a45cb5058fdd0e455a873b559bb4ed0a468",
+  "headsBefore": {
+    "codex/fpv-entry-library-flow": "da589e97625d2c03dff6719090fca25b3b153964",
+    "codex/fpv-ux-comfort": "9e941730bf605b96e63bb2e78a8ed8968289e31d",
+    "codex/fpv-radio-view-action": "a482cf42251bfd74b04db9eed8b588a1f2dad589",
+    "codex/fpv-watch-try-repeat": "5b0cd8332f019f18a87d656ec2c2de75b34adca8"
+  },
+  "headsAfter": {
+    "codex/fpv-entry-library-flow": "281d4e80b11a027fe138e765fb24afde2e21bf34",
+    "codex/fpv-ux-comfort": "a61f74ebb4f7a2db312f943e756e63791ba664c3",
+    "codex/fpv-radio-view-action": "778b4e11fbb8ae47caf250d6df7b133d4a6ebd87",
+    "codex/fpv-watch-try-repeat": "6acc57d2b288abed26c745d40c1b97439440d04a"
+  },
+  "atomicPush": "rejected by explicit leases after GitHub merged1184/1185 and rebased children; no refs overwritten",
+  "nativeRemoteHeadObserved": "deb49d8848152e42a9dfcea34732cbaa293815bd",
+  "currentBase": "d22397939",
+  "developmentHead": "1189e3d9a42963c8c41ef77c1dbc9d284dbfa5ce",
+  "fullTreeIdentity": "461d0bb52d3183688e634a497abd9599b4b88c50",
+  "rebasedRegressionChecks": 135,
+  "failed": 0,
+  "qualificationBridge": "6acc57d2 and1189e3d9 share exact full source tree; admission remains bound to6acc57d2"
+}

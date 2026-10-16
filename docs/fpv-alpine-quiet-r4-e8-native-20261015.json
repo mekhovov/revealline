@@ -1,0 +1,164 @@
+{
+  "sourceRevision": "e8a79844c43ee5840fc31b30ac1686a7be821212",
+  "packageRevision": "a9b9eb0a6fc53c32a04e367fce436a7a313267797f7f06d0baa8cfed0a0712be",
+  "artifact": 12001925669,
+  "cloudRun": 38791123616,
+  "origin": 9192,
+  "receiptUTC": "2026-10-15T19:49:19.032495+00:00",
+  "scope": "Exact integrated package normal CUA player acceptance, one renderer; no installed-data injection. Independent package proof preserves all21oldrows plus newr4=22.",
+  "observations": {
+    "r4NormalDownloadMiB": 21.5,
+    "r3NormalDownloadMiB": 21.5,
+    "bothRetainedAfterReload": true,
+    "lunarShelterR3StillOffered": true,
+    "firstR4Fly": {
+      "status": "Unscored · Ready to arm",
+      "disarmed": true,
+      "heightM": 114,
+      "view": "FPV"
+    },
+    "cameraControls": [
+      "FPV",
+      "Chase",
+      "Overview"
+    ],
+    "stationStart": {
+      "label": "4 · Summit station",
+      "heightM": 564,
+      "readyDisarmed": true,
+      "view": "Overview"
+    },
+    "modeChange": "Acro starts a new paused/disarmed preparation at564m",
+    "explicitArmThenPause": true,
+    "enUkSixStartLabels": true,
+    "editionUk": "Стриманіші поверхні станції",
+    "r4CachedFly": {
+      "actualStatusUk": "Без заліку · Готово до польоту",
+      "heightM": 114,
+      "armResumeAvailable": true
+    },
+    "r3CachedFly": {
+      "actualStatusUk": "Без заліку · Готово до польоту",
+      "heightM": 114,
+      "armResumeAvailable": true
+    },
+    "responsive": [
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "view": "Overview",
+        "locale": "uk",
+        "horizontalOverflow": false,
+        "menuPx": [
+          80.14,
+          44
+        ],
+        "armPx": [
+          166,
+          63.19
+        ]
+      },
+      {
+        "viewport": [
+          844,
+          390
+        ],
+        "view": "FPV",
+        "locale": "uk",
+        "horizontalOverflow": false,
+        "menuPx": [
+          88.14,
+          44
+        ],
+        "armPx": [
+          223.31,
+          44
+        ]
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "view": "FPV",
+        "locale": "uk",
+        "horizontalOverflow": false
+      }
+    ],
+    "viewportReset": true,
+    "rootRendererClosed": true
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-acro-arm-pause-native-20261015.txt",
+      "bytes": 3185,
+      "sha256": "ecd5d9f19ff61356ee55ad937e0ced8ac38d5ae5bf9a9f83c5891320ca0787fa"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-cached-r3-native-20261015.txt",
+      "bytes": 1081,
+      "sha256": "2cfa7ec252d1ad2e7452248506ed15173755944c3f32bdeb9aa864bcd2ed6865"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-cached-r4-native-20261015.txt",
+      "bytes": 1095,
+      "sha256": "ff2e4499d9082afda9f6545d47809a09ed10f7d67908e8d3c4378ec23a18bd00"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-first-fpv-native-20261015.png",
+      "bytes": 25159,
+      "sha256": "6c00cab4764c746f2be274003c965702d29f69cc7bffc59301baf852b74a2960"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-first-fpv-native-20261015.txt",
+      "bytes": 741,
+      "sha256": "e68cd41f9909e67f34765cc35aa37df0154fe110fda40642765d50acbce37c64"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-handheld-layout-native-20261015.png",
+      "bytes": 27735,
+      "sha256": "0511bb02a803c31c7f21b68f7f5aa5fea4746960315d244be738d10c00c9f042"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-landscape-native-20261015.png",
+      "bytes": 17914,
+      "sha256": "e398abb231381e5a696c35310dd693bfc4e090a56814aa0bab6fe17c7a698f76"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-portrait-native-20261015.png",
+      "bytes": 19105,
+      "sha256": "1298f13756f6a11b3f9d02888fe5c88066d105aeb60bbfffd281a46b658b5517"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-retained-native-20261015.txt",
+      "bytes": 18362,
+      "sha256": "7744bcd17beed9b2bb7d6cc9e6d917073439cecf9c939a870dbb38daf6afd62d"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-summit-overview-native-20261015.png",
+      "bytes": 28057,
+      "sha256": "2f2eaaf7fd5cdcdb5c3ef657a7725c95ca379343f939af5beab4f1be2b1b69bf"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-uk-paused-native-20261015.txt",
+      "bytes": 4953,
+      "sha256": "d567595487ca7c539ec001a57f63def1a4a3a4d792074e00f9e26bf81b0efb4f"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r4-e8-uk-reload-native-20261015.txt",
+      "bytes": 29880,
+      "sha256": "f9ad5ad1cb3a61f6a6b60ad7f928940005a29ae2d258d79768aa924d298a095f"
+    }
+  ],
+  "acceptedBoundary": "Quieter timber station-r4 exact Library/player delivery and preservation of older r3 on the isolated browser origin.",
+  "remaining": [
+    "normal protected publication and outstanding CI tails",
+    "separate station-r5 grounding Library admission",
+    "full-world/all-angle representative art",
+    "physical touch/controller/radio/device acceptance",
+    "network-wide offline/application restart/eviction",
+    "actual authored two-hour reliability and public launch"
+  ]
+}

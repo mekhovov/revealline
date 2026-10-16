@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { required } from '../data-json.mjs';
 
 /** Page-session policy around borrowed owners. The host owns the one player,
@@ -12,7 +13,7 @@ export function createCouchMusicSession({
 } = {}) {
   required(
     player && library && soundscape,
-    'Couch music requires player, library and soundscape owners.',
+    t('interface:couchMusicRequiresPlayerLibraryAndSoundscapeOwners'),
   );
   player.setVolume(initialMusicVolume);
   let disposed = false,
@@ -43,7 +44,7 @@ export function createCouchMusicSession({
     });
   }
   async function adopt(work) {
-    required(!disposed, 'Couch music session is disposed.');
+    required(!disposed, t('interface:couchMusicSessionIsDisposed'));
     const token = ++preparation;
     try {
       const result = await work();
@@ -115,11 +116,11 @@ export function createCouchMusicSession({
     },
     pause,
     setVolume(value) {
-      required(!disposed, 'Couch music session is disposed.');
+      required(!disposed, t('interface:couchMusicSessionIsDisposed'));
       player.setVolume(value);
     },
     setAcceptedContext(value) {
-      required(!disposed, 'Couch music session is disposed.');
+      required(!disposed, t('interface:couchMusicSessionIsDisposed'));
       return player.setContext(value);
     },
     pauseGameplay() {

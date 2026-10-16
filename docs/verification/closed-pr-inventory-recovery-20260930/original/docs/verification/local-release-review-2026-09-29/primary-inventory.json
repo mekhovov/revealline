@@ -1,0 +1,3164 @@
+{
+  "observedAt": "2026-09-29T00:42:03.626599+00:00",
+  "head": "9e0bf4f69081a38f23514e006239891cd3c62942",
+  "branch": "codex/mission-selector-level-cards",
+  "atomicSnapshot": false,
+  "files": [
+    {
+      "status": " M",
+      "path": "authoring/asset-studio/index.html",
+      "bytes": 50531,
+      "sha256": "43cd3fc009752587063d2b97f362f32be1325d898a55948d4d6dff541fdbc5da"
+    },
+    {
+      "status": " M",
+      "path": "authoring/asset-studio/sprite-panel.mjs",
+      "bytes": 9865,
+      "sha256": "0e2571adb695138d4944ec9a87060d0902da031cde07a4063a2f12b64c55cfab"
+    },
+    {
+      "status": " M",
+      "path": "authoring/community/index.html",
+      "bytes": 18943,
+      "sha256": "1d8acd1c151649b5fb02a4d2c1e4683259f5ebdf0e22aa0c91dcf7e9d98f13cb"
+    },
+    {
+      "status": " M",
+      "path": "authoring/company-studio/index.html",
+      "bytes": 19243,
+      "sha256": "be04a2331bc091ede0d5c578dd5878aa25cfd5da1eaf641a0b649d982c97f115"
+    },
+    {
+      "status": " M",
+      "path": "authoring/company-studio/playtest.html",
+      "bytes": 5003,
+      "sha256": "e3a1e18f4c98c8707d218d17f0d020bfdb4179edec96454e2f92a89a21483c0f"
+    },
+    {
+      "status": " M",
+      "path": "authoring/design-atlas/atlas.mjs",
+      "bytes": 40722,
+      "sha256": "cde097516a876dfa99b8cb010643b721ddcea0b7fe99d4ce35c7fa4cda1dbbdc"
+    },
+    {
+      "status": " M",
+      "path": "authoring/design-atlas/index.html",
+      "bytes": 36403,
+      "sha256": "95378613b1ab89239c90de8fdcf030a9b31ad401a8ec6e6dca07ad252c7933eb"
+    },
+    {
+      "status": " M",
+      "path": "authoring/design-atlas/reveal-audit.html",
+      "bytes": 5898,
+      "sha256": "4ea57ec1b6bdf70549ea295ae3a014dbbfb553b6e295c8c4aef0f4dc5fda1b97"
+    },
+    {
+      "status": " M",
+      "path": "authoring/enemy-catalog/index.html",
+      "bytes": 3869,
+      "sha256": "4364afc5c875cc1f1289b7dd91d340475d6ee47f90c1e84a52e1ff101458d008"
+    },
+    {
+      "status": " M",
+      "path": "authoring/enemy-catalog/workshop.mjs",
+      "bytes": 9312,
+      "sha256": "7230cd47a7a1fcc542338a745c32f35e465c9060459546265fbba40d834c7828"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/countercurrent-art/index.html",
+      "bytes": 5518,
+      "sha256": "6c0836b6775cd34f2124beab666cfabf03ceba1bdf86dd65ae85d02731587f7f"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-enemy-presentations/index.html",
+      "bytes": 11057,
+      "sha256": "3a0246d0d6ccd0c80a788ec54b47731bfee6987baf1c53ffa689d456a9166737"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/review.html",
+      "bytes": 4030,
+      "sha256": "7e9ad42ce2542a0720005d409ea7c998c1de0a45c638a66b4cd463663103dd6b"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/titles/review.html",
+      "bytes": 3993,
+      "sha256": "594cf07c0bfec8044787808d9bd281a2268928d18c8bf9c43808ee438043cc06"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-role-presentations/index.html",
+      "bytes": 8249,
+      "sha256": "ae91021e60523bbe972896f51fc7cc9876fe88fe8df728689ea3224a2b26d958"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/reserve-illustrations-catalog/README.md",
+      "bytes": 4533,
+      "sha256": "612a70e6246b6f31f161712fdd363fadbb423edd609ab04ca8ec8e1382616685"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/reserve-illustrations-catalog/catalog.py",
+      "bytes": 11248,
+      "sha256": "924b76d6bdcee52f871a98274bacc48f2e575c4241e3959fb4bf604afbbd6f71"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/reserve-illustrations-catalog/index.html",
+      "bytes": 3873,
+      "sha256": "ed15b9aaeeb08170bd1e0e5eee23115fe80bbf69a4b0b0ec3cbae2e0e8979275"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/revealline-original-soundtrack/local-production/audition.html",
+      "bytes": 5601,
+      "sha256": "32abe455b3d7e2ab24f3dde6834df1f22b92fe2b63a8f4acdbe5686c00ab242f"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/runtime-sprite-candidates-v1/inspection/index.html",
+      "bytes": 11087,
+      "sha256": "d8292664d232cf8d9d7b580050ee5f3d7536c9bfcddeb69808a8977d8f3bd53a"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/ukraine-role-presentations/index.html",
+      "bytes": 12794,
+      "sha256": "b42116c6307650c6daeb7c592064daaa07430e442543298ba8daf128bb53576c"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/ukraine-role-wide-variants/index.html",
+      "bytes": 12419,
+      "sha256": "cfcbbdf9d2b8a5a81ff74983661aea42615b5f1e5ae6116e8f0c0458bbfcaf2d"
+    },
+    {
+      "status": " M",
+      "path": "authoring/motion-lab/app.js",
+      "bytes": 76468,
+      "sha256": "c9d55da5aae6d6707644b335f80759c28bbe6c3b0b802b46619d13815bfc5544"
+    },
+    {
+      "status": " M",
+      "path": "authoring/motion-lab/index.html",
+      "bytes": 32896,
+      "sha256": "e11e4b92d108ad3fbc9104bffab904f4fcba5e72132c0154c1e65aedba30fe44"
+    },
+    {
+      "status": " M",
+      "path": "authoring/production/index.html",
+      "bytes": 3513,
+      "sha256": "748f122c8dcb54db00c86bd74489fbfacba3aeeadbc33a6f36294a36d0804804"
+    },
+    {
+      "status": " M",
+      "path": "authoring/prompts/native-edition-workflows.json",
+      "bytes": 8492,
+      "sha256": "41fae3e1e3415916790b930d1bcdae7fd9fe4096e423be1d704192f693200321"
+    },
+    {
+      "status": " M",
+      "path": "authoring/still-media/index.html",
+      "bytes": 8605,
+      "sha256": "5bc58a4257c9d027a069e677aafc3e8bd46c5b45cf487a21e4fb87c412dd11f3"
+    },
+    {
+      "status": " M",
+      "path": "authoring/video-poster/index.html",
+      "bytes": 11566,
+      "sha256": "a9602478bd81764980339fe7eb1b6a38121962d3718264b47e1e85f2aaafddeb"
+    },
+    {
+      "status": " M",
+      "path": "authoring/viewport-lab/index.html",
+      "bytes": 7442,
+      "sha256": "2f81bb60d4acc2972e361b8c4171d1a1726c6b01cf5d4e4442ad206527f13c4a"
+    },
+    {
+      "status": " M",
+      "path": "docs/fpv-typography.md",
+      "bytes": 10364,
+      "sha256": "151170147979749c370dbc84b9db3eb9913202197c5159fa20abc067ca24accf"
+    },
+    {
+      "status": " M",
+      "path": "game/app.mjs",
+      "bytes": 476147,
+      "sha256": "b461d8154e4396582f1f4342afdf72c9603e7f17a2e0594796b2924a480cbaf7"
+    },
+    {
+      "status": " M",
+      "path": "game/assets/field-kit/icons/review.html",
+      "bytes": 3457,
+      "sha256": "f3d7b2a767e53e43129a2d642307bac7f7fd81fbd96a9a71fe23c802f0580b3b"
+    },
+    {
+      "status": " M",
+      "path": "game/assets/field-kit/sprites/review.html",
+      "bytes": 199960,
+      "sha256": "35a10e286b28daefa12c1a75f40336cf17ebe7d4d6bd36d2230257d2e587a2b4"
+    },
+    {
+      "status": " M",
+      "path": "game/backup-set.mjs",
+      "bytes": 10656,
+      "sha256": "d588afc589656c3385a07df9b7bae0611a622f0a92f951d5ed5a940234a07450"
+    },
+    {
+      "status": " M",
+      "path": "game/build-config.json",
+      "bytes": 6034,
+      "sha256": "9d062eb23cbf01f6efa8428e76e0f82e399a288bc5d1298f6738de8d273f62e8"
+    },
+    {
+      "status": " M",
+      "path": "game/community/index.html",
+      "bytes": 3523,
+      "sha256": "91878eb20fdf2e534e45401c2564e7de18979341f71d531afc67acb10af82093"
+    },
+    {
+      "status": " M",
+      "path": "game/community/moderation.html",
+      "bytes": 3835,
+      "sha256": "189c991457266c8ef5cf886b65bc76cfc45a61ad18586c39604849e0a5238515"
+    },
+    {
+      "status": " M",
+      "path": "game/company-campaigns/brands.mjs",
+      "bytes": 21438,
+      "sha256": "6b93674317fa95c3085f1896d81958b3a7f313174ea9e4a395eb0ab0b414d599"
+    },
+    {
+      "status": " M",
+      "path": "game/company-entry.mjs",
+      "bytes": 1070,
+      "sha256": "5125d741673b587b07f64b035d5cbce801f4d0f5fddf69326602d9b275948338"
+    },
+    {
+      "status": " M",
+      "path": "game/company-player.mjs",
+      "bytes": 45762,
+      "sha256": "dfcf57da5ac9f1fb9a4ede9f702d0780df03d302c6c2d87984ebfa48675c869c"
+    },
+    {
+      "status": " M",
+      "path": "game/company.html",
+      "bytes": 995,
+      "sha256": "b3975edfe7b1b0dcdd88227f2e1649540fa41b2fbcc71152bc920c818becbf48"
+    },
+    {
+      "status": " M",
+      "path": "game/content-design/project.mjs",
+      "bytes": 19422,
+      "sha256": "80b0a3c2d617298219d1d514c74cac53e0cca98eb9531f58cd9d41778f0004bb"
+    },
+    {
+      "status": " M",
+      "path": "game/controller-lab/index.html",
+      "bytes": 20680,
+      "sha256": "09eec0f8199ba687f745e68019c44e65f0f25b6cc8b8892b95d105e6c9c09f88"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 32839,
+      "sha256": "f1aa9be291ae67340c1d76dd311bc6f3d90fe1fde4c8651257895cb7cadc942f"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 25784,
+      "sha256": "1cbc7af94dd40f19584bd78dfb704fd71d25204f9bbbd1d439e39b2b275aec7f"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/couch.mjs",
+      "bytes": 177665,
+      "sha256": "a039b331b3c6ac083a5a105a31d478071efd916e4e2900f2aba8d49c26a1b219"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/index.html",
+      "bytes": 41833,
+      "sha256": "614b6a46f5d44359fbdbabdb0f4141727c4f2dddd12ee17ffc7d28ee46641ece"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/mode-entry.js",
+      "bytes": 3641,
+      "sha256": "f7e47b488e1186df3b232ef2f115b6fd1d81fc62312dbbcf66e26d4573498787"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 51400,
+      "sha256": "15c56167a5ecde44a6ad9425a7dfd078c8011c19af1c5ce188dc79b73c4f2cfa"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 230954,
+      "sha256": "c5f6c34fa618a81e9e771abe464adc85e3b41699c7211b4f52406b6341c86a73"
+    },
+    {
+      "status": " M",
+      "path": "game/creator/creator.css",
+      "bytes": 7566,
+      "sha256": "aedeb6231d409d4771cfb010e4d9710dbc8f8144d9bf5bea20562e2f60881d60"
+    },
+    {
+      "status": " M",
+      "path": "game/creator/index.html",
+      "bytes": 13853,
+      "sha256": "9159aeb6067e2f64d6feca83d103708ca374789ba719340cf05a8e7ef3e37b88"
+    },
+    {
+      "status": " M",
+      "path": "game/creator/player.html",
+      "bytes": 6242,
+      "sha256": "1d55a54fe91b12d763fee4b261930a4f35edd5983bd06ebf3f2378f5a0156638"
+    },
+    {
+      "status": " M",
+      "path": "game/creator/player.mjs",
+      "bytes": 16132,
+      "sha256": "845c5fe7e19f30a21f113da7836eb5bcf57af47837e6a8d83c62a5e585cf7a7d"
+    },
+    {
+      "status": " M",
+      "path": "game/creator/team.html",
+      "bytes": 6182,
+      "sha256": "219f584daf5e9c674c17003a434d995f12eb8a126e973b863f7a0825ec50732a"
+    },
+    {
+      "status": " M",
+      "path": "game/downloads.html",
+      "bytes": 7733,
+      "sha256": "2e04f53b5206fed2be37ffcd34b3888f7a952c7ea0dc8f1c3ccd533749ace476"
+    },
+    {
+      "status": " M",
+      "path": "game/edition-context.mjs",
+      "bytes": 5772,
+      "sha256": "4c7ada4dd368e5be53979299010482c0feaed63df9908411b38f3c826e0a2401"
+    },
+    {
+      "status": " M",
+      "path": "game/editions/catalog.json",
+      "bytes": 77876,
+      "sha256": "615d7ef7fa7b0a30a547770df976f3ea53220dc2b0959819a4d20f35711431e9"
+    },
+    {
+      "status": " M",
+      "path": "game/editions/departure-destination.mjs",
+      "bytes": 1373,
+      "sha256": "4fcb2c99ff4fbdc2262af4575c27c17062bf7dfad7ff3eba681547f022d7f077"
+    },
+    {
+      "status": " M",
+      "path": "game/editions/model.mjs",
+      "bytes": 17487,
+      "sha256": "a22709d90353c5423455ed1c547b8d3307e80112f4d95bb8aa062948d6be62e1"
+    },
+    {
+      "status": " M",
+      "path": "game/editions/runtime-asset-sources.json",
+      "bytes": 6364,
+      "sha256": "0fcf46d57cba0840019b429ff93acef0a15faaa51b2c58bec92934fc8f5c5558"
+    },
+    {
+      "status": " M",
+      "path": "game/editions/runtime-assets.json",
+      "bytes": 14734,
+      "sha256": "662f45033d250473da685b71577aade7f5b87e8e0eab1479d5c2e9a3e0dbb68f"
+    },
+    {
+      "status": " M",
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1004887,
+      "sha256": "47e04a28416418cf5665a8386cbd59f11d65c9016b391e96cd678bc8f05e3781"
+    },
+    {
+      "status": " M",
+      "path": "game/index.html",
+      "bytes": 128929,
+      "sha256": "2dd8157d1b7491733ce5529b960012f127edfb5fbc1e0f070a69c625afd41d01"
+    },
+    {
+      "status": " M",
+      "path": "game/installed-app.mjs",
+      "bytes": 17316,
+      "sha256": "aa16409dec5c326391e4825fddb8d745a3cb4817412825bebc8f5f59ebd1a8d8"
+    },
+    {
+      "status": " M",
+      "path": "game/locales/en/interface.json",
+      "bytes": 446458,
+      "sha256": "6c24a899bec6a609787ea4e81b05b4f62a51ba749e4a48022e70495ba2cf72de"
+    },
+    {
+      "status": " M",
+      "path": "game/locales/en/tools.json",
+      "bytes": 226535,
+      "sha256": "a25a2dc51a481a8e31bc65d3d676306db60bcedbd2845d2e2e7318ed0d755ee9"
+    },
+    {
+      "status": " M",
+      "path": "game/locales/en/website.json",
+      "bytes": 23165,
+      "sha256": "4cccfcb282e9f98bf3a91f9b6ab700e92f4c4e39f4d1e64e350f2a3a8fc4e54c"
+    },
+    {
+      "status": " M",
+      "path": "game/locales/uk/interface.json",
+      "bytes": 727933,
+      "sha256": "955c2e5b5b1af8244683cd1556e048b1199092789a1b9a3c40752d154ecb2c55"
+    },
+    {
+      "status": " M",
+      "path": "game/locales/uk/tools.json",
+      "bytes": 378014,
+      "sha256": "e6bb6b93baa45f4295a52953b8c4db49d212eb270445108a783b268350dd3fa9"
+    },
+    {
+      "status": " M",
+      "path": "game/locales/uk/website.json",
+      "bytes": 35992,
+      "sha256": "a963eaec7729db6248d8f7097f364496b4e44e33a2397b91e1611c04cadefbc5"
+    },
+    {
+      "status": " M",
+      "path": "game/mission-library/handoff.mjs",
+      "bytes": 9485,
+      "sha256": "22432330c8b1a5b6440811a1c2ca832dceb6b0d3cdf7ae7ebeb713a7d27bf51f"
+    },
+    {
+      "status": " M",
+      "path": "game/offline/app.html",
+      "bytes": 2546,
+      "sha256": "7c55009ab74fc1e775159432a52380dcc546d773abd9b2ce33976707050a6bd3"
+    },
+    {
+      "status": " M",
+      "path": "game/offline/app.mjs",
+      "bytes": 3275,
+      "sha256": "1c6ffacb4ac25595e998b085f941ef483c0f313d970a5d6d46c04af275cea915"
+    },
+    {
+      "status": " M",
+      "path": "game/playground/index.html",
+      "bytes": 38725,
+      "sha256": "e5b0388349faef1aeefead483deb972a40415a0987b0541b1fa6addb3ef3ed08"
+    },
+    {
+      "status": " M",
+      "path": "game/playground/model.mjs",
+      "bytes": 23098,
+      "sha256": "d8d2cc77e09186be20e2fa4847bae2f404f6953e37541047c58b0584d510eb18"
+    },
+    {
+      "status": " M",
+      "path": "game/playground/playground.mjs",
+      "bytes": 57261,
+      "sha256": "273b478598b6ac245c58b43d952e2d551b746b560dc6543ae7ee190cf9ef2b11"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/combat-review.html",
+      "bytes": 4202,
+      "sha256": "bd62d3a706b2579a49df6636b468807e3090b8ceecd13549f026bac8bc096bdb"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/host.mjs",
+      "bytes": 30103,
+      "sha256": "141fe87848cb6fea3ab03adb6de53221a45477972e2bfcd2a68254481a10686b"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/journey-actor-review.html",
+      "bytes": 2924,
+      "sha256": "6cd5368b5e4416a6a73da42de588114b03e3dcde1cc35844b922ecb270f32843"
+    },
+    {
+      "status": " M",
+      "path": "game/profile-recovery.html",
+      "bytes": 5668,
+      "sha256": "48b70c7c6bf4fbb9dc5c5402bfce7e764be8124c7b96e75b253b48427fe45646"
+    },
+    {
+      "status": " M",
+      "path": "game/replay-player.mjs",
+      "bytes": 9219,
+      "sha256": "e57dc38f6f190479cb170964852f61f33ca02d86a77feb009d65abff0d579bbb"
+    },
+    {
+      "status": " M",
+      "path": "game/replay-theater/app.mjs",
+      "bytes": 25803,
+      "sha256": "853c9b59e9743721b106191be7b6c23285f198aabab721bb140e34a756b658f5"
+    },
+    {
+      "status": " M",
+      "path": "game/replay-theater/index.html",
+      "bytes": 13853,
+      "sha256": "326e6b5a1eebc6def2bb01b5194ad638ad34a6e5042006f8ff19bf62d7629017"
+    },
+    {
+      "status": " M",
+      "path": "game/runtime-content-provider.mjs",
+      "bytes": 8731,
+      "sha256": "d98ce29bc4e98704762ea28584039ea3073614578d2c68d5f1d50d9b180188ca"
+    },
+    {
+      "status": " M",
+      "path": "game/studio/index.html",
+      "bytes": 147566,
+      "sha256": "9ec244ca10b06343af0b8cf13028c4c7875a03b097f913b3c069dcbd24c04e29"
+    },
+    {
+      "status": " M",
+      "path": "game/studio/studio.mjs",
+      "bytes": 50534,
+      "sha256": "b990da8a4130d06e5f64c5ff0fe7c66002f2408e7bc89cd292d1783d42f56d09"
+    },
+    {
+      "status": " M",
+      "path": "game/test/authored-mode-entry-host.test.mjs",
+      "bytes": 13222,
+      "sha256": "b57b07af1c318d7eaddf26c53d2b076a21cb87f49f265bbf61757b3f699e570d"
+    },
+    {
+      "status": " M",
+      "path": "game/test/backup-set-host.test.mjs",
+      "bytes": 15335,
+      "sha256": "0f2d0055d9fbeb33bddf4474699916d8ed55a033e3c770525868e17627c55aaa"
+    },
+    {
+      "status": " M",
+      "path": "game/test/backup-set.test.mjs",
+      "bytes": 14237,
+      "sha256": "76463bd004346c4169b82f3b0923f515433e509825a62ccd5188568a86776859"
+    },
+    {
+      "status": " M",
+      "path": "game/test/boot-build.test.mjs",
+      "bytes": 12481,
+      "sha256": "caf256aae1591b7d351e311ea24135a9d205e43fb658b2451b0984b5f92787a6"
+    },
+    {
+      "status": " M",
+      "path": "game/test/company-player-lifecycle.test.mjs",
+      "bytes": 13193,
+      "sha256": "51bbdfcf874922a07bf0dc3c0676cfdaa58a5007c1f96ae056e57c7b0166c3b1"
+    },
+    {
+      "status": " M",
+      "path": "game/test/content-project.test.mjs",
+      "bytes": 10948,
+      "sha256": "8c2766f8f98b2b6c8a70f6d1d8b4765543452bed4d49459ded3848c0c2dbcf24"
+    },
+    {
+      "status": " M",
+      "path": "game/test/controller-boost.test.mjs",
+      "bytes": 13384,
+      "sha256": "3f8888a588a7849983d50468aa60d3f68d13e4966b87f26651af669f7d0ac034"
+    },
+    {
+      "status": " M",
+      "path": "game/test/controller-navigation.test.mjs",
+      "bytes": 110007,
+      "sha256": "0df85312cf6657c3e930bca1b1eb3559b9e9766312c494759d46f04358ff4246"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-display-reflow.test.mjs",
+      "bytes": 8078,
+      "sha256": "06b7dd3d06c7f7def5c0f15a92ecde784bae2e9f0741efb405ae2257e69edffe"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-host.test.mjs",
+      "bytes": 61991,
+      "sha256": "1788593fd77740e432df0f9224c910f727d807d782ca15670d9d9d07740fe747"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-shared-settings.test.mjs",
+      "bytes": 14845,
+      "sha256": "38036e4fa64381b4fbb8a9a0270f45a343e59c434a9560e27298445ea07d26f4"
+    },
+    {
+      "status": " M",
+      "path": "game/test/couch-catalogue-host.test.mjs",
+      "bytes": 36440,
+      "sha256": "39094afb236a4ddc04b4df2ad69f8ccb3b58db11496d73bb4140eb52dc8b8bf0"
+    },
+    {
+      "status": " M",
+      "path": "game/test/couch-composite-menu-navigation.test.mjs",
+      "bytes": 9030,
+      "sha256": "7a57dd012605b10c4a870abe4b8ec1b8efff911610b3a463e6895a4bc197a4da"
+    },
+    {
+      "status": " M",
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 29853,
+      "sha256": "eebc2bbcb81e5809ebdb0818c76bd8969c3ae3fe93ab391a9c0c26095d240850"
+    },
+    {
+      "status": " M",
+      "path": "game/test/defeat-presentation-host.test.mjs",
+      "bytes": 11556,
+      "sha256": "27e2a999e65fd2b405da29977da84078ce604ffb4dd9e5631f2e16e909b26f50"
+    },
+    {
+      "status": " M",
+      "path": "game/test/display-preferences-host.test.mjs",
+      "bytes": 14674,
+      "sha256": "a0300ab313270366a5f2486431c6809c78ac5787f857486b5905542616d27389"
+    },
+    {
+      "status": " M",
+      "path": "game/test/edition-context.test.mjs",
+      "bytes": 7473,
+      "sha256": "e7906cea1373732e75d14c523f4f8d5607d3e0972d126fd14efbed24d2987a0f"
+    },
+    {
+      "status": " M",
+      "path": "game/test/edition-departure-destination.test.mjs",
+      "bytes": 6104,
+      "sha256": "f6be21b70d0fad991527f06691740163800da4fe11eb1fc2dd6f750343683c4a"
+    },
+    {
+      "status": " M",
+      "path": "game/test/edition-runtime.test.mjs",
+      "bytes": 15879,
+      "sha256": "a5055334292791af6ec970da86250306247061fc42b424da07745725e69268ac"
+    },
+    {
+      "status": " M",
+      "path": "game/test/edition-solo-host.test.mjs",
+      "bytes": 44994,
+      "sha256": "33cf812aa9b5eaf4c38e4266dcb1d141585c866891fabdd660531009a0fb5a50"
+    },
+    {
+      "status": " M",
+      "path": "game/test/editions.test.mjs",
+      "bytes": 41290,
+      "sha256": "ea64ff0eb7a539005c1155d792eaa97460a1d9faf8938327a795565d8e1ef30b"
+    },
+    {
+      "status": " M",
+      "path": "game/test/field-kit-flow.test.mjs",
+      "bytes": 17208,
+      "sha256": "ccca7e15786811f52c3a7c43e18e8446fb50589e975462ad88d205f234f602fb"
+    },
+    {
+      "status": " M",
+      "path": "game/test/field-kit-surfaces.test.mjs",
+      "bytes": 10504,
+      "sha256": "4c0473895a1d8c09051875f70d78f18b44791983c725d6108caf8ffc69ed09f3"
+    },
+    {
+      "status": " M",
+      "path": "game/test/fullscreen.test.mjs",
+      "bytes": 14770,
+      "sha256": "c9c4315e1452b2bec0949cd517e4e4d510102f17481009bc754c5c5b957819a3"
+    },
+    {
+      "status": " M",
+      "path": "game/test/helpers/couch-dom.mjs",
+      "bytes": 14509,
+      "sha256": "1cf04b0dbbb0ad58721d8e2ade3797e7cc2a3a584d11c1a4218be4c7e83602b7"
+    },
+    {
+      "status": " M",
+      "path": "game/test/helpers/solo-dom.mjs",
+      "bytes": 19146,
+      "sha256": "19fa442e1d41284b17f6fc8d11a56b54ec108f99f9d14615350041520ac3d1f3"
+    },
+    {
+      "status": " M",
+      "path": "game/test/install-offline-panel.test.mjs",
+      "bytes": 9626,
+      "sha256": "612748f9edddc5ce5298b541017386f67e0978faaa57036e8324a868c18374c9"
+    },
+    {
+      "status": " M",
+      "path": "game/test/localization-couch-host.test.mjs",
+      "bytes": 3666,
+      "sha256": "3899fe5aaf396d1c4cb362a1c57097411ad5befa95f4b016cb264ec7d9aa7a95"
+    },
+    {
+      "status": " M",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "bytes": 10185,
+      "sha256": "84c1efe919140a94a9c5033337fed813cc41c095f561e7218e131712dfb4ad6d"
+    },
+    {
+      "status": " M",
+      "path": "game/test/optional-world-play-scenarios.mjs",
+      "bytes": 31759,
+      "sha256": "ea15034720d64234f58a8c3c131fda144f402c962ee190f5516b0237f939ea1c"
+    },
+    {
+      "status": " M",
+      "path": "game/test/presentation-host.test.mjs",
+      "bytes": 26172,
+      "sha256": "1d440558fef22242f1165d8ca5a94e7f920b7aa063bf8ed067e76dda273d03ee"
+    },
+    {
+      "status": " M",
+      "path": "game/test/quick-music-controls.test.mjs",
+      "bytes": 9991,
+      "sha256": "f718d76bbcaecbddff4d6599675b74703fc0caa1811711552b73173623c9d7ff"
+    },
+    {
+      "status": " M",
+      "path": "game/test/runtime-content-provider.test.mjs",
+      "bytes": 10929,
+      "sha256": "2ff00bd77d197846aa61603cb1216df0e84d1aaba157b7bef664f932d0e5ab87"
+    },
+    {
+      "status": " M",
+      "path": "game/test/session-only-release-next-host.test.mjs",
+      "bytes": 9566,
+      "sha256": "138c258abb49d5283fc64de9e949a1612ec804afe305702a95ebf34c27284701"
+    },
+    {
+      "status": " M",
+      "path": "game/test/session-originals-export.test.mjs",
+      "bytes": 4597,
+      "sha256": "7e9cc48fa48c99c8fecf7ef3d37a37e49f4bc658a843f504b65e920879ced389"
+    },
+    {
+      "status": " M",
+      "path": "game/test/settings-panels-locale-host.test.mjs",
+      "bytes": 5588,
+      "sha256": "06e53c78744727f3b31e42a7630b804bbc85537b2b0ce432c71f01df6b377418"
+    },
+    {
+      "status": " M",
+      "path": "game/test/settings-panels.test.mjs",
+      "bytes": 12017,
+      "sha256": "ecc1655984e38a9e0356c1d48bc07e2680d5edd52d3a57708e379082f7590c12"
+    },
+    {
+      "status": " M",
+      "path": "game/test/settings-restoration-host.test.mjs",
+      "bytes": 8741,
+      "sha256": "4ee70866449563738652d1c23ada017dacaed5e7536df4a76c99d27de4d47ca6"
+    },
+    {
+      "status": " M",
+      "path": "game/test/shared-settings-solo.test.mjs",
+      "bytes": 7350,
+      "sha256": "261d4d871d0613ff1c2818964f864b5ab95d29b8673e1838ed9d0cf0dd44abca"
+    },
+    {
+      "status": " M",
+      "path": "game/test/shared-settings-versus.test.mjs",
+      "bytes": 5933,
+      "sha256": "c706700b96e6e1538a76c2edd321f7adf81a6d5552a0eb4b4117a2e78b1d5f06"
+    },
+    {
+      "status": " M",
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "bytes": 141419,
+      "sha256": "9ed33a2b59a79c32726cda5d744fb9816acdbcbae234e4e7425e7c7935194e50"
+    },
+    {
+      "status": " M",
+      "path": "game/test/soundtrack-player.test.mjs",
+      "bytes": 66030,
+      "sha256": "2298b1c1aa6bf382051e7a5aa5c12dab1c8be2db21a0f1ab9951dc8ec1e99260"
+    },
+    {
+      "status": " M",
+      "path": "game/test/sprite-panel-focus.test.mjs",
+      "bytes": 7507,
+      "sha256": "f0145146c6748fb3173d511233ace69b2af96e36b0ccbf3598532d53935bc76b"
+    },
+    {
+      "status": " M",
+      "path": "game/test/steamdeck-menu-confirm-host.test.mjs",
+      "bytes": 12578,
+      "sha256": "2ef18e68fa95b46bb7ae754fc9f105f20c856b8dd72b3ad4e42af5f910d3edf7"
+    },
+    {
+      "status": " M",
+      "path": "game/test/still-media-bundle-ui.test.mjs",
+      "bytes": 13723,
+      "sha256": "af12ed9a5d8fc4ab7ef5742c3f4d90a9f609b9c895cabf084847d3b4d522c60b"
+    },
+    {
+      "status": " M",
+      "path": "game/test/still-media-host.test.mjs",
+      "bytes": 32841,
+      "sha256": "b9ba47a4d829668565f972edf9cd05a2bcb7bba3d294f77e388b989850cbac7a"
+    },
+    {
+      "status": " M",
+      "path": "game/test/still-story-panel.test.mjs",
+      "bytes": 18035,
+      "sha256": "e47e0bcc1243fe8a928a82027ecb78f9f0028d9fabc426dea3daf5df50650b33"
+    },
+    {
+      "status": " M",
+      "path": "game/test/team-journey-next-host.test.mjs",
+      "bytes": 28510,
+      "sha256": "e22dd3b5c6217ad156140be8c926605339efb7945ca737798b61ea593510a17e"
+    },
+    {
+      "status": " M",
+      "path": "game/test/tiny5-font.test.mjs",
+      "bytes": 2997,
+      "sha256": "22d0b3487de637c6219a6688437ca2cadf7f7de2d134edcab4b864623c6a607b"
+    },
+    {
+      "status": " M",
+      "path": "game/test/video-poster-workshop.test.mjs",
+      "bytes": 24374,
+      "sha256": "2419cf977e4db45fcd392d192b24df0054b3ed58318f79519e205029bf94d0c6"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/controller-navigation.mjs",
+      "bytes": 41988,
+      "sha256": "d38e7253b4d1b756728816b45aaf871ba30afada681e247c63f9e718ffa84ada"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/controller-router.mjs",
+      "bytes": 18921,
+      "sha256": "9ada0fdd7de817c75a174fb2bb6b93579f44247706c0f80db431723bc2728cbd"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/edition-navigation.mjs",
+      "bytes": 2992,
+      "sha256": "35c4d1db01aa35669f20cf698b47e51d94e9801f62f4993fdcd2277458162cdb"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/edition-play.css",
+      "bytes": 13742,
+      "sha256": "d8f41a1952227566a5f5a78933a3aa2924d0e4391ef45c99bf408bb5db2ed5bd"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/edition-solo.mjs",
+      "bytes": 16161,
+      "sha256": "91dfbfab12a362b71f6b82342f93214c4ddb1ba8e8c78a5bbcfe357907af28f4"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/field-kit-fonts.css",
+      "bytes": 878,
+      "sha256": "83e36f1fd406e966f8c1ffb4b8ee7fa94747555eaf972e8c6b13501de0db8eb3"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/field-kit-surfaces.mjs",
+      "bytes": 3508,
+      "sha256": "dcd660644ea05891d58e19ea88c13fcb3f5d317a2727c2cefb776568f577ae33"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/field-kit-tokens.css",
+      "bytes": 3500,
+      "sha256": "2a952ff6b3e570710bd7df4262131edbc5102c5a4eacd38c16150d9fa35afa7c"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/fullscreen.mjs",
+      "bytes": 7392,
+      "sha256": "3dae2a62b993fadd4305de3a9cb58448722429b096e43c4d06fb97331a9fe93b"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 30819,
+      "sha256": "6adf3327d35884c78ed666b25cb99af674632452cf89ca4481104e2d17b5e029"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 77713,
+      "sha256": "d9f803a63aafda28301035c9cf5fac72cb90ff6b54c092c4476f9e917f9102af"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 1541,
+      "sha256": "196068c0adb3ab64ea7492e7cfbdafe7ece01e0d9bd101f03cbbff6c15f9ff92"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/pwa-install.mjs",
+      "bytes": 2763,
+      "sha256": "c271d91daeaed7365776ea4c477553e09b7a8e3a04850ad91737871ea1f41e36"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/quick-music-controls.mjs",
+      "bytes": 9103,
+      "sha256": "80ca7b555950cd6d4af7c5091e488c23ea4269614120792e4d494abdc5b034cd"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/render.mjs",
+      "bytes": 40789,
+      "sha256": "17d6a100d5832577cba66da27d0db357d2e241fac2909aaa772d2fbac1492c47"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/session-originals-export.mjs",
+      "bytes": 3511,
+      "sha256": "31a5de7db046277efbdc245f9f643767a33164cae613731be2619a1cc1e7ab78"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/settings-panels.mjs",
+      "bytes": 8253,
+      "sha256": "870927e1385255b968ad4d295844da97ad2fb2ded556c7742a6646cd8e670e9d"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 122819,
+      "sha256": "d6461da7abd8450f4c07104c47f9f10f33d624eb6ada077ecd5bd30003c572d1"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 48929,
+      "sha256": "8b05b16dba63fcba883cab959ba9e23af053aec4f955b6411d7fc8c6679f45ae"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/still-media-host.mjs",
+      "bytes": 15589,
+      "sha256": "7770028d34ef0b670af39635b5ac55c76cebab47a54ef16128adb57ebbea7587"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/still-media-panel.mjs",
+      "bytes": 31665,
+      "sha256": "18e6a6b4e10b5e71760968b0bd7504e9dee001ff223ac2f43c9b7a317f94eede"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/still-story-panel.mjs",
+      "bytes": 26426,
+      "sha256": "c08df95f2692290d23a42f9f7d26df47c690f79fe92d6fd18135caf0a28bd25a"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/video-poster-workshop.mjs",
+      "bytes": 24133,
+      "sha256": "87985df39d17a45ef1061aad889383ac179e5c3234d5aa7602e1f489f7c97aa2"
+    },
+    {
+      "status": " M",
+      "path": "platforms/desktop/README.md",
+      "bytes": 9213,
+      "sha256": "bdd77898de46861eb47ec727b2c6e23a13189840c67c90181d81f7c7f5f9e1aa"
+    },
+    {
+      "status": " M",
+      "path": "platforms/desktop/assets/revealline.icns",
+      "bytes": 753383,
+      "sha256": "d1acc9de77da1772d6f88160407c3a74b76253703591c27bfd46e9dc8fcdbff3"
+    },
+    {
+      "status": " M",
+      "path": "platforms/desktop/main.mjs",
+      "bytes": 6109,
+      "sha256": "1d9805bd9da1ee0dfa73cd02cbc5430e3083d07aaf52d902ccc8279f889ff767"
+    },
+    {
+      "status": " M",
+      "path": "platforms/desktop/package-security.mjs",
+      "bytes": 4077,
+      "sha256": "fde09da45578ca88719b88f3b054da85bbfa866b15a44e5bb95b08130fd894c6"
+    },
+    {
+      "status": " M",
+      "path": "platforms/desktop/package.json",
+      "bytes": 524,
+      "sha256": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8"
+    },
+    {
+      "status": " M",
+      "path": "platforms/desktop/package.mjs",
+      "bytes": 6189,
+      "sha256": "b7d7bbbded2dc241a8c64207fe983396ab49f9203f9d0471c8ad13713f4cdd59"
+    },
+    {
+      "status": " M",
+      "path": "platforms/desktop/test/package-security.test.mjs",
+      "bytes": 4584,
+      "sha256": "92a77902f83fde27da66c26e6eff9d1c6e141f4f60cd31cb07dbc9d1ba4222da"
+    },
+    {
+      "status": " M",
+      "path": "platforms/desktop/test/packaging.test.mjs",
+      "bytes": 7268,
+      "sha256": "48f3de1480b01647a49ec15d52abbc0d549baacb1d554e85a1e6280abfe82cac"
+    },
+    {
+      "status": " M",
+      "path": "platforms/ios/README.md",
+      "bytes": 16757,
+      "sha256": "8e6cd80e9b5483901485e1e768d54d68801ced539025c9ba98d08a7a05447d3f"
+    },
+    {
+      "status": " M",
+      "path": "platforms/ios/capacitor.config.json",
+      "bytes": 366,
+      "sha256": "fd688939d24a2a81da9a967b0dc1209081513eb10bfdeb58f7b8897bc874160d"
+    },
+    {
+      "status": " M",
+      "path": "platforms/ios/diagnostics/index.html",
+      "bytes": 1976,
+      "sha256": "6b2996cddcd2c6d9ef565c0982df97fa9fc0cf6a929fc7144563c0e0aded5477"
+    },
+    {
+      "status": " M",
+      "path": "platforms/ios/native/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png",
+      "bytes": 590173,
+      "sha256": "7cb5ce542c1aa2142c3693a8cdb604711472b041e79a8477e34f8b3434d911c2"
+    },
+    {
+      "status": " M",
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png",
+      "bytes": 1190122,
+      "sha256": "e45b5733dc10e109c764ebc64d8ccb37e23c3e1a059502aa54d5c405c37432c2"
+    },
+    {
+      "status": " M",
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png",
+      "bytes": 1190122,
+      "sha256": "e45b5733dc10e109c764ebc64d8ccb37e23c3e1a059502aa54d5c405c37432c2"
+    },
+    {
+      "status": " M",
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png",
+      "bytes": 1190122,
+      "sha256": "e45b5733dc10e109c764ebc64d8ccb37e23c3e1a059502aa54d5c405c37432c2"
+    },
+    {
+      "status": " M",
+      "path": "platforms/ios/native/App/App/Info.plist",
+      "bytes": 2945,
+      "sha256": "315c7add0e8e19ceb4fc3dc93c445785d61dc4fc7ff95854ba48391729aa647a"
+    },
+    {
+      "status": " M",
+      "path": "platforms/ios/package.json",
+      "bytes": 898,
+      "sha256": "a2052c0a297424eb062c03594039899c38444d0fa133a1bb33203a78787b4b98"
+    },
+    {
+      "status": " M",
+      "path": "publishing/edition-fixture.mjs",
+      "bytes": 2175,
+      "sha256": "c363600ce4a17ec6c278e21d36b6f9e20a3274bac6096fe07185d1ba08e7feda"
+    },
+    {
+      "status": " M",
+      "path": "publishing/edition-promotion.mjs",
+      "bytes": 12597,
+      "sha256": "be11160286b43a19ff76099c2f7273b1d0d89412fefb7376f501c9d3483d0dff"
+    },
+    {
+      "status": " M",
+      "path": "publishing/edition-promotion.test.mjs",
+      "bytes": 34193,
+      "sha256": "652f59c4779b0eb9ab6f09cec0e91ecfd21c1c1f24cf9504a04a574a2c6d568b"
+    },
+    {
+      "status": " M",
+      "path": "publishing/pages-controller/launcher.mjs",
+      "bytes": 3900,
+      "sha256": "36a4603d4c1b63c5be5217d45f9a586bbc186bd6a4af48760c35e99dc803adf7"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build-pages.mjs",
+      "bytes": 11811,
+      "sha256": "2e2412084dec8d14ec339e84e8998d7a5755a88868ff8e36cb92d23d06f1845d"
+    },
+    {
+      "status": " M",
+      "path": "scripts/bundle-editions.mjs",
+      "bytes": 8828,
+      "sha256": "a94f52173038ca5bb16a98a93c1bd306e46796cdadd81942244a849e2ff43a44"
+    },
+    {
+      "status": " M",
+      "path": "scripts/company-studio.mjs",
+      "bytes": 18714,
+      "sha256": "a7b812a2096c86a5308088120606c96b8b8e546437d13196d51c87c9b856bc4f"
+    },
+    {
+      "status": " M",
+      "path": "scripts/compile-edition.mjs",
+      "bytes": 36166,
+      "sha256": "73a056f0ced7a18453d8cd9216df4802e3301cb89da4fc4939862ad9235e7b55"
+    },
+    {
+      "status": " M",
+      "path": "scripts/edition-offline.mjs",
+      "bytes": 14296,
+      "sha256": "e8dfae3e5f5d63f9fa3bbcea3043bb4f9b9dbb9e8fbe2cc6173e426c7814e911"
+    },
+    {
+      "status": " M",
+      "path": "scripts/edition-runtime.mjs",
+      "bytes": 8100,
+      "sha256": "d819be4ebc47fb109e1630a82129492157c40938e8b6743dd2d2533a73302c3f"
+    },
+    {
+      "status": " M",
+      "path": "scripts/game-cli.mjs",
+      "bytes": 76037,
+      "sha256": "577e0598363720738958adc689624c85e94deefd93afde32c0475372b9a05bb6"
+    },
+    {
+      "status": " M",
+      "path": "scripts/native-art.mjs",
+      "bytes": 6825,
+      "sha256": "d97a39a5213393ef54364ccc20c5c20257bca8684feba21269777b180d4a3978"
+    },
+    {
+      "status": " M",
+      "path": "scripts/native-art.test.mjs",
+      "bytes": 5335,
+      "sha256": "508c73cc08918c45da3e8a4cde5058f324c2cc2df2dc251886ee04276662e41c"
+    },
+    {
+      "status": " M",
+      "path": "scripts/native-cli.mjs",
+      "bytes": 16018,
+      "sha256": "a4169d72bf4a5688f3ce551b4475cc5ab2b0738e9428d307eca680eaf73fdab0"
+    },
+    {
+      "status": " M",
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 6183,
+      "sha256": "4c402e8afc5025d0dad09da0e4d6c81c459e3aa027e23aed653d4f47557512a0"
+    },
+    {
+      "status": " M",
+      "path": "scripts/offline-launcher.mjs",
+      "bytes": 6879,
+      "sha256": "183b853d9a971b570f643869dfe242f4536d6d1ef009523dc86ea3a7c6e488e8"
+    },
+    {
+      "status": " M",
+      "path": "scripts/pages-current-entry.mjs",
+      "bytes": 8998,
+      "sha256": "8b838d73584a06f135928667795dab45981421fd0121845e062563b38281c167"
+    },
+    {
+      "status": " M",
+      "path": "scripts/produce-field-kit-sprites.mjs",
+      "bytes": 26965,
+      "sha256": "f268d930f82fd60bab8af46d913f2fabbf263924076ce6a83ec47c3959aabd59"
+    },
+    {
+      "status": " M",
+      "path": "scripts/test-edition-offline.mjs",
+      "bytes": 21485,
+      "sha256": "ba92604e7a55a2f64081266683bd25fdc9df4c0fcc2c52a091d56b995842ba55"
+    },
+    {
+      "status": " M",
+      "path": "scripts/test-game-cli.mjs",
+      "bytes": 44270,
+      "sha256": "c88913c2f7a6a43258a82db2cef5879af3651a64a48cc0e968dc9133ed145734"
+    },
+    {
+      "status": " M",
+      "path": "scripts/test-localization-pages.mjs",
+      "bytes": 14902,
+      "sha256": "73e0adb210bad7125f34aa92bfcca0e7bf2fd7592b03088a7e0414f31af4e284"
+    },
+    {
+      "status": " M",
+      "path": "scripts/test-offline-core-closure.mjs",
+      "bytes": 4766,
+      "sha256": "e2373f84fca334b3ac1de450c127b14adb8fdc059237d23407c7f88a06c22b47"
+    },
+    {
+      "status": " M",
+      "path": "scripts/test-offline-publication.mjs",
+      "bytes": 8569,
+      "sha256": "8740743a228704ba6f4fc01a13e2a46fe6267a8bd917cdef98d59d613514cd89"
+    },
+    {
+      "status": " M",
+      "path": "scripts/test-pages-current-entry.mjs",
+      "bytes": 14849,
+      "sha256": "1a6d934972ba25305b20cbcd818084fe71ee06ed3e25c9e407872807658efb26"
+    },
+    {
+      "status": " M",
+      "path": "site/about.html",
+      "bytes": 40177,
+      "sha256": "dc9a99d1ae36bbaa48ad9147e97b640e09e7a2940b2c0649f40f40c01c13c62d"
+    },
+    {
+      "status": " M",
+      "path": "site/index.html",
+      "bytes": 5074,
+      "sha256": "f259868893a0df2489918fc9534499e57759c33d0fa9cbcbbebe00dd6b9e6aee"
+    },
+    {
+      "status": "??",
+      "path": "authoring/demo-recording-variants.html",
+      "bytes": 845,
+      "sha256": "14dca2adf9b9f6c3f949040d2cc3a4889da82112c15b61ce473738f2dda4a215"
+    },
+    {
+      "status": "??",
+      "path": "authoring/demo-recording-variants.mjs",
+      "bytes": 6095,
+      "sha256": "3d35349aa4b1a19e52cf3ef213273318ea7c34b846f6d5bba6530df4dd5e8054"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/droneaid-brand-kit-2026-09-29/README.md",
+      "bytes": 2087,
+      "sha256": "8b26c50e99c1a86bdd72afba9e966d5cbc52375c1f3355d39e5dda583669bea8"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/droneaid-brand-kit-2026-09-29/background-original.png",
+      "bytes": 880307,
+      "sha256": "836c883d4eee658aab610f113eb4fec34f40ed1c963b4a759c52ec37990a8515"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/droneaid-brand-kit-2026-09-29/logomark-light.svg",
+      "bytes": 2300,
+      "sha256": "534941cf335b5c2c9af316f813d4268644cb9449b78d995854f88625ae3cf328"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/droneaid-brand-kit-2026-09-29/review.html",
+      "bytes": 420,
+      "sha256": "ff0b63e881e60b4afe21c59566af5351ecff23237667f599d4b20bc3bf125d3e"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/droneaid-brand-kit-2026-09-29/sources.json",
+      "bytes": 1406,
+      "sha256": "60a2bdf68d60f5e9e7d0378d8f8af8c6085d1c68b8f4e8ce9227470863569e34"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/droneaid-brand-kit-2026-09-29/wordmark-dark.svg",
+      "bytes": 119252,
+      "sha256": "cecf8a67c455d4a7f931594e2ffc4481c473c3475a3316b8cdd876c39abb1e5b"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/droneaid-brand-kit-2026-09-29/wordmark-light.svg",
+      "bytes": 216724,
+      "sha256": "173e0f58ed85904a5b1a3b84a1b9c222ee768cb71a5d95b79fab2343b9425a6d"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/fpv-line-identity/icon-original.png",
+      "bytes": 926563,
+      "sha256": "978ac6d8f979558f1f9341d4f92823e92b639d4cf9d8281fdd45f792e3c3682f"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/fpv-line-identity/prompts.json",
+      "bytes": 6228,
+      "sha256": "2faeefa3fc74a829ca99260bea10beeb203a1296fa5d28fa1e614b68b754d88f"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/menu-scenes/aggregate-prompts.json",
+      "bytes": 4145,
+      "sha256": "3710449af6b58745edb00dbb592309c780363cc4959c8e7a868b7b4c88a787cc"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/menu-scenes/coupa-overview-v1.png",
+      "bytes": 2771009,
+      "sha256": "f384e0ad3c45ada1672bbf150e3c1f18563d4256a354f41f6ea3f2df619a4134"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/menu-scenes/droneaid-nl-overview-v1.png",
+      "bytes": 2307492,
+      "sha256": "c8d9f8013620bdd3513a2927b656582237c812c0318fa4d4279364678a185ae9"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/menu-scenes/prompts.json",
+      "bytes": 2758,
+      "sha256": "29bcafb20237d5820d16536454226e0329abf46f1707312295fabcfede8bd999"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/menu-scenes/retro-rainy-arcade-v1.png",
+      "bytes": 2628557,
+      "sha256": "a831916e3a3b11fdecda72d6f5d76e09e925102e72cb6eafbdf0c2b83b10623a"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/menu-scenes/ukraine-dawn-v1.png",
+      "bytes": 2506002,
+      "sha256": "d72fcf224c59e0ef9b9a225a9f01dbaa8a0a4995567881d2fe563ac4149a0b75"
+    },
+    {
+      "status": "??",
+      "path": "authoring/library/reserve-illustrations-catalog/test_catalog.py",
+      "bytes": 3737,
+      "sha256": "0e691967d9677d5bb56f50335dcd2a53a6b3345f4c97f0960106a9a19b47260b"
+    },
+    {
+      "status": "??",
+      "path": "authoring/shared/samples/README.md",
+      "bytes": 1675,
+      "sha256": "903dc33057b9d62695fe1d1c0885656fb692bed22f100192688876bec2f9dbd8"
+    },
+    {
+      "status": "??",
+      "path": "authoring/shared/samples/dawn-signal.mp4",
+      "bytes": 713732,
+      "sha256": "d643a6ebbf92b93dc57a0cfe65ca4bcf484ceecd8ed632ed6476707ec720e85a"
+    },
+    {
+      "status": "??",
+      "path": "authoring/shared/samples/dawn-signal.png",
+      "bytes": 422581,
+      "sha256": "71fad383778452f730bb9278858acb86aeba275e2a5d3c9e050c221603e02707"
+    },
+    {
+      "status": "??",
+      "path": "docs/authoring-controller-navigation.md",
+      "bytes": 16464,
+      "sha256": "63218c440498dd9b5b996e9671c2e83e569e04bedaab2e6dd6a56ebc8914973e"
+    },
+    {
+      "status": "??",
+      "path": "docs/demo-mode.md",
+      "bytes": 33004,
+      "sha256": "6d2532056eeea0769459cfb16f83a44507f9e0f9425bf6e9249c2af685811fce"
+    },
+    {
+      "status": "??",
+      "path": "docs/edition-public-identity.md",
+      "bytes": 3233,
+      "sha256": "7c55e1dd73adbd1472cdde97eafd7f1c40ac668a6cf8844e0413550881ff2224"
+    },
+    {
+      "status": "??",
+      "path": "docs/fpv-line-branding.md",
+      "bytes": 3287,
+      "sha256": "318891d4648186573f1e283915828e2314cc81c97ca93ad7b623f34a0df0b882"
+    },
+    {
+      "status": "??",
+      "path": "docs/menu-scenes.md",
+      "bytes": 18026,
+      "sha256": "f173fe89ede84e8896ccfd6459b286fafefce613b13d34a7b58fe1de7eb31d9d"
+    },
+    {
+      "status": "??",
+      "path": "docs/native-menu-inventory.json",
+      "bytes": 22629,
+      "sha256": "15759cf11197cc73c5f476c2537ee8240662f53c7cc043ba6e82ba43693e2568"
+    },
+    {
+      "status": "??",
+      "path": "docs/native-menus.md",
+      "bytes": 9571,
+      "sha256": "3f40f0a891cca2a07f8f0e7dc8f248d4c61893a596e84ca3aa7660ac5ef3b9e4"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/analog-flight-references-2026-09-29.md",
+      "bytes": 4884,
+      "sha256": "40435b48c5e375702a69785dc720c810e5d2b8016b0399e262b447df51a707b7"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/analog-menu-references-2026-09-29.md",
+      "bytes": 7083,
+      "sha256": "d6a0d75b9772ae709166b834998e4be74d53cea29dd3effc91a317a86bdb47e5"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/analog-retune-2026-09-29.md",
+      "bytes": 5588,
+      "sha256": "63e92018af7e03f3e8a163e4c01efbd4cc0dbec1b7de853a56b92c0566b5ae4d"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/analog-retune-2026-09-29/flight-acquisition.png",
+      "bytes": 123537,
+      "sha256": "525a25b40252ea6e64b871bac9f3302ab99a0530c877dbd499504435efc49740"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/analog-retune-2026-09-29/flight-mid-loss.png",
+      "bytes": 115732,
+      "sha256": "45ab818880ed2a5fb1e7e09ec172005351a7310714db081397f628c9b45ed670"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/analog-retune-2026-09-29/flight-reduced-loss.png",
+      "bytes": 115007,
+      "sha256": "c850c63de7cd04b4fe7ba6fc57940ec46b314ffb2ee7bbb3e336874c638b83c0"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/analog-retune-2026-09-29/flight-signal-lost.png",
+      "bytes": 120140,
+      "sha256": "906a9849557427762fd3f2fdcdcced829a5b85803f982a0911210111666338a9"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/analog-retune-2026-09-29/menu-retune-held.png",
+      "bytes": 78554,
+      "sha256": "58ec9fc2cc15d38b6fbe289a10cc3a687860b43ddc9e9a92d0d5a9af1bb3f256"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/authoring-artifact-validation-2026-09-29.json",
+      "bytes": 14825,
+      "sha256": "e7dbfd2f1fe331903616ba890e6b225d4e35ddec42865ae79fa6825be404bf25"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/authoring-navigation-2026-09-28.md",
+      "bytes": 25187,
+      "sha256": "39e598973fe246930c47d4c00873ae1e98a90fb890d6008c6be74031f5dd5b55"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/company-menu-source-2026-09-29.md",
+      "bytes": 10365,
+      "sha256": "701b825de8dabdf09222c40f6193335e03a453c78363527ec818bfc99c3c38e8"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-analog-continuous-2026-09-28.md",
+      "bytes": 7212,
+      "sha256": "97506de5666cbc0a5eb14ed5b24f3a089c84d9e862029e9d027de1fac7ab0406"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-atmosphere-2026-09-29.md",
+      "bytes": 8890,
+      "sha256": "9d01fc0704270402f77380f95c0b482bc484b7a2685d11e0f83d053fd03fe534"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-atmosphere-2026-09-29/accelerated-soak.json",
+      "bytes": 63514,
+      "sha256": "4b715caf4ac8198de77a33b5c3dc5698175f5e24d04c3c2567937c70a7c7e5ee"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-atmosphere-2026-09-29/desktop-en.png",
+      "bytes": 89431,
+      "sha256": "d44a5f4e27acf77bfaf6efcaccc4ce196d9ca31ce804e9814dbd3593b6d38b0b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-atmosphere-2026-09-29/desktop-uk.png",
+      "bytes": 47771,
+      "sha256": "4e39b8cb2ac68cc2536d7d5118fe8da2c8ef476ac117dd1ec192b70226352398"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-atmosphere-2026-09-29/landscape-en.png",
+      "bytes": 40581,
+      "sha256": "1a08fa94e7437e89f49c3a29d9ea729c5de858a23acc78066b926a94e03b3bad"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-atmosphere-2026-09-29/portrait-en.png",
+      "bytes": 43234,
+      "sha256": "f9c8431dd84595673f869ee1c92ca64e974ed6b60c79e9d27c9b3b446ed83430"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28.md",
+      "bytes": 26192,
+      "sha256": "a4f9bbc5480106a28e9bc6df04414dab41984d6b8c215b6ce9541881e5ef4b1a"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/analog-direct-takeover.png",
+      "bytes": 117692,
+      "sha256": "4e23f046e208903a64f60dc15c7dd260e0fda67f8875c12840807e759499fac2"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/analog-final-preview.png",
+      "bytes": 43258,
+      "sha256": "7f32d51f641d921459fc5eb80a25bbcce00005b6ab2803ca5efcca86c2aa20bc"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/analog-fullscreen-orchard.png",
+      "bytes": 48632,
+      "sha256": "df586921d74f564acb01f37bef8750434c8f14914d790f3fee66d3cef8db9403"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/analog-phone-preview.png",
+      "bytes": 42716,
+      "sha256": "479aa0857c4d020af0f3b960e2ba354a51d078e98e616b02c0d5b428bcdf88fe"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/bot-qualification.json",
+      "bytes": 3931,
+      "sha256": "d2d9748c20c406751f44831868e6e28686f0edd586c6b3eec37eb536875aae64"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/browser-adapters.txt",
+      "bytes": 516,
+      "sha256": "7c0fa05422b685c881bca881d83cef985ebbfb87fbb96b0113c09b94db5ee2c2"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/courtyard-mosaic.png",
+      "bytes": 68866,
+      "sha256": "659f51bc71dcfa6f87ac54e8e7177922ba8aa17e6173e7e4cfa60730dbcb8e7a"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/desktop-lighter-blur.png",
+      "bytes": 33955,
+      "sha256": "a767fb6249aeb52ab6b07ddf65cc4dee58083b3d9945225e7f5c23cf912a4c8a"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/orchard-mosaic-practice.png",
+      "bytes": 76734,
+      "sha256": "639890a80abec0a22e2362b1f2b69943ba18ef8935a7797bfd0313bf57b875ef"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/orchard-mosaic-victory.png",
+      "bytes": 73249,
+      "sha256": "01039a08032876dea5c15326f39e7b96ea63b24db22e6c745849f0234a636d57"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/orchard-mosaic.png",
+      "bytes": 70483,
+      "sha256": "961c044a154b57f931435b5059ca7a5faa07fe66101c3844c913d0590b6ef444"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/recorded-takeover.png",
+      "bytes": 89927,
+      "sha256": "04d8bffde6d0c967a1545d24a8ac0d874b382cfe420231cb6c8829f254abd545"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/signal-demo-gameplay.png",
+      "bytes": 88393,
+      "sha256": "e02e3f2bed9f693c417e5e6093a3e9d04e404c465fb7e205b438203a8adf52de"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/signal-demo-practice.png",
+      "bytes": 103122,
+      "sha256": "3b90283f0d684856b279da8627ae42f2dc9196e906f28406c926d46a8cba699c"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/signal-picture-comparison.png",
+      "bytes": 80778,
+      "sha256": "083692cf7c0df492d6f2efcea6dbf41c7de88a81512d2f4ec91d8a9072b2beb7"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/soak-attempt-1-timeout.json",
+      "bytes": 19737,
+      "sha256": "5a677dba5537a407ca4286889792eb6d98ecca584b528bb71e49dd1dfe817f2e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/soak-attempt-2-timeout.json",
+      "bytes": 12686,
+      "sha256": "aa5a8bd9e3a186054ac5304c3ec35c2cc418c11079e886169da639d48f297658"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/soak-report-before-runtime-variants.json",
+      "bytes": 62582,
+      "sha256": "348d6ecd0127e9bc7b373b444a5884306c254d6b78c9ebb15dd2b630573eed9b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-mode-2026-09-28/soak-report.json",
+      "bytes": 63510,
+      "sha256": "4473f4665a4b834b72bf1902a973cb274d2aca55abbdef0259d4cf8ab2b3940b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-picture-2026-09-28.md",
+      "bytes": 5031,
+      "sha256": "1dcc8583ee4dbc5344eb5d83c5b1a55ba4544bf8b26d3da093548ece714390b3"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-picture-signal-2026-09-28.md",
+      "bytes": 5202,
+      "sha256": "ce913b5690187dea62189ed2c5723eedf52c19d42083d1ae80d432b147d815d0"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/droneaid-brand-2026-09-29.md",
+      "bytes": 3758,
+      "sha256": "9f36501b5beeadcb82b66d81296ac5b254a468109d81bc366a9c5146d9097c51"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/droneaid-brand-2026-09-29/landing-desktop.jpg",
+      "bytes": 75789,
+      "sha256": "e30cacf57de519414c72cd9fc1e02ce6869c6414e4835aef3a190128fba9179d"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/droneaid-brand-2026-09-29/landing-portrait.jpg",
+      "bytes": 35907,
+      "sha256": "d3a14c573d7a856bf282c81abee3de029e594dd87c44e437136640962a7ade20"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29.md",
+      "bytes": 8832,
+      "sha256": "02cd3dd840914b1a02bcd381e4b4a90dc884f6d7e6896f9b287e9549a9caf1ec"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/about-en.jpg",
+      "bytes": 99759,
+      "sha256": "de42ab9e67f011cad9eb8ec936e4c48e6b37cb77445bdfd6a0f54678c4135a28"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/about-uk.jpg",
+      "bytes": 117452,
+      "sha256": "93b8fdaae13e49593e1981f39419afd7ab2582d45fa2d37aa4d047a70dab43bf"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/company-studio.jpg",
+      "bytes": 114018,
+      "sha256": "b29b4c8ea0bfc41c60407429714ebb20acfbfcab64b882b95943f8770ff4f853"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/coupa-developers-390-corrected.jpg",
+      "bytes": 53801,
+      "sha256": "da51fe35a4d0355b39783f54da088b92ccf51cc56199bfad3e366ddb4cc57b93"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/coupa-developers-390.jpg",
+      "bytes": 57249,
+      "sha256": "37554676ad8a4ce75e66a2f5a5b195737afd6311424fab28564d2726b6661d7e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/creator.jpg",
+      "bytes": 113997,
+      "sha256": "6f4dd55298eaf13cd93db7762ff6fffe0968397acd01306019e75b6d1f779f73"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/design-atlas.jpg",
+      "bytes": 112613,
+      "sha256": "aeff2799098d9cae1d41a8494fc6b9704922f013aefa765bddd63d48ef6b8f0e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/droneaid-390-corrected.jpg",
+      "bytes": 49175,
+      "sha256": "14bb38fba7bdd56e71801db50f45d415107e93e8baadb784d439f3ec50aaf51e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/droneaid-390.jpg",
+      "bytes": 48466,
+      "sha256": "850bc5a5d24f74870f6f5cbdb795595c8f3d98580519b6d793b5f652808d964d"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/droneaid-desktop-final.jpg",
+      "bytes": 133654,
+      "sha256": "aeda7faef07c68da3fe25e29387a9a0efe10efe9928c170a8a901283ae0b5545"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/droneaid-standalone-final.jpg",
+      "bytes": 196447,
+      "sha256": "788f0fe2ed97153da3b3cc9cea673f0d1f8f43f7180ae589d1a82b26026139b4"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/edition-source-390-corrected.json",
+      "bytes": 71409,
+      "sha256": "fbdb6a5db73497dababaa85b1e90e3c1249009ead4882d095ffcd4d595da168b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/edition-source-390.json",
+      "bytes": 67243,
+      "sha256": "831c0fe2800823962d12a6d1cee1368b709781471544835d8c0ba290c733fb8e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/focused-tests.txt",
+      "bytes": 5563,
+      "sha256": "6faa4f88ee02b2ff40fc013495f10603c70963a653426ba5798e7fe09a0ec20a"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/fpv-desktop-final.jpg",
+      "bytes": 106327,
+      "sha256": "a9e42cd645ec8256bdc5e0e07109acc477ee44cfcbec28b975ebd2f03d29fae3"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/fpv-plain-desktop.jpg",
+      "bytes": 102921,
+      "sha256": "df3f34645edc8474478f839d5ea839060376a879e631e64440fb3fc519d52b26"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/fpv-uk-390-final.jpg",
+      "bytes": 39493,
+      "sha256": "4b8bb39a3dbe7794b248aad09306395bf53de3ffe9aaa1bc09b448e92c0a5fd5"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/standalone-build.json",
+      "bytes": 2360,
+      "sha256": "6a29d15617b96ab366ed5e68a5688056297e34aa51b704be8c5c6ebbfaaef449"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/team-uk-390-final.jpg",
+      "bytes": 14749,
+      "sha256": "52cd6b4d982cb10e709698f918cf585a7e4f7dc1b798ec75ca6527a5b376d4ac"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/versus-desktop-final.jpg",
+      "bytes": 106208,
+      "sha256": "c7ebddd4ec8a0322ea18bb13e571fd2670868f88f96262707f6cb2e6c601d97b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/versus-ready-logo.jpg",
+      "bytes": 156308,
+      "sha256": "44e157f68daf80f707dbbb3cdd783086e8693f55531615d2bf3664e69eb24684"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-brand-2026-09-29/versus-title-tests.txt",
+      "bytes": 3431,
+      "sha256": "31b5dc0e34a649b9a224e230a7e886f63a5b8aa388ce8ab1b988fefddfe6280c"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-copy-2026-09-29.md",
+      "bytes": 5389,
+      "sha256": "fa2c6c656336c65cc34e4ed1f18efde6483f0cc81e525686235d1591912535df"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-edition-browser-2026-09-29.md",
+      "bytes": 4052,
+      "sha256": "ed656207742a4e070d320bf29d6d5956e68c46c4462459ba9bf6f6508408d9ba"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/fpv-line-icons-2026-09-29.md",
+      "bytes": 4950,
+      "sha256": "04ae6c0def54a55ca29e669c6c7f5381a9e8fd4e0b0c88ee204e4df83f67481e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-cinemagraph-2026-09-29/fallback-settled.json",
+      "bytes": 639,
+      "sha256": "1371204413ae328da8464b615da8a187b0f61b1efd9f6893a83b065ef10833ed"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-cinemagraph-2026-09-29/fpv-fixed-view.jpg",
+      "bytes": 82299,
+      "sha256": "8110b2839280292aefd8e4ad58acd0c6870076514b451d851a1bc18878a999d9"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-cinemagraph-research-2026-09-29.md",
+      "bytes": 7773,
+      "sha256": "cd83a5f14047d0d5f3b8854c01efeedb00dd791c08a32c5198e053c9afa4dbe1"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-motion-browser-2026-09-29.md",
+      "bytes": 9434,
+      "sha256": "b66a4f1ead557acdd4ed17188006d4d5435a64dee55bb16ca06fd5506fc44962"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-motion-fullscreen-2026-09-29.md",
+      "bytes": 7466,
+      "sha256": "bc98806f184d942be8ecd6408eb2245ccb8ea2980b4ec692e73cb9a5b35c97f6"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-motion-packaging-2026-09-29.json",
+      "bytes": 6500,
+      "sha256": "62cc0c1554245af8d914be43f32c81c61848a8d430fa617d15c73f7000a3092c"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-motion-packaging-2026-09-29.md",
+      "bytes": 3129,
+      "sha256": "8284318e0e1340d48efaebb6ba505a426ea26ca099be7ed2e20a00c765c4590b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29.md",
+      "bytes": 4216,
+      "sha256": "4591ef2f17cbb37dc1f721f1911f023ad4b014837af7e15bf2be432da29927bc"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-0.jpg",
+      "bytes": 110935,
+      "sha256": "48f66eb2eaf4b2d539bb5c9e2acdb4d4e3371cd9443ffedd8d1d1aec49ae74c0"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-1.jpg",
+      "bytes": 106554,
+      "sha256": "cc41201cad0c54db29230cdd578a38f12a224678a1222ad6a4f20cd85d966bcb"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-2.jpg",
+      "bytes": 104485,
+      "sha256": "96108b284021b64452668f2c886e248e0b23a0cebe56a80cebc424ca9dce5855"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-3.jpg",
+      "bytes": 102941,
+      "sha256": "3559d29ba23a5899a613e9a1bf8ae9547bb60deddd89bb01aada33b5e721d96e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-4.jpg",
+      "bytes": 106453,
+      "sha256": "4c4da1fa5f12d4d00bd55b553a34acc2ae93fe0361af477f1b4dcfa718618a44"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-5.jpg",
+      "bytes": 109119,
+      "sha256": "230dd80cc955e0199efcca7ca85c69bc7bf636c39c243284293ca4af071db544"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-6.jpg",
+      "bytes": 110652,
+      "sha256": "a5d8b7608898b35b025952c966ca71c734b744541c5e0592049a43a728f958fb"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-7.jpg",
+      "bytes": 110890,
+      "sha256": "bf16ae6badff7e24015d7096f89e409e47b48ffd696937cbfc8b56aca153ada4"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-8.jpg",
+      "bytes": 110902,
+      "sha256": "6e363fd034b5f4e2912feed859286f8c5a2ab24551d263861f3a9fdb328f868e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/dropout-9.jpg",
+      "bytes": 110891,
+      "sha256": "ddbb40166ebef50a85525f806a591dc1f30171e4bf0fac2e4be6aaf0d05ac699"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/fallback-and-controls.json",
+      "bytes": 3065,
+      "sha256": "90b45d333212534db7183e5d8648fca26efd87c04e52937643ab96b2bee81bf4"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/home-arrival.jpg",
+      "bytes": 109607,
+      "sha256": "2c30d72fddf37fb810799c0ee3e3b61e56e92bf35a50991179f2bb7bc071d212"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/home-signal-loss.jpg",
+      "bytes": 108114,
+      "sha256": "a269cf05fe42ec2c2191598f6948aa70eff1fe293ac77596aa8fb7ef39229b3f"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/landing-reception-2026-09-29/portrait.jpg",
+      "bytes": 80071,
+      "sha256": "11adc8bacd48986cb93ca4d2ffa9384c5c1a084a315a9d0f099b02f6f7e4e1cc"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/living-artwork-2026-09-29.md",
+      "bytes": 4108,
+      "sha256": "30b64a8b3f450925d7d5e6ea14918b5cbd3019246010b0374eb7a9f937f1d486"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/living-artwork-2026-09-29/fpv-moving-a.jpg",
+      "bytes": 81207,
+      "sha256": "f8cf294e5d8e0f1d5946291116454efe8b053464d75d29c00c4ce0780e22c939"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/living-artwork-2026-09-29/fpv-moving-b.jpg",
+      "bytes": 81853,
+      "sha256": "7127d295220255ae043c1c8abbf2a6f734a2043d37ae8771b1b285b27d5522e1"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/living-artwork-2026-09-29/fpv-paused-a.jpg",
+      "bytes": 83338,
+      "sha256": "6710cfe286037c2ab143bbde6d6a2f8fac72bf032b47a23d84dcec00a0039bc9"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/living-artwork-2026-09-29/fpv-paused-b.jpg",
+      "bytes": 83338,
+      "sha256": "6710cfe286037c2ab143bbde6d6a2f8fac72bf032b47a23d84dcec00a0039bc9"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/living-artwork-2026-09-29/frame-comparison.json",
+      "bytes": 321,
+      "sha256": "de2504788bbe81b8f0931acf1c884a989fdfd6b22b2275ee39a0772a070de79f"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/living-artwork-2026-09-29/home-desktop.jpg",
+      "bytes": 108348,
+      "sha256": "d7fb7fff7f15cd1ce4d7e0647c218af65ae81b3f1cdfbf21f7544ee5737ebf05"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/living-artwork-2026-09-29/home-portrait.jpg",
+      "bytes": 40313,
+      "sha256": "03f6822955ea3132cb1436991ce99550b70a622a11c119605f8e8c8ece2388ef"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/menu-scenes/edition-compilation.json",
+      "bytes": 66916,
+      "sha256": "ef4a35a5a13063359ba0cd8125858e1715a3bd796542d9069cda18d2f8d6d7c3"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/menu-scenes/final-packaging.json",
+      "bytes": 6955,
+      "sha256": "9bad0ab6b057bde9abf22d12ad5ea588ddeb0ab8899732e330d2307e86bc9824"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/menu-scenes/final-source-fingerprints.json",
+      "bytes": 469557,
+      "sha256": "8cbc9dbffc52cd68646f6d9d04807aa5aa037416626e12b6d41e7cfd3040b846"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/menu-scenes/measure.html",
+      "bytes": 1396,
+      "sha256": "58672f93755a904f7557055086f18271c1735fc4ca4077e2982137a096e19e6b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/menu-scenes/measure.mjs",
+      "bytes": 4335,
+      "sha256": "038bd31b9ea5e35c467e74861877ebcf9a1fa0e1144c8119ee174e675f50be66"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/menu-scenes/motion-multiframe-2026-09-29.json",
+      "bytes": 706689,
+      "sha256": "8b3be119feca475e651e741832a90e7c87e4c84cfa128ddac128971a073c7089"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/menu-scenes/motion-native-visibility-2026-09-29.json",
+      "bytes": 142820,
+      "sha256": "4006f9fc7b1994b0752168c174bfecc38372980d1dd72a01409524cef6964e1e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/menu-scenes/performance.md",
+      "bytes": 3009,
+      "sha256": "ea37094c9c8055fa18abbac5b791aac166fda4bf67cad85c8b4fd5d756b3586e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-2026-09-29/fullscreen-animated-packaged.png",
+      "bytes": 139650,
+      "sha256": "76a93cca4290675a1e33e9fc3ded064a4040e417bdc0297a631d7d5613e266e4"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-2026-09-29/fullscreen-animated-source.png",
+      "bytes": 140311,
+      "sha256": "d327ee166737e22866bbb523ff63a1000a24846b3df4c7fff3cf7658bfbfcab6"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-2026-09-29/settings-desktop.png",
+      "bytes": 82651,
+      "sha256": "c009af296fdba1d6549034f28cc561330287ce918cb3780fff4632a536b8acb8"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-2026-09-29/settings-packaged.png",
+      "bytes": 86141,
+      "sha256": "3d2840f11ee5517a9dbbb8f0ea0be53c29f191bc9caa05e9717df193c4ff1800"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-2026-09-29/settings-portrait-uk.png",
+      "bytes": 29177,
+      "sha256": "199f80496f26f375b31679be741ca804ed3f290cc8f86200ada7b13b964b2a18"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-2026-09-29/solo-desktop.png",
+      "bytes": 112181,
+      "sha256": "e7fefc5bca99834c90e0f3eac9479bf57aef490e2d9f38e820a05670e45c148b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-2026-09-29/solo-landscape-uk.png",
+      "bytes": 34643,
+      "sha256": "a6f5a2c5d1bbe9fe90664d8ae7b5c676d39dd77f3147ba66c6e8c6efee26f40c"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-2026-09-29/solo-packaged.png",
+      "bytes": 112421,
+      "sha256": "09b4518e670f29ccb2a98c57783eb46745bdd41ecee40a9278dc198063a8fdd7"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-2026-09-29/solo-portrait-uk.png",
+      "bytes": 41134,
+      "sha256": "f47eb0a96492620194e4a934049c7684b9b49f3b5257b27009ee1192fccb3b8b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menu-packaging-2026-09-29.md",
+      "bytes": 8462,
+      "sha256": "b32843b35d3992bf54e9131e197e02342c2a9f513c2cae6346924c6e7824a29a"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/native-menus-2026-09-28.md",
+      "bytes": 16823,
+      "sha256": "20fe35f5996ebb56487a3f31ad5aa275b50ea605183b7b084679d0ffc23db21c"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-picture-2026-09-29.md",
+      "bytes": 6570,
+      "sha256": "1b52fe6a51becd7ad59cf8e2d4cea6fcab3f1518551416c673afc606e3217e17"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-picture-2026-09-29/picture-variety-and-jammer.png",
+      "bytes": 100119,
+      "sha256": "c4940579518afd3264aaf209a5126313fc2b95e70baa36fd49aa3f3c3dffe2e7"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-picture-2026-09-29/relay-perimeter-active.png",
+      "bytes": 81351,
+      "sha256": "3afa90608c604f2c0033fc1897dbea1248cde0d0f977e56be7dfae00d77a4dbb"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-picture-2026-09-29/relay-perimeter-recovery.png",
+      "bytes": 76944,
+      "sha256": "7a33cec61477e7474e86044d2fdb47e456f7ff670efa7b67d035867efe80d28e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-picture-2026-09-29/relay-perimeter-warning.png",
+      "bytes": 81588,
+      "sha256": "79c09273effe7519ac6a701b605e3b12cc767ad24047770b8132d379a6920a1b"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-picture-2026-09-29/relay-storm-inputs.json",
+      "bytes": 1709,
+      "sha256": "2d5052a1ec71f415acae19e0505f698602e1e0953d89efa49280983ad1ac0831"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-reception-2026-09-29.md",
+      "bytes": 5186,
+      "sha256": "f86a862f97fb9f9e776e0655d49178761a1ca74e9e9d84f7018c0e2b9b4e47aa"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-reception-2026-09-29/acquisition.png",
+      "bytes": 146947,
+      "sha256": "aa5472ef5e48805e505e2efc39d35a454bcc8859c983c28c805f0b01be6ce71e"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-reception-2026-09-29/reduced-loss.png",
+      "bytes": 69694,
+      "sha256": "91e151833d1795695b24ebcde30435917060e0807d410aacb1a1e68c8b88f7b7"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/signal-reception-2026-09-29/signal-lost.png",
+      "bytes": 145178,
+      "sha256": "06fd8fb829c99bdc8789bb0e7ba44df0be7152af985e1c4986933553cd9ac730"
+    },
+    {
+      "status": "??",
+      "path": "game/community/directory.css",
+      "bytes": 2598,
+      "sha256": "c53a29650ae4803ef318c5abf9a2ec36cb76c7ee3a0472c3fe0c118b8a9a09e1"
+    },
+    {
+      "status": "??",
+      "path": "game/community/store.html",
+      "bytes": 7991,
+      "sha256": "81cd62ef62a5829b5fb6c9b9b9e110c6b97cff6c742bce1303829954003654ae"
+    },
+    {
+      "status": "??",
+      "path": "game/creator/player-navigation.mjs",
+      "bytes": 4459,
+      "sha256": "7d020a2ce26b19aabf15d82b8237c4c80b72e6e74bb75653625a311bdd4068ba"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-bot-player.mjs",
+      "bytes": 13337,
+      "sha256": "b9d063345b3955479e928060af90d8cfdb67638cede1f298ccf671751bf4f23b"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-bot-worker.mjs",
+      "bytes": 530,
+      "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-bot.mjs",
+      "bytes": 15331,
+      "sha256": "9c37b1168a510c3bd8b20519cf35cce45e0a48a8d89b6ecacbd7ecf743d0478c"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-catalog.mjs",
+      "bytes": 8573,
+      "sha256": "3f6966ecb1c2c4222634b5ecac4227cdc9781a75cd89ba296190d552e502248b"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/catalog.json",
+      "bytes": 4079,
+      "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+      "bytes": 12340,
+      "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/crosswind-openings.replay.json",
+      "bytes": 12332,
+      "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+      "bytes": 10801,
+      "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/first-signal-left.replay.json",
+      "bytes": 10793,
+      "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+      "bytes": 10803,
+      "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/first-signal-right.replay.json",
+      "bytes": 10795,
+      "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+      "bytes": 12273,
+      "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/night-patrol-loop.replay.json",
+      "bytes": 12265,
+      "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+      "bytes": 12246,
+      "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/relay-orchard-loop.replay.json",
+      "bytes": 12238,
+      "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+      "bytes": 12246,
+      "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/relay-orchard-stairs.replay.json",
+      "bytes": 12238,
+      "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/variant-provenance.json",
+      "bytes": 2210,
+      "sha256": "c000e38086afc7cd135534c9d6769ec8febb21e288c8541923178a31c4525d54"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-director.mjs",
+      "bytes": 7203,
+      "sha256": "bdc47d3d1bc9c3e85f13d7f05a5a4ce1eddcde97a3351f47e8e2ca9a585cd299"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-experience.mjs",
+      "bytes": 4928,
+      "sha256": "9aeba930a9ac21cad7d8c06cf2bec8b92963395ec34386e2936eb12423a93313"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-library.mjs",
+      "bytes": 10298,
+      "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-sources.mjs",
+      "bytes": 3500,
+      "sha256": "268687b1ebffe50e3d04805930a9bef4ee128c3f78dce2b1a8236b9d4bc8abcc"
+    },
+    {
+      "status": "??",
+      "path": "game/locales/en/controllerEditor.json",
+      "bytes": 1038,
+      "sha256": "06f358748b851b2df2c792fd11e417abad740c8ace2620f494360e2dae01ceb1"
+    },
+    {
+      "status": "??",
+      "path": "game/locales/en/demo.json",
+      "bytes": 4540,
+      "sha256": "8d974df949166156646a0e9fcdecbcd20cae4f6f315b0b959ee5e33d9eab7dfb"
+    },
+    {
+      "status": "??",
+      "path": "game/locales/uk/controllerEditor.json",
+      "bytes": 1620,
+      "sha256": "72e4367f58da4e117969c2de9f82ac9ad7a4bcf18cf4c8e4ffa8022f861f72fa"
+    },
+    {
+      "status": "??",
+      "path": "game/locales/uk/demo.json",
+      "bytes": 7293,
+      "sha256": "d7e305696a94c06ebc74c55f93a23789ff1630a3cb0754348d9349d3d9c8f1d7"
+    },
+    {
+      "status": "??",
+      "path": "game/offline/navigation.css",
+      "bytes": 738,
+      "sha256": "1c0830593f5e53f2268f120519a4fd1c3611636e7bb37ec9be653df3523638a4"
+    },
+    {
+      "status": "??",
+      "path": "game/test/analog-signal.test.mjs",
+      "bytes": 3585,
+      "sha256": "c976468260d06cc1c67d371ffb180175950775cef2e818953b24ee8221f6318a"
+    },
+    {
+      "status": "??",
+      "path": "game/test/authoring-input.test.mjs",
+      "bytes": 7386,
+      "sha256": "65a349ad6e46545c85897a7af838aa5b6c09a7491c481ec9a4de84e9bf3f7475"
+    },
+    {
+      "status": "??",
+      "path": "game/test/authoring-reference.test.mjs",
+      "bytes": 3012,
+      "sha256": "3682e365fb5dbec527cee8ad0c1de452d688b8b8fe14096d0a1b45914845b1b9"
+    },
+    {
+      "status": "??",
+      "path": "game/test/brand-identity.test.mjs",
+      "bytes": 3099,
+      "sha256": "4b78016cd9ecc6a8bafab621c562fcae69998bed69f3814afcf1bac7f2894c45"
+    },
+    {
+      "status": "??",
+      "path": "game/test/community-directory.test.mjs",
+      "bytes": 7358,
+      "sha256": "0d665f76493268b50be4e3a08fce4da5dbd5b526040dae8f2c147db8faddb88e"
+    },
+    {
+      "status": "??",
+      "path": "game/test/controller-text-draft.test.mjs",
+      "bytes": 2777,
+      "sha256": "126e865f4e492092d799f11d467c9d6558bf6a24aca5cd360523fa6bb784a9c8"
+    },
+    {
+      "status": "??",
+      "path": "game/test/couch-brand-title.test.mjs",
+      "bytes": 4170,
+      "sha256": "dcbf45596b08898dc9d31039e85c1f9cb9781f98f9f53ffafb5477df5f747544"
+    },
+    {
+      "status": "??",
+      "path": "game/test/creator-player-navigation.test.mjs",
+      "bytes": 15067,
+      "sha256": "ef6d931e23bcd729ef81512472398de86147367566c01458c41e159d2323ecaa"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-audio-host.test.mjs",
+      "bytes": 6667,
+      "sha256": "9b99365639ddb90f519a4c5e2191689d069071585853f41b3a4d975cb9a9f76a"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-audio.test.mjs",
+      "bytes": 9397,
+      "sha256": "e3cda368dfa7c2a4844af61cdd58159336f7641ed07d302821539507e0f357a7"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-background.test.mjs",
+      "bytes": 8079,
+      "sha256": "dfcb7fc0261189d980a2ff4cb066d9a95b2adeef82d2ec27b0465c67821d86b2"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-bot.test.mjs",
+      "bytes": 17297,
+      "sha256": "166e780e2e156466949b42f916abd05c90b6c529039549bce1d316b44307440d"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-clock.test.mjs",
+      "bytes": 8910,
+      "sha256": "4c24ca5799348dca80c002d585d48c1d549a1b8603acc4c7af7b30680da351de"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-director.test.mjs",
+      "bytes": 10054,
+      "sha256": "55f6dd133f4fa64224415d64fed249cd5145c345fc1ffb531275b73e9ba93161"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-experience.test.mjs",
+      "bytes": 5806,
+      "sha256": "08e7dd8c1e201930310c68eb53c400a8e111541df85a7621c9775a37ad97ea72"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-fresh-handoff.test.mjs",
+      "bytes": 4377,
+      "sha256": "adafe1aee10023223124eb5ae7549d722812894db178750d223d33339c31be61"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-fullscreen.test.mjs",
+      "bytes": 6395,
+      "sha256": "c5dfd35cb2bade231509372a902776ba86f5439e10e278d12e6e591a467f7c80"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-host.test.mjs",
+      "bytes": 22311,
+      "sha256": "b74c9b6f03326b55d6f70fa64fe0ccf2f540779be0ffe5851e90460f3e42c9f7"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-input.test.mjs",
+      "bytes": 35875,
+      "sha256": "a75f7645a0fa1998a9fe60f0c001c663d32d39334b0d6ffd22067ab8846063d4"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-library.test.mjs",
+      "bytes": 6499,
+      "sha256": "6aa70094daf581a3de0150b1af1b211c4549000a53939ba6b48b7a7bbf77a016"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-picture.test.mjs",
+      "bytes": 29518,
+      "sha256": "299ca5eff3eefa742d58b6a09056e019d060045f5a5572eec8ef402e212ed8cd"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-recordings.test.mjs",
+      "bytes": 15641,
+      "sha256": "c887ec930f260ca814878d01c406b9991c23dcaee2b06d70b5654ae869eb40c5"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-sources.test.mjs",
+      "bytes": 10899,
+      "sha256": "977d533690b96ccea6910cf1e286cc5708222382221a11999e8068a75d0d4084"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-transition-picture.test.mjs",
+      "bytes": 4923,
+      "sha256": "5643de675f705f4b595f9cb6f5765b093788ec333fc30c084fdfd6c699c9ac57"
+    },
+    {
+      "status": "??",
+      "path": "game/test/edition-example-packs-host.test.mjs",
+      "bytes": 1832,
+      "sha256": "d4a8a217e5217ffa61a9ea6fb0e8fea7e7f4bc78f8e96ce4bcf3e00f9912d3f4"
+    },
+    {
+      "status": "??",
+      "path": "game/test/edition-public-identity.test.mjs",
+      "bytes": 6101,
+      "sha256": "c2a041f48317da5b9e4a9dee7f5cd4f4ced7da5e2c5cade485fed50191a01213"
+    },
+    {
+      "status": "??",
+      "path": "game/test/edition-theme-label.test.mjs",
+      "bytes": 2400,
+      "sha256": "7f133839275f00dc7b8d5643b52121988761c14d00d2fcc05e63b89f810e671f"
+    },
+    {
+      "status": "??",
+      "path": "game/test/helpers/demo-host-fixture.mjs",
+      "bytes": 4297,
+      "sha256": "81328e9341cab312744f14e0fed690acff857f7fe4745a85800015d84987596a"
+    },
+    {
+      "status": "??",
+      "path": "game/test/jammer-picture.test.mjs",
+      "bytes": 19097,
+      "sha256": "9aca3aec0c57e6d363d4e160822cc47864391409230085d50479e0e77ae6155e"
+    },
+    {
+      "status": "??",
+      "path": "game/test/launcher-navigation.test.mjs",
+      "bytes": 5101,
+      "sha256": "67e91afa6c57c72716805cf92cc5e116f700c75840f97832e64ddc3f8fd8941c"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/authoring-controller.html",
+      "bytes": 1030,
+      "sha256": "52a45a9d941a3be4c2d8604fa09f4c81102393b3f4a8ff3850afd0968f867cc1"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/authoring-controller.mjs",
+      "bytes": 19710,
+      "sha256": "07eadaae9370a2cc332fd93113219c9c1bc2db13c34823707b4e7acda93cb351"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/edition-launcher-controller.html",
+      "bytes": 3112,
+      "sha256": "3665766c09a71d78cf738167165ef83c7dbe63b299c307aa570d37d431b967f2"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/living-artwork.html",
+      "bytes": 2182,
+      "sha256": "0d936f8a17642ecdaff9865dddf7eb62af94e8b07919357427abb3970dc11bc8"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/living-artwork.mjs",
+      "bytes": 2342,
+      "sha256": "396beab12be2168e78e0fee42cc0672877ad687c8488ef6f74f880f7c92e9002"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/menu-motion-evidence.html",
+      "bytes": 2451,
+      "sha256": "3aea0e5444c45ffff2b81d3d092f7162dd39d97cd7bc15a7d5eea061526747ee"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/menu-motion-evidence.mjs",
+      "bytes": 6279,
+      "sha256": "fd2e348fec3470955b37575950a9a13d86d5124896f2ccf9e88c1584ed08463d"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/menu-motion-pane.html",
+      "bytes": 899,
+      "sha256": "03f4744675ca26077248ce25371c116c05b42626f553153cf542dc5582237c1a"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/menu-retune.html",
+      "bytes": 4521,
+      "sha256": "35f0d729dce8ec508b188333e1ed30eba1fce24f3629058ef8c18492a016f277"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/menu-retune.mjs",
+      "bytes": 2003,
+      "sha256": "9348779e2b77033755e9068ef27b8917b0314e5bb6fdb2d07b9c733c72c31f3d"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/signal-reception.html",
+      "bytes": 2746,
+      "sha256": "33f77a12bc5c76b306c331081b29407e37d798bd84cbe051e87c6f0f030823c8"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/signal-reception.mjs",
+      "bytes": 4212,
+      "sha256": "7f4bb7b754426372575f2c3fd9d2d7c92331863aee7108a5bd199868909ff015"
+    },
+    {
+      "status": "??",
+      "path": "game/test/manual/verify-authoring-downloads.mjs",
+      "bytes": 9461,
+      "sha256": "a97db2f0bac2dba250383e6096b8654b96becd434a6cab3414a7e70e43397d78"
+    },
+    {
+      "status": "??",
+      "path": "game/test/menu-font.test.mjs",
+      "bytes": 3395,
+      "sha256": "81319f769381ae87f96b82bd9ddad9034be7eb14fa7c4a4c8fd495ec416305e4"
+    },
+    {
+      "status": "??",
+      "path": "game/test/menu-retune-host.test.mjs",
+      "bytes": 2189,
+      "sha256": "d8d91cc9e4b858db9458d4bd9e80025b2ed020ef88fc205aa2beca3507b4f810"
+    },
+    {
+      "status": "??",
+      "path": "game/test/menu-retune.test.mjs",
+      "bytes": 9630,
+      "sha256": "75379211af857a6d9b30f7375236437e7178a68f25057d6697b3024152b14bcd"
+    },
+    {
+      "status": "??",
+      "path": "game/test/menu-scene-motion.test.mjs",
+      "bytes": 19424,
+      "sha256": "db648dbde19a9b78b3017f74d24e1e4a095916a2905b589f1b8521ca9e1b79b9"
+    },
+    {
+      "status": "??",
+      "path": "game/test/menu-scenes.test.mjs",
+      "bytes": 30982,
+      "sha256": "1c64289eb9425c2c6e758f4a4240fdd55c684f12f0740d670dbc741af648639d"
+    },
+    {
+      "status": "??",
+      "path": "game/test/menu-signal-loss.test.mjs",
+      "bytes": 10084,
+      "sha256": "af5f6aea7cfd1c2377fbaabdec6b66fe978224437da370f7b9351b2edd893acc"
+    },
+    {
+      "status": "??",
+      "path": "game/test/native-landing-fullscreen.test.mjs",
+      "bytes": 7188,
+      "sha256": "bd42788180c7ba1be929bc86f5f1e154163ed68572456d1838ea79cf5c5ead4e"
+    },
+    {
+      "status": "??",
+      "path": "game/test/native-menu-inventory.test.mjs",
+      "bytes": 1366,
+      "sha256": "59a07548d5c8641f59f689195b52cd7e756d2fc6faa2bbe62ef04a7390a393eb"
+    },
+    {
+      "status": "??",
+      "path": "game/test/player-locator.test.mjs",
+      "bytes": 2986,
+      "sha256": "6b5142d4430e2537be31187db67ed15459ec39993e32164baec1cb82719d886c"
+    },
+    {
+      "status": "??",
+      "path": "game/test/signal-reception-host.test.mjs",
+      "bytes": 7118,
+      "sha256": "3bd7bb79fed3b30707da9a6495127a3c8a9d965933b1b2893dd98df291b743b6"
+    },
+    {
+      "status": "??",
+      "path": "game/test/signal-reception-renderer.test.mjs",
+      "bytes": 18697,
+      "sha256": "dc57df13442b9e993aca86e070755685db57f2c3264db22220c8a99d83a14337"
+    },
+    {
+      "status": "??",
+      "path": "game/test/signal-reception-restore-host.test.mjs",
+      "bytes": 5679,
+      "sha256": "5635c081864e1cda03653ce781505d5e2f8fb2f780333cda5e5f263819aa7088"
+    },
+    {
+      "status": "??",
+      "path": "game/test/signal-reception.test.mjs",
+      "bytes": 19378,
+      "sha256": "1680feeb05108b7cddba47d4b528cb1ab28449681de2ccb31938a5480e1b1308"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/analog-signal.mjs",
+      "bytes": 3162,
+      "sha256": "8bcbc2ac85c8ded6f0a34d2866ee99b8467ec5dec05dbb0874ac75c4564a7d75"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/identity/fpv-line/icon-16.png",
+      "bytes": 469,
+      "sha256": "2a436d1404a2e0fef86ce2cb80fc0bbf866aea8fc038ab7b3390b52a29df86e5"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/identity/fpv-line/icon-180.png",
+      "bytes": 29773,
+      "sha256": "a11433dc760210294c61f16191ba6ebdbd11143c7c0aa5b094cba2f94842571e"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/identity/fpv-line/icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/identity/fpv-line/icon-32.png",
+      "bytes": 1386,
+      "sha256": "ca87e21a649eb91cd125b873af7f30ae9d252feaffe6edef7d3cfb21e2ad2c4b"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/identity/fpv-line/icon-512.png",
+      "bytes": 82577,
+      "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/identity/fpv-line/icon-master.png",
+      "bytes": 926563,
+      "sha256": "978ac6d8f979558f1f9341d4f92823e92b639d4cf9d8281fdd45f792e3c3682f"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/identity/fpv-line/install-icons.json",
+      "bytes": 1691,
+      "sha256": "20e698a91aa34123672fa9e8947009fabf8b53948fa4412e2abb9cd4347308b6"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/identity/fpv-line/provenance.json",
+      "bytes": 3489,
+      "sha256": "49c546e9d2111bbcf988fc8f084f2ad06465f533d1ca502ef20b0b32e9460eb7"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/identity/fpv-line/wordmark.png",
+      "bytes": 485216,
+      "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+      "bytes": 147343,
+      "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/coupa-developer-integration-theme.webp",
+      "bytes": 612326,
+      "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/coupa-inside-village-theme.webp",
+      "bytes": 356686,
+      "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/coupa-product-operations-theme.webp",
+      "bytes": 405702,
+      "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp",
+      "bytes": 375148,
+      "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp",
+      "bytes": 700570,
+      "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/coupa-village.webp",
+      "bytes": 540732,
+      "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/coupa.webp",
+      "bytes": 389078,
+      "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-community.webp",
+      "bytes": 280518,
+      "sha256": "925b826439a7c6029f87ddbe73a5182cce071ffbd992f2b639b4f2361da878c1"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-main-background.png",
+      "bytes": 880307,
+      "sha256": "836c883d4eee658aab610f113eb4fec34f40ed1c963b4a759c52ec37990a8515"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-nl-careful-handoff-theme.webp",
+      "bytes": 259130,
+      "sha256": "d48114be51a7e8114238cfa4473bd84d8434ee19e20a9ceb94164fd0b086bbf6"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-nl-community.webp",
+      "bytes": 408122,
+      "sha256": "27b8f8e60d4c95d662d3a6073fdce17930f176267634260adf4a718eb7a42262"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-nl-makers-together-theme.webp",
+      "bytes": 266786,
+      "sha256": "8cf01b27f85fe3334ad3dda904bac757e6aa6f8fd244d5b0164e1a9394453c80"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-nl-parts-in-motion-theme.webp",
+      "bytes": 273258,
+      "sha256": "ffe4a0d4b50cc3e4bb50dec8c4457f38abb1a1b99b196809e12ee78f1eb6cbf1"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-nl-shared-horizon-theme.webp",
+      "bytes": 243248,
+      "sha256": "305eef95c78ec8cbd2b7000fde60aaeccd901ccf2bb0dddaf0b5ef943367affa"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-nl-signals-of-support-theme.webp",
+      "bytes": 230008,
+      "sha256": "e8467ef9b613f8ca1fdadab5be8b2a121a6abd6732aa2c2760f8bbe37d9df401"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-nl-workshop-lights-theme.webp",
+      "bytes": 258060,
+      "sha256": "7ffb886cc805e0f20073ee3c48665210620b9d59efe0264b8230fba968ef3193"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/droneaid-wordmark-light.svg",
+      "bytes": 119252,
+      "sha256": "cecf8a67c455d4a7f931594e2ffc4481c473c3475a3316b8cdd876c39abb1e5b"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/fpv-portrait.webp",
+      "bytes": 482136,
+      "sha256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/fpv.webp",
+      "bytes": 514190,
+      "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/provenance.json",
+      "bytes": 9374,
+      "sha256": "598853d6053f01942157c71c81d4ac03d716715fb2df3e7c2bc22c0f0280e145"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/retro.webp",
+      "bytes": 554888,
+      "sha256": "2d18104ba075c38e5e018b632ff8a7009697804dd1827725daa196057c680608"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/art/menu-scenes/ukraine.webp",
+      "bytes": 475598,
+      "sha256": "7db1eeb0dffc03405a013a810aabcb4e31e099c06b1a739e3f801acac3a615d2"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/authoring-copy.mjs",
+      "bytes": 3909,
+      "sha256": "f998a22b55d03d910303b58652f765dc04635f6046d3fb3829326acd677ecdc2"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/authoring-editors.mjs",
+      "bytes": 4480,
+      "sha256": "27d46d17eea1f5ae9c131ceceeed5beba8863fe61c0fa84d3f72e4048d588a0f"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/authoring-input-entry.mjs",
+      "bytes": 98,
+      "sha256": "457aadce898d7d9bf2ef07b2e3b727895183eda7572b3b9d46881aaa822d11d8"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/authoring-input-host.mjs",
+      "bytes": 12084,
+      "sha256": "af3323da57ac12750a27949e236bb19d57873e8c7dc8fec3a22558ac1ce4380d"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/authoring-input.css",
+      "bytes": 2999,
+      "sha256": "93f552f3d1bdebd79215dd4bd08fb2eeea533bbf8b3e376246d5244c50ad5214"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/authoring-reference-entry.mjs",
+      "bytes": 97,
+      "sha256": "f1caedb40b13c84524fe2c4bba8245f1af49d688b0ff595bdd72e6f377f51638"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/authoring-reference.mjs",
+      "bytes": 6790,
+      "sha256": "57cf3b361f89d03ff2575c64edd8769f9e02aaf264d23000d1e0e26796811b7c"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/authoring-sources.mjs",
+      "bytes": 9027,
+      "sha256": "fb1ab109702f812e836e61a01773cf10fa59bda935145729412734d2ba37f18a"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/brand-identity.css",
+      "bytes": 1521,
+      "sha256": "9074a7ba78aba54444239dfa0386568c4339724baf45a3903cfb8ed4bcc45c61"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/brand-identity.mjs",
+      "bytes": 2585,
+      "sha256": "ed2cba81f59c4f742e22beffb6640e919906bbc914a48da0ad48d59406a6d4bc"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/controller-field-editor.css",
+      "bytes": 1986,
+      "sha256": "e42457a6fc83d48f7e2b80163f2c10d6aeb5823d03bbf27e7c8a100fbc2b4aa1"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/controller-field-editor.mjs",
+      "bytes": 13637,
+      "sha256": "6933c0f07cafbd623248eb20ef64d9d1bfe6a91dd403599dc1b137c6450ed7e8"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/controller-text-draft.mjs",
+      "bytes": 3691,
+      "sha256": "91b04f6d8b94303605233612704ed7144fff1f0dd3834788d6f5ab4cbb4e0905"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/demo-audio.mjs",
+      "bytes": 8677,
+      "sha256": "dad3e3d0d8f73770085b57ca99b31448b405703fdb22c2c02e5ceb1ed31ed635"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/demo-clock.mjs",
+      "bytes": 5747,
+      "sha256": "229eba68e1008996acc2bd8a4b2dd1bf086b86c0f0535a0ac9aace76b61d1c67"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/demo-fullscreen.mjs",
+      "bytes": 3316,
+      "sha256": "3a1e17e2a43519a54d90b2545a034c0e7288314bd285b81fd8129bf1ea045198"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/demo-host.mjs",
+      "bytes": 24312,
+      "sha256": "0183b2823a3ac8c8b20a6e18e1ac05e52e727385237106b11f89648cfc000ad7"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/demo-input.mjs",
+      "bytes": 15118,
+      "sha256": "2eb082e9add42fbe20bea342762dfddef696ff12a684c89c5160213112300a40"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/demo-picture.mjs",
+      "bytes": 13010,
+      "sha256": "7f777a827d244249ac1b76d56df6e7df4e9b652cd060fb59e37ad4a7a877553f"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/demo.css",
+      "bytes": 5609,
+      "sha256": "a99acc0c869a7b44b318e42058b1fb7b16b448bb572540e47050c5d46e2a671d"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/edition-theme-label.mjs",
+      "bytes": 974,
+      "sha256": "ee12e832cb38341a4e063c924c91f563e5c2cfeb123febe70d66e17b93fc1f87"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/fonts/departure-mono/DepartureMono-Regular.otf",
+      "bytes": 84480,
+      "sha256": "4d53f663155cf8bf7ffc8e688776e719625f7bbb80a8d90073438b249261a2e0"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/fonts/departure-mono/DepartureMono-Regular.woff2",
+      "bytes": 22496,
+      "sha256": "5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/fonts/departure-mono/LICENSE",
+      "bytes": 4357,
+      "sha256": "b65e42750f3cb65437a97f4dfd781c58f199259949db2341012be60e32500e83"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/fonts/departure-mono/provenance.json",
+      "bytes": 828,
+      "sha256": "36932e33e4f97ee9e7887c2f3297d21cc82e4fc855209788d07ac53abea5c588"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/jammer-picture.mjs",
+      "bytes": 5707,
+      "sha256": "1861fc9ba120ea09f47b612be2754335bef9bf43b73bb5a81c0bb5412269fa31"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/launcher-navigation.mjs",
+      "bytes": 3527,
+      "sha256": "9c713179c18553565358fcc6e917cafd5105ecebdcf48d8d7e2765b2c5707e2e"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/menu-navigation-groups.mjs",
+      "bytes": 2323,
+      "sha256": "148186ad1c48e12cf9ea1bf1a0ab23c7fa516a54f3d04b9d14ce5ca38bd88f67"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/menu-retune.css",
+      "bytes": 1292,
+      "sha256": "48e82badc6bc8deb670933360e989df972e6e96327b9e2bcd6bbcd0582ebc249"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/menu-retune.mjs",
+      "bytes": 6296,
+      "sha256": "7e2dd693db69ce7367b43d62391397b2c91cc2df3303a86d30d7baef755a722d"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/menu-scene-catalog.mjs",
+      "bytes": 8854,
+      "sha256": "4c03ecc1324d1bb162050c621b1d1b0128dc4332e0fa106fc462d19f98779fef"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/menu-scene-motion.mjs",
+      "bytes": 15497,
+      "sha256": "9cd29d1cfd8fdf8702218ccbd7ecd92e0c9b1319454488540ae1936ed6883c2a"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/menu-scenes.css",
+      "bytes": 4225,
+      "sha256": "c51eab61200fefba937271754e7b4d9ca9f88efb5b165e8d3e11020633ffd1fd"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/menu-scenes.mjs",
+      "bytes": 11285,
+      "sha256": "2d74ee91464f10e09e29ab81ffec5b203f93c9e29bc8ccdf3ffc10305e98a3fa"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/menu-signal-loss.mjs",
+      "bytes": 6465,
+      "sha256": "5f78ac3cabb23e50122ecf9d77f5dfba105dfa66e5c945f0f6848d23fd5fd405"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/native-menu-icons.mjs",
+      "bytes": 1738,
+      "sha256": "31a2831f7aeba3363fe39a969c4f624d8574c6d6324e78f74596de6cde4aaa86"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/native-menu.css",
+      "bytes": 26508,
+      "sha256": "a5a9e4e827a23ff3d8f74e9524d07f9c34b6f3304089e28be90b54b9251af476"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/native-menus.mjs",
+      "bytes": 16291,
+      "sha256": "1415cdac9cba2af48039eeff24d59ed836321ec050807756620bd935fbe3b0e2"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/player-locator.mjs",
+      "bytes": 1350,
+      "sha256": "ed629a7b2d30e300ffc72d0a44811f93637b31d68229d49972981ce651c6da68"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/signal-reception.mjs",
+      "bytes": 9548,
+      "sha256": "3560400ff9ad5c890a38f4418b2ca45e0e703a3e739e1d81bc219c88e56f27eb"
+    },
+    {
+      "status": "??",
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "status": "??",
+      "path": "scripts/brand-icons.test.mjs",
+      "bytes": 4421,
+      "sha256": "cedc56f0c353151f7f1cd8b049e79db674a046b48fdb377c10be45245106cd25"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build-analog-noise-atlas.mjs",
+      "bytes": 3285,
+      "sha256": "28d57db43984989be363152d9e35a18c1f7ee57e9710c11db2a385f9ea4034ee"
+    },
+    {
+      "status": "??",
+      "path": "scripts/build-demo-recordings.mjs",
+      "bytes": 7365,
+      "sha256": "9269e0a0831dbfd35eb98be1f9491afec27040c4132565911c9eee2764976021"
+    },
+    {
+      "status": "??",
+      "path": "scripts/check-menu-editions.mjs",
+      "bytes": 5694,
+      "sha256": "1e518e7093a35df333f98174f1b2eb5de38eae890596b1e06e67fd153ad59dea"
+    },
+    {
+      "status": "??",
+      "path": "scripts/import-demo-runtime-variants.mjs",
+      "bytes": 2975,
+      "sha256": "8cfe50b988bee52d31d0027ad91d1e50f752f9cc7119cdde082cfa816f1f6b61"
+    },
+    {
+      "status": "??",
+      "path": "scripts/prepare-menu-scenes.py",
+      "bytes": 3586,
+      "sha256": "f435d6913f1ecbc4e8c44c44e180c6978cbf0d0754f917542428661fd0a74ecd"
+    },
+    {
+      "status": "??",
+      "path": "scripts/soak-demo.mjs",
+      "bytes": 14629,
+      "sha256": "0c2546cc1e953e61c21cbfbe3bc898ad84e14cc9b2992898ca177f8b18a25b9f"
+    }
+  ]
+}

@@ -81,6 +81,18 @@
       "variables": ["THEME"],
       "prompt": "Review the {{THEME}} player impact lesson using game/content/scenarios/line-impact-demo.json through the existing practice host. Teach an unboosted Down attempt that visibly seeds two travelling fronts and loses, then a fresh Boost-before-Down attempt that closes safely before arrival. Preserve the original level geometry, declared rules, both turning modes and replay authority. Keep Hold versus Toggle instructions truthful; no synthetic win or duplicate reward. Prove Retry retains one life and the 45 percent target, and Return restores the same guide with parent flight paused and only one audible music owner. Test canceled preparation, held input at return, nested-release URLs and unchanged saved data. Record real browser and human comprehension limits; do not infer reference timing from the preview illustration.",
       "example_request": "python3 authoring/prompt.py render impact-player-lesson --set THEME=retro"
+    },
+    {
+      "id": "current-mission-encounter-guide",
+      "family": "cross-family",
+      "asset_type": "runtime_workflow",
+      "mode": "asset_execution",
+      "intent": "Teach an existing enabled encounter without changing the mission",
+      "status": "template_not_executed",
+      "reference_requirements": ["docs/enemy-guide.md", "docs/feature-delivery-workflow.md"],
+      "variables": ["ROLE"],
+      "prompt": "Open the loaded mission’s Field Guide topic for {{ROLE}}. Explain the actual locked warning, contact/recovery danger and counterplay from its validated rules. Play practice only when the role is enabled. Retain the exact effective level, starting craft, seed, recipes and steering; do not enable actors or apply tuning twice. Verify parent pause, cancellation, unchanged awards and exact return. For edition content, use only the admitted reconstruction adapter; do not overwrite Playground state. Distinguish modeled checks from native/device play and deferred production review.",
+      "example_request": "Exercise current-mission-encounter-guide for optional-sentry in the loaded mission."
     }
   ]
 }

@@ -1,0 +1,96 @@
+{
+  "format": "revealline-soundtrack-batch-technical.v1",
+  "batchId": "metal-next-20260930",
+  "tracks": [
+    {
+      "id": "builtin.catalog.davidkbd.solar-storm",
+      "sha256": "f970376312c518988ce53f963432c2bd86b039655a80ca0118a33bf2a3515fec",
+      "bytes": 7234081,
+      "decoder": "FFmpeg",
+      "decoderVersion": "6.1.1",
+      "fullFileDecoded": true,
+      "integratedLUFS": -15.99,
+      "truePeakDbTP": -6.25,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/second-directions-audition-20260925-receipt.json",
+        "bytes": 48525,
+        "sha256": "f795127ed58406e2594eb1afd778d6a713a62bb6af3a8a99f57d2c10b8a8abed"
+      }
+    },
+    {
+      "id": "builtin.catalog.davidkbd.galactic-battle",
+      "sha256": "263567383813e1cfa75952436e1eb9cbfa2556a73d60499da0cccb0a5f0c3343",
+      "bytes": 7243276,
+      "decoder": "FFmpeg",
+      "decoderVersion": "6.1.1",
+      "fullFileDecoded": true,
+      "integratedLUFS": -15.99,
+      "truePeakDbTP": -5.23,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/second-directions-audition-20260925-receipt.json",
+        "bytes": 48525,
+        "sha256": "f795127ed58406e2594eb1afd778d6a713a62bb6af3a8a99f57d2c10b8a8abed"
+      }
+    },
+    {
+      "id": "builtin.catalog.davidkbd.orbital-assault",
+      "sha256": "89c01c9f646c48bd6a1656bfa45a4b5af28a766b1d5f155f104a7902f628b5d9",
+      "bytes": 5954290,
+      "decoder": "FFmpeg",
+      "decoderVersion": "6.1.1",
+      "fullFileDecoded": true,
+      "integratedLUFS": -15.99,
+      "truePeakDbTP": -6.57,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/second-directions-audition-20260925-receipt.json",
+        "bytes": 48525,
+        "sha256": "f795127ed58406e2594eb1afd778d6a713a62bb6af3a8a99f57d2c10b8a8abed"
+      }
+    },
+    {
+      "id": "builtin.catalog.davidkbd.mutilations-melody",
+      "sha256": "00bcd6d67615f6dfa51cd1e03361a3fc8de7a742aec1ca9336ed56bfe231228c",
+      "bytes": 4264899,
+      "decoder": "FFmpeg",
+      "decoderVersion": "6.1.1",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -6.4,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/metal-purgatory3-audition-20260925-receipt.json",
+        "bytes": 17030,
+        "sha256": "184c1ec4228663f82c5ad8653da0eb53737e279f963d3de830dff40a098ee6ef"
+      }
+    },
+    {
+      "id": "builtin.catalog.davidkbd.bone-grinders-ballad",
+      "sha256": "e8c8670b02b6322c19e37ac993a7713a631af93a0bb997a0ef9c1e75c926ea04",
+      "bytes": 4015795,
+      "decoder": "FFmpeg",
+      "decoderVersion": "6.1.1",
+      "fullFileDecoded": true,
+      "integratedLUFS": -15.99,
+      "truePeakDbTP": -6.59,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/metal-purgatory3-audition-20260925-receipt.json",
+        "bytes": 17030,
+        "sha256": "184c1ec4228663f82c5ad8653da0eb53737e279f963d3de830dff40a098ee6ef"
+      }
+    },
+    {
+      "id": "builtin.catalog.davidkbd.city-limits-crash",
+      "sha256": "7cc21044e1c8b23b9e71af8bf5a9d143ca8de8b6e8898fe930bc78811493a442",
+      "bytes": 3330342,
+      "decoder": "FFmpeg",
+      "decoderVersion": "6.1.1",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -6.25,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/metal-reckless2-audition-20260925-receipt.json",
+        "bytes": 16951,
+        "sha256": "e2c3014a920d2343546638e844c382a80b8e2f24d912472a35ea9279c60d3da7"
+      }
+    }
+  ]
+}

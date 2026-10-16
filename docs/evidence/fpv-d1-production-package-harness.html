@@ -1,0 +1,751 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>D1 production rendering qualification</title>
+<style>
+  body {
+    margin: 24px;
+    background: #101b28;
+    color: #e6f0e8;
+    font: 16px system-ui;
+  }
+  button {
+    font: inherit;
+    padding: 10px;
+    margin: 6px;
+  }
+  #viewport {
+    width: 640px;
+    height: 360px;
+  }
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  pre {
+    white-space: pre-wrap;
+    max-height: 42vh;
+    overflow: auto;
+    font-size: 12px;
+  }
+  #views {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #views img {
+    width: 320px;
+    height: 180px;
+  }
+  p {
+    max-width: 90ch;
+  }
+</style>
+<h1>D1 production rendering qualification</h1>
+<p>
+  Frozen production renderer and simulation. Five arenas × three presets × three
+  cameras × imported/fallback paths, repeated three times. Read-only scene
+  observation records actual quality settings and materials. Timings describe
+  this browser session; counters do not measure VRAM or hardware FPS.
+</p>
+<button id="run">Run production checks</button
+><button id="download" disabled>Download receipt</button>
+<p id="status">Ready. Keep this tab visible.</p>
+<div id="viewport"><canvas id="canvas"></canvas></div>
+<div id="views"></div>
+<pre id="result">No run yet.</pre>
+<script type="module">
+  const SOURCE = {"sourceHead":"e572026ba357f3194bf47e7137a0817cacb1a640","verifiedProjections":[{"inputs":["game/locales/en/errors.json","game/locales/uk/errors.json","game/locales/en/interface.json","game/locales/uk/interface.json"],"kind":"selected-validator-locales","output":{"bytes":3219,"path":"game/i18n/catalogs.mjs","sha256":"150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b"},"committedInputsVerified":true}],"sourceMode":"admitted-distribution","packageBinding":{"envelopeSha256":"4f3c505e10cc401af8d438250feb9ab22af4fb503ed940563839ff074f82a678","distribution":{"bytes":15547680,"path":"distribution-optional-fpv-worlds.zip","sha256":"906a1e319a2ef17d8852fe18fe1c16a1bf620ecaeabe64e52fb12d3706744370"},"sourceRevision":"e572026ba357f3194bf47e7137a0817cacb1a640","sourceTree":"6a90e48f99151041d899b4b8d6b2de5fcffd8b2f","committedInputsVerified":true,"zipMembersVerified":true,"reproducibleBuilds":2},"sourceTree":"6a90e48f99151041d899b4b8d6b2de5fcffd8b2f","sourceFiles":{"/optional-practice/civilian-fpv/world-model.mjs":"ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e","/game/data-json.mjs":"9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd","/game/i18n/index.mjs":"29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07","/game/vendor/i18next-26.4.2.min.js":"eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c","/game/i18n/catalogs.mjs":"150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b","/game/i18n/bootstrap.mjs":"242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395","/optional-practice/civilian-fpv/radio-profile.mjs":"f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933","/optional-practice/civilian-fpv/math.mjs":"555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98","/optional-practice/civilian-fpv/rotation-table.mjs":"2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41","/optional-practice/civilian-fpv/model.mjs":"9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6","/optional-practice/civilian-fpv/flight-sectors.mjs":"5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d","/optional-practice/civilian-fpv/world-themes.mjs":"67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549","/game/presentation/theme-system.mjs":"317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6","/optional-practice/civilian-fpv/snake-hunt.mjs":"39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da","/optional-practice/civilian-fpv/world-collision.mjs":"2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32","/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs":"02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0","/optional-practice/civilian-fpv/world-catalogue.mjs":"14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc","/optional-practice/civilian-fpv/catalogue.mjs":"98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997","/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs":"a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a","/optional-practice/civilian-fpv/expressive-hunt-courses.mjs":"732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede","/optional-practice/civilian-fpv/world-assets.mjs":"2670f199445373f9633ae259a046b704bcc5512887376e2498ab2e8e0055607e","/optional-practice/civilian-fpv/renderer.mjs":"0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75","/optional-practice/civilian-fpv/vendor/three.module.js":"9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea","/optional-practice/civilian-fpv/vendor/three.core.js":"9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6","/game/hunt/actor-catalog.mjs":"a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92","/game/hunt/preferences.mjs":"1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324","/optional-practice/civilian-fpv/world-visuals.mjs":"640107863d738020223ed42c8654c533e40cea31b34355543c2b1809e417ea9b","/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js":"03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f","/optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js":"259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800","/optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js":"28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17","/optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js":"10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"}};
+  const $ = (id) => document.getElementById(id),
+    copy = structuredClone;
+  const qualities = ["low", "balanced", "high"],
+    cameras = ["fpv", "chase", "overview"];
+  const ids = [
+    "snake-hunt-chase-06",
+    "woodland-08",
+    "container-yard-08",
+    "beginner-40",
+    "beginner-37",
+  ];
+  const importedValues = {
+    treeA: [0, 1],
+    treeB: [0, 1],
+    dirt: [0, 1],
+    planks: [0, 0.92],
+    concreteSmooth: [0, 0.86],
+    concrete: [0, 0.94],
+    metal: [0.35, 0.64],
+    wall_metal: [0.08, 0.76],
+  };
+  const assert = (yes, message) => {
+    if (!yes) throw Error(message);
+  };
+  const frame = () => new Promise(requestAnimationFrame);
+  const deadline = (promise, label) => {
+    let timer;
+    return Promise.race([
+      promise,
+      new Promise(
+        (_, reject) =>
+          (timer = setTimeout(
+            () => reject(Error(label + " timed out")),
+            60000,
+          )),
+      ),
+    ]).finally(() => clearTimeout(timer));
+  };
+  const digest = async (bytes) =>
+    Array.from(
+      new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
+      (v) => v.toString(16).padStart(2, "0"),
+    ).join("");
+  const equal = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  const quantile = (samples, p) => {
+    const s = [...samples].sort((a, b) => a - b);
+    return s[Math.min(s.length - 1, Math.floor((s.length - 1) * p))] ?? null;
+  };
+  const distribution = (samples) => ({
+    count: samples.length,
+    min: Math.min(...samples),
+    median: quantile(samples, 0.5),
+    p95: quantile(samples, 0.95),
+    max: Math.max(...samples),
+    samples,
+  });
+  let receipt,
+    runtime,
+    flight,
+    modules,
+    busy = false,
+    lastScene = null,
+    restoreObservation = null;
+  const publish = () => {
+    $("result").textContent = JSON.stringify(receipt, null, 2);
+    $("download").disabled = !receipt;
+  };
+  const status = (s) => ($("status").textContent = s);
+  const check = (name, passed, details = {}) => {
+    receipt.checks.push({ name, passed, ...details });
+    publish();
+    assert(passed, name);
+  };
+  const counts = (r) => ({
+    registered: r.registered,
+    renderer: {
+      geometries: r.renderer.geometries,
+      textures: r.renderer.textures,
+      programs: r.renderer.programs,
+    },
+  });
+  async function verifySources() {
+    const out = {};
+    for (const [url, pin] of Object.entries(SOURCE.sourceFiles)) {
+      const r = await fetch(url, { cache: "no-store" });
+      assert(r.ok, "Missing " + url);
+      const b = await r.arrayBuffer();
+      out[url] = await digest(b);
+      assert(out[url] === pin, "Changed frozen input " + url);
+    }
+    return out;
+  }
+  async function loadModules() {
+    if (modules) return;
+    const root = "/optional-practice/civilian-fpv/";
+    const [assets, catalogue, model, worldModel, THREE] = await Promise.all(
+      [
+        "world-assets.mjs",
+        "world-catalogue.mjs",
+        "model.mjs",
+        "world-model.mjs",
+        "vendor/three.module.js",
+      ].map((n) => import(root + n)),
+    );
+    await worldModel.initWorldRuntime();
+    modules = {
+      ...assets,
+      ...catalogue,
+      createFlight: model.createFlight,
+      createWorldFlight: worldModel.createWorldFlight,
+      THREE,
+    };
+  }
+  function observeProductionScene() {
+    const proto = modules.THREE.Scene.prototype,
+      original = proto.onBeforeRender;
+    proto.onBeforeRender = function (renderer, scene, camera, ...rest) {
+      original?.call(this, renderer, scene, camera, ...rest);
+      if (scene.fog) lastScene = { renderer, scene, camera };
+    };
+    restoreObservation = () => {
+      proto.onBeforeRender = original;
+      lastScene = null;
+    };
+  }
+  function createRuntime() {
+    const canvas = document.createElement("canvas");
+    canvas.id = "canvas";
+    $("viewport").replaceChildren(canvas);
+    runtime = modules.createFlightRenderer({
+      canvas,
+      window: { devicePixelRatio: 2 },
+      onContextLost: () =>
+        receipt.contextLosses.push({ phase: $("status").textContent }),
+    });
+    assert(runtime.available, "WebGL unavailable");
+  }
+  function disposeRuntime() {
+    flight?.dispose?.();
+    flight = null;
+    const owner = runtime;
+    runtime = null;
+    owner?.dispose();
+    lastScene = null;
+    return owner;
+  }
+  function glErrors() {
+    const gl = $("canvas").getContext("webgl2"),
+      errors = [];
+    for (let i = 0; i < 16; i++) {
+      const x = gl.getError();
+      if (x === gl.NO_ERROR) break;
+      errors.push(x);
+    }
+    return errors;
+  }
+  function observe(quality, { pixel = false, naturalWoodland = false } = {}) {
+    assert(lastScene, "Actual production scene not observed");
+    const { renderer, scene } = lastScene,
+      materials = new Set(),
+      textures = new Set(),
+      lights = [];
+    scene.traverse((item) => {
+      if (item.isDirectionalLight)
+        lights.push({
+          shadow: item.castShadow,
+          size: item.shadow.mapSize.toArray(),
+          allocated: item.shadow.map?.width ?? null,
+        });
+      for (const m of Array.isArray(item.material)
+        ? item.material
+        : [item.material])
+        if (m) materials.add(m);
+    });
+    for (const m of materials)
+      for (const t of Object.values(m)) if (t?.isTexture) textures.add(t);
+    const surfaces = [...textures]
+      .filter((t) => t.userData.surface)
+      .map((t) => ({
+        kind: t.userData.surface.kind,
+        pixel: t.userData.surface.pixel,
+        size: t.image?.width,
+        magFilter: t.magFilter,
+        minFilter: t.minFilter,
+        anisotropy: t.anisotropy,
+      }));
+    const sharedSurfaces = [...textures]
+      .filter((t) => t.userData.simSurface)
+      .map((t) => ({
+        role: t.userData.materialRole,
+        collection: t.userData.collectionId,
+        size: t.image?.width,
+        magFilter: t.magFilter,
+        minFilter: t.minFilter,
+        anisotropy: t.anisotropy,
+      }));
+    for (const t of sharedSurfaces)
+      assert(
+        t.magFilter === modules.THREE.LinearFilter &&
+          t.minFilter === modules.THREE.LinearMipmapLinearFilter,
+        "Shared Themes linear sampling",
+      );
+    const named = [...materials]
+      .filter((m) => Object.hasOwn(importedValues, m.name))
+      .map((m) => ({
+        name: m.name,
+        lit: !!m.isMeshStandardMaterial,
+        metalness: m.metalness ?? null,
+        roughness: m.roughness ?? null,
+        mapFilter: m.map?.magFilter ?? null,
+      }));
+    const info = {
+      ratio: renderer.getPixelRatio(),
+      canvas: [$("canvas").width, $("canvas").height],
+      shadowEnabled: renderer.shadowMap.enabled,
+      lights,
+      fog: scene.fog
+        ? {
+            near: scene.fog.near,
+            far: scene.fog.far,
+            color: scene.fog.color.getHex(),
+          }
+        : null,
+      surfaces,
+      sharedSurfaces,
+      named,
+    };
+    assert(
+      info.ratio === { low: 1, balanced: 1.5, high: 2 }[quality],
+      "Production DPR cap " + quality,
+    );
+    assert(
+      info.shadowEnabled === (quality !== "low"),
+      "Production shadow toggle " + quality,
+    );
+    if (quality !== "low")
+      assert(
+        lights.some(
+          (l) =>
+            l.shadow && l.size[0] === { balanced: 1024, high: 2048 }[quality],
+        ),
+        "Production shadow size " + quality,
+      );
+    for (const t of surfaces) {
+      assert(
+        t.size ===
+          (t.pixel ? 64 : { low: 128, balanced: 256, high: 512 }[quality]),
+        "Generated surface tier " + t.kind,
+      );
+      if (t.pixel)
+        assert(
+          t.magFilter === modules.THREE.NearestFilter,
+          "Pixel surface filtering " + t.kind,
+        );
+    }
+    if (pixel)
+      for (const m of named)
+        if (m.mapFilter !== null)
+          assert(
+            m.mapFilter === modules.THREE.NearestFilter,
+            "Pixel imported filtering " + m.name,
+          );
+    if (naturalWoodland)
+      for (const m of named) {
+        const expected = importedValues[m.name];
+        assert(
+          m.lit && m.metalness === expected[0] && m.roughness === expected[1],
+          "Natural imported material " + m.name,
+        );
+      }
+    return info;
+  }
+  async function loadEntry(entry, path, course = entry.course) {
+    flight?.dispose?.();
+    flight = (entry.legacy ? modules.createFlight : modules.createWorldFlight)({
+      course,
+      mode: "self-level",
+    });
+    runtime.setCourse(course, "self-level");
+    const start = performance.now(),
+      blob = path === "imported" ? modules.builtinWorldScene(course) : null,
+      generationMs = performance.now() - start;
+    let loadMs = 0;
+    if (blob) {
+      const t = performance.now();
+      await deadline(runtime.loadScene(blob), "Load scene");
+      loadMs = performance.now() - t;
+    }
+    return {
+      state: flight.snapshot(),
+      course,
+      entry,
+      path,
+      generationMs,
+      loadMs,
+      blobBytes: blob?.size ?? 0,
+    };
+  }
+  async function renderCase(
+    loaded,
+    quality,
+    camera,
+    { timing = true, control = "natural" } = {},
+  ) {
+    const initial = JSON.stringify(loaded.state),
+      actual = JSON.stringify(flight.snapshot()),
+      course = JSON.stringify(loaded.course);
+    const t = performance.now();
+    runtime.draw(loaded.state, { cameraMode: camera });
+    const firstDrawMs = performance.now() - t;
+    await frame();
+    const drawMs = [],
+      frameMs = [];
+    let last = performance.now();
+    for (let i = 0; i < (timing ? 8 : 2); i++) {
+      await frame();
+      const now = performance.now();
+      frameMs.push(now - last);
+      last = now;
+      const start = performance.now();
+      runtime.draw(loaded.state, { cameraMode: camera });
+      drawMs.push(performance.now() - start);
+    }
+    assert(
+      initial === JSON.stringify(loaded.state) &&
+        actual === JSON.stringify(flight.snapshot()),
+      "Rendering mutated physics",
+    );
+    assert(
+      course === JSON.stringify(loaded.course),
+      "Rendering mutated course",
+    );
+    const errors = glErrors();
+    assert(errors.length === 0, "WebGL errors " + errors);
+    const resources = copy(runtime.resources());
+    if (control === "linear-theme")
+      assert(
+        resources.presentation.profileId === "industrial-workshop",
+        "Shared linear theme selected",
+      );
+    const observation = observe(quality, {
+      pixel: control === "pixel" || loaded.course.world.theme === "pixel",
+      naturalWoodland:
+        control === "natural" &&
+        loaded.path === "imported" &&
+        loaded.course.environment === "woodland",
+    });
+    const actorObservation = [];
+    assert(
+      resources.presentation.actors.length ===
+        (loaded.state.actors?.length ?? 0),
+      "Production actor count matches physics snapshot",
+    );
+    const hunt = loaded.course.steps["self-level"].find(
+      (step) => step.type === "hunt-contact-v1",
+    );
+    for (const actor of resources.presentation.actors) {
+      const state = loaded.state.actors?.find?.((a) => a.id === actor.id);
+      const group = lastScene.scene.getObjectByName("actor-" + actor.id);
+      assert(group, "Production actor group " + actor.id);
+      assert(
+        group.visible === !["defeated", "caught"].includes(state?.status),
+        "Actor visibility " + actor.id,
+      );
+      const marker = group.children.find((child) => child.isSprite);
+      const target = hunt?.targets.includes(actor.id);
+      const expectedOpacity = target
+        ? !hunt.ordered ||
+          actor.id === hunt.targets[loaded.state.hunt?.caught.length ?? 0]
+          ? 1
+          : 0.3
+        : null;
+      if (target)
+        assert(
+          marker?.material.opacity === expectedOpacity,
+          "Hunt marker opacity " + actor.id,
+        );
+      actorObservation.push({
+        id: actor.id,
+        visible: group.visible,
+        position: group.position.toArray(),
+        markerOpacity: marker?.material.opacity ?? null,
+        expectedHuntOpacity: expectedOpacity,
+      });
+      if (state?.position)
+        assert(
+          equal(
+            actor.position,
+            ["x", "y", "z"].map((k) => state.position[k] / 1000),
+          ),
+          "Actor position mismatch " + actor.id,
+        );
+    }
+    return {
+      camera,
+      quality,
+      resources,
+      observation,
+      actorObservation,
+      firstDrawMs,
+      drawSubmissionMilliseconds: distribution(drawMs),
+      animationFrameIntervalMilliseconds: distribution(frameMs),
+      visibility: document.visibilityState,
+      glErrors: errors,
+    };
+  }
+  async function qualityCase(loaded, quality, options = {}) {
+    runtime.setQuality(quality);
+    const start = performance.now();
+    assert(
+      await deadline(runtime.prepare(), "Prepare"),
+      "Preparation invalidated unexpectedly",
+    );
+    const prepareMs = performance.now() - start;
+    const views = [];
+    for (const camera of options.cameras ?? cameras)
+      views.push(await renderCase(loaded, quality, camera, options));
+    return { quality, prepareMs, views, resources: copy(runtime.resources()) };
+  }
+  function screenshot(label) {
+    const source = $("canvas");
+    const image = document.createElement("img");
+    image.alt = label;
+    image.title = label;
+    image.src = source.toDataURL("image/png");
+    $("views").append(image);
+  }
+  async function lifecycle(entries) {
+    await loadEntry(entries[0], "imported");
+    runtime.setQuality("balanced");
+    assert(await runtime.prepare(), "Lifecycle initial prepare");
+    let pending = runtime.prepare();
+    runtime.setQuality("high");
+    check(
+      "Quality invalidates pending preparation",
+      (await deadline(pending, "Stale quality")) === false,
+    );
+    assert(await runtime.prepare(), "Updated quality prepare");
+    pending = runtime.prepare();
+    runtime.setCourse(entries[1].course, "self-level");
+    check(
+      "Course invalidates pending preparation",
+      (await deadline(pending, "Stale course")) === false,
+    );
+    await loadEntry(entries[1], "imported");
+    const abort = new AbortController();
+    pending = runtime.prepare({ signal: abort.signal });
+    abort.abort();
+    let errorName;
+    try {
+      await deadline(pending, "Abort prepare");
+    } catch (error) {
+      errorName = error.name;
+    }
+    check("Aborted preparation rejects", errorName === "AbortError", {
+      errorName,
+    });
+    pending = runtime.prepare();
+    const owner = disposeRuntime();
+    check(
+      "Dispose invalidates pending preparation",
+      (await deadline(pending, "Disposed prepare")) === false,
+    );
+    await frame();
+    await frame();
+    const final = owner.resources();
+    check(
+      "Registered ownership empty after disposal",
+      Object.values(final.registered).every((n) => n === 0),
+      { resources: final },
+    );
+    check(
+      "Disposed renderer refuses preparation",
+      (await owner.prepare()) === false,
+    );
+  }
+  $("run").onclick = async () => {
+    if (busy) return;
+    busy = true;
+    $("run").disabled = true;
+    $("views").replaceChildren();
+    receipt = {
+      format: "FPVD1ProductionRenderer.v1",
+      ...SOURCE,
+      startedAt: new Date().toISOString(),
+      browser: {
+        userAgent: navigator.userAgent,
+        actualDevicePixelRatio: devicePixelRatio,
+        requestedDevicePixelRatio: 2,
+        viewport: [innerWidth, innerHeight],
+        drawingCSS: [640, 360],
+        visibility: document.visibilityState,
+      },
+      scope:
+        "Production-renderer configurations and ownership counters. Submission/animation-frame timing samples are bounded browser observations, not GPU frame time, named-device FPS, VRAM, thermal or human acceptance.",
+      checks: [],
+      samples: [],
+      controls: [],
+      contextLosses: [],
+      consoleErrors: [],
+      completed: false,
+    };
+    const originalError = console.error;
+    console.error = (...args) => {
+      receipt.consoleErrors.push(args.map(String).join(" "));
+      originalError(...args);
+    };
+    try {
+      status("Verify frozen production closure");
+      receipt.sourcesBefore = await verifySources();
+      await loadModules();
+      observeProductionScene();
+      createRuntime();
+      const all = [...modules.WORLD_CATALOGUE, ...modules.BEGINNER_CATALOGUE];
+      const entries = ids.map((id) => all.find((e) => e.course.id === id));
+      assert(entries.every(Boolean), "Missing representative course");
+      check(
+        "Five D1 environment/arena representatives",
+        new Set(
+          entries.map(
+            (e) => e.course.environment + JSON.stringify(e.course.bounds),
+          ),
+        ).size === 5,
+        { ids },
+      );
+      const gl = $("canvas").getContext("webgl2");
+      receipt.webgl = {
+        renderer: gl.getParameter(gl.RENDERER),
+        vendor: gl.getParameter(gl.VENDOR),
+        version: gl.getParameter(gl.VERSION),
+        parallelCompile: !!gl.getExtension("KHR_parallel_shader_compile"),
+      };
+      const byKey = new Map(),
+        fog = new Map();
+      for (let round = 1; round <= 3; round++)
+        for (const entry of entries)
+          for (const path of ["imported", "fallback"]) {
+            status(`Round ${round}/3 · ${entry.course.id} · ${path}`);
+            const loaded = await loadEntry(entry, path);
+            for (const quality of qualities) {
+              status(
+                `Round ${round}/3 · ${entry.course.id} · ${path} · ${quality}`,
+              );
+              const data = await qualityCase(loaded, quality);
+              const sample = {
+                round,
+                id: entry.course.id,
+                path,
+                generationMs: loaded.generationMs,
+                loadMs: loaded.loadMs,
+                blobBytes: loaded.blobBytes,
+                ...data,
+              };
+              receipt.samples.push(sample);
+              for (const view of data.views) {
+                const key =
+                  entry.course.id +
+                  "/" +
+                  path +
+                  "/" +
+                  quality +
+                  "/" +
+                  view.camera;
+                const values = byKey.get(key) ?? [];
+                values.push(counts(view.resources));
+                byKey.set(key, values);
+                const fogKey = entry.course.id + "/" + path;
+                const prior = fog.get(fogKey);
+                if (prior)
+                  assert(
+                    equal(prior, view.observation.fog),
+                    "Fog changed with quality/camera",
+                  );
+                else fog.set(fogKey, view.observation.fog);
+              }
+              if (round === 3 && quality === "balanced") {
+                runtime.draw(loaded.state, { cameraMode: "overview" });
+                screenshot(entry.course.id + " " + path);
+              }
+              publish();
+            }
+          }
+      check(
+        "90 configurations rendered in each of three rounds",
+        receipt.samples.length === 90 && byKey.size === 90,
+        {
+          renderedViews: receipt.samples.reduce(
+            (n, s) => n + s.views.length,
+            0,
+          ),
+        },
+      );
+      const plateaus = [...byKey].map(([key, rows]) => ({
+        key,
+        round2: rows[1],
+        round3: rows[2],
+        stable: equal(rows[1], rows[2]),
+      }));
+      check(
+        "Resources plateau between rounds two and three",
+        plateaus.every((p) => p.stable),
+        { plateaus },
+      );
+      for (const entry of entries)
+        for (const [control, variant] of [
+          [
+            "pixel",
+            {
+              world: { ...entry.course.world, theme: "pixel" },
+            },
+          ],
+          [
+            "linear-theme",
+            {
+              world: { ...entry.course.world, theme: "industrial-workshop" },
+            },
+          ],
+        ])
+          for (const path of ["imported", "fallback"]) {
+            status(`Control · ${entry.course.id} · ${control} · ${path}`);
+            const course = { ...entry.course, ...variant };
+            const loaded = await loadEntry(entry, path, course);
+            for (const quality of qualities) {
+              const data = await qualityCase(loaded, quality, {
+                control,
+                cameras: ["overview"],
+                timing: false,
+              });
+              receipt.controls.push({
+                id: entry.course.id,
+                control,
+                path,
+                ...data,
+              });
+            }
+            publish();
+          }
+      check(
+        "Pixel and shared linear-theme controls rendered",
+        receipt.controls.length === 60,
+      );
+      check(
+        "Timing configurations kept visible",
+        [...receipt.samples, ...receipt.controls].every((s) =>
+          s.views.every((v) => v.visibility === "visible"),
+        ),
+      );
+      await lifecycle(entries);
+      receipt.sourcesAfter = await verifySources();
+      check(
+        "Frozen source closure unchanged",
+        equal(receipt.sourcesBefore, receipt.sourcesAfter),
+      );
+      check("No console errors", receipt.consoleErrors.length === 0, {
+        errors: receipt.consoleErrors,
+      });
+      check("No unexpected context loss", receipt.contextLosses.length === 0);
+      receipt.completed = true;
+      receipt.passed = true;
+      status("Production checks passed; receipt and views ready.");
+    } catch (error) {
+      receipt.passed = false;
+      receipt.failure = {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      };
+      status("Stopped: " + error.message);
+      const owner = disposeRuntime();
+      receipt.disposalAfterFailure = owner?.resources();
+    } finally {
+      restoreObservation?.();
+      restoreObservation = null;
+      console.error = originalError;
+      receipt.finishedAt = new Date().toISOString();
+      publish();
+      busy = false;
+      $("run").disabled = false;
+    }
+  };
+  $("download").onclick = () => {
+    const url = URL.createObjectURL(
+        new Blob([JSON.stringify(receipt, null, 2) + "\n"], {
+          type: "application/json",
+        }),
+      ),
+      a = document.createElement("a");
+    a.href = url;
+    a.download = "fpv-d1-production-renderer.json";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+</script>

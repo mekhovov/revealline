@@ -1,0 +1,730 @@
+{
+  "format": "FPVRegionalOverviewHeightVerification.v1",
+  "runtimeSHA256": "f6e6fd9eaeb094e1bd2544dda9b15abc3ebee384cc9192fa2e9062d9dac0acba",
+  "exactFlightComparisons": 768,
+  "inspectedVertices": 1006708,
+  "fittedViews": 48,
+  "cases": [
+    {
+      "world": "Alpine",
+      "start": "glacial-valley",
+      "aspect": 0.46208530805687204,
+      "minimumY": 59.78200149536133,
+      "maximumY": 164.82200622558594,
+      "camera": [
+        698.9768155359384,
+        1128.9955537309293,
+        826.0635092697453
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10199
+    },
+    {
+      "world": "Alpine",
+      "start": "glacial-valley",
+      "aspect": 2.164102564102564,
+      "minimumY": 59.78200149536133,
+      "maximumY": 164.82200622558594,
+      "camera": [
+        577.5945694475755,
+        952.4395594205834,
+        682.6117638925891
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10199
+    },
+    {
+      "world": "Alpine",
+      "start": "glacial-valley",
+      "aspect": 1.6,
+      "minimumY": 59.78200149536133,
+      "maximumY": 164.82200622558594,
+      "camera": [
+        577.5945694475755,
+        952.4395594205834,
+        682.6117638925891
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10199
+    },
+    {
+      "world": "Alpine",
+      "start": "glacial-valley",
+      "aspect": 1.7777777777777777,
+      "minimumY": 59.78200149536133,
+      "maximumY": 164.82200622558594,
+      "camera": [
+        577.5945694475755,
+        952.4395594205834,
+        682.6117638925891
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10199
+    },
+    {
+      "world": "Alpine",
+      "start": "switchback-pass",
+      "aspect": 0.46208530805687204,
+      "minimumY": 65.66400146484375,
+      "maximumY": 360.2650146484375,
+      "camera": [
+        729.5287729423421,
+        1274.0972687000474,
+        862.1703680227679
+      ],
+      "near": 10,
+      "far": 2054.964858029892,
+      "vertices": 10476
+    },
+    {
+      "world": "Alpine",
+      "start": "switchback-pass",
+      "aspect": 2.164102564102564,
+      "minimumY": 65.66400146484375,
+      "maximumY": 360.2650146484375,
+      "camera": [
+        671.5028319229907,
+        1189.695899944627,
+        793.5942559089889
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10476
+    },
+    {
+      "world": "Alpine",
+      "start": "switchback-pass",
+      "aspect": 1.6,
+      "minimumY": 65.66400146484375,
+      "maximumY": 360.2650146484375,
+      "camera": [
+        671.5028319229907,
+        1189.695899944627,
+        793.5942559089889
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10476
+    },
+    {
+      "world": "Alpine",
+      "start": "switchback-pass",
+      "aspect": 1.7777777777777777,
+      "minimumY": 65.66400146484375,
+      "maximumY": 360.2650146484375,
+      "camera": [
+        671.5028319229907,
+        1189.695899944627,
+        793.5942559089889
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10476
+    },
+    {
+      "world": "Alpine",
+      "start": "snow-saddle",
+      "aspect": 0.46208530805687204,
+      "minimumY": 114.33100128173828,
+      "maximumY": 473.94000244140625,
+      "camera": [
+        740.0062508578999,
+        1370.508230382154,
+        874.5528419229726
+      ],
+      "near": 10,
+      "far": 2099.478218912107,
+      "vertices": 14725
+    },
+    {
+      "world": "Alpine",
+      "start": "snow-saddle",
+      "aspect": 2.164102564102564,
+      "minimumY": 114.33100128173828,
+      "maximumY": 473.94000244140625,
+      "camera": [
+        703.7076996205454,
+        1317.7103376732748,
+        831.6545540970081
+      ],
+      "near": 10,
+      "far": 2022.3713748914336,
+      "vertices": 14725
+    },
+    {
+      "world": "Alpine",
+      "start": "snow-saddle",
+      "aspect": 1.6,
+      "minimumY": 114.33100128173828,
+      "maximumY": 473.94000244140625,
+      "camera": [
+        703.7076996205454,
+        1317.7103376732748,
+        831.6545540970081
+      ],
+      "near": 10,
+      "far": 2022.3713748914336,
+      "vertices": 14725
+    },
+    {
+      "world": "Alpine",
+      "start": "snow-saddle",
+      "aspect": 1.7777777777777777,
+      "minimumY": 114.33100128173828,
+      "maximumY": 473.94000244140625,
+      "camera": [
+        703.7076996205454,
+        1317.7103376732748,
+        831.6545540970081
+      ],
+      "near": 10,
+      "far": 2022.3713748914336,
+      "vertices": 14725
+    },
+    {
+      "world": "Alpine",
+      "start": "summit-station",
+      "aspect": 0.46208530805687204,
+      "minimumY": 107.49700164794922,
+      "maximumY": 611,
+      "camera": [
+        763.1979573650971,
+        1469.3546206277522,
+        901.9612223405692
+      ],
+      "near": 10,
+      "far": 2198.0077323646124,
+      "vertices": 14855
+    },
+    {
+      "world": "Alpine",
+      "start": "summit-station",
+      "aspect": 2.164102564102564,
+      "minimumY": 107.49700164794922,
+      "maximumY": 611,
+      "camera": [
+        774.9925876216715,
+        1486.5104464554968,
+        915.9003308256117
+      ],
+      "near": 10,
+      "far": 2223.062360840784,
+      "vertices": 14855
+    },
+    {
+      "world": "Alpine",
+      "start": "summit-station",
+      "aspect": 1.6,
+      "minimumY": 107.49700164794922,
+      "maximumY": 611,
+      "camera": [
+        774.9925876216715,
+        1486.5104464554968,
+        915.9003308256117
+      ],
+      "near": 10,
+      "far": 2223.062360840784,
+      "vertices": 14855
+    },
+    {
+      "world": "Alpine",
+      "start": "summit-station",
+      "aspect": 1.7777777777777777,
+      "minimumY": 107.49700164794922,
+      "maximumY": 611,
+      "camera": [
+        774.9925876216715,
+        1486.5104464554968,
+        915.9003308256117
+      ],
+      "near": 10,
+      "far": 2223.062360840784,
+      "vertices": 14855
+    },
+    {
+      "world": "Alpine",
+      "start": "viaduct-gorge",
+      "aspect": 0.46208530805687204,
+      "minimumY": 80.83799743652344,
+      "maximumY": 356.9320068359375,
+      "camera": [
+        726.5459591456246,
+        1275.6791245298662,
+        858.645224444829
+      ],
+      "near": 10,
+      "far": 2042.292431702886,
+      "vertices": 10453
+    },
+    {
+      "world": "Alpine",
+      "start": "viaduct-gorge",
+      "aspect": 2.164102564102564,
+      "minimumY": 80.83799743652344,
+      "maximumY": 356.9320068359375,
+      "camera": [
+        662.334487740934,
+        1182.2806206684982,
+        782.7589400574674
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10453
+    },
+    {
+      "world": "Alpine",
+      "start": "viaduct-gorge",
+      "aspect": 1.6,
+      "minimumY": 80.83799743652344,
+      "maximumY": 356.9320068359375,
+      "camera": [
+        662.334487740934,
+        1182.2806206684982,
+        782.7589400574674
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10453
+    },
+    {
+      "world": "Alpine",
+      "start": "viaduct-gorge",
+      "aspect": 1.7777777777777777,
+      "minimumY": 80.83799743652344,
+      "maximumY": 356.9320068359375,
+      "camera": [
+        662.334487740934,
+        1182.2806206684982,
+        782.7589400574674
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 10453
+    },
+    {
+      "world": "Alpine",
+      "start": "reservoir-dam",
+      "aspect": 0.46208530805687204,
+      "minimumY": 75.81999969482422,
+      "maximumY": 201.5,
+      "camera": [
+        702.303408229337,
+        1160.1922299991752,
+        829.9949369983074
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 9939
+    },
+    {
+      "world": "Alpine",
+      "start": "reservoir-dam",
+      "aspect": 2.164102564102564,
+      "minimumY": 75.81999969482422,
+      "maximumY": 201.5,
+      "camera": [
+        587.8195948246731,
+        993.6703195923911,
+        694.6958847927954
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 9939
+    },
+    {
+      "world": "Alpine",
+      "start": "reservoir-dam",
+      "aspect": 1.6,
+      "minimumY": 75.81999969482422,
+      "maximumY": 201.5,
+      "camera": [
+        587.8195948246731,
+        993.6703195923911,
+        694.6958847927954
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 9939
+    },
+    {
+      "world": "Alpine",
+      "start": "reservoir-dam",
+      "aspect": 1.7777777777777777,
+      "minimumY": 75.81999969482422,
+      "maximumY": 201.5,
+      "camera": [
+        587.8195948246731,
+        993.6703195923911,
+        694.6958847927954
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 9939
+    },
+    {
+      "world": "Coaster",
+      "start": "arrival-gardens",
+      "aspect": 0.46208530805687204,
+      "minimumY": 8,
+      "maximumY": 34.641998291015625,
+      "camera": [
+        686.341239406542,
+        1019.635529191387,
+        811.1305556622768
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 34097
+    },
+    {
+      "world": "Coaster",
+      "start": "arrival-gardens",
+      "aspect": 2.164102564102564,
+      "minimumY": 8,
+      "maximumY": 34.641998291015625,
+      "camera": [
+        538.7563050475758,
+        804.9665337601633,
+        636.7119968744076
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 34097
+    },
+    {
+      "world": "Coaster",
+      "start": "arrival-gardens",
+      "aspect": 1.6,
+      "minimumY": 8,
+      "maximumY": 34.641998291015625,
+      "camera": [
+        538.7563050475758,
+        804.9665337601633,
+        636.7119968744076
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 34097
+    },
+    {
+      "world": "Coaster",
+      "start": "arrival-gardens",
+      "aspect": 1.7777777777777777,
+      "minimumY": 8,
+      "maximumY": 34.641998291015625,
+      "camera": [
+        538.7563050475758,
+        804.9665337601633,
+        636.7119968744076
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 34097
+    },
+    {
+      "world": "Coaster",
+      "start": "loop-meadow",
+      "aspect": 0.46208530805687204,
+      "minimumY": 8,
+      "maximumY": 38,
+      "camera": [
+        686.8824557991989,
+        1022.1017538897437,
+        811.7701750354167
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 30845
+    },
+    {
+      "world": "Coaster",
+      "start": "loop-meadow",
+      "aspect": 2.164102564102564,
+      "minimumY": 8,
+      "maximumY": 38,
+      "camera": [
+        540.4198544686993,
+        809.0652428635625,
+        638.6780098266446
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 30845
+    },
+    {
+      "world": "Coaster",
+      "start": "loop-meadow",
+      "aspect": 1.6,
+      "minimumY": 8,
+      "maximumY": 38,
+      "camera": [
+        540.4198544686993,
+        809.0652428635625,
+        638.6780098266446
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 30845
+    },
+    {
+      "world": "Coaster",
+      "start": "loop-meadow",
+      "aspect": 1.7777777777777777,
+      "minimumY": 8,
+      "maximumY": 38,
+      "camera": [
+        540.4198544686993,
+        809.0652428635625,
+        638.6780098266446
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 30845
+    },
+    {
+      "world": "Coaster",
+      "start": "ridge-station",
+      "aspect": 0.46208530805687204,
+      "minimumY": 8,
+      "maximumY": 31.94499969482422,
+      "camera": [
+        685.9065583141156,
+        1017.6547664861256,
+        810.6168416439547
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 33145
+    },
+    {
+      "world": "Coaster",
+      "start": "ridge-station",
+      "aspect": 2.164102564102564,
+      "minimumY": 8,
+      "maximumY": 31.94499969482422,
+      "camera": [
+        537.4202156580254,
+        801.6746317136309,
+        635.1329821413028
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 33145
+    },
+    {
+      "world": "Coaster",
+      "start": "ridge-station",
+      "aspect": 1.6,
+      "minimumY": 8,
+      "maximumY": 31.94499969482422,
+      "camera": [
+        537.4202156580254,
+        801.6746317136309,
+        635.1329821413028
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 33145
+    },
+    {
+      "world": "Coaster",
+      "start": "ridge-station",
+      "aspect": 1.7777777777777777,
+      "minimumY": 8,
+      "maximumY": 31.94499969482422,
+      "camera": [
+        537.4202156580254,
+        801.6746317136309,
+        635.1329821413028
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 33145
+    },
+    {
+      "world": "Coaster",
+      "start": "service-courts",
+      "aspect": 0.46208530805687204,
+      "minimumY": 8,
+      "maximumY": 29,
+      "camera": [
+        685.4319063486494,
+        1015.4918637798536,
+        810.0558893211311
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 20781
+    },
+    {
+      "world": "Coaster",
+      "start": "service-courts",
+      "aspect": 2.164102564102564,
+      "minimumY": 8,
+      "maximumY": 29,
+      "camera": [
+        535.961266865824,
+        798.0800245321075,
+        633.4087699323373
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 20781
+    },
+    {
+      "world": "Coaster",
+      "start": "service-courts",
+      "aspect": 1.6,
+      "minimumY": 8,
+      "maximumY": 29,
+      "camera": [
+        535.961266865824,
+        798.0800245321075,
+        633.4087699323373
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 20781
+    },
+    {
+      "world": "Coaster",
+      "start": "service-courts",
+      "aspect": 1.7777777777777777,
+      "minimumY": 8,
+      "maximumY": 29,
+      "camera": [
+        535.961266865824,
+        798.0800245321075,
+        633.4087699323373
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 20781
+    },
+    {
+      "world": "Coaster",
+      "start": "woodland-promenade",
+      "aspect": 0.46208530805687204,
+      "minimumY": 8,
+      "maximumY": 26,
+      "camera": [
+        684.948389865133,
+        1013.2885670765569,
+        809.4844607497025
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 33401
+    },
+    {
+      "world": "Coaster",
+      "start": "woodland-promenade",
+      "aspect": 2.164102564102564,
+      "minimumY": 8,
+      "maximumY": 26,
+      "camera": [
+        534.4750709981988,
+        794.418285088289,
+        631.6523566342348
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 33401
+    },
+    {
+      "world": "Coaster",
+      "start": "woodland-promenade",
+      "aspect": 1.6,
+      "minimumY": 8,
+      "maximumY": 26,
+      "camera": [
+        534.4750709981988,
+        794.418285088289,
+        631.6523566342348
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 33401
+    },
+    {
+      "world": "Coaster",
+      "start": "woodland-promenade",
+      "aspect": 1.7777777777777777,
+      "minimumY": 8,
+      "maximumY": 26,
+      "camera": [
+        534.4750709981988,
+        794.418285088289,
+        631.6523566342348
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 33401
+    },
+    {
+      "world": "Coaster",
+      "start": "river-gardens",
+      "aspect": 0.46208530805687204,
+      "minimumY": 8,
+      "maximumY": 28.767000198364258,
+      "camera": [
+        685.3943532670671,
+        1015.320741214916,
+        810.0115084065337
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 28761
+    },
+    {
+      "world": "Coaster",
+      "start": "river-gardens",
+      "aspect": 2.164102564102564,
+      "minimumY": 8,
+      "maximumY": 28.767000198364258,
+      "camera": [
+        535.8458390850411,
+        797.7956296774238,
+        633.2723552823213
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 28761
+    },
+    {
+      "world": "Coaster",
+      "start": "river-gardens",
+      "aspect": 1.6,
+      "minimumY": 8,
+      "maximumY": 28.767000198364258,
+      "camera": [
+        535.8458390850411,
+        797.7956296774238,
+        633.2723552823213
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 28761
+    },
+    {
+      "world": "Coaster",
+      "start": "river-gardens",
+      "aspect": 1.7777777777777777,
+      "minimumY": 8,
+      "maximumY": 28.767000198364258,
+      "camera": [
+        535.8458390850411,
+        797.7956296774238,
+        633.2723552823213
+      ],
+      "near": 10,
+      "far": 2000,
+      "vertices": 28761
+    }
+  ],
+  "nativeVisualReview": false
+}

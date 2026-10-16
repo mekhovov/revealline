@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "pixelCount": 32768,
+  "protectedPixels": 9976,
+  "comparisonPixels": 5100,
+  "redChannelAdjacentVariation": {
+    "beforeMean": 19.984117647058824,
+    "afterMean": 1.9958823529411764,
+    "ratio": 0.09987342889942012
+  },
+  "textureDimensionsAndFiltersUnchanged": true,
+  "opaque": true,
+  "scope": "Source pixel-art contrast comparison only; not native aliasing, performance or full representative-art acceptance."
+}

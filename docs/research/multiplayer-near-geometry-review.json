@@ -1,0 +1,161 @@
+{
+  "format": "multiplayer-near-geometry-review.v1",
+  "method": "Jaccard overlap of occupied interior foundation, wall and material cells in authored coordinates. Empty field and outer border excluded. Exact rotations/reflections checked separately. Similarity is a review prompt, not proof of player variety.",
+  "highestOverlap": [
+    {
+      "a": "versus-beacon-detour",
+      "b": "versus-lasting-shortcut",
+      "similarity": 0.8758169934640523,
+      "aDecision": "Take the beacon detour around the patrol, or wait one corner turn for a shorter return?",
+      "bDecision": "Open the permanent shortcut, or enclose the eroder before seeking the relay?"
+    },
+    {
+      "a": "versus-archive-auction",
+      "b": "versus-passing-window",
+      "similarity": 0.7861271676300579,
+      "aDecision": "Buy the upper shortcut with a small relay cut, or claim the western pocket and reach the switch from below?",
+      "bDecision": "Use the passing window for a long enclosure, or secure a second refuge before the patrol returns?"
+    },
+    {
+      "a": "team-first-warning-shift",
+      "b": "team-tailwind-delivery",
+      "similarity": 0.7463768115942029,
+      "aDecision": "Close a short connector during the first marked lane, or wait on a landing for the rest window?",
+      "bDecision": "Follow the arrows to connect the upper landing, or clear the lower approach first for a normal-speed return?"
+    },
+    {
+      "a": "team-return-behind-me",
+      "b": "team-fault-relay-service",
+      "similarity": 0.7459016393442623,
+      "aDecision": "Let one pilot secure the return behind the patrol, or build both internal links before touching the shore?",
+      "bDecision": "Open the permanent relay before expanding near the source, or stop erosion first and approach the relay from outside?"
+    },
+    {
+      "a": "team-foundry-handshake",
+      "b": "team-highland-reunion",
+      "similarity": 0.7288888888888889,
+      "aDecision": "Capture the western furnace to simplify the centre, or connect every refuge before attacking either source?",
+      "bDecision": "Unify the highland landings through three arrow fields, or secure two ordinary-speed returns before the final crossing?"
+    },
+    {
+      "a": "versus-inside-track",
+      "b": "versus-faultline-bid",
+      "similarity": 0.7245508982035929,
+      "aDecision": "Bank the broad outside corner, or connect the inner track to keep future returns clear?",
+      "bDecision": "Claim the large fragile pocket, or establish an inland return before extending the frontier?"
+    },
+    {
+      "a": "team-two-stable-shores",
+      "b": "team-citadel-handoff",
+      "similarity": 0.6976744186046512,
+      "aDecision": "Connect the stable shores first, or let one pilot suppress the source while the other expands?",
+      "bDecision": "Build the citadel’s lower approach before the first target opens, or let the nearer pilot take both early enclosures?"
+    },
+    {
+      "a": "versus-prism-bid",
+      "b": "versus-archive-auction",
+      "similarity": 0.6923076923076923,
+      "aDecision": "Bank a short western wedge, or approach the larger eastern prism while its keeper is moving away?",
+      "bDecision": "Buy the upper shortcut with a small relay cut, or claim the western pocket and reach the switch from below?"
+    },
+    {
+      "a": "versus-priority-dispatch",
+      "b": "versus-long-wave-wager",
+      "similarity": 0.6867469879518072,
+      "aDecision": "Dispatch the western link first, or take the eastern relay that shortens two future crossings?",
+      "bDecision": "Commit to the long wave during the keeper’s retreat, or secure a short refuge before entering it?"
+    },
+    {
+      "a": "versus-citadel-wager",
+      "b": "versus-highland-lock-race",
+      "similarity": 0.68,
+      "aDecision": "Open the eastern shield during the first warning, or secure the west return before attacking the citadel?",
+      "bDecision": "Use the fast band while the lane rests, or capture it first so the final return can run against its arrows?"
+    },
+    {
+      "a": "team-inside-the-watch",
+      "b": "team-faultline-detour",
+      "similarity": 0.6612903225806451,
+      "aDecision": "Bank an interior loop first, or time an outside crossing to bring the partner a larger safe region?",
+      "bDecision": "Build an outer detour around the faultline, or enclose its source from the central landing?"
+    },
+    {
+      "a": "versus-faultline-bid",
+      "b": "versus-vault-opening",
+      "similarity": 0.6611111111111111,
+      "aDecision": "Claim the large fragile pocket, or establish an inland return before extending the frontier?",
+      "bDecision": "Open the vault bridge before the shields, or capture a shield en route to the shortcut?"
+    },
+    {
+      "a": "team-stone-before-silk",
+      "b": "team-vault-relay-watch",
+      "similarity": 0.6565656565656566,
+      "aDecision": "Connect stone foundations before taking fragile central ground, or silence the source with a direct enclosure?",
+      "bDecision": "Open the permanent vault bridge before advancing the stations, or take the first target from the lower shore?"
+    },
+    {
+      "a": "versus-first-key-advantage",
+      "b": "versus-permanent-aurora",
+      "similarity": 0.6518987341772152,
+      "aDecision": "Open the near bridge before banking coverage, or reach the relay from the longer outer loop?",
+      "bDecision": "Open a permanent bridge before the eroder reaches the new frontier, or capture the source with a wider first bank?"
+    },
+    {
+      "a": "versus-shelf-shortcut",
+      "b": "versus-coastal-hedge",
+      "similarity": 0.6467391304347826,
+      "aDecision": "Approach the shelf relay directly, or surround the lower bay before turning toward it?",
+      "bDecision": "Hedge the coast with two safe landings, or pursue a fast broad capture near the eroder?"
+    },
+    {
+      "a": "versus-watch-line-finish",
+      "b": "versus-unbroken-finish",
+      "similarity": 0.6465116279069767,
+      "aDecision": "Finish through the interior watch line, or exploit the patrol gap for one larger perimeter bank?",
+      "bDecision": "Secure the permanent circuit before racing for coverage, or silence both eroders and finish across reclaimed ground?"
+    },
+    {
+      "a": "team-faultline-detour",
+      "b": "team-three-watch-stations",
+      "similarity": 0.643979057591623,
+      "aDecision": "Build an outer detour around the faultline, or enclose its source from the central landing?",
+      "bDecision": "Create a route past all three stations, or concentrate each enclosure around the currently active target?"
+    },
+    {
+      "a": "versus-shield-choice",
+      "b": "versus-polar-dividend",
+      "similarity": 0.6394557823129252,
+      "aDecision": "Capture the near shield first, or establish a core approach before opening either shield?",
+      "bDecision": "Use the tailwind for an early relay, or neutralize the band before committing to the long northern cut?"
+    },
+    {
+      "a": "team-repair-landing",
+      "b": "team-quiet-court-signal",
+      "similarity": 0.6372549019607843,
+      "aDecision": "Repair the short connection after its warning, or capture a larger permanent route around the source?",
+      "bDecision": "Capture the warning source before moving into the court, or complete the first station while keeping a short return?"
+    },
+    {
+      "a": "versus-headwind-dividend",
+      "b": "versus-passing-window",
+      "similarity": 0.6337209302325582,
+      "aDecision": "Pay the headwind cost now, or circle the slow direction and reach its far end first?",
+      "bDecision": "Use the passing window for a long enclosure, or secure a second refuge before the patrol returns?"
+    }
+  ],
+  "sourceReview": [
+    {
+      "pair": ["versus-beacon-detour", "versus-lasting-shortcut"],
+      "finding": "87.6% occupied-cell overlap. Beacon uses a moving perimeter patrol; Lasting replaces that pressure with a required permanent relay and a territory eroder. Opening the relay versus removing the eroder is a different native objective order, not an artwork swap."
+    },
+    {
+      "pair": ["versus-archive-auction", "versus-passing-window"],
+      "finding": "78.6% overlap. Archive has a required relay and two field keepers; Passing has two perimeter patrols and one keeper. The departure, return and required-objective pressures differ."
+    },
+    {
+      "pair": ["team-first-warning-shift", "team-tailwind-delivery"],
+      "finding": "74.6% overlap. Warning Shift locks horizontal attack warnings to an owned cut; Tailwind has two directional fields and no emitter. The return-speed and warning-window decisions differ."
+    }
+  ],
+  "acceptance": "Distinct authored mechanics confirmed for the closest occupied-cell pairs; paired human pacing and enjoyment review remains outstanding."
+}

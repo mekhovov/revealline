@@ -1,0 +1,266 @@
+TAP version 13
+# (node:14982) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/tmp/team-recovery-grace-only-loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: first-connection gentle {}: same-tick team recovery is not flight toward the spawn
+ok 1 - first-connection gentle {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 30.16125
+  ...
+# Subtest: first-connection gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 2 - first-connection gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 7.878167
+  ...
+# Subtest: first-connection gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 3 - first-connection gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 23.305084
+  ...
+# Subtest: first-connection standard {}: same-tick team recovery is not flight toward the spawn
+ok 4 - first-connection standard {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 9.465459
+  ...
+# Subtest: first-connection standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 5 - first-connection standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 13.365416
+  ...
+# Subtest: first-connection standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 6 - first-connection standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 10.348417
+  ...
+# Subtest: first-connection expert {}: same-tick team recovery is not flight toward the spawn
+ok 7 - first-connection expert {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 26.182042
+  ...
+# Subtest: first-connection expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 8 - first-connection expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 6.441875
+  ...
+# Subtest: first-connection expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 9 - first-connection expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.947458
+  ...
+# Subtest: relay-yard gentle {}: same-tick team recovery is not flight toward the spawn
+ok 10 - relay-yard gentle {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 11.042167
+  ...
+# Subtest: relay-yard gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 11 - relay-yard gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 5.145375
+  ...
+# Subtest: relay-yard gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 12 - relay-yard gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 8.592708
+  ...
+# Subtest: relay-yard standard {}: same-tick team recovery is not flight toward the spawn
+ok 13 - relay-yard standard {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 11.467125
+  ...
+# Subtest: relay-yard standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 14 - relay-yard standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 10.984833
+  ...
+# Subtest: relay-yard standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 15 - relay-yard standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 16.92525
+  ...
+# Subtest: relay-yard expert {}: same-tick team recovery is not flight toward the spawn
+ok 16 - relay-yard expert {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 7.395208
+  ...
+# Subtest: relay-yard expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 17 - relay-yard expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 9.434833
+  ...
+# Subtest: relay-yard expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 18 - relay-yard expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 4.088667
+  ...
+# Subtest: recovery is observed after skipped rendering even when its core events have retired
+ok 19 - recovery is observed after skipped rendering even when its core events have retired
+  ---
+  duration_ms: 16.415625
+  ...
+# Subtest: first-connection {}: skipped recovery remains detectable after a new cut clears grace
+not ok 20 - first-connection {}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 4.143792
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:96:5'
+  failureType: 'testCodeFailure'
+  error: '0.4707963267948969 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:116:9)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: first-connection {"reduced":true}: skipped recovery remains detectable after a new cut clears grace
+not ok 21 - first-connection {"reduced":true}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 7.261875
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:96:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    unobserved relocation cannot imply boost flight
+    + actual - expected
+
+    + 18.857142857142872
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 18.857142857142872
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:118:16)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: first-connection {"motionScale":0}: skipped recovery remains detectable after a new cut clears grace
+not ok 22 - first-connection {"motionScale":0}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 3.730958
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:96:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    unobserved relocation cannot imply boost flight
+    + actual - expected
+
+    + 18.857142857142872
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 18.857142857142872
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:118:16)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard {}: skipped recovery remains detectable after a new cut clears grace
+not ok 23 - relay-yard {}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 4.55275
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:96:5'
+  failureType: 'testCodeFailure'
+  error: '0.4707963267948969 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:116:9)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard {"reduced":true}: skipped recovery remains detectable after a new cut clears grace
+not ok 24 - relay-yard {"reduced":true}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 5.643417
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:96:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    unobserved relocation cannot imply boost flight
+    + actual - expected
+
+    + 18.857142857142872
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 18.857142857142872
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:118:16)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard {"motionScale":0}: skipped recovery remains detectable after a new cut clears grace
+not ok 25 - relay-yard {"motionScale":0}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 3.178625
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:96:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    unobserved relocation cannot imply boost flight
+    + actual - expected
+
+    + 18.857142857142872
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 18.857142857142872
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:118:16)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: pause and held neutral retain the recovered nose; real safe-ground motion resumes it
+ok 26 - pause and held neutral retain the recovered nose; real safe-ground motion resumes it
+  ---
+  duration_ms: 15.159417
+  ...
+# Subtest: actual prepared image keeps the last heading and opacity through real recovery
+ok 27 - actual prepared image keeps the last heading and opacity through real recovery
+  ---
+  duration_ms: 126.3235
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 21
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 904.6145

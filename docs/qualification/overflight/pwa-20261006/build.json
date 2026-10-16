@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "4fd4df8dc0c6821e23cc3a50e55da27ec8384f1e",
+  "buildId": "4182ffc3295750594fce2bd977c85374fe82f88a70a15a60b650557e94fdf99e",
+  "coreFiles": 1620,
+  "coreBytes": 60048300,
+  "matches": [
+    {
+      "path": "game/snake/classic-app.mjs",
+      "sha256": "bd6c9e1c97384fdabebc12070307c6d78eed82857f255c4bb2d4334b1e0109d3",
+      "canonicalProjection": true
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "sha256": "f1a33d24f777680ba129934f0f5319b8902fc745f668bcbb2e9da825280b6775",
+      "canonicalProjection": false
+    },
+    {
+      "path": "game/downloads.mjs",
+      "sha256": "d7473b9570fa95c708186c83d4103071fcdaedc5ace9d53858fcdaf89662709e",
+      "canonicalProjection": true
+    },
+    {
+      "path": "game/ui/offline-package-choices.mjs",
+      "sha256": "88956f1cc3bb560412e17c8c2d21a9253e47f4e62302804150d589c771070f78",
+      "canonicalProjection": false
+    }
+  ]
+}
