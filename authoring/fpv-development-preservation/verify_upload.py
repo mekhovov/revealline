@@ -139,7 +139,8 @@ def main():
                'serverDigestMatch': True, 'authenticatedFullReadbackSHA256Match': True,
                'restoredMembers': result, 'partManifest': local['partManifest'],
                'sourceBeforeAfterChecks': len(local['sources']),
-               'localSourceReceipt': str(Path(a.local_receipt)), 'verifiedAtUnix': time.time()}
+               'sourceChecks': local['sources'], 'localSourceReceiptSHA256': digest(a.local_receipt),
+               'localSourceReceipt': Path(a.local_receipt).name, 'verifiedAtUnix': time.time()}
     with Path(a.receipt_output).open('x') as f:
         json.dump(receipt, f, indent=2)
         f.write('\n')

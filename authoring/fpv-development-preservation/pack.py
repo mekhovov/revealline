@@ -154,6 +154,7 @@ def main():
     p.add_argument('--max-raw', type=int, default=1_350_000_000)
     p.add_argument('--exclude-digests')
     p.add_argument('--clearances')
+    p.add_argument('--reserved-digests', help='Objects owned by an active pack batch; not a durability claim')
     a = p.parse_args()
     root, stage, receipts = Path(a.source_root), Path(a.stage), Path(a.receipts)
     stage.mkdir()
@@ -162,6 +163,7 @@ def main():
     library = {x['sha256']: x for x in json.loads(Path(a.library_preflight).read_text())['archives']}
     if a.exclude_digests:
         library.update({x: {} for x in json.loads(Path(a.exclude_digests).read_text())})
+    reserved = set(json.loads(Path(a.reserved_digests).read_text())) if a.reserved_digests else set()
     snapshot = list(rows(a.manifest))
     clearance_rows = load_clearances(a.clearances)
     cleared = {(r['path'], r['sha256']) for r in clearance_rows}
@@ -191,11 +193,12 @@ def main():
     for old in receipts.parent.glob('batch-*/part-*-local.json'):
         for x in json.loads(old.read_text())['partManifest']['objects']:
             used.add(x['sha256'])
-    objects = [g for sha, g in sorted(groups.items()) if sha not in used]
+    objects = [g for sha, g in sorted(groups.items()) if sha not in used and sha not in reserved]
     manifest_record = {'format': 'FPVPackBatch.v1', 'sourceManifest': str(a.manifest),
                        'snapshotRows': len(snapshot), 'held': skipped, 'reused': reused,
                        'uniqueObjectsToPack': len(objects), 'uniqueBytesToPack': sum(x['bytes'] for x in objects),
                        'previouslyPackedObjects': len(used), 'finalCoverageClaimed': False}
+    manifest_record['reservedForActiveBatchObjects'] = len(set(groups) & reserved)
     manifest_record['reviewClearances'] = clearance_rows
     if a.clearances:
         manifest_record['clearanceReceiptSHA256'] = digest(a.clearances)
