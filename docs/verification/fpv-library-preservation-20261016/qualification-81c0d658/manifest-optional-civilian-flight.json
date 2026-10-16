@@ -1,0 +1,494 @@
+{
+  "format": "revealline-optional-practice-package.v1",
+  "id": "civilian-flight",
+  "revision": "8893f8d770748278e806908a1eeaca20769f9b738e3b93cb716d026351e95b4d",
+  "classification": "public",
+  "workerTemplateSha256": "e1984801659b630c0fa54522921bd59d44b8563d6c98b5454c0f51c3fdba08c7",
+  "engineCommit": "81c0d6587cdb582835a64e3d69c4c130460fb11a",
+  "engineTree": "2079c94d36b74838cb96cf357e5501dd24ef2235",
+  "qualification": "requires-release-qualification",
+  "entry": "optional-practice/civilian-flight/index.html",
+  "locales": [
+    "en",
+    "uk"
+  ],
+  "core": false,
+  "limits": {
+    "files": 96,
+    "bytes": 8388608
+  },
+  "installation": {
+    "basePath": "/revealline/",
+    "id": "/revealline/practice/civilian-flight/",
+    "scope": "/revealline/practice/civilian-flight/",
+    "startURL": "/revealline/practice/civilian-flight/app/",
+    "launcherRoot": "launcher/"
+  },
+  "files": [
+    {
+      "path": "game/access-gate.css",
+      "bytes": 2233,
+      "sha256": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd"
+    },
+    {
+      "path": "game/access-gate.mjs",
+      "bytes": 6833,
+      "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+    },
+    {
+      "path": "game/audio-preferences.mjs",
+      "bytes": 5918,
+      "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239"
+    },
+    {
+      "path": "game/audio/dialogue-mix.mjs",
+      "bytes": 282,
+      "sha256": "43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a"
+    },
+    {
+      "path": "game/audio/human-reactions/portable.mjs",
+      "bytes": 52575,
+      "sha256": "2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/hunt/actor-catalog.mjs",
+      "bytes": 17530,
+      "sha256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d"
+    },
+    {
+      "path": "game/hunt/copy.mjs",
+      "bytes": 4717,
+      "sha256": "9e57f007948c134ca3a18f6c672f9d30d073839c5596f930ff78896b23189011"
+    },
+    {
+      "path": "game/hunt/industrial-soldier-kit.mjs",
+      "bytes": 3713,
+      "sha256": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524"
+    },
+    {
+      "path": "game/hunt/preferences.mjs",
+      "bytes": 7098,
+      "sha256": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 40871,
+      "sha256": "9a443e476e6bf6a2688d67cd0cae7ef8d3aa771bff87e1b04860030062672588"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/key-bindings.mjs",
+      "bytes": 13649,
+      "sha256": "9f0ccc8a21fb88618f93ca12742bf908e027ab4f05ae69f98fff05a92bef30a2"
+    },
+    {
+      "path": "game/overflight/terrain.mjs",
+      "bytes": 16421,
+      "sha256": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146"
+    },
+    {
+      "path": "game/overflight/world-layout-presentation.mjs",
+      "bytes": 11298,
+      "sha256": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3"
+    },
+    {
+      "path": "game/overflight/worlds.mjs",
+      "bytes": 18852,
+      "sha256": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c"
+    },
+    {
+      "path": "game/presentation/industrial-environments-data.mjs",
+      "bytes": 422824,
+      "sha256": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8"
+    },
+    {
+      "path": "game/presentation/industrial-environments.mjs",
+      "bytes": 9240,
+      "sha256": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87"
+    },
+    {
+      "path": "game/presentation/industrial-machinery.mjs",
+      "bytes": 13604,
+      "sha256": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151"
+    },
+    {
+      "path": "game/presentation/industrial-materials.mjs",
+      "bytes": 7229,
+      "sha256": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd"
+    },
+    {
+      "path": "game/presentation/overflight-world-art-v2.mjs",
+      "bytes": 19404,
+      "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+    },
+    {
+      "path": "game/presentation/overflight-world-art.mjs",
+      "bytes": 7822,
+      "sha256": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a"
+    },
+    {
+      "path": "game/presentation/overflight-world-slots.mjs",
+      "bytes": 2754,
+      "sha256": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94"
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "bytes": 65878,
+      "sha256": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0"
+    },
+    {
+      "path": "game/snake/classic-structure-art.mjs",
+      "bytes": 20243,
+      "sha256": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5"
+    },
+    {
+      "path": "game/ui/art-review-navigation.mjs",
+      "bytes": 2392,
+      "sha256": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2"
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/wordmark.png",
+      "bytes": 485216,
+      "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv.webp",
+      "bytes": 514190,
+      "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+    },
+    {
+      "path": "game/ui/audio-master.mjs",
+      "bytes": 5431,
+      "sha256": "6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8"
+    },
+    {
+      "path": "game/ui/audio-output.mjs",
+      "bytes": 1929,
+      "sha256": "dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1"
+    },
+    {
+      "path": "game/ui/defeat-sound-controls.mjs",
+      "bytes": 2773,
+      "sha256": "b99f97c97e46fd82cd93338e4448c707bf650e6ffb0d5813d2ec68879b56451e"
+    },
+    {
+      "path": "game/ui/destruction-audio.mjs",
+      "bytes": 3628,
+      "sha256": "b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b"
+    },
+    {
+      "path": "game/ui/destruction-level.mjs",
+      "bytes": 2221,
+      "sha256": "ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61"
+    },
+    {
+      "path": "game/ui/dialogue-channel.mjs",
+      "bytes": 523,
+      "sha256": "f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142"
+    },
+    {
+      "path": "game/ui/encounter-audio.mjs",
+      "bytes": 5408,
+      "sha256": "ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd"
+    },
+    {
+      "path": "game/ui/enemy-appearance-controls.mjs",
+      "bytes": 8141,
+      "sha256": "f34c869b039cfd23841a5c8886e7509d2e5f88bc4ecbe0ae56e5fc0f59e1d165"
+    },
+    {
+      "path": "game/ui/global-settings-view.css",
+      "bytes": 1367,
+      "sha256": "1babd7e3417207058d71c6aee4c3b52b7724e8c39a1694bd7132235380680348"
+    },
+    {
+      "path": "game/ui/human-reaction-policy.mjs",
+      "bytes": 1974,
+      "sha256": "dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731"
+    },
+    {
+      "path": "game/ui/menu-navigation-groups.mjs",
+      "bytes": 3942,
+      "sha256": "1ffb27c5e397d3898a07dead6daccb441323bef01aea1ca1760932f90b21342b"
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "bytes": 9323,
+      "sha256": "bdfa47a370c30ac0ea5775e29bd6e63e65432265302ccce023a990bf688487e4"
+    },
+    {
+      "path": "game/ui/mode-play-shell.css",
+      "bytes": 12119,
+      "sha256": "0de38784cc592c06596b27c64fc1ea75fbf0458a09326cc8760b22dba795ef85"
+    },
+    {
+      "path": "game/ui/mode-play-shell.mjs",
+      "bytes": 26517,
+      "sha256": "e9563336d6c3a36f70c632ed5c7e423c92710832826b34bb2e1c1a0ed3a12ade"
+    },
+    {
+      "path": "game/ui/mode-settings-view.css",
+      "bytes": 5647,
+      "sha256": "cc7854f20bbfff00c07888f5336a6666c42e15805a83f312a8bdc47be5bdf163"
+    },
+    {
+      "path": "game/ui/movement-audio.mjs",
+      "bytes": 531,
+      "sha256": "685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020"
+    },
+    {
+      "path": "game/ui/native-menu-icons.mjs",
+      "bytes": 2645,
+      "sha256": "efe5de5b8ae9ecaccd393315294ebdbf6fe8c1d8cf29a6db284efe6f2d4e5351"
+    },
+    {
+      "path": "game/ui/optional-practice-panel.css",
+      "bytes": 3082,
+      "sha256": "700745359dcdc5538b090467d1a6632065615e777c945ed013c5ef31c1249774"
+    },
+    {
+      "path": "game/ui/pause-menu.css",
+      "bytes": 9247,
+      "sha256": "56a8d2867438b07144f3476101f60483b622b127ee362d047329ec0608b9c6a6"
+    },
+    {
+      "path": "game/ui/world-ambience.mjs",
+      "bytes": 1280,
+      "sha256": "95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "game/vendor/I18NEXT-LICENSE.txt",
+      "bytes": 1082,
+      "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a"
+    },
+    {
+      "path": "launcher/access-gate.css",
+      "bytes": 2233,
+      "sha256": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd"
+    },
+    {
+      "path": "launcher/access-gate.mjs",
+      "bytes": 6833,
+      "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+    },
+    {
+      "path": "launcher/app.mjs",
+      "bytes": 19034,
+      "sha256": "f42627683ac9688840501233ef745b805b7d072de356430662518beb1f521bb2"
+    },
+    {
+      "path": "launcher/app.webmanifest",
+      "bytes": 680,
+      "sha256": "2c10e975d8b79d8b864ca81a2344fef5f24f5e5a4cd6ebbd6ae39b28e73a8c57"
+    },
+    {
+      "path": "launcher/context.mjs",
+      "bytes": 19869,
+      "sha256": "7e0b97e9a22068246d846825ce1fdbf1f168613346f0431b200988958e7c07db"
+    },
+    {
+      "path": "launcher/icons/icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+    },
+    {
+      "path": "launcher/icons/icon-512.png",
+      "bytes": 82577,
+      "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+    },
+    {
+      "path": "launcher/index.html",
+      "bytes": 2192,
+      "sha256": "131db2a28346ac26af125f36d309d178b607a235a3a3d6f2f6e60a95f76c42af"
+    },
+    {
+      "path": "launcher/navigation.mjs",
+      "bytes": 2719,
+      "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+    },
+    {
+      "path": "launcher/worker.js",
+      "bytes": 8130,
+      "sha256": "3e258f8602caa590ed564e792092676dec21b1da7fb7c10de046d2c26df2567f"
+    },
+    {
+      "path": "optional-practice/civilian-flight/app.mjs",
+      "bytes": 34543,
+      "sha256": "c3cfc94b210efe10f71c1265733e71a501a5aeaa3da1238955fc0f389bb92642"
+    },
+    {
+      "path": "optional-practice/civilian-flight/app.webmanifest",
+      "bytes": 680,
+      "sha256": "2c10e975d8b79d8b864ca81a2344fef5f24f5e5a4cd6ebbd6ae39b28e73a8c57"
+    },
+    {
+      "path": "optional-practice/civilian-flight/audio.mjs",
+      "bytes": 2177,
+      "sha256": "fb2de6273e41e2214b397154211c726ebe99d7fe60b515b22fbd5d7215e75ab4"
+    },
+    {
+      "path": "optional-practice/civilian-flight/catalogue.mjs",
+      "bytes": 10592,
+      "sha256": "a0e7021a37de0da07c5784ca11bbaa30da61025439b98780d606105e99d9f71d"
+    },
+    {
+      "path": "optional-practice/civilian-flight/copy.mjs",
+      "bytes": 8706,
+      "sha256": "eb32adb2383b7a3da2fe8ec86bc7d97537fd3fdc26dc9fcc7403ce35639a2da3"
+    },
+    {
+      "path": "optional-practice/civilian-flight/guide.html",
+      "bytes": 23443,
+      "sha256": "8a4989f0ddfe6e2662031eec4454be18cc980076de4b5b429962775244e6bfec"
+    },
+    {
+      "path": "optional-practice/civilian-flight/icons/icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+    },
+    {
+      "path": "optional-practice/civilian-flight/icons/icon-512.png",
+      "bytes": 82577,
+      "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+    },
+    {
+      "path": "optional-practice/civilian-flight/index.html",
+      "bytes": 4656,
+      "sha256": "2dde6db4ff31333c2a39f49552b36a7e9870553f4bb40832e92628be97ba1aa9"
+    },
+    {
+      "path": "optional-practice/civilian-flight/input.mjs",
+      "bytes": 6139,
+      "sha256": "c496395bf08f49c0881662124947e36301f0f970534b6b4a64b6e570a4c49648"
+    },
+    {
+      "path": "optional-practice/civilian-flight/model.mjs",
+      "bytes": 9430,
+      "sha256": "20956184f30511a6c903357864699acef5ff82c8a8c4819856897987bd264a46"
+    },
+    {
+      "path": "optional-practice/civilian-flight/offline.mjs",
+      "bytes": 558,
+      "sha256": "9aae8c912f2c6fc14851e98b1a9485b7b40f9038801ce277d4c7748321e4023b"
+    },
+    {
+      "path": "optional-practice/civilian-flight/package-info.json",
+      "bytes": 1645,
+      "sha256": "01b52a85d74440cb0d57ef1ea0999a4d2c4ec16abde3b46aef0d5a7ea566d6b0"
+    },
+    {
+      "path": "optional-practice/civilian-flight/preview.png",
+      "bytes": 86645,
+      "sha256": "caec5cce62757f3938ddb779f8b4d6a920db57624d6f4cd3d72f0460d72b5567"
+    },
+    {
+      "path": "optional-practice/civilian-flight/README.md",
+      "bytes": 25870,
+      "sha256": "cbd7093d66837f302a80ec13c9e95c518dd80332507a56a15d043934392680e1"
+    },
+    {
+      "path": "optional-practice/civilian-flight/style.css",
+      "bytes": 5672,
+      "sha256": "c0f5a87f8c0575276005cfea5ac1c526f135d8d24ad61d8884951f9fbd669ed6"
+    },
+    {
+      "path": "optional-practice/civilian-flight/worker.js",
+      "bytes": 19215,
+      "sha256": "29106652b9716234143e339ce0395ecbae260e985896555ed0dae299aad5e696"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/battlefield-ground.mjs",
+      "bytes": 4594,
+      "sha256": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+      "bytes": 102834,
+      "sha256": "1409667e40931b600a0ddf52b0f5a4fb25bbdc7800ae41a0cefe420e2f0bcede"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "bytes": 322553,
+      "sha256": "c695f64fe937f6a104b81cb8e008e872045bd82e7412f4c2a02c7d8a91787a24"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "bytes": 18718,
+      "sha256": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "bytes": 10613,
+      "sha256": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "bytes": 38417,
+      "sha256": "fa05c07d694b96042ad4285294b1b676c60ef85b5122175a0d7b0b0268a1e8d6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "bytes": 18265,
+      "sha256": "5edfc0ff6a04119758537f887f35b4d61da4f617c45abe032a0161ed91df9b44"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "bytes": 650712,
+      "sha256": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-audio.mjs",
+      "bytes": 28957,
+      "sha256": "cc05ffc5e1b54f500efc17dccf77c96c608a2fc535e8947b8787eccb2103565f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "bytes": 24025,
+      "sha256": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597"
+    },
+    {
+      "path": "optional-practice/guide.mjs",
+      "bytes": 733,
+      "sha256": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203"
+    },
+    {
+      "path": "optional-practice/install-context.mjs",
+      "bytes": 19869,
+      "sha256": "7e0b97e9a22068246d846825ce1fdbf1f168613346f0431b200988958e7c07db"
+    },
+    {
+      "path": "optional-practice/navigation.mjs",
+      "bytes": 2719,
+      "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+    }
+  ]
+}
