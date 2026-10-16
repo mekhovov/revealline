@@ -1,4 +1,5 @@
 import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
+import { createProfileRecordBackend } from '../profile-storage.mjs';
 
 export const COMMUNITY_STATE_KEY = 'revealline.community.library.v1';
 const empty = () => ({
@@ -6,7 +7,11 @@ const empty = () => ({
   editions: [],
 });
 const validate = (source) => {
-  const value = source ?? empty();
+  const value = boundedJSON(source ?? empty(), {
+    maxBytes: 256 * 1024,
+    maxNodes: 4096,
+    maxDepth: 8,
+  });
   required(
     value?.format === 'revealline-community-library.v1' && Array.isArray(value.editions),
     'Community library state is invalid.',
@@ -46,12 +51,22 @@ const validate = (source) => {
       'Community library identity is invalid.',
     );
     required(
-      item.family === undefined || ['creator', 'classic', 'team', 'fpv'].includes(item.family),
+      item.family === undefined ||
+        [
+          'creator',
+          'classic',
+          'team',
+          'fpv',
+          'overflight',
+          'overflight-hunt',
+          'overflight-riy',
+        ].includes(item.family),
       'Unknown installed content family.',
     );
     required(
-      item.family !== 'classic' || /^[a-f0-9]{16}$/.test(item.runtimeIdentity),
-      'Classic content identity is invalid.',
+      !['classic', 'overflight', 'overflight-hunt', 'overflight-riy'].includes(item.family) ||
+        /^[a-f0-9]{16}$/.test(item.runtimeIdentity),
+      'Native content identity is invalid.',
     );
     required(
       item.family !== 'team' || /^[a-f0-9]{64}$/.test(item.runtimeIdentity),
@@ -66,26 +81,42 @@ const validate = (source) => {
   return structuredClone(value);
 };
 
-export function createCommunityStateStore({ storage = globalThis.localStorage } = {}) {
-  return Object.freeze({
-    read() {
+/** Migrate the old localStorage journal once, without deleting recovery bytes.
+ * Every later mutation merges in the existing transactional profile database. */
+export function createCommunityStateStore({
+  storage = globalThis.localStorage,
+  indexedDB = globalThis.indexedDB,
+} = {}) {
+  const backend = createProfileRecordBackend({
+    key: COMMUNITY_STATE_KEY,
+    empty: () => {
       const raw = storage?.getItem(COMMUNITY_STATE_KEY);
-      return validate(
-        raw
-          ? boundedJSON(raw, {
-              maxBytes: 256 * 1024,
-              maxNodes: 4096,
-              maxDepth: 8,
-            })
-          : empty(),
-      );
+      return validate(raw ?? empty());
     },
-    write(value) {
-      const safe = validate(value);
-      required(storage?.setItem, 'Community library storage is unavailable.');
-      storage.setItem(COMMUNITY_STATE_KEY, JSON.stringify(safe));
-      return safe;
+    validate,
+    indexedDB,
+  });
+  let opening = null;
+  const ready = () => {
+    if (!opening)
+      opening = backend
+        .update((state) => state)
+        .catch((error) => {
+          opening = null;
+          throw error;
+        });
+    return opening;
+  };
+  return Object.freeze({
+    async read() {
+      await ready();
+      return backend.read();
     },
+    async update(mutate) {
+      await ready();
+      return backend.update(mutate);
+    },
+    close: () => backend.close(),
   });
 }
 
@@ -93,6 +124,8 @@ export function createMemoryCommunityStateStore() {
   let value = empty();
   return Object.freeze({
     read: () => structuredClone(value),
+    update: (mutate) => (value = validate(mutate(structuredClone(value)))),
+    // Retained for fixtures which seed complete historical journal snapshots.
     write: (next) => (value = validate(next)),
   });
 }

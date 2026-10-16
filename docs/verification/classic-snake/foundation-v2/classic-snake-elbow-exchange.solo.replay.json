@@ -1,0 +1,292 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-elbow-exchange",
+    "revision": "2",
+    "name": "Elbow Exchange",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 6,
+        "y": 5
+      },
+      {
+        "x": 6,
+        "y": 6
+      },
+      {
+        "x": 6,
+        "y": 7
+      },
+      {
+        "x": 13,
+        "y": 7
+      },
+      {
+        "x": 14,
+        "y": 7
+      },
+      {
+        "x": 15,
+        "y": 7
+      },
+      {
+        "x": 16,
+        "y": 7
+      },
+      {
+        "x": 17,
+        "y": 7
+      },
+      {
+        "x": 6,
+        "y": 8
+      },
+      {
+        "x": 11,
+        "y": 8
+      },
+      {
+        "x": 12,
+        "y": 8
+      },
+      {
+        "x": 17,
+        "y": 8
+      },
+      {
+        "x": 6,
+        "y": 9
+      },
+      {
+        "x": 11,
+        "y": 9
+      },
+      {
+        "x": 12,
+        "y": 9
+      },
+      {
+        "x": 17,
+        "y": 9
+      },
+      {
+        "x": 6,
+        "y": 10
+      },
+      {
+        "x": 7,
+        "y": 10
+      },
+      {
+        "x": 8,
+        "y": 10
+      },
+      {
+        "x": 9,
+        "y": 10
+      },
+      {
+        "x": 17,
+        "y": 10
+      },
+      {
+        "x": 6,
+        "y": 11
+      },
+      {
+        "x": 7,
+        "y": 11
+      },
+      {
+        "x": 8,
+        "y": 11
+      },
+      {
+        "x": 9,
+        "y": 11
+      },
+      {
+        "x": 17,
+        "y": 11
+      },
+      {
+        "x": 17,
+        "y": 12
+      },
+      {
+        "x": 17,
+        "y": 13
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 10,
+    "stepMs": 190,
+    "speedupEvery": 0,
+    "minStepMs": 190,
+    "wrap": false,
+    "targetMovement": "flee",
+    "fleeEvery": 6
+  },
+  "levelIdentity": "13e84fa5cdc7f81c",
+  "mode": "solo",
+  "seed": 17,
+  "steps": 170,
+  "turns": [
+    {
+      "tick": 0,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 14,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 18,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 24,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 25,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 26,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 29,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 36,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 41,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 49,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 56,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 60,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 62,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 67,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 69,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 72,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 78,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 79,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 99,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 114,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 116,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 126,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 131,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 135,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 143,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 153,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 163,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 166,
+      "playerId": 0,
+      "direction": "right"
+    }
+  ],
+  "checkpoint": "a906d4520153b3d9"
+}

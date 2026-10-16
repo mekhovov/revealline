@@ -103,6 +103,18 @@ function key(page, value) {
   if (rangeChanged) target.emit('change');
   return event;
 }
+function adjustSetting(page, direction) {
+  const field = page.doc.activeElement;
+  const before = field.value;
+  assert.equal(field.type, 'range');
+  key(page, 'Enter');
+  assert.equal(field.getAttribute('data-controller-editing'), 'true');
+  key(page, direction);
+  assert.equal(field.value, before, 'Settings value remains a draft until explicit Confirm.');
+  key(page, 'Enter');
+  assert.equal(field.hasAttribute('data-controller-editing'), false);
+  assert.equal(page.doc.activeElement, field);
+}
 function enter(page, id) {
   page.$(id).focus();
   assert.equal(page.doc.activeElement, page.$(id));
@@ -254,7 +266,7 @@ test('Versus keyboard master controls persist only the shared record; Team and a
     assert.equal(page.$('race-audio').textContent, 'Mute sound');
     assert.equal(page.$('race-audio').getAttribute('aria-pressed'), null);
     reaches(page, 'race-master-volume');
-    key(page, 'ArrowRight');
+    adjustSetting(page, 'ArrowRight');
     assert.deepEqual(record(saved), { muted: false, volume: 0.66 });
     assert.equal(saved.getItem(AUDIO_PREFERENCES_KEY), '{"muted":false,"volume":0.66}');
     assert.equal(a.contexts(), 0);
@@ -321,7 +333,7 @@ test('Versus starts muted, then master edits preserve active music intent and a 
   assert.equal(sound.cursor, cursor);
   assert.deepEqual(sound.musicState(), music);
   reaches(page, 'race-master-volume');
-  key(page, 'ArrowLeft');
+  adjustSetting(page, 'ArrowLeft');
   assert.deepEqual(record(saved), { muted: false, volume: 0.39 });
   page.frames(30);
   assert.equal(page.state(), 'paused');
@@ -380,11 +392,11 @@ test('Team keyboard master edits remain accessible while paused and preserve its
   assert.equal(page.$('coop-audio').getAttribute('aria-pressed'), null);
   key(page, 'Enter');
   reaches(page, 'coop-master-volume');
-  key(page, 'ArrowRight');
+  adjustSetting(page, 'ArrowRight');
   assert.deepEqual(record(saved), { muted: false, volume: 0.26 });
   page.tick(120);
   assert.equal(page.$('coop-overlay').hidden, false);
-  assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+  assert.equal(page.$('coop-overlay-title').textContent, 'PAUSED');
   assert.deepEqual(
     ids.map((id) => page.$(id).textContent),
     before,
@@ -442,7 +454,7 @@ test('Team keeps its sound explanation through saved edits, storage failure and 
 
   failWrite = true;
   page.$('coop-master-volume').focus();
-  key(page, 'ArrowRight');
+  adjustSetting(page, 'ArrowRight');
   assert.equal(Number(page.$('coop-master-volume').value), 0.26);
   assert.deepEqual(record(saved), { muted: false, volume: 0.25 });
   assert.equal(
@@ -452,7 +464,7 @@ test('Team keeps its sound explanation through saved edits, storage failure and 
   expectExplanation();
 
   failWrite = false;
-  key(page, 'ArrowRight');
+  adjustSetting(page, 'ArrowRight');
   assert.deepEqual(record(saved), { muted: false, volume: 0.27 });
   assert.equal(status.textContent, '');
   expectExplanation();
@@ -504,7 +516,7 @@ for (const mode of ['Versus', 'Team'])
     assert.deepEqual(record(saved), { muted: true, volume: 0.4 });
     refuse = team;
     reaches(page, `${prefix}-master-volume`);
-    key(page, 'ArrowRight');
+    adjustSetting(page, 'ArrowRight');
     assert.equal(Number(control('master-volume').value), 0.41);
     const preferenceBytes = saved.getItem(AUDIO_PREFERENCES_KEY),
       writes = saved.writes.length,
@@ -516,8 +528,7 @@ for (const mode of ['Versus', 'Team'])
       assert.deepEqual(record(saved), { muted: true, volume: 0.4 });
     } else assert.equal(warning, '');
 
-    if (team) enter(page, 'coop-settings-close');
-    else enter(page, 'race-settings-tab-extras');
+    enter(page, `${prefix}-settings-tab-extras`);
     enter(page, `${prefix}-${team ? 'help-toggle' : 'help'}`);
     const entry = control('help-read'),
       region = control('help-reading'),
@@ -547,8 +558,7 @@ for (const mode of ['Versus', 'Team'])
     assert.equal(done.disabled, true);
     assert.equal(region.scrollTop, 80);
     enter(page, `${prefix}-${team ? 'help-toggle' : 'help-back'}`);
-    if (team) enter(page, 'coop-settings-open');
-    else enter(page, 'race-settings-tab-audio');
+    enter(page, `${prefix}-settings-tab-audio`);
     frames(30);
     assert.deepEqual(state(), attempt);
     assert.equal(saved.getItem(AUDIO_PREFERENCES_KEY), preferenceBytes);
@@ -566,7 +576,7 @@ for (const mode of ['Versus', 'Team'])
       assert.equal(page.mediaElements(), 1);
       refuse = false;
       reaches(page, 'coop-master-volume');
-      key(page, 'ArrowRight');
+      adjustSetting(page, 'ArrowRight');
       assert.deepEqual(record(saved), { muted: true, volume: 0.42 });
       assert.equal(control('audio-status').textContent, '');
       assert.equal(control('audio-note').textContent, explanation);

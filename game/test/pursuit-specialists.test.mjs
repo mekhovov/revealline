@@ -177,8 +177,8 @@ test('ordinary Varied preparation never introduces a hazardous specialist', () =
   const geometry = { width: 20, height: 16, cells: new Uint8Array(320) };
   const result = derivePursuitGoals(
     [
-      { id: 'a', x: 5.5, y: 5.5 },
-      { id: 'b', x: 9.5, y: 9.5 },
+      { id: 'a', role: 'scout', x: 5.5, y: 5.5 },
+      { id: 'b', role: 'scout', x: 9.5, y: 9.5 },
     ],
     geometry,
   );

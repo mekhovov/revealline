@@ -172,7 +172,11 @@ test('the Versus controller can reach the landing utility and a denied request r
   });
   page.join(0);
   const landing = page.$('versus-landing-fullscreen');
-  for (let step = 0; step < 16 && page.doc.activeElement !== landing; step++) page.pulse(0, 13);
+  for (let step = 0; step < 16 && page.doc.activeElement !== landing; step++) {
+    // Sound and fullscreen share a horizontal utility row. Down enters that
+    // row; Right reaches its second action without leaving the menu.
+    page.pulse(0, landing.parentNode.contains(page.doc.activeElement) ? 15 : 13);
+  }
   assert.ok(page.doc.activeElement === landing, 'D-pad navigation reaches the landing utility');
   page.pulse(0, 0);
   await Promise.resolve();
@@ -188,4 +192,11 @@ test('the Versus controller can reach the landing utility and a denied request r
   assert.equal(feedback.hidden, false);
   assert.match(feedback.textContent, /Fullscreen is unavailable/);
   assert.equal(landing.getAttribute('aria-describedby'), feedback.id);
+  page.$('race-start').click();
+  page.frame();
+  page.$('race-pause').click();
+  page.frame();
+  assert.equal(page.doc.body.dataset.couchStatus, 'paused');
+  assert.equal(landing.closest('.shared-pause-menu')?.contains(feedback), true);
+  assert.equal(feedback.hidden, false, 'Denied fullscreen feedback stays visible with Pause.');
 });

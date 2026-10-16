@@ -217,6 +217,7 @@ export function suspendSession({
       : prepareRunningEnemyLevel(presentationLevel, {
           classes: run.classRecipes,
           style: run.level.pursuit ? 'varied' : 'original',
+          generation: run.level.pursuit?.version ?? 'pursuit-goals.v1',
         });
     required(matched, 'Tuned picture source differs from this flight.');
     const expected = createRun(matched, {

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, settle, memoryStorage, clickVisibleSimulator } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
@@ -78,7 +78,7 @@ for (const personal of [null, 'tryzub']) {
     };
     destination = undefined;
     page.$('shell-menu').click();
-    page.$('solo-fpv-sim').click();
+    clickVisibleSimulator(page);
     await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), 'vyshyvanka');
 
@@ -102,6 +102,12 @@ for (const personal of [null, 'tryzub']) {
     } finally {
       BoardPainter.prototype.setLevel = setLevel;
     }
+    page.frame(0);
+    assert.equal(page.rendered.run.levelId, 'porcelain-mission');
+    assert.equal(page.rendered.paused, true, 'Mission selection opens its briefing.');
+    assert.equal(page.rendered.run.tick, 0, 'The prepared mission does not autoplay.');
+    assert.equal(page.$('game-overlay').hidden, false);
+    page.$('start-button').click();
     await settle(() => {
       page.frame(0);
       return (
@@ -123,7 +129,7 @@ for (const personal of [null, 'tryzub']) {
     );
     destination = undefined;
     page.$('shell-menu').click();
-    page.$('solo-fpv-sim').click();
+    clickVisibleSimulator(page);
     await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), 'dnipro-porcelain');
     assert.equal(destination.searchParams.get('appearanceRevision'), 'r1');
@@ -186,7 +192,7 @@ for (const outcome of ['cancel', 'failure']) {
     };
     destination = undefined;
     page.$('shell-menu').click();
-    page.$('solo-fpv-sim').click();
+    clickVisibleSimulator(page);
     await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), 'vyshyvanka');
     assert.equal(page.storage.getItem(THEME_PREFERENCES_KEY), null);

@@ -135,7 +135,7 @@ class AdapterTests(unittest.TestCase):
         q = json.loads((output / 'source-qualification.json').read_bytes())
         self.assertEqual(q['tests'], {'status': 'waived', 'counts': None})
         self.assertNotIn('passed', q)
-        self.assertEqual(len(q['gates']), 5)
+        self.assertEqual(len(q['gates']), len(adapter.GATES))
         self.assertFalse((output / 'source.tar').exists())
         pin = next(row for row in q['evidencePins']
                    if row['path'] == adapter.HISTORICAL_AUDIO_EVIDENCE_ARCHIVE)

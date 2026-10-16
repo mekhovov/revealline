@@ -509,5 +509,27 @@ test('static launch markup survives disabled JS and excludes decorative fake con
   assert.match(index, /python3 -m http.server/);
   assert.doesNotMatch(index, /landing-pack-select|pixel-board|flight-window|<select/);
   assert.doesNotMatch(index, /http-equiv="refresh"/);
-  assert.match(index, /<script src="\.\/launch.mjs" defer>/);
+  assert.match(
+    index,
+    /<script\s+src="\.\/launch.mjs"\s+defer\s+type="application\/x-revealline-locked"/,
+  );
+});
+
+test('password-delayed startup waits for deferred scripts after DOMContentLoaded has passed', async () => {
+  const page = boundary({ href: 'file:///fixture/game/index.html' });
+  page.document.readyState = 'interactive';
+  let scriptsLoaded;
+  page.context.RevealLineAccess = {
+    ready: Promise.resolve(true),
+    scriptsReady: new Promise((resolve) => {
+      scriptsLoaded = resolve;
+    }),
+  };
+  page.run();
+  await Promise.resolve();
+  assert.equal(page.document.documentElement.dataset.bootState, 'loading');
+  scriptsLoaded(true);
+  for (let index = 0; index < 5; index++) await Promise.resolve();
+  assert.equal(page.document.documentElement.dataset.bootState, 'file');
+  assert.equal(page.document.activeElement, page.online);
 });

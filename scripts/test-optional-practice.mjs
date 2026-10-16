@@ -11,6 +11,7 @@ import {
   OPTIONAL_PRACTICE_LIMITS,
 } from './build-optional-practice.mjs';
 import { ICON_MASTER } from './brand-icons.mjs';
+import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
 import { readBuildConfig } from './game-cli.mjs';
 import { installPracticeWorker } from '../optional-practice/civilian-flight/worker-template.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -24,6 +25,17 @@ test('optional practice archives are reproducible, admitted completely and absen
   assert.equal(first.manifest.core, false);
   assert.equal(first.manifest.qualification, 'development-only');
   const entries = new Map(first.entries.map((entry) => [entry.name, entry.bytes]));
+  assert.ok(
+    entries.has('game/ui/pause-menu.css'),
+    'The shared shell keeps its pause layout offline.',
+  );
+  for (const stylesheet of [
+    'mode-choice.css',
+    'optional-practice-panel.css',
+    'mode-settings-view.css',
+    'global-settings-view.css',
+  ])
+    assert.ok(entries.has(`game/ui/${stylesheet}`), `${stylesheet} stays in the offline closure`);
   assert.equal(first.manifest.files.length, entries.size - 1);
   for (const file of first.manifest.files) {
     assert.equal(entries.get(file.path).length, file.bytes);
@@ -70,6 +82,24 @@ test('optional practice archives are reproducible, admitted completely and absen
     /commit and tree/,
   );
 });
+test('release-qualified practice retains the full shared menu stylesheet closure within its limit', async () => {
+  const built = await buildOptionalPractice(root, {
+    engineCommit: 'a'.repeat(40),
+    engineTree: 'b'.repeat(40),
+    basePath: '/revealline/',
+  });
+  assert.equal(built.entries.length, 94);
+  assert.equal(OPTIONAL_PRACTICE_LIMITS.files, 96);
+  for (const stylesheet of [
+    'mode-play-shell.css',
+    'mode-choice.css',
+    'optional-practice-panel.css',
+    'pause-menu.css',
+    'mode-settings-view.css',
+    'global-settings-view.css',
+  ])
+    assert.ok(built.entries.some(({ name }) => name === `game/ui/${stylesheet}`));
+});
 test('an unexpected runtime import fails closed before a package can be published', async (t) => {
   const built = await buildOptionalPractice(root),
     fixture = await mkdtemp(path.join(tmpdir(), 'optional-practice-'));
@@ -81,9 +111,8 @@ test('an unexpected runtime import fails closed before a package can be publishe
   }
   const template = OPTIONAL_PRACTICE_ROOT + 'worker-template.mjs';
   await writeFile(path.join(fixture, template), await readFile(path.join(root, template)));
-  for (const locale of ['en', 'uk']) {
-    const name = `game/locales/${locale}/errors.json`,
-      target = path.join(fixture, name);
+  for (const name of OPTIONAL_PACKAGE_POLICIES['civilian-flight'].localeInputs) {
+    const target = path.join(fixture, name);
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, await readFile(path.join(root, name)));
   }
@@ -120,6 +149,7 @@ function workerFixture({ corrupt = false, quota = false, existing = false, stall
     },
     caches: {
       keys: async () => [...stores.keys()],
+      match: async (url, { cacheName }) => stores.get(cacheName)?.get(url)?.clone(),
       delete: async (name) => {
         deleted.push(name);
         return stores.delete(name);

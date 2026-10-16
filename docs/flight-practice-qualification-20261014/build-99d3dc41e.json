@@ -1,0 +1,15 @@
+{
+  "output": "/Volumes/alex/CodexMigrationStaging/flight-practice-publication.sMOWmR/candidate-99d3dc41e",
+  "version": "v0.151.1",
+  "sourceRevision": "99d3dc41e08b420f2b430ef1875b309983be8f38",
+  "sourceTree": "fb5457a3f5281430fe7cf6739eb6c9cdc734f0e8",
+  "packageIds": [
+    "civilian-flight",
+    "civilian-fpv",
+    "fpv-worlds"
+  ],
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "publicEligible": false
+}

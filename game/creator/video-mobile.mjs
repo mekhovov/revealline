@@ -1,4 +1,5 @@
-import { VIDEO_POSTER_LIMITS } from '../video-poster.mjs';
+import { inspectVideoContainerBytes, VIDEO_POSTER_LIMITS } from '../video-poster.mjs';
+import { ownCreatorBlob } from './bytes.mjs';
 
 const OUTPUT_MIME = 'video/mp4';
 const abortError = () => new DOMException('Mobile video preparation cancelled.', 'AbortError');
@@ -25,16 +26,17 @@ export async function prepareMobileCreatorVideo(
   { signal, loadLibrary = defaultLibrary } = {},
 ) {
   checkAbort(signal);
-  if (!(source instanceof Blob) || !['video/mp4', 'video/webm'].includes(source.type))
-    throw new TypeError('Choose an MP4 or WebM video for mobile preparation.');
-  if (source.size <= 0 || source.size > VIDEO_POSTER_LIMITS.sourceBytes)
-    throw new TypeError('Video exceeds the 64 MiB source budget.');
-
+  // Intake deliberately owns anonymous bytes. File.type may also be empty or
+  // incorrect, so use the same bounded container inspection as poster capture.
+  const raw = ownCreatorBlob(source, VIDEO_POSTER_LIMITS.sourceBytes, 'Video');
+  const prefix = new Uint8Array(await raw.slice(0, 65536).arrayBuffer());
+  checkAbort(signal);
+  const mime = inspectVideoContainerBytes(prefix);
   const media = await loadLibrary();
   checkAbort(signal);
   const input = new media.Input({
-      source: new media.BlobSource(source),
-      formats: inputFormats(media, source.type),
+      source: new media.BlobSource(raw),
+      formats: inputFormats(media, mime),
     }),
     target = new media.BufferTarget(),
     output = new media.Output({

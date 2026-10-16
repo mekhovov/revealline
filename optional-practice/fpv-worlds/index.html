@@ -1,15 +1,65 @@
 <!doctype html>
-<html lang="en" data-fpv-worlds="true">
+<html lang="en" data-fpv-worlds="true" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../../game/access-gate.css" />
+    <script src="../../game/access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="theme-color" content="#101b20" />
     <link rel="manifest" href="./app.webmanifest" />
     <title>FPV / LINE · Simulator</title>
     <link rel="stylesheet" href="../civilian-fpv/world-style.css" />
-    <script type="module" src="../civilian-fpv/world-app.mjs"></script>
+    <script type="application/x-revealline-locked" data-access-type="">
+      document.documentElement.dataset.modeShellPending = 'true';
+      const simLoadMessage = (message) => {
+        const status = document.getElementById('sim-menu-boot-message');
+        if (status && document.documentElement.dataset.modeShellPending)
+          status.textContent = message;
+      };
+      const simLoadFailed = () =>
+        simLoadMessage(
+          'Could not start. Reload to retry. / Не вдалося запустити. Оновіть сторінку.',
+        );
+      window.addEventListener('error', simLoadFailed, { once: true });
+      window.addEventListener('unhandledrejection', simLoadFailed, { once: true });
+      window.setTimeout(
+        () =>
+          simLoadMessage(
+            'Still loading… You can reload or go back. / Ще завантажується… Можна оновити сторінку або повернутися назад.',
+          ),
+        15000,
+      );
+    </script>
+    <script
+      src="../civilian-fpv/world-app.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </head>
   <body class="field-kit sim-worlds">
+    <section class="sim-menu-boot" role="status">
+      <strong>FPV / LINE</strong>
+      <p id="sim-menu-boot-message">Preparing game… / Підготовка гри…</p>
+      <a href="./index.html" onclick="event.preventDefault(); location.reload()"
+        >Reload / Оновити</a
+      >
+      <button type="button" onclick="history.back()">Back / Назад</button>
+    </section>
     <a class="sim-skip" href="#explore">Skip to flight selection</a>
     <header class="studio-header">
       <a class="wordmark" href="#explore" aria-label="FPV / LINE Simulator">
@@ -43,10 +93,6 @@
         >
         <button id="lobby-sound" data-sim-icon="mute" aria-label="Sound off">Sound off</button>
         <button id="lobby-settings" data-sim-icon="settings" data-i18n="settings">Settings</button>
-        <select id="world-language" aria-label="Language">
-          <option value="en">EN</option>
-          <option value="uk">УК</option>
-        </select>
       </div>
     </header>
     <main>
@@ -308,6 +354,12 @@
                 <option value="ukrainian">Ukrainian Horizons</option>
                 <option value="pixel">Pixel Circuit</option>
                 <option value="operations">Field Operations</option>
+                <option value="fpv-field-crossing">FPV · Field Crossing</option>
+                <option value="fpv-freight-depot">FPV · Freight Depot</option>
+                <option value="fpv-relay-ruins">FPV · Relay Ruins</option>
+                <option value="fpv-river-port">FPV · River Port</option>
+                <option value="fpv-chalk-quarry">FPV · Chalk Quarry</option>
+                <option value="fpv-orchard-strongpoint">FPV · Orchard Strongpoint</option>
               </select></label
             ><label
               ><span data-i18n="snap">Snap</span
@@ -378,6 +430,311 @@
               Choose a GLB, or a glTF and all its local textures/buffers. Blender and Crocotile
               export these formats.
             </p>
+            <details class="world-import-guide" id="world-import-guide">
+              <summary data-i18n="worldGuideTitle">How to import your first world</summary>
+              <p data-i18n="worldGuideIntro">
+                Want a ready-to-fly world? Use Library. This importer is for scenery you want to
+                turn into your own course.
+              </p>
+              <ol>
+                <li data-i18n="worldGuideGet">
+                  Download and unzip one scene. Prefer a self-contained GLB. A kit with many models
+                  must first be assembled into one scene in Blender.
+                </li>
+                <li data-i18n="worldGuideConvert">
+                  Have a .blend, FBX or OBJ? Open or import it in Blender, then File → Export → glTF
+                  2.0 → glTF Binary (.glb). Use PNG/JPEG textures and leave Draco compression off.
+                  Export custom properties if you authored gameplay markers.
+                </li>
+                <li data-i18n="worldGuideCredit">
+                  Fill in Asset author, the original Source URL and the actual License before
+                  choosing files. CC0 is not a substitute for an unknown license. Keep credits and
+                  note your changes when sharing CC BY work.
+                </li>
+                <li data-i18n="worldGuideSelect">
+                  Choose scene files: select exactly one .glb, or one .gltf together with its .bin
+                  and PNG/JPEG files. For nested texture folders use Choose scene folder and
+                  preserve the directory structure. Select the scene subfolder, not an entire asset
+                  kit.
+                </li>
+                <li data-i18n="worldGuidePlayable">
+                  Read the import report and Preview world. Scenery is visual only: add simplified
+                  collision markers, a safe spawn and route objectives. Check the flight bounds and
+                  use Test flight in both modes. The automatic starter route is not a finished
+                  level.
+                </li>
+                <li data-i18n="worldGuideSave">
+                  Export editable project for a backup, then Install pack to keep it in this
+                  browser. Export world pack to share; recipients import it in Library. Export again
+                  after edits. Before importing a different scene, back up your draft and choose
+                  Start a new world.
+                </li>
+              </ol>
+              <p data-i18n="worldGuideLimits">
+                Current scene limit: 16 MiB after packing, up to 128 supplied files. PNG/JPEG only.
+                A download being free does not guarantee compatibility; large scenes need texture
+                reduction and geometry cleanup before import.
+              </p>
+              <p data-i18n="worldGuideTrouble">
+                Missing resource? Keep file names and folders unchanged, or re-export a
+                self-contained GLB. Unsupported extension? Re-export without geometry compression
+                and with PNG/JPEG textures. Missing spawn/colliders? Follow the authoring guide
+                below; these are gameplay data, not texture errors.
+              </p>
+              <h3 data-i18n="worldGuideLinks">Export and authoring help</h3>
+              <ul class="world-resource-links">
+                <li>
+                  <a
+                    href="https://docs.blender.org/manual/en/4.5/addons/import_export/scene_gltf2.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Blender · glTF export</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.crocotile3d.com/howto.html#exporting"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Crocotile · export</a
+                  >
+                </li>
+              </ul>
+              <p>
+                <a
+                  data-i18n="worldGuideAuthoring"
+                  href="https://github.com/mekhovov/revealline/blob/main/authoring/fpv-worlds/README.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >SIM markers, collisions and export preset</a
+                >
+              </p>
+            </details>
+            <details class="world-import-guide" id="world-import-resources">
+              <summary data-i18n="worldResourcesTitle">
+                Find free scenes &amp; scenery — 23 candidates
+              </summary>
+              <p data-i18n="worldResourcesIntro">
+                These are source resources for review, not installed or verified SIM levels. Links
+                open a new tab and need internet. The guide itself stays with the simulator.
+              </p>
+              <h3 data-i18n="worldResourcesScenes">Assembled scenes — convert and prepare</h3>
+              <p data-i18n="worldResourcesSceneHelp">
+                Start with the small construction site. Poly Haven scenes offer richer detail but
+                need Blender export and substantial optimization for the 16 MiB limit. Choose the
+                Blender scene, not an Unreal project or an HDRI alone.
+              </p>
+              <ul class="world-resource-links">
+                <li>
+                  <a
+                    href="https://opengameart.org/content/3d-house-construction-site-lowpoly-cc0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >House Construction Site · Majadroid</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://polyhaven.com/collections/hidden_alley"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >The Hidden Alley</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://polyhaven.com/collections/pine_forest"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Pine Forest</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://polyhaven.com/collections/the_shed"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >The Shed</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://polyhaven.com/collections/verdant_trail"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >A Verdant Trail</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://polyhaven.com/collections/namaqualand"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Namaqualand</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://polyhaven.com/collections/moon"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Lunar Landscape</a
+                  >
+                </li>
+              </ul>
+              <h3 data-i18n="worldResourcesKits">Build your own world — assemble these kits</h3>
+              <p data-i18n="worldResourcesKitHelp">
+                Kenney kits contain reusable pieces, not authored flight courses. Combine a small
+                selection in Blender and export one scene. Smuggler’s Cove is also a source
+                collection; its Unreal project is not directly importable.
+              </p>
+              <ul class="world-resource-links">
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/city-kit-industrial"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >City Kit Industrial · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/city-kit-suburban"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >City Kit Suburban · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/city-kit-commercial"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >City Kit Commercial · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/city-kit-roads"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >City Kit Roads · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/nature-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Nature Kit · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/racing-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Racing Kit · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/castle-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Castle Kit · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/pirate-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Pirate Kit · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/space-station-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Space Station Kit · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/modular-dungeon-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Modular Dungeon Kit · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/modular-cave-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Modular Cave Kit · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/mini-forest"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Mini Forest · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/mini-skate"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Mini Skate · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/survival-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Survival Kit · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kenney.nl/assets/platformer-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Platformer Kit · Kenney</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://polyhaven.com/collections/smugglers_cove"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >The Smuggler’s Cove · Poly Haven</a
+                  >
+                </li>
+              </ul>
+              <p data-i18n="worldResourcesLicense">
+                Listed sources advertise CC0; check and keep the license supplied with your chosen
+                download. Asset license and import compatibility are separate checks.
+              </p>
+              <ul class="world-resource-links">
+                <li>
+                  <a href="https://polyhaven.com/license" target="_blank" rel="noopener noreferrer"
+                    >Poly Haven · CC0</a
+                  >
+                </li>
+                <li>
+                  <a href="https://kenney.nl/support" target="_blank" rel="noopener noreferrer"
+                    >Kenney · license help</a
+                  >
+                </li>
+              </ul>
+            </details>
             <label class="file-button"
               ><span data-i18n="chooseFiles">Choose scene files</span
               ><input
@@ -417,6 +774,15 @@
         <h1 data-i18n="packs">World packs</h1>
         <p data-i18n="packsHelp">Install portable worlds and back up your recorded flights.</p>
         <div class="button-row">
+          <button
+            id="library-flight-records"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="sim-settings"
+            data-i18n="recordedFlights"
+          >
+            Recorded flights &amp; recovery
+          </button>
           <label class="file-button"
             ><span data-i18n="importPack">Import .rlpack / editable project</span
             ><input id="import-pack" type="file" accept=".rlpack,.zip" /></label
@@ -425,10 +791,17 @@
             ><span data-i18n="restoreProofs">Restore flight records</span
             ><input id="import-proofs" type="file" accept=".json" /></label
           ><button id="prepare-runtime" data-i18n="prepareRuntime">Prepare simulator offline</button
+          ><button id="remove-runtime" data-i18n="removeRuntime">
+            Remove offline simulator files</button
           ><button id="persistent-storage" data-i18n="keepOffline">
             Request persistent storage
           </button>
         </div>
+        <p data-i18n="runtimeOfflineHelp">
+          Removal keeps your installed worlds and flight records. Download again before playing
+          offline.
+        </p>
+        <p id="runtime-offline-status" role="status" aria-live="polite"></p>
         <p id="storage-status"></p>
         <h2 data-i18n="installedWorlds">Installed worlds</h2>
         <div id="installed-packs"></div>
@@ -695,6 +1068,15 @@
       <p data-i18n="settingsHelp">
         Your controls and flight preferences carry across worlds and playlists.
       </p>
+      <div class="sim-accessibility">
+        <label
+          >Language / Мова
+          <select id="world-language">
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+          </select>
+        </label>
+      </div>
       <div id="sim-settings-controls"></div>
       <div class="sim-accessibility">
         <label

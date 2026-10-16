@@ -7,6 +7,10 @@ import { canonicalMissionLevelKey, officialLevelNumber } from '../level-numberin
 
 export const TEAM_LIBRARY_JOURNEY_EDITION = 'team-cultural-specialist-originals-2';
 export const TEAM_LIBRARY_CLASSIC_SOURCE = 'team-classic:relay-rescue-starter';
+// Hunt has different Team and Duel campaigns behind the same route URL. Their
+// library owners must coexist without one mode replacing the other's rows.
+export const teamJourneyLibraryOwner = (editionId) =>
+  `${editionId === 'humanoid-hunt-v1' ? 'team-journey' : 'journey'}:${editionId}`;
 const difficultyKeys = Object.freeze({
   gentle: 'interface:missionLibrary.team.difficulty.gentle',
   standard: 'interface:missionLibrary.team.difficulty.standard',
@@ -49,6 +53,7 @@ export function teamJourneyLibrarySource({
   });
   return {
     ...source,
+    id: teamJourneyLibraryOwner(editionId),
     details: (mission) => {
       const manifest = journey.manifest(mission, difficulty()),
         design = presentation(mission)?.design;

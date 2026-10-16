@@ -1,15 +1,22 @@
 import {
   TEAM_RUNNING_LEVEL_VERSION,
   TEAM_PURSUIT_LEVEL_VERSION,
+  TEAM_PURSUIT_V2_LEVEL_VERSION,
+  TEAM_PURSUIT_V2_RULESET,
+  TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_V2_RULESET,
   TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
   TEAM_SNAKE_PURSUIT_RULESET,
   TEAM_SNAKE_PURSUIT_PACK_VERSION,
   TEAM_PURSUIT_RULESET,
   TEAM_PURSUIT_PACK_VERSION,
+  TEAM_PURSUIT_V2_PACK_VERSION,
+  TEAM_SNAKE_PURSUIT_V2_PACK_VERSION,
   TEAM_RUNNING_RULESET,
   TEAM_RUNNING_PACK_VERSION,
 } from './running-enemies.mjs';
 import { COOP_LEVEL_VERSION, COOP_RULESET, validateCoopLevel } from './core.mjs';
+import { EXPEDITION_LEVEL, EXPEDITION_PACK, EXPEDITION_RULESET } from './expedition-version.mjs';
 import {
   TEAM_SNAKE_LEVEL_VERSION,
   TEAM_SNAKE_RULESET,
@@ -340,8 +347,14 @@ export function validateCoopPack(pack) {
   if (!keys(pack, ['version', 'ruleset', 'id', 'revision', 'name', 'levels']))
     return result(['A co-op pack must be a plain data object with supported fields.']);
   const errors = [];
-  const snakePursuit = pack.version === TEAM_SNAKE_PURSUIT_PACK_VERSION;
-  const pursuit = pack.version === TEAM_PURSUIT_PACK_VERSION || snakePursuit;
+  const successor = [TEAM_PURSUIT_V2_PACK_VERSION, TEAM_SNAKE_PURSUIT_V2_PACK_VERSION].includes(
+    pack.version,
+  );
+  const snakePursuit = [
+    TEAM_SNAKE_PURSUIT_PACK_VERSION,
+    TEAM_SNAKE_PURSUIT_V2_PACK_VERSION,
+  ].includes(pack.version);
+  const pursuit = pack.version === TEAM_PURSUIT_PACK_VERSION || successor || snakePursuit;
   const running = pack.version === TEAM_RUNNING_PACK_VERSION || pursuit;
   const snake = pack.version === TEAM_SNAKE_PACK_VERSION;
   const hunting = pack.version === COOP_HUNT_PACK_VERSION;
@@ -350,6 +363,7 @@ export function validateCoopPack(pack) {
   const bonus = pack.version === COOP_BONUS_PACK_VERSION;
   const impact = pack.version === COOP_IMPACT_PACK_VERSION;
   const specialist = pack.version === COOP_SPECIALIST_PACK_VERSION;
+  const expedition = pack.version === EXPEDITION_PACK;
   const foundations =
     pack.version === COOP_FOUNDATION_PACK_VERSION ||
     terrain ||
@@ -357,6 +371,7 @@ export function validateCoopPack(pack) {
     bonus ||
     impact ||
     specialist ||
+    expedition ||
     hunting ||
     running ||
     snake;
@@ -364,29 +379,35 @@ export function validateCoopPack(pack) {
     errors.push('Unsupported co-op pack version; solo packs are a different format.');
   if (
     pack.ruleset !==
-    (snakePursuit
-      ? TEAM_SNAKE_PURSUIT_RULESET
-      : snake
-        ? TEAM_SNAKE_RULESET
-        : pursuit
-          ? TEAM_PURSUIT_RULESET
-          : running
-            ? TEAM_RUNNING_RULESET
-            : hunting
-              ? COOP_HUNT_RULESET
-              : specialist
-                ? COOP_SPECIALIST_RULESET
-                : impact
-                  ? COOP_IMPACT_RULESET
-                  : bonus
-                    ? COOP_BONUS_RULESET
-                    : rover
-                      ? COOP_ROVER_RULESET
-                      : terrain
-                        ? COOP_TERRAIN_RULESET
-                        : foundations
-                          ? COOP_FOUNDATION_RULESET
-                          : COOP_RULESET)
+    (expedition
+      ? EXPEDITION_RULESET
+      : snakePursuit
+        ? successor
+          ? TEAM_SNAKE_PURSUIT_V2_RULESET
+          : TEAM_SNAKE_PURSUIT_RULESET
+        : snake
+          ? TEAM_SNAKE_RULESET
+          : pursuit
+            ? successor
+              ? TEAM_PURSUIT_V2_RULESET
+              : TEAM_PURSUIT_RULESET
+            : running
+              ? TEAM_RUNNING_RULESET
+              : hunting
+                ? COOP_HUNT_RULESET
+                : specialist
+                  ? COOP_SPECIALIST_RULESET
+                  : impact
+                    ? COOP_IMPACT_RULESET
+                    : bonus
+                      ? COOP_BONUS_RULESET
+                      : rover
+                        ? COOP_ROVER_RULESET
+                        : terrain
+                          ? COOP_TERRAIN_RULESET
+                          : foundations
+                            ? COOP_FOUNDATION_RULESET
+                            : COOP_RULESET)
   )
     errors.push('This co-op pack requires a different ruleset.');
   const validRevision = foundations
@@ -407,29 +428,35 @@ export function validateCoopPack(pack) {
     if (
       validation.valid &&
       level.version !==
-        (snakePursuit
-          ? TEAM_SNAKE_PURSUIT_LEVEL_VERSION
-          : snake
-            ? TEAM_SNAKE_LEVEL_VERSION
-            : pursuit
-              ? TEAM_PURSUIT_LEVEL_VERSION
-              : running
-                ? TEAM_RUNNING_LEVEL_VERSION
-                : hunting
-                  ? COOP_HUNT_LEVEL_VERSION
-                  : specialist
-                    ? COOP_SPECIALIST_LEVEL_VERSION
-                    : impact
-                      ? COOP_IMPACT_LEVEL_VERSION
-                      : bonus
-                        ? COOP_BONUS_LEVEL_VERSION
-                        : rover
-                          ? COOP_ROVER_LEVEL_VERSION
-                          : terrain
-                            ? COOP_TERRAIN_LEVEL_VERSION
-                            : foundations
-                              ? COOP_FOUNDATION_LEVEL_VERSION
-                              : COOP_LEVEL_VERSION)
+        (expedition
+          ? EXPEDITION_LEVEL
+          : snakePursuit
+            ? successor
+              ? TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION
+              : TEAM_SNAKE_PURSUIT_LEVEL_VERSION
+            : snake
+              ? TEAM_SNAKE_LEVEL_VERSION
+              : pursuit
+                ? successor
+                  ? TEAM_PURSUIT_V2_LEVEL_VERSION
+                  : TEAM_PURSUIT_LEVEL_VERSION
+                : running
+                  ? TEAM_RUNNING_LEVEL_VERSION
+                  : hunting
+                    ? COOP_HUNT_LEVEL_VERSION
+                    : specialist
+                      ? COOP_SPECIALIST_LEVEL_VERSION
+                      : impact
+                        ? COOP_IMPACT_LEVEL_VERSION
+                        : bonus
+                          ? COOP_BONUS_LEVEL_VERSION
+                          : rover
+                            ? COOP_ROVER_LEVEL_VERSION
+                            : terrain
+                              ? COOP_TERRAIN_LEVEL_VERSION
+                              : foundations
+                                ? COOP_FOUNDATION_LEVEL_VERSION
+                                : COOP_LEVEL_VERSION)
     )
       errors.push(
         `Level ${i + 1}: ${foundations ? 'This foundation pack requires a matching Team runtime edition.' : 'This historical pack cannot contain a newer Team runtime edition.'}`,

@@ -9,25 +9,28 @@ import { readTestPolicy, parseTestPolicy, policyDecision } from './test-policy.m
 
 const cli = fileURLToPath(new URL('./test-policy.mjs', import.meta.url));
 
-test('the explicit temporary policy skips only automated suites and never reports tests passed', async () => {
+test('the restored policy requires suites without manufacturing a passing verdict', async () => {
   const policy = await readTestPolicy();
-  assert.ok(['waived', 'required'].includes(policy.mode));
-  assert.equal(policy.authorization, 'explicit-user-request-20260922');
+  assert.equal(policy.mode, 'required');
+  assert.equal(policy.authorization, 'explicit-user-request-20261004');
   assert.equal(policy.scope, 'automated-test-suites');
   assert.deepEqual(policyDecision(policy), {
-    policyMode: 'waived',
-    mode: 'waived',
-    runTests: 'false',
-    qualification: 'tests-waived-by-user',
+    policyMode: 'required',
+    mode: 'required',
+    runTests: 'true',
+    qualification: 'tests-required',
     forced: false,
   });
-  assert.deepEqual(policyDecision({ ...policy, mode: 'waived' }), {
-    policyMode: 'waived',
-    mode: 'waived',
-    runTests: 'false',
-    qualification: 'tests-waived-by-user',
-    forced: false,
-  });
+  assert.deepEqual(
+    policyDecision({ ...policy, mode: 'waived', authorization: 'explicit-user-request-20260922' }),
+    {
+      policyMode: 'waived',
+      mode: 'waived',
+      runTests: 'false',
+      qualification: 'tests-waived-by-user',
+      forced: false,
+    },
+  );
   assert.equal(Object.hasOwn(policyDecision(policy), 'passed'), false);
 });
 
@@ -61,6 +64,7 @@ test('missing, malformed and broadened authorization fail closed', async () => {
     '{',
     { ...good, format: 'v2' },
     { ...good, mode: 'skip' },
+    { ...good, mode: 'waived' },
     { ...good, authorization: 'inferred' },
     { ...good, scope: 'all-release-checks' },
     { ...good, reason: '' },
@@ -75,7 +79,14 @@ test('CLI records visible skipped policy and force-tests changes only the effect
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-policy-'));
   t.after(() => fs.rm(root, { recursive: true, force: true }));
   const filename = path.join(root, 'policy.json');
-  await fs.writeFile(filename, JSON.stringify({ ...(await readTestPolicy()), mode: 'waived' }));
+  await fs.writeFile(
+    filename,
+    JSON.stringify({
+      ...(await readTestPolicy()),
+      mode: 'waived',
+      authorization: 'explicit-user-request-20260922',
+    }),
+  );
   for (const forced of ['false', 'true']) {
     const output = path.join(root, forced + '.output');
     const summary = path.join(root, forced + '.summary');

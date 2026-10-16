@@ -1,3 +1,5 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -145,10 +147,10 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
     assert.deepEqual(info(p).owner, owner);
     const saved = JSON.parse(storage.getItem('revealline.suspended.dev.v1'));
-    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
     await start(p);
     ticks(p, 8);
-    assert.ok(p.rendered.run.tick > saved.replay.ticks);
+    assert.ok(p.rendered.run.tick > nativeSession(saved).replay.ticks);
     assert.deepEqual(p.errors, []);
   });
 test('actual notices survive later empty fixed-step batches and same-ID restore resets the history', async (t) => {
@@ -170,8 +172,11 @@ test('actual notices survive later empty fixed-step batches and same-ID restore 
   p.$('flight-details-back').click();
   await Promise.resolve();
   const owner = info(p).owner;
-  p.$('continue-saved').click();
-  await settle(() => !p.$('continue-saved').disabled);
+  const saved = p.storage.getItem('revealline.suspended.dev.v1');
+  p.$('library-button').click();
+  p.$('save-json').value = saved;
+  await activateHostAction(p.$('import-save'));
+  assert.equal(p.$('library-dialog').open, false);
   assert.equal(info(p).owner.attempt, owner.attempt);
   assert.ok(info(p).owner.generation > owner.generation);
   assert.deepEqual(

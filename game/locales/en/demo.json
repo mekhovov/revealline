@@ -88,5 +88,13 @@
   "audio.unavailable": "Audio is unavailable.",
   "audio.failed": "Audio could not start. Try again.",
   "audio.source": "Artist / source",
-  "playChoices": "Want to play?"
+  "playChoices": "Want to play?",
+  "pauseShort": "Pause",
+  "resumeShort": "Resume",
+  "nextShort": "Next level",
+  "guide": "Flight guide",
+  "joinHint": "Steer to take over · practice, no rewards",
+  "closeDetails": "Close details",
+  "fullscreenShort": "Fullscreen",
+  "windowedShort": "Windowed"
 }

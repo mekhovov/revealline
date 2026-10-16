@@ -10,6 +10,8 @@ import {
 import { getMotionDisplay } from './display.mjs';
 import { freezeMotionPresets, motionText, motionCollectionReason } from './copy.mjs';
 import { createPreviewLoop } from './preview-loop.mjs';
+import { mountSharedActorPanel } from './shared-actor-panel.mjs';
+import { mountOverflightMotionPanel } from './overflight-panel.mjs';
 import { canvasTextFonts } from '../../game/text-face.mjs';
 import { fieldKitCopy } from '../../game/ui/field-kit-copy.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
@@ -75,6 +77,8 @@ const directionLabel = (direction) => {
 };
 
 function mountMotionLab() {
+  let sharedActorPanel = null;
+  const overflightMotionPanel = mountOverflightMotionPanel(document.getElementById('overflight-motion-study'));
   const $ = (id) => document.getElementById(id);
   // The lightweight reading control already works while presets are pending.
   // Retire only the real launcher's temporary action, never a newer focus owner.
@@ -1800,6 +1804,7 @@ function mountMotionLab() {
 
   function resume() {
     if (!loop.canRun || !state) return;
+    sharedActorPanel?.pause();
     paused = false;
     loop.setRunning(true);
     loop.resetClock();
@@ -1835,6 +1840,7 @@ function mountMotionLab() {
     const next = localReducedMotion || sharedReducedMotion;
     const changed = reducedMotion !== next;
     reducedMotion = next;
+    sharedActorPanel?.setReducedEffects(reducedMotion);
     $('reduced-motion').checked = localReducedMotion;
     $('motion-effects-notice').textContent = fieldKitCopy(
       `motion.${sharedReducedMotion ? 'effectsCapped' : localReducedMotion ? 'effectsLocal' : 'effectsFull'}`,
@@ -2290,6 +2296,11 @@ function mountMotionLab() {
       autoplay = presets.defaults.autoplay;
       paused = reducedMotion || loop.interrupted;
       setupControls();
+      sharedActorPanel = mountSharedActorPanel({
+        root: $('shared-actor-study'),
+        reducedEffects: reducedMotion,
+        onPlay: () => pause(),
+      });
       applyPalette();
       resize();
       updateAssetStatus();
@@ -2356,6 +2367,8 @@ function mountMotionLab() {
     onDispose() {
       disposed = true;
       startupAbort.abort();
+      sharedActorPanel?.dispose();
+      overflightMotionPanel.dispose();
       setStudyReady(false);
       clearHeld({ preserveDirection: true, forgetPhysical: true });
       listeners.splice(0).forEach((remove) => remove());
@@ -2377,6 +2390,8 @@ function mountMotionLab() {
       updateReduced();
       rotorEditor?.refresh();
       partsEditor?.refresh();
+      sharedActorPanel?.refresh();
+      overflightMotionPanel.refresh();
     }
   });
   const stopDisplay = display.subscribe((value) => {

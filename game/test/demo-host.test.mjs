@@ -1,8 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { demoPage, demoKey, demoPointer } from './helpers/demo-host-fixture.mjs';
+import {
+  demoPage,
+  demoKey,
+  demoPointer,
+  DEMO_HOST_READY_TIMEOUT_MS,
+} from './helpers/demo-host-fixture.mjs';
 import { memoryStorage, settle } from './helpers/solo-dom.mjs';
-import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import { authoritativeCheckpoint, verifyReplay, MAX_REPLAY_TICKS } from '../replay.mjs';
+import { FIXED_DT } from '../core/index.mjs';
+import { REWARD_BOARD_SECONDS, REWARD_STORY_SECONDS } from '../ui/reward-arrival.mjs';
 import { emptyLibrary, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { KEY_BINDING_PRESETS } from '../key-bindings.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
@@ -141,6 +148,10 @@ test('Watch from Settings restores its dialog and focus on Back, while Fresh lea
   assert.deepEqual(stored(page), before);
 
   await page.open();
+  const demonstratedLevel = {
+    id: page.demoFrame.run.levelId,
+    revision: page.demoFrame.run.level.revision,
+  };
   page.$('demo-interrupt').click();
   page.$('demo-fresh').click();
   await waitFor(() => !page.$('demo-dialog').open, {
@@ -151,7 +162,8 @@ test('Watch from Settings restores its dialog and focus on Back, while Fresh lea
   assert.equal(settings.open, false);
   assert.equal(home.open, false);
   assert.equal(page.$('game-overlay').dataset.kind, 'ready');
-  assert.equal(page.rendered.run.levelId, 'signal-01');
+  assert.equal(page.rendered.run.levelId, demonstratedLevel.id);
+  assert.equal(page.rendered.run.level.revision, demonstratedLevel.revision);
   assert.equal(page.rendered.run.tick, 0);
   assert.equal(page.doc.activeElement, page.$('start-button'));
   assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
@@ -341,15 +353,29 @@ test('unattended playback bounds a visible stall and automatically repeats compl
   for (let scene = 0; scene < 3; scene++) {
     const painter = page.demoFrame.painter,
       completed = page.demoFrame.run;
-    frames(page, 200, 250);
+    // The source bank also contains complete improvised performances. Drive
+    // their native clock until the real terminal/recap transition; a fixed
+    // fifty-second route is not a completion contract for every installed map.
+    const maxSceneFrames = Math.ceil(
+      (MAX_REPLAY_TICKS * FIXED_DT + REWARD_BOARD_SECONDS + REWARD_STORY_SECONDS + 8) / 0.25,
+    );
+    let sceneFrames = 0;
     await waitFor(
       () => {
-        page.frame(0);
+        if (page.demoFrame.painter !== painter) return true;
+        if (page.$('demo-dialog').dataset.scene === 'loading') page.frame(0);
+        else {
+          assert.ok(
+            sceneFrames++ < maxSceneFrames,
+            'The scene must finish within its accepted replay and recap budgets.',
+          );
+          page.frame(250);
+        }
         return page.demoFrame.painter !== painter;
       },
       {
-        timeoutMs: 30000,
-        message: 'A completed demo must automatically start its next owned scene.',
+        timeoutMs: DEMO_HOST_READY_TIMEOUT_MS + 30000,
+        message: `A completed demo must rotate (scene ${scene}, status ${completed.status}, tick ${completed.tick}, caption ${page.$('demo-caption').textContent}).`,
       },
     );
     assert.ok(completed.tick > 0, 'Rotation follows an advanced real-core performance.');
@@ -496,7 +522,10 @@ test('accessible Fresh opens the demonstrated level at Ready and preserves the p
   const checkpoint = authoritativeCheckpoint(ordinary),
     beforeLibrary = loadLibrary(page.storage, 'revealline.library.dev.v1').library;
   await page.open();
-  assert.equal(page.demoFrame.run.levelId, 'signal-01');
+  const demonstratedLevel = {
+    id: page.demoFrame.run.levelId,
+    revision: page.demoFrame.run.level.revision,
+  };
   page.$('demo-interrupt').click();
   page.$('demo-fresh').click();
   await waitFor(() => !page.$('demo-dialog').open, {
@@ -522,7 +551,8 @@ test('accessible Fresh opens the demonstrated level at Ready and preserves the p
   assert.equal(page.$('game-overlay').dataset.kind, 'ready');
   assert.equal(page.doc.body.dataset.flightState, 'briefing');
   assert.equal(page.rendered.paused, true);
-  assert.equal(page.rendered.run.levelId, 'signal-01');
+  assert.equal(page.rendered.run.levelId, demonstratedLevel.id);
+  assert.equal(page.rendered.run.level.revision, demonstratedLevel.revision);
   assert.equal(page.rendered.run.tick, 0);
   assert.notEqual(page.rendered.run, ordinary);
   assert.equal(page.doc.activeElement, page.$('start-button'));
@@ -561,4 +591,51 @@ test('demo control hints show the saved keyboard bindings in the actual app', as
   await settle(() => !page.$('demo-practice-controls').hidden);
   assert.match(page.$('demo-bound-controls').textContent, /Directions: I · K · J · L/);
   assert.deepEqual(page.errors, []);
+});
+
+test('spectator information and play invitation stay visible while details remain optional', async (t) => {
+  const page = await demoPage(t);
+  await page.open();
+  assert.equal(page.$('demo-panel').hidden, true);
+  for (const id of ['demo-watch-pause', 'demo-next']) {
+    assert.ok(page.$(id).closest('.demo-header-actions'), id);
+    assert.ok(page.$(id).getAttribute('aria-label'), 'Transport retains localized names.');
+  }
+  assert.ok(page.$('demo-caption').closest('#demo-audience'));
+  assert.ok(page.$('demo-now-playing').closest('#demo-audience'));
+  assert.ok(page.$('demo-interrupt').closest('.demo-header-actions'));
+  assert.ok(page.$('demo-details-toggle').closest('.demo-header-actions'));
+  assert.match(page.$('demo-interrupt').textContent, /Want to play/);
+  assert.match(page.$('demo-join-hint').textContent, /practice/);
+  assert.equal(page.$('demo-guide-portrait').hidden, false);
+  const run = page.demoFrame.run;
+  page.$('demo-details-toggle').click();
+  assert.equal(page.$('demo-panel').hidden, false);
+  assert.equal(page.$('demo-dialog').dataset.details, 'open');
+  assert.equal(page.doc.activeElement, page.$('demo-details-close'));
+  assert.equal(page.$('demo-panel-status').textContent, page.$('demo-status').textContent);
+  assert.equal(page.$('demo-panel-caption').textContent, page.$('demo-caption').textContent);
+  assert.equal(page.$('demo-details-toggle').getAttribute('aria-expanded'), 'true');
+  frames(page, 4);
+  assert.equal(page.demoFrame.run, run, 'Opening details cannot take over or replace the run.');
+  page.$('demo-details-close').click();
+  assert.equal(page.$('demo-panel').hidden, true);
+  assert.equal(page.doc.activeElement, page.$('demo-details-toggle'));
+  page.$('demo-interrupt').click();
+  assert.equal(page.$('demo-panel').hidden, false);
+  assert.equal(page.$('demo-actions').hidden, false);
+});
+
+test('demo guide respects the shared character-reactions preference without hiding teaching captions', async (t) => {
+  const storage = memoryStorage();
+  storage.setItem(
+    'revealline.journey-reactions.v1',
+    JSON.stringify({ format: 'JourneyReactionPreferencesV1', enabled: false }),
+  );
+  const page = await demoPage(t, { storage });
+  await page.open();
+  assert.equal(page.$('demo-guide-portrait').hidden, true);
+  assert.equal(page.$('demo-guide-label').hidden, true);
+  assert.ok(page.$('demo-caption').textContent.length > 0);
+  assert.equal(page.$('demo-audience').hidden, false);
 });

@@ -1,6 +1,12 @@
+import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../ui/destruction-audio.mjs';
+import { createPresentationHost } from '../presentation/host.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { TOKEN_DEFAULTS } from '../presentation/model.mjs';
 import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
+import { actorArtReviewRevision } from '../hunt/preferences.mjs';
+import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
+import { requireAcceptedAttemptAppearance } from '../presentation/attempt-appearance.mjs';
+import { getArcadeCollection, getArcadePalette } from '../presentation/industrial-arcade.mjs';
 import {
   selectedArcadeCollection,
   industrialTexturePixels,
@@ -76,34 +82,7 @@ export function classicAppearanceContext(win = globalThis.window) {
   };
 }
 
-async function readAsset(response, expected) {
-  if (!response.ok || !response.body?.getReader) throw new Error('Classic artwork unavailable.');
-  const reader = response.body.getReader(),
-    chunks = [];
-  let size = 0;
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      size += value.byteLength;
-      if (size > expected) throw new Error('Classic artwork exceeds its exact byte budget.');
-      chunks.push(value);
-    }
-  } finally {
-    await reader.cancel().catch(() => {});
-    reader.releaseLock();
-  }
-  if (size !== expected) throw new Error('Classic artwork byte count differs.');
-  const bytes = new Uint8Array(size);
-  let offset = 0;
-  for (const chunk of chunks) {
-    bytes.set(chunk, offset);
-    offset += chunk.byteLength;
-  }
-  return bytes;
-}
-
-/** Owns only shared interface appearance and two verified artwork bitmaps.
+/** Uses the same authenticated board-art provider as Capture and Team.
  * Gameplay/replay identity does not depend on resources arriving successfully. */
 export function createClassicPresentation({
   window: win = globalThis.window,
@@ -113,17 +92,44 @@ export function createClassicPresentation({
   onWarning = () => {},
 } = {}) {
   const controller = new AbortController(),
-    images = new Map(),
-    derived = new Map();
+    derived = new Map(),
+    artwork = createPresentationHost({
+      profile: 'board',
+      document: doc,
+      fetch: (...args) => win.fetch(...args),
+    });
   let disposed = false,
     themeSnapshot = null,
+    artRevision = actorArtReviewRevision(win?.location),
+    acceptedAppearance = undefined,
     current;
-  function imageFor(slot) {
+  function clearDerived() {
+    for (const canvas of derived.values()) canvas.width = canvas.height = 0;
+    derived.clear();
+  }
+  function imageFor(slot, appearance = acceptedAppearance) {
     if (disposed) return null;
-    const image = images.get(slot) ?? null,
-      collection = selectedArcadeCollection(theme.effectivePreferences());
+    const frame = artwork.current()?.image(slot),
+      image = frame?.image ?? null,
+      collection =
+        appearance === undefined
+          ? selectedArcadeCollection(theme.effectivePreferences())
+          : appearance?.collection
+            ? getArcadeCollection(appearance.collection.id, appearance.collection.revision)
+            : null;
     if (!image || slot !== 'terrain.wall' || collection?.id !== 'military-field') return image;
-    if (derived.has(slot)) return derived.get(slot);
+    if (
+      frame.asset?.id !== `${slot}.field-kit` ||
+      !INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(frame.asset?.file?.sha256)
+    )
+      return image;
+    const key = JSON.stringify([slot, appearance]);
+    if (derived.has(key)) {
+      const cached = derived.get(key);
+      derived.delete(key);
+      derived.set(key, cached);
+      return cached;
+    }
     try {
       const canvas = doc.createElement('canvas');
       canvas.width = image.width;
@@ -137,10 +143,23 @@ export function createClassicPresentation({
           { width: canvas.width, height: canvas.height, rgba: pixels.data },
           slot,
           collection,
+          {
+            reviewRevision:
+              appearance === undefined ? artRevision : (appearance?.artRevision ?? null),
+            environment: appearance?.environmentPin ?? null,
+          },
         ).rgba,
       );
       context.putImageData(pixels, 0, 0);
-      derived.set(slot, canvas);
+      derived.set(key, canvas);
+      // Visible selector cards and live boards share this bounded provider.
+      // Eviction releases pixels; a later draw can regenerate from its pin.
+      while (derived.size > 16) {
+        const oldest = derived.keys().next().value;
+        const retired = derived.get(oldest);
+        retired.width = retired.height = 0;
+        derived.delete(oldest);
+      }
       return canvas;
     } catch {
       return image;
@@ -156,21 +175,44 @@ export function createClassicPresentation({
   function update() {
     if (disposed) return;
     const t = themeSnapshot?.tokens ?? TOKEN_DEFAULTS;
+    const collectionPalette = acceptedAppearance?.collection
+      ? getArcadePalette(
+          getArcadeCollection(
+            acceptedAppearance.collection.id,
+            acceptedAppearance.collection.revision,
+          ),
+        )
+      : null;
     current = Object.freeze({
       owner: CLASSIC_PRESENTATION.id,
       revision: CLASSIC_PRESENTATION.revision,
       theme: themeSnapshot,
-      palette: Object.freeze({
-        field: t.ink,
-        alternate: t.panel,
-        grid: t.line,
-        text: t.text,
-        muted: t.muted,
-        accent: t.amber,
-        safe: t.safe ?? t.cyan,
-        danger: t.hazard,
-      }),
+      palette: Object.freeze(
+        collectionPalette
+          ? {
+              field: collectionPalette.paper,
+              alternate: collectionPalette.field,
+              grid: collectionPalette.grid,
+              text: collectionPalette.ink,
+              muted: collectionPalette.muted,
+              accent: collectionPalette.accent,
+              safe: collectionPalette.safe,
+              danger: collectionPalette.danger,
+            }
+          : {
+              field: t.ink,
+              alternate: t.panel,
+              grid: t.line,
+              text: t.text,
+              muted: t.muted,
+              accent: t.amber,
+              safe: t.safe ?? t.cyan,
+              danger: t.hazard,
+            },
+      ),
       image: imageFor,
+      asset: (slot) => artwork.current()?.image(slot) ?? null,
+      actorArtBudget: () => artwork.current()?.actorArtBudget() ?? null,
     });
     queueMicrotask(() => {
       if (!disposed) onChange(current);
@@ -178,32 +220,21 @@ export function createClassicPresentation({
   }
   const stop = theme.subscribe((value) => {
     themeSnapshot = value;
+    clearDerived();
     update();
   });
   update();
-  const ready = Promise.allSettled(
-    CLASSIC_PRESENTATION.assets.map(async (asset) => {
-      const response = await win.fetch(asset.url, { signal: controller.signal }),
-        bytes = await readAsset(response, asset.bytes),
-        digest = new Uint8Array(await win.crypto.subtle.digest('SHA-256', bytes));
-      if ([...digest].map((v) => v.toString(16).padStart(2, '0')).join('') !== asset.sha256)
-        throw new Error('Classic artwork hash differs.');
-      // Hash admission occurs before image decoding; these exact originals have
-      // small, declared PNG dimensions. There is no arbitrary user-image decoder.
-      const bitmap = await win.createImageBitmap(new Blob([bytes], { type: 'image/png' }));
-      if (disposed || bitmap.width !== asset.size || bitmap.height !== asset.size) {
-        bitmap.close();
-        if (!disposed) throw new Error('Classic artwork dimensions differ.');
-        return;
-      }
-      images.set(asset.slot, bitmap);
+  const ready = artwork
+    .load({ signal: controller.signal })
+    .then(() => {
       update();
-    }),
-  ).then((results) => {
-    if (!disposed && results.some((row) => row.status === 'rejected'))
-      onWarning('Classic vector artwork is active; the verified sprite release is unavailable.');
-    return current;
-  });
+      return current;
+    })
+    .catch(() => {
+      if (!disposed)
+        onWarning('Classic vector artwork is active; the verified sprite release is unavailable.');
+      return current;
+    });
   theme.refresh();
   function dispose() {
     if (disposed) return;
@@ -211,15 +242,50 @@ export function createClassicPresentation({
     controller.abort();
     stop();
     theme.dispose();
-    for (const image of images.values()) image.close();
-    images.clear();
-    for (const canvas of derived.values()) canvas.width = canvas.height = 0;
-    derived.clear();
+    artwork.close();
+    clearDerived();
     win?.removeEventListener('pagehide', hide);
   }
   function hide(event) {
     if (!event.persisted) dispose();
   }
   win?.addEventListener('pagehide', hide);
-  return Object.freeze({ snapshot: () => current, ready, theme, dispose });
+  return Object.freeze({
+    snapshot: () => current,
+    previewSnapshot(value) {
+      const appearance = requireAcceptedAttemptAppearance(value);
+      return Object.freeze({ ...current, image: (slot) => imageFor(slot, appearance) });
+    },
+    boardSnapshot: () => artwork.current(),
+    ready,
+    theme,
+    async readAudio(slot, options) {
+      await ready;
+      const snapshot = artwork.current();
+      if (
+        disposed ||
+        ![
+          'audio.pickup',
+          ...[...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].map((cue) => `audio.${cue}`),
+        ].includes(slot) ||
+        snapshot?.resolved.assets[slot]?.kind !== 'audio'
+      )
+        return null;
+      return artwork.readAudio(slot, { ...options, snapshot });
+    },
+    setAttemptAppearance(value) {
+      acceptedAppearance = requireAcceptedAttemptAppearance(value);
+      artRevision = acceptedAppearance?.artRevision ?? null;
+      clearDerived();
+      update();
+    },
+    setArtRevision(revision) {
+      if (acceptedAppearance !== undefined && revision !== artRevision)
+        throw new TypeError('Accepted artwork can only change with a new attempt.');
+      if (revision === artRevision) return;
+      artRevision = revision;
+      clearDerived();
+    },
+    dispose,
+  });
 }

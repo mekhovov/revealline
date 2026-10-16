@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+import { ACTOR_VOICE_RECORDINGS } from '../audio/reactions/actors.mjs';
+import { editionOfflineOptionalPath } from '../../scripts/edition-offline.mjs';
 import {
   collectEditionEngineFiles,
   editionCodeDependencies,
@@ -16,15 +19,32 @@ import {
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const flightPath = 'optional-practice/civilian-fpv/snake-hunt-catalogue.mjs';
 
-test('Company actor captions and recordings library do not advertise absent actor originals', async () => {
+test('Company actor captions and recordings library include exactly their pinned optional originals', async () => {
   const engine = await collectEditionEngineFiles({ root });
   assert.ok(engine.has('game/hunt/actor-reactions.mjs'));
   assert.ok(engine.has('game/journey/reaction-voice-library.mjs'));
   assert.ok(engine.has('game/editions/standalone/actor-recordings.mjs'));
   assert.ok(!engine.has('game/audio/reactions/actors.mjs'));
-  assert.ok(![...engine.keys()].some((name) => name.includes('/actors-v1/')));
+  const expected = ACTOR_VOICE_RECORDINGS.map((voice) => `game/audio/reactions/${voice.file}`);
+  assert.equal(expected.length, 48);
+  assert.deepEqual(
+    [...engine.keys()].filter((name) => name.includes('/actors-v1/')).sort(),
+    [...expected].sort(),
+  );
+  for (const voice of ACTOR_VOICE_RECORDINGS) {
+    const name = `game/audio/reactions/${voice.file}`,
+      bytes = engine.get(name);
+    assert.equal(bytes.length, voice.bytes, name);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), voice.sha256, name);
+    assert.equal(
+      editionOfflineOptionalPath(name),
+      true,
+      'actor speech stays outside the core cache',
+    );
+  }
   assert.ok([...engine.keys()].some((name) => /^game\/audio\/reactions\/[^/]+\.m4a$/.test(name)));
   const adapter = await import('../editions/standalone/actor-recordings.mjs');
+  // The source adapter stays empty; compilation injects canonical metadata.
   assert.deepEqual(adapter.ACTOR_VOICE_RECORDINGS, []);
   const library = 'game/journey/reaction-voice-library.mjs';
   assert.ok(

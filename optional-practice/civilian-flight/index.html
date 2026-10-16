@@ -1,14 +1,31 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../../game/access-gate.css" />
+    <script src="../../game/access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="theme-color" content="#10231f" />
     <title>Civilian flight gym</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="../../game/ui/mode-play-shell.css" />
+    <link rel="stylesheet" href="../civilian-fpv/flight-fullscreen.css" />
     <link rel="manifest" href="app.webmanifest" />
-    <script type="module" src="app.mjs"></script>
+    <script src="app.mjs" type="application/x-revealline-locked" data-access-type="module"></script>
   </head>
   <body>
     <header>

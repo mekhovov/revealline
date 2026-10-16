@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 // Actual solo entry, stored library, native-select adapter and picture handlers.
 // Browser focus/default events and canvas painting are modeled boundaries.
 import test from 'node:test';
@@ -114,7 +115,8 @@ async function setup(t, modes = ['standard', 'gentle'], { installed = true } = {
     // gallery can deliberately focus its newly populated originating card.
     queueMicrotask(() => this.emit('close'));
   });
-  t.mock.method(SoloElement.prototype, 'getContext', () => ({ drawImage() {} }));
+  // Keep the shared complete inert Canvas boundary: the live field guide also
+  // paints during startup. Only gallery rendering is modeled below.
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
   const page = await soloPage(t, {
     storage,
@@ -205,7 +207,7 @@ test('open Collection translates earned rewards while retaining its context, nod
       language === 'uk' ? /ще 2 місії/ : /2 more missions/,
     );
     assert.match(
-      badges[2].querySelector('span').textContent,
+      [...badges[2].children].find((node) => node.tagName === 'SPAN').textContent,
       language === 'uk' ? /Пройдіть 3 різні місії/ : /Complete 3 different missions/,
     );
     assert.match(galleryCopy.textContent, language === 'uk' ? /Також здобуто:/ : /Also earned:/);
@@ -265,8 +267,8 @@ test('global Collection inspects earned chapter progress independently of the pa
   page.frame(0);
   await settle(
     () =>
-      JSON.parse(page.storage.getItem('revealline.suspended.dev.v1') ?? 'null')?.replay?.ticks ===
-      20,
+      nativeSession(JSON.parse(page.storage.getItem('revealline.suspended.dev.v1') ?? 'null'))
+        ?.replay?.ticks === 20,
     'The existing Pause autosave must finish before taking the no-write baseline.',
   );
   const checkpoint = authoritativeCheckpoint(page.rendered.run),

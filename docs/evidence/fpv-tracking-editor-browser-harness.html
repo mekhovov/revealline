@@ -140,10 +140,24 @@
           }),
         ],
       ]);
+      // Reuse only this origin's existing access authorization. SIM state stays
+      // isolated; the normal access gate still verifies the token itself.
+      try {
+        const accessKey = 'revealline.access.revealline.v1';
+        const accessToken = localStorage.getItem(accessKey);
+        if (accessToken) memory.set(accessKey, accessToken);
+      } catch {
+        // The ordinary gate remains available when storage cannot be read.
+      }
       window.fixtureStorage = {
         getItem: (k) => memory.get(k) ?? null,
         setItem: (k, v) => memory.set(k, String(v)),
         removeItem: (k) => memory.delete(k),
+      };
+      window.fixtureDBName = (name) => {
+        const full = prefix + name;
+        names.add(full);
+        return full;
       };
       window.fixtureDB = {
         open(name, version) {
@@ -163,6 +177,31 @@
       };
       const button = (root, pattern) =>
         [...root.querySelectorAll('button')].find((n) => pattern.test(n.textContent));
+      // Reach legacy tools through the visible shared mission chooser, as a player does.
+      // Hidden Settings destinations can change panel state without opening their shell.
+      async function openTools(tab) {
+        const visible = (node) => node && node.getClientRects().length > 0;
+        const panel = () => d.getElementById(tab);
+        if (visible(panel()) && !panel().hidden) return;
+        const missions = d.getElementById('worlds-shell-missions-dialog');
+        if (missions?.open) {
+          click(missions.querySelector('[data-mode-action="missions-back"]'));
+          await until(() => !missions.open, 'close previous tool surface');
+        }
+        const tools = () => q('[data-sim-mission-tools]');
+        if (!visible(tools())) {
+          const explore = q('#worlds-shell-home-dialog [data-mode-action="missions"]');
+          if (!visible(explore)) throw Error('Visible Explore worlds navigation is unavailable');
+          click(explore);
+          await until(() => visible(tools()), 'shared mission chooser');
+        }
+        if (!tools().open) click(tools().querySelector('summary'));
+        const destination = q(`[data-sim-mission-tool="${tab}"]`);
+        if (!visible(destination))
+          throw Error('Visible SIM tools destination is unavailable: ' + tab);
+        click(destination);
+        await until(() => visible(panel()) && !panel().hidden, 'visible ' + tab + ' tool surface');
+      }
       const set = (node, value) => {
         if (!node) throw Error('Missing public input');
         node.value = String(value);
@@ -179,13 +218,18 @@
         await until(() => d.getElementById('creator-json').value !== old, 'tracking ' + name);
         await wait(0);
       }
-      async function reject(name) {
+      async function reject(name, diagnostic) {
         const before = course();
         click(q(`[data-tracking-action="${name}"]`));
         await until(
-          () => q('[data-actor-status]')?.getAttribute('role') === 'alert',
-          'invalid tracking rejected',
+          () =>
+            q('[data-actor-status]')?.getAttribute('role') === 'alert' &&
+            diagnostic.test(q('[data-actor-status]').textContent),
+          'specific invalid tracking input rejected',
         );
+        // A previous alert is not completion of a new async mutation. Allow
+        // rejection cleanup to finish before selecting another inspector row.
+        await wait(0);
         eq(course(), before, 'Invalid tracking input leaves course unchanged');
       }
       async function history(id, expected, name) {
@@ -360,15 +404,18 @@
         must(true, 'Frozen candidate and harness provenance verified');
         const load = (name) =>
           import(manifest.candidateBase + '/optional-practice/civilian-fpv/' + name);
-        const [model, content, zip, definitions, records] = await Promise.all(
-          [
-            'world-model.mjs',
-            'world-content.mjs',
-            'world-zip.mjs',
-            'content-definitions.mjs',
-            'world-records.mjs',
-          ].map(load),
-        );
+        const [model, content, zip, definitions, records, catalogue, worldStore] =
+          await Promise.all(
+            [
+              'world-model.mjs',
+              'world-content.mjs',
+              'world-zip.mjs',
+              'content-definitions.mjs',
+              'world-records.mjs',
+              'world-catalogue.mjs',
+              'world-store.mjs',
+            ].map(load),
+          );
         data = { model, content, zip, definitions };
         await model.initWorldRuntime();
         const url = new URL('./player.html', location.href);
@@ -386,11 +433,14 @@
         app = active = w.fixtureApp;
         await bounded(app.ready, 'host ready');
         w.focus();
+        const originalCatalogueSize =
+          catalogue.WORLD_CATALOGUE.length + catalogue.BEGINNER_CATALOGUE.length;
         must(
-          app.snapshot().catalogue === 148,
-          'Original 148 challenges retained before fixture installation',
+          app.snapshot().catalogue === originalCatalogueSize,
+          'Exact current authored catalogue retained before fixture import',
+          { expected: originalCatalogueSize, actual: app.snapshot().catalogue },
         );
-        click(q('[data-tab="creator"]'));
+        await openTools('creator');
         set(d.getElementById('asset-author'), 'RevealLine functional qualification');
         set(d.getElementById('asset-source'), 'Original triangle and semantic markers');
         set(d.getElementById('asset-license'), 'original');
@@ -486,14 +536,14 @@
         );
         field('minDistance', 5);
         field('maxDistance', 4);
-        await reject('apply');
+        await reject('apply', /Maximum distance must exceed minimum distance/);
         await chooseTracking('acro:3');
         field('ticks', 0.021);
-        await reject('apply');
+        await reject('apply', /Minimum continuous tracking time.*displayed limits and increments/);
         await chooseTracking('');
         set(q('[data-tracking-subject]'), 'stationary');
         set(q('[data-tracking-kind]'), 'follow');
-        await reject('add');
+        await reject('add', /Follow needs a moving subject with at least two distinct waypoints/);
         set(d.getElementById('criterion-list'), '1');
         must(
           ['duplicate-criterion', 'remove-criterion', 'criterion-up', 'criterion-down'].every(
@@ -615,13 +665,54 @@
           pack: await digest(await packed.blob.arrayBuffer()),
         };
         await upload('import-pack', exported.file.blob, 'tracking-reopen.zip');
-        await until(() => d.getElementById('import-pack').value === '', 'ZIP reopened');
+        await until(
+          () =>
+            d.getElementById('import-pack').value === '' &&
+            [...d.querySelectorAll('#installed-packs [data-pack-id]')].some(
+              (row) => row.dataset.packId === inspected.project.id,
+            ),
+          'ZIP reopened and installed',
+        );
         eq(course(), authored, 'Reopening editable project in actual host preserves course');
         await upload('import-pack', packed.blob, 'tracking-reopen.rlpack');
-        await until(() => d.getElementById('import-pack').value === '', 'Pack reopened');
-        eq(course(), authored, 'Reopening compiled pack preserves independent course data');
+        await until(
+          () =>
+            d.getElementById('import-pack').value === '' &&
+            [...d.querySelectorAll('#installed-packs [data-pack-id]')].some(
+              (row) =>
+                row.dataset.packId === inspected.project.id &&
+                row.querySelector('small')?.textContent.includes(inspected.sha256.slice(0, 12)),
+            ),
+          'Exact compiled pack installed and Library refreshed',
+        );
+        eq(course(), authored, 'Installing exact compiled pack preserves the open authored draft');
+        const installedStore = await worldStore.openWorldStore({ indexedDB: window.fixtureDB });
+        let installedCatalogueSize;
+        try {
+          const revisions = await installedStore.list({ includeRevisions: true });
+          installedCatalogueSize =
+            originalCatalogueSize +
+            revisions.reduce((total, record) => total + record.project.courses.length, 0);
+          must(
+            app.snapshot().catalogue === installedCatalogueSize,
+            'Installed and retained revisions extend the exact original catalogue',
+            {
+              expected: installedCatalogueSize,
+              actual: app.snapshot().catalogue,
+              revisions: revisions.map((record) => ({
+                id: record.id,
+                sha256: record.sha256,
+                courses: record.project.courses.length,
+              })),
+              status: d.getElementById('studio-status')?.textContent,
+              importReport: d.getElementById('import-report')?.textContent,
+            },
+          );
+        } finally {
+          installedStore.close();
+        }
         progress('External source reimport preserves locally authored tracking');
-        click(q('[data-tab="creator"]'));
+        await openTools('creator');
         await upload('import-world', sourceGLB(1), 'tracking-original.glb');
         await until(() => d.getElementById('reimport-review')?.open, 'reimport review');
         eq(course(), authored, 'Reimport preview does not mutate draft');
@@ -661,7 +752,16 @@
         // Restore the exact exported authored route before actual ordinary-command qualification.
         await upload('import-pack', packed.blob, 'tracking-qualified.rlpack');
         await until(() => d.getElementById('import-pack').value === '', 'Authored pack restored');
-        eq(course(), authored, 'Authored pack restored for exact replay');
+        eq(course(), reimported, 'Exact pack installation preserves the reimported draft');
+        const installedRow = [...d.querySelectorAll('#installed-packs [data-pack-id]')].find(
+          (row) => row.dataset.packId === inspected.project.id,
+        );
+        click(button(installedRow, /^Edit$/));
+        await until(
+          () => stable(course()) === stable(authored),
+          'Explicitly edit installed authored pack',
+        );
+        eq(course(), authored, 'Explicit Edit restores exact installed authored course for replay');
         authoredCourse = course();
         progress('Authored course completes and independently replays in both flight modes');
         for (const mode of ['self-level', 'acro']) {
@@ -774,18 +874,28 @@
         app.pause();
         const endRecords = await recordsStore.list();
         eq(endRecords, savedBefore, 'Workshop authoring and preview do not add scored recordings');
+        must(
+          app.snapshot().catalogue === installedCatalogueSize,
+          'Reimport, explicit Edit and preview preserve original and installed revision catalogue',
+        );
         recordsStore.close();
         recordsStore = null;
         must(w.fixtureErrors.length === 0, 'No uncaught host errors', { errors: w.fixtureErrors });
         if (manual) {
           click(d.getElementById('leave-flight'));
           await until(() => !d.getElementById('flight-dialog').open, 'close manual preview');
-          click(q('[data-tab="creator"]'));
+          await openTools('creator');
           $('status').textContent = 'Verified Workshop ready for manual inspection';
           manualCleanup = cleanup;
         } else await cleanup();
       } catch (error) {
-        failed = { message: error.message, stack: error.stack };
+        failed = {
+          message: error.message,
+          stack: error.stack,
+          studioStatus: d?.getElementById('studio-status')?.textContent,
+          importReport: d?.getElementById('import-report')?.textContent,
+          hostErrors: w?.fixtureErrors ?? [],
+        };
         try {
           await cleanup();
         } catch (cause) {

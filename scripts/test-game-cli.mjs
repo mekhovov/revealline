@@ -55,6 +55,52 @@ async function fixture(t) {
   return { root, directory, out: path.join(directory, 'dist') };
 }
 
+test('published FPV contact and support modules are included in main and optional package inputs', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const config = JSON.parse(await fs.readFile(path.join(root, 'game/build-config.json'), 'utf8'));
+  const { OPTIONAL_PACKAGE_POLICIES } = await import('../publishing/optional-package-policy.mjs');
+  for (const module of ['flight-contact.mjs', 'flight-support.mjs']) {
+    const name = `optional-practice/civilian-fpv/${module}`;
+    assert.ok(config.include.includes(name), `main distribution must include ${module}`);
+    assert.ok(
+      OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sharedFiles.includes(name),
+      `installed FPV package must include ${module}`,
+    );
+    assert.ok((await fs.stat(path.join(root, name))).isFile());
+  }
+});
+
+test('published regional review modules match the installed FPV source closure', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const config = JSON.parse(await fs.readFile(path.join(root, 'game/build-config.json'), 'utf8'));
+  const { OPTIONAL_PACKAGE_POLICIES } = await import('../publishing/optional-package-policy.mjs');
+  const regional = OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sharedFiles.filter(
+    (name) =>
+      name.endsWith('/regional-session.mjs') ||
+      name.endsWith('/regional-locations.mjs') ||
+      name.endsWith('/regional-delivery.mjs') ||
+      name.includes('/civilian-fpv/regional/'),
+  );
+  assert.equal(
+    regional.length,
+    25,
+    'the reviewed regional source closure includes RGBA, restore admission, saved places, Railway district and Hillside ground',
+  );
+  assert.ok(regional.includes('optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs'));
+  assert.ok(regional.includes('optional-practice/civilian-fpv/regional/restore-containment.mjs'));
+  assert.ok(regional.includes('optional-practice/civilian-fpv/regional-locations.mjs'));
+  assert.ok(
+    regional.includes('optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs'),
+  );
+  assert.ok(
+    regional.includes('optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs'),
+  );
+  for (const name of regional) {
+    assert.ok(config.include.includes(name), `main distribution must include ${name}`);
+    assert.ok((await fs.stat(path.join(root, name))).isFile());
+  }
+});
+
 test('build binds the same release version into Solo, Versus and Team landing HTML', async (t) => {
   const { root, out } = await fixture(t);
   await fs.mkdir(path.join(root, 'game/couch'));
@@ -180,8 +226,10 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   // Archive the implementation's real metadata dependencies too. No module may
   // resolve back into the current working tree during the frozen build.
   for (const relative of [
+    'scripts/access-pages.mjs',
     'scripts/pack-indexes.mjs',
     'scripts/brand-icons.mjs',
+    'scripts/build-entry-writer.mjs',
     'game/data-json.mjs',
     'game/content-launch.mjs',
   ])
@@ -754,7 +802,8 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
     new URL('../game/offline.mjs', import.meta.url),
     path.join(root, 'game/offline.mjs'),
   );
-  // This packaging fixture has no immutable-version updater context.
+  // This fixture exercises the core offline cache, not the separate installed
+  // app/update sentinel. Supply its bounded update-context dependency.
   await fs.writeFile(
     path.join(root, 'game/game-updates.mjs'),
     'export function readGameUpdateContext() { return null; }\n',
@@ -1002,10 +1051,15 @@ test('compact offline catalogue and inventory preserve reader results, source te
   );
   for (const [name, source] of Object.entries(sources)) {
     if (name.startsWith('game/offline/')) continue;
-    assert.equal(await fs.readFile(path.join(out, name), 'utf8'), source, name);
+    const emitted = await fs.readFile(path.join(out, name), 'utf8');
+    // Current builds project allowlisted runtime module whitespace. The empty
+    // module fixtures retain exactly the same export; authored JSON stays exact.
+    if (source === 'export {};') assert.match(emitted, /^export\s*\{\s*\};$/, name);
+    else assert.equal(emitted, source, name);
+    assert.equal(await fs.readFile(path.join(root, name), 'utf8'), source, name);
     const record = inventory.files.find((file) => file.path === name);
-    assert.equal(record?.bytes, Buffer.byteLength(source), name);
-    assert.equal(record?.sha256, hash(Buffer.from(source)), name);
+    assert.equal(record?.bytes, Buffer.byteLength(emitted), name);
+    assert.equal(record?.sha256, hash(Buffer.from(emitted)), name);
   }
 });
 
@@ -1213,9 +1267,9 @@ test('archived packs stay downloadable with exact bytes while both navigation ca
   await assert.rejects(buildProject({ root, out }));
   assert.deepEqual(await fs.readFile(path.join(out, 'manifest.json')), before);
 });
-test('declaring an optional pack does not relax the 72 MiB core cache budget', async (t) => {
+test('declaring an optional pack does not relax the 80 MiB core cache budget', async (t) => {
   const { root, out } = await optionalPackFixture(t);
-  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(72 * 1024 * 1024));
-  await assert.rejects(buildProject({ root, out }), /72 MiB/);
+  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(80 * 1024 * 1024));
+  await assert.rejects(buildProject({ root, out }), /80 MiB/);
   await assert.rejects(fs.access(out));
 });

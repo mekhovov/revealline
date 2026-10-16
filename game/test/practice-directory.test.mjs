@@ -19,6 +19,10 @@ import {
 import { frozenOptionalPackageOverlay } from '../../publishing/optional-package-promotion.mjs';
 import { verifyPracticeSite } from '../../scripts/verify-practice-site.mjs';
 import { mountPracticeNavigation } from '../../optional-practice/navigation.mjs';
+import {
+  practiceDirectoryHTML,
+  PRACTICE_DIRECTORY_SCRIPT,
+} from '../../publishing/practice-directory.mjs';
 
 const id = 'civilian-flight',
   indexURL = 'https://example.test/practice/index.json';
@@ -39,6 +43,56 @@ const detail = {
   offlineBytes: 2000,
 };
 const metadata = { format: 'revealline-practice-details.v1', packages: [detail] };
+
+test('standalone directory preserves selected locale for main game, guide and package links', () => {
+  const html = practiceDirectoryHTML([entry], [detail]);
+  assert.match(html, /<a data-locale href="\.\.\/game\/"/);
+  assert.match(html, /<a data-locale href="\.\.\/optional-practice\/civilian-fpv\/guide.html"/);
+  const links = [
+    { href: 'https://example.test/game/' },
+    { href: 'https://example.test/optional-practice/civilian-fpv/guide.html' },
+    { href: 'https://example.test/practice/civilian-flight/app/?action=play&lang=en' },
+  ];
+  const select = {};
+  const document = {
+    hidden: true,
+    documentElement: {},
+    getElementById: () => select,
+    querySelectorAll: (selector) => (selector === '[data-launch], [data-locale]' ? links : []),
+  };
+  runInNewContext(PRACTICE_DIRECTORY_SCRIPT, {
+    document,
+    location: { href: 'https://example.test/practice/?lang=uk' },
+    URL,
+    addEventListener() {},
+    setTimeout() {},
+  });
+  for (const locale of ['uk', 'en']) {
+    select.value = locale;
+    select.onchange();
+    assert.equal(document.documentElement.lang, locale);
+    for (const link of links) assert.equal(new URL(link.href).searchParams.get('lang'), locale);
+    assert.equal(new URL(links[2].href).searchParams.get('action'), 'play');
+  }
+});
+
+test('directory introduction stays accurate for empty and extended catalogues', () => {
+  for (const count of [0, 3, 4]) {
+    const html = practiceDirectoryHTML(
+      Array.from({ length: count }, (_, i) => ({
+        ...entry,
+        id: `sample-${i}`,
+        name: `Sample ${i}`,
+        href: `sample-${i}/app/`,
+      })),
+      [],
+    );
+    assert.equal((html.match(/<article>/g) ?? []).length, count);
+    assert.match(html, /Choose a practice app/);
+    assert.match(html, /Виберіть застосунок для практики/);
+    assert.doesNotMatch(html, /Three ways|Три способи/);
+  }
+});
 
 test('standard-controller menu edges move visible focus and activate once, never repeat a held confirm', () => {
   const doc = new Document();
@@ -256,4 +310,111 @@ test('an intentionally empty publication emits a catalogue, and a missing public
     fetcher: async (url) => new Response(output.get(new URL(url).pathname.slice(1))),
   });
   assert.deepEqual(result.checked, []);
+  await assert.rejects(
+    verifyPracticeSite({
+      baseURL: 'https://example.test/',
+      expectedIds: [],
+      fetcher: async (url) =>
+        url.endsWith('/index.html')
+          ? new Response('', { status: 404 })
+          : new Response(output.get(new URL(url).pathname.slice(1))),
+    }),
+    /Published asset unavailable/,
+  );
+});
+
+test('all shipped player guides retain the same bilingual offline and input instructions', async () => {
+  const guides = await Promise.all(
+    ['civilian-flight', 'civilian-fpv', 'fpv-worlds'].map((packageId) =>
+      readFile(new URL(`../../optional-practice/${packageId}/guide.html`, import.meta.url), 'utf8'),
+    ),
+  );
+  assert.equal(guides[1], guides[0]);
+  assert.equal(guides[2], guides[0]);
+  const guide = guides[0].replace(/\s+/g, ' ');
+  for (const copy of [
+    'Controller / Steam Deck',
+    'Контролер / Steam Deck',
+    'Settings → Content &amp; Offline',
+    'Налаштування → Вміст і офлайн',
+    'Select Mission',
+    'Вибрати місію',
+    'Flight guide → Workshop &amp; offline',
+    'Майстерня й автономний запуск',
+    'same browser profile',
+    'тому самому профілі браузера',
+    'An icon alone is not an offline guarantee',
+    'Сама піктограма не гарантує роботи офлайн',
+    'Request persistent storage',
+    'постійне сховище',
+    'not flight records',
+    'не записи',
+    '<strong>.rlpack</strong>',
+  ])
+    assert.ok(guide.includes(copy), `Missing guide instruction: ${copy}`);
+  assert.doesNotMatch(
+    guide,
+    /Notebook in Flight Studio|нотатник у Flight Studio|Controls &amp; authoring in Gym|Старт \/ продовжити/,
+  );
+
+  // Keep the named destinations tied to maintained SIM controls, not a second
+  // binding table that can drift independently of the simulator.
+  const academy = await readFile(
+    new URL('../../optional-practice/civilian-fpv/index.html', import.meta.url),
+    'utf8',
+  );
+  assert.match(academy, /value="controller"/);
+  assert.match(academy, /Workshop &(?:amp;)? offline/);
+  assert.match(academy, /id="install-offline"/);
+  const gym = await readFile(
+    new URL('../../optional-practice/civilian-flight/app.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(gym, /content: \[offlineControls\]/);
+  assert.match(gym, /\.gym-toolbar'\)\.hidden = true/);
+  assert.match(gym, /openMissionLibrary\(doc.activeElement\)/);
+});
+
+test('player guide navigation preserves only a supported locale in published and source routes', async () => {
+  const script = await readFile(
+    new URL('../../optional-practice/guide.mjs', import.meta.url),
+    'utf8',
+  );
+  for (const pathname of [
+    '/revealline/practice/fpv-worlds/releases/v1.2.3/site/optional-practice/fpv-worlds/guide.html',
+    '/optional-practice/fpv-worlds/guide.html',
+  ]) {
+    for (const requestedLocale of ['uk', 'en', 'other']) {
+      const elements = new Map(['locale', 'play', 'directory'].map((key) => [key, {}]));
+      const sections = ['en', 'en', 'uk'].map((lang) => ({ lang, hidden: false }));
+      const document = {
+        documentElement: {},
+        getElementById: (key) => elements.get(key),
+        querySelectorAll: () => sections,
+      };
+      runInNewContext(script, {
+        URL,
+        document,
+        location: {
+          pathname,
+          href: `https://example.test${pathname}?lang=${requestedLocale}&url=https://untrusted.test/`,
+        },
+      });
+      const locale = requestedLocale === 'uk' ? 'uk' : 'en';
+      const directory = pathname.includes('/practice/')
+        ? '/revealline/practice/'
+        : '../../game/index.html';
+      assert.equal(document.documentElement.lang, locale);
+      assert.equal(elements.get('play').href, `index.html?lang=${locale}`);
+      assert.equal(elements.get('directory').href, `${directory}?lang=${locale}`);
+      assert.deepEqual(
+        sections.map((section) => section.hidden),
+        ['en', 'en', 'uk'].map((lang) => lang !== locale),
+      );
+      elements.get('locale').value = 'uk';
+      elements.get('locale').onchange();
+      assert.equal(elements.get('play').href, 'index.html?lang=uk');
+      assert.equal(document.documentElement.lang, 'uk');
+    }
+  }
 });

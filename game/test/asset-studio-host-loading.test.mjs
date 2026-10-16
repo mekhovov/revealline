@@ -388,7 +388,10 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     doc.querySelector('header'),
     'Guide stays in the stable header above asynchronously populated workspace content.',
   );
-  const inDocumentOrder = (element) => [element, ...element.children.flatMap(inDocumentOrder)];
+  const inDocumentOrder = (element) => [
+    element,
+    ...(element.children ?? []).flatMap(inDocumentOrder),
+  ];
   const documentOrder = inDocumentOrder(doc.body);
   for (const selector of ['.workspace-state', 'main']) {
     const dynamicRegion = doc.querySelector(selector);

@@ -283,20 +283,32 @@ function nativeDialogs(t) {
 }
 
 for (const { id, opener } of WORKSHOP_TOOLS) {
-  test(`actual Solo boot returns ${id} to its own Workshop opener without advancing or saving`, async (t) => {
+  test(`actual Solo boot returns ${id} to its own menu opener without advancing or saving`, async (t) => {
     nativeDialogs(t);
     const h = await soloPage(t, { titleScreen: true, search: `?workshop=${id}` });
     assert.equal(h.$('shell-home').open, true);
-    assert.equal(h.$('shell-workshop-dialog').open, true);
+    const controls = id === 'controller-lab';
+    assert.equal(h.$('shell-workshop-dialog').open, !controls);
+    assert.equal(h.$('settings-dialog').open, controls);
+    if (controls) {
+      assert.equal(h.$('settings-panel-controls').hidden, false);
+      assert.equal(h.$('settings-tab-controls').getAttribute('aria-selected'), 'true');
+    }
     assert.equal(h.doc.activeElement.id, opener);
     const checkpoint = authoritativeCheckpoint(h.rendered.run),
       stored = [...h.storage.map];
     const event = h.$(opener).emit('keydown', { key: 'Escape', code: 'Escape' });
-    assert.equal(event.defaultPrevented, true);
+    if (controls) {
+      // Settings uses the browser's native Escape → cancel default action.
+      assert.equal(event.defaultPrevented, false);
+      const dialog = h.$('settings-dialog');
+      if (!dialog.emit('cancel', { bubbles: false }).defaultPrevented) dialog.close();
+    } else assert.equal(event.defaultPrevented, true);
     await Promise.resolve();
     assert.equal(h.$('shell-home').open, true);
     assert.equal(h.$('shell-workshop-dialog').open, false);
-    assert.equal(h.doc.activeElement.id, 'shell-workshop');
+    assert.equal(h.$('settings-dialog').open, false);
+    assert.equal(h.doc.activeElement.id, controls ? 'shell-options' : 'shell-workshop');
     h.frame();
     assert.equal(h.rendered.paused, true);
     assert.equal(h.rendered.run.tick, 0);

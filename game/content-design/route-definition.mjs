@@ -8,6 +8,7 @@ import { WHOLE_JOURNEY_CORE_PACK_IDS } from './whole-journey-order.mjs';
 export function createAuthoredJourneyRouteDefinition(
   id,
   {
+    createDuelExpansionCandidates,
     createPursuitPilotCandidates,
     createPursuitCampaignCandidates,
     createOpeningCandidates,
@@ -58,6 +59,19 @@ export function createAuthoredJourneyRouteDefinition(
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'duel-expedition-v1') {
+    const source = createDuelExpansionCandidates();
+    return freezeDesign({
+      id,
+      label: 'Duel Expeditions',
+      sessionKey: 'revealline.suspended.duel-expedition.v1',
+      profileKey: 'duel-expedition-v1',
+      source,
+      corePackIds: source.packs.map((pack) => pack.id),
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
+  }
   if (id === 'pursuit-campaigns-v1')
     return freezeDesign({
       id,

@@ -333,14 +333,18 @@ test('returning to Settings rechecks optional voice ownership without repeated r
   const dialog = doc.createElement('dialog');
   doc.body.append(dialog);
   dialog.append(container);
-  dialog.showModal();
-  doc.dispatchEvent({
-    type: 'focusin',
-    target: container.querySelector('[data-actor-voice-download]'),
-    relatedTarget: doc.body,
-  });
+  dialog.showModal(); // Native dialog entry focuses its first control once.
   await waitFor(() => status.textContent === 'Available online; download for offline speech.');
   assert.equal(inspections, before + 1);
+  doc.dispatchEvent({
+    type: 'focusin',
+    target: container.querySelector('[data-actor-voice-remove]'),
+    relatedTarget: container.querySelector('[data-actor-voice-download]'),
+  });
+  assert.equal(inspections, before + 1, 'Moving within Settings does not inspect again.');
+  dialog.close();
+  dialog.showModal();
+  assert.equal(inspections, before + 2, 'A later Settings entry inspects once again.');
   view.dispose();
 });
 

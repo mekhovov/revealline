@@ -9,6 +9,7 @@ import {
 
 export const RADIO_FORMAT = 'RadioProfile.v1';
 export const AXIS_RADIO_FORMAT = 'RadioProfile.v2';
+export const ACTION_RADIO_FORMAT = 'RadioProfile.v3';
 export const RESPONSE_FORMAT = 'FlightResponseProfile.v1';
 export const FLIGHT_CONTROLS = Object.freeze(['roll', 'pitch', 'yaw', 'throttle']);
 export const STICK_LAYOUTS = Object.freeze({
@@ -60,7 +61,7 @@ export function validateRadioProfile(input) {
     'radio profile',
   );
   required(
-    [RADIO_FORMAT, AXIS_RADIO_FORMAT].includes(p.format) &&
+    [RADIO_FORMAT, AXIS_RADIO_FORMAT, ACTION_RADIO_FORMAT].includes(p.format) &&
       stableId(p.id) &&
       typeof p.name === 'string' &&
       p.name.trim().length > 0 &&
@@ -111,12 +112,16 @@ export function validateRadioProfile(input) {
         'Centred controls need a measured centre',
       );
   }
-  exactKeys(p.switches, ['arm', 'pause', 'reset'], 'radio switches');
+  const actions =
+    p.format === ACTION_RADIO_FORMAT
+      ? ['arm', 'pause', 'reset', 'camera']
+      : ['arm', 'pause', 'reset'];
+  exactKeys(p.switches, actions, 'radio switches');
   const buttons = new Set();
-  for (const action of ['arm', 'pause', 'reset']) {
+  for (const action of actions) {
     const s = p.switches[action];
     if (s === null) continue;
-    if (p.format === AXIS_RADIO_FORMAT && Object.hasOwn(s, 'axis')) {
+    if (p.format !== RADIO_FORMAT && Object.hasOwn(s, 'axis')) {
       exactKeys(s, ['axis', 'off', 'on'], action);
       required(
         int(s.axis, 0, p.device.axes - 1) &&

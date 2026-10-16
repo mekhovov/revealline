@@ -1,17 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
-    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="studio"></script>
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <link
       rel="stylesheet"
       href="../presentation/industrial-workshop.css"
       data-industrial-workshop
     />
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <title data-i18n="tools:revealLinePlayground">FPV / LINE — Playground</title>
@@ -22,11 +56,27 @@
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
-    <script type="module" src="../ui/tool-display-entry.mjs"></script>
-    <script type="module" src="../presentation/page-entry.mjs"></script>
+    <script
+      src="../ui/tool-display-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../presentation/page-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
-    <script type="module" src="../ui/workshop-return-entry.mjs"></script>
-    <script type="module" src="../ui/content-studio-navigation-entry.mjs"></script>
+    <script
+      src="../ui/workshop-return-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../ui/content-studio-navigation-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/workshop-return.css" />
     <link
       rel="icon"
@@ -773,19 +823,25 @@
             </p>
             <p id="music-readout" class="micro-note"></p>
           </details>
-          <details>
+          <details id="recording-verification">
             <summary data-i18n="tools:replayARecordedRun">Replay a recorded run</summary>
             <p data-i18n="tools:importAnExportedReplayToCheckItsFinalSimulationSummary">
-              Import an exported replay to check its final simulation summary. Playback is a
-              verification run and grants no campaign rewards.
+              Import a Solo replay or a local Capture Team/Versus recording to check its recorded
+              result. The report states whether the full state or declared terminal observations
+              match. Wins and losses can both match. Verification grants no progress or rewards and
+              does not prove mission completion.
             </p>
             <p>
               <a
                 data-workshop-tool="replay-theater"
                 href="../replay-theater/"
                 data-i18n="tools:openReplayTheaterToWatchPauseAndStepThroughA"
-                >Open Replay Theater to watch, pause and step through a recording ↗</a
+                >Watch a Solo recording in Replay Theater ↗</a
               >
+            </p>
+            <p data-i18n="tools:multiplayerRecordingVerificationOnly">
+              Team and Versus recordings are checked here with their native rules. Replay Theater
+              currently provides visual playback for Solo recordings only.
             </p>
 
             <label class="file-button button"
@@ -987,7 +1043,13 @@
       src="../ui/direct-tool-launch.js"
       data-module="playground.mjs"
       data-status="boot-status"
+      type="application/x-revealline-locked"
+      data-access-type=""
     ></script>
-    <script type="module" src="../ui/authoring-input-entry.mjs"></script>
+    <script
+      src="../ui/authoring-input-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </body>
 </html>

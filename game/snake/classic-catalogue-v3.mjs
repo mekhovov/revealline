@@ -343,7 +343,7 @@ export const CLASSIC_SNAKE_V3_LEVELS = freeze(
       level: {
         version: 'classic-snake-level.v3',
         id,
-        revision: '1',
+        revision: '2',
         name: row.en,
         width: 24,
         height: 18,
@@ -352,7 +352,7 @@ export const CLASSIC_SNAKE_V3_LEVELS = freeze(
           { x: 5, y: 2, direction: 'right' },
           { x: 18, y: 15, direction: 'left' },
         ],
-        goal: row.goal,
+        goal: [4, 5, 6, 6, 6, 9, 4, 5, 6, 6, 9, 12][index],
         stepMs: 200,
         speedupEvery: 0,
         minStepMs: 200,

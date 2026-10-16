@@ -1,3 +1,8 @@
+import {
+  OVERFLIGHT_RIY_PACKAGE_FORMAT,
+  importOverflightRiyPackage,
+  overflightRiyPackageIdentity,
+} from '../overflight/riy-community.mjs';
 import { required } from '../data-json.mjs';
 import { importCreatorBundle } from '../creator/bundle.mjs';
 import { creatorSHA256, ownCreatorBlob } from '../creator/bytes.mjs';
@@ -6,6 +11,17 @@ import {
   classicSnakePackageIdentity,
   CLASSIC_PACKAGE_MAX_BYTES,
 } from '../snake/classic-community.mjs';
+import {
+  OVERFLIGHT_PACKAGE_FORMAT,
+  importOverflightPackage,
+  overflightPackageIdentity,
+} from '../overflight/community.mjs';
+
+import {
+  OVERFLIGHT_HUNT_PACKAGE_FORMAT,
+  importOverflightHuntPackage,
+  overflightHuntPackageIdentity,
+} from '../overflight/raid-community.mjs';
 
 /** Native validators own each format. Family detection never trusts a file extension. */
 export async function inspectCommunityPackage(source, options = {}) {
@@ -74,6 +90,42 @@ export async function inspectCommunityPackage(source, options = {}) {
   const bytes = await blob.arrayBuffer();
   new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   const json = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+  if (
+    [
+      OVERFLIGHT_PACKAGE_FORMAT,
+      OVERFLIGHT_HUNT_PACKAGE_FORMAT,
+      OVERFLIGHT_RIY_PACKAGE_FORMAT,
+    ].includes(json?.format)
+  ) {
+    const raid = json.format === OVERFLIGHT_HUNT_PACKAGE_FORMAT;
+    const riy = json.format === OVERFLIGHT_RIY_PACKAGE_FORMAT;
+    const pack = await (
+        riy
+          ? importOverflightRiyPackage
+          : raid
+            ? importOverflightHuntPackage
+            : importOverflightPackage
+      )(blob),
+      text = await blob.text(),
+      editionId = await creatorSHA256(bytes);
+    required(
+      (await creatorSHA256(new TextEncoder().encode(text))) === editionId,
+      'Overflight packages must use plain UTF-8 without a byte-order marker.',
+    );
+    return {
+      family: riy ? 'overflight-riy' : raid ? 'overflight-hunt' : 'overflight',
+      pack,
+      text,
+      editionId,
+      runtimeIdentity: (riy
+        ? overflightRiyPackageIdentity
+        : raid
+          ? overflightHuntPackageIdentity
+          : overflightPackageIdentity)(pack),
+      title: pack.project.title.en,
+      missions: 1,
+    };
+  }
   if (
     ['revealline-creator-team-portable.v1', 'revealline-creator-team-portable.v2'].includes(
       json?.format,

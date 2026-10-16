@@ -66,7 +66,10 @@ export function drawClassicDrone(ctx, snake, ink, { rotorPhase = 0, reduced = fa
   rect(ctx, '#ffd700', -2, 0.5, 4, 2);
   rect(ctx, '#0b1c28', -3, -4, 6, 1);
   rect(ctx, '#0b1c28', -3, 3.5, 6, 1);
-  rect(ctx, '#73e4f5', -0.5, -7.5, 1, 1);
+  // Broad camera nose remains readable at small cell sizes.
+  rect(ctx, '#091b24', -4, -9, 8, 3);
+  rect(ctx, '#ccf5e7', -3, -9, 6, 1);
+  rect(ctx, '#73e4f5', -1, -8, 2, 2);
   rect(ctx, '#0b1c28', -2.5, 7, 5, 3);
   rect(ctx, '#c7d5cd', -1.5, 7.5, 3, 2);
   rect(ctx, ink.band, -1, 8, 2, 1);

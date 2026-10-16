@@ -1160,12 +1160,7 @@ export function validateThemePreferences(value, complete = true) {
 }
 /** Self-contained, bounded migration shared with the generated first-paint bootstrap.
  * Reads never write, including unknown themes retained for a later installation. */
-export function resolveStoredAppearance({
-  appearance,
-  legacyTheme,
-  legacyMenu,
-  legacyDisplay,
-} = {}) {
+export function resolveStoredAppearance({ appearance, legacyTheme, legacyMenu } = {}) {
   const parse = (raw) => {
     try {
       return typeof raw === 'string' && raw.length <= 2048 ? JSON.parse(raw) : null;
@@ -1187,13 +1182,12 @@ export function resolveStoredAppearance({
   const current = parse(appearance);
   if (valid(current, true)) return current;
   const old = parse(legacyTheme),
-    menu = parse(legacyMenu),
-    display = parse(legacyDisplay);
+    menu = parse(legacyMenu);
   const ornaments = ['off', 'subtle', 'rich'].includes(menu?.ornaments) ? menu.ornaments : 'theme';
   if (valid(old, false)) return { ...old, ornaments };
-  const existing =
-    (menu && ['auto', 'ukrainian'].includes(menu.palette)) ||
-    (display && ['plain', 'pixel'].includes(display.textFace));
+  // Font, size and motion are shared accessibility choices, not theme intent.
+  // Saving one must not switch a fresh profile to a legacy theme on navigation.
+  const existing = menu && ['auto', 'ukrainian'].includes(menu.palette);
   return {
     familyId: existing ? 'legacy' : 'follow-game',
     arcadeArt: existing ? 'authored' : 'follow-game',
@@ -1236,7 +1230,6 @@ export function createThemePreferences({
             appearance: raw,
             legacyTheme: storage?.getItem(LEGACY_THEME_PREFERENCES_KEY),
             legacyMenu: storage?.getItem('revealline.menu-style.v1'),
-            legacyDisplay: storage?.getItem('revealline.display.v1'),
           }),
       };
     } catch {

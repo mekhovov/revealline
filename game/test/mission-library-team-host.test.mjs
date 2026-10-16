@@ -100,6 +100,9 @@ async function play(f, name) {
   button.focus();
   f.tap('Enter');
   await waitFor(
+    () => f.$('coop-stage').textContent === name.toUpperCase() && !f.$('journey-chooser').open,
+  );
+  await waitFor(
     () =>
       f.$('coop-stage').textContent === name.toUpperCase() &&
       f.$('coop-overlay').hidden &&

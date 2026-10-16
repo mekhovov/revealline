@@ -1,0 +1,148 @@
+#!/usr/bin/env node
+// Manual contract/ownership qualification, deliberately separate from the unit suite.
+import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
+import {
+  applySimSurfaceCoatings,
+  applySimMaterialBindings,
+  disposeSimVisualGroup,
+} from '../../../optional-practice/civilian-fpv/world-visuals.mjs';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+const output = process.argv[2];
+if (!output) throw Error('Use NEW_RECEIPT_PATH');
+const checks = [],
+  hint = { format: 'SimSurfaceCoating.v1', kind: 'opaque-finish' },
+  sha = (b) => createHash('sha256').update(b).digest('hex');
+function check(name, passed) {
+  checks.push({ name, passed: !!passed });
+  if (!passed) throw Error(name);
+}
+function rootFor(paint) {
+  const root = new THREE.Group(),
+    a = new THREE.Mesh(new THREE.BoxGeometry(), paint),
+    b = new THREE.Mesh(a.geometry, paint);
+  root.add(a, b);
+  return root;
+}
+const state = (paint) => JSON.stringify(paint.toJSON());
+for (const [label, value, patch] of [
+  ['missing', undefined],
+  ['null', null],
+  ['string', 'opaque-finish'],
+  ['array', ['SimSurfaceCoating.v1', 'opaque-finish']],
+  ['unknown version', { ...hint, format: 'SimSurfaceCoating.v2' }],
+  ['unknown kind', { ...hint, kind: 'xray' }],
+  ['numeric override', { ...hint, polygonOffsetFactor: -999 }],
+  ['extra key', { ...hint, extra: null }],
+  ['inherited keys', Object.assign(Object.create(hint), { a: 1, b: 2 })],
+  ['blend', hint, { transparent: true }],
+  ['partial opacity', hint, { opacity: 0.9 }],
+  ['alpha mask', hint, { alphaTest: 0.5 }],
+  ['alpha map', hint, { alphaMap: new THREE.Texture() }],
+  ['transmission', hint, { transmission: 0.5 }],
+  ['depth disabled', hint, { depthTest: false }],
+  ['depth write disabled', hint, { depthWrite: false }],
+]) {
+  const paint = new THREE.MeshPhysicalMaterial();
+  if (value !== undefined) paint.userData.reveallineSurface = value;
+  Object.assign(paint, patch);
+  const root = rootFor(paint),
+    before = state(paint);
+  check(label + ' not applied', applySimSurfaceCoatings(root) === 0);
+  check(label + ' preserves all material state', state(paint) === before);
+  disposeSimVisualGroup(root);
+}
+for (const kind of ['MeshStandardMaterial', 'MeshBasicMaterial']) {
+  const paint = new THREE[kind]({ vertexColors: true, side: THREE.DoubleSide }),
+    root = rootFor(paint),
+    original = root.children.map((m) => [m.geometry, m.material]);
+  paint.userData.reveallineSurface = { kind: hint.kind, format: hint.format };
+  check(kind + ' shared material applied once', applySimSurfaceCoatings(root) === 1);
+  check(
+    kind + ' fixed bias and opaque depth state',
+    paint.polygonOffset &&
+      paint.polygonOffsetFactor === -1 &&
+      paint.polygonOffsetUnits === -1 &&
+      paint.depthTest &&
+      paint.depthWrite &&
+      !paint.transparent &&
+      paint.opacity === 1,
+  );
+  check(
+    kind + ' no geometry/material owner allocation',
+    root.children.every((m, i) => m.geometry === original[i][0] && m.material === original[i][1]),
+  );
+  const applied = state(paint);
+  applySimSurfaceCoatings(root);
+  check(kind + ' repeated application stable', state(paint) === applied);
+  let disposed = 0;
+  paint.addEventListener('dispose', () => disposed++);
+  disposeSimVisualGroup(root);
+  check(kind + ' shared material disposed once', disposed === 1);
+}
+const root = new THREE.Group(),
+  coated = new THREE.MeshStandardMaterial(),
+  plain = new THREE.MeshStandardMaterial(),
+  geometry = new THREE.BoxGeometry();
+coated.userData.reveallineSurface = hint;
+for (const paint of [coated, plain]) {
+  const mesh = new THREE.Mesh(geometry, paint);
+  mesh.userData.reveallineTheme = {
+    format: 'SimMaterialBinding.v1',
+    collectionId: 'industrial-workshop',
+    revision: 'r1',
+    role: 'concrete',
+  };
+  root.add(mesh);
+}
+check('Only marked paint opts in before theme binding', applySimSurfaceCoatings(root) === 1);
+const themed = applySimMaterialBindings(root, { collectionId: 'industrial-workshop' });
+check('Existing theme bindings both apply', themed.applied === 2);
+check(
+  'Theme variant cache separates coating state',
+  root.children[0].material !== root.children[1].material,
+);
+check(
+  'Theme clone preserves fixed coating state',
+  root.children[0].material.polygonOffset &&
+    root.children[0].material.polygonOffsetFactor === -1 &&
+    root.children[0].material.polygonOffsetUnits === -1,
+);
+check('Theme plain material retains default depth bias', !root.children[1].material.polygonOffset);
+check(
+  'Theme retains original owners',
+  root.userData.ownedMaterials.includes(coated) && root.userData.ownedMaterials.includes(plain),
+);
+const owners = new Set([...root.userData.ownedMaterials, ...root.children.map((m) => m.material)]),
+  disposal = new Map();
+for (const paint of owners)
+  paint.addEventListener('dispose', () => disposal.set(paint, (disposal.get(paint) ?? 0) + 1));
+disposeSimVisualGroup(root);
+check(
+  'Every themed/current/original material disposed once',
+  [...owners].every((p) => disposal.get(p) === 1),
+);
+const source = {};
+for (const name of ['renderer.mjs', 'world-visuals.mjs']) {
+  const b = await readFile(
+    new URL('../../../optional-practice/civilian-fpv/' + name, import.meta.url),
+  );
+  source[name] = { bytes: b.length, sha256: sha(b) };
+}
+await writeFile(
+  output,
+  JSON.stringify(
+    {
+      format: 'FPVImportedOpaqueCoatingManualQualification.v1',
+      status: 'passed',
+      checks,
+      source,
+      scope:
+        'CPU material contract and ownership only. Real GL depth, shadows, appearance, import and disposal require the actual renderer fixture.',
+    },
+    null,
+    2,
+  ) + '\n',
+  { flag: 'wx' },
+);
+console.log(JSON.stringify({ passed: checks.length, source }));

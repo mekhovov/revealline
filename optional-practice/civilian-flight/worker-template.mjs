@@ -9,7 +9,8 @@ export function installPracticeWorker(scope, pins, revision) {
   let controller,
     idleTimer,
     downloaded = 0,
-    phase = 'available';
+    phase = 'available',
+    cancelled = false;
   const sha = async (bytes) =>
     [...new Uint8Array(await scope.crypto.subtle.digest('SHA-256', bytes))]
       .map((value) => value.toString(16).padStart(2, '0'))
@@ -39,8 +40,10 @@ export function installPracticeWorker(scope, pins, revision) {
         event.source.url.startsWith(base) ||
         (launcherRoot &&
           [launcherRoot + 'app/', launcherRoot + 'app/index.html'].includes(sourcePath))
-      )
+      ) {
+        cancelled = true;
         controller?.abort();
+      }
       return;
     }
     const port = event.ports?.[0];
@@ -52,13 +55,13 @@ export function installPracticeWorker(scope, pins, revision) {
     }
     if (event.data?.type !== 'practice-status') return;
     const check = (async () => {
-      let ready = false;
+      let ready = false,
+        inconclusive = false;
       try {
-        if ((await scope.caches.keys()).includes(cacheName)) {
-          const cache = await scope.caches.open(cacheName);
+        if (urls.size > 0 && (await scope.caches.keys()).includes(cacheName)) {
           ready = true;
           for (const [url, pin] of urls) {
-            const response = await cache.match(url);
+            const response = await scope.caches.match(url, { cacheName });
             if (!response) {
               ready = false;
               break;
@@ -72,8 +75,16 @@ export function installPracticeWorker(scope, pins, revision) {
         }
       } catch {
         ready = false;
+        inconclusive = true;
       }
-      port.postMessage({ type: 'practice-status', ready, revision, total, scope: base });
+      port.postMessage({
+        type: 'practice-status',
+        ready,
+        status: inconclusive ? 'unknown' : ready ? 'ready' : 'unavailable',
+        revision,
+        total,
+        scope: base,
+      });
     })();
     event.waitUntil?.(check);
   });
@@ -82,13 +93,16 @@ export function installPracticeWorker(scope, pins, revision) {
       (async () => {
         const existed = (await scope.caches.keys()).includes(cacheName);
         controller = new AbortController();
+        if (cancelled) controller.abort();
         const overall = setTimeout(() => controller.abort(), 300000);
         activity();
         phase = 'downloading';
         announce();
         try {
+          if (controller.signal.aborted) throw new Error('Optional download cancelled');
           const cache = await scope.caches.open(cacheName);
           for (const [url, pin] of urls) {
+            if (controller.signal.aborted) throw new Error('Optional download cancelled');
             const response = await scope.fetch(url, {
               cache: 'no-store',
               signal: controller.signal,
@@ -126,6 +140,7 @@ export function installPracticeWorker(scope, pins, revision) {
               throw new Error('Optional package dependency mismatch');
             if (controller.signal.aborted) throw new Error('Optional download cancelled');
             await cache.put(url, new Response(bytes, { status: 200, headers: response.headers }));
+            if (controller.signal.aborted) throw new Error('Optional download cancelled');
             activity();
             phase = 'downloading';
           }
@@ -172,8 +187,7 @@ export function installPracticeWorker(scope, pins, revision) {
     if (event.request.method === 'GET' && urls.has(url.href))
       event.respondWith(
         (async () =>
-          (await (await scope.caches.open(cacheName)).match(url.href)) ||
-          scope.fetch(event.request))(),
+          (await scope.caches.match(url.href, { cacheName })) || scope.fetch(event.request))(),
       );
   });
 }

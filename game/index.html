@@ -7,6 +7,23 @@
 >
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="./access-gate.css" />
+    <script src="./access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
     <style>
       @layer legacy {
         html {
@@ -102,19 +119,23 @@
         }
       }
     </style>
-    <script src="presentation/theme-bootstrap.mjs" data-theme-density="player"></script>
-    <script src="snake/route.js" data-mode="solo"></script>
+    <script
+      src="presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="snake/route.js"
+      data-mode="solo"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <link rel="stylesheet" href="presentation/industrial-workshop.css" data-industrial-workshop />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#070914" />
-    <meta name="revealline-access-id" content="revealline" />
-    <meta name="revealline-access-title" content="FPV / LINE" />
-    <meta
-      name="revealline-access-salt"
-      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
-    />
-    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+
     <!-- Safari uses these when a player adds the game to the Home Screen. -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -122,16 +143,32 @@
     <title>FPV / LINE</title>
 
     <link rel="stylesheet" data-boot-href="./i18n/style.css" />
-    <link rel="stylesheet" href="access-gate.css" />
-    <script src="access-gate.mjs" defer></script>
-    <script src="./vendor/i18next-26.4.2.min.js"></script>
-    <script src="./i18n/catalogs.mjs"></script>
-    <script src="./i18n/bootstrap.mjs"></script>
+
+    <script
+      src="./vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="./i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="./i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <link rel="stylesheet" data-boot-href="boot.css" />
     <!-- Deferred classic scripts leave the static launch screen visible during downloads.
          Styles are requested by boot after error listeners are installed. -->
-    <script src="boot.mjs" defer></script>
+    <script
+      src="boot.mjs"
+      defer
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <link rel="stylesheet" data-boot-href="style.css" />
     <link rel="stylesheet" data-boot-href="ui/controller-settings.css" />
@@ -165,6 +202,7 @@
     <link rel="stylesheet" data-boot-href="ui/edition-play.css" />
     <link rel="stylesheet" data-boot-href="ui/menu-scenes.css" />
     <link rel="stylesheet" data-boot-href="ui/native-menu.css" />
+    <link rel="stylesheet" data-boot-href="ui/pause-menu.css" />
     <link rel="stylesheet" data-boot-href="ui/win-picture.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="ui/art/identity/fpv-line/icon-32.png" />
     <link rel="stylesheet" data-boot-href="ui/hunt-feedback.css" />
@@ -552,6 +590,15 @@
                     Next mission →
                   </button>
                   <button
+                    id="result-random-level"
+                    class="button secondary"
+                    type="button"
+                    hidden
+                    data-i18n="interface:randomLevel"
+                  >
+                    Random level
+                  </button>
+                  <button
                     id="journey-save-options"
                     class="button secondary journey-save-options"
                     type="button"
@@ -779,6 +826,14 @@
                   >
                     Home
                   </button>
+                  <p
+                    id="result-auto-next"
+                    class="result-auto-next"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                    hidden
+                  ></p>
                 </div>
                 <p
                   id="overlay-footnote"
@@ -1278,9 +1333,9 @@
             id="flight-details-back"
             class="button secondary"
             type="button"
-            data-i18n="interface:backToPause"
+            data-i18n="common:actions.back"
           >
-            Back to Pause
+            Back
           </button>
         </div>
       </div>
@@ -2896,8 +2951,8 @@ No offline check yet.</pre
       </div>
     </dialog>
     <dialog id="demo-dialog" class="demo-dialog" aria-labelledby="demo-level">
-      <header class="demo-header">
-        <div>
+      <header class="demo-header" data-ui-surface="toolbar">
+        <div class="demo-heading">
           <p class="eyebrow">
             <span data-i18n="demo:title">DEMO</span> · <span id="demo-source"></span>
           </p>
@@ -2905,14 +2960,46 @@ No offline check yet.</pre
         </div>
         <div class="demo-header-actions" data-demo-ui>
           <button
+            id="demo-watch-pause"
+            class="button secondary"
+            type="button"
+            data-i18n="demo:pauseShort"
+          >
+            Pause
+          </button>
+          <button id="demo-next" class="button secondary" type="button" data-i18n="demo:nextShort">
+            Next level
+          </button>
+          <button
+            id="demo-interrupt"
+            data-demo-ui
+            class="button primary"
+            type="button"
+            data-i18n="demo:playChoices"
+          >
+            Want to play?
+          </button>
+          <button
+            id="demo-details-toggle"
+            class="button secondary"
+            type="button"
+            data-demo-ui
+            data-i18n="demo:details"
+            data-i18n-aria-label="demo:details"
+            aria-controls="demo-panel"
+            aria-expanded="false"
+          >
+            Audio &amp; details
+          </button>
+          <button
             id="demo-fullscreen"
             type="button"
             class="button secondary"
             data-demo-ui
-            data-i18n="demo:enterFullscreen"
+            data-i18n="demo:fullscreenShort"
             hidden
           >
-            Enter fullscreen
+            Fullscreen
           </button>
           <button
             id="demo-back"
@@ -2935,34 +3022,37 @@ No offline check yet.</pre
           aria-label="Live game demonstration"
         ></canvas>
       </div>
-      <div class="demo-panel">
-        <div class="demo-transport" data-demo-ui>
-          <button
-            id="demo-watch-pause"
-            class="button secondary"
-            type="button"
-            data-i18n="demo:pauseDemo"
-          >
-            Pause demo
-          </button>
-          <button id="demo-next" class="button secondary" type="button" data-i18n="demo:next">
-            Next demonstration
-          </button>
-          <button
-            id="demo-interrupt"
-            data-demo-ui
-            class="button primary"
-            type="button"
-            data-i18n="demo:playChoices"
-          >
-            Want to play?
-          </button>
+      <section id="demo-audience" class="demo-audience" data-demo-ui>
+        <div class="demo-commentary" data-ui-surface="toolbar">
+          <img id="demo-guide-portrait" width="48" height="48" alt="" aria-hidden="true" hidden />
+          <div>
+            <p id="demo-guide-label" class="eyebrow" data-i18n="demo:guide">Flight guide</p>
+            <p id="demo-caption" class="demo-compact-caption"></p>
+            <p id="demo-status" class="demo-readout"></p>
+          </div>
         </div>
-        <p id="demo-caption" class="demo-compact-caption"></p>
-        <details id="demo-details" data-demo-ui>
+        <div class="demo-listening" data-ui-surface="toolbar">
+          <p id="demo-music-state" class="eyebrow"></p>
+          <p id="demo-now-playing"></p>
+          <p id="demo-join-hint" data-i18n="demo:joinHint">
+            Steer to take over · practice, no rewards
+          </p>
+        </div>
+      </section>
+      <div id="demo-panel" class="demo-panel" data-demo-ui hidden>
+        <p id="demo-panel-caption"></p>
+        <p id="demo-panel-status"></p>
+        <button
+          id="demo-details-close"
+          type="button"
+          class="button secondary"
+          data-i18n="demo:closeDetails"
+        >
+          Close details
+        </button>
+        <details id="demo-details" data-demo-ui open>
           <summary>
-            <span data-i18n="demo:details">Audio &amp; details</span
-            ><span id="demo-now-playing"></span>
+            <span data-i18n="demo:details">Audio &amp; details</span>
           </summary>
           <div id="demo-audio" data-demo-ui></div>
           <label class="demo-picture-setting" data-demo-ui
@@ -2972,7 +3062,6 @@ No offline check yet.</pre
             ></label
           >
           <div class="demo-notes">
-            <p id="demo-status"></p>
             <p id="demo-picture-note"></p>
           </div>
         </details>
@@ -3641,6 +3730,12 @@ No offline check yet.</pre
         </div>
       </div>
     </dialog>
-    <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js" defer></script>
+    <script
+      id="boot-phaser"
+      src="vendor/phaser-4.2.1.min.js"
+      defer
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
   </body>
 </html>

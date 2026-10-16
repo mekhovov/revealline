@@ -1,0 +1,107 @@
+name: Preserve and rehearse a verified Pages recovery bundle
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Successful publish-main-pages run currently verified live
+        required: true
+        type: string
+      source_sha:
+        description: Exact 40-character source revision of that run
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-recovery-preservation
+  cancel-in-progress: false
+
+jobs:
+  preserve:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_SHA: ${{ inputs.source_sha }}
+      SOURCE_RUN: ${{ inputs.run_id }}
+      REPOSITORY: ${{ github.repository }}
+    steps:
+      - name: Check out reviewed recovery tooling only
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+          sparse-checkout: scripts/pages-recovery.py
+          sparse-checkout-cone-mode: false
+
+      - name: Require successful main publication and current public identity
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$SOURCE_RUN" =~ ^[1-9][0-9]*$ ]]
+          gh api "repos/$REPOSITORY/actions/runs/$SOURCE_RUN" > "$RUNNER_TEMP/run.json"
+          jq -e --arg sha "$SOURCE_SHA" '.head_sha == $sha and .head_branch == "main" and .event == "push" and .path == ".github/workflows/publish-main-pages.yml" and .conclusion == "success"' "$RUNNER_TEMP/run.json"
+          gh api "repos/$REPOSITORY/actions/runs/$SOURCE_RUN/jobs?per_page=100" > "$RUNNER_TEMP/jobs.json"
+          python3 - <<'PY'
+          import json, os, pathlib
+          jobs = json.loads((pathlib.Path(os.environ['RUNNER_TEMP']) / 'jobs.json').read_bytes())['jobs']
+          for name in ('build', 'deploy', 'verify'):
+            matches = [job for job in jobs if job['name'] == name]
+            assert len(matches) == 1 and matches[0]['conclusion'] == 'success', f'Unverified publication job: {name}'
+          PY
+          gh api "repos/$REPOSITORY/compare/$SOURCE_SHA...main" --jq '.behind_by == 0' | grep -qx true
+          curl --fail --silent --show-error --retry 3 -H 'Cache-Control: no-cache' "https://mekhovov.github.io/revealline/main-deployment.json?recovery=$GITHUB_RUN_ID" > "$RUNNER_TEMP/live.json"
+          jq -e --arg sha "$SOURCE_SHA" '.sourceRevision == $sha and .channel == "main"' "$RUNNER_TEMP/live.json"
+
+      - name: Download existing exact artifact and its accepted receipts
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/recovery"
+          gh run download "$SOURCE_RUN" --repo "$REPOSITORY" --name github-pages --dir "$RUNNER_TEMP/recovery"
+          gh run download "$SOURCE_RUN" --repo "$REPOSITORY" --name "main-pages-receipt-$SOURCE_SHA" --dir "$RUNNER_TEMP/recovery"
+          gh run download "$SOURCE_RUN" --repo "$REPOSITORY" --name "main-pages-archive-receipt-$SOURCE_SHA" --dir "$RUNNER_TEMP/recovery"
+          artifact_id="$(jq -er .artifactId "$RUNNER_TEMP/recovery/main-pages-archive-receipt.json")"
+          [[ "$artifact_id" =~ ^[1-9][0-9]*$ ]]
+          gh api "repos/$REPOSITORY/actions/artifacts/$artifact_id" > "$RUNNER_TEMP/artifact.json"
+          jq -e --arg sha "$SOURCE_SHA" --arg run "$SOURCE_RUN" '.name == "github-pages" and .expired == false and .workflow_run.head_sha == $sha and (.workflow_run.id | tostring) == $run' "$RUNNER_TEMP/artifact.json"
+
+      - name: Verify every archive member and rehearse isolated exact restoration
+        run: |
+          set -euo pipefail
+          python3 scripts/pages-recovery.py --bundle "$RUNNER_TEMP/recovery" --restore "$RUNNER_TEMP/restored" --source "$SOURCE_SHA" --run-id "$SOURCE_RUN"
+          cp "$RUNNER_TEMP/run.json" "$RUNNER_TEMP/jobs.json" "$RUNNER_TEMP/live.json" "$RUNNER_TEMP/artifact.json" "$RUNNER_TEMP/recovery/"
+          cd "$RUNNER_TEMP/recovery"
+          sha256sum artifact.tar main-pages-inventory.json main-pages-receipt.json main-pages-archive-receipt.json recovery-rehearsal.json run.json jobs.json live.json artifact.json > SHA256SUMS
+
+      - name: Preserve separate recovery release and verify downloaded assets before publication
+        run: |
+          set -euo pipefail
+          tag="pages-recovery-$SOURCE_SHA"
+          # An existing tag makes --target ineffective. Query the namespace and
+          # fail closed on API errors as well as collisions before any write.
+          gh api "repos/$REPOSITORY/git/matching-refs/tags/$tag" > "$RUNNER_TEMP/existing-tags.json"
+          jq -e 'length == 0' "$RUNNER_TEMP/existing-tags.json"
+          # Never clobber or modify an existing release. A retry needs explicit inspection.
+          gh release create "$tag" "$RUNNER_TEMP/recovery/"* --repo "$REPOSITORY" --target "$SOURCE_SHA" --draft --prerelease --title "Pages recovery $SOURCE_SHA" --notes "Exact previously deployed Pages artifact with source-bound receipts and isolated byte-for-byte restore rehearsal. Not a game release, public qualification, or production rollback. GitHub-enforced release immutability is not asserted."
+          gh release download "$tag" --repo "$REPOSITORY" --dir "$RUNNER_TEMP/redownload"
+          cd "$RUNNER_TEMP/redownload"
+          cmp SHA256SUMS "$RUNNER_TEMP/recovery/SHA256SUMS"
+          sha256sum --check SHA256SUMS
+          # A draft may not create its tag until publication. Create the exact
+          # absent ref explicitly now; a concurrent collision is a fatal error.
+          gh api "repos/$REPOSITORY/git/matching-refs/tags/$tag" > "$RUNNER_TEMP/draft-tags.json"
+          jq -e --arg ref "refs/tags/$tag" 'length == 0 or (length == 1 and .[0].ref == $ref)' "$RUNNER_TEMP/draft-tags.json"
+          if jq -e 'length == 0' "$RUNNER_TEMP/draft-tags.json" >/dev/null; then
+            gh api --method POST "repos/$REPOSITORY/git/refs" -f "ref=refs/tags/$tag" -f "sha=$SOURCE_SHA" > "$RUNNER_TEMP/created-tag.json"
+          fi
+          gh api "repos/$REPOSITORY/commits/$tag" --jq .sha | grep -qx "$SOURCE_SHA"
+          gh release edit "$tag" --repo "$REPOSITORY" --draft=false --latest=false
+          gh release view "$tag" --repo "$REPOSITORY" --json isDraft,tagName,url > "$RUNNER_TEMP/preserved.json"
+          jq -e --arg tag "$tag" '.isDraft == false and .tagName == $tag' "$RUNNER_TEMP/preserved.json"
+          gh api "repos/$REPOSITORY/commits/$tag" --jq .sha | grep -qx "$SOURCE_SHA"

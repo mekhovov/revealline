@@ -1,6 +1,7 @@
 import { localizedText } from '../i18n/index.mjs';
 import { createDestructionPreferences } from '../hunt/preferences.mjs';
 import { huntText } from '../hunt/copy.mjs';
+import { attachDefeatSoundControls } from './defeat-sound-controls.mjs';
 import {
   createHuntDestruction,
   drawHumanoidPixelBody,
@@ -11,6 +12,8 @@ export function attachDestructionControls({
   document: doc = globalThis.document,
   window: win = globalThis.window,
   container,
+  soundContainer,
+  preferences: suppliedPreferences,
   prefix = '',
   getStorage,
   writable,
@@ -18,11 +21,13 @@ export function attachDestructionControls({
     doc.body?.dataset.effects === 'reduced' ||
     win?.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true,
 } = {}) {
-  const preferences = createDestructionPreferences({
-    window: win,
-    ...(getStorage ? { getStorage } : {}),
-    ...(writable ? { writable } : {}),
-  });
+  const preferences =
+    suppliedPreferences ??
+    createDestructionPreferences({
+      window: win,
+      ...(getStorage ? { getStorage } : {}),
+      ...(writable ? { writable } : {}),
+    });
   const root = doc.createElement('div');
   root.className = 'hunt-destruction-controls';
   const input = (name, labelKey) => {
@@ -62,6 +67,13 @@ export function attachDestructionControls({
   canvas.setAttribute('aria-hidden', 'true');
   root.append(canvas);
   container?.append(root);
+  const soundControls = attachDefeatSoundControls({
+    document: doc,
+    window: win,
+    container: soundContainer ?? root,
+    prefix,
+    preferences,
+  });
   const fx = createHuntDestruction({ preview: true, onPreempt: () => stopPreview() });
   let frame = null,
     revision = 0,
@@ -143,7 +155,8 @@ export function attachDestructionControls({
       disposed = true;
       stopPreview();
       unsubscribe();
-      preferences.dispose();
+      soundControls.dispose();
+      if (!suppliedPreferences) preferences.dispose();
       brutal.removeEventListener('change', chooseBrutal);
       blood.removeEventListener('change', chooseBlood);
       retry.removeEventListener('click', save);

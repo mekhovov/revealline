@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 // Actual app/Library/core with finite DOM, locks and IndexedDB. Prepared JSON
 // authority is real; this does not claim native file download or disk recovery.
@@ -135,6 +136,8 @@ async function page(t, f = {}) {
     storage: f.storage,
     lockManager: f.locks,
     pictures: { Image: Picture },
+    // These fixtures begin with Library/import, whose accepted source owns decoding.
+    waitForPictures: false,
     ...f.options,
   });
   const fetchBefore = globalThis.fetch;
@@ -241,10 +244,13 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
     assert.equal(backup.format, 'xonix-backup.v2');
     assert.deepEqual(backup.externalChapters.chapters, [pilot.descriptor]);
     // Current Solo attempts preserve the independent actor pin in v6.
-    assert.equal(backup.session.format, 'xonix-session.v6');
-    assert.equal(backup.session.actorAppearancePin.content.owner.kind, 'campaign');
-    assert.equal(backup.session.actorAppearancePin.content.level.id, p.rendered.run.level.id);
-    assert.equal(backup.session.replay.ticks, p.rendered.run.tick);
+    assert.equal(nativeSession(backup.session).format, 'xonix-session.v6');
+    assert.equal(nativeSession(backup.session).actorAppearancePin.content.owner.kind, 'campaign');
+    assert.equal(
+      nativeSession(backup.session).actorAppearancePin.content.level.id,
+      p.rendered.run.level.id,
+    );
+    assert.equal(nativeSession(backup.session).replay.ticks, p.rendered.run.tick);
     assert.equal(backup.packs.packs[0].id, pilot.descriptor.id);
     assert(!JSON.stringify(backup).includes('data:image'));
     assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);

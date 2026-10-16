@@ -1,0 +1,403 @@
+{
+  "recordedAt": "2026-10-05T11:41:04.988Z",
+  "scope": "Current working-tree Creator browser round-trip; gameplay/controller source not yet frozen.",
+  "exportOrigin": "http://127.0.0.1:8883/game/studio/overflight.html",
+  "importedURL": "http://localhost:8883/game/overflight/play.html?lang=uk&community=75500728aaa13b71",
+  "validatedProjectIdentity": "ab94d58e114eb113",
+  "package": {
+    "dependencies": {
+      "actorArtRevision": "industrial-roster-v3",
+      "effects": {
+        "id": "overflight-field-kit",
+        "revision": 1
+      },
+      "machinery": [
+        "utility-car",
+        "cargo-truck",
+        "armored-carrier",
+        "scout-car",
+        "tracked-tank",
+        "radar-truck"
+      ],
+      "motion": {
+        "id": "overflight-field-kit-motion",
+        "revision": 1
+      },
+      "pools": {
+        "effects": 512,
+        "pickups": 2048,
+        "projectiles": 512
+      },
+      "profile": "board",
+      "soldiers": [
+        "lookout",
+        "patroller",
+        "runner",
+        "sprinter",
+        "courier",
+        "guard",
+        "refuge-seeker",
+        "switchback",
+        "rendezvous-pair",
+        "shield-bearer",
+        "brace-trooper",
+        "relay-warden"
+      ],
+      "wardrobes": [
+        "tactical",
+        "rivals",
+        "arcade"
+      ]
+    },
+    "format": "revealline-overflight-package.v1",
+    "project": {
+      "arena": {
+        "cameraHeight": 540,
+        "cameraWidth": 960,
+        "height": 1080,
+        "width": 2880
+      },
+      "duration": 360,
+      "encounters": [
+        {
+          "end": 35,
+          "families": [
+            "patroller",
+            "runner"
+          ],
+          "hp": 30,
+          "id": "front-1",
+          "pattern": "pursuit",
+          "spawnPerSecond": 3,
+          "speed": 34,
+          "start": 0
+        },
+        {
+          "end": 40,
+          "families": [
+            "patroller"
+          ],
+          "hp": 30,
+          "id": "relief-1",
+          "pattern": "relief",
+          "spawnPerSecond": 0.5,
+          "speed": 34,
+          "start": 35
+        },
+        {
+          "end": 75,
+          "families": [
+            "lookout",
+            "guard",
+            "utility-car"
+          ],
+          "hp": 30,
+          "id": "front-2",
+          "pattern": "pursuit",
+          "spawnPerSecond": 5,
+          "speed": 37,
+          "start": 40
+        },
+        {
+          "end": 80,
+          "families": [
+            "patroller"
+          ],
+          "hp": 30,
+          "id": "relief-2",
+          "pattern": "relief",
+          "spawnPerSecond": 0.5,
+          "speed": 37,
+          "start": 75
+        },
+        {
+          "end": 115,
+          "families": [
+            "sprinter",
+            "shield-bearer",
+            "armored-carrier"
+          ],
+          "hp": 30,
+          "id": "front-3",
+          "pattern": "surge",
+          "spawnPerSecond": 7,
+          "speed": 40,
+          "start": 80
+        },
+        {
+          "end": 120,
+          "families": [
+            "patroller"
+          ],
+          "hp": 30,
+          "id": "relief-3",
+          "pattern": "relief",
+          "spawnPerSecond": 0.5,
+          "speed": 40,
+          "start": 115
+        },
+        {
+          "end": 155,
+          "families": [
+            "courier",
+            "brace-trooper",
+            "cargo-truck"
+          ],
+          "hp": 45,
+          "id": "front-4",
+          "pattern": "pursuit",
+          "spawnPerSecond": 10,
+          "speed": 43,
+          "start": 120
+        },
+        {
+          "end": 160,
+          "families": [
+            "patroller"
+          ],
+          "hp": 30,
+          "id": "relief-4",
+          "pattern": "relief",
+          "spawnPerSecond": 0.5,
+          "speed": 43,
+          "start": 155
+        },
+        {
+          "end": 195,
+          "families": [
+            "patroller",
+            "runner"
+          ],
+          "hp": 45,
+          "id": "front-5",
+          "pattern": "pursuit",
+          "spawnPerSecond": 13,
+          "speed": 46,
+          "start": 160
+        },
+        {
+          "end": 200,
+          "families": [
+            "patroller"
+          ],
+          "hp": 30,
+          "id": "relief-5",
+          "pattern": "relief",
+          "spawnPerSecond": 0.5,
+          "speed": 46,
+          "start": 195
+        },
+        {
+          "end": 235,
+          "families": [
+            "lookout",
+            "guard",
+            "utility-car"
+          ],
+          "hp": 60,
+          "id": "front-6",
+          "pattern": "surge",
+          "spawnPerSecond": 17,
+          "speed": 49,
+          "start": 200
+        },
+        {
+          "end": 240,
+          "families": [
+            "patroller"
+          ],
+          "hp": 30,
+          "id": "relief-6",
+          "pattern": "relief",
+          "spawnPerSecond": 0.5,
+          "speed": 49,
+          "start": 235
+        },
+        {
+          "end": 275,
+          "families": [
+            "sprinter",
+            "shield-bearer",
+            "armored-carrier"
+          ],
+          "hp": 120,
+          "id": "front-7",
+          "pattern": "pursuit",
+          "spawnPerSecond": 32,
+          "speed": 34,
+          "start": 240
+        },
+        {
+          "end": 280,
+          "families": [
+            "patroller"
+          ],
+          "hp": 30,
+          "id": "relief-7",
+          "pattern": "relief",
+          "spawnPerSecond": 0.5,
+          "speed": 52,
+          "start": 275
+        },
+        {
+          "end": 315,
+          "families": [
+            "courier",
+            "brace-trooper",
+            "cargo-truck"
+          ],
+          "hp": 120,
+          "id": "front-8",
+          "pattern": "pursuit",
+          "spawnPerSecond": 38,
+          "speed": 32,
+          "start": 280
+        },
+        {
+          "end": 320,
+          "families": [
+            "patroller"
+          ],
+          "hp": 30,
+          "id": "relief-8",
+          "pattern": "relief",
+          "spawnPerSecond": 0.5,
+          "speed": 55,
+          "start": 315
+        },
+        {
+          "end": 355,
+          "families": [
+            "patroller",
+            "runner"
+          ],
+          "hp": 120,
+          "id": "front-9",
+          "pattern": "surge",
+          "spawnPerSecond": 40,
+          "speed": 30,
+          "start": 320
+        },
+        {
+          "end": 360,
+          "families": [
+            "patroller"
+          ],
+          "hp": 30,
+          "id": "relief-9",
+          "pattern": "relief",
+          "spawnPerSecond": 0.5,
+          "speed": 58,
+          "start": 355
+        }
+      ],
+      "format": "OverflightProjectV1",
+      "goals": {
+        "eliteAt": 120,
+        "finalAt": 300,
+        "finalHp": 5000
+      },
+      "id": "overflight-front",
+      "population": {
+        "capacity": 2500,
+        "heavies": 4,
+        "priorityAttacks": 2,
+        "specialists": 8
+      },
+      "props": [
+        {
+          "id": "case-west",
+          "kind": "supply-case",
+          "x": 960,
+          "y": 320
+        },
+        {
+          "id": "case-east",
+          "kind": "supply-case",
+          "x": 1920,
+          "y": 760
+        }
+      ],
+      "resources": {
+        "actorArtRevision": "industrial-roster-v3",
+        "effects": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "machinery": [
+          "utility-car",
+          "cargo-truck",
+          "armored-carrier",
+          "scout-car",
+          "tracked-tank",
+          "radar-truck"
+        ],
+        "motion": {
+          "id": "overflight-field-kit-motion",
+          "revision": 1
+        },
+        "pools": {
+          "effects": 512,
+          "pickups": 2048,
+          "projectiles": 512
+        },
+        "profile": "board",
+        "soldiers": [
+          "lookout",
+          "patroller",
+          "runner",
+          "sprinter",
+          "courier",
+          "guard",
+          "refuge-seeker",
+          "switchback",
+          "rendezvous-pair",
+          "shield-bearer",
+          "brace-trooper",
+          "relay-warden"
+        ],
+        "wardrobes": [
+          "tactical",
+          "rivals",
+          "arcade"
+        ]
+      },
+      "seed": 17031991,
+      "title": {
+        "en": "Overflight · Shared delivery review",
+        "uk": "Проліт · Прорив"
+      },
+      "upgrades": {
+        "choices": 10,
+        "modules": [
+          "primary",
+          "slow-field",
+          "proximity-pulse",
+          "side-burst",
+          "scanner",
+          "shield"
+        ],
+        "rerolls": 2,
+        "thresholds": [
+          12,
+          45,
+          100,
+          180,
+          300,
+          480,
+          750,
+          1150,
+          1750,
+          2400
+        ]
+      }
+    }
+  },
+  "nativePlaySeconds": 10,
+  "studioPreviewReachedEarnedUpgrade": true,
+  "localeChecks": [
+    "en",
+    "uk"
+  ],
+  "nativeInstalled": "- main:\n  - button \"Меню\"\n  - generic: Проліт\n  - button \"Продовжити\"\n  - region \"Overflight battlefield\":\n    - generic: Міцність 60/100 · Дрони 3\n    - strong: 00:10\n    - generic: Рівень 1\n    - generic: Заряд прольоту 1\n    - generic: Прискорення Готово\n    - status: Пауза · натисніть «Продовжити»\n  - dialog \"FPV / LINE\":\n    - heading \"FPV / LINE\" [level=1]:\n      - img \"FPV / LINE\"\n    - paragraph: Проліт\n    - navigation \"Вибрати режим гри\":\n      - navigation:\n        - link \"Захоплення\":\n          - /url: http://localhost:8883/game/index.html?lang=uk\n        - link \"Змійка\":\n          - /url: http://localhost:8883/game/snake/play.html?lang=uk\n    - paragraph: Проліт · Прорив\n    - navigation \"Головне меню\":\n      - button \"Продовжити\"\n      - button \"Вибрати місію\"\n      - button \"Налаштування\"\n      - button \"На повний екран\": На весь екран\n      - 'button \"Звук: вимкнено\"'\n    - button \"Повторити\"\n  - dialog \"Вибрати місію\":\n    - heading \"Вибрати місію\" [active] [level=1]\n    - heading \"Сутички\" [level=2]\n    - paragraph: Пролітайте крізь прогалини. Дрон автоматично застосовує заряд під час польоту. Збирайте ресурси, покращуйте спорядження та здолайте фінальний танк.\n    - button \"Проліт · Прорив\"\n    - button \"Проліт · Бічний вітер\"\n    - button \"Проліт · Сходження\"\n    - heading \"Встановлені сутички\" [level=3]\n    - button \"Проліт · Прорив\"\n    - button \"Експорт · Проліт · Прорив\": Експорт\n    - button \"Вилучити локальну копію · Проліт · Прорив\": Вилучити локальну копію\n    - status\n    - button \"Назад\"\n    - button \"Переглянути місію\"\n  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄\n- text: + + + + + + + + +"
+}

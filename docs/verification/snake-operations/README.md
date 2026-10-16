@@ -1,0 +1,56 @@
+# Continuous Snake operations — prototype slice, 13 October 2026
+
+**Current status:** [Complete implementation and remaining acceptance](completion-status.md), including the 144-mission audit, both releases and final visual work. This page below records the earlier prototype slice.
+
+**Update:** the subsequent [Release A implementation report](release-a.md) records production admission and 48 new missions. The prototype evidence below describes the preceding slice.
+
+The visual foundation (#1157) is merged. The first four prototypes merged in #1158. This continuation starts from `main` at `45e943bd4` and completes **all eight P0 gameplay prototypes**, covering staged objectives, cargo, switchyards and cable plates. It does not complete production admission, player acceptance or ship the planned 96 missions. The public catalogue remains 144 missions; no existing recipe or calibrated rating is changed.
+
+## Completed
+
+- A bounded v5 operation recipe: one to three continuous stages, cumulative catch requirements, stage-specific deliveries and optional extraction. The finite encounter quota and supply triggers keep their own state. Reaching the catch quota does not end an unfinished delivery/extraction operation.
+- Two to four parcels with letter-matched docks. Each parcel adds one temporary cable segment; the carrier unloads at its matching dock. Ordinary catch growth remains. Cargo collection/delivery emits distinct events, never enemy-defeat events.
+- Accepted movement extends the existing v4 engine through narrow internal rule hooks. Fatal collision resolution still happens before awards. Cargo retains the tail on pickup; simultaneous target-and-parcel growth uses a pending segment rather than duplicating a body cell. Reel preserves carried cargo; delivery removes its pending growth before shortening the actual cable.
+- Team shares stage and cargo progress. Either head can complete extraction on the exact accepted move that the other delivers. A fatal move anywhere on the shared board suppresses both heads' progress for that step.
+- Existing match ownership handles Solo, Team and independent Versus Mission Race. Continuous-operation recipes reject Score/Endless policies; they are not silently flattened into catch-only missions.
+- Exact v5 recording verification shares the bounded verifier with v4. Recipe, accepted inputs, cargo state, stage state and growth debt participate in checkpoint verification. Existing v1–v4 replay behavior remains covered by regressions.
+- Compact final-eight snapshots include the small operation state and retain the shared immutable recipe reference. No input histories are copied into visual frames.
+- One production rendering path draws timber parcels, cable attachments, diamond dock pads and extraction readiness, including in replay/previews. Operation markers remain legible during receiver interference; enemy concealment remains unchanged. These are original procedural cues, not downloaded assets or a second artwork registry.
+- The original four review-only recipes retain their exact recipes and proofs: **Two clearances** (consecutive interception/extraction), **Harbor handoff** (wrapping crossing stage), **Loaded loop** (temporary length then pursuit/extraction), **Freight partners** (matching two destinations with shared Team progress).
+- English/Ukrainian lab, shared D-pad controls, manual single-step inspection, all existing looks, and explicit verified-route playback. The lab stores no progress, awards, proofs or preferences. It is a review fixture, not an alternative player menu or transition controller.
+
+- Two switchyard prototypes: **Choose the branch** requires selecting a patrol branch before interception; **Two dispatchers** combines independent junctions and a continuous second clearance. Switches toggle a linked group once per accepted Team move. A patroller changes branch only on departure from the explicit shared junction; it never teleports or reverses mid-branch.
+- Two cable-plate prototypes: **Hold the shortcut** teaches body-held access and a permanent return bypass; **Loaded pressure** combines temporary cargo length, a held shortcut and a lighter return. Release gives at least 800 ms at every pace; occupied gates yield. Gate state already displayed owns the next collision decision.
+- Shared rendering supplies linked levers, selected route inlays, junction diamonds and pressure-pad state. Routing progress is part of exact checkpoints and compact replay, with no enemy awards for switches or plates.
+
+## Review
+
+Serve the repository and open `game/test/manual/snake-operation-lab.html`. Select a mission and Solo/Team/Mission Race. Play with arrows, WASD for the second pilot, or the shared touch pad. The Mission information disclosure contains single-step and verified-route controls. Setup and review details start collapsed on narrow/short screens; Play/Retry stay at the top while scrolling.
+
+The eight recipes live in `game/test/manual/snake-operation-recipes.mjs`, outside the public catalogue. Sixteen retained seed-17 Solo/Team winning journals are in `game/test/fixtures/classic-snake-v5-prototype-proofs.json`. They were produced through ordinary accepted inputs by the qualification pilot, not by moving actors or changing simulation state.
+
+## Verification
+
+- 275 Snake tests passed, covering historical core/recipe archives, replay/progress, signal concealment, ratings, UI and world rendering, including 24 operation/routing tests.
+- All sixteen prototype recordings verify exactly. Their ordinary input routes also clear at supported slow/normal/fast cadence (280/200/150 ms), with newly exported paced recordings verified: **48 Solo/Team/pace combinations**. This is prototype solvability evidence, not the future 576-mission proof matrix or grading calibration.
+- Additional routing cases: malformed loops, blocked bypass, overlapping objects, fatal Team suppression, simultaneous switches, junction-only branch choice, body-held access, warning duration at every pace, occupied gate yielding, repress cancellation, already-closed gate collision, routing requirements and checkpoint tampering.
+- Focused cargo cases: invalid recipes and policies; wrong dock; parcel/tail collision; fatal Team step suppressing delivery; simultaneous delivery/extraction; intermediate stages without results; deferred double growth; post-quota supplies; Reel/cargo interaction; recording tampering; compact snapshots; independent Mission Race state.
+- Browser: completed Loaded pressure and Loaded loop through live accepted-input route playback; Ukrainian Team including Choose the branch at 320px (296px board, no horizontal overflow); English Night Arcade Mission Race at 640×320, resolving simultaneous completion as a draw; the final layout has two 302px boards side-by-side at 640px without overflow; shared D-pad and manual-step interaction. A previously cached local origin served old engine modules; a fresh preview origin resolved that development-cache issue without deleting user data.
+- Targeted lint, formatting and localization checks passed (English/Ukrainian). Shared play-shell generation remains byte-identical. All 38 optional installation/offline/package checks passed.
+- Disk preflight: approximately 455–716 MiB available during this continuation; only small source/proof files were generated. No worktrees, local files, commits, or caches were deleted. No full distribution build or binary asset generation was necessary.
+
+Not established: physical phone/controller playability, player-rated fun, a full release artifact, production admission of operation missions, or full visual acceptance of all worlds.
+
+## Remaining and recommended priorities
+
+| Priority       | Remaining work                                                                                                                                | Why / impact if deferred                                                                                                                                                                                         |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Complete       | Two switchyard and two cable-plate prototypes, with their actual state cues                                                                   | Implemented and covered by accepted-input proofs plus boundary tests. Player-rated fun remains separate.                                                                                                         |
+| P0 next        | Review all eight prototypes and refine objective readability/feedback                                                                         | Winning journals establish solvability, not fun. Playtesting should expose confusing delivery routes, small-cell labels and weak tactical choices before they enter campaigns.                                   |
+| P0/P1 boundary | Admit all qualified v5 mechanics through production authoring/setup, shared selector and help, session/proof capacity, and package validation | The eight recipes deliberately stay in the lab. Publishing them early would bypass the shared host acceptance surface and storage requirements. No competing menu or transition controller should be introduced. |
+| P1             | Audit all 144 existing missions; author per-mission compositions and replace repetitive decisions                                             | Chapter-level visuals alone do not fix repetitive routes. Gameplay revisions must retain old recipes/proofs.                                                                                                     |
+| P1             | Release A: six chapters / 48 missions with accepted v5 systems                                                                                | Delivers variety after the mechanics and art vocabulary are qualified. No part of these 48 is claimed complete here.                                                                                             |
+| P1 per release | Proof matrix, hazard-seed checks, capacity/concurrent import checks, localization, offline packaging and physical-device/input testing        | Prevents unsolvable content, lost records and mobile regressions. The small prototype matrix cannot substitute for release qualification.                                                                        |
+| P2             | Release B: six chapters / 48 missions; full world/look polish, state animations and sparse ambient effects                                    | Adds breadth after Release A gives playtest evidence. Deferral reduces variety but does not block the first coherent expansion release.                                                                          |
+
+The main game's existing shared settings, mission browser, pause/results, direct launch, automatic final-eight failure replay, 5.2-second victory celebration and cancellable five-second continuation are not replaced by this fixture.

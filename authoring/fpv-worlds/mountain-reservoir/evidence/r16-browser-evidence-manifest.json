@@ -1,0 +1,34 @@
+{
+  "packIdentity": "fpv-pack:50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+  "admittedSource": "364fb78c3dc7e268b84b0a13349af32864bca802",
+  "browserChecks": 304,
+  "completeWatchEndpoints": 16,
+  "allNodeTerminalIdentitiesExact": true,
+  "files": [
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-final-browser.json",
+      "bytes": 90843,
+      "sha256": "1f7efd52fffb4816ee8eea2dabfd508b68a79574ec3f5d11e260de19dc192303"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-final-browser.png",
+      "bytes": 105243,
+      "sha256": "7b1d20a46361b6e80c1a91a83f1cb78ac2c56bb274eb3ffdd94afb5a34bcfc91"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-native-smoke.txt",
+      "bytes": 2064,
+      "sha256": "bcb86322c5799f8073506e338987035f2b458b6a99819f33f796bdfb168db5f9"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-native-flight.png",
+      "bytes": 125163,
+      "sha256": "0050879c6bd78c5076049e98cbf2df1c5e0a2a74c47ef60928ec7ed6a514cb2c"
+    },
+    {
+      "path": "authoring/fpv-worlds/mountain-reservoir/evidence/r16-native-paused.png",
+      "bytes": 104197,
+      "sha256": "e5f6281bf65875975868ab9f9ce23ed4a3303cd6b322f58d47e9b62176e209a7"
+    }
+  ]
+}

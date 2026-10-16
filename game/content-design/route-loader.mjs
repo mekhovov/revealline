@@ -12,7 +12,9 @@ export async function loadAuthoredJourneyRoute(id, options = {}) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   if (SHIPPED_ROUTE_SNAPSHOT?.id === id) return loadRouteSnapshot(SHIPPED_ROUTE_SNAPSHOT, options);
   let factories;
-  if (id === 'pursuit-campaigns-v1') {
+  if (id === 'duel-expedition-v1') {
+    factories = await import('./multiplayer-expansion.mjs');
+  } else if (id === 'pursuit-campaigns-v1') {
     factories = await import('./pursuit-campaign-candidates.mjs');
   } else if (id === 'pursuit-pilots-v1') {
     factories = await import('./pursuit-pilot-candidates.mjs');

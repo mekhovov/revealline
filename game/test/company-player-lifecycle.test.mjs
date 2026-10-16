@@ -14,6 +14,8 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { Soundscape } from '../ui/audio.mjs';
+import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
+import { Document } from './helpers/couch-dom.mjs';
 import { auditSource } from '../../scripts/localization-audit.mjs';
 
 // Run the actual host callbacks against real stores/preference adapters without
@@ -174,12 +176,20 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
     getStorage: () => null,
   });
   const calls = [];
+  const doc = new Document();
+  const defeatSounds = attachDefeatSoundControls({
+    document: doc,
+    window: eventTarget,
+    container: doc.body,
+    getStorage: () => null,
+  });
   const context = {
     displayPreferences,
     touchPreferences,
     audioPreferences,
     audioMaster,
     sound,
+    defeatSounds,
     pause: () => calls.push('pause'),
     menuAudio: { close: () => calls.push('menu-audio') },
     writer: { release: () => calls.push('release') },
@@ -203,10 +213,10 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
   const pagehide = callback(registration.arguments[1], context);
   const listenerCount = () =>
     [...listeners.values()].reduce((sum, entries) => sum + entries.size, 0);
-  assert.equal(listenerCount(), 6);
+  assert.equal(listenerCount(), 8);
   pagehide({ persisted: true });
   assert.deepEqual(calls, ['pause']);
-  assert.equal(listenerCount(), 6);
+  assert.equal(listenerCount(), 8);
   assert.equal(sound.disposed, false);
   assert.doesNotThrow(() => pagehide({ persisted: false }));
   await Promise.resolve();

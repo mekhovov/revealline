@@ -19,6 +19,8 @@ import {
 import { creatorAttemptKey } from '../creator/runtime.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { REWARD_BOARD_SECONDS } from '../ui/reward-arrival.mjs';
+import { createCelebration } from '../ui/celebration.mjs';
 
 const html = await readFile(new URL('../creator/player.html', import.meta.url), 'utf8');
 const themes = JSON.parse(
@@ -358,10 +360,17 @@ async function playerHost(t, fixture, { invalidEdition = false, setLook = async 
     drawOptions = null;
   t.mock.method(BoardPainter.prototype, 'setLevel', () => {});
   t.mock.method(BoardPainter.prototype, 'setLook', setLook);
-  t.mock.method(BoardPainter.prototype, 'draw', (_context, current, _dt, options) => {
+  t.mock.method(BoardPainter.prototype, 'draw', function (_context, current, _dt, options) {
     run = current;
     drawOptions = options;
+    if (current.status === 'won' && !this.celebration)
+      this.celebration = createCelebration({ levelId: current.level.id, seed: current.seed });
   });
+  // The board draw is modeled above; the earned overlay still runs its native
+  // celebration against this finite Canvas API boundary (not a pixel review).
+  const earnedContext = $('earned-confetti').getContext('2d');
+  for (const name of ['beginPath', 'rect', 'clip', 'moveTo', 'lineTo', 'closePath', 'fill'])
+    earnedContext[name] = () => {};
   const globals = {
     document: doc,
     window: win,
@@ -503,10 +512,20 @@ test('a legally completed custom mission exposes result actions and keeps earned
   if (held) page.key(keyFor[held], false);
   assert.equal(page.run().status, 'won', 'only the verified route earns completion');
   await settle(() => !$('next').hidden && !$('next').disabled);
-  page.frame();
-  page.tap(1);
-  assert.equal(doc.activeElement, $('next'));
+  // Verification enables Next before the native reward hold ends. Advance the
+  // actual presentation clock instead of treating that control as panel readiness.
+  const completed = authoritativeCheckpoint(page.run());
+  assert.equal($('earned').hidden, true);
+  assert.notEqual(doc.body.dataset.earnedView, 'on');
+  for (let n = 0; n < Math.ceil(REWARD_BOARD_SECONDS / 0.1) + 1; n++) page.frame(100);
   assert.equal($('earned').hidden, false);
+  assert.equal(doc.body.dataset.earnedView, 'on');
+  assert.equal(doc.activeElement, $('earned-continue'));
+  assert.deepEqual(authoritativeCheckpoint(page.run()), completed);
+  page.tap(1);
+  assert.equal(doc.body.dataset.earnedView, 'off');
+  assert.equal(doc.activeElement, $('next'));
+  assert.equal($('earned').hidden, true, 'Back dismisses the reward, not its verified progress.');
   assert.equal($('export-progress').disabled, false);
   assert.equal($('export-attempt').disabled, true);
   const checkpoint = authoritativeCheckpoint(page.run()),

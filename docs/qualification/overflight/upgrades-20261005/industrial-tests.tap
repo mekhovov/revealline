@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: the feature manifest selects every required stream and real test paths
+ok 1 - the feature manifest selects every required stream and real test paths
+  ---
+  duration_ms: 10.350125
+  ...
+# Subtest: TAP receipts cannot turn skipped, failed, absent or canceled tests into passing evidence
+ok 2 - TAP receipts cannot turn skipped, failed, absent or canceled tests into passing evidence
+  ---
+  duration_ms: 0.505584
+  ...
+# Subtest: deadline cleanup kills a descendant after its parent closes early
+ok 3 - deadline cleanup kills a descendant after its parent closes early
+  ---
+  duration_ms: 1416.493833
+  ...
+# Subtest: aborting cannot accept an exit-zero child and kills its surviving descendants
+ok 4 - aborting cannot accept an exit-zero child and kills its surviving descendants
+  ---
+  duration_ms: 262.668709
+  ...
+# Subtest: cleanup EPERM preserves the interrupted exit-zero outcome as failed execution evidence
+ok 5 - cleanup EPERM preserves the interrupted exit-zero outcome as failed execution evidence
+  ---
+  duration_ms: 260.058208
+  ...
+# Subtest: a failed child spawn still produces serializable failed execution evidence
+ok 6 - a failed child spawn still produces serializable failed execution evidence
+  ---
+  duration_ms: 1.936875
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1997.371625

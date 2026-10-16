@@ -308,14 +308,6 @@ test(
       browserSetup({ document }) {
         // The compiled entry pins this audience on its html element.
         document.documentElement.dataset.editionId = f.edition.id;
-        for (const canvas of document.querySelectorAll('canvas'))
-          canvas.getContext = () => ({ drawImage() {} });
-        const create = document.createElement.bind(document);
-        document.createElement = (tag) => {
-          const node = create(tag);
-          if (tag === 'canvas') node.getContext = () => ({ drawImage() {} });
-          return node;
-        };
       },
     });
     const backend = createRewardBackend({ editionId: f.edition.id, indexedDB: disk.indexedDB });
@@ -364,8 +356,9 @@ test(
     });
     assert.deepEqual(saved.receipts[0].definition, f.reward);
     assert.ok(f.requests.includes(`game/${f.art.path}`));
-    assert.equal(page.$('game-overlay').hidden, true);
-    if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+    page.$('skip-celebration').onclick();
+    assert.equal(page.$('game-overlay').hidden, true, 'The earned picture owns the win moment.');
+    assert.equal(page.$('show-result').hidden, false);
     page.$('show-result').click();
     assert.equal(page.$('game-overlay').dataset.kind, 'won');
     assert.equal(page.$('result-picture').hidden, false);
@@ -593,7 +586,9 @@ async function realShowcaseEdition() {
 
 test(
   'real Threads showcase survives guided staging, source round trip, ordinary wins and bilingual corrective Collection revisit',
-  { timeout: 120000 },
+  // Two complete authored routes plus the Collection revisit can exceed the
+  // old limit when this CPU-heavy host fixture shares a CI runner.
+  { timeout: 180000 },
   async (t) => {
     const priorLocale = getLocale();
     setLocale('en', { persist: false });
@@ -616,14 +611,6 @@ test(
       fetchResponse: f.fetcher,
       browserSetup({ document }) {
         document.documentElement.dataset.editionId = f.editionId;
-        for (const canvas of document.querySelectorAll('canvas'))
-          canvas.getContext = () => ({ drawImage() {} });
-        const create = document.createElement.bind(document);
-        document.createElement = (tag) => {
-          const node = create(tag);
-          if (tag === 'canvas') node.getContext = () => ({ drawImage() {} });
-          return node;
-        };
       },
     });
     const backend = createRewardBackend({ editionId: f.editionId, indexedDB: disk.indexedDB });
@@ -676,6 +663,10 @@ test(
         authoritativeCheckpoint(page.rendered.run),
         authoritativeCheckpoint(expected),
       );
+      page.$('skip-celebration').onclick();
+      assert.equal(page.$('game-overlay').hidden, true, 'The earned picture appears before result actions.');
+      assert.equal(page.$('show-result').hidden, false);
+      page.$('show-result').click();
       assert.equal(page.$('next-button').disabled, false);
       assert.equal(page.$('retry-button').disabled, false);
       return authoritativeCheckpoint(page.rendered.run);
@@ -699,6 +690,9 @@ test(
       'Two actual wins cannot grant a six-win finale or application bonus.',
     );
     assert.ok(f.requests.includes(`game/${f.art.path}`));
+    // The win helper already returned from the earned-picture presentation.
+    assert.equal(page.$('game-overlay').dataset.kind, 'won');
+    assert.equal(page.$('result-picture').hidden, false);
     const lessonOpen = page.$('edition-lesson-open');
     assert.equal(
       lessonOpen.hidden,

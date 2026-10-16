@@ -23,6 +23,8 @@ import { createTimedBorderCandidates } from '../content-design/timed-border-cand
 import { TIMED_BONUS_TRAIL_VERSION } from '../core/timed-bonuses.mjs';
 import { createCulturalWorkshopCandidates } from '../content-design/cultural-workshop-candidates.mjs';
 import { createPursuitInterceptCandidates } from '../content-design/pursuit-intercept-candidates.mjs';
+import { createPursuitPilotCandidates } from '../content-design/pursuit-pilot-candidates.mjs';
+import { createPursuitCampaignCandidates } from '../content-design/pursuit-campaign-candidates.mjs';
 import { createCombatCandidates } from '../content-design/combat-candidates.mjs';
 import { createSpatialBalanceCandidates } from '../content-design/spatial-balance-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
@@ -80,6 +82,7 @@ import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
+import { createMultiplayerExpansionCandidates } from '../content-design/multiplayer-expansion.mjs';
 import { createTeamPressureOriginalCandidates } from '../content-design/team-pressure-originals.mjs';
 import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
 import { createTeamCompleteSpecialistOriginalCandidates } from '../content-design/team-complete-specialist-originals.mjs';
@@ -121,7 +124,6 @@ import { setBoardAvailability } from './board-state.mjs';
 import { tuneContentMission } from '../content-design/tuning.mjs';
 import { createImageWorkbench } from './image-workbench.mjs';
 import { createTraceRecovery } from './trace-recovery.mjs';
-import { freezeDesign } from '../content-design/catalogs.mjs';
 import { syncStudioDifficulty } from './difficulty-view.mjs';
 import { createTeamTestPack, createTeamCampaignTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
@@ -133,6 +135,8 @@ import { createBonusEditor } from './bonus-editor.mjs';
 import { createTimedBonusEditor } from './timed-bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
 import { createRelayEditor } from './relay-editor.mjs';
+import { createTeamEnvironmentEditor } from './team-environment-editor.mjs';
+import { createStudioDraftSnapshot } from './draft-snapshot.mjs';
 import { createDirectionalEditor } from './directional-editor.mjs';
 import { createEncounterEditor } from './encounter-editor.mjs';
 import { createPacingInspector } from './pacing-inspector.mjs';
@@ -175,6 +179,7 @@ let session,
   previewRevision = 0,
   previewController = null;
 const gameplayTuning = createGameplayTuningController();
+const currentDraftSnapshot = createStudioDraftSnapshot(() => session);
 const stopGameplayTuning = gameplayTuning.subscribe(() => {
   if (session) guarded(() => inspectBoard(inspectedTrail))();
 });
@@ -325,6 +330,18 @@ const relayEditor = createRelayEditor({
     return true;
   },
 });
+const teamEnvironmentEditor = createTeamEnvironmentEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
 const directionalEditor = createDirectionalEditor({
   document,
   getSource: () => session.current(),
@@ -453,7 +470,7 @@ function draw(preview) {
 function inspectBoard(trailCells = []) {
   $('preview-remains-options').hidden = true;
   $('preview-show-remains').disabled = true;
-  const project = freezeDesign(session.current());
+  const project = currentDraftSnapshot();
   const mission = project.missions.find((entry) => entry.id === $('mission').value);
   syncStudioDifficulty($('difficulty'), project.difficultyCatalogId, {
     team: !!mission && !mission.modes.includes('solo') && mission.modes[0] === 'team',
@@ -467,6 +484,7 @@ function inspectBoard(trailCells = []) {
   timedBonusEditor.sync();
   objectiveEditor.sync();
   relayEditor.sync();
+  teamEnvironmentEditor.sync();
   directionalEditor.sync();
   encounterEditor.sync();
   discoveryEditor.sync();
@@ -594,7 +612,7 @@ function render(selected = $('mission').value) {
   inspections.invalidate();
   pacingInspector.sync();
   tuningRevision = null;
-  const project = freezeDesign(session.current());
+  const project = currentDraftSnapshot();
   $('pressure-edition').disabled = project.difficultyCatalogId === 'journey-difficulty-v2';
   $('project-id').value = project.id;
   localizedText($('project-name'), () => contentText(project, 'name'));
@@ -631,7 +649,7 @@ function render(selected = $('mission').value) {
   inspectBoard();
 }
 function syncStructure() {
-  const project = freezeDesign(session.current()),
+  const project = currentDraftSnapshot(),
     kind = $('item-kind').value,
     action = $('item-action').value;
   const creating = action === 'create' || action === 'duplicate';
@@ -868,6 +886,18 @@ $('pursuit-intercept').onclick = guarded(() => {
   sourceChanged = true;
   inspectSource();
 });
+for (const [id, create, team] of [
+  ['living-pilots', createPursuitPilotCandidates, false],
+  ['living-chapters', createPursuitCampaignCandidates, false],
+  ['living-team-pilots', createPursuitPilotCandidates, true],
+  ['living-team-chapters', createPursuitCampaignCandidates, true],
+])
+  $(id).onclick = guarded(() => {
+    if (!discardSource()) return;
+    $('source').value = JSON.stringify(create({ team }), null, 2);
+    sourceChanged = true;
+    inspectSource();
+  });
 $('combat-study').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createCombatCandidates(), null, 2);
@@ -976,6 +1006,16 @@ $('team-journey').onclick = guarded(() => {
             : $('team-journey-edition').value === 'pressure-originals-1'
               ? createTeamPressureOriginalCandidates()
               : createTeamJourneyCandidates({ artwork: true }),
+    null,
+    2,
+  );
+  sourceChanged = true;
+  inspectSource();
+});
+$('multiplayer-expedition').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(
+    createMultiplayerExpansionCandidates({ mode: $('multiplayer-expedition-mode').value }),
     null,
     2,
   );

@@ -83,12 +83,18 @@ function assertYardBriefing(f, { visible = false } = {}) {
 
 function recordText(t, node, onWrite = () => {}) {
   const own = Object.getOwnPropertyDescriptor(node, 'textContent');
+  const ownAppend = Object.getOwnPropertyDescriptor(node, 'append');
+  const append = node.append;
   let prototype = node;
   while (!Object.getOwnPropertyDescriptor(prototype, 'textContent'))
     prototype = Object.getPrototypeOf(prototype);
   const original = Object.getOwnPropertyDescriptor(prototype, 'textContent');
   assert.equal(typeof original.set, 'function');
   const writes = [];
+  const record = (value) => {
+    writes.push(String(value));
+    onWrite(String(value));
+  };
   Object.defineProperty(node, 'textContent', {
     configurable: true,
     get() {
@@ -96,13 +102,20 @@ function recordText(t, node, onWrite = () => {}) {
     },
     set(value) {
       original.set.call(this, value);
-      writes.push(String(value));
-      onWrite(String(value));
+      record(value);
     },
   });
+  // Localized captions own a text node so later locale changes retain icons and controls.
+  // Observe that initial append synchronously, including blur inside a status publication.
+  node.append = function (...children) {
+    append.apply(this, children);
+    record(this.textContent);
+  };
   t.after(() => {
     if (own) Object.defineProperty(node, 'textContent', own);
     else delete node.textContent;
+    if (ownAppend) Object.defineProperty(node, 'append', ownAppend);
+    else delete node.append;
   });
   return writes;
 }

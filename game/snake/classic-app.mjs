@@ -1,28 +1,92 @@
+import { classicOperationStatus } from './classic-operation-status.mjs';
+import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from './classic-campaign.mjs';
+import { classicBoardPreferences, isClassicWorldStyle } from './classic-worlds.mjs';
+import { claimProfileWriter } from '../profile-writer.mjs';
+import {
+  createEnemyStats,
+  validateEnemyStatsSession,
+  forkEnemyStatsSession,
+} from '../enemy-stats.mjs';
+import { mountEnemyStats } from '../ui/enemy-stats.mjs';
+import { createClassicRecentReplay } from './classic-recent-replay.mjs';
+import {
+  createContinuousPlayController,
+  continuousPlayPreferences,
+  continuousPlayBindings,
+  mountContinuousPlayControls,
+} from '../ui/continuous-play.mjs';
+import {
+  createCelebration,
+  advanceCelebration,
+  celebrationFrame,
+  drawCelebration,
+} from '../ui/celebration.mjs';
+import { createSignalReception } from '../ui/signal-reception.mjs';
+import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
+import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
+import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
+import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
+import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
+import {
+  getMenuAnimation,
+  setMenuAnimation,
+  subscribeMenuAnimation,
+} from '../ui/menu-animation-preferences.mjs';
+import { mountModeSettings } from '../ui/mode-settings-view.mjs';
+import {
+  attachSettingsPanels,
+  settingsPanelBack,
+  settingsTabOwnsKey,
+} from '../ui/settings-panels.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
+import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
+import {
+  classicSnakeLibrarySource,
+  renderClassicSnakeLibraryPreview,
+} from './classic-mission-library.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { attachMenuScene } from '../ui/menu-scenes.mjs';
 import { setMenuIcon } from '../ui/native-menu-icons.mjs';
 import { snakeStudioReturnHref } from '../ui/content-studio-navigation.mjs';
-import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
-import { contextualAppearance } from '../ui/mode-choice.mjs';
-import { fpvWorldLaunchURL, appearanceLaunchURL } from '../fpv-entry.mjs';
+import { contextualAppearance, mountModeChoices } from '../ui/mode-choice.mjs';
+import { appearanceLaunchURL, nativeArtReviewURL } from '../fpv-entry.mjs';
 import { boardPlacement } from '../ui/feedback-cues.mjs';
 import { createClassicAudio } from './classic-audio.mjs';
-import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
+import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
+import { getLocale, setLocale, onLocaleChange, t } from '../i18n/index.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
-import { createDestructionPreferences, sharedActorAppearance } from '../hunt/preferences.mjs';
-import { ACTOR_CASTS, actorFieldGuide } from '../hunt/actor-catalog.mjs';
-import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
+import {
+  createDestructionPreferences,
+  sharedActorAppearance,
+  runtimeActorArtRevision,
+} from '../hunt/preferences.mjs';
+import { ACTOR_CASTS } from '../hunt/actor-catalog.mjs';
+import {
+  classicMechanicGuide as actorFieldGuide,
+  renderClassicEnemyFieldGuide as renderEnemyFieldGuide,
+} from './classic-mechanic-guide.mjs';
 import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createTouchPreferences } from '../touch-preferences.mjs';
+import { nextInputModality, showScreenControls } from '../input-presentation.mjs';
+import { attachTouchSteering } from '../ui/touch-steering.mjs';
+import {
+  mountTouchControlsView,
+  mountTouchPresentationSettings,
+} from '../ui/touch-controls-view.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { createBoardFootprints } from '../couch/board-footprint.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { Soundscape } from '../ui/audio.mjs';
+import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';
 import {
   CLASSIC_SNAKE_CHAPTERS as OFFICIAL_CHAPTERS,
   CLASSIC_SNAKE_LEVELS as OFFICIAL_LEVELS,
@@ -31,13 +95,10 @@ import {
 } from './classic-catalogue.mjs';
 import { createClassicSnakeCommunityLibrary } from './classic-community.mjs';
 import { CLASSIC_COPY } from './classic-copy.mjs';
-import {
-  createClassicSnake,
-  queueClassicSnakeTurn,
-  stepClassicSnake,
-  classicSnakeSummary,
-  exportClassicSnakeReplay,
-} from './classic-core.mjs';
+import { classicSnakeSummary, validateClassicSnakeLevel } from './classic-core.mjs';
+import { classicSnakeUsesVariableHazards, classicSnakeSignalView } from './classic-core-v4.mjs';
+import { nextClassicHazardSeed } from './classic-attempt-seed.mjs';
+import { resolveClassicBoardScene, classicSceneBackdrop } from './classic-scenes.mjs';
 import {
   createClassicSnakeMatch,
   queueClassicSnakeMatchTurn,
@@ -48,13 +109,31 @@ import {
 } from './classic-match.mjs';
 import {
   prepareClassicSnakeLevel,
+  classicSnakeMissionSettings,
   CLASSIC_PACES,
   classicSnakeSurvivalEntry,
 } from './classic-setup.mjs';
+import {
+  createClassicSnakeRatings,
+  classicSnakeRatingForRecord,
+  classicSnakeRatingCriteriaText,
+} from './classic-ratings.mjs';
 import { createClassicSnakeRecords } from './classic-records.mjs';
+import { resolveClassicSnakeRecipeEntry } from './classic-catalogue-archive.mjs';
 import { createClassicPresentation } from './classic-presentation.mjs';
+import { prepareClassicEnvironments } from './classic-environment.mjs';
+import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import {
+  acceptAttemptAppearance,
+  restoreAttemptAppearance,
+  snapshotAttemptAppearance,
+} from '../presentation/attempt-appearance.mjs';
 import { classicCatchMarks, drawClassicBoard, drawClassicTarget } from './classic-view.mjs';
 import { advanceClassicFlight } from './classic-flight-art.mjs';
+import {
+  advanceClassicReactionTime,
+  observeClassicWorldReactions,
+} from './classic-world-reactions.mjs';
 
 const doc = globalThis.document,
   $ = (id) => doc.getElementById(id);
@@ -70,7 +149,7 @@ if (contentLibrary) {
     $('boot-status').textContent =
       `${getLocale() === 'uk' ? 'Не вдалося відкрити пакет Snake.' : 'This Snake package could not be opened.'} ${error.message}`;
     const link = doc.createElement('a');
-    link.href = '../studio/snake.html';
+    link.href = nativeArtReviewURL('../studio/snake.html', globalThis.location.href);
     link.textContent = getLocale() === 'uk' ? ' Відкрити Snake Studio' : ' Open Snake Studio';
     $('boot-status').append(link);
     throw error;
@@ -93,11 +172,26 @@ const CLASSIC_SNAKE_FEATURED = installedContent ? [] : OFFICIAL_FEATURED;
 const survivalEntry = classicSnakeSurvivalEntry(CLASSIC_SNAKE_LEVELS);
 const MODES = ['solo', 'versus', 'team'],
   PRESETS = ['classic', 'pursuit', 'tactical', 'arcade'];
-const SAVE_KEY = `revealline.classic-snake.round.v2${communityIdentity ? `.${communityIdentity}` : ''}`,
-  OLD_SAVE_KEY = communityIdentity ? SAVE_KEY : 'revealline.classic-snake.round.v1';
+const SAVE_KEY = communityIdentity
+    ? `revealline.classic-snake.round.v2.${communityIdentity}`
+    : `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`,
+  OLD_SAVE_KEY = SAVE_KEY;
 const PREF_KEY = 'revealline.classic-snake.presentation.v1',
   SETUP_KEY = 'revealline.classic-snake.setup.v2';
-const SESSION_FORMAT = 'revealline-classic-snake-session.v2';
+const SESSION_FORMAT = 'revealline-classic-snake-session.v3';
+const LEGACY_SESSION_FORMAT = 'revealline-classic-snake-session.v2';
+const environmentCandidate = await prepareClassicEnvironments(CLASSIC_SNAKE_LEVELS, {
+  official: !installedContent,
+});
+let sessionWriter = await claimProfileWriter(globalThis.navigator.locks, `${SAVE_KEY}:writer`);
+let writerRelease = Promise.resolve(),
+  writerEpoch = 0;
+const pageActive = () => !doc.hidden && (typeof doc.hasFocus !== 'function' || doc.hasFocus());
+const enemyStats = createEnemyStats({ canWrite: () => sessionWriter.writable });
+let statsAttempt = null,
+  liveProvenance = 'live';
+const statsViews = [];
+void enemyStats.read();
 const readLocal = (key) => {
   try {
     return globalThis.localStorage.getItem(key);
@@ -127,7 +221,7 @@ let targetRules = choice(
 let preset = choice(PRESETS, params.get('preset') ?? selected.preset, 'classic');
 let duel = choice(['score', 'survival'], params.get('duel') ?? selected.duel, 'score');
 let style = choice(['cable', 'signal'], cosmetic.style, 'cable');
-let boardStyle = choice(['theme', 'retro'], params.get('board') ?? cosmetic.boardStyle, 'theme');
+let { boardStyle, boardScene } = classicBoardPreferences(params, cosmetic);
 const actorAppearance = sharedActorAppearance();
 const currentCast = () => {
   const value = actorAppearance.snapshot().cast;
@@ -142,11 +236,23 @@ let entry =
   CLASSIC_SNAKE_LEVELS.find(
     (item) => item.id === requested || item.id === `classic-${requested}`,
   ) ??
-  CLASSIC_SNAKE_LEVELS[48] ??
+  CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-snake-open-loop') ??
   CLASSIC_SNAKE_LEVELS[0];
 let playShell = null,
+  missionLibrary = null,
+  missionChooser = null,
+  libraryHostMode = null,
+  libraryInfo = null,
+  libraryToolsRefresh = null,
+  snakeSettingsView = null,
+  snakeGlobalSettings = null,
+  snakeOfflinePanel = null,
+  touchPresentationControls = null,
   menuController = null,
-  boardLayoutObserver = null;
+  boardLayoutObserver = null,
+  music = null,
+  audioInactive = false,
+  disposed = false;
 let match,
   runs = [],
   boards = [],
@@ -154,28 +260,60 @@ let match,
   ready = true,
   paused = true,
   previousFrame = null,
-  importEpoch = 0;
+  importEpoch = 0,
+  pendingImports = 0,
+  pageDeparted = false;
 let offerSavedContinue = !params.has('level');
 let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
   saveNotice = '',
   earlyFailures = 0;
-let review = null,
-  recordedMatch = null,
-  flightFrames = [];
+let recordedMatch = null,
+  verifiedOutcome = null,
+  unsavedOutcome = null,
+  flightFrames = [],
+  reactionTimeMs = 0;
+let celebration = null,
+  transitionControls = null,
+  resultPreview = null,
+  resultPlayback = null,
+  transitionJustStarted = false;
+const recentReplay = createClassicRecentReplay();
+const continuousPreferences = continuousPlayPreferences();
+const signalReception = [createSignalReception(), createSignalReception()];
+const transition = createContinuousPlayController({
+  preferences: continuousPreferences,
+  isCurrent: (identity) => identity === match,
+  isActive: pageActive,
+  onNext: () => launchNext(),
+  onRetry: retryMission,
+});
 const gamepadState = new Map(),
   gamepadSeats = new Map();
 const effects = [createHuntDestruction(), createHuntDestruction()];
+let acceptedArtRevision = runtimeActorArtRevision(),
+  acceptedAppearance = null,
+  retainPreparedAppearance = false;
 const destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
-const display = createDisplayPreferences();
-const presentation = createClassicPresentation({ displayPreferences: display });
+const display = createDisplayPreferences({
+  onWarning: (message, key) => {
+    $('snake-display-status').textContent = key ? t(key) : message;
+  },
+});
+const presentation = createClassicPresentation({
+  displayPreferences: display,
+  onChange: () => missionChooser?.refresh(),
+});
 const audioMaster = createAudioMaster(),
   audioPreferences = createAudioPreferences({ audioMaster });
-const sound = new Soundscape({ audioMaster });
-const classicAudio = createClassicAudio(sound, { getDestruction: () => destruction.snapshot() });
+const sound = new Soundscape({ audioMaster, persistentMusic: true });
+const classicAudio = createClassicAudio(sound, {
+  getDestruction: () => destruction.snapshot(),
+  getBoardStyle: () => boardStyle,
+  presentation,
+});
 sound.configure({
   master: 1,
-  music: 0,
   sfx: Number.isFinite(cosmetic.sfx) ? Math.max(0, Math.min(1, cosmetic.sfx)) : 0.7,
 });
 const isReduced = () => display.snapshot().effectiveReducedEffects;
@@ -184,6 +322,7 @@ const reactions = attachContextualReactions({
   container: $('snake-reaction-caption'),
   settingsContainer: $('snake-reaction-settings'),
   getReduced: isReduced,
+  acquireGain: ({ factor }) => music?.player.acquireGain({ factor }) ?? (() => {}),
 });
 let reactionAttempt = 0;
 const text = (key, values = {}) =>
@@ -210,12 +349,14 @@ const options = (select, rows, value) => {
 const settings = () => ({ pace, format, targetRules, preset });
 const acceptedLevel = () => prepareClassicSnakeLevel(entry, settings());
 const result = () => match?.result ?? null;
+let ratings = null;
 const records = createClassicSnakeRecords({
   ...(installedContent ? { contentPack: installedContent.pack } : {}),
   onChange: () => {
     if (match) {
       renderProgress();
       refresh();
+      void ratings?.refresh();
     }
   },
   onWarning: (error) => {
@@ -224,26 +365,59 @@ const records = createClassicSnakeRecords({
     $('save-status').textContent = text('storage');
   },
 });
+ratings = createClassicSnakeRatings({
+  records,
+  canWrite: () => sessionWriter.writable,
+  onWarning: () => {},
+});
+let touchControllers = [],
+  touchViews = [],
+  touchModality =
+    globalThis.navigator.maxTouchPoints > 0 ||
+    globalThis.matchMedia?.('(any-pointer: coarse)').matches
+      ? 'touch'
+      : 'keyboard';
 const touch = createTouchPreferences({ onChange: () => applyTouch() });
+function clearTouch() {
+  for (const controller of touchControllers) controller.clear();
+}
+function disposeTouchControls() {
+  for (const controller of touchControllers) controller.destroy();
+  for (const view of touchViews) view.dispose();
+  touchControllers = [];
+  touchViews = [];
+}
+function applyTouchVisibility() {
+  const visible = showScreenControls({
+    modality: touchModality,
+    scope: 'flight',
+    running: !ready && !paused && !result(),
+  });
+  const pads = $('pads');
+  if (pads.hidden === !visible) return;
+  pads.hidden = !visible;
+  if (!visible) clearTouch();
+  footprint?.refresh();
+}
 function applyTouch() {
   const prefs = touch.snapshot();
   $('pads').style.setProperty('--snake-pad-size', prefs.size === 'large' ? '64px' : '56px');
-  $('pads').style.setProperty('--snake-pad-opacity', String(Math.max(0.75, prefs.opacity)));
+  clearTouch();
+  $('pads').style.setProperty('--snake-pad-opacity', String(prefs.opacity));
+  for (const view of touchViews) view.apply(prefs);
   $('pads').dataset.side = prefs.side;
+  touchPresentationControls?.refresh();
+  applyTouchVisibility();
 }
 const campaignFor = (item) =>
   CLASSIC_SNAKE_CAMPAIGNS.find((campaign) =>
     (campaign.chapterIds ?? campaign.chapters ?? []).includes(item.chapterId),
   ) ?? CLASSIC_SNAKE_CAMPAIGNS[0];
-const campaignChapters = (campaign) =>
-  CLASSIC_SNAKE_CHAPTERS.filter((chapter) =>
-    (campaign.chapterIds ?? campaign.chapters ?? []).includes(chapter.id),
-  );
 function storePresentation() {
   try {
     globalThis.localStorage.setItem(
       PREF_KEY,
-      JSON.stringify({ style, boardStyle, steering, accent, sfx: sound.settings.sfx }),
+      JSON.stringify({ style, boardStyle, boardScene, steering, accent, sfx: sound.settings.sfx }),
     );
   } catch {
     saveNotice = 'storage';
@@ -262,6 +436,7 @@ function updateURL() {
     duel,
     seed,
     board: boardStyle,
+    scene: boardScene,
   }))
     url.searchParams.set(key, value);
   globalThis.history.replaceState(null, '', url);
@@ -287,16 +462,21 @@ function session() {
     seed,
     style,
     match: exportClassicSnakeMatch(match),
+    appearance: snapshotAttemptAppearance(acceptedAppearance),
+    statistics: enemyStats.session(statsAttempt),
+    provenance: liveProvenance,
+    appearance: snapshotAttemptAppearance(acceptedAppearance),
   };
 }
 function save() {
   if (ready) return;
   try {
     const raw = JSON.stringify(session());
-    globalThis.localStorage.setItem(SAVE_KEY, raw);
+    if (sessionWriter.writable) globalThis.localStorage.setItem(SAVE_KEY, raw);
+    else saveNotice = 'storage';
     savedRound = raw;
     offerSavedContinue = true;
-    saveNotice = 'saved';
+    saveNotice = sessionWriter.writable ? 'saved' : 'storage';
   } catch {
     saveNotice = 'storage';
   }
@@ -304,13 +484,12 @@ function save() {
   $('continue').hidden = !savedRound;
 }
 function remember() {
-  if (!match || recordedMatch === match) return;
+  if (!match || recordedMatch === match || liveProvenance === 'import') return;
   if (result()) recordedMatch = match;
   try {
-    const accepted = restoreClassicSnakeMatch(exportClassicSnakeMatch(match), {
-      level: acceptedLevel(),
-    });
-    for (const run of accepted.runs)
+    const owner = match,
+      accepted = exportClassicSnakeMatch(match);
+    for (const run of match.runs)
       void records
         .remember(run, {
           mode,
@@ -318,7 +497,13 @@ function remember() {
           level: acceptedLevel(),
           allowClear: format === 'campaign',
           policy: accepted.options.policy,
-          match: exportClassicSnakeMatch(accepted),
+          match: accepted,
+        })
+        .then((receipt) => {
+          if (match !== owner) return;
+          if (receipt?.saved === false) unsavedOutcome = owner;
+          if (result() === 'won') verifiedOutcome = owner;
+          refresh();
         })
         .catch(() => {
           saveNotice = 'storage';
@@ -328,7 +513,14 @@ function remember() {
   }
 }
 function pause({ showMenu = true } = {}) {
-  if (ready || paused || result()) return;
+  clearTouch();
+  transition.cancel('pause');
+  if (result()) {
+    if (showMenu && !playShell?.topDialog()) showResults();
+    refreshReplayControl();
+    return;
+  }
+  if (ready || paused) return;
   paused = true;
   sound.gameplayPaused = true;
   sound.pause();
@@ -340,32 +532,44 @@ function pause({ showMenu = true } = {}) {
   if (showMenu && !playShell?.topDialog()) playShell?.open('pause');
 }
 function start() {
-  if (result()) return;
+  if (result() || !pageActive()) return;
+  libraryInfo?.close();
+  if (missionChooser?.elements.dialog.open) missionChooser.close({ retune: false });
+  $('game').querySelector('.arena').append($('snake-reaction-caption'));
   playShell?.enterPlay();
+  if (ready || match.runs.every((run) => run.tick === 0))
+    acceptEnemyArtwork({ retain: retainPreparedAppearance });
   if (ready) void records.visit(entry.id);
   importEpoch++;
-  review = null;
   ready = false;
   paused = false;
   previousFrame = null;
   sound.gameplayPaused = false;
   reactions.resume();
-  void sound
-    .enable()
-    .then(() =>
-      reactions.prepare(
-        runs.flatMap(
-          (run) =>
-            run.level.targets?.required?.map((target) => target.kind) ?? [
-              run.level.targetMovement === 'flee' ? 'runner' : 'lookout',
-            ],
-        ),
+  void sound.enable().then(() => {
+    classicAudio.prepare();
+    return reactions.prepare(
+      runs.flatMap(
+        (run) =>
+          run.level.targets?.required?.map((target) => target.kind) ?? [
+            run.level.targetMovement === 'flee' ? 'runner' : 'lookout',
+          ],
       ),
     );
+  });
+  // Reuse the page-owned Soundscape so an explicit music pause survives Start/Retry.
+  void music?.start();
   refresh();
   boards[0]?.canvas.focus({ preventScroll: true });
 }
 function finish() {
+  sound.event?.({
+    type: 'run.completed',
+    levelId: entry.id,
+    tick: Math.max(...runs.map((run) => run.tick)),
+    won: result() !== 'lost',
+    status: result() === 'lost' ? 'lost' : 'won',
+  });
   paused = true;
   sound.gameplayPaused = true;
   for (const voice of [...sound.voices]) if (voice.feedback && voice.source.loop) voice.stop();
@@ -373,10 +577,298 @@ function finish() {
   remember();
   save();
   refresh();
+  runs.forEach((run, board) => recentReplay.capture(run, board));
+  const competitive = mode === 'versus';
+  const won = competitive || result() === 'won';
+  celebration = won
+    ? createCelebration({ levelId: entry.id, seed, theme: { family: 'fpv' }, reduced: isReduced() })
+    : null;
+  transitionJustStarted = true;
+  transition.begin({
+    identity: match,
+    outcome: won ? 'won' : 'lost',
+    canAdvance: !competitive && result() === 'won' && !!nextMission(),
+    canRetry: !competitive,
+    replayMs: recentReplay.durationMs(),
+    readyMs: 400,
+  });
+  reactions.result({
+    owned: true,
+    presentation: 'snake',
+    mode,
+    outcome: competitive
+      ? result() === 'draw'
+        ? 'draw'
+        : 'won'
+      : result() === 'won'
+        ? 'won'
+        : 'lost',
+    missionId: entry.id,
+    stars: 1,
+  });
+  refresh();
+}
+function nextMission() {
+  if (format !== 'campaign' || mode === 'versus') return null;
+  const chapters = campaignFor(entry)?.chapterIds ?? campaignFor(entry)?.chapters ?? [];
+  const ordered = chapters.flatMap((id) =>
+    CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === id),
+  );
+  const index = ordered.findIndex((item) => item.id === entry.id);
+  return index < 0 ? null : (ordered[index + 1] ?? null);
+}
+function launchMission(destination, { nextMode = mode } = {}) {
+  if (!destination) return false;
+  let hazardSeed;
+  const destinationSettings = classicSnakeMissionSettings(destination, settings());
+  // Validate before retiring the visible result. A rejected destination leaves
+  // its current board and actions usable.
+  try {
+    const level = prepareClassicSnakeLevel(destination, destinationSettings);
+    if (classicSnakeUsesVariableHazards(level))
+      hazardSeed = nextClassicHazardSeed(match?.options.hazardSeed);
+    createClassicSnakeMatch(level, {
+      mode: nextMode,
+      seed,
+      ...(hazardSeed === undefined ? {} : { hazardSeed }),
+      policy:
+        destinationSettings.format === 'campaign'
+          ? 'mission'
+          : nextMode === 'versus'
+            ? duel
+            : 'endless',
+    });
+  } catch {
+    saveNotice = 'invalid';
+    refresh();
+    return false;
+  }
+  save();
+  mode = nextMode;
+  entry = destination;
+  ({ format, targetRules } = destinationSettings);
+  prepare({ launch: true, hazardSeed });
+  return true;
+}
+function launchNext() {
+  return launchMission(nextMission());
+}
+let randomMissionCache = null;
+function randomMissions() {
+  // Survival owns one designated open arena. Choosing another mission would
+  // immediately normalize back to that same arena in prepare().
+  if (format === 'endless' && mode === 'versus' && duel === 'survival') return [];
+  const campaign = campaignFor(entry);
+  const key = JSON.stringify([campaign?.id, mode, pace, format, targetRules, preset, duel]);
+  if (randomMissionCache?.key !== key) {
+    const chapters = campaign?.chapterIds ?? campaign?.chapters ?? [];
+    const candidates = CLASSIC_SNAKE_LEVELS.filter((item) => {
+      if (!chapters.includes(item.chapterId)) return false;
+      try {
+        validateClassicSnakeLevel(prepareClassicSnakeLevel(item, settings()));
+        return true;
+      } catch {
+        return false;
+      }
+    });
+    randomMissionCache = { key, candidates };
+  }
+  return randomMissionCache.candidates.filter((item) => item.id !== entry.id);
+}
+function launchRandom() {
+  const choices = randomMissions();
+  return launchMission(choices[Math.floor(Math.random() * choices.length)]);
+}
+function showResults() {
   playShell?.open('results');
+  $('snake-results').append($('snake-reaction-caption'));
+  const retry = playShell?.elements.buttons.retry;
+  if (mode === 'versus' && retry) retry.textContent = locale === 'uk' ? 'Реванш' : 'Rematch';
+  const focus = !$('next').hidden ? $('next') : retry;
+  focus?.focus({ preventScroll: true });
+}
+function beginResultPlayback() {
+  resultPlayback = {
+    owner: match,
+    frames: recentReplay.frames(),
+    time: 0,
+    duration: recentReplay.durationMs(),
+    playing: true,
+  };
+  refreshReplayControl();
+}
+function refreshReplayControl() {
+  const button = $('review');
+  if (!button) return;
+  const playing = !!resultPlayback?.playing;
+  button.textContent = playing
+    ? locale === 'uk'
+      ? 'Зупинити повтор'
+      : 'Pause replay'
+    : locale === 'uk'
+      ? 'Повторити останні 8 ходів'
+      : 'Replay last 8 moves';
+  button.setAttribute('aria-pressed', String(playing));
+}
+const playAcknowledgements = new WeakMap();
+function observeStep(event) {
+  recentReplay.observe(event);
+  const canvas = boards[event.board]?.canvas;
+  if (canvas) observeClassicWorldReactions(canvas, event.run, match, reactionTimeMs);
+  classicAudio.events?.(event.run, {
+    board: `snake-${event.board}`,
+    placement: boardPlacement(boards[event.board]?.canvas),
+  });
+  classicAudio.update(event.run, {
+    mode,
+    board: `snake-${event.board}`,
+    placement: boardPlacement(canvas),
+  });
+  const delivered = event.run.events.some((item) => item.type === 'cargo.delivered');
+  const antenna = event.run.events.some(
+    (item) => item.type === 'target.caught' && item.target.kind === 'jammer',
+  );
+  if (delivered || antenna)
+    playAcknowledgements.set(event.run, {
+      until: event.run.elapsedMs + 1400,
+      kind: delivered ? 'delivery' : 'antenna',
+    });
+  const defeats = event.run.events
+    .filter((item) => item.type === 'target.caught')
+    .map((item) => ({
+      family:
+        item.target.kind ?? (event.run.level.targetMovement === 'flee' ? 'runner' : 'lookout'),
+      playerId: item.playerId,
+    }));
+  if (defeats.length && statsAttempt)
+    void enemyStats.observe(statsAttempt, {
+      board: String(event.board),
+      sequence: event.run.tick,
+      defeats,
+    });
+}
+function installTransitionControls() {
+  const stage = el('section', null, 'snake-continuation');
+  stage.setAttribute('aria-label', locale === 'uk' ? 'Продовжити гру' : 'Continue playing');
+  const next = el('button', null, 'primary'),
+    retry = el('button'),
+    home = el('button');
+  next.addEventListener('click', launchNext);
+  retry.addEventListener('click', retryMission);
+  home.addEventListener('click', () => playShell.open('home'));
+  stage.append(next, retry, home);
+  $('game').querySelector('.arena').append(stage);
+  mountContinuousPlayControls({
+    document: doc,
+    parent: stage,
+    controller: transition,
+    locale: () => locale,
+    preferences: continuousPreferences,
+  });
+  const footer = playShell.elements.dialogs.results.querySelector('footer');
+  footer.classList.add('snake-result-actions', 'continuous-result-actions');
+  playShell.elements.buttons['results-back'].hidden = true;
+  const primary = el('div', null, 'snake-result-primary');
+  primary.append($('next'), playShell.elements.buttons.retry);
+  const resultHome = el('button');
+  resultHome.addEventListener('click', () => playShell.open('home'));
+  primary.append(resultHome);
+  footer.append(primary);
+  mountContinuousPlayControls({
+    document: doc,
+    parent: footer,
+    controller: transition,
+    locale: () => locale,
+    preferences: continuousPreferences,
+  });
+  const more = el('details', null, 'snake-result-more');
+  const moreLabel = el('summary');
+  more.append(moreLabel);
+  const resultActions = el('div', null, 'run-controls');
+  let resultRandom = null;
+  for (const [en, uk, action] of [
+    ['Random level', 'Випадковий рівень', launchRandom],
+    ['Choose mission', 'Обрати місію', () => playShell.open('missions')],
+    [
+      'Collections',
+      'Колекції',
+      () => {
+        globalThis.location.href = new URL('../?panel=collection', globalThis.location.href).href;
+      },
+    ],
+  ]) {
+    const button = el('button', locale === 'uk' ? uk : en);
+    if (action === launchRandom) resultRandom = button;
+    button.addEventListener('click', () => {
+      transition.cancel('result-action');
+      action();
+    });
+    resultActions.append(button);
+    button.dataset.en = en;
+    button.dataset.uk = uk;
+  }
+  more.append(resultActions, $('slow-offer'));
+  $('snake-results').append(more);
+  const media = el('figure', null, 'snake-result-media');
+  resultPreview = el('canvas', null, 'snake-result-board');
+  resultPreview.setAttribute(
+    'aria-label',
+    locale === 'uk' ? 'Повтор останніх 8 ходів Snake' : 'Snake final 8 moves replay',
+  );
+  const replayControls = el('figcaption', null, 'snake-replay-controls');
+  replayControls.append($('review'));
+  media.append(resultPreview, replayControls);
+  const overview = el('div', null, 'snake-result-overview');
+  const summary = el('div', null, 'snake-result-summary');
+  summary.append($('result-detail'), $('snake-stars'), $('result-record'), $('result-save-notice'));
+  overview.append(media, summary);
+  $('snake-results').prepend(overview);
+  for (const [container, variant] of [
+    [$('game').querySelector('.level-strip'), 'hud'],
+    [playShell.elements.content.pause, 'panel'],
+    [$('snake-results'), 'panel'],
+  ]) {
+    if (container)
+      statsViews.push(
+        mountEnemyStats({
+          document: doc,
+          container,
+          stats: enemyStats,
+          gameType: 'snake',
+          getAttempt: () => statsAttempt,
+          locale: () => locale,
+          variant,
+        }),
+      );
+  }
+  $('game').querySelector('.level-strip').append($('snake-onboarding'));
+  transitionControls = {
+    refresh() {
+      stage.hidden = !result() || !!playShell.topDialog();
+      next.hidden = !nextMission() || result() !== 'won';
+      next.textContent = nextMission()
+        ? `${locale === 'uk' ? 'Далі' : 'Next'}: ${nextMission().title[locale]}`
+        : text('next');
+      retry.textContent =
+        mode === 'versus'
+          ? locale === 'uk'
+            ? 'Реванш'
+            : 'Rematch'
+          : locale === 'uk'
+            ? 'Спробувати ще'
+            : 'Try again';
+      home.textContent = locale === 'uk' ? 'Головна' : 'Home';
+      resultHome.textContent = home.textContent;
+      moreLabel.textContent = locale === 'uk' ? 'Інші дії' : 'More options';
+      playShell.elements.buttons.retry.classList.toggle('primary', $('next').hidden);
+      if (resultRandom) resultRandom.hidden = !randomMissions().length;
+      refreshReplayControl();
+      for (const button of resultActions.children) button.textContent = button.dataset[locale];
+    },
+  };
 }
 function turn(player, direction) {
-  if (result() || review || playShell?.topDialog()) return;
+  if (result() || playShell?.topDialog()) return;
   if (ready) start();
   if (paused) return;
   queueClassicSnakeMatchTurn(match, player, direction);
@@ -391,15 +883,31 @@ function relative(player, offset) {
     heading = snake.turns.at(-1) ?? snake.direction;
   turn(player, directions[(directions.indexOf(heading) + offset + 4) % 4]);
 }
-function prepare({ launch = false } = {}) {
+function retryMission() {
+  // Retry keeps the accepted artwork, but prepare owns a fresh attempt and
+  // jammer schedule. Every input path must use the same ownership boundary.
+  prepare({ launch: true, retainAppearance: true });
+}
+function prepare({ launch = false, retainAppearance = false, hazardSeed } = {}) {
+  ({ format, targetRules } = classicSnakeMissionSettings(entry, settings()));
+  retainPreparedAppearance = retainAppearance;
+  transition.cancel('new-attempt');
+  if (statsAttempt) enemyStats.finishAttempt(statsAttempt);
+  liveProvenance = 'live';
+  statsAttempt = enemyStats.beginAttempt({ gameType: 'snake' });
+  celebration = null;
+  signalReception.forEach((signal) => signal.reset());
+  $('game').querySelector('.arena').append($('snake-reaction-caption'));
   // An explicit selection owns the next Start; an older save remains available
   // only through Workshop, never as a silent replacement for the selected level.
   if (match) offerSavedContinue = false;
   classicAudio.reset();
   importEpoch++;
   reactions.reset(`classic:${++reactionAttempt}`);
-  review = null;
+  resultPlayback = null;
   recordedMatch = null;
+  verifiedOutcome = null;
+  unsavedOutcome = null;
   if (format === 'endless' && mode === 'versus' && duel === 'survival') {
     if (survivalEntry) {
       entry = survivalEntry;
@@ -407,16 +915,22 @@ function prepare({ launch = false } = {}) {
       targetRules = 'authored';
     } else duel = 'score';
   }
-  for (const fx of effects) fx.reset();
-  match = createClassicSnakeMatch(acceptedLevel(), {
+  const level = acceptedLevel();
+  acceptEnemyArtwork({ retain: retainAppearance });
+  if (classicSnakeUsesVariableHazards(level))
+    hazardSeed ??= nextClassicHazardSeed(match?.options.hazardSeed);
+  match = createClassicSnakeMatch(level, {
     mode,
     seed,
+    ...(hazardSeed === undefined ? {} : { hazardSeed }),
     policy: format === 'campaign' ? 'mission' : mode === 'versus' ? duel : 'endless',
     durationMs: 180000,
     catchDeadlineMs: 30000,
   });
   runs = match.runs;
+  recentReplay.reset(runs);
   flightFrames = [];
+  reactionTimeMs = 0;
   ready = true;
   paused = true;
   previousFrame = null;
@@ -424,9 +938,24 @@ function prepare({ launch = false } = {}) {
   updateURL();
   renderCopy();
   refresh();
+  statsViews.forEach((view) => view.refresh());
   if (launch) start();
 }
+function acceptEnemyArtwork({ retain = false } = {}) {
+  if (!retain)
+    acceptedAppearance = acceptAttemptAppearance(environmentCandidate(entry, mode), {
+      artRevision: runtimeActorArtRevision(),
+      collection: selectedArcadeCollection(presentation.theme.effectivePreferences()),
+    });
+  acceptedArtRevision = acceptedAppearance?.artRevision ?? null;
+  presentation.setAttemptAppearance(acceptedAppearance);
+  effects.forEach((fx, index) => {
+    fx.reset();
+    effects[index] = createHuntDestruction({ artRevision: acceptedArtRevision });
+  });
+}
 function buildBoards() {
+  disposeTouchControls();
   boardLayoutObserver?.disconnect();
   footprint?.dispose();
   $('boards').replaceChildren();
@@ -446,6 +975,17 @@ function buildBoards() {
     }
     const wrap = el('div', null, 'board-wrap'),
       canvas = el('canvas');
+    const reception = el('div', null, 'snake-reception');
+    reception.hidden = true;
+    reception.dataset.stat = 'reception';
+    reception.setAttribute('role', 'status');
+    stats.append(reception);
+    const operation = el('div', null, 'snake-operation-status');
+    operation.hidden = !run.operation;
+    stats.dataset.operation = String(!!run.operation);
+    operation.dataset.stat = 'operation';
+    operation.setAttribute('role', 'status');
+    stats.append(operation);
     canvas.width = run.level.width * 28;
     canvas.height = run.level.height * 28;
     canvas.tabIndex = 0;
@@ -457,28 +997,7 @@ function buildBoards() {
     card.append(stats, wrap);
     if (mode === 'versus') card.prepend(el('p', text(index ? 'p2' : 'p1'), 'player-label'));
     $('boards').append(card);
-    boards.push({ canvas, fields, message, title, detail });
-    let pointer = null;
-    canvas.addEventListener('pointerdown', (event) => {
-      if (event.button !== 0 || pointer) return;
-      pointer = { id: event.pointerId, x: event.clientX, y: event.clientY };
-      canvas.setPointerCapture(event.pointerId);
-    });
-    canvas.addEventListener('pointerup', (event) => {
-      if (!pointer || pointer.id !== event.pointerId) return;
-      const dx = event.clientX - pointer.x,
-        dy = event.clientY - pointer.y;
-      pointer = null;
-      if (Math.max(Math.abs(dx), Math.abs(dy)) < 12 || mode === 'team') return;
-      turn(
-        mode === 'versus' ? index : 0,
-        Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : dy > 0 ? 'down' : 'up',
-      );
-    });
-    for (const name of ['pointercancel', 'lostpointercapture'])
-      canvas.addEventListener(name, () => {
-        pointer = null;
-      });
+    boards.push({ canvas, fields, message, title, detail, wrap, reception, operation });
   }
   buildPads();
   footprint = createBoardFootprints(boards.map((board) => board.canvas));
@@ -511,71 +1030,73 @@ function buildBoards() {
   primeEffects();
 }
 function buildPads() {
+  disposeTouchControls();
   $('pads').replaceChildren();
+  $('pads').dataset.steering = steering;
   for (let player = 0; player < (mode === 'solo' ? 1 : 2); player++) {
     const group = el('div'),
-      label = el('p', text(player ? 'p2' : 'p1'), 'pad-label'),
-      pad = el('div', null, steering === 'turns' ? 'pad turn-pad' : 'pad');
-    pad.setAttribute('role', 'group');
-    pad.setAttribute('aria-label', label.textContent);
-    const controls =
-      steering === 'turns'
-        ? [
-            ['turnLeft', '↶'],
-            ['turnRight', '↷'],
-          ]
-        : [
-            ['up', '↑'],
-            ['left', '←'],
-            ['down', '↓'],
-            ['right', '→'],
-          ];
-    for (const [direction, symbol] of controls) {
-      const button = el('button', symbol);
-      button.dataset.direction = direction;
-      button.setAttribute('aria-label', `${label.textContent}: ${text(direction)}`);
-      button.addEventListener('click', () =>
-        steering === 'turns'
-          ? relative(player, direction === 'turnLeft' ? -1 : 1)
-          : turn(player, direction),
-      );
-      pad.append(button);
-    }
+      label = el('p', text(player ? 'p2' : 'p1'), 'pad-label');
+    group.dataset.player = String(player);
     if (mode !== 'solo') group.append(label);
-    group.append(pad);
     $('pads').append(group);
+    if (steering === 'turns') {
+      const pad = el('div', null, 'pad turn-pad');
+      pad.setAttribute('role', 'group');
+      pad.setAttribute('aria-label', label.textContent);
+      for (const [direction, symbol, offset] of [
+        ['turnLeft', '↶', -1],
+        ['turnRight', '↷', 1],
+      ]) {
+        const button = el('button', symbol);
+        button.type = 'button';
+        button.dataset.direction = direction;
+        button.setAttribute('aria-label', `${label.textContent}: ${text(direction)}`);
+        button.addEventListener('click', () => relative(player, offset));
+        pad.append(button);
+      }
+      group.append(pad);
+      continue;
+    }
+    const view = mountTouchControlsView({
+      document: doc,
+      mount: group,
+      idPrefix: `snake-touch-${player}`,
+    });
+    view.root.setAttribute('role', 'group');
+    view.root.setAttribute('aria-label', label.textContent);
+    touchViews.push(view);
+    touchControllers.push(
+      attachTouchSteering({
+        // Team pilots share one board, so each steers through their own thumb area.
+        arena: mode === 'team' ? null : boards[mode === 'versus' ? player : 0]?.canvas,
+        pad: view.pad,
+        surface: view.surface,
+        indicator: view.indicator,
+        window: globalThis,
+        getSettings: () => touch.snapshot(),
+        active: () => !pageDeparted && !result() && !playShell?.topDialog() && (ready || !paused),
+        onDirection: (direction) => turn(player, direction),
+        onCancel: () => pause(),
+      }),
+    );
+    for (const [direction, button] of Object.entries(view.directionButtons))
+      button.addEventListener('click', (event) => {
+        // Pointerdown already steers; keyboard/assistive activation has no pointer.
+        if (event.detail === 0) turn(player, direction);
+      });
   }
   applyTouch();
   footprint?.refresh();
 }
+
 function renderProgress() {
   const chapterEntries = CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId);
-  for (const [index, item] of chapterEntries.entries()) {
-    const option = $('mission').children[index];
-    if (option?.value === item.id)
-      option.textContent = `${records.cleared(item.id) ? '✓ ' : ''}${index + 1}. ${item.title[locale]}`;
-  }
-  const cards = $('mission-cards');
-  cards.setAttribute('aria-label', text('mission'));
-  cards.replaceChildren(
-    ...chapterEntries.map((item, index) => {
-      const card = el(
-        'button',
-        `${records.cleared(item.id) ? '✓ ' : ''}${String(index + 1).padStart(2, '0')} · ${item.title[locale]}`,
-      );
-      card.type = 'button';
-      card.setAttribute('aria-pressed', String(item.id === entry.id));
-      card.addEventListener('click', () => {
-        save();
-        entry = item;
-        prepare();
-        playShell?.open('briefing');
-      });
-      return card;
-    }),
-  );
+  syncLibraryMode();
+  missionChooser?.refresh();
+  libraryToolsRefresh?.();
   $('progress-summary').textContent = text('progress', {
     done: records.chapter(chapterEntries),
+    chapterTotal: chapterEntries.length,
     all: CLASSIC_SNAKE_LEVELS.filter((item) => records.cleared(item.id)).length,
     total: CLASSIC_SNAKE_LEVELS.length,
   });
@@ -592,7 +1113,7 @@ function renderProgress() {
     : CLASSIC_SNAKE_CHAPTERS.filter(
         (chapter) =>
           records.chapter(CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === chapter.id)) ===
-          6,
+          CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === chapter.id).length,
       );
   if (accent !== 'default' && !unlocked.some((chapter) => chapter.id === accent))
     accent = 'default';
@@ -624,58 +1145,242 @@ function nextUncleared() {
     ) ?? CLASSIC_SNAKE_LEVELS.find((item) => !records.cleared(item.id))
   );
 }
-let snakeSimPanel = null;
+function syncLibraryMode() {
+  if (!missionChooser || libraryHostMode === mode) return;
+  libraryHostMode = mode;
+  const filter = $('journey-mode');
+  filter.value = mode;
+  filter.dispatchEvent(new doc.defaultView.Event('change', { bubbles: true }));
+}
+function openMissionLibrary() {
+  if (!missionChooser) {
+    libraryHostMode = mode;
+    const namespace = `snake-${communityIdentity ?? 'official'}`;
+    const session = createMissionLibrarySessionState({
+      mode,
+      storage: {
+        getItem: (key) => globalThis.sessionStorage?.getItem(`${namespace}:${key}`),
+        setItem: (key, value) => globalThis.sessionStorage?.setItem(`${namespace}:${key}`, value),
+      },
+    });
+    missionLibrary = createMissionLibrary([
+      classicSnakeLibrarySource({
+        entries: CLASSIC_SNAKE_LEVELS,
+        chapters: CLASSIC_SNAKE_CHAPTERS,
+        campaigns: CLASSIC_SNAKE_CAMPAIGNS,
+        records,
+        locale: () => locale,
+        communityIdentity,
+        getSetup: settings,
+        getSeed: () => seed,
+        availability: (destination, selectedMode) =>
+          format === 'endless' &&
+          selectedMode === 'versus' &&
+          duel === 'survival' &&
+          destination !== survivalEntry
+            ? {
+                state: 'unavailable',
+                reason:
+                  locale === 'uk'
+                    ? 'Дуель на виживання використовує відкрите поле. Змініть правила, щоб грати інші місії.'
+                    : 'Survival duel uses the open field. Change rules to play other missions.',
+              }
+            : { state: 'ready' },
+        launch: (destination, context) =>
+          pageActive() &&
+          context.isCurrent?.() !== false &&
+          launchMission(destination, { nextMode: context.mode }),
+      }),
+    ]);
+    let selectedRow = null;
+    const currentRow = () => missionLibrary.missions.find((row) => row.runtimeId === entry.id);
+    const selectedEntry = () =>
+      CLASSIC_SNAKE_LEVELS.find((item) => item.id === selectedRow?.runtimeId) ?? entry;
+    missionChooser = attachMissionLibraryChooser({
+      document: doc,
+      library: missionLibrary,
+      mode,
+      availableCollectionsOnly: true,
+      getCurrentId: () => currentRow()?.id,
+      readState: session.read,
+      writeState: session.write,
+      goalPreferenceOptions: {
+        editionId: namespace,
+        getStorage: () => globalThis.localStorage,
+      },
+      description: () =>
+        locale === 'uk'
+          ? 'Усі місії Snake. Оберіть поле й починайте; розділи допоможуть знайти наступне випробування.'
+          : 'Every Snake mission. Choose a board to play; chapters help you find your next challenge.',
+      renderPreview: (options) => {
+        const destination = CLASSIC_SNAKE_LEVELS.find((item) => item.id === options.row.runtimeId);
+        const previewAppearance = acceptAttemptAppearance(
+          environmentCandidate(destination, options.mode),
+          {
+            artRevision: acceptedArtRevision,
+            collection: acceptedAppearance?.collection ?? null,
+          },
+        );
+        return renderClassicSnakeLibraryPreview({
+          ...options,
+          appearance: {
+            boardStyle,
+            boardScene,
+            style,
+            cast:
+              actorAppearance.snapshot().cast === 'authored'
+                ? options.diagram.cast
+                : actorAppearance.snapshot().cast,
+            artRevision: acceptedArtRevision,
+            presentation: presentation.previewSnapshot(previewAppearance),
+            locale,
+          },
+        });
+      },
+      onPause: () => {
+        pause({ showMenu: false });
+        importEpoch++;
+        if (resultPlayback) resultPlayback.playing = false;
+      },
+      onReturn: (opener) => {
+        if (opener?.isConnected && pageActive()) opener.focus({ preventScroll: true });
+      },
+      launchContext: () => {
+        const owner = match;
+        return { isCurrent: () => match === owner && pageActive() };
+      },
+      onSelection: (row) => {
+        selectedRow = row;
+        libraryToolsRefresh?.();
+      },
+    });
+    const tools = el('details', null, 'mission-library-setup'),
+      summary = el('summary'),
+      fields = el('div', null, 'mission-picker-setup-fields'),
+      commands = el('div', null, 'sortie-actions'),
+      rules = el('button'),
+      information = el('button'),
+      copy = el('button'),
+      status = el('p', null, 'muted');
+    tools.id = 'snake-library-options';
+    rules.id = 'snake-library-rules';
+    information.id = 'snake-library-info';
+    copy.id = 'snake-library-copy';
+    status.id = 'snake-library-status';
+    status.setAttribute('role', 'status');
+    for (const button of [rules, information, copy]) button.type = 'button';
+    fields.append(commands, $('snake-missions'), status);
+    tools.append(summary, fields);
+    commands.append(rules, information, copy);
+    missionChooser.elements.footer.append(tools);
+    rules.addEventListener('click', () => playShell.open('expert'));
+    libraryInfo = el('dialog', null, 'mode-play-dialog');
+    libraryInfo.id = 'snake-library-info-dialog';
+    const infoHead = el('header', null, 'mode-play-dialog-head'),
+      infoTitle = el('h1'),
+      infoBody = el('div', null, 'mode-play-content'),
+      infoFooter = el('footer', null, 'mode-play-actions'),
+      infoBack = el('button');
+    infoTitle.id = 'snake-library-info-title';
+    libraryInfo.setAttribute('aria-labelledby', infoTitle.id);
+    infoHead.append(infoTitle);
+    infoFooter.append(infoBack);
+    libraryInfo.append(infoHead, infoBody, infoFooter);
+    doc.body.append(libraryInfo);
+    infoBack.addEventListener('click', () => libraryInfo.close());
+    information.addEventListener('click', () => {
+      const selected = selectedEntry(),
+        selectedMode = missionChooser.state().mode,
+        row = selectedRow ?? currentRow(),
+        diagram = row && missionLibrary.card(row, selectedMode);
+      infoTitle.textContent = selected.title[locale];
+      infoBody.replaceChildren(el('p', selected.description[locale]));
+      if (diagram) infoBody.append(el('p', ratingCriteriaText(diagram.run, selectedMode)));
+      libraryInfo.showModal();
+      infoBack.focus({ preventScroll: true });
+    });
+    copy.addEventListener('click', async () => {
+      const url = new URL(globalThis.location.href);
+      url.searchParams.set('level', selectedEntry().id);
+      url.searchParams.set('mode', missionChooser.state().mode);
+      try {
+        await globalThis.navigator.clipboard.writeText(url.href);
+        status.textContent = locale === 'uk' ? 'Посилання скопійовано.' : 'Level link copied.';
+      } catch {
+        status.textContent = url.href;
+      }
+    });
+    libraryToolsRefresh = () => {
+      summary.textContent = locale === 'uk' ? 'Правила й інформація' : 'Rules and information';
+      rules.textContent = locale === 'uk' ? 'Правила гри' : 'Game rules';
+      information.textContent = locale === 'uk' ? 'Інформація про місію' : 'Mission info';
+      copy.textContent = locale === 'uk' ? 'Копіювати посилання' : 'Copy level link';
+      infoBack.textContent = locale === 'uk' ? 'Назад' : 'Back';
+      information.title = selectedEntry().title[locale];
+    };
+  }
+  syncLibraryMode();
+  libraryToolsRefresh();
+  missionChooser.open(doc.activeElement, {
+    returnLabel: locale === 'uk' ? 'Назад' : 'Back',
+  });
+}
+function libraryBack() {
+  if (libraryInfo?.open) {
+    libraryInfo.close();
+    return true;
+  }
+  if (
+    missionChooser?.elements.dialog.open &&
+    playShell?.topDialog() === missionChooser.elements.dialog
+  ) {
+    missionChooser.close();
+    return true;
+  }
+  return false;
+}
+let snakeModeChoices = null;
 function renderModeLinks() {
   const links = $('snake-mode-links');
   if (!links) return;
-  snakeSimPanel?.dispose();
-  snakeSimPanel = null;
-  links.replaceChildren();
-  for (const [key, path, label] of [
-    ['solo', '../', text('solo')],
-    ['versus', '../couch/', text('versus')],
-    ['team', '../couch/relay-rescue.html', text('team')],
-    ['simulator', null, 'FPV SIM'],
-    ['controls', null, text('title')],
+  snakeModeChoices?.dispose();
+  const actions = {};
+  for (const [key, path] of [
+    ['solo', '../'],
+    ['team', '../couch/relay-rescue.html'],
+    ['versus', '../couch/'],
   ]) {
-    const node = el(path ? 'a' : 'button', label);
-    if (path) {
-      const url = new URL(path, globalThis.location.href);
-      url.searchParams.set('lang', locale);
-      node.href = appearanceLaunchURL(url.href, contextualAppearance(doc), { transfer: false });
-      node.addEventListener('click', () => {
-        node.href = appearanceLaunchURL(url.href, contextualAppearance(doc));
-        pause();
-      });
-    } else {
-      node.type = 'button';
-      if (key === 'controls') node.setAttribute('aria-current', 'page');
-    }
-    setMenuIcon(node, key);
-    links.append(node);
-    if (key === 'simulator') {
-      snakeSimPanel = mountOptionalPracticePanel({
-        document: doc,
-        container: links,
-        opener: node,
-        pause,
-        href: globalThis.location.href,
-        getAppearanceDefault: () => contextualAppearance(doc),
-        bundledHref: fpvWorldLaunchURL(globalThis.location.href, locale),
-        packageId: 'fpv-worlds',
-        idPrefix: 'snake-fpv-sim',
-        preferDirect: true,
-        timeoutMs: 4000,
-      });
-      node.disabled = !snakeSimPanel.open;
-    }
+    const node = el('a');
+    const target = new URL(path, globalThis.location.href);
+    const refreshDestination = (transfer = false) => {
+      target.searchParams.set('lang', locale);
+      node.href = appearanceLaunchURL(
+        nativeArtReviewURL(target.href, globalThis.location.href),
+        contextualAppearance(doc),
+        { transfer },
+      );
+    };
+    refreshDestination();
+    node.addEventListener('click', () => {
+      refreshDestination(true);
+      pause();
+    });
+    actions[key] = node;
   }
+  snakeModeChoices = mountModeChoices({
+    root: links,
+    current: 'snake',
+    actions,
+    pause,
+    guidesContainer: snakeSettingsView?.panels.extras ?? $('snake-workshop'),
+  });
 }
 function renderCopy() {
   doc.documentElement.lang = locale;
   doc.title = `${text('title')} · FPV / LINE`;
   doc.body.dataset.mode = mode;
   doc.body.dataset.boardStyle = boardStyle;
+  applyBoardScene();
   for (const [selector, label] of [
     ['#mode-tabs', 'mode'],
     ['.setup:not(.variants):not(.progress-links)', 'setupLabel'],
@@ -686,30 +1391,13 @@ function renderCopy() {
     doc.querySelector(selector)?.setAttribute('aria-label', text(label));
   for (const node of doc.querySelectorAll('[data-word]'))
     node.textContent = text(node.dataset.word);
+  for (const node of doc.querySelectorAll('#snake-display-reading [data-i18n]'))
+    node.textContent = t(node.dataset.i18n);
   $('language').value = locale;
   for (const button of doc.querySelectorAll('#mode-tabs [data-mode]')) {
     button.textContent = text(button.dataset.mode);
     button.setAttribute('aria-pressed', String(button.dataset.mode === mode));
   }
-  const campaign = campaignFor(entry);
-  options(
-    $('campaign'),
-    CLASSIC_SNAKE_CAMPAIGNS.map((item) => [item.id, item.title[locale]]),
-    campaign.id,
-  );
-  options(
-    $('chapter'),
-    campaignChapters(campaign).map((chapter) => [chapter.id, chapter.title[locale]]),
-    entry.chapterId,
-  );
-  options(
-    $('mission'),
-    CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId).map((item, i) => [
-      item.id,
-      `${records.cleared(item.id) ? '✓ ' : ''}${i + 1}. ${item.title[locale]}`,
-    ]),
-    entry.id,
-  );
   for (const [id, value] of Object.entries({
     format,
     pace,
@@ -718,6 +1406,7 @@ function renderCopy() {
     duel,
     style,
     'board-style': boardStyle,
+    'board-scene': boardScene,
     'actor-cast': actorAppearance.snapshot().cast,
     steering,
   })) {
@@ -740,8 +1429,8 @@ function renderCopy() {
   for (const option of $('duel').options)
     if (option.value === 'survival') option.disabled = !survivalEntry;
   const survival = format === 'endless' && mode === 'versus' && duel === 'survival';
-  for (const id of ['mission', 'chapter', 'campaign', 'target-rules', 'preset'])
-    $(id).disabled = survival;
+  for (const id of ['target-rules', 'preset']) $(id).disabled = survival || !!entry.level.operation;
+  $('format').disabled = !!entry.level.operation;
   $('featured').hidden =
     format !== 'campaign' ||
     !CLASSIC_SNAKE_FEATURED.some((item) => item.chapterId === entry.chapterId);
@@ -773,15 +1462,22 @@ function renderCopy() {
   $('controls-help').textContent = text(mode === 'solo' ? 'controls' : 'twoControls');
   for (const id of ['next']) $(id).textContent = text(id);
   $('home-link').textContent = text('home');
-  $('home-link').href = `../?lang=${locale}`;
+  $('home-link').href = nativeArtReviewURL(`../?lang=${locale}`, globalThis.location.href);
   $('studio-link').href =
-    snakeStudioReturnHref(globalThis.location.href) ?? `../studio/snake.html?lang=${locale}`;
+    snakeStudioReturnHref(globalThis.location.href) ??
+    nativeArtReviewURL(`../studio/snake.html?lang=${locale}`, globalThis.location.href);
   playShell?.setLocale(locale);
+  snakeSettingsView?.refresh(locale);
+  snakeGlobalSettings?.refresh(locale);
+  touchPresentationControls?.refresh();
+  for (const view of touchViews) view.apply(touch.snapshot());
   renderModeLinks();
   $('campaign-link').textContent = text('campaigns');
-  $('campaign-link').href = `./?lang=${locale}`;
-  $('remix-link').href =
-    `${mode === 'solo' ? '../' : mode === 'versus' ? '../couch/' : '../couch/relay-rescue.html'}?journey=snake-hunt-v1&snake-style=capture&lang=${locale}`;
+  $('campaign-link').href = nativeArtReviewURL(`./?lang=${locale}`, globalThis.location.href);
+  $('remix-link').href = nativeArtReviewURL(
+    `${mode === 'solo' ? '../' : mode === 'versus' ? '../couch/' : '../couch/relay-rescue.html'}?journey=snake-hunt-v1&snake-style=capture&lang=${locale}`,
+    globalThis.location.href,
+  );
   $('seed-label').textContent = text('seed', { seed });
   $('save-status').textContent = saveNotice ? text(saveNotice) : '';
   $('continue').hidden = !savedRound;
@@ -802,6 +1498,22 @@ function renderCopy() {
   });
   renderProgress();
 }
+function applyBoardScene() {
+  const scene = resolveClassicBoardScene({
+    boardScene,
+    chapterId: entry.chapterId,
+    levelId: entry.id,
+  });
+  doc.body.dataset.boardScene = scene;
+  $('board-scene-field').hidden = !isClassicWorldStyle(boardStyle);
+  const background = isClassicWorldStyle(boardStyle)
+    ? classicSceneBackdrop(scene, { document: doc, treatment: boardStyle })
+    : null;
+  for (const board of boards) {
+    board.wrap.style.backgroundImage = background ? `url("${background}")` : '';
+    board.wrap.dataset.scene = scene;
+  }
+}
 function failureText(run, boardResult) {
   const cause = boardResult?.cause ?? run.failure?.cause;
   const key = {
@@ -819,8 +1531,22 @@ function failureText(run, boardResult) {
     'shield-front': 'shieldCrash',
     brace: 'armorCrash',
   }[cause];
-  if (!key) return '';
-  const detail = text(key);
+  const hazard = {
+    lane:
+      locale === 'uk'
+        ? 'Голова потрапила під атаку смуги. Дочекайтеся відновлення або облетіть збоку.'
+        : 'The head entered an active lane. Wait for recovery or use the permanent bypass.',
+    projectile:
+      locale === 'uk'
+        ? 'Постріл влучив у голову. Стежте за прицілом і позначкою наступної клітини.'
+        : 'A shot hit the head. Watch the aim line and marked next cell.',
+    relay:
+      locale === 'uk'
+        ? 'Щит ще закритий. Торкніться обох зв’язаних перемикачів.'
+        : 'The shield is still closed. Touch both linked switches first.',
+  }[cause];
+  if (!key && !hazard) return '';
+  const detail = hazard ?? text(key);
   if (mode !== 'team' || !run.failure?.players?.length) return detail;
   return run.failure.players
     .map(
@@ -830,6 +1556,11 @@ function failureText(run, boardResult) {
     .join(' ');
 }
 function readyInstruction() {
+  if (
+    runs[0]?.level.operation ||
+    ['classic-snake-level.v4', 'classic-snake-level.v6'].includes(runs[0]?.level.version)
+  )
+    return entry.description[locale];
   return text(
     runs[0]?.level.targets?.required.some((policy) => ['shield', 'brace'].includes(policy.kind))
       ? 'specialistHelp'
@@ -860,8 +1591,7 @@ function renderEncounterGuide() {
 }
 function refresh() {
   if (!match) return;
-  const nextTarget =
-    runs[0].targets?.find((actor) => !actor.bonus) ?? runs[0].targets?.[0] ?? runs[0].target;
+  const nextTarget = runs[0].targets?.find((actor) => actor.role !== 'bonus') ?? runs[0].target;
   if (nextTarget) {
     const guide = actorFieldGuide(
       nextTarget.kind ?? (runs[0].level.targetMovement === 'flee' ? 'runner' : 'still'),
@@ -878,14 +1608,25 @@ function refresh() {
   }
   const outcome = result();
   doc.body.dataset.playing = String(!ready && !paused);
+  applyTouchVisibility();
   playShell?.update({
     phase: outcome ? 'results' : ready ? 'ready' : paused ? 'paused' : 'playing',
+    transitionActive: !['idle', 'cancelled'].includes(transition.snapshot().phase),
     missionName: entry.title[locale],
     summary: readyInstruction(),
     canResume: !outcome && (!ready || (offerSavedContinue && !!savedRound)),
     muted: audioMaster.snapshot().muted,
   });
-  $('next').hidden = format !== 'campaign' || !runs.some((run) => run.status === 'won');
+  if (playShell?.elements.buttons['pause-skip'])
+    playShell.elements.buttons['pause-skip'].hidden = !nextMission();
+  if (playShell?.elements.buttons['pause-random'])
+    playShell.elements.buttons['pause-random'].hidden = !randomMissions().length;
+  $('next').hidden = !nextMission() || outcome !== 'won';
+  $('next').classList.add('primary');
+  $('next').textContent = nextMission()
+    ? `${locale === 'uk' ? 'Далі' : 'Next'}: ${nextMission().title[locale]}`
+    : text('next');
+  transitionControls?.refresh();
   $('review').hidden = !outcome || !runs.some((run) => run.tick > 0);
   $('slow-offer').hidden = !outcome || earlyFailures < 3 || pace === 'slow';
   $('speed-note').textContent = text('step', {
@@ -895,9 +1636,8 @@ function refresh() {
     outcome === 'p1' || outcome === 'p2'
       ? text('winner', { player: outcome === 'p1' ? 1 : 2 })
       : text(outcome ?? (ready ? 'ready' : 'paused'));
-  $('announcement').textContent = review
-    ? text('reviewPlaying')
-    : outcome === 'lost'
+  const announcement =
+    outcome === 'lost'
       ? failureText(runs[0], match.boardResults[0]) || title
       : outcome
         ? title
@@ -906,8 +1646,47 @@ function refresh() {
           : paused
             ? text('paused')
             : '';
-  $('result-detail').textContent = $('announcement').textContent;
+  if ($('announcement').textContent !== announcement) $('announcement').textContent = announcement;
+  $('result-detail').textContent =
+    $('announcement').textContent +
+    (!nextMission() && outcome === 'won' && mode !== 'versus'
+      ? locale === 'uk'
+        ? ' Кампанію завершено!'
+        : ' Campaign complete!'
+      : '');
+  const resultRetry = playShell?.elements.buttons.retry;
+  if (mode === 'versus' && resultRetry)
+    resultRetry.textContent = locale === 'uk' ? 'Реванш' : 'Rematch';
   $('result-record').textContent = $('record-summary').textContent;
+  renderRatings();
+  const onboarding = $('snake-onboarding');
+  if (onboarding) {
+    const fieldMission =
+      !!runs[0].operation ||
+      ['classic-snake-level.v4', 'classic-snake-level.v6'].includes(runs[0].level.version);
+    const signals = runs.map(classicSnakeSignalView);
+    const jammer = signals.flatMap((signal) => signal.sources)[0];
+    const warning = signals.some((signal) => signal.warning);
+    const relayPending = runs.some((run) => run.relays?.some((relay) => !relay.collected));
+    onboarding.hidden =
+      (!fieldMission &&
+        !['classic-snake-open-loop', 'classic-snake-two-landings'].includes(entry.id)) ||
+      result() ||
+      (runs[0].tick > (fieldMission ? 40 : 36) && !(fieldMission && relayPending) && !warning);
+    onboarding.textContent = jammer
+      ? text(jammer.radius === null ? 'signalBroadcastHelp' : 'signalLocalHelp')
+      : fieldMission
+        ? entry.description[locale]
+        : entry.id === 'classic-snake-two-landings'
+          ? locale === 'uk'
+            ? 'Облітайте острови. Залишайте місце для хвоста.'
+            : 'Turn around the islands. Leave room for your tail.'
+          : runs[0].catches > 0
+            ? locale === 'uk'
+              ? 'Кожен ворог подовжує хвіст. Плануйте наступний поворот.'
+              : 'Every catch grows your tail. Plan your next turn.'
+            : text('firstTurnHelp');
+  }
   boards.forEach((board, i) => {
     const run = runs[i],
       summary = classicSnakeSummary(run),
@@ -915,6 +1694,41 @@ function refresh() {
     board.fields.caught.value.textContent =
       format === 'endless' ? String(summary.catches) : `${summary.catches} / ${summary.goal}`;
     board.fields.length.value.textContent = summary.lengths.join(' + ');
+    const acknowledgement = playAcknowledgements.get(run);
+    const reactionText =
+      acknowledgement && run.elapsedMs < acknowledgement.until
+        ? acknowledgement.kind === 'delivery'
+          ? locale === 'uk'
+            ? 'Посилку доставлено!'
+            : 'Delivery complete!'
+          : locale === 'uk'
+            ? 'Антену перехоплено!'
+            : 'Antenna intercepted!'
+        : '';
+    const courierText = run.targets?.some((actor) => actor.role === 'bonus')
+      ? text('courierOptional')
+      : '';
+    board.operation.hidden = !run.operation && !reactionText && !courierText;
+    board.operation.parentElement.dataset.status = String(!board.operation.hidden);
+    const operationText = [classicOperationStatus(run, locale), reactionText, courierText]
+      .filter(Boolean)
+      .join(' · ');
+    if (board.operation.textContent !== operationText) board.operation.textContent = operationText;
+    const signal = classicSnakeSignalView(run);
+    board.reception.hidden = !signal.sources.length;
+    const signalState = signal.suppressed
+      ? 'signalStable'
+      : signal.active
+        ? 'signalJammed'
+        : signal.warning
+          ? 'signalWarning'
+          : 'signalClear';
+    const receptionText = `⌁ ${text(signalState)}`;
+    if (board.reception.textContent !== receptionText) board.reception.textContent = receptionText;
+    board.reception.dataset.reception = signalState;
+    const receptionLabel = `${text(signalState)}. ${text(signal.sources.some((source) => source.radius !== null) ? 'signalLocalHelp' : 'signalBroadcastHelp')}`;
+    if (board.reception.getAttribute('aria-label') !== receptionLabel)
+      board.reception.setAttribute('aria-label', receptionLabel);
     board.fields.score.value.textContent = String(summary.score);
     board.fields.best.value.textContent = String(
       records.get(run, mode, match.options.policy)?.score ?? 0,
@@ -937,7 +1751,9 @@ function refresh() {
             .join('') || '·',
       )
       .join(' / ');
-    board.message.hidden = !!review || (!ready && !paused && !outcome && !boardResult);
+    board.message.hidden =
+      ['loss-effect', 'replay', 'ready', 'celebration'].includes(transition.snapshot().phase) ||
+      (!ready && !paused && !outcome && !boardResult);
     board.title.textContent = boardResult?.status === 'lost' && !outcome ? text('lost') : title;
     const reason = failureText(run, boardResult);
     board.detail.textContent = reason
@@ -951,8 +1767,60 @@ function refresh() {
           : text('resume');
   });
 }
-function restore(raw) {
+function ratingCriteriaText(run, displayMode = mode) {
+  return classicSnakeRatingCriteriaText({
+    seed: run.seed,
+    levelIdentity: run.levelIdentity,
+    mode: displayMode,
+    format,
+    locale,
+    variableConditions: classicSnakeUsesVariableHazards(run.level),
+  });
+}
+function renderRatings() {
+  if (!$('snake-stars')) return;
+  $('result-save-notice').hidden = unsavedOutcome !== match || !result();
+  const saveNotice = unsavedOutcome === match ? text('verifiedNotSaved') : '';
+  if ($('result-save-notice').textContent !== saveNotice)
+    $('result-save-notice').textContent = saveNotice;
+  const eligible = format === 'campaign' && mode !== 'versus';
+  const grade =
+    eligible && verifiedOutcome === match
+      ? classicSnakeRatingForRecord({
+          clear: true,
+          policy: match.options.policy,
+          mode,
+          seed,
+          levelIdentity: runs[0].levelIdentity,
+          completionOnly: classicSnakeUsesVariableHazards(runs[0].level),
+          fewestMoves: runs[0].tick,
+        })
+      : null;
+  $('snake-stars').hidden = !eligible || result() !== 'won';
+  const starsText =
+    liveProvenance === 'import'
+      ? locale === 'uk'
+        ? 'Запис · без нових нагород'
+        : 'Recording · no new awards'
+      : grade?.stars
+        ? '★'.repeat(grade.stars) + '☆'.repeat(3 - grade.stars)
+        : locale === 'uk'
+          ? 'Перевірка результату…'
+          : 'Verifying completion…';
+  if ($('snake-stars').textContent !== starsText) $('snake-stars').textContent = starsText;
+  const starsLabel = grade?.stars ? `${grade.stars} / 3` : starsText;
+  if ($('snake-stars').getAttribute('aria-label') !== starsLabel)
+    $('snake-stars').setAttribute('aria-label', starsLabel);
+  $('snake-rating-criteria').textContent = ratingCriteriaText(runs[0]);
+}
+function restore(raw, { provenance = 'import' } = {}) {
+  transition.cancel('restore');
   importEpoch++;
+  const restoredReplay = createClassicRecentReplay();
+  const observation = {
+    onStart: (value) => restoredReplay.reset(value.runs),
+    onStep: (event) => restoredReplay.observe(event),
+  };
   try {
     const source = boundedJSON(raw, {
       maxBytes: 8 * 1024 * 1024,
@@ -960,12 +1828,16 @@ function restore(raw) {
       maxArray: 32768,
       maxDepth: 14,
     });
-    const item = CLASSIC_SNAKE_LEVELS.find((candidate) => candidate.id === source.levelId);
+    let item = CLASSIC_SNAKE_LEVELS.find((candidate) => candidate.id === source.levelId);
     required(
       item && MODES.includes(source.mode) && Object.hasOwn(CLASSIC_PACES, source.pace),
       'Unsupported round.',
     );
     let restored, next;
+    required(
+      source.format !== SESSION_FORMAT || Object.hasOwn(source, 'appearance'),
+      'Missing accepted artwork.',
+    );
     if (source.format === 'revealline-classic-snake-session.v1') {
       exactKeys(
         source,
@@ -983,7 +1855,7 @@ function restore(raw) {
       };
       restored = restoreClassicSnakeLegacyMatch(
         { replays: source.replays, elapsedMs: source.elapsedMs, mode: source.mode },
-        { level: prepareClassicSnakeLevel(item, next) },
+        { level: prepareClassicSnakeLevel(item, next), ...observation },
       );
       next.seed = restored.options.seed;
     } else {
@@ -1001,11 +1873,13 @@ function restore(raw) {
           'seed',
           'style',
           'match',
+          ...(source.format === SESSION_FORMAT ? ['appearance', 'statistics', 'provenance'] : []),
         ],
         'Classic Snake session',
       );
       required(
-        source.format === SESSION_FORMAT && ['campaign', 'endless'].includes(source.activity),
+        [SESSION_FORMAT, LEGACY_SESSION_FORMAT].includes(source.format) &&
+          ['campaign', 'endless'].includes(source.activity),
         'Unsupported session.',
       );
       next = {
@@ -1027,8 +1901,12 @@ function restore(raw) {
           next.seed <= 0xffffffff,
         'Invalid setup.',
       );
+      item = resolveClassicSnakeRecipeEntry(item, source.match?.replays?.[0]?.level, next, {
+        allowArchive: false,
+      });
       restored = restoreClassicSnakeMatch(source.match, {
         level: prepareClassicSnakeLevel(item, next),
+        ...observation,
       });
       const policy =
         next.format === 'campaign' ? 'mission' : source.mode === 'versus' ? next.duel : 'endless';
@@ -1039,30 +1917,78 @@ function restore(raw) {
         'Round ownership mismatch.',
       );
     }
+    // Resolve historical gameplay authority before restoring its accepted art.
+    const nextAppearance = restoreAttemptAppearance(
+      source.format === SESSION_FORMAT ? source.appearance : null,
+      environmentCandidate(item, source.mode),
+    );
+    const statistics =
+      source.format === SESSION_FORMAT ? validateEnemyStatsSession(source.statistics) : null;
+    if (source.format === SESSION_FORMAT) {
+      required(
+        ['live', 'continue', 'import'].includes(source.provenance),
+        'Invalid session provenance.',
+      );
+      required(
+        statistics.gameType === 'snake' &&
+          Object.entries(statistics.sequences).every(
+            ([board, tick]) =>
+              /^(0|1)$/.test(board) &&
+              restored.runs[Number(board)] &&
+              tick <= restored.runs[Number(board)].tick,
+          ),
+        'Statistics cursor differs from the accepted attempt.',
+      );
+    }
+    const nextProvenance =
+      provenance === 'continue' && source.provenance !== 'import' ? 'continue' : 'import';
+    const nextAttempt = enemyStats.beginAttempt({
+      gameType: 'snake',
+      provenance: nextProvenance,
+      saved:
+        statistics && nextProvenance === 'continue' && !sessionWriter.writable
+          ? forkEnemyStatsSession(statistics)
+          : statistics,
+    });
+    if (statsAttempt) enemyStats.finishAttempt(statsAttempt);
+    liveProvenance = nextProvenance;
+    statsAttempt = nextAttempt;
     entry = item;
     mode = source.mode;
     ({ pace, format, targetRules, preset, duel, seed, style } = next);
     classicAudio.reset();
     match = restored;
     runs = match.runs;
+    recentReplay.reset();
+    restoredReplay
+      .frames()
+      .forEach((frames, board) => frames.forEach((frame) => recentReplay.capture(frame, board)));
     flightFrames = [];
+    reactionTimeMs = 0;
     ready = false;
     paused = true;
     previousFrame = null;
-    review = null;
     recordedMatch = null;
+    verifiedOutcome = null;
+    unsavedOutcome = null;
     sound.gameplayPaused = true;
     reactions.reset(`classic:${++reactionAttempt}`);
     reactions.suspend();
-    for (const fx of effects) fx.reset();
+    acceptedAppearance = nextAppearance;
+    retainPreparedAppearance = true;
+    acceptEnemyArtwork({ retain: true });
     buildBoards();
     updateURL();
     renderCopy();
     refresh();
+    statsViews.forEach((view) => view.refresh());
     saveNotice = result() ? 'loadedComplete' : 'loaded';
     $('save-status').textContent = text(saveNotice);
-    if (result()) remember();
-    playShell?.open(result() ? 'results' : 'briefing');
+    if (result()) {
+      if (liveProvenance !== 'import' && result() === 'won') verifiedOutcome = match;
+      refresh();
+      showResults();
+    } else start();
     return true;
   } catch {
     saveNotice = 'invalid';
@@ -1089,29 +2015,29 @@ function primeEffects() {
   });
 }
 function watchReview() {
-  playShell?.enterPlay();
-  const frames = runs.map((run) => {
-    const replay = exportClassicSnakeReplay(run),
-      copy = createClassicSnake(replay.level, { mode: replay.mode, seed: replay.seed });
-    const snapshots = [];
-    let cursor = 0;
-    for (let tick = 0; tick <= replay.steps; tick++) {
-      while (replay.turns[cursor]?.tick === tick) {
-        const command = replay.turns[cursor++];
-        queueClassicSnakeTurn(copy, command.playerId, command.direction);
-      }
-      if (tick >= Math.max(0, replay.steps - 8)) snapshots.push(structuredClone(copy));
-      if (tick < replay.steps) stepClassicSnake(copy);
-    }
-    return snapshots;
-  });
-  review = { frames, time: 0 };
+  transition.cancel('replay-viewing');
+  if (!resultPlayback || resultPlayback.owner !== match) beginResultPlayback();
+  else {
+    resultPlayback.playing = !resultPlayback.playing;
+    if (resultPlayback.playing) resultPlayback.time = 0;
+  }
   refresh();
 }
 
 destruction.subscribe(primeEffects);
 remains.subscribe(primeEffects);
 display.subscribe(primeEffects);
+display.subscribe((choice) => {
+  doc.body.dataset.textFace = $('snake-text-face').value = choice.textFace;
+  doc.body.dataset.textSize = $('snake-text-size').value = choice.textSize;
+  footprint?.refresh();
+});
+$('snake-text-face').addEventListener('change', () =>
+  display.set({ textFace: $('snake-text-face').value }),
+);
+$('snake-text-size').addEventListener('change', () =>
+  display.set({ textSize: $('snake-text-size').value }),
+);
 $('brutal').addEventListener('change', () => destruction.set({ brutal: $('brutal').checked }));
 $('blood').addEventListener('change', () => destruction.set({ blood: $('blood').checked }));
 $('remains').addEventListener('change', () => remains.set($('remains').checked));
@@ -1141,6 +2067,13 @@ $('board-style').addEventListener('change', () => {
   doc.body.dataset.boardStyle = boardStyle;
   storePresentation();
   updateURL();
+  applyBoardScene();
+});
+$('board-scene').addEventListener('change', () => {
+  boardScene = $('board-scene').value;
+  storePresentation();
+  updateURL();
+  applyBoardScene();
 });
 $('actor-cast').addEventListener('change', () => {
   actorAppearance.set({ cast: $('actor-cast').value });
@@ -1188,24 +2121,6 @@ for (const id of ['format', 'pace', 'target-rules', 'preset', 'duel'])
     duel = $('duel').value;
     prepare();
   });
-$('campaign').addEventListener('change', () => {
-  save();
-  const campaign = CLASSIC_SNAKE_CAMPAIGNS.find((item) => item.id === $('campaign').value);
-  entry = CLASSIC_SNAKE_LEVELS.find((item) =>
-    (campaign.chapterIds ?? campaign.chapters).includes(item.chapterId),
-  );
-  prepare();
-});
-$('chapter').addEventListener('change', () => {
-  save();
-  entry = CLASSIC_SNAKE_LEVELS.find((item) => item.chapterId === $('chapter').value);
-  prepare();
-});
-$('mission').addEventListener('change', () => {
-  save();
-  entry = CLASSIC_SNAKE_LEVELS.find((item) => item.id === $('mission').value);
-  prepare();
-});
 for (const id of ['recent-level', 'uncleared-level'])
   $(id).addEventListener('click', () => {
     const destination =
@@ -1216,17 +2131,9 @@ for (const id of ['recent-level', 'uncleared-level'])
     save();
     entry = destination;
     format = 'campaign';
-    prepare();
+    prepare({ launch: true });
   });
-$('next').addEventListener('click', () => {
-  playShell?.enterPlay();
-  const same = CLASSIC_SNAKE_LEVELS.filter((item) => item.chapterId === entry.chapterId);
-  entry =
-    same.find((item) => !records.cleared(item.id) && item.id !== entry.id) ??
-    CLASSIC_SNAKE_LEVELS[(CLASSIC_SNAKE_LEVELS.indexOf(entry) + 1) % CLASSIC_SNAKE_LEVELS.length];
-  prepare();
-  playShell?.open('briefing');
-});
+$('next').addEventListener('click', launchNext);
 $('featured').addEventListener('click', () => {
   save();
   const sortie = CLASSIC_SNAKE_FEATURED.find((item) => item.chapterId === entry.chapterId);
@@ -1247,7 +2154,7 @@ $('slow-offer').addEventListener('click', () => {
 });
 $('review').addEventListener('click', watchReview);
 $('continue').addEventListener('click', () => {
-  if (savedRound) restore(savedRound);
+  if (savedRound) restore(savedRound, { provenance: 'continue' });
 });
 $('export').addEventListener('click', () => {
   pause();
@@ -1266,17 +2173,36 @@ $('import').addEventListener('change', async () => {
   pause();
   const file = $('import').files[0],
     ticket = ++importEpoch;
+  pendingImports++;
   try {
     if (!file || file.size > 8 * 1024 * 1024) throw new Error('Size');
     const raw = await file.text();
     if (ticket === importEpoch) restore(raw);
   } catch {
     if (ticket === importEpoch) $('save-status').textContent = text('invalid');
+  } finally {
+    pendingImports--;
   }
   $('import').value = '';
 });
+doc.addEventListener(
+  'pointerdown',
+  (event) => {
+    if (!$('pads').contains(event.target)) touchModality = nextInputModality(touchModality, event);
+    applyTouchVisibility();
+  },
+  true,
+);
+doc.addEventListener(
+  'keydown',
+  (event) => {
+    if (!$('pads').contains(event.target)) touchModality = nextInputModality(touchModality, event);
+    applyTouchVisibility();
+  },
+  true,
+);
 doc.addEventListener('keydown', (event) => {
-  if (event.defaultPrevented || playShell?.topDialog()) return;
+  if (event.defaultPrevented || music?.root() || playShell?.topDialog()) return;
   if (event.key === 'Escape' && !event.repeat) {
     event.preventDefault();
     pause();
@@ -1293,12 +2219,17 @@ doc.addEventListener('keydown', (event) => {
   const key =
     { KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd', KeyP: 'p', KeyR: 'r' }[event.code] ??
     event.key.toLowerCase();
-  if ([' ', 'p', 'r'].includes(key)) {
-    if (key === ' ' && event.target.tagName === 'BUTTON') return;
+  if (result() && ['arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'tab'].includes(key))
+    transition.cancel('navigation');
+  if ([' ', 'p', 'r', 'enter'].includes(key)) {
+    if ([' ', 'enter'].includes(key) && event.target.tagName === 'BUTTON') return;
     event.preventDefault();
     if (event.repeat) return;
-    if (key === 'r' && result()) prepare({ launch: true });
-    else if (key !== 'r') {
+    if (result()) {
+      if (key === 'p') pause();
+      else if (key !== 'r' && result() === 'won' && nextMission()) launchNext();
+      else retryMission();
+    } else if (key !== 'r') {
       if (ready || paused) start();
       else pause();
     }
@@ -1344,19 +2275,32 @@ function pollGamepads() {
     const previous = gamepadState.get(pad.index);
     gamepadState.set(pad.index, buttons);
     if (!previous) continue;
-    if (playShell?.topDialog()) {
-      const directionIndex = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !previous[i]);
-      menuController?.handle({
+    if (buttons.some((pressed, i) => pressed && !previous[i])) {
+      touchModality = 'gamepad';
+      applyTouchVisibility();
+    }
+    const directionIndex = buttons.slice(0, 4).findIndex((pressed, i) => pressed && !previous[i]);
+    if (result() && directionIndex >= 0) transition.cancel('controller-navigation');
+    if (music?.root() || playShell?.topDialog()) {
+      const command = {
         direction: directionIndex < 0 ? null : ['up', 'right', 'down', 'left'][directionIndex],
         confirm: !!buttons[5] && !previous[5],
         back: !!buttons[6] && !previous[6],
         menu: !!buttons[4] && !previous[4],
-      });
+      };
+      if (command.direction || command.back || command.menu)
+        transition.cancel('controller-navigation');
+      if (!snakeGlobalTools.handleFrameCommand(command)) menuController?.handle(command);
       continue;
     }
     if (buttons[4] && !previous[4]) {
-      if (ready || paused) start();
+      if (result()) pause();
+      else if (ready || paused) start();
       else pause();
+    }
+    if (result() && buttons[5] && !previous[5]) {
+      if (result() === 'won' && nextMission()) launchNext();
+      else retryMission();
     }
     for (let i = 0; i < 4; i++)
       if (buttons[i] && !previous[i]) {
@@ -1378,12 +2322,22 @@ doc
       if (details.open) pause();
     }),
   );
+function suspendAudio() {
+  if (disposed || audioInactive) return;
+  audioInactive = true;
+  pause();
+  if (music) music.suspend();
+  else sound.suspend();
+}
 doc.addEventListener('visibilitychange', () => {
-  if (doc.hidden) pause();
+  if (doc.hidden) suspendAudio();
 });
-globalThis.addEventListener('blur', pause);
+globalThis.addEventListener('blur', suspendAudio);
+globalThis.addEventListener('resize', () => {
+  for (const controller of touchControllers) controller.cancel();
+});
 globalThis.addEventListener('focus', () => {
-  void records.read();
+  void records.read().then(() => ratings.refresh());
 });
 globalThis.screen.orientation?.addEventListener('change', () => {
   pause();
@@ -1397,21 +2351,74 @@ landscapeControls?.addEventListener('change', () => {
   pause();
   footprint?.refresh();
 });
-globalThis.addEventListener('pagehide', () => {
+globalThis.addEventListener('pagehide', (event) => {
+  pageDeparted = true;
   importEpoch++;
-  snakeSimPanel?.close({ restoreFocus: false });
-  pause();
-  sound.suspend();
+  writerEpoch++;
+  snakeModeChoices?.closeSimulator();
+  snakeOfflinePanel?.close();
+  suspendAudio();
   classicAudio.reset();
+  if (!event.persisted) {
+    disposed = true;
+    music?.dispose();
+    classicAudio.dispose();
+    disposeTouchControls();
+    touchPresentationControls?.dispose();
+    touch.destroy();
+    snakeDefeatSoundControls.dispose();
+    snakeOfflinePanel?.dispose();
+    sound.dispose?.();
+    audioPreferences.dispose?.();
+    audioMaster.dispose?.();
+  }
   save();
+  const departingWriter = sessionWriter;
+  writerRelease = enemyStats.flush().finally(() => departingWriter.release());
 });
-globalThis.addEventListener('pageshow', () => footprint?.refresh());
+globalThis.addEventListener('pageshow', async (event) => {
+  footprint?.refresh();
+  if (!event.persisted) return;
+  const ticket = ++writerEpoch;
+  await writerRelease;
+  const recovered = await claimProfileWriter(globalThis.navigator.locks, `${SAVE_KEY}:writer`);
+  if (ticket !== writerEpoch) {
+    recovered.release();
+    return;
+  }
+  sessionWriter = recovered;
+  pageDeparted = false;
+  // A different tab may have advanced the saved attempt while this document
+  // was frozen. Retain this board's counts, but isolate its future live events.
+  if (statsAttempt) {
+    const saved = forkEnemyStatsSession(enemyStats.session(statsAttempt));
+    enemyStats.finishAttempt(statsAttempt);
+    statsAttempt = enemyStats.beginAttempt({
+      gameType: 'snake',
+      provenance: liveProvenance === 'import' ? 'import' : 'continue',
+      saved,
+    });
+    save();
+    refresh();
+  }
+  void enemyStats.flush();
+  void ratings?.refresh();
+});
 function frame(now) {
+  if (disposed) return;
+  const available = !doc.hidden && doc.hasFocus();
+  if (!available && !audioInactive) suspendAudio();
+  if (available && audioInactive) {
+    audioInactive = false;
+    previousFrame = null;
+    // Restore listening intent only; a hidden page never resumes a round.
+    void music?.resume();
+  }
   const elapsed = previousFrame === null ? 0 : Math.max(0, now - previousFrame);
   previousFrame = now;
   pollGamepads();
   if (!ready && !paused && !result()) {
-    if (elapsed > 1000 || doc.hidden) pause();
+    if (elapsed > 1000 || !pageActive()) pause();
     else {
       const before = runs.map((run) => run.catches + (run.bonusCatches ?? 0));
       // Seed the presentation projection before movement, so the first catch and
@@ -1424,7 +2431,9 @@ function frame(now) {
           placement: boardPlacement(boards[i]?.canvas),
         }),
       );
-      advanceClassicSnakeMatchTo(match, match.elapsedMs + Math.min(250, elapsed));
+      advanceClassicSnakeMatchTo(match, match.elapsedMs + Math.min(250, elapsed), {
+        onStep: observeStep,
+      });
       runs.forEach((run, i) =>
         classicAudio.update(run, {
           active: true,
@@ -1449,20 +2458,38 @@ function frame(now) {
         }
       });
       if (result()) {
-        sound.encounter(runs.some((run) => run.status === 'lost') ? 'failure' : 'objective');
         finish();
       }
       refresh();
     }
   }
-  if (review && !playShell?.topDialog()) {
-    review.time += Math.min(elapsed, 250);
-    if (review.time > 2200) {
-      review = null;
-      refresh();
-      playShell?.open('results');
-    }
+  const transitionElapsed = transitionJustStarted ? 0 : elapsed;
+  transitionJustStarted = false;
+  transition.advance(transitionElapsed);
+  const flow = transition.snapshot();
+  if (playShell && playShell.elements.root.dataset.transitionPhase !== flow.phase) {
+    playShell.elements.root.dataset.transitionPhase = flow.phase;
+    refresh();
   }
+  if (result() && ['countdown', 'cancelled'].includes(flow.phase) && !playShell?.topDialog())
+    showResults();
+  if (celebration)
+    celebration = advanceCelebration(celebration, Math.min(transitionElapsed, 250) / 1000, {
+      reduced: isReduced(),
+      paused: flow.phase !== 'celebration',
+    });
+  transitionControls?.refresh();
+  if (available)
+    music?.update(
+      !ready && !paused && !result(),
+      { id: 'fpv', family: 'fpv' },
+      { status: result() ? 'won' : paused || ready ? 'paused' : 'running' },
+    );
+  reactionTimeMs = advanceClassicReactionTime(
+    reactionTimeMs,
+    elapsed,
+    !ready && (!paused || !!result()) && pageActive() && flow.phase !== 'replay',
+  );
   runs.forEach((run, i) => {
     const choice = destruction.snapshot();
     flightFrames[i] = advanceClassicFlight(
@@ -1486,28 +2513,81 @@ function frame(now) {
         })),
       },
     );
-    const shown = review
-      ? review.frames[i][Math.min(review.frames[i].length - 1, Math.floor(review.time / 240))]
-      : run;
+    const shown =
+      flow.phase === 'replay'
+        ? (recentReplay.frame(i, flow.replayMs - flow.remainingMs) ?? run)
+        : run;
     drawClassicBoard(boards[i].canvas, shown, {
-      effects: review ? null : effects[i],
+      attemptKey: match,
+      effectTimeMs: flow.phase === 'replay' ? (shown.elapsedMs ?? 0) % 60000 : reactionTimeMs,
+      locale,
+      effects: flow.phase === 'replay' ? null : effects[i],
       ...choice,
       showRemains: remains.snapshot().showRemains,
       style,
       boardStyle,
+      boardScene,
+      chapterId: entry.chapterId,
       cast: currentCast(),
+      artRevision: acceptedArtRevision,
       presentation: presentation.snapshot(),
       accent,
       reduced: isReduced(),
-      flight: flightFrames[i],
+      flight:
+        flow.phase === 'replay'
+          ? { ...flightFrames[i], timeMs: (shown.elapsedMs ?? 0) % 60000 }
+          : flightFrames[i],
       cssWidth: footprint?.width(i),
       pixelRatio: globalThis.devicePixelRatio ?? 1,
     });
+    const canvas = boards[i].canvas,
+      ctx = canvas.getContext('2d');
+    if (ctx?.save && ctx?.setTransform) {
+      ctx.save();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      if (flow.phase === 'loss-effect') {
+        const signal = signalReception[i].advance(run, Math.min(elapsed, 250) / 1000, {
+          mode: 'lost',
+          reduced: isReduced(),
+        });
+        signalReception[i].draw(ctx, canvas.width, canvas.height, signal);
+      }
+      if (flow.phase === 'celebration' && celebration && result() !== 'lost')
+        drawCelebration(
+          ctx,
+          celebrationFrame(celebration),
+          { accent: '#edbd55', safe: '#a8cf8d', paper: '#f4f1dc', danger: '#e17874' },
+          canvas.width,
+          canvas.height,
+        );
+      ctx.restore();
+    }
   });
+  if (resultPreview && playShell?.topDialog()?.dataset.modeSurface === 'results') {
+    const playback = resultPlayback?.owner === match ? resultPlayback : null;
+    if (playback?.playing && pageActive())
+      playback.time = (playback.time + Math.min(elapsed, 250)) % (playback.duration + 720);
+    const frames = playback?.frames[0];
+    const shown = frames?.[Math.min(frames.length - 1, Math.floor(playback.time / 240))] ?? runs[0];
+    drawClassicBoard(resultPreview, shown, {
+      locale,
+      presentation: presentation.snapshot(),
+      style,
+      boardStyle,
+      boardScene,
+      chapterId: entry.chapterId,
+      artRevision: acceptedArtRevision,
+      attemptKey: match,
+      cast: currentCast(),
+      reduced: true,
+      cssWidth: 360,
+      pixelRatio: globalThis.devicePixelRatio ?? 1,
+    });
+  }
   globalThis.requestAnimationFrame(frame);
 }
 prepare();
-void records.read();
+void records.read().then(() => ratings.refresh());
 $('boot-status').hidden = true;
 $('snake-shell').hidden = false;
 playShell = mountModePlayShell({
@@ -1525,18 +2605,41 @@ playShell = mountModePlayShell({
         ['modes', $('snake-mode-links')],
       ]),
   ),
-  services: { attachModalNavigation, attachFullscreen, setMenuIcon },
+  services: {
+    attachModalNavigation,
+    attachFullscreen,
+    setMenuIcon,
+    attachMenuScene,
+    settingsPanelBack,
+  },
   actions: {
+    open: (surface) => {
+      if (surface === 'missions') {
+        openMissionLibrary();
+        return false;
+      }
+      if (surface === 'home') {
+        libraryInfo?.close();
+        if (missionChooser?.elements.dialog.open) missionChooser.close({ retune: false });
+      }
+    },
+    resultFocus: () => (!$('next').hidden ? $('next') : playShell?.elements.buttons.retry),
     pause: () => pause({ showMenu: false }),
-    start,
+    start: () => (result() ? retryMission() : start()),
     resume: start,
-    retry: () => prepare({ launch: true }),
+    retry: retryMission,
+    skip: () => $('next').click(),
+    random: launchRandom,
     canResume: () => !result() && (!ready || (offerSavedContinue && !!savedRound)),
     continue: () => {
       if (!ready && !result()) start();
-      else if (offerSavedContinue && savedRound && restore(savedRound)) {
+      else if (
+        offerSavedContinue &&
+        savedRound &&
+        restore(savedRound, { provenance: 'continue' })
+      ) {
         if (!result()) start();
-      } else playShell.open('briefing');
+      } else start();
     },
     toggleSound: () => {
       const muted = !audioMaster.snapshot().muted;
@@ -1545,19 +2648,193 @@ playShell = mountModePlayShell({
       refresh();
     },
   },
-  initial: params.has('level') || communityIdentity ? 'briefing' : 'home',
+  initial: params.has('level') || communityIdentity ? 'play' : 'home',
+  onSurfaceChange: (surface) => {
+    if (surface === 'results' && result()) beginResultPlayback();
+    if (!['play', 'results'].includes(surface)) {
+      transition.cancel(surface);
+      importEpoch++;
+      if (resultPlayback) resultPlayback.playing = false;
+    }
+  },
   focusPlay: () => boards[0]?.canvas.focus({ preventScroll: true }),
 });
+music = attachCouchMusicHost({
+  document: doc,
+  root: $('snake-music-settings'),
+  prefix: 'snake',
+  audioMaster,
+  audioPreferences,
+  soundscape: sound,
+  canControl: () => !disposed && !audioInactive,
+  // Settings and Pause retain the current round's listening context.
+  getScene: () => (ready ? 'menu' : 'gameplay'),
+  canOpen: () =>
+    !disposed &&
+    !audioInactive &&
+    !doc.hidden &&
+    doc.hasFocus() &&
+    playShell?.topDialog()?.dataset.modeSurface === 'settings',
+  getOwner: () => playShell?.topDialog(),
+  onOpen: () => pause({ showMenu: false }),
+  onClose: () => refresh(),
+});
+const snakeSettingsSections = [...$('snake-settings').children].filter(
+  (node) => node.tagName === 'DETAILS',
+);
+snakeSettingsView = mountModeSettings({
+  root: playShell.elements.dialogs.settings,
+  content: playShell.elements.content.settings,
+  prefix: 'snake-menu-settings',
+  locale,
+  setMenuIcon,
+  attachPanels: attachSettingsPanels,
+  groups: {
+    gameplay: [playShell.elements.buttons.expert, playShell.elements.buttons['home-retry']],
+    controls: [$('steering').closest('label')],
+    audio: [snakeSettingsSections[1]],
+    display: [$('language').closest('label'), snakeSettingsSections[0]],
+    accessibility: [snakeSettingsSections[2]],
+    data: [$('snake-workshop').querySelector('details')],
+    content: [playShell.elements.buttons.workshop],
+    extras: [
+      playShell.elements.buttons.help,
+      $('snake-workshop').querySelector('.game-mode-destinations'),
+    ],
+  },
+});
+const snakeDefeatSoundControls = attachDefeatSoundControls({
+  document: doc,
+  window: globalThis,
+  container: snakeSettingsView.panels.audio,
+  prefix: 'snake-',
+  preferences: destruction,
+});
+attachThemeFamilyControls({
+  document: doc,
+  root: snakeSettingsView.panels.display,
+  host: presentation.theme,
+  prefix: 'snake-',
+  mountBattlefieldGroundControls,
+  mountEnemyAppearance: (options) =>
+    mountEnemyAppearanceControls({
+      ...options,
+      applyMilitary: async () => {
+        await presentation.theme.applyComplete('military-field');
+        renderCopy();
+      },
+      applyAuthored: async () => {
+        await presentation.theme.set({ arcadeArt: 'authored' });
+        renderCopy();
+      },
+    }),
+});
+const displayBinding = (key) => ({
+  get: () => display.snapshot()[key],
+  set: (value) => display.set({ [key]: value }),
+  subscribe: (listener) => display.subscribe(listener),
+});
+snakeGlobalSettings = mountGlobalSettings({
+  document: doc,
+  root: playShell.elements.dialogs.settings,
+  panels: snakeSettingsView.panels,
+  prefix: 'snake-global',
+  locale,
+  controls: {
+    language: $('language').closest('label'),
+    appearance: snakeSettingsView.panels.display.querySelector('[data-theme-controls]'),
+    reducedEffects: $('reduced').closest('label'),
+    masterMuted: $('muted').closest('label'),
+    masterVolume: $('volume').closest('label'),
+  },
+  bindings: {
+    ...continuousPlayBindings(continuousPreferences),
+    textFace: displayBinding('textFace'),
+    textSize: displayBinding('textSize'),
+    menuAnimation: {
+      get: () => getMenuAnimation(globalThis),
+      set: (value) => setMenuAnimation(value, globalThis),
+      subscribe: (listener) => subscribeMenuAnimation(listener, globalThis),
+    },
+  },
+});
+const snakeTouchSettings = el('section');
+touchPresentationControls = mountTouchPresentationSettings({
+  document: doc,
+  mount: snakeTouchSettings,
+  preferences: touch,
+  idPrefix: 'snake-global',
+});
+const snakeAudioCues = el('section');
+attachMenuAudioSettings(sound, doc, {
+  target: snakeAudioCues,
+  window: globalThis,
+  getStorage: () => globalThis.localStorage,
+  idPrefix: 'snake-global',
+});
+snakeOfflinePanel = attachInstallOfflinePanel({
+  document: doc,
+  window: globalThis,
+  downloadsURL: new URL('../downloads.html', import.meta.url),
+  // Snake owns a separate round lease. The shared panel still acquires and
+  // validates the main edition's profile locks before activating an install.
+  canActivate: () =>
+    !pageDeparted &&
+    pageActive() &&
+    sessionWriter.writable &&
+    !pendingImports &&
+    (ready || !!result()),
+  onOpen: () => pause({ showMenu: false }),
+});
+const snakeGlobalTools = mountGlobalSettingsTools({
+  document: doc,
+  window: globalThis,
+  settingsRoot: playShell.elements.dialogs.settings,
+  panels: snakeSettingsView.panels,
+  prefix: 'snake-global-tools',
+  onOpen: pause,
+  offlinePanel: snakeOfflinePanel,
+  coreURL: new URL('../', globalThis.location.href),
+});
+snakeGlobalSettings.update({
+  controls: {
+    audioCues: snakeAudioCues,
+    touchPresentation: snakeTouchSettings,
+    ...snakeGlobalTools.controls,
+  },
+});
+$('snake-settings').hidden = true;
 menuController = attachControllerNavigation({
   document: doc,
   keyboard: true,
-  getScope: () => (playShell?.topDialog() ? 'ui' : 'flight'),
-  getRoot: () => playShell?.topDialog() ?? $('snake-shell'),
-  getDefaultFocus: () => playShell?.topDialog()?.querySelector('button:not(:disabled),a[href]'),
-  onBack: () => (snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back()),
-  onMenu: () => (snakeSimPanel?.root() ? snakeSimPanel.close() : playShell.back()),
+  ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, playShell?.topDialog()),
+  getScope: () =>
+    music?.root() || snakeGlobalTools.root() || playShell?.topDialog() ? 'ui' : 'flight',
+  getRoot: () =>
+    music?.root() ??
+    (snakeGlobalTools.frameFocused()
+      ? null
+      : (snakeGlobalTools.root() ?? playShell?.topDialog() ?? $('snake-shell'))),
+  getDefaultFocus: () =>
+    music?.root()
+      ? music.primary()
+      : (snakeGlobalTools.root() ?? playShell?.topDialog())?.querySelector(
+          'button:not(:disabled),a[href]',
+        ),
+  onBack: () =>
+    (music?.root() ? music.back() : false) ||
+    snakeGlobalTools.back() ||
+    libraryBack() ||
+    (snakeModeChoices?.simulatorRoot() ? snakeModeChoices.closeSimulator() : playShell.back()),
+  onMenu: () =>
+    (music?.root() ? music.back() : false) ||
+    snakeGlobalTools.back() ||
+    libraryBack() ||
+    (snakeModeChoices?.simulatorRoot() ? snakeModeChoices.closeSimulator() : playShell.back()),
 });
+installTransitionControls();
 refresh();
 footprint.refresh();
+if (params.has('level') || communityIdentity) start();
 globalThis.RevealLineToolLaunch?.attached?.();
 globalThis.requestAnimationFrame(frame);

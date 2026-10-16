@@ -1,4 +1,7 @@
+import { createHumanReactionPolicy } from './human-reaction-policy.mjs';
+import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../audio/dialogue-mix.mjs';
 import { encounterSoundRecipe } from './encounter-audio.mjs';
+import { eventCue } from './feedback-cues.mjs';
 import {
   createGameAudioContext,
   createGameAudioOutput,
@@ -44,8 +47,9 @@ export class Soundscape {
     this.menuSettings = readMenuAudio();
     this.radioSettings = readRadioAudio();
     this.movementSettings = readMovementAudio();
-    this.dialogueSettings = { enabled: false, volume: 0.65 };
+    this.dialogueSettings = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
     this.feedbackDirector = new FeedbackDirector(this);
+    this.humanReactions = createHumanReactionPolicy();
     this.persistentMusic = persistentMusic;
     this.context = null;
     this.contextFactory = contextFactory;
@@ -109,13 +113,13 @@ export class Soundscape {
     this.readDestruction = read;
   }
   /** Ready buffers only: loading never replays an event after it has expired. */
-  playDialogue(buffer, { onended = () => {} } = {}) {
+  playDialogue(buffer, { onended = () => {}, ui = false } = {}) {
     const c = this.context;
     if (
       !buffer ||
       !this.enabled ||
       this.paused ||
-      this.gameplayPaused ||
+      (this.gameplayPaused && ui !== true) ||
       this.disposed ||
       this.audioMaster.muted ||
       this.audioMaster.volume === 0 ||
@@ -383,7 +387,7 @@ export class Soundscape {
     if (!this.context) return;
     const time = this.context.currentTime;
     this.dialogueBus?.gain.setTargetAtTime(
-      this.dialogueSettings.enabled ? this.dialogueSettings.volume : 0,
+      this.dialogueSettings.enabled ? this.dialogueSettings.volume * DIALOGUE_MIX_GAIN : 0,
       time,
       0.015,
     );
@@ -473,12 +477,14 @@ export class Soundscape {
     releasePlaybackAudioSession();
     return false;
   }
-  pause() {
+  pause({ preserveDestruction = false } = {}) {
     this.stopVoices('dialogue');
     if (this.persistentMusic) {
       this.gameplayPaused = true;
       this.cancelPreview();
-      this.stopVoices('sfx');
+      for (const voice of [...this.voices])
+        if (voice.bus === 'sfx' && !(preserveDestruction && voice.name?.startsWith('destroy-')))
+          voice.stop();
       this.tension = 0;
       return;
     }
@@ -568,6 +574,20 @@ export class Soundscape {
     const c = this.context;
     if (!this.enabled || this.paused || this.disposed || !c || c.state !== 'running') return false;
     if (this.persistentMusic && this.gameplayPaused && bus === 'sfx') return false;
+    if (bus === 'menu' && (!this.menuSettings.enabled || this.menuSettings.volume === 0))
+      return false;
+    if (note.encounter === true) {
+      // Procedural event phrases obey the recorded-cue headroom for every
+      // layer. They may replace quieter feedback, but never steal music.
+      const owned = [...this.voices].filter((voice) => voice.feedback);
+      if (owned.length >= 16 || this.voices.size >= voiceLimit) {
+        const victim = owned
+          .filter((voice) => voice.priority < (note.priority ?? 0))
+          .sort((a, b) => a.priority - b.priority)[0];
+        if (!victim) return false;
+        victim.stop();
+      }
+    }
     if (this.voices.size >= voiceLimit) {
       const music = [...this.voices].find((v) => v.bus === 'music');
       if (music) music.stop();
@@ -587,7 +607,11 @@ export class Soundscape {
       source.buffer = this.noise;
       filter = c.createBiquadFilter();
       filter.type = note.kind === 'hat' ? 'highpass' : 'bandpass';
-      filter.frequency.value = note.kind === 'hat' ? 6500 : 1600;
+      filter.frequency.value = Number.isFinite(note.filterFrequency)
+        ? clamp(note.filterFrequency, 80, 8000)
+        : note.kind === 'hat'
+          ? 6500
+          : 1600;
       filter.Q.value = note.kind === 'hat' ? 0.5 : 0.7;
     } else {
       source = c.createOscillator();
@@ -630,8 +654,15 @@ export class Soundscape {
       source.connect(filter);
       filter.connect(gain);
     } else source.connect(gain);
-    const destination = bus === 'music' ? this.musicBus : this.sfxBus,
-      drive = bus === 'music' ? this.musicDrive : this.sfxDrive;
+    const destination =
+        bus === 'music'
+          ? this.musicBus
+          : bus === 'menu'
+            ? this.menuBus
+            : note.movement
+              ? this.movementBus
+              : this.sfxBus,
+      drive = bus === 'music' ? this.musicDrive : bus === 'menu' ? null : this.sfxDrive;
     const output = note.voice === 'guitar' && drive ? drive : destination;
     if (Number.isFinite(note.pan) && c.createStereoPanner) {
       const panner = c.createStereoPanner();
@@ -650,6 +681,8 @@ export class Soundscape {
       bus,
       source,
       feedback: note.encounter === true,
+      ambience: note.ambience === true,
+      movement: note.movement === true,
       name: note.cueName,
       cueFamily: note.cueName,
       board: note.board,
@@ -701,12 +734,55 @@ export class Soundscape {
       ...options,
     });
   }
+  /** Optional humanoid feedback, independent of visual gore. Missing bytes keep
+   * the classic impact; never replay later. */
+  humanReaction(details = {}) {
+    const c = this.context;
+    if (
+      !this.enabled ||
+      this.paused ||
+      this.gameplayPaused ||
+      this.disposed ||
+      this.audioMaster.muted ||
+      this.audioMaster.volume === 0 ||
+      c?.state !== 'running' ||
+      !this.settings.master ||
+      !this.settings.sfx
+    )
+      return false;
+    const voices = [...this.voices];
+    if (voices.some((voice) => voice.radio || voice.dialogue || voice.priority >= 5)) return false;
+    const name = this.humanReactions.request(
+      c.currentTime,
+      {
+        ...details,
+        // Either the player's opt-out or a host concealment rule may veto a
+        // voice. Enabling the global preference must not undo jamming silence.
+        vocals: details.vocals !== false && this.readDestruction?.()?.vocals !== false,
+      },
+      voices.filter((voice) => voice.humanReaction).length,
+    );
+    if (!name) return false;
+    const options = {
+      board: details.board ?? 'solo',
+      pan: details.pan ?? 0,
+      humanReaction: true,
+      priority: 2,
+      feedback: true,
+      maxDuration: 0.7,
+      gain: 0.45,
+    };
+    return (
+      this.publishedAudio?.play(name, options) || Boolean(this.feedbackDirector.play(name, options))
+    );
+  }
   /** Shared enemy, machinery and tactical cues, including an offline fallback. */
   encounter(type, details = {}) {
     const recipe = encounterSoundRecipe(type, details),
       c = this.context;
     if (
       !recipe ||
+      details.audible === false ||
       !this.enabled ||
       this.paused ||
       this.gameplayPaused ||
@@ -719,57 +795,118 @@ export class Soundscape {
       this.settings.sfx === 0
     )
       return false;
+    if (
+      recipe.gain === 0 ||
+      (recipe.ambience &&
+        [...this.voices].some((voice) => voice.radio || voice.dialogue || voice.priority >= 5)) ||
+      (recipe.movement &&
+        (!this.movementSettings.enabled ||
+          this.movementSettings.volume === 0 ||
+          [...this.voices].some((voice) => voice.feedback && voice.priority >= 4)))
+    )
+      return false;
     const board = details.board ?? 'solo',
-      key = `encounter:${board}:${type}`;
+      // Friendly clearing must not reserve the player's damage cue on the next
+      // frame. Keep exactly two bounded impact channels; arbitrary semantics
+      // cannot create additional cooldown buckets.
+      cooldownType =
+        type === 'impact' && details.semantic === 'friendly-impact'
+          ? 'friendly-impact'
+          : (recipe.category ?? type),
+      key = `encounter:${board}:${cooldownType}`;
     if (
       c.currentTime - (this.recentEvents.get(key) ?? -Infinity) <
-      (type === 'warning' ? 0.3 : ['notice', 'recover', 'blocked'].includes(type) ? 0.65 : 0.12)
+      (recipe.cooldown ??
+        (type === 'warning' ? 0.3 : ['notice', 'recover', 'blocked'].includes(type) ? 0.65 : 0.12))
     )
       return false;
     this.recentEvents.set(key, c.currentTime);
+    if (recipe.priority >= 5 || details.semantic === 'armor-break') {
+      this.humanReactions?.interrupt(c.currentTime);
+      for (const voice of [...this.voices]) if (voice.humanReaction) voice.retire();
+    }
+    if (recipe.priority >= 5 || details.semantic === 'armor-break')
+      for (const voice of [...this.voices]) if (voice.ambience) voice.stop();
+    if (type === 'catch') this.humanReaction?.(details);
     if (this.recentEvents.size > 64)
       this.recentEvents.delete(this.recentEvents.keys().next().value);
-    if (this.feedbackDirector.play(recipe.name, { ...recipe, board, pan: details.pan ?? 0 }))
+    // A warning arriving later in the same transaction owns the foreground.
+    // Only short movement accents are shed; continuous player rotors remain.
+    if (recipe.priority >= 4)
+      for (const voice of [...this.voices])
+        if (voice.feedback && voice.movement && !voice.source?.loop) voice.stop();
+    const ownership = { ...recipe, board, pan: details.pan ?? 0, feedback: true };
+    // Published destruction replacements use the same bus, headroom and lifetime.
+    if (recipe.category && this.publishedAudio?.play(recipe.name, ownership)) return true;
+    if (!recipe.procedural && this.feedbackDirector.play(recipe.name, ownership)) return true;
+    const reserveFallback = () => {
+      const owned = [...this.voices].filter((voice) => voice.feedback);
+      if (this.voices.size < 64 && owned.length < 16) return true;
+      const victim = owned
+        .filter((voice) => voice.priority < recipe.priority)
+        .sort((a, b) => a.priority - b.priority)[0];
+      if (!victim) return false;
+      victim.stop();
       return true;
+    };
     if (recipe.priority >= 5) dialogueChannel.interrupt();
-    // Missing optional samples remain audible now; loading never replays stale cues.
-    return this.play(
-      {
-        kind: 'tone',
-        encounter: true,
-        cueName: recipe.name,
-        board,
-        priority: recipe.priority,
-        frequency: recipe.tone.from,
-        endFrequency: recipe.tone.to,
-        duration: recipe.tone.duration,
-        volume: recipe.tone.gain,
-        voice: 'lead',
-        wave: recipe.tone.type,
-        pan: details.pan ?? 0,
-      },
-      c.currentTime,
-    );
+    // Missing samples remain audible now; a late decode never replays a death.
+    let played = false;
+    for (const layer of [recipe.tone, ...(recipe.layers ?? [])]) {
+      if (!reserveFallback()) break;
+      played =
+        this.play(
+          {
+            kind: layer.kind ?? 'tone',
+            encounter: true,
+            ambience: recipe.ambience,
+            movement: recipe.movement,
+            cueName: recipe.name,
+            board,
+            priority: recipe.priority,
+            frequency: layer.from,
+            filterFrequency: layer.filterFrequency,
+            endFrequency: layer.to,
+            duration: layer.duration,
+            volume: layer.gain,
+            voice: 'lead',
+            wave: layer.type,
+            pan: details.pan ?? 0,
+          },
+          c.currentTime + (layer.delay ?? 0),
+        ) || played;
+    }
+    return played;
   }
+
   events(events, run, theme, options = {}) {
     this.feedbackDirector.events(events, run, theme, options);
   }
   event(value, details = {}, resultContext = null) {
     const event = typeof value === 'string' ? { ...details, type: value } : value;
+    // A host-owned result can finish after gameplay has paused. Other events
+    // cannot opt out of gameplay pause by passing an arbitrary UI flag.
+    const ui = event?.type === 'run.completed' && event.ui === true;
     if (
       !event ||
       !this.enabled ||
       this.paused ||
       this.audioMaster.muted ||
-      (this.persistentMusic && this.gameplayPaused) ||
+      this.audioMaster.volume === 0 ||
+      ((this.persistentMusic || event.feedback) && this.gameplayPaused && !ui) ||
+      (ui && (!this.menuSettings.enabled || this.menuSettings.volume === 0)) ||
       !this.context
     )
       return;
-    const now = this.context.currentTime,
-      key =
+    const semanticCue = eventCue(event),
+      now = this.context.currentTime,
+      eventKey =
         event.type === 'run.completed'
           ? `${event.type}:${event.levelId || ''}:${event.tick ?? ''}`
-          : event.type;
+          : event.feedback && semanticCue
+            ? `feedback:${semanticCue}`
+            : event.type,
+      key = event.board === undefined ? eventKey : `${event.board}:${eventKey}`;
     if (
       this.recentEvents.has(key) &&
       now - this.recentEvents.get(key) < (event.type === 'run.completed' ? 5 : 0.09)
@@ -789,13 +926,41 @@ export class Soundscape {
             'pickup.collected': 'pickup',
             'powerup.collected': 'pickup',
           }[event.type];
-    if (publishedCue && this.publishedAudio?.play(publishedCue)) return;
-    const base = clamp(this.track.root + 12, 48, 76),
+    const ownership = {
+      ui,
+      board: event.board ?? 'solo',
+      pan: event.pan ?? 0,
+      feedback: event.feedback === true,
+      priority: event.feedback === true ? 3 : 0,
+    };
+    if (publishedCue && this.publishedAudio?.play(publishedCue, ownership)) return;
+    if (semanticCue === 'warning' && event.feedback === true) {
+      // Use the same priority, dialogue interruption and bounded per-board
+      // warning channel when the optional recording is unavailable.
+      this.encounter('warning', { board: ownership.board, pan: 0 });
+      return;
+    }
+    const noteOwnership = {
+        pan: ownership.pan,
+        encounter: ownership.feedback,
+        board: ownership.board,
+        priority: ownership.priority,
+        cueName: publishedCue ?? semanticCue,
+      },
+      base = clamp(this.track.root + 12, 48, 76),
       cue = (steps, voice = 'bell', spacing = 0.09, duration = 0.25) =>
         steps.forEach((n, i) =>
           this.play(
-            { kind: 'tone', frequency: midiFrequency(base + n), voice, volume: 0.08, duration },
+            {
+              kind: 'tone',
+              frequency: midiFrequency(base + n),
+              voice,
+              volume: 0.08,
+              duration,
+              ...noteOwnership,
+            },
             now + 0.015 + i * spacing,
+            ui ? 'menu' : 'sfx',
           ),
         );
     if (event.type === 'run.completed') {
@@ -806,7 +971,11 @@ export class Soundscape {
       }
       if (event.won === false || event.status === 'lost') {
         cue([0, -3, -7, -12], 'lead', 0.16, 0.38);
-        this.play({ kind: 'snare', volume: 0.07, duration: 0.22 }, now + 0.02);
+        this.play(
+          { kind: 'snare', volume: 0.07, duration: 0.22, ...noteOwnership },
+          now + 0.02,
+          ui ? 'menu' : 'sfx',
+        );
       } else {
         const phrase =
           campaignVictoryMotif(resultContext) ??
@@ -830,8 +999,10 @@ export class Soundscape {
                 voice: 'chime',
                 volume,
                 duration,
+                ...noteOwnership,
               },
               now + timing[index],
+              ui ? 'menu' : 'sfx',
             );
         });
         for (const n of [-12, 4, 7])
@@ -842,8 +1013,10 @@ export class Soundscape {
               voice: 'bloom',
               volume: 0.03,
               duration: 1.4,
+              ...noteOwnership,
             },
             now + 0.88,
+            ui ? 'menu' : 'sfx',
           );
       }
     } else if (event.type === 'player.failed') cue([0, -5, -12], 'lead', 0.065, 0.17);
@@ -878,6 +1051,23 @@ export class Soundscape {
     )
       cue([7, 12], 'lead', 0.05, 0.13);
     else if (event.type === 'craft.redeployed') cue([0, -5, 7], 'guitar', 0.04, 0.15);
+    else {
+      // Team's native support/recovery and expedition events need immediate
+      // semantic feedback before samples decode, including fully offline play.
+      // Distinct intervals/cadences survive stereo-to-mono downmix.
+      const fallback = {
+        respawn: [[-12, 0, 7, 12], 'bell', 0.09, 0.2],
+        gate: [[0, 7, 12], 'bell', 0.12, 0.23],
+        pickup: [[7, 12], 'bell', 0.05, 0.13],
+        deploy: [[0, 7, 4], 'lead', 0.055, 0.13],
+        cancel: [[4, 0], 'chip', 0.07, 0.1],
+        erosion: [[7, 3, 0], 'chip', 0.07, 0.12],
+        attack: [[0, -7], 'lead', 0.04, 0.13],
+        neutralized: [[0, 4, 7], 'bell', 0.06, 0.15],
+        closure: [[0, 7], 'bell', 0.04, 0.12],
+      }[semanticCue];
+      if (fallback) cue(...fallback);
+    }
   }
   update(active, theme, state = {}) {
     this.themeFamily = theme?.family || theme?.id || 'fpv';

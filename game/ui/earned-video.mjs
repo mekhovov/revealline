@@ -58,12 +58,13 @@ export function createEarnedVideo({
         window,
         cinematic: true,
         reducedMotion: getReducedMotion(),
+        onEnded: close,
       });
       active = { dialog, media, opener };
       dialog.addEventListener('close', close);
       dialog.showModal();
       exit.focus({ preventScroll: true });
-      void media.start();
+      void media.start({ allowMutedFallback: true });
       return true;
     },
     dispose: close,

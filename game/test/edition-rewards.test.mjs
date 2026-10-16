@@ -928,6 +928,12 @@ test('earned pictures stay visible while locked-preview controls keep accepted p
   for (let index = 0; index < 20; index++) {
     f.doc.getElementById('completion-reward-exhibit-pictures').click();
     await f.settle();
+    await waitFor(
+      () => f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img'),
+      {
+        message: `The earned thumbnail must finish byte verification after preview toggle ${index + 1}.`,
+      },
+    );
     assert(f.doc.querySelector('.completion-reward-exhibit-picture')?.querySelector('img'));
   }
   assert.equal(f.profile.generation, generation);

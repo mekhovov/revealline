@@ -7,6 +7,23 @@
 >
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../game/access-gate.css" />
+    <script src="../game/access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
     <style>
       @layer legacy {
         html {
@@ -35,23 +52,27 @@
         }
       }
     </style>
-    <script src="../game/presentation/theme-bootstrap.mjs" data-theme-density="player" data-theme-follow-context="true"></script>
+    <script
+      src="../game/presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      data-theme-follow-context="true"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <link
       rel="stylesheet"
       href="../game/presentation/industrial-workshop.css"
       data-industrial-workshop
     />
-    <script type="module" src="../game/presentation/theme-entry.mjs"></script>
+    <script
+      src="../game/presentation/theme-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#070914" />
-    <meta name="revealline-access-id" content="revealline" />
-    <meta name="revealline-access-title" content="FPV / LINE" />
-    <meta
-      name="revealline-access-salt"
-      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
-    />
-    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+
     <meta
       name="description"
       content="FPV / LINE. Find an opening. Make your line. Reveal the story."
@@ -60,14 +81,30 @@
     <title data-i18n="website:revealLineLaunch">FPV / LINE · Launch</title>
 
     <link rel="stylesheet" href="../game/i18n/style.css" />
-    <link rel="stylesheet" href="../game/access-gate.css" />
-    <script src="../game/access-gate.mjs" defer></script>
-    <script src="../game/vendor/i18next-26.4.2.min.js"></script>
-    <script src="../game/i18n/catalogs.mjs"></script>
-    <script src="../game/i18n/bootstrap.mjs"></script>
+
+    <script
+      src="../game/vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../game/i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../game/i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <link rel="stylesheet" href="../game/boot.css" />
-    <script src="./launch.mjs" defer></script>
+    <script
+      src="./launch.mjs"
+      defer
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <link rel="stylesheet" href="../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-components.css" />

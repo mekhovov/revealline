@@ -5,6 +5,7 @@ import { createCoop, startCoop, pauseCoop, stepCoop } from '../coop/core.mjs';
 import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
+import { sharedEnemyArtwork } from '../hunt/preferences.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
@@ -102,6 +103,56 @@ test('industrial Team art keeps exact picture identity and freezes per new run',
   assert.equal(painter.artSnapshot.appearance.id, 'industrial-workshop');
   assert.deepEqual(run, before);
   painter.dispose();
+});
+
+test('Team first Start accepts briefing artwork while active, paused and historical attempts retain their choice', () => {
+  const preference = sharedEnemyArtwork(),
+    previous = preference.snapshot().style,
+    view = canvasRecorder(),
+    painter = createCoopPainter(view.canvas),
+    run = createCoop(RELAY_YARD),
+    source = snapshot();
+  let choice = { familyId: 'military-field', arcadeArt: 'authored' };
+  painter.setArcadeProvider(() => choice);
+  painter.setPresentation(source);
+  try {
+    preference.set({ style: 'authored' });
+    painter.captureArcadeCollection(run);
+    painter.paint(run);
+    assert.equal(painter.artSnapshot, source);
+    choice = { ...choice, arcadeArt: 'follow-game' };
+    preference.set({ style: 'military' });
+    assert.equal(painter.acceptEnemyArtwork(run), true);
+    painter.paint(run);
+    assert.equal(painter.artSnapshot.appearance.id, 'military-field');
+    startCoop(run);
+    const active = structuredClone(run);
+    preference.set({ style: 'authored' });
+    choice = { ...choice, arcadeArt: 'authored' };
+    assert.equal(painter.acceptEnemyArtwork(run), false);
+    painter.paint(run);
+    assert.equal(painter.artSnapshot.appearance.id, 'military-field');
+    assert.deepEqual(run, active);
+    pauseCoop(run);
+    assert.equal(painter.acceptEnemyArtwork(run), false);
+    painter.paint(run);
+    assert.equal(painter.artSnapshot.appearance.id, 'military-field');
+    const next = createCoop(RELAY_YARD);
+    painter.paint(next);
+    assert.equal(painter.artSnapshot, source, 'unregistered historical draws stay authored');
+    choice = { ...choice, arcadeArt: 'follow-game' };
+    preference.set({ style: 'military' });
+    painter.captureArcadeCollection(next);
+    painter.paint(next);
+    assert.equal(
+      painter.artSnapshot.appearance.id,
+      'military-field',
+      'an unarmed preview cannot consume first acceptance',
+    );
+  } finally {
+    preference.set({ style: previous });
+    painter.dispose();
+  }
 });
 
 test('legacy callers retain procedural painting and restoring the page snapshot restores that look', () => {

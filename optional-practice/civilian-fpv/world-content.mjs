@@ -1,3 +1,5 @@
+import { validateNativeIndustrialCourses } from './industrial-environment.mjs';
+import { WORLD_SURFACE_COATING_EXTENSION, validateWorldSurfaceCoatings } from './world-themes.mjs';
 import { assertCriterionAnchorTranslation, compileContentProject } from './content-definitions.mjs';
 /** Browser/Node boundary for user-owned FPV worlds. No network or renderer dependencies. */
 export const WORLD_PROJECT_FORMAT = 'FPVWorldProject.v1';
@@ -192,6 +194,7 @@ export function encodeWorldGLB(document, binary = new Uint8Array()) {
   return bytes;
 }
 const SUPPORTED_EXTENSIONS = new Set([
+  WORLD_SURFACE_COATING_EXTENSION,
   'KHR_materials_unlit',
   'KHR_texture_transform',
   'KHR_mesh_quantization',
@@ -265,11 +268,20 @@ function validateDocument(doc, binary) {
     !doc.asset.minVersion || doc.asset.minVersion === '2.0',
     'Unsupported minimum glTF version.',
   );
-  for (const extension of doc.extensionsRequired ?? [])
-    assert(
-      SUPPORTED_EXTENSIONS.has(extension),
-      `Unsupported required extension: ${extension}. Use the offline prepare command to decode it first.`,
-    );
+  const requiredExtensions = doc.extensionsRequired ?? [];
+  assert(
+    Array.isArray(requiredExtensions) &&
+      requiredExtensions.every(
+        (name) => typeof name === 'string' && /^[A-Za-z][A-Za-z0-9_]{0,127}$/.test(name),
+      ),
+    'Invalid required extension names.',
+  );
+  for (const extension of requiredExtensions)
+    if (!SUPPORTED_EXTENSIONS.has(extension))
+      throw Object.assign(new TypeError(`Unsupported required extension: ${extension}.`), {
+        code: 'unsupported-world-extension',
+        extension,
+      });
   const buffers = arrayField(doc, 'buffers', 1),
     views = arrayField(doc, 'bufferViews', WORLD_LIMITS.accessors),
     accessors = arrayField(doc, 'accessors', WORLD_LIMITS.accessors),
@@ -279,6 +291,7 @@ function validateDocument(doc, binary) {
     textures = arrayField(doc, 'textures', 128),
     materials = arrayField(doc, 'materials', 256),
     skins = arrayField(doc, 'skins', 64);
+  validateWorldSurfaceCoatings(doc);
   assert(
     (doc.extensions?.KHR_lights_punctual?.lights?.length ?? 0) <= 8,
     'At most eight imported lights.',
@@ -1206,6 +1219,7 @@ export async function preparePack(input, { assets = new Map() } = {}) {
   const project = resolveProject(input),
     map = await fileMap(assets, WORLD_LIMITS.packBytes),
     entries = [];
+  await validateNativeIndustrialCourses(project.courses);
   for (const [path, bytes] of [...map].sort(([a], [b]) => a.localeCompare(b)))
     entries.push({ path, bytes: bytes.length, sha256: await worldSHA256(bytes) });
   if (project.world.modelAsset)
@@ -1236,6 +1250,7 @@ export async function inspectPack(value) {
   const manifest = safeJSON(decoder.decode(bytes.subarray(12, 12 + length)));
   assert(manifest.format === WORLD_PACK_FORMAT, 'Unsupported FPV pack format.');
   const project = resolveProject(manifest.project);
+  await validateNativeIndustrialCourses(project.courses);
   assert(
     Array.isArray(manifest.assets) && manifest.assets.length <= WORLD_LIMITS.files,
     'Invalid asset list.',

@@ -15,12 +15,6 @@ const scenarios = [
     entry: 'publishing/fastline-release-publisher.mjs',
     exported: 'publishExactRelease',
   },
-  {
-    workflow: '.github/workflows/publish-frozen-pages.yml',
-    step: 'Check out publishing controller and immutable tags',
-    entry: 'publishing/pages-controller/publish.mjs',
-    usage: 'Usage: publish.mjs verify|build|verify-artifact [--preview]',
-  },
 ];
 
 function selectedPaths(workflow, step) {

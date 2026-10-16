@@ -11,6 +11,7 @@ import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } fr
 import { BoardPainter } from '../ui/render.mjs';
 import { attachFieldKitSurfaces } from '../ui/field-kit-surfaces.mjs';
 import { ENCOUNTER_DISPLAY_PREFERENCES_KEY } from '../encounter-display-preferences.mjs';
+import { ENEMY_ARTWORK_PREFERENCES_KEY } from '../hunt/preferences.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import {
   THEME_PREFERENCES_KEY,
@@ -350,6 +351,7 @@ function noPlayerAccess(page) {
       [
         DISPLAY_PREFERENCES_KEY,
         ENCOUNTER_DISPLAY_PREFERENCES_KEY,
+        ENEMY_ARTWORK_PREFERENCES_KEY,
         AUDIO_PREFERENCES_KEY,
         MENU_AUDIO_KEY,
         RADIO_AUDIO_KEY,

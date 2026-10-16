@@ -3,10 +3,18 @@ import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import {
+  OVERFLIGHT_OPERATIONS,
+  createOverflightOperationCards,
+} from '../overflight/operation-view.mjs';
+import { renderModeChoices } from '../ui/mode-choice-view.mjs';
 
 function fixture(options = {}) {
   const document = new Document();
   document.documentElement.lang = 'en';
+  document.fullscreenEnabled = options.fullscreenSupported !== false;
+  if (document.fullscreenEnabled) document.documentElement.requestFullscreen = async () => {};
   const source = document.createElement('main');
   document.body.append(source);
   const slots = {};
@@ -19,12 +27,27 @@ function fixture(options = {}) {
     'help',
     'workshop',
     'results',
+    'modes',
   ]) {
     const slot = document.createElement('section');
     slot.id = `${options.idPrefix ?? 'original'}-${name}`;
     source.append(slot);
     slots[name] = slot;
   }
+  if (options.withModes) {
+    const actions = Object.fromEntries(
+      ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'].map((name) => [
+        name,
+        document.createElement('button'),
+      ]),
+    );
+    renderModeChoices({
+      root: slots.modes,
+      current: options.currentMode ?? 'snake',
+      actions,
+    });
+  }
+  if (options.homeChoices) slots.homeChoices = options.homeChoices(document);
   const calls = [];
   const actions = Object.fromEntries(
     ['pause', 'start', 'resume', 'retry', 'continue', 'toggleSound'].map((name) => [
@@ -41,6 +64,49 @@ function fixture(options = {}) {
   });
   return { document, source, slots, calls, shell };
 }
+
+test('keyboard and controller directions share the exact landing cycle and mode row', () => {
+  const h = fixture({
+    withModes: true,
+    currentMode: 'snake',
+    actions: { fullscreen() {} },
+  });
+  const home = h.shell.elements.home;
+  const navigation = attachControllerNavigation({
+    document: h.document,
+    keyboard: true,
+    getScope: () => 'home',
+    getRoot: () => home,
+    getDefaultFocus: () => home.querySelector('[aria-current="page"]'),
+  });
+  const selected = home.querySelector('[aria-current="page"]');
+  selected.focus();
+  for (const expected of [
+    h.shell.elements.buttons.primary,
+    h.shell.elements.buttons.missions,
+    h.shell.elements.buttons.settings,
+    h.shell.elements.buttons.sound,
+    h.shell.elements.buttons.fullscreen,
+    selected,
+  ]) {
+    navigation.handle({ direction: 'down' });
+    assert.equal(h.document.activeElement, expected);
+  }
+  navigation.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement.dataset.gameMode, 'overflight');
+  navigation.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement.dataset.gameMode, 'simulator');
+  navigation.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement.dataset.modeMore, 'true');
+  navigation.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement.dataset.gameMode, 'solo');
+  h.shell.elements.buttons.fullscreen.hidden = true;
+  h.shell.elements.buttons.sound.focus();
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, selected, 'Unavailable utilities are skipped.');
+  navigation.destroy();
+  h.shell.dispose();
+});
 
 test('menus move the existing live controls and disposal restores their original identity and order', () => {
   const h = fixture();
@@ -90,12 +156,13 @@ test('Settings, help, Back and native Escape never resume a paused attempt', asy
 test('explicit Start closes all preparation surfaces before the host starts its simulation', () => {
   let active;
   const calls = [];
-  const h = fixture({ actions: { start: () => calls.push(active.blocksPlay()) } });
+  const h = fixture({
+    actions: { start: () => calls.push(active.blocksPlay()) },
+  });
   active = h.shell;
   active.elements.buttons.missions.click();
-  active.elements.buttons.review.click();
-  assert.equal(active.topDialog(), active.elements.dialogs.briefing);
-  active.elements.buttons.start.click();
+  active.elements.buttons['mission-start'].click();
+  assert.equal(active.elements.dialogs.briefing.open, false);
   assert.deepEqual(calls, [false]);
   assert.equal(
     active.elements.root.dataset.phase,
@@ -141,7 +208,7 @@ test('a host pause callback can reopen the shared pause surface without recursio
   shell.update({ phase: 'playing' });
   shell.openHome();
   assert.equal(pauses, 1);
-  assert.equal(shell.topDialog(), shell.elements.home);
+  assert.equal(shell.topDialog(), shell.elements.dialogs.pause);
   shell.back();
   assert.equal(shell.blocksPlay(), false);
   assert.equal(pauses, 1);
@@ -177,7 +244,10 @@ test('direct-level briefing can return to Select Mission without starting and lo
     initial: 'briefing',
     modeName: (locale) => (locale === 'uk' ? 'Змійка' : 'Snake'),
   });
-  h.shell.update({ missionName: { en: 'Cable Cutoff', uk: 'Перехоплення кабелем' }, muted: true });
+  h.shell.update({
+    missionName: { en: 'Cable Cutoff', uk: 'Перехоплення кабелем' },
+    muted: true,
+  });
   h.shell.setLocale('uk');
   assert.equal(h.shell.elements.header.querySelector('span').textContent, 'Змійка');
   assert.equal(h.shell.elements.buttons.missions.textContent, 'Вибрати місію');
@@ -289,7 +359,7 @@ test('a Pause pointer press stays paused when focus loss updates host phase befo
   h.shell.update({ phase: 'paused' });
   assert.equal(pauseButton.textContent, 'Resume');
   pauseButton.emit('click', { detail: 1, pointerId: 1 });
-  assert.equal(h.shell.topDialog(), h.shell.elements.home);
+  assert.equal(h.shell.topDialog(), h.shell.elements.dialogs.pause);
   assert.deepEqual(h.calls, [], 'The same Pause activation must never resume.');
   h.shell.back();
   pauseButton.emit('pointerdown', { pointerId: 2, button: 0, isPrimary: true });
@@ -306,7 +376,10 @@ for (const activation of ['cancelled-pointer', 'keyboard'])
     button.emit('pointerdown', { pointerId: 1, button: 0, isPrimary: true });
     h.shell.update({ phase: 'paused' });
     if (activation === 'cancelled-pointer') button.emit('pointercancel', { pointerId: 1 });
-    button.emit('click', { detail: activation === 'keyboard' ? 0 : 1, pointerId: 1 });
+    button.emit('click', {
+      detail: activation === 'keyboard' ? 0 : 1,
+      pointerId: 1,
+    });
     assert.deepEqual(h.calls, ['resume']);
     assert.equal(h.shell.blocksPlay(), false);
     h.shell.dispose();
@@ -404,5 +477,366 @@ test('frequent HUD refreshes preserve pressed menu Text nodes and pointer activa
   const translated = watched[0].current;
   h.shell.setLocale('uk');
   assert.equal(watched[0].current, translated);
+  h.shell.dispose();
+});
+
+test('pause exposes one compact action set, preserves settings, and requires an explicit resume', () => {
+  const changes = [];
+  const h = fixture({
+    initial: 'play',
+    actions: {
+      canResume: () => true,
+      skip: () => changes.push('skip'),
+      random: () => changes.push('random'),
+    },
+  });
+  h.shell.update({ phase: 'playing' });
+  h.shell.open('pause');
+  assert.equal(h.shell.topDialog().dataset.modeSurface, 'pause');
+  assert.ok(h.shell.elements.content.home.contains(h.shell.elements.modes));
+  h.shell.elements.buttons['pause-settings'].click();
+  assert.equal(h.shell.topDialog().dataset.modeSurface, 'settings');
+  h.shell.back();
+  assert.equal(h.shell.topDialog().dataset.modeSurface, 'pause');
+  assert.deepEqual(h.calls, ['pause']);
+  h.shell.setLocale('uk');
+  assert.equal(h.shell.elements.buttons['pause-restart'].textContent, 'Заново');
+  h.shell.elements.buttons['pause-skip'].click();
+  assert.deepEqual(changes, ['skip']);
+  assert.equal(h.shell.blocksPlay(), false);
+  h.shell.open('pause');
+  h.shell.elements.buttons['pause-random'].click();
+  assert.deepEqual(changes, ['skip', 'random']);
+  h.shell.dispose();
+});
+
+test('title device controls stay outside play choices while muted state updates both menus', () => {
+  const h = fixture({ actions: { fullscreen() {} } });
+  const { buttons, utilities, content } = h.shell.elements;
+  assert.equal(buttons.sound.parentElement, utilities);
+  assert.equal(buttons.fullscreen.parentElement, utilities);
+  assert.equal(buttons.settings.parentElement.classList.contains('native-menu-actions'), true);
+  assert.equal(buttons['home-retry'].parentElement, content.settings);
+  h.shell.update({ muted: true });
+  assert.equal(buttons.sound.textContent, 'Sound: off');
+  assert.equal(buttons['pause-sound'].textContent, 'Sound: off');
+  h.shell.dispose();
+});
+
+test('SIM pending boot reveals before initial modal focus', () => {
+  const document = new Document();
+  document.documentElement.dataset.modeShellPending = 'true';
+  const createElement = document.createElement.bind(document);
+  document.createElement = (tag) => {
+    const element = createElement(tag);
+    const focus = element.focus.bind(element);
+    element.focus = (...args) => {
+      assert.equal(document.documentElement.dataset.modeShellPending, undefined);
+      focus(...args);
+    };
+    return element;
+  };
+  const shell = mountModePlayShell({ document, actions: { start() {} } });
+  assert.equal(document.activeElement, shell.elements.buttons.primary);
+  shell.dispose();
+});
+
+test('results focus Next immediately and Pause cancels an active transition without dead Resume', () => {
+  const h = fixture();
+  const next = h.document.createElement('button');
+  next.className = 'button primary';
+  h.slots.results.append(next);
+  h.shell.update({ phase: 'results', transitionActive: true });
+  h.shell.open('results');
+  assert.equal(h.document.activeElement, next);
+  assert.equal(h.shell.elements.buttons.pause.disabled, false);
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.calls.at(-1), 'pause');
+  assert.equal(h.shell.elements.dialogs.pause.open, false);
+  assert.equal(h.document.activeElement, next);
+  next.hidden = true;
+  h.shell.open('results');
+  assert.equal(h.document.activeElement, h.shell.elements.buttons.retry);
+});
+
+for (const currentMode of ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator']) {
+  test(`${currentMode}: More supports controller confirm, all destinations, Back and collapsed wrap`, () => {
+    const h = fixture({
+      withModes: true,
+      currentMode,
+      actions: { fullscreen() {} },
+    });
+    const home = h.shell.elements.home;
+    const more = home.querySelector('[data-mode-more]');
+    const navigation = attachControllerNavigation({
+      document: h.document,
+      keyboard: true,
+      getScope: () => 'home',
+      getRoot: () => home,
+      getDefaultFocus: () => more,
+      onBack: () => h.shell.back(),
+    });
+    if (more.getAttribute('aria-expanded') === 'true') more.click();
+    more.focus();
+    navigation.handle({ confirm: true });
+    assert.equal(more.getAttribute('aria-expanded'), 'true');
+    assert.equal(
+      h.document.activeElement.dataset.gameMode,
+      ['snake', 'overflight', 'simulator'].includes(currentMode) ? currentMode : 'snake',
+    );
+    home.querySelector('[data-game-mode="snake"]').focus();
+    for (const name of ['overflight', 'simulator']) {
+      navigation.handle({ direction: 'right' });
+      assert.equal(h.document.activeElement.dataset.gameMode, name);
+    }
+    navigation.handle({ direction: 'right' });
+    assert.equal(h.document.activeElement, more);
+    navigation.handle({ direction: 'down' });
+    assert.equal(h.document.activeElement, h.shell.elements.buttons.primary);
+    more.focus();
+    navigation.handle({ direction: 'up' });
+    assert.equal(
+      h.document.activeElement.dataset.gameMode,
+      ['snake', 'overflight', 'simulator'].includes(currentMode) ? currentMode : 'snake',
+    );
+    more.focus();
+    navigation.handle({ direction: 'right' });
+    assert.equal(h.document.activeElement.dataset.gameMode, 'solo');
+    navigation.handle({ back: true });
+    assert.equal(more.getAttribute('aria-expanded'), 'false');
+    assert.equal(h.document.activeElement, more);
+    assert.equal(home.open, true, 'Closing More never leaves Home or starts play.');
+    assert.deepEqual(h.calls, []);
+    more.focus();
+    for (const next of [
+      h.shell.elements.buttons.primary,
+      h.shell.elements.buttons.missions,
+      h.shell.elements.buttons.settings,
+      h.shell.elements.buttons.sound,
+      h.shell.elements.buttons.fullscreen,
+    ]) {
+      navigation.handle({ direction: 'down' });
+      assert.equal(h.document.activeElement, next);
+    }
+    navigation.handle({ direction: 'down' });
+    assert.equal(
+      h.document.activeElement,
+      ['solo', 'team', 'versus'].includes(currentMode)
+        ? home.querySelector('[aria-current="page"]')
+        : more,
+    );
+    more.click();
+    home.querySelector('[data-game-mode="snake"]').emit('keydown', { key: 'Escape' });
+    assert.equal(more.getAttribute('aria-expanded'), 'false');
+    assert.equal(h.document.activeElement, more);
+    navigation.destroy();
+    h.shell.dispose();
+  });
+}
+
+test('unsupported fullscreen is absent on home and pause and the direction cycle skips it', () => {
+  const h = fixture({
+    withModes: true,
+    fullscreenSupported: false,
+    actions: { fullscreen() {} },
+  });
+  const { buttons, home } = h.shell.elements;
+  assert.equal(buttons.fullscreen.hidden, true);
+  assert.equal(buttons['pause-fullscreen'].hidden, true);
+  const navigation = attachControllerNavigation({
+    document: h.document,
+    keyboard: true,
+    getScope: () => 'home',
+    getRoot: () => home,
+    getDefaultFocus: () => buttons.primary,
+  });
+  buttons.sound.focus();
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, home.querySelector('[aria-current="page"]'));
+  navigation.destroy();
+  h.shell.dispose();
+});
+
+for (const current of OVERFLIGHT_OPERATIONS.map(({ id }) => id)) {
+  for (const input of ['keyboard', 'controller']) {
+    test(`${current}: ${input} reaches all five operations and every home action without starting play`, () => {
+      let chosen = 0;
+      const h = fixture({
+        withModes: true,
+        currentMode: 'overflight',
+        actions: { fullscreen() {} },
+        homeChoices(document) {
+          return createOverflightOperationCards({
+            document,
+            current,
+            text: (key) => key,
+            destination: (path) => path + (path.includes('?') ? '&' : '?') + 'lang=uk',
+            onSelect: () => chosen++,
+            onLeave() {},
+          }).root;
+        },
+      });
+      const home = h.shell.elements.home;
+      const navigation = attachControllerNavigation({
+        document: h.document,
+        keyboard: true,
+        getScope: () => 'home',
+        getRoot: () => home,
+        onBack: () => h.shell.back(),
+      });
+      const move = (direction) => {
+        if (input === 'keyboard')
+          h.document.activeElement.emit('keydown', {
+            key: `Arrow${direction[0].toUpperCase()}${direction.slice(1)}`,
+          });
+        else navigation.handle({ direction });
+      };
+      const selectedMode = home.querySelector('[aria-current="page"]');
+      const selectedOperation = home.querySelector(`#operation-${current}`);
+      assert.equal(
+        home
+          .querySelector('.landing-commands .mode-play-home-choices')
+          ?.contains(selectedOperation),
+        true,
+        'Survival operation choices remain in the responsive command column.',
+      );
+      const operations = OVERFLIGHT_OPERATIONS.map(({ id }) =>
+        home.querySelector(`#operation-${id}`),
+      );
+      const selectedIndex = operations.indexOf(selectedOperation);
+      selectedMode.focus();
+      const cycle = [
+        selectedOperation,
+        ...['primary', 'missions', 'settings', 'sound', 'fullscreen'].map(
+          (id) => h.shell.elements.buttons[id],
+        ),
+        selectedMode,
+      ];
+      for (const expected of cycle) {
+        move('down');
+        assert.equal(h.document.activeElement, expected);
+      }
+      for (const expected of cycle.slice(0, -1).reverse().concat(selectedMode)) {
+        move('up');
+        assert.equal(h.document.activeElement, expected);
+      }
+      move('down');
+      for (const direction of ['right', 'left']) {
+        for (let step = 1; step <= operations.length; step++) {
+          move(direction);
+          const index =
+            (selectedIndex + step * (direction === 'right' ? 1 : -1) + operations.length) %
+            operations.length;
+          assert.equal(
+            h.document.activeElement,
+            operations[index],
+            `${direction} reaches ${operations[index].id}`,
+          );
+        }
+      }
+      assert.equal(h.document.activeElement, selectedOperation);
+      assert.equal(chosen, 0);
+      navigation.handle({ confirm: true });
+      assert.equal(chosen, 0, 'confirming the current operation does not change or launch it');
+      assert.deepEqual(h.calls, [], 'Navigation and choosing missions do not launch play.');
+      assert.equal(h.shell.elements.dialogs.settings.contains(selectedOperation), false);
+      for (const { id, path } of OVERFLIGHT_OPERATIONS) {
+        if (id === current) continue;
+        assert.equal(
+          home.querySelector(`#operation-${id}`).getAttribute('href'),
+          path + (path.includes('?') ? '&' : '?') + 'lang=uk',
+        );
+      }
+      navigation.destroy();
+      h.shell.dispose();
+    });
+  }
+}
+
+for (const currentMode of ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator']) {
+  test(`${currentMode}: keyboard follows the home loop in both directions after disclosure changes`, () => {
+    const h = fixture({
+      withModes: true,
+      currentMode,
+      actions: { fullscreen() {} },
+    });
+    const home = h.shell.elements.home;
+    const navigation = attachControllerNavigation({
+      document: h.document,
+      keyboard: true,
+      getScope: () => 'home',
+      getRoot: () => home,
+      onBack: () => h.shell.back(),
+    });
+    const selected = home.querySelector('[aria-current="page"]');
+    const more = home.querySelector('[data-mode-more]');
+    for (const expanded of [true, false]) {
+      if ((more.getAttribute('aria-expanded') === 'true') !== expanded) more.click();
+      const anchor = selected.hidden ? more : selected;
+      anchor.focus();
+      const steps = ['primary', 'missions', 'settings', 'sound', 'fullscreen'].map(
+        (name) => h.shell.elements.buttons[name],
+      );
+      for (const expected of [...steps, anchor]) {
+        h.document.activeElement.emit('keydown', { key: 'ArrowDown' });
+        assert.equal(h.document.activeElement.id, expected.id);
+      }
+      for (const expected of [...steps.toReversed(), anchor]) {
+        h.document.activeElement.emit('keydown', { key: 'ArrowUp' });
+        assert.equal(h.document.activeElement.id, expected.id);
+      }
+      assert.deepEqual(h.calls, []);
+    }
+    navigation.destroy();
+    h.shell.dispose();
+  });
+}
+
+test('completed runs keep the visible Results home action in the directional path', () => {
+  const h = fixture({ withModes: true });
+  const navigation = attachControllerNavigation({
+    document: h.document,
+    keyboard: true,
+    getScope: () => 'home',
+    getRoot: () => h.shell.elements.home,
+  });
+  h.shell.update({ phase: 'results' });
+  const { primary, missions, 'home-results': results } = h.shell.elements.buttons;
+  assert.equal(results.hidden, false);
+  primary.focus();
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, results);
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, missions);
+  h.document.activeElement.emit('keydown', { key: 'ArrowUp' });
+  assert.equal(h.document.activeElement, results);
+  h.shell.update({ phase: 'ready' });
+  primary.focus();
+  navigation.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, missions, 'Hidden Results must be skipped.');
+  navigation.destroy();
+  h.shell.dispose();
+});
+
+test('regional corner opens settings menu without arming from ready or paused flight', () => {
+  const h = fixture();
+  for (const phase of ['paused', 'disarmed']) {
+    h.shell.enterPlay();
+    h.shell.update({ phase, pauseOpensMenu: true, canResume: true });
+    assert.equal(h.shell.elements.buttons.pause.disabled, false);
+    assert.equal(h.shell.elements.buttons.pause.textContent, 'Menu');
+    h.shell.elements.buttons.pause.click();
+    assert.equal(h.shell.elements.dialogs.pause.open, true);
+    assert.equal(h.calls.includes('resume'), false);
+  }
+  h.shell.enterPlay();
+  h.shell.update({ phase: 'playing', pauseOpensMenu: true });
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.shell.elements.dialogs.pause.open, true);
+  assert.deepEqual(h.calls, ['pause']);
+  h.shell.enterPlay();
+  h.shell.update({ phase: 'paused', pauseOpensMenu: false });
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.calls.at(-1), 'resume');
   h.shell.dispose();
 });

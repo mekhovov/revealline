@@ -14,6 +14,8 @@ import {
   WORLD_LIMITS,
 } from '../optional-practice/civilian-fpv/world-content.mjs';
 import { exportEditableZip } from '../optional-practice/civilian-fpv/world-zip.mjs';
+import { surfaceCoatingExtension } from '../authoring/fpv-worlds/surface-coating-extension.mjs';
+import { validateWorldSurfaceCoatings } from '../optional-practice/civilian-fpv/world-themes.mjs';
 const requireAuthoring = createRequire(
   new URL('../authoring/fpv-worlds/package.json', import.meta.url),
 );
@@ -101,6 +103,7 @@ async function sourceFiles(entry) {
     }
   }
   await visit(json);
+  validateWorldSurfaceCoatings(json);
   if (/\.glb$/i.test(name))
     check(
       files.size === 1,
@@ -120,7 +123,7 @@ export async function prepareWorldFile({
 }) {
   const source = await sourceFiles(entry),
     [
-      { NodeIO },
+      { NodeIO, Extension, ExtensionProperty, PropertyType },
       { ALL_EXTENSIONS },
       { dedup, prune, inspect },
       { MeshoptDecoder },
@@ -136,10 +139,15 @@ export async function prepareWorldFile({
     ]);
   await MeshoptDecoder.ready;
   const draco = dracoModule.default ?? dracoModule,
-    io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({
-      'meshopt.decoder': MeshoptDecoder,
-      'draco3d.decoder': await draco.createDecoderModule(),
-    });
+    io = new NodeIO()
+      .registerExtensions([
+        ...ALL_EXTENSIONS,
+        surfaceCoatingExtension({ Extension, ExtensionProperty, PropertyType }),
+      ])
+      .registerDependencies({
+        'meshopt.decoder': MeshoptDecoder,
+        'draco3d.decoder': await draco.createDecoderModule(),
+      });
   const document = /\.glb$/i.test(source.name)
     ? await io.readBinary(source.bytes)
     : await io.readJSON({ json: source.json, resources: source.resources });

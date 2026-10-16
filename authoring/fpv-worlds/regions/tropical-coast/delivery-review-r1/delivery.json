@@ -1,0 +1,212 @@
+{
+  "format": "FPVRegionalDelivery.v1",
+  "id": "tropical-coastal-study",
+  "revision": "review-r1",
+  "title": {
+    "en": "Tropical coast — bounded flight study",
+    "uk": "Тропічне узбережжя — дослідження польоту"
+  },
+  "terrain": {
+    "path": "terrain/region.json",
+    "bytes": 4129,
+    "sha256": "076a93c6d08181b2ee0d4d4c172d974435df8cf6b7e210d4a9a2ada3753756fd"
+  },
+  "scenery": {
+    "path": "scenery/region.json",
+    "bytes": 4156,
+    "sha256": "d31187a12b26c11a359e1914963767e9e2da1a70839f755ae7667f1e022e84e3"
+  },
+  "files": [
+    {
+      "path": "scenery/coast-0-0.glb",
+      "bytes": 238904,
+      "sha256": "de25978cb817a5bbf75634836f67e4f8d6d32e4b0fbe051fded42714775f882a"
+    },
+    {
+      "path": "scenery/coast-0-0.json",
+      "bytes": 352371,
+      "sha256": "4dbd17a441dbf6dd8487aba7186f25ebf347d7b88ce698cd57b82c941814786c"
+    },
+    {
+      "path": "scenery/coast-0-1.glb",
+      "bytes": 350852,
+      "sha256": "0ffa0dd8bb48d0b58422ad9299569aef5ab0b7cc31ffa2da02ac2c2632daaae3"
+    },
+    {
+      "path": "scenery/coast-0-1.json",
+      "bytes": 550524,
+      "sha256": "c45feee57c4a06776507fa5e920048592208e34f04d89fd7631b5a44990911c0"
+    },
+    {
+      "path": "scenery/coast-0-2.glb",
+      "bytes": 125752,
+      "sha256": "fe82984cc5f6982d1ad943d73b0ebcce7f67d8ecee57facb26f2a64d98f666aa"
+    },
+    {
+      "path": "scenery/coast-0-2.json",
+      "bytes": 166069,
+      "sha256": "16baa448489215fc4fd23f8993abe715cc194c293e64da4c299946694626a6dc"
+    },
+    {
+      "path": "scenery/coast-1-0.glb",
+      "bytes": 167312,
+      "sha256": "9f4c9b827ad3136997b4f48be7d3342dfd071f875e6320f88b9ab7b77ecbbd7f"
+    },
+    {
+      "path": "scenery/coast-1-0.json",
+      "bytes": 263561,
+      "sha256": "c9e39268084e0cce255415a97f289690272981ff6918475655c82d7e59e1278b"
+    },
+    {
+      "path": "scenery/coast-1-1.glb",
+      "bytes": 308956,
+      "sha256": "301075c65ec929e821b46f5f1d831ffeade7f4650233d7574e65223ede010a10"
+    },
+    {
+      "path": "scenery/coast-1-1.json",
+      "bytes": 468934,
+      "sha256": "e583e54bd27c03955e52ede7b2fc11f2fcea5b6f7d91057df9812d47955e75dd"
+    },
+    {
+      "path": "scenery/coast-1-2.glb",
+      "bytes": 256688,
+      "sha256": "6920fbb7293252488ae0ee73c1f7fa78e8f8dc03f628e43e4b754223cda96e6b"
+    },
+    {
+      "path": "scenery/coast-1-2.json",
+      "bytes": 407141,
+      "sha256": "e379ade2959e1f02ab47e595d060c6ac60191aa354c5b99a7e152e00aafa92d4"
+    },
+    {
+      "path": "scenery/coast-2-0.glb",
+      "bytes": 152732,
+      "sha256": "233e55ff3168c0f7bc1eb08026eb6a88c2aa4730a93def04fcb64562fb759842"
+    },
+    {
+      "path": "scenery/coast-2-0.json",
+      "bytes": 311593,
+      "sha256": "51364a93769120c89c70666b759d645ff2904424fde538376cb44622f7ce3ea2"
+    },
+    {
+      "path": "scenery/coast-2-1.glb",
+      "bytes": 207016,
+      "sha256": "8b5f40eb32a488f3ffd63275537f7e2553ddc6f291473877c3dbd707d8ce6504"
+    },
+    {
+      "path": "scenery/coast-2-1.json",
+      "bytes": 346954,
+      "sha256": "041ef827001a4839f0525004741dc86ed48737bebbeab34874f5c24ec5bc6b2c"
+    },
+    {
+      "path": "scenery/coast-2-2.glb",
+      "bytes": 350872,
+      "sha256": "dc2d5137dc765a270a1895b9e4ac54fe6d546ebc5bc7540e7903fb2c7a8b3372"
+    },
+    {
+      "path": "scenery/coast-2-2.json",
+      "bytes": 550161,
+      "sha256": "d67dad87d973682b9bfa702fe946cd93a294adc971e49e952149373fcae94a8d"
+    },
+    {
+      "path": "scenery/region.json",
+      "bytes": 4156,
+      "sha256": "d31187a12b26c11a359e1914963767e9e2da1a70839f755ae7667f1e022e84e3"
+    },
+    {
+      "path": "terrain/coast-0-0.glb",
+      "bytes": 38404,
+      "sha256": "91bc4b258ff9c4ffc49ad1861e9435b459f7671ffc850782c5097fbea9eb885e"
+    },
+    {
+      "path": "terrain/coast-0-0.json",
+      "bytes": 6475,
+      "sha256": "f32cfc16fa71d8a411adea95a629b81eadb5a931c4d7bd273d3ececb46b6cd54"
+    },
+    {
+      "path": "terrain/coast-0-1.glb",
+      "bytes": 38420,
+      "sha256": "d57aa723625fb486586c58fc9bceeaedefd795b5b525f0e21e13d03946928071"
+    },
+    {
+      "path": "terrain/coast-0-1.json",
+      "bytes": 5469,
+      "sha256": "520287a5f22116816b956ef1366eac96b68ae1ead6f796f292fd13302ab3a8e5"
+    },
+    {
+      "path": "terrain/coast-0-2.glb",
+      "bytes": 38420,
+      "sha256": "ee2d9aaf3d5d748f8c4d4781d21f25f69575b0fd8f19e2acfc1915a4bd91ca8d"
+    },
+    {
+      "path": "terrain/coast-0-2.json",
+      "bytes": 5560,
+      "sha256": "874d8def7e40729416cd4811834438897d7470f312cc57ebcacf5bc986e9b50a"
+    },
+    {
+      "path": "terrain/coast-1-0.glb",
+      "bytes": 38404,
+      "sha256": "ccaa39f53730eb5d25ddf124e3621ae7866e9d7e59270e7afed10507e44a5496"
+    },
+    {
+      "path": "terrain/coast-1-0.json",
+      "bytes": 6360,
+      "sha256": "1d8bc20c898c36aa4fadb80229a7cf6992ded1c11042bcc3bce25e521a84dc99"
+    },
+    {
+      "path": "terrain/coast-1-1.glb",
+      "bytes": 38424,
+      "sha256": "7349d9e86756a27c15bf5c30697d873f63bf9e450e2f305cbf82dfcedfe872d5"
+    },
+    {
+      "path": "terrain/coast-1-1.json",
+      "bytes": 5514,
+      "sha256": "e73dd465f90dce84796665ed6385f0e202eb39965ecdf65b3d6917c08976d87a"
+    },
+    {
+      "path": "terrain/coast-1-2.glb",
+      "bytes": 38420,
+      "sha256": "5c12a3a4680b0f518f0492ee81624b58f3f30898cc3095eb9580aa8befe7f6ac"
+    },
+    {
+      "path": "terrain/coast-1-2.json",
+      "bytes": 5560,
+      "sha256": "80c092ced2b18fba4bd11543b1706f1c7caad8fa37d6099d0fce80404742f44c"
+    },
+    {
+      "path": "terrain/coast-2-0.glb",
+      "bytes": 38404,
+      "sha256": "4727dc00526bd400355cd0b2495e6e7924e9f2b36ca4156325e3001ffc5278f7"
+    },
+    {
+      "path": "terrain/coast-2-0.json",
+      "bytes": 6178,
+      "sha256": "13acce0d8b39296ad9ae706a2c7a4fac16238295a178df57675975c912624aed"
+    },
+    {
+      "path": "terrain/coast-2-1.glb",
+      "bytes": 38420,
+      "sha256": "aa6dea235b0c8bb116091c5d1ae2c783857514c9fc75fb7fa15121c8265828d6"
+    },
+    {
+      "path": "terrain/coast-2-1.json",
+      "bytes": 5552,
+      "sha256": "b96ce818ff93f98640d2694f1d4b8dd5ca65d3f7b3484b78838c5bf85b353fea"
+    },
+    {
+      "path": "terrain/coast-2-2.glb",
+      "bytes": 38420,
+      "sha256": "8dbd93eb3f72f3e2a35d19d902372e2ffa5986d84e61213aac8ef4fc109cd663"
+    },
+    {
+      "path": "terrain/coast-2-2.json",
+      "bytes": 5560,
+      "sha256": "08ad8e922a84999929cc4689bca05b5020957e2c91f89c13a819ec392646fc8d"
+    },
+    {
+      "path": "terrain/region.json",
+      "bytes": 4129,
+      "sha256": "076a93c6d08181b2ee0d4d4c172d974435df8cf6b7e210d4a9a2ada3753756fd"
+    }
+  ],
+  "totalBytes": 5982641
+}

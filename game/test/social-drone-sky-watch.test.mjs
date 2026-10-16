@@ -1,6 +1,7 @@
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { RasterImage } from './helpers/raster-image.mjs';
-import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { soloPage } from './helpers/solo-dom.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import test from 'node:test';
@@ -132,6 +133,7 @@ test('earned video requires a won run and its earned receipt, presents once, and
   const document = new Document();
   let started = 0,
     disposed = 0,
+    startOptions,
     options;
   const presentation = createEarnedVideo({
     document,
@@ -140,7 +142,8 @@ test('earned video requires a won run and its earned receipt, presents once, and
     mountMedia(value) {
       options = value;
       return {
-        start() {
+        start(value) {
+          startOptions = value;
           started++;
         },
         dispose() {
@@ -163,9 +166,13 @@ test('earned video requires a won run and its earned receipt, presents once, and
   assert.equal(presentation.present(run, []), false);
   assert.equal(presentation.present(run, receipts), true);
   assert.equal(started, 1);
+  assert.deepEqual(startOptions, { allowMutedFallback: true });
   assert.equal(options.cinematic, true);
   assert.equal(options.reducedMotion, true);
   assert.equal(presentation.present(run, receipts), false);
+  options.onEnded();
+  assert.equal(disposed, 1);
+  assert.equal(document.querySelector('dialog'), null);
   presentation.dispose();
   assert.equal(disposed, 1);
   assert.equal(document.querySelector('dialog'), null);
@@ -193,13 +200,16 @@ test('normal community mission library launches Sky Watch and holds the finished
   );
   assert(card, 'Public mission menu contains Sky Watch');
   await activateMissionCard(card);
-  await settle(() => {
-    page.frame(0);
-    return (
-      page.rendered.run.levelId === 'social-drone-sky-watch-01' &&
-      page.doc.body.dataset.flightState === 'running'
-    );
-  });
+  page.frame(0);
+  assert.equal(page.rendered.run.levelId, 'social-drone-sky-watch-01');
+  assert.equal(page.rendered.paused, true, 'Mission selection opens its briefing.');
+  assert.equal(page.rendered.run.tick, 0, 'The selected mission does not autoplay.');
+  assert.equal(page.doc.body.dataset.flightState, 'briefing');
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  page.frame(0);
+  assert.equal(page.rendered.run.levelId, 'social-drone-sky-watch-01');
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   const keys = { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' };
   for (const segment of SKY_WATCH_ROUTE) {
     page.key(keys[segment.direction]);
@@ -216,8 +226,14 @@ test('normal community mission library launches Sky Watch and holds the finished
     );
   }
   assert.equal(page.rendered.run.status, 'won');
+  assert.equal(
+    page.$('game-overlay').hidden,
+    true,
+    'The completed Sky Watch board takes over before its video reward.',
+  );
   assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
   for (let i = 0; i < 18; i++) page.frame(100);
+  assert.equal(page.doc.body.dataset.winPicture, 'revealing');
   assert.equal(
     page.doc.querySelector('.earned-video-dialog'),
     null,
@@ -226,7 +242,18 @@ test('normal community mission library launches Sky Watch and holds the finished
   for (let i = 0; i < 60; i++) page.frame(100);
   const dialog = page.doc.querySelector('.earned-video-dialog');
   assert(dialog?.open, 'Public earned video opens after the celebration');
+  for (let i = 0; i < 50; i++) page.frame(100);
+  assert.equal(
+    page.$('game-overlay').hidden,
+    false,
+    'The full-screen video leaves its prepared result underneath and pauses automatic continuation',
+  );
+  assert.equal(page.rendered.run.status, 'won');
   dialog.querySelector('button').click();
   assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
+  for (let i = 0; i < 15 && page.$('game-overlay').hidden; i++) page.frame(100);
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('game-overlay').hidden, false);
+  assert.equal(page.$('result-random-level').hidden, false);
   assert.deepEqual(page.errors, []);
 });

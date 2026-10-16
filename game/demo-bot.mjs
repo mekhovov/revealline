@@ -370,7 +370,7 @@ function evaluate(original, vertices, budget, { allowHazardLoss = false } = {}) 
  * with a real moving threat may be retained as a recoverable overreach. */
 export async function planImprovMacro(
   original,
-  { plannerSeed = 1, decision = 0, allowRisk = false, signal } = {},
+  { plannerSeed = 1, decision = 0, allowRisk = false, preferSafe = false, signal } = {},
 ) {
   const check = () => {
     if (signal?.aborted) throw new DOMException('Improvised demo cancelled.', 'AbortError');
@@ -400,7 +400,8 @@ export async function planImprovMacro(
         candidate.jitter * 5;
     (trial.failure ? risky : safe).push({ ...trial, score });
   }
-  const choices = allowRisk && risky.length && random() < 0.25 ? risky : safe;
+  const choices =
+    allowRisk && risky.length && (!safe.length || (!preferSafe && random() < 0.25)) ? risky : safe;
   choices.sort((a, b) => b.score - a.score);
   // Seeded choice among good routes changes strategy rather than injecting
   // steering jitter into a maneuver already in progress.

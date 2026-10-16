@@ -58,6 +58,21 @@ test('unowned, live, failed, invalid and solo-draw contexts cannot produce react
     assert.equal(journeyResultReaction({ ...context, ...options }), null);
   assert.equal(journeyResultReaction(null), null);
 });
+test('Snake celebrates routes using existing localized recordings without implying a picture reward', () => {
+  for (const locale of ['en', 'uk'])
+    for (const mode of ['solo', 'team', 'versus'])
+      for (const missionId of ['classic-snake-open-loop', 'classic-snake-two-landings']) {
+        const result = journeyResultReaction(
+          { ...context, presentation: 'snake', mode, missionId },
+          locale,
+        );
+        assert.equal(result.speaker, mode === 'versus' ? 'rival' : 'engineer');
+        assert.doesNotMatch(result.text, /picture|картин/iu);
+        assert.match(result.id, /^journey-reaction\.v1\/(engineer|rival)\/[01]$/);
+      }
+  assert.equal(journeyResultReaction({ ...context, presentation: 'snake', outcome: 'lost' }), null);
+  assert.equal(journeyResultReaction(context).speaker, 'guide', 'Capture keeps its own context');
+});
 test('reaction preference loading is read-only and shares one independent mode/release key', () => {
   const storage = memoryStorage({ 'revealline.library.dev.v1': 'unchanged' });
   const options = { getStorage: () => storage, window: new Events() };

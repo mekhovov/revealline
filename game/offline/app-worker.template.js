@@ -103,8 +103,17 @@ self.addEventListener('fetch', (event) => {
       const client = event.clientId ? await self.clients.get(event.clientId) : null;
       // The update document imports the newly published game modules. Its
       // entire same-origin graph must bypass the HTTP cache as well as the old
-      // gameplay worker. Ordinary offline launcher requests keep their cache.
-      if (client && new URL(client.url).pathname === new URL('update.html', scope).pathname)
+      // gameplay worker. Returning to the cached launcher is a navigation,
+      // not part of that graph, even when its initiating client is the updater.
+      const launcherNavigation =
+        event.request.mode === 'navigate' &&
+        (url.pathname === new URL(scope).pathname ||
+          url.pathname === new URL('index.html', scope).pathname);
+      if (
+        !launcherNavigation &&
+        client &&
+        new URL(client.url).pathname === new URL('update.html', scope).pathname
+      )
         return fetch(event.request, { cache: 'no-store' });
       if (!url.href.startsWith(scope)) return fetch(event.request);
       url.search = '';

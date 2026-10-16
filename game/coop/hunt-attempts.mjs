@@ -1,3 +1,4 @@
+import { snapshotAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
 import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { deriveEncounterLevel } from '../hunt/variants.mjs';
@@ -6,10 +7,12 @@ import { applyGameplayTuning, validateGameplayTuning } from '../gameplay-tuning.
 import { createCoop, releaseCoopInputs, startCoop, stepCoop } from './core.mjs';
 import { teamInputHistoryExtends } from './attempt-history.mjs';
 
+export const TEAM_PRESENTATION_ATTEMPT_FORMAT = 'revealline-team-presentation-attempt.v1';
 export const TEAM_HUNT_ATTEMPT_KEY = 'revealline.team-hunt-attempt.v1';
 export const TEAM_HUNT_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v1';
 export const TEAM_RUNNING_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v2';
 export const TEAM_PURSUIT_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v3';
+export const TEAM_PURSUIT_V2_ATTEMPT_FORMAT = 'revealline-team-hunt-attempt.v4';
 export const TEAM_HUNT_ATTEMPT_MAX_BYTES = 1024 * 1024;
 const MAX_SEGMENTS = 8192;
 const MAX_TICKS = 240000;
@@ -47,6 +50,7 @@ export function validateTeamHuntAttempt(source) {
     value,
     [
       'format',
+      ...(value.format === TEAM_PURSUIT_V2_ATTEMPT_FORMAT ? ['pursuitGeneration'] : []),
       'attemptId',
       'levelId',
       'source',
@@ -60,17 +64,26 @@ export function validateTeamHuntAttempt(source) {
       'tuning',
       'segments',
       'checkpoint',
-      ...(value.format === TEAM_PURSUIT_ATTEMPT_FORMAT ? ['runningEnemyStyle'] : []),
-      ...([TEAM_RUNNING_ATTEMPT_FORMAT, TEAM_PURSUIT_ATTEMPT_FORMAT].includes(value.format)
+      ...([TEAM_PURSUIT_ATTEMPT_FORMAT, TEAM_PURSUIT_V2_ATTEMPT_FORMAT].includes(value.format)
+        ? ['runningEnemyStyle']
+        : []),
+      ...([
+        TEAM_RUNNING_ATTEMPT_FORMAT,
+        TEAM_PURSUIT_ATTEMPT_FORMAT,
+        TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
+      ].includes(value.format)
         ? ['runningEnemies']
         : []),
     ],
     'Team Hunt attempt',
   );
   required(
-    [TEAM_HUNT_ATTEMPT_FORMAT, TEAM_RUNNING_ATTEMPT_FORMAT, TEAM_PURSUIT_ATTEMPT_FORMAT].includes(
-      value.format,
-    ),
+    [
+      TEAM_HUNT_ATTEMPT_FORMAT,
+      TEAM_RUNNING_ATTEMPT_FORMAT,
+      TEAM_PURSUIT_ATTEMPT_FORMAT,
+      TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
+    ].includes(value.format),
     'Unsupported Team Hunt save version.',
   );
   required(
@@ -89,12 +102,23 @@ export function validateTeamHuntAttempt(source) {
       identity(value.encounterLevelIdentity),
     'Damaged Team Hunt recipe.',
   );
-  if (value.format === TEAM_PURSUIT_ATTEMPT_FORMAT)
+  if ([TEAM_PURSUIT_ATTEMPT_FORMAT, TEAM_PURSUIT_V2_ATTEMPT_FORMAT].includes(value.format))
     required(value.runningEnemyStyle === 'varied', 'Unsupported varied pursuit recipe.');
-  if ([TEAM_RUNNING_ATTEMPT_FORMAT, TEAM_PURSUIT_ATTEMPT_FORMAT].includes(value.format))
+  if (
+    [
+      TEAM_RUNNING_ATTEMPT_FORMAT,
+      TEAM_PURSUIT_ATTEMPT_FORMAT,
+      TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
+    ].includes(value.format)
+  )
     required(
       value.runningEnemies === 'running-enemies.v1',
       'Unsupported Team running-enemy recipe.',
+    );
+  if (value.format === TEAM_PURSUIT_V2_ATTEMPT_FORMAT)
+    required(
+      value.pursuitGeneration === 'pursuit-goals.v2',
+      'Unsupported Team pursuit generation.',
     );
   exactKeys(value.source, ['pack', 'level'], 'Team Hunt source');
   required(
@@ -155,6 +179,32 @@ export function validateTeamHuntAttempt(source) {
   return value;
 }
 
+/** Portable presentation wraps, but never upgrades, a native Team recording. */
+export function snapshotTeamHuntPresentation(source) {
+  const value = boundedJSON(source, {
+    maxBytes: TEAM_HUNT_ATTEMPT_MAX_BYTES,
+    maxNodes: 150020,
+    maxDepth: 14,
+    maxArray: MAX_SEGMENTS,
+    maxString: 512,
+  });
+  if (value.format !== TEAM_PRESENTATION_ATTEMPT_FORMAT)
+    return { snapshot: validateTeamHuntAttempt(value), attemptAppearance: null, envelope: null };
+  exactKeys(value, ['format', 'attempt', 'appearance'], 'Team presentation attempt');
+  const snapshot = validateTeamHuntAttempt(value.attempt);
+  const attemptAppearance = snapshotAttemptAppearance(value.appearance);
+  required(attemptAppearance !== null, 'A Team presentation attempt needs accepted artwork.');
+  return {
+    snapshot,
+    attemptAppearance,
+    envelope: {
+      format: TEAM_PRESENTATION_ATTEMPT_FORMAT,
+      attempt: snapshot,
+      appearance: attemptAppearance,
+    },
+  };
+}
+
 export function createTeamHuntRecorder({
   run,
   pack,
@@ -172,15 +222,25 @@ export function createTeamHuntRecorder({
     TEAM_HUNT_ATTEMPT_FORMAT,
     TEAM_RUNNING_ATTEMPT_FORMAT,
     TEAM_PURSUIT_ATTEMPT_FORMAT,
+    TEAM_PURSUIT_V2_ATTEMPT_FORMAT,
   ].includes(restored?.snapshot.format)
     ? structuredClone(restored.snapshot)
     : {
         format: runningEnemies
           ? run.level.pursuit
-            ? TEAM_PURSUIT_ATTEMPT_FORMAT
+            ? run.level.pursuit.version === 'pursuit-goals.v2'
+              ? TEAM_PURSUIT_V2_ATTEMPT_FORMAT
+              : TEAM_PURSUIT_ATTEMPT_FORMAT
             : TEAM_RUNNING_ATTEMPT_FORMAT
           : TEAM_HUNT_ATTEMPT_FORMAT,
-        ...(runningEnemies && run.level.pursuit ? { runningEnemyStyle: 'varied' } : {}),
+        ...(runningEnemies && run.level.pursuit
+          ? {
+              runningEnemyStyle: 'varied',
+              ...(run.level.pursuit.version === 'pursuit-goals.v2'
+                ? { pursuitGeneration: run.level.pursuit.version }
+                : {}),
+            }
+          : {}),
         ...(runningEnemies ? { runningEnemies: 'running-enemies.v1' } : {}),
         attemptId: restored?.snapshot.attemptId ?? attemptId,
         levelId: level.id,
@@ -196,6 +256,7 @@ export function createTeamHuntRecorder({
             level: runningEnemies
               ? prepareTeamRunningEnemies(applyGameplayTuning(encounterLevel, tuning), {
                   style: run.level.pursuit ? 'varied' : 'original',
+                  generation: run.level.pursuit?.version ?? 'pursuit-goals.v1',
                 })
               : applyGameplayTuning(encounterLevel, tuning),
           }),
@@ -234,7 +295,7 @@ export async function restoreTeamHuntAttempt(
   source,
   { pack, level, signal, yieldControl = () => new Promise((resolve) => setTimeout(resolve, 0)) },
 ) {
-  const snapshot = validateTeamHuntAttempt(source);
+  const { snapshot, attemptAppearance } = snapshotTeamHuntPresentation(source);
   const check = () => {
     if (signal?.aborted) throw new DOMException('Team Hunt Continue cancelled.', 'AbortError');
   };
@@ -255,7 +316,10 @@ export async function restoreTeamHuntAttempt(
   );
   const baseTuned = applyGameplayTuning(encounterLevel, snapshot.tuning);
   const tuned = snapshot.runningEnemies
-    ? prepareTeamRunningEnemies(baseTuned, { style: snapshot.runningEnemyStyle ?? 'original' })
+    ? prepareTeamRunningEnemies(baseTuned, {
+        style: snapshot.runningEnemyStyle ?? 'original',
+        generation: snapshot.pursuitGeneration ?? 'pursuit-goals.v1',
+      })
     : baseTuned;
   const run = startCoop(
     createCoop(tuned, { seed: snapshot.seed, difficulty: snapshot.difficulty, ...snapshot.config }),
@@ -305,7 +369,7 @@ export async function restoreTeamHuntAttempt(
       adminOverride: snapshot.tuning.adminOverride,
     }),
   });
-  return { run, snapshot, huntAttempt: true };
+  return { run, snapshot, attemptAppearance, huntAttempt: true };
 }
 
 /** A receipt is available only for this exact, unchanged replay-verified core.
@@ -347,6 +411,7 @@ export async function matchingTeamHuntMirror(
     previous.encounterVariant !== (snapshot.encounterVariant ?? 'authored') ||
     previous.runningEnemies !== snapshot.runningEnemies ||
     previous.runningEnemyStyle !== snapshot.runningEnemyStyle ||
+    previous.pursuitGeneration !== snapshot.pursuitGeneration ||
     dataIdentity(previous.tuning) !== dataIdentity(snapshot.tuning) ||
     dataIdentity(previous.config) !== dataIdentity(restored.run.config)
   )
@@ -359,9 +424,18 @@ export async function matchingTeamHuntMirror(
     previous.segments.slice(snapshot.segments.length).every((segment) => segment.release === true);
   if (!covered && !releaseOnly) return null;
   try {
-    const verified = await restoreTeamHuntAttempt(previous, { pack, level, signal, yieldControl });
+    const verified = await restoreTeamHuntAttempt(saved.envelope ?? previous, {
+      pack,
+      level,
+      signal,
+      yieldControl,
+    });
     if (verified.snapshot.gameplayId !== snapshot.gameplayId) return null;
-    return { raw: saved.raw, promotion: releaseOnly ? verified : null };
+    return {
+      raw: saved.raw,
+      attemptAppearance: verified.attemptAppearance,
+      promotion: releaseOnly ? verified : null,
+    };
   } catch (error) {
     if (error.name === 'AbortError') throw error;
     return null;
@@ -375,13 +449,20 @@ export function createTeamHuntAttemptStore({ getStorage = () => globalThis.local
       let raw = null;
       try {
         raw = getStorage().getItem(TEAM_HUNT_ATTEMPT_KEY);
-        return { raw, snapshot: raw === null ? null : validateTeamHuntAttempt(raw), error: null };
+        return raw === null
+          ? { raw, snapshot: null, attemptAppearance: null, error: null }
+          : { raw, ...snapshotTeamHuntPresentation(raw), error: null };
       } catch (error) {
         return { raw, snapshot: null, error };
       }
     },
-    save(source, expectedRaw = null, { replaceAttemptId = null } = {}) {
-      const snapshot = validateTeamHuntAttempt(source);
+    save(source, expectedRaw = null, { replaceAttemptId = null, attemptAppearance } = {}) {
+      const incoming = snapshotTeamHuntPresentation(source);
+      const snapshot = incoming.snapshot;
+      let appearance =
+        attemptAppearance === undefined
+          ? incoming.attemptAppearance
+          : snapshotAttemptAppearance(attemptAppearance);
       const storage = getStorage();
       const previous = storage.getItem(TEAM_HUNT_ATTEMPT_KEY);
       required(
@@ -389,13 +470,33 @@ export function createTeamHuntAttemptStore({ getStorage = () => globalThis.local
         'Another Team Hunt save is kept. Continue or explicitly discard it first.',
       );
       if (previous !== null) {
-        const existing = validateTeamHuntAttempt(previous);
+        const retained = snapshotTeamHuntPresentation(previous);
+        const existing = retained.snapshot;
+        if (
+          attemptAppearance === undefined &&
+          incoming.envelope === null &&
+          existing.attemptId === snapshot.attemptId
+        )
+          appearance = retained.attemptAppearance;
         required(
           existing.attemptId === snapshot.attemptId || existing.attemptId === replaceAttemptId,
           'A different Team Hunt attempt is kept.',
         );
       }
-      const raw = JSON.stringify(snapshot);
+      if (
+        appearance &&
+        appearance.artRevision === null &&
+        appearance.collection === null &&
+        appearance.environmentPin === null
+      )
+        appearance = null;
+      const output =
+        appearance === null
+          ? snapshot
+          : { format: TEAM_PRESENTATION_ATTEMPT_FORMAT, attempt: snapshot, appearance };
+      // The outer presentation does not increase the existing local slot budget.
+      const checked = snapshotTeamHuntPresentation(output);
+      const raw = JSON.stringify(checked.envelope ?? checked.snapshot);
       storage.setItem(TEAM_HUNT_ATTEMPT_KEY, raw);
       return raw;
     },

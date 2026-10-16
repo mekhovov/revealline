@@ -83,6 +83,11 @@ test('actual unified Journey chooser supersedes held Next artwork without a stal
   );
   assert(first, 'Current unified registry exposes the exact Journey mission.');
   first.click();
+  await settle(() => {
+    p.frame(0);
+    return p.rendered.run !== completed && running();
+  });
+  assert.equal(p.rendered.paused, false);
   await settle(running);
   assert.notEqual(p.rendered.run, completed);
   const accepted = p.rendered.run,

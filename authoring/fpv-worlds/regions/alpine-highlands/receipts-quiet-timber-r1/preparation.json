@@ -1,0 +1,89 @@
+{
+  "format": "FPVAlpineQuietTimber.v1",
+  "revision": "relief-r4-quiet-timber",
+  "previousManifestSHA256": {
+    "terrain": "e38bede909419c5502d6e68939a8ca7b3e197f03b9d5e5a4db8c4c5a08fcf90c",
+    "scenery": "b3630a0f78ebaf7ef47e63f709d46abbfafd72ef817807bb1acf35aa659bbee8"
+  },
+  "sourceBytes": 22578804,
+  "edits": [
+    {
+      "chunkId": "alpine-13-11",
+      "changedTextures": 1,
+      "textures": [
+        {
+          "id": "original-white",
+          "width": 1,
+          "height": 1,
+          "sha256": "ad95131bc0b799c0b1af477fb14fcf26a6a9f76079e48bf090acb7e8367bfd0e"
+        },
+        {
+          "id": "original-station-wall",
+          "width": 256,
+          "height": 128,
+          "sha256": "9bbe8c54522e22779d619e577e0147c282a0f41e51dbbb4ff34b0e4e4a6834a3"
+        },
+        {
+          "id": "original-station-roof",
+          "width": 128,
+          "height": 128,
+          "sha256": "9e830e3b79aac8913aab136251a2b7e2b780106c3bae0c18424f00a73787131f"
+        }
+      ]
+    },
+    {
+      "chunkId": "alpine-13-12",
+      "changedTextures": 1,
+      "textures": [
+        {
+          "id": "original-white",
+          "width": 1,
+          "height": 1,
+          "sha256": "ad95131bc0b799c0b1af477fb14fcf26a6a9f76079e48bf090acb7e8367bfd0e"
+        },
+        {
+          "id": "original-station-wall",
+          "width": 256,
+          "height": 128,
+          "sha256": "9bbe8c54522e22779d619e577e0147c282a0f41e51dbbb4ff34b0e4e4a6834a3"
+        },
+        {
+          "id": "original-station-roof",
+          "width": 128,
+          "height": 128,
+          "sha256": "9e830e3b79aac8913aab136251a2b7e2b780106c3bae0c18424f00a73787131f"
+        }
+      ]
+    }
+  ],
+  "manifestSHA256": {
+    "terrain": "63f007335451f4226a5d58d0790fd10fb038e0ba953016b64661fd61767140c5",
+    "scenery": "526de1101fdefaad7de9309ca9e4fb13c860d85096af65369840acb0b396a877"
+  },
+  "maxNineCellResourceBytes": 1496340,
+  "maxRetainedCandidateResourceBytes": 2992680,
+  "materialScaleMetres": {
+    "wallTile": [
+      8,
+      14
+    ],
+    "timberBoardWidth": {
+      "minimum": 0.4375,
+      "maximum": 0.5625
+    },
+    "masonryCourse": 0.35,
+    "roofTile": [
+      8,
+      4
+    ],
+    "roofSeamSpacing": 0.5
+  },
+  "unchanged": [
+    "Every terrain asset byte",
+    "All oriented solid/visual triangle positions",
+    "All spawn positions",
+    "All route/collision clearance"
+  ],
+  "nativeAccepted": false,
+  "playerReady": false
+}

@@ -1,4 +1,6 @@
 import { boundedJSON, dataIdentity, exactKeys, required, stableId } from '../../game/data-json.mjs';
+import { validateIndustrialEnvironmentPin } from '../../game/presentation/industrial-environments.mjs';
+import { SIM_BATTLEFIELD_PROFILES } from './battlefield-ground.mjs';
 
 import {
   BUILTIN_SIM_VISUAL_COLLECTIONS,
@@ -15,6 +17,54 @@ export {
   resolveSimVisualCollection,
   resolveSimEffects,
 } from '../../game/presentation/theme-system.mjs';
+
+export const WORLD_SURFACE_COATING_EXTENSION = 'REVEALLINE_surface_coating';
+/** One canonical capability declaration, shared by import and actual GLTF loading. */
+export function validateWorldSurfaceCoatings(doc) {
+  const marked = new Set();
+  for (const [index, material] of (doc.materials ?? []).entries()) {
+    if (!Object.hasOwn(material.extensions ?? {}, WORLD_SURFACE_COATING_EXTENSION)) continue;
+    const value = material.extensions[WORLD_SURFACE_COATING_EXTENSION];
+    required(
+      value &&
+        Object.keys(value).length === 2 &&
+        Object.hasOwn(value, 'version') &&
+        Object.hasOwn(value, 'kind') &&
+        value.version === 1 &&
+        value.kind === 'opaque-finish',
+      'Unsupported surface coating declaration.',
+    );
+    required(
+      (material.alphaMode ?? 'OPAQUE') === 'OPAQUE' &&
+        (material.pbrMetallicRoughness?.baseColorFactor?.[3] ?? 1) === 1 &&
+        (material.extensions?.KHR_materials_transmission?.transmissionFactor ?? 0) === 0,
+      'Surface coatings require an opaque material.',
+    );
+    marked.add(index);
+  }
+  if (
+    marked.size ||
+    doc.extensionsUsed?.includes(WORLD_SURFACE_COATING_EXTENSION) ||
+    doc.extensionsRequired?.includes(WORLD_SURFACE_COATING_EXTENSION)
+  ) {
+    required(
+      marked.size > 0 &&
+        ['extensionsUsed', 'extensionsRequired'].every(
+          (key) =>
+            Array.isArray(doc[key]) &&
+            doc[key].filter((name) => name === WORLD_SURFACE_COATING_EXTENSION).length === 1,
+        ),
+      'Surface coatings must declare their required capability.',
+    );
+    for (const mesh of doc.meshes ?? [])
+      for (const primitive of mesh.primitives ?? [])
+        required(
+          !marked.has(primitive.material) || [4, 5, 6].includes(primitive.mode ?? 4),
+          'Surface coatings require triangle geometry.',
+        );
+  }
+  return marked;
+}
 
 const title = (en, uk) => ({ en, uk });
 const profile = (id, names, palette, extras = {}) =>
@@ -149,6 +199,7 @@ export const THEME_PROFILES = Object.freeze([
       },
     });
   }),
+  ...SIM_BATTLEFIELD_PROFILES,
 ]);
 
 /** Renderer-only selection. It never changes the course's rules or collision data. */
@@ -196,6 +247,7 @@ const collectionForProfile = (profile) =>
 /** New World recordings retain one exact authored fallback in their course snapshot. */
 export function snapshotSimThemeProfile(course = {}, presentation = {}) {
   const selected = resolveSimThemeProfile(course, presentation);
+  if (selected.format === 'ThemeProfile.v3') return selected;
   if (!collectionForProfile(selected)) return selected;
   const authored = resolveThemeProfile(course);
   const authoredFallback =
@@ -265,12 +317,12 @@ function copy(value) {
 export function validateThemeProfile(input) {
   const value = copy(input);
   if (
-    !['ThemeProfile.v1', 'ThemeProfile.v2'].includes(value.format) ||
+    !['ThemeProfile.v1', 'ThemeProfile.v2', 'ThemeProfile.v3'].includes(value.format) ||
     !/^[a-z][a-z0-9-]{0,63}$/.test(value.id) ||
     typeof value.revision !== 'string'
   )
     throw new TypeError('Invalid theme profile.');
-  if (value.format === 'ThemeProfile.v2') {
+  if (['ThemeProfile.v2', 'ThemeProfile.v3'].includes(value.format)) {
     exactKeys(
       value,
       [
@@ -286,6 +338,7 @@ export function validateThemeProfile(input) {
         'audio',
         'ui',
         'authoredFallback',
+        ...(value.format === 'ThemeProfile.v3' ? ['artRevision', 'industrialEnvironment'] : []),
       ],
       'pinned theme profile',
     );
@@ -298,8 +351,25 @@ export function validateThemeProfile(input) {
     )
       throw new TypeError('Invalid authored theme fallback.');
     value.authoredFallback = validateThemeProfile(value.authoredFallback);
+    if (value.format === 'ThemeProfile.v3') {
+      required(
+        value.id === 'military-field' && value.revision === 'r1',
+        'Industrial environment needs its retained collection.',
+      );
+      required(
+        value.artRevision === 'industrial-roster-v3',
+        'Industrial environment needs its retained actor art.',
+      );
+      value.industrialEnvironment = validateIndustrialEnvironmentPin(value.industrialEnvironment);
+      required(value.industrialEnvironment !== null, 'Industrial environment pin required.');
+    }
   } else if (Object.hasOwn(value, 'authoredFallback'))
     throw new TypeError('Authored theme fallback requires ThemeProfile.v2.');
+  if (
+    value.format !== 'ThemeProfile.v3' &&
+    (Object.hasOwn(value, 'industrialEnvironment') || Object.hasOwn(value, 'artRevision'))
+  )
+    throw new TypeError('Industrial environment requires ThemeProfile.v3.');
   for (const key of ['sky', 'fog', 'ground', 'wall', 'accent', 'warm'])
     if (
       !Number.isInteger(value.palette?.[key]) ||

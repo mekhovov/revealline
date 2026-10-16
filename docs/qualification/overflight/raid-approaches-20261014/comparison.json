@@ -1,0 +1,135 @@
+{
+  "sourceChanges": [
+    "game/overflight/raid-project.mjs"
+  ],
+  "groups": [
+    {
+      "route": "objectives",
+      "difficulty": "standard",
+      "before": {
+        "won": 36,
+        "total": 36,
+        "time": [
+          19.483333333333334,
+          38.333333333333336
+        ],
+        "meanTime": 26.656018518518522,
+        "meanDamage": 31.5,
+        "meanBlocked": 62.75,
+        "meanKills": 55.5,
+        "meanScore": 20563.88888888889,
+        "meanNoTargets": 0
+      },
+      "after": {
+        "won": 36,
+        "total": 36,
+        "time": [
+          18.766666666666666,
+          42.06666666666667
+        ],
+        "meanTime": 24.975,
+        "meanDamage": 17.72222222222222,
+        "meanBlocked": 43.55555555555556,
+        "meanKills": 40.611111111111114,
+        "meanScore": 15600,
+        "meanNoTargets": 0
+      }
+    },
+    {
+      "route": "objectives",
+      "difficulty": "veteran",
+      "before": {
+        "won": 36,
+        "total": 36,
+        "time": [
+          21.733333333333334,
+          27.083333333333332
+        ],
+        "meanTime": 24.5212962962963,
+        "meanDamage": 10.61111111111111,
+        "meanBlocked": 23.61111111111111,
+        "meanKills": 77.91666666666667,
+        "meanScore": 31647.222222222223,
+        "meanNoTargets": 0
+      },
+      "after": {
+        "won": 36,
+        "total": 36,
+        "time": [
+          19.033333333333335,
+          42.11666666666667
+        ],
+        "meanTime": 27.52546296296297,
+        "meanDamage": 39.77777777777778,
+        "meanBlocked": 87.44444444444444,
+        "meanKills": 70.41666666666667,
+        "meanScore": 30066.666666666668,
+        "meanNoTargets": 0
+      }
+    },
+    {
+      "route": "packs",
+      "difficulty": "standard",
+      "before": {
+        "won": 36,
+        "total": 36,
+        "time": [
+          41.55,
+          65.28333333333333
+        ],
+        "meanTime": 51.11898148148147,
+        "meanDamage": 11.444444444444445,
+        "meanBlocked": 19.694444444444443,
+        "meanKills": 218.69444444444446,
+        "meanScore": 104290.27777777778,
+        "meanNoTargets": 0.6472222222222221
+      },
+      "after": {
+        "won": 36,
+        "total": 36,
+        "time": [
+          37.666666666666664,
+          65.63333333333334
+        ],
+        "meanTime": 50.28888888888887,
+        "meanDamage": 16.166666666666668,
+        "meanBlocked": 30.5,
+        "meanKills": 213.11111111111111,
+        "meanScore": 98930.55555555556,
+        "meanNoTargets": 1.0199074074074068
+      }
+    },
+    {
+      "route": "packs",
+      "difficulty": "veteran",
+      "before": {
+        "won": 36,
+        "total": 36,
+        "time": [
+          38.25,
+          59.36666666666667
+        ],
+        "meanTime": 46.951851851851856,
+        "meanDamage": 9.444444444444445,
+        "meanBlocked": 24.13888888888889,
+        "meanKills": 219.72222222222223,
+        "meanScore": 106363.88888888889,
+        "meanNoTargets": 0.000925925925925926
+      },
+      "after": {
+        "won": 36,
+        "total": 36,
+        "time": [
+          35.86666666666667,
+          63.6
+        ],
+        "meanTime": 46.36851851851851,
+        "meanDamage": 23,
+        "meanBlocked": 42.25,
+        "meanKills": 215.44444444444446,
+        "meanScore": 110959.72222222222,
+        "meanNoTargets": 0
+      }
+    }
+  ]
+}

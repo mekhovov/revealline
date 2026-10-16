@@ -43,6 +43,43 @@ export const CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES = Object.freeze(
   ].map(Object.freeze),
 );
 
+export const TEAM_OFFLINE_PROJECT_FACTORIES = Object.freeze(
+  [
+    ['team-journey-candidates', 'createTeamJourneyCandidates', 'team-originals'],
+    [
+      'team-pressure-originals',
+      'createTeamPressureOriginalCandidates',
+      'team-pressure-originals-1',
+    ],
+    ['team-spatial-originals', 'createTeamSpatialOriginalCandidates', 'team-spatial-originals-1'],
+    [
+      'team-impact-originals',
+      'createTeamImpactOriginalCandidates',
+      'team-trail-impact-originals-1',
+    ],
+    [
+      'team-specialist-originals',
+      'createTeamSpecialistOriginalCandidates',
+      'team-specialist-originals-1',
+    ],
+    [
+      'team-complete-specialist-originals',
+      'createTeamCompleteSpecialistOriginalCandidates',
+      'team-complete-specialist-originals-1',
+    ],
+    ...CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES,
+    ['multiplayer-expansion', 'createTeamExpansionCandidates', 'team-expedition-v1'],
+    ['team-hunt-training-candidates', 'createTeamHuntTrainingCandidates', 'humanoid-hunt-v1'],
+    ['team-timed-originals', 'createTeamTimedOriginalCandidates', 'team-timed-originals'],
+    [
+      'team-window-spatial-candidates',
+      'createTeamWindowSpatialCandidates',
+      'team-window-spatial-1',
+    ],
+    ['team-depot-spatial-candidates', 'createTeamDepotSpatialCandidates', 'team-depot-spatial-1'],
+  ].map(Object.freeze),
+);
+
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 /** Built from the exact frozen bytes, never a second, independently maintained asset list. */
 export async function buildOfflineContent(
@@ -140,14 +177,16 @@ export async function buildOfflineContent(
           : authoredPackageId(routeId, mode, pack.id);
         const snapshot = current && !team ? currentChapter.get(pack.id) : null;
         const modeLabel = mode === 'versus' ? 'Versus' : mode === 'team' ? 'Team' : 'Solo';
-        const chapterTitle =
-          pack.id === 'journey-opening'
+        const expedition = ['team-expedition-v1', 'duel-expedition-v1'].includes(routeId);
+        const chapterTitle = expedition
+          ? pack.name
+          : pack.id === 'journey-opening'
             ? 'Horizon'
             : campaigns.map((campaign) => campaign.name.replace(/ · optional$/, '')).join(' · ');
         addGroup({
           id,
           title: current
-            ? `${modeLabel} · ${chapterTitle}`
+            ? `${expedition && mode === 'versus' ? 'Duel' : modeLabel} · ${chapterTitle}`
             : `${team ? 'Team' : 'Journey'} · ${(routeLabel || source.name).replace(/ · (?:balance pending|test candidates|unvalidated.*)$/, '')} · ${classification === 'tooling' ? 'Studio' : 'Archive'}`,
           kind: 'gameplay',
           category: current
@@ -167,7 +206,7 @@ export async function buildOfflineContent(
               : ['shared'],
           files: [
             ...(snapshot && !snapshot.descriptor.core ? [snapshot.path] : []),
-            ...(!current && !team && routeSnapshots.has(routeId)
+            ...(!team && routeId !== snapshots?.route.id && routeSnapshots.has(routeId)
               ? [routeSnapshots.get(routeId)]
               : []),
             ...(source.assets || [])
@@ -203,38 +242,7 @@ export async function buildOfflineContent(
         routeLabel: route.label,
       });
     }
-    for (const [module, factory, routeId] of [
-      ['team-journey-candidates', 'createTeamJourneyCandidates', 'team-originals'],
-      [
-        'team-pressure-originals',
-        'createTeamPressureOriginalCandidates',
-        'team-pressure-originals-1',
-      ],
-      ['team-spatial-originals', 'createTeamSpatialOriginalCandidates', 'team-spatial-originals-1'],
-      [
-        'team-impact-originals',
-        'createTeamImpactOriginalCandidates',
-        'team-trail-impact-originals-1',
-      ],
-      [
-        'team-specialist-originals',
-        'createTeamSpecialistOriginalCandidates',
-        'team-specialist-originals-1',
-      ],
-      [
-        'team-complete-specialist-originals',
-        'createTeamCompleteSpecialistOriginalCandidates',
-        'team-complete-specialist-originals-1',
-      ],
-      ...CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES,
-      ['team-timed-originals', 'createTeamTimedOriginalCandidates', 'team-timed-originals'],
-      [
-        'team-window-spatial-candidates',
-        'createTeamWindowSpatialCandidates',
-        'team-window-spatial-1',
-      ],
-      ['team-depot-spatial-candidates', 'createTeamDepotSpatialCandidates', 'team-depot-spatial-1'],
-    ]) {
+    for (const [module, factory, routeId] of TEAM_OFFLINE_PROJECT_FACTORIES) {
       const source = (await import(`../game/content-design/${module}.mjs`))[factory]({
         artwork: true,
       });

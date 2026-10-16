@@ -1,0 +1,4216 @@
+{
+  "format": "FPVAuthoredRegionalElapsedReview.v1",
+  "scope": "Real elapsed-time immutable Urban road/court workload; production regional flight and renderer. Commanded test pilot, no player input or game progress writes.",
+  "runtimeLabel": "da5df483 / 6a092df1 / authoring cd1a756f · bounded display native smoke",
+  "runtimeLabelVerified": false,
+  "directSourceHashes": [
+    {
+      "path": "renderer.mjs",
+      "bytes": 157444,
+      "sha256": "f6e6fd9eaeb094e1bd2544dda9b15abc3ebee384cc9192fa2e9062d9dac0acba"
+    },
+    {
+      "path": "model.mjs",
+      "bytes": 20087,
+      "sha256": "0015640581f58a2fb86dca985cda5b9e519b78962c6a1ee816741d3ad21fb52c"
+    },
+    {
+      "path": "flight-contact.mjs",
+      "bytes": 2482,
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+    },
+    {
+      "path": "flight-support.mjs",
+      "bytes": 1815,
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+    },
+    {
+      "path": "regional/flight-prototype.mjs",
+      "bytes": 15458,
+      "sha256": "c65e6a34d858b92e4b38ed3490efe5eb93472139ce111a42af47699cdabb43cb"
+    },
+    {
+      "path": "regional/verified-mixed-window.mjs",
+      "bytes": 15600,
+      "sha256": "c9d8e075f143efe6455007c762caf2575eade3a426859f6c06d4cd29ec48fc86"
+    },
+    {
+      "path": "regional/terrain-admission.mjs",
+      "bytes": 8808,
+      "sha256": "80de02224acf14df00f40e152ea8cfedb981579af5fd5360a534d9e008a2829e"
+    },
+    {
+      "path": "regional/scenery-admission.mjs",
+      "bytes": 15259,
+      "sha256": "4e20557b6fa2b0002e974732bbe5bb0ee2b83298c1ef508efcddbbde7fff0113"
+    },
+    {
+      "path": "authoring/endurance.mjs",
+      "bytes": 24641,
+      "sha256": "392af8e414e808234eb457fa9480d70df1f6c53a136acecd40265f1701ce08fc"
+    },
+    {
+      "path": "authoring/endurance-clock.mjs",
+      "bytes": 2454,
+      "sha256": "9c3e9f9ae37e25f5f68408fbe4774a7ef7021b7f2d08523054a9265bb7716678"
+    },
+    {
+      "path": "authoring/endurance-observation.mjs",
+      "bytes": 1800,
+      "sha256": "71c213cfe9cd83395b3c3c1aeb09ea96a9421acdfa9b9a843d39e714cad779f2"
+    },
+    {
+      "path": "authoring/endurance-lifecycle.mjs",
+      "bytes": 3809,
+      "sha256": "fc2610cbbfca018f8f5536c2e2a96ab885029c5303331a3dbf152a049f7a401b"
+    },
+    {
+      "path": "authoring/endurance-report-display.mjs",
+      "bytes": 1601,
+      "sha256": "c5e90e78efb1729ff5ee3f7e2711951940ee1176570d380307176fe153870f93"
+    },
+    {
+      "path": "authoring/authored-endurance-fixture.mjs",
+      "bytes": 6422,
+      "sha256": "ce3cab50afd9475f4e38cd5e32f86880a3640257ced99f8d2dfa6a98795fb712"
+    }
+  ],
+  "wholeRuntimeClosureVerified": false,
+  "fixture": {
+    "descriptor": {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json",
+      "bytes": 6603,
+      "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+    },
+    "terrainManifestSHA256": "66ef229f0812c31432bb8b3daac6f16e3dcaea19f44be00395a614bfa587afd7",
+    "sceneryManifestSHA256": "9ae41033e9a73261eeee3ff2339ceaa0e2f6b47367b212fc1f2de470ca8dacb6",
+    "verifiedPayloadFiles": 38,
+    "verifiedPayloadBytes": 2268846,
+    "source": "Immutable admitted Urban review-r2; road/court circuit, no geometry or spawn edits",
+    "route": [
+      {
+        "id": "mill-road",
+        "position": {
+          "x": 64000,
+          "y": 12000,
+          "z": 16000
+        }
+      },
+      {
+        "id": "container-road",
+        "position": {
+          "x": 320000,
+          "y": 12000,
+          "z": 16000
+        }
+      },
+      {
+        "id": "tower-court",
+        "position": {
+          "x": 320000,
+          "y": 12000,
+          "z": 200000
+        }
+      },
+      {
+        "id": "parking-approach",
+        "position": {
+          "x": 64000,
+          "y": 12000,
+          "z": 200000
+        }
+      },
+      {
+        "id": "west-service-road",
+        "position": {
+          "x": 16000,
+          "y": 12000,
+          "z": 200000
+        }
+      },
+      {
+        "id": "mill-west-approach",
+        "position": {
+          "x": 16000,
+          "y": 12000,
+          "z": 16000
+        }
+      }
+    ],
+    "solidScenerySurfaces": 115,
+    "colliderUpperBound": 248,
+    "id": "urban-earthworks-study",
+    "revision": "mixed-r4"
+  },
+  "startedUTC": "2026-10-15T17:46:53.797Z",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "dimensions": {
+    "basis": "visualViewport",
+    "width": 1280,
+    "height": 720,
+    "dpr": 2,
+    "cssWidth": 1280,
+    "cssHeight": 417.59375,
+    "backingWidth": 1920,
+    "backingHeight": 627
+  },
+  "quality": "balanced",
+  "camera": "chase",
+  "mode": "self-level",
+  "clock": {
+    "status": "completed",
+    "reason": null,
+    "targetMs": 60000,
+    "elapsedMs": 60001.79999999702,
+    "wallElapsedMs": 60002,
+    "simulationMs": 60000,
+    "ticks": 3000,
+    "remainingAccumulatorMs": 1.7999999970197678
+  },
+  "observation": {
+    "policy": "visible-commanded",
+    "input": "Commanded test pilot only; no player input",
+    "scope": "Visible document; window focus optional and recorded, not physical-input qualification",
+    "events": [
+      {
+        "elapsedMs": 0,
+        "type": "start",
+        "visible": true,
+        "focused": true
+      }
+    ],
+    "failure": null
+  },
+  "lifecycleDiagnostics": {
+    "scope": "Diagnostic correlation only; focus/lifecycle/long-task timing cannot identify the cause of a rendering gap. Clock, visibility and safety acceptance are unchanged.",
+    "events": [
+      {
+        "elapsedMs": 0.29999999701976776,
+        "type": "start",
+        "visible": true,
+        "focused": true
+      },
+      {
+        "elapsedMs": 60003.29999999702,
+        "type": "stop",
+        "visible": true,
+        "focused": true
+      }
+    ],
+    "lastFrames": [
+      {
+        "elapsedMs": 59466.20000000298,
+        "intervalMs": 8.599999994039536
+      },
+      {
+        "elapsedMs": 59475,
+        "intervalMs": 8.799999997019768
+      },
+      {
+        "elapsedMs": 59484.5,
+        "intervalMs": 9.5
+      },
+      {
+        "elapsedMs": 59493.40000000596,
+        "intervalMs": 8.900000005960464
+      },
+      {
+        "elapsedMs": 59502.29999999702,
+        "intervalMs": 8.899999991059303
+      },
+      {
+        "elapsedMs": 59507.10000000894,
+        "intervalMs": 4.800000011920929
+      },
+      {
+        "elapsedMs": 59518.5,
+        "intervalMs": 11.399999991059303
+      },
+      {
+        "elapsedMs": 59524.79999999702,
+        "intervalMs": 6.299999997019768
+      },
+      {
+        "elapsedMs": 59535,
+        "intervalMs": 10.200000002980232
+      },
+      {
+        "elapsedMs": 59543.40000000596,
+        "intervalMs": 8.400000005960464
+      },
+      {
+        "elapsedMs": 59552.20000000298,
+        "intervalMs": 8.799999997019768
+      },
+      {
+        "elapsedMs": 59555.70000000298,
+        "intervalMs": 3.5
+      },
+      {
+        "elapsedMs": 59563.90000000596,
+        "intervalMs": 8.200000002980232
+      },
+      {
+        "elapsedMs": 59571.90000000596,
+        "intervalMs": 8
+      },
+      {
+        "elapsedMs": 59580.60000000894,
+        "intervalMs": 8.700000002980232
+      },
+      {
+        "elapsedMs": 59590,
+        "intervalMs": 9.399999991059303
+      },
+      {
+        "elapsedMs": 59598.20000000298,
+        "intervalMs": 8.200000002980232
+      },
+      {
+        "elapsedMs": 59606.90000000596,
+        "intervalMs": 8.700000002980232
+      },
+      {
+        "elapsedMs": 59615.5,
+        "intervalMs": 8.599999994039536
+      },
+      {
+        "elapsedMs": 59623.60000000894,
+        "intervalMs": 8.100000008940697
+      },
+      {
+        "elapsedMs": 59631.79999999702,
+        "intervalMs": 8.199999988079071
+      },
+      {
+        "elapsedMs": 59644.10000000894,
+        "intervalMs": 12.300000011920929
+      },
+      {
+        "elapsedMs": 59648.90000000596,
+        "intervalMs": 4.799999997019768
+      },
+      {
+        "elapsedMs": 59655.10000000894,
+        "intervalMs": 6.200000002980232
+      },
+      {
+        "elapsedMs": 59667.5,
+        "intervalMs": 12.399999991059303
+      },
+      {
+        "elapsedMs": 59676.29999999702,
+        "intervalMs": 8.799999997019768
+      },
+      {
+        "elapsedMs": 59684.79999999702,
+        "intervalMs": 8.5
+      },
+      {
+        "elapsedMs": 59689.90000000596,
+        "intervalMs": 5.100000008940697
+      },
+      {
+        "elapsedMs": 59699.60000000894,
+        "intervalMs": 9.700000002980232
+      },
+      {
+        "elapsedMs": 59710.70000000298,
+        "intervalMs": 11.099999994039536
+      },
+      {
+        "elapsedMs": 59718.29999999702,
+        "intervalMs": 7.5999999940395355
+      },
+      {
+        "elapsedMs": 59722.29999999702,
+        "intervalMs": 4
+      },
+      {
+        "elapsedMs": 59733.70000000298,
+        "intervalMs": 11.400000005960464
+      },
+      {
+        "elapsedMs": 59743.70000000298,
+        "intervalMs": 10
+      },
+      {
+        "elapsedMs": 59752.5,
+        "intervalMs": 8.799999997019768
+      },
+      {
+        "elapsedMs": 59760.40000000596,
+        "intervalMs": 7.9000000059604645
+      },
+      {
+        "elapsedMs": 59769.10000000894,
+        "intervalMs": 8.700000002980232
+      },
+      {
+        "elapsedMs": 59776.40000000596,
+        "intervalMs": 7.299999997019768
+      },
+      {
+        "elapsedMs": 59784.40000000596,
+        "intervalMs": 8
+      },
+      {
+        "elapsedMs": 59793.90000000596,
+        "intervalMs": 9.5
+      },
+      {
+        "elapsedMs": 59799.40000000596,
+        "intervalMs": 5.5
+      },
+      {
+        "elapsedMs": 59809.90000000596,
+        "intervalMs": 10.5
+      },
+      {
+        "elapsedMs": 59818.70000000298,
+        "intervalMs": 8.799999997019768
+      },
+      {
+        "elapsedMs": 59824.90000000596,
+        "intervalMs": 6.200000002980232
+      },
+      {
+        "elapsedMs": 59834,
+        "intervalMs": 9.099999994039536
+      },
+      {
+        "elapsedMs": 59842.70000000298,
+        "intervalMs": 8.700000002980232
+      },
+      {
+        "elapsedMs": 59852.29999999702,
+        "intervalMs": 9.599999994039536
+      },
+      {
+        "elapsedMs": 59868.10000000894,
+        "intervalMs": 15.800000011920929
+      },
+      {
+        "elapsedMs": 59877.5,
+        "intervalMs": 9.399999991059303
+      },
+      {
+        "elapsedMs": 59885.70000000298,
+        "intervalMs": 8.200000002980232
+      },
+      {
+        "elapsedMs": 59894.10000000894,
+        "intervalMs": 8.400000005960464
+      },
+      {
+        "elapsedMs": 59902.5,
+        "intervalMs": 8.399999991059303
+      },
+      {
+        "elapsedMs": 59909.79999999702,
+        "intervalMs": 7.299999997019768
+      },
+      {
+        "elapsedMs": 59918.5,
+        "intervalMs": 8.700000002980232
+      },
+      {
+        "elapsedMs": 59927.5,
+        "intervalMs": 9
+      },
+      {
+        "elapsedMs": 59935.79999999702,
+        "intervalMs": 8.299999997019768
+      },
+      {
+        "elapsedMs": 59940.29999999702,
+        "intervalMs": 4.5
+      },
+      {
+        "elapsedMs": 59948.10000000894,
+        "intervalMs": 7.800000011920929
+      },
+      {
+        "elapsedMs": 59958,
+        "intervalMs": 9.899999991059303
+      },
+      {
+        "elapsedMs": 59965.70000000298,
+        "intervalMs": 7.700000002980232
+      },
+      {
+        "elapsedMs": 59974.79999999702,
+        "intervalMs": 9.099999994039536
+      },
+      {
+        "elapsedMs": 59985.40000000596,
+        "intervalMs": 10.600000008940697
+      },
+      {
+        "elapsedMs": 59992.29999999702,
+        "intervalMs": 6.899999991059303
+      },
+      {
+        "elapsedMs": 60001.79999999702,
+        "intervalMs": 9.5
+      }
+    ],
+    "longTasks": {
+      "capability": "observed",
+      "count": 1,
+      "totalMs": 53,
+      "maxMs": 53,
+      "last": [
+        {
+          "elapsedMs": 42060.60000000894,
+          "durationMs": 53
+        }
+      ]
+    },
+    "dropped": {
+      "events": 0,
+      "longTasks": 0,
+      "frames": 7129
+    },
+    "stopped": true
+  },
+  "commandedRoute": {
+    "target": "container-road",
+    "acceptedWaypoints": 1,
+    "completedCircuits": 0,
+    "visits": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "cellCrossings": 1,
+  "frames": 7193,
+  "collisionAndReservationPeaks": {
+    "geometryBytes": 847008,
+    "textureBytes": 0,
+    "sourceBytes": 1765082,
+    "reservedGeometryBytes": 9256604,
+    "reservedSourceBytes": 2951547,
+    "worlds": 4,
+    "colliders": 170,
+    "rigidBodies": 0,
+    "renderergeometries": 205,
+    "renderertextures": 6,
+    "rendererprograms": 10
+  },
+  "frameIntervalsMs": {
+    "count": 7192,
+    "meanMs": 8.342561179086218,
+    "maxMs": 53.20000000298023,
+    "histogramMs": [
+      0,
+      1,
+      33,
+      119,
+      109,
+      179,
+      219,
+      1024,
+      4104,
+      832,
+      242,
+      150,
+      79,
+      81,
+      17,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "physicsSubmissionCPU": {
+    "count": 7193,
+    "meanMs": 0.20728486033883395,
+    "maxMs": 1.1000000089406967
+  },
+  "drawSubmissionCPU": {
+    "count": 7193,
+    "meanMs": 0.5917280689513719,
+    "maxMs": 3.2999999970197678
+  },
+  "observerCPU": {
+    "frameChecks": {
+      "count": 7193,
+      "meanMs": 0.034825524782647214,
+      "maxMs": 0.20000000298023224
+    },
+    "sampleCollection": {
+      "count": 63,
+      "meanMs": 0.18253968301273527,
+      "maxMs": 0.30000001192092896
+    },
+    "liveDisplay": {
+      "count": 59,
+      "meanMs": 0.06779660966436742,
+      "maxMs": 0.20000000298023224
+    },
+    "scope": "Synchronous frame checks, sample collection and bounded live JSON/text submission only. Excludes asynchronous observer callbacks, final/export serialization, browser layout, GPU completion and garbage collection attribution."
+  },
+  "preparation": {
+    "initial": {
+      "sequence": 1,
+      "status": "prepared",
+      "objects": 79,
+      "batches": 10,
+      "submittedBytes": 563724,
+      "maxBatchBytes": 206880,
+      "compileWaitMs": 66.49999995529652,
+      "uploadCpuMs": 10.600000008940697,
+      "elapsedMs": 144.40000000596046,
+      "gpuCompletionMeasured": false
+    },
+    "completedStages": 2,
+    "maximumElapsedMs": 144.40000000596046
+  },
+  "last120SecondSamples": [
+    {
+      "elapsedMs": 0,
+      "ticks": 0,
+      "position": {
+        "x": 64000,
+        "y": 3000,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 1001.7999999970198,
+      "ticks": 50,
+      "position": {
+        "x": 64000,
+        "y": 3462,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 2002.4000000059605,
+      "ticks": 100,
+      "position": {
+        "x": 64000,
+        "y": 4351,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 3002.2999999970198,
+      "ticks": 150,
+      "position": {
+        "x": 64000,
+        "y": 5301,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 4001.9000000059605,
+      "ticks": 200,
+      "position": {
+        "x": 64000,
+        "y": 6197,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 5002.29999999702,
+      "ticks": 250,
+      "position": {
+        "x": 64000,
+        "y": 7000,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 6001.79999999702,
+      "ticks": 300,
+      "position": {
+        "x": 64000,
+        "y": 7706,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 7002.20000000298,
+      "ticks": 350,
+      "position": {
+        "x": 64000,
+        "y": 8315,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 8001.79999999702,
+      "ticks": 400,
+      "position": {
+        "x": 64000,
+        "y": 8832,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 9002.40000000596,
+      "ticks": 450,
+      "position": {
+        "x": 64000,
+        "y": 9286,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 10001.79999999702,
+      "ticks": 500,
+      "position": {
+        "x": 64000,
+        "y": 9678,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 11001.5,
+      "ticks": 550,
+      "position": {
+        "x": 64000,
+        "y": 10009,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 12000.10000000894,
+      "ticks": 600,
+      "position": {
+        "x": 64000,
+        "y": 10290,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 13001.70000000298,
+      "ticks": 650,
+      "position": {
+        "x": 64000,
+        "y": 10528,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 14001.60000000894,
+      "ticks": 700,
+      "position": {
+        "x": 64000,
+        "y": 10728,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 15002.20000000298,
+      "ticks": 750,
+      "position": {
+        "x": 64000,
+        "y": 10889,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 16001.79999999702,
+      "ticks": 800,
+      "position": {
+        "x": 64002,
+        "y": 11039,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 17002.20000000298,
+      "ticks": 850,
+      "position": {
+        "x": 64314,
+        "y": 11189,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 18001.79999999702,
+      "ticks": 900,
+      "position": {
+        "x": 65141,
+        "y": 11326,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 19002.29999999702,
+      "ticks": 950,
+      "position": {
+        "x": 66363,
+        "y": 11426,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 20000.79999999702,
+      "ticks": 1000,
+      "position": {
+        "x": 67889,
+        "y": 11526,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 21000.60000000894,
+      "ticks": 1050,
+      "position": {
+        "x": 69652,
+        "y": 11626,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 22001.70000000298,
+      "ticks": 1100,
+      "position": {
+        "x": 71598,
+        "y": 11726,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 23002.5,
+      "ticks": 1150,
+      "position": {
+        "x": 73694,
+        "y": 11826,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 24001.79999999702,
+      "ticks": 1200,
+      "position": {
+        "x": 75895,
+        "y": 11926,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 25001.70000000298,
+      "ticks": 1250,
+      "position": {
+        "x": 78184,
+        "y": 12019,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 26002.20000000298,
+      "ticks": 1300,
+      "position": {
+        "x": 80535,
+        "y": 12069,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 27002.40000000596,
+      "ticks": 1350,
+      "position": {
+        "x": 82936,
+        "y": 12119,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 28002.40000000596,
+      "ticks": 1400,
+      "position": {
+        "x": 85387,
+        "y": 12169,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 29001.70000000298,
+      "ticks": 1450,
+      "position": {
+        "x": 87887,
+        "y": 12219,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 30001.70000000298,
+      "ticks": 1500,
+      "position": {
+        "x": 90387,
+        "y": 12269,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 31002.29999999702,
+      "ticks": 1550,
+      "position": {
+        "x": 92887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 32002.40000000596,
+      "ticks": 1600,
+      "position": {
+        "x": 95387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 33002.40000000596,
+      "ticks": 1650,
+      "position": {
+        "x": 97887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 34001.70000000298,
+      "ticks": 1700,
+      "position": {
+        "x": 100387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 35002.20000000298,
+      "ticks": 1750,
+      "position": {
+        "x": 102887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 36002.40000000596,
+      "ticks": 1800,
+      "position": {
+        "x": 105387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 37001.5,
+      "ticks": 1850,
+      "position": {
+        "x": 107887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 38002.29999999702,
+      "ticks": 1900,
+      "position": {
+        "x": 110387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 39001.60000000894,
+      "ticks": 1950,
+      "position": {
+        "x": 112887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 40001.60000000894,
+      "ticks": 2000,
+      "position": {
+        "x": 115387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 41002.40000000596,
+      "ticks": 2050,
+      "position": {
+        "x": 117887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 42002.5,
+      "ticks": 2100,
+      "position": {
+        "x": 120387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 43004.40000000596,
+      "ticks": 2150,
+      "position": {
+        "x": 122887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 44004.5,
+      "ticks": 2200,
+      "position": {
+        "x": 125387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 45003.70000000298,
+      "ticks": 2250,
+      "position": {
+        "x": 127887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 46004.40000000596,
+      "ticks": 2300,
+      "position": {
+        "x": 130387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8428,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 47004.40000000596,
+      "ticks": 2350,
+      "position": {
+        "x": 132887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 84,
+        "triangles": 8440,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 48010.40000000596,
+      "ticks": 2400,
+      "position": {
+        "x": 135387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 85,
+        "triangles": 8819,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 49008.79999999702,
+      "ticks": 2450,
+      "position": {
+        "x": 137887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 50009.20000000298,
+      "ticks": 2500,
+      "position": {
+        "x": 140387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 51001.40000000596,
+      "ticks": 2550,
+      "position": {
+        "x": 142887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 52008.5,
+      "ticks": 2600,
+      "position": {
+        "x": 145387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 53009.10000000894,
+      "ticks": 2650,
+      "position": {
+        "x": 147887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 54010.29999999702,
+      "ticks": 2700,
+      "position": {
+        "x": 150387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 55007.90000000596,
+      "ticks": 2750,
+      "position": {
+        "x": 152887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 56000,
+      "ticks": 2800,
+      "position": {
+        "x": 155387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 57006.29999999702,
+      "ticks": 2850,
+      "position": {
+        "x": 157887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 58007.20000000298,
+      "ticks": 2900,
+      "position": {
+        "x": 160387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 59009.90000000596,
+      "ticks": 2950,
+      "position": {
+        "x": 162887,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 60001.79999999702,
+      "ticks": 3000,
+      "position": {
+        "x": 165387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    }
+  ],
+  "minuteSamples": [
+    {
+      "elapsedMs": 0,
+      "ticks": 0,
+      "position": {
+        "x": 64000,
+        "y": 3000,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 563724,
+        "textureBytes": 0,
+        "sourceBytes": 1186465,
+        "reservedGeometryBytes": 563724,
+        "reservedSourceBytes": 1186465
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 79,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 114,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 16,
+        "released": false
+      }
+    },
+    {
+      "elapsedMs": 60001.79999999702,
+      "ticks": 3000,
+      "position": {
+        "x": 165387,
+        "y": 12303,
+        "z": 16000
+      },
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 2,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "sourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "reservedSourceBytes": 1765082
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 91,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 86,
+        "triangles": 9198,
+        "geometries": 126,
+        "textures": 6,
+        "programs": 10,
+        "contextLost": false
+      },
+      "verifiedCache": {
+        "files": 38,
+        "bytes": 2268846,
+        "reads": 40,
+        "released": false
+      }
+    }
+  ],
+  "final": {
+    "beforeDisposal": {
+      "position": {
+        "x": 165387,
+        "y": 12303,
+        "z": 16000
+      },
+      "velocity": {
+        "x": 2501,
+        "y": 24,
+        "z": 0
+      },
+      "orientation": [
+        0,
+        0,
+        -33684,
+        999433
+      ],
+      "angular": {
+        "roll": -12,
+        "pitch": 0,
+        "yaw": 0
+      },
+      "ticks": 3000,
+      "grounded": false,
+      "support": null,
+      "landingSpeed": 0,
+      "landingTilt": 0,
+      "mode": "self-level",
+      "status": "active",
+      "reason": null,
+      "contacts": 0,
+      "recentres": 2,
+      "originMm": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "localPositionMm": {
+        "x": -26613,
+        "y": 12303,
+        "z": -48000
+      },
+      "pendingTargetMm": null,
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 847008,
+        "textureBytes": 0,
+        "resourceBytes": 847008,
+        "sourceBytes": 1765082,
+        "reservedSourceBytes": 1765082,
+        "reservedGeometryBytes": 847008,
+        "provenance": {
+          "regionId": "urban-earthworks-study",
+          "revision": "mixed-r4",
+          "positionMm": {
+            "x": 128040,
+            "y": 12303,
+            "z": 16000
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "urban-1-0",
+              "terrain": {
+                "chunkId": "urban-1-0",
+                "collision": {
+                  "id": "urban-1-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-1-0.json",
+                  "bytes": 7775,
+                  "sha256": "184d28f0bc7bd63f2e4661447f79708d158be579c42e90dcde18667d69cf652c"
+                },
+                "scene": {
+                  "id": "urban-1-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-1-0.glb",
+                  "bytes": 38404,
+                  "sha256": "7b9ac0bb3725eec3fddb839700feb7270981c5bc11094043148f0e9264e74e13"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-1-0",
+                "collision": {
+                  "id": "urban-1-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-1-0.json",
+                  "bytes": 459529,
+                  "sha256": "8756a17022fe503dcf49e33414260f6e63b3f88a47bff99eac031eaa975c0e4c"
+                },
+                "scene": {
+                  "id": "urban-1-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-1-0.glb",
+                  "bytes": 142132,
+                  "sha256": "ac2c79051fbe6c590a1c75c1b5f230d445dc0a5049b83526de0e0a0767df6e5e"
+                }
+              }
+            },
+            {
+              "chunkId": "urban-0-0",
+              "terrain": {
+                "chunkId": "urban-0-0",
+                "collision": {
+                  "id": "urban-0-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-0-0.json",
+                  "bytes": 7826,
+                  "sha256": "5092461f2f7e5e1404c078b5ed09ecc7846a993f206562d4bcef5d35ad8e01e9"
+                },
+                "scene": {
+                  "id": "urban-0-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-0-0.glb",
+                  "bytes": 38404,
+                  "sha256": "ef72d57cd102a17c63c8dd390b79a6369666741bc814c93a76830018d50cb82d"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-0-0",
+                "collision": {
+                  "id": "urban-0-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-0-0.json",
+                  "bytes": 47621,
+                  "sha256": "bfdf16df8d6b5f204e54961ef1886bcdc0c7c644b351835fb6c390250ad3651a"
+                },
+                "scene": {
+                  "id": "urban-0-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-0-0.glb",
+                  "bytes": 24396,
+                  "sha256": "ea88472d836bdfbfeeecf2b26c9e33b340c6d4390a8532818de4169414eea3bf"
+                }
+              }
+            },
+            {
+              "chunkId": "urban-1-1",
+              "terrain": {
+                "chunkId": "urban-1-1",
+                "collision": {
+                  "id": "urban-1-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-1-1.json",
+                  "bytes": 8021,
+                  "sha256": "cdc8276a907dc303e981b5632a3e6c678b68903406694e28538ccc7bee531f84"
+                },
+                "scene": {
+                  "id": "urban-1-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-1-1.glb",
+                  "bytes": 38404,
+                  "sha256": "fbef12c0f0eacb34d2b2f940fa8783890907ce1b0aa703e5b448cdb745aa8acc"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-1-1",
+                "collision": {
+                  "id": "urban-1-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-1-1.json",
+                  "bytes": 141661,
+                  "sha256": "3f20fe48dee5493e209dbf01770073455ed439c022fa55b29c31f7da545e36aa"
+                },
+                "scene": {
+                  "id": "urban-1-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-1-1.glb",
+                  "bytes": 43588,
+                  "sha256": "0d8c6e43c8963d8ae8fdf7fdbd61170c586d7040b6bdd4b61cddc08ae8375e4d"
+                }
+              }
+            },
+            {
+              "chunkId": "urban-2-0",
+              "terrain": {
+                "chunkId": "urban-2-0",
+                "collision": {
+                  "id": "urban-2-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-2-0.json",
+                  "bytes": 7882,
+                  "sha256": "d8f36d38f1d83dd2d84450cd535ffdec892f3a17e035272eda0567b3b1bd8c86"
+                },
+                "scene": {
+                  "id": "urban-2-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-2-0.glb",
+                  "bytes": 38404,
+                  "sha256": "346950c01db4ad82e0c5027c6d5344cd07daf2eab8708402661b408797dff4de"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-2-0",
+                "collision": {
+                  "id": "urban-2-0-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-2-0.json",
+                  "bytes": 200210,
+                  "sha256": "c114a5fd7c4cca71228a80552547b3b13a759af63f12a203fece546cf52fd2dc"
+                },
+                "scene": {
+                  "id": "urban-2-0-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-2-0.glb",
+                  "bytes": 60452,
+                  "sha256": "0dbf4872ffec556a53ba113c4c2e3fe7d848b846a0e7c0e0ef7a399f02eced59"
+                }
+              }
+            },
+            {
+              "chunkId": "urban-0-1",
+              "terrain": {
+                "chunkId": "urban-0-1",
+                "collision": {
+                  "id": "urban-0-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-0-1.json",
+                  "bytes": 8088,
+                  "sha256": "fac844c2a8946b181af11881607bfdcebf404771db79e5e2330744a3778f7bda"
+                },
+                "scene": {
+                  "id": "urban-0-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-0-1.glb",
+                  "bytes": 38388,
+                  "sha256": "c099282cf60bda2cb84e30051e675fd11656e1ac43dec362fde0ebcdf26ccdff"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-0-1",
+                "collision": {
+                  "id": "urban-0-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-0-1.json",
+                  "bytes": 101940,
+                  "sha256": "1dc117b144137dde8b17c14b992407d92345c1370ad9124d423366dd035bb9b6"
+                },
+                "scene": {
+                  "id": "urban-0-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-0-1.glb",
+                  "bytes": 40288,
+                  "sha256": "ad827ea8e11bc107cb7a5b1a55f9b2d6bcb14fc0180ed4258f3d99fd3a43da51"
+                }
+              }
+            },
+            {
+              "chunkId": "urban-2-1",
+              "terrain": {
+                "chunkId": "urban-2-1",
+                "collision": {
+                  "id": "urban-2-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-2-1.json",
+                  "bytes": 8208,
+                  "sha256": "10d2c0278113a9aebbae5486d5f5bd7af8ab7072513d9ebb3d7450cee68e49c1"
+                },
+                "scene": {
+                  "id": "urban-2-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/terrain/urban-2-1.glb",
+                  "bytes": 38404,
+                  "sha256": "a0261ec550bcf520930edd6f07e93dfcd5b70315bbc7b433fbd1be8ffc28fd64"
+                }
+              },
+              "scenery": {
+                "chunkId": "urban-2-1",
+                "collision": {
+                  "id": "urban-2-1-collision",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-2-1.json",
+                  "bytes": 175601,
+                  "sha256": "357bacefebef823efd5f35f84f9f47a4d6ef437d5a647d7e00220f643d753468"
+                },
+                "scene": {
+                  "id": "urban-2-1-scene",
+                  "url": "https://authored-endurance-cache.invalid/scenery/urban-2-1.glb",
+                  "bytes": 49456,
+                  "sha256": "229fbdf3f9666cfa241c7a13c2f3f5490b43208d96f3b14d617644e0952f571e"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      },
+      "geometryProfile": "terrain-scenery-v1",
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "model": "regional-authoring-flight-prototype.v1",
+      "unscored": true,
+      "playerReady": false
+    },
+    "afterDisposal": {
+      "collision": {
+        "worlds": 0,
+        "colliders": 0,
+        "rigidBodies": 0
+      },
+      "geometryBytes": 0,
+      "reservedGeometryBytes": 0,
+      "reservedSourceBytes": 0,
+      "rootChildren": 0,
+      "renderer": {
+        "available": true,
+        "disposed": true,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 86,
+          "triangles": 9198,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "verifiedCache": {
+        "files": 0,
+        "bytes": 0,
+        "reads": 40,
+        "released": true
+      }
+    },
+    "disposalZero": true
+  },
+  "priorSegments": [
+    {
+      "importedUnverified": false,
+      "startedUTC": "2026-10-15T17:45:45.007Z",
+      "accepted": true,
+      "clock": {
+        "status": "completed",
+        "reason": null,
+        "targetMs": 10000,
+        "elapsedMs": 10005.90000000596,
+        "wallElapsedMs": 10006,
+        "simulationMs": 10000,
+        "ticks": 500,
+        "remainingAccumulatorMs": 5.9000000059604645
+      },
+      "runtimeLabel": "da5df483 / 6a092df1 / authoring cd1a756f · bounded display native smoke",
+      "observationPolicy": "visible-commanded"
+    }
+  ],
+  "limitations": [
+    "Repeated authored Urban road/court circuit, not all worlds, indoor routes or player behavior",
+    "CPU submission is not GPU completion or physical-device FPS",
+    "Resource counters exclude opaque engine/GPU allocations",
+    "Imported segments are unverified history and never extend an uninterrupted pass",
+    "No persistence, browser-restart or all-network-offline claim",
+    "Source payload is fully verified before timing; no network latency is exercised during the measured segment"
+  ],
+  "routeCoverageQualified": false,
+  "accepted": true
+}

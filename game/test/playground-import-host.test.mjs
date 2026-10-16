@@ -4,6 +4,8 @@ import { readFile } from 'node:fs/promises';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { resolveAuthoringEditor } from '../ui/authoring-editors.mjs';
+import { createDuel, resumeDuel, stepDuel, DUEL_PROTOCOL } from '../multiplayer.mjs';
+import { createLocalMatchRecorder } from '../multiplayer-recording.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const settle = async () => {
@@ -80,7 +82,10 @@ function mount(document, html) {
     if (!['meta', 'link', 'input', 'br', 'img', 'hr'].includes(tag)) stack.push(node);
   }
 }
-async function harness(t, { deferImage = false, classicRole = false, tacticalResponse } = {}) {
+async function harness(
+  t,
+  { deferImage = false, classicRole = false, tacticalResponse, hash, initialFocusId } = {},
+) {
   const document = new EditorDocument(),
     window = new Events(),
     images = [],
@@ -89,6 +94,8 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
     layoutFrames = [],
     resizeObservers = [];
   mount(document, await readFile(new URL('../playground/index.html', import.meta.url), 'utf8'));
+  if (hash !== undefined) window.location = { hash };
+  if (initialFocusId) document.getElementById(initialFocusId).focus();
   const documents = new Map(
     await Promise.all(
       [
@@ -557,6 +564,38 @@ test('preview iframe load waits for the child readiness marker and does not reus
   assert.equal(f.$('preview-load-status'), feedback);
 });
 
+test('recording deep links open only the verifier without importing data or replacing editor state', async (t) => {
+  const f = await harness(t, { hash: '#recording-verification' }),
+    section = f.$('recording-verification');
+  assert.equal(section.open, true);
+  assert.equal(f.document.activeElement, section.querySelector('summary'));
+  assert.equal(f.$('replay-paste').value, '');
+  assert.equal(f.$('replay-result').textContent, '');
+  const source = f.$('level-json').value,
+    preview = f.$('preview-frame').src;
+  section.open = false;
+  f.$('generate-button').focus();
+  f.window.location.hash = '#recording-verification?import=untrusted';
+  f.window.emit('hashchange');
+  assert.equal(section.open, false);
+  assert.equal(f.document.activeElement, f.$('generate-button'));
+  f.window.location.hash = '#recording-verification';
+  f.window.emit('hashchange');
+  assert.equal(section.open, true);
+  assert.equal(f.document.activeElement, section.querySelector('summary'));
+  assert.equal(f.$('level-json').value, source);
+  assert.equal(f.$('preview-frame').src, preview);
+});
+
+test('late Playground startup does not steal a deliberately selected control for its recording link', async (t) => {
+  const f = await harness(t, {
+    hash: '#recording-verification',
+    initialFocusId: 'generate-button',
+  });
+  assert.equal(f.$('recording-verification').open, true);
+  assert.equal(f.document.activeElement, f.$('generate-button'));
+});
+
 test('replay file reading acknowledges immediately, cancellation preserves the result, and a fresh real recording verifies', async (t) => {
   const f = await harness(t),
     readGate = deferred();
@@ -579,6 +618,44 @@ test('replay file reading acknowledges immediately, cancellation preserves the r
   assert.match(f.$('replay-status').textContent, /matches its full recorded/);
   assert.equal(JSON.parse(f.$('replay-result').textContent).match, true);
   assert.equal(f.$('cancel-replay').hidden, true);
+});
+
+test('v2 multiplayer verification reports its observation scope without claiming full-state equality', async (t) => {
+  const level = (await read('../content/campaign.json')).levels[0],
+    options = { seed: 17 },
+    duel = { protocol: DUEL_PROTOCOL, seconds: 10 },
+    match = createDuel(level, options, duel),
+    recorder = createLocalMatchRecorder({ mode: 'versus', level, options, duel }),
+    input = Array.from({ length: 2 }, () => ({
+      direction: null,
+      boost: false,
+      action: false,
+      pickup: false,
+    }));
+  resumeDuel(match, { preserveContinuation: true });
+  while (match.status === 'running') {
+    recorder.append(input);
+    stepDuel(match, input);
+  }
+  const recording = await recorder.snapshot(match);
+  recording.final.stateSha256 = '0'.repeat(64);
+  const f = await harness(t),
+    writes = f.writes.length;
+  f.$('replay-paste').value = JSON.stringify(recording);
+  await f.$('verify-replay-json').onclick();
+  const result = JSON.parse(f.$('replay-result').textContent);
+  assert.equal(result.match, true);
+  assert.equal(result.exactStateMatch, false);
+  assert.equal(result.terminalObservationMatch, true);
+  assert.match(result.verificationScope, /terminal-observations/);
+  assert.match(f.$('replay-status').textContent, /declared gameplay observations match/);
+  assert.doesNotMatch(f.$('replay-status').textContent, /matches its full recorded/);
+  assert.equal(f.writes.length, writes);
+  recording.final.observationSha256 = '0'.repeat(64);
+  f.$('replay-paste').value = JSON.stringify(recording);
+  await f.$('verify-replay-json').onclick();
+  assert.equal(f.$('replay-status').dataset.state, 'error');
+  assert.match(f.$('replay-status').textContent, /terminal gameplay observations differ/);
 });
 
 test('the original editor status and Cancel share one bounded sticky region through decode, cancel, failure and Undo', async (t) => {

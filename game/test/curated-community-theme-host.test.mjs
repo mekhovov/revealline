@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
-import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, settle, memoryStorage, clickVisibleSimulator } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
@@ -128,7 +128,7 @@ test('company startup presentation block supplies the admitted candidate and wai
 });
 
 for (const personal of [null, 'tryzub']) {
-  test(`actual custom campaign adoption latches interface and exact arcade dependency${personal ? ' while preserving the personal choice' : ''}`, async (t) => {
+  test(`custom campaign selection prepares the current interface and exact arcade dependency${personal ? ' while preserving the personal choice' : ''}`, async (t) => {
     const fixture = await fixtureWithCustomCampaigns();
     const preference = personal
       ? JSON.stringify({ ...DEFAULT_THEME_PREFERENCES, familyId: personal })
@@ -166,6 +166,12 @@ for (const personal of [null, 'tryzub']) {
     } finally {
       BoardPainter.prototype.setLevel = setLevel;
     }
+    page.frame(0);
+    assert.equal(page.rendered.run.levelId, 'custom-theme-mission');
+    assert.equal(page.rendered.paused, true, 'Selection prepares the accepted custom mission.');
+    assert.equal(page.rendered.run.tick, 0, 'The new mission starts at its initial boundary.');
+    assert.equal(page.$('game-overlay').dataset.kind, 'ready');
+    page.$('start-button').click();
     await settle(() => {
       page.frame(0);
       return (
@@ -191,7 +197,7 @@ for (const personal of [null, 'tryzub']) {
     };
     destination = undefined;
     page.$('shell-menu').click();
-    page.$('solo-fpv-sim').click();
+    clickVisibleSimulator(page);
     await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), second.family.id);
     assert.equal(destination.searchParams.get('appearanceRevision'), second.family.revision);
@@ -250,7 +256,7 @@ for (const outcome of ['cancel', 'failure']) {
     };
     destination = undefined;
     page.$('shell-menu').click();
-    page.$('solo-fpv-sim').click();
+    clickVisibleSimulator(page);
     await settle(() => destination);
     assert.equal(destination.searchParams.get('appearanceFamily'), first.family.id);
     assert.equal(page.storage.getItem(THEME_PREFERENCES_KEY), null);
