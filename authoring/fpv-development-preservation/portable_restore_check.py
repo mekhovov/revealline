@@ -39,7 +39,7 @@ def verify(index, index_sha, work, receipt_path):
                'githubDependencyBytes': result['githubDependencyBytes'],
                'allGitHubDependencyFileHashesMatch': result['allGitHubDependencyFileHashesMatch'],
                'actualRelativeLinksVerified': checked['symlinks'],
-               'pathAndLinkGraphSHA256': checked['pathAndLinkGraphSHA256'],
+               'linkDispositionsSHA256': checked['linkDispositionsSHA256'],
                'allLinksResolveToExactWithinRootTerminal': True, 'diskPreflight': result['diskPreflight'],
                'detailedRestoreReceiptSHA256': hashlib.sha256((work / 'restore-details.json').read_bytes()).hexdigest(),
                'inventoriedPayloadPortableRestoreComplete': True,

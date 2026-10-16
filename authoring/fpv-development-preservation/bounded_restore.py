@@ -98,7 +98,7 @@ def graph(index):
                     for path, target in sorted(targets.items())]
     return {'logicalFilePaths': len(index['files']), 'logicalBytes': sum(r['bytes'] for r in index['files']),
             'symlinks': len(links), 'dependencyFiles': len(files) - len(index['files']),
-            'pathAndLinkGraphSHA256': canonical_sha(dispositions), 'linkDispositions': dispositions}
+            'linkDispositionsSHA256': canonical_sha(dispositions), 'linkDispositions': dispositions}
 
 
 def assets(index):
@@ -296,7 +296,7 @@ def probe_links(index, index_sha, work):
         if not path.exists() or path.resolve() != work / row['terminalPath']:
             raise ValueError('Actual relative link layout differs from the closed graph')
     return {'format': 'FPVGlobalLinkLayoutProbe.v1', 'indexSHA256': index_sha,
-            'pathAndLinkGraphSHA256': checked['pathAndLinkGraphSHA256'],
+            'linkDispositionsSHA256': checked['linkDispositionsSHA256'],
             'emptyFileMarkers': len(markers), 'actualRelativeLinksVerified': checked['symlinks'],
             'allLinksResolveWithinChosenRoot': True, 'payloadBytesVerifiedByThisProbe': False,
             'freeDiskBytesBeforeProbe': free, 'oneShotPayloadMaterializationPerformed': False,
