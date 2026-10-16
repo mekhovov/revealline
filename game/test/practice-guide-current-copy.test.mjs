@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { parse } from 'acorn';
 
 const source = (path) => readFile(new URL(`../../${path}`, import.meta.url), 'utf8');
 const packages = ['civilian-flight', 'civilian-fpv', 'fpv-worlds'];
@@ -93,4 +94,62 @@ test('both guide formats explain deadline/cancel recovery without inventing a st
           ])
         assert(guide.includes(text));
     }
+});
+
+test('World Studio launcher onboarding names the mounted Home actions in both locales', async () => {
+  const app = parse(await source('optional-practice/civilian-fpv/world-app.mjs'), {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  });
+  const field = (node, key) =>
+    node?.type === 'ObjectExpression'
+      ? node.properties.find(
+          (item) =>
+            item.type === 'Property' && !item.computed && (item.key.name ?? item.key.value) === key,
+        )?.value
+      : undefined;
+  const shells = [];
+  function visit(node) {
+    if (!node || typeof node !== 'object') return;
+    if (
+      node.type === 'CallExpression' &&
+      node.callee.type === 'Identifier' &&
+      node.callee.name === 'mountSimPlayShell' &&
+      field(node.arguments[0], 'idPrefix')?.value === 'worlds-shell'
+    )
+      shells.push(node.arguments[0]);
+    for (const value of Object.values(node))
+      if (Array.isArray(value)) value.forEach(visit);
+      else if (value && typeof value === 'object') visit(value);
+  }
+  visit(app);
+  assert.equal(shells.length, 1, 'Exactly one maintained Worlds Home must supply the labels');
+  const labels = [
+    field(field(shells[0], 'homeLabels'), 'missions'),
+    field(field(shells[0], 'homeAction'), 'label'),
+  ];
+  const descriptor = JSON.parse(await source('optional-practice/fpv-worlds/package-info.json'));
+  for (const locale of ['en', 'uk']) {
+    const instruction = descriptor.copy[locale].firstFlight;
+    for (const label of labels) {
+      const literal = field(label, locale);
+      assert.equal(literal?.type, 'Literal', 'Read the public label without executing app code');
+      assert.equal(typeof literal.value, 'string');
+      assert.ok(
+        instruction.includes(literal.value),
+        `Missing current ${locale} action: ${literal.value}`,
+      );
+    }
+    assert.match(instruction, /\.rlpack/);
+    assert.doesNotMatch(
+      instruction,
+      /Open Explore and|Відкрийте «Огляд»|through World packs|через «Пакети світів»/,
+    );
+    assert.match(
+      instruction,
+      locale === 'en'
+        ? /not apps to the Flight practice directory/
+        : /а не застосунки до каталогу льотної практики/,
+    );
+  }
 });
