@@ -625,20 +625,22 @@ test('missing dependencies require repair, then exact offload and a fresh instal
   assert.equal(f.storage.getItem(optionalInstallationKey(f.packageId, f.root)), original);
 });
 
-function workerFixture(install, family, { initialRead, finalWrite, empty = false } = {}) {
+function workerFixture(
+  install,
+  family,
+  { initialRead, finalWrite, empty = false, dependencies = 1 } = {},
+) {
   const base = 'https://example.test/review/optional-practice/civilian-flight/';
   const owner = `revealline.optional.${family}.v1:${new URL(base).pathname}:`;
   const name = owner + 'revision';
   const body = Buffer.from('pinned asset');
   const pins = empty
     ? []
-    : [
-        {
-          path: 'image.png',
-          bytes: body.length,
-          sha256: createHash('sha256').update(body).digest('hex'),
-        },
-      ];
+    : Array.from({ length: dependencies }, (_, index) => ({
+        path: index === 0 ? 'image.png' : `image-${index}.png`,
+        bytes: body.length,
+        sha256: createHash('sha256').update(body).digest('hex'),
+      }));
   const listeners = new Map(),
     stores = new Map(),
     progress = [];
@@ -707,6 +709,30 @@ for (const [family, install] of [
   ['civilian-flight', installFlight],
   ['package', installFPV],
 ]) {
+  test(`${family} announces downloading before awaiting the next dependency`, async () => {
+    const f = workerFixture(install, family, { dependencies: 2 }),
+      body = Buffer.from('pinned asset'),
+      nextResponse = deferred(),
+      phasesAtFetch = [];
+    // A held response must not leave the previous local hashing phase visible.
+    let calls = 0;
+    f.scope.fetch = async () => {
+      phasesAtFetch.push(f.progress.at(-1));
+      if (++calls === 2) await nextResponse.promise;
+      return new Response(body);
+    };
+    const pending = f.start();
+    try {
+      await waitFor(() => calls === 2);
+      assert.deepEqual(phasesAtFetch, ['downloading', 'downloading']);
+      assert.equal(f.progress.at(-1), 'downloading');
+      assert(f.progress.includes('verifying'));
+    } finally {
+      nextResponse.resolve();
+      await pending;
+    }
+    assert.equal(f.progress.at(-1), 'ready');
+  });
   test(`${family} inspection exceptions are inconclusive without changing cached bytes`, async () => {
     for (const stage of ['keys', 'match', 'body', 'digest']) {
       const f = workerFixture(install, family);
