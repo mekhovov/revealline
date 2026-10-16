@@ -1,4 +1,4 @@
-name: Temporary Solo corrected cadence and exact baselines
+name: Temporary Solo Resume and teardown diagnostics
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -30,145 +30,19 @@ jobs:
         include:
           - label: candidate
             case: solo-cadence-input-host
-            source: 605cbd6d36a87ab592ae16cdfede890a1b035ac6
-          - label: baseline
-            case: starting-setup-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: gameplay-pressure-completion-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: first-journey-entry-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: journey-rewards-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: profile-recovery-settings-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
+            source: 8a670281368a58726fe75a7cf9a0c37c921d9849
+          - label: candidate
             case: history-picture-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
+            source: f48f25092a027a1d745a5c96e6c9d62e36aa50de
+          - label: candidate
+            case: starting-setup-host
+            source: f48f25092a027a1d745a5c96e6c9d62e36aa50de
           - label: baseline
-            case: fresh-visual-host
+            case: device-controls-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: current-art
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: sentry-impact-recovery-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: mission-library-team-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: coop-trail-impact-guidance
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: mission-library-team-remote-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: pressure-combination-practice
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: sentinel-circuit
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-journey-discovery-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: ukraine-review-appearance-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: field-kit-surfaces
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: mission-library-versus-degraded-capability-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: sentinel-spatial-candidates
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-journey-next-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: ukraine-role-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: couch-brand-title
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: mission-library-versus-inventory-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: phase-spatial-candidates
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: sentinel-theme-distribution
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: ukrainian-ornament-atlas-routes
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: coop-custom-artwork-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: couch-built-in-picture-parity
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: first-light-playthrough
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: mission-picker-older
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-partner-return-routes
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: test-encounter-consumers
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: coop-departure-locale
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: default-journey-endings-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: library-launch-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: mission-picker
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: picture-production-history
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: published-journey-provider
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: still-workshop-build
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-pressure-assessment
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: ukrainian-ornament-candidates
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: test-expansion-proof-dispatch
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: couch-chapter
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: default-solo-entry-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: flight-information-combat-details-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: optional-chapters-refresh-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: historical-candidate
+            case: device-controls-host
+            source: 845e2a1e1c72ee0d2900b2974589efbf7bb35273
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
@@ -227,6 +101,7 @@ jobs:
           assert digest(original) == entry['testSHA256']
           selected_path = entry['file']
           selected_bytes = original
+          observer = None
           if entry['mode'] == 'bounded-object-identity':
               old = "import assert from 'node:assert/strict';"
               assert original.decode().count(old) == 1
@@ -262,6 +137,14 @@ jobs:
               assert not copy.exists()
               copy.write_bytes(selected_bytes)
               (out / 'diagnostic-test.mjs').write_bytes(selected_bytes)
+          elif entry['mode'] == 'active-handle-observer':
+              declaration = manifest['activeHandleObserver']
+              helper = declaration['source'].encode()
+              assert digest(helper) == declaration['sha256']
+              helper_path = root / declaration['path']
+              assert helper_path.parent == out and not helper_path.exists()
+              helper_path.write_bytes(helper)
+              observer = {'path': declaration['path'], 'sha256': digest(helper), 'scope': declaration['scope']}
           else:
               assert entry['mode'] == 'original'
           receipt = {'format': 'SoloBoundedMemorySelectionV1', 'sourceRevision': head,
@@ -270,7 +153,7 @@ jobs:
                      'manifestSHA256': digest(raw), 'runtimeRevision': entry['runtimeRevision'],
                      'batch': 1, 'selected': [{'path': selected_path, 'sha256': digest(selected_bytes)}],
                      'originalTest': {'path': entry['file'], 'sha256': entry['testSHA256']},
-                     'diagnosticMode': entry['mode'], 'case': entry['case'],
+                     'diagnosticMode': entry['mode'], 'case': entry['case'], 'activeHandleObserver': observer,
                      'diagnosticOverlay': manifest['diagnosticOverlay'],
                      'nodeVersion': 'v22.22.2', 'CI': '1', 'platform': 'ubuntu-latest',
                      'runId': os.environ['GITHUB_RUN_ID'], 'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'],
@@ -388,7 +271,15 @@ jobs:
                   assert digest(root / name) == entry['sha256'], name
                   log = out / (str(len(rows)).zfill(3) + '-' + pathlib.Path(name).name + '.tap')
                   usage = log.with_suffix('.time.txt')
-                  command = ['node', '--test', '--test-concurrency=1', '--test-reporter=tap', name]
+                  command = ['node']
+                  child_env = {**os.environ, 'CI': '1'}
+                  observer = selection.get('activeHandleObserver')
+                  if observer:
+                      assert selection['diagnosticMode'] == 'active-handle-observer'
+                      assert digest(root / observer['path']) == observer['sha256']
+                      command.extend(['--import', str(root / observer['path'])])
+                      child_env.update({'SOLO_HANDLE_TEST': str(root / name), 'SOLO_HANDLE_REPORT': str(out / 'active-handles.json')})
+                  command.extend(['--test', '--test-concurrency=1', '--test-reporter=tap', name])
                   row = {'file': name, 'startedAt': now(), 'command': command,
                          'sourceRevision': selection['sourceRevision'], 'testSHA256Before': entry['sha256'],
                          'log': log.name, 'timedOut': False, 'resourceExhausted': None, 'resourcesBefore': resources(),
@@ -407,7 +298,7 @@ jobs:
                       else:
                           child = subprocess.Popen(['/usr/bin/time', '-v', '-o', str(usage), *command], cwd=root,
                                                    stdout=stream, stderr=subprocess.STDOUT, start_new_session=True,
-                                                   env={**os.environ, 'CI': '1'})
+                                                   env=child_env)
                           try:
                               while True:
                                   observed = resources()
@@ -458,10 +349,20 @@ jobs:
                               'resources': {'file': resource_log.name, 'sha256': digest(resource_log),
                                             'sampledGroupPeakRSSBytes': peak},
                               'gnuTime': {'file': usage.name, 'sha256': digest(usage)} if usage.is_file() else None})
+                  row['activeHandleObserver'] = None
+                  if observer:
+                      observer_after = digest(root / observer['path'])
+                      report = out / 'active-handles.json'
+                      row['activeHandleObserver'] = {'path': observer['path'], 'sha256Before': observer['sha256'],
+                          'sha256After': observer_after, 'unchanged': observer_after == observer['sha256'],
+                          'report': {'file': report.name, 'sha256': digest(report)} if report.is_file() else None,
+                          'attributionStatus': 'report-retained-not-yet-classified' if report.is_file() else 'no-report-incomplete-attribution',
+                          'scope': observer['scope']}
                   row['passed'] = (code == 0 and complete and not row['timedOut'] and not row['resourceExhausted'] and not interrupted
                                    and counts.get('fail') == 0 and counts.get('cancelled', 0) == 0
                                    and row['testSHA256After'] == entry['sha256']
-                                   and row['sourceRevisionAfter'] == selection['sourceRevision'])
+                                   and row['sourceRevisionAfter'] == selection['sourceRevision']
+                                   and (not observer or row['activeHandleObserver']['unchanged']))
                   if row['ownedProcessCleanup'] and row['ownedProcessCleanup']['remainingLive']:
                       fatal.append('Owned descendants survived cleanup; no later file may start')
                       row['passed'] = False
