@@ -130,6 +130,9 @@ test('parallel auxiliary jobs retain separate job-named evidence artifacts', asy
 });
 test('verified baseline reuse requires its separately pinned verifier without permitting arbitrary helpers', () => {
   const p = plan();
+  p.adapterInputs = p.adapterInputs.filter(
+    (ref) => ref.path !== 'scripts/solo-remote-baseline.mjs',
+  );
   p.baseline.reusableArtifact = {};
   assert.throws(() => validateAuxiliaryPlan(p));
   p.adapterInputs.push({
