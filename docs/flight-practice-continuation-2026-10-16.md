@@ -5,6 +5,69 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+### Latest verified checkpoint: all six offline flights and installed-PWA continuity
+
+Frozen observer `57d3b748cf83e21513ae40a4df18eb5b2bc00e7b`, tree
+`e6c3390b997ae1a1931e657e8e2e9969a497f7b0`, uses the unchanged admitted feedback
+candidate `b8aec0821` / envelope `c271bc6c…`. The expanded observer suite passes
+317 tests with one explicitly skipped historical fixture.
+
+- **Six restarted-offline flights pass:** Gym, Academy and imported-model Worlds,
+  each through stable launcher and actual standalone installed window. Every route
+  explicitly lifts from 0 to 0.2 m and pauses, with four stable readings spanning
+  638–643 ms, an uncached failed network probe and screenshot. All nine installation
+  checkpoints and five exact populated World/database/card witnesses pass.
+  Independent audit verifies the actual pack/GLB-derived asset fingerprint,
+  original package/source pins, seven PNGs and complete owned cleanup.
+  [Original evidence](flight-practice-continuation-20261016/all-six-offline-passed-originals.tgz)
+  has SHA-256 `b8e25dccba8be0546b2c31ea49ff6b881e19dfcd150f93baf60201c3452f5a4c`;
+  [independent audit](flight-practice-continuation-20261016/all-six-offline-independent-audit.json)
+  preserves its limits. English short flights are not completed exercises, Acro,
+  physical input, machine-wide outage or OS reboot. Academy's v0.0.0 alias is a
+  same-byte fixture, not a real historical migration. The earlier failed attempt
+  remains failed; its paused-state observation repair changes no app bytes.
+- **Installed-PWA Academy update continuity passes:** the actual historical
+  v0.142.4 standalone window loses focus through one native updater activation,
+  produces trusted blur and visible pause in 74 ms, and retains its document while
+  genuine different-package preparation completes. Native return is observed
+  unfocused→focused in 55 ms, before explicit resumed lift. The whole session takes
+  7,499 ms within its unchanged 30-second limit. Nine checkpoints and all owning
+  cleanup gates pass. [Original evidence](flight-practice-continuation-20261016/pwa-activation-passed-originals.tgz)
+  has SHA-256 `5140f0c57c5da692c7ec8ef494d1e7b04629bfadb6ee4671fef3024759ca6bb3`;
+  [independent audit](flight-practice-continuation-20261016/pwa-activation-independent-audit.json)
+  verifies 54 genuinely changed Academy members and exact authority. Document and
+  proof/profile equality are archived-code assertions, not serialized raw exports;
+  cache names/scopes are checked, not new member hashes. The World witnesses precede
+  the active update. This does not qualify minimization, physical switching,
+  uninterrupted background simulation or all-app active-flight coverage.
+
+The [matched production startup diagnostic](flight-practice-continuation-20261016/production-home-diagnostic-originals.tgz),
+SHA-256 `bd409bb99d7826c31204d090dc6f6c140b2748d75e270b53c0a9152978c64b46`,
+verifies the previous receipt's 643 original served members (10,300,719 bytes),
+then compares fresh English contexts with identical original bytes/CSP and normal
+authentication. Request-time original-file reads miss Home at 10,002.61 ms;
+preverified memory delivery reaches Home at 7,470.14 ms. Afterward all 725 selected
+or additionally served members (18,940,603 bytes) are reverified. Source and cleanup
+pass. This isolates sensitivity to the delivery path for this pair, not a specific
+filesystem cause or a production journey/performance qualification. Full production
+before/after integrity remains in the earlier failed run, not this subset diagnostic.
+The first invocation silently skipped the temporary CLI because macOS resolves
+`/tmp` to `/private/tmp`; its empty log is retained, not counted as a browser case.
+
+Native zoom runs 2 and 3 retain valid ordinary-control 100→200→100 geometry and
+cleanup evidence, but Chrome's native-zoom page/locator screenshots are cropped
+or blank. Their [framing](flight-practice-continuation-20261016/native-zoom-framed-originals.tgz)
+and [locator](flight-practice-continuation-20261016/native-zoom-locator-originals.tgz)
+originals are retained. No visual selected-option or package-accessibility pass is
+claimed. A bounded package-bound EN/UK keyboard/zoom/reduced-motion check remains
+the next separate C9 lane; assistive speech and human readability remain unverified.
+
+The native zoom tools are now repository-owned and documented. Eighteen focused
+tests include ordinary selection, immutable geometry, clipped/obscured/moving
+controls, pending operation cleanup and a reproduced symlinked-CLI no-op repair.
+The expanded observer suite passes **335 tests with one explicit fixture skip**.
+These tool-only changes do not rebuild or relabel the native receipts above.
+
 ### Restarted-offline expansion: first attempt retained, pause sampling repaired
 
 Observer `8facc4b8a`'s first all-six flight run remains **failed**. Gym and
@@ -533,10 +596,14 @@ still required and is not implied by build success. Hosting/capacity remain sepa
 
 ## Still open
 
-The acceptance checklist remains authoritative. Priorities are the corrected
-production-distribution player journey, then
-distinct-release **active-flight** protection and Gym/Worlds migrations. Actual
-verification-phase cancellation, imported
-assets/offline flight, actual eviction, broader browser accessibility/performance
-and real participant/package reviews remain unqualified. Real hardware and hosting
-are deferred, not passed. No local test populates the public catalogue.
+The acceptance checklist remains authoritative. Next software priorities are the
+full original-production directory journey with reliable bounded delivery,
+package-bound native zoom/keyboard/reduced-motion checks, and remaining recovery
+subcases (hash-in-progress cancellation and real eviction on an approved disposable
+setup). All-three genuine migrations, imported-model offline flights and the
+specific Academy PWA activation update now have the scoped passes above; all-app
+active-flight protection is still separate. Measured performance needs an accepted
+budget; spoken assistive behavior and participant/package approvals require actual
+reviewers. World Studio's descriptor also needs its old menu wording synchronized
+in the next exact candidate. Hardware and hosting are deferred, not passed. No local
+test or PR populates the public catalogue.
