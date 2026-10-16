@@ -441,6 +441,264 @@ test('finishing an explicit download does not reopen Versions or steal focus aft
   }
 });
 
+test('a deferred saved-region refresh preserves the exact focused Fly edition across an active-version change', async () => {
+  const old = saved(desert.at(-1), true),
+    next = saved(desert[0]),
+    f = await fixture({ records: [old, next] }),
+    n = navigation(f);
+  let release;
+  f.store.list = () =>
+    new Promise((resolve) => {
+      release = resolve;
+    });
+  try {
+    // Joining the real device adapter does not activate an action.
+    f.family().querySelector('[data-region-primary] button').focus();
+    n.pad();
+    n.pad(0);
+    n.pad();
+    n.pad();
+    f.root().querySelector('button').click();
+    await settle();
+    const prior = f.family().querySelector('[data-region-primary] button');
+    assert.equal(prior.disabled, true);
+    // The minimal DOM can focus disabled controls; this checks observer ownership,
+    // not whether a native browser permits this particular focus operation.
+    prior.dataset.fpvMenuFocus = '';
+    prior.focus();
+    release([
+      { ...old, active: false },
+      { ...next, active: true },
+    ]);
+    await settle();
+    assert.equal(
+      f.family().querySelector('[data-region-primary]').dataset.regionPrimary,
+      next.sha256,
+    );
+    assert.equal(f.doc.activeElement.isConnected, true);
+    assert.equal(f.doc.activeElement.closest('[data-region-key]')?.dataset.regionKey, old.sha256);
+    assert.equal(f.doc.activeElement.dataset.regionAction, 'fly');
+    assert.equal(f.doc.activeElement.dataset.fpvMenuFocus, '');
+    assert.equal(f.family().querySelector('details').open, true);
+    assert.deepEqual(f.flights, []);
+    n.pad(0);
+    n.pad();
+    await settle();
+    assert.equal(f.flights.at(-1).row.sha256, old.sha256);
+    assert.deepEqual(mutations(f), []);
+  } finally {
+    release?.([]);
+    n.nav.dispose();
+    f.ui.dispose();
+  }
+});
+
+test('refresh keeps a pre-existing radio focus lease through body blur, with full world ID plus hash identity', async () => {
+  const pins = REGIONAL_LIBRARY_PINS.filter((row) =>
+      ['railway-valley-expanse', 'railway-valley-study'].includes(row.id),
+    ).map((pin) => ({ ...pin, pin: { ...pin.pin, sha256: 'a'.repeat(64) } })),
+    old = saved(pins[0], true),
+    next = saved(pins[1]),
+    f = await fixture({ pins, records: [old, next] }),
+    n = navigation(f);
+  let release;
+  f.store.list = () =>
+    new Promise((resolve) => {
+      release = resolve;
+    });
+  try {
+    const primary = f.family('railway').querySelector('[data-region-primary] button');
+    primary.focus();
+    n.radio();
+    n.radioConfirm();
+    n.radio();
+    primary.dataset.fpvMenuFocus = '';
+    // Programmatic reopening is a metadata refresh, not an explicit install or
+    // activation. Body blur models loss of a temporarily disabled focus target.
+    f.ui.open();
+    await settle();
+    f.doc.body.focus();
+    release([
+      { ...old, active: false },
+      { ...next, active: true },
+    ]);
+    await settle();
+    const selected = f.family('railway').querySelector('[data-region-primary]');
+    assert.equal(selected.dataset.regionPrimaryId, next.id);
+    assert.equal(selected.dataset.regionPrimary, next.sha256);
+    assert.equal(f.doc.activeElement.closest('[data-region-key]')?.dataset.regionId, old.id);
+    assert.equal(f.doc.activeElement.closest('[data-region-key]')?.dataset.regionKey, old.sha256);
+    assert.equal(f.doc.activeElement.dataset.fpvMenuFocus, '');
+    assert.match(
+      f.family('railway').querySelector('[data-region-focus-notice]').textContent,
+      /edition changed/,
+    );
+    assert.deepEqual(f.flights, []);
+    n.radioConfirm();
+    await settle();
+    assert.equal(f.flights.at(-1).row.id, old.id);
+    assert.equal(f.flights.at(-1).row.sha256, old.sha256);
+    assert.deepEqual(mutations(f), []);
+  } finally {
+    release?.([]);
+    n.nav.dispose();
+    f.ui.dispose();
+  }
+});
+
+test('refresh never changes a vanished Fly action into Download or a different primary Fly, in EN and UK', async () => {
+  for (const lang of ['en', 'uk']) {
+    const old = saved(desert.at(-1), true),
+      next = saved(desert[0]),
+      f = await fixture({ records: [old, next] }),
+      n = navigation(f);
+    let release;
+    f.store.list = () =>
+      new Promise((resolve) => {
+        release = resolve;
+      });
+    try {
+      f.locale(lang);
+      f.family().querySelector('[data-region-primary] button').focus();
+      n.pad();
+      n.pad(0);
+      n.pad();
+      n.pad();
+      f.ui.open();
+      await settle();
+      f.doc.body.focus();
+      // This is an observed metadata change only; no removal is requested or
+      // simulated by the UI. The previously offered identity is still listed.
+      release([{ ...next, active: true }]);
+      await settle();
+      assert.equal(f.doc.activeElement, f.family().querySelector('summary'));
+      assert.equal(f.doc.activeElement.dataset.fpvMenuFocus, '');
+      assert.equal(f.family().querySelector('details').open, false);
+      assert.match(
+        f.family().querySelector('[data-region-focus-notice]').textContent,
+        lang === 'en' ? /edition changed.*Review Versions/ : /варіант змінився.*«Версії»/,
+      );
+      assert.equal(f.version(old.sha256).querySelector('button').dataset.regionAction, 'install');
+      n.pad(0);
+      n.pad();
+      await settle();
+      assert.equal(f.family().querySelector('details').open, true);
+      assert.deepEqual(f.flights, []);
+      assert.deepEqual(mutations(f), []);
+    } finally {
+      release?.([]);
+      n.nav.dispose();
+      f.ui.dispose();
+    }
+  }
+});
+
+test('refresh keeps Versions as the safe confirmation target when the same displayed edition no longer has Fly', async () => {
+  const old = saved(desert[0], true),
+    f = await fixture({ records: [old] });
+  let release;
+  f.store.list = () =>
+    new Promise((resolve) => {
+      release = resolve;
+    });
+  try {
+    f.family().querySelector('[data-region-primary] button').focus();
+    f.ui.open();
+    await settle();
+    f.doc.body.focus();
+    release([]);
+    await settle();
+    assert.equal(
+      f.family().querySelector('[data-region-primary]').dataset.regionPrimary,
+      old.sha256,
+    );
+    assert.equal(f.doc.activeElement, f.family().querySelector('summary'));
+    assert.match(
+      f.family().querySelector('[data-region-focus-notice]').textContent,
+      /available action changed/,
+    );
+    f.doc.activeElement.click();
+    assert.equal(f.family().querySelector('details').open, true);
+    assert.deepEqual(f.flights, []);
+    assert.deepEqual(mutations(f), []);
+  } finally {
+    release?.([]);
+    f.ui.dispose();
+  }
+});
+
+test('refresh of a no-longer-listed retained family returns connected focus without implying removal or taking action', async () => {
+  const record = retained('personal-landscape'),
+    f = await fixture({ records: [record] });
+  let release;
+  f.store.list = () =>
+    new Promise((resolve) => {
+      release = resolve;
+    });
+  try {
+    f.family('retained:personal-landscape').querySelector('[data-region-primary] button').focus();
+    f.ui.open();
+    await settle();
+    f.doc.body.focus();
+    release([]);
+    await settle();
+    assert.equal(f.family('retained:personal-landscape'), undefined);
+    assert.equal(f.doc.activeElement, f.root().querySelector('button'));
+    assert.equal(f.doc.activeElement.isConnected, true);
+    assert.match(f.root().textContent, /focused version is no longer listed/);
+    assert.deepEqual(f.flights, []);
+    assert.deepEqual(mutations(f), []);
+  } finally {
+    release?.([]);
+    f.ui.dispose();
+  }
+});
+
+test('a pending metadata refresh respects later disclosure and navigation choices instead of restoring stale primary intent', async () => {
+  for (const destination of ['summary', 'outside']) {
+    const old = saved(desert.at(-1), true),
+      next = saved(desert[0]),
+      f = await fixture({ records: [old, next] });
+    let release;
+    f.store.list = () =>
+      new Promise((resolve) => {
+        release = resolve;
+      });
+    try {
+      f.family().querySelector('[data-region-primary] button').focus();
+      f.ui.open();
+      await settle();
+      let target;
+      if (destination === 'summary') {
+        target = f.family().querySelector('summary');
+        target.focus();
+        target.click();
+        target.click();
+      } else {
+        target = f.doc.createElement('button');
+        f.doc.body.append(target);
+        target.focus();
+      }
+      release([
+        { ...old, active: false },
+        { ...next, active: true },
+      ]);
+      await settle();
+      assert.equal(
+        f.doc.activeElement,
+        destination === 'summary' ? f.family().querySelector('summary') : target,
+      );
+      assert.equal(f.family().querySelector('details').open, false);
+      assert.equal(f.family().querySelector('[data-region-focus-notice]'), null);
+      assert.deepEqual(f.flights, []);
+      assert.deepEqual(mutations(f), []);
+    } finally {
+      release?.([]);
+      f.ui.dispose();
+    }
+  }
+});
+
 function navigation(f) {
   let now = 0;
   const nav = createFlightMenuNavigation({
