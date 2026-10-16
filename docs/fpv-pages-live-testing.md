@@ -30,6 +30,22 @@ node scripts/game-cli.mjs build --out NEW_SITE --publication-profile main-pages
 node scripts/smoke-fpv-pages.mjs NEW_SITE PLAYWRIGHT_MODULE REPORT.json
 ```
 
+The [current second-review check](fpv-pages-second-review-live-testing-evidence.json)
+passes against the unmodified normal production build at
+`/private/tmp/fpv-rates-second-review-20261016-pages`, version `0.151.1`. Academy
+and World both pass online and in isolated offline contexts, including saved
+rates, keyboard installer activation, Advanced start/restart/export and worker
+disposal. All 3,430 manifest entries and the ZIP checksum were verified, and all
+seven changed runtime modules match the checkout byte-for-byte.
+
+The publication contains 3,432 files / 963,612,018 bytes. Its conservative archive
+forecast is 972,226,560 bytes, leaving 7,773,440 bytes below the unchanged cap.
+The distribution ZIP digest is
+`899acc0d0311d450d8c82cc1c45044cb1d457dc5a9eb1f1c66515f10b950d6a4`.
+The local working-tree build has `sourceRevision: null`; exact committed CI
+publication, public HTTPS, the real password form and existing-install updates
+remain separate checks. No Pages deployment was performed.
+
 The [first continuation check](fpv-pages-continuation-live-testing-evidence.json)
 used a successful, unmodified normal CLI build at
 `/private/tmp/fpv-rates-completion-20261016-pages`, version `0.151.1`. Both packages
@@ -166,5 +182,5 @@ and publication process below.
 Physical flight fidelity, the device performance matrix, public HTTPS behavior,
 real radio sampling and scored competition eligibility are not established by
 this Pages delivery check. The historical Regional capacity failure under host contention remains evidence.
-The separate [final bounded capacity run](fpv-regional-contact-capacity-2026-10-16-final.json)
+The separate [second-review bounded capacity run](fpv-regional-contact-capacity-2026-10-16-second-review.json)
 passes on its pinned sources; neither result is changed by deployment.

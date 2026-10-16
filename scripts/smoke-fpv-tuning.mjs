@@ -18,12 +18,13 @@ const fixture = `<!doctype html><html lang="en"><meta charset="utf-8">
 import { mountFlightTuning } from '/optional-practice/civilian-fpv/tuning-ui.mjs';
 import { createTuningLibraryStore } from '/optional-practice/civilian-fpv/tuning-library.mjs';
 window.qualificationLocale = 'en';
-window.qualificationEvents = { tests: [], applies: [], saved: [] };
+window.qualificationEvents = { tests: [], applies: [], saved: [], advanced: [] };
 window.qualificationStore = createTuningLibraryStore({ storage: localStorage, locks: navigator.locks });
 window.qualificationUI = mountFlightTuning({ document, window, store: window.qualificationStore,
   locale: () => window.qualificationLocale,
   onTest: value => window.qualificationEvents.tests.push(value),
   onApply: value => window.qualificationEvents.applies.push(value),
+  onAdvanced: value => window.qualificationEvents.advanced.push(value),
   onSaved: value => window.qualificationEvents.saved.push(value) });
 window.qualificationUI.button(document.body).id = 'open';
 window.qualificationReady = true;
@@ -183,8 +184,34 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 .inputValue()) === '900',
               'Algorithm draft was reinterpreted',
             );
-            await page.getByLabel('Camera tilt (degrees)', { exact: true }).fill('35');
-            await page.getByLabel('Vertical FOV (degrees)', { exact: true }).fill('100');
+            const cameraTilt = page.getByLabel('Camera tilt (degrees)', { exact: true }),
+              cameraFov = page.getByLabel('Vertical FOV (degrees)', { exact: true });
+            await cameraTilt.fill('');
+            const beforeInvalidCamera = await page.evaluate(() =>
+              window.qualificationStore.export(),
+            );
+            for (const action of [
+              'Save drone assignment & camera',
+              'Save for next flight',
+              'Apply & restart',
+              'Duplicate drone setup',
+              'Test draft · unscored',
+              'Advanced reference quad · experimental',
+            ]) {
+              await button(action).click();
+              await page.getByRole('status').filter({ hasText: 'enter a value' }).waitFor();
+              check(
+                (await cameraTilt.inputValue()) === '' &&
+                  (await page.evaluate(() => window.qualificationStore.export())) ===
+                    beforeInvalidCamera &&
+                  (await page.evaluate(() =>
+                    Object.values(window.qualificationEvents).every(
+                      (events) => events.length === 0,
+                    ),
+                  )),
+                `${action} accepted an incomplete camera value`,
+              );
+            }
             await page.getByLabel('Drone name', { exact: true }).fill('Pending camera setup');
             const draftProfileId = await page
               .getByLabel('Rate profile', { exact: true })
@@ -192,10 +219,28 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page.getByLabel('Rate profile', { exact: true }).selectOption('legacy-feel');
             await page.getByLabel('Rate profile', { exact: true }).selectOption(draftProfileId);
             check(
+              (await cameraTilt.inputValue()) === '',
+              'Changing profiles coerced a blank camera draft',
+            );
+            await button('Close').click();
+            await button('Rates & throttle').click();
+            check((await cameraTilt.inputValue()) === '', 'Reopening coerced a blank camera draft');
+            await cameraTilt.pressSequentially('35.25');
+            await cameraFov.fill('999');
+            await button('Test draft · unscored').click();
+            await page.getByRole('status').filter({ hasText: 'enter a value' }).waitFor();
+            check(
+              await page.evaluate(() => window.qualificationEvents.tests.length === 0),
+              'Out-of-range FOV escaped into a draft flight',
+            );
+            await cameraFov.fill('100.5');
+            await page.getByLabel('Rate profile', { exact: true }).selectOption('legacy-feel');
+            await page.getByLabel('Rate profile', { exact: true }).selectOption(draftProfileId);
+            check(
               (await page.getByLabel('Camera tilt (degrees)', { exact: true }).inputValue()) ===
-                '35' &&
+                '35.25' &&
                 (await page.getByLabel('Vertical FOV (degrees)', { exact: true }).inputValue()) ===
-                  '100' &&
+                  '100.5' &&
                 (await page.getByLabel('Drone name', { exact: true }).inputValue()) ===
                   'Pending camera setup',
               'Selecting a rate profile discarded the independent drone draft',
@@ -208,6 +253,13 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 () => window.qualificationEvents.tests[0].response.rates.axes.roll.rate === 90,
               ),
               'Test callback did not freeze edited Actual rates',
+            );
+            check(
+              await page.evaluate(() => {
+                const camera = window.qualificationEvents.tests[0].camera;
+                return camera.tilt === 35.25 && camera.verticalFov === 100.5;
+              }),
+              'Draft testing changed continuous camera degrees',
             );
             check(
               (await page.evaluate(() => window.qualificationStore.export())) === beforeDraft,
@@ -240,6 +292,8 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             evidence.checks.droneAssignmentCamera = true;
             evidence.checks.numericCommitMatchesSavedUnits = true;
             evidence.checks.independentSetupDraftAcrossProfiles = true;
+            evidence.checks.cameraValidationAndRawDraftPreservation = true;
+            evidence.checks.fractionalCameraDegrees = true;
             await page
               .getByText('Import / export · Betaflight and backups', { exact: true })
               .click();
@@ -411,8 +465,8 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 const config = window.qualificationStore.effective();
                 return (
                   config.profileId === id &&
-                  config.camera.tilt === 35 &&
-                  config.camera.verticalFov === 100
+                  config.camera.tilt === 35.25 &&
+                  config.camera.verticalFov === 100.5
                 );
               }, profileId),
               'Reload lost profile assignment or camera',

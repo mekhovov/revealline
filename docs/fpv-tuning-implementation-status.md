@@ -1,12 +1,68 @@
 # FPV tuning implementation status
 
 Updated 2026-10-16. Work is on `codex/fpv-rates-and-tuning`, refreshed cleanly onto
-`origin/main` at `3585f2c32` before the second review. The earlier implementation
-and completion commits are now `0759c993a` and `f69a58fb7`; their original hashes
+`origin/main` at `20768f599` before the third review. The earlier implementation
+and review commits are now `1506e44f4`, `3f0d3abbc` and `1ff0d996d`; their original hashes
 remain in historical reports. Unrelated local files are preserved. A local commit
 does not deploy GitHub Pages.
 
-## Second review — draft and recovery integrity
+## Third review — camera submission and replay chronology
+
+The [updated plan](fpv-tuning-completion-plan.md#third-review--complete-the-available-scope-without-inventing-qualification)
+adds primary examples from FlySpark, FPV Web and ShramkoGSFPV, distinguishes the
+unavailable Propwash source from verified page reads, and maps every original
+phase to delivered software and explicitly deferred acceptance. Two independent
+audits found and corrected the following remaining software gaps:
+
+- Camera tilt and vertical FOV now reject empty, nonfinite and out-of-range values
+  before saving, duplicating a drone or starting either draft-practice mode.
+  Incomplete camera text survives profile/setup navigation and reopening. Valid
+  fractional degrees and migrated values remain unchanged; portable rates remain
+  independent of unfinished camera edits.
+- Advanced replay now checks each declared consumption substep against its sample
+  timestamp and mission-admission schedule. A within-mission timing alteration
+  previously passed unchanged physics hashes and could misstate CSV command time.
+  It now fails in replay, worker recovery and trace export before adoption or
+  output-file creation. Honest delayed inputs and queued future samples remain
+  valid at 250, 500, 1,000 and the 2,000 Hz numerical reference. This is history
+  consistency, not authenticated physical-input capture.
+
+The [editor matrix](fpv-tuning-browser-third-review-qualification.json) passes all
+six Chrome/Firefox/WebKit desktop and touch-emulated cases. It exercises all six
+camera-consuming actions with invalid values, raw-text retention and fractional
+camera test/save/reload, alongside the earlier transfer and draft workflows.
+The [World/Regional smoke](fpv-advanced-regional-browser-smoke-2026-10-16-third-review.json)
+passes actual-worker recovery adoption, corruption rejection, visible
+cancellation, landing/takeoff, recording replay and Legacy return. All five
+workers terminate; there are no page errors. These are local browser checks,
+not real-touch or aircraft qualification.
+
+The [runtime matrix](fpv-advanced-runtime-qualification-2026-10-16-third-review.json)
+retains exact arena/Regional agreement in Node 20/22/24 and Chrome/Firefox/WebKit,
+including real workers. Golden hashes remain `46294848` / `9d00dd70`. The frozen
+250 Hz mode passes all numerical/contact/capacity gates, with a lowest measured
+capacity of 53.571× on this run. Higher candidates also pass this run; the earlier
+Firefox 1,000 Hz failure is preserved and is not replaced by a broader hardware
+claim. The backend, dynamics and selected frequency are unchanged.
+
+The full practice suite passes **620 tests** (617 top-level and three nested),
+with zero failures, skips or cancellations. This includes the maximum-duration
+recording/recovery checks. All **15 flight-log tests** pass, including rejection
+before either CLI output is written. Lint and formatting pass all **seven changed
+modules**. Release validation passes 3,327 distribution files, valid literal
+references, EN/UK localization (13,651 messages / 9,049 references), generated
+runtime/asset checks and industrial preparation. The seven existing navigation
+warnings remain unchanged.
+
+The [native staging receipt](fpv-native-third-review-staging.json) verifies all
+172 runtime source hashes and passes **75 native tests**. Desktop staging has
+183 files / 18,274,553 bytes; iOS staging has 188 files / 18,348,780 bytes. CSP,
+sandbox, resource routing, access pages and package limits remain intact. This
+review did not repeat actual Electron runtime interactions; their second-review
+evidence remains historical. iOS runtime, signing and physical-device checks
+remain unavailable here.
+
+## Second review — historical draft and recovery evidence
 
 The renewed [plan review](fpv-tuning-completion-plan.md#second-review--draft-integrity-transfer-clarity-and-recovery)
 uses additional examples from WebFPV, FPV Tools, VelociDrone, Liftoff and
@@ -49,6 +105,54 @@ passes at 5.508× for terrain and 6.339× for mixed scenery. Host counters still
 about 99.5% activity even with task-owned heavy jobs separated; these runs do not
 establish performance on an idle host or dense production regions.
 
+All six [final editor cases](fpv-tuning-browser-second-review-qualification.json)
+pass in Chrome, Firefox and WebKit with desktop and narrow touch-emulated layouts.
+They cover sequential decimal typing, numeric normalization, linked-axis edits,
+independent setup drafts, import-preview consistency, header-derived defaults and
+rotation-only export. The [final World host check](fpv-advanced-regional-browser-smoke-2026-10-16-second-review-final.json)
+passes actual recovery-file adoption, finite-state corruption rejection, visible
+cancellation during worker verification, landing/takeoff, recording replay and
+disposal. All five workers terminate. A focused host regression also covers
+cancellation during file reading and ignores its late completion. Earlier editor
+and host receipts remain separate source-bound evidence.
+
+The [second-review native receipt](fpv-native-second-review-qualification.json)
+binds all 172 original runtime sources. Desktop staging contains 183 files /
+18,272,211 bytes; iOS staging contains 188 files / 18,346,438 bytes. The separate
+Electron 44.3 fixture passes headed imports, stale-preview rejection, native CLI
+and receipt-backup exports, Regional landing and valid recovery adoption while
+paused. The restored position, velocity, orientation, angular state and telemetry
+match exactly; both workers terminate with no page errors or stderr output.
+The initial automation navigation failure is preserved. The successful fallback
+uses normal launcher navigation and actual native file dialogs with the existing
+security settings. Current corruption/cancellation coverage comes from the browser
+checks; native relaunch/ghost coverage remains explicitly historical. iOS staging
+still does not establish iOS runtime, signing or physical-device qualification.
+
+The final Node 22.22.2 practice suite passes **610 tests** (607 top-level and
+three nested), with no failures, skips or cancellations. The native build/platform
+suite passes **75 tests**, and lint passes all **15 changed modules**. These runs
+include the final linked-peer editing and pre-file-read cancellation fixes.
+Release validation passes 3,325 distribution files and valid literal references,
+EN/UK localization (13,651 messages / 9,049 references), and all generated-runtime
+and asset checks. Its seven existing navigation warnings remain unchanged.
+
+The normal production Pages build and [generated-site checks](fpv-pages-second-review-live-testing-evidence.json)
+pass for both simulators online and in isolated offline contexts. All 3,430
+manifest entries, the download archive and seven changed runtime files verify
+against their expected hashes. The 3,432-file publication is 963,612,018 bytes;
+the conservative archive forecast leaves 7,773,440 bytes below the unchanged
+980,000,000-byte cap. This is a local working-tree artifact, with no public
+deployment or Advanced promotion. The new restricted candidate-measurement
+workflow does not admit this branch's build-tooling changes; normal reviewed main
+publication remains the route described in the [Pages guide](fpv-pages-live-testing.md).
+
+All seven second-review software checks are complete. The
+[combined second-review receipt](fpv-tuning-second-review-verification.json)
+binds the final changes and verification reports. The original physical,
+wider-platform, public-deployment and promotion gates remain explicitly deferred
+or unavailable; none is counted as a passing software test.
+
 The sections below preserve the first review's source-bound evidence and claims.
 They do not stand in for refreshed verification of the second-review changes.
 
@@ -56,8 +160,9 @@ They do not stand in for refreshed verification of the second-review changes.
 
 The [updated completion plan](fpv-tuning-completion-plan.md) incorporates current
 WebFPV, QuadMath, Flight Division, VelociDrone, Liftoff and Betaflight references.
-On 16 October the user explicitly deferred physical radio, real-aircraft data and
-experienced-pilot feedback. Those gates remain unmeasured and do not block the
+On 16 October the user explicitly deferred physical radio and experienced-pilot
+feedback. No identified real-aircraft measurements were provided. Those gates
+remain unmeasured and do not block the
 remaining software work. Advanced remains optional and unscored.
 
 - Diagnostics follow the active keyboard/touch/controller/radio source and retain

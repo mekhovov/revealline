@@ -10,7 +10,10 @@ import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mj
 import { exportNativeRateProfile } from '../../optional-practice/civilian-fpv/betaflight-import.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
-function fixture(t, { locale = 'en', getDiagnostics, locks, platformOptions } = {}) {
+function fixture(
+  t,
+  { locale = 'en', getDiagnostics, locks, platformOptions, onAdvanced, camera } = {},
+) {
   let currentLocale = locale;
   const document = new Document(),
     window = new Events(),
@@ -32,7 +35,7 @@ function fixture(t, { locale = 'en', getDiagnostics, locks, platformOptions } = 
     getItem: (key) => data.get(key) ?? null,
     setItem: (key, value) => data.set(key, value),
   };
-  const store = createTuningLibraryStore({ storage, locks }),
+  const store = createTuningLibraryStore({ storage, locks, ...(camera ? { camera } : {}) }),
     applied = [],
     tested = [],
     saved = [],
@@ -48,6 +51,7 @@ function fixture(t, { locale = 'en', getDiagnostics, locks, platformOptions } = 
     onTest: (config) => tested.push(config),
     onSaved: (config) => saved.push(config),
     onClose: (context) => closed.push(context),
+    onAdvanced,
   });
   // The minimal DOM does not update a select when its first option's value is
   // assigned after insertion. Native HTML selects choose that first option.
@@ -361,6 +365,92 @@ test('a retained drone draft cannot overwrite another tab and explicit refresh d
   assert.equal(other.effective().camera.tilt, 45);
   await f.click('Refresh library');
   assert.equal(f.find('Camera tilt (degrees)').value, '45');
+});
+
+for (const action of [
+  'Save drone assignment & camera',
+  'Save for next flight',
+  'Apply & restart',
+  'Duplicate drone setup',
+  'Test draft · unscored',
+  'Advanced reference quad · experimental',
+])
+  test(`${action} rejects incomplete or out-of-range camera values before changing a flight or library`, async (t) => {
+    const advanced = [],
+      f = fixture(t, { onAdvanced: (configuration) => advanced.push(configuration) });
+    f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+    const before = f.store.export();
+    for (const [label, value, valid] of [
+      ['Camera tilt (degrees)', '', '10'],
+      ['Camera tilt (degrees)', '999', '10'],
+      ['Camera tilt (degrees)', 'Infinity', '10'],
+      ['Vertical FOV (degrees)', '', '82'],
+      ['Vertical FOV (degrees)', '999', '82'],
+    ]) {
+      f.edit(label, value);
+      await f.click(action);
+      assert.equal(f.store.export(), before, `${label}=${value} must not change stored settings`);
+      assert.equal(f.ui.root.open, true, 'The player can correct the value in the editor');
+      assert.equal(f.find(label).value, value);
+      assert.equal(f.find(label).getAttribute('aria-invalid'), 'true');
+      assert.match(f.ui.root.querySelector('[role="status"]').textContent, /enter a value/);
+      assert.equal(f.tested.length + f.applied.length + advanced.length, 0);
+      assert.equal(f.closed.length, 0);
+      f.edit(label, valid);
+    }
+  });
+
+test('incomplete camera text survives independent draft navigation and leaves rate exports available', async (t) => {
+  const f = fixture(t),
+    original = f.store.snapshot().selectedSetupId;
+  await f.click('Duplicate drone setup');
+  const duplicate = f.store.snapshot().selectedSetupId;
+  f.edit('Camera tilt (degrees)', '');
+  f.edit('Vertical FOV (degrees)', '999');
+  await f.click('New Actual profile');
+  assert.equal(f.find('Camera tilt (degrees)').value, '');
+  assert.equal(f.find('Vertical FOV (degrees)').value, '999');
+  assert.equal((await f.draft()).algorithm, 'actual', 'Portable rates exclude camera settings');
+  await f.click('Close');
+  f.ui.open();
+  assert.equal(f.find('Camera tilt (degrees)').value, '');
+  assert.equal(f.find('Vertical FOV (degrees)').value, '999');
+  f.edit('Drone setup', original, { tag: 'select', event: 'change' });
+  await settle();
+  assert.equal(f.find('Camera tilt (degrees)').value, '10');
+  assert.equal(f.find('Vertical FOV (degrees)').value, '82');
+  f.edit('Drone setup', duplicate, { tag: 'select', event: 'change' });
+  await settle();
+  assert.equal(f.find('Camera tilt (degrees)').value, '');
+  assert.equal(f.find('Vertical FOV (degrees)').value, '999');
+  await f.click('Revert draft');
+  assert.equal(f.find('Camera tilt (degrees)').value, '10');
+  assert.equal(f.find('Vertical FOV (degrees)').value, '82');
+});
+
+test('valid fractional camera migration, editing, testing and Advanced preview retain exact degrees', async (t) => {
+  const advanced = [],
+    camera = { tilt: 10.25, verticalFov: 82.5 },
+    f = fixture(t, { camera, onAdvanced: (configuration) => advanced.push(configuration) });
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  assert.equal(f.find('Camera tilt (degrees)').step, 'any');
+  assert.equal(f.find('Vertical FOV (degrees)').step, 'any');
+  await f.click('Save drone assignment & camera');
+  assert.deepEqual(f.store.effective().camera, camera);
+  for (const value of ['', '32', '32.', '32.25']) {
+    f.edit('Camera tilt (degrees)', value);
+    assert.equal(f.find('Camera tilt (degrees)').value, value);
+  }
+  f.edit('Vertical FOV (degrees)', '103.75');
+  await f.click('Test draft · unscored');
+  assert.deepEqual(f.tested[0].camera, { tilt: 32.25, verticalFov: 103.75 });
+  f.ui.open({ keepDraft: true });
+  await f.click('Advanced reference quad · experimental');
+  assert.deepEqual(advanced[0].camera, { tilt: 32.25, verticalFov: 103.75 });
+  f.ui.open({ keepDraft: true });
+  await f.click('Apply & restart');
+  assert.deepEqual(f.applied[0].camera, { tilt: 32.25, verticalFov: 103.75 });
+  assert.deepEqual(f.store.effective().camera, { tilt: 32.25, verticalFov: 103.75 });
 });
 
 for (const [algorithm, label, typed, normalized, field, stored] of [

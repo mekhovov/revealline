@@ -295,6 +295,32 @@ test('verified SIM trace freezes input, includes comparison/configuration and de
   await assert.rejects(exportAdvancedFlightTrace(record), /verification failed/);
 });
 
+test('trace export rejects falsified consumed-input timing before writing either output', async (t) => {
+  const record = await recording(3);
+  // This leaves the sampled controls and all physics hashes unchanged. The
+  // declared time would nevertheless move the exported command by one substep.
+  record.inputs[0][0] += 1;
+  await assert.rejects(exportAdvancedFlightTrace(record), /input consumption time/);
+
+  const directory = await mkdtemp(path.join(tmpdir(), 'fpv-log-input-timing-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const input = path.join(directory, 'record.json'),
+    output = path.join(directory, 'trace.csv'),
+    meta = path.join(directory, 'meta.json');
+  await writeFile(input, JSON.stringify(record));
+  assert.throws(
+    () =>
+      execFileSync(
+        process.execPath,
+        ['scripts/fpv-flight-log-comparison.mjs', 'trace', input, output, meta],
+        { stdio: 'pipe' },
+      ),
+    (error) => error.status === 1 && /input consumption time/.test(String(error.stderr)),
+  );
+  await assert.rejects(access(output), { code: 'ENOENT' });
+  await assert.rejects(access(meta), { code: 'ENOENT' });
+});
+
 test('verified trace export requires two completed missions and leaves no short-flight output files', async (t) => {
   for (const ticks of [0, 1]) {
     const record = await recording(ticks);
