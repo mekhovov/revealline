@@ -38,6 +38,8 @@ Before creating the destination or downloading payloads, restoration measures fr
 
 `portable_restore_check.py` is the full qualification entry point. It refuses a partial or unconfirmed index, checks the entire path/type/link graph before downloading, then actually restores every file and reviewed Git dependency in one fresh tree. It verifies applied modes and timestamps and resolves every created link to the exact reviewed within-root terminal. Its receipt separates inventoried-payload restoration from the overall source/dependency/disconnect decision:
 
+`indexSHA256` binds the entire index, including all logical file records. `linkDispositionsSHA256` hashes only the checked link-disposition records. Historical receipts used the name `pathAndLinkGraphSHA256` for that same link-only digest; those receipts remain retained and must not be interpreted as a digest of all file nodes.
+
 ```sh
 python3 portable_restore_check.py --index /chosen/backup/preservation-index.json \
   --work /chosen/disk/fresh-full-restore --receipt /chosen/backup/full-portable-restore.json

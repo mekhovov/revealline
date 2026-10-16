@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from bounded_restore import collect, graph, plan, probe_links, run
+from bounded_restore import canonical_sha, collect, graph, plan, probe_links, run
 from github_dependencies import from_reviewed_recipe, git_identity, manifest_tree
 from restore import restore, disk_preflight
 from portable_restore_check import verify
@@ -90,6 +90,7 @@ class BoundedRestoreTests(unittest.TestCase):
         self.assertTrue(result['inventoriedPayloadPortableRestoreComplete'])
         self.assertEqual(result['logicalFilePaths'], 5)
         self.assertEqual(result['actualRelativeLinksVerified'], 2)
+        self.assertEqual(result['linkDispositionsSHA256'], graph(final)['linkDispositionsSHA256'])
         self.assertFalse(result['overallDisconnectSafetyClaimed'])
         with patch('restore.obtain_asset', return_value=source), patch('restore.os.utime'):
             with self.assertRaisesRegex(ValueError, 'metadata differs'):
@@ -98,6 +99,8 @@ class BoundedRestoreTests(unittest.TestCase):
     def test_actual_relative_link_layout_and_conflict_loop_escape_refusals(self):
         checked = graph(self.index)
         self.assertEqual(checked['symlinks'], 2)
+        self.assertEqual(checked['linkDispositionsSHA256'], canonical_sha(checked['linkDispositions']))
+        self.assertNotIn('pathAndLinkGraphSHA256', checked)
         result = probe_links(self.index, 'a' * 64, self.root / 'layout')
         self.assertTrue(result['allLinksResolveWithinChosenRoot'])
         self.assertFalse(result['payloadBytesVerifiedByThisProbe'])
