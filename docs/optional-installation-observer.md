@@ -228,7 +228,7 @@ and independent receipt review are required; unit fixtures do not close C4.
 scripts/observe-practice-directory-native-a11y.mjs PLAN_JSON
 ABSOLUTE_EXISTING_PLAYWRIGHT_MODULE FRESH_OUTPUT_DIRECTORY` requires an exact
 `revealline-practice-directory-native-a11y-plan.v1` plan. Declare protocol
-`practice-directory-native-zoom-a11y.v1`, absolute `repository` and `bundle`,
+`practice-directory-native-zoom-a11y.v2`, absolute `repository` and `bundle`,
 clean source-shell `shellRevision`/`shellTree`, original candidate
 `sourceRevision`/`sourceTree`, `envelopeSha256`, Academy `packageRevision`, and
 exactly the six EN/UK-by-package `cases` exported by the adapter. No arbitrary
@@ -241,9 +241,19 @@ uses the full committed source shell plus admitted overlay, normal access form,
 directory Details, actual launcher/guide/return controls and Escape focus return.
 Play destinations are inspected but no flight is started. Localization and exact
 descriptor onboarding are checked. Sampled focused controls must be active,
-`:focus-visible`, unobscured, in the viewport, have computed outlines, and show no
+`:focus-visible`, unobscured, within the approximate viewport bounds below, have computed outlines, and show no
 animation/transition under the explicit browser `reducedMotion: reduce` override.
 Role/live attributes are semantics, not proof that assistive technology speaks.
+
+V2 uses finite positive fractional visual viewport dimensions, scale exactly 1,
+zero offsets and verified DPR at least 1; each visual/layout dimension must differ
+by less than one CSS pixel. Top/left remain nonnegative; right/bottom residuals
+must be strictly less than half a device pixel (`0.5 / DPR` CSS px, with a tiny
+inward numerical guard). Every sampled focus witness records raw residuals,
+tolerance use and the old v1 integer-plus-0.5-CSS-pixel decision. V1 failures stay
+failed; they cannot be relabelled as v2 passes. This is a versioned approximate
+border-box geometry check, not literal zero clipping or proof that the full
+painted focus outline is visible. Missing metrics fail without an integer fallback.
 
 Source/overlay/helper identities are checked before and after. Pending native or
 server operations, failed reset/cleanup or unresolved Chrome launch prevent safe

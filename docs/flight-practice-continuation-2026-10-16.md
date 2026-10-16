@@ -5,6 +5,36 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+### Hardware deferred; fractional native focus geometry follow-up
+
+The owner explicitly defers real controller/radio/touch hardware checks; they
+remain unverified, not passed. Hosting/public selection also remain deferred.
+
+At source `bffb9e83b28b5d47c172c9b4c36a7dca128eaf9e`, the mounted-language
+repair passes five of six native C9 cases, including all three Ukrainian routes.
+The original run remains **failed**: English Gym's Play border box ends at
+406.59765625 CSS px, against integer `innerHeight` 406 and measured fractional
+visual viewport 406.5. Residual beyond the actual visual edge is 0.09765625 CSS px
+or 0.390625 device px at DPR 4. It is not proof of zero clipping or a rendering bug.
+[Unchanged receipt, plan, authority, log and images](flight-practice-continuation-20261016/native-c9-bffb-failed-originals.tgz)
+SHA-256: `fee5930c1c4125708e649d33ce9be01ee155bebb16b678c64c677bb9ad8e2732`.
+
+Protocol v2 explicitly replaces the old integer-height-plus-0.5-CSS-pixel test
+with fractional visual viewport bounds and **strictly less than half a device
+pixel** residual tolerance. Both measurements, residuals, tolerance use and the
+old decision are retained. Invalid/missing measurements, nonzero visual offsets,
+pinch scale, mismatched zoom or visual/layout discrepancies of one CSS pixel or
+more fail. Negative top/left bounds remain rejected. No app bytes, input route,
+deadline, outline, visibility or motion gate changes. This approximate border-box
+contract is not full painted-outline visibility, human readability or WCAG proof.
+The exact old residual and strict threshold/malformed-measurement regressions
+pass; a fresh versioned native matrix and independent audit are still required.
+The observer now also checks the actual main return document's language, not only
+its URL. [CSSOM View](https://drafts.csswg.org/cssom-view/#visualviewport) defines
+fractional visual measurements; [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/innerHeight)
+documents the integer layout height. The tolerance is our explicit observation
+precision policy, not a standard-mandated accessibility allowance.
+
 ### Production journey and fresh-candidate offline/update checks pass
 
 Observer `88867270621a9d59f8041056e2653d21421ad374`, tree
