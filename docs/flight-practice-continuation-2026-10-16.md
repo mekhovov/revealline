@@ -3,6 +3,43 @@
 Hosting and real hardware remain owner-deferred. This report advances local
 qualification without selecting a public release or approving human review gates.
 
+## Follow-up after the first batch merged
+
+PR #1512 merged at original source `3a1b5e3c3`. The four later follow-up commits
+were rebased cleanly onto main `facf1627e2bb039ee7e5a3b9d662ded4c4ef3368`.
+Their rewritten head before the next observer batch is `224f97d35`; original
+package and observation sources below are not relabelled. No unmerged SIM
+worktree files or hosting changes were incorporated.
+
+Independent migration audit verifies all 630 original cached-member pins in
+twelve inventories, all 24 old/new package artifact pins, seven ordered content
+witnesses and exact worker/launcher revisions. This strengthens the existing
+three-app migration/rollback pass, not active-flight protection.
+
+The [fourth installed-window attempt](flight-practice-continuation-20261016/active-fourth-failed.json)
+uses isolated visible Chrome but still fails before update: actual native bounds
+remain normal throughout the 1.5-second limit. Cleanup succeeds. Its
+[original authority](flight-practice-continuation-20261016/native-224f-fourth-authority.tgz)
+is source `224f97d35`. The [plain-window routing probe](flight-practice-continuation-20261016/window-routing-probe.tgz)
+observes trusted blur and actual minimization through both CDP routes, but uses
+no simulator. It does not qualify PWA continuity or establish a routing repair.
+
+The next explicitly separate ordinary-browser lane retains the same historical
+payload, real update, visible flight/pause/resume and document-identity checks.
+Its acquisition cleanup initially had two reproduced ownership regressions
+(11 passing, two failing tests). Ownership now transfers before post-await
+deadline checks, late rejected creation releases its reserved session, and
+close/detach are exact-once. Independent review passes all 13 regressions.
+Installed-PWA continuity remains open even if this ordinary-window lane passes.
+
+Two further observer-only checks are prepared: the real CC0 Roadworks imported
+model through offline process restart and explicit offline flight, and the exact
+production distribution's six localized directory journeys. The production v2
+protocol pins observer, original build, and admitted app sources independently;
+it never substitutes source for missing build output. These are pending native
+execution, not new completed acceptance items. No SIM mechanics or package bytes
+are changed in this observer batch.
+
 ## Integrated source and package
 
 The feature branch rebased cleanly onto main

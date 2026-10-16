@@ -3,6 +3,7 @@ import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
+import { frozenSource, committedInputMap, verifyCommittedInputs } from './frozen-source.mjs';
 import assert from 'node:assert/strict';
 import { readEditionZip } from '../publishing/edition-zip.mjs';
 import { validateOptionalPackageAdmission } from '../publishing/optional-package-admission.mjs';
@@ -10,6 +11,19 @@ import { startServer } from './game-cli.mjs';
 import { installOptionalStatusDiagnostics } from './optional-installation-diagnostics.mjs';
 import { withOptionalQuotaDeny } from './optional-installation-quota-probe.mjs';
 import { practiceWorkerCacheInventory } from './practice-worker-cache-inventory.mjs';
+import {
+  ORDINARY_WINDOW_MODE,
+  acquireHistoricalOrdinaryWindow,
+  disposeHistoricalOrdinaryWindow,
+} from './optional-installation-ordinary-window.mjs';
+import {
+  selectImportedWorldMode,
+  importedWorldAuthority,
+  importRetainedC4World,
+  verifyRetainedC4World,
+  flyRetainedC4WorldOffline,
+} from './optional-installation-imported-world.mjs';
+import { PACK } from './practice-imported-world-check.mjs';
 import {
   selectInstallationDownloadFaults,
   installationDownloadFaultMatrix,
@@ -147,6 +161,21 @@ const version = envelope.version,
   failedFixture = 'v0.0.1';
 const quotaPackageIds = selectQuotaPackages(process.env.OPTIONAL_INSTALLATION_QUOTA_PACKAGES);
 const worldSeedEnabled = selectInstallationWorldSeed(process.env.OPTIONAL_INSTALLATION_WORLD_SEED);
+const importedWorldEnabled = selectImportedWorldMode(
+  process.env.OPTIONAL_INSTALLATION_IMPORTED_WORLD,
+  {
+    worldSeed: worldSeedEnabled,
+    historical: historicalPrevious,
+    migration: process.env.OPTIONAL_INSTALLATION_MIGRATION,
+    activeSession: process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION,
+    quota: process.env.OPTIONAL_INSTALLATION_QUOTA_PROBE,
+    download: process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
+  },
+);
+assert(
+  !importedWorldEnabled || !previousBundlePath,
+  'Imported-world lane uses current admitted apps, not historical candidates.',
+);
 const migrationEnabled = selectHistoricalMigration(process.env.OPTIONAL_INSTALLATION_MIGRATION, {
   historical: historicalPrevious,
   worldSeed: worldSeedEnabled,
@@ -198,6 +227,42 @@ const { chromium } = await import(pathToFileURL(path.resolve(modulePath)).href);
 const harnessSha256 = sha(await readFile(fileURLToPath(import.meta.url)));
 const helperURL = new URL('./optional-installation-observer-helpers.mjs', import.meta.url);
 const helperSha256 = sha(await readFile(helperURL));
+const importedWorldURLs = [
+  new URL('./optional-installation-imported-world.mjs', import.meta.url),
+  new URL('./practice-imported-world-check.mjs', import.meta.url),
+];
+const importedWorldSource = importedWorldEnabled
+  ? await Promise.all(
+      importedWorldURLs.map(async (url) => ({
+        path: path.basename(fileURLToPath(url)),
+        sha256: sha(await readFile(url)),
+      })),
+    )
+  : [];
+const importedPackURL = new URL('../' + PACK.path, import.meta.url);
+const importedPackBytes = importedWorldEnabled ? await readFile(importedPackURL) : null;
+const importedPackSourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const importedPackSource = importedWorldEnabled ? frozenSource(importedPackSourceRoot) : null;
+if (importedWorldEnabled)
+  verifyCommittedInputs(
+    new Map([[PACK.path, importedPackBytes]]),
+    committedInputMap(importedPackSourceRoot),
+  );
+const importedWorld = importedWorldEnabled
+  ? {
+      format: 'OptionalInstallationImportedWorld.v1',
+      mode: 'roadworks-offline-flight',
+      qualified: false,
+      publicEligible: false,
+      passed: false,
+      source: importedWorldSource,
+      checks: [],
+      flights: [],
+      import: {},
+      scope:
+        'One original committed Roadworks .rlpack uploaded through public Library file input; exact nonempty model Blob/project/revision fingerprints retained through existing offline windows/process restart; EN self-level sub-metre lift and explicit pause in restarted Worlds launcher and standalone window. No completed course, physical input, machine-wide outage or public release claim.',
+    }
+  : null;
 const historicalAuthority = historicalPrevious
   ? await Promise.all(
       ['practice-historical-admission.mjs', 'practice-historical-ui.mjs'].map(async (name) => ({
@@ -242,6 +307,15 @@ const activeSessionMode = process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION;
 const activeSessionEnabled = selectHistoricalActiveSession(activeSessionMode);
 const activeWindowMode = process.env.OPTIONAL_INSTALLATION_ACTIVE_WINDOW;
 const activeWindowEnabled = selectHistoricalWindowMode(activeWindowMode);
+const ordinaryWindowEnabled = activeWindowMode === ORDINARY_WINDOW_MODE;
+const ordinaryWindowURL = new URL('./optional-installation-ordinary-window.mjs', import.meta.url);
+const ordinaryWindow = ordinaryWindowEnabled
+  ? {
+      sourceSha256: sha(await readFile(ordinaryWindowURL)),
+      created: false,
+      standaloneQualified: false,
+    }
+  : null;
 assert(
   !activeWindowEnabled || activeSessionEnabled,
   'Owned-window mode requires the historical active-session lane.',
@@ -264,7 +338,9 @@ const focusSourcePath = path.resolve(
 );
 const activeWindow = activeWindowEnabled
   ? {
-      browserMode: 'headed-isolated-Chrome',
+      browserMode: ordinaryWindowEnabled
+        ? 'headless-isolated-Chrome-ordinary-window'
+        : 'headed-isolated-Chrome',
       sourceSha256: sha(await readFile(activeWindowURL)),
       focusSourcePath,
       focusSourceSha256: sha(await readFile(focusSourcePath)),
@@ -369,7 +445,7 @@ async function launchBrowser(offline = false) {
       channel: 'chrome',
       // Only the explicit native-window diagnostic needs real desktop windows.
       // Headless installed-app minimization can acknowledge without transitioning.
-      headless: !activeWindowEnabled,
+      headless: ordinaryWindowEnabled || !activeWindowEnabled,
       locale: 'en-US',
       viewport: { width: 1280, height: 900 },
       offline,
@@ -482,6 +558,16 @@ try {
       await pointer(fpv, priorVersion);
       await pointer(gym, version);
       await pointer(worlds, version);
+      if (importedWorldEnabled) {
+        importedWorld.authority = importedWorldAuthority(entries.get(worlds), importedPackBytes);
+        importedWorld.packSource = { ...importedPackSource, path: PACK.path, sha256: PACK.sha256 };
+        importedWorld.sourceRevision = envelope.sourceRevision;
+        importedWorld.sourceTree = envelope.sourceTree;
+        importedWorld.envelopeSha256 = sha(envelopeBytes);
+        importedWorld.package = envelope.packages.find((row) => row.id === worlds);
+        worldSeed.scope +=
+          ' In this explicitly opted-in run only, the baseline also includes the separately pinned Roadworks imported model; see importedWorld for its distinct retention/flight evidence.';
+      }
       if (migrationEnabled) {
         for (const id of MIGRATION_IDS) {
           const oldItem = previous.envelope.packages.find((row) => row.id === id);
@@ -718,6 +804,52 @@ try {
         assertInstallationWorldSeed(state, worldSeed.baseline);
         worldSeed.checks.push({ label, ...state });
         if (!worldSeed.baseline) worldSeed.baseline = state;
+        if (importedWorldEnabled && importedWorld.import.baseline) {
+          const receipt = { label };
+          importedWorld.checks.push(receipt);
+          await verifyRetainedC4World(target, {
+            ...importedWorldOptions(target, receipt),
+            libraryAlreadyOpen: true,
+          });
+        }
+      }
+      function importedWorldOptions(target, receipt) {
+        assert(matchesLaunchedAppURL(target.url(), url(entry(worlds, version)), 'en'));
+        return {
+          expectedURL: target.url(),
+          deadlineAt: observationDeadline,
+          requireActive: requireObservationTime,
+          readDatabase: readWorldDatabase,
+          baseline: importedWorld.import.baseline,
+          receipt,
+          capture: async (step) => {
+            assert(['import-ready', 'paused-flight'].includes(step));
+            const label = receipt.label ?? 'initial-import';
+            assert(/^[a-z-]+$/.test(label));
+            const screenshot = `${output}.imported-world-${label}-${step}.png`;
+            const bytes = await boundedOperation('Capture imported world', () =>
+              target.screenshot({ timeout: 5000 }),
+            );
+            assert(bytes.length > 0 && bytes.length <= 32 * 1024 * 1024);
+            await writeFile(screenshot, bytes, { flag: 'wx' });
+            return { path: screenshot, bytes: bytes.length, sha256: sha(bytes) };
+          },
+        };
+      }
+      async function importedOfflineFlight(target, label) {
+        if (!importedWorldEnabled) return;
+        currentStep = `imported world offline flight: ${label}`;
+        // The retention check leaves Library open. Reopen through the real stable
+        // launcher so this adapter starts on the ordinary Home screen.
+        await openPrepared(target, worlds);
+        const receipt = { label };
+        importedWorld.flights.push(receipt);
+        await flyRetainedC4WorldOffline(target, {
+          ...importedWorldOptions(target, receipt),
+          restartConfirmed: browserRestart.contextClosed === true,
+          // openPrepared just required a genuinely uncached failed network probe.
+          networkProbeFailed: true,
+        });
       }
       await open(fpv, priorVersion);
       await prepare(fpv);
@@ -1078,6 +1210,14 @@ try {
         requireObservationTime();
         worldSeed.template = seed.template;
         await open(worlds);
+        if (importedWorldEnabled) {
+          currentStep = 'import original Roadworks pack through public Library file chooser';
+          await importRetainedC4World(page, {
+            ...importedWorldOptions(page, importedWorld.import),
+            packBytes: importedPackBytes,
+          });
+          await open(worlds);
+        }
         await verifyWorldSeed(page, 'before-installation');
         worldSeed.preparedBeforeInstallation = true;
         await open(worlds);
@@ -1216,6 +1356,7 @@ try {
       for (const id of packageIds) {
         await openPrepared(page, id);
         if (id === worlds) await verifyWorldSeed(page, 'browser-process-restart-launcher');
+        if (id === worlds) await importedOfflineFlight(page, 'browser-process-restart-launcher');
       }
       for (const app of osApps.filter((row) => row.installed)) {
         const pendingWindow = context
@@ -1233,6 +1374,8 @@ try {
         assert.equal(app.restartedOfflineWindow.standalone, true);
         if (app.id === worlds)
           await verifyWorldSeed(appWindow, 'browser-process-restart-standalone');
+        if (app.id === worlds)
+          await importedOfflineFlight(appWindow, 'browser-process-restart-standalone');
       }
       await open(fpv, priorVersion);
       assert.equal(await exportedProof(), savedProof);
@@ -1372,11 +1515,28 @@ try {
           });
         }
       }
-      let sessionGuard, windowGuard, upgraded;
+      let sessionGuard, windowGuard, ordinaryGuard, upgraded;
       try {
         if (activeSessionEnabled) {
-          const priorWindow = appWindows.get(fpv);
-          assert(priorWindow, 'Retained historical standalone window is required.');
+          let priorWindow;
+          if (ordinaryWindowEnabled) {
+            currentStep = 'create separate owned ordinary historical window';
+            ordinaryGuard = await acquireHistoricalOrdinaryWindow({
+              context,
+              updatePage: page,
+              expectedURL: url(entry(fpv, priorVersion)) + '?lang=en',
+              mode: activeWindowMode,
+              receipt: ordinaryWindow,
+              deadlineAt: observationDeadline,
+            });
+            priorWindow = ordinaryGuard.page;
+            // Authentication stays exclusively in the existing normal-form helper.
+            await unlockObservedPage(priorWindow, password);
+            await priorWindow.locator(OBSERVED_PACKAGES[fpv].mounted).waitFor({ state: 'visible' });
+          } else {
+            priorWindow = appWindows.get(fpv);
+            assert(priorWindow, 'Retained historical standalone window is required.');
+          }
           currentStep = 'prepare real historical active Academy session';
           if (activeWindowEnabled)
             windowGuard = await configureHistoricalSessionWindow({
@@ -1434,7 +1594,11 @@ try {
         try {
           if (sessionGuard) await disposeHistoricalAcademySession(sessionGuard);
         } finally {
-          if (windowGuard) await disposeHistoricalSessionWindow(windowGuard);
+          try {
+            if (windowGuard) await disposeHistoricalSessionWindow(windowGuard);
+          } finally {
+            if (ordinaryGuard) await disposeHistoricalOrdinaryWindow(ordinaryGuard);
+          }
         }
         if (sessionGuard || windowGuard) {
           await boundedOperation('Restore observer foreground after old-session check', () =>
@@ -1824,6 +1988,43 @@ try {
     report.worldSeed = worldSeed;
     report.passed &&= worldSeed.passed;
   }
+  if (importedWorldEnabled) {
+    try {
+      assert.deepEqual(
+        frozenSource(importedPackSourceRoot),
+        importedPackSource,
+        'Imported pack source checkout changed during observation.',
+      );
+      importedWorld.sourceStable =
+        (
+          await Promise.all(
+            importedWorldURLs.map(
+              async (url, i) => importedWorldSource[i].sha256 === sha(await readFile(url)),
+            ),
+          )
+        ).every(Boolean) && PACK.sha256 === sha(await readFile(importedPackURL));
+      importedWorld.passed =
+        importedWorld.import.imported === true &&
+        importedWorld.import.cleanup?.completed === true &&
+        importedWorld.sourceStable &&
+        worldSeed.passed &&
+        browserRestart.passed &&
+        importedWorld.checks.length === worldSeed.checks.length &&
+        importedWorld.checks.every((row) => row.passed && row.cleanup?.completed) &&
+        JSON.stringify(importedWorld.flights.map((row) => row.label)) ===
+          JSON.stringify([
+            'browser-process-restart-launcher',
+            'browser-process-restart-standalone',
+          ]) &&
+        importedWorld.flights.every((row) => row.passed && row.cleanup?.completed);
+    } catch (error) {
+      importedWorld.passed = false;
+      importedWorld.sourceStable = false;
+      importedWorld.failure = error.message;
+    }
+    report.importedWorld = importedWorld;
+    report.passed &&= importedWorld.passed;
+  }
   if (quotaProbeEnabled) {
     report.quotaProbe = {
       enabled: true,
@@ -1873,6 +2074,17 @@ try {
     report.passed &&= downloadFaults.passed;
   }
   if (activeSessionEnabled) {
+    if (ordinaryWindowEnabled) {
+      ordinaryWindow.sourceStable =
+        ordinaryWindow.sourceSha256 === sha(await readFile(ordinaryWindowURL));
+      activeSession.ordinaryBrowserWindow = ordinaryWindow;
+      activeSession.standaloneQualified = false;
+      activeSession.continuityScope =
+        'Pinned historical Academy in a newly owned ordinary browser window only. Installed-PWA continuity is not qualified by this run.';
+      report.passed &&= Boolean(
+        ordinaryWindow.created && ordinaryWindow.sourceStable && ordinaryWindow.cleanup?.completed,
+      );
+    }
     activeSession.sourceStable =
       activeSession.sourceSha256 === sha(await readFile(activeSessionURL));
     report.activeSession = activeSession;
