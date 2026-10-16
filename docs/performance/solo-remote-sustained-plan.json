@@ -1,0 +1,283 @@
+{
+  "format": "SoloHostedSustainedManifestV1",
+  "cohort": "linux-continuous-long29-saved-reload-2ec-v1",
+  "phase": "long29",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "candidate": {
+    "revision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
+    "tree": "c4d176a8d5af6dfc0becc70e2a5a42a40ce5a367",
+    "run": 38963874667,
+    "artifact": 12074887637,
+    "outer": {
+      "bytes": 1090917792,
+      "sha256": "22a0d121c0afe086392aaaec392af3d15c544b920c36d96422c84043259aa33f"
+    },
+    "inner": {
+      "bytes": 1073304249,
+      "sha256": "7049aedea080d135bb83101861cf30e7ca350333a2e0bd8cf75b02003fb012e9"
+    },
+    "manifestSHA256": "64d8a4bc84d2869c87856935a6d65ca2897c693c8bc46908c1a90110e5e9422c",
+    "producer": "Exact retained Appearance CI package, Node22.13.1 Linux; 819/819 focused checks across65completefiles. No substitute rebuild."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "producer": "Fresh exact-source normal Linux build under Node22.13.1, original source flags/budgets. New archive/manifest identity; not the historical macOS baseline artifact.",
+    "historicalArtifactInvestigation": {
+      "mainRun": 38817575550,
+      "pagesArtifact": 12011437947,
+      "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
+      "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
+    }
+  },
+  "fixture": {
+    "path": "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+    "bytes": 6387,
+    "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5",
+    "authority": "Exact byte copy of qualification-first30-prospective-03/cold-first30.qualification.json; independent test recipe, not production identity."
+  },
+  "evidenceBytes": 536870912,
+  "rowEvidenceBytes": 134217728,
+  "setupTimeoutMs": 2400000,
+  "calibrationTimeoutMs": 300000,
+  "calibrationPreset": "mid",
+  "recipes": {
+    "soak": {
+      "path": "docs/performance/fixtures/solo-remote-sustained/soak.qualification.fixture",
+      "bytes": 4464,
+      "sha256": "c5a3c197b828c92a4e737a681153692aa02ab86b24cc62bafc9d070f3fa2b39b"
+    },
+    "next": {
+      "path": "docs/performance/fixtures/solo-remote-sustained/next.qualification.fixture",
+      "bytes": 12200,
+      "sha256": "869679e7a89bbd1a329ea3efd319aa8a4ffeaa1495715642a1447ab7a36dda40"
+    },
+    "retry": {
+      "path": "docs/performance/fixtures/solo-remote-sustained/retry.qualification.fixture",
+      "bytes": 4326,
+      "sha256": "2e44c12bbe09f3f9cb27b25ee61e1a07659a77ecc5e8898c9e635b657a74606c"
+    },
+    "opening": {
+      "path": "docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture",
+      "bytes": 2897,
+      "sha256": "d36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e"
+    },
+    "long29": {
+      "path": "docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture",
+      "bytes": 4765,
+      "sha256": "5ffad85e4dc752ea3e8bcf236f88e65c09875d58ac339c096890c0b6f2133150"
+    }
+  },
+  "frozenTools": [
+    {
+      "path": "scripts/calibrate-solo-performance.mjs",
+      "bytes": 4773,
+      "sha256": "e8a6d45e8cc2a04d65537f2bc0a6d0d8df18caec2766de4cefb9a153ec6bc816"
+    },
+    {
+      "path": "scripts/vendor/devtools-benchmark.mjs",
+      "bytes": 2739,
+      "sha256": "dc39973cdbf82704a3d623dd57d037ea501eb5761596c66e27f301c9e860af6b"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 58150,
+      "sha256": "7db5478c4c4c921c6bf2fff36c3d3b93d87147bcdf2eed796fcf61bbff05bcfe"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 24877,
+      "sha256": "556ac41f48b67c776a46dd899f56ada6f7c832d4eb3e74ac9cf9a75762feb6a6"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-cadence.mjs",
+      "bytes": 7999,
+      "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+    },
+    {
+      "path": "scripts/solo-qualification-observation.mjs",
+      "bytes": 14584,
+      "sha256": "0195f26910e35c68f6dc29e472b84b151b9910f2afd8ce9183ed5ef577d21a7b"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-replay.mjs",
+      "bytes": 1260,
+      "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+    },
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "bytes": 17343,
+      "sha256": "3a631883304de44fbb6c54f088d5a79108495e297c5231e4bee76faf38f363d6"
+    },
+    {
+      "path": "scripts/solo-diagnostics-analysis.mjs",
+      "bytes": 17343,
+      "sha256": "78e021e5751d90e65293d496b577104f2ed16cde685caaadc09d1becccb7fa9f"
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "bytes": 19115,
+      "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-identity.mjs",
+      "bytes": 1866,
+      "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 48206,
+      "sha256": "c3fb70a4edbc433a1ea8265e5d911eff2d4f96d02006ff7652c9b848d83bf8c0"
+    }
+  ],
+  "release": {
+    "format": "SoloHostedPhaseReleaseV1",
+    "status": "pending-first-eight-and-four-wave-review",
+    "phase": "long29",
+    "previousPhase": "diagnostics",
+    "candidateRevision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
+    "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "noUnclosedOwners": false,
+    "allPriorPlannedJobsClosed": false,
+    "priorProofInspected": false,
+    "firstEightAllCorrectnessPassed": false,
+    "evidence": []
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 134217728,
+    "aggregateEvidenceBytes": 536870912,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "Same existing disjoint145min helper/190min job: source/artifact40min, Chromium calibration5min, two44min arms and12min nonresettable finalization remainder; outside45min checkout/dependencies/policy/cleanup/upload.29min play and public saved reload remain inside unchanged40min scenario.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824
+  },
+  "scope": "Prospective fifth separate phase: three exact-source pairs per engine, same existing owner/calibration/limits.29real minutes uninterrupted recording, exact public saved reload, pre-reload performance only. Actual30min soak remains distinct; no physical/thermal/offline/OS durability claim.",
+  "phaseOrder": ["soak", "next", "retry", "diagnostics", "long29"],
+  "remainingDistinctScope": [
+    "Actual30minute soak remains separate and does not prove continuous recording.",
+    "Public page-reload equality proves no OS flush, browser restart, power loss or attribution to the Pause write.",
+    "This2ec artifact excludes later Demo-quality runtime; successor qualification needs new artifact authority."
+  ],
+  "jobs": [
+    {
+      "engine": "chromium",
+      "repetition": 1
+    },
+    {
+      "engine": "chromium",
+      "repetition": 2
+    },
+    {
+      "engine": "chromium",
+      "repetition": 3
+    },
+    {
+      "engine": "webkit",
+      "repetition": 1
+    },
+    {
+      "engine": "webkit",
+      "repetition": 2
+    },
+    {
+      "engine": "webkit",
+      "repetition": 3
+    }
+  ],
+  "deadlines": {
+    "outsideHelper": {
+      "checkoutsAndNodeMinutes": 7,
+      "dependencySetupMinutes": 20,
+      "wrapperTestsAndBindingMinutes": 3,
+      "outerAndStepShutdownMarginMinutes": 3,
+      "setupEvidenceRetentionMinutes": 2,
+      "artifactUploadMinutes": 10
+    },
+    "insideHelper": {
+      "artifactPreparationMinutes": 40,
+      "calibrationMinutes": 5,
+      "phases": {
+        "soak": {
+          "perArmMinutes": 44,
+          "armCount": 2,
+          "rowBoundaryAndFinalizationReserveMinutes": 12,
+          "helperMinutes": 145,
+          "wholeJobMinutes": 190
+        },
+        "next": {
+          "perArmMinutes": 24,
+          "armCount": 2,
+          "rowBoundaryAndFinalizationReserveMinutes": 12,
+          "helperMinutes": 105,
+          "wholeJobMinutes": 150
+        },
+        "retry": {
+          "perArmMinutes": 19,
+          "armCount": 2,
+          "rowBoundaryAndFinalizationReserveMinutes": 12,
+          "helperMinutes": 95,
+          "wholeJobMinutes": 140
+        },
+        "diagnostics": {
+          "perArmMinutes": 30,
+          "armCount": 1,
+          "rowBoundaryAndFinalizationReserveMinutes": 10,
+          "helperMinutes": 85,
+          "wholeJobMinutes": 130
+        },
+        "long29": {
+          "perArmMinutes": 44,
+          "armCount": 2,
+          "rowBoundaryAndFinalizationReserveMinutes": 12,
+          "helperMinutes": 145,
+          "wholeJobMinutes": 190
+        }
+      },
+      "baselineBuildMaximumMinutes": 20,
+      "baselineBuildScope": "Root-approved second first8 attempt1200s setup-only change. This is contained in the existing40min combined artifact-preparation cap, not added after it; every browser/scenario deadline stays fixed."
+    },
+    "controlJobMinutes": 5,
+    "enforcement": "Artifact setup and each command have explicit deadlines; the overall helper deadline contains the fixed row-boundary/finalization reserve. Outer timeout adds2min and the step adds1min solely for shutdown/stdio, not observations. The5min declaration job is separate from each of the30workload jobs across five separately released phases. No automatic phase release; no deadline reset or enlargement after launch."
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-sustained.mjs",
+      "bytes": 25168,
+      "sha256": "56b4be744aa0fca88b89b2d70b1b680b3f1090405201af7e288a1050d5fc5591"
+    }
+  ]
+}

@@ -25,7 +25,8 @@ concurrency:
 
 jobs:
   correctness:
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository
+    # Previous cohort is complete; bind the next exact package before reenabling.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && false
     runs-on: ubuntu-24.04
     timeout-minutes: 145
     env:
