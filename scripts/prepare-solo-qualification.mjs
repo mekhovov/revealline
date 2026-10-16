@@ -632,7 +632,7 @@ await put(
     replayRequirements: { jammerTicks: 1, movingTicks: 2400 },
     actions: [
       { type: 'snapshot', group: 'original-art-ready' },
-      { type: 'click', selector: '#shell-featured', timeoutMs: 60000 },
+      { type: 'click', selector: '#start-button', timeoutMs: 60000 },
       { type: 'wait', phase: 'running', timeoutMs: 60000 },
       ...play(sentinelSegments),
       { type: 'wait', phase: 'running' },

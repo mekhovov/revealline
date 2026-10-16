@@ -31,6 +31,9 @@ import {
   readPrePlayReadiness,
   createRafIntervalClock,
   calibrateReadyCadence,
+  observeLowWorkCadence,
+  calibrateLowWorkCadence,
+  frozenExternalCadence,
   externalQualificationBudgets,
   aggregateQualificationGates,
 } from './solo-qualification-observation.mjs';
@@ -159,7 +162,7 @@ const report = {
     'This harness adds phase/rAF and audio-API observers. Its timing is not a measurement of ordinary diagnostics overhead.',
     ...(workProbe
       ? [
-          'Independent PRE_STEP→POST_RENDER work instrumentation and an explicit30-frame ready-phase calibration are enabled. Use identical flags on compared builds; no physical/GPU or overhead-free claim.',
+          'Independent PRE_STEP→POST_RENDER work instrumentation uses one fixed30-interval foreground about:blank calibration before game navigation with the same viewport/DPR/CPU setting. Title-ready intervals are separate startup evidence. External B stays fixed across navigation/reload and is independent of application B; no physical/GPU or overhead-free claim.',
         ]
       : []),
     ...(baselineRuntime
@@ -203,7 +206,8 @@ const report = {
   uploads: [],
   pageErrors: [],
   failedResponses: [],
-  prePlayCalibrations: [],
+  externalCadenceCalibration: null,
+  startupCadenceObservations: [],
   failure: null,
 };
 await mkdir(dirname(resolve(output)), { recursive: true });
@@ -311,13 +315,23 @@ try {
         );
       await route.fulfill({ response, body });
     });
+  if (cpu !== 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
+  if (workProbe) {
+    assert.equal(page.url(), 'about:blank', 'Cadence must precede every game request');
+    await page.bringToFront();
+    report.externalCadenceCalibration = calibrateLowWorkCadence(
+      await page.evaluate(observeLowWorkCadence, { timeoutMs: 5000 }),
+    );
+    await save();
+  }
   if (audioProof) await page.addInitScript(installAudioProof);
   await page.addInitScript(
     `window.soloQualificationReadiness = ${readPrePlayReadiness.toString()};
-     window.soloQualificationIntervalClock = ${createRafIntervalClock.toString()};`,
+     window.soloQualificationIntervalClock = ${createRafIntervalClock.toString()};
+     window.soloQualificationFrozenCadence = ${frozenExternalCadence.toString()};`,
   );
   await page.addInitScript(
-    ({ bounds, workProbe }) => {
+    ({ bounds, workProbe, externalCadenceCalibration }) => {
       const phases = ['boot', 'briefing', 'running', 'paused', 'result', 'picture', 'other'];
       const counts = phases.map(() => new Float64Array(bounds.length));
       const totals = new Float64Array(phases.length * 5),
@@ -352,8 +366,10 @@ try {
         workSubscribed = false,
         calibrating = false,
         calibrationCount = 0,
-        calibration = null,
-        frameBudget = null;
+        startupObservation = null;
+      const { calibration, baselineMs: frameBudget } = window.soloQualificationFrozenCadence(
+        externalCadenceCalibration,
+      );
       const readyState = () => window.soloQualificationReadiness();
       // Capture the constructed owner once. Never wrap update/draw, evaluate
       // drawOptions, or recompute presentation ownership during active play.
@@ -451,11 +467,7 @@ try {
           missed[missedOffset + 2] = gaps ? missed[missedOffset + 2] + gaps : 0;
           missed[missedOffset + 1] = Math.max(missed[missedOffset + 1], missed[missedOffset + 2]);
         }
-        if (calibrating && calibrationCount < 30) {
-          if (readyState().ready && dt > 0 && Number.isFinite(dt))
-            calibrationSamples[calibrationCount++] = dt;
-          else calibrationCount = 0;
-        }
+        if (calibrating && calibrationCount < 30) calibrationSamples[calibrationCount++] = dt;
         if (dt >= 50) totals[offset + 3]++;
         if (dt >= 100) totals[offset + 4]++;
         if (dt >= 50) {
@@ -500,11 +512,11 @@ try {
           samples: Array.from(calibrationSamples.subarray(0, calibrationCount)),
           state: readyState(),
         }),
-        finishCalibration(value) {
-          if (calibration) throw new Error('A document may only accept one pre-play calibration');
+        finishStartupObservation(value) {
+          if (startupObservation)
+            throw new Error('A document may only accept one title-ready startup observation');
           calibrating = false;
-          calibration = value;
-          if (value.status === 'measured-before-play') frameBudget = value.baselineMs;
+          startupObservation = value;
         },
         presentation: () => ({
           atMs: performance.now(),
@@ -525,6 +537,7 @@ try {
           tail: Array.from(tail.subarray(0, Math.min(256, tailCount) * 4)),
           audio: { ...audio },
           calibration,
+          startupObservation,
           missed: Array.from(missed),
           work: workProbe
             ? {
@@ -541,9 +554,12 @@ try {
         }),
       };
     },
-    { bounds: FRAME_BOUNDS, workProbe },
+    {
+      bounds: FRAME_BOUNDS,
+      workProbe,
+      externalCadenceCalibration: report.externalCadenceCalibration,
+    },
   );
-  if (cpu !== 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
   if (cpuProfile) {
     cpuRecorder = createQualificationCpuProfile(cdp, {
       file: resolve(output) + '.cpuprofile',
@@ -637,9 +653,10 @@ try {
       const progress = await page.evaluate(() =>
         window.soloQualificationProbe?.calibrationProgress(),
       );
-      report.prePlayCalibrations.push({
+      report.startupCadenceObservations.push({
         label,
         url: page.url(),
+        role: 'startup-only; never used for external B',
         ...calibrateReadyCadence(progress?.samples ?? [], progress?.state),
         deadlineFailure: String(error.message),
       });
@@ -657,12 +674,20 @@ try {
       deadlineFailure = String(error.message);
     }
     const progress = await page.evaluate(() => window.soloQualificationProbe.calibrationProgress());
-    const calibration = calibrateReadyCadence(progress.samples, progress.state);
+    const startupObservation = {
+      ...calibrateReadyCadence(progress.samples, progress.state),
+      role: 'startup-only; never used for external B',
+    };
     await page.evaluate(
-      (value) => window.soloQualificationProbe.finishCalibration(value),
-      calibration,
+      (value) => window.soloQualificationProbe.finishStartupObservation(value),
+      startupObservation,
     );
-    report.prePlayCalibrations.push({ label, url: page.url(), ...calibration, deadlineFailure });
+    report.startupCadenceObservations.push({
+      label,
+      url: page.url(),
+      ...startupObservation,
+      deadlineFailure,
+    });
   }
   if (!scenario.readySelector) await prepareObservation('initial-ready');
   report.readyAt = new Date().toISOString();

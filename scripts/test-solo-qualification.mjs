@@ -24,6 +24,9 @@ import {
   readPrePlayReadiness,
   createRafIntervalClock,
   calibrateReadyCadence,
+  observeLowWorkCadence,
+  calibrateLowWorkCadence,
+  frozenExternalCadence,
   externalQualificationBudgets,
   aggregateQualificationGates,
 } from './solo-qualification-observation.mjs';
@@ -692,6 +695,121 @@ test('pre-play calibration keeps unstable, incomplete and active windows provisi
     calibrateReadyCadence(Array(30).fill(16.7), { ready: true, phase: 'running' }).status,
     'provisional-unstable',
   );
+});
+
+function lowWorkBrowser() {
+  let clock = 5,
+    scheduled,
+    timer,
+    focused = true,
+    frameCount = 0;
+  const listeners = new Map();
+  const environment = {
+    location: { href: 'about:blank' },
+    innerWidth: 1280,
+    innerHeight: 800,
+    devicePixelRatio: 1,
+    performance: { now: () => clock },
+    requestAnimationFrame(callback) {
+      scheduled = callback;
+      frameCount++;
+      return frameCount;
+    },
+    cancelAnimationFrame: () => (scheduled = null),
+    setTimeout: (callback) => (timer = callback),
+    clearTimeout: () => (timer = null),
+    addEventListener: (name, callback) => listeners.set(name, callback),
+    removeEventListener: (name) => listeners.delete(name),
+    document: {
+      hidden: false,
+      visibilityState: 'visible',
+      hasFocus: () => focused,
+      addEventListener: (name, callback) => listeners.set(name, callback),
+      removeEventListener: (name) => listeners.delete(name),
+    },
+  };
+  return {
+    environment,
+    listeners,
+    frame(timestamp) {
+      clock = timestamp + 10;
+      const callback = scheduled;
+      scheduled = null;
+      callback?.(timestamp);
+    },
+    blur() {
+      focused = false;
+      listeners.get('blur')?.();
+      focused = true;
+    },
+    timeout() {
+      clock = 5005;
+      timer?.();
+    },
+    scheduled: () => scheduled,
+    frameCount: () => frameCount,
+  };
+}
+
+test('low-work cadence uses one fixed foreground window with first callback retained separately', async () => {
+  const fake = lowWorkBrowser();
+  // The exact function is serialized into a blank browser page, without imports.
+  const pending = vm.runInNewContext(`(${observeLowWorkCadence.toString()})()`, fake.environment);
+  fake.frame(0);
+  for (let index = 1; index <= 30; index++) fake.frame(index * (1000 / 60));
+  const observation = await pending;
+  assert.equal(observation.samples.length, 30);
+  assert.equal(observation.firstRafCallback.timestampMinusRegistrationMs, -5);
+  assert.equal(observation.firstRafCallback.registrationToFirstCallbackMs, 5);
+  assert(observation.samples.every((value) => value > 16 && value < 17));
+  assert.equal(fake.frameCount(), 31);
+  assert.equal(fake.scheduled(), null);
+  assert.equal(fake.listeners.size, 0);
+  const calibration = calibrateLowWorkCadence(observation);
+  assert.equal(calibration.status, 'measured-before-play');
+  assert.equal(calibration.protocol, 'foreground-about-blank-fixed-30-v1');
+  assert.match(calibration.scope, /not physical refresh rate/);
+  const firstDocument = frozenExternalCadence(calibration);
+  const reloadedDocument = frozenExternalCadence(structuredClone(calibration));
+  assert.equal(firstDocument.baselineMs, reloadedDocument.baselineMs);
+  assert.throws(() => (firstDocument.baselineMs = 50), TypeError);
+  // A busy title window is separate evidence and cannot replace external B.
+  const busyTitle = calibrateReadyCadence([300, ...Array(29).fill(16.67)], {
+    ready: true,
+    phase: 'briefing',
+  });
+  assert.equal(busyTitle.status, 'provisional-unstable');
+  assert.equal(firstDocument.baselineMs, calibration.baselineMs);
+});
+
+test('low-work cadence retains instability, transient focus loss and deadline without retry', async () => {
+  for (const failure of ['unstable', 'blur', 'timeout', 'changed-viewport', 'nonpositive']) {
+    const fake = lowWorkBrowser();
+    const pending = observeLowWorkCadence({}, fake.environment);
+    fake.frame(0);
+    let timestamp = 0;
+    for (let index = 1; index <= 30; index++) {
+      if (index === 4 && failure === 'blur') fake.blur();
+      if (index === 4 && failure === 'changed-viewport') fake.environment.innerWidth = 400;
+      if (index === 4 && failure === 'timeout') {
+        fake.timeout();
+        break;
+      }
+      timestamp += index === 4 && failure === 'unstable' ? 100 : 1000 / 60;
+      fake.frame(index === 4 && failure === 'nonpositive' ? timestamp - 1000 / 60 : timestamp);
+    }
+    const observation = await pending;
+    const calibration = calibrateLowWorkCadence(observation);
+    assert.notEqual(calibration.status, 'measured-before-play', failure);
+    assert.equal(frozenExternalCadence(calibration).baselineMs, null, failure);
+    assert.equal(fake.scheduled(), null);
+    assert.equal(fake.listeners.size, 0);
+    if (failure === 'timeout') {
+      assert.equal(observation.deadlineReached, true);
+      assert.equal(observation.samples.length, 3);
+      assert.equal(fake.frameCount(), 5);
+    } else assert.equal(observation.samples.length, 30);
+  }
 });
 
 test('external baseline gates never synthesize missing internal counters or exact truncated quantiles', () => {
