@@ -133,6 +133,7 @@ import {
 import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
 import { drawResultPicture } from './ui/result-picture.mjs';
 import { resultContinuationLabel } from './ui/result-continuation.mjs';
+import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -7833,6 +7834,7 @@ try {
   }
   function automaticResultContinuationAvailable() {
     if (
+      !continuousPlayPreferences().snapshot().autoNext ||
       practice ||
       scenario ||
       courseSession ||
@@ -11269,6 +11271,8 @@ try {
         presentEarnedVictoryMedia();
       }
     }
+    if (resultAutoAdvanceRun === run && !continuousPlayPreferences().snapshot().autoNext)
+      clearResultAutoAdvance({ dismiss: true });
     if (
       resultAutoAdvanceRun === run &&
       automaticResultContinuationAvailable() &&

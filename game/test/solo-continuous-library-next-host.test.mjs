@@ -438,3 +438,40 @@ test('Solo final Journey result retains the picture while Browse permits a delib
   assert.equal(p.$('journey-chooser').open, false);
   assert.deepEqual(p.errors, []);
 });
+
+for (const changeDuringCountdown of [false, true]) {
+  test(
+    `Solo respects automatic progression disabled ${changeDuringCountdown ? 'during countdown' : 'before victory'}`,
+    { timeout: 120000 },
+    async (t) => {
+      const { p } = await setup(t);
+      const setting = p.doc.querySelector('[data-global-setting="autoNext"] input');
+      assert.ok(setting, 'The actual shared settings control is mounted.');
+      const previous = setting.checked;
+      const change = (enabled) => {
+        setting.checked = enabled;
+        setting.emit('change');
+      };
+      t.after(() => change(previous));
+      change(changeDuringCountdown);
+      await earnWin(p);
+      for (let tick = 0; tick < 80 && p.$('game-overlay').hidden; tick++) p.frame(100);
+      const completed = p.rendered.run;
+      assert.equal(p.$('result-auto-next').hidden, !changeDuringCountdown);
+      change(false);
+      for (let tick = 0; tick < 100; tick++) p.frame(100);
+      assert.equal(
+        p.rendered.run,
+        completed,
+        'Disabling automatic progression retains the earned result.',
+      );
+      assert.equal(p.$('result-auto-next').hidden, true);
+      change(true);
+      for (let tick = 0; tick < 60; tick++) p.frame(100);
+      assert.equal(p.rendered.run, completed, 'Re-enabling does not resume a cancelled countdown.');
+      await observeAction(p.$('next-button'));
+      await running(p, 'level-0-1');
+      assert.deepEqual(p.errors, []);
+    },
+  );
+}

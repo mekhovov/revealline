@@ -1,0 +1,313 @@
+{
+  "sourceSha256": "5b964ef5be3cc9985d35678c695ab8954652fe8a039ce2a08c6046a1f80c9b1f",
+  "evidenceSha256": "eccdeba36e6dd8d86f817a3ce87b7ada4e5dbdacd1b0ef77df68c44b7d20ef8a",
+  "comparisons": 42,
+  "uniqueCombinations": 42,
+  "worstRatio": 1.0425531914798756,
+  "allPass": true,
+  "allResourcesStable": true,
+  "interruptedRuns": [
+    {
+      "environment": "quarry",
+      "quality": "balanced",
+      "reason": "Browser became hidden; comparison aborted and excluded, then repeated with browser visible."
+    }
+  ],
+  "scope": "Synthetic routes and browser cadence only. Vsync can conceal GPU cost. First four observations overlapped non-graphics Node checks; remaining runs used no concurrent test/build workload. Physical-device, actual-flight and readability qualification remain separate.",
+  "rows": [
+    {
+      "environment": "gym",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1.034090909089575,
+      "resourceStable": true
+    },
+    {
+      "environment": "gym",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1,
+      "resourceStable": true
+    },
+    {
+      "environment": "gym",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 0.9999999999968018,
+      "resourceStable": true
+    },
+    {
+      "environment": "coast",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 0.9999999999968018,
+      "resourceStable": true
+    },
+    {
+      "environment": "coast",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 0.9659090909295357,
+      "resourceStable": true
+    },
+    {
+      "environment": "coast",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 0.9887640449593991,
+      "resourceStable": true
+    },
+    {
+      "environment": "quarry",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1.0113636363477014,
+      "resourceStable": true
+    },
+    {
+      "environment": "quarry",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1.0112359550667616,
+      "resourceStable": true
+    },
+    {
+      "environment": "quarry",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1.0224719101073625,
+      "resourceStable": true
+    },
+    {
+      "environment": "rooftops",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1,
+      "resourceStable": true
+    },
+    {
+      "environment": "rooftops",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1,
+      "resourceStable": true
+    },
+    {
+      "environment": "rooftops",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1.0112359550667616,
+      "resourceStable": true
+    },
+    {
+      "environment": "orchard",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1.0340909090695622,
+      "resourceStable": true
+    },
+    {
+      "environment": "orchard",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1.0113636363477014,
+      "resourceStable": true
+    },
+    {
+      "environment": "orchard",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 0.9892473118179966,
+      "resourceStable": true
+    },
+    {
+      "environment": "solar-farm",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 0.9888888888785409,
+      "resourceStable": true
+    },
+    {
+      "environment": "solar-farm",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1.0000000000240032,
+      "resourceStable": true
+    },
+    {
+      "environment": "solar-farm",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 0.9897959183816504,
+      "resourceStable": true
+    },
+    {
+      "environment": "rail-depot",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1,
+      "resourceStable": true
+    },
+    {
+      "environment": "rail-depot",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1.0208333333040274,
+      "resourceStable": true
+    },
+    {
+      "environment": "rail-depot",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1,
+      "resourceStable": true
+    },
+    {
+      "environment": "field",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 0.9900990098918604,
+      "resourceStable": true
+    },
+    {
+      "environment": "field",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 0.9900990099146847,
+      "resourceStable": true
+    },
+    {
+      "environment": "field",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1.0202020201735131,
+      "resourceStable": true
+    },
+    {
+      "environment": "woodland",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1.0000000000235183,
+      "resourceStable": true
+    },
+    {
+      "environment": "woodland",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1.0102040816421078,
+      "resourceStable": true
+    },
+    {
+      "environment": "woodland",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1,
+      "resourceStable": true
+    },
+    {
+      "environment": "courtyard",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 0.9898989899130058,
+      "resourceStable": true
+    },
+    {
+      "environment": "courtyard",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1.0102040816183497,
+      "resourceStable": true
+    },
+    {
+      "environment": "courtyard",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1.0206185566963293,
+      "resourceStable": true
+    },
+    {
+      "environment": "warehouse",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1.0102040816183497,
+      "resourceStable": true
+    },
+    {
+      "environment": "warehouse",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1.030612244878807,
+      "resourceStable": true
+    },
+    {
+      "environment": "warehouse",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1.0315789473488142,
+      "resourceStable": true
+    },
+    {
+      "environment": "stadium",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1.0300000000046565,
+      "resourceStable": true
+    },
+    {
+      "environment": "stadium",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1.0104166666765195,
+      "resourceStable": true
+    },
+    {
+      "environment": "stadium",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1.0319148936222913,
+      "resourceStable": true
+    },
+    {
+      "environment": "container-yard",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1.0104166666762668,
+      "resourceStable": true
+    },
+    {
+      "environment": "container-yard",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 1,
+      "resourceStable": true
+    },
+    {
+      "environment": "container-yard",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1.0104166667252785,
+      "resourceStable": true
+    },
+    {
+      "environment": "garage",
+      "quality": "low",
+      "gate": "pass",
+      "worstRatio": 1.0208333333040274,
+      "resourceStable": true
+    },
+    {
+      "environment": "garage",
+      "quality": "balanced",
+      "gate": "pass",
+      "worstRatio": 0.989898989936524,
+      "resourceStable": true
+    },
+    {
+      "environment": "garage",
+      "quality": "high",
+      "gate": "pass",
+      "worstRatio": 1.0425531914798756,
+      "resourceStable": true
+    }
+  ]
+}

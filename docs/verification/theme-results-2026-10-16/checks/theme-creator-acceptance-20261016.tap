@@ -1,0 +1,189 @@
+TAP version 13
+# Subtest: preview admits the registered runtime ledger and rejects invalid or duplicate unselected assets
+ok 1 - preview admits the registered runtime ledger and rejects invalid or duplicate unselected assets
+  ---
+  duration_ms: 68.944208
+  ...
+# Subtest: whole-game preview verifies the report, every artifact byte and exact selected draft
+ok 2 - whole-game preview verifies the report, every artifact byte and exact selected draft
+  ---
+  duration_ms: 32.742875
+  ...
+# Subtest: a self-consistent compiler report cannot omit or add curated theme definitions behind matching pins
+ok 3 - a self-consistent compiler report cannot omit or add curated theme definitions behind matching pins
+  ---
+  duration_ms: 233.839167
+  ...
+# Subtest: changed executable bytes, report totals/exclusions and invented approval cannot pass preview verification
+ok 4 - changed executable bytes, report totals/exclusions and invented approval cannot pass preview verification
+  ---
+  duration_ms: 32.971
+  ...
+# Subtest: preview verification stops before activation on cancellation and oversized streamed bytes
+ok 5 - preview verification stops before activation on cancellation and oversized streamed bytes
+  ---
+  duration_ms: 23.594125
+  ...
+# Subtest: overlong artifact and pending-read abort reject despite nonsettling transport cancellation
+ok 6 - overlong artifact and pending-read abort reject despite nonsettling transport cancellation
+  ---
+  duration_ms: 21.748958
+  ...
+# Subtest: focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
+ok 7 - focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
+  ---
+  duration_ms: 22763.123166
+  ...
+# Subtest: new-company starter loads the current Solo host and First Flight with complete neutral classes
+ok 8 - new-company starter loads the current Solo host and First Flight with complete neutral classes
+  ---
+  duration_ms: 87.883375
+  ...
+# Subtest: Studio CLI creates missing workspace parents while preserving new-only destinations
+ok 9 - Studio CLI creates missing workspace parents while preserving new-only destinations
+  ---
+  duration_ms: 771.728583
+  ...
+# Subtest: Studio import/export preserves original retained JSON text and rejects modified, parsed or missing snapshots
+ok 10 - Studio import/export preserves original retained JSON text and rejects modified, parsed or missing snapshots
+  ---
+  duration_ms: 105.42875
+  ...
+# Subtest: Studio preview verifies historical-only media and immutable snapshots in its inventory and totals
+ok 11 - Studio preview verifies historical-only media and immutable snapshots in its inventory and totals
+  ---
+  duration_ms: 175.492333
+  ...
+# Subtest: one edited candidate is reusable in two unrelated source drafts and exact offline publications
+ok 12 - one edited candidate is reusable in two unrelated source drafts and exact offline publications
+  ---
+  duration_ms: 103.43525
+  ...
+# Subtest: candidate admission excludes unrelated records, protects immutable identity and rejects missing or executable dependencies
+ok 13 - candidate admission excludes unrelated records, protects immutable identity and rejects missing or executable dependencies
+  ---
+  duration_ms: 149.291459
+  ...
+# Subtest: normal shared host resolves the admitted custom identity and preserves personal override and exact installed artwork
+ok 14 - normal shared host resolves the admitted custom identity and preserves personal override and exact installed artwork
+  ---
+  duration_ms: 9.200834
+  ...
+# Subtest: compact export preserves edited candidate scope and unsupported selected source assets are rejected before assignment
+ok 15 - compact export preserves edited candidate scope and unsupported selected source assets are rejected before assignment
+  ---
+  duration_ms: 260.887959
+  ...
+# Subtest: custom SIM handoff carries only validated cosmetic context and follows independent personal and world overrides
+ok 16 - custom SIM handoff carries only validated cosmetic context and follows independent personal and world overrides
+  ---
+  duration_ms: 8.565
+  ...
+# Subtest: compiled first paint uses exact custom palette without preference writes and rejects arbitrary style injection
+ok 17 - compiled first paint uses exact custom palette without preference writes and rejects arbitrary style injection
+  ---
+  duration_ms: 8.996375
+  ...
+# Subtest: retained custom presentation keeps exact curated bytes and late admission advances affected owner revisions
+ok 18 - retained custom presentation keeps exact curated bytes and late admission advances affected owner revisions
+  ---
+  duration_ms: 125.404416
+  ...
+# Subtest: unavailable or expired custom SIM context uses authored world with retained intent while explicit world choice wins
+ok 19 - unavailable or expired custom SIM context uses authored world with retained intent while explicit world choice wins
+  ---
+  duration_ms: 10.673
+  ...
+# Subtest: unfinished low-contrast candidate stays previewable but cannot be registered or published
+ok 20 - unfinished low-contrast candidate stays previewable but cannot be registered or published
+  ---
+  duration_ms: 137.173417
+  ...
+# Subtest: noopener optional launch transfers one bounded context to a separate tab without sharing session storage or preferences
+ok 21 - noopener optional launch transfers one bounded context to a separate tab without sharing session storage or preferences
+  ---
+  duration_ms: 393.268875
+  ...
+# Subtest: only atomic accepted custom context reaches auxiliary pages and expires with its first-paint seed
+ok 22 - only atomic accepted custom context reaches auxiliary pages and expires with its first-paint seed
+  ---
+  duration_ms: 153.254208
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context without saving a preference
+ok 23 - actual edition campaign adoption updates appearance and SIM context without saving a preference
+  ---
+  duration_ms: 1065.862958
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+ok 24 - actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+  ---
+  duration_ms: 767.877416
+  ...
+# Subtest: a cancelled campaign theme preload retains the active flight and SIM context
+ok 25 - a cancelled campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 611.787959
+  ...
+# Mission preparation failed. Error: Fixture font decode failed.
+#     at TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/edition-appearance-host.test.mjs:184:19)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: a failed campaign theme preload retains the active flight and SIM context
+ok 26 - a failed campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 616.6885
+  ...
+# Subtest: Theme Studio opens the real workspace editor and shared material gallery without editing a theme
+ok 27 - Theme Studio opens the real workspace editor and shared material gallery without editing a theme
+  ---
+  duration_ms: 339.750958
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+ok 28 - saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+  ---
+  duration_ms: 1579.668833
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+ok 29 - saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+  ---
+  duration_ms: 1834.372542
+  ...
+# Subtest: missing exact basis stays portable and editable without silently becoming latest Industrial
+ok 30 - missing exact basis stays portable and editable without silently becoming latest Industrial
+  ---
+  duration_ms: 586.611625
+  ...
+# Subtest: v1 native data remains exact and malformed or unversioned basis metadata is rejected
+ok 31 - v1 native data remains exact and malformed or unversioned basis metadata is rejected
+  ---
+  duration_ms: 478.733125
+  ...
+# Subtest: workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+ok 32 - workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+  ---
+  duration_ms: 535.585083
+  ...
+# Subtest: Studio chrome lists and immediately applies admitted custom themes without editing the workspace
+ok 33 - Studio chrome lists and immediately applies admitted custom themes without editing the workspace
+  ---
+  duration_ms: 176.527417
+  ...
+# Subtest: role inspector uses runtime semantics without inline paint or stealing selector focus
+ok 34 - role inspector uses runtime semantics without inline paint or stealing selector focus
+  ---
+  duration_ms: 506.398542
+  ...
+# Subtest: edited Studio theme survives two real compiled community entries and verified cache-only reload
+ok 35 - edited Studio theme survives two real compiled community entries and verified cache-only reload
+  ---
+  duration_ms: 10956.992084
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30985.730959
