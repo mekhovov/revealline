@@ -16,6 +16,7 @@ import {
   waitQualificationPreparation,
 } from './solo-qualification-export.mjs';
 import { createQualificationCpuProfile } from './solo-qualification-cpu-profile.mjs';
+import { createQualificationReplayIdentity } from './solo-qualification-replay-identity.mjs';
 import {
   qualificationContextMode,
   createPersistentQualificationOwner,
@@ -227,6 +228,8 @@ const report = {
   startupCadenceObservations: [],
   failure: null,
 };
+const replayIdentity = scenario.replayIdentity ? createQualificationReplayIdentity() : null;
+if (replayIdentity) report.replayIdentity = replayIdentity.report;
 await mkdir(dirname(resolve(output)), { recursive: true });
 async function save() {
   const target = resolve(output),
@@ -1061,6 +1064,7 @@ try {
           const text = await readPublicQualificationReplay(page, timeout);
           nativeReplay = text;
           record.bytes = Buffer.byteLength(text);
+          if (replayIdentity) record.identity = replayIdentity.observe(text);
         } else if (action.type === 'snapshot') {
           const snapshot = await page.evaluate(() => {
             const phase = document.body.dataset.flightState;
@@ -1118,6 +1122,7 @@ try {
     }
   }
   await execute(scenario.actions);
+  replayIdentity?.finish();
   if (scenario.expectAudio) {
     const probe = await page.evaluate(() => window.soloQualificationProbe.export());
     const audio = report.snapshots.at(-1)?.application?.audio;
