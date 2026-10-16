@@ -230,10 +230,14 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     'scripts/pack-indexes.mjs',
     'scripts/brand-icons.mjs',
     'scripts/build-entry-writer.mjs',
+    'publishing/vendor/acorn-8.18.0.mjs',
+    'publishing/vendor/acorn-LICENSE.txt',
     'game/data-json.mjs',
     'game/content-launch.mjs',
-  ])
+  ]) {
+    await fs.mkdir(path.dirname(path.join(root, relative)), { recursive: true });
     await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));
+  }
   await fs.writeFile(
     path.join(root, 'scripts/offline-core-closure.mjs'),
     'export function isOptionalSpatialAudioBody() { return false; }\nexport function isOptionalReactionVoiceBody() { return false; }\n',
@@ -251,7 +255,7 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   await fs.writeFile(path.join(scripts, 'game-cli.mjs'), historicalEntry);
   await fs.writeFile(path.join(root, '.gitignore'), 'releases/\n');
   git('init', '--quiet');
-  git('add', 'game', 'scripts', '.gitignore');
+  git('add', 'game', 'scripts', 'publishing', '.gitignore');
   git(
     '-c',
     'commit.gpgsign=false',
@@ -307,6 +311,11 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   const sourceEntries = new Map(readTarEntries(archive).map((entry) => [entry.name, entry.bytes]));
   assert.deepEqual(sourceEntries.get('game/core.mjs'), oldCore);
   assert.equal(sourceEntries.get('scripts/game-cli.mjs').toString(), historicalEntry);
+  assert.deepEqual(
+    sourceEntries.get('publishing/vendor/acorn-8.18.0.mjs'),
+    await fs.readFile(new URL('../publishing/vendor/acorn-8.18.0.mjs', import.meta.url)),
+    'The frozen build uses its archived parser bytes without resolving host node_modules.',
+  );
   assert.ok(
     ![...sourceEntries.keys()].some(
       (name) => name.startsWith('releases/') || name.startsWith('.git/'),
