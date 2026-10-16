@@ -2144,7 +2144,6 @@ try {
             readAsset: source.readAsset,
             onChange: (state) => {
               soundtrackPanel?.update(state);
-              quickMusicControls?.render();
               notifyDemoAudio();
               musicPreviewState = state;
               renderMusicPreview();
