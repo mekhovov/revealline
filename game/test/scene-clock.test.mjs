@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createSceneClock } from '../ui/scene-clock.mjs';
 
 test('native 30 through 144 Hz schedules advance the same authoritative time past startup', () => {
-  for (const hz of [30, 60, 90, 120, 144]) {
+  for (const hz of [30, 40, 45, 60, 90, 120, 144]) {
     const clock = createSceneClock();
     clock.sample(0, true);
     let seconds = 0;
@@ -17,7 +17,7 @@ test('cadence changes and exact interruption boundary preserve time without hidi
   const clock = createSceneClock();
   clock.sample(0, true);
   let now = 0;
-  for (const delta of [1000 / 60, 1000 / 30, 1000 / 90, 100, 249, 250]) {
+  for (const delta of [1000 / 60, 1000 / 40, 1000 / 45, 1000 / 30, 1000 / 90, 100, 249, 250]) {
     now += delta;
     const result = clock.sample(now, true);
     assert.ok(Math.abs(result.elapsedSeconds - delta / 1000) < 1e-9);
@@ -25,11 +25,10 @@ test('cadence changes and exact interruption boundary preserve time without hidi
   }
   for (const delta of [251, 500]) {
     now += delta;
-    assert.deepEqual(clock.sample(now, true), {
-      elapsedSeconds: 0,
-      rawElapsedMs: delta,
-      interrupted: true,
-    });
+    const sample = clock.sample(now, true);
+    assert.equal(sample.elapsedSeconds, 0);
+    assert.equal(sample.interrupted, true);
+    assert.ok(Math.abs(sample.rawElapsedMs - delta) < 1e-9);
   }
 });
 
