@@ -156,6 +156,21 @@
         "sha256": "e71b137f908a28de7e96471aed26c26ee45e85c2e41c8f15d85c13e86916d1f7"
       },
       "scope": "Watching/pause/details/background/return/practice, public return-to-play and strict original/fresh same-engine replay; excluded from timing and heat claims."
+    },
+    {
+      "kind": "offline-installed-entry-restart",
+      "status": "failed",
+      "report": {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/offline-starter-8c1af9d1-attempt02/offline/report.json",
+        "bytes": 199031,
+        "sha256": "9d4d2b92973fad69b4602ea322d449d97aad9ebc32e61282c2dfa096443ea213"
+      },
+      "interpretation": {
+        "path": ".cache/solo-followup/native-offline-restart-diagnostic-01/interpretation.json",
+        "bytes": 6346,
+        "sha256": "2b1509e437e1f052f0167cc4fc82ff4c8d983a0e6a04f24cea0ce2325e831085"
+      },
+      "scope": "Original deployment CSP; public Starter readiness then full persistent-browser restart with server stopped. Manifest /app/ launch failed; worker saw zero launcher cache entries. No offline gameplay/replay or physical-PWA qualification. Cause unresolved."
     }
   ],
   "limitations": [
@@ -163,5 +178,20 @@
     "Historical failed and partial observations retain their exact source and are not overwritten.",
     "Physical iPhone17Pro/iOS27.0.1 Safari regular-tab and installed-PWA, plus SteamDeckOLED Chrome default-cadence checks remain unobserved."
   ],
-  "scope": "Existing successful CI package verified before browser use. No release/deployment or universal smoothness claim."
+  "scope": "Existing successful CI package verified before browser use. No release/deployment or universal smoothness claim.",
+  "nativePreservation": {
+    "path": ".cache/solo-followup/native-8c1af9d1-preservation-01/receipt.json",
+    "bytes": 3028,
+    "sha256": "08e6dc9d3ddd4613eab2599afeec96227976680cfc5cc485ced7b8bf7b21f63c"
+  },
+  "nativeEvidenceArchive": {
+    "absolutePath": "/Volumes/alex/solo-performance-b1174522/evidence/native-final-8c1af9d1-preserved-01/evidence.tar.gz",
+    "bytes": 333457,
+    "sha256": "04e6b8d94bbd14926f1ee2756c53a6fd59931455629c480d37d71263fdeb9197"
+  },
+  "ownedDemoProfileRetirement": {
+    "path": ".cache/solo-followup/demo-profile-8c1-final-retirement/receipt.json",
+    "bytes": 1820,
+    "sha256": "4674ff1a2cf402ddc7e0bde1a0f725b9ec8cb49e96fc24ef982a149e95658389"
+  }
 }
