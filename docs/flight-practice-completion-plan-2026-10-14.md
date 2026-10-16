@@ -2,11 +2,18 @@
 
 ## 16 October research and execution update
 
-The next batch is deliberately bounded: verify the prepared native keyboard
-completion/export/replay path; reproduce the result-action pointer failure;
-repair its shared presentation owner and regenerate the existing SIM shell
-projection; then qualify the changed package bytes. SIM flight mechanics,
-lessons and rendering remain outside this batch. Keep all failed receipts.
+The [result-action continuation](flight-practice-result-qualification-2026-10-16.md)
+completes the native keyboard probe, reproduces and repairs moving result targets,
+and passes all eight EN/UK Academy/Worlds Self-level/Acro lift-and-land journeys
+with first-pointer Home, actual backup and exact-package independent replay.
+All three changed packages reproduce twice and pass admission. The original
+failed matrix and observer correction remain retained. This is not a complete
+Phase 1/public release or a human/hardware qualification.
+
+Next: populated Worlds offline process restart, distinct-release active-session
+update/rollback, and current timeout/cancellation recovery. Real hardware is
+deferred at the owner's subsequent request; hosting remains deferred. SIM flight
+mechanics, lessons and rendering remain outside this workstream.
 
 Fresh primary-source guidance sharpens acceptance rather than adding features:
 
@@ -44,8 +51,9 @@ EN/UK settings/reload/visible stationary-HUD journeys. Matching guides are updat
 The first genuine FPV exercise probe failed at the unchanged deadline; its
 observer-only ground-clearance correction passes a reproduced model regression,
 then a corrected probe genuinely completed in 13.353 seconds but failed its
-pointer-based export and browser-cleanup timeout. The prepared keyboard export,
-actual backup/replay, clean shutdown and full eight-case matrix remain unverified.
+pointer-based export and browser-cleanup timeout. The then-open keyboard export,
+backup/replay, clean shutdown and eight-case matrix were subsequently verified
+in the result-action continuation above; original failed attempts stay failed.
 Disk pressure briefly paused native work; future batches need a safe margin. No hosting
 or review gate is waived. Historical FPV DOM telemetry is not visible-HUD proof.
 

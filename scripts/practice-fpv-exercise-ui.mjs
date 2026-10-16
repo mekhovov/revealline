@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { setTimeout as delay } from 'node:timers/promises';
 
 export const FPV_EXERCISE_PROTOCOL = Object.freeze({
-  id: 'practice-fpv-exercise-public-ui.prototype.v3',
+  id: 'practice-fpv-exercise-public-ui.prototype.v4',
   sourceReviewed: '1d8b9c076',
   maximumMs: 90000,
   operationMs: 1500,
@@ -123,25 +123,27 @@ export function parsePublicFPVSnapshot(raw, spec) {
         spec.locale === 'uk' ? 'Органи керування · Mode 2' : 'Flight controls · Mode 2',
         'Visible left stick is not Mode 2 throttle.',
       );
-      assert(
-        raw.stickVisible &&
-          Number.isFinite(raw.stickY) &&
-          Number.isFinite(raw.stickRadius) &&
-          raw.stickRadius > 0,
-        'Visible throttle stick geometry unavailable.',
-      );
-      throttle = (1 - raw.stickY / raw.stickRadius) / 2;
-      // CSS matrix serialization may round the rendered coordinate slightly.
-      assert(
-        throttle >= -0.00001 && throttle <= 1.00001,
-        'Throttle stick outside its visible range.',
-      );
-      throttle = clamp(throttle, 0, 1);
     } else {
-      const match = boundedText(raw.throttleText).match(/^(\d+(?:[.,]\d+)?)%$/);
-      assert(match, 'Missing visible Worlds throttle percentage.');
-      throttle = Number(match[1].replace(',', '.')) / 100;
+      assert.match(
+        raw.stickModeLabel,
+        spec.locale === 'uk' ? /^Рискання -?\d+%, Газ \d+%$/ : /^Yaw -?\d+%, Throttle \d+%$/,
+        'Visible Worlds left stick is not yaw/throttle.',
+      );
     }
+    assert(
+      raw.stickVisible &&
+        Number.isFinite(raw.stickY) &&
+        Number.isFinite(raw.stickRadius) &&
+        raw.stickRadius > 0,
+      'Visible throttle stick geometry unavailable.',
+    );
+    throttle = (1 - raw.stickY / raw.stickRadius) / 2;
+    // CSS matrix serialization may round the rendered coordinate slightly.
+    assert(
+      throttle >= -0.00001 && throttle <= 1.00001,
+      'Throttle stick outside its visible range.',
+    );
+    throttle = clamp(throttle, 0, 1);
   }
   if (height !== null)
     assert(
@@ -280,8 +282,8 @@ export async function readPublicFPVSnapshot(page, packageId) {
     const viewport = node(academy ? '#viewport' : '#world-viewport');
     const result = node(academy ? '#complete' : '#result-panel');
     const hud = '[data-sim-hud="flight"]';
-    const stick = node('#left-dot');
-    const stickVisible = academy && visible(stick) && visible(stick?.parentElement);
+    const stick = node(academy ? '#left-dot' : '#world-left-stick > i');
+    const stickVisible = visible(stick) && visible(stick?.parentElement);
     const stickY = stickVisible
       ? new globalThis.DOMMatrixReadOnly(globalThis.getComputedStyle(stick).transform).m42
       : null;
@@ -303,11 +305,10 @@ export async function readPublicFPVSnapshot(page, packageId) {
       details: text(`${hud} [data-hud-part="details"]`),
       gauge: text(`${hud} [data-hud-part="gauge-name"]`),
       action: text(`${hud} [data-hud-part="action"]`),
-      throttleText: academy ? null : text('#world-touch-throttle'),
       stickVisible,
       stickY,
-      stickRadius: stickVisible ? stick.parentElement.clientWidth * 0.3 : null,
-      stickModeLabel: academy ? node('#sticks')?.getAttribute('aria-label') : null,
+      stickRadius: stickVisible ? stick.parentElement.clientWidth * (academy ? 0.3 : 0.34) : null,
+      stickModeLabel: node(academy ? '#sticks' : '#world-left-stick')?.getAttribute('aria-label'),
       resultVisible: visible(result),
       resultHeading: academy ? text('#complete-title') : text('#result-panel h2'),
     };
