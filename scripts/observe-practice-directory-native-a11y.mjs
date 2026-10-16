@@ -24,7 +24,7 @@ export const A11Y_CASES = Object.freeze(
   ),
 );
 export const A11Y_POLICY = Object.freeze({
-  id: 'practice-directory-native-zoom-a11y.v2',
+  id: 'practice-directory-native-zoom-a11y.v3',
   caseMs: 90000,
   overallMs: 600000,
   actionMs: 10000,
@@ -34,6 +34,50 @@ export const A11Y_POLICY = Object.freeze({
 });
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const pin = (name, bytes) => ({ path: name, bytes: bytes.length, sha256: sha(bytes) });
+/** Source previews have no generated release identity. Retain every original
+ * failure; classify only these exact optional probes, never missing app assets. */
+export function classifyNativeSourceRequests(
+  failures,
+  { sourceShellOnly, productionQualification, buildInfoAbsent },
+) {
+  assert(Array.isArray(failures));
+  assert.equal(typeof sourceShellOnly, 'boolean');
+  assert.equal(typeof productionQualification, 'boolean');
+  assert.equal(typeof buildInfoAbsent, 'boolean');
+  const expected = [],
+    unexpected = [];
+  let builds = 0,
+    icons = 0;
+  for (const [index, row] of failures.entries()) {
+    let reason;
+    if (
+      sourceShellOnly &&
+      !productionQualification &&
+      buildInfoAbsent &&
+      row.path === '/revealline/game/build-info.json' &&
+      row.message === 'Not a committed regular file.' &&
+      ++builds <= A11Y_CASES.length * 2
+    )
+      reason = 'Absent generated release identity in committed source preview';
+    else if (
+      sourceShellOnly &&
+      !productionQualification &&
+      row.path === '/favicon.ico' &&
+      row.message === 'Outside local fixture root.' &&
+      ++icons <= A11Y_CASES.length * 2
+    )
+      reason = 'Browser default icon probe outside fixture root';
+    (reason ? expected : unexpected).push({ index, ...row, ...(reason ? { reason } : {}) });
+  }
+  return {
+    policy: 'bounded-source-preview-probes.v1',
+    sourceShellOnly,
+    productionQualification,
+    buildInfoAbsent,
+    expected,
+    unexpected,
+  };
+}
 export function validateNativeA11yPlan(plan) {
   assert.deepEqual(
     Object.keys(plan).sort(),
@@ -969,10 +1013,15 @@ export async function observeNativeDirectoryA11y({
     await total.run('Final clean source identity', source);
     total.check();
     report.sourceStable = true;
+    report.requestClassification = classifyNativeSourceRequests(report.requestFailures, {
+      sourceShellOnly: report.sourceShellOnly,
+      productionQualification: report.productionQualification,
+      buildInfoAbsent: !tree.has('game/build-info.json'),
+    });
     report.passed =
       report.cases.length === 6 &&
       report.cases.every((x) => x.passed) &&
-      report.requestFailures.length === 0;
+      report.requestClassification.unexpected.length === 0;
   } catch (error) {
     report.failure = error.message;
   } finally {
@@ -997,6 +1046,16 @@ export async function observeNativeDirectoryA11y({
       await cleanup('Join underlying operations', () => scope.settled());
     report.pendingOperations =
       scopes.reduce((n, s) => n + s.pending(), 0) + (server?.pending() ?? 0);
+    // Reclassify after every request/native operation settles; a late unexpected
+    // request cannot escape the earlier success calculation.
+    if (report.requestClassification) {
+      report.requestClassification = classifyNativeSourceRequests(report.requestFailures, {
+        sourceShellOnly: report.sourceShellOnly,
+        productionQualification: report.productionQualification,
+        buildInfoAbsent: report.requestClassification.buildInfoAbsent,
+      });
+      report.passed &&= report.requestClassification.unexpected.length === 0;
+    }
     report.profileRemoved ??= false;
     if (
       profile &&
