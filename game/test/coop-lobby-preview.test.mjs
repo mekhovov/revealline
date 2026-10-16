@@ -242,6 +242,7 @@ test('held artwork completes behind Settings without reclaiming its selector or 
   f.$('coop-settings-open').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-options').open, true);
+  f.$('coop-settings-tab-accessibility').click();
   const selector = f.$('coop-text-size');
   selector.focus();
   selector.value = 'large';

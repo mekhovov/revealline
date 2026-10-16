@@ -1,0 +1,1625 @@
+diff --git a/game/presentation/reference-bundle.mjs b/game/presentation/reference-bundle.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..38472bbb35198dffd9a14528a2d7aceba23bf32e
+--- /dev/null
++++ b/game/presentation/reference-bundle.mjs
+@@ -0,0 +1,105 @@
++/** Explicit local v2 prototype transfer. No legacy magic/schema is broadened. */
++import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mjs';
++import { LIMITS } from './model.mjs';
++import { browserDecodeImage } from '../imports.mjs';
++import { THEME_BUNDLE_MIME, verifyPresentationFileRows } from './bundle.mjs';
++import { validateReferencedBundle, checkReferenceAbort } from './reference-model.mjs';
++
++const MAGIC = new TextEncoder().encode('RLTHM2\r\n');
++const sizeOf = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
++export async function verifyReferencedAssets(source, assets, options = {}) {
++  const document = await validateReferencedBundle(source, options);
++  return verifyPresentationFileRows(document.assets, assets, options);
++}
++export async function exportReferencedBundle(source, sourceAssets = new Map(), options = {}) {
++  const document = await validateReferencedBundle(source, options);
++  const assets = await verifyPresentationFileRows(document.assets, sourceAssets, options);
++  const table = [...assets].map(([sha256, blob]) => ({ sha256, bytes: sizeOf.call(blob) }));
++  const manifest = new TextEncoder().encode(canonicalJSON({ document, assets: table }));
++  required(manifest.length <= LIMITS.manifestBytes, 'Bundle manifest exceeds its budget.');
++  required(
++    12 + manifest.length + table.reduce((sum, row) => sum + row.bytes, 0) <= LIMITS.bundleBytes,
++    'Theme bundle exceeds 32 MiB.',
++  );
++  const header = new Uint8Array(12);
++  header.set(MAGIC);
++  new DataView(header.buffer).setUint32(8, manifest.length);
++  checkReferenceAbort(options.signal);
++  return new Blob([header, manifest, ...assets.values()], { type: THEME_BUNDLE_MIME });
++}
++export async function importReferencedBundle(
++  source,
++  { signal, decodeImage = browserDecodeImage, previous = null, expectedRevision } = {},
++) {
++  checkReferenceAbort(signal);
++  let size;
++  try {
++    size = sizeOf.call(source);
++  } catch {
++    throw new TypeError('A native Blob or File is required.');
++  }
++  required(size >= 12 && size <= LIMITS.bundleBytes, 'File exceeds its byte budget.');
++  const blob = Blob.prototype.slice.call(source, 0, size);
++  const header = new Uint8Array(await blob.slice(0, 12).arrayBuffer());
++  required(
++    MAGIC.every((byte, i) => header[i] === byte),
++    'Unsupported v2 theme bundle.',
++  );
++  const length = new DataView(header.buffer).getUint32(8);
++  required(
++    length > 0 && length <= LIMITS.manifestBytes && 12 + length <= size,
++    'Invalid theme manifest length.',
++  );
++  const manifest = boundedJSON(
++    new TextDecoder('utf-8', { fatal: true }).decode(
++      await blob.slice(12, 12 + length).arrayBuffer(),
++    ),
++    {
++      maxBytes: LIMITS.manifestBytes,
++      maxNodes: 110000,
++      maxArray: 2048,
++      maxDepth: 20,
++      maxString: 8192,
++    },
++  );
++  exactKeys(manifest, ['document', 'assets'], 'theme transfer');
++  const document = await validateReferencedBundle(manifest.document, {
++    signal,
++    previous,
++    expectedRevision,
++  });
++  required(
++    Array.isArray(manifest.assets) && manifest.assets.length <= LIMITS.assets,
++    'Invalid theme asset table.',
++  );
++  const assets = new Map();
++  let offset = 12 + length,
++    last = '';
++  for (const row of manifest.assets) {
++    exactKeys(row, ['sha256', 'bytes'], 'payload row');
++    required(
++      typeof row.sha256 === 'string' &&
++        /^[a-f0-9]{64}$/.test(row.sha256) &&
++        row.sha256 > last &&
++        Number.isSafeInteger(row.bytes) &&
++        row.bytes > 0 &&
++        row.bytes <= LIMITS.assetBytes,
++      'Invalid or duplicate payload row.',
++    );
++    required(offset + row.bytes <= size, 'Truncated theme asset.');
++    assets.set(row.sha256, blob.slice(offset, offset + row.bytes));
++    offset += row.bytes;
++    last = row.sha256;
++  }
++  required(offset === size, 'Unexpected trailing theme bytes.');
++  const accepted = await verifyPresentationFileRows(document.assets, assets, {
++    signal,
++    decodeImage,
++  });
++  checkReferenceAbort(signal);
++  return Object.freeze({
++    document,
++    assets: accepted,
++    imagesDecoded: typeof decodeImage === 'function',
++  });
++}
+diff --git a/game/presentation/reference-model.mjs b/game/presentation/reference-model.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..83c6ed363d23436a15c26185175e153eb2958bb3
+--- /dev/null
++++ b/game/presentation/reference-model.mjs
+@@ -0,0 +1,277 @@
++/** Local P04 prototype. Explicit v2 boundary; legacy v1 remains unchanged. */
++import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
++import {
++  FORMATS,
++  LIMITS,
++  freezePresentation,
++  validateThemeBundle,
++  validateAssetSlotSpec,
++  validateAssetRevision,
++  validatePresentationTheme,
++  validateAssetCollection,
++  validatePresentationReferences,
++  resolvePresentationRecords,
++} from './model.mjs';
++import { hashPresentationBytes } from './bundle.mjs';
++
++export const REFERENCE_FORMAT = 'revealline-theme-bundle.v2';
++export const REFERENCE_ASSET = 'revealline-asset-revision.v2';
++export const referenceKey = (record) => `${record.id}@${record.revision}`;
++export const referenceOf = ({ id, revision }) => ({ id, revision });
++export const checkReferenceAbort = (signal) => {
++  if (signal?.aborted) throw new DOMException('Theme operation cancelled.', 'AbortError');
++};
++const own = (value) =>
++  boundedJSON(value, {
++    maxBytes: LIMITS.manifestBytes,
++    maxNodes: 100000,
++    maxArray: 2048,
++    maxDepth: 18,
++    maxString: 8192,
++  });
++const keys = (value, fields, label) => {
++  exactKeys(value, fields, label);
++  required(
++    fields.every((key) => Object.hasOwn(value, key)),
++    `${label} is missing fields.`,
++  );
++};
++const ref = (value) => {
++  keys(value, ['id', 'revision'], 'reference');
++  required(
++    stableId(value.id) && Number.isSafeInteger(value.revision) && value.revision > 0,
++    'Invalid reference.',
++  );
++};
++export const provenanceContent = ({ creator, source, license, prompt }) => ({
++  creator,
++  source,
++  license,
++  prompt,
++});
++export const provenanceDigest = (provenance) =>
++  hashPresentationBytes(new TextEncoder().encode(canonicalJSON(provenanceContent(provenance))));
++
++/** Validate saved-history progression without async work inside an IDB transaction.
++ * Both inputs must already have passed their explicit format validators. */
++export function assertReferencedHistory(document, previous, { multiple = false } = {}) {
++  required(
++    document.id === previous.id && document.revision >= previous.revision,
++    'Saving must retain the same studio document and history.',
++  );
++  if (document.revision === previous.revision) {
++    required(
++      canonicalJSON(document) === canonicalJSON(previous),
++      'A changed studio document must advance its revision.',
++    );
++    return;
++  }
++  required(
++    multiple || document.revision === previous.revision + 1,
++    'A transition must advance the same bundle exactly once.',
++  );
++  for (const field of ['slots', 'assets', 'themes', 'collections']) {
++    const old = new Map(previous[field].map((row) => [referenceKey(row), row]));
++    const next = new Map(document[field].map((row) => [referenceKey(row), row]));
++    for (const [key, row] of old)
++      required(
++        canonicalJSON(next.get(key)) === canonicalJSON(row),
++        `Immutable ${field} history changed.`,
++      );
++    const newest = new Map();
++    for (const row of previous[field])
++      newest.set(row.id, Math.max(newest.get(row.id) ?? 0, row.revision));
++    for (const row of [...document[field]].sort((a, b) => a.revision - b.revision)) {
++      if (old.has(referenceKey(row))) continue;
++      required(
++        row.revision === (newest.get(row.id) ?? 0) + 1,
++        `New ${field} revisions must retain their complete history.`,
++      );
++      if (multiple) newest.set(row.id, row.revision);
++    }
++  }
++}
++
++function effectiveAsset(row, index) {
++  if (row.format === FORMATS.asset) return row;
++  const target = index.get(referenceKey(row.provenance.anchor));
++  required(
++    target?.format === FORMATS.asset,
++    'Reference anchor must be an existing direct inline v1 asset.',
++  );
++  return {
++    ...row,
++    format: FORMATS.asset,
++    provenance: { ...provenanceContent(target.provenance), parent: row.provenance.parent },
++  };
++}
++
++export async function validateReferencedBundle(
++  source,
++  { previous = null, expectedRevision, signal } = {},
++) {
++  checkReferenceAbort(signal);
++  const value = own(source); // Structural/encoded limits run before any hash resolution.
++  keys(
++    value,
++    ['format', 'id', 'revision', 'slots', 'assets', 'themes', 'collections', 'selection'],
++    'reference bundle',
++  );
++  required(
++    value.format === REFERENCE_FORMAT &&
++      stableId(value.id) &&
++      Number.isSafeInteger(value.revision) &&
++      value.revision > 0,
++    'Invalid v2 reference bundle.',
++  );
++  const groups = [
++    ['slots', LIMITS.slots, validateAssetSlotSpec],
++    ['assets', LIMITS.assets, null],
++    ['themes', LIMITS.themes, validatePresentationTheme],
++    ['collections', LIMITS.collections, validateAssetCollection],
++  ];
++  for (const [name, limit, validate] of groups) {
++    required(Array.isArray(value[name]) && value[name].length <= limit, `Invalid ${name} count.`);
++    const seen = new Set();
++    for (const row of value[name]) {
++      if (validate) validate(row);
++      else {
++        keys(
++          row,
++          [
++            'format',
++            'id',
++            'revision',
++            'kind',
++            'description',
++            'provenance',
++            'file',
++            'recipe',
++            'geometry',
++            'quality',
++          ],
++          'asset revision',
++        );
++        required(
++          stableId(row.id) && Number.isSafeInteger(row.revision) && row.revision > 0,
++          'Invalid asset identity.',
++        );
++      }
++      required(!seen.has(referenceKey(row)), `Duplicate ${name} identity.`);
++      seen.add(referenceKey(row));
++    }
++  }
++  required(
++    value.slots.length > 0 && new Set(value.slots.map((row) => row.id)).size === value.slots.length,
++    'Slots require unique stable IDs.',
++  );
++  keys(value.selection, ['base', 'theme', 'collection'], 'selection');
++  ref(value.selection.base);
++  ref(value.selection.theme);
++  if (value.selection.collection !== null) ref(value.selection.collection);
++  const index = new Map(value.assets.map((row) => [referenceKey(row), row]));
++  const hashes = new Map();
++  // Inline anchors are schema checked before any reference can consume them.
++  for (const row of value.assets) if (row.format === FORMATS.asset) validateAssetRevision(row);
++  for (const row of value.assets) {
++    checkReferenceAbort(signal);
++    if (row.format === FORMATS.asset) continue;
++    required(row.format === REFERENCE_ASSET, 'Unsupported asset revision format.');
++    keys(row.provenance, ['anchor', 'parent'], 'reference provenance');
++    keys(row.provenance.anchor, ['id', 'revision', 'sha256'], 'provenance anchor');
++    const anchor = row.provenance.anchor;
++    ref({ id: anchor.id, revision: anchor.revision });
++    required(/^[a-f0-9]{64}$/.test(anchor.sha256), 'Invalid provenance anchor hash.');
++    if (row.provenance.parent !== null) ref(row.provenance.parent);
++    const target = index.get(referenceKey(anchor));
++    required(
++      target?.format === FORMATS.asset,
++      'Reference anchor must be an existing direct inline v1 asset.',
++    );
++    if (!hashes.has(referenceKey(anchor)))
++      hashes.set(referenceKey(anchor), await provenanceDigest(target.provenance));
++    checkReferenceAbort(signal);
++    required(
++      hashes.get(referenceKey(anchor)) === anchor.sha256,
++      'Provenance anchor hash mismatch.',
++    );
++    validateAssetRevision(effectiveAsset(row, index));
++  }
++  // Same legacy graph/geometry/file-fact checks, with encoded rows retained.
++  validatePresentationReferences(value);
++  if (previous) {
++    const old =
++      previous.format === FORMATS.bundle
++        ? validateThemeBundle(previous)
++        : await validateReferencedBundle(previous, { signal });
++    required(
++      expectedRevision === undefined || expectedRevision === old.revision,
++      'Stale expected revision.',
++    );
++    assertReferencedHistory(value, old);
++  } else
++    required(
++      expectedRevision === undefined || expectedRevision === value.revision,
++      'Stale expected revision.',
++    );
++  checkReferenceAbort(signal);
++  return freezePresentation(value);
++}
++
++export async function migrateThemeReferences(source, options = {}) {
++  const legacy = validateThemeBundle(source);
++  return validateReferencedBundle(
++    { ...structuredClone(legacy), format: REFERENCE_FORMAT, revision: legacy.revision + 1 },
++    { ...options, previous: legacy, expectedRevision: legacy.revision },
++  );
++}
++
++export async function resolveReferencedPresentation(source, options = {}) {
++  const value = await validateReferencedBundle(source, { signal: options.signal });
++  const selection = {};
++  for (const key of ['themeId', 'collectionId'])
++    if (options[key] !== undefined) selection[key] = options[key];
++  const selected = resolvePresentationRecords(value, selection);
++  const index = new Map(value.assets.map((row) => [referenceKey(row), row]));
++  const assets = Object.fromEntries(
++    Object.entries(selected.assets).map(([slot, row]) => [slot, effectiveAsset(row, index)]),
++  );
++  return freezePresentation(own({ ...selected, assets }));
++}
++
++/** Own and schema-check a single effective revision without expanding history. */
++export async function readReferencedAsset(source, target) {
++  return (await openReferencedAssets(source)).get(target);
++}
++/** Keeps encoded history and resolves one bounded revision at a time. */
++export async function openReferencedAssets(source, options = {}) {
++  const document = await validateReferencedBundle(source, options);
++  const index = new Map(document.assets.map((row) => [referenceKey(row), row]));
++  return Object.freeze({
++    document,
++    get(target) {
++      const row = index.get(referenceKey(target));
++      required(row, 'Missing asset revision.');
++      return validateAssetRevision(effectiveAsset(row, index));
++    },
++  });
++}
++
++export async function encodeReferencedRevision(source, input) {
++  const row = validateAssetRevision(input),
++    content = canonicalJSON(provenanceContent(row.provenance));
++  const anchor = source.assets.find(
++    (record) =>
++      record.format === FORMATS.asset &&
++      canonicalJSON(provenanceContent(record.provenance)) === content,
++  );
++  if (!anchor) return row;
++  return {
++    ...row,
++    format: REFERENCE_ASSET,
++    provenance: {
++      anchor: { ...referenceOf(anchor), sha256: await provenanceDigest(anchor.provenance) },
++      parent: row.provenance.parent,
++    },
++  };
++}
+diff --git a/game/presentation/reference-session.mjs b/game/presentation/reference-session.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..68e49650b4deded5135579bbf617621fa9e3fa2c
+--- /dev/null
++++ b/game/presentation/reference-session.mjs
+@@ -0,0 +1,200 @@
++import { canonicalJSON } from '../data-json.mjs';
++import {
++  validateReferencedBundle,
++  resolveReferencedPresentation,
++  openReferencedAssets,
++  encodeReferencedRevision,
++  referenceOf as ref,
++  referenceKey as key,
++} from './reference-model.mjs';
++
++/** Explicit v2 operation; v1 session functions retain their original contracts. */
++export async function reviseReferencedTheme(
++  source,
++  { assets = [], bindings = {}, tokens = {} } = {},
++) {
++  const previous = await validateReferencedBundle(source),
++    next = structuredClone(previous);
++  const current = next.themes.find((row) => key(row) === key(next.selection.theme));
++  const collection =
++    next.selection.collection &&
++    next.collections.find((row) => key(row) === key(next.selection.collection));
++  for (const asset of assets) next.assets.push(await encodeReferencedRevision(next, asset));
++  const theme = {
++    ...structuredClone(current),
++    revision:
++      Math.max(...next.themes.filter((row) => row.id === current.id).map((row) => row.revision)) +
++      1,
++    parent: ref(current),
++    tokens: { ...tokens },
++    bindings: { ...collection?.bindings, ...bindings },
++  };
++  next.themes.push(theme);
++  next.selection.theme = ref(theme);
++  next.selection.collection = null;
++  next.revision++;
++  return validateReferencedBundle(next, { previous, expectedRevision: previous.revision });
++}
++const content = (asset) => {
++  const copy = structuredClone(asset);
++  delete copy.revision;
++  delete copy.quality;
++  delete copy.provenance.parent;
++  return canonicalJSON(copy);
++};
++/** Append and validate the complete collection before changing its selection. */
++export async function replaceReferencedCollection(
++  source,
++  { id, name, requiredSlots, bindings, assets = [] },
++) {
++  const previous = await validateReferencedBundle(source),
++    next = structuredClone(previous);
++  for (const asset of assets) next.assets.push(await encodeReferencedRevision(next, asset));
++  const collection = {
++    format: 'revealline-asset-collection.v1',
++    id,
++    name,
++    revision:
++      Math.max(0, ...next.collections.filter((row) => row.id === id).map((row) => row.revision)) +
++      1,
++    themeId: next.selection.theme.id,
++    requiredSlots,
++    bindings,
++  };
++  next.collections.push(collection);
++  next.selection.collection = ref(collection);
++  next.revision++;
++  return validateReferencedBundle(next, { previous, expectedRevision: previous.revision });
++}
++/** Same production succession semantics, with new revisions encoded explicitly. */
++export async function retainReferencedProductionHistory(desiredSource, priorSource) {
++  const desired = await validateReferencedBundle(desiredSource),
++    prior = await validateReferencedBundle(priorSource);
++  if (
++    prior.id !== desired.id ||
++    prior.selection.theme.id !== desired.selection.theme.id ||
++    canonicalJSON(prior.slots) !== canonicalJSON(desired.slots)
++  )
++    throw new Error('Production slot contracts changed; provide an explicit compatible migration.');
++  const wanted = await resolveReferencedPresentation(desired),
++    previous = await resolveReferencedPresentation(prior);
++  const reader = await openReferencedAssets(prior),
++    reusable = new Map(),
++    newest = new Map();
++  for (const encoded of prior.assets) {
++    const asset = reader.get(encoded),
++      identity = content(asset);
++    if (!reusable.has(identity)) reusable.set(identity, []);
++    reusable.get(identity).push({ reference: ref(asset), quality: canonicalJSON(asset.quality) });
++    if (!newest.has(asset.id) || newest.get(asset.id).revision < asset.revision)
++      newest.set(asset.id, ref(asset));
++  }
++  const assets = [],
++    bindings = {};
++  for (const [slot, proposed] of Object.entries(wanted.assets)) {
++    const before = previous.assets[slot],
++      identity = content(proposed),
++      reviewed = proposed.quality.stage === 'reviewed';
++    if (
++      before &&
++      content(before) === identity &&
++      (!reviewed || canonicalJSON(before.quality) === canonicalJSON(proposed.quality))
++    )
++      continue;
++    const match = (reusable.get(identity) ?? [])
++      .filter((row) => !reviewed || row.quality === canonicalJSON(proposed.quality))
++      .sort((a, b) => b.reference.revision - a.reference.revision)[0];
++    if (match) {
++      bindings[slot] = match.reference;
++      continue;
++    }
++    const last = newest.get(proposed.id),
++      asset = {
++        ...structuredClone(proposed),
++        revision: (last?.revision ?? 0) + 1,
++        provenance: {
++          ...structuredClone(proposed.provenance),
++          parent: last ?? structuredClone(proposed.provenance.parent),
++        },
++      };
++    assets.push(asset);
++    bindings[slot] = ref(asset);
++    newest.set(asset.id, ref(asset));
++    if (!reusable.has(identity)) reusable.set(identity, []);
++    reusable.get(identity).push({ reference: ref(asset), quality: canonicalJSON(asset.quality) });
++  }
++  const tokens = Object.fromEntries(
++    Object.entries(wanted.tokens).filter(
++      ([name, value]) => canonicalJSON(value) !== canonicalJSON(previous.tokens[name]),
++    ),
++  );
++  if (!assets.length && !Object.keys(bindings).length && !Object.keys(tokens).length) return prior;
++  return reviseReferencedTheme(prior, { assets, bindings, tokens });
++}
++
++/** Resolve foreign content and derivative ancestry before local dedup/remapping. */
++export async function adoptReferencedBundle(source, incomingSource) {
++  const localReader = await openReferencedAssets(source),
++    foreignReader = await openReferencedAssets(incomingSource);
++  const previous = localReader.document,
++    incoming = foreignReader.document;
++  const presentation = await resolveReferencedPresentation(incoming),
++    next = structuredClone(previous);
++  const used = new Set([...next.assets, ...next.collections].map((row) => row.id));
++  const prefix = `import-${next.revision + 1}`;
++  let namespace = prefix;
++  for (
++    let suffix = 1;
++    [...used].some((id) => id === namespace || id.startsWith(namespace + '-'));
++    suffix++
++  )
++    namespace = `${prefix}-${suffix}`;
++  const imports = new Map(),
++    local = new Map(previous.assets.map((row) => [key(row), row]));
++  const foreign = new Map(incoming.assets.map((row, index) => [key(row), { row, index }]));
++  const adopt = async (target) => {
++    const identity = key(target);
++    if (imports.has(identity)) return imports.get(identity);
++    const { row, index } = foreign.get(identity),
++      candidate = structuredClone(foreignReader.get(row));
++    candidate.provenance.parent = candidate.provenance.parent
++      ? await adopt(candidate.provenance.parent)
++      : null;
++    const existing = local.get(identity);
++    let result;
++    if (existing && canonicalJSON(localReader.get(existing)) === canonicalJSON(candidate))
++      result = ref(existing);
++    else {
++      result = { id: `${namespace}-${index}`, revision: 1 };
++      next.assets.push(await encodeReferencedRevision(next, { ...candidate, ...result }));
++    }
++    imports.set(identity, result);
++    return result;
++  };
++  for (const row of incoming.assets) await adopt(row);
++  const current = next.themes.find((row) => key(row) === key(next.selection.theme));
++  const theme = {
++    ...structuredClone(current),
++    revision:
++      Math.max(...next.themes.filter((row) => row.id === current.id).map((row) => row.revision)) +
++      1,
++    tokens: { ...presentation.tokens },
++  };
++  next.themes.push(theme);
++  next.selection.theme = ref(theme);
++  const collection = {
++    format: 'revealline-asset-collection.v1',
++    id: namespace,
++    revision: 1,
++    name: presentation.theme.name,
++    themeId: theme.id,
++    requiredSlots: next.slots.filter((slot) => slot.required).map((slot) => slot.id),
++    bindings: Object.fromEntries(
++      Object.entries(presentation.bindings).map(([id, target]) => [id, imports.get(key(target))]),
++    ),
++  };
++  next.collections.push(collection);
++  next.selection.collection = ref(collection);
++  next.revision++;
++  return validateReferencedBundle(next, { previous, expectedRevision: previous.revision });
++}
+diff --git a/game/presentation/reference-store.mjs b/game/presentation/reference-store.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..5120972a86b22e6ff2d4b347ef62f7f92d56be9f
+--- /dev/null
++++ b/game/presentation/reference-store.mjs
+@@ -0,0 +1,83 @@
++import { canonicalJSON, required } from '../data-json.mjs';
++import { FORMATS, validateThemeBundle } from './model.mjs';
++import { verifyThemeAssets } from './bundle.mjs';
++import { createStudioRecordConnection } from './studio-store.mjs';
++import {
++  validateReferencedBundle,
++  assertReferencedHistory,
++  checkReferenceAbort,
++} from './reference-model.mjs';
++import { verifyReferencedAssets } from './reference-bundle.mjs';
++
++const KEY = 'workspace';
++/** Explicit local prototype entry. Never upgrades a document implicitly. */
++export function createReferencedStudioStore({ indexedDB = globalThis.indexedDB } = {}) {
++  const connection = createStudioRecordConnection({ indexedDB, cancelPendingWrites: true });
++  const prepare = async (record, signal) => {
++    if (!record) return null;
++    required(
++      Number.isSafeInteger(record.generation) && record.generation > 0,
++      'The stored studio revision is invalid.',
++    );
++    const legacy = record.document?.format === FORMATS.bundle;
++    const document = legacy
++      ? validateThemeBundle(record.document)
++      : await validateReferencedBundle(record.document, { signal });
++    const assets = await (legacy ? verifyThemeAssets : verifyReferencedAssets)(
++      document,
++      record.assets,
++      { signal },
++    );
++    return { generation: record.generation, document, assets };
++  };
++  return Object.freeze({
++    async load({ signal } = {}) {
++      checkReferenceAbort(signal);
++      const record = await connection.transaction('readonly', (_store, value) => value);
++      const result = await prepare(record, signal);
++      checkReferenceAbort(signal);
++      return result;
++    },
++    async save(source, sourceAssets, { expectedGeneration = 0, signal } = {}) {
++      required(
++        Number.isSafeInteger(expectedGeneration) &&
++          expectedGeneration >= 0 &&
++          expectedGeneration < Number.MAX_SAFE_INTEGER,
++        'Invalid expected studio generation.',
++      );
++      const document = await validateReferencedBundle(source, { signal });
++      const assets = await verifyReferencedAssets(document, sourceAssets, { signal });
++      // Read and validate saved closure before the short write transaction.
++      const old = await prepare(
++        await connection.transaction('readonly', (_store, value) => value),
++        signal,
++      );
++      required(
++        (old?.generation ?? 0) === expectedGeneration,
++        'This draft changed in another tab. Reload the studio before saving.',
++      );
++      if (old) assertReferencedHistory(document, old.document, { multiple: true });
++      const oldIdentity = old && canonicalJSON(old.document);
++      checkReferenceAbort(signal);
++      return connection.transaction(
++        'readwrite',
++        (store, current) => {
++          checkReferenceAbort(signal);
++          required(
++            (current?.generation ?? 0) === expectedGeneration,
++            'This draft changed in another tab. Reload the studio before saving.',
++          );
++          required(
++            current ? oldIdentity === canonicalJSON(current.document) : old === null,
++            'Stored document changed during verification.',
++          );
++          const generation = expectedGeneration + 1;
++          store.put({ generation, document, assets }, KEY);
++          return { generation, document, assets };
++        },
++        { signal },
++      );
++    },
++    close: connection.close,
++  });
++}
+diff --git a/game/presentation/studio-formats.mjs b/game/presentation/studio-formats.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..8034a3d8eb7d295971ef69def1a302a981a09a80
+--- /dev/null
++++ b/game/presentation/studio-formats.mjs
+@@ -0,0 +1,158 @@
++/** Studio-only format dispatch. The existing v1 APIs remain strict and unchanged. */
++import { boundedJSON, required } from '../data-json.mjs';
++import {
++  FORMATS,
++  LIMITS,
++  validateThemeBundle,
++  resolvePresentation,
++  presentationCoverageFromView,
++} from './model.mjs';
++import { verifyThemeAssets, importThemeBundle, exportThemeBundle } from './bundle.mjs';
++import {
++  reviseStudioTheme,
++  replaceStudioCollection,
++  adoptStudioBundle,
++} from './studio-session.mjs';
++import { createStudioStore } from './studio-store.mjs';
++import {
++  REFERENCE_FORMAT,
++  validateReferencedBundle,
++  resolveReferencedPresentation,
++  openReferencedAssets,
++  migrateThemeReferences,
++  checkReferenceAbort,
++  referenceKey,
++} from './reference-model.mjs';
++import {
++  verifyReferencedAssets,
++  importReferencedBundle,
++  exportReferencedBundle,
++} from './reference-bundle.mjs';
++import {
++  reviseReferencedTheme,
++  replaceReferencedCollection,
++  adoptReferencedBundle,
++} from './reference-session.mjs';
++import { createReferencedStudioStore } from './reference-store.mjs';
++
++function isReference(document) {
++  const format =
++    document && typeof document === 'object' && Object.getOwnPropertyDescriptor(document, 'format');
++  required(
++    format &&
++      Object.hasOwn(format, 'value') &&
++      [FORMATS.bundle, REFERENCE_FORMAT].includes(format.value),
++    'Unsupported Studio workspace format.',
++  );
++  return format.value === REFERENCE_FORMAT;
++}
++export async function validateStudioDocument(source, options = {}) {
++  const document = boundedJSON(source, {
++    maxBytes: LIMITS.manifestBytes,
++    maxNodes: 100000,
++    maxArray: 2048,
++    maxDepth: 18,
++    maxString: 8192,
++  });
++  checkReferenceAbort(options.signal);
++  return isReference(document)
++    ? validateReferencedBundle(document, options)
++    : validateThemeBundle(document, options);
++}
++export function verifyStudioAssets(document, assets, options = {}) {
++  return (isReference(document) ? verifyReferencedAssets : verifyThemeAssets)(
++    document,
++    assets,
++    options,
++  );
++}
++/** A view and history reader belong to the same immutable encoded draft. */
++export async function prepareStudioSnapshot(source, sourceAssets, { signal } = {}) {
++  const document = await validateStudioDocument(source, { signal });
++  const referenced = isReference(document);
++  const view = referenced
++    ? await resolveReferencedPresentation(document, { signal })
++    : resolvePresentation(document);
++  const reader = referenced ? await openReferencedAssets(document, { signal }) : null;
++  const history = reader ? null : new Map(document.assets.map((row) => [referenceKey(row), row]));
++  checkReferenceAbort(signal);
++  return Object.freeze({
++    document,
++    assets: new Map(sourceAssets),
++    view,
++    coverage: presentationCoverageFromView(document.slots, view),
++    asset(target) {
++      const value = reader ? reader.get(target) : history.get(referenceKey(target));
++      required(value, 'Missing asset revision.');
++      return value;
++    },
++  });
++}
++export function reviseStudioDocument(document, change) {
++  return (isReference(document) ? reviseReferencedTheme : reviseStudioTheme)(document, change);
++}
++export function replaceStudioDocumentCollection(document, change) {
++  return (isReference(document) ? replaceReferencedCollection : replaceStudioCollection)(
++    document,
++    change,
++  );
++}
++export async function selectStudioTheme(document, id) {
++  const previous = await validateStudioDocument(document);
++  const next = structuredClone(previous);
++  const theme = next.themes.filter((row) => row.id === id).at(-1);
++  required(theme, 'Missing selected theme.');
++  next.selection.theme = { id: theme.id, revision: theme.revision };
++  next.selection.collection = null;
++  next.revision++;
++  return validateStudioDocument(next, { previous, expectedRevision: previous.revision });
++}
++export async function upgradeStudioDocument(document, assets, options = {}) {
++  required(!isReference(document), 'This workspace already uses v2 references.');
++  const verified = await verifyThemeAssets(document, assets, options);
++  const next = await migrateThemeReferences(document, options);
++  return prepareStudioSnapshot(next, verified, options);
++}
++export async function adoptStudioDocument(document, incoming) {
++  if (!isReference(document)) {
++    required(
++      !isReference(incoming),
++      'This collection uses v2 references. Export a backup and explicitly Upgrade workspace before importing it.',
++    );
++    return adoptStudioBundle(document, incoming);
++  }
++  // Only the incoming reader changes: the existing workspace never upgrades implicitly.
++  const foreign = isReference(incoming) ? incoming : await migrateThemeReferences(incoming);
++  return adoptReferencedBundle(document, foreign);
++}
++export function exportStudioBundle(document, assets, options = {}) {
++  return (isReference(document) ? exportReferencedBundle : exportThemeBundle)(
++    document,
++    assets,
++    options,
++  );
++}
++export async function importStudioBundle(source, options = {}) {
++  checkReferenceAbort(options.signal);
++  const size = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get.call(source);
++  required(size >= 12 && size <= LIMITS.bundleBytes, 'File exceeds its byte budget.');
++  const header = new TextDecoder().decode(
++    await Blob.prototype.slice.call(source, 0, 8).arrayBuffer(),
++  );
++  checkReferenceAbort(options.signal);
++  required(header === 'RLTHM1\r\n' || header === 'RLTHM2\r\n', 'Unsupported Studio theme bundle.');
++  return (header === 'RLTHM2\r\n' ? importReferencedBundle : importThemeBundle)(source, options);
++}
++export function createFormatStudioStore(options = {}) {
++  const legacy = createStudioStore(options),
++    reference = createReferencedStudioStore(options);
++  return Object.freeze({
++    load: reference.load,
++    save(document, assets, settings = {}) {
++      return (isReference(document) ? reference : legacy).save(document, assets, settings);
++    },
++    async close() {
++      await Promise.all([legacy.close(), reference.close()]);
++    },
++  });
++}
+diff --git a/game/test/presentation-references.test.mjs b/game/test/presentation-references.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..7667b2347d71220ddc2be33a160b499f83e05de4
+--- /dev/null
++++ b/game/test/presentation-references.test.mjs
+@@ -0,0 +1,584 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import fs from 'node:fs/promises';
++import { createHash } from 'node:crypto';
++import { getEventListeners } from 'node:events';
++import { canonicalJSON } from '../data-json.mjs';
++import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
++import {
++  FORMATS,
++  LIMITS,
++  validateThemeBundle,
++  resolvePresentation,
++} from '../presentation/model.mjs';
++import {
++  importThemeBundle,
++  exportThemeBundle,
++  hashPresentationBytes,
++} from '../presentation/bundle.mjs';
++import { createStudioStore } from '../presentation/studio-store.mjs';
++import { managedIndexedDB } from './helpers/managed-idb.mjs';
++import {
++  REFERENCE_ASSET,
++  validateReferencedBundle,
++  migrateThemeReferences,
++  resolveReferencedPresentation,
++  openReferencedAssets,
++  referenceOf as ref,
++} from '../presentation/reference-model.mjs';
++import {
++  importReferencedBundle,
++  exportReferencedBundle,
++} from '../presentation/reference-bundle.mjs';
++import {
++  reviseReferencedTheme,
++  retainReferencedProductionHistory,
++  adoptReferencedBundle,
++} from '../presentation/reference-session.mjs';
++import { createReferencedStudioStore } from '../presentation/reference-store.mjs';
++import {
++  compilePresentation,
++  compileReferencedPresentation,
++} from '../../scripts/compile-presentation.mjs';
++
++const bytes = (value) => Buffer.byteLength(canonicalJSON(value));
++const clone = (value) => structuredClone(value);
++const hash = (value) => createHash('sha256').update(value).digest('hex');
++const originalHash = '287cddba3f92cf9730b3d0eefece7fbf690aca7c6fe88ca77308d9873851d1a4';
++let actualPromise;
++const actual = () =>
++  (actualPromise ??= (async () => {
++    assert.ok(
++      process.env.P04_LEDGER_PATH,
++      'Use the exact retained r5 ledger as the external capacity fixture.',
++    );
++    const raw = await fs.readFile(process.env.P04_LEDGER_PATH);
++    assert.equal(hash(raw), originalHash);
++    const imported = await importThemeBundle(new Blob([raw]), { decodeImage: null });
++    return { ...imported, raw };
++  })());
++async function smallReference() {
++  const legacy = createDefaultThemeBundle(),
++    migrated = await migrateThemeReferences(legacy);
++  const selected = await resolveReferencedPresentation(migrated);
++  const targets = Object.entries(selected.assets).slice(0, 2);
++  const revisions = targets.map(([, asset]) => ({
++    ...clone(asset),
++    revision: asset.revision + 1,
++    provenance: { ...clone(asset.provenance), parent: ref(asset) },
++  }));
++  const document = await reviseReferencedTheme(migrated, {
++    assets: revisions,
++    bindings: Object.fromEntries(targets.map(([slot], i) => [slot, ref(revisions[i])])),
++  });
++  assert.equal(document.assets.filter((row) => row.format === REFERENCE_ASSET).length, 2);
++  return { legacy, migrated, document };
++}
++async function assertStored(store, snapshot) {
++  const now = await store.load();
++  assert.equal(now.generation, snapshot.generation);
++  assert.deepEqual(now.document, snapshot.document);
++  assert.deepEqual([...now.assets.keys()], [...snapshot.assets.keys()]);
++  for (const [id, blob] of now.assets)
++    assert.deepEqual(
++      new Uint8Array(await blob.arrayBuffer()),
++      new Uint8Array(await snapshot.assets.get(id).arrayBuffer()),
++    );
++}
++
++test('actual 194-asset review and replacement preserve history, 127 payloads and complete portable adoption under existing bounds', async () => {
++  const original = await actual(),
++    migrated = await migrateThemeReferences(original.document);
++  const reexport = await exportThemeBundle(original.document, original.assets);
++  assert.deepEqual(
++    new Uint8Array(await reexport.arrayBuffer()),
++    new Uint8Array(original.raw),
++    'legacy export bytes remain exact',
++  );
++  for (const field of ['slots', 'assets', 'themes', 'collections'])
++    assert.deepEqual(migrated[field], original.document[field]);
++  const desired = clone(migrated),
++    selected = await resolveReferencedPresentation(desired);
++  const required = desired.slots.filter((slot) => slot.required);
++  assert.equal(required.length, 194);
++  assert.equal(original.assets.size, 127);
++  for (const slot of required) {
++    const target = selected.assets[slot.id];
++    desired.assets.find((row) => row.id === target.id && row.revision === target.revision).quality =
++      {
++        stage: 'reviewed',
++        evidence: ['Capacity fixture only; not production qualification. '.repeat(4)],
++      };
++  }
++  const reviewed = await retainReferencedProductionHistory(desired, migrated);
++  assert.equal(reviewed.assets.length, migrated.assets.length + 194);
++  assert.deepEqual(reviewed.assets.slice(0, migrated.assets.length), migrated.assets);
++  const variation = clone(reviewed),
++    resolved = await resolveReferencedPresentation(reviewed);
++  for (const slot of required) {
++    const target = resolved.assets[slot.id];
++    variation.assets.find(
++      (row) => row.id === target.id && row.revision === target.revision,
++    ).description += ' / coordinated replacement capacity fixture';
++  }
++  const replaced = await retainReferencedProductionHistory(variation, reviewed);
++  assert.equal(replaced.assets.length, reviewed.assets.length + 194);
++  assert.deepEqual(replaced.assets.slice(0, reviewed.assets.length), reviewed.assets);
++  const exported = await exportReferencedBundle(replaced, original.assets),
++    raw = new Uint8Array(await exported.arrayBuffer());
++  const manifestBytes = new DataView(raw.buffer).getUint32(8);
++  assert.ok(manifestBytes <= LIMITS.manifestBytes);
++  assert.ok(raw.length <= LIMITS.bundleBytes);
++  const imported = await importReferencedBundle(exported, { decodeImage: null });
++  assert.deepEqual(imported.document, replaced);
++  assert.equal(imported.assets.size, 127);
++  for (const [id, blob] of imported.assets)
++    assert.equal(await hashPresentationBytes(new Uint8Array(await blob.arrayBuffer())), id);
++  const compiled = await compileReferencedPresentation(replaced, imported.assets);
++  assert.deepEqual(compiled.resolved, await resolveReferencedPresentation(replaced));
++  assert.deepEqual(
++    JSON.parse(new TextDecoder().decode(compiled.files.get('studio.json'))),
++    replaced,
++  );
++  const compiledPayloads = [...compiled.files].filter(([name]) => name.startsWith('assets/'));
++  assert.equal(compiledPayloads.length, 127);
++  for (const [name, raw] of compiledPayloads)
++    assert.equal(await hashPresentationBytes(raw), name.slice(7, 71));
++  const adopted = await adoptReferencedBundle(replaced, imported.document);
++  assert.deepEqual(
++    adopted.assets,
++    replaced.assets,
++    'portable native round trip reuses all exact history',
++  );
++  assert.deepEqual(
++    (await resolveReferencedPresentation(adopted)).assets,
++    (await resolveReferencedPresentation(replaced)).assets,
++  );
++  const adoptedExport = await exportReferencedBundle(adopted, imported.assets);
++  assert.ok(adoptedExport.size >= exported.size);
++  const reader = await openReferencedAssets(replaced);
++  const expanded = {
++    ...clone(replaced),
++    format: FORMATS.bundle,
++    assets: replaced.assets.map((row) => reader.get(row)),
++  };
++  assert.ok(bytes(expanded) > LIMITS.manifestBytes);
++  assert.throws(
++    () => validateThemeBundle(expanded),
++    /byte budget/,
++    'expanded over-budget v1 is still rejected',
++  );
++  const fixture = managedIndexedDB(),
++    oldStore = createStudioStore({ indexedDB: fixture.indexedDB });
++  const saved = await oldStore.save(original.document, original.assets);
++  const newStore = createReferencedStudioStore({ indexedDB: fixture.indexedDB });
++  const successor = await newStore.save(replaced, imported.assets, {
++    expectedGeneration: saved.generation,
++  });
++  assert.equal(successor.generation, 2);
++  await assertStored(newStore, successor);
++  await assert.rejects(
++    oldStore.save(original.document, original.assets, { expectedGeneration: 2 }),
++    /bundle|format/,
++    'an old tab cannot overwrite v2',
++  );
++  fixture.failAnyPutAt = 1;
++  await assert.rejects(
++    newStore.save(adopted, imported.assets, { expectedGeneration: 2 }),
++    /write failure/,
++  );
++  fixture.failAnyPutAt = null;
++  await assertStored(newStore, successor);
++  await oldStore.close();
++  await newStore.close();
++  assert.equal(hash(await fs.readFile(process.env.P04_LEDGER_PATH)), originalHash);
++  console.log(
++    JSON.stringify({
++      capacityProof: {
++        oldDocumentBytes: bytes(original.document),
++        migratedBytes: bytes(migrated),
++        reviewedBytes: bytes(reviewed),
++        replacedBytes: bytes(replaced),
++        expandedLegacyBytes: bytes(expanded),
++        actualTransferManifestBytes: manifestBytes,
++        manifestHeadroomBytes: LIMITS.manifestBytes - manifestBytes,
++        transferBytes: raw.length,
++        transferHeadroomBytes: LIMITS.bundleBytes - raw.length,
++        preservedOldAssetRecords: original.document.assets.length,
++        totalAssetRecords: replaced.assets.length,
++        payloads: imported.assets.size,
++        payloadBytes: [...imported.assets.values()].reduce((sum, blob) => sum + blob.size, 0),
++      },
++    }),
++  );
++});
++
++test('malformed second anchors, reference chains, parent cycles and shared-SHA conflicts never install a draft', async () => {
++  const { migrated, document } = await smallReference();
++  const fixture = managedIndexedDB(),
++    store = createReferencedStudioStore({ indexedDB: fixture.indexedDB });
++  const saved = await store.save(migrated, new Map());
++  for (const [name, mutate, message] of [
++    [
++      'missing',
++      (doc) => {
++        doc.assets.at(-1).provenance.anchor.id = 'missing';
++      },
++      /direct inline/,
++    ],
++    [
++      'hash',
++      (doc) => {
++        doc.assets.at(-1).provenance.anchor.sha256 = '0'.repeat(64);
++      },
++      /hash mismatch/,
++    ],
++    [
++      'reference cycle',
++      (doc) => {
++        const a = doc.assets.at(-1),
++          b = doc.assets.at(-2);
++        a.provenance.anchor = { ...ref(b), sha256: '0'.repeat(64) };
++        b.provenance.anchor = { ...ref(a), sha256: '0'.repeat(64) };
++      },
++      /direct inline/,
++    ],
++    [
++      'self',
++      (doc) => {
++        const row = doc.assets.at(-1);
++        row.provenance.anchor = { ...ref(row), sha256: '0'.repeat(64) };
++      },
++      /direct inline/,
++    ],
++    [
++      'parent cycle',
++      (doc) => {
++        doc.assets.at(-1).provenance.parent = ref(doc.assets.at(-1));
++      },
++      /derivative cycle/,
++    ],
++  ]) {
++    const bad = clone(document);
++    mutate(bad);
++    const beforePuts = fixture.allPuts.length;
++    await assert.rejects(store.save(bad, new Map(), { expectedGeneration: 1 }), message, name);
++    assert.equal(fixture.allPuts.length, beforePuts);
++    await assertStored(store, saved);
++  }
++  const production = await actual(),
++    collision = await migrateThemeReferences(production.document);
++  const bad = clone(collision),
++    source = bad.assets.find((row) => row.file),
++    copy = clone(source);
++  copy.id = 'conflicting-shared-file';
++  copy.revision = 1;
++  copy.file.bytes++;
++  bad.assets.push(copy);
++  await assert.rejects(
++    validateReferencedBundle(bad),
++    /Conflicting facts/,
++    'identical SHA cannot carry different file facts',
++  );
++  await store.close();
++});
++
++test('concurrent stale generations, aborted writes and close/cancel during verification preserve saved state', async () => {
++  const { migrated, document } = await smallReference(),
++    fixture = managedIndexedDB();
++  const first = createReferencedStudioStore({ indexedDB: fixture.indexedDB }),
++    second = createReferencedStudioStore({ indexedDB: fixture.indexedDB });
++  await first.save(migrated, new Map());
++  const results = await Promise.allSettled([
++    first.save(document, new Map(), { expectedGeneration: 1 }),
++    second.save(document, new Map(), { expectedGeneration: 1 }),
++  ]);
++  assert.equal(results.filter((row) => row.status === 'fulfilled').length, 1);
++  assert.match(
++    results.find((row) => row.status === 'rejected').reason.message,
++    /changed in another tab/,
++  );
++  const winner = await first.load();
++  assert.equal(winner.generation, 2);
++  const next = await reviseReferencedTheme(document, { tokens: { amber: '#ffcc00' } });
++  fixture.onAnyPut = ({ tx }) => tx.abort();
++  await assert.rejects(first.save(next, new Map(), { expectedGeneration: 2 }), /cancelled/);
++  fixture.onAnyPut = null;
++  await assertStored(first, winner);
++  const abort = new AbortController(),
++    saving = first.save(next, new Map(), { expectedGeneration: 2, signal: abort.signal });
++  abort.abort();
++  await assert.rejects(saving, { name: 'AbortError' });
++  await assertStored(first, winner);
++  const closing = second.save(next, new Map(), { expectedGeneration: 2 });
++  await second.close();
++  await assert.rejects(closing, /closed/);
++  await assertStored(first, winner);
++  await first.close();
++});
++
++test('v2 pending put cancellation and close retain the complete prior ledger and all payloads', async () => {
++  const original = await actual(),
++    migrated = await migrateThemeReferences(original.document),
++    next = await reviseReferencedTheme(migrated, { tokens: { amber: '#ffcc00' } });
++  for (const mode of ['signal', 'close']) {
++    const fixture = managedIndexedDB(),
++      store = createReferencedStudioStore({ indexedDB: fixture.indexedDB }),
++      reader = createReferencedStudioStore({ indexedDB: fixture.indexedDB }),
++      controller = new AbortController(),
++      saved = await store.save(migrated, original.assets);
++    let reachedPut = false;
++    fixture.onAnyPut = () => {
++      reachedPut = true;
++      if (mode === 'signal') controller.abort();
++      else void store.close();
++    };
++    await assert.rejects(
++      store.save(next, original.assets, {
++        expectedGeneration: saved.generation,
++        signal: controller.signal,
++      }),
++      mode === 'signal' ? { name: 'AbortError' } : /closed/,
++    );
++    assert.equal(reachedPut, true);
++    fixture.onAnyPut = null;
++    assert.equal(getEventListeners(controller.signal, 'abort').length, 0);
++    await assertStored(reader, saved);
++    await store.close();
++    await reader.close();
++  }
++});
++
++test('v2 completed commits are not reported as rolled back and listeners detach on terminal outcomes', async () => {
++  const { migrated, document } = await smallReference();
++  for (const outcome of ['success', 'already-committed', 'quota']) {
++    const fixture = managedIndexedDB(),
++      store = createReferencedStudioStore({ indexedDB: fixture.indexedDB }),
++      reader = createReferencedStudioStore({ indexedDB: fixture.indexedDB }),
++      controller = new AbortController(),
++      prior = await store.save(migrated, new Map());
++    if (outcome === 'already-committed')
++      fixture.afterAnyCommit = () => {
++        controller.abort();
++        void store.close();
++      };
++    if (outcome === 'quota') fixture.failAnyPutAt = 1;
++    const saving = store.save(document, new Map(), {
++      expectedGeneration: 1,
++      signal: controller.signal,
++    });
++    let saved;
++    if (outcome === 'quota') await assert.rejects(saving, { name: 'QuotaExceededError' });
++    else saved = await saving;
++    assert.equal(getEventListeners(controller.signal, 'abort').length, 0);
++    fixture.afterAnyCommit = null;
++    fixture.failAnyPutAt = null;
++    controller.abort();
++    await store.close();
++    await assertStored(reader, saved ?? prior);
++    await reader.close();
++  }
++});
++
++test('v2 owner close does not abort another connection and legacy close retains its prior semantics', async () => {
++  const { migrated, document, legacy } = await smallReference(),
++    fixture = managedIndexedDB(),
++    first = createReferencedStudioStore({ indexedDB: fixture.indexedDB }),
++    other = createReferencedStudioStore({ indexedDB: fixture.indexedDB });
++  await first.save(migrated, new Map());
++  await other.load();
++  fixture.onAnyPut = () => void other.close();
++  const saved = await first.save(document, new Map(), { expectedGeneration: 1 });
++  fixture.onAnyPut = null;
++  await assertStored(first, saved);
++  await first.close();
++  const legacyFixture = managedIndexedDB(),
++    old = createStudioStore({ indexedDB: legacyFixture.indexedDB });
++  await old.save(legacy, new Map());
++  legacyFixture.onAnyPut = () => void old.close();
++  const oldSaved = await old.save(legacy, new Map(), { expectedGeneration: 1 });
++  legacyFixture.onAnyPut = null;
++  const oldReader = createStudioStore({ indexedDB: legacyFixture.indexedDB });
++  await assertStored(oldReader, oldSaved);
++  await oldReader.close();
++});
++
++test('foreign same-ID ancestry is remapped before reference deduplication', async () => {
++  const legacy = createDefaultThemeBundle(),
++    local = await migrateThemeReferences(legacy),
++    foreign = clone(legacy);
++  foreign.assets[0].provenance.prompt += ' Foreign parent context.';
++  foreign.assets[1].provenance.source += ' Foreign child provenance.';
++  foreign.assets[1].provenance.parent = ref(foreign.assets[0]);
++  const incoming = await migrateThemeReferences(foreign),
++    child = clone(foreign.assets[1]);
++  child.revision++;
++  child.provenance.parent = ref(foreign.assets[1]);
++  const slot = Object.entries(resolvePresentation(foreign).bindings).find(
++    ([, value]) => value.id === child.id,
++  )[0];
++  const withReference = await reviseReferencedTheme(incoming, {
++    assets: [child],
++    bindings: { [slot]: ref(child) },
++  });
++  const snapshot = canonicalJSON(withReference),
++    adopted = await adoptReferencedBundle(local, withReference);
++  assert.deepEqual(adopted.assets.slice(0, local.assets.length), local.assets);
++  assert.equal(canonicalJSON(withReference), snapshot);
++  const selected = await resolveReferencedPresentation(adopted),
++    reader = await openReferencedAssets(adopted),
++    target = selected.assets[slot];
++  assert.notEqual(target.id, child.id);
++  assert.equal(target.provenance.source, child.provenance.source);
++  const parent = reader.get(target.provenance.parent),
++    grandparent = reader.get(parent.provenance.parent);
++  assert.notEqual(parent.id, foreign.assets[1].id);
++  assert.notEqual(grandparent.id, foreign.assets[0].id);
++  assert.equal(grandparent.provenance.prompt, foreign.assets[0].provenance.prompt);
++  assert.equal(target.provenance.prompt, child.provenance.prompt);
++});
++
++test('actual wrapper overhead and transfer limits reject before returning or saving a candidate', async () => {
++  const original = await actual(),
++    document = clone(await migrateThemeReferences(original.document));
++  const target = LIMITS.manifestBytes - 1000;
++  for (const row of document.assets) {
++    const needed = target - bytes(document);
++    if (needed <= 0) break;
++    row.provenance.prompt += 'x'.repeat(Math.min(needed, 8192 - row.provenance.prompt.length));
++  }
++  assert.equal(bytes(document), target);
++  await validateReferencedBundle(document);
++  await assert.rejects(
++    exportReferencedBundle(document, original.assets),
++    /manifest exceeds its budget/,
++  );
++  const tooLarge = clone(document);
++  tooLarge.assets[0].provenance.prompt = 'x'.repeat(8193);
++  await assert.rejects(validateReferencedBundle(tooLarge), /budget|prompt/);
++  await assert.rejects(
++    importReferencedBundle(new Blob([new Uint8Array(LIMITS.bundleBytes + 1)])),
++    /byte budget/,
++  );
++  const { document: small } = await smallReference(),
++    portable = await exportReferencedBundle(small);
++  const abort = new AbortController(),
++    imported = importReferencedBundle(portable, { signal: abort.signal, decodeImage: null });
++  abort.abort();
++  await assert.rejects(imported, { name: 'AbortError' });
++  await assert.rejects(
++    importThemeBundle(portable, { decodeImage: null }),
++    /Unsupported theme bundle/,
++  );
++});
++
++test('compiler shares unchanged runtime assembly while carrying encoded v2 studio history', async () => {
++  const legacy = createDefaultThemeBundle(),
++    migrated = await migrateThemeReferences(legacy);
++  const before = await compilePresentation(legacy),
++    after = await compileReferencedPresentation(migrated);
++  assert.deepEqual(after.resolved, before.resolved);
++  assert.deepEqual(after.files.get('theme.css'), before.files.get('theme.css'));
++  const runtime = JSON.parse(new TextDecoder().decode(after.files.get('runtime.json')));
++  assert.deepEqual(runtime.resolved, before.resolved);
++  assert.equal(runtime.source.revision, migrated.revision);
++  const studio = JSON.parse(new TextDecoder().decode(after.files.get('studio.json')));
++  assert.deepEqual(studio, migrated);
++  assert.equal(studio.format, 'revealline-theme-bundle.v2');
++});
++
++test('malformed reference imports and corrupted payload imports leave the previous complete workspace intact', async () => {
++  const { migrated, document } = await smallReference(),
++    fixture = managedIndexedDB();
++  const store = createReferencedStudioStore({ indexedDB: fixture.indexedDB });
++  const saved = await store.save(migrated, new Map()),
++    portable = await exportReferencedBundle(document);
++  const raw = new Uint8Array(await portable.arrayBuffer()),
++    length = new DataView(raw.buffer).getUint32(8);
++  const originalManifest = JSON.parse(new TextDecoder().decode(raw.slice(12, 12 + length)));
++  for (const mutation of ['missing', 'hash']) {
++    const manifest = clone(originalManifest),
++      anchor = manifest.document.assets.at(-1).provenance.anchor;
++    if (mutation === 'missing') anchor.id = 'missing';
++    else anchor.sha256 = '0'.repeat(64);
++    const encoded = new TextEncoder().encode(canonicalJSON(manifest)),
++      header = raw.slice(0, 12);
++    new DataView(header.buffer).setUint32(8, encoded.length);
++    const puts = fixture.allPuts.length;
++    await assert.rejects(
++      (async () => {
++        const accepted = await importReferencedBundle(new Blob([header, encoded]), {
++          decodeImage: null,
++        });
++        await store.save(accepted.document, accepted.assets, { expectedGeneration: 1 });
++      })(),
++      /direct inline|hash mismatch/,
++    );
++    assert.equal(fixture.allPuts.length, puts);
++    await assertStored(store, saved);
++  }
++  const original = await actual(),
++    full = await exportReferencedBundle(
++      await migrateThemeReferences(original.document),
++      original.assets,
++    );
++  const corrupted = new Uint8Array(await full.arrayBuffer());
++  corrupted[corrupted.length - 1] ^= 1;
++  const puts = fixture.allPuts.length;
++  await assert.rejects(
++    (async () => {
++      const accepted = await importReferencedBundle(new Blob([corrupted]), { decodeImage: null });
++      await store.save(accepted.document, accepted.assets, { expectedGeneration: 1 });
++    })(),
++    /bytes\/hash/,
++  );
++  assert.equal(fixture.allPuts.length, puts);
++  await assertStored(store, saved);
++  await store.close();
++});
++
++test('encoded shape and count boundaries reject before reading unsafe fields or resolving anchors', async () => {
++  const { document } = await smallReference();
++  let reads = 0;
++  const accessor = clone(document);
++  Object.defineProperty(accessor.assets.at(-1).provenance.anchor, 'sha256', {
++    enumerable: true,
++    get() {
++      reads++;
++      return '0'.repeat(64);
++    },
++  });
++  await assert.rejects(validateReferencedBundle(accessor), /accessors/);
++  assert.equal(reads, 0);
++  const slots = clone(document);
++  slots.slots = Array.from({ length: LIMITS.slots + 1 }, () => clone(document.slots[0]));
++  await assert.rejects(validateReferencedBundle(slots), /slots count/);
++  const hidden = clone(document);
++  hidden.assets.at(-1).provenance.anchor.url = 'https://example.invalid/history';
++  await assert.rejects(validateReferencedBundle(hidden), /not supported/);
++});
++
++test('one transition cannot invent two revisions of one identity while a saved batch retains valid separate actions', async () => {
++  const { migrated, document } = await smallReference();
++  const selected = await resolveReferencedPresentation(document),
++    [slot, current] = Object.entries(selected.assets)[0];
++  const row = clone(current);
++  row.revision++;
++  row.provenance.parent = ref(current);
++  const second = await reviseReferencedTheme(document, {
++    assets: [row],
++    bindings: { [slot]: ref(row) },
++  });
++  const collapsed = { ...clone(second), revision: migrated.revision + 1 };
++  await assert.rejects(
++    validateReferencedBundle(collapsed, { previous: migrated }),
++    /next revision|complete history/,
++  );
++  const fixture = managedIndexedDB(),
++    store = createReferencedStudioStore({ indexedDB: fixture.indexedDB });
++  await store.save(migrated, new Map());
++  const saved = await store.save(second, new Map(), { expectedGeneration: 1 });
++  assert.equal(saved.generation, 2);
++  assert.deepEqual(saved.document.assets.slice(0, migrated.assets.length), migrated.assets);
++  await store.close();
++});
+diff --git a/game/test/presentation-studio-formats.test.mjs b/game/test/presentation-studio-formats.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..d3c801dd9b9595afac731d3ae7d1dda1535a47f5
+--- /dev/null
++++ b/game/test/presentation-studio-formats.test.mjs
+@@ -0,0 +1,176 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
++import { FORMATS, resolvePresentation, validateThemeBundle } from '../presentation/model.mjs';
++import { exportThemeBundle, importThemeBundle } from '../presentation/bundle.mjs';
++import { REFERENCE_FORMAT } from '../presentation/reference-model.mjs';
++import { createStudioStore } from '../presentation/studio-store.mjs';
++import { managedIndexedDB } from './helpers/managed-idb.mjs';
++import {
++  prepareStudioSnapshot,
++  upgradeStudioDocument,
++  reviseStudioDocument,
++  replaceStudioDocumentCollection,
++  selectStudioTheme,
++  adoptStudioDocument,
++  exportStudioBundle,
++  importStudioBundle,
++  createFormatStudioStore,
++} from '../presentation/studio-formats.mjs';
++
++const ref = ({ id, revision }) => ({ id, revision });
++const bytes = async (blob) => new Uint8Array(await blob.arrayBuffer());
++const legacy = () => createDefaultThemeBundle();
++
++test('ordinary Studio v1 load, edit, save and export preserve the strict legacy format and bytes', async () => {
++  const db = managedIndexedDB();
++  const store = createFormatStudioStore({ indexedDB: db.indexedDB });
++  const document = legacy();
++  const original = await bytes(await exportThemeBundle(document));
++  assert.deepEqual(await bytes(await exportStudioBundle(document, new Map())), original);
++  const imported = await importStudioBundle(new Blob([original]));
++  assert.deepEqual(imported.document, document);
++  await store.save(document, new Map());
++  const loaded = await store.load();
++  assert.deepEqual(loaded.document, document);
++  const next = await reviseStudioDocument(loaded.document, { tokens: { textSize: 21 } });
++  await store.save(next, loaded.assets, { expectedGeneration: 1 });
++  const saved = await store.load();
++  assert.equal(saved.document.format, FORMATS.bundle);
++  for (const key of ['slots', 'assets', 'collections'])
++    assert.deepEqual(saved.document[key], document[key]);
++  assert.deepEqual(
++    await bytes(await exportStudioBundle(saved.document, saved.assets)),
++    await bytes(await exportThemeBundle(next)),
++  );
++  await store.close();
++});
++
++test('explicit upgrade is a detached immutable draft; old writer rejects saved v2 and CAS retains the winner', async () => {
++  const db = managedIndexedDB(),
++    store = createFormatStudioStore({ indexedDB: db.indexedDB });
++  const document = legacy();
++  await store.save(document, new Map());
++  const previous = await prepareStudioSnapshot(document, new Map());
++  const upgraded = await upgradeStudioDocument(document, new Map());
++  assert.equal(upgraded.document.format, REFERENCE_FORMAT);
++  assert.equal(upgraded.document.revision, document.revision + 1);
++  assert.deepEqual((await store.load()).document, document, 'Preparing Upgrade does not persist.');
++  for (const key of ['slots', 'assets', 'themes', 'collections', 'selection'])
++    assert.deepEqual(upgraded.document[key], previous.document[key]);
++  assert.deepEqual(upgraded.view, previous.view);
++  assert.deepEqual(upgraded.coverage, previous.coverage);
++  assert.deepEqual(
++    (await store.save(upgraded.document, upgraded.assets, { expectedGeneration: 1 })).document,
++    upgraded.document,
++  );
++  const old = createStudioStore({ indexedDB: db.indexedDB });
++  await assert.rejects(old.load(), /Invalid bundle identity/);
++  await assert.rejects(
++    old.save(document, new Map(), { expectedGeneration: 2 }),
++    /Invalid bundle identity/,
++  );
++  await assert.rejects(
++    store.save(upgraded.document, upgraded.assets, { expectedGeneration: 1 }),
++    /another tab/,
++  );
++  assert.deepEqual((await store.load()).document, upgraded.document);
++  const signal = AbortSignal.abort();
++  await assert.rejects(upgradeStudioDocument(document, new Map(), { signal }), {
++    name: 'AbortError',
++  });
++  assert.deepEqual((await store.load()).document, upgraded.document);
++  await Promise.all([store.close(), old.close()]);
++});
++
++test('v2 Studio edits retain encoded history while views, complete collections and historical provenance resolve', async () => {
++  const original = legacy(),
++    upgraded = await upgradeStudioDocument(original, new Map());
++  const selected = Object.keys(upgraded.view.assets)[0],
++    current = upgraded.view.assets[selected];
++  const asset = {
++    ...structuredClone(current),
++    revision: current.revision + 1,
++    provenance: { ...structuredClone(current.provenance), parent: ref(current) },
++    quality: { stage: 'reviewed', evidence: ['Actual local fixture review only.'] },
++  };
++  let next = await reviseStudioDocument(upgraded.document, {
++    assets: [asset],
++    bindings: { [selected]: ref(asset) },
++    tokens: { textSize: 22 },
++  });
++  const encoded = next.assets.at(-1);
++  assert.equal(encoded.format, 'revealline-asset-revision.v2');
++  assert.equal(encoded.provenance.creator, undefined);
++  let snapshot = await prepareStudioSnapshot(next, new Map());
++  assert.deepEqual(snapshot.asset(encoded), asset);
++  assert.equal(snapshot.view.assets[selected].provenance.prompt, current.provenance.prompt);
++  assert.equal(snapshot.coverage.rows.find((row) => row.slotId === selected).stage, 'reviewed');
++  next = await replaceStudioDocumentCollection(next, {
++    id: 'studio-test-collection',
++    name: 'Fixture',
++    requiredSlots: [selected],
++    bindings: { [selected]: ref(asset) },
++  });
++  snapshot = await prepareStudioSnapshot(next, new Map());
++  assert.equal(snapshot.view.collection.id, 'studio-test-collection');
++  await assert.rejects(
++    replaceStudioDocumentCollection(next, {
++      id: 'invalid-collection',
++      name: 'Missing selected binding',
++      requiredSlots: [selected],
++      bindings: {},
++    }),
++    /binding|slot/i,
++  );
++  next = await reviseStudioDocument(next, { bindings: { [selected]: ref(current) } });
++  next = await selectStudioTheme(next, next.selection.theme.id);
++  snapshot = await prepareStudioSnapshot(next, new Map());
++  assert.deepEqual(ref(snapshot.view.assets[selected]), ref(current));
++  for (const key of ['slots', 'assets', 'themes', 'collections'])
++    assert.deepEqual(next[key].slice(0, original[key].length), original[key]);
++  assert.throws(() => validateThemeBundle(next), /Invalid bundle identity/);
++});
++
++test('Studio transfer and adoption matrix is explicit, complete and fail-closed', async () => {
++  const one = legacy(),
++    two = (await upgradeStudioDocument(one, new Map())).document;
++  const file = await exportStudioBundle(two, new Map());
++  await assert.rejects(importThemeBundle(file), /Unsupported/);
++  const incoming = await importStudioBundle(file);
++  assert.deepEqual(incoming.document, two);
++  await assert.rejects(adoptStudioDocument(one, incoming.document), /explicitly Upgrade/);
++  for (const foreign of [one, two]) {
++    const adopted = await adoptStudioDocument(two, foreign);
++    assert.equal(adopted.format, REFERENCE_FORMAT);
++    assert.deepEqual(adopted.assets.slice(0, two.assets.length), two.assets);
++    const snapshot = await prepareStudioSnapshot(adopted, new Map());
++    assert.deepEqual(snapshot.view.tokens, resolvePresentation(one).tokens);
++    assert.ok(snapshot.view.collection);
++  }
++  const before = structuredClone(two);
++  const malformed = structuredClone(two);
++  malformed.format = 'revealline-theme-bundle.v99';
++  await assert.rejects(prepareStudioSnapshot(malformed, new Map()), /Unsupported/);
++  await assert.rejects(importStudioBundle(new Blob(['RLTHM9\r\n1234'])), /Unsupported/);
++  const broken = new Uint8Array(await file.arrayBuffer());
++  broken[8] = 255;
++  await assert.rejects(importStudioBundle(new Blob([broken])), /manifest/);
++  assert.deepEqual(two, before);
++});
++
++test('format dispatch does not evaluate an untrusted format accessor', async () => {
++  let reads = 0;
++  const malicious = Object.defineProperty({}, 'format', {
++    enumerable: true,
++    get() {
++      reads++;
++      return FORMATS.bundle;
++    },
++  });
++  assert.throws(() => exportStudioBundle(malicious, new Map()), /Unsupported/);
++  assert.throws(() => reviseStudioDocument(malicious, {}), /Unsupported/);
++  await assert.rejects(prepareStudioSnapshot(malicious, new Map()), /getter|accessor|data|JSON/i);
++  await assert.rejects(selectStudioTheme(malicious, 'fpv'), /getter|accessor|data|JSON/i);
++  assert.equal(reads, 0);
++});

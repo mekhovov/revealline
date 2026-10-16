@@ -82,6 +82,62 @@ function fixture(t, mode) {
     setActive: (v) => (active = v),
   };
 }
+test('outside release is observed before another control stops propagation; teardown removes observers', (t) => {
+  const f = fixture(t, 'stick');
+  f.surfaces[0].setPointerCapture = () => {};
+  f.pointer(0, 'pointerdown', 78, 78, 11);
+  f.pointer(0, 'pointermove', 115, 78, 11);
+  f.pads[0].addEventListener('pointerup', (event) => event.stopPropagation());
+  f.pads[0].emit('pointerup', { pointerId: 11 });
+  f.pointer(0, 'pointerdown', 78, 78, 22);
+  f.pointer(0, 'pointermove', 78, 115, 22);
+  assert.equal(f.input.snapshotDirection(0), 'down');
+  assert.equal(f.pauses(), 0);
+  assert.ok(f.win.captureListeners.get('pointerup').size > 0);
+  f.input.destroy();
+  for (const type of ['pointerup', 'pointercancel']) {
+    assert.equal(f.win.captureListeners.get(type).size, 0);
+    assert.equal(f.win.listeners.get(type)?.size || 0, 0);
+  }
+  f.win.emit('pointercancel', { pointerId: 22 });
+  assert.equal(f.pauses(), 0, 'A destroyed input owner cannot pause a later game.');
+});
+
+for (const mode of ['stick', 'swipe', 'dpad'])
+  test(`${mode}: outside release after capture failure keeps both seats usable`, (t) => {
+    const f = fixture(t, mode);
+    f.surfaces[0].setPointerCapture = () => {
+      throw new Error('Pointer capture unavailable');
+    };
+    f.pointer(0, 'pointerdown', mode === 'dpad' ? 145 : 78, 78, 11);
+    f.pointer(1, 'pointerdown', 78, mode === 'dpad' ? 145 : 78, 22);
+    if (mode !== 'dpad') {
+      f.pointer(0, 'pointermove', 115, 78, 11);
+      f.pointer(1, 'pointermove', 78, 115, 22);
+    }
+    f.win.emit('pointercancel', { pointerId: 99 });
+    f.win.emit('pointerup', { pointerId: 11 });
+    assert.equal(f.pauses(), 0);
+    assert.deepEqual(
+      f.input.consume().map((command) => command.direction),
+      ['right', 'down'],
+    );
+    assert.equal(f.surfaces[1].hasPointerCapture(22), true);
+    f.pointer(0, 'pointerdown', mode === 'dpad' ? 5 : 78, 78, 33);
+    if (mode !== 'dpad') f.pointer(0, 'pointermove', 5, 78, 33);
+    assert.deepEqual(
+      f.input.consume().map((command) => command.direction),
+      ['left', 'down'],
+    );
+    f.win.emit('pointercancel', { pointerId: 11 });
+    assert.equal(f.pauses(), 0, 'An old gesture cannot interrupt either current seat.');
+    f.win.emit('pointercancel', { pointerId: 33 });
+    assert.equal(f.pauses(), 1, 'A genuine interruption still pauses the shared game.');
+    assert.equal(f.surfaces[1].hasPointerCapture(22), false);
+    f.win.emit('pointercancel', { pointerId: 33 });
+    assert.equal(f.pauses(), 1);
+  });
+
 for (const mode of ['stick', 'swipe', 'dpad'])
   test(`${mode}: both seats steer independently, release persists, recovery clears stale fingers`, (t) => {
     const f = fixture(t, mode);

@@ -1,0 +1,187 @@
+{
+  "format": "FPVReservoirSceneScopeAudit.v1",
+  "beforePreparedSHA256": "cb799ef07882e62e415d28746ea99a1f36a872b091fd17c9dd5257bb2535334a",
+  "afterPreparedSHA256": "f440002a460b614a3ac36e6316bdddc9912a8e6159c2298451073a4c20bb2e5e",
+  "changedCourseKeys": [
+    "revision",
+    "obstacles"
+  ],
+  "changedObstacles": [
+    {
+      "id": "building-maintenance-roof",
+      "before": {
+        "id": "building-maintenance-roof",
+        "type": "trimesh",
+        "vertices": [
+          -40300,
+          4200,
+          -17300,
+          -31700,
+          4200,
+          -17300,
+          -31700,
+          4200,
+          -8700,
+          -40300,
+          4200,
+          -8700,
+          -40300,
+          4450,
+          -17300,
+          -31700,
+          4450,
+          -17300,
+          -31700,
+          4450,
+          -8700,
+          -40300,
+          4450,
+          -8700
+        ],
+        "indices": [
+          4,
+          6,
+          5,
+          0,
+          1,
+          2,
+          4,
+          7,
+          6,
+          0,
+          2,
+          3,
+          0,
+          1,
+          4,
+          1,
+          5,
+          4,
+          1,
+          2,
+          5,
+          2,
+          6,
+          5,
+          2,
+          3,
+          6,
+          3,
+          7,
+          6,
+          3,
+          0,
+          7,
+          0,
+          4,
+          7
+        ]
+      },
+      "after": {
+        "id": "building-maintenance-roof",
+        "type": "trimesh",
+        "vertices": [
+          -26300,
+          4200,
+          -19300,
+          -17700,
+          4200,
+          -19300,
+          -17700,
+          4200,
+          -10700,
+          -26300,
+          4200,
+          -10700,
+          -26300,
+          4450,
+          -19300,
+          -17700,
+          4450,
+          -19300,
+          -17700,
+          4450,
+          -10700,
+          -26300,
+          4450,
+          -10700
+        ],
+        "indices": [
+          4,
+          6,
+          5,
+          0,
+          1,
+          2,
+          4,
+          7,
+          6,
+          0,
+          2,
+          3,
+          0,
+          1,
+          4,
+          1,
+          5,
+          4,
+          1,
+          2,
+          5,
+          2,
+          6,
+          5,
+          2,
+          3,
+          6,
+          3,
+          7,
+          6,
+          3,
+          0,
+          7,
+          0,
+          4,
+          7
+        ]
+      }
+    },
+    {
+      "id": "building-maintenance",
+      "before": {
+        "id": "building-maintenance",
+        "min": {
+          "x": -40000,
+          "y": 0,
+          "z": -17000
+        },
+        "max": {
+          "x": -32000,
+          "y": 4200,
+          "z": -9000
+        }
+      },
+      "after": {
+        "id": "building-maintenance",
+        "min": {
+          "x": -26000,
+          "y": 0,
+          "z": -19000
+        },
+        "max": {
+          "x": -18000,
+          "y": 4200,
+          "z": -11000
+        }
+      }
+    }
+  ],
+  "unchanged": {
+    "steps": "5171cbcfa6c91c199256d751a71af6fe2f6bc0a8c98f0fcd85c3f4c227889a2d",
+    "spawn": "57679d0da1c10c83f2e583429cc175ad036b42d299fedf2bb83ea25c7d3f0221",
+    "bounds": "b11ea7fb2831e782a49d64f4fe91de58d9a584abb7e6a62fc57779ec5189bd82",
+    "rules": "60d63bd168c34e9f41daa256d3d59eaeda4a322059bbd536b1113f9f8851439a",
+    "actors": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "limitations": "Static source/asset scope only. No visual acceptance, ordinary flight or replay qualification."
+}

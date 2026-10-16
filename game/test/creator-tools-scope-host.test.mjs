@@ -41,15 +41,30 @@ for (const mode of ['ordinary', 'practice', 'course']) {
     for (const link of links) assert.equal(link.getClientRects().length, 0);
     page.$('settings-tab-audio').focus();
     arrow(page, 'End');
-    assert.equal(page.doc.activeElement, page.$('settings-tab-data'));
+    assert.ok(
+      page.doc.activeElement === page.$('settings-tab-extras'),
+      'End reaches the final category in the current eight-category menu.',
+    );
+    arrow(page, 'ArrowUp');
+    assert.ok(page.doc.activeElement === page.$('settings-tab-content'));
+    arrow(page, 'ArrowUp');
+    assert.ok(
+      page.doc.activeElement === page.$('settings-tab-data'),
+      `Data tab must own focus; actual ${page.doc.activeElement?.id}`,
+    );
     assert.equal(page.$('settings-tab-data').getAttribute('aria-selected'), 'true');
     assert.equal(page.$('settings-panel-data').hidden, false);
     for (const link of links) assert.equal(link.getClientRects().length > 0, !isolated);
     if (isolated) {
-      page.$('offline-details').parentElement.querySelector('summary').focus();
+      // Offline details now belong to Content. Begin from a visible real Data
+      // action so this scope check does not focus a control in a hidden panel.
+      const visibleDataAction = page.$('settings-saves');
+      assert.ok(visibleDataAction.getClientRects().length > 0);
+      assert.equal(visibleDataAction.disabled, false);
+      visibleDataAction.focus();
       arrow(page, 'ArrowDown');
       assert.equal(creator.contains(page.doc.activeElement), false);
-      assert.equal(page.doc.activeElement.closest('[hidden]'), null);
+      assert.ok(!page.doc.activeElement.closest('[hidden]'), 'Focus remains in visible controls.');
       assert.ok(page.$('settings-dialog').contains(page.doc.activeElement));
       // A forced synthetic activation is still blocked by the unchanged
       // navigation guard. Hiding these links does not grant an escape route.
@@ -57,11 +72,11 @@ for (const mode of ['ordinary', 'practice', 'course']) {
     } else {
       creator.querySelector('summary').focus();
       arrow(page, 'ArrowDown');
-      assert.equal(page.doc.activeElement, links[0]);
+      assert.ok(page.doc.activeElement === links[0], 'Down enters the first Creator link.');
       arrow(page, 'ArrowDown');
-      assert.equal(page.doc.activeElement, links[1]);
+      assert.ok(page.doc.activeElement === links[1], 'Down reaches the second Creator link.');
       arrow(page, 'ArrowUp');
-      assert.equal(page.doc.activeElement, links[0]);
+      assert.ok(page.doc.activeElement === links[0], 'Up returns to the first Creator link.');
       assert.equal(links[0].emit('click').defaultPrevented, false);
       // Native navigation itself belongs to the actual browser, not this DOM.
     }
@@ -69,13 +84,22 @@ for (const mode of ['ordinary', 'practice', 'course']) {
     // keyboard scope; navigation must not cross into a hidden category.
     page.$('settings-tab-data').focus();
     arrow(page, 'Home');
+    assert.ok(
+      page.doc.activeElement === page.$('settings-tab-gameplay'),
+      'Home reaches Gameplay before the Controls category.',
+    );
+    arrow(page, 'ArrowDown');
+    assert.ok(page.doc.activeElement === page.$('settings-tab-controls'));
     assert.equal(page.$('settings-panel-controls').hidden, false);
     assert.equal(page.$('settings-panel-data').hidden, true);
     for (const link of links) assert.equal(link.getClientRects().length, 0);
     page.$('keyboard-settings').querySelector('summary').focus();
     arrow(page, 'ArrowUp');
     assert.equal(creator.contains(page.doc.activeElement), false);
-    assert.equal(page.doc.activeElement.closest('[hidden]'), null);
+    assert.ok(
+      !page.doc.activeElement.closest('[hidden]'),
+      'Focus remains in the visible category.',
+    );
     page.$('settings-dialog').close();
     page.frame(0);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);

@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createPresentationHost, ACTOR_PRESENTATION_SLOTS } from '../presentation/host.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
+import { OVERFLIGHT_ACTOR_SLOT_IDS } from '../presentation/overflight-actor-slots.mjs';
 import {
   ACTOR_APPEARANCE_RELEASES,
   ACTOR_APPEARANCE_REQUIRED_SLOTS,
@@ -21,6 +22,35 @@ const bytes = new Uint8Array(
 );
 const manifest = JSON.parse(new TextDecoder().decode(bytes));
 const hash = await hashPresentationBytes(bytes);
+test('authored campaign receipt retains exactly and never substitutes missing or changed recipes', async () => {
+  const identity = {
+    content: content('solo', true),
+    scope: 'journey',
+    authoredPresentationSha256: 'a'.repeat(64),
+  };
+  const first = await prepareActorAppearanceLease({ ...identity, style: 'campaign' });
+  const pin = first.pin();
+  assert.equal(pin.format, 'revealline-actor-appearance-pin.v2');
+  const retained = await prepareRetainedActorAppearanceLease({ ...identity, pin });
+  assert.deepEqual(retained.pin(), pin);
+  for (const authoredPresentationSha256 of [undefined, 'b'.repeat(64)])
+    await assert.rejects(
+      prepareRetainedActorAppearanceLease({ ...identity, pin, authoredPresentationSha256 }),
+      /exact earlier artwork/,
+    );
+  const prior = await prepareActorAppearanceLease({
+    content: identity.content,
+    scope: 'journey',
+    style: 'campaign',
+  });
+  await assert.rejects(
+    prepareRetainedActorAppearanceLease({ ...identity, pin: prior.pin() }),
+    /exact earlier artwork/,
+  );
+  first.release();
+  retained.release();
+  prior.release();
+});
 function content(mode = 'solo', journey = false) {
   return {
     editionId: journey ? 'journey-pressure' : 'field-kit',
@@ -106,8 +136,10 @@ function environment({
       document: new Proxy(
         {},
         {
-          get() {
-            assert.fail('Actor profile must not read the live document.');
+          get(target, key) {
+            // Page memory capability is read without granting DOM authority.
+            if (key === 'defaultView') return undefined;
+            assert.fail('Actor profile must not read the live document DOM.');
           },
         },
       ),
@@ -142,6 +174,10 @@ test('approved actor registry binds exact accepted compiled62 bytes, not a curre
   assert.equal(ACTOR_APPEARANCE_REQUIRED_SLOTS.solo.length, 28);
   assert.equal(ACTOR_APPEARANCE_REQUIRED_SLOTS.versus.length, 28);
   assert.equal(ACTOR_APPEARANCE_REQUIRED_SLOTS.team.length, 39);
+  for (const slot of OVERFLIGHT_ACTOR_SLOT_IDS) {
+    assert.ok(!ACTOR_PRESENTATION_SLOTS.includes(slot));
+    assert.ok(!ACTOR_APPEARANCE_REQUIRED_SLOTS.solo.includes(slot));
+  }
 });
 
 test('fixed actors loader uses the existing verified image path and has no other presentation authority', async () => {

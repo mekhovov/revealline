@@ -1,0 +1,30 @@
+{
+  "sourceRevision": "0b1aa412d",
+  "operation": "Riy",
+  "layout": "freight-depot-loading-loop",
+  "seed": 17031991,
+  "build": "echo",
+  "method": "After frozen trial3, resumed activepilot then startednative20srecording andpressedTakecontrol; no furthersteering,boostorFocus.",
+  "start": {
+    "gameplaySeconds": 139,
+    "hull": 20,
+    "airframes": 3,
+    "cleared": 445,
+    "choices": 6
+  },
+  "finish": {
+    "gameplaySeconds": 150,
+    "hull": 0,
+    "airframes": 0,
+    "cleared": 464
+  },
+  "video": "depot-riy-echo-unattended.webm",
+  "sha256": "89fc89f57d1fb704cd24191f6bfe36e106daed98274d8d4c31c9f9cecfa941b1",
+  "boundaries": [
+    "Recording separatefromtimingtrial",
+    "Lowstartinghull;not fullhealthmaturebuildbalancedcomparison",
+    "Includesairframereplacements",
+    "Battlefieldonly;HUD/cardsnotinclip;mastermuted",
+    "No personalrecordsaved;not anordinaryplayerplaytest"
+  ]
+}

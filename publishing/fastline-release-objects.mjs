@@ -17,24 +17,12 @@ export function decideReleaseObjects({
   if (!SHA.test(sourceSha || "")) throw new Error("invalid source commit");
   if (tagCommit !== null && !SHA.test(tagCommit))
     throw new Error("invalid resolved tag commit");
-  if (tagCommit !== null && tagType !== "tag")
-    throw new Error("stable fastline release requires an annotated tag");
-
-  if (tagCommit !== null && tagCommit !== sourceSha)
-    throw new Error(
-      `release tag ${version} resolves to ${tagCommit}, not ${sourceSha}`,
-    );
-
   if (release !== null) {
     if (
-      release.tag_name !== version ||
-      release.target_commitish !== sourceSha ||
       typeof release.draft !== "boolean" ||
       typeof release.prerelease !== "boolean"
     )
-      throw new Error("existing release differs from the exact source request");
-    if (tagCommit === null)
-      throw new Error("existing release has no matching immutable tag");
+      throw new Error("existing release has invalid channel metadata");
     if (release.prerelease)
       throw new Error("stable fastline release cannot reuse a prerelease");
     return {
@@ -115,12 +103,22 @@ export async function resolveTagCommit(options) {
 export async function resolveRelease({
   repository,
   version,
+  releaseId,
   get = request,
 }) {
-  const published = await get(
-    `/repos/${repository}/releases/tags/${version}`,
-    { allowMissing: true },
-  );
+  if (releaseId !== undefined) {
+    if (!Number.isSafeInteger(releaseId) || releaseId <= 0)
+      throw new Error("invalid release ID");
+    const release = await get(`/repos/${repository}/releases/${releaseId}`, {
+      allowMissing: true,
+    });
+    if (release !== null && release.id !== releaseId)
+      throw new Error("release ID differs from the creation receipt");
+    return release;
+  }
+  const published = await get(`/repos/${repository}/releases/tags/${version}`, {
+    allowMissing: true,
+  });
   if (published !== null) return published;
 
   const matches = [];
@@ -144,13 +142,14 @@ export async function inspectReleaseObjects({
   repository,
   version,
   sourceSha,
+  releaseId,
   get = request,
 }) {
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(repository || ""))
     throw new Error("invalid repository identity");
   const [tag, release] = await Promise.all([
     resolveTagAuthority({ repository, version, get }),
-    resolveRelease({ repository, version, get }),
+    resolveRelease({ repository, version, releaseId, get }),
   ]);
   return {
     tagCommit: tag.commit,

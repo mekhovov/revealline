@@ -1,0 +1,7502 @@
+{
+  "format": "classic-snake-v4-proofs.v1",
+  "proofs": [
+    {
+      "levelId": "classic-field-signal-check",
+      "mode": "solo",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-check",
+          "revision": "1",
+          "name": "Signal Check",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 12,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 7
+            },
+            {
+              "x": 11,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 7
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 4,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "77053967cffef50c",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 78,
+        "turns": [
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 61,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "57378318d205b71b"
+      }
+    },
+    {
+      "levelId": "classic-field-quiet-return",
+      "mode": "solo",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-quiet-return",
+          "revision": "1",
+          "name": "Quiet Return",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 8,
+              "y": 7
+            },
+            {
+              "x": 9,
+              "y": 7
+            },
+            {
+              "x": 8,
+              "y": 8
+            },
+            {
+              "x": 9,
+              "y": 8
+            },
+            {
+              "x": 14,
+              "y": 10
+            },
+            {
+              "x": 15,
+              "y": 10
+            },
+            {
+              "x": 16,
+              "y": 10
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "runner",
+                "every": 3
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "349b087d7745d45f",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 116,
+        "turns": [
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 21,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 26,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 34,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 56,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 66,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 68,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 78,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 86,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 106,
+            "playerId": 0,
+            "direction": "down"
+          }
+        ],
+        "checkpoint": "6ade3f82a115127e"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-crossing",
+      "mode": "solo",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-crossing",
+          "revision": "1",
+          "name": "Signal Crossing",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 10,
+              "y": 4
+            },
+            {
+              "x": 11,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 13,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 13,
+              "y": 13
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "0b92da5b4155a6e0",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 80,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 26,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 29,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 38,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 44,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 45,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 53,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 61,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 79,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "471ed8dd71330e96"
+      }
+    },
+    {
+      "levelId": "classic-field-relay-airfield",
+      "mode": "solo",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-relay-airfield",
+          "revision": "1",
+          "name": "Relay Airfield",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            },
+            {
+              "x": 16,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              },
+              {
+                "kind": "relay",
+                "every": 3,
+                "at": {
+                  "x": 12,
+                  "y": 8
+                },
+                "relays": [
+                  {
+                    "x": 3,
+                    "y": 5
+                  },
+                  {
+                    "x": 20,
+                    "y": 12
+                  }
+                ]
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "f3bb742fc25a0a43",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 103,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 17,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 41,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 50,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 51,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 53,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 60,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 62,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 65,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 69,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 74,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 87,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 89,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 90,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 94,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "a70effd4554188af"
+      }
+    },
+    {
+      "levelId": "classic-field-field-links",
+      "mode": "solo",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-field-links",
+          "revision": "1",
+          "name": "Field Links",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 6,
+              "y": 5
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 6,
+              "y": 6
+            },
+            {
+              "x": 7,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 7
+            },
+            {
+              "x": 13,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 8
+            },
+            {
+              "x": 13,
+              "y": 8
+            },
+            {
+              "x": 12,
+              "y": 9
+            },
+            {
+              "x": 13,
+              "y": 9
+            },
+            {
+              "x": 12,
+              "y": 10
+            },
+            {
+              "x": 13,
+              "y": 10
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "eroder",
+                "every": 3,
+                "at": {
+                  "x": 11,
+                  "y": 8
+                },
+                "breaks": [
+                  {
+                    "x": 12,
+                    "y": 8
+                  }
+                ]
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "guard",
+                "every": 3,
+                "at": {
+                  "x": 6,
+                  "y": 8
+                },
+                "heading": "right"
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "27c336bce6054f89",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 75,
+        "turns": [
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 12,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 17,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 18,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 27,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 47,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 61,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 64,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 72,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 74,
+            "playerId": 0,
+            "direction": "down"
+          }
+        ],
+        "checkpoint": "212e2a2b9957e855"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-check",
+      "mode": "team",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-check",
+          "revision": "1",
+          "name": "Signal Check",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 12,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 7
+            },
+            {
+              "x": 11,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 7
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 4,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "77053967cffef50c",
+        "mode": "team",
+        "seed": 17,
+        "steps": 50,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 11,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 16,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 17,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 18,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 25,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 26,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 26,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 28,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 38,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 39,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 42,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 49,
+            "playerId": 1,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "84e010ff31676203"
+      }
+    },
+    {
+      "levelId": "classic-field-quiet-return",
+      "mode": "team",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-quiet-return",
+          "revision": "1",
+          "name": "Quiet Return",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 8,
+              "y": 7
+            },
+            {
+              "x": 9,
+              "y": 7
+            },
+            {
+              "x": 8,
+              "y": 8
+            },
+            {
+              "x": 9,
+              "y": 8
+            },
+            {
+              "x": 14,
+              "y": 10
+            },
+            {
+              "x": 15,
+              "y": 10
+            },
+            {
+              "x": 16,
+              "y": 10
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "runner",
+                "every": 3
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "349b087d7745d45f",
+        "mode": "team",
+        "seed": 17,
+        "steps": 84,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 10,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 11,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 12,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 21,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 25,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 32,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 32,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 33,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 36,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 37,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 44,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 47,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 50,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 57,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 62,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 62,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 75,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 77,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 83,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "7d44055b91da2195"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-crossing",
+      "mode": "team",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-crossing",
+          "revision": "1",
+          "name": "Signal Crossing",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 10,
+              "y": 4
+            },
+            {
+              "x": 11,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 13,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 13,
+              "y": 13
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "0b92da5b4155a6e0",
+        "mode": "team",
+        "seed": 17,
+        "steps": 78,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 12,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 13,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 15,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 16,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 18,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 19,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 20,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 22,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 23,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 24,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 26,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 27,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 28,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 30,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 32,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 32,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 33,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 34,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 35,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 38,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 39,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 40,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 44,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 44,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 45,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 45,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 48,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 49,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 51,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 62,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 63,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 68,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 70,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 71,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 77,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 77,
+            "playerId": 1,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "bf02f1caa3f73758"
+      }
+    },
+    {
+      "levelId": "classic-field-relay-airfield",
+      "mode": "team",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-relay-airfield",
+          "revision": "1",
+          "name": "Relay Airfield",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            },
+            {
+              "x": 16,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              },
+              {
+                "kind": "relay",
+                "every": 3,
+                "at": {
+                  "x": 12,
+                  "y": 8
+                },
+                "relays": [
+                  {
+                    "x": 3,
+                    "y": 5
+                  },
+                  {
+                    "x": 20,
+                    "y": 12
+                  }
+                ]
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "f3bb742fc25a0a43",
+        "mode": "team",
+        "seed": 17,
+        "steps": 59,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 13,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 14,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 18,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 18,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 26,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 27,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 32,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 34,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 36,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 37,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 41,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 45,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 53,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 55,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 55,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 58,
+            "playerId": 1,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "99e0cc37ffa92484"
+      }
+    },
+    {
+      "levelId": "classic-field-field-links",
+      "mode": "team",
+      "pace": "slow",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-field-links",
+          "revision": "1",
+          "name": "Field Links",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 6,
+              "y": 5
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 6,
+              "y": 6
+            },
+            {
+              "x": 7,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 7
+            },
+            {
+              "x": 13,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 8
+            },
+            {
+              "x": 13,
+              "y": 8
+            },
+            {
+              "x": 12,
+              "y": 9
+            },
+            {
+              "x": 13,
+              "y": 9
+            },
+            {
+              "x": 12,
+              "y": 10
+            },
+            {
+              "x": 13,
+              "y": 10
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 280,
+          "speedupEvery": 0,
+          "minStepMs": 280,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "eroder",
+                "every": 3,
+                "at": {
+                  "x": 11,
+                  "y": 8
+                },
+                "breaks": [
+                  {
+                    "x": 12,
+                    "y": 8
+                  }
+                ]
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "guard",
+                "every": 3,
+                "at": {
+                  "x": 6,
+                  "y": 8
+                },
+                "heading": "right"
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "27c336bce6054f89",
+        "mode": "team",
+        "seed": 17,
+        "steps": 47,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 12,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 12,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 17,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 18,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 21,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 23,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 28,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 29,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 30,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 44,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "d6c18bbe780ba91d"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-check",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-check",
+          "revision": "1",
+          "name": "Signal Check",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 12,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 7
+            },
+            {
+              "x": 11,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 7
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 4,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "7ebb0607e6d835ec",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 78,
+        "turns": [
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 61,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "a077f990dfba0242"
+      }
+    },
+    {
+      "levelId": "classic-field-quiet-return",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-quiet-return",
+          "revision": "1",
+          "name": "Quiet Return",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 8,
+              "y": 7
+            },
+            {
+              "x": 9,
+              "y": 7
+            },
+            {
+              "x": 8,
+              "y": 8
+            },
+            {
+              "x": 9,
+              "y": 8
+            },
+            {
+              "x": 14,
+              "y": 10
+            },
+            {
+              "x": 15,
+              "y": 10
+            },
+            {
+              "x": 16,
+              "y": 10
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "runner",
+                "every": 3
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "322667ccefa1864f",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 116,
+        "turns": [
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 21,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 26,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 34,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 56,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 66,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 68,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 78,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 86,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 106,
+            "playerId": 0,
+            "direction": "down"
+          }
+        ],
+        "checkpoint": "5406d9c05a03f1a2"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-crossing",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-crossing",
+          "revision": "1",
+          "name": "Signal Crossing",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 10,
+              "y": 4
+            },
+            {
+              "x": 11,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 13,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 13,
+              "y": 13
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "2bb6e2ad168ca240",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 80,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 26,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 29,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 38,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 44,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 45,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 53,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 61,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 79,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "4edc897f07714444"
+      }
+    },
+    {
+      "levelId": "classic-field-relay-airfield",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-relay-airfield",
+          "revision": "1",
+          "name": "Relay Airfield",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            },
+            {
+              "x": 16,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              },
+              {
+                "kind": "relay",
+                "every": 3,
+                "at": {
+                  "x": 12,
+                  "y": 8
+                },
+                "relays": [
+                  {
+                    "x": 3,
+                    "y": 5
+                  },
+                  {
+                    "x": 20,
+                    "y": 12
+                  }
+                ]
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "4cd1bd63cdb49893",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 103,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 17,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 41,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 50,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 51,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 53,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 60,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 62,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 65,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 69,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 74,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 87,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 89,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 90,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 94,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "a9cf25ce9bfb93db"
+      }
+    },
+    {
+      "levelId": "classic-field-field-links",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-field-links",
+          "revision": "1",
+          "name": "Field Links",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 6,
+              "y": 5
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 6,
+              "y": 6
+            },
+            {
+              "x": 7,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 7
+            },
+            {
+              "x": 13,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 8
+            },
+            {
+              "x": 13,
+              "y": 8
+            },
+            {
+              "x": 12,
+              "y": 9
+            },
+            {
+              "x": 13,
+              "y": 9
+            },
+            {
+              "x": 12,
+              "y": 10
+            },
+            {
+              "x": 13,
+              "y": 10
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "eroder",
+                "every": 3,
+                "at": {
+                  "x": 11,
+                  "y": 8
+                },
+                "breaks": [
+                  {
+                    "x": 12,
+                    "y": 8
+                  }
+                ]
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "guard",
+                "every": 3,
+                "at": {
+                  "x": 6,
+                  "y": 8
+                },
+                "heading": "right"
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "e4b19059d1c9a949",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 75,
+        "turns": [
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 12,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 17,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 18,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 27,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 47,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 61,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 64,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 72,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 74,
+            "playerId": 0,
+            "direction": "down"
+          }
+        ],
+        "checkpoint": "752c616b526d4a2f"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-check",
+      "mode": "team",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-check",
+          "revision": "1",
+          "name": "Signal Check",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 12,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 7
+            },
+            {
+              "x": 11,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 7
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 4,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "7ebb0607e6d835ec",
+        "mode": "team",
+        "seed": 17,
+        "steps": 50,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 11,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 16,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 17,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 18,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 25,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 26,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 26,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 28,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 38,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 39,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 42,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 49,
+            "playerId": 1,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "89ae8c11f7e9f0cd"
+      }
+    },
+    {
+      "levelId": "classic-field-quiet-return",
+      "mode": "team",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-quiet-return",
+          "revision": "1",
+          "name": "Quiet Return",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 8,
+              "y": 7
+            },
+            {
+              "x": 9,
+              "y": 7
+            },
+            {
+              "x": 8,
+              "y": 8
+            },
+            {
+              "x": 9,
+              "y": 8
+            },
+            {
+              "x": 14,
+              "y": 10
+            },
+            {
+              "x": 15,
+              "y": 10
+            },
+            {
+              "x": 16,
+              "y": 10
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "runner",
+                "every": 3
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "322667ccefa1864f",
+        "mode": "team",
+        "seed": 17,
+        "steps": 84,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 10,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 11,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 12,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 21,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 25,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 32,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 32,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 33,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 36,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 37,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 44,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 47,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 50,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 57,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 62,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 62,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 75,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 77,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 83,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "7048b86245c585be"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-crossing",
+      "mode": "team",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-crossing",
+          "revision": "1",
+          "name": "Signal Crossing",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 10,
+              "y": 4
+            },
+            {
+              "x": 11,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 13,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 13,
+              "y": 13
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "2bb6e2ad168ca240",
+        "mode": "team",
+        "seed": 17,
+        "steps": 78,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 12,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 13,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 15,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 16,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 18,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 19,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 20,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 22,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 23,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 24,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 26,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 27,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 28,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 30,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 32,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 32,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 33,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 34,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 35,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 38,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 39,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 40,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 44,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 44,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 45,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 45,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 48,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 49,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 51,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 62,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 63,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 68,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 70,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 71,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 77,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 77,
+            "playerId": 1,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "229ad9a4600c7ed8"
+      }
+    },
+    {
+      "levelId": "classic-field-relay-airfield",
+      "mode": "team",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-relay-airfield",
+          "revision": "1",
+          "name": "Relay Airfield",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            },
+            {
+              "x": 16,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              },
+              {
+                "kind": "relay",
+                "every": 3,
+                "at": {
+                  "x": 12,
+                  "y": 8
+                },
+                "relays": [
+                  {
+                    "x": 3,
+                    "y": 5
+                  },
+                  {
+                    "x": 20,
+                    "y": 12
+                  }
+                ]
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "4cd1bd63cdb49893",
+        "mode": "team",
+        "seed": 17,
+        "steps": 59,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 13,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 14,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 18,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 18,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 26,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 27,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 32,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 34,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 36,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 37,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 41,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 45,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 53,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 55,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 55,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 58,
+            "playerId": 1,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "bce0ee06cacdcff4"
+      }
+    },
+    {
+      "levelId": "classic-field-field-links",
+      "mode": "team",
+      "pace": "normal",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-field-links",
+          "revision": "1",
+          "name": "Field Links",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 6,
+              "y": 5
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 6,
+              "y": 6
+            },
+            {
+              "x": 7,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 7
+            },
+            {
+              "x": 13,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 8
+            },
+            {
+              "x": 13,
+              "y": 8
+            },
+            {
+              "x": 12,
+              "y": 9
+            },
+            {
+              "x": 13,
+              "y": 9
+            },
+            {
+              "x": 12,
+              "y": 10
+            },
+            {
+              "x": 13,
+              "y": 10
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "eroder",
+                "every": 3,
+                "at": {
+                  "x": 11,
+                  "y": 8
+                },
+                "breaks": [
+                  {
+                    "x": 12,
+                    "y": 8
+                  }
+                ]
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "guard",
+                "every": 3,
+                "at": {
+                  "x": 6,
+                  "y": 8
+                },
+                "heading": "right"
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "e4b19059d1c9a949",
+        "mode": "team",
+        "seed": 17,
+        "steps": 47,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 12,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 12,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 17,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 18,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 21,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 23,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 28,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 29,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 30,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 44,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "907caf024f0c2d12"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-check",
+      "mode": "solo",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-check",
+          "revision": "1",
+          "name": "Signal Check",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 12,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 7
+            },
+            {
+              "x": 11,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 7
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 4,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "7bc8c50d2d2d8f48",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 78,
+        "turns": [
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 61,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "ce0ca3862c31a933"
+      }
+    },
+    {
+      "levelId": "classic-field-quiet-return",
+      "mode": "solo",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-quiet-return",
+          "revision": "1",
+          "name": "Quiet Return",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 8,
+              "y": 7
+            },
+            {
+              "x": 9,
+              "y": 7
+            },
+            {
+              "x": 8,
+              "y": 8
+            },
+            {
+              "x": 9,
+              "y": 8
+            },
+            {
+              "x": 14,
+              "y": 10
+            },
+            {
+              "x": 15,
+              "y": 10
+            },
+            {
+              "x": 16,
+              "y": 10
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "runner",
+                "every": 3
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "0e46985a9c61fb2f",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 116,
+        "turns": [
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 21,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 26,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 34,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 56,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 66,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 68,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 78,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 86,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 106,
+            "playerId": 0,
+            "direction": "down"
+          }
+        ],
+        "checkpoint": "af1309356ba9ac8b"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-crossing",
+      "mode": "solo",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-crossing",
+          "revision": "1",
+          "name": "Signal Crossing",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 10,
+              "y": 4
+            },
+            {
+              "x": 11,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 13,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 13,
+              "y": 13
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "c34e10769101f8ec",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 80,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 26,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 29,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 38,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 44,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 45,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 57,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 58,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 61,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 79,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "4bb8ba4a9da0565d"
+      }
+    },
+    {
+      "levelId": "classic-field-relay-airfield",
+      "mode": "solo",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-relay-airfield",
+          "revision": "1",
+          "name": "Relay Airfield",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            },
+            {
+              "x": 16,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              },
+              {
+                "kind": "relay",
+                "every": 3,
+                "at": {
+                  "x": 12,
+                  "y": 8
+                },
+                "relays": [
+                  {
+                    "x": 3,
+                    "y": 5
+                  },
+                  {
+                    "x": 20,
+                    "y": 12
+                  }
+                ]
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "9724dbaf2ce672b7",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 103,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 17,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 41,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 50,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 51,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 55,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 56,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 60,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 62,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 65,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 69,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 74,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 87,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 89,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 90,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 94,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "6d98fe994bf1c402"
+      }
+    },
+    {
+      "levelId": "classic-field-field-links",
+      "mode": "solo",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-field-links",
+          "revision": "1",
+          "name": "Field Links",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 6,
+              "y": 5
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 6,
+              "y": 6
+            },
+            {
+              "x": 7,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 7
+            },
+            {
+              "x": 13,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 8
+            },
+            {
+              "x": 13,
+              "y": 8
+            },
+            {
+              "x": 12,
+              "y": 9
+            },
+            {
+              "x": 13,
+              "y": 9
+            },
+            {
+              "x": 12,
+              "y": 10
+            },
+            {
+              "x": 13,
+              "y": 10
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "eroder",
+                "every": 3,
+                "at": {
+                  "x": 11,
+                  "y": 8
+                },
+                "breaks": [
+                  {
+                    "x": 12,
+                    "y": 8
+                  }
+                ]
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "guard",
+                "every": 3,
+                "at": {
+                  "x": 6,
+                  "y": 8
+                },
+                "heading": "right"
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "6510251813acc01d",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 75,
+        "turns": [
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 12,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 17,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 18,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 27,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 47,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 61,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 64,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 73,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "83506fccc884d348"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-check",
+      "mode": "team",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-check",
+          "revision": "1",
+          "name": "Signal Check",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 12,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 7
+            },
+            {
+              "x": 11,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 7
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 4,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "7bc8c50d2d2d8f48",
+        "mode": "team",
+        "seed": 17,
+        "steps": 50,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 11,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 16,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 17,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 18,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 25,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 26,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 26,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 28,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 38,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 39,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 42,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 49,
+            "playerId": 1,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "fba457e4bd9bcf2a"
+      }
+    },
+    {
+      "levelId": "classic-field-quiet-return",
+      "mode": "team",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-quiet-return",
+          "revision": "1",
+          "name": "Quiet Return",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 8,
+              "y": 7
+            },
+            {
+              "x": 9,
+              "y": 7
+            },
+            {
+              "x": 8,
+              "y": 8
+            },
+            {
+              "x": 9,
+              "y": 8
+            },
+            {
+              "x": 14,
+              "y": 10
+            },
+            {
+              "x": 15,
+              "y": 10
+            },
+            {
+              "x": 16,
+              "y": 10
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 1,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "runner",
+                "every": 3
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 3,
+                  "y": 10
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "0e46985a9c61fb2f",
+        "mode": "team",
+        "seed": 17,
+        "steps": 84,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 10,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 11,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 12,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 21,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 25,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 32,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 32,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 33,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 36,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 37,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 44,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 47,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 50,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 57,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 62,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 62,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 75,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 77,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 83,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "4329c2d79279dfd2"
+      }
+    },
+    {
+      "levelId": "classic-field-signal-crossing",
+      "mode": "team",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-signal-crossing",
+          "revision": "1",
+          "name": "Signal Crossing",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 10,
+              "y": 4
+            },
+            {
+              "x": 11,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 10,
+              "y": 5
+            },
+            {
+              "x": 11,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 10,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 13,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 13,
+              "y": 13
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "c34e10769101f8ec",
+        "mode": "team",
+        "seed": 17,
+        "steps": 84,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 12,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 13,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 15,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 16,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 18,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 19,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 20,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 22,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 23,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 24,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 26,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 27,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 28,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 30,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 32,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 32,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 33,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 34,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 35,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 38,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 39,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 40,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 44,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 44,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 45,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 45,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 48,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 48,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 49,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 49,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 50,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 51,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 51,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 52,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 53,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 55,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 57,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 59,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 67,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 69,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 71,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 72,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 74,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 77,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 77,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 78,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 78,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 82,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 82,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 83,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "e734c26f24fcf0a0"
+      }
+    },
+    {
+      "levelId": "classic-field-relay-airfield",
+      "mode": "team",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-relay-airfield",
+          "revision": "1",
+          "name": "Relay Airfield",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 15,
+              "y": 11
+            },
+            {
+              "x": 16,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            },
+            {
+              "x": 16,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "lane",
+                "every": 3,
+                "at": {
+                  "x": 5,
+                  "y": 8
+                },
+                "lane": {
+                  "axis": "x",
+                  "from": 5,
+                  "to": 18
+                }
+              },
+              {
+                "kind": "relay",
+                "every": 3,
+                "at": {
+                  "x": 12,
+                  "y": 8
+                },
+                "relays": [
+                  {
+                    "x": 3,
+                    "y": 5
+                  },
+                  {
+                    "x": 20,
+                    "y": 12
+                  }
+                ]
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "9724dbaf2ce672b7",
+        "mode": "team",
+        "seed": 17,
+        "steps": 59,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 13,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 14,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 15,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 18,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 18,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 26,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 27,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 32,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 34,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 36,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 37,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 41,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 45,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 53,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 55,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 55,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 58,
+            "playerId": 1,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "d863a0f5645c8f23"
+      }
+    },
+    {
+      "levelId": "classic-field-field-links",
+      "mode": "team",
+      "pace": "fast",
+      "seed": 17,
+      "replay": {
+        "version": "classic-snake-replay.v4",
+        "ruleset": "classic-snake-core.v4",
+        "level": {
+          "version": "classic-snake-level.v4",
+          "id": "classic-field-field-links",
+          "revision": "1",
+          "name": "Field Links",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 6,
+              "y": 5
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 6,
+              "y": 6
+            },
+            {
+              "x": 7,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 6
+            },
+            {
+              "x": 13,
+              "y": 6
+            },
+            {
+              "x": 12,
+              "y": 7
+            },
+            {
+              "x": 13,
+              "y": 7
+            },
+            {
+              "x": 12,
+              "y": 8
+            },
+            {
+              "x": 13,
+              "y": 8
+            },
+            {
+              "x": 12,
+              "y": 9
+            },
+            {
+              "x": 13,
+              "y": 9
+            },
+            {
+              "x": 12,
+              "y": 10
+            },
+            {
+              "x": 13,
+              "y": 10
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 6,
+          "stepMs": 150,
+          "speedupEvery": 0,
+          "minStepMs": 150,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3,
+          "objective": "mission",
+          "targets": {
+            "maxActive": 2,
+            "required": [
+              {
+                "kind": "eroder",
+                "every": 3,
+                "at": {
+                  "x": 11,
+                  "y": 8
+                },
+                "breaks": [
+                  {
+                    "x": 12,
+                    "y": 8
+                  }
+                ]
+              },
+              {
+                "kind": "jammer",
+                "every": 3,
+                "at": {
+                  "x": 20,
+                  "y": 8
+                }
+              },
+              {
+                "kind": "guard",
+                "every": 3,
+                "at": {
+                  "x": 6,
+                  "y": 8
+                },
+                "heading": "right"
+              }
+            ],
+            "bonus": null
+          },
+          "shutters": [],
+          "pickups": []
+        },
+        "levelIdentity": "6510251813acc01d",
+        "mode": "team",
+        "seed": 17,
+        "steps": 47,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 7,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 9,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 12,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 12,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 17,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 18,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 21,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 23,
+            "playerId": 1,
+            "direction": "left"
+          },
+          {
+            "tick": 24,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 28,
+            "playerId": 1,
+            "direction": "down"
+          },
+          {
+            "tick": 29,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 30,
+            "playerId": 1,
+            "direction": "right"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 44,
+            "playerId": 1,
+            "direction": "up"
+          },
+          {
+            "tick": 46,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "4d7051aea2e3ca0a"
+      }
+    }
+  ]
+}

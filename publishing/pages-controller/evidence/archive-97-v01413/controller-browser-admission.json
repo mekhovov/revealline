@@ -1,0 +1,57 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-97",
+  "infrastructureCommit": "e5de2a5e1710003c1ffa49769af71e64fcd17019",
+  "deploymentId": 6681784433,
+  "deploymentStatusId": 18881674244,
+  "versions": ["v0.141.3"],
+  "surface": "bounded browser interaction",
+  "sequence": [
+    "RevealLine archive 97 / original v0.141.3 build",
+    "v0.141.3 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+    "Complete library; 285 missions · Solo; first card focused; playable and downloadable entries visible",
+    "No warnings or errors"
+  ],
+  "observed": {
+    "sourceObservations": [
+      {
+        "observed": "RevealLine archive 97 / original v0.141.3 build",
+        "result": "PASS",
+        "surface": "archive index"
+      },
+      {
+        "observed": "v0.141.3 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+        "result": "PASS",
+        "surface": "Play -> archived Home"
+      },
+      {
+        "observed": "Complete library; 285 missions · Solo; first card focused; playable and downloadable entries visible",
+        "result": "PASS",
+        "surface": "Missions"
+      },
+      {
+        "observed": "No warnings or errors",
+        "result": "PASS",
+        "surface": "mission-library console"
+      }
+    ],
+    "observedAt": "2026-09-26T17:38:23.557Z"
+  },
+  "scope": "Archive97 index, archived Home, mission library, and console acceptance for the preserved v0.141.3 route.",
+  "limitations": [
+    "Browser interaction is not physical touch certification.",
+    "Browser interaction is not physical-controller certification.",
+    "No full mission playthrough was performed during this bounded archive admission check."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-97-v01413/browser-admission.json",
+      "sha256": "30f9e3780b44097d77a446b17451948e58f63b44d80c90145a29c8967e7d47d9"
+    },
+    {
+      "path": "evidence/archive-97-v01413/public-acceptance.json",
+      "sha256": "97cbedb95f532673bcf77c270d2c21685b3145b6479e2f68977c948026b083e2"
+    }
+  ]
+}

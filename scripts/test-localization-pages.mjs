@@ -24,6 +24,16 @@ const toolResources = Object.fromEntries(
     ]),
   ),
 );
+const interfaceResources = Object.fromEntries(
+  await Promise.all(
+    ['en', 'uk'].map(async (locale) => [
+      locale,
+      JSON.parse(
+        await fs.readFile(new URL(`../game/locales/${locale}/interface.json`, import.meta.url)),
+      ),
+    ]),
+  ),
+);
 const assets = [
   'game/vendor/i18next-26.4.2.min.js',
   'game/i18n/catalogs.mjs',
@@ -40,6 +50,8 @@ test('generated public pages use complete messages and retain original attributi
   const entries = [
     ...assets,
     'game/vendor/LZ-STRING-LICENSE.txt',
+    'game/vendor/QRCODEGEN-LICENSE.txt',
+    'game/vendor/qrcodegen-1.8.0.json',
     'game/ui/fonts/field-kit/provenance.json',
   ].map((name) => entry(name));
   addPublicEntries(entries, {
@@ -85,6 +97,31 @@ test('generated public pages use complete messages and retain original attributi
     'IBM Corp.',
   ])
     assert.ok(resources.uk['page.fontNotices'].includes(author));
+});
+
+test('community guide rich messages match their direct DOM slots in every locale', async () => {
+  const source = await fs.readFile(
+    new URL('../authoring/community/index.html', import.meta.url),
+    'utf8',
+  );
+  const richNodes = descendants(parse(source)).filter((node) => attribute(node, 'data-i18n-rich'));
+  assert.ok(richNodes.length, 'authoring/community/index.html: rich messages');
+  for (const node of richNodes) {
+    const key = attribute(node, 'data-i18n-rich');
+    assert.match(key, /^tools:/, key);
+    const slots = (node.childNodes || [])
+      .map((child) => attribute(child, 'data-i18n-slot'))
+      .filter(Boolean)
+      .sort();
+    for (const locale of ['en', 'uk']) {
+      const message = toolResources[locale][key.slice('tools:'.length)];
+      assert.equal(typeof message, 'string', `${locale}: ${key}`);
+      const placeholders = [...message.matchAll(/\[\[([^\]]+)\]\]/g)]
+        .map((match) => match[1])
+        .sort();
+      assert.deepEqual(placeholders, slots, `${locale}: ${key}`);
+    }
+  }
 });
 
 test('root launch rewriting keeps every localization asset inside the distribution', async () => {
@@ -165,7 +202,176 @@ test('maintained sprite review pages localize static and generated presentation 
   assert.match(generated, /onLocaleChange\(update\)/);
   assert.match(generated, /localizedAttribute\(node,\s*['"]alt['"]/);
   assert.doesNotMatch(generated, /textContent\s*=\s*['"](?:Prompt copied|Text selected)/);
-  const inlineScripts = [...generated.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+  const inlineScripts = descendants(parse(generated)).filter(node => node.tagName === 'script' && !attribute(node, 'src') && (!attribute(node, 'type') || attribute(node, 'type') === 'application/x-revealline-locked' && attribute(node, 'data-access-type') === '')).map(node => node.childNodes.map(child => child.value ?? '').join(''));
   assert.ok(inlineScripts.length);
-  assert.doesNotThrow(() => new Function(inlineScripts.at(-1)[1]));
+  assert.doesNotThrow(() => new Function(inlineScripts.at(-1)));
+});
+
+test('offline download and launcher routes provide live language controls and bilingual fallbacks', async () => {
+  for (const { file, prefix } of [
+    { file: '../game/downloads.html', prefix: '' },
+    { file: '../game/offline/app.html', prefix: '' },
+  ]) {
+    const source = await fs.readFile(new URL(file, import.meta.url), 'utf8');
+    const nodes = descendants(parse(source));
+    assert.ok(
+      nodes.some((node) => attribute(node, 'data-language-control') !== undefined),
+      file,
+    );
+    assert.ok(source.includes('"' + prefix + 'i18n/style.css"'), file + ': stylesheet');
+    const moduleName = file.endsWith('app.html') ? 'app.mjs' : 'downloads.mjs';
+    assert.ok(nodes.some(node => node.tagName === 'script' && attribute(node, 'src') === moduleName && (attribute(node, 'type') === 'module' || attribute(node, 'type') === 'application/x-revealline-locked' && attribute(node, 'data-access-type') === 'module')), file + ': module entry');
+    const moduleSource = await fs.readFile(
+      new URL(file.replace(/html$/, 'mjs'), import.meta.url),
+      'utf8',
+    );
+    assert.match(
+      moduleSource,
+      /from ['"]\.\/i18n\/index\.mjs['"]/,
+      file + ': local module closure',
+    );
+    assert.doesNotMatch(
+      source,
+      /(?:src|href)="\.\.\/(?:i18n|vendor)\//,
+      file + ': no escaping launcher dependency',
+    );
+    const keys = nodes.map((node) => attribute(node, 'data-i18n')).filter(Boolean);
+    assert.ok(keys.length >= 8, `${file}: static catalog coverage`);
+    for (const key of keys) {
+      assert.match(key, /^interface:/, `${file}: ${key}`);
+      for (const locale of ['en', 'uk'])
+        assert.equal(
+          typeof interfaceResources[locale][key.slice('interface:'.length)],
+          'string',
+          `${file}: ${locale}: ${key}`,
+        );
+    }
+    const noScript = nodes.find((node) => node.tagName === 'noscript');
+    assert.ok(noScript, `${file}: noscript fallback`);
+    assert.match(noScript.childNodes[0].value, /JavaScript/);
+    assert.match(noScript.childNodes[0].value, /потрібен JavaScript/);
+  }
+});
+
+test('offline runtime-owned captions have one live binding owner', async () => {
+  for (const [file, ids] of [
+    [
+      '../game/downloads.html',
+      ['game-title', 'game-status', 'cancel', 'retention-status', 'music-status', 'all-music'],
+    ],
+    ['../game/offline/app.html', ['status']],
+  ]) {
+    const html = await fs.readFile(new URL(file, import.meta.url), 'utf8');
+    const nodes = descendants(parse(html));
+    const moduleSource = await fs.readFile(
+      new URL(file.replace(/html$/, 'mjs'), import.meta.url),
+      'utf8',
+    );
+    for (const id of ids) {
+      const node = nodes.find((item) => attribute(item, 'id') === id);
+      assert.ok(node, file + ': ' + id);
+      assert.equal(attribute(node, 'data-i18n'), undefined, file + ': dynamic owner ' + id);
+      assert.ok(
+        moduleSource.includes("localizedText($('" + id + "'),"),
+        file + ': live binding ' + id,
+      );
+      assert.ok(
+        !moduleSource.includes("$('" + id + "').textContent ="),
+        file + ': no stale binding ' + id,
+      );
+    }
+  }
+});
+
+test('company entry and public directory localize independently of the main game menu', async () => {
+  const companySource = await fs.readFile(new URL('../game/company.html', import.meta.url), 'utf8');
+  const companyNodes = descendants(parse(companySource));
+  assert.ok(
+    companyNodes.some((node) => attribute(node, 'data-language-control') !== undefined),
+    'game/company.html: language control',
+  );
+  assert.ok(companySource.includes('"i18n/style.css"'), 'game/company.html: language styles');
+  assert.ok(
+    companyNodes.some(node => node.tagName === 'script' && attribute(node, 'src') === 'company-entry.mjs' && (attribute(node, 'type') === 'module' || attribute(node, 'type') === 'application/x-revealline-locked' && attribute(node, 'data-access-type') === 'module')),
+    'game/company.html: localized module entry',
+  );
+  const companyKeys = companyNodes.map((node) => attribute(node, 'data-i18n')).filter(Boolean);
+  assert.ok(companyKeys.length >= 4, 'game/company.html: catalog coverage');
+  for (const key of companyKeys) {
+    assert.match(key, /^interface:/, `game/company.html: ${key}`);
+    for (const locale of ['en', 'uk'])
+      assert.equal(
+        typeof interfaceResources[locale][key.slice('interface:'.length)],
+        'string',
+        `game/company.html: ${locale}: ${key}`,
+      );
+  }
+  assert.match(companySource, /<noscript>[\s\S]*lang="uk"/);
+  assert.match(companySource, /<noscript>[\s\S]*index\.html\?company=1/);
+
+  const entrySource = await fs.readFile(
+    new URL('../game/company-entry.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(entrySource, /from ['"]\.\/i18n\/index\.mjs['"]/);
+  assert.match(entrySource, /translateDOM\(document\)/);
+  assert.match(entrySource, /attachLanguageControls\(document\)/);
+
+  const siteSource = await fs.readFile(new URL('../site/index.html', import.meta.url), 'utf8');
+  const siteLink = descendants(parse(siteSource)).find(
+    (node) => attribute(node, 'href') === '../game/communities/',
+  );
+  assert.equal(attribute(siteLink, 'data-i18n'), 'website:companyJourneys');
+  for (const locale of ['en', 'uk'])
+    assert.equal(typeof resources[locale].companyJourneys, 'string', `${locale}: companyJourneys`);
+
+  const gameSource = await fs.readFile(new URL('../game/index.html', import.meta.url), 'utf8');
+  const gameNodes = descendants(parse(gameSource));
+  assert.ok(
+    !gameNodes.some((node) =>
+      /^(?:\.\/)?(?:company\.html|community\/)/.test(attribute(node, 'href') ?? ''),
+    ),
+    'game/index.html: company and community browsing stays outside the main game menu',
+  );
+  assert.ok(!gameNodes.some((node) => attribute(node, 'id') === 'shell-community'));
+
+  const directorySource = await fs.readFile(
+    new URL('../game/communities/index.html', import.meta.url),
+    'utf8',
+  );
+  const directoryNodes = descendants(parse(directorySource));
+  assert.ok(directoryNodes.some((node) => attribute(node, 'data-language-control') !== undefined));
+  for (const edition of ['droneaid', 'droneaid-community']) {
+    const link = directoryNodes.find((node) => attribute(node, 'href') === `./${edition}/`);
+    assert.ok(link, `company directory: ${edition} launch link`);
+    assert.ok(
+      descendants(link).some((node) => attribute(node, 'data-i18n')),
+      `company directory: ${edition} localized launch label`,
+    );
+  }
+  const directoryKeys = directoryNodes.flatMap((node) =>
+    (node.attrs ?? [])
+      .filter(({ name }) => name === 'data-i18n' || name.startsWith('data-i18n-aria-'))
+      .map(({ value }) => value),
+  );
+  assert.ok(directoryKeys.length >= 3, 'company directory: heading and launch labels use catalogs');
+  for (const locale of ['en', 'uk']) {
+    const catalogs = new Map([['interface', interfaceResources[locale]]]);
+    for (const key of directoryKeys) {
+      const [namespace, messageKey] = key.split(':');
+      assert.match(namespace, /^[a-z]+$/);
+      if (!catalogs.has(namespace))
+        catalogs.set(
+          namespace,
+          JSON.parse(
+            await fs.readFile(
+              new URL(`../game/locales/${locale}/${namespace}.json`, import.meta.url),
+            ),
+          ),
+        );
+      const message = catalogs.get(namespace)[messageKey];
+      assert.equal(typeof message, 'string', `company directory: ${locale}: ${key}`);
+      assert.ok(message.trim(), `company directory: ${locale}: ${key}`);
+    }
+  }
 });

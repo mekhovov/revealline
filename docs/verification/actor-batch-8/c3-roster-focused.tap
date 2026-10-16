@@ -1,0 +1,290 @@
+TAP version 13
+# Subtest: Scout compact: native palette and exact silhouette, motors, camera and rig clearance
+ok 1 - Scout compact: native palette and exact silhouette, motors, camera and rig clearance
+  ---
+  duration_ms: 5.403667
+  ...
+# Subtest: Scout detailed: native palette and exact silhouette, motors, camera and rig clearance
+ok 2 - Scout detailed: native palette and exact silhouette, motors, camera and rig clearance
+  ---
+  duration_ms: 14.18825
+  ...
+# Subtest: central material has greater measured luminance while retaining its dark side, not an art approval
+ok 3 - central material has greater measured luminance while retaining its dark side, not an art approval
+  ---
+  duration_ms: 2.146583
+  ...
+# Subtest: detailed battery adds native half-grid material detail instead of copying enlarged compact pixels
+ok 4 - detailed battery adds native half-grid material detail instead of copying enlarged compact pixels
+  ---
+  duration_ms: 1.48625
+  ...
+# Subtest: all retained v3 bytes and transitive original construction sources remain exact
+ok 5 - all retained v3 bytes and transitive original construction sources remain exact
+  ---
+  duration_ms: 16.468584
+  ...
+# Subtest: two new source-only records reproduce with exact original geometry and every construction dependency
+ok 6 - two new source-only records reproduce with exact original geometry and every construction dependency
+  ---
+  duration_ms: 37.080083
+  ...
+# Subtest: unsupported roles or nonnative frames cannot silently receive the Scout study
+ok 7 - unsupported roles or nonnative frames cannot silently receive the Scout study
+  ---
+  duration_ms: 0.319208
+  ...
+# Subtest: reference-v3 preserves all sixteen reference-v2 source rasters
+ok 8 - reference-v3 preserves all sixteen reference-v2 source rasters
+  ---
+  duration_ms: 8.511833
+  ...
+# Subtest: player.scout.compact: binary native pixels, palette, attached small motors and clean rotor clearance
+ok 9 - player.scout.compact: binary native pixels, palette, attached small motors and clean rotor clearance
+  ---
+  duration_ms: 3.695833
+  ...
+# Subtest: player.scout.detailed: binary native pixels, palette, attached small motors and clean rotor clearance
+ok 10 - player.scout.detailed: binary native pixels, palette, attached small motors and clean rotor clearance
+  ---
+  duration_ms: 8.482416
+  ...
+# Subtest: player.carrier.compact: binary native pixels, palette, attached small motors and clean rotor clearance
+ok 11 - player.carrier.compact: binary native pixels, palette, attached small motors and clean rotor clearance
+  ---
+  duration_ms: 1.409833
+  ...
+# Subtest: player.carrier.detailed: binary native pixels, palette, attached small motors and clean rotor clearance
+ok 12 - player.carrier.detailed: binary native pixels, palette, attached small motors and clean rotor clearance
+  ---
+  duration_ms: 5.600292
+  ...
+# Subtest: detailed drawings use native subclusters rather than scaling the compact sprites
+ok 13 - detailed drawings use native subclusters rather than scaling the compact sprites
+  ---
+  duration_ms: 6.200375
+  ...
+# Subtest: finite cohort reproduces four tiny PNGs and exact inherited rigs
+ok 14 - finite cohort reproduces four tiny PNGs and exact inherited rigs
+  ---
+  duration_ms: 19.545167
+  ...
+# Subtest: unsupported roles and non-native sizes fail instead of substituting art
+ok 15 - unsupported roles and non-native sizes fail instead of substituting art
+  ---
+  duration_ms: 0.674833
+  ...
+# Subtest: Scout compact: native equipment widens without changing camera, arms, motors or overall framing
+ok 16 - Scout compact: native equipment widens without changing camera, arms, motors or overall framing
+  ---
+  duration_ms: 10.938
+  ...
+# Subtest: Scout detailed: native equipment widens without changing camera, arms, motors or overall framing
+ok 17 - Scout detailed: native equipment widens without changing camera, arms, motors or overall framing
+  ---
+  duration_ms: 20.350792
+  ...
+# Subtest: a five-to-six native-pixel amber face remains broader at actual 20/24/32 CSS envelopes without upsizing actors
+ok 18 - a five-to-six native-pixel amber face remains broader at actual 20/24/32 CSS envelopes without upsizing actors
+  ---
+  duration_ms: 9.165416
+  ...
+# Subtest: detailed face uses deliberate native half-grid clusters instead of a doubled compact raster
+ok 19 - detailed face uses deliberate native half-grid clusters instead of a doubled compact raster
+  ---
+  duration_ms: 2.402458
+  ...
+# Subtest: every retained v2/v3/v4 cohort and construction source keeps its frozen bytes
+ok 20 - every retained v2/v3/v4 cohort and construction source keeps its frozen bytes
+  ---
+  duration_ms: 11.532292
+  ...
+# Subtest: new source-only records reproduce and declare exact native geometry and all construction dependencies
+ok 21 - new source-only records reproduce and declare exact native geometry and all construction dependencies
+  ---
+  duration_ms: 56.859917
+  ...
+# Subtest: unsupported roles and nonnative frames cannot receive the Scout optical study
+ok 22 - unsupported roles and nonnative frames cannot receive the Scout optical study
+  ---
+  duration_ms: 0.433
+  ...
+# Subtest: scout compact: native body is attached, palette bounded and equipment clears rotating blades
+ok 23 - scout compact: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 7.893542
+  ...
+# Subtest: scout detailed: native body is attached, palette bounded and equipment clears rotating blades
+ok 24 - scout detailed: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 8.839917
+  ...
+# Subtest: bomber compact: native body is attached, palette bounded and equipment clears rotating blades
+ok 25 - bomber compact: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 3.551417
+  ...
+# Subtest: bomber detailed: native body is attached, palette bounded and equipment clears rotating blades
+ok 26 - bomber detailed: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 10.296791
+  ...
+# Subtest: carrier compact: native body is attached, palette bounded and equipment clears rotating blades
+ok 27 - carrier compact: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 0.993417
+  ...
+# Subtest: carrier detailed: native body is attached, palette bounded and equipment clears rotating blades
+ok 28 - carrier detailed: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 3.548875
+  ...
+# Subtest: interceptor compact: native body is attached, palette bounded and equipment clears rotating blades
+ok 29 - interceptor compact: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 1.4895
+  ...
+# Subtest: interceptor detailed: native body is attached, palette bounded and equipment clears rotating blades
+ok 30 - interceptor detailed: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 6.711125
+  ...
+# Subtest: fiber compact: native body is attached, palette bounded and equipment clears rotating blades
+ok 31 - fiber compact: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 1.086542
+  ...
+# Subtest: fiber detailed: native body is attached, palette bounded and equipment clears rotating blades
+ok 32 - fiber detailed: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 3.065375
+  ...
+# Subtest: impact compact: native body is attached, palette bounded and equipment clears rotating blades
+ok 33 - impact compact: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 0.802041
+  ...
+# Subtest: impact detailed: native body is attached, palette bounded and equipment clears rotating blades
+ok 34 - impact detailed: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 2.325083
+  ...
+# Subtest: trapper compact: native body is attached, palette bounded and equipment clears rotating blades
+ok 35 - trapper compact: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 0.827792
+  ...
+# Subtest: trapper detailed: native body is attached, palette bounded and equipment clears rotating blades
+ok 36 - trapper detailed: native body is attached, palette bounded and equipment clears rotating blades
+  ---
+  duration_ms: 2.638292
+  ...
+# Subtest: compact: five new equipment silhouettes preserve exact motors, frame, camera and antenna source
+ok 37 - compact: five new equipment silhouettes preserve exact motors, frame, camera and antenna source
+  ---
+  duration_ms: 9.383375
+  ...
+# Subtest: detailed: five new equipment silhouettes preserve exact motors, frame, camera and antenna source
+ok 38 - detailed: five new equipment silhouettes preserve exact motors, frame, camera and antenna source
+  ---
+  duration_ms: 28.490709
+  ...
+# Subtest: five new detailed bodies include original native clusters instead of enlarged compact pixels
+ok 39 - five new detailed bodies include original native clusters instead of enlarged compact pixels
+  ---
+  duration_ms: 5.260458
+  ...
+# Subtest: new roster reproduces all 14 records and declares exact rigs plus every construction dependency
+ok 40 - new roster reproduces all 14 records and declares exact rigs plus every construction dependency
+  ---
+  duration_ms: 109.769291
+  ...
+# Subtest: every v2-v5 source and candidate image retains its immutable bytes
+ok 41 - every v2-v5 source and candidate image retains its immutable bytes
+  ---
+  duration_ms: 5.027
+  ...
+# Subtest: unsupported roles and nonnative sizes cannot produce roster frames
+ok 42 - unsupported roles and nonnative sizes cannot produce roster frames
+  ---
+  duration_ms: 0.46825
+  ...
+# Subtest: all thirty original sprite outputs retain their exact pre-candidate aggregate hash
+ok 43 - all thirty original sprite outputs retain their exact pre-candidate aggregate hash
+  ---
+  duration_ms: 41.118667
+  ...
+# Subtest: candidate rigs keep a native-pixel frame gutter and independent neighboring sweep circles
+ok 44 - candidate rigs keep a native-pixel frame gutter and independent neighboring sweep circles
+  ---
+  duration_ms: 0.691958
+  ...
+# Subtest: all seven compact candidates have distinct native silhouettes, smaller hubs and lighter body proportions
+ok 45 - all seven compact candidates have distinct native silhouettes, smaller hubs and lighter body proportions
+  ---
+  duration_ms: 9.754
+  ...
+# Subtest: all seven detailed candidates have distinct native silhouettes, smaller hubs and lighter body proportions
+ok 46 - all seven detailed candidates have distinct native silhouettes, smaller hubs and lighter body proportions
+  ---
+  duration_ms: 16.333625
+  ...
+# Subtest: carrier keeps six separate arms and patrol candidate is opt-in without registering old empty geometry
+ok 47 - carrier keeps six separate arms and patrol candidate is opt-in without registering old empty geometry
+  ---
+  duration_ms: 1.752041
+  ...
+# Subtest: finite roster loader verifies all construction sources and native frames with no release authority
+ok 48 - finite roster loader verifies all construction sources and native frames with no release authority
+  ---
+  duration_ms: 39.224209
+  ...
+# Subtest: tampered manifest fails closed and disposes all previously decoded frames
+ok 49 - tampered manifest fails closed and disposes all previously decoded frames
+  ---
+  duration_ms: 2.500042
+  ...
+# Subtest: tampered construction fails closed and disposes all previously decoded frames
+ok 50 - tampered construction fails closed and disposes all previously decoded frames
+  ---
+  duration_ms: 3.520709
+  ...
+# Subtest: tampered PNG fails closed and disposes all previously decoded frames
+ok 51 - tampered PNG fails closed and disposes all previously decoded frames
+  ---
+  duration_ms: 7.185625
+  ...
+# Subtest: wrong decoded dimensions release the new image and do not publish a partial cohort
+ok 52 - wrong decoded dimensions release the new image and do not publish a partial cohort
+  ---
+  duration_ms: 5.284666
+  ...
+# Subtest: cancellation during decode closes late completion and keeps prior images released
+ok 53 - cancellation during decode closes late completion and keeps prior images released
+  ---
+  duration_ms: 6.683833
+  ...
+# Subtest: finite timeout rejects an unresponsive fetch, without decoding or returning assets
+ok 54 - finite timeout rejects an unresponsive fetch, without decoding or returning assets
+  ---
+  duration_ms: 6.174209
+  ...
+# Subtest: review fixture uses seven Solo visual class identities and two unchanged Team pilot identities
+ok 55 - review fixture uses seven Solo visual class identities and two unchanged Team pilot identities
+  ---
+  duration_ms: 30.585416
+  ...
+# Subtest: complete painters draw every exact class image at calibrated sizes and hold reduced Team rotor poses
+ok 56 - complete painters draw every exact class image at calibrated sizes and hold reduced Team rotor poses
+  ---
+  duration_ms: 1325.199292
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2243.164625

@@ -1,0 +1,109 @@
+{
+  "report": [
+    {
+      "id": "industrial-workshop",
+      "state": [
+        {
+          "backdrop": "authored",
+          "motion": "on",
+          "plane": "block",
+          "background": "rgb(8, 14, 24)",
+          "motif": "none",
+          "source": "http://127.0.0.1:8768/game/ui/art/menu-scenes/fpv.webp"
+        }
+      ]
+    },
+    {
+      "id": "vyshyvanka",
+      "state": [
+        {
+          "backdrop": "interface",
+          "motion": "off",
+          "plane": "none",
+          "background": "rgb(15, 15, 18)",
+          "motif": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%23f48686' stroke-width='2'%3E%3Cpath d='M32 10l22 22-22 22L10 32zM24 24l16 16m0-16L24 40'/%3E%3C/g%3E%3Cpath fill='%23e1ddcf' d='M0 0h2v2H0zm62 0h2v2h-2zM0 62h2v2H0zm62 0h2v2h-2z'/%3E%3C/svg%3E\")",
+          "source": "http://127.0.0.1:8768/game/ui/art/menu-scenes/fpv.webp"
+        }
+      ]
+    },
+    {
+      "id": "dnipro-porcelain",
+      "state": [
+        {
+          "backdrop": "interface",
+          "motion": "off",
+          "plane": "none",
+          "background": "rgb(243, 247, 251)",
+          "motif": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='96'%3E%3Cg fill='none' stroke='%230057b7'%3E%3Cpath d='M-30 24q30-28 60 0t60 0t60 0M-30 72q30-28 60 0t60 0t60 0'/%3E%3Cpath d='M60 30q-12 10 0 20q12-10 0-20m0 20v8'/%3E%3C/g%3E%3C/svg%3E\")",
+          "source": "http://127.0.0.1:8768/game/ui/art/menu-scenes/fpv.webp"
+        }
+      ]
+    },
+    {
+      "id": "tryzub",
+      "state": [
+        {
+          "backdrop": "interface",
+          "motion": "off",
+          "plane": "none",
+          "background": "rgb(10, 22, 40)",
+          "motif": "repeating-linear-gradient(90deg, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 95px, rgb(70, 87, 122) 95px, rgb(70, 87, 122) 96px), repeating-linear-gradient(0deg, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 95px, rgb(70, 87, 122) 95px, rgb(70, 87, 122) 96px)",
+          "source": "http://127.0.0.1:8768/game/ui/art/menu-scenes/fpv.webp"
+        }
+      ]
+    },
+    {
+      "id": "windows-classic",
+      "state": [
+        {
+          "backdrop": "interface",
+          "motion": "off",
+          "plane": "none",
+          "background": "rgb(0, 136, 136)",
+          "motif": "none",
+          "source": "http://127.0.0.1:8768/game/ui/art/menu-scenes/fpv.webp"
+        }
+      ]
+    },
+    {
+      "id": "dos",
+      "state": [
+        {
+          "backdrop": "interface",
+          "motion": "off",
+          "plane": "none",
+          "background": "rgb(0, 0, 32)",
+          "motif": "none",
+          "source": "http://127.0.0.1:8768/game/ui/art/menu-scenes/fpv.webp"
+        }
+      ]
+    },
+    {
+      "id": "orchard-workshop",
+      "state": [
+        {
+          "backdrop": "interface",
+          "motion": "off",
+          "plane": "none",
+          "background": "rgb(243, 230, 199)",
+          "motif": "repeating-linear-gradient(0deg, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 7px, rgb(155, 128, 91) 7px, rgb(155, 128, 91) 8px, rgba(0, 0, 0, 0) 8px, rgba(0, 0, 0, 0) 62px, rgb(155, 128, 91) 62px, rgb(155, 128, 91) 64px), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 191px, rgb(155, 128, 91) 191px, rgb(155, 128, 91) 192px)",
+          "source": "http://127.0.0.1:8768/game/ui/art/menu-scenes/fpv.webp"
+        }
+      ]
+    },
+    {
+      "id": "neon-ruins",
+      "state": [
+        {
+          "backdrop": "interface",
+          "motion": "off",
+          "plane": "none",
+          "background": "rgb(20, 24, 39)",
+          "motif": "linear-gradient(30deg, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 48%, rgb(103, 216, 202) 49%, rgb(103, 216, 202) 50%, rgba(0, 0, 0, 0) 51%), linear-gradient(150deg, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 48%, rgb(89, 99, 125) 49%, rgb(89, 99, 125) 50%, rgba(0, 0, 0, 0) 51%)",
+          "source": "http://127.0.0.1:8768/game/ui/art/menu-scenes/fpv.webp"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

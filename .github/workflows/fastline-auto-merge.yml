@@ -2,7 +2,17 @@ name: Fastline exact-head auto-merge
 
 on:
   workflow_run:
-    workflows: [Build and deploy GitHub Pages]
+    # Reconcile when any PR validation workflow completes, including a failure
+    # that must disarm an earlier decision. The controller also waits for every
+    # non-waived exact-head check already registered on the commit.
+    workflows:
+      - Validate source for continuous main
+      - Appearance preview
+      - Industrial feature verification
+      - Company edition candidates
+      - Assemble full-test release evidence
+      - Community hosted acceptance
+      - Community MinIO recovery
     types: [completed]
   pull_request:
     branches: [main]
@@ -27,6 +37,7 @@ permissions:
   contents: write
   pull-requests: write
   checks: read
+  actions: write
 
 concurrency:
   group: fastline-merge-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || github.run_id }}
@@ -47,13 +58,21 @@ jobs:
       # This privileged controller checks out automation only from protected main.
       # It never checks out or executes pull-request code.
       - name: Check out trusted controller
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: main
           fetch-depth: 1
           filter: blob:none
           persist-credentials: false
-          sparse-checkout: publishing/fastline-merge-controller.mjs
+          sparse-checkout: |
+            .github/workflows/deploy-pages.yml
+            publishing/fastline-merge-controller.mjs
+            publishing/admission-binding.mjs
+            publishing/admission-preflight.mjs
+            publishing/focused-tests.mjs
+            publishing/focused-test-map.json
+            publishing/test-policy.json
+            publishing/test-policy.mjs
           sparse-checkout-cone-mode: false
 
       - name: Record one-time controller bootstrap

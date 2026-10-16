@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-09-29T01:56:54.305923+00:00",
+  "worktree": "/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test",
+  "basePRHead": "d89af8ea47d3ed8210df6bb2a3e5ccbdc2d6517c",
+  "requestedTip": "0832938b032f8cb2387387dea8cfb72f4210615e",
+  "testStartHead": "78542943e09a423335637e66b284414f4b9bcbe1",
+  "currentHead": "c0a8757501ed84d85e8f8054d3d351a6fd557f01",
+  "status": "",
+  "reviewedCommits": [
+    "6e8d3a0cb",
+    "4b8856053",
+    "6835dc780",
+    "0832938b0",
+    "2612dc7d4"
+  ],
+  "subsequentChanges": "78542943 merges current Pages main; c0a87575 changes only docs/native-menu-plan-status.md and docs/verification/custom-menu-2026-09-29.md. Tested runtime bytes unchanged.",
+  "tests": {
+    "command": "mise exec node@22.22.2 -- node --test --test-concurrency=1 game/test/creator-player-menu.test.mjs game/test/creator-player-navigation.test.mjs game/test/controller-practice-pause-host.test.mjs game/test/creator-versus-installed-host.test.mjs game/test/mission-library-handoff.test.mjs",
+    "passed": 54,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 90071.838917,
+    "log": "/tmp/revealline-native-menu-review-20260929.tap"
+  },
+  "findings": [],
+  "reviewScope": [
+    "Custom Solo action/modal/save ownership and creator navigation",
+    "Controller Practice checked Return action",
+    "Versus Settings launch owner through async preparation",
+    "Select-only Versus handoff with exact mission identity and malformed intent handling",
+    "Dirty documentation assertions retained as owner evidence, not independently reproduced browser evidence"
+  ],
+  "preservationRecommendation": "No duplicate preservation PR or push needed. Owner independently committed/pushed all reviewed runtime and remaining documentation changes to existing PR782, now c0a87575 and clean. Retain draft aggregate input assignedv0.150.0; final exact-head qualification remains required.",
+  "limitations": [
+    "No complete PR782 or whole-product review",
+    "No production-ledger reproduction or full release qualification in this bounded review",
+    "No new browser, physical-controller, native-package, or200%zoom acceptance"
+  ],
+  "mutations": "Only/tmp review log and this report; no owner worktree edits, commits, pushes, or GitHub mutations."
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Re-render the existing 32px emblem; no source images or new design are involved.
+/** Package the generated FPV / LINE master at required native sizes without redrawing it.
  * Read-only by default. Only the five fixed asset paths below are writable.
  */
 import fs from 'node:fs/promises';
@@ -35,7 +35,7 @@ export function makeICNS(pngs) {
       bytes[24] !== 8 ||
       bytes[25] !== 2
     )
-      throw new TypeError(`ICNS ${type} needs the original ${size}px RGB PNG.`);
+      throw new TypeError(`ICNS ${type} needs the generated ${size}px RGB PNG.`);
     const header = Buffer.alloc(8);
     header.write(type, 0, 4, 'ascii');
     header.writeUInt32BE(bytes.length + 8, 4);
@@ -109,7 +109,7 @@ export async function manageNativeArt({ root = ROOT, mode = 'verify', replace = 
     const matches = before?.equals(entry.bytes) ?? false;
     if (mode === 'verify' && !matches)
       throw new Error(
-        `Native asset is missing or differs from the original renderer: ${entry.name}`,
+        `Native asset is missing or differs from the generated brand master: ${entry.name}`,
       );
     if (mode === 'write' && before && !matches && !replace)
       throw new Error(
@@ -169,7 +169,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const options = parseArtArgs(process.argv.slice(2));
     if (options.help)
       console.log(
-        'Render the existing original emblem at fixed native asset paths.\n  --verify (default): check bytes without writing\n  --write: create missing assets; preserve differing files\n  --write --replace: replace only the five designated native assets',
+        'Package the generated FPV / LINE master at fixed native asset paths.\n  --verify (default): check bytes without writing\n  --write: create missing assets; preserve differing files\n  --write --replace: replace only the five designated native assets',
       );
     else console.log(JSON.stringify(await manageNativeArt(options), null, 2));
   } catch (error) {

@@ -1,0 +1,17 @@
+{
+  "recordedAt": "2026-10-05T11:05:45.393Z",
+  "viewport": {
+    "devicePixelRatio": 1.7999999523162842,
+    "height": 1338,
+    "width": 1670
+  },
+  "browser": "Codex in-app Chromium; exact browser version not measured for this functional check",
+  "mode": "automated-review-fan-ordinary-inputs-earned-upgrades",
+  "resultText": "Results\nSortie complete\n\nAutomated review · Fan build\n\nTime\n05:39\nCleared\n4624\nSalvage\n6940\nYour build\nSaturation Fan 4 · Proximity pulse 3 · Side burst 3 · Salvage scanner 1\n\nTry another combination on the same battlefield.\n\nBack\nRetry",
+  "observedHUD": {
+    "time": "05:39",
+    "hull": 22,
+    "airframes": 2
+  },
+  "scope": "Functional native run, not performance or human-play qualification."
+}

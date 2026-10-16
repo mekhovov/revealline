@@ -1,0 +1,232 @@
+{
+  "schema": "OverflightExpandedEarnedMatrixPlanV1",
+  "simulationStarted": false,
+  "claim": "One locked Riy Echo baseline and its four original held-heading branches, plus one explicitly supplemental parked continuation at 120 seconds. This is a bounded cover-fix sanity check, not full qualification.",
+  "expectedRuntimeCommit": "60b0c25ab2703371691d4d203df7d5067638ca14",
+  "sourceProvenanceFile": "riy-cover-provenance.json",
+  "fullCoverage": {
+    "baselines": 12,
+    "branches": 49,
+    "worlds": {
+      "field-crossing": 2,
+      "freight-depot": 2,
+      "relay-ruins": 2,
+      "river-port": 2,
+      "chalk-quarry": 2,
+      "orchard-strongpoint": 2
+    },
+    "modes": {
+      "survivor": 6,
+      "riy": 6
+    },
+    "builds": {
+      "fan": 4,
+      "echo": 4,
+      "systems": 4
+    },
+    "seeds": {
+      "101303": 4,
+      "202604": 4,
+      "303907": 4
+    },
+    "difficulty": {
+      "standard": 6,
+      "veteran": 6
+    },
+    "airframes": {
+      "1": 6,
+      "3": 6
+    },
+    "buildByMode": {
+      "survivor/fan": 2,
+      "riy/echo": 2,
+      "survivor/echo": 2,
+      "riy/systems": 2,
+      "survivor/systems": 2,
+      "riy/fan": 2
+    },
+    "difficultyByAirframes": {
+      "standard/3": 3,
+      "veteran/1": 3,
+      "veteran/3": 3,
+      "standard/1": 3
+    },
+    "policies": {
+      "park": 5,
+      "heading-0": 4,
+      "heading-1": 4,
+      "heading-2": 4,
+      "heading-3": 4,
+      "heading-4": 4,
+      "heading-5": 4,
+      "heading-6": 4,
+      "heading-7": 4,
+      "straight-shuttle": 3,
+      "tiny-circle": 3,
+      "wall": 3,
+      "orbit": 3
+    },
+    "policyByMode": {
+      "survivor/park": 2,
+      "survivor/heading-0": 3,
+      "survivor/heading-1": 2,
+      "survivor/heading-2": 3,
+      "riy/heading-3": 2,
+      "riy/heading-4": 3,
+      "riy/heading-5": 2,
+      "riy/heading-6": 3,
+      "riy/park": 3,
+      "survivor/heading-7": 2,
+      "survivor/straight-shuttle": 2,
+      "survivor/tiny-circle": 1,
+      "survivor/wall": 2,
+      "riy/orbit": 2,
+      "riy/heading-0": 1,
+      "riy/heading-1": 2,
+      "survivor/heading-3": 2,
+      "survivor/heading-4": 1,
+      "survivor/heading-5": 2,
+      "riy/heading-7": 2,
+      "riy/straight-shuttle": 1,
+      "riy/tiny-circle": 2,
+      "survivor/orbit": 1,
+      "riy/heading-2": 1,
+      "survivor/heading-6": 1,
+      "riy/wall": 1
+    },
+    "policyByCheckpoint": {
+      "60/park": 1,
+      "120/heading-0": 1,
+      "180/heading-1": 1,
+      "240/heading-2": 1,
+      "60/heading-3": 1,
+      "120/heading-4": 1,
+      "180/heading-5": 1,
+      "240/heading-6": 1,
+      "120/park": 2,
+      "60/heading-7": 1,
+      "120/straight-shuttle": 1,
+      "180/tiny-circle": 1,
+      "240/wall": 1,
+      "60/orbit": 1,
+      "180/heading-0": 1,
+      "240/heading-1": 1,
+      "60/heading-2": 1,
+      "120/heading-3": 1,
+      "180/heading-4": 1,
+      "240/heading-5": 1,
+      "60/heading-6": 1,
+      "120/heading-7": 1,
+      "180/straight-shuttle": 1,
+      "240/tiny-circle": 1,
+      "60/wall": 1,
+      "120/orbit": 1,
+      "180/park": 1,
+      "240/heading-0": 1,
+      "60/heading-1": 1,
+      "120/heading-2": 1,
+      "180/heading-3": 1,
+      "240/heading-4": 1,
+      "60/heading-5": 1,
+      "120/heading-6": 1,
+      "180/heading-7": 1,
+      "240/straight-shuttle": 1,
+      "60/tiny-circle": 1,
+      "120/wall": 1,
+      "180/orbit": 1,
+      "240/park": 1,
+      "60/heading-0": 1,
+      "120/heading-1": 1,
+      "180/heading-2": 1,
+      "240/heading-3": 1,
+      "60/heading-4": 1,
+      "120/heading-5": 1,
+      "180/heading-6": 1,
+      "240/heading-7": 1
+    }
+  },
+  "selectedCoverage": {
+    "baselines": 1,
+    "branches": 5,
+    "worlds": {
+      "field-crossing": 1
+    },
+    "modes": {
+      "riy": 1
+    },
+    "builds": {
+      "echo": 1
+    },
+    "seeds": {
+      "303907": 1
+    },
+    "difficulty": {
+      "veteran": 1
+    },
+    "airframes": {
+      "1": 1
+    },
+    "buildByMode": {
+      "riy/echo": 1
+    },
+    "difficultyByAirframes": {
+      "veteran/1": 1
+    },
+    "policies": {
+      "heading-3": 1,
+      "heading-4": 1,
+      "heading-5": 1,
+      "heading-6": 1,
+      "park": 1
+    },
+    "policyByMode": {
+      "riy/heading-3": 1,
+      "riy/heading-4": 1,
+      "riy/heading-5": 1,
+      "riy/heading-6": 1,
+      "riy/park": 1
+    },
+    "policyByCheckpoint": {
+      "60/heading-3": 1,
+      "120/heading-4": 1,
+      "180/heading-5": 1,
+      "240/heading-6": 1,
+      "120/park": 1
+    }
+  },
+  "selected": [
+    {
+      "index": 1,
+      "world": "field-crossing",
+      "layout": "field-crossing-supply-orchard-edge",
+      "mode": "riy",
+      "seed": 303907,
+      "build": "echo",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "branches": [
+        {
+          "checkpoint": 60,
+          "policy": "heading-3"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "heading-4"
+        },
+        {
+          "checkpoint": 180,
+          "policy": "heading-5"
+        },
+        {
+          "checkpoint": 240,
+          "policy": "heading-6"
+        },
+        {
+          "checkpoint": 120,
+          "policy": "park",
+          "supplemental": true
+        }
+      ]
+    }
+  ]
+}

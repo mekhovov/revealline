@@ -1,0 +1,2028 @@
+{
+  "format": "FPVStickGeometryNativeAudit.v1",
+  "source": "34ddde3ed0416f0e90aae8170101bd6a6c8d08e2",
+  "baseline": "21826c460e80fa4e7fa47ec8e6ba9f98f75beea4",
+  "fixtureSHA256": "373878bafd9bf69d80195229c2e384b39f81bcb0f9ad73457129ed359f42a0ef",
+  "functional": {
+    "checks": 1338,
+    "cases": 138,
+    "variants": {
+      "baseline": 46,
+      "candidate": 46,
+      "fallback": 46
+    },
+    "errors": 0,
+    "warnings": 0,
+    "candidateObserver": [
+      {
+        "id": 0,
+        "name": "resizeSticks",
+        "targets": [],
+        "calls": 43,
+        "disconnects": 1
+      }
+    ],
+    "fullscreen": [
+      {
+        "native": true,
+        "immersive": "worlds",
+        "geometry": {
+          "course": "beginner-40",
+          "mode": "self-level",
+          "source": "keyboard",
+          "display": "expanded",
+          "locale": "en",
+          "viewport": [
+            1280,
+            720
+          ],
+          "state": {
+            "ticks": 0,
+            "status": "paused",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "orientation": [
+              0,
+              0,
+              0,
+              1000000
+            ],
+            "angular": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0
+            },
+            "step": 0,
+            "hold": 0,
+            "contacts": 0,
+            "landingSpeed": 0,
+            "landingTilt": 0,
+            "lastInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0,
+              "actions": 0
+            },
+            "heightRange": {
+              "min": 0,
+              "max": 0
+            },
+            "health": 100,
+            "grounded": true,
+            "support": {
+              "id": "$floor",
+              "y": 1,
+              "normal": {
+                "x": 0,
+                "y": 1000000,
+                "z": 0
+              }
+            },
+            "cooldown": 0,
+            "contactCooldown": 0,
+            "rng": 739,
+            "nextProjectileId": 1,
+            "projectiles": [],
+            "actors": [],
+            "events": [],
+            "shots": 0,
+            "hits": 0,
+            "total": 9,
+            "target": {
+              "type": "hold",
+              "min": {
+                "x": -1800,
+                "y": 2200,
+                "z": -1800
+              },
+              "max": {
+                "x": 1800,
+                "y": 3800,
+                "z": 1800
+              },
+              "ticks": 50,
+              "maxSpeed": 1800,
+              "maxTilt": 2000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            },
+            "attitude": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "up": {
+                "x": 0,
+                "y": 1000000,
+                "z": 0
+              }
+            },
+            "maxHealth": 100
+          },
+          "texts": {
+            "world-flight-identity": "Read the landmarks",
+            "flight-instruments": "0.0 m \u00b7 0 m/s \u00b7 0.0 s \u00b7 \u2665 100",
+            "flight-objective": "1/9 \u00b7 Hold position",
+            "world-arm": "Arm / resume",
+            "world-retry": "Retry",
+            "world-flight-resume": "Arm / resume",
+            "world-left-label": "Yaw / Throttle",
+            "world-right-label": "Roll / Pitch",
+            "world-touch-throttle": "0%",
+            "world-keys-hint": "W / S throttle \u00b7 A / D yaw \u00b7 \u2191 / \u2193 pitch forward/back \u00b7 \u2190 / \u2192 roll \u00b7 Shift fine control \u00b7 Space arm / pause \u00b7 R reset \u00b7 Esc / P menu \u00b7 F fire",
+            "world-input-status": "W / S throttle \u00b7 A / D yaw \u00b7 \u2191 / \u2193 pitch forward/back \u00b7 \u2190 / \u2192 roll \u00b7 Shift fine control"
+          },
+          "sticks": [
+            {
+              "side": "left",
+              "clientWidth": 58,
+              "box": [
+                60,
+                60
+              ],
+              "dot": [
+                16,
+                16
+              ],
+              "relativeCenter": [
+                0,
+                19.719970703125
+              ],
+              "translation": [
+                0,
+                19.72
+              ],
+              "inline": "translate(0px, 19.72px)",
+              "padding": [
+                "0px",
+                "0px",
+                "0px",
+                "0px"
+              ],
+              "boxSizing": "border-box",
+              "border": [
+                "1px",
+                "1px",
+                "1px",
+                "1px"
+              ],
+              "aria": "Yaw 0%, Throttle 0%",
+              "visible": true
+            },
+            {
+              "side": "right",
+              "clientWidth": 58,
+              "box": [
+                60,
+                60
+              ],
+              "dot": [
+                16,
+                16
+              ],
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "translation": [
+                0,
+                0
+              ],
+              "inline": "translate(0px, 0px)",
+              "padding": [
+                "0px",
+                "0px",
+                "0px",
+                "0px"
+              ],
+              "boxSizing": "border-box",
+              "border": [
+                "1px",
+                "1px",
+                "1px",
+                "1px"
+              ],
+              "aria": "Roll 0%, Pitch 0%",
+              "visible": true
+            }
+          ],
+          "inputUnavailable": false,
+          "monitorHidden": false
+        }
+      },
+      {
+        "native": false,
+        "immersive": null,
+        "geometry": {
+          "course": "beginner-40",
+          "mode": "self-level",
+          "source": "keyboard",
+          "display": "expanded",
+          "locale": "en",
+          "viewport": [
+            1024,
+            720
+          ],
+          "state": {
+            "ticks": 0,
+            "status": "paused",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "orientation": [
+              0,
+              0,
+              0,
+              1000000
+            ],
+            "angular": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0
+            },
+            "step": 0,
+            "hold": 0,
+            "contacts": 0,
+            "landingSpeed": 0,
+            "landingTilt": 0,
+            "lastInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0,
+              "actions": 0
+            },
+            "heightRange": {
+              "min": 0,
+              "max": 0
+            },
+            "health": 100,
+            "grounded": true,
+            "support": {
+              "id": "$floor",
+              "y": 1,
+              "normal": {
+                "x": 0,
+                "y": 1000000,
+                "z": 0
+              }
+            },
+            "cooldown": 0,
+            "contactCooldown": 0,
+            "rng": 739,
+            "nextProjectileId": 1,
+            "projectiles": [],
+            "actors": [],
+            "events": [],
+            "shots": 0,
+            "hits": 0,
+            "total": 9,
+            "target": {
+              "type": "hold",
+              "min": {
+                "x": -1800,
+                "y": 2200,
+                "z": -1800
+              },
+              "max": {
+                "x": 1800,
+                "y": 3800,
+                "z": 1800
+              },
+              "ticks": 50,
+              "maxSpeed": 1800,
+              "maxTilt": 2000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            },
+            "attitude": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "up": {
+                "x": 0,
+                "y": 1000000,
+                "z": 0
+              }
+            },
+            "maxHealth": 100
+          },
+          "texts": {
+            "world-flight-identity": "Read the landmarks",
+            "flight-instruments": "0.0 m \u00b7 0 m/s \u00b7 0.0 s \u00b7 \u2665 100",
+            "flight-objective": "1/9 \u00b7 Hold position",
+            "world-arm": "Arm / resume",
+            "world-retry": "Retry",
+            "world-flight-resume": "Arm / resume",
+            "world-left-label": "Yaw / Throttle",
+            "world-right-label": "Roll / Pitch",
+            "world-touch-throttle": "0%",
+            "world-keys-hint": "W / S throttle \u00b7 A / D yaw \u00b7 \u2191 / \u2193 pitch forward/back \u00b7 \u2190 / \u2192 roll \u00b7 Shift fine control \u00b7 Space arm / pause \u00b7 R reset \u00b7 Esc / P menu \u00b7 F fire",
+            "world-input-status": "W / S throttle \u00b7 A / D yaw \u00b7 \u2191 / \u2193 pitch forward/back \u00b7 \u2190 / \u2192 roll \u00b7 Shift fine control"
+          },
+          "sticks": [
+            {
+              "side": "left",
+              "clientWidth": 58,
+              "box": [
+                60,
+                60
+              ],
+              "dot": [
+                16,
+                16
+              ],
+              "relativeCenter": [
+                0,
+                19.719970703125
+              ],
+              "translation": [
+                0,
+                19.72
+              ],
+              "inline": "translate(0px, 19.72px)",
+              "padding": [
+                "0px",
+                "0px",
+                "0px",
+                "0px"
+              ],
+              "boxSizing": "border-box",
+              "border": [
+                "1px",
+                "1px",
+                "1px",
+                "1px"
+              ],
+              "aria": "Yaw 0%, Throttle 0%",
+              "visible": true
+            },
+            {
+              "side": "right",
+              "clientWidth": 58,
+              "box": [
+                60,
+                60
+              ],
+              "dot": [
+                16,
+                16
+              ],
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "translation": [
+                0,
+                0
+              ],
+              "inline": "translate(0px, 0px)",
+              "padding": [
+                "0px",
+                "0px",
+                "0px",
+                "0px"
+              ],
+              "boxSizing": "border-box",
+              "border": [
+                "1px",
+                "1px",
+                "1px",
+                "1px"
+              ],
+              "aria": "Roll 0%, Pitch 0%",
+              "visible": true
+            }
+          ],
+          "inputUnavailable": false,
+          "monitorHidden": false
+        }
+      }
+    ],
+    "resizeOrdering": [
+      {
+        "variant": "baseline",
+        "name": "learning-391x844",
+        "events": [
+          {
+            "type": "begin",
+            "at": 2670.300000011921
+          },
+          {
+            "type": "immediate-after-source-changed",
+            "at": 2683.5,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2693.300000011921
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2710.300000011921
+          },
+          {
+            "type": "next-native-RAF-point",
+            "at": 2710.5,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2711.399999976158
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2713.599999964237
+          },
+          {
+            "type": "following-native-RAF-point",
+            "at": 2713.800000011921,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          }
+        ],
+        "dropped": 0
+      },
+      {
+        "variant": "baseline",
+        "name": "learning-844x391",
+        "events": [
+          {
+            "type": "begin",
+            "at": 2757.899999976158
+          },
+          {
+            "type": "immediate-after-source-unchanged",
+            "at": 2768.199999988079,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 40.12px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2772.800000011921
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2793
+          },
+          {
+            "type": "next-native-RAF-point",
+            "at": 2793.099999964237,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 40.12px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2794.399999976158
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2796.099999964237
+          },
+          {
+            "type": "following-native-RAF-point",
+            "at": 2796.399999976158,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 40.12px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          }
+        ],
+        "dropped": 0
+      },
+      {
+        "variant": "candidate",
+        "name": "learning-391x844",
+        "events": [
+          {
+            "type": "begin",
+            "at": 2488.199999988079
+          },
+          {
+            "type": "immediate-after-source-changed",
+            "at": 2501.599999964237,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "native-RO-enter",
+            "at": 2502
+          },
+          {
+            "type": "native-RO-return",
+            "at": 2502,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2509.599999964237
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2527.399999976158
+          },
+          {
+            "type": "next-native-RAF-point",
+            "at": 2527.5,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2529.099999964237
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2530.5
+          },
+          {
+            "type": "following-native-RAF-point",
+            "at": 2530.800000011921,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          }
+        ],
+        "dropped": 0
+      },
+      {
+        "variant": "candidate",
+        "name": "learning-844x391",
+        "events": [
+          {
+            "type": "begin",
+            "at": 2577.399999976158
+          },
+          {
+            "type": "immediate-after-source-unchanged",
+            "at": 2586.300000011921,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "native-RO-enter",
+            "at": 2587.399999976158
+          },
+          {
+            "type": "native-RO-return",
+            "at": 2587.399999976158,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 40.12px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2589.300000011921
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2609.099999964237
+          },
+          {
+            "type": "next-native-RAF-point",
+            "at": 2609.199999988079,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 40.12px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2612.599999964237
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2613.800000011921
+          },
+          {
+            "type": "following-native-RAF-point",
+            "at": 2613.899999976158,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 40.12px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          }
+        ],
+        "dropped": 0
+      },
+      {
+        "variant": "fallback",
+        "name": "learning-391x844",
+        "events": [
+          {
+            "type": "begin",
+            "at": 2471.800000011921
+          },
+          {
+            "type": "immediate-after-source-changed",
+            "at": 2484.7000000476837,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2493.800000011921
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2518.5
+          },
+          {
+            "type": "next-native-RAF-point",
+            "at": 2518.7000000476837,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2519.7000000476837
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2521.7000000476837
+          },
+          {
+            "type": "following-native-RAF-point",
+            "at": 2521.900000035763,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 134,
+                "transform": "translate(0px, 45.56px)"
+              },
+              {
+                "side": "right",
+                "width": 134,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          }
+        ],
+        "dropped": 0
+      },
+      {
+        "variant": "fallback",
+        "name": "learning-844x391",
+        "events": [
+          {
+            "type": "begin",
+            "at": 2569.800000011921
+          },
+          {
+            "type": "immediate-after-source-unchanged",
+            "at": 2580.800000011921,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 40.12px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2583.800000011921
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2608.900000035763
+          },
+          {
+            "type": "next-native-RAF-point",
+            "at": 2609,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 40.12px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          },
+          {
+            "type": "host-RAF-enter",
+            "at": 2611.800000011921
+          },
+          {
+            "type": "host-RAF-return",
+            "at": 2613.900000035763
+          },
+          {
+            "type": "following-native-RAF-point",
+            "at": 2614.100000023842,
+            "sticks": [
+              {
+                "side": "left",
+                "width": 118,
+                "transform": "translate(0px, 40.12px)"
+              },
+              {
+                "side": "right",
+                "width": 118,
+                "transform": "translate(0px, 0px)"
+              }
+            ]
+          }
+        ],
+        "dropped": 0
+      }
+    ]
+  },
+  "timing": {
+    "checks": 372,
+    "windows": [
+      {
+        "variant": "baseline",
+        "scene": "yard",
+        "phase": "fixed-pose-ready",
+        "elapsedMs": 5001,
+        "hostCallbacks": 601,
+        "hostCPUms": 1025.2000004053116,
+        "resizeCPUms": 0,
+        "hostPlusResizeMeanMs": 1.705823627962249,
+        "widthReads": 1202,
+        "layoutReads": {
+          "raf:world-left-stick.clientWidth": {
+            "count": 601,
+            "sumMs": 265.69999980926514,
+            "minMs": 0.19999998807907104,
+            "maxMs": 0.800000011920929,
+            "histogram": [
+              0,
+              0,
+              0,
+              0,
+              5,
+              362,
+              234,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "raf:world-right-stick.clientWidth": {
+            "count": 601,
+            "sumMs": 0.9000000953674316,
+            "minMs": 0,
+            "maxMs": 0.10000002384185791,
+            "histogram": [
+              592,
+              0,
+              0,
+              2,
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "drawMeanMs": 0.7484193007878575,
+        "observerLowerBoundMeanMs": 0.03261231235577144,
+        "ticks": [
+          0,
+          0
+        ],
+        "canvas": [
+          {
+            "width": 1530,
+            "height": 948
+          },
+          {
+            "width": 1530,
+            "height": 948
+          }
+        ],
+        "viewport": [
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          },
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          }
+        ],
+        "profile": [
+          "operations",
+          "operations"
+        ],
+        "registered": [
+          {
+            "geometries": 206,
+            "materials": 150,
+            "textures": 27
+          },
+          {
+            "geometries": 206,
+            "materials": 150,
+            "textures": 27
+          }
+        ],
+        "renderer": [
+          {
+            "calls": 222,
+            "triangles": 72914,
+            "geometries": 106,
+            "textures": 22,
+            "programs": 20,
+            "contextLost": false
+          },
+          {
+            "calls": 222,
+            "triangles": 72914,
+            "geometries": 106,
+            "textures": 22,
+            "programs": 20,
+            "contextLost": false
+          }
+        ],
+        "maxRAFGapMs": 10.400000000000546,
+        "performanceEntries": {},
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "nativeTickDelta": 0,
+          "observedStatuses": [
+            "disarmed"
+          ],
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        }
+      },
+      {
+        "variant": "baseline",
+        "scene": "yard",
+        "phase": "verified-native-playback",
+        "elapsedMs": 5001.299999952316,
+        "hostCallbacks": 601,
+        "hostCPUms": 1008.2000004053116,
+        "resizeCPUms": 0,
+        "hostPlusResizeMeanMs": 1.6775374382783887,
+        "widthReads": 1202,
+        "layoutReads": {
+          "raf:world-left-stick.clientWidth": {
+            "count": 601,
+            "sumMs": 286.3000001311302,
+            "minMs": 0.20000004768371582,
+            "maxMs": 0.800000011920929,
+            "histogram": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              270,
+              330,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "raf:world-right-stick.clientWidth": {
+            "count": 601,
+            "sumMs": 0.7999999523162842,
+            "minMs": 0,
+            "maxMs": 0.10000002384185791,
+            "histogram": [
+              593,
+              0,
+              0,
+              4,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "drawMeanMs": 0.6304492521008318,
+        "observerLowerBoundMeanMs": 0.030782030049258977,
+        "ticks": [
+          5,
+          255
+        ],
+        "canvas": [
+          {
+            "width": 1530,
+            "height": 948
+          },
+          {
+            "width": 1530,
+            "height": 948
+          }
+        ],
+        "viewport": [
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          },
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          }
+        ],
+        "profile": [
+          "operations",
+          "operations"
+        ],
+        "registered": [
+          {
+            "geometries": 206,
+            "materials": 150,
+            "textures": 27
+          },
+          {
+            "geometries": 207,
+            "materials": 152,
+            "textures": 27
+          }
+        ],
+        "renderer": [
+          {
+            "calls": 224,
+            "triangles": 74072,
+            "geometries": 106,
+            "textures": 22,
+            "programs": 20,
+            "contextLost": false
+          },
+          {
+            "calls": 138,
+            "triangles": 59836,
+            "geometries": 109,
+            "textures": 23,
+            "programs": 20,
+            "contextLost": false
+          }
+        ],
+        "maxRAFGapMs": 10.400000000001455,
+        "performanceEntries": {},
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "nativeTickDelta": 250,
+          "observedStatuses": [
+            "active"
+          ],
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        }
+      },
+      {
+        "variant": "candidate",
+        "scene": "yard",
+        "phase": "fixed-pose-ready",
+        "elapsedMs": 5002.100000023842,
+        "hostCallbacks": 601,
+        "hostCPUms": 750.7000007629395,
+        "resizeCPUms": 0,
+        "hostPlusResizeMeanMs": 1.2490848598385016,
+        "widthReads": 0,
+        "layoutReads": {},
+        "drawMeanMs": 0.7542429283732384,
+        "observerLowerBoundMeanMs": 0.02429284539674959,
+        "ticks": [
+          0,
+          0
+        ],
+        "canvas": [
+          {
+            "width": 1530,
+            "height": 948
+          },
+          {
+            "width": 1530,
+            "height": 948
+          }
+        ],
+        "viewport": [
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          },
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          }
+        ],
+        "profile": [
+          "operations",
+          "operations"
+        ],
+        "registered": [
+          {
+            "geometries": 206,
+            "materials": 150,
+            "textures": 27
+          },
+          {
+            "geometries": 206,
+            "materials": 150,
+            "textures": 27
+          }
+        ],
+        "renderer": [
+          {
+            "calls": 222,
+            "triangles": 72914,
+            "geometries": 106,
+            "textures": 22,
+            "programs": 20,
+            "contextLost": false
+          },
+          {
+            "calls": 222,
+            "triangles": 72914,
+            "geometries": 106,
+            "textures": 22,
+            "programs": 20,
+            "contextLost": false
+          }
+        ],
+        "maxRAFGapMs": 10.400000000000546,
+        "performanceEntries": {},
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "nativeTickDelta": 0,
+          "observedStatuses": [
+            "disarmed"
+          ],
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        }
+      },
+      {
+        "variant": "candidate",
+        "scene": "yard",
+        "phase": "verified-native-playback",
+        "elapsedMs": 5001.400000035763,
+        "hostCallbacks": 601,
+        "hostCPUms": 709.8000014424324,
+        "resizeCPUms": 0,
+        "hostPlusResizeMeanMs": 1.1810316163767594,
+        "widthReads": 0,
+        "layoutReads": {},
+        "drawMeanMs": 0.6361064881135937,
+        "observerLowerBoundMeanMs": 0.02312811936395934,
+        "ticks": [
+          4,
+          255
+        ],
+        "canvas": [
+          {
+            "width": 1530,
+            "height": 948
+          },
+          {
+            "width": 1530,
+            "height": 948
+          }
+        ],
+        "viewport": [
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          },
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          }
+        ],
+        "profile": [
+          "operations",
+          "operations"
+        ],
+        "registered": [
+          {
+            "geometries": 206,
+            "materials": 150,
+            "textures": 27
+          },
+          {
+            "geometries": 207,
+            "materials": 152,
+            "textures": 27
+          }
+        ],
+        "renderer": [
+          {
+            "calls": 224,
+            "triangles": 74072,
+            "geometries": 106,
+            "textures": 22,
+            "programs": 20,
+            "contextLost": false
+          },
+          {
+            "calls": 138,
+            "triangles": 59836,
+            "geometries": 109,
+            "textures": 23,
+            "programs": 20,
+            "contextLost": false
+          }
+        ],
+        "maxRAFGapMs": 10.300000000001091,
+        "performanceEntries": {},
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "nativeTickDelta": 251,
+          "observedStatuses": [
+            "active"
+          ],
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        }
+      },
+      {
+        "variant": "candidate",
+        "scene": "reservoir",
+        "phase": "fixed-pose-ready",
+        "elapsedMs": 5000.100000023842,
+        "hostCallbacks": 601,
+        "hostCPUms": 661.6000005602837,
+        "resizeCPUms": 0,
+        "hostPlusResizeMeanMs": 1.10083194768766,
+        "widthReads": 0,
+        "layoutReads": {},
+        "drawMeanMs": 0.6262895178279146,
+        "observerLowerBoundMeanMs": 0.024126456799404,
+        "ticks": [
+          0,
+          0
+        ],
+        "canvas": [
+          {
+            "width": 1530,
+            "height": 948
+          },
+          {
+            "width": 1530,
+            "height": 948
+          }
+        ],
+        "viewport": [
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          },
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          }
+        ],
+        "profile": [
+          "ukrainian",
+          "ukrainian"
+        ],
+        "registered": [
+          {
+            "geometries": 191,
+            "materials": 285,
+            "textures": 33
+          },
+          {
+            "geometries": 191,
+            "materials": 285,
+            "textures": 33
+          }
+        ],
+        "renderer": [
+          {
+            "calls": 187,
+            "triangles": 27450,
+            "geometries": 134,
+            "textures": 29,
+            "programs": 17,
+            "contextLost": false
+          },
+          {
+            "calls": 187,
+            "triangles": 27450,
+            "geometries": 134,
+            "textures": 29,
+            "programs": 17,
+            "contextLost": false
+          }
+        ],
+        "maxRAFGapMs": 10.400000000000091,
+        "performanceEntries": {},
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "nativeTickDelta": 0,
+          "observedStatuses": [
+            "disarmed"
+          ],
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        }
+      },
+      {
+        "variant": "candidate",
+        "scene": "reservoir",
+        "phase": "verified-native-playback",
+        "elapsedMs": 5001.5,
+        "hostCallbacks": 601,
+        "hostCPUms": 770.1000002622604,
+        "resizeCPUms": 0,
+        "hostPlusResizeMeanMs": 1.281364393115242,
+        "widthReads": 0,
+        "layoutReads": {},
+        "drawMeanMs": 0.7821963396722981,
+        "observerLowerBoundMeanMs": 0.02795341050565342,
+        "ticks": [
+          3,
+          253
+        ],
+        "canvas": [
+          {
+            "width": 1530,
+            "height": 948
+          },
+          {
+            "width": 1530,
+            "height": 948
+          }
+        ],
+        "viewport": [
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          },
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          }
+        ],
+        "profile": [
+          "ukrainian",
+          "ukrainian"
+        ],
+        "registered": [
+          {
+            "geometries": 191,
+            "materials": 285,
+            "textures": 33
+          },
+          {
+            "geometries": 191,
+            "materials": 285,
+            "textures": 33
+          }
+        ],
+        "renderer": [
+          {
+            "calls": 187,
+            "triangles": 27450,
+            "geometries": 134,
+            "textures": 29,
+            "programs": 17,
+            "contextLost": false
+          },
+          {
+            "calls": 174,
+            "triangles": 26406,
+            "geometries": 134,
+            "textures": 30,
+            "programs": 17,
+            "contextLost": false
+          }
+        ],
+        "maxRAFGapMs": 10.399999999999636,
+        "performanceEntries": {},
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "nativeTickDelta": 250,
+          "observedStatuses": [
+            "active"
+          ],
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        }
+      },
+      {
+        "variant": "baseline",
+        "scene": "reservoir",
+        "phase": "fixed-pose-ready",
+        "elapsedMs": 5001.099999964237,
+        "hostCallbacks": 601,
+        "hostCPUms": 993.100000679493,
+        "resizeCPUms": 0,
+        "hostPlusResizeMeanMs": 1.652412646721286,
+        "widthReads": 1202,
+        "layoutReads": {
+          "raf:world-left-stick.clientWidth": {
+            "count": 601,
+            "sumMs": 259.200000166893,
+            "minMs": 0.19999998807907104,
+            "maxMs": 0.800000011920929,
+            "histogram": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              383,
+              216,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "raf:world-right-stick.clientWidth": {
+            "count": 601,
+            "sumMs": 0.5999998450279236,
+            "minMs": 0,
+            "maxMs": 0.10000002384185791,
+            "histogram": [
+              595,
+              0,
+              0,
+              5,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "drawMeanMs": 0.7074875212747126,
+        "observerLowerBoundMeanMs": 0.024958402959756962,
+        "ticks": [
+          0,
+          0
+        ],
+        "canvas": [
+          {
+            "width": 1530,
+            "height": 948
+          },
+          {
+            "width": 1530,
+            "height": 948
+          }
+        ],
+        "viewport": [
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          },
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          }
+        ],
+        "profile": [
+          "ukrainian",
+          "ukrainian"
+        ],
+        "registered": [
+          {
+            "geometries": 191,
+            "materials": 285,
+            "textures": 33
+          },
+          {
+            "geometries": 191,
+            "materials": 285,
+            "textures": 33
+          }
+        ],
+        "renderer": [
+          {
+            "calls": 187,
+            "triangles": 27450,
+            "geometries": 134,
+            "textures": 29,
+            "programs": 17,
+            "contextLost": false
+          },
+          {
+            "calls": 187,
+            "triangles": 27450,
+            "geometries": 134,
+            "textures": 29,
+            "programs": 17,
+            "contextLost": false
+          }
+        ],
+        "maxRAFGapMs": 10.400000000000091,
+        "performanceEntries": {},
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "nativeTickDelta": 0,
+          "observedStatuses": [
+            "disarmed"
+          ],
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        }
+      },
+      {
+        "variant": "baseline",
+        "scene": "reservoir",
+        "phase": "verified-native-playback",
+        "elapsedMs": 5002.199999988079,
+        "hostCallbacks": 601,
+        "hostCPUms": 999.5000001788139,
+        "resizeCPUms": 0,
+        "hostPlusResizeMeanMs": 1.6630615643574276,
+        "widthReads": 1202,
+        "layoutReads": {
+          "raf:world-left-stick.clientWidth": {
+            "count": 601,
+            "sumMs": 277.29999989271164,
+            "minMs": 0.19999998807907104,
+            "maxMs": 0.8999999761581421,
+            "histogram": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              294,
+              306,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "raf:world-right-stick.clientWidth": {
+            "count": 601,
+            "sumMs": 0.7999999523162842,
+            "minMs": 0,
+            "maxMs": 0.10000002384185791,
+            "histogram": [
+              593,
+              0,
+              0,
+              4,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "drawMeanMs": 0.7006655578406996,
+        "observerLowerBoundMeanMs": 0.027287855124513243,
+        "ticks": [
+          2,
+          253
+        ],
+        "canvas": [
+          {
+            "width": 1530,
+            "height": 948
+          },
+          {
+            "width": 1530,
+            "height": 948
+          }
+        ],
+        "viewport": [
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          },
+          {
+            "width": 1024,
+            "height": 720,
+            "dpr": 2,
+            "visual": {
+              "width": 1024,
+              "height": 720,
+              "scale": 1,
+              "offsetLeft": 0,
+              "offsetTop": 0
+            },
+            "fullscreen": false
+          }
+        ],
+        "profile": [
+          "ukrainian",
+          "ukrainian"
+        ],
+        "registered": [
+          {
+            "geometries": 191,
+            "materials": 285,
+            "textures": 33
+          },
+          {
+            "geometries": 191,
+            "materials": 285,
+            "textures": 33
+          }
+        ],
+        "renderer": [
+          {
+            "calls": 187,
+            "triangles": 27450,
+            "geometries": 134,
+            "textures": 29,
+            "programs": 17,
+            "contextLost": false
+          },
+          {
+            "calls": 174,
+            "triangles": 26406,
+            "geometries": 134,
+            "textures": 30,
+            "programs": 17,
+            "contextLost": false
+          }
+        ],
+        "maxRAFGapMs": 10.400000000000546,
+        "performanceEntries": {},
+        "coverage": {
+          "expectedStatusAtStart": true,
+          "expectedStatusAtEnd": true,
+          "nativeTickDelta": 251,
+          "observedStatuses": [
+            "active"
+          ],
+          "remainedFocused": true,
+          "remainedVisible": true,
+          "timerWithin5500ms": true
+        }
+      }
+    ],
+    "pairs": [
+      {
+        "scene": "yard",
+        "phase": "fixed-pose-ready",
+        "baselineMs": 1.705823627962249,
+        "candidateMs": 1.2490848598385016,
+        "differenceMs": 0.45673876812374736,
+        "observedReductionPercent": 26.775263317776915,
+        "boundaryRegisteredCountsExact": true
+      },
+      {
+        "scene": "yard",
+        "phase": "verified-native-playback",
+        "baselineMs": 1.6775374382783887,
+        "candidateMs": 1.1810316163767594,
+        "differenceMs": 0.4965058219016294,
+        "observedReductionPercent": 29.597302007827608,
+        "boundaryRegisteredCountsExact": true
+      },
+      {
+        "scene": "reservoir",
+        "phase": "fixed-pose-ready",
+        "baselineMs": 1.652412646721286,
+        "candidateMs": 1.10083194768766,
+        "differenceMs": 0.551580699033626,
+        "observedReductionPercent": 33.380324226401406,
+        "boundaryRegisteredCountsExact": true
+      },
+      {
+        "scene": "reservoir",
+        "phase": "verified-native-playback",
+        "baselineMs": 1.6630615643574276,
+        "candidateMs": 1.281364393115242,
+        "differenceMs": 0.3816971712421855,
+        "observedReductionPercent": 22.95147572541401,
+        "boundaryRegisteredCountsExact": true
+      }
+    ],
+    "environment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "dpr": 2,
+      "hardwareConcurrency": 14,
+      "platform": "MacIntel",
+      "language": "en-US",
+      "physicalDevice": "Unverified; browser-reported fields are not hardware qualification",
+      "screen": {
+        "width": 2056,
+        "height": 1329
+      },
+      "viewport": {
+        "width": 1024,
+        "height": 720
+      }
+    },
+    "support": {
+      "observerTypes": [
+        "element",
+        "event",
+        "first-input",
+        "interaction-contentful-paint",
+        "largest-contentful-paint",
+        "layout-shift",
+        "long-animation-frame",
+        "longtask",
+        "mark",
+        "measure",
+        "navigation",
+        "paint",
+        "resource",
+        "soft-navigation",
+        "visibility-state"
+      ],
+      "nativeResizeObserver": true,
+      "resizeObserverDisabled": false,
+      "textContent": true,
+      "clientWidth": true
+    },
+    "ownedAfterDispose": [
+      {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      }
+    ],
+    "nativeResizeEvents": [
+      [],
+      [],
+      [],
+      []
+    ],
+    "errors": 0,
+    "warnings": 0,
+    "dropped": [
+      {},
+      {},
+      {},
+      {}
+    ]
+  },
+  "limits": [
+    "Observed host RAF plus native ResizeObserver callback time, not whole-browser style/layout/paint, GPU elapsed, input latency or FPS. Getter/draw/clone figures are nested.",
+    "Mixed-scene A-yard/B-yard/B-Reservoir/A-Reservoir one pair per scene, not repeated same-scene ABBA or statistical significance.",
+    "Ready poses/ticks exact; native playback start ticks differ by one, final ticks match; no clock or input substitution.",
+    "No actual resize during the accepted timing windows: geometry transitions/disposal are independently covered by native functional matrix; their cost is not amortized into stable-window averages.",
+    "Browser-reported MacIntel/Chrome154/DPR2/14 logical CPUs; actual hardware and shared-process contention unverified.",
+    "Supported LoAF/longtask observers saw zero qualifying entries starting in the windows; absence is not absence of jank.",
+    "Academy display implementation and physical controller/mobile-device qualification remain separate. No ImageBitmap/heap/thermal claim.",
+    "Prior timing canvas change remains unexplained; successful fixed-size rerun does not fix or establish its cause."
+  ]
+}

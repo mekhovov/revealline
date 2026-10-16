@@ -1,0 +1,225 @@
+{
+  "format": "revealline-sparse-input-repair-diagnostic.v1",
+  "source": {
+    "revision": "2ba9741464f7e38e18ca2c34d84c94355f372f63",
+    "tree": "33e7a9995c7e35a66fefd5eedea21b530c0ba084"
+  },
+  "qualified": false,
+  "restoration": {
+    "files": 81,
+    "bytes": 8224734,
+    "gitBlobsVerified": true,
+    "createExclusive": true,
+    "existingFilesOverwritten": false,
+    "trackedContentChanged": false,
+    "indexContentMatchesHead": true,
+    "sparsePatternsChanged": false,
+    "automaticSparseVivification": "Git changed hydrated path skip-worktree flags from S to H when noticing the present exact committed files; no sparse configuration or indexed content changed."
+  },
+  "initialRun": {
+    "tests": 209,
+    "passed": 187,
+    "failed": 22,
+    "cause": "Missing committed sparse inputs (ENOENT).",
+    "log": {
+      "path": "initial-integration-tests.log",
+      "bytes": 68512,
+      "sha256": "8587b3c2876dad064ad44f1134185467db5e76e065ec0eed754f3677101dbe17",
+      "tests": 209,
+      "passed": 187,
+      "failed": 22,
+      "observedCause": "ENOENT sparse committed inputs"
+    }
+  },
+  "focusedFinalRun": {
+    "suites": [
+      {
+        "path": "game/test/presentation-production-history.test.mjs",
+        "tests": 19,
+        "passed": 15,
+        "failed": 4
+      },
+      {
+        "path": "scripts/test-field-kit-recipe-sources.mjs",
+        "tests": 15,
+        "passed": 15,
+        "failed": 0
+      }
+    ],
+    "tests": 34,
+    "passed": 30,
+    "failed": 4,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 139361.547458,
+    "exitCode": 1,
+    "remainingENOENT": 0,
+    "log": {
+      "path": "repaired-production-suites-final.log",
+      "bytes": 50950,
+      "sha256": "73b64754fb7cb2998d37f0a7ebe25b7478210e4421758aef689f0d2bb2c00289"
+    },
+    "failures": [
+      {
+        "test": 3,
+        "name": "current P03 reproduction retains its measured source stage before any review successor",
+        "category": "Current-production reproduction diverges from retained production100",
+        "diagnostic": "Stale expected revision."
+      },
+      {
+        "test": 4,
+        "name": "Journey music review retains fpv33 source evidence and every earlier immutable record",
+        "category": "Current-production reproduction diverges from retained production100",
+        "diagnostic": "Reproduced production document differs from the current retained production ledger."
+      },
+      {
+        "test": 9,
+        "name": "shared-host UI and managed-media audio bind only reviewed current inputs",
+        "category": "Current-review source authentication fails",
+        "diagnostic": "Reviewed input length game/app.mjs: expected461449, actual472019."
+      },
+      {
+        "test": 19,
+        "name": "Steam Deck continuation preserves exact theme99 and appends only eight audio52 successors",
+        "category": "Current-review source authentication fails",
+        "diagnostic": "Reviewed input length game/app.mjs: expected461449, actual472019."
+      }
+    ]
+  },
+  "exactReview": {
+    "path": "docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json",
+    "sha256": "a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c",
+    "audioInputCount": 28,
+    "expectedFingerprintSha256": "39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4",
+    "actualBranchFingerprintSha256": "bb2e3548596d68c10bd80a0364c99a19f916538416a51a35b3dd21655569b6a0",
+    "originMain": {
+      "revision": "b5ab06e12542f72e33c45b973ba693a5e1509c1c",
+      "mergeBase": "b5ab06e12542f72e33c45b973ba693a5e1509c1c",
+      "fingerprintSha256": "39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4",
+      "all28InputsMatchReview": true,
+      "networkRefreshed": false
+    },
+    "changedInputs": [
+      {
+        "path": "game/app.mjs",
+        "expected": {
+          "bytes": 461449,
+          "sha256": "9da828070b22e5ec988e833a9e4cf2f2e49baed9f4f9918d549ef3acfdf66bd9",
+          "gitBlob": "15751777bfea8a875c95a5962fda05368d69e081"
+        },
+        "actual": {
+          "bytes": 472019,
+          "sha256": "fa0c9fac4c58296e63c2a6d6dea8dae1e3ca98b7a59021b410522b220528cd30",
+          "gitBlob": "d78b150ae39eb320f8ce5a76be58d50380f1593b"
+        },
+        "main": {
+          "bytes": 461449,
+          "sha256": "9da828070b22e5ec988e833a9e4cf2f2e49baed9f4f9918d549ef3acfdf66bd9",
+          "gitBlob": "15751777bfea8a875c95a5962fda05368d69e081"
+        },
+        "mainMatchesReview": true,
+        "branchEqualsMain": false
+      },
+      {
+        "path": "game/ui/audio.mjs",
+        "expected": {
+          "bytes": 26850,
+          "sha256": "2e00042160e1f0717c0be5d8103db75d7f6957531473f3fce8170d3accbe7783",
+          "gitBlob": "b89f6c9b6a6900ed24ebef2006564deba8370621"
+        },
+        "actual": {
+          "bytes": 26996,
+          "sha256": "4df28559cf58864aafb5133af4d5d757c4adc0efe381282de57dcd9c2f45e698",
+          "gitBlob": "bdbabd2bb84697ce56c26cc6eef29dc9d92cbbfc"
+        },
+        "main": {
+          "bytes": 26850,
+          "sha256": "2e00042160e1f0717c0be5d8103db75d7f6957531473f3fce8170d3accbe7783",
+          "gitBlob": "b89f6c9b6a6900ed24ebef2006564deba8370621"
+        },
+        "mainMatchesReview": true,
+        "branchEqualsMain": false
+      },
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "expected": {
+          "bytes": 130653,
+          "sha256": "9a8834a7a2d835766c2c9155aa0543cb42b2a24800fc0a7d9d268b4aa760009f",
+          "gitBlob": "bc2460f223c7e01f7e0b428bf1d91588573561cc"
+        },
+        "actual": {
+          "bytes": 132224,
+          "sha256": "bb6fb735eeb9400ef6629837cf2999ace2414b7cc2d03323725f9ff5a4384a2d",
+          "gitBlob": "4aebf2d8d970aee26aa1cbdf59256c6b5705ef44"
+        },
+        "main": {
+          "bytes": 130653,
+          "sha256": "9a8834a7a2d835766c2c9155aa0543cb42b2a24800fc0a7d9d268b4aa760009f",
+          "gitBlob": "bc2460f223c7e01f7e0b428bf1d91588573561cc"
+        },
+        "mainMatchesReview": true,
+        "branchEqualsMain": false
+      }
+    ],
+    "unchangedAuthorityBlobs": [
+      {
+        "path": "scripts/produce-field-kit-theme.mjs",
+        "branchBlob": "482981dcaf966a019f7b36064b0238848f60bed6",
+        "mainBlob": "482981dcaf966a019f7b36064b0238848f60bed6"
+      },
+      {
+        "path": "game/test/presentation-production-history.test.mjs",
+        "branchBlob": "091309dbc734b57239ac1a7324d44e3c54c7a64d",
+        "mainBlob": "091309dbc734b57239ac1a7324d44e3c54c7a64d"
+      },
+      {
+        "path": "scripts/test-field-kit-recipe-sources.mjs",
+        "branchBlob": "d1b26c6e17cce6028f5e105b705d337382b79147",
+        "mainBlob": "d1b26c6e17cce6028f5e105b705d337382b79147"
+      },
+      {
+        "path": "docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json",
+        "branchBlob": "8c1221016b85e09579ef9560aa20a805bb7e29c9",
+        "mainBlob": "8c1221016b85e09579ef9560aa20a805bb7e29c9"
+      },
+      {
+        "path": "authoring/library/fpv-field-kit/production.rltheme",
+        "branchBlob": "98873caea65e6e655d2420c1f3948b6f3250c783",
+        "mainBlob": "98873caea65e6e655d2420c1f3948b6f3250c783"
+      }
+    ]
+  },
+  "interpretation": "Hydration fixes missing inputs but exposes four genuine current-production/review failures. The three changed audio-owner sources differ from exact main; main matches the immutable review. Historical review/ledger/producer/test files themselves match main. This is a release-readiness gate, not a test waiver or proof of gameplay regression.",
+  "nextGate": {
+    "reviewRequired": true,
+    "scope": "Current production reproduction and exact declared audio-owner input review; historical immutable records must remain unchanged.",
+    "steps": [
+      "Review actual branch differences in app/audio/soundtrack panel against exact main production100 and record evidence scoped to observed behavior.",
+      "Create a new immutable continuation record bound to exact source inputs, current review and predecessor oracle; do not alter historical approval.",
+      "Use the existing append-only production flow to append changed successors, then reproduce exact bytes with --check and run committed readiness plus focused historical/adversarial tests.",
+      "Leave human/listening/physical-device/public-origin qualification explicitly separate."
+    ],
+    "authorities": [
+      "docs/field-kit-production.md:11",
+      "docs/field-kit-production.md:23",
+      "docs/field-kit-production.md:35",
+      "docs/field-kit-production.md:41",
+      "scripts/produce-field-kit-theme.mjs",
+      "scripts/check-field-kit-readiness.mjs"
+    ]
+  },
+  "excludedClaims": [
+    "No producer write, review/provenance edits or assertion changes.",
+    "No full integration rerun, new release allocation, publishing or additional human/listening/device qualification."
+  ],
+  "privateEvidencePreserved": {
+    "complete": true,
+    "inventoryAndHydrationReceipts": true,
+    "initialFailureLog": true,
+    "finalFailureLog": true,
+    "stoppedPrematureTestLog": true,
+    "inventoryReadBufferFailureRecorded": true
+  },
+  "candidatePublicationEligible": false,
+  "recordScope": "Publication-safe diagnostic of unqualified candidate inputs; raw logs remain local."
+}

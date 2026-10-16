@@ -1,0 +1,49 @@
+{
+  "format": "overflight-local-ux-recovery.v1",
+  "sourceRevision": "60b0c25ab2703371691d4d203df7d5067638ca14",
+  "currentRevision": "895431b744040688da4ec6ec78a5bf617222d253",
+  "platform": "darwin",
+  "node": "v20.19.5",
+  "original": {
+    "tests": 541,
+    "pass": 540,
+    "fail": 1,
+    "reason": "Missing local fake-indexeddb6.2.5 dependency prevented fpv-world-appearance-ui.test.mjs from loading",
+    "report": "report.json"
+  },
+  "rerun": {
+    "tests": 37,
+    "pass": 37,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exitCode": 0,
+    "signal": null,
+    "passed": true,
+    "report": "dependency-recovery.json"
+  },
+  "aggregate": {
+    "tests": 577,
+    "pass": 577,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "kind": "540 passing original tests plus37 tests in separately recovered file; not a single all-green cohort run"
+  },
+  "verifierPolicy": {
+    "tests": 13,
+    "pass": 13,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exitCode": 0,
+    "signal": null,
+    "passed": true
+  },
+  "sourceComparison": "source-after.json",
+  "runtimeTreesUnchanged": true,
+  "all30ManifestTestFilesUnchanged": true
+}

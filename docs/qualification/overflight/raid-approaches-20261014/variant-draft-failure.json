@@ -1,0 +1,6 @@
+{
+  "scope": "Initial 72-route qualification stopped on exception; partial attempt configuration was not retained.",
+  "error": "Raid content cannot offer three distinct legal upgrades.",
+  "cause": "chooseOverflightHuntUpgrade immediately opens another queued draft; step-only exhausted-catalog protection was too late.",
+  "sourceHash": "ee45f924c7f30469a1b7135bbd2bbacaeef74c3bd1fbf029237603a4cf645a8e"
+}

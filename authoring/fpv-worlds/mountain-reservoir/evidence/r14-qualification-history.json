@@ -1,0 +1,4 @@
+{
+  "status": "qualifier correction retained",
+  "note": "Initial face material assertion compared JSON key insertion order (version/kind versus canonical kind/version). Shared validator and real loader63 checks passed. The independent qualifier now canonicalizes object keys while retaining exact binary attribute/image equality; final562 checks pass."
+}

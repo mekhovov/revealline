@@ -1,0 +1,143 @@
+{
+  "phase": "playing",
+  "time": 7.33,
+  "renderer": "Phaser 4.2.1 WebGL",
+  "logicalWidth": 960,
+  "logicalHeight": 540,
+  "backingWidth": 960,
+  "backingHeight": 540,
+  "atlas": {
+    "width": 1020,
+    "height": 1292,
+    "textures": 2,
+    "baseRGBABytes": 5533504,
+    "retainedCanvasBytes": 5533504,
+    "soldierFrames": 216,
+    "machineryFrames": 36,
+    "heroFrames": 4,
+    "equipmentFrames": 13,
+    "frameCount": 276
+  },
+  "heroArtwork": {
+    "assetId": "player.scout.detailed.field-kit",
+    "rotorCount": 4,
+    "visibleDiameter": 32,
+    "bakedFrameSize": 48,
+    "paintedWidth": 41.47608169635396,
+    "paintedHeight": 41.47608169635396
+  },
+  "counts": {
+    "alive": 1500,
+    "visible": 700,
+    "rendered": 700,
+    "effects": 46,
+    "pickups": 480,
+    "warnings": 5,
+    "quads": 1261
+  },
+  "allocatedSprites": 1522,
+  "fixture": "reference",
+  "reducedEffects": false,
+  "preparationMs": 21.200000047683716,
+  "contextLosses": 1,
+  "contextRestores": 1,
+  "contextRecoveryTests": 1,
+  "lost": false,
+  "failed": false,
+  "cadenceMs": {
+    "samples": 881,
+    "p50": 8.300000011920929,
+    "p95": 9,
+    "p99": 9.400000035762787,
+    "worst": 31.600000023841858
+  },
+  "submissionMs": {
+    "samples": 883,
+    "p50": 0.3999999761581421,
+    "p95": 0.5,
+    "p99": 0.6000000238418579,
+    "worst": 3.600000023841858
+  },
+  "cadenceHz": 119.94880731926943,
+  "measuredIntervals": 881,
+  "measuredSeconds": 7.344800000011921,
+  "retainedIntervals": 881,
+  "sampleCapacity": 120000,
+  "submissionTotalMs": 341.79999989271164,
+  "over33Ms": 0,
+  "over50Ms": 0,
+  "over100Ms": 0,
+  "exclusions": {
+    "context-lost": 1,
+    "context-restored": 1
+  },
+  "highWater": {
+    "alive": 1500,
+    "visible": 700,
+    "rendered": 700,
+    "effects": 306,
+    "pickups": 480
+  },
+  "protocol": {
+    "arrangement": "One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.",
+    "warmupSeconds": 30,
+    "measurementSeconds": 120,
+    "repetitions": 3,
+    "windows": [
+      {
+        "index": 1,
+        "complete": false,
+        "measuredSeconds": 0,
+        "cadenceMs": {
+          "samples": 0,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "worst": null
+        },
+        "cadenceHz": null,
+        "slowFraction": null,
+        "passes": null
+      },
+      {
+        "index": 2,
+        "complete": false,
+        "measuredSeconds": 0,
+        "cadenceMs": {
+          "samples": 0,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "worst": null
+        },
+        "cadenceHz": null,
+        "slowFraction": null,
+        "passes": null
+      },
+      {
+        "index": 3,
+        "complete": false,
+        "measuredSeconds": 0,
+        "cadenceMs": {
+          "samples": 0,
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "worst": null
+        },
+        "cadenceHz": null,
+        "slowFraction": null,
+        "passes": null
+      }
+    ],
+    "acceptance": null,
+    "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+  },
+  "clock": {
+    "steps": 440,
+    "droppedSeconds": 0,
+    "accumulator": 0.007700000047683716
+  },
+  "longFrames": 0,
+  "trialValid": true
+}

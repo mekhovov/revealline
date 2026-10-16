@@ -1,0 +1,1 @@
+Game CLI error: Build output parent may not traverse symbolic links

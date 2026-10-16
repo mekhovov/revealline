@@ -1,6 +1,10 @@
-import { t, localizedText } from '../../game/i18n/index.mjs';
+import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
 import { createSpriteEditor, spriteDocument } from '../../game/presentation/sprite-editor.mjs';
 import { hexColor, rgbHex } from './helpers.mjs';
+import {
+  createGridEditorAdapter,
+  registerAuthoringEditor,
+} from '../../game/ui/authoring-editors.mjs';
 export function mountSpritePanel({ onPrepare, onError, runOperation }) {
   const $ = (id) => document.getElementById(id),
     canvas = $('sprite-canvas'),
@@ -44,7 +48,20 @@ export function mountSpritePanel({ onPrepare, onError, runOperation }) {
     }
     undo.disabled = !history.undo;
     redo.disabled = !history.redo;
-    localizedText($('sprite-cursor'), () =>`${doc.width} × ${doc.height} · cursor ${cursor.join(', ')}${selection ? ` · selection ${selection.width} × ${selection.height}` : ''}${anchor ? (" " + t("tools:chooseTheEndPointThenSpace") + "") : ''}`);
+    localizedText($('sprite-cursor'), () =>
+      t('tools:studio.sprite.cursor', {
+        width: doc.width,
+        height: doc.height,
+        cursor: cursor.join(', '),
+        selection: selection
+          ? t('tools:studio.sprite.selection', {
+              width: selection.width,
+              height: selection.height,
+            })
+          : '',
+        anchor: anchor ? ` ${t('tools:chooseTheEndPointThenSpace')}` : '',
+      }),
+    );
   }
   function guarded(fn) {
     try {
@@ -155,6 +172,36 @@ export function mountSpritePanel({ onPrepare, onError, runOperation }) {
       draw();
     }
   });
+  registerAuthoringEditor(
+    canvas,
+    createGridEditorAdapter({
+      element: canvas,
+      available: () => !!editor && !$('sprite-workbench').hidden,
+      dimensions: () => [canvas.width, canvas.height],
+      position: () => cursor,
+      move: (next) => {
+        cursor = next;
+      },
+      apply: () =>
+        guarded(() => {
+          const multi = ['line', 'rectangle', 'filled-rectangle', 'selection'].includes(
+            $('sprite-tool').value,
+          );
+          if (multi && !anchor) anchor = [...cursor];
+          else {
+            apply(anchor || cursor, cursor);
+            anchor = null;
+          }
+        }),
+      cancel: () => {
+        const pending = !!anchor;
+        anchor = null;
+        stroke = null;
+        return pending;
+      },
+      changed: draw,
+    }),
+  );
   canvas.addEventListener('focus', draw);
   canvas.addEventListener('blur', draw);
   $('sprite-zoom').addEventListener('change', draw);
@@ -176,7 +223,7 @@ export function mountSpritePanel({ onPrepare, onError, runOperation }) {
     guarded(() => editor.replaceColor(hexColor($('replace-color').value), color()));
   $('move-selection').onclick = () =>
     guarded(() => {
-      if (!selection) throw new Error(t("tools:selectARectangleOnTheCanvasFirst"));
+      if (!selection) throw new Error(t('tools:selectARectangleOnTheCanvasFirst'));
       const dx = Number($('selection-dx').value),
         dy = Number($('selection-dy').value);
       editor.moveSelection(selection, dx, dy);
@@ -184,7 +231,7 @@ export function mountSpritePanel({ onPrepare, onError, runOperation }) {
       selection.y += dy;
     });
   $('use-sprite').onclick = () =>
-    runOperation(t("tools:encodingTheEditedSprite"), async (task) => {
+    runOperation(t('tools:encodingTheEditedSprite'), async (task) => {
       const doc = editor.snapshot(),
         output = document.createElement('canvas');
       output.width = doc.width;
@@ -192,7 +239,7 @@ export function mountSpritePanel({ onPrepare, onError, runOperation }) {
       output.getContext('2d').putImageData(new ImageData(doc.pixels, doc.width, doc.height), 0, 0);
       const blob = await new Promise((resolve) => output.toBlob(resolve, 'image/png'));
       task.check();
-      if (!blob) throw new Error(t("tools:theBrowserCouldNotEncodeThisSprite"));
+      if (!blob) throw new Error(t('tools:theBrowserCouldNotEncodeThisSprite'));
       await onPrepare(blob, task);
     });
   return {
@@ -228,8 +275,10 @@ export function mountSpritePanel({ onPrepare, onError, runOperation }) {
           const b = document.createElement('button');
           b.type = 'button';
           b.style.background = hex;
-          b.title = `Use ${hex}`;
-          b.setAttribute('aria-label', `Use ${hex}`);
+          localizedAttribute(b, 'title', () => t('tools:studio.sprite.useColor', { color: hex }));
+          localizedAttribute(b, 'aria-label', () =>
+            t('tools:studio.sprite.useColor', { color: hex }),
+          );
           b.onclick = () => {
             $('sprite-color').value = hex;
           };

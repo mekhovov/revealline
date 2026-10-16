@@ -1,0 +1,277 @@
+{
+  "status": "pass",
+  "ticks": 360000,
+  "reversals": 53,
+  "recentres": 269,
+  "max": {
+    "geometryBytes": 152856,
+    "sourceBytes": 127308,
+    "reservedGeometryBytes": 8693600,
+    "reservedSourceBytes": 254616,
+    "meshes": 9,
+    "geometries": 9,
+    "materials": 2,
+    "chunks": 3
+  },
+  "collisionPeak": {
+    "worlds": 4,
+    "colliders": 18,
+    "rigidBodies": 0
+  },
+  "collisionDisposed": {
+    "worlds": 0,
+    "colliders": 0,
+    "rigidBodies": 0
+  },
+  "final": {
+    "position": {
+      "x": 374141,
+      "y": 20225,
+      "z": 6000
+    },
+    "velocity": {
+      "x": -4301,
+      "y": 9,
+      "z": 0
+    },
+    "orientation": [0, 0, 56846, 998383],
+    "angular": {
+      "roll": -8,
+      "pitch": 0,
+      "yaw": 0
+    },
+    "ticks": 360000,
+    "grounded": false,
+    "support": null,
+    "landingSpeed": 0,
+    "landingTilt": 0,
+    "mode": "self-level",
+    "status": "active",
+    "reason": null,
+    "contacts": 0,
+    "recentres": 269,
+    "originMm": {
+      "x": 320000,
+      "y": 0,
+      "z": 64000
+    },
+    "localPositionMm": {
+      "x": 54141,
+      "y": 20225,
+      "z": -58000
+    },
+    "pendingTargetMm": null,
+    "terrain": {
+      "state": "ready",
+      "terrainReady": true,
+      "flightReady": false,
+      "hasRetainedTerrain": true,
+      "geometryProfile": "terrain-scenery-v1",
+      "geometryBytes": 152856,
+      "sourceBytes": 127308,
+      "reservedSourceBytes": 127308,
+      "reservedGeometryBytes": 152856,
+      "provenance": {
+        "regionId": "mixed-check",
+        "revision": "r1",
+        "positionMm": {
+          "x": 383942,
+          "y": 20225,
+          "z": 6000
+        },
+        "originMm": {
+          "x": 320000,
+          "y": 0,
+          "z": 64000
+        },
+        "compiler": "FPV regional mixed owner v1",
+        "chunks": [
+          {
+            "chunkId": "tile-2",
+            "terrain": {
+              "chunkId": "tile-2",
+              "collision": {
+                "id": "tile-2-collision",
+                "url": "https://terrain.example/tile-2-collision.json",
+                "bytes": 2290,
+                "sha256": "8d9aa3e82145b2921ca6b5cd39bdbdd3d9a26eef2d3bfc0c2c1469447a8d873a"
+              },
+              "scene": {
+                "id": "tile-2-scene",
+                "url": "https://terrain.example/tile-2-scene.glb",
+                "bytes": 38384,
+                "sha256": "9a1d5c2e4bc91f42f9b29427b334d634b0cd830fdf9560d910ede766070d380f"
+              }
+            },
+            "scenery": {
+              "chunkId": "tile-2",
+              "collision": {
+                "id": "tile-2-collision",
+                "url": "https://scenery.example/tile-2-collision.json",
+                "bytes": 386,
+                "sha256": "d27a846e4d4c1c69890fa0fd85ee795d7bf10f7b88aba2a8474ff451ff4e279e"
+              },
+              "scene": {
+                "id": "tile-2-scene",
+                "url": "https://scenery.example/tile-2-scene.glb",
+                "bytes": 1376,
+                "sha256": "aedd9ee00cd6a00cc7631372f83cc52297e6e2148cfe8a57c7e19684df94ec79"
+              }
+            }
+          },
+          {
+            "chunkId": "tile-1",
+            "terrain": {
+              "chunkId": "tile-1",
+              "collision": {
+                "id": "tile-1-collision",
+                "url": "https://terrain.example/tile-1-collision.json",
+                "bytes": 2290,
+                "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+              },
+              "scene": {
+                "id": "tile-1-scene",
+                "url": "https://terrain.example/tile-1-scene.glb",
+                "bytes": 38384,
+                "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+              }
+            },
+            "scenery": {
+              "chunkId": "tile-1",
+              "collision": {
+                "id": "tile-1-collision",
+                "url": "https://scenery.example/tile-1-collision.json",
+                "bytes": 386,
+                "sha256": "99b0b0aa3902a81950ff767aa275af58bd9208ee49871fcf4d2d37b706cba758"
+              },
+              "scene": {
+                "id": "tile-1-scene",
+                "url": "https://scenery.example/tile-1-scene.glb",
+                "bytes": 1376,
+                "sha256": "6e758d3a590a2cc57b9985b6f65233ef00240ff56bf2183a559c875de698bd50"
+              }
+            }
+          },
+          {
+            "chunkId": "tile-3",
+            "terrain": {
+              "chunkId": "tile-3",
+              "collision": {
+                "id": "tile-3-collision",
+                "url": "https://terrain.example/tile-3-collision.json",
+                "bytes": 2290,
+                "sha256": "8f6459feb87aa6361a19030f48827a8f6b21a66d3e33048578a28ce4be367039"
+              },
+              "scene": {
+                "id": "tile-3-scene",
+                "url": "https://terrain.example/tile-3-scene.glb",
+                "bytes": 38384,
+                "sha256": "b10df4bf7faec72e1a1ea129374d05d15ad8d569c23ccbb754b5ae47fadd5b84"
+              }
+            },
+            "scenery": {
+              "chunkId": "tile-3",
+              "collision": {
+                "id": "tile-3-collision",
+                "url": "https://scenery.example/tile-3-collision.json",
+                "bytes": 386,
+                "sha256": "7a5e63a7bc67dc04465ecd6f1e37e82bf2dba3b7c32c16b19f0a4a5def853285"
+              },
+              "scene": {
+                "id": "tile-3-scene",
+                "url": "https://scenery.example/tile-3-scene.glb",
+                "bytes": 1376,
+                "sha256": "d214e158b36c338685f5dc31d976a83653294f45264f6a3856fae2328e1221d6"
+              }
+            }
+          }
+        ]
+      },
+      "failure": null
+    },
+    "geometryProfile": "terrain-scenery-v1",
+    "streaming": {
+      "enabled": true,
+      "pending": false,
+      "failure": null
+    },
+    "model": "regional-authoring-flight-prototype.v1",
+    "unscored": true,
+    "playerReady": false
+  },
+  "disposed": {
+    "position": {
+      "x": 374141,
+      "y": 20225,
+      "z": 6000
+    },
+    "velocity": {
+      "x": -4301,
+      "y": 9,
+      "z": 0
+    },
+    "orientation": [0, 0, 56846, 998383],
+    "angular": {
+      "roll": -8,
+      "pitch": 0,
+      "yaw": 0
+    },
+    "ticks": 360000,
+    "grounded": false,
+    "support": null,
+    "landingSpeed": 0,
+    "landingTilt": 0,
+    "mode": "self-level",
+    "status": "disposed",
+    "reason": null,
+    "contacts": 0,
+    "recentres": 269,
+    "originMm": {
+      "x": 320000,
+      "y": 0,
+      "z": 64000
+    },
+    "localPositionMm": {
+      "x": 54141,
+      "y": 20225,
+      "z": -58000
+    },
+    "pendingTargetMm": null,
+    "terrain": {
+      "state": "disposed",
+      "terrainReady": false,
+      "flightReady": false,
+      "hasRetainedTerrain": false,
+      "geometryProfile": "terrain-scenery-v1",
+      "geometryBytes": 0,
+      "sourceBytes": 0,
+      "reservedSourceBytes": 0,
+      "reservedGeometryBytes": 0,
+      "provenance": null,
+      "failure": null
+    },
+    "geometryProfile": "terrain-scenery-v1",
+    "streaming": {
+      "enabled": true,
+      "pending": false,
+      "failure": null
+    },
+    "model": "regional-authoring-flight-prototype.v1",
+    "unscored": true,
+    "playerReady": false
+  },
+  "scope": "Node synthetic shared-flight workload. No browser FPS, GPU, device or two-hour acceptance claim.",
+  "sourceRevision": "43ffb5a13f55eaf90dd5897a19571ef0e9b160b2",
+  "fixedStepHz": 50,
+  "simulatedSeconds": 7200,
+  "workload": {
+    "file": "regional-sustained-collision-7200s.mjs",
+    "bytes": 8402,
+    "sha256": "78835fe7af817fbea9bc5a5c520c385540d7eee40c57225e4ea2f60ce424df03"
+  },
+  "rawOutput": {
+    "file": "regional-sustained-collision-7200s.jsonl",
+    "bytes": 10510,
+    "sha256": "2fd25ebb1fe78fd8f714da4c24bfa68c0aa7dfa4e1cd1bdfbe397a882e3f5c51"
+  }
+}

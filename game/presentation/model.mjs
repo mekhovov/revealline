@@ -1,3 +1,4 @@
+import { validateActorAnimation } from './actor-animation.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import {
   decodePresentationDocument,
@@ -8,9 +9,11 @@ import {
 
 export const FORMATS = Object.freeze({
   bundle: 'revealline-theme-bundle.v1',
+  appearanceBundle: 'revealline-theme-bundle.v2',
   theme: 'revealline-presentation-theme.v1',
   slot: 'revealline-asset-slot.v1',
   asset: 'revealline-asset-revision.v1',
+  animatedAsset: 'revealline-asset-revision.v2',
   collection: 'revealline-asset-collection.v1',
   draft: 'revealline-presentation-draft.v1',
 });
@@ -145,6 +148,20 @@ function ref(value) {
   fields(value, 'id revision', 'asset reference');
   required(stableId(value.id) && integer(value.revision), 'Invalid revision reference.');
 }
+/** Portable authoring intent. Missing installed revisions remain editable; the
+ * candidate/export boundary resolves these exact references before rendering. */
+export function validateStudioAppearanceBasis(value) {
+  const basis = boundedJSON(value, { maxBytes: 1024, maxNodes: 12, maxDepth: 2 });
+  fields(basis, 'familyId familyRevision interfaceId interfaceRevision', 'appearance basis');
+  required(
+    stableId(basis.familyId) &&
+      stableId(basis.interfaceId) &&
+      /^r[1-9][0-9]{0,8}$/.test(basis.familyRevision) &&
+      /^r[1-9][0-9]{0,8}$/.test(basis.interfaceRevision),
+    'Invalid exact appearance basis.',
+  );
+  return Object.freeze(basis);
+}
 function list(value, max, check, label) {
   required(Array.isArray(value) && value.length <= max, `Invalid ${label} list.`);
   for (const entry of value) required(check(entry), `Invalid ${label} entry.`);
@@ -226,7 +243,23 @@ function geometry(value, dimensions = null) {
   );
   const centers = new Set();
   for (const anchor of value.rotorAnchors) {
-    fields(anchor, 'x y radius blades', 'rotor anchor');
+    // Additive reader support only: absent motion fields retain historical
+    // index-based animation. Extended anchors belong to new asset revisions;
+    // older strict readers reject them and must not receive those revisions.
+    exactKeys(anchor, ['x', 'y', 'radius', 'blades', 'direction', 'phaseDegrees'], 'rotor anchor');
+    required(
+      ['x', 'y', 'radius', 'blades'].every((name) => Object.hasOwn(anchor, name)),
+      'rotor anchor is missing fields.',
+    );
+    if (Object.hasOwn(anchor, 'direction'))
+      required([-1, 1].includes(anchor.direction), 'Invalid rotor direction.');
+    if (Object.hasOwn(anchor, 'phaseDegrees'))
+      required(
+        Number.isFinite(anchor.phaseDegrees) &&
+          anchor.phaseDegrees >= 0 &&
+          anchor.phaseDegrees < 360,
+        'Invalid rotor phase.',
+      );
     required(
       [anchor.x, anchor.y, anchor.radius].every(Number.isFinite) &&
         anchor.radius > 0 &&
@@ -321,12 +354,14 @@ function slotCheck(value) {
   owner(value.owner);
 }
 function assetCheck(value) {
+  const animated = value.format === FORMATS.animatedAsset;
   fields(
     value,
-    'format id revision kind description provenance file recipe geometry quality',
+    'format id revision kind description provenance file recipe geometry quality' +
+      (animated ? ' animation' : ''),
     'asset revision',
   );
-  identity(value, FORMATS.asset, 'asset');
+  identity(value, animated ? FORMATS.animatedAsset : FORMATS.asset, 'asset');
   required(
     KINDS.includes(value.kind) && text(value.description, 2048),
     'Invalid asset kind/description.',
@@ -380,6 +415,24 @@ function assetCheck(value) {
   }
   if (value.kind === 'image') geometry(value.geometry, value.file);
   else required(value.geometry === null, 'Only raster assets carry frame geometry.');
+  if (animated) {
+    required(value.kind === 'image', 'Animated asset revisions require an admitted image atlas.');
+    value.animation = validateActorAnimation(value.animation, {
+      width: value.file?.width,
+      height: value.file?.height,
+    });
+    required(value.animation.rig === 'sprite.v1', 'Actor rig differs from its artwork.');
+    required(
+      value.animation.anchors.pivot.x === value.geometry.pivot.x &&
+        value.animation.anchors.pivot.y === value.geometry.pivot.y &&
+        value.animation.frames.every(
+          (frame) =>
+            frame.region.width === value.geometry.frame.width &&
+            frame.region.height === value.geometry.frame.height,
+        ),
+      'Every atlas pose must preserve the admitted frame dimensions and pivot.',
+    );
+  }
 }
 function themeCheck(value) {
   fields(value, 'format id revision name parent tokens bindings', 'theme');
@@ -443,6 +496,8 @@ function checkBindings(rows, index) {
       asset = index.assets.get(key(target));
     required(slot && asset, `Missing slot or asset reference: ${id}.`);
     required(slot.kinds.includes(asset.kind), `Wrong asset kind for ${id}.`);
+    if (asset.animation)
+      required(slot.group === 'enemies', 'Animated actor assets require an enemy slot.');
     if (asset.kind === 'recipe')
       required(slot.recipes.includes(asset.recipe.id), `Wrong registered recipe for ${id}.`);
     if (asset.file)
@@ -569,8 +624,14 @@ export function validateThemeBundle(source, { previous = null, expectedRevision 
     typeof source === 'string'
       ? decodePresentationDocument(source)
       : ownPresentationDocument(source);
-  fields(value, 'format id revision slots assets themes collections selection', 'theme bundle');
-  identity(value, FORMATS.bundle, 'bundle');
+  const appearance = value.format === FORMATS.appearanceBundle;
+  fields(
+    value,
+    `format id revision slots assets themes collections selection${appearance ? ' appearanceBasis' : ''}`,
+    'theme bundle',
+  );
+  identity(value, appearance ? FORMATS.appearanceBundle : FORMATS.bundle, 'bundle');
+  if (appearance) validateStudioAppearanceBasis(value.appearanceBasis);
   indexed(value.slots, slotCheck, LIMITS.slots, 'slots');
   required(
     value.slots.length > 0 && new Set(value.slots.map((s) => s.id)).size === value.slots.length,
@@ -652,6 +713,10 @@ export function validateThemeBundle(source, { previous = null, expectedRevision 
   }
   if (previous) {
     const old = validateThemeBundle(previous);
+    required(
+      !old.appearanceBasis || appearance,
+      'An edit cannot discard its saved appearance basis.',
+    );
     required(
       expectedRevision === undefined || expectedRevision === old.revision,
       'Stale expected revision.',

@@ -1,0 +1,24 @@
+{
+  "base": "5636af7726b3c0fed15e7455306409fbf371e74b",
+  "files": [
+    {
+      "path": "game/content-design/solo-route-host.mjs",
+      "bytes": 6837,
+      "sha256": "22630ff7136e056535e8d87e55c3d6527914305fa75666088982c792270aee60",
+      "packagedBytesMatch": true
+    },
+    {
+      "path": "game/offline-download-access.mjs",
+      "bytes": 10067,
+      "sha256": "5728c081042989e7f3ea7011e43eb5f4058e5afe88dfa679ab0c7a4d3bebfd80",
+      "packagedBytesMatch": true
+    },
+    {
+      "path": "game/ui/company-startup.mjs",
+      "bytes": 1670,
+      "sha256": "388faa2a96063156ca1b8b50cbdfebf7cc1f712cb1e9624d7fb06702193122e6",
+      "packagedBytesMatch": true
+    }
+  ],
+  "localBuildOnly": true
+}

@@ -1,0 +1,239 @@
+{
+  "format": "FPVQuarrySourcePackageClosure.v1",
+  "sourceBaseline": "0aeb0c2b4342715ba9a19b976114d7d905fed7bd",
+  "packageBaseline": "287eec95c81687fb8a6d176f750f7c65a60e1fe3",
+  "admittedCandidate": "0a7c390bece5e6569d69f98755cfadd0c10527f2",
+  "sameHarnessSha256": true,
+  "harnessSha256": "5e407082f2f210e2ced9c2291ae315db1edc0ac44cdb521553c90310b125f811",
+  "files": [
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "packageFixtureSha256": "053f74a1d42db8373994350010f347ff0d306dfebd05cbdd9bf7df838b73d9e0",
+      "admittedPlayerSha256": "053f74a1d42db8373994350010f347ff0d306dfebd05cbdd9bf7df838b73d9e0",
+      "sourceFixtureSha256": "ab8306298c6e2517a21106952b99098b9181b5cfbaf2d7359d92f72958a360c8",
+      "sourceAndPackageExact": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "packageFixtureSha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "admittedPlayerSha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "sourceFixtureSha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "packageFixtureSha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "admittedPlayerSha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "sourceFixtureSha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "packageFixtureSha256": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+      "admittedPlayerSha256": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+      "sourceFixtureSha256": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "game/data-json.mjs",
+      "packageFixtureSha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "admittedPlayerSha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "sourceFixtureSha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "packageFixtureSha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "admittedPlayerSha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "sourceFixtureSha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "packageFixtureSha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "admittedPlayerSha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "sourceFixtureSha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "packageFixtureSha256": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b",
+      "admittedPlayerSha256": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b",
+      "sourceFixtureSha256": "15a52267d8df3f90334f59084247d4a183c6e190e7460cdb6cc3464d29f8c75a",
+      "sourceAndPackageExact": false
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "packageFixtureSha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "admittedPlayerSha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "sourceFixtureSha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "packageFixtureSha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+      "admittedPlayerSha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+      "sourceFixtureSha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "packageFixtureSha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+      "admittedPlayerSha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+      "sourceFixtureSha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "packageFixtureSha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "admittedPlayerSha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "sourceFixtureSha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "packageFixtureSha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "admittedPlayerSha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "sourceFixtureSha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "packageFixtureSha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "admittedPlayerSha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "sourceFixtureSha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "packageFixtureSha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "admittedPlayerSha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "sourceFixtureSha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+      "packageFixtureSha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "admittedPlayerSha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "sourceFixtureSha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt.mjs",
+      "packageFixtureSha256": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+      "admittedPlayerSha256": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+      "sourceFixtureSha256": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "packageFixtureSha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+      "admittedPlayerSha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+      "sourceFixtureSha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "packageFixtureSha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "admittedPlayerSha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "sourceFixtureSha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "packageFixtureSha256": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+      "admittedPlayerSha256": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+      "sourceFixtureSha256": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "packageFixtureSha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "admittedPlayerSha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "sourceFixtureSha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "packageFixtureSha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+      "admittedPlayerSha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+      "sourceFixtureSha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "packageFixtureSha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+      "admittedPlayerSha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+      "sourceFixtureSha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-assets.mjs",
+      "packageFixtureSha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+      "admittedPlayerSha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+      "sourceFixtureSha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "packageFixtureSha256": "28baf7f257c7beb8a8d166aae24d25335e7bf778b53a63d63aace281f50b5b43",
+      "admittedPlayerSha256": "28baf7f257c7beb8a8d166aae24d25335e7bf778b53a63d63aace281f50b5b43",
+      "sourceFixtureSha256": "28baf7f257c7beb8a8d166aae24d25335e7bf778b53a63d63aace281f50b5b43",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "game/hunt/actor-catalog.mjs",
+      "packageFixtureSha256": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92",
+      "admittedPlayerSha256": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92",
+      "sourceFixtureSha256": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "game/hunt/preferences.mjs",
+      "packageFixtureSha256": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324",
+      "admittedPlayerSha256": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324",
+      "sourceFixtureSha256": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "packageFixtureSha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "admittedPlayerSha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "sourceFixtureSha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "packageFixtureSha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "admittedPlayerSha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "sourceFixtureSha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "packageFixtureSha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "admittedPlayerSha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "sourceFixtureSha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "sourceAndPackageExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "packageFixtureSha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+      "admittedPlayerSha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+      "sourceFixtureSha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+      "sourceAndPackageExact": true
+    }
+  ],
+  "differences": [
+    "optional-practice/civilian-fpv/world-visuals.mjs",
+    "game/i18n/catalogs.mjs"
+  ],
+  "explanation": {
+    "optional-practice/civilian-fpv/world-visuals.mjs": "Only independently audited incoming Coast lighthouse hook/helper; Quarry AST/maps exact. Current-main package baseline includes same Lighthouse art.",
+    "game/i18n/catalogs.mjs": "Normal selected-message projection in admitted package; full source locale aggregate omitted by package builder."
+  },
+  "limitations": [
+    "Browser image equality is checked separately, not implied from this31-module hash audit.",
+    "Expected source/package sample changes are confined to Coast control because upstream Lighthouse is intentionally included; Quarry and Courtyard samples must remain exact."
+  ]
+}

@@ -1,0 +1,321 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-two-return-rhythm",
+    "revision": "2",
+    "name": "Two-way Rhythm",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 11,
+        "y": 5
+      },
+      {
+        "x": 11,
+        "y": 6
+      },
+      {
+        "x": 6,
+        "y": 7
+      },
+      {
+        "x": 7,
+        "y": 7
+      },
+      {
+        "x": 11,
+        "y": 7
+      },
+      {
+        "x": 16,
+        "y": 7
+      },
+      {
+        "x": 17,
+        "y": 7
+      },
+      {
+        "x": 18,
+        "y": 7
+      },
+      {
+        "x": 6,
+        "y": 8
+      },
+      {
+        "x": 7,
+        "y": 8
+      },
+      {
+        "x": 11,
+        "y": 8
+      },
+      {
+        "x": 16,
+        "y": 8
+      },
+      {
+        "x": 17,
+        "y": 8
+      },
+      {
+        "x": 18,
+        "y": 8
+      },
+      {
+        "x": 6,
+        "y": 9
+      },
+      {
+        "x": 7,
+        "y": 9
+      },
+      {
+        "x": 11,
+        "y": 9
+      },
+      {
+        "x": 16,
+        "y": 9
+      },
+      {
+        "x": 17,
+        "y": 9
+      },
+      {
+        "x": 18,
+        "y": 9
+      },
+      {
+        "x": 6,
+        "y": 10
+      },
+      {
+        "x": 7,
+        "y": 10
+      },
+      {
+        "x": 11,
+        "y": 10
+      },
+      {
+        "x": 16,
+        "y": 10
+      },
+      {
+        "x": 17,
+        "y": 10
+      },
+      {
+        "x": 18,
+        "y": 10
+      },
+      {
+        "x": 11,
+        "y": 11
+      },
+      {
+        "x": 11,
+        "y": 12
+      },
+      {
+        "x": 11,
+        "y": 13
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 12,
+    "stepMs": 175,
+    "speedupEvery": 0,
+    "minStepMs": 175,
+    "wrap": true,
+    "targetMovement": "still",
+    "fleeEvery": 3
+  },
+  "levelIdentity": "57444d4780ed642f",
+  "mode": "team",
+  "seed": 17,
+  "steps": 82,
+  "turns": [
+    {
+      "tick": 0,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 0,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 1,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 4,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 5,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 7,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 11,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 12,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 13,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 13,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 15,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 15,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 16,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 18,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 21,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 27,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 29,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 29,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 36,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 37,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 37,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 40,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 40,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 50,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 51,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 59,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 65,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 65,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 76,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 78,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 79,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 80,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 81,
+      "playerId": 1,
+      "direction": "right"
+    }
+  ],
+  "checkpoint": "ad30bcfcc8ca73f9"
+}

@@ -26,13 +26,13 @@ test('Team setup switches all static and dynamic copy without changing its selec
 
   assert.equal(f.$('coop-title').textContent.trim(), 'Find your common ground.');
   assert.equal(f.$('coop-start').textContent, 'Start together →');
-  assert.equal(f.$('coop-optional-setup-toggle').textContent, 'Team options');
+  assert.equal(f.$('coop-optional-setup-toggle').textContent, 'Arena & team options');
   setLocale('uk', { persist: false });
   assert.equal(f.$('coop-title').textContent.trim(), 'Знайдіть спільну територію.');
   assert.equal(selectedText('coop-level'), 'Перше з’єднання · випробування території');
   assert.equal(f.$('coop-menu-goal').textContent, 'Відкрийте 65% разом');
   assert.equal(f.$('coop-start').textContent, 'Почати разом →');
-  assert.equal(f.$('coop-optional-setup-toggle').textContent, 'Параметри команди');
+  assert.equal(f.$('coop-optional-setup-toggle').textContent, 'Арена й параметри команди');
   assert.equal(selectedText('coop-experiment'), 'Повна взаємодія');
   assert.equal(f.$('coop-level').value, level);
   assert.equal(f.$('coop-difficulty').value, difficulty);

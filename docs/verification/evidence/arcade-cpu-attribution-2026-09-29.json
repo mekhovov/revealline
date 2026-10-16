@@ -1,0 +1,371 @@
+{
+  "format": "revealline-first-win-cpu-diagnostic.v1",
+  "qualified": false,
+  "date": "2026-09-29",
+  "purpose": "Identify sampled work inside one genuine Frame first-win task and its subsequent reward-save task; this does not qualify a reward-only 50 ms limit.",
+  "source": {
+    "kind": "local-double-compiled-artifact",
+    "revision": "9105025316c21bfe749ea8617dbb2220fd2b5530",
+    "tree": "e11dd115342ceda5a30a81ea4cf49e15ae805198",
+    "distribution": {
+      "bytes": 33281297,
+      "sha256": "46f218a17c0aac6b775a2aeb6dca2154d8048b33d13e8d016188f29463b0a86a"
+    },
+    "editionId": "fpv-learning",
+    "editionRevision": 9,
+    "gameplayId": "7feffc97157784af",
+    "artifactMount": "current-910502531/site",
+    "worktreeRuntimeServed": false
+  },
+  "scenario": {
+    "missionId": "fpv-meet-aircraft-01",
+    "mission": "The Frame",
+    "locale": "en",
+    "difficulty": "standard",
+    "turnPolicy": "immediate",
+    "classId": "scout",
+    "effects": "full",
+    "sound": "muted",
+    "viewport": {
+      "width": 1280,
+      "height": 633,
+      "devicePixelRatio": 1
+    },
+    "browser": "Installed Chrome 154, isolated fresh headless context through external Playwright",
+    "input": "Automated keyboard through ordinary controls; no engine or progress injection.",
+    "route": [
+      "Pause, Restart, confirm restart",
+      "ArrowDown 1800 ms",
+      "ArrowDown 3200 ms",
+      "ArrowRight 1400 ms",
+      "ArrowUp 6000 ms"
+    ],
+    "completion": {
+      "kind": "won",
+      "coveragePercent": 64.3
+    },
+    "record": {
+      "started": 15269.199999988079,
+      "visible": 19017.19999998808,
+      "ended": 21018.79999998212,
+      "keys": [
+        {
+          "key": "ArrowUp",
+          "time": 15274.59999999404,
+          "trusted": true
+        }
+      ],
+      "syntheticInputs": 0,
+      "kind": "won"
+    },
+    "recordCaveat": "syntheticInputs counts untrusted DOM input events in the harness. Trusted events were automated browser keyboard inputs, not physical human input.",
+    "quietWindow": "Parent coordinated no heavy builds, full test suites or other browser work. Light metadata, ZIP-header projection and documentation work were permitted."
+  },
+  "capture": {
+    "categories": "toplevel,devtools.timeline,disabled-by-default-devtools.timeline,disabled-by-default-devtools.timeline.frame,disabled-by-default-devtools.timeline.stack,v8.execute,disabled-by-default-v8.cpu_profiler,disabled-by-default-v8.cpu_profiler.hires,disabled-by-default-v8.runtime_stats,blink,blink.user_timing,latencyInfo,renderer.scheduler",
+    "trace": {
+      "bytes": 35679383,
+      "sha256": "45d8a2bf569c7bc4a0f01cdb71aa2dde2227a65210c9b5daf684c8c7435fa646",
+      "eventCount": 165776
+    },
+    "renderer": {
+      "pid": 40400,
+      "tid": 11067471
+    },
+    "window": {
+      "start": {
+        "name": "discovery-first-win:start",
+        "ts": 170432490166
+      },
+      "end": {
+        "name": "discovery-first-win:end",
+        "ts": 170438239660
+      },
+      "explicit": true
+    },
+    "checkpoints": [
+      {
+        "name": "discovery-first-win:visible",
+        "ts": 170436238087
+      }
+    ],
+    "cpuProfiles": {
+      "profileCount": 1,
+      "nodeCount": 2429,
+      "sampleCount": 51732,
+      "uncontainedSamples": 33292,
+      "negativeTimeDeltas": 1811,
+      "available": true
+    },
+    "traceKeyEvents": 2,
+    "observer": "Same separately pinned passive observer as the matched comparison. Only a three-second result sample was taken for this diagnostic; it is excluded from the matched 20-second p95 comparisons."
+  },
+  "longTasks": [
+    {
+      "ts": 170432301896,
+      "durationMs": 188.388,
+      "fullyInsideWindow": false,
+      "classification": "application-or-browser-task",
+      "cpuSamples": 4,
+      "rewardStackSamples": 0
+    },
+    {
+      "ts": 170436152992,
+      "durationMs": 88.693,
+      "fullyInsideWindow": true,
+      "classification": "application-or-browser-task",
+      "cpuSamples": 673,
+      "rewardStackSamples": 133
+    },
+    {
+      "ts": 170436344783,
+      "durationMs": 50.877,
+      "fullyInsideWindow": true,
+      "classification": "application-or-browser-task",
+      "cpuSamples": 340,
+      "rewardStackSamples": 294
+    }
+  ],
+  "boundaryTask": {
+    "durationMs": 188.388,
+    "overlapWithWindowMs": 0.118,
+    "retained": true,
+    "evidence": [
+      "Receive mojo message carries blink.mojom.DevToolsSession",
+      "V8.InvokeApiInterruptCallbacks spans187.871 ms",
+      "Profile begins inside task; only4 CPU samples are present"
+    ],
+    "interpretation": "Profiler-start boundary work is suggested by direct trace events. The unchanged analyzer retains its generic application-or-browser classification. This task is preserved and is not treated as proven reward cost."
+  },
+  "findings": [
+    {
+      "owner": "Shared arcade shell campaign catalogue",
+      "taskMs": 88.693,
+      "directCallback": {
+        "path": "game/vendor/phaser-4.2.1.min.js",
+        "durationMs": 84.61
+      },
+      "sampleCount": 673,
+      "rewardStackSamples": 133,
+      "approximateRewardSampleSupportMs": 20.19,
+      "mainObservedPath": "catalog → executionEntries → refreshSavedFlight calls campaignKey and normalizedLevel repeatedly before the saved-preview trusted-key shortcut.",
+      "keyFunctions": [
+        {
+          "functionName": "campaignKey",
+          "path": "game/library.mjs",
+          "line1": 124,
+          "samples": 221,
+          "nearestSampleSupportMs": 34.635500000000015
+        },
+        {
+          "functionName": "normalizedLevel",
+          "path": "game/core/level.mjs",
+          "line1": 383,
+          "samples": 202,
+          "nearestSampleSupportMs": 31.387500000000017
+        },
+        {
+          "functionName": "refreshSavedFlight",
+          "path": "game/app.mjs",
+          "line1": 5923,
+          "samples": 161,
+          "nearestSampleSupportMs": 24.661000000000023
+        },
+        {
+          "functionName": "executionEntries",
+          "path": "game/app.mjs",
+          "line1": 4923,
+          "samples": 160,
+          "nearestSampleSupportMs": 24.53350000000002
+        },
+        {
+          "functionName": "catalog",
+          "path": "game/app.mjs",
+          "line1": 4900,
+          "samples": 141,
+          "nearestSampleSupportMs": 21.975000000000012
+        },
+        {
+          "functionName": "composeState",
+          "path": "game/rewards/model.mjs",
+          "line1": 756,
+          "samples": 69,
+          "nearestSampleSupportMs": 10.708500000000004
+        }
+      ],
+      "recommendation": "Avoid rebuilding and re-normalizing known installed/candidate entries merely to select dynamic challenge entries. Reuse only module-owned exact identities or filter to genuinely dynamic entries before identity work; preserve mutable-input validation and historical gameplay keys. Do not change level normalization or simulation."
+    },
+    {
+      "owner": "Reward persistence boundary",
+      "taskMs": 50.877,
+      "directCallback": {
+        "path": "game/profile-storage.mjs",
+        "functionName": "request.onsuccess",
+        "durationMs": 50.735
+      },
+      "sampleCount": 340,
+      "rewardStackSamples": 294,
+      "approximateRewardSampleSupportMs": 41.639,
+      "keyFunctions": [
+        {
+          "functionName": "boundedJSON",
+          "path": "game/data-json.mjs",
+          "line1": 13,
+          "samples": 275,
+          "nearestSampleSupportMs": 38.942000000000064
+        },
+        {
+          "functionName": "validateRewardState",
+          "path": "game/rewards/model.mjs",
+          "line1": 699,
+          "samples": 224,
+          "nearestSampleSupportMs": 31.875500000000034
+        },
+        {
+          "functionName": "validateCompletionRewards",
+          "path": "game/rewards/model.mjs",
+          "line1": 399,
+          "samples": 165,
+          "nearestSampleSupportMs": 22.843000000000004
+        },
+        {
+          "functionName": "validateCompletionReward",
+          "path": "game/rewards/model.mjs",
+          "line1": 282,
+          "samples": 94,
+          "nearestSampleSupportMs": 13.092500000000001
+        },
+        {
+          "functionName": "mergeRewardStates",
+          "path": "game/rewards/model.mjs",
+          "line1": 876,
+          "samples": 69,
+          "nearestSampleSupportMs": 9.592500000000001
+        },
+        {
+          "functionName": "composeState",
+          "path": "game/rewards/model.mjs",
+          "line1": 756,
+          "samples": 66,
+          "nearestSampleSupportMs": 9.1955
+        }
+      ],
+      "recommendation": "Investigate duplicate bounded traversal of state → promise list → individual definitions plus aggregate composeState scan. Fresh IndexedDB data must remain fully validated; never trust matching IDs, hashes claimed by input, or caller-frozen objects. Any reuse must be private to successfully validated immutable subtrees and retain every nested/aggregate limit and atomic concurrent-update rule."
+    }
+  ],
+  "method": {
+    "analyzer": "Unchanged bounded analyze-discovery-trace.mjs, with source-bound options and explicit renderer/start/end marks.",
+    "diagnostics": "Two task-local helpers each require exactly one matching long direct callback task, verify the original trace SHA, reconstruct signed CPU sample deltas, and match chosen sample counts to the analyzer. Weights use nearest-sample midpoint support clipped to each task; they are approximate sampling support, not exclusive CPU durations. Inclusive ancestor rows overlap.",
+    "sampling": {
+      "median": 137,
+      "p95": 208,
+      "max": 880
+    },
+    "comparison": "The earlier four unprofiled p95 pairs and two timeline-only traces remain unchanged. CPU-profile durations cannot be compared as an uninstrumented regression or an exclusive reward-time measurement.",
+    "reproduce": [
+      "Serve the admitted exact candidate using server.mjs config.json and verify http-pins.json.",
+      "Run observe-case.mjs config.json candidate-cpu in a parent-cleared quiet window with a new output directory.",
+      "Run the pinned bounded analyzer with first-win-options.json.",
+      "Run the two pinned task diagnostic helpers only after the original trace validates."
+    ],
+    "portableAutomation": false,
+    "portabilityGap": "The retained driver/config use task-local artifact and external Playwright paths. Existing committed observer/analyzer and the explicit protocol are reusable, but this driver is not advertised as a portable command."
+  },
+  "limitations": [
+    "One normally earned first win on one desktop/browser; no human, physical-radio, device-matrix or installation qualification.",
+    "CPU profiling adds substantial overhead, and signed sample deltas plus native or unsampled work limit attribution.",
+    "Neither all88.693 ms of the Phaser task nor all50.877 ms of the storage task is proved to be exclusive reward rendering.",
+    "The reward-only50 ms gate remains unresolved; this diagnostic does not replace the existing preserved timeline-only and unprofiled slow tasks.",
+    "No new engine behavior, progress state, reward evidence or score was injected.",
+    "No additional runtime changes were made for this diagnostic."
+  ],
+  "cleanup": {
+    "isolatedBrowserClosed": true,
+    "ownedStaticServerStopped": true
+  },
+  "evidenceRoot": ".cache/phase7-910502531/arcade-cpu-attribution",
+  "files": {
+    "config.json": {
+      "bytes": 1163,
+      "sha256": "4f813967844348a9cb7831f73a88bab49091da3b5a5ddf2614ab326475b6588c"
+    },
+    "observe-case.mjs": {
+      "bytes": 10037,
+      "sha256": "18866840e747ce415b3876dea5fd4b1a837dc867f29c24702abb962aa1410f51"
+    },
+    "server.mjs": {
+      "bytes": 2166,
+      "sha256": "48bcd97b0dc5c2f89ee378c62ee925d41337e15d15afd04556677aacead4c5b7"
+    },
+    "instrumentation-source.json": {
+      "bytes": 980,
+      "sha256": "7d01fc531623b8414c553434d04c085c011f197e3fb980b72ece01cc9d24c007"
+    },
+    "http-pins.json": {
+      "bytes": 586,
+      "sha256": "bf239f5f2a5553eed01fa176bbac24d07b03992982148768bad42a6ab1213c4b"
+    },
+    "analyze-phaser-task.mjs": {
+      "bytes": 5496,
+      "sha256": "e303452e2ad668ede97afc55e03962c64d0b6d07233fc2b0ff437b1e3a91a420"
+    },
+    "analyze-storage-task.mjs": {
+      "bytes": 5499,
+      "sha256": "d2b247bc05217544781594617ae0edccea614f2844f486f5e658a0d26a759fa2"
+    },
+    "candidate-cpu/first-win-trace.json": {
+      "bytes": 35679383,
+      "sha256": "45d8a2bf569c7bc4a0f01cdb71aa2dde2227a65210c9b5daf684c8c7435fa646"
+    },
+    "candidate-cpu/first-win-options.json": {
+      "bytes": 442,
+      "sha256": "e858700238d1f697b239a3bed2adb001458bba090e41a3397f6d41c8bcf22f55"
+    },
+    "candidate-cpu/first-win-record.json": {
+      "bytes": 247,
+      "sha256": "4d3ce2522b809c4bf444be3944ef7d5159fa90abfbbdb7c8b2732e169a268f27"
+    },
+    "candidate-cpu/first-win-analysis.json": {
+      "bytes": 203603,
+      "sha256": "4cd15842103b568c6ba971bdcd58cf2de607d4a5da4a4505c1677780b99667bc"
+    },
+    "candidate-cpu/phaser-task-diagnostic.json": {
+      "bytes": 34120,
+      "sha256": "8a60eae9b5b444b1060f6e82a1a06998946f66d2b9d58b001f060047e39ee614"
+    },
+    "candidate-cpu/storage-task-diagnostic.json": {
+      "bytes": 25955,
+      "sha256": "ae1f68ced91ec90af01a96489d296a93c8481df324c6a586619f67d5ac6a22f0"
+    },
+    "candidate-cpu/result-report.json": {
+      "bytes": 5048,
+      "sha256": "6cf1961be7c7f2b3ca3248a933d543bd995966bcfea4ea1b800dda2085f1f00f"
+    }
+  },
+  "runtimeFunctions": {
+    "game/app.mjs": {
+      "bytes": 470109,
+      "sha256": "56862e818c156a4740b5bc801919a9f470c492e7142a891675ee27d7fa56c2f3"
+    },
+    "game/library.mjs": {
+      "bytes": 35962,
+      "sha256": "cda2d2aa7bb3675b6a8991ae0080d0a4f7f15f23e44df973dd2e8d8aca8d152c"
+    },
+    "game/rewards/model.mjs": {
+      "bytes": 34442,
+      "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92"
+    },
+    "game/rewards/store.mjs": {
+      "bytes": 17038,
+      "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f"
+    },
+    "game/profile-storage.mjs": {
+      "bytes": 6205,
+      "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+    },
+    "game/data-json.mjs": {
+      "bytes": 5108,
+      "sha256": "c238667bfb7315a93a76fb798b53b06a684c9438750faeffc0f8b032b272483a"
+    }
+  }
+}

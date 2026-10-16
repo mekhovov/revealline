@@ -1,0 +1,115 @@
+{
+  "date": "2026-09-29",
+  "nativeExport": {
+    "path": "/Users/oleksandr.mekhovov/Downloads/ukrainian-pixel-scenes-r7.rlart",
+    "bytes": 17904621,
+    "sha256": "942580e3d25345f24ee83509d719a3f4033c77d878aabe82b28a127f4aec4967",
+    "route": "http://127.0.0.1:8808/authoring/asset-studio/",
+    "reportedBrowser": "root in-app browser",
+    "downloadEvent": "Bridge event timed out; the actual complete browser download was independently read and verified."
+  },
+  "nativeReimport": {
+    "result": "passed",
+    "reportedBrowser": "root in-app browser, tab 30",
+    "input": "The actual downloaded ukrainian-pixel-scenes-r7.rlart packet",
+    "selectedArtwork": "poltava-revised-r6-wide-r7",
+    "observed": "Verified file preview ready; revision 7, exact hash, byte count, parent and provenance matched. The loaded image was complete at 1152 × 576.",
+    "screenshot": "docs/verification/actor-batch-12/poltava-native-r7-reimport.png",
+    "screenshotIndependentlyInspected": true,
+    "boundary": "Successful native intake, preparation, export and reimport; not cultural, pixel-grid, gameplay-contrast or production approval."
+  },
+  "collection": {
+    "id": "ukrainian-pixel-scenes",
+    "revision": 7,
+    "artworks": 9,
+    "payloadBytes": 17884748
+  },
+  "checks": {
+    "downloadSizeAndModificationTimeStableDuringRead": true,
+    "strictPacketImportSucceeded": true,
+    "allEightPreviousArtworkDeclarationsUnchanged": true,
+    "allPreviousCollectionAndSourceDeclarationsUnchanged": true,
+    "allEightPreviousPngPayloadsEqualLocalOriginals": true,
+    "newPngMatchesNativeUiBytesAndSha256": true,
+    "strictReexportEqualsNativeDownloadByteForByte": true,
+    "strictReimportPreservesAllNineRecordsAndPayloads": true,
+    "onlyNewPngCopiedToThisFolder": true
+  },
+  "modelDecodeBoundary": "Independent Node checks use the actual strict model byte/hash/static-header guards with an injected PNG IHDR dimension adapter. This is separate from native Studio image decoding and visual inspection.",
+  "files": {
+    "newCandidate": {
+      "bytes": 1756938,
+      "height": 576,
+      "mime": "image/png",
+      "name": "poltava-revised-r6-wide-r7.png",
+      "sha256": "aaafaaca7ad1ee916ceeb04338690178a10314d6b735fcbe63fd565ec672ac30",
+      "width": 1152,
+      "bitDepth": 8,
+      "colorType": 6
+    },
+    "unchanged": [
+      {
+        "path": "authoring/library/community-art-cohort-v1/workshop-original.png",
+        "bytes": 2408056,
+        "sha256": "8782c3642af6866d09e441891b34876e0c8fa3197a018d9e0cef562699a79cf8"
+      },
+      {
+        "path": "authoring/library/community-art-cohort-v1/poltava-original.png",
+        "bytes": 2914645,
+        "sha256": "6e528a622b5bcd1fa2ed0b0ddf50404ecf7a433fee0a71ef400ae9f309dc13c5"
+      },
+      {
+        "path": "authoring/library/community-art-cohort-v1/synevyr-original.png",
+        "bytes": 2310897,
+        "sha256": "e4e66fcd65d54c560353ad8f08c42454a7b9ea187a81998dece04a6bd165d5c1"
+      },
+      {
+        "path": "authoring/library/community-art-cohort-v1/board-candidates-v1/workshop-original-wide-r2.png",
+        "bytes": 1590026,
+        "sha256": "140bba2cf410d092f8534c7d8286c566798e1d53483cb9ab879e41ac8ebc599a"
+      },
+      {
+        "path": "authoring/library/community-art-cohort-v1/board-candidates-v1/poltava-original-wide-r3.png",
+        "bytes": 1781810,
+        "sha256": "af591a5f1cc0befe3b8555841c903d4576cff59f2ec04b3ac5204050d3e0c978"
+      },
+      {
+        "path": "authoring/library/community-art-cohort-v1/board-candidates-v1/synevyr-original-wide-r4.png",
+        "bytes": 1534613,
+        "sha256": "62675863d6738930a1b8ec4872fe08d735ac43242af5d6f51b0f1d6005bc4199"
+      },
+      {
+        "path": "authoring/library/community-art-cohort-v1/board-candidates-v1/workshop-original-classic-r5.png",
+        "bytes": 762662,
+        "sha256": "7b298708666f3aabb6376fb706fadb28c4455fd7e841b6837ae347ad87e2c4c8"
+      },
+      {
+        "path": "authoring/library/community-art-cohort-v2/poltava-revised.png",
+        "bytes": 2825101,
+        "sha256": "6428a4d0f7d0e97c30cf565a68ae8bbc515c3de98343c34af2413cb200a5f07a"
+      }
+    ]
+  },
+  "derivation": {
+    "version": "board-derivative.v1",
+    "board": "wide",
+    "fit": "contain",
+    "width": 1152,
+    "height": 576,
+    "sourceWidth": 1774,
+    "sourceHeight": 887,
+    "source": [0, 0, 1774, 887],
+    "destination": [0, 0, 1152, 576],
+    "background": "#08131e",
+    "sampling": "nearest",
+    "tool": "Reveal Line Asset Studio",
+    "encoder": "native-canvas-png",
+    "review": "candidate-not-production-approved"
+  },
+  "remainingReview": [
+    "Deliberate native pixel-grid cleanup",
+    "Cultural review of interpreted details",
+    "Native-size actor and gameplay-overlay contrast",
+    "Separate production artwork approval and bindings"
+  ]
+}

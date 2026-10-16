@@ -255,6 +255,7 @@ def assemble(config, output):
             source['commit'] in (pr['commit'], pull['merge_commit_sha']), 'Merged source PR identity differs')
     evidence = {'preparation/inputs.json': encoded(config), 'runs/pull-request.json': pull_body,
                 common.POLICY: policy_body}
+    common.retain_historical_audio_evidence(evidence, repo, source['commit'])
     authorities = parse(common.read(config['workflowAuthority'], 4 * 1024**2))
     require(set(authorities) == {'pr', 'manual'} and authorities['pr']['sha'] == b['prWorkflowCommit'] and
             authorities['manual']['sha'] == source['commit'], 'Workflow commit authorities differ')
@@ -352,7 +353,7 @@ def assemble(config, output):
              'step': common.step(build_job, 'Build pull-request artifact'), 'sourceRevision': pr['commit'], 'sourceTree': pr['tree']},
          'frozenArtifactCorroboration': {'artifactId': artifact['id'], 'runId': artifact['runId'],
              'inspectionRunId': inspection_run['id'], 'wholeOriginalArtifactVerifiedBeforeQualification': True,
-             'sourceTarGitBlobTypeModeAndPaxCommitVerified': True, 'allInnerZipManifestBytesVerified': True,
+             **common.qualification_proof(verify), 'allInnerZipManifestBytesVerified': True,
              'frozenOfflineInventoryAndBindingsVerified': True,
              'inputs': {k: pin(n, small[n]) for k, n in [('inspection', 'verification.json'), ('manifest', 'manifest.json'),
                         ('releaseRecord', 'release.json'), ('checksum', 'distribution.zip.sha256')]}},
@@ -373,7 +374,7 @@ def assemble(config, output):
     asset = lambda n, body: {'name': n, 'bytes': len(body), 'sha256': sha(body)}
     large = [{'name': n, 'bytes': verify[r]['bytes'], 'sha256': verify[r]['sha256'],
               'originalMember': verify[r]['outerMember'], 'copiedToDisk': False}
-             for n, r in [('source.tar', 'sourceTar'), ('distribution.zip', 'distribution')]]
+             for n, r in [common.inspection_source(verify), ('distribution.zip', 'distribution')]]
     small['qualification-evidence-record.json'] = encoded({'format': 'revealline-qualification-evidence-record.v1',
         'sourceRevision': source['commit'], 'sourceTree': source['tree'], 'version': source['version'],
         'sourceQualified': True, 'originalFrozenPayloadVerified': True, 'sourceGateCounts': q['tests'],

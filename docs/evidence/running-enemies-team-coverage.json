@@ -1,0 +1,4415 @@
+{
+  "schema": "running-enemies-team-coverage.v1",
+  "observedAt": "2026-10-02T23:48:30.762Z",
+  "head": "3636201d3d18b9f31b6710e969a9edde2febf75f",
+  "workingTreeChanges": true,
+  "method": "Structural source compilation at Standard, gameplay tuning then optional running-enemy preparation; initial createCoop and public combat view only. No simulation steps, automated test suite, browser or playability qualification. Exact picture source projection checked against the immutable accepted runtime, retaining inherited edition and full stripped supplemental base.",
+  "scope": "All 13 Team routes admitted by relay-rescue.mjs (10 createTeamGreyboxEntry, 3 createTeamTimedEntry), and both legacy starter levels. Arbitrary future/imported levels are handled generically but are not exhaustively enumerable.",
+  "summary": {
+    "registeredRoutes": 13,
+    "registeredMissions": 123,
+    "starterMissions": 2,
+    "totalMissions": 125,
+    "withAddedRunners": 119,
+    "authoredHuntPreserved": 6,
+    "failed": 0,
+    "addedRunnerCount": 714
+  },
+  "routes": [
+    {
+      "route": "humanoid-hunt-v1",
+      "sourceModule": "team-hunt-training-candidates",
+      "sourceIdentity": "1a4953df217ecdba",
+      "missionCount": 6,
+      "rows": [
+        {
+          "id": "hunt-first-contact",
+          "executionKey": "team-humanoid-hunt-training/candidate-e4574ee478927eb2/95bf84853cf4bbd4",
+          "baseVersion": "revealline-coop-level.v8",
+          "tunedIdentity": "797abd9ed3ff39ef",
+          "preparedVersion": "revealline-coop-level.v8",
+          "preparedIdentity": "797abd9ed3ff39ef",
+          "addedRunners": 0,
+          "authoredHuntPreserved": true,
+          "huntTargetCount": 2,
+          "ordinaryActorCount": 1,
+          "optionalActorCount": 2,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "hunt-cutoff-route",
+          "executionKey": "team-humanoid-hunt-training/candidate-e4574ee478927eb2/95bf84853cf4bbd4",
+          "baseVersion": "revealline-coop-level.v8",
+          "tunedIdentity": "00073ff9931f1730",
+          "preparedVersion": "revealline-coop-level.v8",
+          "preparedIdentity": "00073ff9931f1730",
+          "addedRunners": 0,
+          "authoredHuntPreserved": true,
+          "huntTargetCount": 3,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 3,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "hunt-close-the-bay",
+          "executionKey": "team-humanoid-hunt-training/candidate-e4574ee478927eb2/95bf84853cf4bbd4",
+          "baseVersion": "revealline-coop-level.v8",
+          "tunedIdentity": "a8b5dd6cf8dea983",
+          "preparedVersion": "revealline-coop-level.v8",
+          "preparedIdentity": "a8b5dd6cf8dea983",
+          "addedRunners": 0,
+          "authoredHuntPreserved": true,
+          "huntTargetCount": 3,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 3,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "hunt-break-the-aim",
+          "executionKey": "team-humanoid-hunt-training/candidate-e4574ee478927eb2/95bf84853cf4bbd4",
+          "baseVersion": "revealline-coop-level.v8",
+          "tunedIdentity": "e8c913549d221acd",
+          "preparedVersion": "revealline-coop-level.v8",
+          "preparedIdentity": "e8c913549d221acd",
+          "addedRunners": 0,
+          "authoredHuntPreserved": true,
+          "huntTargetCount": 3,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 3,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "hunt-island-roundup",
+          "executionKey": "team-humanoid-hunt-training/candidate-e4574ee478927eb2/95bf84853cf4bbd4",
+          "baseVersion": "revealline-coop-level.v8",
+          "tunedIdentity": "72b9c2e983c29d36",
+          "preparedVersion": "revealline-coop-level.v8",
+          "preparedIdentity": "72b9c2e983c29d36",
+          "addedRunners": 0,
+          "authoredHuntPreserved": true,
+          "huntTargetCount": 5,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 5,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "hunt-final-roundup",
+          "executionKey": "team-humanoid-hunt-training/candidate-e4574ee478927eb2/95bf84853cf4bbd4",
+          "baseVersion": "revealline-coop-level.v8",
+          "tunedIdentity": "82a8f1ddbb89aa15",
+          "preparedVersion": "revealline-coop-level.v8",
+          "preparedIdentity": "82a8f1ddbb89aa15",
+          "addedRunners": 0,
+          "authoredHuntPreserved": true,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-greybox",
+      "sourceModule": "team-journey-candidates",
+      "sourceIdentity": "18b64040904c16c9",
+      "missionCount": 12,
+      "rows": [
+        {
+          "id": "twin-landings",
+          "executionKey": "horizon-partners/candidate-64de0366f4d60b62/f8fc9421efc62fa3",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "33789e348863c1d1",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "9f35fadac800918b",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "stepping-exchange",
+          "executionKey": "shared-returns/candidate-154b4eca97dee9ee/e9efeb988a35516f",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "9514e707c7509e9b",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "52e82e4f4177b455",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "divided-workshop",
+          "executionKey": "shared-returns/candidate-154b4eca97dee9ee/e9efeb988a35516f",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "5961b0d82b0a4561",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "d6af0db4bfb11f6a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "switchback-partners",
+          "executionKey": "shared-returns/candidate-154b4eca97dee9ee/e9efeb988a35516f",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "2a0552e056517941",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "f4cdf0d9dc74a163",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-detour",
+          "executionKey": "signal-partners/candidate-bf7f51ef9985b9ea/65c6d3d73f9e3c4a",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "1195b6e7343c746a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "4ab3a654180b2e2a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "crossed-gardens",
+          "executionKey": "shared-material-routes/candidate-959089b37e25ba6b/148a77239d1b1677",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "3106d1524dab6dcb",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "9cf1fd3d603a1140",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "split-orchards",
+          "executionKey": "shared-material-routes/candidate-959089b37e25ba6b/148a77239d1b1677",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "d6efdfa10a7e82bc",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "73262590237202b9",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "weaver-crossing",
+          "executionKey": "shared-material-routes/candidate-959089b37e25ba6b/148a77239d1b1677",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "9940e3c3f76899d0",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "b23e0f7aaad644fc",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-lookout",
+          "executionKey": "changing-common-ground/candidate-ea0835fa039cc5d1/e97738d9c255ea5c",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "cc9d2e76adc469e2",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "13cf51b5268b08dd",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "twin-depots",
+          "executionKey": "changing-common-ground/candidate-ea0835fa039cc5d1/e97738d9c255ea5c",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "6104dd35085c2784",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "37bc6b28aad42080",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "changing-courtyard",
+          "executionKey": "changing-common-ground/candidate-ea0835fa039cc5d1/e97738d9c255ea5c",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "5aa0e62eaa52d323",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "b2ef0b9004a8d234",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "last-rendezvous",
+          "executionKey": "changing-common-ground/candidate-ea0835fa039cc5d1/e97738d9c255ea5c",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "41f61c155efb9aa8",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "e9bd2dae6c1c203f",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 5,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-originals",
+      "sourceModule": "team-journey-candidates",
+      "sourceIdentity": "db3b4fe245ff1af8",
+      "missionCount": 12,
+      "rows": [
+        {
+          "id": "twin-landings",
+          "executionKey": "horizon-partners/candidate-f40abe89ca862bf8/b86d20d2fdd1fbf4",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "33789e348863c1d1",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "9f35fadac800918b",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "stepping-exchange",
+          "executionKey": "shared-returns/candidate-7ef2100b156cee75/df7e6fa1bf7cf677",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "9514e707c7509e9b",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "52e82e4f4177b455",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "divided-workshop",
+          "executionKey": "shared-returns/candidate-7ef2100b156cee75/df7e6fa1bf7cf677",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "5961b0d82b0a4561",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "d6af0db4bfb11f6a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "switchback-partners",
+          "executionKey": "shared-returns/candidate-7ef2100b156cee75/df7e6fa1bf7cf677",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "2a0552e056517941",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "f4cdf0d9dc74a163",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-detour",
+          "executionKey": "signal-partners/candidate-0bb6ad3d5b569544/4264662f2934f20e",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "1195b6e7343c746a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "4ab3a654180b2e2a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "crossed-gardens",
+          "executionKey": "shared-material-routes/candidate-b5e1529e78dc69b0/093fdae08724d0a7",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "3106d1524dab6dcb",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "9cf1fd3d603a1140",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "split-orchards",
+          "executionKey": "shared-material-routes/candidate-b5e1529e78dc69b0/093fdae08724d0a7",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "d6efdfa10a7e82bc",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "73262590237202b9",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "weaver-crossing",
+          "executionKey": "shared-material-routes/candidate-b5e1529e78dc69b0/093fdae08724d0a7",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "9940e3c3f76899d0",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "b23e0f7aaad644fc",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-lookout",
+          "executionKey": "changing-common-ground/candidate-3a6d99678b2c37d0/31b2381bc95a10cf",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "cc9d2e76adc469e2",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "13cf51b5268b08dd",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "twin-depots",
+          "executionKey": "changing-common-ground/candidate-3a6d99678b2c37d0/31b2381bc95a10cf",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "6104dd35085c2784",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "37bc6b28aad42080",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "changing-courtyard",
+          "executionKey": "changing-common-ground/candidate-3a6d99678b2c37d0/31b2381bc95a10cf",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "5aa0e62eaa52d323",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "b2ef0b9004a8d234",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "last-rendezvous",
+          "executionKey": "changing-common-ground/candidate-3a6d99678b2c37d0/31b2381bc95a10cf",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "41f61c155efb9aa8",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "e9bd2dae6c1c203f",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 5,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-pressure-originals-1",
+      "sourceModule": "team-pressure-originals",
+      "sourceIdentity": "582be948c24bd166",
+      "missionCount": 12,
+      "rows": [
+        {
+          "id": "twin-landings",
+          "executionKey": "horizon-partners/candidate-a04af131393262a7/a1ac5ed617c50c7c",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "cd5b792b3056df40",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a9d03650cd4b6d1f",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "stepping-exchange",
+          "executionKey": "shared-returns/candidate-f89979131167ed47/041d463c2147d457",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "1149c7c61efb58fe",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "6f8717e3feecef11",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "divided-workshop",
+          "executionKey": "shared-returns/candidate-f89979131167ed47/041d463c2147d457",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "c8878c86428663ee",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "9eeb73aceb6c1f7a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "switchback-partners",
+          "executionKey": "shared-returns/candidate-f89979131167ed47/041d463c2147d457",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "9fa64ceb0d1f1fb4",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "2779df64d052a40f",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-detour",
+          "executionKey": "signal-partners/candidate-e94f361139aef9fb/22e0894e1521cda9",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "97564348412c4cce",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "0420bb31743e2a82",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "crossed-gardens",
+          "executionKey": "shared-material-routes/candidate-edc66b95f61f3c23/0ee263b5e5d7dc91",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "7602caf942fd68f6",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "15c9cb0df0cef8f4",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "split-orchards",
+          "executionKey": "shared-material-routes/candidate-edc66b95f61f3c23/0ee263b5e5d7dc91",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "659064490068e6ca",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "0d9342af4dc3e2fd",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "weaver-crossing",
+          "executionKey": "shared-material-routes/candidate-edc66b95f61f3c23/0ee263b5e5d7dc91",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "7e9c29c6ec581fe9",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a7eb15ecf54fc37c",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-lookout",
+          "executionKey": "changing-common-ground/candidate-9311d130da058be9/4eaf7f8ec922ea67",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "0322240984af17f4",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "00f0b937b4a634b2",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "twin-depots",
+          "executionKey": "changing-common-ground/candidate-9311d130da058be9/4eaf7f8ec922ea67",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "3a8848bc8047c8ed",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "bac8fb6e98af7daa",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "changing-courtyard",
+          "executionKey": "changing-common-ground/candidate-9311d130da058be9/4eaf7f8ec922ea67",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "d723065fe3060373",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "811908d44a7a878e",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "last-rendezvous",
+          "executionKey": "changing-common-ground/candidate-9311d130da058be9/4eaf7f8ec922ea67",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "f5e17b045d8ad6d5",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "ef217e478e94bb2d",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 5,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-spatial-originals-1",
+      "sourceModule": "team-spatial-originals",
+      "sourceIdentity": "03fcbd1fcd3b890a",
+      "missionCount": 12,
+      "rows": [
+        {
+          "id": "twin-landings",
+          "executionKey": "horizon-partners/candidate-a04af131393262a7/a1ac5ed617c50c7c",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "cd5b792b3056df40",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a9d03650cd4b6d1f",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "stepping-exchange",
+          "executionKey": "shared-returns/candidate-f89979131167ed47/041d463c2147d457",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "1149c7c61efb58fe",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "6f8717e3feecef11",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "divided-workshop",
+          "executionKey": "shared-returns/candidate-f89979131167ed47/041d463c2147d457",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "c8878c86428663ee",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "9eeb73aceb6c1f7a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "switchback-partners",
+          "executionKey": "shared-returns/candidate-f89979131167ed47/041d463c2147d457",
+          "baseVersion": "revealline-coop-level.v2",
+          "tunedIdentity": "9fa64ceb0d1f1fb4",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "2779df64d052a40f",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-detour",
+          "executionKey": "signal-partners/candidate-e94f361139aef9fb/22e0894e1521cda9",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "97564348412c4cce",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "0420bb31743e2a82",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "crossed-gardens",
+          "executionKey": "shared-material-routes/candidate-edc66b95f61f3c23/0ee263b5e5d7dc91",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "7602caf942fd68f6",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "15c9cb0df0cef8f4",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "split-orchards",
+          "executionKey": "shared-material-routes/candidate-edc66b95f61f3c23/0ee263b5e5d7dc91",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "659064490068e6ca",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "0d9342af4dc3e2fd",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "weaver-crossing",
+          "executionKey": "shared-material-routes/candidate-edc66b95f61f3c23/0ee263b5e5d7dc91",
+          "baseVersion": "revealline-coop-level.v3",
+          "tunedIdentity": "7e9c29c6ec581fe9",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a7eb15ecf54fc37c",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-lookout",
+          "executionKey": "changing-common-ground/candidate-6d62965964ddee56/79fd768d1d054321",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "6e3f47e042c44f50",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "b86f3e7892471f82",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "twin-depots",
+          "executionKey": "changing-common-ground/candidate-6d62965964ddee56/79fd768d1d054321",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "1b2625eaf0f10fce",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "f50a5f2415ba4638",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 6,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "changing-courtyard",
+          "executionKey": "changing-common-ground/candidate-6d62965964ddee56/79fd768d1d054321",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "d723065fe3060373",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "811908d44a7a878e",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "last-rendezvous",
+          "executionKey": "changing-common-ground/candidate-6d62965964ddee56/79fd768d1d054321",
+          "baseVersion": "revealline-coop-level.v4",
+          "tunedIdentity": "f5e17b045d8ad6d5",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "ef217e478e94bb2d",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 5,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-trail-impact-originals-1",
+      "sourceModule": "team-impact-originals",
+      "sourceIdentity": "01dd5e53b9a68ea2",
+      "missionCount": 12,
+      "rows": [
+        {
+          "id": "twin-landings",
+          "executionKey": "horizon-partners/candidate-3057076ea4b7b438/416e714b9af026b4",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "c752778ba70f9ae0",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a6cf0b0ebcc6472c",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "stepping-exchange",
+          "executionKey": "shared-returns/candidate-ac748e651d1e89d4/3fe0bbe830e64312",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "9b2e8123d59aabd6",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "e29dd0507b0052c6",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "divided-workshop",
+          "executionKey": "shared-returns/candidate-ac748e651d1e89d4/3fe0bbe830e64312",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "954d058828486b74",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a0e74eb40bf51755",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "switchback-partners",
+          "executionKey": "shared-returns/candidate-ac748e651d1e89d4/3fe0bbe830e64312",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "29a542369a65e785",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "379002d63d4193a2",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-detour",
+          "executionKey": "signal-partners/candidate-135f85c6508f24fc/81bf38e43b6fdc71",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "47939b80da0f8105",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a5f659ea20e07c6b",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "crossed-gardens",
+          "executionKey": "shared-material-routes/candidate-8b6cf0fe03df58d7/f1c9c273aa4ab21d",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "0dc4569c7e7bd0f1",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "02396785133bcf3d",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "split-orchards",
+          "executionKey": "shared-material-routes/candidate-8b6cf0fe03df58d7/f1c9c273aa4ab21d",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "edf09ba6b4d0e6f7",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "9ca413df7a569ac0",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "weaver-crossing",
+          "executionKey": "shared-material-routes/candidate-8b6cf0fe03df58d7/f1c9c273aa4ab21d",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "6c4102f588c064ef",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "965881787e146cb3",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-lookout",
+          "executionKey": "changing-common-ground/candidate-6b3b80ea132f2fdc/baba6630a6906466",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "71feaad83bbb82fa",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "22fd05a34c15b2ce",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "twin-depots",
+          "executionKey": "changing-common-ground/candidate-6b3b80ea132f2fdc/baba6630a6906466",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "fd2d553b82da34a5",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "b83f64af9ddc6e5c",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 6,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "changing-courtyard",
+          "executionKey": "changing-common-ground/candidate-6b3b80ea132f2fdc/baba6630a6906466",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "3d87db8838f568b7",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "f8e418bff9ce22a2",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "last-rendezvous",
+          "executionKey": "changing-common-ground/candidate-6b3b80ea132f2fdc/baba6630a6906466",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "95f5216cbb26f859",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "055b1da997dbe895",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 5,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-specialist-originals-1",
+      "sourceModule": "team-specialist-originals",
+      "sourceIdentity": "e1794267cf5432c7",
+      "missionCount": 12,
+      "rows": [
+        {
+          "id": "twin-landings",
+          "executionKey": "horizon-partners/candidate-3057076ea4b7b438/416e714b9af026b4",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "c752778ba70f9ae0",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a6cf0b0ebcc6472c",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "stepping-exchange",
+          "executionKey": "shared-returns/candidate-ac748e651d1e89d4/3fe0bbe830e64312",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "9b2e8123d59aabd6",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "e29dd0507b0052c6",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "divided-workshop",
+          "executionKey": "shared-returns/candidate-ac748e651d1e89d4/3fe0bbe830e64312",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "954d058828486b74",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a0e74eb40bf51755",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "switchback-partners",
+          "executionKey": "shared-returns/candidate-ac748e651d1e89d4/3fe0bbe830e64312",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "29a542369a65e785",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "379002d63d4193a2",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-detour",
+          "executionKey": "signal-partners/candidate-135f85c6508f24fc/81bf38e43b6fdc71",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "47939b80da0f8105",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a5f659ea20e07c6b",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "crossed-gardens",
+          "executionKey": "shared-material-routes/candidate-8b6cf0fe03df58d7/f1c9c273aa4ab21d",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "0dc4569c7e7bd0f1",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "02396785133bcf3d",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "split-orchards",
+          "executionKey": "shared-material-routes/candidate-8b6cf0fe03df58d7/f1c9c273aa4ab21d",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "edf09ba6b4d0e6f7",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "9ca413df7a569ac0",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "weaver-crossing",
+          "executionKey": "shared-material-routes/candidate-8b6cf0fe03df58d7/f1c9c273aa4ab21d",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "6c4102f588c064ef",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "965881787e146cb3",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "shared-lookout",
+          "executionKey": "changing-common-ground/candidate-192f87989f3bea4b/a92236b152ca14f4",
+          "baseVersion": "revealline-coop-level.v6",
+          "tunedIdentity": "71feaad83bbb82fa",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "22fd05a34c15b2ce",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "twin-depots",
+          "executionKey": "complementary-specialists/candidate-8e6185012448ed6b/8c2f0068d65caaa1",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "9440f8cb060625aa",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "623ac79f00d02bf2",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 6,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "changing-courtyard",
+          "executionKey": "complementary-specialists/candidate-8e6185012448ed6b/8c2f0068d65caaa1",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "12b69ca7adee1d23",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "119207b09073e92c",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "last-rendezvous",
+          "executionKey": "complementary-specialists/candidate-8e6185012448ed6b/8c2f0068d65caaa1",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "41513aa5e293783a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "08c2f541331e0e1b",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 5,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-complete-specialist-originals-1",
+      "sourceModule": "team-complete-specialist-originals",
+      "sourceIdentity": "a24c41a72502b53a",
+      "missionCount": 12,
+      "rows": [
+        {
+          "id": "twin-landings",
+          "executionKey": "horizon-partners/candidate-71bd31937204d0cd/9007554cd722a4f8",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "211d3e21eea61447",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "968f15016b327442",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "stepping-exchange",
+          "executionKey": "stepping-partner-specialists/candidate-ed5144eb4ef780f7/df583483dc393a15",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "048f5874906fc05c",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "4566764c5f971120",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "divided-workshop",
+          "executionKey": "shared-returns/candidate-2593ab8cd0180a41/eeec3b3372b44f78",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "543a947e643190d8",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "e6890b8442e48b55",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "switchback-partners",
+          "executionKey": "switchback-partner-specialists/candidate-e87fb7c044a71a7a/9aa671c8c40bf024",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "ef2a5c73a2fa63df",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "b17c3f90613189b8",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "shared-detour",
+          "executionKey": "signal-partners/candidate-e0d5f24f2b50a1d5/68435866c5efb178",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "c8da3be0914391cd",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "6b8e26b739542329",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "crossed-gardens",
+          "executionKey": "material-partner-specialists/candidate-c86251953b60da81/e442f99b2e7fe121",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "c2c0e956860933dd",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "af4baa6f70e60251",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "split-orchards",
+          "executionKey": "shared-material-routes/candidate-8ae37d529fcb6abc/225c7c2c1001eaa1",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "2760683efff5261a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "c2dbcfecf940417a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "weaver-crossing",
+          "executionKey": "shared-material-routes/candidate-8ae37d529fcb6abc/225c7c2c1001eaa1",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "8165fb3135a9e1d3",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a937120f7e757743",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "shared-lookout",
+          "executionKey": "changing-common-ground/candidate-c107a64547f949b1/7c6a06c9b15f43fb",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "82db218b41c36ad0",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "375e7467a11ae1b8",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "twin-depots",
+          "executionKey": "complementary-specialists/candidate-21ff2c28edc2bfa3/8dd22faaeb8851bd",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "958148d81d02a3f7",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "7b9070e01a014bee",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 6,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "changing-courtyard",
+          "executionKey": "complementary-specialists/candidate-21ff2c28edc2bfa3/8dd22faaeb8851bd",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "12b69ca7adee1d23",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "119207b09073e92c",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "last-rendezvous",
+          "executionKey": "complementary-specialists/candidate-21ff2c28edc2bfa3/8dd22faaeb8851bd",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "41513aa5e293783a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "08c2f541331e0e1b",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 5,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-cultural-specialist-originals-1",
+      "sourceModule": "team-cultural-specialist-originals",
+      "sourceIdentity": "7212d2099fc0c6d3",
+      "missionCount": 12,
+      "rows": [
+        {
+          "id": "twin-landings",
+          "executionKey": "horizon-partners/candidate-71bd31937204d0cd/9007554cd722a4f8",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "211d3e21eea61447",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "968f15016b327442",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "stepping-exchange",
+          "executionKey": "stepping-partner-specialists/candidate-6496f0d979ab8cd9/8c2529f719046e12",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "103c60d12a425683",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "677d9a5da301d1d2",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "divided-workshop",
+          "executionKey": "shared-returns/candidate-f6472c894b47ee90/b7961fa5b8208247",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "1277b3f3bd54f7dd",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "23827f3104c6e69d",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "switchback-partners",
+          "executionKey": "switchback-partner-specialists/candidate-e87fb7c044a71a7a/9aa671c8c40bf024",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "ef2a5c73a2fa63df",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "b17c3f90613189b8",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "shared-detour",
+          "executionKey": "signal-partners/candidate-e443066057dc9bba/c5d20849875f52e3",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "2da71425e04b4e8a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "dd8dfc632f511889",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "crossed-gardens",
+          "executionKey": "material-partner-specialists/candidate-c86251953b60da81/e442f99b2e7fe121",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "c2c0e956860933dd",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "af4baa6f70e60251",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "split-orchards",
+          "executionKey": "shared-material-routes/candidate-8ae37d529fcb6abc/225c7c2c1001eaa1",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "2760683efff5261a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "c2dbcfecf940417a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "weaver-crossing",
+          "executionKey": "shared-material-routes/candidate-8ae37d529fcb6abc/225c7c2c1001eaa1",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "8165fb3135a9e1d3",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "a937120f7e757743",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "shared-lookout",
+          "executionKey": "changing-common-ground/candidate-c107a64547f949b1/7c6a06c9b15f43fb",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "82db218b41c36ad0",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "375e7467a11ae1b8",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "twin-depots",
+          "executionKey": "complementary-specialists/candidate-21ff2c28edc2bfa3/8dd22faaeb8851bd",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "958148d81d02a3f7",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "7b9070e01a014bee",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 6,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "changing-courtyard",
+          "executionKey": "complementary-specialists/candidate-21ff2c28edc2bfa3/8dd22faaeb8851bd",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "12b69ca7adee1d23",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "119207b09073e92c",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "last-rendezvous",
+          "executionKey": "complementary-specialists/candidate-21ff2c28edc2bfa3/8dd22faaeb8851bd",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "41513aa5e293783a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "08c2f541331e0e1b",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 5,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-cultural-specialist-originals-2",
+      "sourceModule": "team-cultural-specialist-v2-originals",
+      "sourceIdentity": "326ed1cd0b4d484b",
+      "missionCount": 12,
+      "rows": [
+        {
+          "id": "twin-landings",
+          "executionKey": "horizon-partners/candidate-71bd31937204d0cd/9007554cd722a4f8",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "211d3e21eea61447",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "968f15016b327442",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "stepping-exchange",
+          "executionKey": "stepping-partner-specialists/candidate-6496f0d979ab8cd9/8c2529f719046e12",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "103c60d12a425683",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "677d9a5da301d1d2",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "divided-workshop",
+          "executionKey": "shared-returns/candidate-f6472c894b47ee90/b7961fa5b8208247",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "1277b3f3bd54f7dd",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "23827f3104c6e69d",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "switchback-partners",
+          "executionKey": "switchback-partner-specialists/candidate-e87fb7c044a71a7a/9aa671c8c40bf024",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "ef2a5c73a2fa63df",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "b17c3f90613189b8",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "shared-detour",
+          "executionKey": "signal-partners/candidate-e443066057dc9bba/c5d20849875f52e3",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "2da71425e04b4e8a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "dd8dfc632f511889",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "crossed-gardens",
+          "executionKey": "material-partner-specialists/candidate-12dcf3777a067525/66475718bb01995b",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "134bf4030c9cd65a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "5bbdb2521ab65bf7",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "split-orchards",
+          "executionKey": "shared-material-routes/candidate-07991c6ff7237721/fd199a5740dbcaa7",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "c329a4a857ebecee",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "d9113fd245be5dcf",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 2,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "weaver-crossing",
+          "executionKey": "shared-material-routes/candidate-07991c6ff7237721/fd199a5740dbcaa7",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "c2fcd76f6b27c33d",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "cbeda75653e71479",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "shared-lookout",
+          "executionKey": "changing-common-ground/candidate-c107a64547f949b1/7c6a06c9b15f43fb",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "82db218b41c36ad0",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "375e7467a11ae1b8",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "twin-depots",
+          "executionKey": "complementary-specialists/candidate-21ff2c28edc2bfa3/8dd22faaeb8851bd",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "958148d81d02a3f7",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "7b9070e01a014bee",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 6,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "changing-courtyard",
+          "executionKey": "complementary-specialists/candidate-21ff2c28edc2bfa3/8dd22faaeb8851bd",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "12b69ca7adee1d23",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "119207b09073e92c",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        },
+        {
+          "id": "last-rendezvous",
+          "executionKey": "complementary-specialists/candidate-21ff2c28edc2bfa3/8dd22faaeb8851bd",
+          "baseVersion": "revealline-coop-level.v7",
+          "tunedIdentity": "41513aa5e293783a",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "08c2f541331e0e1b",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 5,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["interceptor", "disruptor"],
+            "after": ["interceptor", "disruptor"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-timed-originals",
+      "sourceModule": "team-timed-originals",
+      "sourceIdentity": "a667a1530651bb9b",
+      "missionCount": 3,
+      "rows": [
+        {
+          "id": "window-exchange",
+          "executionKey": "window-exchange-study/candidate-d4fff44254231e15/5f170ff9c10a9253",
+          "baseVersion": "revealline-coop-level.v5",
+          "tunedIdentity": "e82f1e989b953de6",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "6fcc1d2dc1b01a94",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "coolant-crossing",
+          "executionKey": "coolant-crossing-study/candidate-cb7d6dcd4a414bdf/8600f0eaac6c3ad7",
+          "baseVersion": "revealline-coop-level.v5",
+          "tunedIdentity": "d05df6f9d3d439b9",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "6047b71b12fc3f0a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "depot-dash",
+          "executionKey": "depot-dash-study/candidate-da23dfad4b26b813/ca20b3f2ea00096e",
+          "baseVersion": "revealline-coop-level.v5",
+          "tunedIdentity": "ab1a8c06d6c5bdb0",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "e1a16a3bcbe7eb28",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-window-spatial-1",
+      "sourceModule": "team-window-spatial-candidates",
+      "sourceIdentity": "1eb82ec939990710",
+      "missionCount": 3,
+      "rows": [
+        {
+          "id": "window-exchange",
+          "executionKey": "window-exchange-study/candidate-6966ec862b037d2c/34ec736f3b93308b",
+          "baseVersion": "revealline-coop-level.v5",
+          "tunedIdentity": "420a80ce3cd8ebeb",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "e39a0812252b2665",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "coolant-crossing",
+          "executionKey": "coolant-crossing-study/candidate-1a686ddb27b556c4/acd87c00c2b529c8",
+          "baseVersion": "revealline-coop-level.v5",
+          "tunedIdentity": "d05df6f9d3d439b9",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "6047b71b12fc3f0a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "depot-dash",
+          "executionKey": "depot-dash-study/candidate-11d2ed9f3654ce08/6f0b910037a3ca21",
+          "baseVersion": "revealline-coop-level.v5",
+          "tunedIdentity": "ab1a8c06d6c5bdb0",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "e1a16a3bcbe7eb28",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        }
+      ]
+    },
+    {
+      "route": "team-depot-spatial-1",
+      "sourceModule": "team-depot-spatial-candidates",
+      "sourceIdentity": "87a3171cf8272c0f",
+      "missionCount": 3,
+      "rows": [
+        {
+          "id": "window-exchange",
+          "executionKey": "window-exchange-study/candidate-1897350942d8346a/aab1187df409ed3b",
+          "baseVersion": "revealline-coop-level.v5",
+          "tunedIdentity": "420a80ce3cd8ebeb",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "e39a0812252b2665",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "coolant-crossing",
+          "executionKey": "coolant-crossing-study/candidate-dc90f0b259d30696/61ed93913c2ddeaa",
+          "baseVersion": "revealline-coop-level.v5",
+          "tunedIdentity": "d05df6f9d3d439b9",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "6047b71b12fc3f0a",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 3,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        },
+        {
+          "id": "depot-dash",
+          "executionKey": "depot-dash-study/candidate-6994562ca5ea98ad/55a69bf920e07a6b",
+          "baseVersion": "revealline-coop-level.v5",
+          "tunedIdentity": "d09302b6e1ecea81",
+          "preparedVersion": "revealline-coop-level.v9",
+          "preparedIdentity": "8c2ad7bae343d7dd",
+          "addedRunners": 6,
+          "authoredHuntPreserved": false,
+          "huntTargetCount": 6,
+          "ordinaryActorCount": 4,
+          "optionalActorCount": 6,
+          "checks": {
+            "valid": true,
+            "exactBase": true,
+            "sameGrid": true,
+            "sameGoal": true,
+            "sameReserveLives": true,
+            "sameSupportRoles": true,
+            "validPublicView": true,
+            "allNewActorsVisible": true,
+            "pictureInheritedEditionMatches": true,
+            "pictureSupplementalBaseExact": true
+          },
+          "passed": true,
+          "reserveLives": {
+            "before": 2,
+            "after": 2
+          },
+          "supportRoles": {
+            "before": ["hybrid", "hybrid"],
+            "after": ["hybrid", "hybrid"]
+          }
+        }
+      ]
+    }
+  ],
+  "starter": {
+    "route": "legacy-starter",
+    "sourceModule": "coop/library.mjs",
+    "sourceIdentity": "4e741c9b16417273",
+    "missionCount": 2,
+    "rows": [
+      {
+        "id": "first-connection",
+        "baseVersion": "revealline-coop-level.v1",
+        "tunedIdentity": "0417a95f36a0da17",
+        "preparedVersion": "revealline-coop-level.v9",
+        "preparedIdentity": "94c52d32505b96b7",
+        "addedRunners": 6,
+        "authoredHuntPreserved": false,
+        "huntTargetCount": 6,
+        "ordinaryActorCount": 4,
+        "optionalActorCount": 6,
+        "checks": {
+          "valid": true,
+          "exactBase": true,
+          "sameGrid": true,
+          "sameGoal": true,
+          "sameReserveLives": true,
+          "sameSupportRoles": true,
+          "validPublicView": true,
+          "allNewActorsVisible": true,
+          "pictureInheritedEditionMatches": true,
+          "pictureSupplementalBaseExact": true
+        },
+        "passed": true,
+        "reserveLives": {
+          "before": 3,
+          "after": 3
+        },
+        "supportRoles": {
+          "before": ["hybrid", "hybrid"],
+          "after": ["hybrid", "hybrid"]
+        }
+      },
+      {
+        "id": "relay-yard",
+        "baseVersion": "revealline-coop-level.v1",
+        "tunedIdentity": "f6b8a3828ff78913",
+        "preparedVersion": "revealline-coop-level.v9",
+        "preparedIdentity": "0771b70e911e0c72",
+        "addedRunners": 6,
+        "authoredHuntPreserved": false,
+        "huntTargetCount": 6,
+        "ordinaryActorCount": 4,
+        "optionalActorCount": 6,
+        "checks": {
+          "valid": true,
+          "exactBase": true,
+          "sameGrid": true,
+          "sameGoal": true,
+          "sameReserveLives": true,
+          "sameSupportRoles": true,
+          "validPublicView": true,
+          "allNewActorsVisible": true,
+          "pictureInheritedEditionMatches": true,
+          "pictureSupplementalBaseExact": true
+        },
+        "passed": true,
+        "reserveLives": {
+          "before": 3,
+          "after": 3
+        },
+        "supportRoles": {
+          "before": ["hybrid", "hybrid"],
+          "after": ["hybrid", "hybrid"]
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "dispatch": "game/couch/relay-rescue.mjs",
+    "entryModules": [
+      "game/content-design/team-entry.mjs",
+      "game/content-design/team-timed-entry.mjs"
+    ],
+    "exclusions": [
+      {
+        "source": "game/content-design/team-partner-specialist-originals.mjs",
+        "reason": "Factory imported by team-entry but no route admitted by current relay-rescue dispatch; not included in active route totals."
+      },
+      {
+        "source": "game/content-design/team-window-spatial-candidates.mjs (artwork:false)",
+        "reason": "Greybox factory option not dispatched by current Team route."
+      },
+      {
+        "source": "game/content-design/team-depot-spatial-candidates.mjs (artwork:false)",
+        "reason": "Greybox factory option not dispatched by current Team route."
+      }
+    ],
+    "codeSHA256": {
+      "game/couch/relay-rescue.mjs": "3fa14bebb68a05d39b72be2964a8ae7a8a3a8bf2facc624b2c4144bab60f7522",
+      "game/coop/running-enemies.mjs": "43c6c62fd621e6e07076e73b12b928bca0b8819db6962b435a97c9429b03b259",
+      "game/hunt/team-running-enemies.mjs": "bad440eac138c4f1e1491c11e0d00e7d19dc70647bb41cd639cb7dc6a3152fa8",
+      "game/hunt/running-enemy-placement.mjs": "eb2fc887469eb34787b2aeee420175bb06e96666ddd2d9b4e4ddf23571d1e40b",
+      "game/coop/core.mjs": "92b90138c873426c3dd401a0cfc7a87df91308e4f1afb6d286c0bdf3d16a5c5e",
+      "game/coop/foundations.mjs": "3216aa27f52dcff8123972cfd76c635b252c48a55f6ec75aae2fa0812f15cddb",
+      "game/coop/combat-patrols.mjs": "b83e14c05e0d0c35127dcdd787066051c186a70583ba7855439f4a34fb40d670",
+      "game/content-design/team-progress.mjs": "74494edc02882c7dcaeee173fd513cda9dd898a76b097d43435f9cbf8e3814f2",
+      "game/coop/hunt-attempts.mjs": "8cc16a555c8fa8395f52542d4ba9500e2cc141b89055b1fea7d4c3ae4cd24dbb",
+      "game/creator/team-installed.mjs": "74e7c41c126a111fbcaf36a6e08b4a86060437d8a13ae3cb17d39473174f2af1",
+      "game/coop/picture-source.mjs": "9da51caae9d8c7893196cd596aaae55d7c51c49ef2ff89bf0c1238091aeb1a68",
+      "game/couch/coop-view.mjs": "f05d095e00b150401e4f3d06e673bc9f9f39f57c41a823c7e40d23ec10ba59d0"
+    }
+  }
+}

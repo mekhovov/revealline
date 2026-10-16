@@ -14,15 +14,15 @@ export const SOUNDTRACK_CATALOGUE_FORMAT = 'revealline-soundtrack-catalogue.v1';
 export const SOUNDTRACK_CATALOGUE_FORMAT_V2 = 'revealline-soundtrack-catalogue.v2';
 const LEGACY_SOUNDTRACK_GENRES = Object.freeze(['synth90s', 'metal', 'ukrainian']);
 export const SOUNDTRACK_GENRE_LABELS = Object.freeze({
-  synth90s: '90s Synth',
+  synth90s: 'Synth',
   metal: 'Metal',
-  ukrainian: 'Ukrainian',
-  chiptune: 'Chiptune',
-  electronic: 'Electronic & dance',
+  electronic: 'Electronic',
+  chiptune: 'Chiptune & 8-bit',
   rock: 'Rock',
-  ambient: 'Ambient & chill',
+  ambient: 'Ambient',
   cinematic: 'Cinematic',
   acoustic: 'Acoustic & folk',
+  ukrainian: 'Ukrainian · UA',
 });
 export const SOUNDTRACK_GENRES = Object.freeze(Object.keys(SOUNDTRACK_GENRE_LABELS));
 export const SOUNDTRACK_MODES = Object.freeze(['auto', ...SOUNDTRACK_GENRES, 'fusion', 'mix']);
@@ -34,6 +34,7 @@ export const SOUNDTRACK_LIMITS = Object.freeze({
   customTracks: 123,
   customPlaylists: 26,
   catalogueTracks: 256,
+  onlineTracks: 512,
   assets: 512,
   playlists: 32,
   playlistEntries: 128,

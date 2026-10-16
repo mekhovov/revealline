@@ -246,3 +246,64 @@ test('default capacity requires a split before the portable 24 MiB package limit
   assert.equal(h.nodes.split.hidden, false);
   assert.match(h.nodes.capacity.textContent, /24\.00 MiB pack limit/);
 });
+
+test('restored review reapplies settings and only rebuilds formerly prepared items', async () => {
+  const h = harness();
+  const sources = [file('third.png'), file('first.png'), file('failed.png')];
+  h.controller.restore({
+    settings: {
+      collectionName: 'Recovered campaign',
+      pacing: 'gentle-first',
+      fit: 'cover',
+      creatorCredit: 'Recovered creator',
+      pictureCredit: 'Recovered owner',
+      license: 'Recovered license',
+    },
+    items: [
+      {
+        id: 'picture-3',
+        file: sources[0],
+        title: 'Third first',
+        included: true,
+        status: 'queued',
+        error: '',
+        generation: 4,
+      },
+      {
+        id: 'picture-1',
+        file: sources[1],
+        title: 'First second',
+        included: true,
+        status: 'queued',
+        error: '',
+        generation: 1,
+      },
+      {
+        id: 'picture-2',
+        file: sources[2],
+        title: 'Failed excluded',
+        included: false,
+        status: 'excluded',
+        error: 'Unsupported picture header.',
+        generation: 2,
+      },
+    ],
+  });
+  assert.equal(h.nodes.collectionName.value, 'Recovered campaign');
+  assert.equal(h.nodes.pacing.value, 'gentle-first');
+  assert.equal(h.nodes.fit.value, 'cover');
+  assert.deepEqual(
+    h.controller.snapshot().items.map((item) => item.id),
+    ['picture-3', 'picture-1', 'picture-2'],
+  );
+
+  await h.controller.resume(['picture-3']);
+  assert.deepEqual(
+    h.controller.snapshot().items.map((item) => item.status),
+    ['ready', 'queued', 'excluded'],
+  );
+  assert.equal(h.prepared.length, 1);
+  assert.equal(h.prepared[0].context.generation, 4);
+  assert.equal(h.prepared[0].context.settings.collectionName, 'Recovered campaign');
+  assert.equal(h.controller.snapshot().items[2].error, 'Unsupported picture header.');
+});

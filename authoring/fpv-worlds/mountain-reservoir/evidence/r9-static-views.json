@@ -1,0 +1,717 @@
+{
+  "format": "FPVMountainReservoirStaticViews.v1",
+  "fixture": "7f246fe01c6010249f2ec0c30ed150ddc463587127835bfdc88d81fe21724ca5",
+  "observations": [
+    {
+      "pose": "westjoin",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "variant": "after",
+      "modelSHA256": "925dec1cfa0a70d3ca2aacb5f5fc56cb17693c3522352719d35a6f13ef6771a4",
+      "positionMetres": [
+        -30,
+        1.4,
+        24
+      ],
+      "targetMetres": [
+        -41,
+        6,
+        -11
+      ],
+      "pixelSHA256": "68407baec1563e1a501e2e1b72c65960e5ddae806d9bf227675e1c6d2f721a25",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 183,
+          "materials": 276,
+          "textures": 30
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 25284,
+          "geometries": 109,
+          "textures": 23,
+          "programs": 15,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "westjoin",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "variant": "before",
+      "modelSHA256": "0ef73f962a189567176b4ba5bdbea14babde10a2671d8e71522ecd370a8f49cd",
+      "positionMetres": [
+        -30,
+        1.4,
+        24
+      ],
+      "targetMetres": [
+        -41,
+        6,
+        -11
+      ],
+      "pixelSHA256": "e39f9cd21228fecbf525f85bc90c19dae693ddee1ee027027819275b06384d07",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 183,
+          "materials": 276,
+          "textures": 30
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 25216,
+          "geometries": 109,
+          "textures": 23,
+          "programs": 15,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "northjoin",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "variant": "before",
+      "modelSHA256": "0ef73f962a189567176b4ba5bdbea14babde10a2671d8e71522ecd370a8f49cd",
+      "positionMetres": [
+        -7,
+        2.5,
+        -19
+      ],
+      "targetMetres": [
+        -20,
+        7,
+        -34
+      ],
+      "pixelSHA256": "62a7e5c3cd5f197e89b3f3823f95fc726bdd5116d19e5cece93bfb96e1b2220e",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 183,
+          "materials": 276,
+          "textures": 30
+        },
+        "renderer": {
+          "calls": 124,
+          "triangles": 24552,
+          "geometries": 92,
+          "textures": 21,
+          "programs": 15,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "northjoin",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "variant": "after",
+      "modelSHA256": "925dec1cfa0a70d3ca2aacb5f5fc56cb17693c3522352719d35a6f13ef6771a4",
+      "positionMetres": [
+        -7,
+        2.5,
+        -19
+      ],
+      "targetMetres": [
+        -20,
+        7,
+        -34
+      ],
+      "pixelSHA256": "3a4e2545d5afe4f14d78469ea8a28ec1d98defa0badd1416b1c957cc2e3bb407",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 183,
+          "materials": 276,
+          "textures": 30
+        },
+        "renderer": {
+          "calls": 124,
+          "triangles": 24620,
+          "geometries": 92,
+          "textures": 21,
+          "programs": 15,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "westgrazing",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "variant": "after",
+      "modelSHA256": "925dec1cfa0a70d3ca2aacb5f5fc56cb17693c3522352719d35a6f13ef6771a4",
+      "positionMetres": [
+        -42,
+        3.5,
+        12
+      ],
+      "targetMetres": [
+        -44,
+        5.5,
+        5
+      ],
+      "pixelSHA256": "b0ef1de8e7e5dee26457ee9f55d2d86586ed23bb786f8cd49f3433792a3a2483",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 183,
+          "materials": 276,
+          "textures": 30
+        },
+        "renderer": {
+          "calls": 114,
+          "triangles": 24550,
+          "geometries": 86,
+          "textures": 22,
+          "programs": 15,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "westgrazing",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "variant": "before",
+      "modelSHA256": "0ef73f962a189567176b4ba5bdbea14babde10a2671d8e71522ecd370a8f49cd",
+      "positionMetres": [
+        -42,
+        3.5,
+        12
+      ],
+      "targetMetres": [
+        -44,
+        5.5,
+        5
+      ],
+      "pixelSHA256": "a69e3a62230c088a1e8ee11aae37f5a1f18c195a4d5c9e5db26f58fca85ed5a2",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 183,
+          "materials": 276,
+          "textures": 30
+        },
+        "renderer": {
+          "calls": 114,
+          "triangles": 24482,
+          "geometries": 86,
+          "textures": 22,
+          "programs": 15,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "westgrazing",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "low",
+      "appearance": "authored",
+      "variant": "after",
+      "modelSHA256": "925dec1cfa0a70d3ca2aacb5f5fc56cb17693c3522352719d35a6f13ef6771a4",
+      "positionMetres": [
+        -42,
+        3.5,
+        12
+      ],
+      "targetMetres": [
+        -44,
+        5.5,
+        5
+      ],
+      "pixelSHA256": "a306f363837aedbaf8afe7e1489f89ea736a8b29a7b68b439deb5197b3948f23",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "low",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 183,
+          "materials": 276,
+          "textures": 27
+        },
+        "renderer": {
+          "calls": 52,
+          "triangles": 11852,
+          "geometries": 51,
+          "textures": 20,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "westgrazing",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "high",
+      "appearance": "authored",
+      "variant": "after",
+      "modelSHA256": "925dec1cfa0a70d3ca2aacb5f5fc56cb17693c3522352719d35a6f13ef6771a4",
+      "positionMetres": [
+        -42,
+        3.5,
+        12
+      ],
+      "targetMetres": [
+        -44,
+        5.5,
+        5
+      ],
+      "pixelSHA256": "3806aab67fcfd3185bacdcb2235bbb3f1beced62197c0d3cc73ee1247052db0c",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 194,
+          "materials": 282,
+          "textures": 30
+        },
+        "renderer": {
+          "calls": 118,
+          "triangles": 27014,
+          "geometries": 90,
+          "textures": 22,
+          "programs": 15,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "westgrazing",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "high",
+      "appearance": "pixel",
+      "variant": "after",
+      "modelSHA256": "925dec1cfa0a70d3ca2aacb5f5fc56cb17693c3522352719d35a6f13ef6771a4",
+      "positionMetres": [
+        -42,
+        3.5,
+        12
+      ],
+      "targetMetres": [
+        -44,
+        5.5,
+        5
+      ],
+      "pixelSHA256": "1fcbe00c38beb1c8ed836390188a9ffd1263aef12f0d7bc4abce8819712daac0",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "pixel",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 194,
+          "materials": 282,
+          "textures": 30
+        },
+        "renderer": {
+          "calls": 118,
+          "triangles": 27014,
+          "geometries": 90,
+          "textures": 22,
+          "programs": 15,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "westgrazing",
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "variant": "after",
+      "modelSHA256": "925dec1cfa0a70d3ca2aacb5f5fc56cb17693c3522352719d35a6f13ef6771a4",
+      "positionMetres": [
+        -42,
+        3.5,
+        12
+      ],
+      "targetMetres": [
+        -44,
+        5.5,
+        5
+      ],
+      "pixelSHA256": "9c0a7be83a691c63218c97d7a9405ea0e91108b022c87e9d6b9d759f7fc0cf07",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 14
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 197,
+          "materials": 280,
+          "textures": 17
+        },
+        "renderer": {
+          "calls": 118,
+          "triangles": 27014,
+          "geometries": 90,
+          "textures": 10,
+          "programs": 16,
+          "contextLost": false
+        }
+      }
+    }
+  ],
+  "errors": []
+}

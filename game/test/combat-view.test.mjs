@@ -50,6 +50,7 @@ test('combat projection is exact, owned, deeply frozen, and does not expose priv
         y: 12.5,
         vx: 0.25,
         vy: 0,
+        facingRadians: Math.PI / 2,
         radius: 0.22,
         phase: 'cooldown',
         warningTicks: 0,

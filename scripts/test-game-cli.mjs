@@ -8,12 +8,16 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { generatePackCatalogs } from './generate-pack-catalogs.mjs';
+import { buildOfflineContent, buildOfflineInventory } from './offline-content.mjs';
+import { downloadFiles } from '../game/download-catalogue.mjs';
+import { LAUNCHER_CATALOG_KEYS, LAUNCHER_NAVIGATION_FILES } from './offline-launcher.mjs';
 import {
   buildProject,
   collectBuildFiles,
   crc32,
   createZip,
   generateLevel,
+  inspectBuildProject,
   parseArguments,
   PUBLIC_SECURITY_HEADERS,
   readBuildConfig,
@@ -50,6 +54,70 @@ async function fixture(t) {
   );
   return { root, directory, out: path.join(directory, 'dist') };
 }
+
+test('published FPV contact and support modules are included in main and optional package inputs', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const config = JSON.parse(await fs.readFile(path.join(root, 'game/build-config.json'), 'utf8'));
+  const { OPTIONAL_PACKAGE_POLICIES } = await import('../publishing/optional-package-policy.mjs');
+  for (const module of ['flight-contact.mjs', 'flight-support.mjs']) {
+    const name = `optional-practice/civilian-fpv/${module}`;
+    assert.ok(config.include.includes(name), `main distribution must include ${module}`);
+    assert.ok(
+      OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sharedFiles.includes(name),
+      `installed FPV package must include ${module}`,
+    );
+    assert.ok((await fs.stat(path.join(root, name))).isFile());
+  }
+});
+
+test('published regional review modules match the installed FPV source closure', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const config = JSON.parse(await fs.readFile(path.join(root, 'game/build-config.json'), 'utf8'));
+  const { OPTIONAL_PACKAGE_POLICIES } = await import('../publishing/optional-package-policy.mjs');
+  const regional = OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sharedFiles.filter(
+    (name) =>
+      name.endsWith('/regional-session.mjs') ||
+      name.endsWith('/regional-locations.mjs') ||
+      name.endsWith('/regional-delivery.mjs') ||
+      name.includes('/civilian-fpv/regional/'),
+  );
+  assert.equal(
+    regional.length,
+    25,
+    'the reviewed regional source closure includes RGBA, restore admission, saved places, Railway district and Hillside ground',
+  );
+  assert.ok(regional.includes('optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs'));
+  assert.ok(regional.includes('optional-practice/civilian-fpv/regional/restore-containment.mjs'));
+  assert.ok(regional.includes('optional-practice/civilian-fpv/regional-locations.mjs'));
+  assert.ok(
+    regional.includes('optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs'),
+  );
+  assert.ok(
+    regional.includes('optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs'),
+  );
+  for (const name of regional) {
+    assert.ok(config.include.includes(name), `main distribution must include ${name}`);
+    assert.ok((await fs.stat(path.join(root, name))).isFile());
+  }
+});
+
+test('build binds the same release version into Solo, Versus and Team landing HTML', async (t) => {
+  const { root, out } = await fixture(t);
+  await fs.mkdir(path.join(root, 'game/couch'));
+  const pages = ['game/index.html', 'game/couch/index.html', 'game/couch/relay-rescue.html'];
+  for (const page of pages)
+    await fs.writeFile(
+      path.join(root, page),
+      '<html data-build-version="__REVEALLINE_VERSION__"><head></head><body>__REVEALLINE_VERSION__</body></html>',
+    );
+  await buildProject({ root, out, version: '0.142.1' });
+  for (const page of pages) {
+    const html = await fs.readFile(path.join(out, page), 'utf8');
+    assert.ok(!html.includes('__REVEALLINE_VERSION__'), page);
+    assert.match(html, /data-build-version="v0\.142\.1"/, page);
+    assert.match(html, /<body>v0\.142\.1<\/body>/, page);
+  }
+});
 
 test('strict command parsing rejects typos, duplicates and absent values', () => {
   assert.deepEqual(parseArguments(['build', '--version', '0.1.0']), {
@@ -136,14 +204,40 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     new URL('./game-cli.mjs', import.meta.url),
     path.join(scripts, 'build-implementation.mjs'),
   );
+  await fs.writeFile(
+    path.join(scripts, 'localization.mjs'),
+    'export async function validateLocalization() { return { valid: true }; }\n',
+  );
+  await fs.mkdir(path.join(root, 'game/content'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/content/soundtrack-catalogue.mjs'),
+    'export const SOUNDTRACK_BUNDLED_ASSETS = [];\n',
+  );
+  await fs.mkdir(path.join(root, 'game/mission-library'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/mission-library/included-bundled-pack.mjs'),
+    'export function isIncludedBundledMission() { return false; }\n',
+  );
+  await fs.mkdir(path.join(root, 'game/i18n'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/i18n/index.mjs'),
+    'export function t(key) { return key; }\n',
+  );
   // Archive the implementation's real metadata dependencies too. No module may
   // resolve back into the current working tree during the frozen build.
   for (const relative of [
+    'scripts/access-pages.mjs',
     'scripts/pack-indexes.mjs',
+    'scripts/brand-icons.mjs',
+    'scripts/build-entry-writer.mjs',
     'game/data-json.mjs',
     'game/content-launch.mjs',
   ])
     await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));
+  await fs.writeFile(
+    path.join(root, 'scripts/offline-core-closure.mjs'),
+    'export function isOptionalSpatialAudioBody() { return false; }\nexport function isOptionalReactionVoiceBody() { return false; }\n',
+  );
   // Retain the historical argv/URL guard in the archived entry. The real build
   // implementation runs behind it, so fixing only the current entry guard would
   // still fail this old-revision snapshot when TMPDIR contains a symlink.
@@ -320,6 +414,77 @@ test('build is byte-reproducible and each manifest checksum covers exact output 
   assert.equal(
     await fs.readFile(path.join(root, 'game/core.mjs'), 'utf8'),
     'export const value = 3;\n',
+  );
+});
+
+test('manifest-only inspection shares exact build preparation without site or ZIP writes', async (t) => {
+  const { root, out, directory } = await fixture(t);
+  const before = await fs.readdir(directory);
+  const sourceRevision = 'a'.repeat(40);
+  const inspection = await inspectBuildProject({ root, sourceRevision, out });
+  assert.deepEqual(await fs.readdir(directory), before);
+  assert.equal(inspection.publicEligible, false);
+  assert.equal(inspection.promotable, false);
+  assert.equal(inspection.completeHostedOutput, false);
+  assert.equal(inspection.sourceRevision, sourceRevision);
+  assert.equal('entries' in inspection, false);
+  await buildProject({ root, out, sourceRevision });
+  const bytes = await fs.readFile(path.join(out, 'manifest.json'));
+  assert.deepEqual(inspection.manifest, JSON.parse(bytes));
+  assert.equal(inspection.manifestDescriptor.sha256, hash(bytes));
+  assert.equal(inspection.manifestDescriptor.bytes, bytes.length);
+  assert.equal(
+    inspection.payloadBytesIncludingManifest,
+    inspection.manifest.totalBytes + bytes.length,
+  );
+  assert.equal(
+    await fs.readFile(path.join(root, 'game/core.mjs'), 'utf8'),
+    'export const value = 3;\n',
+  );
+});
+
+test('manifest-only inspection retains the ordinary reference and malformed-input gates', async (t) => {
+  const { root, directory } = await fixture(t);
+  await fs.writeFile(path.join(root, 'game/app.mjs'), 'import "./missing.mjs";');
+  await assert.rejects(inspectBuildProject({ root }), /Missing distribution references/);
+  await fs.writeFile(path.join(root, 'game/app.mjs'), 'import "unbundled-package";');
+  await assert.rejects(inspectBuildProject({ root }), /bare import/);
+  await fs.writeFile(path.join(root, 'game/app.mjs'), 'export {};');
+  await fs.writeFile(path.join(root, 'game/invalid.json'), '{');
+  await assert.rejects(inspectBuildProject({ root }), SyntaxError);
+  assert.deepEqual(await fs.readdir(directory), ['project']);
+});
+
+test('an existing authoring dependency must be explicitly admitted without its neighboring originals', async (t) => {
+  const { root, out } = await fixture(t);
+  const model = 'authoring/company-studio/model.mjs';
+  await fs.mkdir(path.join(root, 'authoring/company-studio'), { recursive: true });
+  await fs.writeFile(path.join(root, model), 'export const draft = {};\n');
+  await fs.writeFile(
+    path.join(root, 'authoring/company-studio/unselected-original.txt'),
+    'Not admitted',
+  );
+  await fs.writeFile(
+    path.join(root, 'game/app.mjs'),
+    'import { draft } from "../authoring/company-studio/model.mjs"; export { draft };\n',
+  );
+  await assert.rejects(inspectBuildProject({ root }), /Missing distribution references/);
+  await assert.rejects(buildProject({ root, out }), /Missing distribution references/);
+  const config = await readBuildConfig(root);
+  config.include.push(model);
+  await fs.writeFile(path.join(root, 'game/build-config.json'), JSON.stringify(config));
+  const inspected = await inspectBuildProject({ root });
+  await buildProject({ root, out });
+  const actual = JSON.parse(await fs.readFile(path.join(out, 'manifest.json'), 'utf8'));
+  assert.deepEqual(inspected.manifest, actual);
+  assert.ok(actual.files.some((entry) => entry.path === model));
+  assert.equal(
+    actual.files.some((entry) => entry.path.endsWith('unselected-original.txt')),
+    false,
+  );
+  await assert.rejects(
+    fs.access(path.join(out, 'authoring/company-studio/unselected-original.txt')),
+    /ENOENT/,
   );
 });
 
@@ -630,12 +795,18 @@ test('class validation accepts current data and rejects unsupported mechanics th
   await assert.rejects(validateClasses(root), /Invalid class recipes/);
 });
 
-test('packaged offline builds generate scoped metadata, original icons, complete integrity inventory and reproducible bytes', async (t) => {
+test('packaged offline builds generate scoped metadata, generated brand icons, complete integrity inventory and reproducible bytes', async (t) => {
   const { root, out, directory } = await fixture(t);
   await fs.mkdir(path.join(root, 'game/offline'));
   await fs.copyFile(
     new URL('../game/offline.mjs', import.meta.url),
     path.join(root, 'game/offline.mjs'),
+  );
+  // This fixture exercises the core offline cache, not the separate installed
+  // app/update sentinel. Supply its bounded update-context dependency.
+  await fs.writeFile(
+    path.join(root, 'game/game-updates.mjs'),
+    'export function readGameUpdateContext() { return null; }\n',
   );
   await fs.mkdir(path.join(root, 'game/content-design'));
   await fs.copyFile(
@@ -655,6 +826,20 @@ test('packaged offline builds generate scoped metadata, original icons, complete
     path.join(root, 'game/playground/index.html'),
     '<html><head><title>Nested</title><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"></head><body>Preview</body></html>',
   );
+  await fs.mkdir(path.join(root, 'game/ui'));
+  await fs.writeFile(
+    path.join(root, 'game/ui/install-entry.mjs'),
+    'export const installOwner = true;',
+  );
+  await fs.mkdir(path.join(root, 'game/communities/sample'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/communities/sample/index.html'),
+    '<!doctype html><html data-community-entry="loading"><head><script type="module" src="../entry.mjs"></script></head><body>Opening community</body></html>',
+  );
+  await fs.writeFile(
+    path.join(root, 'game/communities/entry.mjs'),
+    'export const loadSharedHost = true;',
+  );
   // Canonical sources remain in the distribution; the complete runtime catalog
   // is the sole copy needed by a player preparing offline play.
   await fs.mkdir(path.join(root, 'game/i18n'));
@@ -667,7 +852,16 @@ test('packaged offline builds generate scoped metadata, original icons, complete
   const first = await buildProject({ root, out });
   const second = await buildProject({ root, out: path.join(directory, 'second') });
   assert.equal(first.sha256, second.sha256);
+  const inspected = await inspectBuildProject({ root });
+  const actualManifestBytes = await fs.readFile(path.join(out, 'manifest.json'));
+  assert.deepEqual(inspected.manifest, JSON.parse(actualManifestBytes));
+  assert.equal(actualManifestBytes.toString(), `${JSON.stringify(inspected.manifest)}\n`);
+  assert.equal(inspected.manifestDescriptor.sha256, hash(actualManifestBytes));
   const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'));
+  assert.equal(
+    await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'),
+    `${JSON.stringify(cache)}\n`,
+  );
   const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.start_url, './game/');
   assert.equal(manifest.scope, './');
@@ -703,6 +897,22 @@ test('packaged offline builds generate scoped metadata, original icons, complete
   assert.match(entry, new RegExp(cache.buildId));
   const nested = await fs.readFile(path.join(out, 'game/playground/index.html'), 'utf8');
   assert.match(nested, /\.\.\/\.\.\/manifest.webmanifest/);
+  for (const page of [entry, nested])
+    assert.equal(
+      [...page.matchAll(/<script\b[^>]*src="[^"]*\/ui\/install-entry\.mjs"/g)].length,
+      1,
+    );
+  const community = await fs.readFile(path.join(out, 'game/communities/sample/index.html'), 'utf8');
+  assert.doesNotMatch(community, /install-entry\.mjs/);
+  assert.deepEqual(
+    [...community.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map((match) => match[1]),
+    ['../entry.mjs'],
+    'Only the shared-host loader runs before document replacement; install listeners belong to the fetched main host.',
+  );
+  assert.match(community, /\.\.\/\.\.\/\.\.\/manifest.webmanifest/);
+  assert.match(community, /\.\.\/\.\.\/\.\.\/service-worker.js/);
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/sample/index.html'));
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/entry.mjs'));
   // Both missing metadata and an already prepared page produce one declaration.
   for (const page of [entry, nested]) {
     for (const [name, content] of [
@@ -721,7 +931,19 @@ test('packaged offline builds generate scoped metadata, original icons, complete
     const icon = await fs.readFile(path.join(out, `icons/icon-${size}.png`));
     assert.equal(icon.readUInt32BE(16), size);
     assert.equal(icon.readUInt32BE(20), size);
+    assert.ok(icon.length <= 128 * 1024);
   }
+  const installManifest = JSON.parse(
+    await fs.readFile(path.join(out, 'manifest.webmanifest'), 'utf8'),
+  );
+  assert.equal(installManifest.name, 'FPV / LINE');
+  assert.equal(installManifest.short_name, 'FPV / LINE');
+  assert.equal(installManifest.id, './');
+  assert.equal(installManifest.scope, './');
+  assert.match(
+    await fs.readFile(path.join(out, 'credits.html'), 'utf8'),
+    /href="\.\/icons\/icon-192\.png"/,
+  );
   assert.equal(await fs.readFile(path.join(root, 'game/index.html'), 'utf8'), source);
   await assert.rejects(fs.access(path.join(out, 'game/offline/service-worker.template.js')));
   await fs.writeFile(path.join(root, 'game/core.mjs'), 'export const value=42;');
@@ -736,6 +958,109 @@ test('offline source sentinel requires its template and does not silently emit a
   const { root, out } = await fixture(t);
   await fs.writeFile(path.join(root, 'game/offline.mjs'), 'export {};');
   await assert.rejects(buildProject({ root, out }), /ENOENT/);
+});
+
+test('compact offline catalogue and inventory preserve reader results, source text and integrity', async (t) => {
+  const { root, out } = await fixture(t);
+  const sources = {
+    'game/offline.mjs': 'export {};',
+    'game/installed-app.mjs': 'export {};',
+    'game/offline/service-worker.template.js': 'const CONFIG = __XONIX_OFFLINE_CONFIG__;',
+    'game/offline/app-worker.template.js': 'const CONFIG = __REVEALLINE_LAUNCHER_CONFIG__;',
+    'game/offline/app.html': '<html><head></head><body>Installer</body></html>',
+    'game/offline/app.mjs': 'export {};',
+    'game/offline/navigation.css': 'body { color: navy; }',
+    ...Object.fromEntries(
+      LAUNCHER_NAVIGATION_FILES.map((file) => [
+        'game/' + file,
+        file.endsWith('.css') ? 'body { color: navy; }' : 'export {};',
+      ]),
+    ),
+    'game/downloads.css': 'body { color: navy; }',
+    'game/edition-context.mjs': 'export {};',
+    'game/profile-writer.mjs': 'export {};',
+    'game/i18n/index.mjs': 'export {};',
+    'game/i18n/bootstrap.mjs': 'export {};',
+    'game/i18n/style.css': 'body { color: navy; }',
+    'game/vendor/i18next-26.4.2.min.js': 'globalThis.fixture = true;',
+    'game/historical-original.json': '{"title":"Retained  original\\nОригінал","revision":1}',
+  };
+  for (const language of ['en', 'uk'])
+    for (const [namespace, keys] of Object.entries({
+      ...LAUNCHER_CATALOG_KEYS,
+      controllerEditor: ['fixture'],
+    }))
+      sources[`game/locales/${language}/${namespace}.json`] = JSON.stringify(
+        Object.fromEntries(keys.map((key) => [key, `${language}: ${key}  unchanged\ntext`])),
+      );
+  for (const [name, source] of Object.entries(sources)) {
+    await fs.mkdir(path.dirname(path.join(root, name)), { recursive: true });
+    await fs.writeFile(path.join(root, name), source);
+  }
+  await buildProject({ root, out });
+  const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.json')));
+  const inventoryBytes = await fs.readFile(path.join(out, 'offline-inventory.json'));
+  const catalogueBytes = await fs.readFile(path.join(out, 'offline-content.json'));
+  const catalogue = JSON.parse(catalogueBytes);
+  const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json')));
+  const entries = await Promise.all(
+    manifest.files
+      .filter((file) => file.path !== 'offline-inventory.json')
+      .map(async (file) => ({
+        name: file.path,
+        bytes: await fs.readFile(path.join(out, file.path)),
+      })),
+  );
+  const expected = buildOfflineInventory(entries, catalogue, cache.files);
+  const expectedCatalogue = await buildOfflineContent(entries, new Set(), manifest.version);
+  assert.deepEqual(catalogue, expectedCatalogue);
+  assert.ok(
+    catalogueBytes.length < Buffer.byteLength(`${JSON.stringify(expectedCatalogue, null, 2)}\n`),
+  );
+  const selectedGroups = catalogue.groups.map((group) => group.id);
+  assert.ok(selectedGroups.length > 0);
+  assert.deepEqual(
+    downloadFiles(catalogue, selectedGroups),
+    downloadFiles(expectedCatalogue, selectedGroups),
+  );
+  const catalogueDescriptor = {
+    path: 'offline-content.json',
+    bytes: catalogueBytes.length,
+    sha256: hash(catalogueBytes),
+  };
+  assert.deepEqual(
+    manifest.files.find((file) => file.path === catalogueDescriptor.path),
+    catalogueDescriptor,
+  );
+  assert.deepEqual(
+    cache.files.find((file) => file.path === catalogueDescriptor.path),
+    catalogueDescriptor,
+  );
+  const inventory = JSON.parse(inventoryBytes);
+  // The build sorts output only after inventory generation. Its record order
+  // remains immaterial, while every descriptor, group and size must survive.
+  const normalize = (value) => ({
+    ...value,
+    files: value.files.slice().sort((a, b) => a.path.localeCompare(b.path)),
+  });
+  assert.deepEqual(normalize(inventory), normalize(expected));
+  assert.ok(inventoryBytes.length < Buffer.byteLength(`${JSON.stringify(expected, null, 2)}\n`));
+  assert.deepEqual(
+    manifest.files.find((file) => file.path === 'offline-inventory.json'),
+    { path: 'offline-inventory.json', bytes: inventoryBytes.length, sha256: hash(inventoryBytes) },
+  );
+  for (const [name, source] of Object.entries(sources)) {
+    if (name.startsWith('game/offline/')) continue;
+    const emitted = await fs.readFile(path.join(out, name), 'utf8');
+    // Current builds project allowlisted runtime module whitespace. The empty
+    // module fixtures retain exactly the same export; authored JSON stays exact.
+    if (source === 'export {};') assert.match(emitted, /^export\s*\{\s*\};$/, name);
+    else assert.equal(emitted, source, name);
+    assert.equal(await fs.readFile(path.join(root, name), 'utf8'), source, name);
+    const record = inventory.files.find((file) => file.path === name);
+    assert.equal(record?.bytes, Buffer.byteLength(emitted), name);
+    assert.equal(record?.sha256, hash(Buffer.from(emitted)), name);
+  }
 });
 
 test('public package has local entry, accurate storage notices and enforced preview headers without changing source serving', async (t) => {
@@ -759,17 +1084,18 @@ test('public package has local entry, accurate storage notices and enforced prev
   const source = await getRaw(sourceServer.url, '/game/'),
     release = await getRaw(releaseServer.url, '/game/');
   assert.equal(source.headers['content-security-policy'], undefined);
-  assert.match(release.headers['content-security-policy'], /script-src 'self'/);
-  assert.doesNotMatch(release.headers['content-security-policy'], /unsafe-eval/);
+  assert.match(release.headers['content-security-policy'], /script-src 'self' 'wasm-unsafe-eval'/);
+  assert.doesNotMatch(release.headers['content-security-policy'], /'unsafe-eval'/);
   assert.equal(
     release.headers['content-security-policy']
       .split(';')
       .find((value) => value.trim().startsWith('connect-src'))
       .trim(),
-    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks-01/",
-    'Local preview fetches may reach only the code-admitted soundtrack archive path.',
+    "connect-src 'self' https:",
+    'Optional sources require HTTPS catalogue access in packaged previews; the manager gates user-selected sources.',
   );
   assert.match(PUBLIC_SECURITY_HEADERS['Content-Security-Policy'], /connect-src 'self';/);
+  assert.match(release.headers['content-security-policy'], /media-src 'self' data: blob: https:;/);
   assert.equal(release.headers['referrer-policy'], 'no-referrer');
   assert.equal(release.headers['cache-control'], 'no-cache');
   const entry = await getRaw(releaseServer.url, '/');
@@ -782,7 +1108,7 @@ test('public package has local entry, accurate storage notices and enforced prev
   assert.match(credits, /Carol of the Bells \(Metal Version\)/);
   assert.match(credits, /Alexander Nakarada \(CreatorChords\)/);
   assert.match(credits, /Creative Commons Attribution 4\.0 International/);
-  assert.match(credits, /Mykola Leontovych’s <cite>Shchedryk<\/cite>/);
+  assert.match(credits, /Mykola Leontovych’s <cite[^>]*>Shchedryk<\/cite>/);
   const publishedHeaders = await fs.readFile(path.join(out, '_headers'), 'utf8');
   assert.match(publishedHeaders, /Content-Security-Policy/);
   assert.doesNotMatch(publishedHeaders, /revealline-soundtracks-01/);
@@ -838,6 +1164,11 @@ async function optionalPackFixture(t) {
 }
 test('optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source', async (t) => {
   const { root, out, directory } = await optionalPackFixture(t);
+  await fs.mkdir(path.join(root, 'game/communities/sample'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/communities/sample/index.html'),
+    '<!doctype html><html data-community-entry="loading"><head></head><body>Opening community</body></html>',
+  );
   const result = await buildProject({ root, out });
   const again = await buildProject({ root, out: path.join(directory, 'same') });
   assert.equal(result.sha256, again.sha256);
@@ -857,6 +1188,11 @@ test('optional indexed pack keeps exact shipped and ZIP bytes while core cache e
   ]);
   const page = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
   assert.match(page, /optionalPacks/);
+  const shell = await fs.readFile(path.join(out, 'game/communities/sample/index.html'), 'utf8');
+  assert.doesNotMatch(shell, /optionalPacks|optionalArtwork/);
+  assert.match(shell, /revealline-offline/);
+  assert.match(shell, new RegExp(cache.buildId));
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/sample/index.html'));
   const zip = await fs.readFile(path.join(out, 'distribution.zip'));
   assert.ok(zip.includes(original), 'Stored ZIP entry retains exact optional pack payload.');
   const omitted = manifest.files
@@ -931,9 +1267,9 @@ test('archived packs stay downloadable with exact bytes while both navigation ca
   await assert.rejects(buildProject({ root, out }));
   assert.deepEqual(await fs.readFile(path.join(out, 'manifest.json')), before);
 });
-test('declaring an optional pack does not relax the 64 MiB core cache budget', async (t) => {
+test('declaring an optional pack does not relax the 80 MiB core cache budget', async (t) => {
   const { root, out } = await optionalPackFixture(t);
-  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(64 * 1024 * 1024));
-  await assert.rejects(buildProject({ root, out }), /64 MiB/);
+  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(80 * 1024 * 1024));
+  await assert.rejects(buildProject({ root, out }), /80 MiB/);
   await assert.rejects(fs.access(out));
 });

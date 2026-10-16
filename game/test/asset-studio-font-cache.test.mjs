@@ -398,7 +398,7 @@ function assertSharedFace(view, low = 400, high = 600) {
 }
 function assertReady(view, surface) {
   assert.equal(surface.status.dataset.state, 'ready');
-  assert.match(statusText(surface.status), /ready\./);
+  assert.match(statusText(surface.status), /\bReady$/);
   assert.equal(surface.element.getAttribute('aria-busy'), 'false');
   const samples = surface.element.querySelectorAll('.font-file-sample');
   assert.ok(samples.length > 0, 'The actual handler renders the current font sample.');

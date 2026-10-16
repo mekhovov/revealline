@@ -2,9 +2,41 @@
 import * as fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import os from "node:os";
+import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
+import {
+  POLICY_FILES,
+  sameAdmission,
+  validationPolicyDigest,
+} from "./admission-binding.mjs";
 
-const HOLD_LABELS = new Set(["release-train-hold", "do-not-merge", "hold"]);
 const STACK_MERGE_LABEL = "fastline-stack-merge";
+// release-ready records the selected source policy. These jobs are deliberately
+// skipped when that policy waives a full suite; a skip is never a test pass.
+const POLICY_SKIPPED_JOBS = new Set(["focused", "test", "build"]);
+
+export function exactHeadCheckBlocker(checkRuns = [], headSha) {
+  const latest = new Map();
+  for (const check of checkRuns) {
+    // The controller cannot wait for its own currently running reconcile job.
+    if (check.name === "reconcile") continue;
+    if (check.head_sha && check.head_sha !== headSha)
+      return `${check.name} belongs to a different head`;
+    const previous = latest.get(check.name);
+    if (!previous || check.id > previous.id) latest.set(check.name, check);
+  }
+  for (const check of latest.values()) {
+    if (check.status !== "completed")
+      return `${check.name} is ${check.status || "pending"} on the exact head`;
+    if (
+      check.conclusion !== "success" &&
+      !(check.conclusion === "skipped" && POLICY_SKIPPED_JOBS.has(check.name))
+    )
+      return `${check.name} concluded ${check.conclusion || "without a result"} on the exact head`;
+  }
+  return null;
+}
 
 export function dependencyNumbers(body = "") {
   return [
@@ -15,8 +47,9 @@ export function dependencyNumbers(body = "") {
 export function decideMergeAction({
   pullRequest,
   observedHeadSha,
-  activeMilestone,
   requiredCheck,
+  checkRuns = [],
+  checkInventoryComplete = true,
   dependencies = [],
 }) {
   const labels = new Set(
@@ -28,20 +61,6 @@ export function decideMergeAction({
       return "event has no exact head SHA";
     if (pullRequest.head?.sha !== observedHeadSha)
       return "head changed after inspection";
-    if (!activeMilestone) return "active release variable is not configured";
-    if (pullRequest.milestone?.title !== activeMilestone)
-      return "pull request is outside the active milestone";
-    if (pullRequest.draft) return "pull request remains draft";
-    if (!labels.has("fastline-approved"))
-      return "fastline-approved label is absent";
-    if (
-      [...labels].some(
-        (label) => HOLD_LABELS.has(label) || label.startsWith("hold:"),
-      )
-    )
-      return "hold label is present";
-    if (pullRequest.review_decision === "CHANGES_REQUESTED")
-      return "review changes are requested";
     if (dependencies.some((dependency) => !dependency.merged_at))
       return "declared predecessor is not merged";
     if (
@@ -51,6 +70,12 @@ export function decideMergeAction({
       requiredCheck.head_sha !== observedHeadSha
     )
       return "release-ready is not successful on the exact head";
+    if (requiredCheck.admissionMatches !== true)
+      return "source or admission metadata changed since the successful gate";
+    if (!checkInventoryComplete)
+      return "exact-head check inventory is incomplete";
+    const checkBlocker = exactHeadCheckBlocker(checkRuns, observedHeadSha);
+    if (checkBlocker) return checkBlocker;
     if (
       pullRequest.mergeable === false ||
       pullRequest.mergeable_state === "dirty"
@@ -102,7 +127,23 @@ export function asynchronousMergeRequest(headSha) {
     sha: headSha,
     merge_method: "merge",
     merge_action: "default",
+    bypass_rules: false,
   };
+}
+
+export function isStackOnlyMergeError(error) {
+  return (
+    error?.status === 403 &&
+    error?.data?.message ===
+      "Merging stacked PRs via this endpoint is not supported. Use the asynchronous merge endpoint instead."
+  );
+}
+
+// Pull-request merges made with the workflow token do not emit a second
+// `push` workflow run. Dispatch the rolling Pages build deliberately after a
+// controller-owned merge so public play always follows protected main.
+export function mainPagesDispatchRequest() {
+  return { ref: "main" };
 }
 
 export function asynchronousMergeResult(value) {
@@ -187,6 +228,17 @@ async function mergeStack(owner, repository, pullRequest, headSha) {
   );
 }
 
+async function dispatchMainPages(owner, repository) {
+  await github(
+    `/repos/${owner}/${repository}/actions/workflows/publish-main-pages.yml/dispatches`,
+    {
+      method: "POST",
+      body: JSON.stringify(mainPagesDispatchRequest()),
+      headers: { "content-type": "application/json" },
+    },
+  );
+}
+
 async function graphql(query, variables) {
   const result = await github("/graphql", {
     method: "POST",
@@ -196,22 +248,6 @@ async function graphql(query, variables) {
   if (result.errors?.length)
     throw new Error(`GraphQL: ${JSON.stringify(result.errors)}`);
   return result.data;
-}
-
-async function reviewDecision(owner, repository, number) {
-  const data = await graphql(
-    `
-      query ($owner: String!, $repository: String!, $number: Int!) {
-        repository(owner: $owner, name: $repository) {
-          pullRequest(number: $number) {
-            reviewDecision
-          }
-        }
-      }
-    `,
-    { owner, repository, number },
-  );
-  return data.repository.pullRequest.reviewDecision;
 }
 
 async function setAutoMerge(pullRequest, action, headSha) {
@@ -345,17 +381,27 @@ async function main() {
   const pullRequest = await github(
     `/repos/${owner}/${repository}/pulls/${number}`,
   );
-  pullRequest.review_decision = await reviewDecision(owner, repository, number);
   const checks = await github(
     `/repos/${owner}/${repository}/commits/${pullRequest.head.sha}/check-runs?per_page=100`,
   );
   const requiredCheck = checks.check_runs
     .filter((check) => check.name === "release-ready")
-    .sort(
-      (left, right) =>
-        new Date(right.completed_at || 0) - new Date(left.completed_at || 0),
-    )[0];
-  if (requiredCheck) requiredCheck.head_sha = pullRequest.head.sha;
+    // A new queued/in-progress gate supersedes an older successful one too.
+    .sort((left, right) => right.id - left.id)[0];
+  // Never relabel a check from another commit as an exact-head success.
+  if (requiredCheck?.conclusion === "success") {
+    try {
+      requiredCheck.admissionMatches = await checkedAdmission(
+        owner,
+        repository,
+        requiredCheck,
+        pullRequest,
+      );
+    } catch (error) {
+      requiredCheck.admissionMatches = false;
+      await appendSummary([`Admission receipt rejected: ${error.message}`]);
+    }
+  }
   const dependencyIds = [
     ...new Set(dependencyNumbers(pullRequest.body)),
   ].filter((dependency) => dependency !== number);
@@ -367,8 +413,9 @@ async function main() {
   const decision = decideMergeAction({
     pullRequest,
     observedHeadSha,
-    activeMilestone: process.env.ACTIVE_MILESTONE || "",
     requiredCheck,
+    checkRuns: checks.check_runs,
+    checkInventoryComplete: checks.total_count <= checks.check_runs.length,
     dependencies,
   });
   await appendSummary([
@@ -385,6 +432,24 @@ async function main() {
     decision,
     observedHeadSha,
   );
+  if (["update", "stack", "merge", "arm"].includes(decision.action)) {
+    const fresh = await github(`/repos/${owner}/${repository}/pulls/${number}`);
+    if (
+      fresh.head.sha !== observedHeadSha ||
+      !sameAdmission(
+        requiredCheck.admissionReceipt,
+        fresh,
+        requiredCheck.policyDigest,
+      )
+    ) {
+      if (fresh.auto_merge)
+        await setAutoMerge(fresh, "disarm", observedHeadSha);
+      throw new Error(
+        "Admission changed before mutation; no merge was submitted.",
+      );
+    }
+  }
+  let merged = false;
   if (decision.action === "update") {
     await github(
       `/repos/${owner}/${repository}/pulls/${number}/update-branch`,
@@ -395,7 +460,7 @@ async function main() {
       },
     );
   } else if (decision.action === "stack") {
-    const merged = await mergeStack(
+    merged = await mergeStack(
       owner,
       repository,
       pullRequest,
@@ -404,23 +469,119 @@ async function main() {
     if (!merged)
       throw new Error("GitHub did not accept the declared stack merge.");
   } else if (decision.action === "merge") {
-    const result = await github(
-      `/repos/${owner}/${repository}/pulls/${number}/merge`,
-      {
-        method: "PUT",
-        body: JSON.stringify({
-          sha: observedHeadSha,
-          merge_method: "merge",
-        }),
-        headers: { "content-type": "application/json" },
-      },
-    );
-    if (!result?.merged)
-      throw new Error(
-        result?.message || "GitHub rejected the exact-head merge.",
+    try {
+      const result = await github(
+        `/repos/${owner}/${repository}/pulls/${number}/merge`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            sha: observedHeadSha,
+            merge_method: "merge",
+          }),
+          headers: { "content-type": "application/json" },
+        },
       );
+      if (!result?.merged)
+        throw new Error(
+          result?.message || "GitHub rejected the exact-head merge.",
+        );
+      merged = true;
+    } catch (error) {
+      if (!isStackOnlyMergeError(error)) throw error;
+      merged = await mergeStack(owner, repository, pullRequest, observedHeadSha);
+      if (!merged)
+        throw new Error("GitHub did not accept the exact-head stack merge.");
+    }
   } else if (decision.action === "arm" || decision.action === "disarm")
     await setAutoMerge(pullRequest, decision.action, observedHeadSha);
+  if (merged) {
+    await dispatchMainPages(owner, repository);
+    await appendSummary([
+      "Dispatched the rolling Pages build from protected main after the merge.",
+    ]);
+  }
+}
+
+async function checkedAdmission(owner, repository, check, pullRequest) {
+  const match = new URL(check.details_url).pathname.match(
+    /\/actions\/runs\/(\d+)\//,
+  );
+  if (check.app?.slug !== "github-actions" || !match) return false;
+  const prefix = `/repos/${owner}/${repository}`;
+  const run = await github(`${prefix}/actions/runs/${match[1]}`);
+  if (
+    run.event !== "pull_request" ||
+    run.path !== ".github/workflows/deploy-pages.yml" ||
+    run.head_sha !== pullRequest.head.sha
+  )
+    return false;
+  // The artifact is untrusted input. Compare the actual checked revision's
+  // policy blobs with protected-main automation, not its self-reported digest.
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  const query = `query($owner: String!, $repository: String!) {
+    repository(owner: $owner, name: $repository) {
+      ${POLICY_FILES.map((name, index) => `p${index}: object(expression: ${JSON.stringify(`${run.head_sha}:${name}`)}) { oid }`).join("\n")}
+    }
+  }`;
+  const policy = await graphql(query, { owner, repository });
+  for (const [index, name] of POLICY_FILES.entries()) {
+    const bytes = await fs.readFile(path.join(root, name));
+    const oid = createHash("sha1")
+      .update(`blob ${bytes.length}\0`)
+      .update(bytes)
+      .digest("hex");
+    if (policy.repository[`p${index}`]?.oid !== oid) return false;
+  }
+  const result = await github(
+    `${prefix}/actions/runs/${run.id}/artifacts?per_page=100`,
+  );
+  const artifacts = result.artifacts.filter(
+    (item) => item.name === `admission-${run.id}-${run.run_attempt}`,
+  );
+  if (
+    artifacts.length !== 1 ||
+    artifacts[0].expired ||
+    artifacts[0].size_in_bytes > 1_000_000
+  )
+    return false;
+  const response = await fetch(
+    `https://api.github.com${prefix}/actions/artifacts/${artifacts[0].id}/zip`,
+    {
+      headers: {
+        authorization: `Bearer ${process.env.GH_TOKEN}`,
+        accept: "application/vnd.github+json",
+      },
+    },
+  );
+  if (!response.ok)
+    throw new Error(`Receipt download failed: ${response.status}`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (bytes.length > 1_000_000)
+    throw new Error("Admission archive exceeds budget.");
+  const directory = await fs.mkdtemp(
+    path.join(os.tmpdir(), "fastline-admission-"),
+  );
+  const archive = path.join(directory, "receipt.zip");
+  try {
+    await fs.writeFile(archive, bytes);
+    // Read one bounded member only. Never extract or execute artifact contents.
+    const receipt = JSON.parse(
+      execFileSync("unzip", ["-p", archive, "admission.json"], {
+        encoding: "utf8",
+        maxBuffer: 512_000,
+        timeout: 10_000,
+      }),
+    );
+    const policyDigest = await validationPolicyDigest(
+      path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."),
+    );
+    check.admissionReceipt = receipt;
+    check.policyDigest = policyDigest;
+    return sameAdmission(receipt, pullRequest, policyDigest);
+  } finally {
+    await fs.unlink(archive).catch(() => {});
+    await fs.rmdir(directory);
+  }
 }
 
 if (

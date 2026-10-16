@@ -1,0 +1,26 @@
+{
+  "cpu": "Apple M4 Pro",
+  "model": "Mac16,7",
+  "memoryBytes": 51539607552,
+  "os": {
+    "name": "macOS",
+    "version": "26.7.1",
+    "build": "25G241"
+  },
+  "powerSource": "AC Power",
+  "pmsetPowerMode": 0,
+  "batteryPercent": 100,
+  "browser": "Codex in-app Chromium; reported user-agent Chrome/155.0.0.0",
+  "displayCadence": "approximately 120 Hz observed; not a locked 60 Hz reference device",
+  "qualificationViewport": {
+    "width": 1920,
+    "height": 1080,
+    "devicePixelRatio": 1
+  },
+  "backingCanvas": {
+    "width": 960,
+    "height": 540
+  },
+  "masterMuted": true,
+  "referenceHardwareCertified": false
+}

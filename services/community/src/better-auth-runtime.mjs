@@ -1,14 +1,42 @@
 import { betterAuth } from 'better-auth';
+import { createAccountMailCallbacks } from './account-mail.mjs';
 
-export function createCommunityBetterAuth({ database, baseURL, secret, trustedOrigins = [] }) {
+export function createCommunityBetterAuth({
+  database,
+  baseURL,
+  secret,
+  trustedOrigins = [],
+  mailDelivery,
+  emailVerificationExpiresIn = 3_600,
+  passwordResetExpiresIn = 1_800,
+}) {
   if (!database || !baseURL || !secret)
     throw new Error('Better Auth needs database, baseURL, and secret.');
+  const accountMail = createAccountMailCallbacks({
+    delivery: mailDelivery,
+    actionBaseURL: baseURL,
+    emailVerificationExpiresIn,
+    passwordResetExpiresIn,
+  });
   return betterAuth({
     database,
     baseURL,
     secret,
     trustedOrigins,
-    emailAndPassword: { enabled: true },
+    emailVerification: {
+      sendVerificationEmail: accountMail.sendVerificationEmail,
+      sendOnSignUp: true,
+      sendOnSignIn: true,
+      autoSignInAfterVerification: false,
+      expiresIn: emailVerificationExpiresIn,
+    },
+    emailAndPassword: {
+      enabled: true,
+      requireEmailVerification: true,
+      sendResetPassword: accountMail.sendResetPassword,
+      resetPasswordTokenExpiresIn: passwordResetExpiresIn,
+      revokeSessionsOnPasswordReset: true,
+    },
     advanced: { database: { joins: true } },
   });
 }

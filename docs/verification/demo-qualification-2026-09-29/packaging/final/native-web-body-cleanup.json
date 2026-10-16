@@ -1,0 +1,10 @@
+{
+  "scope": "qualification-before-confirm-integration",
+  "at": "2026-09-29T02:36:33.953712+00:00",
+  "reason": "Root-authorized rebuild of integrated c5e3419ee at same path; exact prior manifests, verification and archive hashes retained",
+  "removed": [
+    "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/desktop",
+    "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/ios",
+    "/private/tmp/revealline-demo-qualification-web-final-20260929"
+  ]
+}

@@ -1,0 +1,581 @@
+{
+  "passed": true,
+  "actualSourceExtentM": [
+    16384,
+    16384
+  ],
+  "manifestSHA256": "e2e67f498c6b4e64d70e550952ebd9a13dd657488dad3e6c2fb545892023925e",
+  "authoredStarts": 12,
+  "sceneryAssetRequests": 72,
+  "actualCommandedRoutes": 12,
+  "actualSolidContacts": [
+    {
+      "mode": "self-level",
+      "landmark": "windstone-low",
+      "ticks": 40,
+      "contacts": 1,
+      "position": {
+        "x": 2755907,
+        "y": 140672,
+        "z": 3218664
+      }
+    },
+    {
+      "mode": "self-level",
+      "landmark": "wash-west-tower",
+      "ticks": 39,
+      "contacts": 1,
+      "position": {
+        "x": 6950363,
+        "y": 142263,
+        "z": 5251732
+      }
+    },
+    {
+      "mode": "self-level",
+      "landmark": "playa-natural-window",
+      "ticks": 40,
+      "contacts": 1,
+      "position": {
+        "x": 2921324,
+        "y": 76079,
+        "z": 11121800
+      }
+    },
+    {
+      "mode": "self-level",
+      "landmark": "scarp-low-rib",
+      "ticks": 40,
+      "contacts": 1,
+      "position": {
+        "x": 11358224,
+        "y": 126314,
+        "z": 2860790
+      }
+    },
+    {
+      "mode": "self-level",
+      "landmark": "mesa-broken-crown",
+      "ticks": 40,
+      "contacts": 1,
+      "position": {
+        "x": 11908694,
+        "y": 192309,
+        "z": 9039986
+      }
+    },
+    {
+      "mode": "self-level",
+      "landmark": "plain-first-tor",
+      "ticks": 39,
+      "contacts": 1,
+      "position": {
+        "x": 10292776,
+        "y": 151838,
+        "z": 13536142
+      }
+    },
+    {
+      "mode": "acro",
+      "landmark": "windstone-low",
+      "ticks": 40,
+      "contacts": 1,
+      "position": {
+        "x": 2755907,
+        "y": 140672,
+        "z": 3218664
+      }
+    },
+    {
+      "mode": "acro",
+      "landmark": "wash-west-tower",
+      "ticks": 39,
+      "contacts": 1,
+      "position": {
+        "x": 6950363,
+        "y": 142263,
+        "z": 5251732
+      }
+    },
+    {
+      "mode": "acro",
+      "landmark": "playa-natural-window",
+      "ticks": 40,
+      "contacts": 1,
+      "position": {
+        "x": 2921324,
+        "y": 76079,
+        "z": 11121800
+      }
+    },
+    {
+      "mode": "acro",
+      "landmark": "scarp-low-rib",
+      "ticks": 40,
+      "contacts": 1,
+      "position": {
+        "x": 11358224,
+        "y": 126314,
+        "z": 2860790
+      }
+    },
+    {
+      "mode": "acro",
+      "landmark": "mesa-broken-crown",
+      "ticks": 40,
+      "contacts": 1,
+      "position": {
+        "x": 11908694,
+        "y": 192309,
+        "z": 9039986
+      }
+    },
+    {
+      "mode": "acro",
+      "landmark": "plain-first-tor",
+      "ticks": 39,
+      "contacts": 1,
+      "position": {
+        "x": 10292776,
+        "y": 151838,
+        "z": 13536142
+      }
+    }
+  ],
+  "records": [
+    {
+      "mode": "self-level",
+      "route": "windstone-weave",
+      "segments": [
+        {
+          "ticks": 1070,
+          "position": {
+            "x": 2779934,
+            "y": 137379,
+            "z": 3241982
+          }
+        },
+        {
+          "ticks": 1008,
+          "position": {
+            "x": 2829937,
+            "y": 138237,
+            "z": 3238032
+          }
+        },
+        {
+          "ticks": 1294,
+          "position": {
+            "x": 2899936,
+            "y": 139100,
+            "z": 3239992
+          }
+        }
+      ],
+      "ticks": 3372,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0.09517592279469043,
+      "maxHeightErrorM": 0.10532049347472139
+    },
+    {
+      "mode": "self-level",
+      "route": "wash-tower-passage",
+      "segments": [
+        {
+          "ticks": 1141,
+          "position": {
+            "x": 6980000,
+            "y": 124339,
+            "z": 5249937
+          }
+        },
+        {
+          "ticks": 1436,
+          "position": {
+            "x": 6980000,
+            "y": 127205,
+            "z": 5329936
+          }
+        }
+      ],
+      "ticks": 2577,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.09287500000000648
+    },
+    {
+      "mode": "self-level",
+      "route": "playa-window-crossing",
+      "segments": [
+        {
+          "ticks": 1069,
+          "position": {
+            "x": 2910000,
+            "y": 50371,
+            "z": 11119942
+          }
+        },
+        {
+          "ticks": 1079,
+          "position": {
+            "x": 2910000,
+            "y": 50384,
+            "z": 11174937
+          }
+        }
+      ],
+      "ticks": 2148,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.15001518749999576
+    },
+    {
+      "mode": "self-level",
+      "route": "scarp-rib-weave",
+      "segments": [
+        {
+          "ticks": 1355,
+          "position": {
+            "x": 11389942,
+            "y": 123308,
+            "z": 2890000
+          }
+        },
+        {
+          "ticks": 1221,
+          "position": {
+            "x": 11454941,
+            "y": 127618,
+            "z": 2890000
+          }
+        },
+        {
+          "ticks": 1221,
+          "position": {
+            "x": 11519942,
+            "y": 134039,
+            "z": 2890000
+          }
+        }
+      ],
+      "ticks": 3797,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.22203483173070993
+    },
+    {
+      "mode": "self-level",
+      "route": "mesa-crown-orbit",
+      "segments": [
+        {
+          "ticks": 962,
+          "position": {
+            "x": 11874966,
+            "y": 175577,
+            "z": 9005066
+          }
+        },
+        {
+          "ticks": 960,
+          "position": {
+            "x": 11919935,
+            "y": 175395,
+            "z": 8990029
+          }
+        },
+        {
+          "ticks": 969,
+          "position": {
+            "x": 11964949,
+            "y": 175395,
+            "z": 9004971
+          }
+        },
+        {
+          "ticks": 960,
+          "position": {
+            "x": 11979974,
+            "y": 175666,
+            "z": 9049936
+          }
+        }
+      ],
+      "ticks": 3851,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0.3146466271875821,
+      "maxHeightErrorM": 0.16610137249998047
+    },
+    {
+      "mode": "self-level",
+      "route": "plain-tor-slalom",
+      "segments": [
+        {
+          "ticks": 1069,
+          "position": {
+            "x": 10314940,
+            "y": 141354,
+            "z": 13560000
+          }
+        },
+        {
+          "ticks": 1008,
+          "position": {
+            "x": 10364934,
+            "y": 141303,
+            "z": 13560000
+          }
+        },
+        {
+          "ticks": 1079,
+          "position": {
+            "x": 10419938,
+            "y": 141387,
+            "z": 13560000
+          }
+        },
+        {
+          "ticks": 1150,
+          "position": {
+            "x": 10479944,
+            "y": 141621,
+            "z": 13560000
+          }
+        }
+      ],
+      "ticks": 4306,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.15132565249999175
+    },
+    {
+      "mode": "acro",
+      "route": "windstone-weave",
+      "segments": [
+        {
+          "ticks": 1070,
+          "position": {
+            "x": 2779933,
+            "y": 137379,
+            "z": 3242007
+          }
+        },
+        {
+          "ticks": 1008,
+          "position": {
+            "x": 2829938,
+            "y": 138237,
+            "z": 3238032
+          }
+        },
+        {
+          "ticks": 1294,
+          "position": {
+            "x": 2899934,
+            "y": 139100,
+            "z": 3239989
+          }
+        }
+      ],
+      "ticks": 3372,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0.09788726035224457,
+      "maxHeightErrorM": 0.10528380021412431
+    },
+    {
+      "mode": "acro",
+      "route": "wash-tower-passage",
+      "segments": [
+        {
+          "ticks": 1141,
+          "position": {
+            "x": 6980000,
+            "y": 124339,
+            "z": 5249937
+          }
+        },
+        {
+          "ticks": 1436,
+          "position": {
+            "x": 6980000,
+            "y": 127205,
+            "z": 5329938
+          }
+        }
+      ],
+      "ticks": 2577,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.09287500000000648
+    },
+    {
+      "mode": "acro",
+      "route": "playa-window-crossing",
+      "segments": [
+        {
+          "ticks": 1069,
+          "position": {
+            "x": 2910000,
+            "y": 50371,
+            "z": 11119941
+          }
+        },
+        {
+          "ticks": 1079,
+          "position": {
+            "x": 2910000,
+            "y": 50384,
+            "z": 11174937
+          }
+        }
+      ],
+      "ticks": 2148,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.15001518749999576
+    },
+    {
+      "mode": "acro",
+      "route": "scarp-rib-weave",
+      "segments": [
+        {
+          "ticks": 1355,
+          "position": {
+            "x": 11389941,
+            "y": 123303,
+            "z": 2890000
+          }
+        },
+        {
+          "ticks": 1221,
+          "position": {
+            "x": 11454941,
+            "y": 127619,
+            "z": 2890000
+          }
+        },
+        {
+          "ticks": 1221,
+          "position": {
+            "x": 11519943,
+            "y": 134039,
+            "z": 2890000
+          }
+        }
+      ],
+      "ticks": 3797,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.22283703365393137
+    },
+    {
+      "mode": "acro",
+      "route": "mesa-crown-orbit",
+      "segments": [
+        {
+          "ticks": 955,
+          "position": {
+            "x": 11874957,
+            "y": 175582,
+            "z": 9005068
+          }
+        },
+        {
+          "ticks": 960,
+          "position": {
+            "x": 11919938,
+            "y": 175395,
+            "z": 8990034
+          }
+        },
+        {
+          "ticks": 970,
+          "position": {
+            "x": 11964934,
+            "y": 175395,
+            "z": 9004961
+          }
+        },
+        {
+          "ticks": 960,
+          "position": {
+            "x": 11979960,
+            "y": 175666,
+            "z": 9049934
+          }
+        }
+      ],
+      "ticks": 3845,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0.31717644931565697,
+      "maxHeightErrorM": 0.1651691199999732
+    },
+    {
+      "mode": "acro",
+      "route": "plain-tor-slalom",
+      "segments": [
+        {
+          "ticks": 1069,
+          "position": {
+            "x": 10314941,
+            "y": 141354,
+            "z": 13560000
+          }
+        },
+        {
+          "ticks": 1008,
+          "position": {
+            "x": 10364934,
+            "y": 141303,
+            "z": 13560000
+          }
+        },
+        {
+          "ticks": 1079,
+          "position": {
+            "x": 10419941,
+            "y": 141387,
+            "z": 13560000
+          }
+        },
+        {
+          "ticks": 1150,
+          "position": {
+            "x": 10479944,
+            "y": 141621,
+            "z": 13560000
+          }
+        }
+      ],
+      "ticks": 4306,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.15132513000000358
+    }
+  ],
+  "playerReady": false,
+  "claim": "Six close-range licensed rock compositions flown by actual shared-flight commands in both modes; not whole-map traversal, native art acceptance, device FPS or public admission."
+}

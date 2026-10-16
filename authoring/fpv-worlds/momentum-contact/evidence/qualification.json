@@ -1,0 +1,292 @@
+{
+  "format": "fpv-hunt-momentum-qualification.v1",
+  "baselineRevision": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "runtime": "v20.19.5",
+  "checks": 15714,
+  "passed": true,
+  "runtimeFiles": [
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "bytes": 60167,
+      "sha256": "626563d18b6180f009aaac8ed5d599069e62b25a1a35af6a860a85a30b12b6d8"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt.mjs",
+      "bytes": 4144,
+      "sha256": "3efbfb2ffb36b381927c4d3fbdb2bf664a2ed3e55558550b4f0d91080e5682ff"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-actor-editor.mjs",
+      "bytes": 66207,
+      "sha256": "28471be1c8659b76072ce9ae21dd0c0547f480486d56e208339327b9718c785a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 268915,
+      "sha256": "6283394f54747669ee980c692e7a5bdf9ae56bc21b33e593f77e314571ba2022"
+    }
+  ],
+  "rows": [
+    {
+      "kind": "legacy",
+      "courses": 134,
+      "archivedReplays": [
+        {
+          "kind": "all-catches",
+          "finalStateIdentity": "cbde57f921e595d7",
+          "status": "complete",
+          "ticks": 1232
+        },
+        {
+          "kind": "deliberate-tail-contact",
+          "finalStateIdentity": "2420615982e6b957",
+          "status": "failed",
+          "ticks": 1007
+        },
+        {
+          "kind": "pulses-do-not-catch",
+          "finalStateIdentity": "d99d1101bfc8519a",
+          "status": "active",
+          "ticks": 60
+        },
+        {
+          "kind": "wrong-order-contact",
+          "finalStateIdentity": "b396d2025885f3c6",
+          "status": "active",
+          "ticks": 60
+        }
+      ]
+    },
+    {
+      "kind": "baseline-admission",
+      "sourceRevision": "2d447bc790bdf3951251c99041c8a918363ece0a",
+      "absentPolicyAccepted": true,
+      "newPolicyRejected": true,
+      "normalizedCourseBytesExact": 134
+    },
+    {
+      "kind": "replay-rejection",
+      "check": "self-level: legacy proof cannot be relabeled as new policy",
+      "reason": "Exact world, runtime, mode, response, rules and conditions required"
+    },
+    {
+      "kind": "replay-rejection",
+      "check": "self-level: new proof cannot replay under legacy policy",
+      "reason": "Exact world, runtime, mode, response, rules and conditions required"
+    },
+    {
+      "kind": "replay-rejection",
+      "check": "self-level: model-only substitution is rejected",
+      "reason": "Exact world, runtime, mode, response, rules and conditions required"
+    },
+    {
+      "kind": "fresh-practice",
+      "mode": "self-level",
+      "oldModel": "civilian-world-hunt.v1",
+      "newModel": "civilian-world-hunt.v2",
+      "oldTicks": 1043,
+      "newTicks": 1044,
+      "catches": [
+        {
+          "actor": "runner-01",
+          "tick": 619,
+          "position": {
+            "x": -1964,
+            "y": 1000,
+            "z": -3979
+          },
+          "incoming": {
+            "x": -661,
+            "y": 4,
+            "z": -9
+          },
+          "outgoing": {
+            "x": -661,
+            "y": 4,
+            "z": -9
+          }
+        },
+        {
+          "actor": "runner-02",
+          "tick": 1019,
+          "position": {
+            "x": 9904,
+            "y": 1000,
+            "z": -10939
+          },
+          "incoming": {
+            "x": 706,
+            "y": 4,
+            "z": -50
+          },
+          "outgoing": {
+            "x": 706,
+            "y": 4,
+            "z": -50
+          }
+        }
+      ],
+      "movingTicks": 1019,
+      "recoveredContinuationExact": true,
+      "finalStateIdentity": "2972f5edffe94e0f"
+    },
+    {
+      "kind": "replay-rejection",
+      "check": "acro: legacy proof cannot be relabeled as new policy",
+      "reason": "Exact world, runtime, mode, response, rules and conditions required"
+    },
+    {
+      "kind": "replay-rejection",
+      "check": "acro: new proof cannot replay under legacy policy",
+      "reason": "Exact world, runtime, mode, response, rules and conditions required"
+    },
+    {
+      "kind": "replay-rejection",
+      "check": "acro: model-only substitution is rejected",
+      "reason": "Exact world, runtime, mode, response, rules and conditions required"
+    },
+    {
+      "kind": "fresh-practice",
+      "mode": "acro",
+      "oldModel": "civilian-world-hunt.v1",
+      "newModel": "civilian-world-hunt.v2",
+      "oldTicks": 1043,
+      "newTicks": 1044,
+      "catches": [
+        {
+          "actor": "runner-01",
+          "tick": 619,
+          "position": {
+            "x": -1963,
+            "y": 1000,
+            "z": -3986
+          },
+          "incoming": {
+            "x": -661,
+            "y": 4,
+            "z": -8
+          },
+          "outgoing": {
+            "x": -661,
+            "y": 4,
+            "z": -8
+          }
+        },
+        {
+          "actor": "runner-02",
+          "tick": 1019,
+          "position": {
+            "x": 9899,
+            "y": 1000,
+            "z": -10949
+          },
+          "incoming": {
+            "x": 709,
+            "y": 4,
+            "z": -49
+          },
+          "outgoing": {
+            "x": 709,
+            "y": 4,
+            "z": -49
+          }
+        }
+      ],
+      "movingTicks": 1019,
+      "recoveredContinuationExact": true,
+      "finalStateIdentity": "0ae105ccc50b100b"
+    },
+    {
+      "kind": "unchanged-contact",
+      "scenario": "wrong-order",
+      "ticks": 1200,
+      "contactTicks": 100,
+      "supportedTicks": 0,
+      "stoppedTicks": 100
+    },
+    {
+      "kind": "unchanged-contact",
+      "scenario": "non-target",
+      "ticks": 1200,
+      "contactTicks": 100,
+      "supportedTicks": 0,
+      "stoppedTicks": 100
+    },
+    {
+      "kind": "unchanged-contact",
+      "scenario": "inactive-objective",
+      "ticks": 1200,
+      "contactTicks": 100,
+      "supportedTicks": 0,
+      "stoppedTicks": 100
+    },
+    {
+      "kind": "unchanged-contact",
+      "scenario": "moving-hazard",
+      "ticks": 1200,
+      "contactTicks": 92,
+      "supportedTicks": 0,
+      "stoppedTicks": 92
+    },
+    {
+      "kind": "unchanged-contact",
+      "scenario": "solid-wall",
+      "ticks": 521,
+      "contactTicks": 187,
+      "supportedTicks": 0,
+      "stoppedTicks": 0
+    },
+    {
+      "kind": "unchanged-contact",
+      "scenario": "ground-support",
+      "ticks": 1200,
+      "contactTicks": 0,
+      "supportedTicks": 1200,
+      "stoppedTicks": 0
+    },
+    {
+      "kind": "unchanged-contact",
+      "scenario": "world-bounds",
+      "ticks": 1200,
+      "contactTicks": 716,
+      "supportedTicks": 0,
+      "stoppedTicks": 1
+    },
+    {
+      "kind": "editor-preservation",
+      "policy": "absent",
+      "apply": true,
+      "move": true,
+      "targetOrder": true,
+      "actorRemoval": true,
+      "hostUndo": true,
+      "jsonRoundTrip": true
+    },
+    {
+      "kind": "editor-preservation",
+      "policy": "retain-momentum-v1",
+      "apply": true,
+      "move": true,
+      "targetOrder": true,
+      "actorRemoval": true,
+      "hostUndo": true,
+      "jsonRoundTrip": true
+    },
+    {
+      "kind": "importable-practice",
+      "pack": "momentum-contact-practice.rlpack",
+      "editable": "momentum-contact-practice.zip",
+      "bytes": 2646,
+      "editableBytes": 2705,
+      "identity": "fpv-pack:01c247ba293abc36af8ff26667b2e12f8fdd0f85ec8e429d1d27f320de7b9c9e",
+      "course": "momentum-contact-practice-01",
+      "reproducible": true,
+      "exactEditableRoundTrip": true
+    }
+  ],
+  "limitations": [
+    "Manual functional probe; no permanent unit coverage is added.",
+    "Ordinary FlightCourse.v2 Hunt only; pursuit opt-in is rejected.",
+    "No browser, package, deployment, physical device or player-acceptance claim."
+  ]
+}

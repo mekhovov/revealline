@@ -1,0 +1,26 @@
+{
+  "commit": "aa01ebfed8c97d47f4495fdb73841b3e463a4c00",
+  "passed": true,
+  "files": [
+    {
+      "path": "endurance.html",
+      "bytes": 3832,
+      "sha256": "8d4faa9dc91be8558e05c82029fb6ee559a5e73d27ff513c9e673fa6e930fa88"
+    },
+    {
+      "path": "endurance.mjs",
+      "bytes": 17678,
+      "sha256": "c8fe1bf464e8157fd1f5dccc2333b004210e7d1505f32f442c693c2cfb95093c"
+    },
+    {
+      "path": "endurance-clock.mjs",
+      "bytes": 2454,
+      "sha256": "9c3e9f9ae37e25f5f68408fbe4774a7ef7021b7f2d08523054a9265bb7716678"
+    },
+    {
+      "path": "endurance-fixture.mjs",
+      "bytes": 4736,
+      "sha256": "7b627678c4ff2ff9d2bc11d0b67ab16e04322aedca22b436901a9e366e3d4c12"
+    }
+  ]
+}

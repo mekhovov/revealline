@@ -1,0 +1,19 @@
+{
+  "sourceRevision": "f57aa287db7a80fe27342adc4a1f149d8fe4883c",
+  "version": "0.151.1",
+  "distributionFiles": 3275,
+  "distributionSha256": "a68979a2e08f1fb0ae035f69bfd2ec8cd4a80cc0560fd379c623bcb26eb7af98",
+  "combinedTests": {
+    "passed": 363,
+    "failed": 0
+  },
+  "optionalPackageTests": {
+    "passed": 16,
+    "failed": 0
+  },
+  "catalogueSetups": 1440,
+  "catalogueProofs": 1452,
+  "physicalDevicesTested": false,
+  "playerStudy": "optional; waived",
+  "buildOutput": "Verified generated output removed after retaining this receipt."
+}

@@ -1,0 +1,296 @@
+TAP version 13
+# Subtest: modal restoration uses an explicit visible fallback when its opener becomes display
+ok 1 - modal restoration uses an explicit visible fallback when its opener becomes display
+  ---
+  duration_ms: 1.99125
+  ...
+# Subtest: modal restoration uses an explicit visible fallback when its opener becomes visibility
+ok 2 - modal restoration uses an explicit visible fallback when its opener becomes visibility
+  ---
+  duration_ms: 0.448
+  ...
+# Subtest: modal restoration uses an explicit visible fallback when its opener becomes disabled
+ok 3 - modal restoration uses an explicit visible fallback when its opener becomes disabled
+  ---
+  duration_ms: 0.124584
+  ...
+# Subtest: modal restoration uses an explicit visible fallback when its opener becomes detached
+ok 4 - modal restoration uses an explicit visible fallback when its opener becomes detached
+  ---
+  duration_ms: 0.177333
+  ...
+# Subtest: modal fallback cannot steal deliberate replacement focus or escape a remaining dialog
+ok 5 - modal fallback cannot steal deliberate replacement focus or escape a remaining dialog
+  ---
+  duration_ms: 0.231292
+  ...
+# Subtest: fallback failure, hidden targets and reentrant modal opening never steal focus
+ok 6 - fallback failure, hidden targets and reentrant modal opening never steal focus
+  ---
+  duration_ms: 0.493834
+  ...
+# Subtest: opening order owns controller scope across reversed DOM order, Back and fresh reopen
+ok 7 - opening order owns controller scope across reversed DOM order, Back and fresh reopen
+  ---
+  duration_ms: 2.473209
+  ...
+# Subtest: ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+ok 8 - ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+  ---
+  duration_ms: 0.17225
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus hidden/at-close
+ok 9 - modal close keeps stack cleanup but does not restore focus hidden/at-close
+  ---
+  duration_ms: 0.304916
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus hidden/after-close
+ok 10 - modal close keeps stack cleanup but does not restore focus hidden/after-close
+  ---
+  duration_ms: 0.192791
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus blur/at-close
+ok 11 - modal close keeps stack cleanup but does not restore focus blur/at-close
+  ---
+  duration_ms: 0.136083
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus blur/after-close
+ok 12 - modal close keeps stack cleanup but does not restore focus blur/after-close
+  ---
+  duration_ms: 0.201375
+  ...
+# Subtest: Collection keyboard disclosure activation toggles exactly once and preserves the paused attempt
+ok 13 - Collection keyboard disclosure activation toggles exactly once and preserves the paused attempt
+  ---
+  duration_ms: 1163.602292
+  ...
+# Subtest: Collection touch disclosure activation toggles exactly once and preserves the paused attempt
+ok 14 - Collection touch disclosure activation toggles exactly once and preserves the paused attempt
+  ---
+  duration_ms: 5126.540833
+  ...
+# Subtest: actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight
+ok 15 - actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight
+  ---
+  duration_ms: 5906.009125
+  ...
+# Subtest: actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+ok 16 - actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+  ---
+  duration_ms: 1251.602417
+  ...
+# Subtest: actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 17 - actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 1719.32825
+  ...
+# Subtest: actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 18 - actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 1701.968542
+  ...
+# Subtest: Collection disclosure collapse preserves reading, focus and the paused attempt
+    # Subtest: without leaving hidden focus or resuming
+    ok 1 - without leaving hidden focus or resuming
+      ---
+      duration_ms: 203.789417
+      ...
+    # Subtest: without stealing later focus
+    ok 2 - without stealing later focus
+      ---
+      duration_ms: 346.253667
+      ...
+    1..2
+ok 19 - Collection disclosure collapse preserves reading, focus and the paused attempt
+  ---
+  duration_ms: 1691.210416
+  ...
+# Subtest: actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+ok 20 - actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+  ---
+  duration_ms: 3786.449917
+  ...
+# Subtest: actual Solo Settings restores Game menu when responsive layout hides its toolbar opener
+ok 21 - actual Solo Settings restores Game menu when responsive layout hides its toolbar opener
+  ---
+  duration_ms: 1002.129958
+  ...
+# Subtest: title Settings returns to its title opener after controller Back or native Escape
+ok 22 - title Settings returns to its title opener after controller Back or native Escape
+  ---
+  duration_ms: 1133.838167
+  ...
+# Subtest: opening Settings during a flight keeps its paused-flight return instead of opening the title
+ok 23 - opening Settings during a flight keeps its paused-flight return instead of opening the title
+  ---
+  duration_ms: 1806.000583
+  ...
+# Subtest: title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+ok 24 - title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+  ---
+  duration_ms: 1527.294916
+  ...
+# Subtest: Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+ok 25 - Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+  ---
+  duration_ms: 1922.804375
+  ...
+# Subtest: title picture controller returns through Collection and Settings to its exact opener
+ok 26 - title picture controller returns through Collection and Settings to its exact opener
+  ---
+  duration_ms: 551.0395
+  ...
+# Subtest: title picture escape returns through Collection and Settings to its exact opener
+ok 27 - title picture escape returns through Collection and Settings to its exact opener
+  ---
+  duration_ms: 525.885458
+  ...
+# Subtest: title picture close button returns through Collection and Settings to its exact opener
+ok 28 - title picture close button returns through Collection and Settings to its exact opener
+  ---
+  duration_ms: 526.759375
+  ...
+# Subtest: picture Replay deliberately leaves title and Collection for the selected ready briefing
+ok 29 - picture Replay deliberately leaves title and Collection for the selected ready briefing
+  ---
+  duration_ms: 571.944041
+  ...
+# Subtest: Collection Choose appearance opens Missions setup over retained Settings and title
+ok 30 - Collection Choose appearance opens Missions setup over retained Settings and title
+  ---
+  duration_ms: 5646.785958
+  ...
+# Subtest: Collection resets its return label from Settings to a direct paused-flight visit
+ok 31 - Collection resets its return label from Settings to a direct paused-flight visit
+  ---
+  duration_ms: 7139.031875
+  ...
+# Subtest: programmatic Collection after a real win does not refocus a hidden opener
+ok 32 - programmatic Collection after a real win does not refocus a hidden opener
+  ---
+  duration_ms: 24263.113042
+  ...
+# Subtest: title Workshop Library returns through actual openers for button, Escape and controller Back
+ok 33 - title Workshop Library returns through actual openers for button, Escape and controller Back
+  ---
+  duration_ms: 1701.5395
+  ...
+# Subtest: paused flight Workshop Library returns through actual openers for button, Escape and controller Back
+ok 34 - paused flight Workshop Library returns through actual openers for button, Escape and controller Back
+  ---
+  duration_ms: 3674.906291
+  ...
+# Subtest: title Settings How to play returns through its exact retained openers
+ok 35 - title Settings How to play returns through its exact retained openers
+  ---
+  duration_ms: 1548.9275
+  ...
+# Subtest: paused flight Settings How to play returns through its exact retained openers
+ok 36 - paused flight Settings How to play returns through its exact retained openers
+  ---
+  duration_ms: 3531.285208
+  ...
+# Subtest: Workshop Library explicit challenge selection leaves retained parents from title
+ok 37 - Workshop Library explicit challenge selection leaves retained parents from title
+  ---
+  duration_ms: 2348.130916
+  ...
+# Subtest: Workshop Library explicit challenge selection leaves retained parents from paused flight
+ok 38 - Workshop Library explicit challenge selection leaves retained parents from paused flight
+  ---
+  duration_ms: 3693.926458
+  ...
+# Subtest: Workshop Library resume-save returns a verified saved cut to its paused field
+ok 39 - Workshop Library resume-save returns a verified saved cut to its paused field
+  ---
+  duration_ms: 8668.596416
+  ...
+# Subtest: Workshop Library import-save returns a verified saved cut to its paused field
+ok 40 - Workshop Library import-save returns a verified saved cut to its paused field
+  ---
+  duration_ms: 8742.568208
+  ...
+# Subtest: Team departure button stays at the actual Missions opener without resuming the saved cut
+ok 41 - Team departure button stays at the actual Missions opener without resuming the saved cut
+  ---
+  duration_ms: 10580.739792
+  ...
+# Subtest: Team departure escape stays at the actual Missions opener without resuming the saved cut
+ok 42 - Team departure escape stays at the actual Missions opener without resuming the saved cut
+  ---
+  duration_ms: 10615.074208
+  ...
+# Subtest: Team departure controller stays at the actual Missions opener without resuming the saved cut
+ok 43 - Team departure controller stays at the actual Missions opener without resuming the saved cut
+  ---
+  duration_ms: 10459.368541
+  ...
+# Subtest: actual nested Collection picture Tab wraps only its current modal and close restores the earned card
+ok 44 - actual nested Collection picture Tab wraps only its current modal and close restores the earned card
+  ---
+  duration_ms: 388.238083
+  ...
+# Subtest: Missions preserves its Home opener after Collection appearance setup
+ok 45 - Missions preserves its Home opener after Collection appearance setup
+  ---
+  duration_ms: 6329.755458
+  ...
+# Subtest: Missions preserves its field opener after Collection appearance setup
+ok 46 - Missions preserves its field opener after Collection appearance setup
+  ---
+  duration_ms: 6276.807792
+  ...
+# Subtest: legacy Missions Back uses an available Home fallback when its opener is disabled
+ok 47 - legacy Missions Back uses an available Home fallback when its opener is disabled
+  ---
+  duration_ms: 997.01625
+  ...
+# Subtest: legacy Missions Back uses an available Home fallback when its opener is hidden
+ok 48 - legacy Missions Back uses an available Home fallback when its opener is hidden
+  ---
+  duration_ms: 1091.378125
+  ...
+# Subtest: legacy Missions Back uses an available Home fallback when its opener is detached
+ok 49 - legacy Missions Back uses an available Home fallback when its opener is detached
+  ---
+  duration_ms: 991.938167
+  ...
+# Subtest: legacy Missions close callback retains newer dialog ownership before reopening Home
+ok 50 - legacy Missions close callback retains newer dialog ownership before reopening Home
+  ---
+  duration_ms: 1016.9855
+  ...
+# Subtest: legacy Missions close callback retains newer focus ownership before reopening Home
+ok 51 - legacy Missions close callback retains newer focus ownership before reopening Home
+  ---
+  duration_ms: 1027.25825
+  ...
+# Subtest: legacy Missions close callback retains newer background ownership before reopening Home
+ok 52 - legacy Missions close callback retains newer background ownership before reopening Home
+  ---
+  duration_ms: 992.250875
+  ...
+# Subtest: Missions return cannot cover a newer dialog established by its Home pause callback
+ok 53 - Missions return cannot cover a newer dialog established by its Home pause callback
+  ---
+  duration_ms: 1000.856417
+  ...
+# Subtest: direct Mission brief stops before moving its view after a dispose pause callback
+ok 54 - direct Mission brief stops before moving its view after a dispose pause callback
+  ---
+  duration_ms: 1020.166291
+  ...
+# Subtest: direct Mission brief stops before moving its view after a home pause callback
+ok 55 - direct Mission brief stops before moving its view after a home pause callback
+  ---
+  duration_ms: 1042.955666
+  ...
+1..55
+# tests 57
+# suites 0
+# pass 57
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 164755.342208

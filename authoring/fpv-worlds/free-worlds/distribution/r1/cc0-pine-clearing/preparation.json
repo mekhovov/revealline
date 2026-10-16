@@ -1,0 +1,160 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-pine-clearing",
+  "title": [
+    "Pine Clearing",
+    "Соснова галявина"
+  ],
+  "kit": "nature-kit",
+  "sourceURL": "https://kenney.nl/assets/nature-kit",
+  "downloadURL": "https://kenney.nl/media/pages/assets/nature-kit/37ac38a37b-1677698939/kenney_nature-kit.zip",
+  "archiveSha256": "fa7974a0d342bfe63c38664ba9f8ec1a4aab8ea25f099bdc56870e33588c4d9d",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 54368,
+  "modelSha256": "57644e2cc7f713b6b9492207bb9f8bcefae5c6e1fe19fc46f5fa43915b3c270a",
+  "packBytes": 131266,
+  "packSha256": "59c448a1226ad03a3881322ff7d9d766cc7ca35ef888267665fe66399cfe8b3f",
+  "collisionSurfaces": 19,
+  "collisionTriangles": 1260,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLTF format/tree_pineTallA.glb",
+      "sha256": "e0a56eb196d8a64ba86c7304d607136e17e6f9ad748dffcf86bd53b18b91b196",
+      "placement": {
+        "model": "tree_pineTallA",
+        "x": -17,
+        "z": 20,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 25.513457616757123
+    },
+    {
+      "model": "Models/GLTF format/tree_pineTallA.glb",
+      "sha256": "e0a56eb196d8a64ba86c7304d607136e17e6f9ad748dffcf86bd53b18b91b196",
+      "placement": {
+        "model": "tree_pineTallA",
+        "x": 17,
+        "z": 20,
+        "size": 10,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 25.513457616757123
+    },
+    {
+      "model": "Models/GLTF format/tree_pineTallB.glb",
+      "sha256": "49b54146351e1e009e97ee592f997a90a16b10c5467baf734d352df1cddec5d1",
+      "placement": {
+        "model": "tree_pineTallB",
+        "x": -17,
+        "z": 0,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 25.513457616757123
+    },
+    {
+      "model": "Models/GLTF format/tree_pineTallB.glb",
+      "sha256": "49b54146351e1e009e97ee592f997a90a16b10c5467baf734d352df1cddec5d1",
+      "placement": {
+        "model": "tree_pineTallB",
+        "x": 17,
+        "z": 0,
+        "size": 10,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 25.513457616757123
+    },
+    {
+      "model": "Models/GLTF format/tree_oak.glb",
+      "sha256": "d7fd8773674928c50c11b66d12c636d49bdcc15a8b1c7fbb98e6f63a3439a3f3",
+      "placement": {
+        "model": "tree_oak",
+        "x": -17,
+        "z": -20,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 13.519944905543726
+    },
+    {
+      "model": "Models/GLTF format/tree_oak.glb",
+      "sha256": "d7fd8773674928c50c11b66d12c636d49bdcc15a8b1c7fbb98e6f63a3439a3f3",
+      "placement": {
+        "model": "tree_oak",
+        "x": 17,
+        "z": -20,
+        "size": 10,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 13.519944905543726
+    },
+    {
+      "model": "Models/GLTF format/cliff_cave_rock.glb",
+      "sha256": "2d83296b0166ad0e980152ad4f45b4e45349e932a6b6c2adbe7eb606a6472d8d",
+      "placement": {
+        "model": "cliff_cave_rock",
+        "x": -32,
+        "z": -30,
+        "size": 17,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 17
+    },
+    {
+      "model": "Models/GLTF format/rock_largeA.glb",
+      "sha256": "6dd15390fd96501dcd1454765a17ba61dbbd8d47705dfe5149c8dd92b353ce25",
+      "placement": {
+        "model": "rock_largeA",
+        "x": 26,
+        "z": -32,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.8781917723566695
+    },
+    {
+      "model": "Models/GLTF format/tent_detailedOpen.glb",
+      "sha256": "d54d9665d07e0ff9680e56731c9f5338fc25d93788504d63b8375f54e6444193",
+      "placement": {
+        "model": "tent_detailedOpen",
+        "x": -21,
+        "z": 34,
+        "size": 5,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.7147559728087804
+    },
+    {
+      "model": "Models/GLTF format/log_stack.glb",
+      "sha256": "90eaae4a01ba1f25c2f0c6d83087e4a7a8fac684f2452615245333968d118d68",
+      "placement": {
+        "model": "log_stack",
+        "x": 19,
+        "z": 33,
+        "size": 5,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.04225373395827
+    }
+  ]
+}

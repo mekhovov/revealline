@@ -20,6 +20,8 @@ export function attachOfflinePanel({
   let action = 'prepare';
   const feedback = createOperationStatus($('offline-status'), { isCurrent: () => !disposed });
   const available = availability();
+  const legacyControls = $('offline-legacy-controls');
+  if (legacyControls) legacyControls.hidden = available.packageConsent === true;
   const note = $('offline-optional-note');
   localizedText(note, () => offlineOptionalText(available));
   note.hidden = !available.note;
