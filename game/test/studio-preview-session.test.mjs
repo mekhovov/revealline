@@ -12,10 +12,18 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 function openEarnedResult(page) {
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.$('skip-celebration').onclick();
-  assert.equal(page.$('game-overlay').hidden, true, 'The preview keeps the earned picture in full view.');
+  assert.equal(
+    page.$('game-overlay').hidden,
+    true,
+    'The preview keeps the earned picture in full view.',
+  );
   assert.equal(page.$('show-result').hidden, false, 'The earned picture can return to its result.');
   page.$('show-result').click();
-  assert.equal(page.$('game-overlay').hidden, false, 'The result opens after the picture presentation.');
+  assert.equal(
+    page.$('game-overlay').hidden,
+    false,
+    'The result opens after the picture presentation.',
+  );
   assert.equal(page.$('game-overlay').dataset.kind, 'won');
   assert.equal(page.$('show-result').hidden, true);
   assert.equal(page.$('retry-button').hidden, false);
@@ -127,10 +135,13 @@ test('actual Studio game launch, accepted win, reward reveal and Retry never ope
     'won',
     'The shared engine accepts the legal preview capture.',
   );
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
   await settle(() => {
+    // Preview rewards observe the accepted win without another display interval.
     page.frame(0);
     return page.$('completion-reward-shelf').querySelector('article')?.dataset.earned === 'true';
   });
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   openEarnedResult(page);
   assert.match(page.$('overlay-copy').textContent, /Preview mission complete/);
   assert.match(page.$('overlay-copy').textContent, /Player progress is unchanged/);

@@ -347,13 +347,20 @@ test(
     assert.equal(expected.status, 'won');
     assert.equal(ticks, 469);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(expected));
+    assert.equal(
+      page.doc.querySelector(`article[data-reward-id="${f.reward.id}"]`)?.dataset.earned,
+      'true',
+      'The winning frame exposes the accepted reward before any durability wait.',
+    );
     const checkpoint = authoritativeCheckpoint(page.rendered.run);
     let saved;
     await waitForSaved(async () => {
-      page.frame(0);
+      // Later IDB durability adoption uses the ordinary terminal UI cadence.
+      page.frame(1000 / 60);
       saved = await backend.read();
       return saved.receipts.length === 1;
     });
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     assert.deepEqual(saved.receipts[0].definition, f.reward);
     assert.ok(f.requests.includes(`game/${f.art.path}`));
     page.$('skip-celebration').onclick();
@@ -664,7 +671,11 @@ test(
         authoritativeCheckpoint(expected),
       );
       page.$('skip-celebration').onclick();
-      assert.equal(page.$('game-overlay').hidden, true, 'The earned picture appears before result actions.');
+      assert.equal(
+        page.$('game-overlay').hidden,
+        true,
+        'The earned picture appears before result actions.',
+      );
       assert.equal(page.$('show-result').hidden, false);
       page.$('show-result').click();
       assert.equal(page.$('next-button').disabled, false);
@@ -675,12 +686,18 @@ test(
     await win(`${f.campaignId}-01`);
     page.$('next-button').click();
     const checkpoint = await win(f.missionId);
+    assert.equal(
+      page.doc.querySelector(`article[data-reward-id="${f.reward.id}"]`)?.dataset.earned,
+      'true',
+      'The accepted successor reward is visible before any durability wait.',
+    );
     let saved;
     await waitForSaved(async () => {
-      page.frame(0);
+      page.frame(1000 / 60);
       saved = await backend.read();
       return saved.receipts.length === 2;
     });
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     assert.deepEqual(
       saved.receipts.find((entry) => entry.definition.id === f.reward.id).definition,
       f.reward,
