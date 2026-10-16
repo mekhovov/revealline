@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { inflateRawSync } from 'node:zlib';
 import { JOURNEY_ART_CANDIDATES } from '../game/content-design/journey-art.mjs';
-import { buildProject, readBuildConfig } from './game-cli.mjs';
+import { addOfflineEntries, buildProject, readBuildConfig } from './game-cli.mjs';
 import {
   readExternalDistributionEntries,
   validateExternalDistributionConfig,
@@ -45,6 +45,72 @@ function assertExternalSourceMembers(files, pins) {
     [...pins.values()].sort(byPath),
     'Only exact, explicitly admitted external authoring sources may ship',
   );
+}
+function assertExternalDownloadOwnership(worker, offline, catalogue, chapters) {
+  const match = worker.match(/const CONFIG = (\{[^\n]+\});/);
+  assert(match, 'The emitted worker must embed its frozen offline configuration');
+  const embedded = JSON.parse(match[1]);
+  assert.deepEqual(embedded, offline, 'Worker and loose offline metadata must agree exactly');
+  const byPath = (a, b) => a.path.localeCompare(b.path);
+  for (const chapter of chapters) {
+    const expected = [chapter.pack, chapter.media]
+      .map(({ path, bytes, sha256 }) => ({
+        path,
+        bytes,
+        sha256,
+        kind: 'gameplay',
+      }))
+      .sort(byPath);
+    const paths = expected.map((file) => file.path);
+    for (const pin of expected) {
+      assert(
+        !embedded.files.some((file) => file.path === pin.path),
+        'External bodies stay out of core',
+      );
+      assert(
+        !(embedded.optionalPacks || []).some((file) => file.path === pin.path),
+        'External bodies stay out of legacy optional packs',
+      );
+      assert.deepEqual(
+        embedded.downloadFiles.filter((file) => file.path === pin.path),
+        [pin],
+      );
+      assert.deepEqual(
+        catalogue.files.filter((file) => file.path === pin.path),
+        [pin],
+      );
+    }
+    const owner = `chapter:${chapter.id}`;
+    const groups = catalogue.groups.filter((group) => group.id === owner);
+    assert.equal(groups.length, 1);
+    assert.equal(groups[0].kind, 'gameplay');
+    assert.deepEqual([...groups[0].files].sort(), paths);
+    assert.deepEqual(groups[0].requires, ['shared']);
+    for (const name of paths)
+      assert.deepEqual(
+        catalogue.groups.filter((group) => group.files.includes(name)).map((group) => group.id),
+        [owner],
+        'Each external body belongs only to its explicit chapter',
+      );
+    assert(!downloadFiles(catalogue, ['shared']).some((file) => paths.includes(file.path)));
+    assert.deepEqual(
+      downloadFiles(catalogue, [owner])
+        .filter((file) => paths.includes(file.path))
+        .sort(byPath),
+      expected,
+    );
+    const missions = catalogue.missions.filter((mission) => mission.packId === chapter.id);
+    assert.equal(missions.length, chapter.levels);
+    for (const mission of missions) {
+      assert.deepEqual(mission.groups, [owner]);
+      assert.deepEqual(
+        downloadFiles(catalogue, mission.groups)
+          .filter((file) => paths.includes(file.path))
+          .sort(byPath),
+        expected,
+      );
+    }
+  }
 }
 function assertZipMemberPins(zip, wanted) {
   const counts = new Map();
@@ -208,6 +274,123 @@ test('explicit Production originals retain exact source pins without shipping ne
   );
 });
 
+test('external chapter worker metadata preserves exact optional download ownership', async () => {
+  const chapter = EXTERNAL_CATALOG.chapters[0];
+  const { buildExternalPilot } = await import(
+    '../authoring/library/external-chapter-pilot/build.mjs'
+  );
+  const { payloads } = await buildExternalPilot();
+  const index = JSON.parse(
+    await readFile(path.join(source, 'game/content/mission-library-index.json')),
+  );
+  index.missions = index.missions.filter((mission) => mission.packId === chapter.id);
+  assert.equal(index.missions.length, 3);
+  const entries = [
+    { name: 'game/offline.mjs', bytes: Buffer.from('export {};') },
+    {
+      name: 'game/index.html',
+      bytes: Buffer.from('<html><head></head><body>Fixture</body></html>'),
+    },
+    { name: 'game/content/mission-library-index.json', bytes: Buffer.from(JSON.stringify(index)) },
+    {
+      name: option.catalog,
+      bytes: Buffer.from(JSON.stringify({ ...EXTERNAL_CATALOG, chapters: [chapter] })),
+    },
+  ];
+  for (const kind of ['pack', 'media']) {
+    const bytes = Buffer.from(await payloads[kind].arrayBuffer());
+    assert.equal(bytes.length, chapter[kind].bytes);
+    assert.equal(sha(bytes), chapter[kind].sha256);
+    entries.push({ name: chapter[kind].path, bytes });
+  }
+  await addOfflineEntries(
+    source,
+    entries,
+    { version: 'external-ownership-fixture', sourceRevision: 'a'.repeat(40) },
+    { optionalOffline: [] },
+    [],
+    [chapter.pack.path, chapter.media.path],
+  );
+  const output = new Map(entries.map((entry) => [entry.name, entry.bytes]));
+  const offline = JSON.parse(output.get('offline-cache.json'));
+  const catalogue = JSON.parse(output.get('offline-content.json'));
+  const worker = output.get('service-worker.js').toString();
+  assertExternalDownloadOwnership(worker, offline, catalogue, [chapter]);
+  const pin = offline.downloadFiles.find((file) => file.path === chapter.media.path);
+  const owner = `chapter:${chapter.id}`;
+  // Mutate both worker and loose metadata together, so these probes must fail
+  // on the ownership/pin boundary rather than merely a serialization mismatch.
+  for (const [label, mutate] of [
+    ['core leak', (config) => config.files.push(pin)],
+    [
+      'legacy leak',
+      (config) => {
+        config.optionalPacks = [pin];
+      },
+    ],
+    [
+      'missing worker pin',
+      (config) => {
+        config.downloadFiles = config.downloadFiles.filter((file) => file.path !== pin.path);
+      },
+    ],
+    ['duplicate worker pin', (config) => config.downloadFiles.push(pin)],
+    [
+      'same-length tampered pin',
+      (config, content) => {
+        const altered = Buffer.from(output.get(pin.path));
+        altered[altered.length - 1] ^= 1;
+        assert.equal(altered.length, pin.bytes);
+        config.downloadFiles.find((file) => file.path === pin.path).sha256 = sha(altered);
+        content.files.find((file) => file.path === pin.path).sha256 = sha(altered);
+      },
+    ],
+    [
+      'missing catalogue pin',
+      (_config, content) => {
+        content.files = content.files.filter((file) => file.path !== pin.path);
+      },
+    ],
+    [
+      'missing chapter member',
+      (_config, content) => {
+        content.groups.find((group) => group.id === owner).files = [chapter.pack.path];
+      },
+    ],
+    [
+      'shared owner leak',
+      (_config, content) =>
+        content.groups.find((group) => group.id === 'shared').files.push(pin.path),
+    ],
+    [
+      'wrong mission selection',
+      (_config, content) => {
+        content.missions[0].groups = ['shared'];
+      },
+    ],
+  ]) {
+    const config = structuredClone(offline),
+      content = structuredClone(catalogue);
+    mutate(config, content);
+    const changedWorker = worker.replace(
+      /const CONFIG = (\{[^\n]+\});/,
+      `const CONFIG = ${JSON.stringify(config)};`,
+    );
+    assert.throws(
+      () => assertExternalDownloadOwnership(changedWorker, config, content, [chapter]),
+      assert.AssertionError,
+      label,
+    );
+  }
+  assert.throws(
+    () =>
+      assertExternalDownloadOwnership(worker, { ...offline, buildId: '0'.repeat(64) }, catalogue, [
+        chapter,
+      ]),
+    assert.AssertionError,
+  );
+});
+
 test('explicit real-source build ships thirty-two exact generated bodies once in loose/ZIP/manifest and excludes them from all core metadata', async (t) => {
   const dir = await directory(t),
     out = path.join(dir, 'out');
@@ -341,11 +524,9 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
   }
   assert(offline.files.some((entry) => entry.path === 'game/content/packs/index.json'));
   const worker = await readFile(path.join(out, 'service-worker.js'), 'utf8');
-  for (const name of wanted.keys())
-    assert(
-      !worker.includes(name),
-      'No external body URL is registered in core or legacy worker metadata',
-    );
+  // URLs are deliberately registered for verified chapter downloads. Their
+  // presence must never turn optional bodies into automatic core/legacy work.
+  assertExternalDownloadOwnership(worker, offline, catalogue, EXTERNAL_CATALOG.chapters);
   await t.test(
     'sixteen external choices plus five embedded choices do not relax twelve installed packs or evict owners',
     async () => {
