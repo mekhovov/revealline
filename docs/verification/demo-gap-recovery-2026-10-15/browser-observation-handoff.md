@@ -1,3 +1,5 @@
+> **FINISHED — INTERRUPTED, NOT A PASS.** Final report saved at 2026-10-16T00:20:29.052Z. Owned observer tab/server released and viewport reset. Do not Start, resume, reload or run the post-observation Worker check. See [the exact finite outcome](final-requalification/README.md#real-browser-observation--interrupted-no-endurance-pass). Original instructions below are retained as history, not active run instructions.
+
 # Finite final-source audit and browser observation
 
 ## Frozen source and owned resources
@@ -58,3 +60,11 @@ Update only evidence and qualification/plan documentation, with focused formatti
 Once final evidence is saved, reset the temporary 1200×900 viewport and retain the prior browser presentation setting (false), then release only this observer tab and the verified task-owned port 8832 server. Confirm the exact listener/process before stopping it if the exec session is unavailable. Do not close another tab or kill another server.
 
 Report meaningful completion, a new failure or required user action only. Then **pause this finite heartbeat through automation_update**, preserving its fields. Stop its recurring work after the finite outcome or an unrecoverable limitation. Do not create another observation or retry until green.
+
+## Observer recovery warning — 23:05 UTC
+
+At 22:53:27.323 UTC the observer recorded `checkpoint-storage-unavailable`: its IndexedDB connection is closing. At approximately 1,793 elapsed seconds the game and DOM observer remain attached, playback advances, and there are zero long gaps or attachment failures. Automatic persisted recovery is unavailable; preserve the existing tab and collect the final DOM report directly. Do not reload or restart. [The warning and bounded metadata](final-requalification/browser-recovery-warning-20261015T2305.json) are preserved separately. Three full-report reads changed during collection, so the earlier exact running snapshot remains retained; no partial joined report was accepted. This observer-storage failure is not a game failure or an interrupted observation.
+
+## Final disposition
+
+One child navigation to Couch race at 6,013.239 seconds broke observer attachment. It was manually finalized at 6,298.309 seconds, short of two hours. Source inventories and direct local hashes are unchanged, but the report is invalid for endurance acceptance. Exact final/report checkpoint bytes are preserved. The Worker follow-up is skipped, owned resources are released, and the heartbeat is paused. The cause of the game navigation is not established. No restart is authorized by this historical handoff.

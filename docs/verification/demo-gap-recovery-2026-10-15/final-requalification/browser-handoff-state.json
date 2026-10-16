@@ -3,18 +3,15 @@
   "browserId": "2",
   "tabId": "2",
   "url": "http://127.0.0.1:8832/game/test/browser/demo-watch.html",
-  "status": "observing",
-  "lastObservedStatus": "Hashing served sources. The observation clock has not started.",
+  "status": "finalized-interrupted",
+  "lastObservedStatus": "Finalized manual-stop after child navigation to Couch race; requested duration not reached, observation invalid.",
   "serverSession": 89844,
-  "instruction": "Never press Start again, reload, navigate or edit served source while this observation is active.",
+  "instruction": "Finite observation is finished. Do not Start, resume, reload or run the post-observation Worker check. Preserve all results; heartbeat is PAUSED.",
   "startedAt": "2026-10-15T22:35:30.499Z",
   "intendedDurationSeconds": 7200,
-  "lastCheckpoint": "2026-10-15T22:41:34.056Z",
+  "lastCheckpoint": "2026-10-16T00:20:29.052Z",
   "refreshPerformedBeforeStart": true,
-  "viewportOverride": {
-    "width": 1200,
-    "height": 900
-  },
+  "viewportOverride": null,
   "viewportOverrideReason": "The default browser had no drawable viewport. Applied during the same ongoing observation after about 194 seconds; reset it during final cleanup.",
   "priorBrowserVisibility": false,
   "browserVisibilityRestoredToPrior": true,
@@ -26,5 +23,22 @@
   "initialInventoryFiles": 327,
   "initialInventoryChangedAtCollection": [],
   "startActionRecordedAt": "2026-10-15T22:35:45.960167+00:00",
-  "preliminaryCheckpoint": "browser-start-checkpoint.json"
+  "preliminaryCheckpoint": "browser-start-checkpoint.json",
+  "recoveryStorageWarning": {
+    "at": "2026-10-15T22:53:27.323Z",
+    "type": "checkpoint-storage-unavailable",
+    "message": "Observer IndexedDB connection is closing; automatic checkpoint recovery is unavailable. The DOM report and running game remain available. Preserve the tab and collect the final DOM report without reloading.",
+    "evidence": "browser-recovery-warning-20261015T2305.json"
+  },
+  "latestCollection": "Final DOM report saved exactly in bounded 79,000-character chunks with unchanged before/after markers; SHA-256 eabf6dc013bebe2a78220cf3a3faab82f984e91967cd97e97420612b69a7bd05.",
+  "finishedAt": "2026-10-16T00:20:29.052Z",
+  "finalReport": "browser-observation-final.json",
+  "outcomeSummary": "browser-outcome-summary.json",
+  "requestedDurationReached": false,
+  "observationComplete": false,
+  "viewportOverrideReset": true,
+  "observerTabClosed": true,
+  "ownedServerStopped": true,
+  "workerFollowup": "Skipped because browser observation was interrupted.",
+  "heartbeatStatus": "PAUSED"
 }
