@@ -148,6 +148,9 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   await copy('game/index.html');
   for (const name of [
     'game/boot.mjs',
+    // These real entry points are deferred at runtime, but still ship offline.
+    'game/boot-updates.mjs',
+    'game/editions/bootstrap.mjs',
     'game/access-gate.mjs',
     'game/boot.css',
     ...[...LAUNCHER_APPEARANCE_FILES, ...LAUNCHER_NAVIGATION_FILES].map((name) => `game/${name}`),
@@ -244,6 +247,8 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'index.html',
     'game/index.html',
     'game/boot.mjs',
+    'game/boot-updates.mjs',
+    'game/editions/bootstrap.mjs',
     'game/boot.css',
     'game/ui/handheld-play.css',
     'game/ui/touch-steering.css',
