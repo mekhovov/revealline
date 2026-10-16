@@ -3598,6 +3598,7 @@ export function attachSoundtrackPanel({
     if (state.playing && !audioMaster) await onAudioEnabled();
   }
   function updateAudition() {
+    if (disposed || !dialog.open || doc.hidden) return;
     renderMusicCreatorLinks(auditionSources, auditionTrack, { document: doc });
     const available = auditionURL !== null && !disposed;
     auditionControls.hidden = !available;
@@ -3679,8 +3680,17 @@ export function attachSoundtrackPanel({
     suspended: 'interface:soundtrack.playback.suspended',
     disposed: 'interface:soundtrack.playback.disposed',
   });
-  function update(snapshot = player.snapshot()) {
+  function clearTransportPresentation() {
+    transportActivity?.clear();
+    transportActivity = null;
+  }
+  function update(snapshot) {
     if (disposed) return;
+    if (!dialog.open || doc.hidden) {
+      clearTransportPresentation();
+      return;
+    }
+    if (snapshot === undefined) snapshot = player.snapshot();
     localizedText(now, () =>
       t('interface:soundtrack.nowPlaying', {
         track: snapshot.track?.title ?? t('interface:noTrackSelected'),
@@ -3721,6 +3731,7 @@ export function attachSoundtrackPanel({
     onOpen();
     returnFocus = doc.activeElement;
     if (!dialog.open) dialog.showModal();
+    update();
     if (!onlineCatalogue && !onlineCatalogueController) void loadOnlineCatalogue();
     closeButton.focus();
     if (!saved) {
@@ -3781,6 +3792,7 @@ export function attachSoundtrackPanel({
     reloadOnline.disabled = disposed;
     void playback(() => stopAudition(restoreMusic));
     dialog.close();
+    clearTransportPresentation();
     if (
       restoreFocus &&
       !doc.hidden &&
@@ -3888,6 +3900,7 @@ export function attachSoundtrackPanel({
   });
   listen(doc, 'visibilitychange', () => {
     if (doc.hidden) {
+      clearTransportPresentation();
       const intended = restoreMusic;
       void playback(async () => {
         await stopAudition(false);
@@ -3895,7 +3908,7 @@ export function attachSoundtrackPanel({
         // decides when actual listening may resume; never play a hidden page.
         if (intended && !disposed) player.setIntent(true);
       });
-    }
+    } else if (dialog.open) update();
   });
   function dispose() {
     if (disposed) return;

@@ -116,7 +116,8 @@ export function attachDemoHost({
     controlsLives = null,
     controlsStatus = null,
     controlsCaption = null,
-    controlsController = null;
+    controlsController = null,
+    controlsAudio = null;
   const owners = new WeakMap(),
     listeners = [];
   const listen = (element, type, fn, options) => {
@@ -165,6 +166,7 @@ export function attachDemoHost({
   function renderControls() {
     if (!active) return;
     publishPreparationPhase();
+    if (doc.hidden) return;
     fullscreen.refresh();
     dialog.classList.toggle('is-practice', !!practice);
     const state = currentRun(),
@@ -181,6 +183,7 @@ export function attachDemoHost({
     dialog.dataset.scene = loading ? 'loading' : 'playing';
     const audioState = audio?.snapshot?.(),
       track = audioState?.track;
+    controlsAudio = audioControlFields(audioState);
     text(
       'demo-now-playing',
       track
@@ -331,6 +334,20 @@ export function attachDemoHost({
     for (const action of ['boost', 'ability', 'pickup'])
       text(`demo-${action}`, `${t(`demo:${action}`)} · ${keys[action]}`);
   }
+  const audioControlFields = (state) => [
+    state?.track ? String(state.track.title) : null,
+    state?.track?.artist || t('interface:artistNotRecorded'),
+    !!state?.muted,
+    state?.status ?? 'idle',
+  ];
+  function audioChanged() {
+    if (!active) return;
+    publishPreparationPhase();
+    if (doc.hidden) return;
+    const fields = audioControlFields(audio?.snapshot?.());
+    if (controlsAudio && fields.every((value, index) => value === controlsAudio[index])) return;
+    renderControls();
+  }
   function refreshReadout() {
     const state = currentRun();
     if (
@@ -348,6 +365,7 @@ export function attachDemoHost({
   };
   listen(doc.defaultView, 'resize', invalidateDisplay);
   listen(doc, 'fullscreenchange', invalidateDisplay);
+  listen(doc, 'visibilitychange', renderControls);
   const preferencesChanged = () => {
     if (!active) return;
     invalidateDisplay();
@@ -1071,7 +1089,7 @@ export function attachDemoHost({
     },
   });
   const unsubscribe = onLocaleChange(preferencesChanged);
-  const unsubscribeAudio = audio?.subscribe?.(renderControls);
+  const unsubscribeAudio = audio?.subscribe?.(audioChanged);
   const unsubscribeGuide = guidePreferences.subscribe(renderControls);
   return {
     get active() {
