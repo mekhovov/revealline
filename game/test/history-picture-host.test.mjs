@@ -325,6 +325,8 @@ test('history Load saved flight and explicit Resume keep the saved pin and check
   );
   page.$('library-dialog').close();
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
   ticks(page, 2);
   assert.equal(page.rendered.paused, false);
   assert.equal(page.doc.querySelectorAll('dialog[open]').length, 0);
