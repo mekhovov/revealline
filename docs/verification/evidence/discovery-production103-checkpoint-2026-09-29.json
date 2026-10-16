@@ -1,0 +1,178 @@
+{
+  "format": "revealline-production103-checkpoint-evidence.v1",
+  "publicEligible": false,
+  "promotable": false,
+  "observedAt": "2026-09-29T03:45:53.473147+00:00",
+  "source": {
+    "head": "336a7b58b9a614da61e701fca7626b948ba9ec11",
+    "tree": "4d696c2461e59e30360965dad98a66c3b19940f7",
+    "workingTreeModified": true,
+    "scope": "Exact pinned working-tree software continuation over committed production102; source commit does not yet contain these changes.",
+    "workingInputPins": [
+      {
+        "path": "game/app.mjs",
+        "bytes": 471963,
+        "sha256": "66427475570df32f0323f8abedf4c49c06dfecffd1e161ddee316dec92b79965"
+      },
+      {
+        "path": "scripts/produce-field-kit-theme.mjs",
+        "bytes": 60944,
+        "sha256": "e518eddc93cf167588f50a49f64fe7ed7c790459d1a10a0248f6dd5a92f56019"
+      },
+      {
+        "path": "scripts/test-field-kit-recipe-sources.mjs",
+        "bytes": 24978,
+        "sha256": "f99f6cc57f9af39a33f181862c8e86a0295e8fc65b58039fb01ca56a4bdb1405"
+      },
+      {
+        "path": "game/test/presentation-production-history.test.mjs",
+        "bytes": 82426,
+        "sha256": "3ffbf6ec4110c9b286a37fe264a962b1ccbf26a67fce265759200181785a0e42"
+      },
+      {
+        "path": "game/test/fixtures/production-discovery-reviewed-ui-fpv102.json",
+        "bytes": 1770,
+        "sha256": "88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315"
+      },
+      {
+        "path": "docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json",
+        "bytes": 22156,
+        "sha256": "27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d"
+      }
+    ]
+  },
+  "outputs": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 8492839,
+      "sha256": "01e8db067359589dc20fcde86b8b36f7617b9229f3d666df8e2524a49378fed0"
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "bytes": 29119,
+      "sha256": "99ccdfe27ae21536102fe81d092a2a92171cb81c761969477596b93867e08057"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 1252907,
+      "sha256": "813ce5598736109011290a38ce3bbf257375d1e45f496ba60237bf4725bc81ca"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "bytes": 4483486,
+      "sha256": "de69f4ff9f26a021a3ef31c942294d21b05213046f3a4f5e4cbbf1140ab2e624"
+    }
+  ],
+  "actualCheckpoint": {
+    "revision": 103,
+    "assets": 2670,
+    "themes": 104,
+    "slots": 335,
+    "immutablePreviousRevision": 102,
+    "immutablePreviousAssets": 2662,
+    "addedReviewedAudio": 8,
+    "audioRevision": 54,
+    "audioParentRevision": 53,
+    "uiAndAllOtherBindingsUnchanged": true,
+    "originalPayloadCount": 132,
+    "originalPayloadBytes": 4009342,
+    "compiledStudioLimitBytes": 5242880,
+    "qualityEvidenceEntryLimit": 16,
+    "qualityEvidenceTextLimit": 2048,
+    "sourceFingerprint": "94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be",
+    "sourceInputs": 50,
+    "changedSourceInputs": ["game/app.mjs"],
+    "scope": "Same eight audio recipes and132 original payloads; no limits or historical records changed."
+  },
+  "tests": {
+    "fullTwoSuites": {
+      "tests": 40,
+      "pass": 40,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 135480.275375,
+      "suites": [
+        "game/test/presentation-production-history.test.mjs",
+        "scripts/test-field-kit-recipe-sources.mjs"
+      ]
+    },
+    "audioSupportingPair": {
+      "tests": 130,
+      "pass": 130,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 2196.297375
+    },
+    "reproductionCheck": {
+      "passed": true,
+      "source": "field-kit",
+      "revision": 103,
+      "slots": 335,
+      "files": 140,
+      "assetBytes": 4009342,
+      "coverage": {
+        "missing": 0,
+        "source": 99,
+        "produced": 0,
+        "reviewed": 236
+      },
+      "qualification": "Production candidate. Review required slots in real screens before publication."
+    },
+    "localSourceEligibilityBeforeReceipt": {
+      "passed": true,
+      "status": "verified",
+      "format": "revealline-public-source-eligibility.v1",
+      "files": 5049,
+      "assets": 294,
+      "scope": "Present checkout inputs; this does not replace complete frozen source-archive admission."
+    },
+    "lintFormatDiffCheck": "passed"
+  },
+  "logs": [
+    {
+      "name": "discovery-production103-write.log",
+      "bytes": 246,
+      "sha256": "2e4ce4853636fe16057d542e87c464fc600144516443f4a519005ac75417db45",
+      "rawKeptLocal": true
+    },
+    {
+      "name": "discovery-production103-history-source-tests.log",
+      "bytes": 9129,
+      "sha256": "2dc6545a488919b034b01324888a76dc012f62a382d6346d7b2bc56a3df0be24",
+      "rawKeptLocal": true
+    },
+    {
+      "name": "discovery-production103-reproduction.log",
+      "bytes": 246,
+      "sha256": "2e4ce4853636fe16057d542e87c464fc600144516443f4a519005ac75417db45",
+      "rawKeptLocal": true
+    },
+    {
+      "name": "discovery-production103-source-eligibility.log",
+      "bytes": 99,
+      "sha256": "a1d2c226d6fe97f6029417deaa47df6bc4020e22eded7b6c82f9cdadba579ee4",
+      "rawKeptLocal": true
+    },
+    {
+      "name": "discovery-gp4-audio-continuation-tests.log",
+      "bytes": 29814,
+      "sha256": "bf0bd06afc237bab44ad42e89b740d509baeae5c041af2504d05b9030eb4da44",
+      "rawKeptLocal": true
+    },
+    {
+      "name": "discovery-gp4-recipe-source-tests.log",
+      "bytes": 4007,
+      "sha256": "c88aea64180dd0ee7527637ae555b6910ac5a5341d3f7df9afa3963ae4e4c5f6",
+      "rawKeptLocal": true
+    }
+  ],
+  "independentReview": "Separate agent rehashed the50 source inputs, exact app diff and committed102 oracle and reviewed the append-only implementation and history tests without an actionable finding.",
+  "limitations": [
+    "The audio continuation is scoped software review, not listening, composition, human, device or release approval.",
+    "Historical gp4 restore and fresh canonical reward bindings have separate test/browser evidence; this receipt does not infer cross-browser simulation portability.",
+    "The tests reconstruct committed102 and all retained predecessors before asserting only the eight audio54 successors; no fresh production-byte publication or full default-build capacity claim.",
+    "Frozen edition/default artifacts, integrated CI, full hosted output, performance, installed/public rollback and coordinator-owned publication remain separate."
+  ]
+}

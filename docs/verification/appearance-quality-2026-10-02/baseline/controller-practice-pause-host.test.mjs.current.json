@@ -1,0 +1,29 @@
+{
+  "file": "game/test/controller-practice-pause-host.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/controller-practice-pause-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 14.95,
+  "failures": [
+    {
+      "test": "repeated forced Pause keeps the chosen menu action after Settings closes",
+      "location": "game/test/controller-practice-pause-host.test.mjs:134:1",
+      "detail": "\n  ---\n  duration_ms: 3848.236125\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/controller-practice-pause-host.test.mjs:134:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected \"actual\" to be reference-equal to \"expected\":\n    + actual - expected ... Lines skipped\n    \n      <ref *43> SoloElement {\n        _rect: [Object],\n    +   _text: 'Skip mission',\n    -   _text: 'Choose mission',\n        attributes: [Map],\n        captureListeners: Map(0) {},\n    ...\n        disabled: false,\n        hidden: false,\n    +   id: 'journey-skip',\n    -   id: 'overlay-missions',\n        inert: false,\n        listeners: Map(0) {},\n    ...\n        options: [],\n        ownerDocument: <ref *1> SoloDocument {\n    +     activeElement: [Circular *43],\n    +     body: <ref *12> SoloElement {\n    +       _rect: {\n    +         height: 44,\n    +         width: 100,\n    +         x: 0,\n    +         y: 0\n    +       },\n    +       _text: '',\n    +       attributes: Map(3) {\n    +         'data-menu-back' => 'East',\n    +         'data-menu-confirm' => 'South',\n    +         'data-menu-input' => 'keyboard'\n    +       },\n    +       captureListeners: Map(0) {},\n    +       captures: Set(0) {},\n    +       checked: false,\n    +       children: [\n    +         <ref *11> SoloElement {\n    ...\n    -     activeElement: <ref *635> SoloElement {\n    -       _rect: {\n    -         height: 44,\n    -         width: 100,\n    -         x: 0,\n    -         y: 0\n    -       },\n    -       _text: 'Skip mission',\n    -       attributes: Map(5) {\n    -         'class' => 'button secondary',\n    -         'data-i18n' => 'interface:skipMission',\n    -         'hidden' => '',\n    -         'id' => 'journey-skip',\n    -         'type' => 'button'\n    -       },\n    -       captureListeners: Map(0) {},\n    -       captures: Set(0) {},\n    -       checked: false,\n    -       children: [],\n    ...\n  code: 'ERR_TEST_FAILURE'"
+    }
+  ],
+  "summary": [
+    "# tests 5",
+    "# pass 4",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 14921.95425"
+  ]
+}

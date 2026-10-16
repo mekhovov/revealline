@@ -1,0 +1,4929 @@
+{
+  "format": "UkrainianOrnamentV11MatrixReplayAuditV1",
+  "sourceGitBase": "7018c0c0eec307d993df6e548b4f5a06a8e7e9dc",
+  "gameplayVersion": "gameplay-pressure.v4",
+  "supersedes": {
+    "format": "UkrainianOrnamentRouteStudyV1",
+    "sourceProjectIdentity": "98161e7c0fba69c1",
+    "reason": "The former v9-based matrix is retained in Git history and replayed here on v11."
+  },
+  "outcomes": {
+    "life-lost": 48,
+    "route-exhausted": 74
+  },
+  "rows": [
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "approach": "mouth",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["down", 14],
+            ["right", 299],
+            ["up", 62]
+          ],
+          "status": "route-exhausted",
+          "ticks": 375,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.02723558783477077,
+          "coverageGoal": 0.7,
+          "checkpoint": "1462427de496491f",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "e615db0474749f85",
+          "simulationIdentity": "11a77cb4092559b6",
+          "levelIdentity": "fc862c7e64b118ae",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 136],
+            ["right", 299],
+            ["down", 35]
+          ],
+          "status": "route-exhausted",
+          "ticks": 470,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.014979573309123922,
+          "coverageGoal": 0.7,
+          "checkpoint": "4cd4a8764ae06532",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "e615db0474749f85",
+          "simulationIdentity": "11a77cb4092559b6",
+          "levelIdentity": "fc862c7e64b118ae",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "approach": "mouth",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["down", 12],
+            ["right", 299],
+            ["up", 63]
+          ],
+          "status": "route-exhausted",
+          "ticks": 374,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.02723558783477077,
+          "coverageGoal": 0.7,
+          "checkpoint": "b191b5fb67c94dda",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "e615db0474749f85",
+          "simulationIdentity": "11a77cb4092559b6",
+          "levelIdentity": "fc862c7e64b118ae",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 134],
+            ["right", 299],
+            ["down", 36]
+          ],
+          "status": "route-exhausted",
+          "ticks": 469,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.014979573309123922,
+          "coverageGoal": 0.7,
+          "checkpoint": "529ce449794d5564",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "e615db0474749f85",
+          "simulationIdentity": "11a77cb4092559b6",
+          "levelIdentity": "fc862c7e64b118ae",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "approach": "mouth",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["down", 14],
+            ["right", 299],
+            ["up", 62]
+          ],
+          "status": "route-exhausted",
+          "ticks": 375,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.02723558783477077,
+          "coverageGoal": 0.7,
+          "checkpoint": "767ddeceb56caf66",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "a6ca80fc9f183e7f",
+          "simulationIdentity": "78afc50c3beb9431",
+          "levelIdentity": "d3123982f6d5de90",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "continuation",
+          "seed": 1,
+          "segments": [
+            ["down", 14],
+            ["right", 299],
+            ["up", 62],
+            ["down", 7],
+            ["up", 14],
+            ["right", 40],
+            ["down", 82],
+            ["left", 108],
+            ["up", 8],
+            ["down", 7],
+            ["up", 14],
+            ["right", 27],
+            ["up", 163],
+            ["right", 27],
+            ["down", 55],
+            ["up", 54],
+            ["right", 326],
+            ["down", 108],
+            ["left", 265],
+            ["right", 142],
+            ["down", 217],
+            ["right", 14],
+            ["up", 211],
+            ["down", 7],
+            ["up", 122],
+            ["right", 95],
+            ["up", 41],
+            ["right", 27],
+            ["down", 455]
+          ],
+          "status": "life-lost",
+          "ticks": 1285,
+          "cuts": 3,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0.07535179300953246,
+          "coverageGoal": 0.7,
+          "checkpoint": "2bac0796d9371b50",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "a6ca80fc9f183e7f",
+          "simulationIdentity": "78afc50c3beb9431",
+          "levelIdentity": "d3123982f6d5de90",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 136],
+            ["right", 299],
+            ["down", 35]
+          ],
+          "status": "route-exhausted",
+          "ticks": 470,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.014979573309123922,
+          "coverageGoal": 0.7,
+          "checkpoint": "b4c21f9c1731d83e",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "a6ca80fc9f183e7f",
+          "simulationIdentity": "78afc50c3beb9431",
+          "levelIdentity": "d3123982f6d5de90",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "approach": "mouth",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["down", 12],
+            ["right", 299],
+            ["up", 63]
+          ],
+          "status": "route-exhausted",
+          "ticks": 374,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.02723558783477077,
+          "coverageGoal": 0.7,
+          "checkpoint": "411eef6d743bfe23",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "a6ca80fc9f183e7f",
+          "simulationIdentity": "78afc50c3beb9431",
+          "levelIdentity": "d3123982f6d5de90",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "continuation",
+          "seed": 1,
+          "segments": [
+            ["down", 12],
+            ["right", 299],
+            ["up", 63],
+            ["down", 20],
+            ["up", 14],
+            ["right", 27],
+            ["down", 95],
+            ["left", 109],
+            ["up", 21],
+            ["down", 20],
+            ["right", 55],
+            ["down", 176],
+            ["right", 41],
+            ["up", 170],
+            ["down", 170],
+            ["right", 67],
+            ["up", 123],
+            ["left", 61],
+            ["right", 47],
+            ["up", 218],
+            ["left", 122],
+            ["down", 184]
+          ],
+          "status": "life-lost",
+          "ticks": 908,
+          "cuts": 2,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0.05537902859736723,
+          "coverageGoal": 0.7,
+          "checkpoint": "e1fbc441c9dcbb37",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "a6ca80fc9f183e7f",
+          "simulationIdentity": "78afc50c3beb9431",
+          "levelIdentity": "d3123982f6d5de90",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 134],
+            ["right", 299],
+            ["down", 36]
+          ],
+          "status": "route-exhausted",
+          "ticks": 469,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.014979573309123922,
+          "coverageGoal": 0.7,
+          "checkpoint": "d3786c23b7dd63e9",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "a6ca80fc9f183e7f",
+          "simulationIdentity": "78afc50c3beb9431",
+          "levelIdentity": "d3123982f6d5de90",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "approach": "mouth",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["down", 14],
+            ["right", 299],
+            ["up", 62]
+          ],
+          "status": "route-exhausted",
+          "ticks": 375,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.02723558783477077,
+          "coverageGoal": 0.7,
+          "checkpoint": "381ba501f1f26495",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 136],
+            ["right", 37]
+          ],
+          "status": "route-exhausted",
+          "ticks": 173,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "cd54cb13945d836c",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 136],
+            ["right", 7]
+          ],
+          "status": "route-exhausted",
+          "ticks": 173,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "d5e49cb0ab6a4e25",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 113]
+          ],
+          "status": "route-exhausted",
+          "ticks": 173,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "81f6ef815b0e1eb4",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 53]
+          ],
+          "status": "route-exhausted",
+          "ticks": 173,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "19d3505798c955ab",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 77]
+          ],
+          "status": "route-exhausted",
+          "ticks": 317,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "97bff0a5b45631c3",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "approach": "mouth",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["down", 12],
+            ["right", 299],
+            ["up", 63]
+          ],
+          "status": "route-exhausted",
+          "ticks": 374,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.02723558783477077,
+          "coverageGoal": 0.7,
+          "checkpoint": "f68e59b023766da1",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 134],
+            ["right", 39]
+          ],
+          "status": "route-exhausted",
+          "ticks": 173,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "7df7057060f498a1",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 134],
+            ["right", 9]
+          ],
+          "status": "route-exhausted",
+          "ticks": 173,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "826c39530efe138c",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 113]
+          ],
+          "status": "route-exhausted",
+          "ticks": 173,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "0487658cf0882214",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 53]
+          ],
+          "status": "route-exhausted",
+          "ticks": 173,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "237f8c6c42caf50f",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 77]
+          ],
+          "status": "route-exhausted",
+          "ticks": 317,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.7,
+          "checkpoint": "cf487af7260e0ca3",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "c0251eaece092a17",
+          "simulationIdentity": "8a147edf1be00274",
+          "levelIdentity": "5f2f1a8af11d56ab",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "approach": "inner",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 14],
+            ["right", 157]
+          ],
+          "status": "route-exhausted",
+          "ticks": 171,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.0039447731755424065,
+          "coverageGoal": 0.72,
+          "checkpoint": "b8f5027d353fe913",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "f980805442b401ec",
+          "simulationIdentity": "1e20f675164b0af6",
+          "levelIdentity": "a8d59433a9879658",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "approach": "end",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 537]
+          ],
+          "status": "life-lost",
+          "ticks": 1023,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "b5ad201ec866a0ba",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "f980805442b401ec",
+          "simulationIdentity": "1e20f675164b0af6",
+          "levelIdentity": "a8d59433a9879658",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "approach": "inner",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 12],
+            ["right", 158]
+          ],
+          "status": "route-exhausted",
+          "ticks": 170,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.0039447731755424065,
+          "coverageGoal": 0.72,
+          "checkpoint": "5f373f27287f949e",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "f980805442b401ec",
+          "simulationIdentity": "1e20f675164b0af6",
+          "levelIdentity": "a8d59433a9879658",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "approach": "end",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 538]
+          ],
+          "status": "life-lost",
+          "ticks": 745,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "aaa6c493ecc4f591",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "f980805442b401ec",
+          "simulationIdentity": "1e20f675164b0af6",
+          "levelIdentity": "a8d59433a9879658",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "approach": "inner",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 14],
+            ["right", 157]
+          ],
+          "status": "route-exhausted",
+          "ticks": 171,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.0039447731755424065,
+          "coverageGoal": 0.72,
+          "checkpoint": "4a093d7a08af6070",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "continuation",
+          "seed": 1,
+          "segments": [
+            ["up", 14],
+            ["right", 164],
+            ["left", 14],
+            ["up", 81],
+            ["left", 108],
+            ["down", 69],
+            ["up", 14],
+            ["left", 163],
+            ["up", 54],
+            ["right", 271],
+            ["down", 41],
+            ["right", 380],
+            ["up", 55],
+            ["left", 713],
+            ["right", 34],
+            ["down", 442]
+          ],
+          "status": "route-exhausted",
+          "ticks": 2617,
+          "cuts": 5,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.1888560157790927,
+          "coverageGoal": 0.72,
+          "checkpoint": "f0aa396e684f0627",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "approach": "end",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 462]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "1ef5af7e4d799a48",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 432]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "1e72db22b0f3fd1c",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 402]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "f5f13daea365a634",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 342]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "e895f00215028645",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 222]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "58f45fd734326ff4",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "approach": "inner",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 12],
+            ["right", 158]
+          ],
+          "status": "route-exhausted",
+          "ticks": 170,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.0039447731755424065,
+          "coverageGoal": 0.72,
+          "checkpoint": "891e4bbb17644669",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "continuation",
+          "seed": 1,
+          "segments": [
+            ["up", 12],
+            ["right", 165],
+            ["left", 40],
+            ["up", 82],
+            ["left", 122],
+            ["down", 82],
+            ["up", 108],
+            ["left", 217],
+            ["down", 28],
+            ["right", 231],
+            ["down", 1],
+            ["left", 26],
+            ["down", 1],
+            ["right", 26],
+            ["down", 27],
+            ["left", 225],
+            [null, 60],
+            ["right", 47],
+            ["down", 381],
+            ["right", 54],
+            ["up", 109],
+            ["left", 61]
+          ],
+          "status": "route-exhausted",
+          "ticks": 2105,
+          "cuts": 6,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.13954635108481261,
+          "coverageGoal": 0.72,
+          "checkpoint": "3cfe09b0f6a5fe9d",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "approach": "end",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 462]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "771a3fe7ab6a70f3",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 432]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "5e4fecde442dec78",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 402]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "ba902b074f97f97a",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 342]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "303096888711b563",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 222]
+          ],
+          "status": "route-exhausted",
+          "ticks": 977,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "3cef748e90b9aa1f",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "df0ebd97f7e5597e",
+          "simulationIdentity": "4dbb583acce25818",
+          "levelIdentity": "84fc3646ad3a40c3",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "approach": "inner",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 14],
+            ["right", 157]
+          ],
+          "status": "route-exhausted",
+          "ticks": 171,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.0039447731755424065,
+          "coverageGoal": 0.72,
+          "checkpoint": "a4dad3c05d06b40e",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "approach": "end",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 299]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "46e88e60cf2a3f2f",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 269]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "e9d45525d5b0a504",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 239]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "337866db5801ad3d",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 179]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "ebec2c74d53900aa",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 54],
+            ["left", 163],
+            ["down", 298],
+            ["right", 59]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "5ad2a1d6321dc540",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "approach": "inner",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 12],
+            ["right", 158]
+          ],
+          "status": "route-exhausted",
+          "ticks": 170,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.0039447731755424065,
+          "coverageGoal": 0.72,
+          "checkpoint": "f57694696f4b3fcf",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "approach": "end",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 299]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "9bf8be6578799c1c",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 269]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "14a5e2f35c249691",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 239]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "c6e6f10a00a53c98",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 179]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "22b7c29341c86302",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 53],
+            ["left", 163],
+            ["down", 299],
+            ["right", 59]
+          ],
+          "status": "route-exhausted",
+          "ticks": 814,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.72,
+          "checkpoint": "823bad1491491403",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "0a7ab3b94550fc4e",
+          "simulationIdentity": "563bf3f6f1857198",
+          "levelIdentity": "31b533c9ca094497",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "approach": "side",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [["down", 84]],
+          "status": "route-exhausted",
+          "ticks": 84,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "28a0f43ead7eb92e",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["down", 54]
+          ],
+          "status": "route-exhausted",
+          "ticks": 84,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "bb98aef74f572a96",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["down", 31]
+          ],
+          "status": "life-lost",
+          "ticks": 91,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-player",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "dca724e9cf1995de",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["down", 34]
+          ],
+          "status": "life-lost",
+          "ticks": 154,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "631a1c9af95dc7b6",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["down", 95],
+            ["right", 320]
+          ],
+          "status": "route-exhausted",
+          "ticks": 655,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.013257575757575758,
+          "coverageGoal": 0.74,
+          "checkpoint": "13d1ce78f8243faa",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 27],
+            ["left", 339],
+            ["down", 156]
+          ],
+          "status": "life-lost",
+          "ticks": 358,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "795d65ec5dfc3b10",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "approach": "side",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [["down", 84]],
+          "status": "route-exhausted",
+          "ticks": 84,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "89a1af43608e2b47",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["down", 54]
+          ],
+          "status": "route-exhausted",
+          "ticks": 84,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "3c146dbe23c0d5bf",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["down", 31]
+          ],
+          "status": "life-lost",
+          "ticks": 91,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-player",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "81875199bb03d8cb",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["down", 34]
+          ],
+          "status": "life-lost",
+          "ticks": 154,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "c162e45f11af6a07",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["down", 94],
+            ["right", 321]
+          ],
+          "status": "route-exhausted",
+          "ticks": 655,
+          "cuts": 1,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.013257575757575758,
+          "coverageGoal": 0.74,
+          "checkpoint": "1ab6a0d693147e8c",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 26],
+            ["left", 339],
+            ["down", 158]
+          ],
+          "status": "life-lost",
+          "ticks": 358,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "8ab933aa7f4f4e45",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "3ce3ebc6182a494d",
+          "simulationIdentity": "92a05ecc832c4995",
+          "levelIdentity": "516784f6c15ee38f",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "gentle",
+            "enemySpeed": 0.75,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "approach": "side",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [["down", 63]],
+          "status": "route-exhausted",
+          "ticks": 63,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "8670cc6095596f29",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["down", 34]
+          ],
+          "status": "life-lost",
+          "ticks": 64,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "9d3d06f160e31050",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["down", 52]
+          ],
+          "status": "life-lost",
+          "ticks": 112,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "88bff02ce0b302ac",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["down", 95],
+            ["right", 320]
+          ],
+          "status": "life-lost",
+          "ticks": 428,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "8c071814b3571769",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "continuation",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["down", 95],
+            ["right", 367],
+            ["down", 244],
+            ["left", 108],
+            ["up", 238],
+            ["down", 7],
+            ["right", 108],
+            ["down", 68],
+            ["right", 116],
+            [null, 120],
+            ["right", 7],
+            ["up", 245],
+            ["left", 958],
+            ["right", 7],
+            ["left", 14],
+            ["down", 55],
+            ["right", 449],
+            ["down", 40],
+            ["left", 442]
+          ],
+          "status": "life-lost",
+          "ticks": 428,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "8c071814b3571769",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 27],
+            ["left", 339],
+            ["down", 156]
+          ],
+          "status": "life-lost",
+          "ticks": 294,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "61f9628118eb55fc",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "approach": "side",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [["down", 63]],
+          "status": "route-exhausted",
+          "ticks": 63,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "e7e5f275434991e7",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["down", 34]
+          ],
+          "status": "life-lost",
+          "ticks": 64,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "8914051e6b1162d2",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["down", 52]
+          ],
+          "status": "life-lost",
+          "ticks": 112,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "2adfe8ed723b1572",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["down", 94],
+            ["right", 321]
+          ],
+          "status": "life-lost",
+          "ticks": 428,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "5f2686b312ff8691",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "continuation",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["down", 94],
+            ["right", 382],
+            ["down", 136],
+            ["left", 122],
+            ["up", 143],
+            ["down", 61],
+            ["left", 27],
+            ["down", 109],
+            ["right", 251],
+            [null, 60],
+            ["right", 7],
+            ["up", 339],
+            ["left", 958],
+            ["right", 20],
+            ["left", 14],
+            ["down", 54],
+            ["right", 449],
+            ["left", 298],
+            ["down", 109],
+            ["left", 109],
+            ["up", 116]
+          ],
+          "status": "life-lost",
+          "ticks": 428,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "5f2686b312ff8691",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 26],
+            ["left", 339],
+            ["down", 158]
+          ],
+          "status": "life-lost",
+          "ticks": 294,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "af66a2e75bbd606c",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "57d659d3d21dd983",
+          "simulationIdentity": "a31dfb71dd74d2b1",
+          "levelIdentity": "ca7266a3826cd3ec",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "approach": "side",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [["down", 53]],
+          "status": "route-exhausted",
+          "ticks": 53,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "201de26abb3eb492",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["down", 29]
+          ],
+          "status": "life-lost",
+          "ticks": 59,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-player",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "d7d9e9794df09dd9",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["down", 34]
+          ],
+          "status": "life-lost",
+          "ticks": 94,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "7ec1938657f7c5df",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["down", 95],
+            ["right", 287]
+          ],
+          "status": "life-lost",
+          "ticks": 444,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "624a075762282f3f",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["down", 95],
+            ["right", 167]
+          ],
+          "status": "route-exhausted",
+          "ticks": 502,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "e9104cade38e62b5",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-6",
+          "seed": 1,
+          "segments": [
+            ["right", 27],
+            ["down", 50]
+          ],
+          "status": "route-exhausted",
+          "ticks": 77,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "c97caeaebda7a726",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-7",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["right", 27],
+            ["down", 29]
+          ],
+          "status": "life-lost",
+          "ticks": 86,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-player",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "253f8dbee4367b2c",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-8",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["right", 27],
+            ["down", 95],
+            ["right", 293]
+          ],
+          "status": "life-lost",
+          "ticks": 405,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "7cc1207fa2f34a97",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 27],
+            ["left", 339],
+            ["down", 85]
+          ],
+          "status": "life-lost",
+          "ticks": 444,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "109357ad5773acc8",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 27],
+            ["left", 339],
+            ["down", 55]
+          ],
+          "status": "life-lost",
+          "ticks": 437,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "a93fd70b9708914c",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 27],
+            ["left", 339],
+            ["down", 25]
+          ],
+          "status": "life-lost",
+          "ticks": 430,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "0133379e5dd690aa",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 27],
+            ["left", 304]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "62099fd5c3b1e2cf",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 27],
+            ["left", 184]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "de205720cf193458",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-6",
+          "seed": 1,
+          "segments": [
+            ["up", 27],
+            ["left", 326],
+            ["down", 98]
+          ],
+          "status": "life-lost",
+          "ticks": 444,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "4a79d92db7fc1759",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-7",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 27],
+            ["left", 326],
+            ["down", 68]
+          ],
+          "status": "life-lost",
+          "ticks": 437,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "6b7f3aed17d70acc",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-8",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 27],
+            ["left", 326],
+            ["down", 38]
+          ],
+          "status": "life-lost",
+          "ticks": 430,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "d7f3a78e0559f7bd",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-9",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 27],
+            ["left", 304]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "62099fd5c3b1e2cf",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-10",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 27],
+            ["left", 184]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "de205720cf193458",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-11",
+          "seed": 1,
+          "segments": [
+            ["up", 27],
+            ["left", 353],
+            ["down", 71]
+          ],
+          "status": "life-lost",
+          "ticks": 444,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "038a0934bc734dab",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-12",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 27],
+            ["left", 353],
+            ["down", 41]
+          ],
+          "status": "life-lost",
+          "ticks": 437,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "1654e98857607be0",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-13",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 27],
+            ["left", 353],
+            ["down", 11]
+          ],
+          "status": "life-lost",
+          "ticks": 430,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "20d0e67b5be1d639",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-14",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 27],
+            ["left", 304]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "62099fd5c3b1e2cf",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-15",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 27],
+            ["left", 184]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "de205720cf193458",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "approach": "side",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [["down", 53]],
+          "status": "route-exhausted",
+          "ticks": 53,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "757d1689209de470",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["down", 29]
+          ],
+          "status": "life-lost",
+          "ticks": 59,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-player",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "97349c742fcaff9b",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["down", 34]
+          ],
+          "status": "life-lost",
+          "ticks": 94,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "1289894e9de14be5",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["down", 94],
+            ["right", 288]
+          ],
+          "status": "life-lost",
+          "ticks": 444,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "a98fad61d9115f2f",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["down", 94],
+            ["right", 168]
+          ],
+          "status": "route-exhausted",
+          "ticks": 502,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "11f20d57b555eb21",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-6",
+          "seed": 1,
+          "segments": [
+            ["right", 26],
+            ["down", 51]
+          ],
+          "status": "route-exhausted",
+          "ticks": 77,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "19a42d87bd995e9e",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-7",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["right", 26],
+            ["down", 30]
+          ],
+          "status": "life-lost",
+          "ticks": 86,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-player",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "ffa59359923a65b9",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-8",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["right", 26],
+            ["down", 95],
+            ["right", 294]
+          ],
+          "status": "life-lost",
+          "ticks": 405,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "bddb37912a07d9ff",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "approach": "shoulder",
+      "samples": [
+        {
+          "sampleId": "attempt-1",
+          "seed": 1,
+          "segments": [
+            ["up", 26],
+            ["left", 339],
+            ["down", 86]
+          ],
+          "status": "life-lost",
+          "ticks": 444,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "d65285424d91c6cb",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-2",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 26],
+            ["left", 339],
+            ["down", 56]
+          ],
+          "status": "life-lost",
+          "ticks": 437,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "b13574ef3ffed517",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-3",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 26],
+            ["left", 339],
+            ["down", 26]
+          ],
+          "status": "life-lost",
+          "ticks": 430,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "91f672c71f1e80f8",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-4",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 26],
+            ["left", 305]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "75341ad23e954d04",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-5",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 26],
+            ["left", 185]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "8c8be2111a950310",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-6",
+          "seed": 1,
+          "segments": [
+            ["up", 26],
+            ["left", 326],
+            ["down", 99]
+          ],
+          "status": "life-lost",
+          "ticks": 444,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "53fa20c54ab2c99d",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-7",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 26],
+            ["left", 326],
+            ["down", 69]
+          ],
+          "status": "life-lost",
+          "ticks": 437,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "c5d8a0095c753685",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-8",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 26],
+            ["left", 326],
+            ["down", 39]
+          ],
+          "status": "life-lost",
+          "ticks": 430,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "ecccb18970316f16",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-9",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 26],
+            ["left", 305]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "75341ad23e954d04",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-10",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 26],
+            ["left", 185]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "8c8be2111a950310",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-11",
+          "seed": 1,
+          "segments": [
+            ["up", 26],
+            ["left", 353],
+            ["down", 72]
+          ],
+          "status": "life-lost",
+          "ticks": 444,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "f757d4b054494ea4",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-12",
+          "seed": 1,
+          "segments": [
+            [null, 30],
+            ["up", 26],
+            ["left", 353],
+            ["down", 42]
+          ],
+          "status": "life-lost",
+          "ticks": 437,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "a82da1355555d0a7",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-13",
+          "seed": 1,
+          "segments": [
+            [null, 60],
+            ["up", 26],
+            ["left", 353],
+            ["down", 12]
+          ],
+          "status": "life-lost",
+          "ticks": 430,
+          "cuts": 0,
+          "losses": 1,
+          "failureCause": "enemy-trail",
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "bde8494eb501866e",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-14",
+          "seed": 1,
+          "segments": [
+            [null, 120],
+            ["up", 26],
+            ["left", 305]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "75341ad23e954d04",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        },
+        {
+          "sampleId": "attempt-15",
+          "seed": 1,
+          "segments": [
+            [null, 240],
+            ["up", 26],
+            ["left", 185]
+          ],
+          "status": "route-exhausted",
+          "ticks": 451,
+          "cuts": 0,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0,
+          "coverageGoal": 0.74,
+          "checkpoint": "8c8be2111a950310",
+          "sourceProjectIdentity": "72870f888a4c79c7",
+          "authoredSimulationIdentity": "24a6f5e45dfe0b0d",
+          "simulationIdentity": "766934b69e7753cd",
+          "levelIdentity": "a04286f5a5bea2d0",
+          "ruleset": "xonix-core.v6",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "expert",
+            "enemySpeed": 1.2,
+            "playerSpeed": 1,
+            "enemyDensity": 0.5,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "objectives": [],
+          "replayVerified": true
+        }
+      ]
+    }
+  ]
+}

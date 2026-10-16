@@ -3,10 +3,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { createPresentationHost, validateCompiledPresentation } from '../presentation/host.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
-import { FORMATS } from '../presentation/model.mjs';
+import { FORMATS, LIMITS } from '../presentation/model.mjs';
 import { compilePresentation } from '../../scripts/compile-presentation.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
+import { prepareStillAsset } from '../media-still.mjs';
+import { rasterFixtures } from './helpers/raster-fixtures.mjs';
+import { pageActorArtPool } from '../presentation/actor-art-pool.mjs';
 
 const baseURL = 'https://game.test/releases/v1/game/presentation/compiled/';
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
@@ -100,6 +103,65 @@ function styleFixture() {
   };
 }
 
+test('native landing skips only the two legacy title backdrops while other screens still load', async () => {
+  const folder = new URL('../presentation/compiled/', import.meta.url);
+  const manifest = JSON.parse(await fs.readFile(new URL('runtime.json', folder), 'utf8'));
+  const byHash = new Map(
+    Object.values(manifest.resolved.assets)
+      .filter((asset) => asset.file)
+      .map((asset) => [asset.file.sha256, asset.file]),
+  );
+  const seen = new Set();
+  let nativeLanding = true;
+  const host = createPresentationHost({
+    baseURL,
+    document: {
+      querySelector: (selector) => (selector === '.native-landing' && nativeLanding ? {} : null),
+    },
+    fetch: async (url) => {
+      const file = url.slice(baseURL.length);
+      seen.add(file);
+      return new Response(
+        file === 'runtime.json'
+          ? JSON.stringify(manifest)
+          : await fs.readFile(new URL(file, folder)),
+      );
+    },
+    decodeImage: async (blob) => {
+      const hash = await hashPresentationBytes(new Uint8Array(await blob.arrayBuffer()));
+      const file = byHash.get(hash);
+      return { width: file.width, height: file.height, close() {} };
+    },
+    createObjectURL: () => 'blob:test',
+    revokeObjectURL() {},
+    fontFactory: () => ({ load: async () => {} }),
+  });
+  const snapshot = await host.load();
+  for (const id of ['screen.title.background', 'screen.title.portrait']) {
+    const asset = manifest.resolved.assets[id];
+    assert.ok(asset, id);
+    assert.equal(snapshot.image(id), null);
+    assert.equal(seen.has(manifest.urls[asset.file.sha256]), false);
+  }
+  assert.ok(snapshot.image('player.scout.compact'));
+  // A different screen may intentionally reuse one title image; its binding
+  // still loads. The optimization filters slots rather than banning hashes.
+  manifest.resolved.assets['screen.settings.background'] = structuredClone(
+    manifest.resolved.assets['screen.title.background'],
+  );
+  manifest.resolved.bindings['screen.settings.background'] = structuredClone(
+    manifest.resolved.bindings['screen.title.background'],
+  );
+  const replacement = await host.load();
+  assert.ok(replacement.image('screen.settings.background'));
+  assert.equal(replacement.image('screen.title.background'), null);
+  nativeLanding = false;
+  const classic = await host.load();
+  assert.ok(classic.image('screen.title.background'));
+  assert.ok(classic.image('screen.title.portrait'));
+  host.close();
+});
+
 test('the host accepts actual deterministic compiler output and no authoring history or arbitrary URLs', async () => {
   const f = await fixture();
   assert.deepEqual(validateCompiledPresentation(f.manifest), f.manifest);
@@ -173,6 +235,47 @@ test('loading is lazy, hash-pinned, and owns decoded assets until close without 
     e.urls.map((r) => r.url),
   );
   await assert.rejects(e.host.load(), /closed/);
+});
+
+test('DOM-isolated actor owners share the actual page budget and independently offload and reinstall', async (t) => {
+  const prior = Object.getOwnPropertyDescriptor(globalThis, 'document'),
+    document = { defaultView: { navigator: { deviceMemory: 8 } } };
+  Object.defineProperty(globalThis, 'document', { configurable: true, value: document });
+  t.after(() => {
+    if (prior) Object.defineProperty(globalThis, 'document', prior);
+    else delete globalThis.document;
+  });
+  const f = await fixture(),
+    page = environment(f, { document }),
+    actor = environment(f, { profile: 'actors', document: null }),
+    pool = pageActorArtPool(document);
+  t.after(() => {
+    page.host.close();
+    actor.host.close();
+  });
+  const original = await page.host.load(),
+    isolated = await actor.host.load();
+  assert.strictEqual(
+    isolated.image('player.scout.compact').image,
+    original.image('player.scout.compact').image,
+  );
+  assert.equal(actor.decoded.length, 0, 'No second decoder for the same page-owned SHA.');
+  assert.equal(pool.stats().limit, 64 * 1024 * 1024);
+  assert.equal(pool.stats().reservedBytes, 4096);
+  assert.equal(pool.stats().leases, 2);
+  page.host.close();
+  assert.equal(page.decoded[0].closes, 0, 'The active actor owner survives page-theme offload.');
+  actor.host.close();
+  assert.equal(page.decoded[0].closes, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
+  const reinstalled = environment(f, { profile: 'actors', document: null });
+  t.after(() => reinstalled.host.close());
+  await reinstalled.host.load();
+  assert.equal(reinstalled.decoded.length, 1, 'A later install cannot reuse a disposed image.');
+  assert.equal(pool.stats().reservedBytes, 4096);
+  reinstalled.host.close();
+  assert.equal(reinstalled.decoded[0].closes, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
 });
 
 test('registered native origins retain the same closed hash-derived path boundary', async () => {
@@ -279,8 +382,12 @@ test('a small compressed manifest cannot allocate an unbounded decoded image set
   const f = await fixture(),
     manifest = structuredClone(f.manifest),
     files = new Map(f.files);
+  const budgetSlots = Object.keys(manifest.resolved.assets)
+    .filter((slot) => slot.startsWith('world.overflight.'))
+    .slice(0, 17);
+  assert.equal(budgetSlots.length, 17);
   for (let i = 1; i <= 17; i++) {
-    const slot = `enemy.budget-${i}`,
+    const slot = budgetSlots[i - 1],
       hash = i.toString(16).padStart(64, '0');
     const asset = structuredClone(manifest.resolved.assets['player.scout.compact']);
     asset.id = `budget-${i}`;
@@ -326,9 +433,12 @@ test('superseded late image decoding is disposed and cannot release the newer ac
   while (!release) await tick();
   const rejected = assert.rejects(first, { name: 'AbortError' });
   const oldCount = oldStatus.length;
-  const second = await e.host.load({ onStatus: (status) => nextStatus.push(status) });
+  const replacement = e.host.load({ onStatus: (status) => nextStatus.push(status) });
+  await tick();
+  assert.equal(count, 1, 'A cancelled codec retains its reservation until it settles.');
   release(stale);
   await rejected;
+  const second = await replacement;
   assert.equal(oldStatus.length, oldCount);
   assert.equal(nextStatus.at(-1).status, 'ready');
   assert.equal(stale.closes, 1);
@@ -410,6 +520,136 @@ test('atlas frames are cropped once and the original and cropped bitmap have ind
   e.host.close();
   assert.equal(cropped.closes, 1);
   assert.equal(e.decoded[0].closes, 1);
+});
+
+test('a cancelled actor CSS export retains its accounted scratch pixels until encoding settles', async () => {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    files = new Map(f.files);
+  manifest.resolved.assets['player.scout.compact'].geometry.frame = {
+    x: 8,
+    y: 4,
+    width: 16,
+    height: 16,
+  };
+  files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  let finish,
+    cropClosed = 0;
+  const canvas = {
+      width: 0,
+      height: 0,
+      getContext: () => ({ drawImage() {} }),
+      toBlob: (callback) => {
+        finish = callback;
+      },
+    },
+    document = { createElement: () => canvas },
+    pool = pageActorArtPool(document),
+    e = environment(
+      { files },
+      {
+        document,
+        cropImage: async () => ({ width: 16, height: 16, close: () => cropClosed++ }),
+      },
+    ),
+    loading = e.host.load(),
+    rejected = assert.rejects(loading, { name: 'AbortError' });
+  while (!finish) await tick();
+  assert.equal(pool.stats().reservedBytes, 4096 + 1024 + 1024);
+  e.host.close();
+  assert.equal(e.decoded[0].closes, 1);
+  assert.equal(cropClosed, 1);
+  assert.equal(canvas.width, 16, 'The encoder still owns this backing store.');
+  assert.equal(pool.stats().reservedBytes, 1024);
+  finish(new Blob([f.bytes], { type: 'image/png' }));
+  await rejected;
+  assert.equal(canvas.width, 0);
+  assert.equal(canvas.height, 0);
+  assert.equal(pool.stats().reservedBytes, 0);
+  assert.equal(e.urls.length, 0, 'A cancelled export cannot create a CSS image URL.');
+});
+
+test('cancelling a host settles immediately but retains an asynchronous crop input until codec retirement', async () => {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    files = new Map(f.files),
+    document = {};
+  manifest.resolved.assets['player.scout.compact'].geometry.frame = {
+    x: 8,
+    y: 4,
+    width: 16,
+    height: 16,
+  };
+  files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  let finish,
+    cropClosed = 0;
+  const pool = pageActorArtPool(document),
+    e = environment(
+      { files },
+      {
+        document,
+        cropImage: () => new Promise((resolve) => (finish = resolve)),
+      },
+    ),
+    loading = e.host.load(),
+    rejected = assert.rejects(loading, { name: 'AbortError' });
+  while (!finish) await tick();
+  e.host.close();
+  await rejected;
+  assert.equal(e.decoded[0].closes, 0, 'The crop codec still owns its source pixels.');
+  assert.equal(pool.stats().reservedBytes, 4096 + 1024);
+  finish({ width: 16, height: 16, close: () => cropClosed++ });
+  await tick();
+  assert.equal(cropClosed, 1);
+  assert.equal(e.decoded[0].closes, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
+  assert.equal(e.host.current(), null);
+  assert.equal(e.urls.length, 0);
+});
+
+test('actor CSS crop export refuses capacity before allocating a scratch canvas', async () => {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    files = new Map(f.files);
+  manifest.resolved.assets['player.scout.compact'].geometry.frame = {
+    x: 8,
+    y: 4,
+    width: 16,
+    height: 16,
+  };
+  files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  let canvases = 0,
+    cropsClosed = 0;
+  const document = {
+      createElement: () => {
+        canvases++;
+        return {};
+      },
+    },
+    pool = pageActorArtPool(document),
+    height = (pool.stats().limit - 5120) / 4,
+    otherActors = await pool.acquire({
+      key: 'other-live-actors',
+      width: 1,
+      height,
+      load: () => ({ width: 1, height }),
+    }),
+    e = environment(
+      { files },
+      {
+        document,
+        cropImage: async () => ({ width: 16, height: 16, close: () => cropsClosed++ }),
+      },
+    );
+  await assert.rejects(e.host.load(), /decoded byte budget/);
+  assert.equal(canvases, 0);
+  assert.equal(e.host.current(), null);
+  assert.equal(e.decoded[0].closes, 1);
+  assert.equal(cropsClosed, 1);
+  assert.equal(pool.stats().reservedBytes, pool.stats().limit - 5120);
+  e.host.close();
+  otherActors.release();
+  assert.equal(pool.stats().reservedBytes, 0);
 });
 
 test('font bytes are pinned and decoded before atomic registration, with owned CSS family and disposal', async () => {
@@ -580,6 +820,149 @@ test('picture originals remain lazy exact bytes and host close cancels a late or
   assert.equal(cancelled, 1);
 });
 
+async function webpPictureFixture({ bytes, width = 1, frameWidth = width, fileBytes } = {}) {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    slot = CURRENT_PICTURES.find((row) => row.owner.themeId === 'fpv').id,
+    asset = manifest.resolved.assets['player.scout.compact'];
+  bytes ??= rasterFixtures().find((row) => row.extension === 'webp').bytes;
+  const hash = await hashPresentationBytes(bytes);
+  delete manifest.resolved.assets['player.scout.compact'];
+  delete manifest.resolved.bindings['player.scout.compact'];
+  asset.file = {
+    sha256: hash,
+    bytes: fileBytes ?? bytes.length,
+    mime: 'image/webp',
+    width,
+    height: 1,
+  };
+  asset.geometry.frame = { x: 0, y: 0, width: frameWidth, height: 1 };
+  manifest.resolved.assets[slot] = asset;
+  manifest.resolved.bindings[slot] = { id: asset.id, revision: asset.revision };
+  manifest.urls = { [hash]: `./assets/${hash}.webp` };
+  const files = new Map([
+    ['runtime.json', new TextEncoder().encode(JSON.stringify(manifest))],
+    [`assets/${hash}.webp`, bytes],
+  ]);
+  return { files, manifest, slot, hash, bytes };
+}
+
+test('full-frame WebP picture reads keep exact lazy bytes and still require downstream complete decode', async () => {
+  const f = await webpPictureFixture(),
+    env = environment(f);
+  try {
+    const snapshot = await env.host.load();
+    assert.equal(env.requests.length, 1, 'Loading the presentation does not acquire originals.');
+    const picture = await env.host.readPicture(f.slot, { snapshot });
+    assert.deepEqual(Buffer.from(await picture.blob.arrayBuffer()), f.bytes);
+    assert.equal(picture.blob.type, 'image/webp');
+    assert.equal(picture.asset.file.sha256, f.hash);
+    assert.ok(Object.isFrozen(picture.asset.file));
+    assert.equal(env.requests.at(-1).url, baseURL + `assets/${f.hash}.webp`);
+    assert.equal(env.requests.at(-1).options.redirect, 'error');
+    assert.equal(env.decoded.length, 0, 'A verified header is not a complete browser decode.');
+    const metadata = {
+      id: 'webp-original',
+      provenance: { kind: 'original', credit: 'Test', source: 'Owned raster fixture' },
+    };
+    await assert.rejects(
+      prepareStillAsset(picture.blob, metadata, {
+        decodeImage: async () => {
+          throw new Error('Complete decoder refused fixture');
+        },
+      }),
+      /Complete decoder refused/,
+    );
+    const prepared = await prepareStillAsset(picture.blob, metadata, {
+      decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),
+    });
+    assert.equal(prepared.asset.sha256, f.hash);
+    assert.deepEqual(Buffer.from(await prepared.blob.arrayBuffer()), f.bytes);
+  } finally {
+    env.host.close();
+  }
+});
+
+test('WebP picture admission rejects cropped, malformed, mismatched and oversized originals without replacing its snapshot', async () => {
+  const bytes = rasterFixtures().find((row) => row.extension === 'webp').bytes,
+    animated = Buffer.from(bytes);
+  animated.write('ANIM', 12);
+  for (const [name, options, response, expected] of [
+    ['cropped', { width: 2, frameWidth: 1 }, null, /complete PNG\/JPEG\/WebP/],
+    ['animated', { bytes: animated }, null, /header disagrees/],
+    ['truncated container', { bytes: bytes.subarray(0, -1) }, null, /header disagrees/],
+    ['dimensions', { width: 2 }, null, /header disagrees/],
+    ['wrong hash', {}, Buffer.from(bytes).fill(0), /hash mismatch/],
+    ['oversized body', {}, Buffer.concat([bytes, Buffer.from([0])]), /byte budget/],
+  ]) {
+    const f = await webpPictureFixture(options);
+    if (response) f.files.set(`assets/${f.hash}.webp`, response);
+    const env = environment(f);
+    try {
+      const snapshot = await env.host.load();
+      await assert.rejects(env.host.readPicture(f.slot), expected, name);
+      assert.equal(env.host.current(), snapshot, name);
+      assert.equal(env.decoded.length, 0, name);
+      assert.equal(env.urls.length, 0, name);
+      if (name === 'cropped') assert.equal(env.requests.length, 1, 'Crop rejected before fetch.');
+    } finally {
+      env.host.close();
+    }
+  }
+  const oversized = environment(await webpPictureFixture({ fileBytes: LIMITS.assetBytes + 1 }));
+  try {
+    await assert.rejects(oversized.host.load(), /identity\/budget/);
+    assert.equal(oversized.requests.length, 1);
+    assert.equal(oversized.host.current(), null);
+  } finally {
+    oversized.host.close();
+  }
+});
+
+test('aborted WebP original reads cancel late bodies and cannot retire the accepted snapshot', async () => {
+  const f = await webpPictureFixture();
+  let resolveBody,
+    began,
+    cancelled = 0;
+  const pendingBody = new Promise((resolve) => {
+      resolveBody = resolve;
+    }),
+    started = new Promise((resolve) => {
+      began = resolve;
+    }),
+    controller = new AbortController(),
+    env = environment(f, {
+      fetch: async (url) => {
+        if (url.endsWith('/runtime.json')) return new Response(f.files.get('runtime.json'));
+        began();
+        await pendingBody;
+        return {
+          ok: true,
+          body: {
+            cancel: async () => {
+              cancelled++;
+            },
+          },
+        };
+      },
+    });
+  try {
+    const snapshot = await env.host.load(),
+      pending = env.host.readPicture(f.slot, { signal: controller.signal }),
+      rejected = assert.rejects(pending, { name: 'AbortError' });
+    await started;
+    controller.abort();
+    resolveBody();
+    await rejected;
+    assert.equal(cancelled, 1);
+    assert.equal(env.host.current(), snapshot);
+    assert.equal(env.decoded.length, 0);
+    assert.equal(env.urls.length, 0);
+  } finally {
+    env.host.close();
+  }
+});
+
 test('retained hosts load exact historical bytes beside shared assets without selecting the current manifest', async () => {
   const original = await fixture();
   const bytes = original.files.get('runtime.json');
@@ -691,4 +1074,58 @@ test('failed retained reload and aborted preparation preserve the accepted owner
     e.host.close();
   }
   assert.equal(e.decoded[0].closes, 1);
+});
+
+test('board scene filtering decodes selected world art only and preserves full-host behavior', async () => {
+  const original = await fixture(),
+    f = { ...original, files: new Map(original.files) },
+    manifest = structuredClone(original.manifest),
+    selected = 'world.overflight.material.earth',
+    other = 'world.overflight.module.floodgate-panel';
+  for (const [slot, name] of [
+    [selected, 'player-bomber-compact.png'],
+    [other, 'player-carrier-compact.png'],
+  ]) {
+    const bytes = new Uint8Array(
+        await fs.readFile(new URL(`../assets/field-kit/sprites/${name}`, import.meta.url)),
+      ),
+      hash = await hashPresentationBytes(bytes),
+      asset = structuredClone(manifest.resolved.assets['player.scout.compact']);
+    asset.id = `selected-world.${name.replace('.png', '')}`;
+    asset.file = { ...asset.file, sha256: hash, bytes: bytes.length };
+    manifest.resolved.bindings[slot] = { id: asset.id, revision: 1 };
+    manifest.resolved.assets[slot] = asset;
+    manifest.urls[hash] = `./assets/${hash}.png`;
+    f.files.set(`assets/${hash}.png`, bytes);
+  }
+  f.files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  const { host, requests } = environment(f, { profile: 'board' });
+  try {
+    let snapshot = await host.load({ worldImageSlots: [selected] });
+    assert.ok(snapshot.image(selected));
+    assert.ok(snapshot.image('player.scout.compact'), 'actor lease is unchanged');
+    assert.equal(snapshot.image(other), null);
+    assert.ok(
+      !requests.some(({ url }) =>
+        url.endsWith(`${manifest.resolved.assets[other].file.sha256}.png`),
+      ),
+    );
+    snapshot = await host.load({ worldImageSlots: [other] });
+    assert.ok(snapshot.image(other));
+    assert.equal(snapshot.image(selected), null, 'a later selected world has its own load scope');
+    await assert.rejects(
+      host.load({ worldImageSlots: ['arbitrary.slot'] }),
+      /registered battlefield/,
+    );
+  } finally {
+    host.close();
+  }
+  const full = environment(f);
+  try {
+    const snapshot = await full.host.load({ worldImageSlots: [] });
+    assert.ok(snapshot.image(selected));
+    assert.ok(snapshot.image(other));
+  } finally {
+    full.host.close();
+  }
 });

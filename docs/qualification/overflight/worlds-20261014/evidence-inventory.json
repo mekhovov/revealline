@@ -1,0 +1,641 @@
+{
+  "runtimeSource": "a539ccde4d2390ee74a717a076f43926f46952b2",
+  "builtSource": "dece9da68922743c73dc6cc2697a0aa9783b5326",
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 15635,
+      "sha256": "2e984cdc2f8a0102673cf95a5fdaef42beafe0c5d65cdc976b62bef470b90517"
+    },
+    {
+      "file": "asset-studio-admitted-artwork.jpg",
+      "bytes": 101123,
+      "sha256": "e18b45c3a6c2b630cb12302580739e04792d2fc9be261cf7153b8625622d4219"
+    },
+    {
+      "file": "audio-evidence.json",
+      "bytes": 1608,
+      "sha256": "4ce574d1d9b60432680266556b4d738e5668cf1bffcbdb1070f118cc75ab4f3a"
+    },
+    {
+      "file": "audio-review.md",
+      "bytes": 5169,
+      "sha256": "5ec34ac782c2a227dc97a9b2fc833a5c72f89f9d0e2e0c6ccabb1f11e1d7eb8c"
+    },
+    {
+      "file": "audio-settings-native.png",
+      "bytes": 56733,
+      "sha256": "614166f78b418e2af4c630c27e7b48a2be482896f13cf834d4c21f91602de364"
+    },
+    {
+      "file": "balance-review.md",
+      "bytes": 13080,
+      "sha256": "fcb41ae873b23b5b34462fb4818d082d868750477aa4c578572a0342a14ecf3c"
+    },
+    {
+      "file": "baseline-relocation.json",
+      "bytes": 325,
+      "sha256": "666994c2b2dfc0c60ecd17a95d200eee5055ffc12ac0a98daab4a55b7e75d8b0"
+    },
+    {
+      "file": "build-c90-local-disk-failure.log",
+      "bytes": 503,
+      "sha256": "4a10729d197beea962d683a4a9fb719957a15e9226591ea44ac320a41cb249c0"
+    },
+    {
+      "file": "build-final-numeric.log",
+      "bytes": 480,
+      "sha256": "005ba8512caefbc17369c0f30acae6d4fe9ad15da3157b598c27f94ca2f0594f"
+    },
+    {
+      "file": "build-final.log",
+      "bytes": 498,
+      "sha256": "77a2632b00bfa6cc780c022b15d24b0648a69633552aea147edf8af4bfabb34f"
+    },
+    {
+      "file": "build-review-archive.mjs",
+      "bytes": 1832,
+      "sha256": "d2501990b8ea1307b5b863583873d0b496cf6eadd7cfc4770281d399d5eb4672"
+    },
+    {
+      "file": "ci-dece9da68.json",
+      "bytes": 1233,
+      "sha256": "b308ce145fd8cb095d26670436a9e5c210e14036e4617300ccedb4a98d181554"
+    },
+    {
+      "file": "creator-native-review.md",
+      "bytes": 9501,
+      "sha256": "8c83a30832c3cab802d963a875a5b1cc3553849c65b60f5f0175cb3801f3fd13"
+    },
+    {
+      "file": "creator-package-evidence.json",
+      "bytes": 7489,
+      "sha256": "0d5b6ef34fbed1e9f33f9eeae353c7b2135e8823ab1593ac1b162a76d0d78b16"
+    },
+    {
+      "file": "cross-mode-reuse.md",
+      "bytes": 5794,
+      "sha256": "462b5cb728e90d983bd6d72d93a14fecf45194230b884c7c4598027c52798752"
+    },
+    {
+      "file": "depot-bounded-flank-comparison.json.gz",
+      "bytes": 216258,
+      "sha256": "f27f490bf45a43f31d54d4d491d114a96deb7cab9475fb85c9e94f29e278a15d"
+    },
+    {
+      "file": "depot-echo-scanner-diagnostics.json",
+      "bytes": 492097,
+      "sha256": "5d047c65202ae820e505091081aa1ae852d518b0a56e6e0ff1cea72901b17035"
+    },
+    {
+      "file": "depot-focus-and-idle-diagnostics.json.gz",
+      "bytes": 106187,
+      "sha256": "41999371bb7292a728e97d88fa948f3c467ade1b1f7272d2e583b5c39fea01e8"
+    },
+    {
+      "file": "depot-lure-boss-transition.json",
+      "bytes": 420323,
+      "sha256": "f7f234c4d7650f5d0f482644f60e10b076ac4063685c597328fbe252836279b5"
+    },
+    {
+      "file": "depot-lure-earned-transition.json",
+      "bytes": 381073,
+      "sha256": "000653908311c64f0bffaac19465bca350b555559076968ff57a1fdd854f85da"
+    },
+    {
+      "file": "depot-lure-return-diagnostics.json.gz",
+      "bytes": 54944,
+      "sha256": "0a6cfb85c6fefd2e872878d29e9d8fec22369798debda260c04185618c45ef37"
+    },
+    {
+      "file": "depot-lure-route-confirmation.json",
+      "bytes": 423694,
+      "sha256": "c29f09ec6d1aaa2c8dbdcc8bafe8e33ce2b4799e8ba387748b33b6b2ae8104bc"
+    },
+    {
+      "file": "depot-lure-route-diagnostics.json",
+      "bytes": 381681,
+      "sha256": "acf3aa974d9f47c43853fc5354820af728377cc598d46c171aebb9168c21431a"
+    },
+    {
+      "file": "depot-priority-earned-kit.json",
+      "bytes": 314267,
+      "sha256": "6474c4d92cbdc73af4bb57ecbe0f749a8d320237329b8d45081392ea6fa68bab"
+    },
+    {
+      "file": "depot-priority-squad-standoff.json",
+      "bytes": 272460,
+      "sha256": "9806136199f8799ee6a803213a7d86d84293c6c48e543c7b3102e5e8a150f5a8"
+    },
+    {
+      "file": "depot-priority-technique.json",
+      "bytes": 258088,
+      "sha256": "63e90762feaac55fa8cdd23d2f91cd3ffb2026170790c6a7c3988655acc1b6e1"
+    },
+    {
+      "file": "depot-systems-alternate-routes.json.gz",
+      "bytes": 68031,
+      "sha256": "b2e30ccbbc116665a31dafcdca8b9e9241f0257c85f9cdd963724e7c202fe2c2"
+    },
+    {
+      "file": "distribution-a539ccde4.json",
+      "bytes": 539,
+      "sha256": "62230928a16db1597a2f44f445fefc149717a760bb04c186437c8aa72cfe381f"
+    },
+    {
+      "file": "distribution-dece9da68.json",
+      "bytes": 521,
+      "sha256": "77a6f3d3adefac94bfe1e99d9e9e26508df3ca023f718568d72656fbca61a1dd"
+    },
+    {
+      "file": "echo-route-diagnostics.json.gz",
+      "bytes": 280983,
+      "sha256": "47e22b116eb62b49da8ea7b2caffc4a30279cdf2911615a1f19b841bf35f6857"
+    },
+    {
+      "file": "evolved-fan-native-1280.jpg",
+      "bytes": 59988,
+      "sha256": "3508a10963da8142bd50b44158d93f249b8b6ef683abdc6e88292fcb947d811d"
+    },
+    {
+      "file": "experimental-raid-barrier-initial-probe.json.gz",
+      "bytes": 10159,
+      "sha256": "ab96f667e0a74aabf3a699056f8677f30f257ea1691fea8ebe18545217fb2033"
+    },
+    {
+      "file": "experimental-raid-barrier-initial-probe.mjs",
+      "bytes": 7879,
+      "sha256": "a9e9bc508d3d9f05c93cd961a4a9bca7312570f259232a1d8e9909ab539bb6c5"
+    },
+    {
+      "file": "experimental-raid-barrier-probe.json.gz",
+      "bytes": 9794,
+      "sha256": "a7691c54e95910860a8c1e7eef1d5b18b0ca263cf82a11e01e44208660301a50"
+    },
+    {
+      "file": "experimental-raid-barrier-probe.md",
+      "bytes": 3073,
+      "sha256": "4ca563e1f6c612d5bd5ddaddb115c66d4510ee84bcf9dd204aea8ecde019f130"
+    },
+    {
+      "file": "experimental-raid-barrier-probe.mjs",
+      "bytes": 8103,
+      "sha256": "5a459db4b4fb5bc6132d7a6ddee77e31b4df7c56060461b7547fea576b7cf10d"
+    },
+    {
+      "file": "experimental-raid-native.jpg",
+      "bytes": 73791,
+      "sha256": "23f261aa04e5daa6a14dee4413380bddba249be6b1586d92df45a59b47898c09"
+    },
+    {
+      "file": "experimental-raid-navigation-probe.json.gz",
+      "bytes": 5926,
+      "sha256": "4555ea65549433672570bb07ef4411dbbc0597eebff35656333fb56feefb964c"
+    },
+    {
+      "file": "experimental-raid-navigation-probe.md",
+      "bytes": 2805,
+      "sha256": "265b02ad00f52cb1ecfcb04389c36c01f8bfa9697cd8d67f51232cb2244b5104"
+    },
+    {
+      "file": "experimental-raid-navigation.mjs",
+      "bytes": 1852,
+      "sha256": "1ad397088d4f9b9a9ae2de267f0004cfdc52a44573b72aedcfd428ba9c9b2251"
+    },
+    {
+      "file": "experimental-raid-probe.json.gz",
+      "bytes": 12478,
+      "sha256": "970912a3a3920aefdfdf0e8772e27292de2f4cd2f698a4dfd85429a9cc986fb5"
+    },
+    {
+      "file": "experimental-raid-probe.md",
+      "bytes": 2548,
+      "sha256": "5abbdc683c10c2ea4400186fd6b65b2fc487d1baca96ea546afd1543b1e8617b"
+    },
+    {
+      "file": "experimental-raid-probe.mjs",
+      "bytes": 6118,
+      "sha256": "bac002279032a7f64910a01aec3e50da533428cc5675b771abca5475ad0163f1"
+    },
+    {
+      "file": "experimental-raid-route-policy.mjs",
+      "bytes": 7183,
+      "sha256": "990b74f2fac3f9a1e0c293a160e9bd98e84328262e8c3a88192e7b4d8d68feee"
+    },
+    {
+      "file": "experimental-riy-native.jpg",
+      "bytes": 66700,
+      "sha256": "ee4f31f4e0eabf07fc5d89b91d1f56b1e179b8de32861937178918720a41fa89"
+    },
+    {
+      "file": "experimental-survival-native.jpg",
+      "bytes": 56284,
+      "sha256": "295ac62191353ec7288d7ef0c8fb7cb48b3ce163285792ada9a3d834f8812630"
+    },
+    {
+      "file": "family-home-depot-selected.jpg",
+      "bytes": 85287,
+      "sha256": "fd82c415fbe53d9ea36c4d74e890a98da3e86ade19863b87b72a473abb6ec0a5"
+    },
+    {
+      "file": "family-home-fresh.jpg",
+      "bytes": 86037,
+      "sha256": "cf5440e5945e31af4c4919e5d37554a01b1ab7ae4477b9e7095bd4e4b4349925"
+    },
+    {
+      "file": "family-home-merged-1280.jpg",
+      "bytes": 84989,
+      "sha256": "116a4ba41eb61371edbe9ababc7ea36fae60dcad5818d95aea1047fdd238848d"
+    },
+    {
+      "file": "fan-completed-native.jpg",
+      "bytes": 112798,
+      "sha256": "dabbf2a9c270422c7e10affb46b47b00894b28fe7669f1f13ca6b7cb96c65020"
+    },
+    {
+      "file": "fan-evolved-native.webm",
+      "bytes": 4010386,
+      "sha256": "b4fb1a0183d460af2856dead518c1f7250fdc4483969f774badb8cce1133824b"
+    },
+    {
+      "file": "fan-midrun-native.jpg",
+      "bytes": 160478,
+      "sha256": "7e2c316e4834ce73477e8cf8932c81ce60c97f42a31cc6e97c8820c4177a8a4b"
+    },
+    {
+      "file": "fan-normal-effects-audio.webm",
+      "bytes": 4735612,
+      "sha256": "0b2c5bcb0e832ac915d51814227078a91feec22baee9bf5eeaecfca8706af33f"
+    },
+    {
+      "file": "fan-opening-native.webm",
+      "bytes": 3736175,
+      "sha256": "1497c3efe4745108d2004386e76ef87eb0d4cfe48b0546fd87afef75ccd3a944"
+    },
+    {
+      "file": "fan-reduced-effects-audio.webm",
+      "bytes": 4778820,
+      "sha256": "675056a761ca53f28274d4ed710eeaf6c0e72001e9312854358d1797d264f6bc"
+    },
+    {
+      "file": "fan-reduced-effects-diagnostic.jpg",
+      "bytes": 90833,
+      "sha256": "3ab2b066cbd90d8d1fc169dd97dae559bb2470254eae7f535b3ac959f6fdc36c"
+    },
+    {
+      "file": "field-crossing-native.jpg",
+      "bytes": 54361,
+      "sha256": "f1b58210162754f5a4f11734e09ece949c9847654d3a925696ad2e6feff6afe8"
+    },
+    {
+      "file": "fpv-survivals-family-home.jpg",
+      "bytes": 101951,
+      "sha256": "b3bae022de9c5b7fc2ba71b8e70994a485ea71a41d63596c2eda79cc60b6af12"
+    },
+    {
+      "file": "gameplay-probes-extended-final.json.gz",
+      "bytes": 145303,
+      "sha256": "ee1b1e1f80225f6a145f8f9d088243358523dd21027288428bfb478315be9dd3"
+    },
+    {
+      "file": "gameplay-probes-final.json.gz",
+      "bytes": 1034731,
+      "sha256": "e5ae7c9a3ef5970aeee533d9832716f94066912d50a964d4b8d9fb7318033bfb"
+    },
+    {
+      "file": "gameplay-probes-final.log",
+      "bytes": 17996,
+      "sha256": "b2c53cb6fd085c4e58b0a06eec08c3f4934e744d9ec93fed869a6694646483dc"
+    },
+    {
+      "file": "gameplay-probes.json.gz",
+      "bytes": 771027,
+      "sha256": "7eab6a10066c77effd29bf833347025fd8850f8b29e298408285d1d36ca11d5d"
+    },
+    {
+      "file": "graphics-recovery-native.json",
+      "bytes": 5932,
+      "sha256": "504d8564a83e729aa03a71157bb36cf426cc6837c33571e61ef495abbd73c356"
+    },
+    {
+      "file": "graphics-restored-awaiting-continue.jpg",
+      "bytes": 100830,
+      "sha256": "be0fc74e759799e32275197ae439558a585c67f7967656d92698618860b8e867"
+    },
+    {
+      "file": "guided-terrain-studio.jpg",
+      "bytes": 443408,
+      "sha256": "7c10a977bc7be28086bb6a233c661ad7d63c69aecab42476a40278c6711263f9"
+    },
+    {
+      "file": "guided-terrain-validation.jpg",
+      "bytes": 123347,
+      "sha256": "97c99d396cbb82f503fd01493f04c5e9d75b4f2a46973c33a4f36d608d22c703"
+    },
+    {
+      "file": "installed-relay-time-attack.jpg",
+      "bytes": 64492,
+      "sha256": "045cf670d39c0f40d460886668a4ffd16ea177c5ec62c96ce848978d3a154f6f"
+    },
+    {
+      "file": "installed-terrain-marathon-unavailable.jpg",
+      "bytes": 94882,
+      "sha256": "040875f7611edb3e07a7412c13517a368b5fad3ebc749394c15a6849e234d12a"
+    },
+    {
+      "file": "installed-terrain-time-attack-unavailable.jpg",
+      "bytes": 91423,
+      "sha256": "72df24dcde71170467156ac5f1cb956e533d70812bc1bb00533e430b1d1a6061"
+    },
+    {
+      "file": "installed-three-worlds-studio.jpg",
+      "bytes": 72623,
+      "sha256": "5c8ed60fb096c3d19c39ffae63c094e2ec1bd4069ac4834c0effea920011a765"
+    },
+    {
+      "file": "integrated-tests-premerge.tap",
+      "bytes": 117374,
+      "sha256": "a89415754106549d79425a16b6c6f1169a90538b75593613f4140975b964e31b"
+    },
+    {
+      "file": "lure-route-policy.mjs",
+      "bytes": 10507,
+      "sha256": "600134e83b5e63031a8fcdb5819e688a4cde8ba227e3a8e5e2dfdbfa7459791e"
+    },
+    {
+      "file": "native-reference-invalid-hidden.json.gz",
+      "bytes": 61979,
+      "sha256": "feea91c9b581baf1444570b8a8f902a57446cc3fca30bf669abbbd761d69099a"
+    },
+    {
+      "file": "native-reference-soak-summary.json",
+      "bytes": 5825,
+      "sha256": "765a27704e0dd6f854efe234954aee03f40bc47a592ad1f23ac480e3208942a5"
+    },
+    {
+      "file": "native-reference-soak.json.gz",
+      "bytes": 1876288,
+      "sha256": "bcab94eec2b8fd4ebaf129e74eef6197926ff68481e5c5158858b3e17dc9f326"
+    },
+    {
+      "file": "native-retries.json",
+      "bytes": 10910,
+      "sha256": "7622141e1fc2a6167047e7eaefebc441a96a9dae962c1b659ff6abeb76e4d103"
+    },
+    {
+      "file": "offline-invalid-review-version.jpg",
+      "bytes": 87134,
+      "sha256": "1ca68ee238aa03d91dc9dcd268aa0ad19fa78b46d985944509ac6c056d90888f"
+    },
+    {
+      "file": "offline-main-baseline-destinations.tap",
+      "bytes": 1796,
+      "sha256": "8c97e59e60eb9120bf0c803330141acd099be738c3f1af5017e1c8cd4ad717f8"
+    },
+    {
+      "file": "offline-main-baseline-worker.tap",
+      "bytes": 13888,
+      "sha256": "a02c18c2b4f93acb75b4b40313afb41f6c72a13a0a04e0a6738222f23b0227e6"
+    },
+    {
+      "file": "offline-main-baseline.json",
+      "bytes": 5631,
+      "sha256": "211403fba2e0b2942b6ee75a122dba03ab64b72d2947e1127dc5c8124a1b2f14"
+    },
+    {
+      "file": "offline-marathon.jpg",
+      "bytes": 50261,
+      "sha256": "e5a71a3eed8c8bc3e9dbe5b14f912e377799e1178174922e67c2ca82173d3a98"
+    },
+    {
+      "file": "offline-native-receipt.json",
+      "bytes": 1726,
+      "sha256": "1f462c6d8f497238793e2b028e98bec07334ef7458b3e36fb841a3b91ba5fe0d"
+    },
+    {
+      "file": "offline-native-review.md",
+      "bytes": 3222,
+      "sha256": "63ff8a5493322fe8ed375e55282bc5e54bf6031a02f9dc03b7700656260c0eed"
+    },
+    {
+      "file": "offline-packages-ready.jpg",
+      "bytes": 84189,
+      "sha256": "273cf83e8950232a1e07b8f96c76eb6ebb8c9debd7f0bd061601a609d44ae50b"
+    },
+    {
+      "file": "offline-riy-upgrade.jpg",
+      "bytes": 94128,
+      "sha256": "7f95689bdf57c0a59cc27e097614d0bf96774be5df1d30ecf6a4be218ed4c6b8"
+    },
+    {
+      "file": "offline-route-bound-results.tap",
+      "bytes": 14735,
+      "sha256": "805e65e9e8e4903aa8b4ed17380f8238429dfe7454be2e2724f6dbda1caa7738"
+    },
+    {
+      "file": "offline-single-drone.jpg",
+      "bytes": 47158,
+      "sha256": "b95a1a44ebc5f784f991c9d5bbc6f810ac122a6d2347596333173e179869d18c"
+    },
+    {
+      "file": "offline-single-raid.jpg",
+      "bytes": 49603,
+      "sha256": "ad5637fd49d73bc6479fc0e74d3daf27d70456ac1191ab9bd504a0b5ecf8e16b"
+    },
+    {
+      "file": "offline-snake.jpg",
+      "bytes": 60686,
+      "sha256": "48452ac6a3f253d7d8c23340d036b4b2cf5599fbafe5d7a92453df6dfe93f7cc"
+    },
+    {
+      "file": "offline-time-attack.jpg",
+      "bytes": 48165,
+      "sha256": "927d938e56bf72022855f4c84ebe4ed3e75bf3a07f2fae8abcdb9b297a89fac2"
+    },
+    {
+      "file": "optional-package-preparation.json",
+      "bytes": 669,
+      "sha256": "d090a82b01a9a48e929c7fe094fe50b24313fecaafa4235a3acd8a8f355d292e"
+    },
+    {
+      "file": "package-count-final.tap",
+      "bytes": 1070,
+      "sha256": "265fad39376bd4fe6abd6df463763a7ded12fd26f80914cf88e197f8d10b3ec4"
+    },
+    {
+      "file": "presentation-check-premerge.json",
+      "bytes": 170,
+      "sha256": "226b8aadf10739e9b4f1277839ed245ac5b3945d8ed623425a8665188951192f"
+    },
+    {
+      "file": "priority-route-policy.mjs",
+      "bytes": 14701,
+      "sha256": "972b4c329ccc34d0d204d2957a0479f0ee1d50e04a9eaab05e89c62a4e10f022"
+    },
+    {
+      "file": "raid-armor-audio.webm",
+      "bytes": 4462562,
+      "sha256": "d243c8b06f09466a357f01b180d7cdbf1b90c9eefff0e83a43d62ac93c0def4b"
+    },
+    {
+      "file": "raid-armor-listening-plus24db.mp3",
+      "bytes": 268868,
+      "sha256": "c79ee2a9258b86e80b80b4931618efc0f868f8ada256d0e695bb1545c3ec4f43"
+    },
+    {
+      "file": "raid-baseline-worlds.json",
+      "bytes": 38459,
+      "sha256": "f0bab2253d3d836482fc02152ecc8914b49dd692830913a5b7f41ec7742b4947"
+    },
+    {
+      "file": "raid-objective-result.jpg",
+      "bytes": 64683,
+      "sha256": "28b7ae727cad8ac957ebbe0d3ac86a82f10b652e356c873766e772be42b67ad4"
+    },
+    {
+      "file": "reference-diagnostic-trial.json",
+      "bytes": 245212,
+      "sha256": "b00b8974a2d6394aa9cd9000ae416698b05471e084820474f3414e9a737b3ae1"
+    },
+    {
+      "file": "renderer-terrain-lifecycle.json",
+      "bytes": 2913,
+      "sha256": "dbc168c90556bcf6e4548918b526e03b3e36bb9ef5d5d4b0a2f32a3cf3fa649b"
+    },
+    {
+      "file": "renderer-terrain-lifecycle.tap",
+      "bytes": 11717,
+      "sha256": "08fbbdb07d5ea7d2cc5cb85e04ea9598d7554f4153f15b3614c89affe61b1d48"
+    },
+    {
+      "file": "riy-field-approach-audio.webm",
+      "bytes": 4323627,
+      "sha256": "b5a6feb2a94c50c742ce3e63ccc87c221109baf10c5cacc73c4d65478a1a8605"
+    },
+    {
+      "file": "riy-field-developing-audio.webm",
+      "bytes": 3987429,
+      "sha256": "bd3902fc1cefdcbc6f726a41c2f3cc794dc94dcea8c6ff637809d409215542b2"
+    },
+    {
+      "file": "riy-field-elite-audio.webm",
+      "bytes": 4373501,
+      "sha256": "521336d606425f5d4453811124c1cd4533ebfa0235433a62ac226a8113655215"
+    },
+    {
+      "file": "riy-field-opening-audio.webm",
+      "bytes": 3736102,
+      "sha256": "dc2f0b79364f4a617c253913860e3c0537646f6a66340a52d4dee3c81b4db216"
+    },
+    {
+      "file": "riy-opening-elite-listening-plus24db.mp3",
+      "bytes": 800204,
+      "sha256": "ac0f9973b693190c78dd9882ff0adf5b81e3d3af7770db4b21a4ab0712f8c5f4"
+    },
+    {
+      "file": "serve-review-archive.py",
+      "bytes": 2943,
+      "sha256": "dc6642482e93a46b0a1fe79eec01d1744666e29483965b9420cda561f5d2de83"
+    },
+    {
+      "file": "sim-field-authoring-native.png",
+      "bytes": 70228,
+      "sha256": "4789fe90bc003296471e92b44194615c1e0924062d70c365f6a767be71336980"
+    },
+    {
+      "file": "sim-field-material-preview-native.png",
+      "bytes": 61293,
+      "sha256": "a92cdf5d2266388658d924a6ea99a03ea274548abc80c80ad08df6809e91b7b9"
+    },
+    {
+      "file": "sim-field-native-overview.png",
+      "bytes": 88739,
+      "sha256": "f33c97b29728e93cf2bbd63ddb456e07cb4dd16042fd0b5bd7e1bac6b854a863"
+    },
+    {
+      "file": "simulation-lifecycle-review.md",
+      "bytes": 3097,
+      "sha256": "ecd5169033e3dc5418827bd87d7d7ec1cfeb65c09aaa3fd26b8406d6488954db"
+    },
+    {
+      "file": "simulation-raid-soak.json",
+      "bytes": 15723,
+      "sha256": "1d86ad9447f01b6a2e0601169c8bbcd7e34dc2587dcbd552754ccb68cc7a722e"
+    },
+    {
+      "file": "simulation-reference-soak.json",
+      "bytes": 15806,
+      "sha256": "79609e7dc3dc1cbe7e251505a105d2ff54f96186391649ad917d6c958db2daf8"
+    },
+    {
+      "file": "simulation-stress.json",
+      "bytes": 13954,
+      "sha256": "99155f11a94b60f38a43987867f66b3a954c37c22c7ac4f22faf37a167525dbe"
+    },
+    {
+      "file": "solo-appearance-before.png",
+      "bytes": 76097,
+      "sha256": "15bcbe79955a884cbb300289d56d20f1e68260ca30e563b177baea3e75e5a167"
+    },
+    {
+      "file": "solo-battlefield-settings-native.png",
+      "bytes": 78834,
+      "sha256": "fdfa5ec0927face1a28164f3c0bdf3312e4b66b1ac6042a767b8a60ee815e997"
+    },
+    {
+      "file": "solo-depot-native.png",
+      "bytes": 54959,
+      "sha256": "9c2d42b51125f0ff36f9c75ba243bd697f5e972aaa7c7615398191bea7f94d18"
+    },
+    {
+      "file": "solo-depot-reveal-native.png",
+      "bytes": 65120,
+      "sha256": "e250bf228d9cabe6dae0345ad7435fdc20885a5fbe982b61696b9f5b6ae6082e"
+    },
+    {
+      "file": "solo-original-picture-loading.png",
+      "bytes": 64289,
+      "sha256": "bab4b0ac2d423c6a4e786678acf9ccbd09358c13b699577bcaad156a522ae825"
+    },
+    {
+      "file": "studio-field-crossing.raid.json",
+      "bytes": 17179,
+      "sha256": "6609c00c8fa49ba5777fb4a96b9f3b81c81583961a9bc0972b8e8d834333f43e"
+    },
+    {
+      "file": "studio-field-marathon.jpg",
+      "bytes": 68925,
+      "sha256": "fb90d39b975dbf86f50e02683084daf36a1ab93e19cdd34c3ab25a5d1d34731c"
+    },
+    {
+      "file": "studio-freight-depot.raid.json",
+      "bytes": 14450,
+      "sha256": "9f5ecd8679b09230394e3235c47a1a989cd0381a5329f908de795af1f183eb53"
+    },
+    {
+      "file": "studio-freight-marathon.jpg",
+      "bytes": 70551,
+      "sha256": "ebddd957923678fbc450cc7d3122dca84d6201dea3edf108372eac31932d124a"
+    },
+    {
+      "file": "studio-relay-marathon.jpg",
+      "bytes": 72493,
+      "sha256": "8aedcc914a18667483970dd419c3b931ae1cce132c0c6e000159d07cb079f25c"
+    },
+    {
+      "file": "studio-relay-reimported.raid.json",
+      "bytes": 16479,
+      "sha256": "95a53594712a5f33f2d57073c928e09c84f1bf3ba8103dda1fe211eeb5d42368"
+    },
+    {
+      "file": "studio-relay-ruins.raid.json",
+      "bytes": 16479,
+      "sha256": "95a53594712a5f33f2d57073c928e09c84f1bf3ba8103dda1fe211eeb5d42368"
+    },
+    {
+      "file": "world-missions-fresh.jpg",
+      "bytes": 83161,
+      "sha256": "31e903790f7dcdd4d7601be11fa036d12686bdbe10f3ad1431e3147607048f19"
+    }
+  ]
+}

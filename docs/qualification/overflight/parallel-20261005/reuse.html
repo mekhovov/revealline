@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Overflight · shared supply reuse</title>
+    <style>
+      body {
+        margin: 0;
+        background: #111b19;
+        color: #f1eee1;
+        font: 16px system-ui;
+        padding: 32px;
+      }
+      main {
+        max-width: 1200px;
+        margin: auto;
+      }
+      h1 {
+        font-size: 30px;
+      }
+      h2 {
+        font-size: 18px;
+        color: #efc567;
+      }
+      p {
+        max-width: 80ch;
+        line-height: 1.5;
+      }
+      canvas {
+        width: 100%;
+        image-rendering: pixelated;
+        background: #263b31;
+        border: 1px solid #516354;
+      }
+      section {
+        margin: 24px 0;
+      }
+      #source {
+        image-rendering: pixelated;
+        width: 80px;
+        height: 80px;
+      }
+      code {
+        color: #9ce0cb;
+      }
+      #status {
+        color: #efc567;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>One supply case · two native consumers</h1>
+      <p>
+        This review uses the Overflight PNG through Capture’s existing board painter and Asset
+        Studio’s presentation adapter. The source artwork and gameplay state remain unchanged.
+      </p>
+      <p id="status">Preparing shared art…</p>
+      <img id="source" alt="Original Overflight supply case" />
+      <p><code id="identity"></code></p>
+      <section>
+        <h2>Capture · existing BoardPainter</h2>
+        <canvas id="native" width="1152" height="576"></canvas>
+      </section>
+      <section>
+        <h2>Asset Studio · context preview using the same BoardPainter</h2>
+        <canvas id="studio" width="1152" height="576"></canvas>
+      </section>
+      <p id="result"></p>
+    </main>
+    <script type="module" src="reuse.mjs"></script>
+  </body>
+</html>

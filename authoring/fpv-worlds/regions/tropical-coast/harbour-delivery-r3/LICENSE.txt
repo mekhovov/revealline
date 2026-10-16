@@ -1,0 +1,11 @@
+Selected source models and textures: Ron Kapaun / 3TD Studios.
+CC0 1.0 Universal public-domain dedication.
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Source and public license declaration:
+https://opengameart.org/content/3td-tropical-environment-pack-v20
+Verified 2026-10-15. Attribution retained although not required by CC0.
+The archive includes legacy commercial installation wording; the later
+source-page release explicitly identifies this pack as CC0/public domain.
+
+Conversion tools are authoring-only and keep their separate upstream licenses.

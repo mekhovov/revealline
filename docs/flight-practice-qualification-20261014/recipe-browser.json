@@ -1,0 +1,50 @@
+{
+  "format": "revealline-practice-recipe-browser.v1",
+  "publicEligible": false,
+  "sourceRevision": "2e23fdca0ef616865a207603cff6c154acacc327",
+  "sourceBinding": "Working-tree fixture based on this commit; not a frozen release candidate.",
+  "overlaySha256": {
+    "previous": "c4cf87c2f7f37b4f5b610eb1c25c90626c225cc1c58ac30ae8f6a11eb97ebcf2",
+    "current": "b05dc805e9ac4e452b3d1b779d323e38609d607f2a455a8b6fd4b95d0a550aa3",
+    "retired": "606d6535249e46dab1ca97b3499b903552bc0d58b9e2ca0512b2b14f4a9baffd"
+  },
+  "fixtureBuilderSha256": "b81eba66b948264f1585571a1e3a085b6c32dcd8f948a5efb9e074eba85d80e8",
+  "manifests": [
+    {
+      "name": "practice/sample-flight/releases/v1.2.2/site/optional-package.json",
+      "sha256": "2dc9929423e633d88aa7839fa3816d9d7dacb9cd88e161291e8d912995b7173b"
+    },
+    {
+      "name": "practice/sample-flight/releases/v1.2.3/site/optional-package.json",
+      "sha256": "a7cd5dc04014d5e9f9a80f8b53720da4b3f86c20980beae30c91308fdae0ffb3"
+    }
+  ],
+  "harnessSha256": "f5efab5963e962c54cc0f7d5e4ad77dc6b1cc5217747acfe62d5d9f7f05539c7",
+  "startedAt": "2026-10-14T05:07:04.809Z",
+  "checkpoints": [
+    "four cards; EN/UK launch links; one Play opens sample; explicit start/pause/retry",
+    "previous version prepared through stable launcher",
+    "update preserves previous prepared version",
+    "all tabs closed; stable launcher reopens prepared current app with network disabled",
+    "retained-version rollback launches previous bytes",
+    "retirement removes discovery while retaining immutable previous app"
+  ],
+  "screenshots": [
+    {
+      "path": "/tmp/practice-recipe-browser-record-20261014-sample-paused.png",
+      "sha256": "de3b69887f27fe655f810b06f39fd1c114cb67c8b0472bed27771d26a93a3ff7"
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Local unpublished sample cloned from Gym; synthetic review records are not release approval.",
+    "Browser-emulated network loss, not a physical network or OS restart.",
+    "No physical controller, touch device, screen reader, human learning or performance qualification."
+  ],
+  "browser": "155.0.8059.40",
+  "passed": true,
+  "cleanup": {
+    "errors": []
+  },
+  "finishedAt": "2026-10-14T05:07:20.987Z"
+}

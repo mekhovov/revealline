@@ -1,0 +1,4197 @@
+{
+  "family": "dos",
+  "outer": "none",
+  "ornaments": "subtle",
+  "highContrast": false,
+  "reducedEffects": false,
+  "forcedColors": false,
+  "semantics": {
+    "status": "passed",
+    "checks": [
+      {
+        "id": "sample-selected-disabled.background",
+        "passed": true,
+        "expected": "#000040",
+        "actual": "rgb(0, 0, 64)"
+      },
+      {
+        "id": "sample-selected-disabled.foreground",
+        "passed": true,
+        "expected": "#cccccc",
+        "actual": "rgb(204, 204, 204)"
+      },
+      {
+        "id": "sample-selected-disabled.shadow",
+        "passed": true,
+        "expected": "none",
+        "actual": "none"
+      },
+      {
+        "id": "sample-selected-disabled.borderImage",
+        "passed": true,
+        "expected": "none",
+        "actual": "none"
+      },
+      {
+        "id": "sample-selected-disabled.finish",
+        "passed": true,
+        "expected": "none",
+        "actual": "none"
+      },
+      {
+        "id": "sample-danger-pressed.background",
+        "passed": true,
+        "expected": "#ffaaaa",
+        "actual": "rgb(255, 170, 170)"
+      },
+      {
+        "id": "sample-danger-pressed.foreground",
+        "passed": true,
+        "expected": "#17191b",
+        "actual": "rgb(23, 25, 27)"
+      },
+      {
+        "id": "sample-danger-pressed.borderImage",
+        "passed": true,
+        "expected": "none",
+        "actual": "none"
+      },
+      {
+        "id": "sample-selected-disabled-twin.background",
+        "passed": true,
+        "expected": "#000040",
+        "actual": "rgb(0, 0, 64)"
+      },
+      {
+        "id": "sample-selected-disabled-twin.foreground",
+        "passed": true,
+        "expected": "#cccccc",
+        "actual": "rgb(204, 204, 204)"
+      },
+      {
+        "id": "sample-selected-disabled-twin.shadow",
+        "passed": true,
+        "expected": "none",
+        "actual": "none"
+      },
+      {
+        "id": "sample-selected-disabled-twin.borderImage",
+        "passed": true,
+        "expected": "none",
+        "actual": "none"
+      },
+      {
+        "id": "sample-selected-disabled-twin.finish",
+        "passed": true,
+        "expected": "none",
+        "actual": "none"
+      },
+      {
+        "id": "sample-danger-pressed-twin.background",
+        "passed": true,
+        "expected": "#ffaaaa",
+        "actual": "rgb(255, 170, 170)"
+      },
+      {
+        "id": "sample-danger-pressed-twin.foreground",
+        "passed": true,
+        "expected": "#17191b",
+        "actual": "rgb(23, 25, 27)"
+      },
+      {
+        "id": "sample-danger-pressed-twin.borderImage",
+        "passed": true,
+        "expected": "none",
+        "actual": "none"
+      }
+    ]
+  },
+  "controlSemantics": {
+    "status": "passed",
+    "checks": [
+      {
+        "id": "sample-input-invalid.foreground",
+        "expected": "#ffffff",
+        "actual": "rgb(255, 255, 255)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid.background",
+        "expected": "#000020",
+        "actual": "rgb(0, 0, 32)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid.borderColor",
+        "expected": "#ffaaaa",
+        "actual": "rgb(255, 170, 170)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-focus.foreground",
+        "expected": "#ffffff",
+        "actual": "rgb(255, 255, 255)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-focus.background",
+        "expected": "#000020",
+        "actual": "rgb(0, 0, 32)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-focus.borderColor",
+        "expected": "#ffaaaa",
+        "actual": "rgb(255, 170, 170)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-focus.focus-visible",
+        "expected": "at least 2px solid independent focus ring",
+        "actual": "rgb(255, 255, 85) solid 3px",
+        "passed": true
+      },
+      {
+        "id": "sample-input-disabled.foreground",
+        "expected": "#cccccc",
+        "actual": "rgb(204, 204, 204)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-disabled.background",
+        "expected": "#000040",
+        "actual": "rgb(0, 0, 64)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-disabled.finish",
+        "expected": "none",
+        "actual": "none",
+        "passed": true
+      },
+      {
+        "id": "sample-input-disabled.shadow",
+        "expected": "none",
+        "actual": "none",
+        "passed": true
+      },
+      {
+        "id": "sample-select-disabled.foreground",
+        "expected": "#cccccc",
+        "actual": "rgb(204, 204, 204)",
+        "passed": true
+      },
+      {
+        "id": "sample-select-disabled.background",
+        "expected": "#000040",
+        "actual": "rgb(0, 0, 64)",
+        "passed": true
+      },
+      {
+        "id": "sample-select-disabled.finish",
+        "expected": "none",
+        "actual": "none",
+        "passed": true
+      },
+      {
+        "id": "sample-select-disabled.shadow",
+        "expected": "none",
+        "actual": "none",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-twin.foreground",
+        "expected": "#ffffff",
+        "actual": "rgb(255, 255, 255)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-twin.background",
+        "expected": "#000020",
+        "actual": "rgb(0, 0, 32)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-twin.borderColor",
+        "expected": "#ffaaaa",
+        "actual": "rgb(255, 170, 170)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-focus-twin.foreground",
+        "expected": "#ffffff",
+        "actual": "rgb(255, 255, 255)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-focus-twin.background",
+        "expected": "#000020",
+        "actual": "rgb(0, 0, 32)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-focus-twin.borderColor",
+        "expected": "#ffaaaa",
+        "actual": "rgb(255, 170, 170)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-invalid-focus-twin.focus-visible",
+        "expected": "at least 2px solid independent focus ring",
+        "actual": "rgb(255, 255, 85) solid 3px",
+        "passed": true
+      },
+      {
+        "id": "sample-input-disabled-twin.foreground",
+        "expected": "#cccccc",
+        "actual": "rgb(204, 204, 204)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-disabled-twin.background",
+        "expected": "#000040",
+        "actual": "rgb(0, 0, 64)",
+        "passed": true
+      },
+      {
+        "id": "sample-input-disabled-twin.finish",
+        "expected": "none",
+        "actual": "none",
+        "passed": true
+      },
+      {
+        "id": "sample-input-disabled-twin.shadow",
+        "expected": "none",
+        "actual": "none",
+        "passed": true
+      },
+      {
+        "id": "sample-select-disabled-twin.foreground",
+        "expected": "#cccccc",
+        "actual": "rgb(204, 204, 204)",
+        "passed": true
+      },
+      {
+        "id": "sample-select-disabled-twin.background",
+        "expected": "#000040",
+        "actual": "rgb(0, 0, 64)",
+        "passed": true
+      },
+      {
+        "id": "sample-select-disabled-twin.finish",
+        "expected": "none",
+        "actual": "none",
+        "passed": true
+      },
+      {
+        "id": "sample-select-disabled-twin.shadow",
+        "expected": "none",
+        "actual": "none",
+        "passed": true
+      },
+      {
+        "id": "sample-loading.loading-rail",
+        "expected": "visible foreground progress rail above relief",
+        "actual": "rgb(255, 255, 255) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "passed": true
+      },
+      {
+        "id": "sample-selected-loading.loading-rail",
+        "expected": "visible foreground progress rail above relief",
+        "actual": "rgb(23, 25, 27) 0px -3px 0px 0px inset, rgb(41, 42, 43) 1.55898px 0.441022px 0px 0px inset, rgb(69, 70, 72) -0.235914px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+        "passed": true
+      },
+      {
+        "id": "sample-loading-focus.loading-rail",
+        "expected": "visible foreground progress rail above relief",
+        "actual": "rgb(255, 255, 255) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "passed": true
+      },
+      {
+        "id": "sample-loading-focus.focus-visible",
+        "expected": "at least 2px solid independent focus ring",
+        "actual": "rgb(143, 143, 104) solid 3px",
+        "passed": true
+      },
+      {
+        "id": "sample-loading-disabled.loading-rail",
+        "expected": "no loading rail on a disabled action",
+        "actual": "none",
+        "passed": true
+      },
+      {
+        "id": "sample-loading-twin.loading-rail",
+        "expected": "visible foreground progress rail above relief",
+        "actual": "rgb(255, 255, 255) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "passed": true
+      },
+      {
+        "id": "sample-selected-loading-twin.loading-rail",
+        "expected": "visible foreground progress rail above relief",
+        "actual": "rgb(23, 25, 27) 0px -3px 0px 0px inset, rgb(41, 42, 43) 1.55898px 0.441022px 0px 0px inset, rgb(69, 70, 72) -0.235914px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+        "passed": true
+      },
+      {
+        "id": "sample-loading-focus-twin.loading-rail",
+        "expected": "visible foreground progress rail above relief",
+        "actual": "rgb(255, 255, 255) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "passed": true
+      },
+      {
+        "id": "sample-loading-focus-twin.focus-visible",
+        "expected": "at least 2px solid independent focus ring",
+        "actual": "rgb(143, 143, 104) solid 3px",
+        "passed": true
+      },
+      {
+        "id": "sample-loading-disabled-twin.loading-rail",
+        "expected": "no loading rail on a disabled action",
+        "actual": "none",
+        "passed": true
+      }
+    ]
+  },
+  "viewport": {
+    "width": 926,
+    "height": 1316,
+    "devicePixelRatio": 2,
+    "scrollY": 0
+  },
+  "backdrop": "none",
+  "gallery": null,
+  "closeUp": null,
+  "samples": [
+    {
+      "id": "sample-panel",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(0, 0, 64) 0px 0px 0px 1px inset, rgb(255, 255, 85) 0px 0px 0px 2px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "panel",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 388.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 404.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 404.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-panel-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(0, 0, 64) 0px 0px 0px 1px inset, rgb(255, 255, 85) 0px 0px 0px 2px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "panel",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 388.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 404.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 404.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-muted-panel",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(0, 0, 64) 0px 0px 0px 1px inset, rgb(255, 255, 85) 0px 0px 0px 2px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "muted-panel",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 499,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 515,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 515,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-muted-panel-twin",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(0, 0, 64) 0px 0px 0px 1px inset, rgb(255, 255, 85) 0px 0px 0px 2px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "muted-panel",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 499,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 515,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 515,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-default",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "default",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 609.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 625.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 625.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-default-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "default",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 609.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 625.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 625.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-hover",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(125, 126, 128) 1.55898px 0.441022px 0px 0px inset, rgb(111, 112, 113) -0.235914px 0.882043px 0px 0px inset, rgba(64, 64, 64, 0.44) -0.441022px -0.441022px 0px 0px inset, rgba(128, 128, 128, 0.44) -0.882043px -0.882043px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "hover",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 720,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 736,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 736,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-hover-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(125, 126, 128) 1.55898px 0.441022px 0px 0px inset, rgb(111, 112, 113) -0.235914px 0.882043px 0px 0px inset, rgba(64, 64, 64, 0.44) -0.441022px -0.441022px 0px 0px inset, rgba(128, 128, 128, 0.44) -0.882043px -0.882043px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "hover",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 720,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 736,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 736,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-pressed",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 0.441022px 0.441022px 0px 0.558978px inset, rgba(128, 128, 128, 0.44) 0.882043px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "pressed",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 830.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 846.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 846.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-pressed-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 0.441022px 0.441022px 0px 0.558978px inset, rgba(128, 128, 128, 0.44) 0.882043px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "pressed",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 830.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 846.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 846.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 1.55898px 0.441022px 0px 0px inset, rgb(69, 70, 72) -0.235914px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 941,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 957,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 957,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 1.55898px 0.441022px 0px 0px inset, rgb(69, 70, 72) -0.235914px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 941,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 957,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 957,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-hover",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(125, 126, 128) 1.55898px 0.441022px 0px 0px inset, rgb(111, 112, 113) -0.235914px 0.882043px 0px 0px inset, rgba(64, 64, 64, 0.44) -0.441022px -0.441022px 0px 0px inset, rgba(128, 128, 128, 0.44) -0.882043px -0.882043px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected-hover",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 1051.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 1067.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 1067.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-hover-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(125, 126, 128) 1.55898px 0.441022px 0px 0px inset, rgb(111, 112, 113) -0.235914px 0.882043px 0px 0px inset, rgba(64, 64, 64, 0.44) -0.441022px -0.441022px 0px 0px inset, rgba(128, 128, 128, 0.44) -0.882043px -0.882043px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected-hover",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 1051.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 1067.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 1067.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-pressed",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 0.441022px 0.441022px 0px 0.558978px inset, rgba(128, 128, 128, 0.44) 0.882043px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected-pressed",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 1162,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 1178,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 1178,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-pressed-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 0.441022px 0.441022px 0px 0.558978px inset, rgba(128, 128, 128, 0.44) 0.882043px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected-pressed",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 1162,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 1178,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 1178,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-primary",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "primary",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 1272.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 1288.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 1288.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-primary-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "primary",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 1272.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 1288.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 1288.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-primary-hover",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(125, 126, 128) 1.55898px 0.441022px 0px 0px inset, rgb(111, 112, 113) -0.235914px 0.882043px 0px 0px inset, rgba(64, 64, 64, 0.44) -0.441022px -0.441022px 0px 0px inset, rgba(128, 128, 128, 0.44) -0.882043px -0.882043px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "primary-hover",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 1383,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 1399,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 1399,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-primary-hover-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(125, 126, 128) 1.55898px 0.441022px 0px 0px inset, rgb(111, 112, 113) -0.235914px 0.882043px 0px 0px inset, rgba(64, 64, 64, 0.44) -0.441022px -0.441022px 0px 0px inset, rgba(128, 128, 128, 0.44) -0.882043px -0.882043px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "primary-hover",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 1383,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 1399,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 1399,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-danger",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 170, 170)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "danger",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 1493.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 1509.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 1509.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-danger-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 170, 170)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "danger",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 1493.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 1509.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 1509.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-danger-hover",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 170, 170)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(125, 126, 128) 1.55898px 0.441022px 0px 0px inset, rgb(111, 112, 113) -0.235914px 0.882043px 0px 0px inset, rgba(64, 64, 64, 0.44) -0.441022px -0.441022px 0px 0px inset, rgba(128, 128, 128, 0.44) -0.882043px -0.882043px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "danger-hover",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 1604,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 1620,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 1620,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-danger-hover-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 170, 170)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(125, 126, 128) 1.55898px 0.441022px 0px 0px inset, rgb(111, 112, 113) -0.235914px 0.882043px 0px 0px inset, rgba(64, 64, 64, 0.44) -0.441022px -0.441022px 0px 0px inset, rgba(128, 128, 128, 0.44) -0.882043px -0.882043px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "danger-hover",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 1604,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 1620,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 1620,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-danger-pressed",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 170, 170)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 0.441022px 0.441022px 0px 0.558978px inset, rgba(128, 128, 128, 0.44) 0.882043px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "danger-pressed",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 1714.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 1730.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 1730.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-danger-pressed-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 170, 170)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 0.441022px 0.441022px 0px 0.558978px inset, rgba(128, 128, 128, 0.44) 0.882043px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "danger-pressed",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 1714.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 1730.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 1730.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-disabled",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "disabled",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 1825,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 1841,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 1841,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-disabled-twin",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "disabled",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 1825,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 1841,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 1841,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-primary-disabled",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "primary-disabled",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 1935.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 1951.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 1951.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-primary-disabled-twin",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "primary-disabled",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 1935.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 1951.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 1951.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-disabled",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected-disabled",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 2046,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 2062,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 2062,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-disabled-twin",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected-disabled",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 2046,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 2062,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 2062,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-focus",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(143, 143, 104) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "focus",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 2156.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 2172.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 2172.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-focus-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(143, 143, 104) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "focus",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 2156.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 2172.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 2172.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-loading",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 255) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "loading",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 2267,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 2283,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 2283,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-loading-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 255) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "loading",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 2267,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 2283,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 2283,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-loading",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(23, 25, 27) 0px -3px 0px 0px inset, rgb(41, 42, 43) 1.55898px 0.441022px 0px 0px inset, rgb(69, 70, 72) -0.235914px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected-loading",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 2377.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 2393.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 2393.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-loading-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(23, 25, 27) 0px -3px 0px 0px inset, rgb(41, 42, 43) 1.55898px 0.441022px 0px 0px inset, rgb(69, 70, 72) -0.235914px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(23, 25, 27) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "selected-loading",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 2377.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 2393.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 2393.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-focus",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 1.55898px 0.441022px 0px 0px inset, rgb(69, 70, 72) -0.235914px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(143, 143, 104) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "selected-focus",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 2488,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 2504,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 2504,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-selected-focus-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 255, 85)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(41, 42, 43) 1.55898px 0.441022px 0px 0px inset, rgb(69, 70, 72) -0.235914px 0.882043px 0px 0px inset, rgba(255, 255, 255, 0.44) -0.441022px -0.441022px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(143, 143, 104) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "selected-focus",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 2488,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 2504,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 2504,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-danger-focus",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 170, 170)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(143, 143, 104) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "danger-focus",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 2598.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 2614.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 2614.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-danger-focus-twin",
+      "foreground": "rgb(23, 25, 27)",
+      "background": "rgb(255, 170, 170)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(143, 143, 104) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "danger-focus",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 2598.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 2614.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 2614.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-loading-focus",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 255) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(143, 143, 104) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "loading-focus",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 2709,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 2725,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 2725,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-loading-focus-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 255) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(143, 143, 104) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "loading-focus",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 2709,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 2725,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 2725,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-loading-disabled",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "loading-disabled",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 72,
+        "y": 2819.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 2835.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 2835.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-loading-disabled-twin",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "loading-disabled",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "box-shadow 0.1s, outline-color 0.1s, translate 0.07s ease-out",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": null,
+      "rectangle": {
+        "x": 473,
+        "y": 2819.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 2835.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 2835.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "input",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": false,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 2930,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 2946,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 2946,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "input",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": false,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 2930,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 2946,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 2946,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input-hover",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -2px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "input-hover",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": false,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -2px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 3040.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 3056.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 3056.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input-hover-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -2px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "input-hover",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": false,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -2px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 3040.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 3056.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 3056.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input-disabled",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "input-disabled",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": true,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(204, 204, 204)",
+        "background": "rgb(0, 0, 64)",
+        "borderColor": "rgb(119, 119, 170)",
+        "outline": "rgb(204, 204, 204) none 3px",
+        "shadow": "none"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 3151,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 3167,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 3167,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input-disabled-twin",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "input-disabled",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": true,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(204, 204, 204)",
+        "background": "rgb(0, 0, 64)",
+        "borderColor": "rgb(119, 119, 170)",
+        "outline": "rgb(204, 204, 204) none 3px",
+        "shadow": "none"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 3151,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 3167,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 3167,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input-invalid",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 170, 170) 3px 0px 0px 0px inset, rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "input-invalid",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": false,
+        "checked": false,
+        "invalid": "true",
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 170, 170)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 170, 170) 3px 0px 0px 0px inset, rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 3261.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 3277.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 3277.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input-invalid-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 170, 170) 3px 0px 0px 0px inset, rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "input-invalid",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": false,
+        "checked": false,
+        "invalid": "true",
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 170, 170)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 170, 170) 3px 0px 0px 0px inset, rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 3261.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 3277.5,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 3277.5,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input-invalid-focus",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 170, 170) 3px 0px 0px 0px inset, rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(255, 255, 85) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "input-invalid-focus",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": false,
+        "checked": false,
+        "invalid": "true",
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 170, 170)",
+        "outline": "rgb(255, 255, 85) solid 3px",
+        "shadow": "rgb(255, 170, 170) 3px 0px 0px 0px inset, rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 3372,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 3388,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 3388,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-input-invalid-focus-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 170, 170) 3px 0px 0px 0px inset, rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 170, 170)",
+      "outline": "rgb(255, 255, 85) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "input-invalid-focus",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "text",
+        "disabled": false,
+        "checked": false,
+        "invalid": "true",
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 170, 170)",
+        "outline": "rgb(255, 255, 85) solid 3px",
+        "shadow": "rgb(255, 170, 170) 3px 0px 0px 0px inset, rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 3372,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 3388,
+        "width": 349,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 3388,
+        "width": 349,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-select",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "select",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "SELECT",
+        "type": "select-one",
+        "disabled": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 3482.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 3498.5,
+        "width": 333,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 3498.5,
+        "width": 333,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-select-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "select",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "SELECT",
+        "type": "select-one",
+        "disabled": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 3482.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 3498.5,
+        "width": 333,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 3498.5,
+        "width": 333,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-select-hover",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -2px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "select-hover",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "SELECT",
+        "type": "select-one",
+        "disabled": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -2px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 3593,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 3609,
+        "width": 333,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 3609,
+        "width": 333,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-select-hover-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -2px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "select-hover",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "SELECT",
+        "type": "select-one",
+        "disabled": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -2px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 3593,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 3609,
+        "width": 333,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 3609,
+        "width": 333,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-select-focus",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 85) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "select-focus",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "SELECT",
+        "type": "select-one",
+        "disabled": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 85) solid 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 3703.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 3719.5,
+        "width": 333,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 3719.5,
+        "width": 333,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-select-focus-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 32)",
+      "finish": "none, none",
+      "borderImage": "none",
+      "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 85)",
+      "outline": "rgb(255, 255, 85) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "select-focus",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "SELECT",
+        "type": "select-one",
+        "disabled": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 85) solid 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 3703.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 3719.5,
+        "width": 333,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 3719.5,
+        "width": 333,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-select-disabled",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "select-disabled",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": {
+        "tag": "SELECT",
+        "type": "select-one",
+        "disabled": true,
+        "invalid": null,
+        "foreground": "rgb(204, 204, 204)",
+        "background": "rgb(0, 0, 64)",
+        "borderColor": "rgb(119, 119, 170)",
+        "outline": "rgb(204, 204, 204) none 3px",
+        "shadow": "none"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 3814,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 88,
+        "y": 3830,
+        "width": 333,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 88,
+        "y": 3830,
+        "width": 333,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-select-disabled-twin",
+      "foreground": "rgb(204, 204, 204)",
+      "background": "rgb(0, 0, 64)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(204, 204, 204) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "select-disabled",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": {
+        "tag": "SELECT",
+        "type": "select-one",
+        "disabled": true,
+        "invalid": null,
+        "foreground": "rgb(204, 204, 204)",
+        "background": "rgb(0, 0, 64)",
+        "borderColor": "rgb(119, 119, 170)",
+        "outline": "rgb(204, 204, 204) none 3px",
+        "shadow": "none"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 3814,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 489,
+        "y": 3830,
+        "width": 333,
+        "height": 36
+      },
+      "documentReadingRectangle": {
+        "x": 489,
+        "y": 3830,
+        "width": 333,
+        "height": 36
+      }
+    },
+    {
+      "id": "sample-checkbox",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "checkbox",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": false,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 3924.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 215.796875,
+        "y": 3948,
+        "width": 134.40625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 215.796875,
+        "y": 3948,
+        "width": 134.40625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-checkbox-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "checkbox",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": false,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(0, 0, 32)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 3924.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 616.796875,
+        "y": 3948,
+        "width": 134.40625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 616.796875,
+        "y": 3948,
+        "width": 134.40625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-checkbox-checked",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "checkbox-checked",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 4035,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 215.796875,
+        "y": 4058.5,
+        "width": 134.40625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 215.796875,
+        "y": 4058.5,
+        "width": 134.40625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-checkbox-checked-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "checkbox-checked",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 4035,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 616.796875,
+        "y": 4058.5,
+        "width": 134.40625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 616.796875,
+        "y": 4058.5,
+        "width": 134.40625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-checkbox-focus",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 85) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "checkbox-focus",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 85) solid 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 4145.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 215.796875,
+        "y": 4169,
+        "width": 134.40625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 215.796875,
+        "y": 4169,
+        "width": 134.40625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-checkbox-focus-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 85) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "checkbox-focus",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 85) solid 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 4145.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 616.796875,
+        "y": 4169,
+        "width": 134.40625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 616.796875,
+        "y": 4169,
+        "width": 134.40625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-checkbox-disabled",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "checkbox-disabled",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": true,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(204, 204, 204)",
+        "background": "rgb(0, 0, 64)",
+        "borderColor": "rgb(204, 204, 204)",
+        "outline": "rgb(204, 204, 204) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 4256,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 215.796875,
+        "y": 4279.5,
+        "width": 134.40625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 215.796875,
+        "y": 4279.5,
+        "width": 134.40625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-checkbox-disabled-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "checkbox-disabled",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": true,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(204, 204, 204)",
+        "background": "rgb(0, 0, 64)",
+        "borderColor": "rgb(204, 204, 204)",
+        "outline": "rgb(204, 204, 204) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 4256,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 616.796875,
+        "y": 4279.5,
+        "width": 134.40625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 616.796875,
+        "y": 4279.5,
+        "width": 134.40625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-radio-checked",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "radio-checked",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "radio",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 4366.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 211.5,
+        "y": 4390,
+        "width": 144,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 211.5,
+        "y": 4390,
+        "width": 144,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-radio-checked-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "radio-checked",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "radio",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 4366.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 612.5,
+        "y": 4390,
+        "width": 144,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 612.5,
+        "y": 4390,
+        "width": 144,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-radio-focus",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 85) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "radio-focus",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "radio",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 85) solid 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 4477,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 211.5,
+        "y": 4500.5,
+        "width": 144,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 211.5,
+        "y": 4500.5,
+        "width": 144,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-radio-focus-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 85) solid 3px",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "case": "radio-focus",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "radio",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 85) solid 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 4477,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 612.5,
+        "y": 4500.5,
+        "width": 144,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 612.5,
+        "y": 4500.5,
+        "width": 144,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-switch",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "switch",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 4587.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 235,
+        "y": 4611,
+        "width": 96,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 235,
+        "y": 4611,
+        "width": 96,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-switch-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(0, 0, 96)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(119, 119, 170)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "switch",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "disabled": false,
+        "checked": true,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(255, 255, 85)",
+        "borderColor": "rgb(255, 255, 85)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "rgb(255, 255, 85) 0px -1px 0px 0px inset"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 4587.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 636,
+        "y": 4611,
+        "width": 96,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 636,
+        "y": 4611,
+        "width": 96,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-range",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgba(0, 0, 0, 0)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 255)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "range",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "range",
+        "disabled": false,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "borderColor": "rgb(255, 255, 255)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "none"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 4698,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 209.6953125,
+        "y": 4747.5,
+        "width": 105.6015625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 209.6953125,
+        "y": 4747.5,
+        "width": 105.6015625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-range-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgba(0, 0, 0, 0)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 255)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "range",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 4.5,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "range",
+        "disabled": false,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "borderColor": "rgb(255, 255, 255)",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "shadow": "none"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 4698,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 610.6953125,
+        "y": 4747.5,
+        "width": 105.6015625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 610.6953125,
+        "y": 4747.5,
+        "width": 105.6015625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-range-disabled",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgba(0, 0, 0, 0)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 255)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "range-disabled",
+      "twin": false,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "range",
+        "disabled": true,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(204, 204, 204)",
+        "background": "rgba(0, 0, 0, 0)",
+        "borderColor": "rgb(204, 204, 204)",
+        "outline": "rgb(204, 204, 204) none 3px",
+        "shadow": "none"
+      },
+      "rectangle": {
+        "x": 72,
+        "y": 4808.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 209.6953125,
+        "y": 4858,
+        "width": 105.6015625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 209.6953125,
+        "y": 4858,
+        "width": 105.6015625,
+        "height": 21
+      }
+    },
+    {
+      "id": "sample-range-disabled-twin",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgba(0, 0, 0, 0)",
+      "finish": "none",
+      "borderImage": "none",
+      "shadow": "none",
+      "loadingRail": 3,
+      "borderColor": "rgb(255, 255, 255)",
+      "outline": "rgb(255, 255, 255) none 3px",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "case": "range-disabled",
+      "twin": true,
+      "nativeHover": false,
+      "nativeActive": false,
+      "focused": false,
+      "transition": "all",
+      "transform": "none",
+      "translate": "none",
+      "opacity": "1",
+      "minimum": 3,
+      "nativeControl": {
+        "tag": "INPUT",
+        "type": "range",
+        "disabled": true,
+        "checked": false,
+        "invalid": null,
+        "foreground": "rgb(204, 204, 204)",
+        "background": "rgba(0, 0, 0, 0)",
+        "borderColor": "rgb(204, 204, 204)",
+        "outline": "rgb(204, 204, 204) none 3px",
+        "shadow": "none"
+      },
+      "rectangle": {
+        "x": 473,
+        "y": 4808.5,
+        "width": 381,
+        "height": 68
+      },
+      "readingRectangle": {
+        "x": 610.6953125,
+        "y": 4858,
+        "width": 105.6015625,
+        "height": 21
+      },
+      "documentReadingRectangle": {
+        "x": 610.6953125,
+        "y": 4858,
+        "width": 105.6015625,
+        "height": 21
+      }
+    }
+  ]
+}

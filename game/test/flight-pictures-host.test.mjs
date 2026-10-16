@@ -1,6 +1,12 @@
+import {
+  CAPTURE_PRESENTATION_SESSION_FORMAT,
+  nativeCaptureSession as nativeSession,
+} from '../capture-presentation-session.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import {
@@ -13,6 +19,8 @@ import {
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { presentationPicturePins } from '../flight-media-pins.mjs';
+import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
+import { ACTOR_APPEARANCE_PIN_FORMAT } from '../presentation/actor-appearance-pin.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
@@ -118,15 +126,40 @@ async function pageFor(t, f, options = {}) {
   });
 }
 
+// Native download dialogs keep JSON URLs alive for a minute. These fixtures
+// inspect the exported JSON immediately and explicitly retire their own leases.
+function retireJSONDownloads(t) {
+  const URLImpl = globalThis.URL,
+    create = URLImpl.createObjectURL.bind(URLImpl),
+    revoke = URLImpl.revokeObjectURL.bind(URLImpl),
+    schedule = globalThis.setTimeout,
+    urls = [],
+    timers = [];
+  t.mock.method(URLImpl, 'createObjectURL', (blob) => {
+    const url = create(blob);
+    if (blob.type === 'application/json') urls.push(url);
+    return url;
+  });
+  t.mock.method(globalThis, 'setTimeout', (callback, delay, ...args) => {
+    const timer = schedule(callback, delay, ...args);
+    if (delay === 60000 && new Error().stack.includes('/platform.mjs:')) timers.push(timer);
+    return timer;
+  });
+  t.after(() => {
+    for (const timer of timers) clearTimeout(timer);
+    for (const url of urls) revoke(url);
+  });
+}
+
 for (const policy of ['immediate', 'grid-center'])
   test(`${policy}: real cut saves chosen A; assignment B cannot change Resume, completion receipt or victory`, async (t) => {
     const f = await setup(t),
       p = await pageFor(t, f);
     if (policy === 'grid-center') {
       p.change('turn-select', policy);
-      await settle(() => p.doc.body.dataset.pictureState === 'ready');
     }
-    p.$('start-button').click();
+    await activateHostAction(p.$('start-button'));
+    await settle(() => p.doc.body.dataset.flightState === 'running');
     p.key('ArrowDown');
     ticks(p, 13);
     p.key('ArrowDown', false);
@@ -134,9 +167,15 @@ for (const policy of ['immediate', 'grid-center'])
     p.frame(0);
     const saved = JSON.parse(p.storage.getItem(sessionKey)),
       beforeTime = p.rendered.run.time;
-    assert.equal(saved.format, 'xonix-session.v4');
     assert.equal(
-      presentationPicturePins(saved.presentationPins).choices.find(
+      saved.format,
+      CAPTURE_PRESENTATION_SESSION_FORMAT,
+      'Library imports the accepted-artwork envelope intact.',
+    );
+    assert.equal(nativeSession(saved).format, ACTOR_SESSION_FORMAT);
+    assert.equal(nativeSession(saved).actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
+    assert.equal(
+      presentationPicturePins(nativeSession(saved).presentationPins).choices.find(
         (x) => x.identity.themeId === 'fpv',
       ).assetId,
       'picture-a',
@@ -146,19 +185,21 @@ for (const policy of ['immediate', 'grid-center'])
     await f.replace();
     p.$('library-button').click();
     p.$('save-json').value = JSON.stringify(saved);
-    p.$('import-save').click();
-    await settle(() => !p.$('library-dialog').open);
+    await activateHostAction(p.$('import-save'));
+    assert.equal(p.$('library-dialog').open, false);
     p.frame(0);
     assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
     assert.equal(p.doc.body.dataset.flightState, 'paused');
-    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
     image = p.rendered.backdrop.image;
     p.$('start-button').click();
+    await settle(() => p.doc.body.dataset.flightState === 'running');
     ticks(p, 1);
     assert.equal(p.rendered.backdrop.image, image);
     assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
     assert.ok(p.rendered.run.time > beforeTime);
-    for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+    // Four unchanged fixed steps per render retain the same 900-tick budget.
+    for (let i = 0; i < 225 && p.rendered.run.status !== 'won'; i++) p.frame(1000 / 30);
     assert.equal(p.rendered.run.status, 'won');
     const profile = loadLibrary(p.storage, 'revealline.library.dev.v1', {
       campaigns: [campaign],
@@ -194,7 +235,7 @@ test('pending decoded original blocks every fixed tick; background return never 
   await new Promise((resolve) => setTimeout(resolve, 10));
   assert.equal(decoding, 1, 'Start observes the existing prewarm instead of decoding again.');
   assert.equal(p.$('flight-preparation-status').dataset.state, 'busy');
-  assert.equal(p.$('flight-preparation-cancel').hidden, false);
+  assert.equal(p.$('flight-preparation-cancel').hidden, true);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
   p.doc.hidden = true;
   p.doc.emit('visibilitychange');
@@ -214,6 +255,9 @@ test('pending decoded original blocks every fixed tick; background return never 
 });
 
 test('a failed picture prewarm can be retried without reusing its rejected promise', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
   const f = await setup(t),
     gate = deferred();
   let decoding = 0;
@@ -229,7 +273,21 @@ test('a failed picture prewarm can be retried without reusing its rejected promi
   const before = authoritativeCheckpoint(p.rendered.run);
   gate.reject(new Error('Decoder temporarily unavailable'));
   await settle(() => p.$('flight-preparation-status').dataset.state === 'error');
-  assert.match(p.$('flight-preparation-status').textContent, /Decoder temporarily unavailable/);
+  assert.match(p.$('flight-preparation-status').textContent, /Picture unavailable.*original media/);
+  p.$('start-button').focus();
+  for (const language of ['uk', 'en']) {
+    setLocale(language, { persist: false });
+    ticks(p, 3);
+    assert.equal(p.doc.activeElement, p.$('start-button'));
+    assert.equal(decoding, 1, 'Changing locale must not retry the failed decode');
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+    assert.match(
+      p.$('flight-preparation-status').textContent,
+      language === 'uk'
+        ? /Зображення недоступне.*оригінальних медіафайлів/
+        : /Picture unavailable.*original media/,
+    );
+  }
   ticks(p, 10);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
   p.$('start-button').click();
@@ -240,7 +298,7 @@ test('a failed picture prewarm can be retried without reusing its rejected promi
   assert.deepEqual(p.errors, []);
 });
 
-test('cancelling picture preparation restores keyboard focus before native hiding drops it', async (t) => {
+test('cancelling picture preparation keeps keyboard focus on the launch command', async (t) => {
   const f = await setup(t),
     gate = deferred();
   let decoding = 0;
@@ -255,17 +313,7 @@ test('cancelling picture preparation restores keyboard focus before native hidin
   p.$('start-button').click();
   const before = authoritativeCheckpoint(p.rendered.run),
     cancel = p.$('flight-preparation-cancel');
-  let hidden = cancel.hidden;
-  Object.defineProperty(cancel, 'hidden', {
-    configurable: true,
-    get: () => hidden,
-    set(value) {
-      hidden = value;
-      // A browser drops focus when its current action becomes display:none.
-      if (value && p.doc.activeElement === cancel) p.doc.body.focus();
-    },
-  });
-  cancel.focus();
+  p.$('start-button').focus();
   cancel.click();
   assert.equal(p.doc.activeElement, p.$('start-button'));
   assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
@@ -332,9 +380,11 @@ for (const launch of ['start', 'retry', 'restart'])
       joinPad(p, pad);
       if (launch !== 'start') {
         p.$('start-button').click();
+        await settle(() => p.doc.body.dataset.flightState === 'running');
         p.key('ArrowDown');
         if (launch === 'retry') {
-          for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+          // Four unchanged fixed steps per render retain the same 900-tick budget.
+          for (let i = 0; i < 225 && p.rendered.run.status !== 'won'; i++) p.frame(1000 / 30);
           p.key('ArrowDown', false);
           assert.equal(p.rendered.run.status, 'won');
           await settle(
@@ -352,7 +402,10 @@ for (const launch of ['start', 'retry', 'restart'])
           ticks(p, 13);
           p.key('ArrowDown', false);
           p.$('pause-button').click();
-          assert.equal(verifyReplay(JSON.parse(p.storage.getItem(sessionKey)).replay).match, true);
+          assert.equal(
+            verifyReplay(nativeSession(JSON.parse(p.storage.getItem(sessionKey))).replay).match,
+            true,
+          );
           hold = true;
           p.$('overlay-restart').click();
           assert.equal(p.$('restart-dialog').open, true);
@@ -375,7 +428,7 @@ for (const launch of ['start', 'retry', 'restart'])
         library = p.storage.getItem('revealline.library.dev.v1'),
         selected = [p.$('pack-select').value, p.$('level-select').value, p.$('theme-select').value],
         media = await f.store.read();
-      p.$('flight-preparation-cancel').focus();
+      p.$(launch === 'retry' ? 'retry-button' : 'start-button').focus();
       backInput(p, mode, pad);
       assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
       assert.equal(p.$('flight-preparation-cancel').hidden, true);
@@ -427,13 +480,16 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   const f = await setup(t),
     p = await pageFor(t, f);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
   p.$('pause-button').click();
-  const old = JSON.parse(p.storage.getItem(sessionKey));
+  const old = nativeSession(JSON.parse(p.storage.getItem(sessionKey)));
   old.format = 'xonix-session.v2';
   delete old.presentationPins;
+  delete old.visualThemePin;
+  delete old.actorAppearancePin;
   p.$('library-button').click();
   p.$('save-json').value = JSON.stringify(old);
   p.$('import-save').click();
@@ -442,10 +498,14 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   assert.equal(p.rendered.backdrop, null);
   assert.equal(p.doc.body.dataset.flightState, 'paused');
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.frame();
   p.$('pause-button').click();
-  assert.equal(JSON.parse(p.storage.getItem(sessionKey)).format, 'xonix-session.v2');
-  assert.equal(verifyReplay(JSON.parse(p.storage.getItem(sessionKey)).replay).match, true);
+  assert.equal(nativeSession(JSON.parse(p.storage.getItem(sessionKey))).format, 'xonix-session.v2');
+  assert.equal(
+    verifyReplay(nativeSession(JSON.parse(p.storage.getItem(sessionKey))).replay).match,
+    true,
+  );
 });
 
 test('unavailable storage blocks a new flight until explicit original-art choice', async (t) => {
@@ -466,7 +526,9 @@ test('unavailable storage blocks a new flight until explicit original-art choice
   p.$('pause-button').click();
   const saved = JSON.parse(p.storage.getItem(sessionKey));
   assert.ok(
-    presentationPicturePins(saved.presentationPins).choices.every((pin) => pin.kind === 'legacy'),
+    presentationPicturePins(nativeSession(saved).presentationPins).choices.every(
+      (pin) => pin.kind === 'legacy',
+    ),
   );
   assert.equal(p.rendered.backdrop, null);
 });
@@ -475,6 +537,7 @@ test('a missing saved original cannot adopt a different picture or overwrite the
   const f = await setup(t),
     p = await pageFor(t, f);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -536,6 +599,7 @@ test('First Flight keeps legacy artwork and creates no managed or player progres
   const p = await pageFor(t, f, { search: '?course=first-flight&lesson=close-line' });
   const writes = p.storage.writes.length;
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 30);
   p.key('ArrowDown', false);
@@ -550,6 +614,7 @@ test('First Flight keeps legacy artwork and creates no managed or player progres
 test('managed current attempt export and First Flight handoff preserve the exact pinned saved session', async (t) => {
   const f = await setup(t),
     p = await pageFor(t, f);
+  retireJSONDownloads(t);
   let navigation = null;
   p.win.location.assign = (url) => {
     navigation = url;
@@ -557,6 +622,7 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.change('turn-select', 'grid-center');
   await settle(() => p.doc.body.dataset.pictureState === 'ready');
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -571,18 +637,20 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.$('export-session').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const exported = JSON.parse(p.$('save-json').value);
-  assert.equal(exported.format, 'xonix-session.v4');
-  assert.deepEqual(exported.presentationPins, raw.presentationPins);
-  assert.equal(verifyReplay(exported.replay).match, true);
+  assert.equal(nativeSession(exported).format, ACTOR_SESSION_FORMAT);
+  assert.equal(nativeSession(exported).actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
+  assert.deepEqual(nativeSession(exported).presentationPins, nativeSession(raw).presentationPins);
+  assert.equal(verifyReplay(nativeSession(exported).replay).match, true);
   p.$('library-dialog').close();
   p.$('help-button').click();
   p.$('first-flight-help-enter').click();
   await settle(() => navigation !== null);
   const retained = JSON.parse(p.storage.getItem(sessionKey));
-  assert.equal(retained.format, 'xonix-session.v4');
-  assert.deepEqual(retained.presentationPins, raw.presentationPins);
-  assert.deepEqual(retained.continuation, raw.continuation);
-  assert.equal(verifyReplay(retained.replay).match, true);
+  assert.equal(nativeSession(retained).format, ACTOR_SESSION_FORMAT);
+  assert.equal(nativeSession(retained).actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
+  assert.deepEqual(nativeSession(retained).presentationPins, nativeSession(raw).presentationPins);
+  assert.deepEqual(nativeSession(retained).continuation, nativeSession(raw).continuation);
+  assert.equal(verifyReplay(nativeSession(retained).replay).match, true);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
   assert.match(navigation, /course=first-flight/);
 });
@@ -590,7 +658,9 @@ test('managed current attempt export and First Flight handoff preserve the exact
 test('raw installed campaign plus retained normalized owner can export a complete pinned backup', async (t) => {
   const f = await setup(t),
     p = await pageFor(t, f);
+  retireJSONDownloads(t);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -599,14 +669,18 @@ test('raw installed campaign plus retained normalized owner can export a complet
   p.$('export-backup').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const backup = JSON.parse(p.$('save-json').value);
-  assert.equal(backup.session.format, 'xonix-session.v4');
+  assert.equal(nativeSession(backup.session).format, ACTOR_SESSION_FORMAT);
   assert.equal(
-    presentationPicturePins(backup.session.presentationPins).choices.find(
+    nativeSession(backup.session).actorAppearancePin.format,
+    ACTOR_APPEARANCE_PIN_FORMAT,
+  );
+  assert.equal(
+    presentationPicturePins(nativeSession(backup.session).presentationPins).choices.find(
       (x) => x.identity.themeId === 'fpv',
     ).assetId,
     'picture-a',
   );
-  assert.equal(verifyReplay(backup.session.replay).match, true);
+  assert.equal(verifyReplay(nativeSession(backup.session).replay).match, true);
 });
 
 for (const outcome of ['ready', 'error', 'background'])

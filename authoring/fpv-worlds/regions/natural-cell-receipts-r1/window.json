@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "check": "diagonal transition, retained staging, cancellation and retry",
+      "cellSizeMm": 512000,
+      "residentCells": 9,
+      "residentGeometryBytes": 456408,
+      "stagedAndRetainedGeometryBytes": 912816,
+      "peakColliders": 18,
+      "sceneryRequests": 0
+    },
+    {
+      "check": "retained plus staged geometry limit",
+      "retained": true,
+      "rejectedBeforeFetch": true,
+      "sceneryRequests": 0
+    },
+    {
+      "check": "retained plus staged source limit",
+      "retained": true,
+      "rejectedBeforeFetch": true,
+      "sceneryRequests": 0
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "format": "fpv-public-library-journey.v1",
+  "date": "2026-10-13",
+  "method": "Actual Codex in-app browser UI on public Pages; no fixture, hidden state injection or simulated gamepad.",
+  "playerUrl": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html",
+  "deployment": {
+    "sourceRevision": "6514e5c3ab8171bc75af287e08262977db88e2b3",
+    "buildVersion": "main-6514e5c3ab81",
+    "runId": 38460556864,
+    "conclusion": "success",
+    "containsLibraryMerge": "e5dce34d35b0f7bca81c95f54e27fba9b8e6cacd"
+  },
+  "installedWorlds": [
+    {
+      "name": "Mountain Reservoir",
+      "revision": "r16",
+      "courses": 8
+    },
+    {
+      "name": "Festival Grounds",
+      "revision": "r5",
+      "courses": 8
+    },
+    {
+      "name": "Harbor Docks",
+      "revision": "r4",
+      "courses": 8
+    }
+  ],
+  "proofImport": {
+    "file": "harbor-docks.r4.proofs.json",
+    "bytes": 1018615,
+    "sha256": "7341d203aa2d3a61199a0000cc87a31f50553588dad610d878a5238aab433102",
+    "records": 16,
+    "verified": 16
+  },
+  "nativeReplays": [
+    {
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "conditionsIdentity": "030d08b3879ad283",
+      "course": "harbor-docks-05",
+      "courseIdentity": "f9e83e5c616d9f95",
+      "finalStateIdentity": "1312bb3ef361d530",
+      "format": "FlightAttempt.v2",
+      "mode": "self-level",
+      "model": "civilian-world-fixed.v2",
+      "response": {
+        "expo": 30,
+        "format": "FlightResponseProfile.v1",
+        "id": "gentle-v1",
+        "maxRate": 240,
+        "maxTilt": 30,
+        "name": "Gentle",
+        "responseTicks": 8
+      },
+      "responseIdentity": "73833493634ba989",
+      "rulesIdentity": "5e604d970f44ec41",
+      "session": "demonstration",
+      "worldIdentity": "7204cae60dd4e0e0",
+      "frameCount": 1727,
+      "packIdentity": "fpv-pack:d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "observedResult": "Demonstration complete"
+    },
+    {
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "conditionsIdentity": "030d08b3879ad283",
+      "course": "harbor-docks-05",
+      "courseIdentity": "f9e83e5c616d9f95",
+      "finalStateIdentity": "39470d61962b54c2",
+      "format": "FlightAttempt.v2",
+      "mode": "acro",
+      "model": "civilian-world-fixed.v2",
+      "response": {
+        "expo": 30,
+        "format": "FlightResponseProfile.v1",
+        "id": "gentle-v1",
+        "maxRate": 240,
+        "maxTilt": 30,
+        "name": "Gentle",
+        "responseTicks": 8
+      },
+      "responseIdentity": "73833493634ba989",
+      "rulesIdentity": "5e604d970f44ec41",
+      "session": "demonstration",
+      "worldIdentity": "7204cae60dd4e0e0",
+      "frameCount": 1733,
+      "packIdentity": "fpv-pack:d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "observedResult": "Demonstration complete"
+    }
+  ],
+  "observations": [
+    "All three actual Library downloads persisted across page reload; 24 imported courses remained available.",
+    "Public player reloaded after the deployment marker advanced to the reported descendant.",
+    "Watch example reached through Select Mission > SIM tools. Both Harbor Terminal cart escort modes reached Demonstration complete.",
+    "Fly this challenge returned to practice; Pause hid the live guidance widget.",
+    "Settings changed Self-level to Acro; returning showed Paused. Arm deliberately to continue., 0.0 s and zero throttle.",
+    "No warnings or errors in captured console log."
+  ],
+  "limits": [
+    "Not a new offline installation/update/rollback qualification.",
+    "Not a current-main full Creator transactional qualification.",
+    "Not a sustained frame-time, memory or physical-controller measurement.",
+    "Not all 48 recordings played visibly; all 16 Harbor recordings passed the real importer verification.",
+    "The first pre-reload search for Watch was inconclusive; no reproducible defect or runtime fix is claimed.",
+    "Additional unit coverage remains deferred to D6."
+  ]
+}

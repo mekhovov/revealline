@@ -1,0 +1,72 @@
+TAP version 13
+# Subtest: Workshop destinations ship their actual authoring runtime and return paths
+not ok 1 - Workshop destinations ship their actual authoring runtime and return paths
+  ---
+  duration_ms: 821.581083
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/field-kit-surfaces.test.mjs:12:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, lstat '/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/authoring/library/tactical-teaching'"
+  code: 'ENOENT'
+  stack: |-
+    async Module.lstat (node:internal/fs/promises:1025:18)
+    async noSymlinkPath (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/scripts/game-cli.mjs:124:10)
+    async regularFiles (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/scripts/game-cli.mjs:132:18)
+    async collectBuildFiles (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/scripts/game-cli.mjs:224:24)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/field-kit-surfaces.test.mjs:14:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: settings categories keep the real controls and preferences without starting the flight
+ok 2 - settings categories keep the real controls and preferences without starting the flight
+  ---
+  duration_ms: 3575.776542
+  ...
+# Subtest: leaving Controls cancels a pending physical-key capture through its native cancel action
+ok 3 - leaving Controls cancels a pending physical-key capture through its native cancel action
+  ---
+  duration_ms: 2488.843417
+  ...
+# Subtest: settings tabs support arrow and end navigation without leaking the key to the game
+ok 4 - settings tabs support arrow and end navigation without leaking the key to the game
+  ---
+  duration_ms: 2521.0815
+  ...
+# Subtest: data and collection shortcuts reuse the existing nested Library sections without changing saved data
+ok 5 - data and collection shortcuts reuse the existing nested Library sections without changing saved data
+  ---
+  duration_ms: 1937.95375
+  ...
+# Subtest: supporting page text size remains presentation only and listeners are released
+ok 6 - supporting page text size remains presentation only and listeners are released
+  ---
+  duration_ms: 0.2525
+  ...
+# Subtest: supporting pages read the shared UI skin without writing or competing with native game controls
+ok 7 - supporting pages read the shared UI skin without writing or competing with native game controls
+  ---
+  duration_ms: 0.487166
+  ...
+# Subtest: support-skin CSS owns chrome tokens but never canvas, board geometry or hidden focus
+ok 8 - support-skin CSS owns chrome tokens but never canvas, board geometry or hidden focus
+  ---
+  duration_ms: 5.843709
+  ...
+# Subtest: edition tool chrome cannot be replaced by a saved default-game palette
+ok 9 - edition tool chrome cannot be replaced by a saved default-game palette
+  ---
+  duration_ms: 0.368417
+  ...
+# Subtest: surface copy supports regional locales and preserves native controls
+ok 10 - surface copy supports regional locales and preserves native controls
+  ---
+  duration_ms: 0.348791
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 9
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12211.956917

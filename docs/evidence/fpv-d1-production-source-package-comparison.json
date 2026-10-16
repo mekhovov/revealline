@@ -1,0 +1,84 @@
+{
+  "format": "FPVD1SourcePackageSemanticComparison.v1",
+  "source": {
+    "path": "/tmp/fpv-d1-production-source-browser.json",
+    "bytes": 3492950,
+    "sha256": "abb38414fb27d4211cd22fc614af01e3fe3db6e8de8fa1b3d8a7c06ed26347e2"
+  },
+  "package": {
+    "path": "/tmp/fpv-d1-production-package-browser.json",
+    "bytes": 3494467,
+    "sha256": "3d0062f4c14ec0a45cd60efbc67890c24705343ffd399e4d3e95e539acd19f2f"
+  },
+  "method": {
+    "sampleAlignment": [
+      "round",
+      "id",
+      "path",
+      "quality"
+    ],
+    "controlAlignment": [
+      "id",
+      "control",
+      "path",
+      "quality"
+    ],
+    "viewAlignment": [
+      "camera"
+    ],
+    "ignoredRootProvenanceAndRunTimestamps": [
+      "sourceHead",
+      "sourceTree",
+      "sourceMode",
+      "verifiedProjections",
+      "packageBinding",
+      "sourceFiles",
+      "sourcesBefore",
+      "sourcesAfter",
+      "startedAt",
+      "finishedAt"
+    ],
+    "ignoredExplicitTimingFields": [
+      "generationMs",
+      "loadMs",
+      "prepareMs",
+      "firstDrawMs",
+      "drawSubmissionMilliseconds",
+      "animationFrameIntervalMilliseconds"
+    ],
+    "comparison": "Exact recursive equality after only explicit timing/provenance/timestamp exclusions and sample/control/view key alignment. All other arrays retain order; all other fields remain compared.",
+    "included": "Full sample/view/control resources, full observations (materials, shadow/DPR/fog/surfaces), actorObservation, glErrors, blobBytes, checks, browser/WebGL descriptors, consoleErrors, contextLosses, completed/passed, and every remaining field."
+  },
+  "counts": {
+    "comparedObjects": 12247,
+    "comparedLeaves": 72680,
+    "comparedArrays": 10601
+  },
+  "excludedFieldOccurrencesBothReceipts": {
+    "sourceHead": 2,
+    "verifiedProjections": 2,
+    "sourceMode": 2,
+    "sourceTree": 2,
+    "sourceFiles": 2,
+    "startedAt": 2,
+    "generationMs": 180,
+    "loadMs": 180,
+    "prepareMs": 300,
+    "firstDrawMs": 660,
+    "drawSubmissionMilliseconds": 660,
+    "animationFrameIntervalMilliseconds": 660,
+    "sourcesBefore": 2,
+    "sourcesAfter": 2,
+    "finishedAt": 2,
+    "packageBinding": 1
+  },
+  "matchedCounts": {
+    "sampleRecords": 90,
+    "naturalViews": 270,
+    "controls": 60,
+    "controlViews": 60
+  },
+  "discrepancyCount": 0,
+  "discrepancies": [],
+  "passed": true
+}

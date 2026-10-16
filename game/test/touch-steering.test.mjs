@@ -29,8 +29,10 @@ class Surface extends EventTarget {
 function setup(t, mode = 'stick') {
   const arena = new Surface(),
     pad = new Surface(),
-    surface = new Surface();
+    surface = new Surface(),
+    win = new Surface();
   const commands = [],
+    vectors = [],
     releases = [],
     cancellations = [];
   let enabled = true;
@@ -38,9 +40,11 @@ function setup(t, mode = 'stick') {
     arena,
     pad,
     surface,
+    window: win,
     getSettings: () => ({ mode }),
     active: () => enabled,
     onDirection: (direction) => commands.push(direction),
+    onVector: (vector, id) => vectors.push({ ...vector, id }),
     onRelease: (id) => releases.push(id),
     onCancel: () => cancellations.push(true),
   });
@@ -49,7 +53,9 @@ function setup(t, mode = 'stick') {
     arena,
     pad,
     surface,
+    win,
     commands,
+    vectors,
     releases,
     cancellations,
     input,
@@ -57,6 +63,47 @@ function setup(t, mode = 'stick') {
       enabled = false;
     },
   };
+}
+
+for (const mode of ['stick', 'swipe', 'dpad']) {
+  test(`${mode}: outside release recovers steering when pointer capture is unavailable`, (t) => {
+    const f = setup(t, mode);
+    const target = mode === 'dpad' ? f.pad : f.surface;
+    target.setPointerCapture = () => {
+      throw new Error('Pointer capture unavailable');
+    };
+    target.pointer('pointerdown', mode === 'dpad' ? 145 : 78, 78, 11);
+    if (mode !== 'dpad') target.pointer('pointermove', 115, 78, 11);
+    f.win.pointer('pointerup', 200, 78, 99);
+    assert.deepEqual(f.releases, [], 'Another finger does not own this gesture.');
+    f.win.pointer('pointerup', 200, 78, 11);
+    assert.deepEqual(f.releases, [11], 'Outside release retires the gesture immediately.');
+    target.pointer('pointerup', 200, 78, 11);
+    assert.deepEqual(f.releases, [11], 'Window and element delivery release exactly once.');
+    assert.deepEqual(f.cancellations, [], 'Ordinary release is not an interruption.');
+    target.pointer('pointerdown', 78, mode === 'dpad' ? 145 : 78, 22);
+    f.win.pointer('pointercancel', 200, 78, 11);
+    if (mode !== 'dpad') target.pointer('pointermove', 78, 115, 22);
+    assert.deepEqual(f.commands, ['right', 'down']);
+    assert.deepEqual(f.releases, [11], 'An old pointer cannot retire the new owner.');
+  });
+
+  test(`${mode}: outside cancellation retires only the matching steering gesture`, (t) => {
+    const f = setup(t, mode);
+    const target = mode === 'dpad' ? f.pad : f.surface;
+    target.setPointerCapture = () => {};
+    target.pointer('pointerdown', 78, 78, 11);
+    f.win.pointer('pointercancel', 200, 78, 99);
+    assert.deepEqual(f.cancellations, []);
+    f.win.pointer('pointercancel', 200, 78, 11);
+    assert.deepEqual(f.releases, [11]);
+    assert.deepEqual(f.cancellations, [true], 'Outside cancellation interrupts immediately.');
+    target.pointer('pointercancel', 200, 78, 11);
+    target.pointer('pointermove', 200, 78, 11);
+    assert.deepEqual(f.releases, [11]);
+    assert.deepEqual(f.cancellations, [true]);
+    assert.deepEqual(f.commands, []);
+  });
 }
 
 test('cardinal touch directions reject jitter and retain heading at diagonal boundaries', () => {
@@ -93,6 +140,100 @@ test('floating stick follows a drifting thumb and can reverse without returning 
   f.arena.pointer('pointermove', 300, 100);
   f.arena.pointer('pointermove', 230, 100);
   assert.deepEqual(f.commands, ['right', 'left']);
+});
+
+test('continuous stick preserves diagonals, scales travel and stops inside its dead zone', (t) => {
+  const f = setup(t);
+  f.surface.pointer('pointerdown', 100, 100, 7);
+  f.surface.pointer('pointermove', 128, 100, 7);
+  assert.deepEqual(f.vectors.at(-1), { x: 0.5, y: 0, id: 7 });
+  f.surface.pointer('pointermove', 128, 128, 7);
+  assert.deepEqual(f.vectors.at(-1), { x: 0.5, y: 0.5, id: 7 });
+  f.surface.pointer('pointermove', 140, 140, 7);
+  const diagonal = f.vectors.at(-1);
+  assert.ok(Math.abs(Math.hypot(diagonal.x, diagonal.y) - 1) < 1e-12);
+  assert.equal(diagonal.x, diagonal.y);
+  f.surface.pointer('pointermove', 102, 102, 7);
+  assert.deepEqual(f.vectors.at(-1), { x: 0, y: 0, id: 7 });
+});
+
+test('continuous stick reverses around the drifting anchor and releases exactly once', (t) => {
+  const f = setup(t);
+  f.surface.pointer('pointerdown', 100, 100, 7);
+  f.surface.pointer('pointermove', 300, 100, 7);
+  assert.deepEqual(f.vectors.at(-1), { x: 1, y: 0, id: 7 });
+  f.surface.pointer('pointermove', 216, 100, 7);
+  assert.deepEqual(f.vectors.at(-1), { x: -0.5, y: 0, id: 7 });
+  const before = f.vectors.length;
+  f.win.pointer('pointerup', 216, 100, 8);
+  assert.equal(f.vectors.length, before, 'An unrelated finger cannot zero movement.');
+  f.win.pointer('pointerup', 216, 100, 7);
+  assert.deepEqual(f.vectors.at(-1), { x: 0, y: 0, id: 7 });
+  f.surface.pointer('pointerup', 216, 100, 7);
+  f.surface.pointer('pointermove', 260, 100, 7);
+  assert.equal(f.vectors.length, before + 1);
+});
+
+test('swipe vectors hold the last accepted direction until another turn or release', (t) => {
+  const f = setup(t, 'swipe');
+  f.surface.pointer('pointerdown', 100, 100);
+  f.surface.pointer('pointermove', 140, 100);
+  f.surface.pointer('pointermove', 138, 102);
+  assert.deepEqual(f.vectors.at(-1), { x: 1, y: 0, id: 1 });
+  f.surface.pointer('pointermove', 124, 100);
+  assert.deepEqual(f.vectors.at(-1), { x: -1, y: 0, id: 1 });
+  f.input.clear();
+  assert.deepEqual(f.vectors.at(-1), { x: 0, y: 0, id: 1 });
+});
+
+test('D-pad vectors follow cardinal sectors and stop at the center', (t) => {
+  const f = setup(t, 'dpad');
+  f.pad.pointer('pointerdown', 78, 25);
+  assert.deepEqual(f.vectors.at(-1), { x: 0, y: -1, id: 1 });
+  f.pad.pointer('pointermove', 145, 78);
+  assert.deepEqual(f.vectors.at(-1), { x: 1, y: 0, id: 1 });
+  f.pad.pointer('pointermove', 80, 78);
+  assert.deepEqual(f.vectors.at(-1), { x: 0, y: 0, id: 1 });
+});
+
+for (const type of ['pointercancel', 'lostpointercapture']) {
+  test(`${type} zeroes continuous steering without a stale release affecting its next owner`, (t) => {
+    const f = setup(t);
+    f.surface.pointer('pointerdown', 100, 100, 7);
+    f.surface.pointer('pointermove', 156, 100, 7);
+    f.surface.pointer(type, 156, 100, 7);
+    assert.deepEqual(f.vectors.at(-1), { x: 0, y: 0, id: 7 });
+    f.surface.pointer('pointerdown', 100, 100, 8);
+    f.surface.pointer('pointermove', 100, 156, 8);
+    const before = f.vectors.length;
+    f.surface.pointer(type, 156, 100, 7);
+    assert.equal(f.vectors.length, before);
+    assert.deepEqual(f.vectors.at(-1), { x: 0, y: 1, id: 8 });
+  });
+}
+
+test('a continuous-only host can synchronously clear during its vector callback', () => {
+  const surface = new Surface(),
+    vectors = [];
+  let input;
+  input = attachTouchSteering({
+    surface,
+    getSettings: () => ({ mode: 'stick' }),
+    active: () => true,
+    onVector: (vector) => {
+      vectors.push(vector);
+      if (vector.x) input.clear();
+    },
+  });
+  surface.pointer('pointerdown', 100, 100);
+  surface.pointer('pointermove', 156, 100);
+  assert.deepEqual(vectors, [
+    { x: 0, y: 0 },
+    { x: 1, y: 0 },
+    { x: 0, y: 0 },
+  ]);
+  assert.equal(surface.captures.size, 0);
+  input.destroy();
 });
 
 test('swipe uses recent travel so a short reverse flick turns immediately', (t) => {

@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedMessage, localizedText, t, localizedAttribute } from '../i18n/index.mjs';
 import {
   ENEMY_GUIDE_TOPICS,
   enemyGuideEntry,
@@ -5,10 +7,13 @@ import {
   createEnemyGuideScenario,
 } from '../enemy-guide.mjs';
 import { ENEMY_THEMES } from '../enemy-catalog.mjs';
+import { isEncounterGuideTopic, encounterGuideAvailability } from '../encounter-guide.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { createActorPresentation, drawPresentedActor } from './actor-presentation.mjs';
 import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import { attachEnemyWorkshopReturnHost } from './enemy-workshop-return.mjs';
+import { gameDocumentURL } from '../community-routes.mjs';
+import { observePreviewReadiness } from '../studio/preview-readiness.mjs';
 
 const HANDOFF = 'revealline.playground.current';
 // Illustration size only; the sampled pose and its contact radius remain unchanged.
@@ -22,13 +27,20 @@ export function attachEnemyGuide({
   getThemeId = () => 'fpv',
   getPresentation = () => null,
   getTurnPolicy = () => 'immediate',
+  getLevel = () => null,
+  getRunOptions = () => undefined,
+  getMissionTheme = () => null,
+  resolveEncounterPracticeURL = () => null,
+  // Catalog lessons use the generic scenario handoff. Edition hosts admit only
+  // their current-mission reconstruction and must opt out of this separate route.
+  catalogPracticeAvailable = true,
   createBodyAssets = createEnemyBodyAssets,
   loadImpactScenario = async () => {
     const response = await fetch(
       new URL('../content/scenarios/line-impact-demo.json', import.meta.url),
     );
     if (!response.ok)
-      throw new Error('The impact lesson is unavailable. Try again when its content is available.');
+      throw new Error(t('interface:theImpactLessonIsUnavailableTryAgainWhenItsContent'));
     return response.json();
   },
   onPractice = () => {},
@@ -46,6 +58,8 @@ export function attachEnemyGuide({
     parentSuspended = false,
     suspendedTicket = null,
     launchController = null,
+    practiceReadiness = null,
+    stopPracticeReadiness = null,
     time = 0,
     pageVisible = true,
     previewPose = null,
@@ -54,7 +68,7 @@ export function attachEnemyGuide({
   const node = (tag, id, text = '') => {
     const el = doc.createElement(tag);
     if (id) el.id = `enemy-guide-${id}`;
-    if (text) el.textContent = text;
+    if (text) localizedText(el, () => text);
     return el;
   };
   const button = (id, label, fn) => {
@@ -65,30 +79,31 @@ export function attachEnemyGuide({
     return el;
   };
   const select = (id, label, items) => {
-    const wrap = node('label', null, label),
+    const wrap = node('label'),
+      caption = node('span', null, label),
       el = node('select', id);
     for (const [value, text] of items) {
       const option = node('option', null, text);
       option.value = value;
       el.append(option);
     }
-    wrap.append(el);
+    wrap.append(caption, el);
     return { wrap, el };
   };
   const dialog = node('dialog', 'dialog');
   dialog.className = 'enemy-guide-dialog';
   dialog.setAttribute('aria-labelledby', 'enemy-guide-title');
-  const title = node('h2', 'title', 'Field guide'),
+  const title = node('h2', 'title', localizedMessage('interface:fieldGuide')),
     content = node('div', 'content'),
     status = node('p', 'status'),
     topic = select(
       'topic',
-      'Learn about',
+      t('interface:learnAbout'),
       ENEMY_GUIDE_TOPICS.map(({ id, label }) => [id, label]),
     ),
     appearance = select(
       'theme',
-      'Appearance',
+      t('interface:appearance'),
       ENEMY_THEMES.map((id) => [id, themes?.find((item) => item.id === id)?.name ?? id]),
     ),
     choices = node('div'),
@@ -106,27 +121,28 @@ export function attachEnemyGuide({
   choices.append(topic.wrap, appearance.wrap);
   canvas.width = 192;
   canvas.height = 112;
-  canvas.setAttribute(
-    'aria-label',
-    'Illustrated role preview; the practice lesson uses actual game timing.',
+  localizedAttribute(canvas, 'aria-label', () =>
+    t('interface:illustratedRolePreviewThePracticeLessonUsesActualGameTiming'),
   );
   summary.tabIndex = 0;
   summary.setAttribute('role', 'region');
-  summary.setAttribute('aria-label', 'Enemy recognition and practice instructions');
-  summary.setAttribute('data-game-reading', '');
-  const read = button('read', 'Read guide', () =>
-    onRead({ region: summary, origin: read, label: 'Field guide' }),
+  localizedAttribute(summary, 'aria-label', () =>
+    t('interface:enemyRecognitionAndPracticeInstructions'),
   );
-  const exercise = select('exercise', 'Impact exercise', [
+  summary.setAttribute('data-game-reading', '');
+  const read = button('read', localizedMessage('interface:readGuide'), () =>
+    onRead({ region: summary, origin: read, label: t('interface:fieldGuide') }),
+  );
+  const exercise = select('exercise', t('interface:impactExercise'), [
     ['observe', '1 · Observe the strike'],
     ['escape', '2 · Escape with Boost'],
   ]);
   const instructions = node('p', 'instructions');
   summary.append(heading, form, spot, risk, action, note, instructions);
   const previous = button('previous', '← Previous', () => changeTopic(-1)),
-    next = button('next', 'Next →', () => changeTopic(1)),
-    play = button('play', 'Play practice', launch),
-    back = button('back', 'Close guide', close),
+    next = button('next', localizedMessage('interface:next'), () => changeTopic(1)),
+    play = button('play', localizedMessage('interface:playPractice'), launch),
+    back = button('back', localizedMessage('common:actions.closeGuide'), close),
     actions = node('div');
   actions.className = 'enemy-guide-actions';
   actions.append(previous, next, play, back);
@@ -147,10 +163,14 @@ export function attachEnemyGuide({
   const practice = node('div', 'practice'),
     practiceHint = node('p', 'practice-hint'),
     frame = node('iframe', 'frame'),
-    returnButton = button('return', 'Return to field guide', returnFromPractice);
+    returnButton = button(
+      'return',
+      localizedMessage('interface:returnToFieldGuide'),
+      returnFromPractice,
+    );
   practice.hidden = true;
   frame.hidden = true;
-  frame.title = 'Reward-free field guide practice';
+  localizedAttribute(frame, 'title', () => t('interface:rewardFreeFieldGuidePractice'));
   frame.setAttribute('allow', 'gamepad; autoplay');
   practice.append(practiceHint, frame, returnButton);
   status.setAttribute('role', 'status');
@@ -162,31 +182,72 @@ export function attachEnemyGuide({
     bridge = attachEnemyWorkshopReturnHost({
       window: host,
       frame,
-      gameURL: new URL('.', host.location.href).href,
+      gameURL: new URL('.', gameDocumentURL(host.location.href)).href,
       returnTo: 'enemy-guide',
       onReturn: returnFromPractice,
     });
   function entry() {
     return enemyGuideEntry(topic.el.value, appearance.el.value);
   }
+  function canonicalTheme(id = appearance.el.value) {
+    return ENEMY_THEMES.includes(id) ? themes?.find((theme) => theme.id === id) : null;
+  }
+  function catalogPracticeReady() {
+    return catalogPracticeAvailable === true && !!canonicalTheme();
+  }
+  function refreshAppearances() {
+    const available = ENEMY_THEMES.filter(
+      (id) => canonicalTheme(id) || compiledPreview(id, topic.el.value),
+    );
+    for (const option of appearance.el.children)
+      option.disabled = !available.includes(option.value);
+    if (!available.includes(appearance.el.value)) appearance.el.value = available[0] ?? 'fpv';
+    appearance.el.disabled = busy || isEncounterGuideTopic(topic.el.value) || available.length < 2;
+  }
+  function previewPalette() {
+    return (
+      compiledPreview(appearance.el.value, topic.el.value)?.palette ?? canonicalTheme()?.palette
+    );
+  }
   function refresh() {
-    const record = entry();
-    previewNote.textContent =
-      record.id === 'line-impact'
-        ? 'Line-impact diagram · practice uses actual timing.'
-        : 'Enlarged illustration · center dot marks contact.';
+    refreshAppearances();
+    const record = entry(),
+      encounter = isEncounterGuideTopic(record.id),
+      availability = encounter ? encounterGuideAvailability(record.id, getLevel()) : null,
+      missingPreview = !encounter && record.id !== 'line-impact' && !previewPalette();
+    canvas.hidden = encounter || missingPreview;
+    localizedText(previewNote, () =>
+      encounter
+        ? t('interface:encounterGuide.previewNote')
+        : missingPreview
+          ? t('interface:guidePreviewUnavailable')
+          : record.id === 'line-impact'
+            ? t('interface:lineImpactDiagramPracticeUsesActualTiming')
+            : t('interface:enlargedIllustrationCenterDotMarksContact'),
+    );
     canvas.setAttribute('aria-label', previewNote.textContent);
-    heading.textContent = record.label;
-    form.textContent = record.form;
-    spot.textContent = `Spot: ${record.spot}`;
-    risk.textContent = `Risk: ${record.risk}`;
-    action.textContent = `Try: ${record.try}`;
-    note.textContent = record.note;
+    localizedText(heading, () => entry().label);
+    localizedText(form, () => entry().form);
+    localizedText(spot, () => t('interface:encounterGuide.spot', { text: entry().spot }));
+    localizedText(risk, () => t('interface:encounterGuide.risk', { text: entry().risk }));
+    localizedText(action, () => t('interface:encounterGuide.try', { text: entry().try }));
+    localizedText(note, () => entry().note);
     exercise.wrap.hidden = record.id !== 'line-impact';
-    instructions.textContent = enemyGuidePracticeInstructions(record.id, exercise.el.value);
-    for (const el of [topic.el, appearance.el, exercise.el, previous, next, play])
-      el.disabled = busy;
-    play.textContent = busy ? 'Preparing practice…' : 'Play practice';
+    localizedText(instructions, () =>
+      !encounter && !catalogPracticeReady()
+        ? t('interface:guideCatalogPracticeUnavailable')
+        : [
+            enemyGuidePracticeInstructions(record.id, exercise.el.value),
+            availability ? t(`interface:encounterGuide.${availability.reason}`) : '',
+          ]
+            .filter(Boolean)
+            .join(' '),
+    );
+    for (const el of [topic.el, exercise.el, previous, next, play]) el.disabled = busy;
+    play.disabled = busy || (encounter ? !availability.available : !catalogPracticeReady());
+    localizedText(play, () =>
+      busy ? t('interface:preparingPractice') : t('interface:playPractice'),
+    );
     update(0, previewSettings);
   }
   function changeTopic(delta) {
@@ -223,14 +284,80 @@ export function attachEnemyGuide({
           else host.sessionStorage.setItem(HANDOFF, previousHandoff);
         }
       } catch {
-        failure = 'Practice ended; its temporary handoff could not be restored.';
+        failure = t('interface:practiceEndedItsTemporaryHandoffCouldNotBeRestored');
       }
     }
     ownedHandoff = null;
     previousHandoff = null;
     return failure;
   }
+  function pausePracticeReadiness() {
+    stopPracticeReadiness?.();
+    stopPracticeReadiness = null;
+  }
+  function practiceReadinessCurrent(owner) {
+    return (
+      practiceReadiness === owner &&
+      active &&
+      owner.current() &&
+      frame.src === owner.url &&
+      frame.contentWindow === owner.window
+    );
+  }
+  function recoverPracticeFocus() {
+    const owner = practiceReadiness;
+    if (!owner?.returnFocusPending) return;
+    if (!practiceReadinessCurrent(owner) || doc.activeElement !== frame) {
+      owner.returnFocusPending = false;
+      return;
+    }
+    if (!pageVisible || doc.hidden || doc.hasFocus?.() === false) return;
+    // A visible but inactive window may observe failure. Defer only the focus
+    // handoff; a later navigation, reload or focus choice retires that request.
+    owner.returnFocusPending = false;
+    try {
+      const child = frame.contentDocument;
+      if (
+        child !== owner.failedDocument ||
+        child?.URL !== owner.url ||
+        child.documentElement?.dataset.bootState !== 'failed'
+      )
+        return;
+    } catch {
+      return;
+    }
+    returnButton.focus({ preventScroll: true });
+  }
+  function resumePracticeReadiness() {
+    pausePracticeReadiness();
+    recoverPracticeFocus();
+    const owner = practiceReadiness;
+    if (!owner || owner.settled || !pageVisible || doc.hidden) return;
+    const current = () => practiceReadinessCurrent(owner);
+    if (!current()) return;
+    let observedDocument;
+    stopPracticeReadiness = observePreviewReadiness({
+      expectedURL: owner.url,
+      readDocument: () => (observedDocument = frame.contentDocument),
+      isCurrent: () => current() && pageVisible && !doc.hidden,
+      notify: (state) => {
+        if (!current() || !pageVisible || doc.hidden || state === 'slow') return;
+        // Settle at readiness: the running lesson owns its recovery controls.
+        // A failed boot keeps its own detail and the exact temporary handoff.
+        owner.settled = true;
+        stopPracticeReadiness = null;
+        if (state === 'failed') {
+          localizedText(status, () => t('interface:enemyGuide.practiceBootFailed'));
+          owner.failedDocument = observedDocument;
+          owner.returnFocusPending = doc.activeElement === frame;
+          recoverPracticeFocus();
+        }
+      },
+    });
+  }
   function stopPractice() {
+    pausePracticeReadiness();
+    practiceReadiness = null;
     active = false;
     frame.hidden = true;
     frame.src = 'about:blank';
@@ -248,36 +375,78 @@ export function attachEnemyGuide({
     if (disposed || !active) return;
     generation++;
     const failure = stopPractice();
-    status.textContent =
-      failure ?? 'Practice ended. Your campaign remains paused; no progress was awarded.';
+    localizedText(
+      status,
+      () => failure ?? t('interface:practiceEndedYourCampaignRemainsPausedNoProgressWasAwarded'),
+    );
     play.focus({ preventScroll: true });
     refresh();
   }
   async function launch() {
     if (disposed || busy || active || !dialog.open) return false;
+    // Disabled controls are only presentation: reject stale/direct activation
+    // before fetching, suspending the parent or touching its temporary handoff.
+    if (!isEncounterGuideTopic(topic.el.value) && !catalogPracticeReady()) return false;
     const ticket = ++generation,
       selected = topic.el.value,
       selectedTheme = appearance.el.value,
-      turnPolicy = getTurnPolicy();
+      turnPolicy = getTurnPolicy(),
+      encounter = isEncounterGuideTopic(selected),
+      levelOwner = encounter ? getLevel() : null;
     const controller = new AbortController();
     launchController = controller;
     busy = true;
-    status.textContent = 'Preparing an isolated lesson…';
+    localizedText(status, () => t('interface:preparingAnIsolatedLesson'));
     refresh();
-    const current = () => !disposed && dialog.open && ticket === generation;
+    const current = () =>
+      !disposed &&
+      dialog.open &&
+      ticket === generation &&
+      (!encounter || getLevel() === levelOwner);
     try {
+      // Own exact level/setup/theme before the first asynchronous preparation.
+      // Replacing the loaded mission retires this launch; caller edits cannot
+      // rewrite the already validated candidate.
+      const candidate = encounter
+        ? createEnemyGuideScenario({
+            topic: selected,
+            themeId: selectedTheme,
+            turnPolicy,
+            themes,
+            encounterLevel: levelOwner,
+            encounterTheme: getMissionTheme(),
+            runOptions: getRunOptions(),
+          })
+        : null;
       const impactScenario = selected === 'line-impact' ? await loadImpactScenario() : null;
       if (!current()) return false;
       const prepared = await prepareScenario(
-        createEnemyGuideScenario({
-          topic: selected,
-          themeId: selectedTheme,
-          turnPolicy,
-          themes,
-          impactScenario,
-        }),
+        candidate ??
+          createEnemyGuideScenario({
+            topic: selected,
+            themeId: selectedTheme,
+            turnPolicy,
+            themes,
+            impactScenario,
+          }),
       );
       if (!current()) return false;
+      const returnURL = bridge.launchURL(),
+        resolvedURL = encounter
+          ? resolveEncounterPracticeURL({
+              scenario: prepared.scenario,
+              returnURL,
+            })
+          : null,
+        url = resolvedURL ?? returnURL;
+      if (resolvedURL !== null && typeof resolvedURL !== 'string')
+        throw new TypeError(t('interface:practiceMustRemainOnTheSameOrigin'));
+      const checkedURL = new URL(url, host.location.href);
+      if (
+        !['http:', 'https:'].includes(checkedURL.protocol) ||
+        checkedURL.origin !== new URL(host.location.href).origin
+      )
+        throw new TypeError(t('interface:practiceMustRemainOnTheSameOrigin'));
       parentSuspended = true;
       suspendedTicket = ticket;
       await onPractice({ signal: controller.signal, isCurrent: current });
@@ -285,23 +454,37 @@ export function attachEnemyGuide({
         if (suspendedTicket === ticket) stopPractice();
         return false;
       }
-      previousHandoff = host.sessionStorage.getItem(HANDOFF);
-      ownedHandoff = JSON.stringify(prepared.scenario);
-      host.sessionStorage.setItem(HANDOFF, ownedHandoff);
-      const url = bridge.launchURL();
+      if (resolvedURL === null) {
+        previousHandoff = host.sessionStorage.getItem(HANDOFF);
+        ownedHandoff = JSON.stringify(prepared.scenario);
+        host.sessionStorage.setItem(HANDOFF, ownedHandoff);
+      }
       active = true;
       content.hidden = true;
       practice.hidden = false;
-      practiceHint.textContent = `${enemyGuidePracticeInstructions(selected, exercise.el.value)} Pause to Restart or Return to field guide.`;
-      frame.src = url;
+      localizedText(practiceHint, () =>
+        t('gameplay:pauseToRestartOrReturnToFieldGuide', {
+          value1: enemyGuidePracticeInstructions(selected, exercise.el.value),
+        }),
+      );
+      frame.src = checkedURL.href;
       frame.hidden = false;
       frame.focus();
-      status.textContent = 'Practice only · campaign progress and saved flights are unchanged.';
+      localizedText(status, () =>
+        t('interface:practiceOnlyCampaignProgressAndSavedFlightsAreUnchanged'),
+      );
+      practiceReadiness = {
+        current,
+        url: checkedURL.href,
+        window: frame.contentWindow,
+        settled: false,
+      };
+      resumePracticeReadiness();
       return true;
     } catch (error) {
       if (current()) {
         stopPractice();
-        status.textContent = `Practice did not open: ${error.message}`;
+        localizedText(status, () => t('gameplay:practiceDidNotOpen', { value1: error.message }));
       }
       return false;
     } finally {
@@ -329,13 +512,13 @@ export function attachEnemyGuide({
   function releasePreview() {
     bodyAssets.clear();
     previewPose = null;
-    artworkStatus.textContent = '';
+    localizedText(artworkStatus, () => '');
     artworkStatus.hidden = true;
   }
-  function compiledPreview() {
-    if (previewPose?.themeId !== 'fpv') return null;
+  function compiledPreview(themeId = previewPose?.themeId, type = previewPose?.type) {
+    if (themeId !== 'fpv') return null;
     const snapshot = getPresentation();
-    const sprite = snapshot?.image?.(`enemy.${previewPose.type}`);
+    const sprite = snapshot?.image?.(`enemy.${type}`);
     return sprite ? { ...sprite, palette: snapshot.canvas.palette } : null;
   }
   function updatePreviewAssets() {
@@ -344,9 +527,15 @@ export function attachEnemyGuide({
   }
   // A host snapshot change selects artwork for the existing sampled pose only.
   function refreshPresentation() {
-    if (!previewVisible() || !previewPose || topic.el.value === 'line-impact') return;
-    updatePreviewAssets();
-    paintPreview();
+    if (
+      !previewVisible() ||
+      topic.el.value === 'line-impact' ||
+      isEncounterGuideTopic(topic.el.value)
+    )
+      return;
+    // Re-evaluate available roles when the selected presentation becomes ready
+    // or retires. A zero-delta refresh preserves the held cosmetic clocks.
+    refresh();
   }
   // A decode completion repaints the sampled frame without advancing either clock.
   function paintPreview() {
@@ -354,6 +543,7 @@ export function attachEnemyGuide({
       releasePreview();
       return;
     }
+    if (canvas.hidden) return;
     context.clearRect(0, 0, 192, 112);
     context.fillStyle = '#080d19';
     context.fillRect(0, 0, 192, 112);
@@ -372,20 +562,31 @@ export function attachEnemyGuide({
       return;
     }
     const compiled = compiledPreview(),
-      body = compiled ?? bodyAssets.current(previewPose);
+      body = compiled ?? bodyAssets.current(previewPose),
+      palette = compiled?.palette ?? canonicalTheme()?.palette;
+    if (!palette) {
+      canvas.hidden = true;
+      releasePreview();
+      localizedText(previewNote, () => t('interface:guidePreviewUnavailable'));
+      return;
+    }
     drawPresentedActor(
       context,
       { ...previewPose, diameter: PREVIEW_BODY_DIAMETER },
-      compiled?.palette ?? themes.find(({ id }) => id === appearance.el.value).palette,
+      palette,
       body?.image,
       compiled?.geometry,
       compiled ? null : body?.record,
     );
-    artworkStatus.textContent = compiled ? '' : bodyAssets.status();
+    localizedText(artworkStatus, () => (compiled ? '' : bodyAssets.status()));
     artworkStatus.hidden = !artworkStatus.textContent;
   }
   function update(dt = 0, { paused = false, reduced = false } = {}) {
-    if (!previewVisible()) {
+    if (
+      !previewVisible() ||
+      isEncounterGuideTopic(topic.el.value) ||
+      (topic.el.value !== 'line-impact' && !previewPalette())
+    ) {
       releasePreview();
       return;
     }
@@ -445,8 +646,9 @@ export function attachEnemyGuide({
       origin = doc.activeElement;
       dialog.showModal();
     }
-    status.textContent =
-      'Recognize a threat, then try it. Practice never awards campaign progress.';
+    localizedText(status, () =>
+      t('interface:recognizeAThreatThenTryItPracticeNeverAwardsCampaign'),
+    );
     refresh();
     topic.el.focus({ preventScroll: true });
     return true;
@@ -472,21 +674,38 @@ export function attachEnemyGuide({
     event.preventDefault();
     close();
   };
-  const visibility = () => update(0, previewSettings);
+  const visibility = () => {
+    // Readiness can change while hidden, when presentation notifications must
+    // not paint. Reconcile the selected role before the first visible repaint.
+    if (previewVisible()) refresh();
+    else releasePreview();
+    resumePracticeReadiness();
+  };
   const pageHide = () => {
     pageVisible = false;
     releasePreview();
+    pausePracticeReadiness();
   };
   const pageShow = () => {
     pageVisible = true;
     visibility();
   };
   const closed = () => {
-    if (!dialog.open) releasePreview();
+    if (!dialog.open) {
+      releasePreview();
+      pausePracticeReadiness();
+      practiceReadiness = null;
+    }
+  };
+  const focusChanged = () => {
+    if (practiceReadiness?.returnFocusPending && doc.activeElement !== frame)
+      practiceReadiness.returnFocusPending = false;
   };
   dialog.addEventListener('cancel', cancel);
   dialog.addEventListener('close', closed);
   doc.addEventListener('visibilitychange', visibility);
+  doc.addEventListener('focusin', focusChanged);
+  host.addEventListener('focus', recoverPracticeFocus);
   host.addEventListener('pagehide', pageHide);
   host.addEventListener('pageshow', pageShow);
   refresh();
@@ -514,6 +733,8 @@ export function attachEnemyGuide({
       dialog.removeEventListener('cancel', cancel);
       dialog.removeEventListener('close', closed);
       doc.removeEventListener('visibilitychange', visibility);
+      doc.removeEventListener('focusin', focusChanged);
+      host.removeEventListener('focus', recoverPracticeFocus);
       host.removeEventListener('pagehide', pageHide);
       host.removeEventListener('pageshow', pageShow);
       dialog.remove();

@@ -1,0 +1,958 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "3bc884268378c5058f7a0bd1b8ca49ce67189e48d30b979d49fd98ceaad188a2",
+  "originalGitBlob": "ecc5522d219d61e8db9ae02eb4a88cb56296ba84",
+  "removedRecordsOrFields": 6,
+  "excerpt": {
+    "format": "revealline-practice-png-capacity-audit.v1",
+    "observedAt": "2026-10-14T05:13:52.317Z",
+    "sourceRevision": "f0ccfd37dbb432728997e42f44262aa851538e79",
+    "hostManifest": {
+      "url": "https://mekhovov.github.io/revealline/manifest.json",
+      "bytes": 473022,
+      "sha256": "364b44b1222515e4b03109b99de8d9a3f9b92d96e5f1385f27add612acdd9346"
+    },
+    "tool": "Node zlib 1.3.1-470d3a2",
+    "node": "v20.19.5",
+    "method": "Preserve IHDR and every non-IDAT chunk; compare exact RGBA with a bounded RGB/RGBA8 PNG decoder; original-filter zlib9 always, FFmpeg PNG9 mixed prediction only when explicitly enabled; never choose growth.",
+    "withFFmpeg": false,
+    "maxFiles": 30,
+    "maxInputBytes": 100000000,
+    "measuredFiles": 30,
+    "attemptedFiles": 30,
+    "inputBytes": 90551929,
+    "measuredInputBytes": 90551929,
+    "candidateBytes": 89316017,
+    "measuredSavingsBytes": 1235912,
+    "savingsByConstraint": {
+      "hash-pinned-runtime-asset-review-required": 1235912,
+      "authoring-original-contract-review-required": 0
+    },
+    "publicEligible": false,
+    "implementationPerformed": false,
+    "imagesWritten": 0,
+    "note": "Measured candidates are not approved build projections. Source images, original downloads, byte-pinned descriptors and retained releases are unchanged. No extrapolation beyond these files or whole-site capacity claim.",
+    "rows": [
+      {
+        "path": "game/editions/assets/discovery/textile-light-diffuse-v1.png",
+        "sourceSha256": "eabcef992854e71c481a7e4fdb17fcaf86894375e2950644b940886a7ea1c7e1",
+        "originalBytes": 3333938,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1536,
+        "height": 1024,
+        "rgbaSha256": "a49f9a6acd1e8688fd0212985ce0e24d24e85e75f75e5c3216e2222798f2ca30",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3333938,
+            "sha256": "eabcef992854e71c481a7e4fdb17fcaf86894375e2950644b940886a7ea1c7e1",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2897392,
+            "sha256": "7a66616cf3fc8f9dd79135abc795808987c37d41a1eb0b846c41438974e236cc",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "zlib9-original-filters",
+          "bytes": 2897392,
+          "sha256": "7a66616cf3fc8f9dd79135abc795808987c37d41a1eb0b846c41438974e236cc",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 436546
+      },
+      {
+        "path": "authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+        "sourceSha256": "523c5449a07811f806acd6448ada9d3c8fc7dbd621f0d5cae9944235d4e257a0",
+        "originalBytes": 3286349,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "b1e30a3e13d13258966e6831477ca7a991a1eacb6719a5df210cc7877033cab0",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3286349,
+            "sha256": "523c5449a07811f806acd6448ada9d3c8fc7dbd621f0d5cae9944235d4e257a0",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 3310430,
+            "sha256": "42985637131195a41f8663754998068ad5179e10e9ec17dfc303587ea4506aa2",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 3286349,
+          "sha256": "523c5449a07811f806acd6448ada9d3c8fc7dbd621f0d5cae9944235d4e257a0",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/editions/assets/discovery/textile-light-left-v1.png",
+        "sourceSha256": "09ff0b2d7811b9ae6076db4ab2708688250ac66d4f683c0fba6e2de92dea4607",
+        "originalBytes": 3145957,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1536,
+        "height": 1024,
+        "rgbaSha256": "811d4bdcb6d92c7215e090ad10ea2a4e3a9255f4cdfbb9a869bbd99481263551",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3145957,
+            "sha256": "09ff0b2d7811b9ae6076db4ab2708688250ac66d4f683c0fba6e2de92dea4607",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2749614,
+            "sha256": "da76fbff15c1da3dd1c764b0c6ce5dbd1f9e95152adccbcdd9c41031010ec366",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "zlib9-original-filters",
+          "bytes": 2749614,
+          "sha256": "da76fbff15c1da3dd1c764b0c6ce5dbd1f9e95152adccbcdd9c41031010ec366",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 396343
+      },
+      {
+        "path": "authoring/library/challenge-chapter-art/originals/crosswind-depot.png",
+        "sourceSha256": "c7cd2e7d98ecea4b02a63a46da583e2cdd3bcfe627fb929c06235e39fca2ee04",
+        "originalBytes": 3136739,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "0f06979e7de8e0700bd085801ceb2ea1ada951ac1daf9a4a0ff42e21c82a4175",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3136739,
+            "sha256": "c7cd2e7d98ecea4b02a63a46da583e2cdd3bcfe627fb929c06235e39fca2ee04",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 3177825,
+            "sha256": "ea42d3a6d032a6214f239d6d329222a7e4258bb941149437d888f65d67c61351",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 3136739,
+          "sha256": "c7cd2e7d98ecea4b02a63a46da583e2cdd3bcfe627fb929c06235e39fca2ee04",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/editions/assets/discovery/textile-light-right-v1.png",
+        "sourceSha256": "53fe2601e7dfff5ea54f63fea9481c29c1cf7acdea3025f6967bacfdcc88259d",
+        "originalBytes": 3114152,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1536,
+        "height": 1024,
+        "rgbaSha256": "9fe07148f0abbdf9f6dc826aa17d8e32d41b7fb8c2fc101323f92e449db726ac",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3114152,
+            "sha256": "53fe2601e7dfff5ea54f63fea9481c29c1cf7acdea3025f6967bacfdcc88259d",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2742457,
+            "sha256": "92a874872379e48b267d60d11b79eb504cc778a019222b8b794e81f05ba4f3af",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "zlib9-original-filters",
+          "bytes": 2742457,
+          "sha256": "92a874872379e48b267d60d11b79eb504cc778a019222b8b794e81f05ba4f3af",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 371695
+      },
+      {
+        "path": "game/content-design/assets/team-partners-r1/split-orchards.png",
+        "sourceSha256": "e4fa297c4b2fd2e5a7251ee4521e5c9811ec40d916821b468455d816c8b8f861",
+        "originalBytes": 3110865,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "11c95e7d02f3b1f791616a2acde8246d991690c96b34cf6d57c2cab3f32c3e55",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3110865,
+            "sha256": "e4fa297c4b2fd2e5a7251ee4521e5c9811ec40d916821b468455d816c8b8f861",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 3119053,
+            "sha256": "69b9b5405091954e0aa1532a891b0335801a55426820a8983e4625bd42dd7159",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 3110865,
+          "sha256": "e4fa297c4b2fd2e5a7251ee4521e5c9811ec40d916821b468455d816c8b8f861",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "authoring/library/ukraine-route-art/originals/crosswind-market-depot.png",
+        "sourceSha256": "18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5",
+        "originalBytes": 3107900,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [
+          {
+            "parent": "39702f79ae56b12430d6f44ac201704ada77d4ae1b3db4f0235d46ed822ed0e0",
+            "offset": 11011,
+            "bytes": 3107900
+          }
+        ],
+        "width": 1672,
+        "height": 941,
+        "rgbaSha256": "881b0f329c5706d7dd2e2a4678e6db2cfc1bf3133d7809e6fe447adc536893fa",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3107900,
+            "sha256": "18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 3135154,
+            "sha256": "30a44e8fc1eee6f9fb2d429910864969418fd703f16fe9787ac2530f32b30adf",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 3107900,
+          "sha256": "18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "authoring/library/challenge-chapter-art/originals/signal-switchback.png",
+        "sourceSha256": "2f454f321578454b79d6f01205b1e25ab2364d1d1cbb58fb98b9a8197f6ae345",
+        "originalBytes": 3047928,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "f06edf9ac9738c257d832fe934050caec577baf0495f78af07091dee8d16d9f4",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3047928,
+            "sha256": "2f454f321578454b79d6f01205b1e25ab2364d1d1cbb58fb98b9a8197f6ae345",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 3070999,
+            "sha256": "75494ef2f387a53d67cd67cfa1a8e3482d9bf4d770a90b7299c258203400b0af",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 3047928,
+          "sha256": "2f454f321578454b79d6f01205b1e25ab2364d1d1cbb58fb98b9a8197f6ae345",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "authoring/library/ukraine-atlas-art/originals/dnipro-autumn-watch.png",
+        "sourceSha256": "ab6a0a07876b2c2b1149cf58eb0596bf7b0b292a6cd37f61f3e96d76d6974f72",
+        "originalBytes": 3046555,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "b93f192f2968a58cf8fc030f344ac47c4f4afc9a30cd640eee447c4d0edf6bb5",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3046555,
+            "sha256": "ab6a0a07876b2c2b1149cf58eb0596bf7b0b292a6cd37f61f3e96d76d6974f72",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 3089634,
+            "sha256": "d293c5c54bb740124715bfe7203642ad641d80bf981090a70cf14ef905cca8cc",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 3046555,
+          "sha256": "ab6a0a07876b2c2b1149cf58eb0596bf7b0b292a6cd37f61f3e96d76d6974f72",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "authoring/library/sentinel-theme-art/ukraine/originals/listening-court.png",
+        "sourceSha256": "f67723506534671cf8a1979d45f07f2fb442ba08485009924f211540a54bdb91",
+        "originalBytes": 3018491,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [
+          {
+            "parent": "dc95ace9a12923999c2a740cccfffaa073542344e190c49b5d3b2310ea459afd",
+            "offset": 5157133,
+            "bytes": 3018491
+          }
+        ],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "5951678da96e710430afa125cb1b538f984f1fa86f7828ab51bcdb6223641548",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3018491,
+            "sha256": "f67723506534671cf8a1979d45f07f2fb442ba08485009924f211540a54bdb91",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 3046651,
+            "sha256": "fac92fe4b89adc16a6fd576cacb342da6c2882f026f75ef74bb712dc8c07872d",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 3018491,
+          "sha256": "f67723506534671cf8a1979d45f07f2fb442ba08485009924f211540a54bdb91",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/content-design/assets/team-partners-r1/weaver-crossing.png",
+        "sourceSha256": "72879acacd983f3dde6cb3a83f9f8063ac15b270fa48986084b8594b48fdb94f",
+        "originalBytes": 3013618,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "54eba2f28000e5721ccf66820574b48556d984421527dd56126e09ed345e18e2",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 3013618,
+            "sha256": "72879acacd983f3dde6cb3a83f9f8063ac15b270fa48986084b8594b48fdb94f",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 3026243,
+            "sha256": "bb9d387456b090e27ec6390574727c96c167cc9eafb59f3da0aed21938f410bb",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 3013618,
+          "sha256": "72879acacd983f3dde6cb3a83f9f8063ac15b270fa48986084b8594b48fdb94f",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "authoring/library/fpv-pressure-art/originals/orchard-crossing.png",
+        "sourceSha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc",
+        "originalBytes": 2999096,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "d6ba721b144f4004b3580e7d56e7cbbf83eda185f45de8cd4444bd78fd1d9880",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2999096,
+            "sha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 3032027,
+            "sha256": "ed8ee528dc69b1bd561246f5068c78d9d4457e71c02dd4226d47a944769c9afe",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2999096,
+          "sha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/content-design/assets/border-r1/return-pocket.png",
+        "sourceSha256": "976479d8b41f29b1117f186c210e5d10699f95551b935643f1d798f5c04a0f2f",
+        "originalBytes": 2981041,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "801839ccd85c35dcd3b78b583364977ea01828a30c7b849ea306d7721b3389d2",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2981041,
+            "sha256": "976479d8b41f29b1117f186c210e5d10699f95551b935643f1d798f5c04a0f2f",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2993426,
+            "sha256": "e680e9d60045f471eb9d508b337ed349ca3099c6c5679d0f9fc557c39627ea83",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2981041,
+          "sha256": "976479d8b41f29b1117f186c210e5d10699f95551b935643f1d798f5c04a0f2f",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/content-design/assets/border-r1/turn-the-corner.png",
+        "sourceSha256": "53d1f2c5d627961986a12c0cf35787064124b518f4ce713883839743b2aeb1f5",
+        "originalBytes": 2952279,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "f3e9f26f8d0a043e2c3e2653ef9ec3e0c5890548eab73d66b1b82d7d07e1843a",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2952279,
+            "sha256": "53d1f2c5d627961986a12c0cf35787064124b518f4ce713883839743b2aeb1f5",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2962051,
+            "sha256": "70bf15a5d31d7003310adc1ae66e449edc3a46bd54774735828f814f40223065",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2952279,
+          "sha256": "53d1f2c5d627961986a12c0cf35787064124b518f4ce713883839743b2aeb1f5",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "authoring/library/sentinel-circuit-art/originals/listening-court.png",
+        "sourceSha256": "1fc560183995092042e7ddbdfe7020412498f177f1f57cbae2e987c78fdb70e1",
+        "originalBytes": 2948372,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [
+          {
+            "parent": "ca68ec6d1c7b1ade630227f810416136bd862f956b9e26dc0a0233e7d28c2e3c",
+            "offset": 2713957,
+            "bytes": 2948372
+          }
+        ],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "ea4517dceed8a8a90a70933e23340df08e3f770fa92c9092417e012b394fc6c8",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2948372,
+            "sha256": "1fc560183995092042e7ddbdfe7020412498f177f1f57cbae2e987c78fdb70e1",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2959136,
+            "sha256": "41d4893294b9e4d2251b15e3fc733b482682000ae4be4056a7ba9ef98997a88a",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2948372,
+          "sha256": "1fc560183995092042e7ddbdfe7020412498f177f1f57cbae2e987c78fdb70e1",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "authoring/library/sentinel-circuit-art/originals/switchyard-gates.png",
+        "sourceSha256": "d6160676bdd2bb8b1e0f79bcc39736321881a9320f1482a8c844ab4c673cc6b3",
+        "originalBytes": 2933729,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [
+          {
+            "parent": "ca68ec6d1c7b1ade630227f810416136bd862f956b9e26dc0a0233e7d28c2e3c",
+            "offset": 5662329,
+            "bytes": 2933729
+          }
+        ],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "43a83497dc9f35045c9f2694f5fabecaaf4b06702da9cc17d567ad79ef8720f4",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2933729,
+            "sha256": "d6160676bdd2bb8b1e0f79bcc39736321881a9320f1482a8c844ab4c673cc6b3",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2968099,
+            "sha256": "5cbe33710ea4a54ff714d191eb2c350313c56ade2e14272106cda228c5fa207b",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2933729,
+          "sha256": "d6160676bdd2bb8b1e0f79bcc39736321881a9320f1482a8c844ab4c673cc6b3",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "authoring/library/ukraine-route-art/originals/carpathian-thread-relay.png",
+        "sourceSha256": "6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f",
+        "originalBytes": 2926966,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [
+          {
+            "parent": "39702f79ae56b12430d6f44ac201704ada77d4ae1b3db4f0235d46ed822ed0e0",
+            "offset": 5898921,
+            "bytes": 2926966
+          }
+        ],
+        "width": 1672,
+        "height": 941,
+        "rgbaSha256": "0f11899a9d21e2f988517fb66db6867893c744a8f0f7cb75323053e682607064",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2926966,
+            "sha256": "6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2956337,
+            "sha256": "d7d9de674ccdd7f1bf0c335a9f1f959c4c79d82991e0f79cc6b641d2393881d5",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2926966,
+          "sha256": "6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "authoring/library/ukraine-atlas-art/originals/carpathian-woven-dawn.png",
+        "sourceSha256": "df27fc7bd2eac13a8cec95a95d95016d5755104830ce30ce922551c5067de0ee",
+        "originalBytes": 2920551,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "08112fff5653527a7deb1a28b8f069da4000ee51879c10fe1e6d7398ce181486",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2920551,
+            "sha256": "df27fc7bd2eac13a8cec95a95d95016d5755104830ce30ce922551c5067de0ee",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2945132,
+            "sha256": "b2108eeabd8b74779e9f6ec6e6a4addc29860ffe2642a637d51b64decd1ae8e9",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2920551,
+          "sha256": "df27fc7bd2eac13a8cec95a95d95016d5755104830ce30ce922551c5067de0ee",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/content-design/assets/crosswind-highlands-r1/windbreak-weave.png",
+        "sourceSha256": "91bb8ecd0dd0eeaa7eb85272237d63c1ecb95b933400b1746c91de95dbfdd7e1",
+        "originalBytes": 2912970,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "c49e7f81c9fa60b08a3cdae038e3ee5ab00f05447edda79bca10404a647eeff6",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2912970,
+            "sha256": "91bb8ecd0dd0eeaa7eb85272237d63c1ecb95b933400b1746c91de95dbfdd7e1",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2881642,
+            "sha256": "7c4e9c95cc57cbeb0f33706bec8e0f9baf79012dfa6a062c3805f99ae951046c",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "zlib9-original-filters",
+          "bytes": 2881642,
+          "sha256": "7c4e9c95cc57cbeb0f33706bec8e0f9baf79012dfa6a062c3805f99ae951046c",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 31328
+      },
+      {
+        "path": "authoring/library/fpv-pressure-art/originals/courtyard-exits.png",
+        "sourceSha256": "e87e23b60bb32a51d92aa535737420c87ae25d56520ba624eee39054ca2fce62",
+        "originalBytes": 2912184,
+        "constraintClass": "authoring-original-contract-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "992f73d2fc858e46911e20714386916b5c5606ff630d0e4dd96b81f1c96669a7",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2912184,
+            "sha256": "e87e23b60bb32a51d92aa535737420c87ae25d56520ba624eee39054ca2fce62",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2956572,
+            "sha256": "da0bf758c4202cbed4ed31efd3d6d4c985b77b927588aefe1878f844db399311",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2912184,
+          "sha256": "e87e23b60bb32a51d92aa535737420c87ae25d56520ba624eee39054ca2fce62",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/content-design/assets/signal-pixel-r1/garden-refuges.png",
+        "sourceSha256": "4571b484b94055ea036262f42bc0b13b4275dd7cc8960e70d5e46ba580adb14e",
+        "originalBytes": 2881279,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "f720057157487ac9ff3ffe7e4adbc6a9573e43a6deee5e5e8159f19be8594d22",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2881279,
+            "sha256": "4571b484b94055ea036262f42bc0b13b4275dd7cc8960e70d5e46ba580adb14e",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2888576,
+            "sha256": "f39434316c69cbeef69ec51884f43faf9abd8e96e6cf9887ae41a699d8cf7c9c",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2881279,
+          "sha256": "4571b484b94055ea036262f42bc0b13b4275dd7cc8960e70d5e46ba580adb14e",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/content-design/assets/team-partners-r1/shared-lookout.png",
+        "sourceSha256": "402574a4a52e67ac6d340348832f4e35de5a021220f0b866d1fd436dbe35f36c",
+        "originalBytes": 2867465,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "64a61d46ff8c57b59d8f28fe8decf74b0504c0c392c69f3ba35986c8470715fa",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2867465,
+            "sha256": "402574a4a52e67ac6d340348832f4e35de5a021220f0b866d1fd436dbe35f36c",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2894240,
+            "sha256": "b3b78c9511a84e1c58d13e0382341f43908e994dec6ece5fa6344a0958a3184f",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2867465,
+          "sha256": "402574a4a52e67ac6d340348832f4e35de5a021220f0b866d1fd436dbe35f36c",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/choose-your-share.png",
+        "sourceSha256": "d2d9d57da0c25d1e264387d24d2ecad2e88ad43b77db3934039f1291edd017ae",
+        "originalBytes": 2828010,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "0187884092fe2d7dee334723669dcbb256adac7cc1461f4bb731e29aa788d7a0",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2828010,
+            "sha256": "d2d9d57da0c25d1e264387d24d2ecad2e88ad43b77db3934039f1291edd017ae",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2851003,
+            "sha256": "c370c66703392417495d260dd999322225fdf93bc646de20221ddf03340acdf5",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2828010,
+          "sha256": "d2d9d57da0c25d1e264387d24d2ecad2e88ad43b77db3934039f1291edd017ae",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      },
+      {
+        "path": "game/content-design/assets/border-r1/long-rail.png",
+        "sourceSha256": "b9d561e1e09440977c3afe04e37e898e5fca336f32546e447a7f82a97001d9f4",
+        "originalBytes": 2818924,
+        "constraintClass": "hash-pinned-runtime-asset-review-required",
+        "publishedOriginalBundleReferences": [],
+        "width": 1774,
+        "height": 887,
+        "rgbaSha256": "9cebf238491182d2f5b22a7847559e3ee1c47710c57d6c3dc4a209b4ebe38f27",
+        "options": [
+          {
+            "method": "original",
+            "bytes": 2818924,
+            "sha256": "b9d561e1e09440977c3afe04e37e898e5fca336f32546e447a7f82a97001d9f4",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          },
+          {
+            "method": "zlib9-original-filters",
+            "bytes": 2823706,
+            "sha256": "fc394c4c40f2f871bde4f0d2fa697f281153d095daefb141643e6bbee3304d72",
+            "exactRGBA": true,
+            "exactIHDR": true,
+            "exactNonIDATChunks": true
+          }
+        ],
+        "best": {
+          "method": "original",
+          "bytes": 2818924,
+          "sha256": "b9d561e1e09440977c3afe04e37e898e5fca336f32546e447a7f82a97001d9f4",
+          "exactRGBA": true,
+          "exactIHDR": true,
+          "exactNonIDATChunks": true
+        },
+        "savedBytes": 0
+      }
+    ],
+    "skipped": []
+  }
+}

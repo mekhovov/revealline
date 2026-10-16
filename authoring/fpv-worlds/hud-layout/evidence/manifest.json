@@ -1,0 +1,282 @@
+[
+  {
+    "source": "/tmp/fpv-steady-flight-8950-complete.json",
+    "rawBytes": 298549,
+    "rawSHA256": "5c2f9ce59a897a25ef8edaecb3a158745e91d3b5277fc73de971c1857c52c4ac",
+    "file": "fpv-steady-flight-8950-complete.json.gz",
+    "bytes": 23179,
+    "sha256": "4d9f5bbb446627a7b0c186358f2aac3ab843219290f04f14388be96b85ea752d"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8951-complete.json",
+    "rawBytes": 300275,
+    "rawSHA256": "3f298318974c5a65dd0973f76205bea935188c3f1f7d89e2b977dbfc971c5838",
+    "file": "fpv-hud-layout-8951-complete.json.gz",
+    "bytes": 23158,
+    "sha256": "97c27d0e323c817228bc395f3b4786d89c030f52e7e046fe8179c3b19dfb807a"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8952-complete.json",
+    "rawBytes": 255767,
+    "rawSHA256": "6517d235fc1ae461533c65c2546b4123b80511bff8ebe7d802cc1f7f8f7eddd8",
+    "file": "fpv-hud-layout-8952-complete.json.gz",
+    "bytes": 21502,
+    "sha256": "af4967511ab048cf128adc3772777d9d90a17805a5c3ad38c41b12d4d718281e"
+  },
+  {
+    "source": "/tmp/fpv-hud-source-renderer-parity-r1.json",
+    "rawBytes": 54639,
+    "rawSHA256": "4e572ded2d2e0bdd93ee6e56f732ef592f1e02b70e7d7aad29db1eef4f68884b",
+    "file": "fpv-hud-source-renderer-parity-r1.json.gz",
+    "bytes": 3820,
+    "sha256": "076971c2368a41b8b7eea4c09d3b357b66a537e99b52fb5cb6d5a699c2bfc9a4"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8954-failed.json",
+    "rawBytes": 443737,
+    "rawSHA256": "675af2b7602cf1274c7f1585694737c9c09cb1662d463cff28f7b355bc125ed3",
+    "file": "fpv-hud-layout-8954-failed.json.gz",
+    "bytes": 22726,
+    "sha256": "b91a5917f1b47352d514db99ec9009a6c119b274da079db717d44b45de9253b9"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-functional-r1/fixture.json",
+    "rawBytes": 96148,
+    "rawSHA256": "82ee41b1a5f2cad29ffee1abaf8171ac86c1fe0fbae62091926c0b4d070b072f",
+    "file": "fpv-hud-layout-functional-r1-fixture.json.gz",
+    "bytes": 9129,
+    "sha256": "725186dbc098edb3a3c273ccece484d2448152336f27ad2bfec854871a1dd36a"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-functional-r1/run.mjs",
+    "rawBytes": 12910,
+    "rawSHA256": "b50ebc8503c4b1773945f4ea3e8ed292d233638c9624cd1cc5bf84cecb07c3f7",
+    "file": "fpv-hud-layout-functional-r1-run.mjs.gz",
+    "bytes": 4530,
+    "sha256": "42a39c9fba85cb32b09e49cf7f6410c616268702ba9746a6e113c9f0a4887f18"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-functional-r2/fixture.json",
+    "rawBytes": 96148,
+    "rawSHA256": "0ae3580390be06875ef805d4fa8a7e1be563038a115f1fc187cdd10c91e49de9",
+    "file": "fpv-hud-layout-functional-r2-fixture.json.gz",
+    "bytes": 9130,
+    "sha256": "2454d88570a69989cea72feeab07260e239944143e1a0a51b293ec7a58e1d924"
+  },
+  {
+    "source": "/tmp/fpv-hud-source-renderer-parity-r2.json",
+    "rawBytes": 54639,
+    "rawSHA256": "4e572ded2d2e0bdd93ee6e56f732ef592f1e02b70e7d7aad29db1eef4f68884b",
+    "file": "fpv-hud-source-renderer-parity-r2.json.gz",
+    "bytes": 3820,
+    "sha256": "076971c2368a41b8b7eea4c09d3b357b66a537e99b52fb5cb6d5a699c2bfc9a4"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-functional-r2/run.mjs",
+    "rawBytes": 13439,
+    "rawSHA256": "de2b2a59f7e9c8a72f4f5595d4f422044a7d648e440e19a1ea3a18e1d4eec66e",
+    "file": "fpv-hud-layout-functional-r2-run.mjs.gz",
+    "bytes": 4662,
+    "sha256": "c881e35cf11e8939c6255897847b6c58e8104392bdee83f97df222c700a12ec6"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8955-complete.json",
+    "rawBytes": 754837,
+    "rawSHA256": "d5c036fbd0472b43ebca0e3eff479272d56efb8f9b3ff3ccb5b26018daf46b66",
+    "file": "fpv-hud-layout-8955-complete.json.gz",
+    "bytes": 29166,
+    "sha256": "c81cac7e49c9b1236e88510c380b218b559ffb879f7ad91542a4306878ecd009"
+  },
+  {
+    "source": "/tmp/fpv-hud-materialization-a60.json",
+    "rawBytes": 313,
+    "rawSHA256": "3fb1463903674aeb029545c841c9ab2513b5926e986aaed35b7aa4b5474bf2ae",
+    "file": "fpv-hud-materialization-a60.json.gz",
+    "bytes": 234,
+    "sha256": "7a973889532006118892fa785f61d778c3132a7ca1f0b2a547ec3fcfc8dae583"
+  },
+  {
+    "source": "/tmp/fpv-hud-materialize-a60.mjs",
+    "rawBytes": 3257,
+    "rawSHA256": "ac549264fb8dde9cb64969d32a3b84984b216f55148d01d1a4d684ad0fabfe6d",
+    "file": "fpv-hud-materialize-a60.mjs.gz",
+    "bytes": 1544,
+    "sha256": "6f710a0a6979f3a8c5d2b0fcd82bd13085b28d53759db5afcd5285fe9fc23ea7"
+  },
+  {
+    "source": "/tmp/fpv-hud-validate-a60.log",
+    "rawBytes": 3676,
+    "rawSHA256": "99398d5702bab0c517bc59f010cac7d21c13af441923834a1b3888f279d5eb81",
+    "file": "fpv-hud-validate-a60.log.gz",
+    "bytes": 1535,
+    "sha256": "375a0bebee899b75b9d5aead2c37ebd021c2b811e3a5f022c6161d1cbd288c72"
+  },
+  {
+    "source": "/tmp/fpv-hud-existing-a60.log",
+    "rawBytes": 4945,
+    "rawSHA256": "117ec9688369763767aa558b8a10de25b005286ab42b679428de403ae3c8b2d1",
+    "file": "fpv-hud-existing-a60.log.gz",
+    "bytes": 1408,
+    "sha256": "ff686b76e33e2cc9fad2929243b6a01e79558f57181386aaecdbd41246b63dd3"
+  },
+  {
+    "source": "/tmp/fpv-hud-texture-prerequisites-a60.json",
+    "rawBytes": 364,
+    "rawSHA256": "b7f4946b1804215eaf99251b1393f7e51d83aedebac1ddd32bcd2720c970cfab",
+    "file": "fpv-hud-texture-prerequisites-a60.json.gz",
+    "bytes": 225,
+    "sha256": "a70109edb769d096df836c32b7d4ee67bbf4d1c031f5f2f0724abca6e1fee8c4"
+  },
+  {
+    "source": "/tmp/fpv-hud-textures-a60-r2.log",
+    "rawBytes": 1280,
+    "rawSHA256": "98de0901564e4d38c60d331742eb3ea82948c703191b6a625db12a18d606f124",
+    "file": "fpv-hud-textures-a60-r2.log.gz",
+    "bytes": 470,
+    "sha256": "dde6a9de0a829e70257c06fd92fde38ab16c7186f24a3c50a462a9c8dd299d42"
+  },
+  {
+    "source": "/tmp/fpv-hud-visual-projection-a60.json",
+    "rawBytes": 584,
+    "rawSHA256": "ab62f72ba60d800b8bec196f29758a989cc37b64c6ccd82397a24782c2aa3aa7",
+    "file": "fpv-hud-visual-projection-a60.json.gz",
+    "bytes": 391,
+    "sha256": "c314839684a4bff0ea04697b71091146f51076b28d3580411307165a59f8ffd1"
+  },
+  {
+    "source": "/tmp/fpv-hud-admission-a60.log",
+    "rawBytes": 417,
+    "rawSHA256": "4c5179c4fc618545706eec23488f80e35a419bdef5ff2a863aaa7e04b4f3fe85",
+    "file": "fpv-hud-admission-a60.log.gz",
+    "bytes": 286,
+    "sha256": "7390d391d1f479d1ec80360eb374f098be767ea0dde1bbe74186a5391dcbce0c"
+  },
+  {
+    "source": "/tmp/fpv-hud-admitted-input-bridge-a60.json",
+    "rawBytes": 21304,
+    "rawSHA256": "37598908848297e223fc3816216f960d8bf89fc13c7b238268661bd4f237c12f",
+    "file": "fpv-hud-admitted-input-bridge-a60.json.gz",
+    "bytes": 6028,
+    "sha256": "0b44ae358ebaf07adb44fa488e5e86317201f487f7e02c8a9af4bffff42a7bff"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admitted-player-a60d1b27f.json",
+    "rawBytes": 42957,
+    "rawSHA256": "49595228a081a1ca57c226eb37e58c28e913e42b23ea21d6541218794c09bee5",
+    "file": "fpv-hud-layout-admitted-player-a60d1b27f.json.gz",
+    "bytes": 7345,
+    "sha256": "da6bbd86d37dbfeb4ae612aed6fde3101290889e4831060ed18ddcfbd790f524"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/manifest-optional-civilian-flight.json",
+    "rawBytes": 8847,
+    "rawSHA256": "d2d6c0c1b67c8a610c5ec6eb92a071ce163098cf8aaa1d2452cae2fcaa1e05d9",
+    "file": "manifest-optional-civilian-flight.json.gz",
+    "bytes": 2855,
+    "sha256": "90ffb884ce95447226ed45899e9783a277a3d82d06ffc5f13aef497e9e6c5f80"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/manifest-optional-civilian-fpv.json",
+    "rawBytes": 12570,
+    "rawSHA256": "5ba208fa6f992b26bafd92cdf65e08f62792d1120a0fb254d6de93c04e9c9bf3",
+    "file": "manifest-optional-civilian-fpv.json.gz",
+    "bytes": 4014,
+    "sha256": "bc75af0d8a7d6dd036d02c2ffe0678db50d291816fe91764641ff69edb945e0f"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/manifest-optional-fpv-worlds.json",
+    "rawBytes": 18746,
+    "rawSHA256": "2e487c0441d7adad6508d92b0ee3ccce63957467dc6ed6d3aff49f6fc2ad0787",
+    "file": "manifest-optional-fpv-worlds.json.gz",
+    "bytes": 5873,
+    "sha256": "4fb30c9c9d9a6711bc4bc1d358a1921629a671da6393289abea1ec7928727e65"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/optional-candidate-verification.json",
+    "rawBytes": 1142,
+    "rawSHA256": "c4ab3049b12903f0cba9987b3754260c4c59a617da3bd28ace3739576d5ad14a",
+    "file": "optional-candidate-verification.json.gz",
+    "bytes": 612,
+    "sha256": "9110424eb45fc4e2485b0ccf7cb2a11442d70a24e3a60fbd27e10a00cbf00568"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/optional-checksums.json",
+    "rawBytes": 2136,
+    "rawSHA256": "01cb170dc4c03dbec05be44d3f3287087a68e17e1d0446f0ac03ced44a3bbdd6",
+    "file": "optional-checksums.json.gz",
+    "bytes": 917,
+    "sha256": "b2efea7f3d58b85c33be062d22bbb5e612e8e6b10d5ac153277a0302fb155560"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/optional-package-review.json",
+    "rawBytes": 2838,
+    "rawSHA256": "0ec9146a6a84bcdd848e0240f3084f543ef94ab565724cee4c70080150988203",
+    "file": "optional-package-review.json.gz",
+    "bytes": 459,
+    "sha256": "2532aaaa7c5348ca73acf7e4829daa223defc6ca0cadbefc6a3ff7ae41c39023"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/optional-packages.json",
+    "rawBytes": 2633,
+    "rawSHA256": "148346af9a9784d24e07e16c5791ebc43c8ba3d31ab41451119644ec895dd89c",
+    "file": "optional-packages.json.gz",
+    "bytes": 1073,
+    "sha256": "96b5b44d6415791ade0ba360d8d4820c845f69fdcefe72ad5cea4d7ded4387a6"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/source-inventory-optional-civilian-flight.json",
+    "rawBytes": 14052,
+    "rawSHA256": "e74cd146b02f7b03aec6cc0d29173ecaaf47a14327118b77458548087c5971cf",
+    "file": "source-inventory-optional-civilian-flight.json.gz",
+    "bytes": 3450,
+    "sha256": "a80d5800f8e0f92312a34fce7181fc3e729f1d102bfa18d33768ee2d65bd79d3"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/source-inventory-optional-civilian-fpv.json",
+    "rawBytes": 21034,
+    "rawSHA256": "d45e7330d14b63273cd2c6780daf60a9a2755d3316c73fc322bf4c7f61a52cab",
+    "file": "source-inventory-optional-civilian-fpv.json.gz",
+    "bytes": 4993,
+    "sha256": "ff0086a6b21622d1430b3c8936a62128be6ba0400a4408249ba6274731c933a0"
+  },
+  {
+    "source": "/private/tmp/fpv-hud-layout-admission-a60d1b27f/source-inventory-optional-fpv-worlds.json",
+    "rawBytes": 32166,
+    "rawSHA256": "be73d0ae3d794ebf73c48d5a93881e73fcee0edbd96357884ecb7c0ef1585903",
+    "file": "source-inventory-optional-fpv-worlds.json.gz",
+    "bytes": 7143,
+    "sha256": "a5a1d67fb0eada9d9a0036deab7deb9af6f4ae04d32c7f560b7653d4dcee2f6d"
+  },
+  {
+    "source": "/tmp/fpv-hud-source-renderer-parity-r3.json",
+    "rawBytes": 54639,
+    "rawSHA256": "4e572ded2d2e0bdd93ee6e56f732ef592f1e02b70e7d7aad29db1eef4f68884b",
+    "file": "fpv-hud-source-renderer-parity-r3.json.gz",
+    "bytes": 3820,
+    "sha256": "076971c2368a41b8b7eea4c09d3b357b66a537e99b52fb5cb6d5a699c2bfc9a4"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8956-admitted-flight.png",
+    "rawBytes": 72640,
+    "rawSHA256": "e934da7a711e370ace9480238094ee6b06fac08155656fefa4ca60df37331566",
+    "file": "fpv-hud-layout-8956-admitted-flight.png.gz",
+    "bytes": 66991,
+    "sha256": "b7972e2143736202b90268559be314e77b3f738b566aae8a0679694e8ed75cd4"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8956-admitted-flight.txt",
+    "rawBytes": 565,
+    "rawSHA256": "b2c02787e2f5a965802659217950db035d972eb364e8085baa5aeec6bba097c7",
+    "file": "fpv-hud-layout-8956-admitted-flight.txt.gz",
+    "bytes": 342,
+    "sha256": "cba364bf7b9f9381ca5ce56c7360b06330c8e5b627313a3ec2f5100f51fdb0a4"
+  },
+  {
+    "source": "/tmp/fpv-hud-layout-8956-admitted-paused.txt",
+    "rawBytes": 1685,
+    "rawSHA256": "e9361c694b0e41adc0197cbb67060b73bf9f21bab82439ef7060f94fadf42584",
+    "file": "fpv-hud-layout-8956-admitted-paused.txt.gz",
+    "bytes": 743,
+    "sha256": "edc9aae41b41aecd922eaadb1e37a802ec750a9e5dedfa10e791351dd96ffeb7"
+  }
+]

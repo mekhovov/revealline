@@ -1,0 +1,46 @@
+{
+  "format": "revealline-practice-preflight.v1",
+  "publicEligible": false,
+  "note": "Development preview only. Commit source, reproduce artifacts and complete all existing review gates before publication.",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "readyToBundle": true,
+      "files": 77,
+      "offlineBytes": 3523078,
+      "downloadBytes": 3548210,
+      "limits": {
+        "files": 80,
+        "bytes": 8388608
+      },
+      "revision": "e152f2f7f8a54f7b4b1bdde2b594eee2e0c9854be8251692ccbfd575175b4b77",
+      "errors": []
+    },
+    {
+      "id": "civilian-fpv",
+      "readyToBundle": true,
+      "files": 87,
+      "offlineBytes": 6532971,
+      "downloadBytes": 6561568,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      },
+      "revision": "9e0f92995121b849584ee952f4cd7bf9be7f979c816395448cf5ccd3c40c57b0",
+      "errors": []
+    },
+    {
+      "id": "fpv-worlds",
+      "readyToBundle": true,
+      "files": 122,
+      "offlineBytes": 16934045,
+      "downloadBytes": 16975505,
+      "limits": {
+        "files": 128,
+        "bytes": 20971520
+      },
+      "revision": "7a7d731fc780bbdca2f98f72eab090aa4c381d8a05f93482132980bba707be33",
+      "errors": []
+    }
+  ]
+}

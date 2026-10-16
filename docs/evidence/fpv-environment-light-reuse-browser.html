@@ -1,0 +1,233 @@
+<!doctype html><meta charset="utf-8" /><title>One-target environment light comparison</title>
+<style>
+  body {
+    font: 15px system-ui;
+    background: #15212c;
+    color: #eef4ef;
+    margin: 20px;
+  }
+  button {
+    font: inherit;
+    padding: 9px;
+  }
+  iframe {
+    width: 665px;
+    height: 435px;
+    border: 1px solid #52616b;
+  }
+  pre {
+    white-space: pre-wrap;
+    max-height: 250px;
+    overflow: auto;
+  }
+  textarea {
+    width: 96%;
+    height: 180px;
+  }
+  canvas {
+    max-width: 640px;
+  }
+  p {
+    max-width: 105ch;
+  }
+</style>
+<h1>One-target environment light comparison</h1>
+<p>
+  Frozen current-main baseline and candidate run sequentially in real WebGL. Two cycles cover
+  imported/fallback, same-course retry, changed bounds, indoor/outdoor, Pixel and a shared
+  collection at all qualities. Then each owner loses/restores its context and retries. Exact image
+  and draw-count comparisons; timings are observed wall times, not hardware FPS or a historical
+  stall fix.
+</p>
+<button id="run">Run frozen comparison</button>
+<p id="status">Prepared; not run. Keep the tab visible and run alone.</p>
+<iframe id="baseline" title="Baseline renderer"></iframe
+><iframe id="candidate" title="Candidate renderer"></iframe>
+<section id="retained" hidden>
+  <h2>Retained comparison</h2>
+  <label
+    >View
+    <select id="view" aria-label="Retained comparison view"></select
+  ></label>
+  <p>
+    Baseline (left), candidate (right). These are captured pixels from the checked frames, retained
+    after WebGL disposal.
+  </p>
+  <div style="display: flex; gap: 8px">
+    <canvas id="before-image" width="640" height="360" style="width: 49%; height: auto"></canvas
+    ><canvas id="after-image" width="640" height="360" style="width: 49%; height: auto"></canvas>
+  </div>
+</section>
+<pre id="summary">No run yet.</pre>
+<label
+  >Full read-only receipt<textarea
+    id="full-receipt"
+    aria-label="Full environment-light receipt"
+    readonly
+  >
+No run yet.</textarea
+  >
+</label>
+<script type="module">
+  const $ = (id) => document.getElementById(id),
+    receipt = { format: 'fpv-environment-light-browser.v1', pairs: [], errors: [], visibility: [] },
+    captures = new Map(),
+    retained = new Map();
+  function paintRetained() {
+    const row = retained.get($('view').value);
+    if (!row) return;
+    for (const [id, pixels] of [
+      ['before-image', row.before],
+      ['after-image', row.after],
+    ]) {
+      const flipped = new Uint8ClampedArray(pixels.length);
+      for (let y = 0; y < 360; y++)
+        flipped.set(pixels.subarray(y * 640 * 4, (y + 1) * 640 * 4), (359 - y) * 640 * 4);
+      $(id)
+        .getContext('2d')
+        .putImageData(new ImageData(flipped, 640, 360), 0, 0);
+    }
+  }
+  $('view').onchange = paintRetained;
+  const digest = async (b) =>
+    [...new Uint8Array(await crypto.subtle.digest('SHA-256', b))]
+      .map((x) => x.toString(16).padStart(2, '0'))
+      .join('');
+  document.addEventListener('visibilitychange', () =>
+    receipt.visibility.push({ time: performance.now(), state: document.visibilityState }),
+  );
+  function finish() {
+    const text = JSON.stringify(receipt, null, 2);
+    $('full-receipt').textContent = text;
+    $('full-receipt').value = text;
+    $('summary').textContent = JSON.stringify(
+      {
+        pass: receipt.pass,
+        pairs: receipt.pairs.length,
+        imageFailures: receipt.pairs
+          .filter((p) => p.changedPixels)
+          .map((p) => ({ key: p.key, changedPixels: p.changedPixels, maxChannel: p.maxChannel })),
+        variants: receipt.variants,
+        errors: receipt.errors,
+      },
+      null,
+      2,
+    );
+  }
+  function runVariant(variant) {
+    return new Promise((resolve, reject) => {
+      const frame = $(variant),
+        pending = [];
+      const listener = async (event) => {
+        if (event.source !== frame.contentWindow || event.origin !== location.origin) return;
+        const m = event.data;
+        if (m.type === 'sample') {
+          if (variant === 'baseline') captures.set(m.key, m);
+          else {
+            const before = captures.get(m.key);
+            if (!before) {
+              reject(Error('Missing baseline ' + m.key));
+              return;
+            }
+            const work = (async () => {
+              const a = new Uint8Array(before.pixels),
+                b = new Uint8Array(m.pixels);
+              if (a.length !== b.length) throw Error('Image dimensions differ: ' + m.key);
+              let changedPixels = 0,
+                maxChannel = 0,
+                total = 0;
+              for (let i = 0; i < a.length; i += 4) {
+                let changed = false;
+                for (let j = 0; j < 4; j++) {
+                  const d = Math.abs(a[i + j] - b[i + j]);
+                  total += d;
+                  maxChannel = Math.max(maxChannel, d);
+                  changed ||= !!d;
+                }
+                changedPixels += changed ? 1 : 0;
+              }
+              receipt.pairs.push({
+                key: m.key,
+                changedPixels,
+                maxChannel,
+                meanChannelDifference: total / a.length,
+                baselinePixelSha256: await digest(a),
+                candidatePixelSha256: await digest(b),
+                drawParity:
+                  before.resources.renderer.calls === m.resources.renderer.calls &&
+                  before.resources.renderer.triangles === m.resources.renderer.triangles,
+                registeredParity:
+                  JSON.stringify(before.resources.registered) ===
+                  JSON.stringify(m.resources.registered),
+                baseline: before.meta,
+                candidate: m.meta,
+              });
+              if (m.key.startsWith('2/') && m.key.endsWith('/high')) {
+                if (a.length !== 640 * 360 * 4 || retained.size >= 12)
+                  throw Error('Retained image bound violated');
+                retained.set(m.key, { before: a, after: b });
+                const option = document.createElement('option');
+                option.value = m.key;
+                option.textContent = m.key;
+                $('view').append(option);
+                $('retained').hidden = false;
+                if (m.key === '2/school-fallback/high') $('view').value = m.key;
+                paintRetained();
+              }
+              captures.delete(m.key);
+            })();
+            pending.push(work);
+          }
+        } else if (m.type === 'done') {
+          window.removeEventListener('message', listener);
+          await Promise.all(pending);
+          resolve(m.receipt);
+        } else if (m.type === 'error') {
+          window.removeEventListener('message', listener);
+          reject(Error(m.error));
+        }
+      };
+      window.addEventListener('message', listener);
+      frame.src = `/${variant}/runner.html?variant=${variant}`;
+    });
+  }
+  $('run').onclick = async () => {
+    $('run').disabled = true;
+    receipt.startedAt = new Date().toISOString();
+    receipt.start = {
+      visibility: document.visibilityState,
+      focus: document.hasFocus(),
+      viewport: [innerWidth, innerHeight],
+      dpr: devicePixelRatio,
+    };
+    try {
+      receipt.manifest = await (await fetch('/manifest.json', { cache: 'no-store' })).json();
+      receipt.variants = {};
+      for (const variant of ['baseline', 'candidate']) {
+        $('status').textContent = 'Running ' + variant;
+        receipt.variants[variant] = await runVariant(variant);
+      }
+      receipt.pass =
+        receipt.pairs.length === 73 &&
+        receipt.pairs.every((p) => !p.changedPixels && p.drawParity && p.registeredParity) &&
+        Object.values(receipt.variants).every((v) => v.pass) &&
+        receipt.variants.candidate.allocations < receipt.variants.baseline.allocations &&
+        !receipt.errors.length;
+    } catch (error) {
+      receipt.errors.push(String(error.stack ?? error));
+      receipt.pass = false;
+    } finally {
+      receipt.finishedAt = new Date().toISOString();
+      receipt.retainedImageKeys = [...retained.keys()];
+      if (retained.size) {
+        $('baseline').hidden = true;
+        $('candidate').hidden = true;
+        paintRetained();
+      }
+      $('status').textContent = receipt.pass
+        ? 'PASS — full receipt ready'
+        : 'Review required — full receipt ready';
+      finish();
+    }
+  };
+</script>

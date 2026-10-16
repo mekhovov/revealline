@@ -1,0 +1,82 @@
+{
+  "format": "FPVPropellerResponseBrowserVerification.v1",
+  "createdAt": "2026-10-02T00:05:06.803Z",
+  "url": "http://127.0.0.1:8789/dist/fpv-propeller-response-verification/index.html",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Gray circular surrounds removed; four cyan demand arcs and propellers retained",
+      "passed": true
+    },
+    {
+      "name": "Percentages hidden by default, shown only by explicit motor details",
+      "passed": true
+    },
+    {
+      "name": "Repeated identical frames cause zero SVG mutations",
+      "passed": true,
+      "updates": 100,
+      "mutations": 0
+    },
+    {
+      "name": "New motor ticks do not rebuild stationary airframe or ground",
+      "passed": true,
+      "mutations": 8,
+      "geometryWrites": 4
+    },
+    {
+      "name": "Zero-demand new ticks produce no decorative SVG mutations",
+      "passed": true,
+      "mutations": 0
+    },
+    {
+      "name": "Changing quaternion within a tick responds immediately",
+      "passed": true
+    },
+    {
+      "name": "Changing actual position within a tick moves ground immediately",
+      "passed": true
+    },
+    {
+      "name": "20% versus80% has visible independent fourfold phase speed",
+      "passed": true,
+      "slowRadiansPer100ms": 0.1884955592153874,
+      "fastRadiansPer100ms": 0.7539822368615505
+    },
+    {
+      "name": "At100ms cadence maximum3-blade phase remains below alias boundary",
+      "passed": true,
+      "degrees": [
+        54,
+        -54.000000000000014,
+        -54.000000000000014,
+        54
+      ]
+    },
+    {
+      "name": "Different display cadences preserve the same constant-command simulation phase",
+      "passed": true
+    },
+    {
+      "name": "Changed commands at one tick update arcs without jumping propeller phase",
+      "passed": true
+    },
+    {
+      "name": "Paused, reduced-motion and seek behavior remain bounded",
+      "passed": true
+    },
+    {
+      "name": "Geometry cache handles inline, fullscreen, locale and detail changes",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "0125f49e0ed93c75f2fcb604733a4883ba87e8326290c9769f1f3d38865dab3f",
+    "optional-practice/civilian-fpv/style.css": "eb388f40541cf1fb0ffc48f01e31cc77d3031ffbd46eee422d2bf841a9209fce",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+  },
+  "limits": [
+    "Illustrative normalized motor demand; not physical RPM",
+    "Component geometry and DOM work, not complete-game frame-rate or physical-radio qualification"
+  ]
+}

@@ -1,0 +1,588 @@
+<!doctype html><meta charset="utf-8" /><title>Environment light context restore diagnostic</title>
+<style>
+  body {
+    font: 15px system-ui;
+    margin: 18px;
+    background: #15212c;
+    color: #eff5f0;
+  }
+  button {
+    font: inherit;
+    padding: 9px;
+  }
+  iframe {
+    width: 665px;
+    height: 420px;
+    border: 0;
+  }
+  canvas {
+    width: 640px;
+    height: 360px;
+  }
+  textarea {
+    width: 96%;
+    height: 200px;
+  }
+  pre {
+    white-space: pre-wrap;
+    max-height: 240px;
+    overflow: auto;
+  }
+  p {
+    max-width: 105ch;
+  }
+</style>
+<section id="parent">
+  <h1>Context recovery qualification</h1>
+  <p>
+    Eight bounded cases: imported/procedural × baseline/candidate × unconsumed/observed loss flag.
+    Same Woodland workshop input before and after actual WebGL context loss. Every raw error code is
+    retained; GL calls after restore are instrumented to identify the first failing API and pre-loss
+    object arguments. The candidate must have zero traced GL errors, exact pre/post-loss pixels,
+    rebuilt visible aircraft and exactly-once old resource disposal. The prior source retains its
+    known cleanup failure.
+  </p>
+  <button id="run">Run bounded recovery qualification</button>
+  <p id="status">Prepared; not run. Keep visible and run alone.</p>
+  <iframe id="frame" title="Active restore diagnostic"></iframe>
+  <pre id="summary">No result</pre>
+  <label
+    >Full read-only diagnostic receipt<textarea
+      id="full-receipt"
+      aria-label="Full restore diagnostic receipt"
+      readonly
+    >
+No run yet.</textarea
+    >
+  </label>
+</section>
+<section id="child" hidden><p id="phase">Loading</p></section>
+<script type="module">
+  const $ = (id) => document.getElementById(id),
+    variant = new URL(location.href).searchParams.get('variant'),
+    digest = async (b) =>
+      [...new Uint8Array(await crypto.subtle.digest('SHA-256', b))]
+        .map((x) => x.toString(16).padStart(2, '0'))
+        .join('');
+  if (!variant) {
+    const receipt = {
+      format: 'fpv-environment-light-recovery-browser.v1',
+      variants: {},
+      errors: [],
+      visibility: [],
+    };
+    document.addEventListener('visibilitychange', () =>
+      receipt.visibility.push({ state: document.visibilityState, time: performance.now() }),
+    );
+    $('run').onclick = async () => {
+      $('run').disabled = true;
+      receipt.startedAt = new Date().toISOString();
+      receipt.start = {
+        visibility: document.visibilityState,
+        focus: document.hasFocus(),
+        viewport: [innerWidth, innerHeight],
+        dpr: devicePixelRatio,
+      };
+      try {
+        receipt.manifest = await (await fetch('/manifest.json', { cache: 'no-store' })).json();
+        for (const name of ['baseline', 'candidate']) {
+          $('status').textContent = 'Diagnosing ' + name;
+          receipt.variants[name] = await new Promise((resolve, reject) => {
+            const listener = (e) => {
+              if (e.source !== $('frame').contentWindow || e.origin !== location.origin) return;
+              if (e.data.type === 'done') {
+                window.removeEventListener('message', listener);
+                resolve(e.data.receipt);
+              } else if (e.data.type === 'fatal') {
+                window.removeEventListener('message', listener);
+                reject(Error(e.data.error));
+              }
+            };
+            window.addEventListener('message', listener);
+            $('frame').src = `/${name}/restore.html?variant=${name}`;
+          });
+        }
+      } catch (e) {
+        receipt.errors.push(String(e.stack ?? e));
+      } finally {
+        receipt.finishedAt = new Date().toISOString();
+        const text = JSON.stringify(receipt, null, 2);
+        $('full-receipt').textContent = text;
+        $('full-receipt').value = text;
+        $('status').textContent = 'Diagnostic complete — review raw errors';
+        $('summary').textContent = JSON.stringify(
+          {
+            variants: Object.fromEntries(
+              Object.entries(receipt.variants).map(([k, v]) => [
+                k,
+                {
+                  source: v.source,
+                  cases: v.cases.map((c) => ({
+                    mode: c.mode,
+                    path: c.path,
+                    stageErrors: c.stages.filter((s) => s.codes.length),
+                    glErrors: c.glErrors
+                      .slice(0, 3)
+                      .map((e) => ({ phase: e.phase, method: e.method, codes: e.codes })),
+                    targets: c.targets,
+                    summary: {
+                      allocations: c.summary.allocations,
+                      maxLive: c.summary.maxLive,
+                      glErrorTotal: c.summary.glErrorTotal,
+                      watchedObjects: c.summary.watchedObjects,
+                      failedChecks: c.summary.failedChecks,
+                    },
+                    fatal: c.fatal,
+                  })),
+                },
+              ]),
+            ),
+            errors: receipt.errors,
+          },
+          null,
+          2,
+        );
+      }
+    };
+  } else {
+    $('parent').hidden = true;
+    $('child').hidden = false;
+    const receipt = { variant, cases: [], errors: [], warnings: [] },
+      send = (type, body) => parent.postMessage({ type, ...body }, location.origin),
+      raf = () => new Promise(requestAnimationFrame),
+      wait = (ms) => new Promise((r) => setTimeout(r, ms)),
+      clone = (v) => JSON.parse(JSON.stringify(v));
+    let runtime,
+      flight,
+      originalPMREM,
+      THREE,
+      restoreMethods = () => {};
+    const warn = console.warn,
+      error = console.error;
+    console.warn = (...args) => {
+      receipt.warnings.push(args.map(String).join(' '));
+      warn(...args);
+    };
+    console.error = (...args) => {
+      receipt.errors.push(args.map(String).join(' '));
+      error(...args);
+    };
+    try {
+      const manifest = await (await fetch('/manifest.json', { cache: 'no-store' })).json();
+      receipt.source = manifest.variants[variant].revision;
+      receipt.verifiedSources = {};
+      for (const [name, pin] of Object.entries(manifest.variants[variant].files)) {
+        const res = await fetch('./' + name, { cache: 'no-store' }),
+          b = await res.arrayBuffer();
+        if (!res.ok || (await digest(b)) !== pin.sha256)
+          throw Error('Frozen source changed ' + name);
+        receipt.verifiedSources[name] = pin.sha256;
+      }
+      const root = './optional-practice/civilian-fpv/',
+        [assets, catalogue, model, three, hunt] = await Promise.all(
+          [
+            'world-assets.mjs',
+            'world-catalogue.mjs',
+            'world-model.mjs',
+            'vendor/three.module.js',
+            'snake-hunt-presentation.mjs',
+          ].map((n) => import(root + n)),
+        );
+      THREE = three;
+      await model.initWorldRuntime();
+      const entry = catalogue.BEGINNER_CATALOGUE.find((e) => e.id === 'beginner-40');
+      if (!entry) throw Error('Missing Woodland course');
+      for (const path of ['procedural', 'imported'])
+        for (const mode of ['unconsumed-loss-flag', 'observe-loss-flag']) {
+          const canvas = document.createElement('canvas');
+          canvas.width = 640;
+          canvas.height = 360;
+          $('child').append(canvas);
+          const row = {
+              mode,
+              path,
+              stages: [],
+              glErrors: [],
+              glErrorTotal: 0,
+              glErrorCounts: {},
+              targets: [],
+              checks: [],
+              restored: false,
+              losses: 0,
+              summary: {},
+            },
+            check = (name, pass) => row.checks.push({ name, pass: !!pass });
+          receipt.cases.push(row);
+          let phase = 'construct',
+            epoch = 0,
+            trace = false,
+            calls = 0,
+            maxLive = 0;
+          const watched = new Map();
+          let mainScene = null,
+            createdHuntOwners = 0,
+            disposedHuntOwners = 0;
+          const originalSceneRender = THREE.Scene.prototype.onBeforeRender;
+          THREE.Scene.prototype.onBeforeRender = function (...args) {
+            if (this.children.some((c) => c.isHemisphereLight)) mainScene = this;
+            return originalSceneRender.apply(this, args);
+          };
+          const watchScene = () =>
+            mainScene.traverse((item) => {
+              for (const resource of [
+                item.geometry,
+                ...[item.material].flat(),
+                item.customDepthMaterial,
+                item.customDistanceMaterial,
+                item.isInstancedMesh ? item : null,
+                item.skeleton,
+              ].filter(Boolean)) {
+                for (const value of [
+                  resource,
+                  ...Object.values(resource).filter((v) => v?.isTexture),
+                ])
+                  if (!watched.has(value)) {
+                    watched.set(value, 0);
+                    value.addEventListener('dispose', () =>
+                      watched.set(value, watched.get(value) + 1),
+                    );
+                  }
+              }
+            });
+          const modelView = () => {
+            const aircraft = mainScene?.children[2];
+            let meshes = 0;
+            aircraft?.traverse((n) => {
+              if (n.isMesh) meshes++;
+            });
+            return {
+              visible: !!aircraft?.visible,
+              meshes,
+              ghost: runtime.ghostSnapshot(),
+              drone: runtime.resources().drone,
+              presentation: runtime.resources().presentation.collectionId,
+            };
+          };
+          const handles = new WeakMap(),
+            descriptors = new Map();
+          runtime = assets.createFlightRenderer({
+            canvas,
+            window: { devicePixelRatio: 1 },
+            reducedMotion: true,
+            onContextLost: () => {
+              row.losses++;
+              row.lossResources = clone(runtime.resources().registered);
+              row.oldDisposalAtLoss = [...watched.values()];
+            },
+            createHuntPresentation: (options) => {
+              const value = hunt.createSnakeHuntPresentation({
+                ...options,
+                preferences: () => ({ brutal: false, blood: false }),
+              });
+              createdHuntOwners++;
+              const dispose = value.dispose;
+              value.dispose = () => {
+                disposedHuntOwners++;
+                dispose.call(value);
+              };
+              return value;
+            },
+          });
+          if (!runtime.available) throw Error('WebGL unavailable');
+          const gl = canvas.getContext('webgl2'),
+            originalGetError = gl.getError.bind(gl),
+            names = (code) =>
+              Object.entries({
+                NO_ERROR: gl.NO_ERROR,
+                INVALID_ENUM: gl.INVALID_ENUM,
+                INVALID_VALUE: gl.INVALID_VALUE,
+                INVALID_OPERATION: gl.INVALID_OPERATION,
+                INVALID_FRAMEBUFFER_OPERATION: gl.INVALID_FRAMEBUFFER_OPERATION,
+                OUT_OF_MEMORY: gl.OUT_OF_MEMORY,
+                CONTEXT_LOST_WEBGL: gl.CONTEXT_LOST_WEBGL,
+              }).find(([, v]) => v === code)?.[0] ?? 'UNKNOWN',
+            drain = () => {
+              const codes = [];
+              for (let n = 0; n < 16; n++) {
+                const code = originalGetError();
+                if (code === gl.NO_ERROR) break;
+                codes.push({ code, hex: '0x' + code.toString(16), name: names(code) });
+              }
+              return codes;
+            },
+            stage = (name) => {
+              phase = name;
+              const codes = drain();
+              row.stages.push({
+                name,
+                isContextLost: gl.isContextLost(),
+                codes,
+                allocations: row.targets.length,
+                liveTargets: row.targets.filter((t) => !t.disposed).length,
+              });
+              return codes;
+            };
+          const methods = new Set();
+          for (
+            let p = Object.getPrototypeOf(gl);
+            p && p !== Object.prototype;
+            p = Object.getPrototypeOf(p)
+          )
+            for (const name of Object.getOwnPropertyNames(p))
+              if (typeof Object.getOwnPropertyDescriptor(p, name)?.value === 'function')
+                methods.add(name);
+          for (const name of methods) {
+            if (['constructor', 'getError', 'isContextLost'].includes(name)) continue;
+            const original = gl[name];
+            descriptors.set(name, Object.getOwnPropertyDescriptor(gl, name));
+            gl[name] = function (...args) {
+              const result = original.apply(this, args);
+              if (
+                result &&
+                typeof result === 'object' &&
+                (/^create/.test(name) || name === 'getUniformLocation')
+              )
+                handles.set(result, { method: name, epoch });
+              if (trace) {
+                calls++;
+                const codes = drain();
+                for (const code of codes) {
+                  row.glErrorTotal++;
+                  const key = phase + '/' + name + '/' + code.name;
+                  row.glErrorCounts[key] = (row.glErrorCounts[key] ?? 0) + 1;
+                }
+                if (codes.length && row.glErrors.length < 64)
+                  row.glErrors.push({
+                    phase,
+                    method: name,
+                    codes,
+                    args: args.map((a) =>
+                      a && typeof a === 'object'
+                        ? { type: a.constructor?.name, created: handles.get(a) ?? null }
+                        : a,
+                    ),
+                    stack: new Error().stack.split('\n').slice(1, 7),
+                  });
+                if (calls > 100000) throw Error('Diagnostic GL call bound exceeded');
+              }
+              return result;
+            };
+          }
+          restoreMethods = () => {
+            for (const [name, descriptor] of descriptors)
+              if (descriptor) Object.defineProperty(gl, name, descriptor);
+              else delete gl[name];
+          };
+          originalPMREM = THREE.PMREMGenerator.prototype.fromScene;
+          THREE.PMREMGenerator.prototype.fromScene = function (...args) {
+            const value = originalPMREM.apply(this, args),
+              target = { id: row.targets.length, phase, epoch, disposed: 0 };
+            value.addEventListener('dispose', () => target.disposed++);
+            row.targets.push(target);
+            maxLive = Math.max(maxLive, row.targets.filter((t) => !t.disposed).length);
+            return value;
+          };
+          const course = structuredClone(entry.course);
+          flight = model.createWorldFlight({ course, mode: 'self-level' });
+          const state = flight.snapshot(),
+            stateBefore = JSON.stringify(flight.snapshot());
+          const ghostSamples = [
+            { tick: 0, position: { ...state.position }, orientation: [0, 0, 0, 1] },
+            {
+              tick: 5,
+              position: { ...state.position, x: state.position.x + 500 },
+              orientation: [0, 0, 0, 1],
+            },
+          ];
+          async function install() {
+            runtime.setCourse(course, 'self-level');
+            runtime.setQuality('high');
+            if (path === 'imported') await runtime.loadScene(assets.builtinWorldScene(course));
+            runtime.setGhost(ghostSamples);
+          }
+          runtime.setPresentation({ collectionId: 'industrial-workshop' });
+          async function image(label) {
+            phase = label;
+            const prepared = await runtime.prepare();
+            stage(label + '/after-prepare');
+            for (let i = 0; i < 3; i++) {
+              await raf();
+              phase = label + '/draw-' + i;
+              runtime.draw(state, { cameraMode: 'overview' });
+              stage(phase + '/after');
+            }
+            const pixels = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+            phase = label + '/readPixels';
+            gl.readPixels(
+              0,
+              0,
+              gl.drawingBufferWidth,
+              gl.drawingBufferHeight,
+              gl.RGBA,
+              gl.UNSIGNED_BYTE,
+              pixels,
+            );
+            const codes = stage(label + '/after-readPixels');
+            return {
+              prepared,
+              pixelSha256: await digest(pixels),
+              nonzeroBytes: pixels.reduce((n, v) => n + (v !== 0), 0),
+              bytes: pixels.length,
+              codes,
+              resources: clone(runtime.resources()),
+              model: modelView(),
+            };
+          }
+          try {
+            $('phase').textContent = variant + ' / ' + mode;
+            stage('before-course');
+            runtime.setCosmetic({ color: '#ca8877' });
+            runtime.setDrone('utility');
+            await install();
+            stage('installed-before-loss');
+            row.before = await image('before-loss');
+            watchScene();
+            check(
+              'aircraft initially visible',
+              row.before.model.visible && row.before.model.meshes > 0,
+            );
+            const extension = gl.getExtension('WEBGL_lose_context');
+            if (!extension) throw Error('WEBGL_lose_context unavailable');
+            await new Promise((resolve, reject) => {
+              const timer = setTimeout(() => reject(Error('Loss timeout')), 6000);
+              canvas.addEventListener(
+                'webglcontextlost',
+                () => {
+                  clearTimeout(timer);
+                  resolve();
+                },
+                { once: true },
+              );
+              extension.loseContext();
+            });
+            row.lostState = {
+              isContextLost: gl.isContextLost(),
+              allocations: row.targets.length,
+              liveTargets: row.targets.filter((t) => !t.disposed).length,
+            };
+            if (mode === 'observe-loss-flag') stage('observed-while-lost');
+            await wait(80);
+            await new Promise((resolve, reject) => {
+              const timer = setTimeout(() => reject(Error('Restore timeout')), 6000);
+              canvas.addEventListener(
+                'webglcontextrestored',
+                () => {
+                  row.restored = true;
+                  clearTimeout(timer);
+                  resolve();
+                },
+                { once: true },
+              );
+              epoch = 1;
+              extension.restoreContext();
+            });
+            epoch = 1;
+            stage('restored-before-runtime-calls');
+            trace = true;
+            phase = 'restored-setPresentation';
+            runtime.setPresentation({ collectionId: 'industrial-workshop' });
+            stage('after-restored-setPresentation');
+            phase = 'restored-install';
+            await install();
+            stage('after-restored-install');
+            row.after = await image('restored');
+            check('regenerated after restore', row.targets.length === 2);
+            check(
+              'same-preset aircraft/model/ghost rebuilt',
+              JSON.stringify(row.before.model) === JSON.stringify(row.after.model) &&
+                row.after.model.visible &&
+                row.after.model.meshes > 0,
+            );
+            check('physics state unchanged', JSON.stringify(flight.snapshot()) === stateBefore);
+            check(
+              'old resources disposed once by Retry',
+              [...watched.values()].every((n) => n === 1),
+            );
+            check(
+              'candidate released all registered resources while lost',
+              variant === 'baseline' || Object.values(row.lossResources).every((n) => n === 0),
+            );
+            check(
+              'candidate optional hunt owner recreated',
+              variant === 'baseline' || createdHuntOwners === 2,
+            );
+            check(
+              'exact image after same-course reinstall',
+              row.before.pixelSha256 === row.after.pixelSha256,
+            );
+            check(
+              'post-restore no GL errors',
+              row.glErrorTotal === 0 &&
+                !row.stages
+                  .filter((s) => s.name !== 'observed-while-lost')
+                  .some((s) => s.codes.length),
+            );
+          } catch (e) {
+            row.fatal = String(e.stack ?? e);
+          } finally {
+            phase = 'dispose';
+            runtime.dispose();
+            runtime.dispose();
+            flight?.dispose();
+            row.finalResources = clone(runtime.resources());
+            check(
+              'old resources not disposed again',
+              [...watched.values()].every((n) => n === 1),
+            );
+            check(
+              'final registered resources zero',
+              Object.values(row.finalResources.registered).every((n) => n === 0),
+            );
+            check(
+              'all probe targets released once',
+              row.targets.every((t) => t.disposed === 1),
+            );
+            check(
+              'all optional hunt owners released once',
+              createdHuntOwners === disposedHuntOwners,
+            );
+            check('complete GL error aggregate zero', row.glErrorTotal === 0);
+            trace = false;
+            row.summary = {
+              allocations: row.targets.length,
+              eachDisposedOnce: row.targets.every((t) => t.disposed === 1),
+              maxLive,
+              glCallsTraced: calls,
+              glErrors: row.glErrors.length,
+              glErrorTotal: row.glErrorTotal,
+              glErrorCounts: row.glErrorCounts,
+              watchedObjects: watched.size,
+              oldResourceDisposals: [...watched.values()],
+              createdHuntOwners,
+              disposedHuntOwners,
+              failedChecks: row.checks.filter((c) => !c.pass),
+            };
+            THREE.PMREMGenerator.prototype.fromScene = originalPMREM;
+            originalPMREM = null;
+            restoreMethods();
+            THREE.Scene.prototype.onBeforeRender = originalSceneRender;
+            restoreMethods = () => {};
+            canvas.remove();
+            runtime = null;
+            flight = null;
+          }
+        }
+      send('done', { receipt });
+    } catch (e) {
+      receipt.errors.push(String(e.stack ?? e));
+      send('done', { receipt });
+    } finally {
+      runtime?.dispose();
+      flight?.dispose();
+      restoreMethods();
+      if (originalPMREM) THREE.PMREMGenerator.prototype.fromScene = originalPMREM;
+      console.warn = warn;
+      console.error = error;
+    }
+  }
+</script>

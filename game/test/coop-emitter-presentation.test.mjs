@@ -133,6 +133,42 @@ for (const [scenario, slot] of [
     painter.paint(fixture.run, { reduced: true });
     assert.equal(calls.find((c) => c.method === 'drawImage').args[0], s.images[slot].image);
   });
+
+test('versioned Team travelling fronts use shared shape-distinct markers and preserve authority', () => {
+  const fixture = createStudioTeamFixture({ arena: 'relay-yard', scenario: 'emitter-spark' }),
+    seed = fixture.run.impacts[0];
+  fixture.run.impacts = [
+    { ...seed, id: 'departure', version: 'team-line-impact.v2', direction: -1 },
+    { ...seed, id: 'player', version: 'team-line-impact.v2', direction: 1 },
+  ];
+  const before = structuredClone(fixture.run),
+    { canvas, calls } = surface(),
+    painter = createCoopPainter(canvas);
+  painter.setPresentation(snapshot());
+  painter.paint(fixture.run, { reduced: true });
+  assert.equal(
+    calls.some((call) => call.method === 'drawImage' && call.args[0]?.id === 'team.emitter.spark'),
+    false,
+    'the generic emitter spark does not hide versioned front semantics',
+  );
+  assert.equal(
+    calls.filter(
+      (call) =>
+        call.method === 'translate' && call.args[0] === seed.x * 16 && call.args[1] === seed.y * 16,
+    ).length,
+    2,
+  );
+  assert.ok(
+    calls.some((call) => call.method === 'closePath'),
+    'craft-bound front is a diamond',
+  );
+  assert.ok(
+    calls.some((call) => call.method === 'fillRect'),
+    'departure front is a square cross',
+  );
+  assert.deepEqual(fixture.run, before);
+});
+
 test('historical emitter remains procedural; malformed advertised frames fail; completed previews report hidden effects', () => {
   assert.deepEqual(prepareTeamEmitter(null), {});
   const s = snapshot();

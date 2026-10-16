@@ -1,0 +1,20 @@
+[
+  {
+    "collection": "pocket-lcd",
+    "course": "Lift and land",
+    "outputs": ["pocket-lcd · 198 draw calls · 7490 triangles · 19 textures"],
+    "specimen": "pocket-lcd"
+  },
+  {
+    "collection": "copper-observatory",
+    "course": "Lift and land",
+    "outputs": ["copper-observatory · 198 draw calls · 7490 triangles · 19 textures"],
+    "specimen": "copper-observatory"
+  },
+  {
+    "collection": "sakura-station",
+    "course": "Lift and land",
+    "outputs": ["sakura-station · 198 draw calls · 7490 triangles · 19 textures"],
+    "specimen": "sakura-station"
+  }
+]

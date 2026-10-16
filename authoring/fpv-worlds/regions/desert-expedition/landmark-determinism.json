@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "manifestAndPreparationBytesIdentical": true,
+  "regeneratedPayloadHashes": 2060,
+  "terrainPayloads": 2048,
+  "sceneryPayloads": 12,
+  "existingOutputNeverOverwritten": true
+}

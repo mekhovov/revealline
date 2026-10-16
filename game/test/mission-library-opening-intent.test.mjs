@@ -38,3 +38,21 @@ test('disposal before arming leaves no listeners; later menu focus cannot retire
   assert.equal(retired, false);
   assert.equal(intent.current(), true);
 });
+
+test('claim snapshots an accepted opener before owned asynchronous focus changes', async () => {
+  const doc = new Document(),
+    opener = doc.createElement('button'),
+    installedCard = doc.createElement('button');
+  doc.body.append(opener, installedCard);
+  opener.focus();
+  let retired = 0;
+  const intent = trackMissionLibraryOpening({ document: doc, onRetire: () => retired++ });
+  await Promise.resolve();
+  assert.equal(intent.claim(), true);
+  installedCard.focus();
+  assert.equal(intent.current(), true);
+  assert.equal(retired, 0);
+  doc.emit('click');
+  assert.equal(retired, 1);
+  assert.equal(intent.current(), false);
+});

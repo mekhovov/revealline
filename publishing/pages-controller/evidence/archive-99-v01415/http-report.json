@@ -1,0 +1,12 @@
+{
+  "format": "revealline-archive-public-http-audit.v1",
+  "base": "https://mekhovov.github.io/revealline-archive-99/",
+  "inventorySha256": "573935df8f1ba3c6f0d81d7d358cfb1ecc8bb8751ea14081afd119be4c725bc0",
+  "expectedFiles": 1317,
+  "expectedBytes": 612092320,
+  "verifiedFiles": 1317,
+  "verifiedBytes": 612092320,
+  "failed": [],
+  "elapsedSeconds": 127.232,
+  "status": "PASS"
+}

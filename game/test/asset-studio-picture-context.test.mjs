@@ -5,6 +5,8 @@ import { pictureOwnerContext } from '../../authoring/asset-studio/picture-contex
 import { CURRENT_ART_SOURCES } from '../presentation/current-art-sources.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { campaignKey } from '../library.mjs';
+import { setLocale } from '../i18n/index.mjs';
+import { assetStudioErrorText } from '../../authoring/asset-studio/error-copy.mjs';
 
 const bytes = new Uint8Array(
   await readFile(new URL('../content/packs/classic-lab.json', import.meta.url)),
@@ -108,6 +110,28 @@ test('unavailable, corrupt, oversized or mismatched owners never fall back to an
       options({ describe: () => wrong, fetch: async () => new Response(bytes) }),
     ),
     /owner level or theme differs/,
+  );
+});
+
+test('picture owner failures retain canonical diagnostics and follow the active locale', async (t) => {
+  t.after(() => setLocale('en', { persist: false }));
+  const error = await pictureOwnerContext(
+    descriptor.id,
+    options({ fetch: async () => new Response('', { status: 404 }) }),
+  ).catch((value) => value);
+
+  assert.equal(error.localization.key, 'tools:studio.pictureContext.unavailable');
+  assert.equal(error.localization.values.status, 404);
+  assert.match(error.message, /Exact owner pack unavailable \(HTTP 404\)/);
+  setLocale('uk', { persist: false });
+  assert.equal(
+    assetStudioErrorText(error),
+    'Точний пакет власника недоступний (HTTP 404). Відкрийте відповідний випуск; іншу дошку не підставлено.',
+  );
+  setLocale('en', { persist: false });
+  assert.equal(
+    assetStudioErrorText(error),
+    'Exact owner pack unavailable (HTTP 404). Open the matching release; no substitute board was used.',
   );
 });
 

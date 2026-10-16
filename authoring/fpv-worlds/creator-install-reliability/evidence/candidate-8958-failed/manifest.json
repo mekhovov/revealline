@@ -1,0 +1,39 @@
+{
+  "format": "FPVCreatorInstallEvidence.v1",
+  "runtimeRevision": "0147226227880548a8ea3e047bfe94ada5f7704c",
+  "passed": false,
+  "failingCheck": 275,
+  "issue": "Fixture changed compiled course but not authoritative Challenge.v1 definition; separate writer prepared identical C hash, so requiring C inactive was false.",
+  "runtimeChangeRequired": false,
+  "files": [
+    {
+      "path": "fpv-creator-install-8958-failed.json.gz",
+      "bytes": 106964,
+      "sha256": "7b416af09ef081b8d9be0795c9a6d589b39db92474b3e711e88f43b919158cf7",
+      "originalBytes": 1771153,
+      "originalSHA256": "63b813ff1eb7831f6a2b10bfe0e8ce0f5888b3d760572fe6169d11d9d9db6884"
+    },
+    {
+      "path": "fpv-creator-install-8958-summary.json.gz",
+      "bytes": 892,
+      "sha256": "e7e7b81a316d009b8f0425858ad4b5d32ec4a1f14170492d15de8c1da3c5f90b",
+      "originalBytes": 3592,
+      "originalSHA256": "f916f5dbf13492ba4f455ff420773d6ba611918aca79fa6c36edb461d7ef248f"
+    },
+    {
+      "path": "fpv-creator-install-8958-failed.png",
+      "bytes": 12447,
+      "sha256": "07f7582beb9f47a5e71f080740ba529ccfe9327a6122c7141635278652acf352",
+      "originalBytes": 12447,
+      "originalSHA256": "07f7582beb9f47a5e71f080740ba529ccfe9327a6122c7141635278652acf352"
+    },
+    {
+      "path": "fixture.json.gz",
+      "bytes": 8399,
+      "sha256": "ed496de73ebd7c6b3586f98f8cb6dc3363c82f7b607c8706587a4f9df012b36c",
+      "originalBytes": 45941,
+      "originalSHA256": "4d77e313b8841028b1138258f9b3705e3b2c324d6524d25bc82277d417b79a18"
+    }
+  ],
+  "restore": "gzip -dc FILE.json.gz restores original bytes"
+}

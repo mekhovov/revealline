@@ -1,0 +1,30 @@
+{
+  "format": "FPVWoodlandMaterialGrovesMainBinding.v1",
+  "candidate": "06ed832704d68e6111a958e3d0fc1ca34a5c0f63",
+  "integratedMain": "e40809f25ea8fe248dea6f8443876d811d21a777",
+  "qualifiedCombinedCandidate": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "qualifiedInputInventorySha256": "602789f5f4f04cdbcc73d07388acaa02c058ac16e7e56c66c93b05eb20c60eca",
+  "originalInputs": 95,
+  "originalInputBytes": 16737736,
+  "inputHeadroomBytes": 39480,
+  "inputDifferencesVersusQualifiedCombined": [],
+  "inputDifferencesVersusMaterialBeforeGroves": [
+    {
+      "path": "optional-practice/civilian-fpv/world-assets.mjs",
+      "previous": {
+        "bytes": 1166343,
+        "path": "optional-practice/civilian-fpv/world-assets.mjs",
+        "sha256": "5fed8f7be259a611030af7203c081927540caadfe028ec19781b7df26c812ff3"
+      },
+      "current": {
+        "bytes": 1167019,
+        "path": "optional-practice/civilian-fpv/world-assets.mjs",
+        "sha256": "2670f199445373f9633ae259a046b704bcc5512887376e2498ab2e8e0055607e"
+      }
+    }
+  ],
+  "renderingPhysicsBuildCodeExactCombined": true,
+  "templateRuntimeEqual": true,
+  "browserRunPerformedForThisMerge": false,
+  "qualification": "All 95 admitted original inputs and all runtime, model, authoring and build code match the already-qualified local combined candidate. Earlier focused and combined browser receipts retain their original candidate IDs; no new browser run is claimed."
+}

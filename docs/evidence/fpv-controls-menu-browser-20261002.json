@@ -1,0 +1,30 @@
+{
+  "format": "FPVMenuBrowserEvidence.v1",
+  "passed": true,
+  "checks": [
+    "Held entry requires release",
+    "Join focuses without activation",
+    "Fresh confirm action",
+    "Checkbox activation",
+    "Standard analog navigation",
+    "Select preview, disabled option and cancel",
+    "Select commit through normal change handler",
+    "Range preview and cancel",
+    "Native details and nested action",
+    "Dialog ownership and host Back",
+    "Capture isolation with keyboard fallback",
+    "Hints clear outside menus",
+    "Calibrated axis-only radio join ignores throttle",
+    "Radio hold threshold and gradual release",
+    "Radio Back gesture",
+    "Context transition discards held gesture",
+    "Setup owns calibration axes",
+    "Active-flight keyboard survives cosmetic button focus",
+    "Paused menus and text fields cannot move the drone"
+  ],
+  "method": "Actual rendered DOM controls and production input adapters, with controlled gamepad/radio samples and dispatched keyboard events.",
+  "limitations": [
+    "No physical controller, OS picker or hardware performance claim.",
+    "Native keyboard acceptance and full application flows are verified separately."
+  ]
+}

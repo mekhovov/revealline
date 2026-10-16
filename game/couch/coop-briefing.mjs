@@ -1,95 +1,132 @@
-import { coopGroundName } from './coop-ground.mjs';
-import { TEAM_BONUS_HELP } from './coop-bonus-view.mjs';
+import { snakeBrief, snakeText } from '../snake/copy.mjs';
+import { huntText } from '../hunt/copy.mjs';
+import { t } from '../i18n/index.mjs';
+import { coopGroundContext, coopGroundLabel } from './coop-ground.mjs';
+import { teamBonusHelp } from './coop-bonus-view.mjs';
+import { hasTeamLineImpacts } from '../coop/foundations.mjs';
 
 /** Presentation advice for an already validated arena. Never changes its recipe. */
 export function coopArenaGuidance(level, { jointCuts = true } = {}) {
-  const groundName = coopGroundName(level);
+  const groundName = coopGroundLabel(level);
+  const context = coopGroundContext(level);
   const hunters = level.enemies.some((enemy) => enemy.type === 'hunter');
   const drifters = level.enemies.some((enemy) => enemy.type === 'drifter');
   const roamers = level.enemies.some((enemy) => enemy.type === 'claimed-rover');
   const relays = Boolean(level.strongholds?.length);
-  const requiredCores = level.goal.cores?.length ?? 0;
+  const trailImpacts = hasTeamLineImpacts(level) && level.enemies.length > 0;
+  const requiredCores = level.hunt?.mode === 'hunt' ? 0 : (level.goal.cores?.length ?? 0);
+  const patrols = level.combatPatrols?.enabled ? level.combatPatrols.actors : [];
+  const humanoids = Boolean(level.hunt);
+  const guards = patrols.some((actor) => actor.role === 'sentry');
   const threats = [];
-  if (level.timedBonuses) threats.push(TEAM_BONUS_HELP);
+  if (level.snake) threats.push(snakeBrief(level, { team: true }));
+  if (humanoids) threats.push(huntText('hint'));
+  if (level.timedBonuses) threats.push(teamBonusHelp());
   const slow = level.terrain?.some((area) => area.kind === 'slow'),
     lethal = level.terrain?.some((area) => area.kind === 'lethal');
-  if (slow)
-    threats.push(
-      'Paired dashes slow only your craft on unclaimed field; enemies keep their speed.',
-    );
-  if (lethal)
-    threats.push(
-      'Framed crosses harm your craft on unclaimed field. Enclose them before crossing.',
-    );
+  if (slow) threats.push(t('interface:pairedDashesSlowOnlyYourCraftOnUnclaimedFieldEnemies'));
+  if (lethal) threats.push(t('interface:framedCrossesHarmYourCraftOnUnclaimedFieldEncloseThem'));
   if (slow || lethal)
-    threats.push('Capturing field neutralizes its terrain for both craft. Walls never close cuts.');
-  if (hunters)
-    threats.push(
-      'Hunters mark a route before charging. Cross during recovery, or use Support to slow them.',
-    );
+    threats.push(t('interface:capturingFieldNeutralizesItsTerrainForBothCraftWallsNever'));
+  if (hunters) threats.push(t('interface:huntersMarkARouteBeforeChargingCrossDuringRecoveryOr'));
   if (drifters)
-    threats.push(
-      'Drifters patrol continuously and can hit your craft or unfinished line. Keep cuts short when one is nearby.',
-    );
-  if (roamers)
-    threats.push(
-      'Tracked roamers do not retain field. Reclaim their full footprint and they warn for one active second, then roam reclaimed ground and threaten both craft and unfinished lines. Keep an escape corridor; reclaimed ground closes cuts but is not universally safe.',
-    );
-  if (relays)
-    threats.push(
-      'Relay cores warn before sending a spark along an unfinished line. Bank the threatened line or use Support near the spark.',
-    );
+    threats.push(t('interface:driftersPatrolContinuouslyAndCanHitYourCraftOrUnfinished'));
+  if (roamers) threats.push(t('interface:trackedRoamersDoNotRetainFieldReclaimTheirFullFootprint'));
+  if (relays) threats.push(t('interface:relayCoresWarnBeforeSendingASparkAlongAnUnfinished'));
+  if (trailImpacts)
+    threats.push(t('interface:team.trailImpactContact'), t('interface:team.trailImpactDirections'));
+  const supportRoles = level.supportRoles ?? ['hybrid', 'hybrid'];
   const specialist = level.supportRoles?.length === 2;
+  const intercept = relays || trailImpacts || guards;
+  const canSlow = hunters || drifters || roamers || patrols.length > 0;
+  const interceptorSeat = supportRoles.indexOf('interceptor') + 1;
+  const disruptorSeat = supportRoles.indexOf('disruptor') + 1;
   const pulse = specialist
-    ? 'Interceptor Support removes nearby travelling impacts. Disruptor Support slows nearby enemies. Coordinate before spending either eight-second cooldown. '
-    : hunters || drifters || roamers
-      ? `Tap Support to slow nearby enemies${relays ? ' and intercept nearby sparks' : ''}. A dashed ring shows the slowdown. `
-      : relays
-        ? 'Tap Support near a travelling spark to intercept it. '
+    ? intercept && canSlow
+      ? t('interface:team.specialistSupportSlowAndIntercept', {
+          interceptor: interceptorSeat,
+          disruptor: disruptorSeat,
+        }) + ' '
+      : intercept
+        ? t('interface:team.specialistSupportIntercept', { player: interceptorSeat }) + ' '
+        : canSlow
+          ? t('interface:team.specialistSupportSlow', { player: disruptorSeat }) + ' '
+          : ''
+    : canSlow
+      ? t(intercept ? 'gameplay:team.supportSlowAndIntercept' : 'gameplay:team.supportSlow') + ' '
+      : intercept
+        ? '' + t('interface:tapSupportNearATravellingSparkToInterceptIt') + ' '
         : '';
-  const rescue = `Hold Support on ${groundName} beside a downed partner for one second to rescue them without spending a reserve. Avoid steering while rescuing.`;
+  const rescue = t('gameplay:team.rescueAdvice', { context });
   const route = jointCuts
-    ? 'Start with a small loop, then meet your partner to join a larger cut.'
-    : `Bring each cut back to ${groundName}. Meeting your partner does not join the lines.`;
+    ? t('interface:startWithASmallLoopThenMeetYourPartnerTo')
+    : t('gameplay:team.separateCuts', { context });
   return {
     groundName,
-    threatTitle: threats.length ? 'Watch the threats.' : 'Practice your routes.',
-    threatText: threats.length
-      ? threats.join(' ')
-      : `This arena has no enemies or relay emitters. Build ${groundName} with short loops, then try longer routes.`,
+    groundContext: context,
+    threatTitle: threats.length
+      ? t('interface:watchTheThreats')
+      : t('interface:practiceYourRoutes'),
+    threatText: threats.length ? threats.join(' ') : t('gameplay:team.noThreats', { context }),
     supportText: pulse + rescue,
-    supportBySeat: (level.supportRoles ?? ['hybrid', 'hybrid']).map((role) =>
+    supportCapabilities: Object.freeze({
+      intercept,
+      slow: canSlow,
+      specialist,
+      interceptorSeat: specialist ? interceptorSeat : null,
+      disruptorSeat: specialist ? disruptorSeat : null,
+    }),
+    supportBySeat: supportRoles.map((role) =>
       role === 'interceptor'
-        ? 'Interceptor · removes nearby travelling impacts'
+        ? t('interface:interceptorRemovesNearbyTravellingImpacts')
         : role === 'disruptor'
-          ? 'Disruptor · slows nearby enemies'
-          : 'Support · slows nearby enemies and intercepts impacts',
+          ? t('interface:disruptorSlowsNearbyEnemies')
+          : t('interface:supportSlowsNearbyEnemiesAndInterceptsImpacts'),
     ),
     showStrongholds: relays,
-    strongholdTitle: requiredCores ? 'Secure the relay cores.' : 'Relay defenses.',
+    strongholdTitle: requiredCores
+      ? t('interface:secureTheRelayCores')
+      : t('interface:relayDefenses'),
     strongholdText:
-      'Capture both anchors of a stronghold to expose its core. Claim the exposed core with a later cut to stop its emitter. A shielded core blocks entry.' +
-      (requiredCores ? '' : ' Your goal is the coverage target.'),
-    briefingTitle:
-      requiredCores > 1
-        ? 'SECURE THE REQUIRED CORES'
+      t('gameplay:team.strongholdAdvice') +
+      (level.hunt?.mode === 'hunt'
+        ? ' ' + huntText('huntGoal')
         : requiredCores
-          ? 'TAKE THE STRONGHOLD TOGETHER'
-          : 'MAKE YOUR COMMON GROUND',
-    levelNote: requiredCores
-      ? 'Plan routes to the anchors, then claim the exposed cores with later cuts.'
-      : groundName === 'reclaimed ground'
-        ? 'Create return routes together. Use reclaimed ground to launch your next cut.'
-        : 'Create safe routes together. Use the revealed ground to launch your next cut.',
-    startMessage: `${specialist ? 'Specialists share the board: Interceptor covers exposed lines; Disruptor opens movement windows. ' : ''}${
+          ? ''
+          : ' ' + t('interface:yourGoalIsTheCoverageTarget')),
+    briefingTitle: level.snake
+      ? snakeText('title')
+      : humanoids
+        ? huntText(level.hunt.mode)
+        : requiredCores > 1
+          ? t('interface:secureTheRequiredCores')
+          : requiredCores
+            ? t('interface:takeTheStrongholdTogether')
+            : t('interface:makeYourCommonGround'),
+    levelNote: level.snake
+      ? snakeBrief(level, { team: true })
+      : humanoids
+        ? huntText(
+            level.hunt.mode === 'hunt'
+              ? 'huntGoal'
+              : level.hunt.mode === 'capture-quota'
+                ? 'quotaGoal'
+                : 'bonusGoal',
+          )
+        : requiredCores
+          ? t('interface:planRoutesToTheAnchorsThenClaimTheExposedCores')
+          : context === 'reclaimed'
+            ? t('interface:createReturnRoutesTogetherUseReclaimedGroundToLaunchYour')
+            : t('interface:createSafeRoutesTogetherUseTheRevealedGroundToLaunch'),
+    startMessage: `${level.snake ? snakeBrief(level, { team: true }) + ' ' : ''}${specialist ? '' + t('interface:specialistsShareTheBoardInterceptorCoversExposedLinesDisruptorOpens') + ' ' : ''}${
       roamers
-        ? `Keep an escape corridor before enclosing a tracked roamer. WAKING gives one active second to move away. ${route}`
+        ? t('gameplay:team.startRoamer', { route })
         : hunters
-          ? `Watch the Hunter warnings and cross during recovery. ${route}`
+          ? t('gameplay:team.startHunter', { route })
           : drifters
-            ? `Keep cuts short near patrolling Drifters. ${route}`
+            ? t('gameplay:team.startDrifter', { route })
             : relays
-              ? `Watch relay warnings; bank the threatened line or intercept its spark with Support. ${route}`
+              ? t('gameplay:team.startRelay', { route })
               : route
     }`,
   };
