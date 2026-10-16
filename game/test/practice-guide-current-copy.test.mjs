@@ -76,3 +76,21 @@ test('both guide formats distinguish incomplete verification from confirmed repa
     }
   }
 });
+
+test('both guide formats explain deadline/cancel recovery without inventing a storage cause', async () => {
+  for (const locale of ['en', 'uk'])
+    for (const guide of await localizedGuides(locale)) {
+      for (const text of locale === 'en'
+        ? [
+            'Download stalled / exceeded five minutes',
+            'not that a previous copy was removed',
+            'Permission errors do not necessarily mean storage is full',
+          ]
+        : [
+            'Завантаження не просувалося / тривало понад п’ять хвилин',
+            'а не видаляє попередню копію',
+            'Помилка дозволу не обов’язково означає заповнене сховище',
+          ])
+        assert(guide.includes(text));
+    }
+});
