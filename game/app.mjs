@@ -12432,6 +12432,8 @@ try {
       this.readyFrames = new Float64Array(30);
       this.readyCount = 0;
       this.lastInterfaceAt = -Infinity;
+      this.lastInterfaceRun = null;
+      this.lastInterfaceStatus = null;
       this.framePending = false;
       this.pendingSubmission = false;
       this.frameStartedAt = null;
@@ -12783,9 +12785,17 @@ try {
         updateMs = performance.now() - workStart;
         if (!foreground) this.retainUnchangedDisplay();
         if (demoHost?.active || !foreground || rendererLost.size) return;
-        if (now - this.lastInterfaceAt >= 100) {
-          editionUI?.refresh();
+        if (
+          this.lastInterfaceRun !== run ||
+          this.lastInterfaceStatus !== run.status ||
+          now - this.lastInterfaceAt >= 100
+        ) {
+          // Accepted transitions must be observed before a deliberate Retry or
+          // Next can replace their run/recorder. Ordinary UI polling stays bounded.
+          this.lastInterfaceRun = run;
+          this.lastInterfaceStatus = run.status;
           this.lastInterfaceAt = now;
+          editionUI?.refresh();
         }
         qualityPolicy.setReducedPreference(displayPreferences.snapshot().effectiveReducedEffects);
         titleCharacter?.update(Math.min(dt, 0.1), {

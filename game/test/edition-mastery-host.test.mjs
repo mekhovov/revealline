@@ -10,9 +10,10 @@ import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.m
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { createRewardBackend } from '../rewards/store.mjs';
+import { t as translate } from '../i18n/index.mjs';
 
 test(
-  'the actual Solo app accepts the normal winning run before asynchronously granting its configured no-loss discovery',
+  'the actual Solo app observes a no-loss win before immediate Retry without another presentation interval',
   // CI's concurrent qualification exceeded 30s with 469 separate 120Hz UI
   // renders. Keep every simulation step, render at an ordinary 60Hz cadence,
   // and allow the same bounded host budget as the personal-best replay tests.
@@ -82,17 +83,30 @@ test(
       page.frame(FIXED_DT * 1000 * frameTicks);
     }
     assert.equal(ticks, 469, 'The fixture still executes its complete original winning route.');
+    assert.equal(
+      page.$('edition-mastery-notice').textContent,
+      translate('interface:journeyMastery.checking'),
+      'The winning frame starts mastery verification before any extra frame or async wait.',
+    );
     page.key('ArrowDown', false);
-    page.frame(0);
+    const acceptedRun = page.rendered.run;
     assert.equal(expected.status, 'won');
     assert.equal(expected.classic.livesLost, 0);
-    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(expected));
+    assert.deepEqual(authoritativeCheckpoint(acceptedRun), authoritativeCheckpoint(expected));
+    page.$('skip-celebration').onclick();
+    page.$('show-result').click();
     assert.equal(page.$('retry-button').disabled, false);
+    page.$('retry-button').click();
     const proofKey = 'revealline.journey-mastery-proofs.sample-public.v1';
     await waitFor(() => {
       page.frame(0);
       return storage.getItem(proofKey);
     });
+    await settle(
+      () => page.rendered.run !== acceptedRun && page.doc.body.dataset.flightState === 'running',
+    );
+    assert.equal(page.rendered.run.tick, 0, 'The retry has not borrowed presentation time.');
+    assert.deepEqual(authoritativeCheckpoint(acceptedRun), authoritativeCheckpoint(expected));
     const proof = JSON.parse(storage.getItem(proofKey)).proofs[0];
     const backend = createRewardBackend({ editionId: 'sample-public', indexedDB: disk.indexedDB });
     t.after(() => backend.close());
