@@ -1,0 +1,299 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- dialog:
+  - banner:
+    - button "Menu"
+    - generic: FPV SIM · Worlds
+    - button "Resume"
+  - button "Arm / resume"
+  - generic: +
+  - generic "Yaw 0%, Throttle 0%":
+  - generic "Roll 0%, Pitch 0%":
+  - complementary "Drone response. Paused · actual pose retained vertical speed near zero. 0.0 m · +0.0 m/s vertical · 0.0 m/s drift":
+    - button "Hide drone response": ×
+    - status: Paused · actual pose retained · Drone upright
+  - text: +
+  - region "Enemies defeated":
+    - generic: Enemies
+    - generic: Lifetime
+    - strong: "0"
+- text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ +
+- text: ⌃
+- dialog "Pause":
+  - heading "Pause" [level=1]
+  - button "Resume"
+  - heading "Flight setup" [level=2]
+  - generic: Flight mode
+  - combobox "Flight mode":
+    - option "Self-level" [selected]
+    - option "Acro"
+  - generic: Controls
+  - combobox "Controls":
+    - option "Keyboard" [selected]
+    - option "Touch"
+    - option "Controller / Steam Deck"
+    - option "USB radio"
+  - button "Set up radio"
+  - generic: Changing mode starts a new paused attempt. Changing input keeps flight paused.
+  - group "Camera view":
+    - generic: Camera view
+    - button "FPV" [pressed]
+    - button "Chase"
+    - button "Overview"
+    - generic: "V · R3: click the right stick. Radio: choose a view in this menu."
+  - generic "Your device controls"
+  - heading "Watch → Try → Repeat" [level=2]
+  - paragraph: First three
+  - button "Retry"
+  - button "Practise full route"
+  - generic: Full-route practice starts at launch without score or saved recordings. Arm when you are ready.
+  - heading "Missions" [level=3]
+  - button "Skip"
+  - button "Random"
+  - button "Choose"
+  - heading "Sound" [level=3]
+  - 'button "Sound: off"'
+  - heading "Settings" [level=3]
+  - button "Settings"
+  - button "Full screen"
+  - button "Home"
+  - region "Enemies defeated":
+    - generic "Lifetime 0 Enemy details +":
+      - generic: Lifetime
+      - strong: "0"
+      - generic: Enemy details +
+  - group "Your best flight":
+    - generic: Your best flight
+    - paragraph: No verified personal best for these settings.
+    - button "Show personal best" [disabled]
+    - generic: Only a verified recording for the same challenge, world revision, flight mode and response profile. Camera view does not change compatibility. No collision or scoring changes.
+- dialog "Select Mission":
+  - heading "Select Mission" [active] [level=1]
+  - navigation "Simulator":
+    - button "Fly"
+    - button "My playlists"
+  - main:
+    - paragraph: TAKE IT WITH YOU
+    - heading "Library" [level=1]
+    - paragraph: Install portable worlds and back up your recorded flights.
+    - button "Recorded flights & recovery"
+    - generic: Import .rlpack / editable project
+    - button "Remove offline simulator files"
+    - paragraph: Removal keeps your installed worlds and flight records. Download again before playing offline.
+    - region "More worlds to fly":
+      - heading "More worlds to fly" [level=2]
+      - paragraph: Choose Play to download a world once and prepare a disarmed flight. Installed worlds stay on this device. Prepare the simulator offline separately.
+      - searchbox "Find a world"
+      - button "Refresh worlds"
+      - status: Download or save failed. Installed worlds are unchanged. Try again.
+      - article:
+        - strong: Mountain Reservoir
+        - paragraph: 8 challenges · Download 1.3 MiB
+        - 'button "Play: Mountain Reservoir"': Play
+      - article:
+        - strong: Festival Grounds
+        - paragraph: 8 challenges · Download 1.2 MiB
+        - 'button "Play: Festival Grounds"': Play
+      - article:
+        - strong: Harbor Docks
+        - paragraph: 8 challenges · Download 859 KiB
+        - 'button "Play: Harbor Docks"': Play
+      - article:
+        - strong: Castle Courtyard
+        - paragraph: 1 challenge · Download 157 KiB
+        - 'button "Play: Castle Courtyard"': Play
+      - article:
+        - strong: City Plaza
+        - paragraph: 1 challenge · Download 1.2 MiB
+        - 'button "Play: City Plaza"': Play
+      - article:
+        - strong: House Construction Site
+        - paragraph: 1 challenge · Download 2.3 MiB
+        - 'button "Play: House Construction Site"': Play
+      - article:
+        - strong: Frontier Camp
+        - paragraph: 1 challenge · Download 169 KiB
+        - 'button "Play: Frontier Camp"': Play
+      - article:
+        - strong: Industrial Service Yard
+        - paragraph: 1 challenge · Download 1.0 MiB
+        - 'button "Play: Industrial Service Yard"': Play
+      - article:
+        - strong: Orbital Workshop
+        - paragraph: 1 challenge · Download 153 KiB
+        - 'button "Play: Orbital Workshop"': Play
+      - article:
+        - strong: Pine Clearing
+        - paragraph: 1 challenge · Download 129 KiB
+        - 'button "Play: Pine Clearing"': Play
+      - article:
+        - strong: Platform Garden
+        - paragraph: 1 challenge · Download 156 KiB
+        - 'button "Play: Platform Garden"': Play
+      - article:
+        - strong: Race Paddock
+        - paragraph: 1 challenge · Download 386 KiB
+        - 'button "Play: Race Paddock"': Play
+      - article:
+        - strong: Roadworks Practice Park
+        - paragraph: 1 challenge · Download 63 KiB
+        - 'button "Play: Roadworks Practice Park"': Play
+      - article:
+        - strong: Rock Grotto
+        - paragraph: 1 challenge · Download 1.4 MiB
+        - 'button "Play: Rock Grotto"': Play
+      - article:
+        - strong: Ruined Halls
+        - paragraph: 1 challenge · Download 1.7 MiB
+        - 'button "Play: Ruined Halls"': Play
+      - article:
+        - strong: Dry-dock Shipyard
+        - paragraph: 1 challenge · Download 594 KiB
+        - 'button "Play: Dry-dock Shipyard"': Play
+      - article:
+        - strong: Skate Plaza
+        - paragraph: 1 challenge · Download 210 KiB
+        - 'button "Play: Skate Plaza"': Play
+      - article:
+        - strong: Village Green
+        - paragraph: 1 challenge · Download 606 KiB
+        - 'button "Play: Village Green"': Play
+      - article:
+        - strong: Woodland Camp
+        - paragraph: 1 challenge · Download 304 KiB
+        - 'button "Play: Woodland Camp"': Play
+      - article:
+        - strong: Coaster Practice Park
+        - paragraph: 1 challenge · Download 1.1 MiB
+        - 'button "Play: Coaster Practice Park"': Play
+    - heading "Installed worlds" [level=2]
+    - region "Regional free flight":
+      - heading "Regional free flight" [level=2]
+      - paragraph: Download a region once, then choose Fly. Regions are unscored practice areas. Save the simulator offline separately; this download saves the scenery.
+      - button "Refresh saved regions"
+      - status: Could not complete this action. Existing downloads are retained; refresh and retry.
+      - article:
+        - strong: Lunar Basin — flight study
+        - paragraph: Shelter detail
+        - paragraph: 768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity.
+        - paragraph: Optional scenery download · 2 MiB · unscored
+        - 'button "Download: Lunar Basin — flight study · Shelter detail"': Download region
+      - article:
+        - strong: Alpine Highlands — connected mountain study
+        - paragraph: Station surface details
+        - paragraph: 4.096 × 4.096 km · six starting points · unscored free flight. Original timber station cladding, opaque backed panels and roof seams add detail to the refined-contour landscape. Separate station-r3 study; earlier Alpine editions remain available. The wider landscape and route detail are still being refined.
+        - paragraph: Optional scenery download · 21.6 MiB · unscored
+        - 'button "Download: Alpine Highlands — connected mountain study · Station surface details"': Download region
+      - article:
+        - strong: Lunar Basin — flight study
+        - paragraph: Edition · 1ec74a07
+        - paragraph: 768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity.
+        - paragraph: Optional scenery download · 1.9 MiB · unscored
+        - 'button "Download: Lunar Basin — flight study · Edition · 1ec74a07"': Download region
+      - article:
+        - strong: Alpine Highlands — connected mountain study
+        - paragraph: Refined contours
+        - paragraph: 4.096 × 4.096 km · six starting points · unscored free flight. Refined snow and scree contours connect the glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Separate review-r2 study; the earlier revision remains available. Landscape and route detail are still being refined.
+        - paragraph: Optional scenery download · 20.8 MiB · unscored
+        - 'button "Download: Alpine Highlands — connected mountain study · Refined contours"': Download region
+      - article:
+        - strong: Alpine Highlands — connected mountain study
+        - paragraph: Original study
+        - paragraph: 4.096 × 4.096 km · six starting points · unscored free flight. Explore a glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Early landscape study; scenery and route detail are still being refined.
+        - paragraph: Optional scenery download · 20.1 MiB · unscored
+        - 'button "Download: Alpine Highlands — connected mountain study · Original study"': Download region
+      - article:
+        - strong: Canal City — bridges and courtyards
+        - paragraph: 384 × 384 m · six starting points · unscored free flight. Follow the canals beneath a masonry arch and high walkway, pass through warehouses and courtyards, or weave around basin moorings. Early composition study; surrounding banks remain sparse. Water is visual only.
+        - paragraph: Optional scenery download · 6.5 MiB · unscored
+        - 'button "Download: Canal City — bridges and courtyards"': Download region
+      - article:
+        - strong: Desert Expedition — rock routes
+        - paragraph: Rock practice routes
+        - paragraph: 16.384 × 16.384 km · six close-range rock practice areas · unscored free flight. Weave between windstones, pass through a natural arch, climb the escarpment ribs and orbit the mesa crown. Early composition study; the wider terrain remains sparse.
+        - paragraph: Optional scenery download · 45.9 MiB · unscored
+        - 'button "Download: Desert Expedition — rock routes · Rock practice routes"': Download region
+      - article:
+        - strong: Desert Expedition — 16 km relief study
+        - paragraph: Open desert terrain
+        - paragraph: 16.384 × 16.384 km · six landscapes and six starting points · unscored free flight. Explore broad dunes, a dry wash, salt basin, escarpment, mesa corridor and rocky plain. Early terrain study focused on broad relief.
+        - paragraph: Optional scenery download · 45.7 MiB · unscored
+        - 'button "Download: Desert Expedition — 16 km relief study · Open desert terrain"': Download region
+      - article:
+        - strong: Tropical coast — connected harbour
+        - paragraph: Connected harbour
+        - paragraph: 768 × 768 m · connected wooden harbour decks and shore approach · six starting areas, unscored free flight. Separate harbour-r3 revision; the earlier coastal settlement remains available. Early coastal study; visual water only.
+        - paragraph: Optional scenery download · 7.6 MiB · unscored
+        - 'button "Download: Tropical coast — connected harbour · Connected harbour"': Download region
+      - article:
+        - strong: Railway Valley — six districts
+        - paragraph: 4.096 × 4.096 km · six starting areas · unscored free flight. Explore a freight hall, viaduct, quarry conveyor, station canopy, foundry and timber yard. Early landscape study with static trains and sparse scenery between districts.
+        - paragraph: Optional scenery download · 17.1 MiB · unscored
+        - 'button "Download: Railway Valley — six districts"': Download region
+      - article:
+        - strong: Coaster Gardens — connected park study
+        - paragraph: Connected park routes
+        - paragraph: 2.048 × 2.048 km · six starting points · unscored free flight. Explore the supported loop, linked approach paths, station courts and woodland routes. Early static park study; district scenery is still being refined and rides do not move.
+        - paragraph: Optional scenery download · 32.6 MiB · unscored
+        - 'button "Download: Coaster Gardens — connected park study · Connected park routes"': Download region
+      - article:
+        - strong: Coaster Gardens — 2 km study
+        - paragraph: Original park study
+        - paragraph: 2.048 × 2.048 km · six park districts and six starting points · unscored free flight. Explore garden plazas, a looping landmark, station terraces, service halls and woodland paths. Early static park study; rides do not move.
+        - paragraph: Optional scenery download · 32.3 MiB · unscored
+        - 'button "Download: Coaster Gardens — 2 km study · Original park study"': Download region
+      - article:
+        - strong: Hillside Town — civic court materials
+        - paragraph: Civic courtyard materials
+        - paragraph: 384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available.
+        - paragraph: Optional scenery download · 8.3 MiB · unscored
+        - 'button "Download: Hillside Town — civic court materials · Civic courtyard materials"': Download region
+      - article:
+        - strong: Hillside Town — terraces and courtyards
+        - paragraph: Terraces and courtyards
+        - paragraph: 384 × 384 m · three terraces, graded streets, open doorways and an elevated pad · unscored free flight. Choose one of four starting points. Early town study with original building-kit materials.
+        - paragraph: Optional scenery download · 8 MiB · unscored
+        - 'button "Download: Hillside Town — terraces and courtyards · Terraces and courtyards"': Download region
+      - article:
+        - strong: Tropical coast — six flight districts
+        - paragraph: Six coastal districts
+        - paragraph: 768 × 768 m · harbour, lagoon piers, reef rocks, palm valley, hillside huts and bamboo grove · unscored free flight. Follow shoreline routes, practise pier openings and explore the village paths. Early coastal study; visual water only.
+        - paragraph: Optional scenery download · 7.5 MiB · unscored
+        - 'button "Download: Tropical coast — six flight districts · Six coastal districts"': Download region
+      - article:
+        - strong: Canyon Expanse — broad relief study
+        - paragraph: 8.192 × 8.192 km · six starting areas · unscored free flight. Broad terrain-only relief with basins, mesas and ridges; an early landscape study with sparse detail.
+        - paragraph: Optional scenery download · 45.8 MiB · unscored
+        - 'button "Download: Canyon Expanse — broad relief study"': Download region
+      - article:
+        - strong: Tropical coast — bounded flight study
+        - paragraph: 384 × 384 m · two piers, a stilt hut, palms and dunes · unscored free flight. Practise open bays, low passes and a shoreline circuit. Early coastal preview; visual water only.
+        - paragraph: Optional scenery download · 5.7 MiB · unscored
+        - 'button "Download: Tropical coast — bounded flight study"': Download region
+      - article:
+        - strong: Canyon Badlands — six districts
+        - paragraph: Edition · f69cc4d3
+        - paragraph: 768 × 768 m · six districts and six starting points. Explore the basin, mesa, winding gorge, twin buttes, split ravine and sunset shelf in a stylized region for unscored free flight.
+        - paragraph: Optional scenery download · 3.2 MiB · unscored
+        - 'button "Download: Canyon Badlands — six districts · Edition · f69cc4d3"': Download region
+      - article:
+        - strong: Canyon Badlands — regional preview
+        - paragraph: Edition · 5cd92029
+        - paragraph: 384 × 384 m · basin, gorge and rock openings · unscored free flight. A stylized regional preview with twin spires, ridge passages and clear practice routes.
+        - paragraph: Optional scenery download · 1.1 MiB · unscored
+        - 'button "Download: Canyon Badlands — regional preview · Edition · 5cd92029"': Download region
+      - article:
+        - strong: Railway Valley — regional preview
+        - paragraph: 384 × 384 m · bridge, freight yard and open workshop · unscored free flight. An early regional preview with static trains and clear practice corridors.
+        - paragraph: Optional scenery download · 5.4 MiB · unscored
+        - 'button "Download: Railway Valley — regional preview"': Download region
+      - article:
+        - strong: Urban earthworks — regional preview
+        - paragraph: 384 × 384 m · loading court, open workshop and connected parking ramps · unscored free flight. A regional preview with marked roads, building openings and rooftop passages.
+        - paragraph: Optional scenery download · 2.2 MiB · unscored
+        - 'button "Download: Urban earthworks — regional preview"': Download region
+    - status: "Failed to execute 'transaction' on 'IDBDatabase': The database connection is closing."
+  - button "Back"
+  - button "Start"
+  - button "Expert options"
+  - paragraph: "Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back."

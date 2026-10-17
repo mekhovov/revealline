@@ -3,7 +3,9 @@ import * as THREE from '../vendor/three.module.js';
 
 export function validateScenerySurface(style = 'plain', quality = 'balanced') {
   if (
-    !['plain', 'urban', 'tropical-settlement-water', 'alpine-overlays'].includes(style) ||
+    !['plain', 'urban', 'tropical-settlement-water', 'alpine-overlays', 'lunar-survey'].includes(
+      style,
+    ) ||
     !['performance', 'balanced', 'quality'].includes(quality)
   )
     throw new TypeError('Unknown scenery surface profile');
@@ -13,6 +15,8 @@ export function validateScenerySurface(style = 'plain', quality = 'balanced') {
 /** Only explicitly matched original visual surfaces opt in; licensed props stay untouched. */
 export function sceneryMaterialStyle(style, surface) {
   validateScenerySurface(style);
+  if (style === 'lunar-survey')
+    return !surface.texture && lunarSurfaceKind(surface.color) >= 0 ? style : 'plain';
   if (style === 'alpine-overlays') {
     const texture = surface.texture;
     const overlay =
@@ -169,6 +173,7 @@ export function createScenerySurface({
     return material;
   }
   if (style === 'tropical-settlement-water') return coastalWater(material, quality, originMm);
+  if (style === 'lunar-survey') return lunarSurveySurface(material, color, quality, originMm);
   const kind = urbanSurfaceKind(color);
   if (style === 'plain' || !kind) return material;
   material.name = `Urban architectural surface ${kind}`;
@@ -242,6 +247,98 @@ float parkingLip = max(urbanRange(p.x, 55.6, 56.0), urbanRange(p.x, 72.0, 72.4))
 float paint = max(entrancePaint, horizontalFace * max(mill * millLip, parking * parkingLip));
 diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.72, 0.43, 0.09), paint * 0.82);
 `,
+    );
+  };
+  return material;
+}
+
+// Only the five original composition-r1 palettes are eligible; licensed palettes are untouched.
+export function lunarSurfaceKind(color) {
+  if (!Array.isArray(color)) return -1;
+  return [
+    [0.25, 0.27, 0.29],
+    [0.51, 0.5, 0.47],
+    [0.7, 0.69, 0.64],
+    [0.57, 0.62, 0.64],
+    [0.75, 0.52, 0.21],
+  ].findIndex((palette) => palette.every((value, index) => value === color[index]));
+}
+
+function lunarSurveySurface(material, color, quality, originMm) {
+  const kind = lunarSurfaceKind(color);
+  if (kind < 0) return material;
+  // Cool graphite rock, light dust and galvanized survey structures; original amber markers stay amber.
+  material.color.setRGB(
+    ...[
+      [0.19, 0.205, 0.22],
+      [0.34, 0.35, 0.36],
+      [0.59, 0.59, 0.56],
+      [0.61, 0.65, 0.67],
+      [0.75, 0.52, 0.21],
+    ][kind],
+  );
+  material.roughness = kind === 3 ? 0.78 : 0.98;
+  const uniforms = {
+    lunarSurveyOrigin: {
+      value: new THREE.Vector3(originMm.x / 1000, originMm.y / 1000, originMm.z / 1000),
+    },
+  };
+  material.name = `Lunar ${kind === 3 ? 'survey alloy' : kind === 4 ? 'amber marker' : 'rock'} · ${quality}`;
+  material.userData.setRegionalSurfaceQuality = (next) => {
+    validateScenerySurface('lunar-survey', next);
+    if (next === quality) return;
+    quality = next;
+    material.name = `Lunar ${kind === 3 ? 'survey alloy' : kind === 4 ? 'amber marker' : 'rock'} · ${quality}`;
+    material.needsUpdate = true;
+  };
+  material.customProgramCacheKey = () => `fpv-lunar-survey-v1-${kind}-${quality}`;
+  material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, uniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace(
+        '#include <common>',
+        '#include <common>\nuniform vec3 lunarSurveyOrigin;\nvarying vec3 vLunarSurveyPoint;\nvarying vec3 vLunarSurveyNormal;',
+      )
+      .replace(
+        '#include <begin_vertex>',
+        '#include <begin_vertex>\nvLunarSurveyPoint = (modelMatrix * vec4(transformed,1.0)).xyz + lunarSurveyOrigin;\nvLunarSurveyNormal = normalize(mat3(modelMatrix)*normal);',
+      );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <common>',
+      `#include <common>
+varying vec3 vLunarSurveyPoint;
+varying vec3 vLunarSurveyNormal;
+float lunarSurveyHash(vec3 p) { return fract(sin(dot(p,vec3(13.17,73.91,117.43)))*4371.73); }
+float lunarSurveyNoise(vec3 p) {
+  vec3 i=floor(p), f=fract(p); f=f*f*(3.0-2.0*f);
+  return mix(mix(mix(lunarSurveyHash(i),lunarSurveyHash(i+vec3(1,0,0)),f.x),mix(lunarSurveyHash(i+vec3(0,1,0)),lunarSurveyHash(i+vec3(1,1,0)),f.x),f.y),mix(mix(lunarSurveyHash(i+vec3(0,0,1)),lunarSurveyHash(i+vec3(1,0,1)),f.x),mix(lunarSurveyHash(i+vec3(0,1,1)),lunarSurveyHash(i+vec3(1,1,1)),f.x),f.y),f.z);
+}`,
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <color_fragment>',
+      `#include <color_fragment>
+vec3 sp=vLunarSurveyPoint;
+vec3 sn=abs(normalize(vLunarSurveyNormal));
+float surveyBroad=${quality === 'performance' ? '0.5 + 0.12*sin(sp.x*0.47+sp.y*0.29)*sin(sp.z*0.37-sp.y*0.21)' : 'lunarSurveyNoise(sp*0.42)'};
+${
+  kind === 3
+    ? `
+// Two-metre alloy panels, anti-aliased and faded at distance. No wood-grain stripes.
+vec2 panel = sn.y > max(sn.x,sn.z) ? sp.xz : (sn.x > sn.z ? sp.zy : sp.xy);
+vec2 edge = abs(fract(panel/2.0+0.5)-0.5)*2.0;
+float aa=max(length(fwidth(panel)),0.008);
+float joint=(1.0-smoothstep(0.015,0.015+aa,min(edge.x,edge.y)))*(1.0-smoothstep(0.12,0.5,aa));
+diffuseColor.rgb *= (0.96 + surveyBroad*0.08)*(1.0-joint*0.28);
+`
+    : kind === 4
+      ? 'diffuseColor.rgb *= 0.98 + surveyBroad*0.04;'
+      : `
+float dust=smoothstep(0.42,0.95,max(normalize(vLunarSurveyNormal).y,0.0));
+diffuseColor.rgb *= 0.86+surveyBroad*0.22+dust*0.09;
+${quality === 'performance' ? '' : 'diffuseColor.rgb *= 1.0+(lunarSurveyNoise(sp*2.2)-0.5)*0.12*(1.0-smoothstep(0.05,0.4,length(fwidth(sp))));'}
+${quality === 'quality' ? 'diffuseColor.rgb *= 1.0+(lunarSurveyNoise(sp*6.0)-0.5)*0.06*(1.0-smoothstep(0.02,0.15,length(fwidth(sp))));' : ''}
+`
+}`,
     );
   };
   return material;

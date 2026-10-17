@@ -1,4 +1,5 @@
 import { canalViews } from './canal-city/views.mjs';
+import { lunarViews } from './lunar-basin/views.mjs';
 import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { configureSceneryPreviewDepth } from "./preview-depth.mjs";
 import { createSceneryLighting } from './scenery-lighting.mjs';
@@ -82,6 +83,11 @@ const alpineViews = [
   ['Snow contour overview', [3400, 575, 3100], [3900, 1260, 3650], [3456, 470, 3200], 2000, true],
   ['Scree contour overview', [1800, 350, 1100], [1350, 900, 650], [1740, 330, 1100], 2000, true],
   ['Summit station', [3400, 575, 3100], [3550, 655, 3260], [3400, 576, 3120]],
+  ['Summit concourse pilot height', [3400, 564, 3100], [3370, 564, 3100], [3440, 566, 3100]],
+  ['Summit opaque wall detail', [3400, 564, 3100], [3390, 564, 3092], [3400, 566, 3080.5]],
+  ['Summit roof seams', [3400, 582, 3100], [3370, 584, 3092], [3400, 576, 3068]],
+  ['Summit cable approach', [3280, 565, 3155], [3320, 570, 3030], [3260, 550, 3155]],
+  ['Summit lookout approach', [3495, 580, 3185], [3445, 576, 3155], [3495, 590, 3185]],
   ['Viaduct gorge', [2400, 219, 3070], [2530, 285, 3220], [2400, 224, 3070]],
   ['Reservoir dam', [800, 184, 2800], [970, 250, 2970], [800, 184, 2790]],
 ];
@@ -95,11 +101,13 @@ const views =
     alpine: alpineViews,
     'desert-landmarks': desertLandmarkViews,
     'canal-city': canalViews,
+    'lunar-basin': lunarViews,
   }[new URLSearchParams(location.search).get('views')] ?? urbanViews;
 let window = null,
   busy = false,
   closed = false,
-  controller = null;
+  controller = null,
+  includesTerrain = false;
 const mm = (p) => ({
   x: Math.round(p[0] * 1000),
   y: Math.round(p[1] * 1000),
@@ -135,7 +143,7 @@ async function view(v) {
     window.group.traverse((object) => {
       if (object.isMesh) meshCount++;
     });
-    status.textContent = `${v[0]} · ${result.provenance.chunks.length} verified cells · ${meshCount} rendered meshes · ${result.geometryBytes} geometry bytes · no flight admission`;
+    status.textContent = `${v[0]} · ${includesTerrain ? 'terrain + scenery' : 'scenery only'} · ${result.provenance.chunks.length} verified cells · ${meshCount} rendered meshes · ${result.geometryBytes} geometry bytes · no flight admission`;
     draw();
   } catch (error) {
     if (!closed) status.textContent = `Preparation stopped: ${error.message}`;
@@ -182,7 +190,8 @@ document.querySelector('form').addEventListener('submit', async (event) => {
   controller = new AbortController();
   try {
     const url = new URL(input.value, location.href);
-    const companion = new URLSearchParams(location.search).get('companion');
+    const parameters = new URLSearchParams(location.search);
+    const companion = parameters.get('companion') || parameters.get('terrain');
     const companionURL = companion ? new URL(companion, location.href) : null;
     const [manifest, terrain] = await Promise.all([
       loadManifest(url, controller.signal),
@@ -193,6 +202,7 @@ document.querySelector('form').addEventListener('submit', async (event) => {
     const scenerySource = {
       baseURL: new URL('./', url).href,
       surfaceStyle: new URLSearchParams(location.search).get('surface') ?? 'plain',
+      surfaceQuality: new URLSearchParams(location.search).get('quality') ?? 'balanced',
     };
     window = terrain
       ? createVerifiedMixedWindow(terrain, {
@@ -204,6 +214,7 @@ document.querySelector('form').addEventListener('submit', async (event) => {
           scenery: { manifest, source: scenerySource },
         })
       : createVerifiedSceneryWindow(manifest, scenerySource);
+    includesTerrain = Boolean(terrain);
     controls(false);
     const requestedView = new URLSearchParams(location.search).get('view');
     const selected = views.find(
@@ -222,6 +233,7 @@ document.querySelector('#release').onclick = async () => {
   controls(true);
   await window?.dispose();
   window = null;
+  includesTerrain = false;
   lighting.release();
   status.textContent = 'Resources released; no live scenery or collision.';
   draw();

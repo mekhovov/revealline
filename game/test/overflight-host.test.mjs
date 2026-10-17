@@ -9,6 +9,7 @@ import {
   overflightPreviewRequest,
   createOverflightReviewPlayback,
   overflightReviewStopAt,
+  overflightReviewControls,
   createOverflightKeyboardState,
   createOverflightJSONPages,
 } from '../overflight/host-loop.mjs';
@@ -23,6 +24,99 @@ import {
 import { DEFAULT_OVERFLIGHT_PROJECT, compileOverflightProject } from '../overflight/project.mjs';
 import { OVERFLIGHT_COPY } from '../overflight/copy.mjs';
 import { createOverflightReviewRecorder } from '../overflight/review-recorder.mjs';
+
+test('review provenance and pilot inputs share the selected route without changing prior defaults', () => {
+  for (const mode of ['overflight', 'overflight-riy']) {
+    for (const build of ['fan', 'echo', 'systems', 'echo-scanner']) {
+      const original = overflightReviewControls({ mode, build });
+      assert.deepEqual(original, { route: 'tight', pilotArgument: 'tight' });
+      assert.deepEqual(overflightReviewControls({ mode, build, route: 'unknown' }), original);
+      for (const route of ['tight', 'figure-eight', 'lure-and-return']) {
+        const controls = overflightReviewControls({ mode, build, route });
+        assert.deepEqual(controls, { route, pilotArgument: route });
+        const calls = [];
+        const review = createOverflightReviewPlayback({
+          build,
+          route: controls.pilotArgument,
+          pilot: (run, received) => {
+            calls.push(received);
+            return { x: 1, y: 0, boost: false };
+          },
+          selectCard: () => null,
+        });
+        review.input({ tick: 0, time: 0 });
+        review.input({ tick: 5, time: 5 / 60 });
+        review.input({ tick: 6, time: 0.1 });
+        assert.deepEqual(calls, [controls.route, controls.route]);
+      }
+    }
+  }
+  assert.deepEqual(overflightReviewControls({ mode: 'overflight', build: null, route: 'tight' }), {
+    route: null,
+    pilotArgument: null,
+  });
+  assert.deepEqual(
+    overflightReviewControls({ mode: 'overflight-hunt', build: 'objectives', route: 'tight' }),
+    { route: 'objectives', pilotArgument: 'objectives' },
+  );
+  assert.deepEqual(
+    overflightReviewControls({ mode: 'overflight-hunt', build: 'breaker', route: 'figure-eight' }),
+    { route: 'packs', pilotArgument: 'breaker' },
+  );
+});
+
+test('native entry forwards an explicit review route through both wrappers and records that same route', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const variable = (name) =>
+    ast.body.flatMap((node) => node.declarations ?? []).find((node) => node.id.name === name);
+  const base = variable('mode').init.alternate.properties.find(
+    (node) => node.key.name === 'pilot',
+  ).value;
+  const forwarded = variable('review').init.arguments[0].properties.find(
+    (node) => node.key.name === 'pilot',
+  ).value;
+  const identity = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'reviewIdentity',
+  );
+  for (const route of ['tight', 'figure-eight', 'lure-and-return']) {
+    const calls = [];
+    const nativePilot = runInNewContext(`(${source.slice(base.start, base.end)})`, {
+      pilot: (run, received) => {
+        calls.push(received);
+        return { x: 1, y: 0, boost: false };
+      },
+    });
+    const reviewControls = overflightReviewControls({
+      mode: 'overflight-riy',
+      build: 'echo',
+      route,
+    });
+    const forwarder = runInNewContext(`(${source.slice(forwarded.start, forwarded.end)})`, {
+      mode: { pilot: nativePilot },
+    });
+    const playback = createOverflightReviewPlayback({
+      build: 'echo',
+      route: reviewControls.pilotArgument,
+      pilot: forwarder,
+      selectCard: () => null,
+    });
+    playback.input({ tick: 0, time: 0 });
+    assert.deepEqual(
+      calls,
+      [route],
+      'neither native wrapper may silently replace the chosen route',
+    );
+    const report = runInNewContext(
+      `${source.slice(identity.start, identity.end)}; reviewIdentity()`,
+      { reviewBuild: 'echo', reviewStopAt: null, reviewControls },
+    );
+    assert.equal(report.route, calls[0]);
+  }
+});
 
 test('native variant mission picker queries progress only for supported installed projects', async () => {
   const { readFile } = await import('node:fs/promises');
@@ -972,4 +1066,135 @@ test('a selected demonstration remains manual until opt-in, and takeover stops a
   assert.equal(run.review, true, 'taking over cannot erase automated-run provenance');
   playback.reset();
   assert.equal(playback.active(), false, 'retry stays under manual control after takeover');
+});
+
+test('opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state', () => {
+  const run = createOverflightRun(compileOverflightProject(DEFAULT_OVERFLIGHT_PROJECT));
+  const initial = structuredClone(run.player);
+  const review = createOverflightReviewPlayback({
+    build: 'echo',
+    trace: true,
+    detailTick: 0,
+    pilot: () => ({ x: 1, y: 0, boost: false, focus: true }),
+    selectCard: () => null,
+  });
+  review.input(run, {});
+  review.input(run, {});
+  const receipt = review.traceSnapshot();
+  assert.equal(receipt.samples.length, 1, 'cached control frames do not produce duplicate samples');
+  assert.equal(receipt.samples[0].tick, 0);
+  assert.deepEqual(receipt.samples[0].input, { x: 1, y: 0, boost: false, focus: true });
+  assert.deepEqual(receipt.samples[0].player, {
+    x: initial.x,
+    y: initial.y,
+    vx: initial.vx,
+    vy: initial.vy,
+    heading: initial.heading,
+    hull: initial.hull,
+    shield: initial.shield,
+    boostRemaining: initial.boostRemaining,
+    boostCooldown: initial.boostCooldown,
+  });
+  receipt.samples[0].input.x = -1;
+  assert.equal(review.traceSnapshot().samples[0].input.x, 1);
+  assert.deepEqual(run.player, initial);
+  for (let index = 1; index <= receipt.capacity; index++) {
+    run.tick = index * 6;
+    review.input(run, {});
+  }
+  assert.equal(review.traceSnapshot().samples.length, receipt.capacity);
+  assert.equal(review.traceSnapshot().dropped, 1);
+  assert.equal(review.traceSnapshot().details.length, 2);
+  assert.deepEqual(
+    review.traceSnapshot().details.map((row) => row.tick),
+    [0, 6],
+  );
+  review.reset();
+  assert.deepEqual(review.traceSnapshot().samples, []);
+  assert.equal(review.traceSnapshot().dropped, 0);
+  const manual = createOverflightReviewPlayback({
+    trace: true,
+    pilot: () => assert.fail(),
+    selectCard: () => null,
+  });
+  const input = { x: 0, y: 1 };
+  assert.equal(manual.input(run, input), input);
+  assert.deepEqual(manual.traceSnapshot().samples, []);
+  assert.equal(
+    createOverflightReviewPlayback({
+      build: 'echo',
+      pilot: () => ({}),
+      selectCard: () => null,
+    }).traceSnapshot(),
+    null,
+  );
+});
+
+test('finished review download captures terminal state instead of an older inspector snapshot', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { parse } = await import('acorn');
+  const { runInNewContext } = await import('node:vm');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const node = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'downloadMeasurements',
+  );
+  assert.ok(node, 'the final report needs an export callable from inside the results dialog');
+  let saved;
+  const pauses = [];
+  const context = {
+    rawPages: { json: JSON.stringify({ phase: 'paused', time: 40 }) },
+    completedMeasurement: { phase: 'paused', time: 120 },
+    measurement: (options) => {
+      assert.equal(options.raw, true);
+      return { phase: 'lost', time: 319, reviewTrace: { samples: [{ tick: 19140 }] } };
+    },
+    pause: (options) => pauses.push(options),
+    downloadBlob: (blob, name) => (saved = { blob, name }),
+    Blob,
+    JSON,
+    fixture: null,
+    seed: 202604,
+  };
+  const save = runInNewContext(
+    `${source.slice(node.start, node.end)}; downloadMeasurements`,
+    context,
+  );
+  save({ current: true });
+  assert.equal(JSON.parse(await saved.blob.text()).phase, 'lost');
+  assert.equal(saved.name, 'overflight-sortie-202604.json');
+  assert.equal(pauses.length, 1);
+  save();
+  assert.equal(
+    JSON.parse(await saved.blob.text()).time,
+    40,
+    'the separate frozen inspector download keeps its prior behavior',
+  );
+  const bindings = ast.body.filter(
+    (node) => node.type === 'ExpressionStatement' && node.expression.callee?.name === 'listen',
+  );
+  for (const [id, options] of [
+    ['result-download-metrics', { current: true }],
+    ['download-metrics', undefined],
+  ]) {
+    const binding = bindings.find(
+      (node) =>
+        node.expression.arguments[0].callee?.name === '$' &&
+        node.expression.arguments[0].arguments[0].value === id,
+    );
+    assert.ok(binding, id);
+    const callback = binding.expression.arguments[2];
+    let received;
+    runInNewContext(`(${source.slice(callback.start, callback.end)})`, {
+      downloadMeasurements: (value) => (received = value),
+    })({ current: true });
+    assert.equal(JSON.stringify(received), JSON.stringify(options));
+  }
+  for (const name of ['play.html', 'raid.html']) {
+    const html = await readFile(new URL(`../overflight/${name}`, import.meta.url), 'utf8');
+    assert.match(
+      html,
+      /<section id="overflight-results">[\s\S]*?id="result-download-metrics"[\s\S]*?<\/section>/,
+    );
+  }
 });

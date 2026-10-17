@@ -50,7 +50,10 @@ function compatiblePolicy(value) {
     if (!tokens?.length || tokens.some((token) => !allowed.includes(token))) return false;
   }
   return (
-    actual.get('script-src')?.join(' ') === "'self' 'wasm-unsafe-eval'" &&
+    // Authored diagnostic pages can deliberately omit WebAssembly. Keep that
+    // stricter self-only policy; the subset check above still rejects unsafe
+    // eval, inline script, remote sources and every other widened directive.
+    actual.get('script-src')?.includes("'self'") &&
     actual.get('connect-src')?.join(' ') === "'self'"
   );
 }

@@ -7,6 +7,7 @@ import {
   compileOverflightHuntProject,
 } from '../overflight/raid-project.mjs';
 import { createOverflightHuntReviewPilot } from '../overflight/raid-review-pilot.mjs';
+import { applyOverflightBattlefield } from '../overflight/battlefields.mjs';
 import {
   overflightHuntRecordContext,
   OVERFLIGHT_HUNT_RECORDS_FORMAT,
@@ -16,6 +17,9 @@ import {
   overflightTimeAttackResult,
   overflightRaidMedalTime,
   overflightMarathonProject,
+  overflightMarathonNextContract,
+  overflightMarathonSequence,
+  OVERFLIGHT_MARATHON_TACTICS,
   overflightRaidVariantRecord,
 } from '../overflight/raid-variants.mjs';
 const compiled = () => compileOverflightHuntProject(createOverflightHuntProject({ seed: 42 }));
@@ -54,6 +58,122 @@ test('pre-run variant record lookup uses the same revision as its completed run'
       const beforeRun = mode.recordQuery({ compiled: definition });
       assert.equal(beforeRun.compiled.projectIdentity, saved.compiled.projectIdentity);
     }
+});
+
+test('Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages', () => {
+  const mode = variant();
+  const current = createOverflightHuntProject({
+    rulesVersion: 4,
+    layout: 'relay-ruins-receiver-gardens',
+    seed: 42,
+  });
+  const sequence = overflightMarathonSequence(current);
+  const run = mode.createRun(compileOverflightHuntProject(current));
+  const previews = {
+    en: [
+      'Guarded approaches · attached escorts screen the new layout',
+      'Return approach · reordered routes through familiar cover',
+      'Combined command · selected columns reverse through familiar cover',
+    ],
+    uk: [
+      'Захищені підходи · супровід прикриває нову місцевість',
+      'Повторний підхід · новий порядок маршрутів серед знайомих укриттів',
+      'Спільне командування · окремі колони змінюють напрямок серед знайомих укриттів',
+    ],
+  };
+  const points = (route) =>
+    route.map(({ x, y }) => [x, y]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  for (const contract of [3, 4, 5]) {
+    const authored = applyOverflightBattlefield(current, sequence[contract - 1]);
+    const project = overflightMarathonProject(current, contract, 42);
+    let reordered = false;
+    for (const [index, encounter] of project.encounters.entries()) {
+      const original = authored.encounters[index];
+      for (const [actorIndex, actor] of [...encounter.packs, ...encounter.objectives].entries()) {
+        const before = [...original.packs, ...original.objectives].find((p) => p.id === actor.id);
+        assert.deepEqual(points(actor.route), points(before.route));
+        if (JSON.stringify(actor.route) !== JSON.stringify(before.route)) reordered = true;
+        if (actor.escortOf) {
+          assert.equal(actor.x, before.x);
+          assert.equal(actor.y, before.y);
+        } else {
+          const offset = (contract - 1) % before.route.length;
+          const expected = [...before.route.slice(offset), ...before.route.slice(0, offset)];
+          if (contract === 5 && actorIndex % 2) expected.reverse();
+          assert.deepEqual(actor.route, expected);
+        }
+      }
+    }
+    assert.ok(reordered, `contract ${contract} changes approach ordering inside authored cover`);
+    run.raidVariant.contract = contract - 1;
+    for (const locale of ['en', 'uk']) {
+      assert.ok(
+        overflightMarathonNextContract(run, locale).endsWith(previews[locale][contract - 3]),
+      );
+    }
+  }
+  const legacy = mode.createRun(
+    compileOverflightHuntProject(createOverflightHuntProject({ rulesVersion: 3, seed: 42 })),
+  );
+  for (const contract of [3, 4, 5]) {
+    legacy.raidVariant.contract = contract - 1;
+    for (const locale of ['en', 'uk'])
+      assert.equal(
+        overflightMarathonNextContract(legacy, locale),
+        OVERFLIGHT_MARATHON_TACTICS[contract - 1][locale],
+      );
+  }
+});
+
+test('custom V4 Marathon previews preserve optional battlefield and movement authoring', () => {
+  for (const retainBattlefield of [false, true]) {
+    const source = createOverflightHuntProject({
+      rulesVersion: 4,
+      layout: 'relay-ruins-receiver-gardens',
+      seed: 42,
+    });
+    if (!retainBattlefield) {
+      delete source.battlefield;
+      delete source.terrain;
+      delete source.presentation;
+    }
+    for (const encounter of source.encounters)
+      for (const actor of [...encounter.packs, ...encounter.objectives]) delete actor.movement;
+    const original = structuredClone(source);
+    const definition = compileOverflightHuntProject(source);
+    const run = variant().createRun(definition);
+    const identity = run.raidVariant.baseIdentity;
+    for (const contract of retainBattlefield ? [5] : [2, 3, 4, 5]) {
+      run.raidVariant.contract = contract - 1;
+      const project = overflightMarathonProject(source, contract, 42);
+      for (const [index, encounter] of project.encounters.entries()) {
+        const before = source.encounters[index];
+        for (const actor of [...encounter.packs, ...encounter.objectives]) {
+          if (actor.escortOf) continue;
+          const authored = [...before.packs, ...before.objectives].find((a) => a.id === actor.id);
+          const offset = (contract - 1) % authored.route.length;
+          assert.deepEqual(actor.route, [
+            ...authored.route.slice(offset),
+            ...authored.route.slice(0, offset),
+          ]);
+          assert.equal(actor.movement, undefined);
+        }
+      }
+      const en = overflightMarathonNextContract(run, 'en');
+      const uk = overflightMarathonNextContract(run, 'uk');
+      assert.doesNotMatch(en, /reverse|new layout|reflected|shifted/i);
+      assert.doesNotMatch(
+        uk,
+        /змінюють напрямок|нова місцевість|нову місцевість|віддзеркал|зміщен/i,
+      );
+      assert.match(en, /authored/i);
+      assert.match(uk, /авторськ/i);
+      assert.equal(overflightMarathonNextContract(run, 'fr'), en);
+    }
+    assert.deepEqual(source, original);
+    assert.equal(run.raidVariant.baseIdentity, identity);
+    assert.deepEqual(run.raidVariant.source, original);
+  }
 });
 
 test('Time Attack and Marathon reject experimental terrain rather than silently changing routes', () => {
@@ -336,6 +456,38 @@ function resultUI() {
   };
   return { document, footer, base };
 }
+
+test('Marathon next-contract prose has its own result panel while numeric scores remain compact', () => {
+  for (const locale of ['en', 'uk']) {
+    const { document, base } = resultUI();
+    document.documentElement.lang = locale;
+    const mode = createOverflightRaidVariant(base, { variant: 'marathon' });
+    const run = mode.createRun(
+      compileOverflightHuntProject(
+        createOverflightHuntProject({
+          rulesVersion: 4,
+          layout: 'relay-ruins-receiver-gardens',
+          seed: 42,
+        }),
+      ),
+    );
+    victory(run);
+    mode.renderResults({ run, document, formatTime: String, text: (key) => key });
+    const rows = document.getElementById('result-stats').children;
+    const detail = rows.filter((row) => row.className.includes('overflight-result-detail'));
+    assert.equal(detail.length, 1, 'only the route description needs the full-width text panel');
+    assert.equal(
+      detail[0].children[0].textContent,
+      locale === 'uk' ? 'Наступний контракт' : 'Next contract',
+    );
+    assert.equal(detail[0].children[1].textContent, overflightMarathonNextContract(run, locale));
+    assert.ok(
+      rows
+        .filter((row) => !detail.includes(row))
+        .every((row) => row.className === 'overflight-result-stat'),
+    );
+  }
+});
 
 test('Marathon buttons bank once, refresh results and continue only with the host guard', async () => {
   const { document, footer, base } = resultUI(),

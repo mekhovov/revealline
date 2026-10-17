@@ -1,0 +1,203 @@
+{
+  "format": "FPVIDBConnectionObservation.v1",
+  "stopped": true,
+  "limits": {
+    "events": 128,
+    "connections": 32,
+    "pendingRequests": 64,
+    "callerFrames": 4
+  },
+  "counts": {
+    "opens": 5,
+    "droppedEvents": 0,
+    "droppedConnections": 0,
+    "droppedRequests": 0,
+    "diagnosticErrors": 0,
+    "closeInterceptions": 0,
+    "closeInterceptionRefused": 0,
+    "restorationSkipped": 0
+  },
+  "pendingRequests": 0,
+  "ownedRetireActions": 0,
+  "connections": [
+    {
+      "connection": 1,
+      "name": "revealline-journey-v1",
+      "version": 1,
+      "openCaller": [
+        {
+          "path": "game/profile-storage.mjs",
+          "line": 92,
+          "column": 29
+        },
+        {
+          "path": "game/profile-storage.mjs",
+          "line": 83,
+          "column": 23
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": null,
+      "closeInterception": "disabled"
+    },
+    {
+      "connection": 2,
+      "name": "revealline.fpv.world-records.v1",
+      "version": 1,
+      "openCaller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 94,
+          "column": 31
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 93,
+          "column": 20
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": null,
+      "closeInterception": "disabled"
+    },
+    {
+      "connection": 3,
+      "name": "revealline-fpv-worlds-v1",
+      "version": 2,
+      "openCaller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-store.mjs",
+          "line": 21,
+          "column": 29
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "line": 8003,
+          "column": 7
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "line": 8032,
+          "column": 5
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": null,
+      "closeInterception": "disabled"
+    },
+    {
+      "connection": 4,
+      "name": "revealline-fpv-regions-v1",
+      "version": 2,
+      "openCaller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-store.mjs",
+          "line": 21,
+          "column": 29
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+          "line": 316,
+          "column": 23
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional-library.mjs",
+          "line": 633,
+          "column": 48
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": null,
+      "closeInterception": "disabled"
+    },
+    {
+      "connection": 5,
+      "name": "revealline-journey-v1",
+      "version": 1,
+      "openCaller": [
+        {
+          "path": "game/profile-storage.mjs",
+          "line": 92,
+          "column": 29
+        },
+        {
+          "path": "game/profile-storage.mjs",
+          "line": 83,
+          "column": 23
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": null,
+      "closeInterception": "disabled"
+    }
+  ],
+  "events": [
+    {
+      "sequence": 1,
+      "atMs": 48482.89999999106,
+      "kind": "open-success",
+      "connection": 1,
+      "name": "revealline-journey-v1",
+      "version": 1,
+      "trusted": true
+    },
+    {
+      "sequence": 2,
+      "atMs": 48483,
+      "kind": "open-success",
+      "connection": 2,
+      "name": "revealline.fpv.world-records.v1",
+      "version": 1,
+      "trusted": true
+    },
+    {
+      "sequence": 3,
+      "atMs": 48483.09999999404,
+      "kind": "open-success",
+      "connection": 3,
+      "name": "revealline-fpv-worlds-v1",
+      "version": 2,
+      "trusted": true
+    },
+    {
+      "sequence": 4,
+      "atMs": 48483.5,
+      "kind": "open-success",
+      "connection": 4,
+      "name": "revealline-fpv-regions-v1",
+      "version": 2,
+      "trusted": true
+    },
+    {
+      "sequence": 5,
+      "atMs": 48485.69999998808,
+      "kind": "open-success",
+      "connection": 5,
+      "name": "revealline-journey-v1",
+      "version": 1,
+      "trusted": true
+    }
+  ],
+  "coverage": {
+    "factoryFacade": true,
+    "ambientFactoryOrPrototypePatched": false,
+    "explicitCloseInterceptionRequested": false,
+    "nativeRequestAndDatabaseIdentityPreserved": true,
+    "connectionsOutsideFacade": "not-observed",
+    "borrowedCloseReceivers": "not-observed",
+    "synchronousOpenExceptions": "delegated; not-observed",
+    "connectionState": "events-only; no liveness probe",
+    "rootCause": "not-established",
+    "nativeOfflineRestartEviction": "not-measured"
+  }
+}

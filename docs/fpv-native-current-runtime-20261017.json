@@ -1,0 +1,1799 @@
+{
+  "format": "FpvNativeCurrentRuntimeQualification.v1",
+  "pass": true,
+  "nativeRuntimeVerified": false,
+  "desktopFixtureRuntimeVerified": true,
+  "iosRuntimeVerified": false,
+  "scope": "Current-source simulator-only unsigned development Electron shell on one ARM64 Mac, using the separate labeled production World fixture; does not qualify production authentication, signing, installers, iOS, physical controls, device matrix or aircraft realism.",
+  "initialRun": {
+    "source": "/private/tmp/fpv-eighth-native-source",
+    "fixtureSource": "/private/tmp/fpv-eighth-native-fixture",
+    "stage": "/private/tmp/fpv-eighth-native-desktop",
+    "manifestSha256": "d448775752b0968e0c251a26da63b73772aeb86125561960ed82b31a65ccfb50",
+    "fixtureManifestSha256": "2ef10c7578f75f2f3cca97c521100e209fc9f899a8bd1b48f622b2c02dfb8a98",
+    "ordinaryFiles": 183,
+    "ordinaryBytes": 18281667,
+    "fixtureFiles": 187,
+    "fixtureBytes": 18343645,
+    "sourceHashes": {
+      "game/access-gate.css": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd",
+      "game/access-gate.mjs": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0",
+      "game/audio/human-reactions/portable.mjs": "2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696",
+      "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "game/encounter-display-preferences.mjs": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03",
+      "game/fpv-entry.mjs": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2",
+      "game/hunt/actor-art.mjs": "6e8bd02d8655be40e5e19d639f76ca2a2aa89eba11c5471bd4c37ef323498b4c",
+      "game/hunt/actor-catalog.mjs": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d",
+      "game/hunt/copy.mjs": "9e57f007948c134ca3a18f6c672f9d30d073839c5596f930ff78896b23189011",
+      "game/hunt/industrial-soldier-kit.mjs": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524",
+      "game/hunt/preferences.mjs": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a",
+      "game/hunt/presentation-catalog.mjs": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796",
+      "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "game/key-bindings.mjs": "9f0ccc8a21fb88618f93ca12742bf908e027ab4f05ae69f98fff05a92bef30a2",
+      "game/overflight/terrain.mjs": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+      "game/overflight/world-layout-presentation.mjs": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3",
+      "game/overflight/worlds.mjs": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c",
+      "game/platform.mjs": "1bcc979c6990c197be6cc015a17b05481b3c15a680b55eb33782b14cb54e81a8",
+      "game/presentation/actor-animation.mjs": "53ddaf069ed5da7bae3ab8ef6bf1284f38957ceb91f06315a489814cb2c06234",
+      "game/presentation/industrial-environments-data.mjs": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8",
+      "game/presentation/industrial-environments.mjs": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87",
+      "game/presentation/industrial-machinery.mjs": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151",
+      "game/presentation/industrial-materials.mjs": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd",
+      "game/presentation/overflight-world-art-v2.mjs": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83",
+      "game/presentation/overflight-world-art.mjs": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a",
+      "game/presentation/overflight-world-slots.mjs": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94",
+      "game/presentation/theme-system.mjs": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0",
+      "game/profile-database.mjs": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "game/profile-storage.mjs": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "game/rewards/audio-groups.mjs": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+      "game/rewards/exploration.mjs": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+      "game/rewards/learning-profiles.mjs": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+      "game/rewards/model.mjs": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+      "game/rewards/store.mjs": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+      "game/snake/classic-structure-art.mjs": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5",
+      "game/test/platform.test.mjs": "79f5a59efb690d3ee4d5bf6a3b5fc855f70c6aa4ed36df1a93e93e50d79b60a9",
+      "game/ui/art-review-navigation.mjs": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2",
+      "game/ui/art/identity/fpv-line/wordmark.png": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+      "game/ui/art/menu-scenes/fpv-portrait.webp": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24",
+      "game/ui/art/menu-scenes/fpv.webp": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45",
+      "game/ui/defeat-sound-controls.mjs": "b99f97c97e46fd82cd93338e4448c707bf650e6ffb0d5813d2ec68879b56451e",
+      "game/ui/destruction-audio.mjs": "b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b",
+      "game/ui/destruction-level.mjs": "ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61",
+      "game/ui/enemy-appearance-controls.mjs": "f34c869b039cfd23841a5c8886e7509d2e5f88bc4ecbe0ae56e5fc0f59e1d165",
+      "game/ui/human-reaction-policy.mjs": "dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731",
+      "game/ui/menu-navigation-groups.mjs": "1ffb27c5e397d3898a07dead6daccb441323bef01aea1ca1760932f90b21342b",
+      "game/ui/native-menu-icons.mjs": "efe5de5b8ae9ecaccd393315294ebdbf6fe8c1d8cf29a6db284efe6f2d4e5351",
+      "game/ui/reward-knowledge.mjs": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+      "game/vendor/I18NEXT-LICENSE.txt": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a",
+      "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "optional-practice/civilian-fpv/README.md": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774",
+      "optional-practice/civilian-fpv/advanced-controller.mjs": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30",
+      "optional-practice/civilian-fpv/advanced-practice.mjs": "7406787e28bcb95037372402b395663076772c55c02a535ec4d3d37735ac2c72",
+      "optional-practice/civilian-fpv/advanced-regional.mjs": "ecdc2b84abaf06e7fcdbbd87929402deb200d9a540a6a52b02b01fad7b98dc66",
+      "optional-practice/civilian-fpv/advanced-simulation.mjs": "bd606bf22bd1dc80f26e11f23b7f368d5139885b433c5a9e8e36b9df26b2de4d",
+      "optional-practice/civilian-fpv/advanced-terrain.mjs": "bb03e8493a578d9d845637fcc1f90a9820400a1b75474fce71c73d4b83c7e5ee",
+      "optional-practice/civilian-fpv/advanced-worker-client.mjs": "0e2e763c4bf25005158b8af15a581228fd6f51ec0f5a77f5667fa6a42d5a4581",
+      "optional-practice/civilian-fpv/advanced-worker.mjs": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3",
+      "optional-practice/civilian-fpv/app.mjs": "7518642d2003fa6284a5327e6cc5bb819d90a273b3cbdfffaebdb79a3d4e7012",
+      "optional-practice/civilian-fpv/app.webmanifest": "1f24cc04ce0b759c23a57f4349484dc16398234e09e8b036f97ec1844d13a2e0",
+      "optional-practice/civilian-fpv/attempts.mjs": "c710eda8c25fca79a56f0a30263809ba8f503b484e954aa9933ba39dcbf30dbb",
+      "optional-practice/civilian-fpv/battlefield-ground.mjs": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993",
+      "optional-practice/civilian-fpv/beginner-coach.mjs": "216d7c0e37248b7de2833639f980ca665c12b012865e16bde738b8af1f61379e",
+      "optional-practice/civilian-fpv/betaflight-import.mjs": "fefd959402f8812d8ad4103302e6877da50d86198d2f5cd0e5d7e8c49deb78bb",
+      "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "optional-practice/civilian-fpv/content-definitions.mjs": "c3cc752eaef2b2e8d2865e4ba371e49097ba5fd6d069c1ca35f19cf94406ffad",
+      "optional-practice/civilian-fpv/copy.mjs": "7b8d8f47c635e758e9b30f688818047ca3ed243a1db9acb7975789384ebc8578",
+      "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+      "optional-practice/civilian-fpv/expressive-hunt-courses.mjs": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+      "optional-practice/civilian-fpv/flight-contact.mjs": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6",
+      "optional-practice/civilian-fpv/flight-fullscreen.mjs": "c6841a6a8146b749a3390cc114ace019e8c3135b4d5805e1312f90baae364598",
+      "optional-practice/civilian-fpv/flight-response.mjs": "89ec7b85d787ac077de36bba66c9e9a851c49721d8f2d598db8c461ecb6ae363",
+      "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "optional-practice/civilian-fpv/flight-support.mjs": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af",
+      "optional-practice/civilian-fpv/guide.html": "a769c73b3df992f7310a6f18db8dbefa47b59ca9139dff2528cc5a39a6434af3",
+      "optional-practice/civilian-fpv/index.html": "7d8f53ce7256b4833b65dbea96a4e3b427e2292c4aa8f7c8cd1abf8c629fb0cc",
+      "optional-practice/civilian-fpv/industrial-environment.mjs": "f16dfab709c376b098927155f37b06e21b1f8a9e727da769388d0beba86f790f",
+      "optional-practice/civilian-fpv/industrial-soldiers.mjs": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b",
+      "optional-practice/civilian-fpv/industrial-vehicles.mjs": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46",
+      "optional-practice/civilian-fpv/input.mjs": "9890ef3de130762da619a4a4d7e4f43b7e5b5c64d8e28d3cbbbf0eecd4f9fdb6",
+      "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "optional-practice/civilian-fpv/model.mjs": "9fe3bda757f9d9b51fed64bd1d17a3821ddaefc6e58e42ce935cb712be5de3f0",
+      "optional-practice/civilian-fpv/native-pursuit-courses.mjs": "2d35af03d1df8b026c340b465577df9517e7d6f59df002b1f75235e611311992",
+      "optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+      "optional-practice/civilian-fpv/offline.mjs": "d6abd2e8142f13aa7d3cf85a3df1491fcbaba78e3ee76eec7835d188131a0d71",
+      "optional-practice/civilian-fpv/package-info.json": "8ffc75a58ac9a66142c8e1ba71a65eba28de68e8e7f5d754a692ad4a04be2158",
+      "optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+      "optional-practice/civilian-fpv/preview.png": "31d4f28a15a75721dfeaf8d57ffd0559ef6540bd45ab528840d5f57f84ea6e2a",
+      "optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+      "optional-practice/civilian-fpv/radio-guide.mjs": "eb42fe3cdbab36e35624a4942e1fee2192fe650cc5b149b3a53f967b9e58549a",
+      "optional-practice/civilian-fpv/radio-profile.mjs": "d972a03be9f62d390894958b8fa58ae7ac3f97bab2d797b165fca4ab98c506ed",
+      "optional-practice/civilian-fpv/radio-runtime.mjs": "3f659e0c8ba6728ad0897218f41e73eebe46316fa6d7046a3ded0ab489106c1e",
+      "optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+      "optional-practice/civilian-fpv/radio-setup.mjs": "b1c22d24b845fda354176b3000424a4672a06755ee6f13cfcb958311d3608a1a",
+      "optional-practice/civilian-fpv/rates.mjs": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5",
+      "optional-practice/civilian-fpv/regional-delivery.mjs": "7276ecdcf7798741bda92c361da8e417bbff1fa0fbf7885f8e9005f78a0b5997",
+      "optional-practice/civilian-fpv/regional-library.mjs": "02e95765c68d7aeb809d5cc49f441e0247064e198dca3b04d79eac3bc2bfc199",
+      "optional-practice/civilian-fpv/regional-locations.mjs": "acf37b9a20ac955e49c3bad30822d909ab4db5fa6a7f85a35de4bab512f99902",
+      "optional-practice/civilian-fpv/regional-session.mjs": "8241c9f04e98a14ddf6c75b882f75d2d169f003517753928680054f8b512d9cd",
+      "optional-practice/civilian-fpv/regional/flight-prototype.mjs": "c65e6a34d858b92e4b38ed3490efe5eb93472139ce111a42af47699cdabb43cb",
+      "optional-practice/civilian-fpv/regional/frame-transaction.mjs": "b059fead0f4e67e5401175b2e12f43c8f58d98ceadadcda3ddd65b7e1f781988",
+      "optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs": "b9a4afcdce5f9d02f9210f501b474c09e17220bd656e108712b828f8f3c78233",
+      "optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs": "a57dcc5eff03a659fd918cbc933e3a49f1d29241732623887e3caf3d9c3fb832",
+      "optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs": "8802491835a0f42834bf920e21dc9b6b938ca9c00c6b2829ba033d7cea50d883",
+      "optional-practice/civilian-fpv/regional/region-manifest.mjs": "c07631c6661450b7a59e1ce069e2ce100064327c1e76c2e422f3ff29eea1cc68",
+      "optional-practice/civilian-fpv/regional/region-motion-query.mjs": "fba3960fe9e90c0d56d7fbf77711843342b8c9230cd7502dffa9df2bda9686ce",
+      "optional-practice/civilian-fpv/regional/restore-containment.mjs": "8b23f3519141e29894827ebb84ab7bce8449b87136468d4f46f3df352db762c3",
+      "optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs": "a284324fcd0cceeec6ec398df11c20a5382fa4cedfeb7af9caacef5cff5b290f",
+      "optional-practice/civilian-fpv/regional/scenery-admission.mjs": "184d34c5cff615fd17a00097d8f3cd450a086573bf1e88953a7e92226e389765",
+      "optional-practice/civilian-fpv/regional/scenery-cell.mjs": "f11a55b1cbb3144dbe896eb9156a3d9bb7eb4938596f8903459e025d688c9cf6",
+      "optional-practice/civilian-fpv/regional/scenery-surface.mjs": "c676d16f9c1690f1e8d095c1bdbae5f1b5aac11675fbe8253012881a0428ef56",
+      "optional-practice/civilian-fpv/regional/source-window.mjs": "42a9b850704000900c16855bccfef6adf4e5925565677eb2d99c4401651fe3f9",
+      "optional-practice/civilian-fpv/regional/terrain-admission.mjs": "35b9af942b3b1526c63f6b41ab030e43806cee74715adbf0a71ada1cbf023c59",
+      "optional-practice/civilian-fpv/regional/terrain-cell.mjs": "9e1d97897578999d1d9c3641b31fdaca96110d7bb848bf0f6e55bbf4138cdc54",
+      "optional-practice/civilian-fpv/regional/terrain-normals.mjs": "94c319af2ca720e8224ac7a975cff8af36b0dd988998e3f559ad820d10505c2e",
+      "optional-practice/civilian-fpv/regional/terrain-surface.mjs": "b5ad2a8b8da1331ae9d7c1d940e00806ca4a50eec0c56463627be09468f91b9f",
+      "optional-practice/civilian-fpv/regional/urban-ground-surface.mjs": "0ef2eadfd74b7901cd87732769967d5fea2b716d0d918073d1e78c32f8c81ff0",
+      "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs": "18573585c1b1f59fe62a9eaefe62275135716291cea072d4acdd3e5a361ecbb2",
+      "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs": "812b46df0d4c4fef9c76c1b2fc6c7c570b31d9ba83b72bca97ae2e5c1979ad0c",
+      "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs": "07d5b719b8a37a1f6deec0838c594f575fabce6d1203f3adab96b2723a771fb5",
+      "optional-practice/civilian-fpv/regional/verified-terrain-window.mjs": "4a4df9f20e84f20cb2c66f2dbc1ea1b38bed12937a5b363509dd90ddea46bca0",
+      "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+      "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "optional-practice/civilian-fpv/sim-boot.mjs": "28c712b3141fdd5f59259c614de57be4f6c40a9c2be1c888234e2c4cc696c188",
+      "optional-practice/civilian-fpv/sim-presentation.mjs": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05",
+      "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+      "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "bc579645b8ad951b534c71b270bef19783b215bc925cc428317930512e51ceb5",
+      "optional-practice/civilian-fpv/snake-hunt.mjs": "3efbfb2ffb36b381927c4d3fbdb2bf664a2ed3e55558550b4f0d91080e5682ff",
+      "optional-practice/civilian-fpv/studio.mjs": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485",
+      "optional-practice/civilian-fpv/style.css": "caf333f5853e0805126789f96e5013878461f725cd8354c9239be84e5aab81ce",
+      "optional-practice/civilian-fpv/tuning-library.mjs": "ff08c8f3e3da605c86e5518a14043e76a7d5d52c5abcc8f3e12de6d8dfc08696",
+      "optional-practice/civilian-fpv/tuning-ui.mjs": "65fc9b312efc85494cf79354d33e9ce0a136ff5f05c88e16609317e6523cf9d3",
+      "optional-practice/civilian-fpv/tuning.css": "1db1a07a432c7fabfb334cf4456556fcd6a5c93d42b04d42632020ef1f76098e",
+      "optional-practice/civilian-fpv/vendor/LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+      "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "optional-practice/civilian-fpv/vendor/addons/provenance.json": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1",
+      "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "optional-practice/civilian-fpv/vendor/rapier/LICENSE": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519",
+      "optional-practice/civilian-fpv/vendor/rapier/provenance.json": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074",
+      "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "optional-practice/civilian-fpv/world-app.mjs": "d384a73f53f6e49d715f27567d98cf6ba335020be8f1165c4f09f1103afe1571",
+      "optional-practice/civilian-fpv/world-assets.mjs": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+      "optional-practice/civilian-fpv/world-catalogue.mjs": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "optional-practice/civilian-fpv/world-collision.mjs": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538",
+      "optional-practice/civilian-fpv/world-content.mjs": "4e2822f1c94bdef24f62fb14629dd4909c8d8ed3aea6708f2fdf2e8ca5b8081b",
+      "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+      "optional-practice/civilian-fpv/world-editor.mjs": "756be0060ca09ae22c282f9447b4c2689385248beddf263c4f71f3e7f5c47012",
+      "optional-practice/civilian-fpv/world-model.mjs": "ef930dca37efb2756162851a7ffea920552415d5869925e6bb91afd5e0dcacfc",
+      "optional-practice/civilian-fpv/world-pursuit.mjs": "5512d0a2dd104307e3b89adbbabae8e02934553c7bc2f31efa49456ffe0ec878",
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "50244c9b2d469be8cb68dcd50b1b6b5bc9b6b25c5a72f3db087dc99aab9aabdd",
+      "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+      "optional-practice/civilian-fpv/world-store.mjs": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+      "optional-practice/civilian-fpv/world-style.css": "16a72fb03fdcf1f7d40895058698b8fade0b02bfbd13f601919e82d045fa409a",
+      "optional-practice/civilian-fpv/world-themes.mjs": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597",
+      "optional-practice/civilian-fpv/world-visuals.mjs": "7bbf3b12ba925f72209a3a2f6022e732545b5100e1b28718777d18fb78cef2aa",
+      "optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+      "optional-practice/fpv-worlds/README.md": "f9f83c740a0805a4cdd495301e3c0647a5ec5c9d36334e89185de06681466810",
+      "optional-practice/fpv-worlds/SCENERY-LICENSES.txt": "d879c1a60cabeb2179e7a60fe6d827ef17828d263de84369f2f994eceb7439cd",
+      "optional-practice/fpv-worlds/advanced-worker.mjs": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514",
+      "optional-practice/fpv-worlds/app.webmanifest": "57c44da18b2a120b907c94a105940a86ae158726ac514c6401958d870ab3ddb0",
+      "optional-practice/fpv-worlds/guide.html": "a769c73b3df992f7310a6f18db8dbefa47b59ca9139dff2528cc5a39a6434af3",
+      "optional-practice/fpv-worlds/index.html": "d4bbc350de197693c91b093501b747bc2168e977604696293f36f79d553f9d08",
+      "optional-practice/fpv-worlds/package-info.json": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014",
+      "optional-practice/fpv-worlds/preview.png": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1",
+      "optional-practice/fpv-worlds/scenery-provenance.json": "d45c8608de29b2b2fb4f7b2d3d1e10559cb7c1302972ebd7363b6cde6400c878",
+      "optional-practice/guide.mjs": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203",
+      "optional-practice/install-context.mjs": "bae814b206dc1ccf39b5f5b55391e9aae3d38760c07fcdf6cfeb7abea2419acf",
+      "optional-practice/navigation.mjs": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1",
+      "package.json": "d559ec927f7f78833b3f4bc483cbbad453fa2646a22ffd7407cb9d5314a6d99b",
+      "platforms/desktop/main.mjs": "a89a54828ede8dfa2bc32dc60f4aa889eb8bb546bb8bb8451343c59c17750980",
+      "platforms/desktop/package.json": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8",
+      "platforms/desktop/policy.mjs": "92ff61da8d8b74700157d9c77d0f179050a9c45ee9446cedfca3f85a6810cc75",
+      "platforms/desktop/resources.mjs": "3de16ace66c1c435e50865314f7b5f7222431e7c174b4b78f7b4eb24366a7cfe",
+      "platforms/desktop/test/fpv-smoke-harness.mjs": "6d882d572da4ee5941d176033d6bc61d96c1c0f551bac40aedc502729985ce58",
+      "platforms/desktop/test/helpers/fuse-api.mjs": "f9690db253356a8bcb6757431929ace25cc1aba6df07fabe47b4fbf2599b24eb",
+      "platforms/desktop/test/package-security.test.mjs": "92a77902f83fde27da66c26e6eff9d1c6e141f4f60cd31cb07dbc9d1ba4222da",
+      "platforms/desktop/test/packaging.test.mjs": "48f3de1480b01647a49ec15d52abbc0d549baacb1d554e85a1e6280abfe82cac",
+      "platforms/desktop/test/policy.test.mjs": "712268393383ea1bc37bdf8b6a8fb85062fc97d2538c15e8959932ece1dfa3a4",
+      "platforms/desktop/test/resources.test.mjs": "bbd50976ff02c10732633102b002e07667613df5648891753a49e8ec3ebc592f",
+      "platforms/ios/bridge/bridge-entry.mjs": "f7e518d19e3bc1c239e3fd799281fd257a62e17bfb62b8372eba4e4eaf8c06f2",
+      "platforms/ios/bridge/dist/bridge.mjs": "b13cd034a4a09250c6f03271c0c89ee30e672e6efb4016409fad81ccb89a8935",
+      "platforms/ios/package-lock.json": "3ab42e4275216f1bfb4a7ad47c4aff1fda18a9e28a1851be11594b4c1806483c",
+      "platforms/ios/package.json": "a2052c0a297424eb062c03594039899c38444d0fa133a1bb33203a78787b4b98",
+      "platforms/ios/scripts/build-bridge.mjs": "1b813b616f664aee4096b61178df85205478510e0d1bbbe48d948d632693324a",
+      "platforms/ios/test/bridge.test.mjs": "45cc8e398d8d528fe746c4dcf19ffa0bb04db062ffa2a563fc449654554442b9",
+      "platforms/ios/test/configuration.test.mjs": "6c48f8b3762e6d75fcd4e75e394236a42b9626fa984c1f9b809955f8f5ba3de6",
+      "platforms/ios/test/diagnostics.test.mjs": "572ba9a727be5a7fc78c92b1741777b375ba48256748558f60a800c1bcbdc4b2",
+      "publishing/optional-package-admission.mjs": "94eedf3b46c5b8dccab58e7669116482ca044b729e27df71cd8df39a4a3673ba",
+      "publishing/optional-package-candidate.mjs": "cc659bc6ce63cead724540aff4f3cc47bb0c35726e408c6ad75fd2140e937db7",
+      "publishing/optional-package-policy.mjs": "5465d019eef0108503b626bdd66ef4b5a7491a2c40bbc3937ecf00187a8461d4",
+      "scripts/build-fpv-native-smoke.mjs": "3f9fe78a92b3ca67933ce12ee3b70cbe1681db03f848fc60319d3feb600fbab2",
+      "scripts/build-fpv-native.mjs": "5199fa8260303a58f31c0ce830bfce11cb24ce6d7bbd73036f923221ad15de08",
+      "scripts/native-cli.mjs": "8f9b830dc30c884f9ed9d9e3ab1903428d4ea24b49118c71d1cbc0a1ee2ab3d1",
+      "scripts/native-cli.test.mjs": "bba9b780c6955b2f1b5edf8c341ebdef6044aaba3c07590bade80f31123bb0c6",
+      "scripts/test-build-fpv-native.mjs": "24d85577c2eb112dfb305713b571f68f447e6ce87148f98e2926279bdda3bc9c"
+    },
+    "sourceBinding": "Runtime payload exactly matches seventh-review ordinary source inventory. New labeled fixture adds test-only harness and launcher. Source identities remain historical if subsequent corrections alter dependencies.",
+    "accessPages": [
+      {
+        "path": "optional-practice/civilian-fpv/index.html",
+        "sha256": "7d8f53ce7256b4833b65dbea96a4e3b427e2292c4aa8f7c8cd1abf8c629fb0cc",
+        "preserved": true,
+        "accessGateLocked": true
+      },
+      {
+        "path": "optional-practice/fpv-worlds/index.html",
+        "sha256": "d4bbc350de197693c91b093501b747bc2168e977604696293f36f79d553f9d08",
+        "preserved": true,
+        "accessGateLocked": true
+      }
+    ],
+    "observations": {
+      "startedAt": "2026-10-17T02:09:55.123Z",
+      "checks": [
+        {
+          "check": "Blank numeric draft survives algorithm navigation; saved Actual roll900 as player default with drone tilt32 and vertical FOV104",
+          "pass": true
+        },
+        {
+          "check": "CLI patch imported as explicit new profile with roll880, matching source digest and unapplied PID receipt; player default stays900",
+          "pass": true,
+          "receipt": {
+            "baseline": {
+              "kind": "draft",
+              "profileId": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+              "revision": 1,
+              "sha256": "aacbd1483ab614b9901b33d2d09925778a82a069fcd85de320b09fc95cd7118d"
+            },
+            "firmware": {
+              "origin": "header",
+              "version": "2026.6.2"
+            },
+            "format": "FpvRateImportReceipt.v1",
+            "operation": "patch",
+            "preset": null,
+            "rateIdentity": "7c26b9edc690a45f",
+            "resultSha256": "5ee1f3562869197eaeb1349aae46c25c7e442989fb244bc167494cce1c9a877b",
+            "review": {
+              "applied": {
+                "entries": [
+                  "{\"field\":\"rates_type\",\"value\":\"actual\"}",
+                  "{\"field\":\"roll_srate\",\"value\":88}"
+                ],
+                "shortened": false,
+                "total": 2
+              },
+              "changed": {
+                "entries": [
+                  "{\"after\":88,\"before\":90,\"field\":\"roll_srate\"}"
+                ],
+                "shortened": false,
+                "total": 1
+              },
+              "ignored": {
+                "entries": [
+                  "{\"key\":\"p_roll\",\"line\":4,\"pidProfile\":0,\"rateProfile\":0,\"reason\":\"No verified SIM adapter; remains unapplied.\",\"value\":\"80\"}"
+                ],
+                "shortened": false,
+                "total": 1
+              },
+              "inferred": {
+                "entries": [],
+                "shortened": false,
+                "total": 0
+              },
+              "normalizations": {
+                "entries": [],
+                "shortened": false,
+                "total": 0
+              },
+              "warnings": {
+                "entries": [
+                  "Only supported rates and throttle settings transfer. Aircraft, hardware, PID, filtering and RC smoothing remain unapplied."
+                ],
+                "shortened": false,
+                "total": 1
+              }
+            },
+            "source": {
+              "bytes": 82,
+              "encoding": "utf-8",
+              "kind": "cli",
+              "sha256": "2f387f3fb4ba3a23d7ad09d5e3dcbe03618aacfc48a6b71fe2aa4b34c3d3b3c4"
+            },
+            "sourceProfile": 0
+          }
+        },
+        {
+          "check": "Actual native Save dialog exported36-tick Advanced recording; Node replay verified final hash e52f8d87; restart returns prepared; second export cancelled; return to tuning terminates both workers",
+          "pass": true
+        }
+      ],
+      "priorDriverAttempts": [
+        {
+          "pass": false,
+          "stage": "driver bootstrap",
+          "reason": "Dynamic ESM import unsupported by persistent REPL; loaded installed driver through createRequire instead; no app launch."
+        },
+        {
+          "pass": false,
+          "stage": "driver bootstrap",
+          "reason": "REPL has no process global; used explicit test-only directory environment; no app launch."
+        },
+        {
+          "pass": false,
+          "stage": "initial navigation",
+          "reason": "Controls addressed as button instead of its actual tab role; driver timed out and process closed before tuning edits; corrected locator to tab."
+        },
+        {
+          "pass": false,
+          "stage": "preview wait",
+          "reason": "Diagnostic wait searched for an absent display label Source SHA-256; actual JSON preview was already successful and its source.sha256 was verified before saving. No runtime failure or re-preview required."
+        }
+      ],
+      "pageErrors": [],
+      "stderr": "",
+      "libraryBeforeReopen": {
+        "defaultProfileId": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+        "format": "FpvTuningLibrary.v1",
+        "profiles": [
+          {
+            "history": [],
+            "id": "legacy-feel",
+            "name": "Legacy feel",
+            "response": {
+              "expo": 30,
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "name": "Gentle",
+              "responseTicks": 8
+            },
+            "revision": 0
+          },
+          {
+            "history": [
+              {
+                "name": "New profile",
+                "response": {
+                  "format": "FlightResponseProfile.v2",
+                  "maxTilt": 30,
+                  "rates": {
+                    "algorithm": "actual",
+                    "axes": {
+                      "pitch": {
+                        "expo": 0,
+                        "limit": 1998,
+                        "rate": 67,
+                        "rcRate": 7
+                      },
+                      "roll": {
+                        "expo": 0,
+                        "limit": 1998,
+                        "rate": 67,
+                        "rcRate": 7
+                      },
+                      "yaw": {
+                        "expo": 0,
+                        "limit": 1998,
+                        "rate": 67,
+                        "rcRate": 7
+                      }
+                    },
+                    "format": "FpvRateProfile.v1",
+                    "quickRatesRcExpo": false,
+                    "throttle": {
+                      "expo": 0,
+                      "hover": 50,
+                      "limitPercent": 100,
+                      "limitType": "off",
+                      "mid": 50,
+                      "model": "betaflight-2025.12"
+                    }
+                  },
+                  "responseTicks": 8
+                },
+                "revision": 0
+              }
+            ],
+            "id": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+            "name": "Electron current profile",
+            "response": {
+              "format": "FlightResponseProfile.v2",
+              "maxTilt": 30,
+              "rates": {
+                "algorithm": "actual",
+                "axes": {
+                  "pitch": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  },
+                  "roll": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 90,
+                    "rcRate": 7
+                  },
+                  "yaw": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  }
+                },
+                "format": "FpvRateProfile.v1",
+                "quickRatesRcExpo": false,
+                "throttle": {
+                  "expo": 0,
+                  "hover": 50,
+                  "limitPercent": 100,
+                  "limitType": "off",
+                  "mid": 50,
+                  "model": "betaflight-2025.12"
+                }
+              },
+              "responseTicks": 8
+            },
+            "revision": 1
+          },
+          {
+            "history": [],
+            "id": "tuning-745c02c2-d003-40e3-9bad-96c149ed6622",
+            "name": "Imported Electron 880",
+            "provenance": {
+              "baseline": {
+                "kind": "draft",
+                "profileId": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+                "revision": 1,
+                "sha256": "aacbd1483ab614b9901b33d2d09925778a82a069fcd85de320b09fc95cd7118d"
+              },
+              "firmware": {
+                "origin": "header",
+                "version": "2026.6.2"
+              },
+              "format": "FpvRateImportReceipt.v1",
+              "operation": "patch",
+              "preset": null,
+              "rateIdentity": "7c26b9edc690a45f",
+              "resultSha256": "5ee1f3562869197eaeb1349aae46c25c7e442989fb244bc167494cce1c9a877b",
+              "review": {
+                "applied": {
+                  "entries": [
+                    "{\"field\":\"rates_type\",\"value\":\"actual\"}",
+                    "{\"field\":\"roll_srate\",\"value\":88}"
+                  ],
+                  "shortened": false,
+                  "total": 2
+                },
+                "changed": {
+                  "entries": [
+                    "{\"after\":88,\"before\":90,\"field\":\"roll_srate\"}"
+                  ],
+                  "shortened": false,
+                  "total": 1
+                },
+                "ignored": {
+                  "entries": [
+                    "{\"key\":\"p_roll\",\"line\":4,\"pidProfile\":0,\"rateProfile\":0,\"reason\":\"No verified SIM adapter; remains unapplied.\",\"value\":\"80\"}"
+                  ],
+                  "shortened": false,
+                  "total": 1
+                },
+                "inferred": {
+                  "entries": [],
+                  "shortened": false,
+                  "total": 0
+                },
+                "normalizations": {
+                  "entries": [],
+                  "shortened": false,
+                  "total": 0
+                },
+                "warnings": {
+                  "entries": [
+                    "Only supported rates and throttle settings transfer. Aircraft, hardware, PID, filtering and RC smoothing remain unapplied."
+                  ],
+                  "shortened": false,
+                  "total": 1
+                }
+              },
+              "source": {
+                "bytes": 82,
+                "encoding": "utf-8",
+                "kind": "cli",
+                "sha256": "2f387f3fb4ba3a23d7ad09d5e3dcbe03618aacfc48a6b71fe2aa4b34c3d3b3c4"
+              },
+              "sourceProfile": 0
+            },
+            "response": {
+              "format": "FlightResponseProfile.v2",
+              "maxTilt": 30,
+              "rates": {
+                "algorithm": "actual",
+                "axes": {
+                  "pitch": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  },
+                  "roll": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 88,
+                    "rcRate": 7
+                  },
+                  "yaw": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  }
+                },
+                "format": "FpvRateProfile.v1",
+                "quickRatesRcExpo": false,
+                "throttle": {
+                  "expo": 0,
+                  "hover": 50,
+                  "limitPercent": 100,
+                  "limitType": "off",
+                  "mid": 50,
+                  "model": "betaflight-2025.12"
+                }
+              },
+              "responseTicks": 8
+            },
+            "revision": 0
+          }
+        ],
+        "revision": 5,
+        "selectedSetupId": "my-drone",
+        "setups": [
+          {
+            "camera": {
+              "tilt": 32,
+              "verticalFov": 104
+            },
+            "id": "my-drone",
+            "name": "Electron current drone",
+            "profileId": null
+          }
+        ]
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) FPV/LINE/0.21.0 Chrome/152.0.7977.78 Electron/44.3.0 Safari/537.36",
+      "panelBeforeReopen": {
+        "status": "menu",
+        "advanced": false,
+        "workers": {
+          "created": 2,
+          "terminated": 2,
+          "live": 0
+        },
+        "profiles": [
+          {
+            "name": "Legacy feel",
+            "revision": 0
+          },
+          {
+            "name": "Electron current profile",
+            "revision": 1
+          },
+          {
+            "name": "Imported Electron 880",
+            "revision": 0
+          }
+        ],
+        "revision": 5,
+        "samples": 20,
+        "errors": [],
+        "storageProbe": {
+          "lockAcquired": true,
+          "transactionComplete": true,
+          "previousVisits": 1,
+          "visits": 2
+        }
+      }
+    },
+    "fixtureRuntime": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) FPV/LINE/0.21.0 Chrome/152.0.7977.78 Electron/44.3.0 Safari/537.36",
+      "capabilities": {
+        "secureContext": true,
+        "webLocks": true,
+        "indexedDB": true
+      },
+      "storageProbe": {
+        "lockAcquired": true,
+        "transactionComplete": true,
+        "previousVisits": 1,
+        "visits": 2
+      },
+      "workers": {
+        "created": 2,
+        "terminated": 2,
+        "live": 0
+      },
+      "errors": [],
+      "sampleCount": 20
+    },
+    "artifacts": [
+      {
+        "path": "/private/tmp/fpv-eighth-native-arena.json",
+        "bytes": 4677,
+        "sha256": "da05c52fd3f1dfc92c9a7836fa04756e075f6a4dd3991509c682e4e63f436a3d"
+      },
+      {
+        "path": "/private/tmp/fpv-eighth-native-before-reopen.json",
+        "bytes": 65299,
+        "sha256": "8848c2d53aa7a583b258fefac1f22737e69f4a6c5c99c538eca3e459ce6fb0a4"
+      },
+      {
+        "path": "/private/tmp/fpv-eighth-native-observations.json",
+        "bytes": 10911,
+        "sha256": "8ec39beee3d8096f93a473bb7a7121a81716c58f95d55e08c0f387a87a9cd8cc"
+      }
+    ],
+    "recording": {
+      "missionTicks": 36,
+      "frequency": 250,
+      "finalHash": "e52f8d87",
+      "nodeReplayVerified": true,
+      "nativeDialogSave": true,
+      "recordedRollDegreesPerSecond": 880,
+      "defaultRollDegreesPerSecond": 900,
+      "restartPrepared": true,
+      "secondExportCancelled": true
+    },
+    "stagedSourceMatches": {
+      "checked": 173,
+      "mismatches": [],
+      "excludedUnstagedSourcePins": [
+        "game/test/platform.test.mjs",
+        "package.json",
+        "platforms/desktop/main.mjs",
+        "platforms/desktop/package.json",
+        "platforms/desktop/policy.mjs",
+        "platforms/desktop/resources.mjs",
+        "platforms/desktop/test/helpers/fuse-api.mjs",
+        "platforms/desktop/test/package-security.test.mjs",
+        "platforms/desktop/test/packaging.test.mjs",
+        "platforms/desktop/test/policy.test.mjs",
+        "platforms/desktop/test/resources.test.mjs",
+        "platforms/ios/bridge/bridge-entry.mjs",
+        "platforms/ios/bridge/dist/bridge.mjs",
+        "platforms/ios/package-lock.json",
+        "platforms/ios/package.json",
+        "platforms/ios/scripts/build-bridge.mjs",
+        "platforms/ios/test/bridge.test.mjs",
+        "platforms/ios/test/configuration.test.mjs",
+        "platforms/ios/test/diagnostics.test.mjs",
+        "publishing/optional-package-admission.mjs",
+        "publishing/optional-package-candidate.mjs",
+        "publishing/optional-package-policy.mjs",
+        "scripts/build-fpv-native-smoke.mjs",
+        "scripts/build-fpv-native.mjs",
+        "scripts/native-cli.mjs",
+        "scripts/native-cli.test.mjs",
+        "scripts/test-build-fpv-native.mjs"
+      ]
+    }
+  },
+  "environment": {
+    "os": "26.7.1",
+    "architecture": "arm64",
+    "electron": "44.3.0",
+    "driver": "Installed Playwright Electron driver for normal launcher and DOM actions; CUA for native Save/Cancel/quit and remaining actions. No CSP, sandbox, protocol policy or production access pages changed.",
+    "cuaTransport": "Normal OS Save dialog, saved /private/tmp/fpv-eighth-native-arena.json and evidence; cancelled second recording save; Cmd+Q exited process."
+  },
+  "limits": [
+    "One ARM64 Mac and unsigned development shell; no wider platform or physical qualification.",
+    "Synthetic keyboard and accessibility actions do not establish radio, touch, sampling or physical latency performance.",
+    "Initial runtime fly/record check uses reference arena; no new Regional contact/capacity or recovery claim.",
+    "iOS doctor reports installed bridge dependencies/project but no full Xcode or simctl; iOS execution remains unavailable.",
+    "Source changes between initial import/arena run and final reopen/Regional run are listed explicitly. Initial interaction evidence is retained under its own pins; final source rechecks exact stored import receipts, camera, worker, native export and replay rather than relabeling every earlier interaction as repeated.",
+    "No physical low-end/Intel/iOS runtime, dense-route capacity, full-game distribution, signed release, installer-update, public Pages or Advanced promotion claim follows from this local Electron fixture."
+  ],
+  "generatedAt": "2026-10-17T02:32:29.454950+00:00",
+  "sourceHashes": {
+    "authoring/fpv-worlds/regions/endurance-fixture.mjs": "7b627678c4ff2ff9d2bc11d0b67ab16e04322aedca22b436901a9e366e3d4c12",
+    "game/access-gate.css": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd",
+    "game/access-gate.mjs": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0",
+    "game/audio/human-reactions/portable.mjs": "2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696",
+    "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+    "game/encounter-display-preferences.mjs": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03",
+    "game/fpv-entry.mjs": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2",
+    "game/hunt/actor-art.mjs": "6e8bd02d8655be40e5e19d639f76ca2a2aa89eba11c5471bd4c37ef323498b4c",
+    "game/hunt/actor-catalog.mjs": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d",
+    "game/hunt/copy.mjs": "9e57f007948c134ca3a18f6c672f9d30d073839c5596f930ff78896b23189011",
+    "game/hunt/industrial-soldier-kit.mjs": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524",
+    "game/hunt/preferences.mjs": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a",
+    "game/hunt/presentation-catalog.mjs": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796",
+    "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+    "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+    "game/key-bindings.mjs": "9f0ccc8a21fb88618f93ca12742bf908e027ab4f05ae69f98fff05a92bef30a2",
+    "game/overflight/terrain.mjs": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+    "game/overflight/world-layout-presentation.mjs": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3",
+    "game/overflight/worlds.mjs": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c",
+    "game/platform.mjs": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec",
+    "game/presentation/actor-animation.mjs": "53ddaf069ed5da7bae3ab8ef6bf1284f38957ceb91f06315a489814cb2c06234",
+    "game/presentation/industrial-environments-data.mjs": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8",
+    "game/presentation/industrial-environments.mjs": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87",
+    "game/presentation/industrial-machinery.mjs": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151",
+    "game/presentation/industrial-materials.mjs": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd",
+    "game/presentation/overflight-world-art-v2.mjs": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83",
+    "game/presentation/overflight-world-art.mjs": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a",
+    "game/presentation/overflight-world-slots.mjs": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94",
+    "game/presentation/theme-system.mjs": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0",
+    "game/profile-database.mjs": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+    "game/profile-storage.mjs": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+    "game/rewards/audio-groups.mjs": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+    "game/rewards/exploration.mjs": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+    "game/rewards/learning-profiles.mjs": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+    "game/rewards/model.mjs": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+    "game/rewards/store.mjs": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+    "game/snake/classic-structure-art.mjs": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5",
+    "game/test/platform.test.mjs": "79f5a59efb690d3ee4d5bf6a3b5fc855f70c6aa4ed36df1a93e93e50d79b60a9",
+    "game/ui/art-review-navigation.mjs": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2",
+    "game/ui/art/identity/fpv-line/wordmark.png": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+    "game/ui/art/menu-scenes/fpv-portrait.webp": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24",
+    "game/ui/art/menu-scenes/fpv.webp": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45",
+    "game/ui/defeat-sound-controls.mjs": "b99f97c97e46fd82cd93338e4448c707bf650e6ffb0d5813d2ec68879b56451e",
+    "game/ui/destruction-audio.mjs": "b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b",
+    "game/ui/destruction-level.mjs": "ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61",
+    "game/ui/enemy-appearance-controls.mjs": "f34c869b039cfd23841a5c8886e7509d2e5f88bc4ecbe0ae56e5fc0f59e1d165",
+    "game/ui/human-reaction-policy.mjs": "dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731",
+    "game/ui/menu-navigation-groups.mjs": "1ffb27c5e397d3898a07dead6daccb441323bef01aea1ca1760932f90b21342b",
+    "game/ui/native-menu-icons.mjs": "efe5de5b8ae9ecaccd393315294ebdbf6fe8c1d8cf29a6db284efe6f2d4e5351",
+    "game/ui/reward-knowledge.mjs": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+    "game/vendor/I18NEXT-LICENSE.txt": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a",
+    "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+    "optional-practice/civilian-fpv/README.md": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774",
+    "optional-practice/civilian-fpv/advanced-controller.mjs": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30",
+    "optional-practice/civilian-fpv/advanced-practice.mjs": "7406787e28bcb95037372402b395663076772c55c02a535ec4d3d37735ac2c72",
+    "optional-practice/civilian-fpv/advanced-regional.mjs": "ecdc2b84abaf06e7fcdbbd87929402deb200d9a540a6a52b02b01fad7b98dc66",
+    "optional-practice/civilian-fpv/advanced-simulation.mjs": "bd606bf22bd1dc80f26e11f23b7f368d5139885b433c5a9e8e36b9df26b2de4d",
+    "optional-practice/civilian-fpv/advanced-terrain.mjs": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95",
+    "optional-practice/civilian-fpv/advanced-worker-client.mjs": "0e2e763c4bf25005158b8af15a581228fd6f51ec0f5a77f5667fa6a42d5a4581",
+    "optional-practice/civilian-fpv/advanced-worker.mjs": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3",
+    "optional-practice/civilian-fpv/app.mjs": "cdbb034b2142651d819381045b69642d07b337518e597f332c2ede12c6e48933",
+    "optional-practice/civilian-fpv/app.webmanifest": "1f24cc04ce0b759c23a57f4349484dc16398234e09e8b036f97ec1844d13a2e0",
+    "optional-practice/civilian-fpv/attempts.mjs": "c710eda8c25fca79a56f0a30263809ba8f503b484e954aa9933ba39dcbf30dbb",
+    "optional-practice/civilian-fpv/battlefield-ground.mjs": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "216d7c0e37248b7de2833639f980ca665c12b012865e16bde738b8af1f61379e",
+    "optional-practice/civilian-fpv/betaflight-import.mjs": "fefd959402f8812d8ad4103302e6877da50d86198d2f5cd0e5d7e8c49deb78bb",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/content-definitions.mjs": "c3cc752eaef2b2e8d2865e4ba371e49097ba5fd6d069c1ca35f19cf94406ffad",
+    "optional-practice/civilian-fpv/copy.mjs": "7b8d8f47c635e758e9b30f688818047ca3ed243a1db9acb7975789384ebc8578",
+    "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "optional-practice/civilian-fpv/expressive-hunt-courses.mjs": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+    "optional-practice/civilian-fpv/flight-contact.mjs": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "b739a4e192bf1f12d3c6aea4d6e9775ccc135769657e20fbd2a1e35eeea207a5",
+    "optional-practice/civilian-fpv/flight-response.mjs": "89ec7b85d787ac077de36bba66c9e9a851c49721d8f2d598db8c461ecb6ae363",
+    "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "optional-practice/civilian-fpv/flight-support.mjs": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af",
+    "optional-practice/civilian-fpv/guide.html": "a769c73b3df992f7310a6f18db8dbefa47b59ca9139dff2528cc5a39a6434af3",
+    "optional-practice/civilian-fpv/index.html": "7d8f53ce7256b4833b65dbea96a4e3b427e2292c4aa8f7c8cd1abf8c629fb0cc",
+    "optional-practice/civilian-fpv/industrial-environment.mjs": "f16dfab709c376b098927155f37b06e21b1f8a9e727da769388d0beba86f790f",
+    "optional-practice/civilian-fpv/industrial-soldiers.mjs": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b",
+    "optional-practice/civilian-fpv/industrial-vehicles.mjs": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46",
+    "optional-practice/civilian-fpv/input.mjs": "9890ef3de130762da619a4a4d7e4f43b7e5b5c64d8e28d3cbbbf0eecd4f9fdb6",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/model.mjs": "9fe3bda757f9d9b51fed64bd1d17a3821ddaefc6e58e42ce935cb712be5de3f0",
+    "optional-practice/civilian-fpv/native-pursuit-courses.mjs": "2d35af03d1df8b026c340b465577df9517e7d6f59df002b1f75235e611311992",
+    "optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+    "optional-practice/civilian-fpv/offline.mjs": "d6abd2e8142f13aa7d3cf85a3df1491fcbaba78e3ee76eec7835d188131a0d71",
+    "optional-practice/civilian-fpv/package-info.json": "8ffc75a58ac9a66142c8e1ba71a65eba28de68e8e7f5d754a692ad4a04be2158",
+    "optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+    "optional-practice/civilian-fpv/preview.png": "31d4f28a15a75721dfeaf8d57ffd0559ef6540bd45ab528840d5f57f84ea6e2a",
+    "optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+    "optional-practice/civilian-fpv/radio-guide.mjs": "eb42fe3cdbab36e35624a4942e1fee2192fe650cc5b149b3a53f967b9e58549a",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "d972a03be9f62d390894958b8fa58ae7ac3f97bab2d797b165fca4ab98c506ed",
+    "optional-practice/civilian-fpv/radio-runtime.mjs": "3f659e0c8ba6728ad0897218f41e73eebe46316fa6d7046a3ded0ab489106c1e",
+    "optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "b1c22d24b845fda354176b3000424a4672a06755ee6f13cfcb958311d3608a1a",
+    "optional-practice/civilian-fpv/rates.mjs": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5",
+    "optional-practice/civilian-fpv/regional-delivery.mjs": "7276ecdcf7798741bda92c361da8e417bbff1fa0fbf7885f8e9005f78a0b5997",
+    "optional-practice/civilian-fpv/regional-library.mjs": "02e95765c68d7aeb809d5cc49f441e0247064e198dca3b04d79eac3bc2bfc199",
+    "optional-practice/civilian-fpv/regional-locations.mjs": "acf37b9a20ac955e49c3bad30822d909ab4db5fa6a7f85a35de4bab512f99902",
+    "optional-practice/civilian-fpv/regional-session.mjs": "8241c9f04e98a14ddf6c75b882f75d2d169f003517753928680054f8b512d9cd",
+    "optional-practice/civilian-fpv/regional/flight-prototype.mjs": "c65e6a34d858b92e4b38ed3490efe5eb93472139ce111a42af47699cdabb43cb",
+    "optional-practice/civilian-fpv/regional/frame-transaction.mjs": "b059fead0f4e67e5401175b2e12f43c8f58d98ceadadcda3ddd65b7e1f781988",
+    "optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs": "b9a4afcdce5f9d02f9210f501b474c09e17220bd656e108712b828f8f3c78233",
+    "optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs": "a57dcc5eff03a659fd918cbc933e3a49f1d29241732623887e3caf3d9c3fb832",
+    "optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs": "8802491835a0f42834bf920e21dc9b6b938ca9c00c6b2829ba033d7cea50d883",
+    "optional-practice/civilian-fpv/regional/region-manifest.mjs": "c07631c6661450b7a59e1ce069e2ce100064327c1e76c2e422f3ff29eea1cc68",
+    "optional-practice/civilian-fpv/regional/region-motion-query.mjs": "fba3960fe9e90c0d56d7fbf77711843342b8c9230cd7502dffa9df2bda9686ce",
+    "optional-practice/civilian-fpv/regional/restore-containment.mjs": "8b23f3519141e29894827ebb84ab7bce8449b87136468d4f46f3df352db762c3",
+    "optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs": "a284324fcd0cceeec6ec398df11c20a5382fa4cedfeb7af9caacef5cff5b290f",
+    "optional-practice/civilian-fpv/regional/scenery-admission.mjs": "184d34c5cff615fd17a00097d8f3cd450a086573bf1e88953a7e92226e389765",
+    "optional-practice/civilian-fpv/regional/scenery-cell.mjs": "f11a55b1cbb3144dbe896eb9156a3d9bb7eb4938596f8903459e025d688c9cf6",
+    "optional-practice/civilian-fpv/regional/scenery-surface.mjs": "c676d16f9c1690f1e8d095c1bdbae5f1b5aac11675fbe8253012881a0428ef56",
+    "optional-practice/civilian-fpv/regional/source-window.mjs": "42a9b850704000900c16855bccfef6adf4e5925565677eb2d99c4401651fe3f9",
+    "optional-practice/civilian-fpv/regional/terrain-admission.mjs": "35b9af942b3b1526c63f6b41ab030e43806cee74715adbf0a71ada1cbf023c59",
+    "optional-practice/civilian-fpv/regional/terrain-cell.mjs": "9e1d97897578999d1d9c3641b31fdaca96110d7bb848bf0f6e55bbf4138cdc54",
+    "optional-practice/civilian-fpv/regional/terrain-normals.mjs": "94c319af2ca720e8224ac7a975cff8af36b0dd988998e3f559ad820d10505c2e",
+    "optional-practice/civilian-fpv/regional/terrain-surface.mjs": "b5ad2a8b8da1331ae9d7c1d940e00806ca4a50eec0c56463627be09468f91b9f",
+    "optional-practice/civilian-fpv/regional/urban-ground-surface.mjs": "0ef2eadfd74b7901cd87732769967d5fea2b716d0d918073d1e78c32f8c81ff0",
+    "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs": "18573585c1b1f59fe62a9eaefe62275135716291cea072d4acdd3e5a361ecbb2",
+    "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs": "812b46df0d4c4fef9c76c1b2fc6c7c570b31d9ba83b72bca97ae2e5c1979ad0c",
+    "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs": "07d5b719b8a37a1f6deec0838c594f575fabce6d1203f3adab96b2723a771fb5",
+    "optional-practice/civilian-fpv/regional/verified-terrain-window.mjs": "4a4df9f20e84f20cb2c66f2dbc1ea1b38bed12937a5b363509dd90ddea46bca0",
+    "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+    "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+    "optional-practice/civilian-fpv/sim-boot.mjs": "28c712b3141fdd5f59259c614de57be4f6c40a9c2be1c888234e2c4cc696c188",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "bc579645b8ad951b534c71b270bef19783b215bc925cc428317930512e51ceb5",
+    "optional-practice/civilian-fpv/snake-hunt.mjs": "3efbfb2ffb36b381927c4d3fbdb2bf664a2ed3e55558550b4f0d91080e5682ff",
+    "optional-practice/civilian-fpv/studio.mjs": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485",
+    "optional-practice/civilian-fpv/style.css": "caf333f5853e0805126789f96e5013878461f725cd8354c9239be84e5aab81ce",
+    "optional-practice/civilian-fpv/tuning-library.mjs": "ff08c8f3e3da605c86e5518a14043e76a7d5d52c5abcc8f3e12de6d8dfc08696",
+    "optional-practice/civilian-fpv/tuning-ui.mjs": "65fc9b312efc85494cf79354d33e9ce0a136ff5f05c88e16609317e6523cf9d3",
+    "optional-practice/civilian-fpv/tuning.css": "1db1a07a432c7fabfb334cf4456556fcd6a5c93d42b04d42632020ef1f76098e",
+    "optional-practice/civilian-fpv/vendor/LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+    "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+    "optional-practice/civilian-fpv/vendor/addons/provenance.json": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1",
+    "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+    "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+    "optional-practice/civilian-fpv/vendor/rapier/LICENSE": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519",
+    "optional-practice/civilian-fpv/vendor/rapier/provenance.json": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074",
+    "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "optional-practice/civilian-fpv/world-app.mjs": "93f8f7906182f50df92376ed50e07a107b99f8621750983c8d71d70d2d79fdac",
+    "optional-practice/civilian-fpv/world-assets.mjs": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+    "optional-practice/civilian-fpv/world-collision.mjs": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538",
+    "optional-practice/civilian-fpv/world-content.mjs": "4e2822f1c94bdef24f62fb14629dd4909c8d8ed3aea6708f2fdf2e8ca5b8081b",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-editor.mjs": "756be0060ca09ae22c282f9447b4c2689385248beddf263c4f71f3e7f5c47012",
+    "optional-practice/civilian-fpv/world-model.mjs": "ef930dca37efb2756162851a7ffea920552415d5869925e6bb91afd5e0dcacfc",
+    "optional-practice/civilian-fpv/world-pursuit.mjs": "5512d0a2dd104307e3b89adbbabae8e02934553c7bc2f31efa49456ffe0ec878",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "50244c9b2d469be8cb68dcd50b1b6b5bc9b6b25c5a72f3db087dc99aab9aabdd",
+    "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+    "optional-practice/civilian-fpv/world-store.mjs": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+    "optional-practice/civilian-fpv/world-style.css": "16a72fb03fdcf1f7d40895058698b8fade0b02bfbd13f601919e82d045fa409a",
+    "optional-practice/civilian-fpv/world-themes.mjs": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597",
+    "optional-practice/civilian-fpv/world-visuals.mjs": "7bbf3b12ba925f72209a3a2f6022e732545b5100e1b28718777d18fb78cef2aa",
+    "optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+    "optional-practice/fpv-worlds/README.md": "f9f83c740a0805a4cdd495301e3c0647a5ec5c9d36334e89185de06681466810",
+    "optional-practice/fpv-worlds/SCENERY-LICENSES.txt": "d879c1a60cabeb2179e7a60fe6d827ef17828d263de84369f2f994eceb7439cd",
+    "optional-practice/fpv-worlds/advanced-worker.mjs": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514",
+    "optional-practice/fpv-worlds/app.webmanifest": "57c44da18b2a120b907c94a105940a86ae158726ac514c6401958d870ab3ddb0",
+    "optional-practice/fpv-worlds/guide.html": "a769c73b3df992f7310a6f18db8dbefa47b59ca9139dff2528cc5a39a6434af3",
+    "optional-practice/fpv-worlds/index.html": "d4bbc350de197693c91b093501b747bc2168e977604696293f36f79d553f9d08",
+    "optional-practice/fpv-worlds/package-info.json": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014",
+    "optional-practice/fpv-worlds/preview.png": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1",
+    "optional-practice/fpv-worlds/scenery-provenance.json": "d45c8608de29b2b2fb4f7b2d3d1e10559cb7c1302972ebd7363b6cde6400c878",
+    "optional-practice/guide.mjs": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203",
+    "optional-practice/install-context.mjs": "bae814b206dc1ccf39b5f5b55391e9aae3d38760c07fcdf6cfeb7abea2419acf",
+    "optional-practice/navigation.mjs": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1",
+    "package.json": "d559ec927f7f78833b3f4bc483cbbad453fa2646a22ffd7407cb9d5314a6d99b",
+    "platforms/desktop/main.mjs": "a89a54828ede8dfa2bc32dc60f4aa889eb8bb546bb8bb8451343c59c17750980",
+    "platforms/desktop/package.json": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8",
+    "platforms/desktop/policy.mjs": "92ff61da8d8b74700157d9c77d0f179050a9c45ee9446cedfca3f85a6810cc75",
+    "platforms/desktop/resources.mjs": "3de16ace66c1c435e50865314f7b5f7222431e7c174b4b78f7b4eb24366a7cfe",
+    "platforms/desktop/test/fpv-smoke-harness.mjs": "6d882d572da4ee5941d176033d6bc61d96c1c0f551bac40aedc502729985ce58",
+    "platforms/desktop/test/helpers/fuse-api.mjs": "f9690db253356a8bcb6757431929ace25cc1aba6df07fabe47b4fbf2599b24eb",
+    "platforms/desktop/test/package-security.test.mjs": "92a77902f83fde27da66c26e6eff9d1c6e141f4f60cd31cb07dbc9d1ba4222da",
+    "platforms/desktop/test/packaging.test.mjs": "48f3de1480b01647a49ec15d52abbc0d549baacb1d554e85a1e6280abfe82cac",
+    "platforms/desktop/test/policy.test.mjs": "712268393383ea1bc37bdf8b6a8fb85062fc97d2538c15e8959932ece1dfa3a4",
+    "platforms/desktop/test/resources.test.mjs": "bbd50976ff02c10732633102b002e07667613df5648891753a49e8ec3ebc592f",
+    "platforms/ios/bridge/bridge-entry.mjs": "f7e518d19e3bc1c239e3fd799281fd257a62e17bfb62b8372eba4e4eaf8c06f2",
+    "platforms/ios/bridge/dist/bridge.mjs": "b13cd034a4a09250c6f03271c0c89ee30e672e6efb4016409fad81ccb89a8935",
+    "platforms/ios/package-lock.json": "3ab42e4275216f1bfb4a7ad47c4aff1fda18a9e28a1851be11594b4c1806483c",
+    "platforms/ios/package.json": "a2052c0a297424eb062c03594039899c38444d0fa133a1bb33203a78787b4b98",
+    "platforms/ios/scripts/build-bridge.mjs": "1b813b616f664aee4096b61178df85205478510e0d1bbbe48d948d632693324a",
+    "platforms/ios/test/bridge.test.mjs": "45cc8e398d8d528fe746c4dcf19ffa0bb04db062ffa2a563fc449654554442b9",
+    "platforms/ios/test/configuration.test.mjs": "6c48f8b3762e6d75fcd4e75e394236a42b9626fa984c1f9b809955f8f5ba3de6",
+    "platforms/ios/test/diagnostics.test.mjs": "572ba9a727be5a7fc78c92b1741777b375ba48256748558f60a800c1bcbdc4b2",
+    "publishing/optional-import-capabilities.mjs": "d336481a02ef0fe4a3203fecc74fe8f1739c4df035b6d921ee886a0290f0d28d",
+    "publishing/optional-module-closure.mjs": "dd88effb1ab7f754866a87410f5fd125db7234e22176eaeba393eafaac578d4c",
+    "publishing/optional-package-admission.mjs": "94eedf3b46c5b8dccab58e7669116482ca044b729e27df71cd8df39a4a3673ba",
+    "publishing/optional-package-candidate.mjs": "cc659bc6ce63cead724540aff4f3cc47bb0c35726e408c6ad75fd2140e937db7",
+    "publishing/optional-package-policy.mjs": "5465d019eef0108503b626bdd66ef4b5a7491a2c40bbc3937ecf00187a8461d4",
+    "scripts/build-fpv-native-smoke.mjs": "3f9fe78a92b3ca67933ce12ee3b70cbe1681db03f848fc60319d3feb600fbab2",
+    "scripts/build-fpv-native.mjs": "5199fa8260303a58f31c0ce830bfce11cb24ce6d7bbd73036f923221ad15de08",
+    "scripts/build-optional-practice.mjs": "35b8fb89ec73c6359860d8a49ea4c629e8aab7832632e8a7b1315607adfee6c2",
+    "scripts/native-cli.mjs": "8f9b830dc30c884f9ed9d9e3ab1903428d4ea24b49118c71d1cbc0a1ee2ab3d1",
+    "scripts/native-cli.test.mjs": "bba9b780c6955b2f1b5edf8c341ebdef6044aaba3c07590bade80f31123bb0c6",
+    "scripts/test-build-fpv-native.mjs": "24d85577c2eb112dfb305713b571f68f447e6ce87148f98e2926279bdda3bc9c"
+  },
+  "sourceStable": true,
+  "finalRun": {
+    "scope": "Final ordinary simulator source and desktop/iOS stage integrity followed by actual Electron process reopen, exact saved-library continuity, final World/Regional Advanced worker boot, native recording export/replay and cleanup. Current desktop source qualification only.",
+    "staging": {
+      "format": "FpvNativeEighthReviewFinalStaging.v1",
+      "startedAt": "2026-10-17T02:28:59.127Z",
+      "completedAt": "2026-10-17T02:29:02.150Z",
+      "pass": true,
+      "scope": "Simulator-only ordinary desktop/iOS staging and resource-policy checks; no Electron or iOS runtime launch.",
+      "nativeRuntimeVerified": false,
+      "desktopFixtureRuntimeVerified": false,
+      "iosRuntimeVerified": false,
+      "source": "/private/tmp/fpv-eighth-native-final-20261017-source",
+      "build": {
+        "out": "/private/tmp/fpv-eighth-native-final-20261017-source",
+        "version": "fpv-eighth-review-final-20261017",
+        "scope": "simulators-only",
+        "files": 183,
+        "bytes": 18282307,
+        "nativeRuntimeVerified": false,
+        "packages": [
+          {
+            "id": "civilian-fpv",
+            "revision": "538ea3232fa7ba3aab7bfacd21f9aa0150409ae226439a97702a99bb48cae438",
+            "files": 108,
+            "bytes": 11231258,
+            "manifestSha256": "d9deedc313ca215f51e943a4336d42be7c4d4465af23dd860a7be672bfa19650"
+          },
+          {
+            "id": "fpv-worlds",
+            "revision": "d04ccaa86d003d00ed1e070240a61f747ccfe854ff37d1a2e24a3c38884ab4f8",
+            "files": 167,
+            "bytes": 17696250,
+            "manifestSha256": "60d265b7a2624fef04fd10440a7e0929da2a4a6676a2a82736785457915f45f7"
+          }
+        ]
+      },
+      "stages": {
+        "desktop": {
+          "format": "revealline-native-site.v1",
+          "platform": "desktop",
+          "scheme": "revealline",
+          "host": "app",
+          "entry": "game/index.html",
+          "version": "fpv-eighth-review-final-20261017",
+          "manifestSha256": "597f854ea7e6b33b19d58211e9b39fe9f64a89d2b85291b74d38993902a60672",
+          "sourceManifestSha256": "597f854ea7e6b33b19d58211e9b39fe9f64a89d2b85291b74d38993902a60672",
+          "out": "/private/tmp/fpv-eighth-native-final-20261017-desktop",
+          "files": 183,
+          "bytes": 18282307
+        },
+        "ios": {
+          "format": "revealline-native-site.v1",
+          "platform": "ios",
+          "scheme": "capacitor",
+          "host": "localhost",
+          "entry": "game/index.html",
+          "version": "fpv-eighth-review-final-20261017",
+          "manifestSha256": "92d7ae994adc0a0fca8db1870e0ef9f805ce148709f2af855f8238394d552b46",
+          "sourceManifestSha256": "597f854ea7e6b33b19d58211e9b39fe9f64a89d2b85291b74d38993902a60672",
+          "out": "/private/tmp/fpv-eighth-native-final-20261017-ios",
+          "files": 188,
+          "bytes": 18356534
+        }
+      },
+      "sourceStable": true,
+      "resourceChecks": [
+        {
+          "path": "game/index.html",
+          "status": 200,
+          "bytes": 1772,
+          "sha256": "05aa460062458ab73e6ae9c737378912d3ebf2f1b396c7cd8bb39ef47b25bf50"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/index.html",
+          "status": 200,
+          "bytes": 15337,
+          "sha256": "7d8f53ce7256b4833b65dbea96a4e3b427e2292c4aa8f7c8cd1abf8c629fb0cc"
+        },
+        {
+          "path": "optional-practice/fpv-worlds/index.html",
+          "status": 200,
+          "bytes": 49412,
+          "sha256": "d4bbc350de197693c91b093501b747bc2168e977604696293f36f79d553f9d08"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+          "status": 200,
+          "bytes": 61741,
+          "sha256": "65fc9b312efc85494cf79354d33e9ce0a136ff5f05c88e16609317e6523cf9d3"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/betaflight-import.mjs",
+          "status": 200,
+          "bytes": 37790,
+          "sha256": "fefd959402f8812d8ad4103302e6877da50d86198d2f5cd0e5d7e8c49deb78bb"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+          "status": 200,
+          "bytes": 47922,
+          "sha256": "7406787e28bcb95037372402b395663076772c55c02a535ec4d3d37735ac2c72"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+          "status": 200,
+          "bytes": 6216,
+          "sha256": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+          "status": 200,
+          "bytes": 4340292,
+          "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+        }
+      ],
+      "accessPagesRemainLocked": true,
+      "iosCSPVerified": true,
+      "iosDiagnosticsCSPVerified": true,
+      "limits": {
+        "simulatorInput": {
+          "files": 256,
+          "bytes": 33554432
+        },
+        "nativeSiteBytes": 805306368,
+        "nativeResourceBytes": 67108864,
+        "unchanged": true
+      },
+      "manifests": {
+        "source": "597f854ea7e6b33b19d58211e9b39fe9f64a89d2b85291b74d38993902a60672",
+        "desktop": "597f854ea7e6b33b19d58211e9b39fe9f64a89d2b85291b74d38993902a60672",
+        "ios": "92d7ae994adc0a0fca8db1870e0ef9f805ce148709f2af855f8238394d552b46"
+      },
+      "tests": null
+    },
+    "fixtureSource": "/private/tmp/fpv-eighth-native-final-fixture",
+    "fixtureStage": "/private/tmp/fpv-eighth-native-final-fixture-desktop",
+    "fixtureFiles": 187,
+    "fixtureBytes": 18344285,
+    "fixtureManifestSha256": "6214104241cff0e32769f8bf3e7d843c52afa1cbf6f2befc6b9b9af54056c755",
+    "sourceChangesSinceInitial": [
+      {
+        "path": "game/platform.mjs",
+        "initialSha256": "1bcc979c6990c197be6cc015a17b05481b3c15a680b55eb33782b14cb54e81a8",
+        "finalSha256": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+        "initialSha256": "bb03e8493a578d9d845637fcc1f90a9820400a1b75474fce71c73d4b83c7e5ee",
+        "finalSha256": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "initialSha256": "7518642d2003fa6284a5327e6cc5bb819d90a273b3cbdfffaebdb79a3d4e7012",
+        "finalSha256": "cdbb034b2142651d819381045b69642d07b337518e597f332c2ede12c6e48933"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "initialSha256": "c6841a6a8146b749a3390cc114ace019e8c3135b4d5805e1312f90baae364598",
+        "finalSha256": "b739a4e192bf1f12d3c6aea4d6e9775ccc135769657e20fbd2a1e35eeea207a5"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "initialSha256": "d384a73f53f6e49d715f27567d98cf6ba335020be8f1165c4f09f1103afe1571",
+        "finalSha256": "93f8f7906182f50df92376ed50e07a107b99f8621750983c8d71d70d2d79fdac"
+      }
+    ],
+    "addedSourcePins": [
+      "authoring/fpv-worlds/regions/endurance-fixture.mjs",
+      "publishing/optional-import-capabilities.mjs",
+      "publishing/optional-module-closure.mjs",
+      "scripts/build-optional-practice.mjs"
+    ],
+    "observations": {
+      "startedAt": "2026-10-17T02:29:41.565Z",
+      "libraryExactlyPreserved": true,
+      "library": {
+        "defaultProfileId": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+        "format": "FpvTuningLibrary.v1",
+        "profiles": [
+          {
+            "history": [],
+            "id": "legacy-feel",
+            "name": "Legacy feel",
+            "response": {
+              "expo": 30,
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "name": "Gentle",
+              "responseTicks": 8
+            },
+            "revision": 0
+          },
+          {
+            "history": [
+              {
+                "name": "New profile",
+                "response": {
+                  "format": "FlightResponseProfile.v2",
+                  "maxTilt": 30,
+                  "rates": {
+                    "algorithm": "actual",
+                    "axes": {
+                      "pitch": {
+                        "expo": 0,
+                        "limit": 1998,
+                        "rate": 67,
+                        "rcRate": 7
+                      },
+                      "roll": {
+                        "expo": 0,
+                        "limit": 1998,
+                        "rate": 67,
+                        "rcRate": 7
+                      },
+                      "yaw": {
+                        "expo": 0,
+                        "limit": 1998,
+                        "rate": 67,
+                        "rcRate": 7
+                      }
+                    },
+                    "format": "FpvRateProfile.v1",
+                    "quickRatesRcExpo": false,
+                    "throttle": {
+                      "expo": 0,
+                      "hover": 50,
+                      "limitPercent": 100,
+                      "limitType": "off",
+                      "mid": 50,
+                      "model": "betaflight-2025.12"
+                    }
+                  },
+                  "responseTicks": 8
+                },
+                "revision": 0
+              }
+            ],
+            "id": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+            "name": "Electron current profile",
+            "response": {
+              "format": "FlightResponseProfile.v2",
+              "maxTilt": 30,
+              "rates": {
+                "algorithm": "actual",
+                "axes": {
+                  "pitch": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  },
+                  "roll": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 90,
+                    "rcRate": 7
+                  },
+                  "yaw": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  }
+                },
+                "format": "FpvRateProfile.v1",
+                "quickRatesRcExpo": false,
+                "throttle": {
+                  "expo": 0,
+                  "hover": 50,
+                  "limitPercent": 100,
+                  "limitType": "off",
+                  "mid": 50,
+                  "model": "betaflight-2025.12"
+                }
+              },
+              "responseTicks": 8
+            },
+            "revision": 1
+          },
+          {
+            "history": [],
+            "id": "tuning-745c02c2-d003-40e3-9bad-96c149ed6622",
+            "name": "Imported Electron 880",
+            "provenance": {
+              "baseline": {
+                "kind": "draft",
+                "profileId": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+                "revision": 1,
+                "sha256": "aacbd1483ab614b9901b33d2d09925778a82a069fcd85de320b09fc95cd7118d"
+              },
+              "firmware": {
+                "origin": "header",
+                "version": "2026.6.2"
+              },
+              "format": "FpvRateImportReceipt.v1",
+              "operation": "patch",
+              "preset": null,
+              "rateIdentity": "7c26b9edc690a45f",
+              "resultSha256": "5ee1f3562869197eaeb1349aae46c25c7e442989fb244bc167494cce1c9a877b",
+              "review": {
+                "applied": {
+                  "entries": [
+                    "{\"field\":\"rates_type\",\"value\":\"actual\"}",
+                    "{\"field\":\"roll_srate\",\"value\":88}"
+                  ],
+                  "shortened": false,
+                  "total": 2
+                },
+                "changed": {
+                  "entries": [
+                    "{\"after\":88,\"before\":90,\"field\":\"roll_srate\"}"
+                  ],
+                  "shortened": false,
+                  "total": 1
+                },
+                "ignored": {
+                  "entries": [
+                    "{\"key\":\"p_roll\",\"line\":4,\"pidProfile\":0,\"rateProfile\":0,\"reason\":\"No verified SIM adapter; remains unapplied.\",\"value\":\"80\"}"
+                  ],
+                  "shortened": false,
+                  "total": 1
+                },
+                "inferred": {
+                  "entries": [],
+                  "shortened": false,
+                  "total": 0
+                },
+                "normalizations": {
+                  "entries": [],
+                  "shortened": false,
+                  "total": 0
+                },
+                "warnings": {
+                  "entries": [
+                    "Only supported rates and throttle settings transfer. Aircraft, hardware, PID, filtering and RC smoothing remain unapplied."
+                  ],
+                  "shortened": false,
+                  "total": 1
+                }
+              },
+              "source": {
+                "bytes": 82,
+                "encoding": "utf-8",
+                "kind": "cli",
+                "sha256": "2f387f3fb4ba3a23d7ad09d5e3dcbe03618aacfc48a6b71fe2aa4b34c3d3b3c4"
+              },
+              "sourceProfile": 0
+            },
+            "response": {
+              "format": "FlightResponseProfile.v2",
+              "maxTilt": 30,
+              "rates": {
+                "algorithm": "actual",
+                "axes": {
+                  "pitch": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  },
+                  "roll": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 88,
+                    "rcRate": 7
+                  },
+                  "yaw": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  }
+                },
+                "format": "FpvRateProfile.v1",
+                "quickRatesRcExpo": false,
+                "throttle": {
+                  "expo": 0,
+                  "hover": 50,
+                  "limitPercent": 100,
+                  "limitType": "off",
+                  "mid": 50,
+                  "model": "betaflight-2025.12"
+                }
+              },
+              "responseTicks": 8
+            },
+            "revision": 0
+          }
+        ],
+        "revision": 5,
+        "selectedSetupId": "my-drone",
+        "setups": [
+          {
+            "camera": {
+              "tilt": 32,
+              "verticalFov": 104
+            },
+            "id": "my-drone",
+            "name": "Electron current drone",
+            "profileId": null
+          }
+        ]
+      },
+      "panelOnReopen": {
+        "status": "menu",
+        "advanced": false,
+        "workers": {
+          "created": 0,
+          "terminated": 0,
+          "live": 0
+        },
+        "profiles": [
+          {
+            "name": "Legacy feel",
+            "revision": 0
+          },
+          {
+            "name": "Electron current profile",
+            "revision": 1
+          },
+          {
+            "name": "Imported Electron 880",
+            "revision": 0
+          }
+        ],
+        "revision": 5,
+        "samples": 1,
+        "errors": [],
+        "storageProbe": {
+          "lockAcquired": true,
+          "transactionComplete": true,
+          "previousVisits": 2,
+          "visits": 3
+        }
+      },
+      "comfortKeys": {},
+      "security": {
+        "sandbox": true,
+        "contextIsolation": true,
+        "nodeIntegration": false,
+        "webSecurity": true
+      },
+      "checks": [
+        {
+          "check": "Final source reopens exact saved library, camera32/104, default900 and imported880 receipt; real Web Locks and IndexedDB visits advance2to3",
+          "pass": true
+        },
+        {
+          "check": "Production Regional host boots current Advanced worker, arms, pauses290ticks, exports through OS Save; Node replay verifies e3aef0ae and900rates; Legacy restart and disposal terminate worker",
+          "pass": true
+        }
+      ],
+      "beforeCleanup": {
+        "status": "paused",
+        "reason": "prepared",
+        "ticks": 290,
+        "advanced": true,
+        "backend": "civilian-quad-advanced-regional.v1",
+        "workers": {
+          "created": 1,
+          "terminated": 0,
+          "live": 1
+        },
+        "profiles": [
+          {
+            "name": "Legacy feel",
+            "revision": 0
+          },
+          {
+            "name": "Electron current profile",
+            "revision": 1
+          },
+          {
+            "name": "Imported Electron 880",
+            "revision": 0
+          }
+        ],
+        "revision": 5,
+        "samples": 8,
+        "errors": [],
+        "storageProbe": {
+          "lockAcquired": true,
+          "transactionComplete": true,
+          "previousVisits": 2,
+          "visits": 3
+        }
+      },
+      "worldCamera": [
+        {
+          "id": "world-fov",
+          "value": "104"
+        },
+        {
+          "id": "world-tilt",
+          "value": "32"
+        }
+      ],
+      "panelAfterCleanup": {
+        "status": "disposed",
+        "advanced": false,
+        "workers": {
+          "created": 1,
+          "terminated": 1,
+          "live": 0
+        },
+        "profiles": [
+          {
+            "name": "Legacy feel",
+            "revision": 0
+          },
+          {
+            "name": "Electron current profile",
+            "revision": 1
+          },
+          {
+            "name": "Imported Electron 880",
+            "revision": 0
+          }
+        ],
+        "revision": 5,
+        "samples": 11,
+        "errors": [],
+        "storageProbe": {
+          "lockAcquired": true,
+          "transactionComplete": true,
+          "previousVisits": 2,
+          "visits": 3
+        }
+      },
+      "pageErrors": [],
+      "stderr": "",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) FPV/LINE/0.21.0 Chrome/152.0.7977.78 Electron/44.3.0 Safari/537.36",
+      "libraryAfterFlight": {
+        "defaultProfileId": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+        "format": "FpvTuningLibrary.v1",
+        "profiles": [
+          {
+            "history": [],
+            "id": "legacy-feel",
+            "name": "Legacy feel",
+            "response": {
+              "expo": 30,
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "name": "Gentle",
+              "responseTicks": 8
+            },
+            "revision": 0
+          },
+          {
+            "history": [
+              {
+                "name": "New profile",
+                "response": {
+                  "format": "FlightResponseProfile.v2",
+                  "maxTilt": 30,
+                  "rates": {
+                    "algorithm": "actual",
+                    "axes": {
+                      "pitch": {
+                        "expo": 0,
+                        "limit": 1998,
+                        "rate": 67,
+                        "rcRate": 7
+                      },
+                      "roll": {
+                        "expo": 0,
+                        "limit": 1998,
+                        "rate": 67,
+                        "rcRate": 7
+                      },
+                      "yaw": {
+                        "expo": 0,
+                        "limit": 1998,
+                        "rate": 67,
+                        "rcRate": 7
+                      }
+                    },
+                    "format": "FpvRateProfile.v1",
+                    "quickRatesRcExpo": false,
+                    "throttle": {
+                      "expo": 0,
+                      "hover": 50,
+                      "limitPercent": 100,
+                      "limitType": "off",
+                      "mid": 50,
+                      "model": "betaflight-2025.12"
+                    }
+                  },
+                  "responseTicks": 8
+                },
+                "revision": 0
+              }
+            ],
+            "id": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+            "name": "Electron current profile",
+            "response": {
+              "format": "FlightResponseProfile.v2",
+              "maxTilt": 30,
+              "rates": {
+                "algorithm": "actual",
+                "axes": {
+                  "pitch": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  },
+                  "roll": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 90,
+                    "rcRate": 7
+                  },
+                  "yaw": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  }
+                },
+                "format": "FpvRateProfile.v1",
+                "quickRatesRcExpo": false,
+                "throttle": {
+                  "expo": 0,
+                  "hover": 50,
+                  "limitPercent": 100,
+                  "limitType": "off",
+                  "mid": 50,
+                  "model": "betaflight-2025.12"
+                }
+              },
+              "responseTicks": 8
+            },
+            "revision": 1
+          },
+          {
+            "history": [],
+            "id": "tuning-745c02c2-d003-40e3-9bad-96c149ed6622",
+            "name": "Imported Electron 880",
+            "provenance": {
+              "baseline": {
+                "kind": "draft",
+                "profileId": "tuning-4b2bf74c-01f2-4212-b251-bc3a3acbcf16",
+                "revision": 1,
+                "sha256": "aacbd1483ab614b9901b33d2d09925778a82a069fcd85de320b09fc95cd7118d"
+              },
+              "firmware": {
+                "origin": "header",
+                "version": "2026.6.2"
+              },
+              "format": "FpvRateImportReceipt.v1",
+              "operation": "patch",
+              "preset": null,
+              "rateIdentity": "7c26b9edc690a45f",
+              "resultSha256": "5ee1f3562869197eaeb1349aae46c25c7e442989fb244bc167494cce1c9a877b",
+              "review": {
+                "applied": {
+                  "entries": [
+                    "{\"field\":\"rates_type\",\"value\":\"actual\"}",
+                    "{\"field\":\"roll_srate\",\"value\":88}"
+                  ],
+                  "shortened": false,
+                  "total": 2
+                },
+                "changed": {
+                  "entries": [
+                    "{\"after\":88,\"before\":90,\"field\":\"roll_srate\"}"
+                  ],
+                  "shortened": false,
+                  "total": 1
+                },
+                "ignored": {
+                  "entries": [
+                    "{\"key\":\"p_roll\",\"line\":4,\"pidProfile\":0,\"rateProfile\":0,\"reason\":\"No verified SIM adapter; remains unapplied.\",\"value\":\"80\"}"
+                  ],
+                  "shortened": false,
+                  "total": 1
+                },
+                "inferred": {
+                  "entries": [],
+                  "shortened": false,
+                  "total": 0
+                },
+                "normalizations": {
+                  "entries": [],
+                  "shortened": false,
+                  "total": 0
+                },
+                "warnings": {
+                  "entries": [
+                    "Only supported rates and throttle settings transfer. Aircraft, hardware, PID, filtering and RC smoothing remain unapplied."
+                  ],
+                  "shortened": false,
+                  "total": 1
+                }
+              },
+              "source": {
+                "bytes": 82,
+                "encoding": "utf-8",
+                "kind": "cli",
+                "sha256": "2f387f3fb4ba3a23d7ad09d5e3dcbe03618aacfc48a6b71fe2aa4b34c3d3b3c4"
+              },
+              "sourceProfile": 0
+            },
+            "response": {
+              "format": "FlightResponseProfile.v2",
+              "maxTilt": 30,
+              "rates": {
+                "algorithm": "actual",
+                "axes": {
+                  "pitch": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  },
+                  "roll": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 88,
+                    "rcRate": 7
+                  },
+                  "yaw": {
+                    "expo": 0,
+                    "limit": 1998,
+                    "rate": 67,
+                    "rcRate": 7
+                  }
+                },
+                "format": "FpvRateProfile.v1",
+                "quickRatesRcExpo": false,
+                "throttle": {
+                  "expo": 0,
+                  "hover": 50,
+                  "limitPercent": 100,
+                  "limitType": "off",
+                  "mid": 50,
+                  "model": "betaflight-2025.12"
+                }
+              },
+              "responseTicks": 8
+            },
+            "revision": 0
+          }
+        ],
+        "revision": 5,
+        "selectedSetupId": "my-drone",
+        "setups": [
+          {
+            "camera": {
+              "tilt": 32,
+              "verticalFov": 104
+            },
+            "id": "my-drone",
+            "name": "Electron current drone",
+            "profileId": null
+          }
+        ]
+      }
+    },
+    "fixtureRuntime": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) FPV/LINE/0.21.0 Chrome/152.0.7977.78 Electron/44.3.0 Safari/537.36",
+      "capabilities": {
+        "secureContext": true,
+        "webLocks": true,
+        "indexedDB": true
+      },
+      "storageProbe": {
+        "lockAcquired": true,
+        "transactionComplete": true,
+        "previousVisits": 2,
+        "visits": 3
+      },
+      "workers": {
+        "created": 1,
+        "terminated": 1,
+        "live": 0
+      },
+      "errors": [],
+      "sampleCount": 11
+    },
+    "recordingReplay": {
+      "verified": true,
+      "missionTicks": 290,
+      "finalHash": "e3aef0ae",
+      "rateProfile": {
+        "algorithm": "actual",
+        "axes": {
+          "pitch": {
+            "expo": 0,
+            "limit": 1998,
+            "rate": 67,
+            "rcRate": 7
+          },
+          "roll": {
+            "expo": 0,
+            "limit": 1998,
+            "rate": 90,
+            "rcRate": 7
+          },
+          "yaw": {
+            "expo": 0,
+            "limit": 1998,
+            "rate": 67,
+            "rcRate": 7
+          }
+        },
+        "format": "FpvRateProfile.v1",
+        "quickRatesRcExpo": false,
+        "throttle": {
+          "expo": 0,
+          "hover": 50,
+          "limitPercent": 100,
+          "limitType": "off",
+          "mid": 50,
+          "model": "betaflight-2025.12"
+        }
+      },
+      "frequency": 250,
+      "format": "AdvancedRegionalRecording.v1",
+      "terrain": null
+    },
+    "artifacts": [
+      {
+        "path": "/private/tmp/fpv-eighth-native-final-stage.mjs",
+        "bytes": 5376,
+        "sha256": "196f5065312badfd236a1405d2be4e54fb8e5faf93485e0469aa35268837fdcb"
+      },
+      {
+        "path": "/private/tmp/fpv-eighth-native-final-stage-result.json",
+        "bytes": 28997,
+        "sha256": "ee5c0c5e48a726273a46cd3df3d9ea0995c52cd6b00b16f836fdc439b5183660"
+      },
+      {
+        "path": "/private/tmp/fpv-eighth-native-final-observations.json",
+        "bytes": 16259,
+        "sha256": "886642326449c476439cae1708819f2541923cf8ce384989a56c0aa2abc821c8"
+      },
+      {
+        "path": "/private/tmp/fpv-eighth-native-final-runtime.json",
+        "bytes": 77909,
+        "sha256": "3c4a8205a6945fa0c7d50edd056531458a54b5556951b3444f4bf7cf594e8041"
+      },
+      {
+        "path": "/private/tmp/fpv-eighth-native-final-regional.json",
+        "bytes": 108166,
+        "sha256": "f39efa485f35eef6e90be79d713524bc24393829ef9c2bdd31133cc2abd96c9f"
+      },
+      {
+        "path": "/private/tmp/fpv-eighth-native-final-regional-replay.json",
+        "bytes": 780,
+        "sha256": "e6d13718c54c3372eccefe9f9020b8cf78b76e33782100ed438ca9134f6d1576"
+      },
+      {
+        "path": "/private/tmp/fpv-eighth-native-ios-doctor.json",
+        "bytes": 507,
+        "sha256": "b4361046c620bed650881e4e1325f794eef0caac333ee1f7f1135ec5fc3eec19"
+      }
+    ],
+    "normalQuitObserved": true,
+    "accessControlledOriginalPagesPreserved": true
+  },
+  "iosDoctor": {
+    "format": "revealline-ios-doctor.v1",
+    "node": "v22.22.2",
+    "nodeSupported": true,
+    "configuration": {
+      "valid": true,
+      "errors": []
+    },
+    "dependenciesInstalled": true,
+    "stagedEntry": false,
+    "stagedManifest": false,
+    "nativeProject": true,
+    "nativeDeploymentTargets": [
+      "15.4"
+    ],
+    "privacyManifestLinked": true,
+    "developerDirectory": "/Library/Developer/CommandLineTools",
+    "xcode": null,
+    "xcodeSupported": false,
+    "simulatorTool": null,
+    "nativeRuntimeVerified": false
+  }
+}
