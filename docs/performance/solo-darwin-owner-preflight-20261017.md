@@ -27,3 +27,52 @@ Earlier 4bf/c696 discovery-and-build steps succeeded in 3/7 seconds using Xcode 
 The narrow setup correction gives compiler path/version and SDK path/version one nonrenewing 30-second deadline. Every query receives only remaining time, late returned output fails before further work, and original command errors abort without retry. Git identity remains five seconds, compilation 30 seconds and actual native inventory three seconds. The sum of declared command allowances is 65 seconds, not a guaranteed wall-clock process exit; the unchanged two-minute compilation step and 24-minute job remain the hard outer bounds. All three leader/tree/deadline cases, ambiguity and cleanup checks remain required before Cocoa media is considered.
 
 The cache-only proof retains the original exact 0feb Git blobs/tree, independent readback of the failed artifact, previous build receipts and the proposed source diff under `.cache/solo-followup/darwin-toolchain-discovery-proposal/`. Six injected discovery controls pass. The complete existing inventory test file passes 21 controls with the deliberately disabled hosted-owner test skipped in a copied 141-file source graph; the guard rejects workspace-source fallback. Its first attempted run correctly rejected an uncopied pinned npm dependency; that failure is retained, and the final copy includes read-back versions of acorn, entities, lz-string and parse5 matching the lockfile. These controls execute fixtures only, with no local xcrun, compiler or real inventory. No native observation or future tooling SHA is invented.
+
+## Reviewed dependent Cocoa counterpart
+
+The reviewed successor adds a separate dependent Cocoa job to this existing
+workflow. The original standalone Cocoa workflow and its failed observations
+remain byte-identical. The non-browser job keeps its exact one-shot edge, three
+cases, source admission, 24-minute outer bound and 22-minute step sum. It publishes
+small job outputs only after the existing native command succeeds and bounded
+report readback independently re-assesses all three cases against the current
+four owner-source hashes. Failed, withheld, incomplete, mismatched or uncertain
+ownership cannot publish a positive handoff. The deliberate deadline case must
+retain its exact expected negative and confirmed cleanup.
+
+The dependent job requires `needs: preflight`, the predecessor
+job's successful result, `passed` handoff status and an exact match between the
+handoff source and the event-head source. The one-shot prerequisite remains source-bound to the existing before-0feb
+synchronize edge; this release is prospective and is not a native observation. The successful prerequisite report's size
+and SHA-256, workflow run/attempt and source is retained in the Cocoa
+artifact before toolchain discovery, browser installation or launch. The complete
+original report remains in the prerequisite artifact from the same workflow run.
+Missing outputs or a failed artifact upload also withhold downstream execution.
+
+The Cocoa job uses a fresh `macos-15-intel` host. Prior-host success does not grant
+ownership on that host: it compiles/adopts its own current inventory, runs the
+existing contracts and requires the unchanged fresh blank-browser ownership gate
+before any original fixture download or media observation. It retains the same
+Playwright 1.62.1/WebKit 26.5, original Bossa Blob, five-second passive window,
+ten-second trusted-play window, 500 ms sampling, 128 events, 32 samples, strict
+media values and closure checks. It requires no production package or game
+execution and cannot qualify game performance, physical Safari or iPhone behavior.
+
+The separate Cocoa job keeps its existing 28-minute outer bound; its steps total
+26 minutes, including one minute for prerequisite identity validation/retention,
+leaving two minutes for orchestration. Its existing 12-minute native step and all
+inner owner/media/evidence bounds stay unchanged. Both jobs always retain failed
+or partial evidence. The Cocoa checkout adds only the two current owner-test
+witness inputs missing from the historical checkout; historical declarations are
+not edited. The two jobs' source-confined proof copy contains 153 files, with no
+workspace-source fallback. Local controls use synthetic reports and mocked
+process helpers only, not native inventories, browsers, media or a server.
+
+GitHub documents that jobs using
+[`needs`](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idneeds)
+wait for successful prerequisites and otherwise skip unless explicitly overridden.
+The Cocoa job has no such override. The
+[job outputs](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/pass-job-outputs)
+bind the successful report to the dependent job within this run. This avoids an
+extra production-build push solely to release the codec observation; it does not
+waive either native ownership gate.

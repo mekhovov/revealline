@@ -133,10 +133,11 @@ test('deadline control requires its precise failed owner and confirmed owned cle
 });
 
 test('one-shot non-browser workflow declares finite setup, native observation and upload separately', async () => {
-  const workflow = await readFile(
+  const completeWorkflow = await readFile(
     new URL('../.github/workflows/solo-darwin-owner-preflight-temporary.yml', import.meta.url),
     'utf8',
   );
+  const workflow = completeWorkflow.split('\n  cocoa:\n')[0];
   assert.equal(
     workflow.match(/^    if: (.+)$/m)?.[1],
     "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '0febd334619731adc26dfa3df78aab02991563af'",
@@ -235,7 +236,7 @@ test('tools sparse checkout contains complete static owner graph and actual dyna
   assert(listed.length < 200);
 });
 
-test('successor workflow requires every exact one-shot condition before c696', async () => {
+test('successor workflow requires every exact one-shot condition before 0feb', async () => {
   const text = await readFile(
     new URL('../.github/workflows/solo-darwin-owner-preflight-temporary.yml', import.meta.url),
     'utf8',
@@ -249,14 +250,198 @@ test('successor workflow requires every exact one-shot condition before c696', a
     );
     assert(!value.includes('workflow_dispatch'));
   };
-  check(text);
+  const preflight = text.split('\n  cocoa:\n')[0];
+  check(preflight);
   for (const condition of [
     'github.event.pull_request.number == 1544',
     'github.event.pull_request.head.repo.full_name == github.repository',
     "github.event.action == 'synchronize'",
     "github.event.before == '0febd334619731adc26dfa3df78aab02991563af'",
   ])
-    assert.throws(() => check(text.replace(condition, 'true')));
-  assert.throws(() => check(text.replace(expected, '')));
-  assert.throws(() => check(text.replace(expected, '    if: true')));
+    assert.throws(() => check(preflight.replace(condition, 'true')));
+  assert.throws(() => check(preflight.replace(expected, '')));
+  assert.throws(() => check(preflight.replace(expected, '    if: true')));
+});
+
+test('Cocoa remains gated behind the exact successful prerequisite and keeps its independent owner gate', async () => {
+  const whole = await readFile(
+    new URL('../.github/workflows/solo-darwin-owner-preflight-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  const [preflight, cocoa] = whole.split('\n  cocoa:\n');
+  assert(cocoa);
+  assert.match(cocoa, /^    needs: preflight\n/);
+  assert.match(cocoa, /^    if: needs\.preflight\.result == 'success'/m);
+  assert.doesNotMatch(cocoa.split('    steps:')[0], /always\(|continue-on-error/);
+  assert.match(preflight, /owner-source: \$\{\{ steps.owner-proof.outputs.source \}\}/);
+  assert.match(preflight, /owner-status: \$\{\{ steps.owner-proof.outputs.status \}\}/);
+  assert.match(
+    preflight,
+    /owner-report-sha256: \$\{\{ steps.owner-proof.outputs.reportSha256 \}\}/,
+  );
+  assert.match(preflight, /owner-report-bytes: \$\{\{ steps.owner-proof.outputs.reportBytes \}\}/);
+  assert.match(
+    preflight,
+    /set -euo pipefail\n          node scripts\/solo-darwin-owner-preflight.mjs run/,
+  );
+  const limits = [...cocoa.matchAll(/timeout-minutes: (\d+)/g)].map((m) => Number(m[1]));
+  assert.deepEqual(limits, [28, 2, 1, 1, 2, 2, 5, 12, 1]);
+  assert.equal(
+    limits.slice(1).reduce((a, b) => a + b, 0),
+    26,
+  );
+  assert(
+    cocoa.indexOf('Retain the exact successful prerequisite') < cocoa.indexOf('Compile the exact'),
+  );
+  assert(
+    cocoa.indexOf('Retain the exact successful prerequisite') <
+      cocoa.indexOf('Install exact Cocoa WebKit'),
+  );
+  for (const field of ['SOURCE', 'REPORT_SHA256', 'REPORT_BYTES', 'STATUS'])
+    assert(cocoa.includes('PRIOR_OWNER_' + field));
+  assert.match(cocoa, /run: node scripts\/solo-native-mp3-control.mjs run-cocoa/);
+  assert.match(cocoa, /solo-native-mp3-prerequisite.json/);
+  assert.match(cocoa, /if: always\(\)/);
+  assert.match(cocoa, /playwright@1\.62\.1/);
+  assert.doesNotMatch(cocoa, /workflow_dispatch|workflow_run|game-cli\.mjs build|--with-deps/);
+});
+
+test('the actual prerequisite publisher re-assesses all three cases and exact sources before producing outputs', async () => {
+  const whole = await readFile(
+    new URL('../.github/workflows/solo-darwin-owner-preflight-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  const code = whole
+    .split('          // BEGIN OWNER HANDOFF ADMISSION\n')[1]
+    .split('          // END OWNER HANDOFF ADMISSION')[0];
+  const admit = Function(
+    'assert',
+    'assessDarwinOwnerCase',
+    `return (${code.trim()})`,
+  )(assert, assessDarwinOwnerCase);
+  const sources = [{ path: 'scripts/fixture.mjs', bytes: 2, sha256: '1'.repeat(64) }];
+  const complete = () => ({
+    format: 'SoloDarwinNonBrowserOwnerPreflightV1',
+    sourceRevision: source,
+    platform: 'darwin',
+    architecture: 'x64',
+    status: 'passed',
+    sources: structuredClone(sources),
+    ownershipQualification: false,
+    browserObservations: 0,
+    mediaObservations: 0,
+    performanceQualification: false,
+    cases: ['leader', 'tree', 'deadline'].map((id) => {
+      const f = fixture(id),
+        assessment = assessDarwinOwnerCase(id, f.command, f.observations, source);
+      return { id, ...f, assessment, status: assessment.status };
+    }),
+  });
+  assert.equal(admit(complete(), source, sources), true);
+  for (const change of [
+    (r) => (r.status = 'failed'),
+    (r) => (r.sourceRevision = 'b'.repeat(40)),
+    (r) => (r.platform = 'linux'),
+    (r) => (r.architecture = 'arm64'),
+    (r) => (r.failure = 'partial'),
+    (r) => (r.browserObservations = 1),
+    (r) => (r.mediaObservations = 1),
+    (r) => (r.ownershipQualification = true),
+    (r) => (r.performanceQualification = true),
+    (r) => (r.sources[0].sha256 = '2'.repeat(64)),
+    (r) => r.cases.pop(),
+    (r) => r.cases.reverse(),
+    (r) => (r.cases[0].status = 'withheld'),
+    (r) => (r.cases[0].failure = 'failed readback'),
+    (r) => r.cases[0].command.survivors.push({ pid: 99 }),
+    (r) => r.cases[0].command.ambiguous.push({ pid: 99 }),
+    (r) => (r.cases[0].command.cleanupUnconfirmed = true),
+    (r) => (r.cases[0].command.peakRSS = 0),
+    (r) => r.cases[1].observations.pop(),
+    (r) => (r.cases[2].command.violation = 'rss-cap'),
+    (r) => (r.cases[2].command.signal = 'SIGKILL'),
+    (r) => r.cases[0].assessment.failures.push('altered'),
+  ]) {
+    const report = complete();
+    change(report);
+    assert.throws(() => admit(report, source, sources));
+  }
+});
+
+test('dependent Cocoa checkout preserves the original closure and includes its current immutable owner witness', async () => {
+  const root = new URL('../', import.meta.url);
+  const original = await readFile(
+    new URL('.github/workflows/solo-native-mp3-cocoa-temporary.yml', root),
+    'utf8',
+  );
+  const whole = await readFile(
+    new URL('.github/workflows/solo-darwin-owner-preflight-temporary.yml', root),
+    'utf8',
+  );
+  const cocoa = whole.split('\n  cocoa:\n')[1];
+  const selected = (text) =>
+    text
+      .match(/          sparse-checkout: \|\n((?:            .+\n)+)/)[1]
+      .trim()
+      .split('\n')
+      .map((line) => line.trim().slice(1));
+  const expected = [
+    ...selected(original),
+    '.github/workflows/solo-darwin-inventory-diagnostic-temporary.yml',
+    'docs/performance/fixtures/solo-darwin-inventory/696-v1-source.json',
+  ].sort();
+  const check = (paths) => {
+    assert.equal(paths.length, new Set(paths).size);
+    assert.deepEqual([...paths].sort(), expected);
+  };
+  const actual = selected(cocoa);
+  check(actual);
+  for (const path of actual) assert((await readFile(new URL(path, root))).length > 0);
+  for (const missing of [
+    'scripts/solo-darwin-process-inventory.c',
+    'scripts/solo-native-mp3-control.mjs',
+    ...expected.filter((path) => path.includes('696-v1') || path.includes('inventory-diagnostic')),
+  ])
+    assert.throws(() => check(actual.filter((path) => path !== missing)));
+  assert.doesNotMatch(whole, /continue-on-error/);
+});
+
+test('prospective Cocoa condition rejects every nonpositive or mismatched prerequisite result', async () => {
+  const whole = await readFile(
+    new URL('../.github/workflows/solo-darwin-owner-preflight-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  const cocoa = whole.split('\n  cocoa:\n')[1];
+  const actual = cocoa.match(/^    if: (.+)$/m)[1];
+  const expected =
+    "needs.preflight.result == 'success' && needs.preflight.outputs.owner-status == 'passed' && needs.preflight.outputs.owner-source == github.event.pull_request.head.sha";
+  assert.equal(actual, expected);
+  const expression = actual
+    .replaceAll('.outputs.owner-status', ".outputs['owner-status']")
+    .replaceAll('.outputs.owner-source', ".outputs['owner-source']");
+  const check = Function('needs', 'github', 'return ' + expression);
+  const github = { event: { pull_request: { head: { sha: source } } } };
+  const needs = () => ({
+    preflight: { result: 'success', outputs: { 'owner-status': 'passed', 'owner-source': source } },
+  });
+  assert.equal(check(needs(), github), true);
+  for (const result of ['failure', 'cancelled', 'skipped', '', null]) {
+    const value = needs();
+    value.preflight.result = result;
+    assert.equal(check(value, github), false);
+  }
+  for (const status of ['failed', 'withheld', '', null]) {
+    const value = needs();
+    value.preflight.outputs['owner-status'] = status;
+    assert.equal(check(value, github), false);
+  }
+  for (const revision of ['b'.repeat(40), '', null]) {
+    const value = needs();
+    value.preflight.outputs['owner-source'] = revision;
+    assert.equal(check(value, github), false);
+  }
+  assert.equal(
+    Function('needs', 'github', 'return false && (' + expression + ')')(needs(), github),
+    false,
+  );
 });
