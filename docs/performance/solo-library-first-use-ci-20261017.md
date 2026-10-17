@@ -16,6 +16,10 @@ The corrections join the existing public action's preparation or wait for its ac
 
 The complete files for modal navigation, external backup, Classic, touchscreen controls, difficulty, Field Kit surfaces, Flight Information details/backups, backup feedback, device controls, text size and Solo soundtrack context pass **173 cases across twelve distinct files**, executed in separate groups. The original failing controls and intermediate failures remain retained. Difficulty's authored two-map fixture also now binds its retained source artwork to those actual map IDs, and its result flow advances the real bounded picture presentation before using the visible action. Required no-award, checkpoint and save assertions remain.
 
+Six further complete files pass **84 cases**, bringing this correction batch to **257 cases across eighteen distinct files**, not one combined run. Title/actor controls (66) now distinguish completed status feedback from actual accepted Resume and use the prepared Custom briefing's visible Start action. Session-only Next and pending-backup controls (10) advance the real bounded picture presentation and use the visible result action, preserving the held verifier, checkpoint, no-write and storage-race checks. Fracture/Countercurrent chapter controls (8) join public Library preparation before export/import; all four authored-owner constructions, original authentication and fresh-profile restoration still run. Their original unbound-handler failures and dependent skips remain retained.
+
+The six-file follow-up receipts are `.cache/solo-followup/title-actor-first-use/final-receipt.json`, `92ff-required-checks/session-pending-final-receipt.json` and `chapter-library-lazy-boundary-34d95/review.json`. The last pair's complete TAP has SHA-256 `57795e7e7a4f0e69709c2231aba8606a97aa952fd96af4f72a06e8a02b749fbf`. All affected files pass scoped lint/formatting; runtime and shared readiness helpers remain unchanged by these test corrections.
+
 Retained canceled-run evidence:
 
 | Item                        | Identity                                                                                                |
