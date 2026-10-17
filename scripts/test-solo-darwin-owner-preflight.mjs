@@ -140,7 +140,7 @@ test('one-shot non-browser workflow declares finite setup, native observation an
   const workflow = completeWorkflow.split('\n  cocoa:\n')[0];
   assert.equal(
     workflow.match(/^    if: (.+)$/m)?.[1],
-    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '0febd334619731adc26dfa3df78aab02991563af'",
+    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'",
   );
   assert.match(workflow, /runs-on: macos-15-intel/);
   assert.match(workflow, /timeout-minutes: 24/);
@@ -236,13 +236,13 @@ test('tools sparse checkout contains complete static owner graph and actual dyna
   assert(listed.length < 200);
 });
 
-test('successor workflow requires every exact one-shot condition before 0feb', async () => {
+test('successor workflow requires every exact one-shot condition before e1cc', async () => {
   const text = await readFile(
     new URL('../.github/workflows/solo-darwin-owner-preflight-temporary.yml', import.meta.url),
     'utf8',
   );
   const expected =
-    "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '0febd334619731adc26dfa3df78aab02991563af'";
+    "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'";
   const check = (value) => {
     assert.deepEqual(
       value.split('\n').filter((s) => s.startsWith('    if: ')),
@@ -256,7 +256,7 @@ test('successor workflow requires every exact one-shot condition before 0feb', a
     'github.event.pull_request.number == 1544',
     'github.event.pull_request.head.repo.full_name == github.repository',
     "github.event.action == 'synchronize'",
-    "github.event.before == '0febd334619731adc26dfa3df78aab02991563af'",
+    "github.event.before == 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'",
   ])
     assert.throws(() => check(preflight.replace(condition, 'true')));
   assert.throws(() => check(preflight.replace(expected, '')));
@@ -396,6 +396,15 @@ test('dependent Cocoa checkout preserves the original closure and includes its c
   };
   const actual = selected(cocoa);
   check(actual);
+  const preflight = selected(whole.split('\n  cocoa:\n')[0]);
+  const requireTestInputs = (paths) => {
+    assert.equal(paths.length, new Set(paths).size);
+    for (const path of actual)
+      assert(paths.includes(path), 'Preflight test reads missing Cocoa input: ' + path);
+  };
+  requireTestInputs(preflight);
+  for (const path of actual)
+    assert.throws(() => requireTestInputs(preflight.filter((item) => item !== path)));
   for (const path of actual) assert((await readFile(new URL(path, root))).length > 0);
   for (const missing of [
     'scripts/solo-darwin-process-inventory.c',
