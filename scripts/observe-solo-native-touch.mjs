@@ -31,6 +31,57 @@ import {
 import { writeFile } from 'node:fs/promises';
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
+export async function observeTouchCadenceAfterStart(page, report) {
+  report.internalCadenceBoundary = 'after-public-start-before-native-input';
+  try {
+    await page.waitForFunction(() => window.soloTouchProbe.read().readyCount === 30, null, {
+      timeout: 5000,
+    });
+  } catch (error) {
+    // This is the same optional internal observation. The independent settled120
+    // measurement remains the only external cadence authority for the input gate.
+    report.internalCadenceWait = String(error.message);
+  }
+}
+
+export async function readPartialTouchReplay(page, timeoutMs = 10000) {
+  assert(Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 10000);
+  const deadline = Date.now() + timeoutMs;
+  const remaining = () => {
+    const time = deadline - Date.now();
+    assert(time > 0, 'Partial public replay readback deadline exceeded');
+    return time;
+  };
+  assert.equal(
+    await page.locator('body').getAttribute('data-flight-state', { timeout: remaining() }),
+    'paused',
+    'Partial touch replay is read only after the attempt is paused',
+  );
+  let recording, source;
+  if (await page.locator('#replay-dialog').isVisible()) {
+    // A native click can open this public dialog before its automation promise
+    // settles. Do not click through that modal or issue the export a second time.
+    recording = await page.locator('#replay-json').inputValue({ timeout: remaining() });
+    source = 'already-open-public-replay-dialog';
+  } else {
+    recording = await readPublicQualificationReplay(page, remaining());
+    source = 'public-export-controls';
+  }
+  assert(
+    Buffer.byteLength(recording) <= TOUCH_PROTOCOL.replayBytes,
+    'Partial public replay exceeds the unchanged byte bound',
+  );
+  assert(recording.trim().length > 0, 'Partial public replay is empty');
+  const parsed = JSON.parse(recording);
+  assert(parsed && typeof parsed === 'object' && !Array.isArray(parsed));
+  assert.equal(
+    await page.locator('body').getAttribute('data-flight-state', { timeout: remaining() }),
+    'paused',
+    'The attempt must remain paused throughout partial readback',
+  );
+  return { recording, source };
+}
+
 export function installTouchProbe({ mode }, environment = globalThis) {
   const documentRef = environment.document;
   let phaser,
@@ -330,13 +381,6 @@ export async function observeTouch(planArg, outputArg) {
     await page.waitForFunction(() => !document.getElementById('settings-dialog')?.open, null, {
       timeout: 5000,
     });
-    try {
-      await page.waitForFunction(() => window.soloTouchProbe.read().readyCount === 30, null, {
-        timeout: 5000,
-      });
-    } catch (error) {
-      report.internalCadenceWait = String(error.message);
-    }
     report.beforeStart = await page.evaluate(() => ({
       retained: window.soloTouchProbe.read(),
       application: window.RevealLineSoloPerformance.export(),
@@ -352,6 +396,7 @@ export async function observeTouch(planArg, outputArg) {
       { timeout: 5000 },
     );
     action('first-active-retained-paint-observed');
+    await observeTouchCadenceAfterStart(page, report);
     const initial = await page.evaluate(() => window.soloTouchProbe.read());
     report.initial = initial;
     assert.equal(initial.levelId, 'first-return');
@@ -484,8 +529,13 @@ export async function observeTouch(planArg, outputArg) {
         );
         report.nativeInput ??= await page.evaluate(() => window.soloTouchProbe?.export() ?? null);
         if (!recording) {
-          recording = await readPublicQualificationReplay(page, 10000);
+          const partial = await readPartialTouchReplay(page, 10000);
+          recording = partial.recording;
           report.partialReplay = true;
+          report.partialReplayReadback = {
+            source: partial.source,
+            authority: 'public-text-only; the original scenario failure remains failed',
+          };
         }
       } catch (error) {
         report.partialExportFailure = String(error.stack ?? error);
