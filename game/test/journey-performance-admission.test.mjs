@@ -6,6 +6,7 @@ import {
   createRecorder,
   recordInput,
   exportReplay,
+  exportReplayAsync,
   verifyReplay,
   verifyReplayAsync,
 } from '../replay.mjs';
@@ -15,6 +16,8 @@ import {
   emptyJourneyPerformance,
   verifyPerformanceRecord,
   performanceSummary,
+  inspectPerformanceRecord,
+  JOURNEY_PERFORMANCE_LIMITS,
 } from '../journey/performance.mjs';
 import { emptyJourneyPictures } from '../journey/pictures.mjs';
 import { createMediaPreparation } from '../ui/media-preparation.mjs';
@@ -857,4 +860,324 @@ test('final record publication still requires its own admitted synchronous work'
     /did not run work/,
   );
   assert.throws(() => late(), /exactly once/);
+});
+
+test('optional export owns the terminal projection but waits to checksum until admitted', async (t) => {
+  const run = createRun(level),
+    recorder = createRecorder(level);
+  for (let tick = 0; tick < 600 && run.status === 'running'; tick++) {
+    const input = { direction: 'down' };
+    stepRun(run, input, FIXED_DT);
+    recordInput(recorder, input);
+  }
+  const expected = exportReplay(recorder, run),
+    media = createMediaPreparation();
+  t.after(() => media.close());
+  media.setPhase('playing');
+  let hashes = 0;
+  const asUintN = BigInt.asUintN;
+  t.mock.method(BigInt, 'asUintN', (...args) => {
+    hashes++;
+    return asUintN(...args);
+  });
+  let settled = false;
+  const pending = exportReplayAsync(recorder, run, {
+    scheduleChunk: (work, options) => media.run('main', work, options),
+  }).then((value) => {
+    settled = true;
+    return value;
+  });
+  await until(() => media.snapshot().queued === 1);
+  assert.equal(hashes, 0, 'the immediate bounded projection must not calculate any checkpoint');
+  assert.equal(settled, false);
+  run.enemies[0].x += 1;
+  run.level.goal.coverage = 0.91;
+  recorder.segments[0].input.direction = 'left';
+  recorder.build = 'later';
+  media.setPhase('paused');
+  const observed = await pending;
+  assert(hashes > 0, 'the real checksum runs only inside admission');
+  assert.equal(JSON.stringify(observed), JSON.stringify(expected));
+  assert.equal(verifyReplay(observed).match, true);
+});
+
+test('optional export preserves recording guards, cancellation and exact-once work ownership', async (t) => {
+  const run = createRun(level),
+    recorder = createRecorder(level),
+    media = createMediaPreparation();
+  t.after(() => media.close());
+  media.setPhase('playing');
+  const controller = new AbortController();
+  const aborted = exportReplayAsync(recorder, run, {
+    signal: controller.signal,
+    scheduleChunk: (work, options) => media.run('main', work, options),
+  });
+  const rejection = assert.rejects(aborted, { name: 'AbortError' });
+  await until(() => media.snapshot().queued === 1);
+  controller.abort();
+  await rejection;
+  assert.equal(media.snapshot().queued, 0);
+  let called = false;
+  recorder.ticks = 1;
+  await assert.rejects(
+    exportReplayAsync(recorder, run, {
+      scheduleChunk: () => {
+        called = true;
+      },
+    }),
+    /Recorder tick count differs/,
+  );
+  assert.equal(called, false);
+  recorder.ticks = 0;
+  let late;
+  await assert.rejects(
+    exportReplayAsync(recorder, run, {
+      scheduleChunk: (work) => {
+        late = work;
+      },
+    }),
+    /did not invoke work/,
+  );
+  assert.throws(late, /exactly once/);
+  await assert.rejects(
+    exportReplayAsync(recorder, run, {
+      scheduleChunk: (work) => {
+        work();
+        try {
+          work();
+        } catch {}
+      },
+    }),
+    /exactly once/,
+  );
+  const expected = exportReplay(recorder, run);
+  assert.deepEqual(await exportReplayAsync(recorder, run), expected);
+  assert.deepEqual(
+    await exportReplayAsync(recorder, run, { scheduleChunk: (work) => work() }),
+    expected,
+  );
+});
+
+test('actual Solo opening ownership publishes the immutable campaign identity used by terminal receipts', async () => {
+  const { createOpeningCandidates } = await import('../content-design/horizon-candidates.mjs');
+  const { createEncounterSoloHost } = await import('../content-design/encounter-host.mjs');
+  const { campaignKey } = await import('../library.mjs');
+  const { themes } = JSON.parse(
+    await readFile(new URL('../content-design/themes.json', import.meta.url)),
+  );
+  const host = createEncounterSoloHost(createOpeningCandidates({ artwork: true }), { themes });
+  {
+    const mission = host.catalog.missions.find((row) => row.levelId === 'first-return');
+    assert(mission);
+    const frozen = (value) => {
+      if (!value || typeof value !== 'object') return;
+      assert(Object.isFrozen(value));
+      for (const descriptor of Object.values(Object.getOwnPropertyDescriptors(value))) {
+        assert(Object.hasOwn(descriptor, 'value'));
+        frozen(descriptor.value);
+      }
+    };
+    for (const difficulty of ['gentle', 'standard', 'expert']) {
+      const accepted = host.select(mission, difficulty);
+      assert(host.owns(accepted));
+      frozen(accepted.campaign);
+      assert.equal(accepted.executionKey, campaignKey(accepted.campaign));
+      assert.equal(host.owns({ ...accepted, executionKey: 'forged' }), false);
+      const draft = structuredClone(accepted.campaign);
+      draft.levels[0].rules.lives++;
+      assert.notEqual(campaignKey(draft), accepted.executionKey);
+      draft.levels[0].width = -1;
+      assert.throws(() => campaignKey(draft));
+    }
+  }
+});
+
+test('optional export preserves every versioned checkpoint section and exact replay bytes', async () => {
+  const { prepareRunningEnemyLevel } = await import('../hunt/running-enemies.mjs');
+  const { createHuntTrainingCandidates } = await import(
+    '../content-design/hunt-training-candidates.mjs'
+  );
+  const { compileContentProject, resolveMission } = await import('../content-design/project.mjs');
+  const levels = [];
+  for (const version of [1, 3, 4, 5, 6, 7])
+    levels.push({
+      ...structuredClone(level),
+      version: `xonix-level.v${version}`,
+      width: version >= 3 ? 72 : 48,
+      ...(version >= 2 ? { encounter: null } : {}),
+      ...(version >= 4 ? { classic: { version: 'classic.v1', terrain: [], powerups: [] } } : {}),
+      ...(version >= 5 ? { foundations: [] } : {}),
+      ...(version >= 6 ? { relayGates: { version: 'relay-gates.v1', gates: [] } } : {}),
+      ...(version >= 7
+        ? { directionalFields: { version: 'directional-fields.v1', zones: [] } }
+        : {}),
+    });
+  const encounterSource = JSON.parse(
+    await readFile(
+      new URL('../../authoring/library/sentinel-relay/proposedpack-source.json', import.meta.url),
+    ),
+  );
+  levels.push(encounterSource.campaigns[0].levels[0]);
+  const { createSentinelCandidates } = await import('../content-design/sentinel-candidates.mjs');
+  const sentinels = compileContentProject(createSentinelCandidates({ artwork: false }));
+  levels.push(
+    resolveMission(sentinels, sentinels.missions[0].id, { mode: 'solo', difficulty: 'standard' })
+      .level,
+  );
+  const project = compileContentProject(createHuntTrainingCandidates({ artwork: false }));
+  const hunt = resolveMission(project, 'hunt-final-roundup', {
+    mode: 'solo',
+    difficulty: 'standard',
+  }).level;
+  levels.push(hunt);
+  const snake = {
+    ...hunt,
+    version: 'xonix-level.v11',
+    snake: {
+      version: 'snake-hunt.v1',
+      initialLength: 6,
+      growthPerCatch: 2,
+      maxLength: 24,
+      shedOnReturn: 0,
+      friendlyTail: 'self',
+      bonus: 'chain',
+      chainWindowTicks: 600,
+      order: [],
+    },
+  };
+  levels.push(prepareRunningEnemyLevel(level), snake);
+  for (const generation of ['pursuit-goals.v1', 'pursuit-goals.v2'])
+    for (const source of [hunt, snake])
+      levels.push(prepareRunningEnemyLevel(source, { style: 'varied', generation }));
+  const seen = new Set();
+  for (const source of levels) {
+    const run = createRun(source),
+      recorder = createRecorder(source);
+    for (let tick = 0; tick < 12; tick++) {
+      const input = { direction: null };
+      stepRun(run, input, FIXED_DT);
+      recordInput(recorder, input);
+    }
+    const expected = exportReplay(recorder, run);
+    let execute;
+    const pending = exportReplayAsync(recorder, run, {
+      scheduleChunk: (work) =>
+        new Promise((resolve) => {
+          execute = () => {
+            work();
+            resolve();
+          };
+        }),
+    });
+    run.tick++;
+    run.cells[0] = 0;
+    recorder.segments[0].ticks++;
+    execute();
+    const result = await pending;
+    assert.equal(JSON.stringify(result), JSON.stringify(expected), source.version);
+    assert.equal(verifyReplay(result).match, true, source.version);
+    seen.add(source.version);
+  }
+  assert.deepEqual(
+    [...seen].sort(),
+    Array.from({ length: 15 }, (_, i) => `xonix-level.v${i + 1}`).sort(),
+  );
+});
+
+for (const change of ['clear', 'dispose'])
+  test(`Journey ${change} during queued optional export cannot capture or write stale evidence`, async (t) => {
+    const f = inspectionFixture(t);
+    const run = verifyReplay(f.input.replay).state;
+    const recorder = createRecorder(
+      f.input.replay.level,
+      f.input.replay.options,
+      f.input.replay.build,
+    );
+    for (const key of ['segments', 'releaseAfter', 'ticks'])
+      recorder[key] = structuredClone(f.input.replay[key]);
+    f.media.setPhase('playing');
+    const pending = exportReplayAsync(recorder, run, {
+      scheduleChunk: (work, request) => f.media.run('main', work, request),
+    }).then((replay) => f.controller.capture({ ...f.input, replay }));
+    const rejected = assert.rejects(
+      pending,
+      change === 'dispose' ? /unavailable/ : /exact accepted clear/,
+    );
+    await until(() => f.media.snapshot().queued === 1);
+    if (change === 'dispose') f.controller.dispose();
+    else
+      f.profile.clears.solo[f.input.missionId] = {
+        ...f.profile.clears.solo[f.input.missionId],
+        runId: 'replacement',
+      };
+    f.media.setPhase('paused');
+    await rejected;
+    assert.equal(f.controller.snapshot().records.length, 0);
+    assert.equal(f.media.snapshot().queued, 0);
+  });
+
+test('actual optional Journey caller rejects only the existing array overflow before copying', async () => {
+  const source = await readFile(new URL('../app.mjs', import.meta.url), 'utf8');
+  const start = source.indexOf('const optionalReplay =');
+  const end = source.indexOf(';', start);
+  assert(start > 0 && end > start);
+  const prepare = new Function(
+    'recorder',
+    'acceptedRun',
+    'scheduleOptionalReplayChunk',
+    'exportReplayAsync',
+    'JOURNEY_PERFORMANCE_LIMITS',
+    `return (${source.slice(start + 'const optionalReplay ='.length, end)});`,
+  );
+  const run = createRun(level),
+    recorder = createRecorder(level);
+  const limit = JOURNEY_PERFORMANCE_LIMITS.arrayItems;
+  assert.equal(limit, 4096, 'The existing inspector limit must not change.');
+  for (let tick = 0; tick <= limit; tick++) {
+    if (tick > 0) {
+      const input = { direction: tick % 2 ? 'left' : 'right' };
+      stepRun(run, input, FIXED_DT);
+      recordInput(recorder, input);
+    }
+  }
+  const context = {
+    mode: 'solo',
+    missionId: 'one',
+    runId: 'one',
+    difficulty: 'standard',
+    gameplayId: '0123456789abcdef',
+  };
+  const expected = exportReplay(recorder, run);
+  assert.equal(recorder.segments.length, limit);
+  assert.deepEqual(inspectPerformanceRecord({ ...context, replay: expected }).replay, expected);
+  assert.deepEqual(
+    await prepare(recorder, run, (work) => work(), exportReplayAsync, JOURNEY_PERFORMANCE_LIMITS),
+    expected,
+  );
+  const command = { direction: 'left' };
+  stepRun(run, command, FIXED_DT);
+  recordInput(recorder, command);
+  const full = exportReplay(recorder, run);
+  assert.equal(recorder.segments.length, limit + 1);
+  assert.equal(
+    verifyReplay(full).match,
+    true,
+    'Public replay export retains its original larger limit.',
+  );
+  assert.throws(() => inspectPerformanceRecord({ ...context, replay: full }));
+  let copied = 0;
+  await assert.rejects(
+    prepare(
+      recorder,
+      run,
+      () => assert.fail('must not admit'),
+      () => {
+        copied++;
+        return Promise.resolve(full);
+      },
+      JOURNEY_PERFORMANCE_LIMITS,
+    ),
+    /array budget/,
+  );
+  assert.equal(copied, 0);
 });

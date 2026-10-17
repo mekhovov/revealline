@@ -7,13 +7,14 @@ export const JOURNEY_PERFORMANCE_LIMITS = Object.freeze({
   records: 48,
   bytes: 2 * 1024 * 1024,
   recordBytes: 512 * 1024,
+  arrayItems: 4096,
   totalTicks: 216000,
 });
 const limits = {
   maxBytes: JOURNEY_PERFORMANCE_LIMITS.bytes,
   maxNodes: 200000,
   maxDepth: 32,
-  maxArray: 4096,
+  maxArray: JOURNEY_PERFORMANCE_LIMITS.arrayItems,
   maxString: 4096,
 };
 const text = (value) => typeof value === 'string' && value.length > 0 && value.length <= 1024;

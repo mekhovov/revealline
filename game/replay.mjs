@@ -428,8 +428,10 @@ function authoritativeSections(state, versions) {
 /** Covers future-affecting simulation state, including action latches. */
 export function authoritativeCheckpoint(state) {
   const versions = resolveVersions({ levelVersion: state.level.version, ruleset: state.ruleset });
-  const projected = authoritativeSections(state, versions),
-    sections = {};
+  return checkpointForProjection(authoritativeSections(state, versions), versions);
+}
+function checkpointForProjection(projected, versions) {
+  const sections = {};
   for (const name of sectionNames(versions)) sections[name] = checksum(projected[name]);
   return { algorithm: versions.checkpointAlgorithm, hash: checksum(sections), sections };
 }
@@ -487,7 +489,7 @@ export function recordRelease(recorder) {
   return recorder;
 }
 
-export function exportReplay(recorder, state) {
+function replayExportSource(recorder, state) {
   const versions = resolveVersions({
     levelVersion: recorder.level.version,
     replayVersion: recorder.version,
@@ -507,18 +509,69 @@ export function exportReplay(recorder, state) {
     );
   if (canonical(pick(state, Object.keys(recorder._identity))) !== canonical(recorder._identity))
     reject('Recorder and run identities differ.', 'recording-mismatch');
-  return boundedCopy({
-    version: versions.replayVersion,
-    build: recorder.build,
-    ruleset: versions.ruleset,
-    level: recorder.level,
-    options: recorder.options,
-    segments: recorder.segments,
-    releaseAfter: recorder.releaseAfter,
-    ticks: recorder.ticks,
-    summary: getSummary(state),
-    checkpoint: authoritativeCheckpoint(state),
-  });
+  return {
+    versions,
+    record: {
+      version: versions.replayVersion,
+      build: recorder.build,
+      ruleset: versions.ruleset,
+      level: recorder.level,
+      options: recorder.options,
+      segments: recorder.segments,
+      releaseAfter: recorder.releaseAfter,
+      ticks: recorder.ticks,
+      summary: getSummary(state),
+    },
+  };
+}
+export function exportReplay(recorder, state) {
+  const { record } = replayExportSource(recorder, state);
+  return boundedCopy({ ...record, checkpoint: authoritativeCheckpoint(state) });
+}
+
+/** Optional collection owns the exact terminal inputs before yielding. Required
+ * public/save exports keep the synchronous exportReplay contract above. */
+export async function exportReplayAsync(recorder, state, { signal, scheduleChunk } = {}) {
+  checkAbort(signal);
+  if (scheduleChunk === undefined) return exportReplay(recorder, state);
+  if (typeof scheduleChunk !== 'function') reject('scheduleChunk must be a function.');
+  const source = replayExportSource(recorder, state),
+    record = boundedCopy(source.record),
+    names = sectionNames(source.versions),
+    projected = authoritativeSections(state, source.versions),
+    owned = boundedCopy(Object.fromEntries(names.map((name) => [name, projected[name]])));
+  // This captures only the authoritative projection, not the entire mutable run.
+  // Canonical checkpoint hashing and final export serialization wait for the
+  // existing owner; no later mutation or replacement can alter this snapshot.
+  let result,
+    called = false,
+    retired = false,
+    failure;
+  try {
+    await scheduleChunk(
+      () => {
+        try {
+          if (called || retired) reject('Replay export admission must invoke work exactly once.');
+          called = true;
+          checkAbort(signal);
+          result = boundedCopy({
+            ...record,
+            checkpoint: checkpointForProjection(owned, source.versions),
+          });
+        } catch (error) {
+          failure = error;
+          throw error;
+        }
+      },
+      { signal },
+    );
+    if (failure) throw failure;
+    if (!called) reject('Replay export admission did not invoke work.');
+    checkAbort(signal);
+    return result;
+  } finally {
+    retired = true;
+  }
 }
 
 function snapshotReplaySource(source) {
