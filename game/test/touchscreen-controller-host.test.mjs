@@ -1,6 +1,7 @@
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { readFileSync } from 'node:fs';
 import { soloPage, settle, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
@@ -25,8 +26,8 @@ async function classicPage(t, options = {}) {
   // Cold released-picture verification can outlast five seconds on a busy CI
   // worker. Readiness stays mandatory before any synchronous input assertion.
   const page = await soloPage(t, { initialReadyTimeoutMs: 30000, ...options });
-  page.$('library-button').click();
-  page.doc.querySelector('[data-library-panel="packs"]').click();
+  await activateHostAction(page.$('library-button'));
+  await activateHostAction(page.doc.querySelector('[data-library-panel="packs"]'));
   assert.equal(page.$('library-dialog').open, true);
   assert.equal(page.$('library-packs').hidden, false);
   const arcade = structuredClone(classic);
