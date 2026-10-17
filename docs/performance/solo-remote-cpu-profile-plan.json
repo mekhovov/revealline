@@ -199,8 +199,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 52196,
-      "sha256": "f9514d7324409bf4c99d1fad9a808aeb597e908f1cc3426f0e322f91696d08c6"
+      "bytes": 52211,
+      "sha256": "42750c0bb862b5ca28dfb8394b6381694418b0ed9240a70f006652fcfde28235"
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",
