@@ -9,12 +9,12 @@ import {
 } from './aircraft-physics.mjs';
 
 export const AIRCRAFT_PRESET_FORMAT = 'FpvAircraftPreset.v1';
-export const AIRCRAFT_CATALOG_REVISION = 1;
+export const AIRCRAFT_CATALOG_REVISION = 2;
 const freeze = (value) => {
   for (const child of Object.values(value)) if (child && typeof child === 'object') freeze(child);
   return Object.freeze(value);
 };
-const source = (url, title) => ({ url, title, checked: '2026-10-17' });
+const source = (url, title, checked = '2026-10-17') => ({ url, title, checked });
 const beta = (slug) => `https://betafpv.com/products/${slug}`;
 const lava1 = source(beta('lava-ii-1s-battery'), 'LAVA II 1S specifications');
 const manufacturer = (sources, note = '') => ({ kind: 'manufacturer', sources, note });
@@ -127,6 +127,60 @@ const references = [
     sources: [
       source(beta('meteor85-brushless-whoop-quadcopter-2022'), 'Meteor85 specifications'),
       source(beta('lava-2s-3s-4s-450mah-75c-battery-2pcs'), 'LAVA 450 mAh specifications'),
+    ],
+  },
+  {
+    id: 'mobula8-analog-2023',
+    revision: 1,
+    name: 'Happymodel Mobula8',
+    variant: '2023 · analog · SPI ELRS · 11000 KV',
+    category: 'whoop',
+    wheelbase: 85,
+    propeller: 52.17,
+    motor: 'EX1103 11000 KV',
+    prop: 'Gemfan Hurricane 2023 three-blade',
+    dry: 43,
+    batteryMass: 26.1,
+    cells: 2,
+    capacity: 450,
+    chemistry: 'lihv',
+    batteryName: 'LAVA 2S 450 mAh · SIM-selected pack',
+    dimensions: [120, 50, 120],
+    thrust: 0.75,
+    lag: 0.02,
+    resistance: 0.07,
+    current: 15,
+    tilt: 25,
+    hardware: {
+      frame: 'Mobula8 85 mm ducted frame · transparent black',
+      flightController: 'X12 ELRS V2.1 · STM32F411 · ICM20689 or ICM42688P',
+      esc: 'Integrated BLHeli_S 4-in-1 · 12 A per channel',
+      receiver: 'Integrated SPI ExpressLRS 2.4 GHz',
+      camera: 'Caddx ANT 1200 TVL · 14×14 mm',
+      videoTransmitter: 'Integrated 5.8 GHz OpenVTX',
+      battery:
+        'SIM-selected LAVA 2S 450 mAh LiHV XT30, 63×15.5×13.5 mm; aircraft manufacturer recommends 2S 450/550/650 mAh but supplies no battery.',
+      revision:
+        'Frozen 2023 analog SPI ELRS bill of materials; later X12 V2.3 and digital O3/O4 variants are separate aircraft.',
+    },
+    propellerNote:
+      'Uses the installed Gemfan 2023 diameter of 52.17 mm in the aircraft specification. The separate 2023 frame page gives a conflicting 51 mm maximum; no exact duct clearance is claimed.',
+    sources: [
+      source(
+        'https://www.happymodel.cn/index.php/2023/04/29/happymodel-mobula8-1-2s-85mm-micro-fpv-whoop-drone/',
+        'Mobula8 2023 analog SPI ELRS component specification',
+        '2026-10-18',
+      ),
+      source(
+        beta('lava-2s-3s-4s-450mah-75c-battery-2pcs'),
+        'LAVA 2S 450 mAh reference-pack specification',
+        '2026-10-18',
+      ),
+      source(
+        'https://www.happymodel.cn/index.php/2023/04/28/mobula8-frame-85mm-brushless-whoop-frame/',
+        'Mobula8 frame specification and conflicting nominal propeller limit',
+        '2026-10-18',
+      ),
     ],
   },
   {
@@ -381,7 +435,8 @@ const catalog = freeze(
     return {
       format: AIRCRAFT_PRESET_FORMAT,
       id: r.id,
-      revision: AIRCRAFT_CATALOG_REVISION,
+      // Catalog additions do not revise existing aircraft or replay identities.
+      revision: r.revision ?? 1,
       name: r.name,
       variant: r.variant,
       category: r.category,
@@ -390,6 +445,7 @@ const catalog = freeze(
       propellerDiameterMm: r.propeller,
       motor: r.motor,
       propeller: r.prop,
+      ...(r.hardware ? { hardware: r.hardware } : {}),
       envelopeMm: { width: r.dimensions[0], height: r.dimensions[1], length: r.dimensions[2] },
       battery: {
         name: r.batteryName,
@@ -441,7 +497,7 @@ const catalog = freeze(
             : manufacturer(batterySource),
         flyingMass: calculated('Assembled aircraft + explicit receiver allowance + one battery.'),
         wheelbase: manufacturer([0]),
-        propeller: manufacturer([0]),
+        propeller: manufacturer(r.propellerNote ? [0, 2] : [0], r.propellerNote ?? ''),
         motor: manufacturer([0]),
         geometry: estimated(
           'Body envelope and rotor arrangement based on aircraft class and published wheelbase; not CAD-measured.',

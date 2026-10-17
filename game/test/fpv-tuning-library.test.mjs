@@ -42,6 +42,7 @@ test('built-in aircraft selection atomically copies independent rates and physic
   const storage = memory(),
     store = createTuningLibraryStore({ storage });
   const before = store.snapshot();
+  const catalogBefore = listAircraftPresets().map((preset) => preset.id);
   await store.createPresetSetup({
     presetId: 'meteor75-analog-2022',
     setupId: 'meteor',
@@ -64,7 +65,10 @@ test('built-in aircraft selection atomically copies independent rates and physic
   assert.equal(effective.advanced.aircraft.battery.depletion, false);
   assert.deepEqual(value.setups[1].preset, { id: 'meteor75-analog-2022', revision: 1 });
   assert.equal(value.setups.length, 2, 'Built-ins do not occupy saved setup slots until selected');
-  assert.equal(listAircraftPresets().length, 12);
+  assert.deepEqual(
+    listAircraftPresets().map((preset) => preset.id),
+    catalogBefore,
+  );
   const restored = createTuningLibraryStore({ storage: memory() });
   await restored.restore(store.export());
   assert.deepEqual(restored.effective(), effective);
