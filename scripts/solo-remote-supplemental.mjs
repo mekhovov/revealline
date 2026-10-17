@@ -22,14 +22,44 @@ export const FIRST_RETURN_PHASES = Object.freeze({
   'first-return-next': 'eb859ade98235a43c22858bcf5748daa8d951bd9aa1790f26fc13787c77b8fb5',
 });
 const firstReturn = (plan) => plan?.sourceCohort === FIRST_RETURN_COHORT;
+export const LARGE_PROFILE_COHORT = 'large-profile-main8b-candidatea6e';
+const largeProfile = (plan) => plan?.sourceCohort === LARGE_PROFILE_COHORT;
+const LARGE_PROFILE_SOURCE = {
+  baseline: FIRST_RETURN_SOURCE.baseline,
+  candidate: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
+};
+export const LARGE_PROFILE_PHASE = Object.freeze({
+  recipe: {
+    path: 'docs/performance/fixtures/solo-remote-supplemental/large-profile.qualification.fixture',
+    bytes: 4804,
+    sha256: '228647a8fbceaf368872adecc8ee88c6b4fc57f55567ea9d8ea79ef4ee87f30e',
+    stagedName: 'scenario.qualification.json',
+  },
+  upload: {
+    path: 'docs/performance/fixtures/solo-remote-supplemental/large-profile.library.fixture',
+    bytes: 2788121,
+    sha256: 'a71209967e8c3e3b687a0488075d59301a7adea62ea43fa60eba7a83d7df4e07',
+    stagedName: 'large-profile.library.json',
+  },
+  scenarioTimeoutMs: 360000,
+});
 function sources(plan) {
   assert(
-    plan?.sourceCohort === undefined || firstReturn(plan),
+    plan?.sourceCohort === undefined || firstReturn(plan) || largeProfile(plan),
     'Unknown supplemental source cohort',
   );
-  return firstReturn(plan) ? FIRST_RETURN_SOURCE : SOURCE;
+  return largeProfile(plan)
+    ? LARGE_PROFILE_SOURCE
+    : firstReturn(plan)
+      ? FIRST_RETURN_SOURCE
+      : SOURCE;
 }
-const phases = (plan) => (firstReturn(plan) ? FIRST_RETURN_PHASES : SUPPLEMENTAL_PHASES);
+const phases = (plan) =>
+  largeProfile(plan)
+    ? { 'large-profile': LARGE_PROFILE_PHASE.recipe.sha256 }
+    : firstReturn(plan)
+      ? FIRST_RETURN_PHASES
+      : SUPPLEMENTAL_PHASES;
 function firstReturnPhase(name) {
   const retry = name === 'first-return-retry';
   assert(retry || name === 'first-return-next');
@@ -52,9 +82,19 @@ function firstReturnPhase(name) {
   };
 }
 function validateFirstReturnSources(plan) {
-  assert.equal(plan.candidate.tree, 'fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508');
+  assert.equal(
+    plan.candidate.tree,
+    largeProfile(plan)
+      ? '6b13627e324f695b6ee8d9f2dee2eeeb7217c332'
+      : 'fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508',
+  );
   assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
-  assert.equal(plan.runtimeRevision, '488eae03aee7f58dd5837451363015888faa429f');
+  assert.equal(
+    plan.runtimeRevision,
+    largeProfile(plan)
+      ? '32abd322afd8243e4537ce4784e2f78ee45ecbec'
+      : '488eae03aee7f58dd5837451363015888faa429f',
+  );
   assert(!plan.baseline.publishVerifiedNormal && !plan.baseline.publisher);
   // Keep matrix declaration standalone. The common runner subsequently calls
   // validateBaselineReuse and fully reads both archives, ready proof and source.
@@ -102,23 +142,45 @@ function validateRelease(plan) {
   assert.equal(plan.release?.performanceQualification, 'excluded');
   assert.equal(
     plan.release?.scope,
-    firstReturn(plan) ? 'first-return-native-preflight' : 'supplemental-native-preflight',
+    largeProfile(plan)
+      ? 'large-profile-public-import-diagnostics'
+      : firstReturn(plan)
+        ? 'first-return-native-preflight'
+        : 'supplemental-native-preflight',
   );
-  assert.equal(plan.release?.predecessorRun, 38985941469);
+  assert.equal(plan.release?.predecessorRun, largeProfile(plan) ? 39008793892 : 38985941469);
   assert.equal(plan.release?.candidateRevision, sources(plan).candidate);
   for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
     assert.equal(plan.release[key], true);
   const previous = Object.keys(SUPPLEMENTAL_PHASES).indexOf(plan.phase) - 1;
   assert.equal(
     plan.release.previousPhase,
-    firstReturn(plan)
-      ? 'latency-long-rail-anchored'
-      : plan.phase === 'latency-long-rail-anchored'
-        ? 'latency-long-rail'
-        : previous < 0
-          ? 'reviewed-first-eight-diagnostic'
-          : Object.keys(SUPPLEMENTAL_PHASES)[previous],
+    largeProfile(plan)
+      ? 'final-source-package-admission'
+      : firstReturn(plan)
+        ? 'latency-long-rail-anchored'
+        : plan.phase === 'latency-long-rail-anchored'
+          ? 'latency-long-rail'
+          : previous < 0
+            ? 'reviewed-first-eight-diagnostic'
+            : Object.keys(SUPPLEMENTAL_PHASES)[previous],
   );
+  if (largeProfile(plan)) {
+    assert.equal(plan.release.sourceCohort, LARGE_PROFILE_COHORT);
+    assert.equal(plan.release.baselineRevision, LARGE_PROFILE_SOURCE.baseline);
+    assert.deepEqual(plan.release.diagnosticPredecessor, {
+      run: 39008793892,
+      conclusion: 'failure',
+      nativeObservations: 0,
+      allOwnersClosed: true,
+      allFailuresRetained: true,
+    });
+    assert(
+      plan.release.evidence.some(
+        (row) => row.runId === 39008793892 && row.artifactId === 12092316097,
+      ),
+    );
+  }
   if (firstReturn(plan)) {
     assert.equal(plan.release.baselineRevision, FIRST_RETURN_SOURCE.baseline);
     assert.deepEqual(plan.release.diagnosticPredecessor, {
@@ -163,8 +225,12 @@ function validateRelease(plan) {
   }
 }
 function expectedRows(plan, engine) {
-  return ['baseline', 'candidate'].map((source) => ({
-    id: `${plan.phase}-${engine}-${source}`,
+  const roles =
+    largeProfile(plan) && (plan.repetition + engines.indexOf(engine)) % 2 === 0
+      ? ['candidate', 'baseline']
+      : ['baseline', 'candidate'];
+  return roles.map((source) => ({
+    id: `${plan.phase}-${engine}${largeProfile(plan) ? `-r${plan.repetition}` : ''}-${source}`,
     kind: 'supplemental',
     source,
     engine,
@@ -182,7 +248,16 @@ export function validateSupplementalPlan(plan) {
   assert.equal(plan.candidate.revision, source.candidate);
   assert.equal(plan.baseline.revision, source.baseline);
   assert(plan.baseline.reusableArtifact);
-  if (firstReturn(plan)) validateFirstReturnSources(plan);
+  if (firstReturn(plan) || largeProfile(plan)) validateFirstReturnSources(plan);
+  if (largeProfile(plan)) {
+    assert.equal(plan.phase, 'large-profile');
+    assert([1, 2, 3].includes(plan.repetition));
+    assert.equal(
+      plan.hitchJournal,
+      undefined,
+      'This correctness lane does not claim complete timing coverage',
+    );
+  }
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
   assert.equal(plan.cpu, 1);
@@ -197,6 +272,10 @@ export function validateSupplementalPlan(plan) {
   assert.deepEqual(plan.rows, expectedRows(plan, plan.engine));
   assert.deepEqual(Object.keys(plan.phases), Object.keys(phaseHashes));
   for (const [name, phase] of Object.entries(plan.phases)) {
+    if (largeProfile(plan)) {
+      assert.deepEqual(phase, LARGE_PROFILE_PHASE);
+      continue;
+    }
     if (firstReturn(plan)) assert.deepEqual(phase, firstReturnPhase(name));
     assert.equal(phase.recipe.sha256, phaseHashes[name]);
     assert.equal(phase.scenarioTimeoutMs, 240000);
@@ -229,26 +308,44 @@ export function validateSupplementalPlan(plan) {
   for (const ref of inputReferences(plan)) {
     assert(/^(scripts|game|docs)\//.test(ref.path) && !ref.path.split('/').includes('..'));
     assert.match(ref.sha256, /^[a-f0-9]{64}$/);
-    assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < MiB);
+    // Only this exact retained synthetic profile exceeds the existing per-file
+    // limit. The original row/aggregate evidence caps remain unchanged.
+    const maximum =
+      largeProfile(plan) && ref.path === LARGE_PROFILE_PHASE.upload.path ? 4 * MiB : MiB;
+    assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < maximum);
   }
   return plan;
 }
-export function bindSupplementalJob(manifest, engine) {
+export function bindSupplementalJob(manifest, engine, repetition) {
   assert.equal(manifest.format, 'SoloHostedSupplementalManifestV1');
   assert.deepEqual(manifest.engines, engines);
   const plan = structuredClone(manifest);
   delete plan.engines;
   plan.format = 'SoloHostedSupplementalPlanV1';
   plan.engine = engine;
+  if (largeProfile(plan)) {
+    assert.deepEqual(plan.repetitions, [1, 2, 3]);
+    delete plan.repetitions;
+    plan.repetition = Number(repetition);
+  }
   plan.rows = expectedRows(plan, engine);
   return validateSupplementalPlan(plan);
 }
 export function supplementalMatrix(manifest) {
   return {
-    include: engines.map((engine) => {
-      const plan = bindSupplementalJob(manifest, engine);
-      return { phase: plan.phase, engine, jobMinutes: 130, stepMinutes: 78, outerSeconds: 4620 };
-    }),
+    include: engines.flatMap((engine) =>
+      (largeProfile(manifest) ? [1, 2, 3] : [undefined]).map((repetition) => {
+        const plan = bindSupplementalJob(manifest, engine, repetition);
+        return {
+          phase: plan.phase,
+          engine,
+          ...(largeProfile(plan) ? { repetition } : {}),
+          jobMinutes: 130,
+          stepMinutes: 78,
+          outerSeconds: 4620,
+        };
+      }),
+    ),
   };
 }
 function inputReferences(plan) {
@@ -299,6 +396,16 @@ export async function prepareSupplementalMode(ctx) {
   await verifyInputs(ctx);
   await ctx.ensureBaseline();
   assert.equal(ctx.admitted.status, 'passed');
+  if (largeProfile(ctx.plan))
+    for (const role of ['baseline', 'candidate']) {
+      const identity = ctx.admitted.artifacts[role];
+      assert.equal(identity.sourceRevision, sources(ctx.plan)[role]);
+      assert.equal(identity.sourceTree, ctx.plan[role].tree);
+      const archive =
+        role === 'candidate' ? ctx.plan.candidate : ctx.plan.baseline.reusableArtifact;
+      assert.equal(identity.manifestSHA256, archive.manifestSHA256);
+      assert.deepEqual(identity.archiveIdentity, archive.inner);
+    }
   const input = join(ctx.work, 'supplemental-inputs');
   await mkdir(input);
   const phase = ctx.plan.phases[ctx.plan.phase];
@@ -320,7 +427,10 @@ export async function prepareSupplementalMode(ctx) {
 }
 export function validateSupplementalScenario(plan, scenario) {
   assert.equal(scenario.timeoutMs, plan.phases[plan.phase].scenarioTimeoutMs);
-  assert.equal(scenario.kind, firstReturn(plan) ? 'lifecycle' : 'performance');
+  assert.equal(
+    scenario.kind,
+    firstReturn(plan) || largeProfile(plan) ? 'lifecycle' : 'performance',
+  );
   assert(scenario.expectedReplayDefinition);
   if (firstReturn(plan)) {
     assert.equal(scenario.evidenceStorage, undefined, 'Short preflights retain inline evidence');
@@ -330,6 +440,15 @@ export function validateSupplementalScenario(plan, scenario) {
       plan.phase === 'first-return-retry'
         ? { closures: 1, maximumTrailCells: 30, maximumClaimedCells: 800 }
         : undefined,
+    );
+  } else if (largeProfile(plan)) {
+    assert.equal(scenario.id, 'large-profile-public-import-and-reload');
+    assert.equal(scenario.evidenceStorage, undefined);
+    assert.equal(scenario.resourceRules, undefined);
+    assert.equal(scenario.actions.filter((action) => action.type === 'upload').length, 1);
+    assert.equal(
+      scenario.actions.find((action) => action.type === 'upload').file,
+      LARGE_PROFILE_PHASE.upload.stagedName,
     );
   } else assert(scenario.replayRequirements);
   return scenario;
@@ -391,7 +510,7 @@ export function supplementalAssessment(plan, row, raw, command, browserVersion) 
     numericalRecorded &&
     command.exitCode === expectedExit &&
     raw?.format === 'SoloQualificationReportV1' &&
-    raw.kind === (firstReturn(plan) ? 'lifecycle' : 'performance') &&
+    raw.kind === (firstReturn(plan) || largeProfile(plan) ? 'lifecycle' : 'performance') &&
     raw.scenarioStatus === 'pass' &&
     raw.workProbe === true &&
     raw.cadenceProtocol === 'settled120' &&
@@ -429,9 +548,11 @@ export function supplementalAssessment(plan, row, raw, command, browserVersion) 
     rawNumericalStatus: numerical ?? 'unobserved',
     performanceQualification: 'excluded',
     firstEightAllCorrectnessPassed: false,
-    scope: firstReturn(plan)
-      ? 'Single public Retry/Next lifecycle preflight only; no long-run, latency or timing qualification. All raw numerical failures retained.'
-      : 'Single recipe preflight only; all raw gates retained, no timing or prerequisite promotion.',
+    scope: largeProfile(plan)
+      ? 'Public import, reload and gameplay with retained synthetic metadata only; exact per-run raw numeric outcomes remain excluded from timing qualification. No large-media library, complete hitch-journal or physical-device claim.'
+      : firstReturn(plan)
+        ? 'Single public Retry/Next lifecycle preflight only; no long-run, latency or timing qualification. All raw numerical failures retained.'
+        : 'Single recipe preflight only; all raw gates retained, no timing or prerequisite promotion.',
   };
 }
 export async function runSupplementalRow(ctx, row, dir, tmp) {
@@ -509,13 +630,13 @@ export async function runSupplementalRow(ctx, row, dir, tmp) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  const [mode, input, output, engine] = process.argv.slice(2);
+  const [mode, input, output, engine, repetition] = process.argv.slice(2);
   const bytes = await readFile(input);
   if (mode === 'matrix-plan')
     process.stdout.write(`matrix=${JSON.stringify(supplementalMatrix(JSON.parse(bytes)))}\n`);
   else {
     assert.equal(mode, 'bind-plan');
-    const plan = bindSupplementalJob(JSON.parse(bytes), engine);
+    const plan = bindSupplementalJob(JSON.parse(bytes), engine, repetition);
     plan.manifestInput = {
       path: resolve(input),
       bytes: bytes.length,
