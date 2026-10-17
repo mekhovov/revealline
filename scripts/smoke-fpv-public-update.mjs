@@ -359,12 +359,16 @@ export async function smokeFPVPublicUpdate({
             window.publicOldController = navigator.serviceWorker.controller;
             await (await navigator.serviceWorker.getRegistration()).update();
           });
-          await page.waitForFunction(
-            async () =>
-              (await navigator.serviceWorker.getRegistration())?.waiting?.state === 'installed',
-            null,
-            { timeout: 180000 },
-          );
+          await page.evaluate(async () => {
+            const deadline = performance.now() + 180000;
+            while (
+              (await navigator.serviceWorker.getRegistration())?.waiting?.state !== 'installed'
+            ) {
+              if (performance.now() > deadline)
+                throw new Error('Updated worker did not enter waiting state');
+              await new Promise((resolve) => setTimeout(resolve, 100));
+            }
+          });
           waiting = await workerStatus(page, base, 'waiting');
           assert.equal(waiting.revision, binding.workers[id]);
           assert.equal(waiting.ready, true);
@@ -379,14 +383,16 @@ export async function smokeFPVPublicUpdate({
           const observer = await context.newPage();
           await observer.goto(new URL('main-deployment.json', root).href);
           await page.close();
-          await observer.waitForFunction(
-            async (base) => {
+          await observer.evaluate(async (base) => {
+            const deadline = performance.now() + 60000;
+            for (;;) {
               const reg = await navigator.serviceWorker.getRegistration(base);
-              return reg?.active?.state === 'activated' && !reg.waiting;
-            },
-            base,
-            { timeout: 60000 },
-          );
+              if (reg?.active?.state === 'activated' && !reg.waiting) return;
+              if (performance.now() > deadline)
+                throw new Error('Updated worker did not activate after scope closed');
+              await new Promise((resolve) => setTimeout(resolve, 100));
+            }
+          }, base);
           assert.equal((await workerStatus(observer, base)).revision, binding.workers[id]);
           retainedCaches = await observer.evaluate(() => caches.keys());
           assert.ok(retainedCaches.some((name) => name.endsWith(saved.oldWorkerRevision)));
@@ -428,6 +434,7 @@ export async function smokeFPVPublicUpdate({
         await page.waitForFunction((key) => localStorage.getItem(key) !== null, libraryKey);
         const backupCheck = await page.evaluate(
           async ({ root, expectedLegacy }) => {
+            const { canonicalJSON } = await import(new URL('game/data-json.mjs', root).href);
             const { createTuningLibraryStore } = await import(
               new URL('optional-practice/civilian-fpv/tuning-library.mjs', root).href
             );
@@ -438,7 +445,7 @@ export async function smokeFPVPublicUpdate({
               new URL('optional-practice/civilian-fpv/radio-profile.mjs', root).href
             );
             const old = createFlightProfileStore({ storage: localStorage }).library();
-            if (JSON.stringify(old) !== JSON.stringify(expectedLegacy))
+            if (canonicalJSON(old) !== canonicalJSON(expectedLegacy))
               throw new Error('Legacy radio/response changed');
             const store = createTuningLibraryStore({
               storage: localStorage,
@@ -450,7 +457,7 @@ export async function smokeFPVPublicUpdate({
               .snapshot()
               .profiles.find((profile) => profile.id === 'public-rates');
             if (existing) {
-              if (JSON.stringify(existing.response) !== JSON.stringify(response))
+              if (canonicalJSON(existing.response) !== canonicalJSON(response))
                 throw new Error('Existing public acceptance profile differs');
             } else
               await store.createProfile({
@@ -466,7 +473,7 @@ export async function smokeFPVPublicUpdate({
               after = JSON.parse(store.export());
             delete before.revision;
             delete after.revision;
-            if (JSON.stringify(before) !== JSON.stringify(after))
+            if (canonicalJSON(before) !== canonicalJSON(after))
               throw new Error('Backup restore changed data');
             return {
               restored: true,
@@ -496,8 +503,8 @@ export async function smokeFPVPublicUpdate({
             .querySelector('.fpv-tuning')
             .textContent.includes('Preview only. Save as a new profile'),
         );
-        const beforeImportCount = await page.evaluate(
-          (key) => JSON.parse(localStorage.getItem(key)).profiles.length,
+        const beforeImportIds = await page.evaluate(
+          (key) => JSON.parse(localStorage.getItem(key)).profiles.map((profile) => profile.id),
           libraryKey,
         );
         await page.getByRole('button', { name: 'Save import as new profile', exact: true }).click();
@@ -509,9 +516,56 @@ export async function smokeFPVPublicUpdate({
               profiles.some((item) => item.provenance && item.response.rates.axes.roll.rate === 88)
             );
           },
-          { key: libraryKey, count: beforeImportCount },
+          { key: libraryKey, count: beforeImportIds.length },
         );
+        const libraryBeforeRevert = await page.evaluate(
+          (key) => JSON.parse(localStorage.getItem(key)),
+          libraryKey,
+        );
+        const importedProfiles = libraryBeforeRevert.profiles.filter(
+          (profile) => !beforeImportIds.includes(profile.id),
+        );
+        assert.equal(importedProfiles.length, 1);
+        const importedProfile = importedProfiles[0];
+        assert.equal(importedProfile.response.rates.axes.roll.rate, 88);
+        assert.ok(importedProfile.provenance);
+        assert.equal(
+          libraryBeforeRevert.profiles.find((profile) => profile.id === 'public-rates').response
+            .rates.axes.roll.rate,
+          90,
+        );
+        await page
+          .getByLabel('Rate profile', { exact: true })
+          .evaluate(async (select, profileId) => {
+            const deadline = performance.now() + 60000;
+            while (select.value !== profileId) {
+              if (performance.now() > deadline)
+                throw new Error('Imported profile did not become the selected editing profile');
+              await new Promise((resolve) => setTimeout(resolve, 100));
+            }
+          }, importedProfile.id);
         await page.getByLabel('Rate profile', { exact: true }).selectOption('public-rates');
+        const rollMaximum = page
+          .getByRole('group', { name: 'Roll', exact: true })
+          .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true });
+        // Import previews are retained per profile as drafts. Selecting the saved
+        // profile restores that draft; explicitly revert before testing its saved rates.
+        assert.equal(await rollMaximum.inputValue(), '880');
+        await page.getByRole('button', { name: 'Revert draft', exact: true }).click();
+        assert.equal(await rollMaximum.inputValue(), '900');
+        assert.deepEqual(
+          await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), libraryKey),
+          libraryBeforeRevert,
+          'Reverting the preview draft changed the saved library',
+        );
+        assert.equal(
+          await page.getByLabel('Camera tilt (degrees)', { exact: true }).inputValue(),
+          '27',
+        );
+        assert.equal(
+          await page.getByLabel('Vertical FOV (degrees)', { exact: true }).inputValue(),
+          '108',
+        );
         await page
           .getByRole('button', { name: 'Advanced reference quad · experimental', exact: true })
           .click();
@@ -562,6 +616,13 @@ export async function smokeFPVPublicUpdate({
           migratedCamera: { tilt: 27, verticalFov: 108 },
           backupCheck,
           cliPatchRateDegreesPerSecond: 880,
+          draftRevert: {
+            savedRateDegreesPerSecond: 900,
+            retainedPreviewRateDegreesPerSecond: 880,
+            revertedRateDegreesPerSecond: 900,
+            importedProfileId: importedProfile.id,
+            savedLibraryUnchanged: true,
+          },
           expectedWorkerURL,
           recordingPath,
           recordingSha256: sha(recordingBytes),

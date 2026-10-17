@@ -17,6 +17,99 @@ No optional-package selector change or optional-package release/promotion is
 needed for direct-route live testing. The repository's existing main-branch
 review and product-release policies still apply.
 
+## Public publication — 17 October 2026
+
+[PR #1561](https://github.com/mekhovov/revealline/pull/1561) delivered implementation
+`eaecd60562917b7cf47d4995af00d561b154debd`. After its 12 non-skipped product
+checks passed, the ordinary repository controller merged it as
+`b2f251dac0d762d476f725b1bc601a2d6d5485a5`. The normal
+[Pages run](https://github.com/mekhovov/revealline/actions/runs/38997742653)
+passed build, deploy and verification; the public metadata reports that exact
+merge. The two general CI test/build jobs were skipped, not counted as passes.
+
+The retained [publication receipts](fpv-public-delivery-artifacts/delivery-summary.json)
+verify 3,442 staged files / 963,681,552 bytes and an actual uploaded archive of
+966,676,480 bytes. Archive headroom is 13,323,520 bytes below the unchanged
+980,000,000-byte limit. The optional catalogue exists with no selected releases;
+its empty check does not qualify separately published optional packages. These
+receipts cover the main site's integrated SIM routes.
+
+The [fresh password check](fpv-public-fresh-password-acceptance.json) passes the
+normal access form and Rates & throttle editor on both live routes in separate
+Chrome contexts. Each context initially remains locked. The exact
+[historical runner](fpv-public-delivery-artifacts/fresh-password-runner.mjs.txt)
+and [provenance](fpv-public-delivery-artifacts/fresh-password-provenance.json)
+are retained without credentials. This check alone makes no offline-install or
+flight claim.
+
+The separate [fresh-install check](fpv-public-fresh-install-acceptance.json)
+passes on both routes. In a new persistent profile it unlocks normally, creates
+and saves a 900°/s Actual profile through visible controls, then uses the visible
+offline installer. A complete browser-process restart with networking disabled
+loads from the expected installed worker and retains the saved rates. Advanced
+reference practice starts offline, exports a 12-tick unscored recording, replays
+exactly with hash `1d473fbb`, and releases its worker on return to tuning.
+Both recordings are retained. Public metadata, manifest, source pins and runner
+remain unchanged during the check. These short neutral-input flights establish
+loading/export/replay behavior, not flight fidelity or performance.
+
+The repeatable fresh-install runner accepts `HTTPS_ROOT EXPECTED_SHA REPORT.json
+PLAYWRIGHT_MODULE` after `node scripts/smoke-fpv-public-fresh-install.mjs`.
+Supply `FPV_LIVE_TEST_PASSWORD` transiently; the runner removes it from the
+browser subprocess environment and excludes it from reports. Existing-install
+update acceptance uses the separate two-stage runner and preserved old profiles.
+
+The [public existing-install check](fpv-public-delivery-acceptance.json) passes
+both genuine old-main installations from `8b0199194` to deployed `b2f251dac`.
+The old worker continues controlling the page while the new worker waits;
+closing the scoped page permits natural activation. No forced activation or
+cache clearing is used. Restarting the browser offline retains Legacy response,
+synthetic/unverified radio settings, 27° tilt and 108° vertical FOV. Production
+library APIs verify named profile creation and backup/restore; the visible CLI
+editor saves an 880°/s patch while the saved 900°/s profile remains unchanged.
+The preview draft is retained when returning to that profile; explicit Revert
+restores the saved 900°/s value without changing the saved library. The subsequent
+offline Advanced recording uses 900°/s, replays exactly and disposes its worker.
+The 12-tick recordings have hash `1d473fbb` and remain unscored.
+
+Upgrade provenance and failed attempts remain explicit:
+
+- The profiles used for this update originated in the [first public baseline](fpv-public-delivery-baseline-runner-change-failure.json).
+  Both per-package password/installation checks completed, but a concurrent
+  formatting change made that report's whole-run runner-stability check fail.
+  It remains a failed report. The separate frozen [baseline run](fpv-public-delivery-baseline.json)
+  passed, but its profiles were not substituted for this final update.
+- An initial complete attempt using the separate frozen-baseline profiles hit an [asynchronous-wait harness defect](fpv-public-delivery-waiting-worker-failure.json).
+  A [separate reproduction](fpv-public-delivery-wait-harness-diagnostic.json)
+  showed that the installed browser wrapper returned immediately for async wait
+  predicates. Cleanup then activated its Academy worker without the intended
+  observation checkpoint. Those profiles remain diagnostic evidence; final
+  acceptance uses the original profiles from the first baseline described above.
+  Explicit bounded async polling replaced the defective waits.
+- A [JSON ordering failure](fpv-public-delivery-legacy-order-failure.json)
+  was independently diagnosed as [deeply equal data](fpv-public-delivery-legacy-comparison-diagnostic.json).
+  Exact canonical-data comparison retains every value and array order.
+- The [880°/s recording failure](fpv-public-delivery-draft-preview-failure.json)
+  came from deliberately retained preview drafts, as confirmed by the
+  [saved-library diagnostic](fpv-public-delivery-draft-preview-diagnostic.json).
+  The probe now explicitly reverts before flying saved rates. A subsequent
+  [selector failure](fpv-public-delivery-profile-selector-failure.json) was fixed
+  by waiting on the actual labeled control instead of assuming an HTML ID.
+
+The [input state](fpv-public-delivery-artifacts/update-state-before-acceptance.json)
+matches the final report's preparation-state hash. Academy's previously observed
+natural activation is explicitly resumed; World's activation is observed in the
+final run. The [final state](fpv-public-delivery-artifacts/update-state-after-acceptance.json)
+retains both activation checkpoints. Runtime sources and public deployment
+remained unchanged throughout these harness corrections. The
+[combined verification](fpv-public-delivery-verification.json) binds the final
+reports, source hashes and retained recordings.
+
+All live checks use disposable browser profiles on one desktop. Physical radios,
+touch hardware, pilot feedback, identified-aircraft measurements, iOS runtime,
+wider-device qualification and Advanced promotion remain deferred. Advanced
+stays optional, unscored and default-ineligible.
+
 ## Local generated-output check
 
 Use the Pages workflow's Node **22.22.2**. Build into a new directory with enough
@@ -346,8 +439,10 @@ and publication process below.
     the values to fractional degrees and verify save/test/reload preserves them.
     Rate-only exports should remain available during an unfinished camera edit.
 
-Physical flight fidelity, the device performance matrix, public HTTPS behavior,
-real radio sampling and scored competition eligibility are not established by
-this Pages delivery check. The historical Regional capacity failure under host contention remains evidence.
+The public checks above establish only their listed HTTPS/browser flows. The
+broader checklist remains useful for manual testing; it is not a claim that every
+step ran on the public site. Physical flight fidelity, the device performance
+matrix, real radio sampling and scored competition eligibility are not
+established by Pages acceptance. The historical Regional capacity failure under host contention remains evidence.
 The separate [second-review bounded capacity run](fpv-regional-contact-capacity-2026-10-16-second-review.json)
 passes on its pinned sources; neither result is changed by deployment.
