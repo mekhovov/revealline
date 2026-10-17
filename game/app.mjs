@@ -124,7 +124,7 @@ import {
   readMissionLibraryReady,
   readMissionLibraryReturn,
 } from './mission-library/handoff.mjs';
-import { playedLevelHref } from './mission-library/played-level-link.mjs';
+import { playedLevelHref, indexedPlayedLevelHref } from './mission-library/played-level-link.mjs';
 import { createDuel } from './multiplayer.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
 import {
@@ -5953,10 +5953,22 @@ try {
     const selectedRun = run;
     if (practiceSession || practice || demo || runtimeContent) return;
     try {
-      const host = await getUnifiedMissionLibrary();
-      if (generation !== playedLevelLinkGeneration || run !== selectedRun) return;
-      const row = currentSoloLibraryMission(host);
-      const href = playedLevelHref(row, { baseURL: location.href });
+      let href;
+      if (!journeyEnabled) {
+        const selection = currentRetainedMissionIdentity();
+        actorMissionIndex ??= getJSON('content/mission-library-index.json').catch((error) => {
+          actorMissionIndex = null;
+          throw error;
+        });
+        const index = await actorMissionIndex;
+        if (generation !== playedLevelLinkGeneration || run !== selectedRun) return;
+        href = indexedPlayedLevelHref(index, selection, { baseURL: location.href });
+      } else {
+        const host = await getUnifiedMissionLibrary();
+        if (generation !== playedLevelLinkGeneration || run !== selectedRun) return;
+        const row = currentSoloLibraryMission(host);
+        href = playedLevelHref(row, { baseURL: location.href });
+      }
       if (!href) return;
       playedLevelLink = href;
       $('copy-level-link').hidden = false;
@@ -6002,7 +6014,10 @@ try {
       if (!row) throw new Error('The exact current Journey mission is unavailable.');
       return row;
     }
-    return retainedLibraryMission(host.library, {
+    return retainedLibraryMission(host.library, currentRetainedMissionIdentity());
+  }
+  function currentRetainedMissionIdentity() {
+    return {
       mode: 'solo',
       levelId: campaign.levels[levelIndex].id,
       campaignKey: activeEntry.classicRulesSourceCampaignKey
@@ -6011,7 +6026,7 @@ try {
       sourcePackId: activeEntry.sourcePackId ?? null,
       rulesEdition: activeEntry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL,
       ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
-    });
+    };
   }
   function armSkip(destination) {
     journeySkipArmed = runId;
@@ -12350,9 +12365,43 @@ try {
     // The first source catalogue contains exact installed Classic originals.
     if (candidateHost?.owns(entry))
       throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostSelectIt'));
+    const baseKey = entry.baseCampaignKey || campaignKey(entry.baseCampaign ?? entry.campaign);
+    // This Legacy owner already authenticated the exact installed demo source.
+    // Use its ordinary checked launch instead of compiling unrelated Journey
+    // catalogues before reaching Ready or the saved-flight replacement dialog.
+    if (!journeyEnabled && !entry.classicRulesEdition) {
+      const pack = entry.sourcePackId
+        ? packs.packs.find((item) => item.id === entry.sourcePackId)
+        : null;
+      const original = pack ? resolvePackCampaign(pack, entry.campaign.id) : baseEntry;
+      if ((!entry.sourcePackId || pack) && campaignKey(original.campaign) === baseKey) {
+        const authored = original.campaign.levels.find((item) => item.id === level.id);
+        if (!authored)
+          throw new Error(t('interface:thatExactInstalledCampaignIsNoLongerAvailable'));
+        const revision = unifiedLaunchRevision;
+        let handedOff = false;
+        const intentCurrent = () =>
+          revision === unifiedLaunchRevision &&
+          (handedOff || isCurrent()) &&
+          !document.hidden &&
+          document.hasFocus?.() !== false;
+        const selected = await launchLibraryClassic(
+          pack,
+          {
+            campaignId: original.campaign.id,
+            levelId: authored.id,
+            levelRevision: authored.revision,
+          },
+          { mode: 'solo', prepareOnly: true, intentCurrent },
+        );
+        if (selected !== true || !intentCurrent())
+          throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
+        handedOff = true;
+        return true;
+      }
+    }
     const host = await getUnifiedMissionLibrary();
     assertIntent();
-    const baseKey = entry.baseCampaignKey || campaignKey(entry.baseCampaign ?? entry.campaign);
     const row = host.library
       .forMode('solo')
       .find(

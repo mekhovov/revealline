@@ -1,0 +1,191 @@
+TAP version 13
+# Subtest: live whitelist pins actual standard maps, rules and roster while allowing translated names
+ok 1 - live whitelist pins actual standard maps, rules and roster while allowing translated names
+  ---
+  duration_ms: 10.851666
+  ...
+# Subtest: orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 2 - orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 26254.099209
+  ...
+# {"seed":1,"ticks":7425,"status":"won","coverage":0.8272184300341296,"captures":10,"bends":14,"maxPlanningMs":1706}
+# {"seed":2,"ticks":8838,"status":"won","coverage":0.685580204778157,"captures":11,"bends":20,"maxPlanningMs":914}
+# {"seed":3,"ticks":5920,"status":"won","coverage":0.6838737201365188,"captures":8,"bends":13,"maxPlanningMs":1822}
+# Subtest: orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 3 - orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 23963.624625
+  ...
+# {"seed":1,"ticks":7697,"status":"won","coverage":0.6924061433447098,"captures":12,"bends":19,"maxPlanningMs":1726}
+# {"seed":2,"ticks":8358,"status":"won","coverage":0.7781569965870307,"captures":12,"bends":19,"maxPlanningMs":2911}
+# {"seed":3,"ticks":2647,"status":"won","coverage":0.6992320819112628,"captures":4,"bends":5,"maxPlanningMs":957}
+# Subtest: courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 4 - courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 39844.809292
+  ...
+# {"seed":1,"ticks":6624,"status":"won","coverage":0.7586505190311419,"captures":13,"bends":19,"maxPlanningMs":989}
+# {"seed":2,"ticks":2536,"status":"won","coverage":0.7698961937716263,"captures":3,"bends":4,"maxPlanningMs":3268}
+# {"seed":3,"ticks":4857,"status":"won","coverage":0.7629757785467128,"captures":9,"bends":10,"maxPlanningMs":2080}
+# Subtest: courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 5 - courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 67780.068709
+  ...
+# {"seed":1,"ticks":4325,"status":"won","coverage":0.8858131487889274,"captures":7,"bends":11,"maxPlanningMs":8290}
+# {"seed":2,"ticks":2531,"status":"won","coverage":0.7698961937716263,"captures":3,"bends":4,"maxPlanningMs":1759}
+# {"seed":3,"ticks":5335,"status":"won","coverage":0.754757785467128,"captures":11,"bends":13,"maxPlanningMs":2724}
+# Subtest: planning is deterministic and declines an exposed cut without changing it
+ok 6 - planning is deterministic and declines an exposed cut without changing it
+  ---
+  duration_ms: 4383.707292
+  ...
+# Subtest: actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+not ok 7 - actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+  ---
+  duration_ms: 5018.756209
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-bot.test.mjs:182:1'
+  failureType: 'testCodeFailure'
+  error: 'Autoplay planning deadline reached.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Timeout.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-bot-player.mjs:50:22)
+    listOnTimeout (node:internal/timers:581:17)
+    process.processTimers (node:internal/timers:519:7)
+  ...
+# Subtest: background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+ok 8 - background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+  ---
+  duration_ms: 10454.39175
+  ...
+# Subtest: background budget releases a rejected stale result to the unchanged fault boundary
+ok 9 - background budget releases a rejected stale result to the unchanged fault boundary
+  ---
+  duration_ms: 6823.796958
+  ...
+# Subtest: background budget never bypasses the existing planning watchdog
+ok 10 - background budget never bypasses the existing planning watchdog
+  ---
+  duration_ms: 10738.630709
+  ...
+# Subtest: missing Worker, abort and planning watchdog fail closed and release every worker
+ok 11 - missing Worker, abort and planning watchdog fail closed and release every worker
+  ---
+  duration_ms: 254.5515
+  ...
+# Subtest: future search exhaustion ends only after the current safe macro, never runs an old heading
+ok 12 - future search exhaustion ends only after the current safe macro, never runs an old heading
+  ---
+  duration_ms: 11811.729875
+  ...
+# Subtest: a stale future plan remains a fault, not a successful exhaustion handoff
+ok 13 - a stale future plan remains a fault, not a successful exhaustion handoff
+  ---
+  duration_ms: 11370.863708
+  ...
+# Subtest: live playback crosses the old 60 second cutoff without claiming completion
+ok 14 - live playback crosses the old 60 second cutoff without claiming completion
+  ---
+  duration_ms: 18941.158708
+  ...
+# Subtest: full live admission now finishes the formerly exhausted seed and resets before display
+not ok 15 - full live admission now finishes the formerly exhausted seed and resets before display
+  ---
+  duration_ms: 5049.868792
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-bot.test.mjs:499:1'
+  failureType: 'testCodeFailure'
+  error: 'Autoplay planning deadline reached.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Timeout.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-bot-player.mjs:50:22)
+    listOnTimeout (node:internal/timers:581:17)
+    process.processTimers (node:internal/timers:519:7)
+  ...
+# Subtest: immediate: purposeful routes vary, close cuts and only lose to believable hazards
+ok 16 - immediate: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 233083.137958
+  ...
+# {"seed":123,"captures":17,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":19,"ticks":11331}
+# {"seed":987654321,"captures":4,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":10,"ticks":3854}
+# Subtest: grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+ok 17 - grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 60228.725084
+  ...
+# {"seed":123,"captures":11,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":17,"ticks":8151}
+# {"seed":987654321,"captures":29,"losses":2,"causes":["enemy-trail","boss-lane"],"bends":32,"ticks":16270}
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 18 - improvised preparation respects cancellation before it owns a player
+  ---
+  duration_ms: 2.06225
+  ...
+# Subtest: cancellation during route planning stops before publishing a recording
+ok 19 - cancellation during route planning stops before publishing a recording
+  ---
+  duration_ms: 117.647292
+  ...
+# Subtest: journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+ok 20 - journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 28025.957166
+  ...
+# Subtest: journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+ok 21 - journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 29134.077833
+  ...
+# Subtest: journey/first-relay/immediate: formerly stalled performance reaches a real result
+ok 22 - journey/first-relay/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 44048.922542
+  ...
+# Subtest: journey/first-relay/grid-center: formerly stalled performance reaches a real result
+not ok 23 - journey/first-relay/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 26452.541959
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:71:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:73:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:86:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+ok 24 - journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 11558.957625
+  ...
+# Subtest: journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+ok 25 - journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 6371.770375
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+ok 26 - droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 3967.955459
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+ok 27 - droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 3900.833042
+  ...
+# Subtest: coupa-all/coupa-developer-integration-02/grid-center: formerly stalled performance reaches a real result
+ok 28 - coupa-all/coupa-developer-integration-02/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 3563.934208
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 25
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 717050.400792

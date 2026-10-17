@@ -1,0 +1,121 @@
+{
+  "checkpointAt": "2026-10-15T23:05:23.274Z",
+  "checkpointLimitations": "Incomplete checkpoint only. Terminal source/storage comparisons have not run. Time after this checkpoint is unobserved. Recovery never resumes a run or operates the game.",
+  "checkpointReason": "periodic",
+  "checkpointStatus": "Automatic recovery unavailable: Failed to execute 'transaction' on 'IDBDatabase': The database connection is closing. Download JSON while this page remains open. Observation can continue.",
+  "diagnostics": [
+    {
+      "at": "2026-10-15T22:53:27.323Z",
+      "elapsedSeconds": 1076.838100000009,
+      "message": "Failed to execute 'transaction' on 'IDBDatabase': The database connection is closing.",
+      "name": "InvalidStateError",
+      "scope": "observer-window",
+      "stack": "InvalidStateError: Failed to execute 'transaction' on 'IDBDatabase': The database connection is closing.\n    at http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:392:21\n    at http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:349:18\n    at new Promise (<anonymous>)\n    at operation (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:327:12)\n    at transaction (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:391:12)\n    at async Object.write (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:445:7)\n    at async http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:590:13",
+      "type": "checkpoint-storage-unavailable"
+    }
+  ],
+  "lastSample": {
+    "actionsShown": false,
+    "audio": {
+      "artist": "Alexander Nakarada",
+      "mute": {
+        "disabled": false,
+        "hidden": false,
+        "label": "Sound off",
+        "pressed": "false"
+      },
+      "status": "playing",
+      "title": "Carol of the Bells (Metal Version)",
+      "transport": {
+        "disabled": false,
+        "hidden": false,
+        "label": "Pause music",
+        "pressed": null
+      },
+      "volume": "0.8"
+    },
+    "available": true,
+    "bootState": "ready",
+    "buildLabel": "__REVEALLINE_VERSION__",
+    "calendarGapSeconds": 5.251,
+    "canvas": {
+      "algorithm": "fnv1a32-scaled-rgba-12x8",
+      "checksum": "e7fb3a5f",
+      "height": 576,
+      "sampled": true,
+      "width": 768
+    },
+    "caption": "A closed cut captures territory. Watch which area opens and where the next route begins.",
+    "childFocused": true,
+    "childVisibility": "visible",
+    "demoOpen": true,
+    "demoPause": {
+      "disabled": false,
+      "hidden": false,
+      "label": "Pause",
+      "pressed": "false"
+    },
+    "diagnosticCount": 1,
+    "elapsedSeconds": 1792.848700000003,
+    "gapSeconds": 5.251,
+    "level": "Signal Garden",
+    "longGap": false,
+    "memory": {
+      "jsHeapSizeLimit": 4395630592,
+      "supported": true,
+      "totalJSHeapSize": 405742841,
+      "usedJSHeapSize": 205897721
+    },
+    "observerHealth": {
+      "attached": true,
+      "error": null,
+      "failures": 0,
+      "targets": 5
+    },
+    "parentFocused": true,
+    "parentVisibility": "visible",
+    "practice": false,
+    "practicePause": {
+      "disabled": false,
+      "hidden": true,
+      "label": "Pause",
+      "pressed": null
+    },
+    "practiceResume": {
+      "disabled": false,
+      "hidden": false,
+      "label": "Keep watching",
+      "pressed": null
+    },
+    "source": "Recorded play",
+    "statusAndTimer": "66% captured · 3 lives · 37s"
+  },
+  "limitations": [
+    "No synthetic gameplay or direct internal playback access.",
+    "DOM music state is not proof of physical audio output.",
+    "Bounded error listeners preserve ordinary browser reporting; opaque, worker or earlier errors may not be observable.",
+    "Long gaps and clock discontinuities are unobserved, not proof of OS freeze/recovery or continued playback.",
+    "A completed duration does not certify physical inputs, native devices, human comprehension, absence of leaks or release acceptance.",
+    "The embedded frame has its measured viewport; it is not top-level or fullscreen qualification."
+  ],
+  "observerHealth": {
+    "attached": true,
+    "error": null,
+    "failures": 0,
+    "targets": 5
+  },
+  "observerStatus": "Observing 1792.8 / 7200 seconds\nSamples 350; long gaps 0; unobserved gap time 0.0s\nRecorded play · Signal Garden\n66% captured · 3 lives · 37s\nDOM observer attached; attachment failures 0; JS diagnostics 1",
+  "samples": 350,
+  "startedAt": "2026-10-15T22:35:30.499Z",
+  "status": "incomplete",
+  "timing": {
+    "calendarDiscontinuitySeconds": 0,
+    "droppedEvents": 0,
+    "droppedSamples": 0,
+    "elapsedSeconds": 1792.848700000003,
+    "longGaps": 0,
+    "maxGapSeconds": 5.427899999991059,
+    "sampledIntervalSeconds": 1792.8487000000025,
+    "unobservedLongGapSeconds": 0
+  }
+}

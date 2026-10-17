@@ -115,7 +115,7 @@ function ray(state, origin, d) {
   }
   return { cells, end: null };
 }
-function pathsFor(state, random, preferBent) {
+function pathsFor(state, random, preferBent, compactCuts = false) {
   const paths = safePaths(state),
     result = [],
     seen = new Set();
@@ -197,6 +197,10 @@ function pathsFor(state, random, preferBent) {
       jitter: random(),
     });
   }
+  // Pressure Lines' pursuing enemies need short closure windows. Preserve the
+  // broader legacy routes instead of turning those performances into dozens
+  // of tiny captures.
+  const cutSpans = compactCuts ? [1, 2, 4, 8, 12, 16, 24] : [4, 8, 12, 16, 24];
   // Candidate geometry is bounded independently of simulation work.
   const origins = paths.queue.filter((i) => paths.lengths[i] <= 48);
   for (const origin of origins) {
@@ -205,14 +209,14 @@ function pathsFor(state, random, preferBent) {
       const first = ray(state, from, d);
       if (!first.cells.length) continue;
       if (first.end) add(origin, [first.end], first.cells.length * 4, 0);
-      for (const depth of [4, 8, 12, 16, 24]) {
+      for (const depth of cutSpans) {
         const elbow = first.cells[depth - 1];
         if (!elbow) continue;
         for (const side of DIRECTIONS.filter((p) => p.x * d.x + p.y * d.y === 0)) {
           const across = ray(state, elbow, side);
           if (across.end && across.cells.length)
             add(origin, [elbow, across.end], (depth * (across.cells.length + 1)) / 2, 1);
-          for (const width of [4, 8, 12, 16, 24]) {
+          for (const width of cutSpans) {
             const corner = across.cells[width - 1];
             if (!corner) continue;
             const back = ray(state, corner, { x: -d.x, y: -d.y });
@@ -227,7 +231,7 @@ function pathsFor(state, random, preferBent) {
   pool.sort((a, b) => b.advantage + b.jitter * 6 - (a.advantage + a.jitter * 6));
   // Reserve attempts for several exposed lengths instead of spending the
   // entire allowance on large cuts that share the same dangerous crossing.
-  const exposures = [24, 40, 60, Infinity];
+  const exposures = compactCuts ? [8, 24, 40, Infinity] : [24, 40, 60, Infinity];
   const shortlisted = [];
   // Adjacent starting cells often generate nearly identical large cuts. Spend
   // the finite simulation allowance on different locations and route shapes,
@@ -267,8 +271,9 @@ function waypointsFor(candidate, paths, state) {
   const points = indices.map((i) => point(i, state.width)),
     waypoints = [];
   if (distance(state.player, paths.anchor) > EPS) waypoints.push(paths.anchor);
-  const startCenter = point(paths.start, state.width);
-  if (distance(paths.anchor, startCenter) > EPS) waypoints.push(startCenter);
+  // Immediate steering can stop a fraction away from a cell center. Keep that
+  // real offset until the next purposeful turn rather than briefly reversing
+  // direction just to chase a nominal center.
   let previous = point(paths.start, state.width),
     prior = null;
   for (let i = 0; i < points.length; i++) {
@@ -281,12 +286,21 @@ function waypointsFor(candidate, paths, state) {
   return [...waypoints, ...candidate.vertices];
 }
 function directionTo(a, b) {
-  if (Math.abs(b.x - a.x) > EPS) return b.x > a.x ? 'right' : 'left';
+  // Follow the purposeful leg, not a sub-tick lateral offset left by the
+  // previous capture. The core retains the actual coordinates throughout.
+  if (Math.abs(b.x - a.x) > Math.abs(b.y - a.y)) return b.x > a.x ? 'right' : 'left';
   return b.y > a.y ? 'down' : 'up';
 }
 
 /** Run only public commands against an owned candidate. Never publish a candidate state as live authority. */
-function evaluate(original, vertices, budget, { allowHazardLoss = false } = {}) {
+function evaluate(
+  original,
+  vertices,
+  budget,
+  { allowHazardLoss = false, safeApproach = false } = {},
+) {
+  if ((budget.candidates ?? 0) >= BOT_LIMITS.candidates) return null;
+  budget.candidates = (budget.candidates ?? 0) + 1;
   const state = structuredClone(original),
     segments = [];
   let localTicks = 0,
@@ -314,6 +328,11 @@ function evaluate(original, vertices, budget, { allowHazardLoss = false } = {}) 
     stepRun(state, { direction }, FIXED_DT);
     append(segments, direction);
     if (
+      safeApproach &&
+      (state.player.cutting || state.events.some((event) => event.type === 'cut.started'))
+    )
+      return false;
+    if (
       state.lives !== original.lives ||
       state.status === 'lost' ||
       state.status === 'respawning'
@@ -335,7 +354,7 @@ function evaluate(original, vertices, budget, { allowHazardLoss = false } = {}) 
     return true;
   }
   let from = { ...state.player };
-  for (let v = 0; v < vertices.length && !closed; v++) {
+  for (let v = 0; v < vertices.length && !closed && state.status !== 'won'; v++) {
     const target = vertices[v],
       direction = directionTo(from, target),
       axis = ['left', 'right'].includes(direction) ? 'x' : 'y',
@@ -348,21 +367,205 @@ function evaluate(original, vertices, budget, { allowHazardLoss = false } = {}) 
       const queueTurn = state.turnPolicy === 'grid-center' && nextDirection && remaining < 1 - EPS;
       if (!tick(queueTurn ? nextDirection : direction))
         return failure ? { state, segments, bends, ticks: localTicks, failure } : null;
-      if (closed) break;
+      if (closed || state.status === 'won') break;
       if (queueTurn && state.player.direction === nextDirection) break;
       stagnant = distance(before, state.player) < EPS ? stagnant + 1 : 0;
       if (stagnant >= 3) return null;
     }
     from = target;
   }
+  // Encounter isolation can finish during travel, without cut.closed. Retain
+  // its exact terminal tick instead of stepping a won state until 'stagnant'.
+  if (state.status === 'won') return { state, segments, bends, ticks: localTicks };
+  if (safeApproach) {
+    if (
+      closed ||
+      state.coverage !== original.coverage ||
+      distance(state.player, vertices.at(-1)) > 1 ||
+      distance(state.player, original.player) < 4
+    )
+      return null;
+    return { state, segments, bends, ticks: localTicks, approach: true };
+  }
   if (!closed || state.coverage <= original.coverage) return null;
   if (state.status !== 'won') {
     // The authored stop-on-capture permits a short pause before a new gesture.
     // This is part of the evaluated input macro, not a claim that safe
     // terrain is invulnerable to contour patrols or claimed rovers.
-    for (let i = 0; i < 60; i++) if (!tick(null)) return null;
+    for (let i = 0; i < 60 && state.status !== 'won'; i++) {
+      // A readable capture pause is optional. Leave time to depart before a
+      // patrol reaches this stop: safe ground is not an invulnerable waiting
+      // area. The next maneuver still requires full simulation validation.
+      if (
+        state.enemies.some(
+          (enemy) => Math.hypot(enemy.x - state.player.x, enemy.y - state.player.y) < 3,
+        )
+      )
+        break;
+      if (!tick(null)) return null;
+    }
   }
   return { state, segments, bends, ticks: localTicks };
+}
+
+/** Reach a distant required relay along existing safe ground before cutting.
+ * This runs only after an unsuccessful capture shortlist. Every retained tick
+ * is simulated; touching field or a threat rejects the entire approach. */
+function approachObjective(original, budget) {
+  const goals = original.objectives.filter(
+    (objective) => objective.required && !objective.captured,
+  );
+  if (!goals.length) return null;
+  const paths = safePaths(original),
+    targets = [];
+  for (const goal of goals) {
+    const before = distance(original.player, goal);
+    for (const origin of paths.queue) {
+      const from = point(origin, original.width);
+      if (
+        !DIRECTIONS.some(
+          (d) =>
+            inside(original, from.x + d.x, from.y + d.y) &&
+            original.cells[indexAt(original, from.x + d.x, from.y + d.y)] === CELL.FIELD,
+        )
+      )
+        continue;
+      let target = origin;
+      while (paths.lengths[target] > 48) target = paths.parents[target];
+      // A fixed tick can carry us just beyond a waypoint. Grid-center steering
+      // must still reach the next center before turning, so do not finish an
+      // approach aimed straight from safe ground into an unplanned live cut.
+      while (paths.lengths[target] >= 8) {
+        const at = point(target, original.width);
+        const previous = point(paths.parents[target], original.width);
+        const heading = DIRECTIONS.find(
+          (direction) => direction.name === directionTo(previous, at),
+        );
+        const x = at.x + heading.x,
+          y = at.y + heading.y;
+        if (inside(original, x, y) && original.cells[indexAt(original, x, y)] === CELL.SAFE) break;
+        target = paths.parents[target];
+      }
+      const end = point(target, original.width);
+      if (paths.lengths[target] < 8 || before - distance(end, goal) < 4) continue;
+      targets.push({
+        origin: target,
+        vertices: [],
+        score: distance(from, goal) + paths.lengths[origin] * 0.02,
+      });
+    }
+  }
+  targets.sort((a, b) => a.score - b.score);
+  const seen = new Set();
+  for (const target of targets) {
+    if (seen.has(target.origin)) continue;
+    seen.add(target.origin);
+    const trial = evaluate(original, waypointsFor(target, paths, original), budget, {
+      safeApproach: true,
+    });
+    if (trial) {
+      if (trial.state.status === 'won') return trial;
+      const following = safePaths(trial.state).anchor;
+      if (
+        inside(trial.state, following.x, following.y) &&
+        trial.state.cells[indexAt(trial.state, following.x, following.y)] === CELL.SAFE
+      )
+        return trial;
+    }
+    if (seen.size >= 4 || budget.ticks >= BOT_LIMITS.totalTicks) break;
+  }
+  return null;
+}
+
+/** Wait only for an actual simulation-owned boundary, never arbitrary padding.
+ * The complete hold is rehearsed: safe territory can still contain threats. */
+function settleBoundary(original, budget, retryEncounter = false) {
+  const recovery = original.player.graceUntil > original.time + EPS;
+  const isolated =
+    original.encounter &&
+    !original.encounter.defeated &&
+    ['transition', 'exposed'].includes(original.encounter.stage) &&
+    original.cells.reduce((count, cell) => count + Number(cell === CELL.FIELD), 0) <=
+      original.level.encounter.minReleaseCutCells;
+  const phaseWait =
+    retryEncounter &&
+    original.encounter &&
+    !original.encounter.defeated &&
+    ['warning', 'active'].includes(original.encounter.phase);
+  if (!recovery && !isolated && !phaseWait) return null;
+  if ((budget.candidates ?? 0) >= BOT_LIMITS.candidates) return null;
+  budget.candidates = (budget.candidates ?? 0) + 1;
+  const state = structuredClone(original),
+    segments = [];
+  for (
+    let ticks = 1;
+    ticks <= BOT_LIMITS.candidateTicks && budget.ticks < BOT_LIMITS.totalTicks;
+    ticks++
+  ) {
+    budget.ticks++;
+    stepRun(state, {}, FIXED_DT);
+    append(segments, null);
+    if (
+      state.lives !== original.lives ||
+      state.player.cutting ||
+      !['running', 'won'].includes(state.status)
+    )
+      return null;
+    if (
+      state.status === 'won' ||
+      (recovery && !isolated && state.time + EPS >= state.player.graceUntil) ||
+      (phaseWait &&
+        (state.encounter.phase !== original.encounter.phase ||
+          state.encounter.cycle !== original.encounter.cycle))
+    )
+      return { state, segments, bends: 0, ticks, boundary: recovery ? 'recovery' : 'encounter' };
+  }
+  return null;
+}
+
+/** A nearby patrol can make every immediate cut unsafe. Rehearse a short
+ * escape on already safe ground before trying another departure. Never turn
+ * over a live cable, retain a loss or pad a scene with ineffective movement. */
+function escapeOnSafeGround(original, budget) {
+  const clearance = (state) =>
+    Math.min(...state.enemies.map((enemy) => distance(state.player, enemy)));
+  const before = clearance(original);
+  if (before > 8) return null;
+  let best = null,
+    score = -Infinity;
+  for (const direction of DIRECTIONS) {
+    if ((budget.candidates ?? 0) >= BOT_LIMITS.candidates) break;
+    budget.candidates = (budget.candidates ?? 0) + 1;
+    const state = structuredClone(original),
+      segments = [];
+    let valid = true;
+    for (let tick = 0; tick < 90 && budget.ticks < BOT_LIMITS.totalTicks; tick++) {
+      budget.ticks++;
+      stepRun(state, { direction: direction.name }, FIXED_DT);
+      append(segments, direction.name);
+      if (
+        state.lives !== original.lives ||
+        state.player.cutting ||
+        state.events.some((event) => event.type === 'cut.started') ||
+        state.status !== 'running'
+      ) {
+        valid = false;
+        break;
+      }
+    }
+    const improvement = clearance(state) - before;
+    if (
+      valid &&
+      segments.reduce((ticks, segment) => ticks + segment.ticks, 0) === 90 &&
+      distance(state.player, original.player) >= 3 &&
+      improvement >= 1 &&
+      improvement > score
+    ) {
+      score = improvement;
+      best = { state, segments, bends: 0, ticks: 90, escape: true };
+    }
+  }
+  return best;
 }
 
 /** Prepare varied, purposeful recording inputs without widening live-bot
@@ -370,16 +573,32 @@ function evaluate(original, vertices, budget, { allowHazardLoss = false } = {}) 
  * with a real moving threat may be retained as a recoverable overreach. */
 export async function planImprovMacro(
   original,
-  { plannerSeed = 1, decision = 0, allowRisk = false, preferSafe = false, signal } = {},
+  {
+    plannerSeed = 1,
+    decision = 0,
+    allowRisk = false,
+    preferSafe = false,
+    seekFrontier = false,
+    signal,
+  } = {},
 ) {
   const check = () => {
     if (signal?.aborted) throw new DOMException('Improvised demo cancelled.', 'AbortError');
   };
   check();
   if (original.status !== 'running' || original.player.cutting) return null;
+  const budget = { ticks: 0 },
+    settled = settleBoundary(original, budget, seekFrontier);
+  check();
+  if (settled) return settled;
+  if (seekFrontier) {
+    const approach = approachObjective(original, budget);
+    if (approach) return approach;
+    const escape = escapeOnSafeGround(original, budget);
+    if (escape) return escape;
+  }
   const random = randomFor((plannerSeed ^ Math.imul(decision + 1, 2654435761)) >>> 0),
-    { candidates, paths } = pathsFor(original, random, false),
-    budget = { ticks: 0 },
+    { candidates, paths } = pathsFor(original, random, false, seekFrontier),
     safe = [],
     risky = [];
   for (const candidate of candidates) {
@@ -392,6 +611,9 @@ export async function planImprovMacro(
       allowHazardLoss: true,
     });
     if (!trial) continue;
+    // A genuine finish needs no further search for cosmetic scoring gains.
+    // Keep its exact independently simulated terminal tick and public inputs.
+    if (trial.state.status === 'won') return trial;
     const score = trial.failure
       ? candidate.advantage + candidate.jitter * 4
       : (trial.state.coverage - original.coverage) * 60 +
@@ -399,6 +621,17 @@ export async function planImprovMacro(
         trial.ticks / 400 +
         candidate.jitter * 5;
     (trial.failure ? risky : safe).push({ ...trial, score });
+    // On the opening/recovery route, three useful alternatives including a
+    // bend already provide seeded variety. Keep the remaining allowance for
+    // difficult boards rather than always simulating sixteen similar routes.
+    // Overreach searches retain their full allowance and real hazard choices.
+    if (
+      (!allowRisk || preferSafe) &&
+      budget.candidates >= 8 &&
+      safe.filter((move) => move.state.coverage - original.coverage >= 0.04).length >= 3 &&
+      safe.some((move) => move.bends > 0)
+    )
+      break;
   }
   const choices =
     allowRisk && risky.length && (!safe.length || (!preferSafe && random() < 0.25)) ? risky : safe;
@@ -422,7 +655,7 @@ export function planDemoMacro(
     return { ok: false, reason: 'unsafe-planning-boundary' };
   const start = authoritativeCheckpoint(original),
     random = randomFor((plannerSeed ^ Math.imul(decision + 1, 2654435761)) >>> 0);
-  const { candidates, paths } = pathsFor(original, random, preferBent);
+  const { candidates, paths } = pathsFor(original, random, preferBent, true);
   const budget = { ticks: 0 };
   let best = null,
     examined = 0;
@@ -438,6 +671,12 @@ export function planDemoMacro(
       trial.ticks / 300 +
       candidate.jitter * 0.3;
     if (!best || score > best.score) best = { ...trial, score };
+    // A fully simulated useful move is enough; searching for a perfect cut
+    // spends the next maneuver's deadline on marginal improvements. Keep the
+    // remaining allowance for cases where these first choices are unsafe.
+    const gained = best.state.coverage - original.coverage;
+    if (best.state.status === 'won' || (examined >= 4 && gained >= (best.bends ? 0.04 : 0.08)))
+      break;
   }
   if (!best) return { ok: false, reason: 'no-safe-macro', examined, simulatedTicks: budget.ticks };
   return {

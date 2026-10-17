@@ -1,0 +1,188 @@
+{
+  "scope": "Instrumented CPU-profile diagnostic, not production timing or qualification.",
+  "self": [
+    {
+      "function": "nextLineImpactSeed",
+      "path": "game/core/line-impact.mjs",
+      "milliseconds": 2375.9
+    },
+    {
+      "function": "planClassicEnemy",
+      "path": "game/core/classic-motion.mjs",
+      "milliseconds": 2064.8
+    },
+    {
+      "function": "world",
+      "path": "game/core/classic-step.mjs",
+      "milliseconds": 1668.7
+    },
+    {
+      "function": "planClassicPlayer",
+      "path": "game/core/classic-motion.mjs",
+      "milliseconds": 1547.7
+    },
+    {
+      "function": "",
+      "path": "game/core/line-impact.mjs",
+      "milliseconds": 1421.7
+    },
+    {
+      "function": "evaluate",
+      "path": "game/demo-bot.mjs",
+      "milliseconds": 696.0
+    },
+    {
+      "function": "linearInterval",
+      "path": "game/core/geometry.mjs",
+      "milliseconds": 647.6
+    },
+    {
+      "function": "stepClassic",
+      "path": "game/core/classic-step.mjs",
+      "milliseconds": 426.3
+    },
+    {
+      "function": "ownershipSpans",
+      "path": "game/core/movement.mjs",
+      "milliseconds": 418.5
+    },
+    {
+      "function": "updateSignal",
+      "path": "game/core/systems.mjs",
+      "milliseconds": 417.6
+    },
+    {
+      "function": "planClassicPlayer",
+      "path": "game/core/classic-motion.mjs",
+      "milliseconds": 412.6
+    },
+    {
+      "function": "selfContact",
+      "path": "game/core/capture.mjs",
+      "milliseconds": 412.5
+    },
+    {
+      "function": "planClassicEnemy",
+      "path": "game/core/classic-motion.mjs",
+      "milliseconds": 401.5
+    },
+    {
+      "function": "nextLineImpactSeed",
+      "path": "game/core/line-impact.mjs",
+      "milliseconds": 397.6
+    },
+    {
+      "function": "applyClassicEnemy",
+      "path": "game/core/classic-motion.mjs",
+      "milliseconds": 326.7
+    },
+    {
+      "function": "components",
+      "path": "game/content-design/map.mjs",
+      "milliseconds": 311.5
+    },
+    {
+      "function": "boxTime",
+      "path": "game/core/geometry.mjs",
+      "milliseconds": 295.0
+    },
+    {
+      "function": "world",
+      "path": "game/core/classic-step.mjs",
+      "milliseconds": 290.0
+    }
+  ],
+  "inclusive": [
+    {
+      "function": "planImprovMacro",
+      "path": "game/demo-bot.mjs",
+      "milliseconds": 17853.0
+    },
+    {
+      "function": "evaluate",
+      "path": "game/demo-bot.mjs",
+      "milliseconds": 17730.9
+    },
+    {
+      "function": "tick",
+      "path": "game/demo-bot.mjs",
+      "milliseconds": 16945.0
+    },
+    {
+      "function": "stepRun",
+      "path": "game/core/index.mjs",
+      "milliseconds": 16815.5
+    },
+    {
+      "function": "fixedStep",
+      "path": "game/core/index.mjs",
+      "milliseconds": 16739.0
+    },
+    {
+      "function": "stepClassic",
+      "path": "game/core/classic-step.mjs",
+      "milliseconds": 16640.8
+    },
+    {
+      "function": "world",
+      "path": "game/core/classic-step.mjs",
+      "milliseconds": 15418.4
+    },
+    {
+      "function": "nextLineImpactSeed",
+      "path": "game/core/line-impact.mjs",
+      "milliseconds": 4773.1
+    },
+    {
+      "function": "",
+      "path": "scripts/audit-demo-availability.mjs",
+      "milliseconds": 4136.6
+    },
+    {
+      "function": "",
+      "path": "game/core/classic-step.mjs",
+      "milliseconds": 3983.2
+    },
+    {
+      "function": "loadDemoSources",
+      "path": "game/demo-sources.mjs",
+      "milliseconds": 3798.9
+    },
+    {
+      "function": "planClassicEnemy",
+      "path": "game/core/classic-motion.mjs",
+      "milliseconds": 3758.3
+    },
+    {
+      "function": "verifyReplayAsync",
+      "path": "game/replay.mjs",
+      "milliseconds": 3365.8
+    },
+    {
+      "function": "replaySteps",
+      "path": "game/replay.mjs",
+      "milliseconds": 3316.0
+    },
+    {
+      "function": "stepRun",
+      "path": "game/core/index.mjs",
+      "milliseconds": 3290.5
+    },
+    {
+      "function": "fixedStep",
+      "path": "game/core/index.mjs",
+      "milliseconds": 3258.0
+    },
+    {
+      "function": "stepClassic",
+      "path": "game/core/classic-step.mjs",
+      "milliseconds": 3233.3
+    },
+    {
+      "function": "world",
+      "path": "game/core/classic-step.mjs",
+      "milliseconds": 3018.8
+    }
+  ],
+  "auditElapsedSeconds": 34.121066583
+}

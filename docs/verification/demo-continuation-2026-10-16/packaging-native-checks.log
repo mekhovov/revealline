@@ -1,0 +1,205 @@
+TAP version 13
+# Subtest: desktop staging preserves verified asset/manifest bytes and never rewrites the released source
+ok 1 - desktop staging preserves verified asset/manifest bytes and never rewrites the released source
+  ---
+  duration_ms: 388.197792
+  ...
+# Subtest: public community routes and shared loader retain exact native inventory ownership under the existing CSP
+ok 2 - public community routes and shared loader retain exact native inventory ownership under the existing CSP
+  ---
+  duration_ms: 1584.685791
+  ...
+# Subtest: current-sized native inventories stage and load without dropping localization files
+ok 3 - current-sized native inventories stage and load without dropping localization files
+  ---
+  duration_ms: 26126.126167
+  ...
+# Subtest: iOS adds the explicit bridge and records both source and resulting inventory identities
+ok 4 - iOS adds the explicit bridge and records both source and resulting inventory identities
+  ---
+  duration_ms: 169.158125
+  ...
+# Subtest: iOS policy derives from public headers, excludes unsupported meta directives and precedes bootstrap
+ok 5 - iOS policy derives from public headers, excludes unsupported meta directives and precedes bootstrap
+  ---
+  duration_ms: 0.327042
+  ...
+# Subtest: compatible existing policy is preserved and relocated once; conflicts, duplicates and malformed heads reject
+ok 6 - compatible existing policy is preserved and relocated once; conflicts, duplicates and malformed heads reject
+  ---
+  duration_ms: 0.531583
+  ...
+# Subtest: a conflicting first-party HTML policy cannot replace an existing verified iOS stage
+ok 7 - a conflicting first-party HTML policy cannot replace an existing verified iOS stage
+  ---
+  duration_ms: 153.492791
+  ...
+# Subtest: iOS diagnostics copy exactly four bounded files into the native inventory without altering source
+ok 8 - iOS diagnostics copy exactly four bounded files into the native inventory without altering source
+  ---
+  duration_ms: 319.950791
+  ...
+# Subtest: diagnostics reject wrong platform, missing/oversized files and symlinks before replacing output
+ok 9 - diagnostics reject wrong platform, missing/oversized files and symlinks before replacing output
+  ---
+  duration_ms: 201.613459
+  ...
+# Subtest: traversal, duplicate, reserved and invalid inventory records are rejected before creating output
+ok 10 - traversal, duplicate, reserved and invalid inventory records are rejected before creating output
+  ---
+  duration_ms: 61.31225
+  ...
+# Subtest: missing and tampered assets cannot replace a previously verified native stage
+ok 11 - missing and tampered assets cannot replace a previously verified native stage
+  ---
+  duration_ms: 67.406833
+  ...
+# Subtest: bounded stat guards reject oversized manifest, actual asset and bridge before reading their data
+ok 12 - bounded stat guards reject oversized manifest, actual asset and bridge before reading their data
+  ---
+  duration_ms: 89.405916
+  ...
+# Subtest: source/output overlap and existing unowned output are preserved
+ok 13 - source/output overlap and existing unowned output are preserved
+  ---
+  duration_ms: 99.992375
+  ...
+# Subtest: verified owned stages can be replaced explicitly, but tampered or augmented stages cannot
+ok 14 - verified owned stages can be replaced explicitly, but tampered or augmented stages cannot
+  ---
+  duration_ms: 162.353083
+  ...
+# Subtest: missing/empty/conflicting iOS bridge and cross-platform replacement preserve existing output
+ok 15 - missing/empty/conflicting iOS bridge and cross-platform replacement preserve existing output
+  ---
+  duration_ms: 220.877
+  ...
+# Subtest: all source/bridge/output symbolic links are rejected without creating directories through them
+ok 16 - all source/bridge/output symbolic links are rejected without creating directories through them
+  ---
+  duration_ms: 69.68125
+  ...
+# Subtest: native marker version/origin/source identity and untracked symlinks are checked on verification
+ok 17 - native marker version/origin/source identity and untracked symlinks are checked on verification
+  ---
+  duration_ms: 348.847583
+  ...
+# Subtest: CLI reports errors without creating output and verifies a valid staged directory
+ok 18 - CLI reports errors without creating output and verifies a valid staged directory
+  ---
+  duration_ms: 2462.977417
+  ...
+# Subtest: sparse publication checkouts include the full admitted directory import closure
+ok 19 - sparse publication checkouts include the full admitted directory import closure
+  ---
+  duration_ms: 689.612917
+  ...
+# Subtest: maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+ok 20 - maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+  ---
+  duration_ms: 30910.9405
+  ...
+# Subtest: frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+ok 21 - frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+  ---
+  duration_ms: 39689.859209
+  ...
+# Subtest: absent versioned opt-in preserves complete build bytes regardless of optional source bodies
+ok 22 - absent versioned opt-in preserves complete build bytes regardless of optional source bodies
+  ---
+  duration_ms: 3128.558208
+  ...
+# Subtest: explicit optional publication is complete in manifest/ZIP and absent from automatic core cache
+ok 23 - explicit optional publication is complete in manifest/ZIP and absent from automatic core cache
+  ---
+  duration_ms: 3940.2865
+  ...
+# Subtest: bad optional hash, path, symbolic source and duplicate default inclusion preserve prior output
+ok 24 - bad optional hash, path, symbolic source and duplicate default inclusion preserve prior output
+  ---
+  duration_ms: 1783.587125
+  ...
+# Subtest: Route Choices publishes its exact original body once in loose/manifest/ZIP while core preparation stays small
+ok 25 - Route Choices publishes its exact original body once in loose/manifest/ZIP while core preparation stays small
+  ---
+  duration_ms: 2054.130125
+  ...
+# Subtest: optional practice archives are reproducible, admitted completely and absent from core build inputs
+ok 26 - optional practice archives are reproducible, admitted completely and absent from core build inputs
+  ---
+  duration_ms: 3711.13225
+  ...
+# Subtest: release-qualified practice retains the full shared menu stylesheet closure within its limit
+ok 27 - release-qualified practice retains the full shared menu stylesheet closure within its limit
+  ---
+  duration_ms: 1147.867625
+  ...
+# Subtest: an unexpected runtime import fails closed before a package can be published
+ok 28 - an unexpected runtime import fails closed before a package can be published
+  ---
+  duration_ms: 1054.613542
+  ...
+# Subtest: worker reports progress, validates cached dependencies and detects eviction
+ok 29 - worker reports progress, validates cached dependencies and detects eviction
+  ---
+  duration_ms: 24.800792
+  ...
+# Subtest: cancel discards only the incomplete version and keeps previous and foreign caches
+ok 30 - cancel discards only the incomplete version and keeps previous and foreign caches
+  ---
+  duration_ms: 0.972042
+  ...
+# Subtest: optional worker verifies every byte before activation and only replaces its own scope cache
+ok 31 - optional worker verifies every byte before activation and only replaces its own scope cache
+  ---
+  duration_ms: 9.450125
+  ...
+# Subtest: corruption or quota prevents optional activation and preserves previously installed caches
+ok 32 - corruption or quota prevents optional activation and preserves previously installed caches
+  ---
+  duration_ms: 8.776209
+  ...
+# Subtest: counts complete manifest bytes, stable launcher copies and pointer only for active version
+ok 33 - counts complete manifest bytes, stable launcher copies and pointer only for active version
+  ---
+  duration_ms: 3.337167
+  ...
+# Subtest: explicit future reserve is not a fictitious retained release or a capacity pass
+ok 34 - explicit future reserve is not a fictitious retained release or a capacity pass
+  ---
+  duration_ms: 0.11275
+  ...
+# Subtest: even an empty selection exactly at the guard still requires complete-site assembly
+ok 35 - even an empty selection exactly at the guard still requires complete-site assembly
+  ---
+  duration_ms: 0.176375
+  ...
+# Subtest: rejects duplicate immutable versions and competing stable launchers
+ok 36 - rejects duplicate immutable versions and competing stable launchers
+  ---
+  duration_ms: 0.4775
+  ...
+# Subtest: rejects invalid core claims, counts and overflowing sums
+ok 37 - rejects invalid core claims, counts and overflowing sums
+  ---
+  duration_ms: 0.599208
+  ...
+# Subtest: rejects unsafe and duplicate pins, absent entry and absent active launcher
+ok 38 - rejects unsafe and duplicate pins, absent entry and absent active launcher
+  ---
+  duration_ms: 1.043875
+  ...
+# Subtest: config resolves paths relative to itself and pins candidate manifests without admitting archives
+ok 39 - config resolves paths relative to itself and pins candidate manifests without admitting archives
+  ---
+  duration_ms: 1108.499667
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 126633.808459

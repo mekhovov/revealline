@@ -1,0 +1,20 @@
+TAP version 13
+# Subtest: metadata links preserve exact public Original/Current owners without preparing playable content
+ok 1 - metadata links preserve exact public Original/Current owners without preparing playable content
+  ---
+  duration_ms: 64.375042
+  ...
+# Subtest: unregistered or changed ownership cannot receive a public-looking link
+ok 2 - unregistered or changed ownership cannot receive a public-looking link
+  ---
+  duration_ms: 12.960292
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 552.032958

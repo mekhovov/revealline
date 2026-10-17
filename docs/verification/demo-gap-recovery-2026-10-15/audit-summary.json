@@ -1,0 +1,360 @@
+{
+  "sourceCommit": "e45a0731cdb026893b4be11d32a7653a889256e4",
+  "scope": "Sequential Node source preparation, terminal real-core play and independent replay verification. Not browser/device/viewing acceptance.",
+  "owners": {
+    "base": {
+      "summary": {
+        "registered": 46,
+        "registeredLevels": 30,
+        "usableLevels": 30,
+        "verified": 41,
+        "failed": 5,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "policies": {
+        "immediate": {
+          "verifiedSources": 20,
+          "totalSources": 23,
+          "usableMaps": 15,
+          "totalMaps": 15,
+          "wins": 17,
+          "losses": 3
+        },
+        "grid-center": {
+          "verifiedSources": 21,
+          "totalSources": 23,
+          "usableMaps": 15,
+          "totalMaps": 15,
+          "wins": 18,
+          "losses": 3
+        }
+      },
+      "mapsUsableUnderEverySelection": 15,
+      "distinctMaps": 15,
+      "failedCases": [
+        {
+          "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-3",
+          "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+          "kind": "bot",
+          "turnPolicy": "immediate",
+          "status": "failed",
+          "error": {
+            "name": "Error",
+            "code": null,
+            "message": "Live performance cannot reach a complete result."
+          },
+          "elapsedMs": 2397
+        },
+        {
+          "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-1",
+          "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+          "kind": "bot",
+          "turnPolicy": "immediate",
+          "status": "failed",
+          "preparationMs": 5357,
+          "error": {
+            "name": "Error",
+            "code": null,
+            "message": "Nonterminal endpoint: error/running"
+          },
+          "elapsedMs": 6434
+        },
+        {
+          "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2",
+          "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+          "kind": "bot",
+          "turnPolicy": "immediate",
+          "status": "failed",
+          "error": {
+            "name": "Error",
+            "code": null,
+            "message": "Live performance cannot reach a complete result."
+          },
+          "elapsedMs": 1708
+        },
+        {
+          "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2",
+          "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+          "kind": "bot",
+          "turnPolicy": "grid-center",
+          "status": "failed",
+          "error": {
+            "name": "Error",
+            "code": null,
+            "message": "Live performance cannot reach a complete result."
+          },
+          "elapsedMs": 2271
+        },
+        {
+          "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-3",
+          "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+          "kind": "bot",
+          "turnPolicy": "grid-center",
+          "status": "failed",
+          "error": {
+            "name": "Error",
+            "code": null,
+            "message": "Live performance cannot reach a complete result."
+          },
+          "elapsedMs": 4689
+        }
+      ],
+      "elapsedWallSeconds": 99.67382525000001,
+      "finishedAt": "2026-10-15T21:24:02.587Z",
+      "changedDuringAudit": [],
+      "changedAtSummary": [],
+      "cleanup": {
+        "ownersBeforeForcedCleanup": 0,
+        "listeners": 0
+      },
+      "errors": []
+    },
+    "journey": {
+      "summary": {
+        "registered": 210,
+        "registeredLevels": 206,
+        "usableLevels": 200,
+        "verified": 204,
+        "failed": 6,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "policies": {
+        "immediate": {
+          "verifiedSources": 102,
+          "totalSources": 105,
+          "usableMaps": 100,
+          "totalMaps": 103,
+          "wins": 100,
+          "losses": 2
+        },
+        "grid-center": {
+          "verifiedSources": 102,
+          "totalSources": 105,
+          "usableMaps": 100,
+          "totalMaps": 103,
+          "wins": 100,
+          "losses": 2
+        }
+      },
+      "mapsUsableUnderEverySelection": 98,
+      "distinctMaps": 103,
+      "failedCases": [
+        {
+          "id": "improv-border-bloom/candidate-ee8246509ac9a486/b6877d13d0dd82d3-turn-the-corner",
+          "levelKey": "border-bloom/candidate-ee8246509ac9a486/b6877d13d0dd82d3/turn-the-corner",
+          "kind": "improv",
+          "turnPolicy": "immediate",
+          "status": "failed",
+          "error": {
+            "name": "DemoLoadingTimeoutError",
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline."
+          },
+          "elapsedMs": 15002
+        },
+        {
+          "id": "improv-signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96-neutral-ground",
+          "levelKey": "signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96/neutral-ground",
+          "kind": "improv",
+          "turnPolicy": "immediate",
+          "status": "failed",
+          "error": {
+            "name": "Error",
+            "code": null,
+            "message": "No complete purposeful performance is available for this level."
+          },
+          "elapsedMs": 2133
+        },
+        {
+          "id": "improv-livewire-foundry/candidate-ace18ecbeb730751/70575f8d5aa3394a-crossbar-depot",
+          "levelKey": "livewire-foundry/candidate-ace18ecbeb730751/70575f8d5aa3394a/crossbar-depot",
+          "kind": "improv",
+          "turnPolicy": "immediate",
+          "status": "failed",
+          "error": {
+            "name": "Error",
+            "code": null,
+            "message": "No complete purposeful performance is available for this level."
+          },
+          "elapsedMs": 1680
+        },
+        {
+          "id": "improv-signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96-neutral-ground",
+          "levelKey": "signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96/neutral-ground",
+          "kind": "improv",
+          "turnPolicy": "grid-center",
+          "status": "failed",
+          "error": {
+            "name": "Error",
+            "code": null,
+            "message": "No complete purposeful performance is available for this level."
+          },
+          "elapsedMs": 7222
+        },
+        {
+          "id": "improv-relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85-second-approach",
+          "levelKey": "relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85/second-approach",
+          "kind": "improv",
+          "turnPolicy": "grid-center",
+          "status": "failed",
+          "error": {
+            "name": "DemoLoadingTimeoutError",
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline."
+          },
+          "elapsedMs": 15024
+        },
+        {
+          "id": "improv-relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85-spiral-stores",
+          "levelKey": "relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85/spiral-stores",
+          "kind": "improv",
+          "turnPolicy": "grid-center",
+          "status": "failed",
+          "error": {
+            "name": "DemoLoadingTimeoutError",
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline."
+          },
+          "elapsedMs": 15000
+        }
+      ],
+      "elapsedWallSeconds": 944.783869292,
+      "finishedAt": "2026-10-15T21:39:52.384Z",
+      "changedDuringAudit": [],
+      "changedAtSummary": [],
+      "cleanup": {
+        "ownersBeforeForcedCleanup": 0,
+        "listeners": 0
+      },
+      "errors": []
+    },
+    "droneaid": {
+      "summary": {
+        "registered": 84,
+        "registeredLevels": 84,
+        "usableLevels": 84,
+        "verified": 84,
+        "failed": 0,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "policies": {
+        "immediate": {
+          "verifiedSources": 42,
+          "totalSources": 42,
+          "usableMaps": 42,
+          "totalMaps": 42,
+          "wins": 41,
+          "losses": 1
+        },
+        "grid-center": {
+          "verifiedSources": 42,
+          "totalSources": 42,
+          "usableMaps": 42,
+          "totalMaps": 42,
+          "wins": 36,
+          "losses": 6
+        }
+      },
+      "mapsUsableUnderEverySelection": 42,
+      "distinctMaps": 42,
+      "failedCases": [],
+      "elapsedWallSeconds": 284.703138,
+      "finishedAt": "2026-10-15T21:44:38.319Z",
+      "changedDuringAudit": [],
+      "changedAtSummary": [],
+      "cleanup": {
+        "ownersBeforeForcedCleanup": 0,
+        "listeners": 0
+      },
+      "errors": []
+    },
+    "coupa": {
+      "summary": {
+        "registered": 72,
+        "registeredLevels": 72,
+        "usableLevels": 69,
+        "verified": 69,
+        "failed": 3,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "policies": {
+        "immediate": {
+          "verifiedSources": 35,
+          "totalSources": 36,
+          "usableMaps": 35,
+          "totalMaps": 36,
+          "wins": 33,
+          "losses": 2
+        },
+        "grid-center": {
+          "verifiedSources": 34,
+          "totalSources": 36,
+          "usableMaps": 34,
+          "totalMaps": 36,
+          "wins": 31,
+          "losses": 3
+        }
+      },
+      "mapsUsableUnderEverySelection": 33,
+      "distinctMaps": 36,
+      "failedCases": [
+        {
+          "id": "improv-coupa-developer-integration/candidate-a242ad1c061d9876/aa78cac6ca8003d1-coupa-developer-integration-03",
+          "levelKey": "coupa-developer-integration/candidate-a242ad1c061d9876/aa78cac6ca8003d1/coupa-developer-integration-03",
+          "kind": "improv",
+          "turnPolicy": "immediate",
+          "status": "failed",
+          "error": {
+            "name": "Error",
+            "code": null,
+            "message": "No complete purposeful performance is available for this level."
+          },
+          "elapsedMs": 5157
+        },
+        {
+          "id": "improv-coupa-source-to-pay/candidate-da1d210a61109f42/5d2181226350354e-coupa-source-to-pay-06",
+          "levelKey": "coupa-source-to-pay/candidate-da1d210a61109f42/5d2181226350354e/coupa-source-to-pay-06",
+          "kind": "improv",
+          "turnPolicy": "grid-center",
+          "status": "failed",
+          "error": {
+            "name": "DemoLoadingTimeoutError",
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline."
+          },
+          "elapsedMs": 15372
+        },
+        {
+          "id": "improv-coupa-product-operations/candidate-4117fa1b4fff3731/062bc81d5e5b0c3d-coupa-product-operations-04",
+          "levelKey": "coupa-product-operations/candidate-4117fa1b4fff3731/062bc81d5e5b0c3d/coupa-product-operations-04",
+          "kind": "improv",
+          "turnPolicy": "grid-center",
+          "status": "failed",
+          "error": {
+            "name": "DemoLoadingTimeoutError",
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline."
+          },
+          "elapsedMs": 15003
+        }
+      ],
+      "elapsedWallSeconds": 330.714423667,
+      "finishedAt": "2026-10-15T21:50:10.500Z",
+      "changedDuringAudit": [],
+      "changedAtSummary": [],
+      "cleanup": {
+        "ownersBeforeForcedCleanup": 0,
+        "listeners": 0
+      },
+      "errors": []
+    }
+  }
+}

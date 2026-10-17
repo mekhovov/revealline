@@ -1,0 +1,19 @@
+TAP version 13
+# Subtest: journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+not ok 1 - journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 51413.158417
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:49:3'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 30000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+not ok 2 - journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 31731.694875
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:49:3'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 30000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...

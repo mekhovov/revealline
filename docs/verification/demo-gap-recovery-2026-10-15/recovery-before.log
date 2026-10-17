@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+not ok 1 - journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 14890.573417
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:51:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:70:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:59:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+not ok 2 - journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 5768.096166
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:51:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:70:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:59:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: journey/first-relay/immediate: formerly stalled performance reaches a real result
+not ok 3 - journey/first-relay/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 27577.983958
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:51:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:70:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:59:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: journey/first-relay/grid-center: formerly stalled performance reaches a real result
+not ok 4 - journey/first-relay/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 9631.725916
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:51:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:70:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:59:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+not ok 5 - journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 16226.854084
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:51:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:70:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:59:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+not ok 6 - journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 13234.741417
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:51:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:70:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:59:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+not ok 7 - droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 9045.460333
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:51:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:70:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:59:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+not ok 8 - droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 28567.880125
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:51:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:70:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:59:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: coupa-all/coupa-developer-integration-02/grid-center: formerly stalled performance reaches a real result
+not ok 9 - coupa-all/coupa-developer-integration-02/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 16994.965584
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:51:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:70:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:59:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 0
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 172915.851375

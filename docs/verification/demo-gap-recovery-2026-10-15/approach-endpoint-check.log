@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+ok 1 - journey/staggered-reserve/immediate: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.656958
+  ...
+# Subtest: journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+ok 2 - journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.049292
+  ...
+# Subtest: journey/first-relay/immediate: formerly stalled performance reaches a real result
+ok 3 - journey/first-relay/immediate: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040333
+  ...
+# Subtest: journey/first-relay/grid-center: formerly stalled performance reaches a real result
+not ok 4 - journey/first-relay/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 4152.709709
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:71:3'
+  failureType: 'testCodeFailure'
+  error: 'No complete purposeful performance is available for this level.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    prepareImprovPlayer (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/demo-improv-player.mjs:73:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-planner-recovery.test.mjs:86:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+ok 5 - journey/relay-perimeter/immediate: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.642167
+  ...
+# Subtest: journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+ok 6 - journey/crown-audience/grid-center: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.063667
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+ok 7 - droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.11475
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+ok 8 - droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035208
+  ...
+# Subtest: coupa-all/coupa-developer-integration-02/grid-center: formerly stalled performance reaches a real result
+ok 9 - coupa-all/coupa-developer-integration-02/grid-center: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.140041
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 8
+# todo 0
+# duration_ms 8103.244708

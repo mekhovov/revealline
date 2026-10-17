@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "f0136c2b0f2916af142f6e27a86b3ed2141b844a",
+  "status": "complete",
+  "startedAt": "2026-10-15T22:01:55.285163+00:00",
+  "driverPID": 19927,
+  "results": [
+    {
+      "owner": "base",
+      "command": [
+        "node",
+        "scripts/audit-demo-availability.mjs",
+        "--report",
+        "/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/docs/verification/demo-gap-recovery-2026-10-15/final-requalification/base-final.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "owner": "journey",
+      "command": [
+        "node",
+        "scripts/audit-demo-availability.mjs",
+        "--journey",
+        "--report",
+        "/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/docs/verification/demo-gap-recovery-2026-10-15/final-requalification/journey-final.json"
+      ],
+      "exitCode": 1
+    },
+    {
+      "owner": "droneaid",
+      "command": [
+        "node",
+        "scripts/audit-demo-availability.mjs",
+        "--edition",
+        "droneaid",
+        "--report",
+        "/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/docs/verification/demo-gap-recovery-2026-10-15/final-requalification/droneaid-final.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "owner": "coupa",
+      "command": [
+        "node",
+        "scripts/audit-demo-availability.mjs",
+        "--edition",
+        "coupa-all",
+        "--report",
+        "/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/docs/verification/demo-gap-recovery-2026-10-15/final-requalification/coupa-final.json"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "activeOwner": null,
+  "finishedAt": "2026-10-15T22:31:16.853730+00:00"
+}

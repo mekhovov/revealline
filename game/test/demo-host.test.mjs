@@ -13,6 +13,7 @@ import { REWARD_BOARD_SECONDS, REWARD_STORY_SECONDS } from '../ui/reward-arrival
 import { emptyLibrary, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { KEY_BINDING_PRESETS } from '../key-bindings.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 
 const frames = (page, count, ms = 16) => {
   for (let i = 0; i < count; i++) page.frame(ms);
@@ -481,13 +482,33 @@ test('a failed saved-flight write keeps Fresh behind replacement review and Stay
   const checkpoint = authoritativeCheckpoint(ordinary),
     before = stored(page);
   await page.open();
-  page.$('demo-interrupt').click();
+  assert.equal(
+    page.demoFrame.run.levelId,
+    ordinary.levelId,
+    'The save-replacement case must demonstrate the already accessible first mission.',
+  );
+  const pointerClick = (button) => {
+    assert.equal(button.disabled, false);
+    demoPointer(button, 'pointerdown', { button: 0 });
+    demoPointer(button, 'pointerup', { button: 0 });
+    button.emit('click', { detail: 1, pointerId: 41, pointerType: 'touch', button: 0 });
+  };
+  pointerClick(page.$('demo-interrupt'));
+  assert.equal(
+    page.$('demo-actions').hidden,
+    false,
+    'The visible play choices own the next gesture.',
+  );
   const originalSet = page.storage.setItem;
+  let savedWriteAttempted = false;
   t.mock.method(page.storage, 'setItem', function (key, value) {
-    if (key === 'revealline.suspended.dev.v1') throw Error('Injected quota refusal');
+    if (key === 'revealline.suspended.dev.v1') {
+      savedWriteAttempted = true;
+      throw Error('Injected quota refusal');
+    }
     return originalSet.call(this, key, value);
   });
-  page.$('demo-fresh').click();
+  pointerClick(page.$('demo-fresh'));
   await waitFor(
     () =>
       page.$('mission-replace-dialog').open &&
@@ -497,6 +518,23 @@ test('a failed saved-flight write keeps Fresh behind replacement review and Stay
       timeoutMs: 30000,
       message: 'Failed-save handoff must remain behind the ordinary checked replacement review.',
     },
+  ).catch((error) => {
+    error.message += JSON.stringify({
+      savedWriteAttempted,
+      demoOpen: page.$('demo-dialog').open,
+      freshDisabled: page.$('demo-fresh').disabled,
+      demoStatus: page.$('demo-status').textContent,
+      replaceOpen: page.$('mission-replace-dialog').open,
+      confirmDisabled: page.$('mission-replace-confirm').disabled,
+      replacementStatus: page.$('mission-replace-status').textContent,
+      errors: page.errors.map((value) => String(value?.stack ?? value)),
+    });
+    throw error;
+  });
+  assert.equal(
+    savedWriteAttempted,
+    true,
+    'The ordinary checked save must actually reject the injected write.',
   );
   assert.equal(page.$('demo-dialog').open, false);
   assert.equal(page.$('demo-practice-controls').hidden, true);
@@ -558,7 +596,7 @@ test('accessible Fresh opens the demonstrated level at Ready and preserves the p
   assert.equal(page.doc.activeElement, page.$('start-button'));
   assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
   const savedBytes = page.storage.getItem('revealline.suspended.dev.v1'),
-    saved = JSON.parse(savedBytes),
+    saved = nativeCaptureSession(JSON.parse(savedBytes)),
     afterLibrary = loadLibrary(page.storage, 'revealline.library.dev.v1').library;
   assert.deepEqual(saved.replay.checkpoint, checkpoint);
   assert.equal(verifyReplay(saved.replay).match, true);
