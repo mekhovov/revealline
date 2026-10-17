@@ -441,7 +441,9 @@ export function qualificationQualityOptions(flags, scenario, hash) {
     ['full', 'reduced'].includes(tier), 'Exact quality selector');
   const sourceRevision = flags.find((flag) => flag.startsWith('--source-revision='))?.slice(18);
   const densityFlags = flags.filter((f) => f.startsWith('--density-comparison'));
-  const density = sourceRevision === DENSITY_COMPARISON_SOURCE;
+  const density =
+    sourceRevision === DENSITY_COMPARISON_SOURCE ||
+    (sourceRevision === COMPACT_QUALITY_COMPARISON_SOURCE && densityFlags.length > 0);
   require(density
     ? densityFlags.length === 1 && densityFlags[0] === '--density-comparison=same-viewport-v1'
     : densityFlags.length === 0, 'Exact density selector');

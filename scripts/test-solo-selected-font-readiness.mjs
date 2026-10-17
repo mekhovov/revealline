@@ -335,13 +335,13 @@ test('qualifier routes the exact native response, performs passive boundaries an
   assert(!s.includes('font-preparation-cancel'));
 });
 
-for (const joined of [false, true])
-  test(`font correctness (${joined ? 'joined V2' : 'original V1'}) remains independent from failed numbers and rejects replay, GPU, action or transport failures`, async () => {
+for (const joined of [false, '0feb', 'c696'])
+  test(`font correctness (${joined ? 'joined V2 ' + joined : 'original V1'}) remains independent from failed numbers and rejects replay, GPU, action or transport failures`, async () => {
     const { readinessAssessment } = await import('./solo-remote-readiness.mjs');
     const api = await import('./solo-remote-readiness.mjs');
     const protocol = joined ? 'selected-font-cancel-joined-v2' : 'selected-font-cancel-v1';
     const policy = joined ? 'same-url-two-v2' : 'single-v1';
-    const declaration = joined ? joinedManifest(api) : manifest();
+    const declaration = joined ? joinedManifest(api, joined === 'c696') : manifest();
     const m = model(false, protocol),
       p = readinessRowPlan(
         bindReadinessJob(declaration, 'chromium'),
@@ -465,7 +465,7 @@ test('new combined declaration runs from the actual isolated one-file CLI and un
     input = join(dir, 'model-only.json');
   await writeFile(file, await read('scripts/solo-remote-readiness.mjs'));
   const api = await import('./solo-remote-readiness.mjs');
-  for (const declared of [manifest(), joinedManifest(api)]) {
+  for (const declared of [manifest(), joinedManifest(api), joinedManifest(api, true)]) {
     await writeFile(input, JSON.stringify(declared));
     assert.equal(
       execFileSync(process.execPath, [file, 'matrix-plan', input], {
@@ -492,16 +492,17 @@ test('new combined declaration runs from the actual isolated one-file CLI and un
 });
 
 // Explicit successor admission; these are models, not package/native evidence.
-function joinedManifest(a) {
+function joinedManifest(a, c696 = false) {
+  const selectedSource = c696 ? a.SELECTED_FONT_SOURCE : a.FONT_DPR_SOURCE;
   const m = manifest();
-  m.sourceCohort = a.FONT_DPR_COHORT;
+  m.sourceCohort = c696 ? a.FONT_DPR_C696_COHORT : a.FONT_DPR_COHORT;
   m.phase = 'joined-selected-font-and-same-viewport-dpr';
-  Object.assign(m.candidate, a.FONT_DPR_SOURCE);
-  m.runtimeRevision = a.FONT_DPR_SOURCE.revision;
+  Object.assign(m.candidate, selectedSource);
+  m.runtimeRevision = selectedSource.revision;
   m.fixture = a.SELECTED_FONT_JOINED_FIXTURE;
   m.additionalFixtures = [a.COMPACT_READINESS_FIXTURES.full];
   m.protocol = a.FONT_DPR_PROTOCOL;
-  m.release.candidateRevision = m.release.onceOnlyBefore = a.FONT_DPR_SOURCE.revision;
+  m.release.candidateRevision = m.release.onceOnlyBefore = selectedSource.revision;
   m.release.comparisonScope = 'same-viewport-dpr-full-muted-only';
   return m;
 }
@@ -537,7 +538,7 @@ test('joined font source admits exactly six explicit rows and unchanged bounded 
       (f) =>
         f.map((v) =>
           v.startsWith('--source-revision=')
-            ? '--source-revision=' + SELECTED_FONT_SOURCE.revision
+            ? '--source-revision=4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7'
             : v,
         ),
       (f) =>
@@ -611,4 +612,37 @@ test('joined qualifier forwards explicit request policy and collector protocol w
     /createSelectedFontHold\(url\.href,\s*\{\s*requestPolicy: readinessOptions.requestPolicy \?\? 'single-v1'/,
   );
   assert.match(text, /assertSelectedFontCancelled\(witness, readinessOptions.protocol\)/);
+});
+
+test('same-source c696 joined selector cannot borrow V1 fixture or another source tree', async () => {
+  const a = await import('./solo-remote-readiness.mjs'),
+    h = await import('./solo-qualification-readiness.mjs'),
+    m = joinedManifest(a, true);
+  for (const engine of m.engines) {
+    const p = bindReadinessJob(m, engine),
+      row = p.rows[0],
+      r = readinessRowPlan(p, row),
+      bytes = await read(r.fixture.path);
+    assert.equal(r.sourceCohort, 'readiness-selected-font-joined-candidatec696');
+    const args = readinessArguments(
+      { plan: p, here: '/tools/scripts', repository: '/tools' },
+      row,
+      'http://localhost/game/',
+      '/out',
+    ).slice(4);
+    assert.deepEqual(
+      qualificationReadinessOptions(args, JSON.parse(bytes), bytes),
+      h.SELECTED_FONT_JOINED_C696_PILOT,
+    );
+    assert.throws(() => qualificationReadinessOptions(args, JSON.parse(bytes), Buffer.from('{}')));
+  }
+  for (const change of [
+    (p) => (p.candidate.tree = a.FONT_DPR_SOURCE.tree),
+    (p) => (p.fixture = SELECTED_FONT_FIXTURE),
+    (p) => (p.runtimeRevision = a.FONT_DPR_SOURCE.revision),
+  ]) {
+    const x = clone(m);
+    change(x);
+    assert.throws(() => readinessMatrix(x));
+  }
 });

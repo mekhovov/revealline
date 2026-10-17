@@ -45,6 +45,10 @@ export const SELECTED_FONT_JOINED_PILOT = Object.freeze({
   records: 8,
   bytes: 16384,
 });
+export const SELECTED_FONT_JOINED_C696_PILOT = Object.freeze({
+  ...SELECTED_FONT_JOINED_PILOT,
+  sourceRevision: SELECTED_FONT_PILOT.sourceRevision,
+});
 export const COMPACT_SAVED_READINESS_PILOT = Object.freeze({
   protocol: 'saved-resume-v1',
   sourceRevision: 'c696af41857840359ae473558b90682f3d71f2db',
@@ -73,10 +77,12 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       : protocol === SELECTED_FONT_PILOT.protocol
         ? SELECTED_FONT_PILOT
         : protocol === SELECTED_FONT_JOINED_PILOT.protocol
-          ? SELECTED_FONT_JOINED_PILOT
+          ? flags.includes('--source-revision=' + SELECTED_FONT_PILOT.sourceRevision)
+            ? SELECTED_FONT_JOINED_C696_PILOT
+            : SELECTED_FONT_JOINED_PILOT
           : RESUME_READINESS_PILOTS[protocol];
   assert(pilot, 'Unknown readiness protocol');
-  if (pilot === SELECTED_FONT_JOINED_PILOT)
+  if ([SELECTED_FONT_JOINED_PILOT, SELECTED_FONT_JOINED_C696_PILOT].includes(pilot))
     assert(
       !flags.some((flag) => /^--(?:density-comparison|visual-quality-observation)/.test(flag)),
       'Font and density are separate observations',
@@ -99,7 +105,11 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
   assert.equal(createHash('sha256').update(bytes).digest('hex'), pilot.scenarioSHA256);
   assert.deepEqual(scenario, JSON.parse(bytes));
   assert.equal(scenario.timeoutMs, 240000);
-  if ([SELECTED_FONT_PILOT, SELECTED_FONT_JOINED_PILOT].includes(pilot)) {
+  if (
+    [SELECTED_FONT_PILOT, SELECTED_FONT_JOINED_PILOT, SELECTED_FONT_JOINED_C696_PILOT].includes(
+      pilot,
+    )
+  ) {
     assert.equal(scenario.kind, 'lifecycle');
     assert(!scenario.cacheMode, 'Font routing cannot qualify warm HTTP caching');
     assert(flags.includes('--server-fixture-access'));

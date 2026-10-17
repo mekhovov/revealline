@@ -76,14 +76,20 @@ export function readinessRowPlan(plan, row) {
     if (Object.hasOwn(expected, 'dpr'))
       return {
         ...plan,
-        sourceCohort: 'readiness-public-dpr-candidate0feb',
+        sourceCohort:
+          fontDprSource(plan).revision === SELECTED_FONT_SOURCE.revision
+            ? 'readiness-public-dpr-candidatec696'
+            : 'readiness-public-dpr-candidate0feb',
         phase: `public-dpr-${expected.dpr}`,
         fixture: COMPACT_READINESS_FIXTURES.full,
         rows: [expected],
       };
     return {
       ...plan,
-      sourceCohort: 'readiness-selected-font-candidate0feb',
+      sourceCohort:
+        fontDprSource(plan).revision === SELECTED_FONT_SOURCE.revision
+          ? 'readiness-selected-font-joined-candidatec696'
+          : 'readiness-selected-font-candidate0feb',
       phase: 'selected-font-cancel',
       fixture: SELECTED_FONT_JOINED_FIXTURE,
       rows: [readinessRow(plan.engine, 'selected-font-cancel')],
@@ -160,10 +166,15 @@ function combinedFixtureInputs(plan) {
 }
 
 function selection(plan) {
-  if (plan.sourceCohort === 'readiness-selected-font-candidate0feb') {
+  if (
+    [
+      'readiness-selected-font-candidate0feb',
+      'readiness-selected-font-joined-candidatec696',
+    ].includes(plan.sourceCohort)
+  ) {
     assert.equal(plan.phase, 'selected-font-cancel');
     return {
-      source: FONT_DPR_SOURCE,
+      source: fontDprSource(plan),
       fixture: SELECTED_FONT_JOINED_FIXTURE,
       protocol: 'selected-font-cancel-joined-v2',
       requestPolicy: 'same-url-two-v2',
@@ -172,10 +183,14 @@ function selection(plan) {
       documents: 1,
     };
   }
-  if (plan.sourceCohort === 'readiness-public-dpr-candidate0feb') {
+  if (
+    ['readiness-public-dpr-candidate0feb', 'readiness-public-dpr-candidatec696'].includes(
+      plan.sourceCohort,
+    )
+  ) {
     assert(['public-dpr-1', 'public-dpr-3'].includes(plan.phase));
     return {
-      source: FONT_DPR_SOURCE,
+      source: fontDprSource(plan),
       quality: true,
       density: true,
       resume: false,
@@ -197,7 +212,7 @@ function selection(plan) {
   if (combinedPlan(plan))
     return {
       source: fontDprPlan(plan)
-        ? FONT_DPR_SOURCE
+        ? fontDprSource(plan)
         : fontCompactPlan(plan)
           ? SELECTED_FONT_SOURCE
           : RESUME_READINESS_SOURCE,
@@ -307,6 +322,7 @@ export const FONT_DPR_SOURCE = Object.freeze({
   tree: '692135315b5a4d0dcb98bc24314c644d37cec1ed',
 });
 export const FONT_DPR_COHORT = 'readiness-joined-font-and-dpr-candidate0feb';
+export const FONT_DPR_C696_COHORT = 'readiness-joined-font-and-dpr-candidatec696';
 export const SELECTED_FONT_JOINED_FIXTURE = Object.freeze({
   path: 'docs/performance/fixtures/solo-readiness-font/selected-font-cancel-joined-v2.qualification.fixture',
   bytes: 5746,
@@ -345,10 +361,24 @@ export function fontDprRows(engine) {
   ].concat(engine === 'webkit' ? densityComparisonSchedule() : []);
 }
 function fontDprPlan(plan) {
-  return plan?.sourceCohort === FONT_DPR_COHORT;
+  return [FONT_DPR_COHORT, FONT_DPR_C696_COHORT].includes(plan?.sourceCohort);
+}
+function fontDprSource(plan) {
+  return [
+    FONT_DPR_C696_COHORT,
+    'readiness-selected-font-joined-candidatec696',
+    'readiness-public-dpr-candidatec696',
+  ].includes(plan?.sourceCohort)
+    ? SELECTED_FONT_SOURCE
+    : FONT_DPR_SOURCE;
 }
 function densityPlan(plan) {
-  return fontDprPlan(plan) || plan?.sourceCohort === 'readiness-public-dpr-candidate0feb';
+  return (
+    fontDprPlan(plan) ||
+    ['readiness-public-dpr-candidate0feb', 'readiness-public-dpr-candidatec696'].includes(
+      plan?.sourceCohort,
+    )
+  );
 }
 function comparisonSchedule(plan) {
   return densityPlan(plan) ? densityComparisonSchedule() : qualityComparisonSchedule();
@@ -988,12 +1018,12 @@ export async function assessQualityComparisonArm(
   const density = densityPlan(plan);
   const compact = plan?.sourceCohort === 'readiness-public-effects-candidatec696' || density;
   const expectedSource = density
-    ? FONT_DPR_SOURCE.revision
+    ? fontDprSource(plan).revision
     : compact
       ? SELECTED_FONT_SOURCE.revision
       : source;
   const expectedTree = density
-    ? FONT_DPR_SOURCE.tree
+    ? fontDprSource(plan).tree
     : compact
       ? SELECTED_FONT_SOURCE.tree
       : 'e87e64d0e14584c2a569d06bae8e7c602c5ed105';
@@ -1266,7 +1296,7 @@ export function qualityComparisonArguments(ctx, arm, url, dir) {
     join(dir, 'report.json'),
     '--source-revision=' +
       (density
-        ? FONT_DPR_SOURCE.revision
+        ? fontDprSource(ctx.plan).revision
         : compact
           ? SELECTED_FONT_SOURCE.revision
           : RESUME_READINESS_SOURCE.revision),
