@@ -11,6 +11,61 @@ const workflowPath = '.github/workflows/solo-native-mp3-cocoa-owner397-temporary
 const oldPath = '.github/workflows/solo-darwin-owner-preflight-thermald-temporary.yml';
 const witness = JSON.parse(await readFile(join(proposal, fixturePath)));
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+// This exact source already executed. The additive Git witness is historical only;
+// future declarations must still admit their own current helper bytes.
+const executed816Bytes = await readFile(
+  new URL(
+    'docs/performance/fixtures/solo-native-816/executed-source.json',
+    process.env.SOLO_EXECUTED_816_PROPOSAL || new URL('../', import.meta.url),
+  ),
+);
+function executed816Bindings(bytes, bindings) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '017ca49b181d9e2aece4fc059dfac32b21ecea47f2759f262255efd93d1ff45f',
+  );
+  const value = JSON.parse(bytes);
+  assert.equal(value.format, 'Solo816ExecutedSourceWitnessV1');
+  assert.equal(value.revision, '8161953a10b9c37e603d78f236e277da380e57ad');
+  assert.equal(value.tree, '3cc69ce4de5367590e9bd11e4eeed38ddd510d9a');
+  assert.equal(value.postHocExactGitReadback, true);
+  assert.deepEqual(
+    value.runs.map((r) => r.run),
+    [39073210040, 39073210270, 39073210265, 39073210308],
+  );
+  assert.equal(value.records.length, 73);
+  assert.equal(new Set(value.records.map((r) => r.path)).size, value.records.length);
+  for (const ref of value.records) assert.match(ref.blob, /^[a-f0-9]{40}$/);
+  for (const [path, input] of bindings) {
+    const ref = value.records.find((r) => r.path === path);
+    assert(ref, path);
+    assert.equal(input.length, ref.bytes, path);
+    assert.equal(createHash('sha256').update(input).digest('hex'), ref.sha256, path);
+  }
+  return value;
+}
+function executed816Ref(execution, ref) {
+  const entry = execution.records.find((r) => r.path === ref.path);
+  assert(entry, ref.path);
+  assert.equal(entry.bytes, ref.bytes, ref.path);
+  assert.equal(entry.sha256, ref.sha256, ref.path);
+}
+
+const executed816 = executed816Bindings(executed816Bytes, [
+  [fixturePath, await readFile(join(proposal, fixturePath))],
+  [workflowPath, await readFile(join(proposal, workflowPath))],
+]);
+test('executed816 rejects changed witness bytes and original declaration or workflow bytes', () => {
+  assert.throws(() => executed816Bindings(Buffer.from('{}'), []));
+  const ref = executed816.records.find((r) => r.path === fixturePath);
+  assert.throws(() => executed816Bindings(executed816Bytes, [[ref.path, Buffer.from('{}')]]));
+  const workflowRef = executed816.records.find((r) => r.path === workflowPath);
+  assert.throws(() =>
+    executed816Bindings(executed816Bytes, [[workflowRef.path, Buffer.from('{}')]]),
+  );
+  assert.throws(() => executed816Ref(executed816, { ...ref, sha256: '0'.repeat(64) }));
+  assert.throws(() => executed816Ref(executed816, { ...ref, bytes: ref.bytes + 1 }));
+});
 const { assessDarwinOwnerCase } = await import(
   pathToFileURL(join(root, 'scripts/solo-darwin-owner-preflight.mjs'))
 );
@@ -71,9 +126,7 @@ test('actual397 retained non-browser proof is source bound and re-assessed witho
   const report = prerequisite(witness);
   assert.equal(nativeOwnerPreflightComplete(report, report.cases[0].command), false);
   for (const ref of report.sources) {
-    const bytes = await readFile(join(root, ref.path));
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(sha(bytes), ref.sha256, ref.path);
+    executed816Ref(executed816, ref);
   }
 });
 test('missing or substituted previous-host source, archive, raw report and case evidence fails', () => {

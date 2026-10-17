@@ -213,7 +213,9 @@ export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, lea
   const leader = owned.get(leaderPid);
   const knownExecutable =
     (row?.argv === '/bin/ps' && row.ppid > 1) ||
-    (row?.argv === '/usr/libexec/thermald' &&
+    ((row?.argv === '/usr/libexec/thermald' ||
+      row?.argv ===
+        '/System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService') &&
       row.ppid === 1 &&
       row.parentUniqueId === '1' &&
       row.pgid === row.pid);

@@ -28,6 +28,7 @@ import {
 import {
   isOwnedProcess,
   darwinForeignSystemProcessWitness,
+  darwinKnownNonBrowserProcessWitness,
   collectUnattributedProcesses,
   ownedCommand,
   spawnedLeaderIdentity,
@@ -1081,4 +1082,123 @@ test('first ambiguous evidence is bounded and does not change foreign exemption 
   assert(Buffer.byteLength(JSON.stringify(retained)) < 8192);
   m.row.argv = '/changed';
   assert.notEqual(retained.row.argv, m.row.argv);
+});
+
+function observedMetalCompilerModel() {
+  // Exact scalar row retained by run39073210308/artifact12116355923. Its full
+  // before/all inventory was NOT retained. The surrounding map and non-root
+  // leader are controlled models; this test cannot promote that failed run.
+  const m = observedPsModel();
+  m.all.delete(m.row.pid);
+  m.row = {
+    ...m.row,
+    pid: 15107,
+    ppid: 1,
+    pgid: 15107,
+    birth: '00000000000000015107',
+    argv: '/System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService',
+    parentUniqueId: '1',
+    version: 30818,
+  };
+  m.all.set(m.row.pid, m.row);
+  return m;
+}
+const metalWitness = (m) =>
+  darwinKnownNonBrowserProcessWitness(m.row, m.before, m.all, m.owned, m.leader);
+
+test('retained kernel MetalCompilerService row is classification only with unavailable resources', () => {
+  const m = observedMetalCompilerModel();
+  assert.equal(m.row.argv.length, 122);
+  assert.deepEqual(collectModel(m), []);
+  const w = m.record.foreignSystemProcesses[0];
+  assert.equal(w.format, 'SoloKnownNonBrowserProcessWitnessV1');
+  assert.equal(w.process.executable, m.row.argv);
+  assert.equal(w.process.birth, '00000000000000015107');
+  assert.equal(w.process.version, 30818);
+  assert.equal(w.process.rss, null);
+  assert.equal(w.process.ownerTagged, null);
+  assert.equal(m.row.inspectionIncomplete, true);
+  assert.deepEqual([...m.owned.keys()], [3266]);
+  assert.deepEqual(collectModel(m, false), [m.row]);
+});
+
+test('Metal classification rejects changed executable, lineage, privilege and unavailable path provenance', () => {
+  for (const mutate of [
+    (m) => (m.row.argv += '-helper'),
+    (m) => (m.row.argv += ' -- WebKit'),
+    (m) => (m.row.argv = '/tmp/MTLCompilerService'),
+    (m) =>
+      (m.row.argv =
+        '/System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/WebKit'),
+    (m) => (m.row.ppid = 2),
+    (m) => (m.row.parentUniqueId = '2'),
+    (m) => (m.row.pgid = 2),
+    (m) => (m.row.euid = 501),
+    (m) => (m.row.ruid = 501),
+    (m) => (m.row.pathInspection = 'unavailable'),
+    (m) => (m.row.pathInspection = 'unobserved'),
+    (m) => (m.row.ownerTagged = true),
+    (m) => (m.row.ownerTagInspection = 'present'),
+    (m) => (m.row.ownerTagInspection = 'unobserved'),
+    (m) => (m.row.rssInspection = 'unobserved'),
+    (m) => (m.row.rss = 1),
+    (m) => (m.row.identityKind = 'timestamp'),
+    (m) => (m.row.birth = '0'),
+    (m) => (m.row.version = -1),
+    (m) => delete m.owned.get(m.leader).euid,
+    (m) => (m.owned.get(m.leader).ruid = 0),
+  ]) {
+    const m = observedMetalCompilerModel();
+    mutate(m);
+    assert.equal(metalWitness(m), null, String(mutate));
+    assert.deepEqual(collectModel(m), [m.row], String(mutate));
+    assert.equal(m.record.foreignSystemProcesses.length, 0);
+  }
+  const contradictory = observedMetalCompilerModel();
+  contradictory.row.inspectionIncomplete = false;
+  assert.equal(metalWitness(contradictory), null);
+  // Existing collection considers browser commands or incomplete inspections.
+  // This invalid complete/non-browser row gets no new exception or authority;
+  // parser consistency remains the boundary before inventory collection.
+  assert.deepEqual(collectModel(contradictory), []);
+  assert.equal(contradictory.record.foreignSystemProcesses.length, 0);
+});
+
+test('Metal classification rejects reused or owned lifetime and mismatched current exec image', () => {
+  for (const mutate of [
+    (m) => m.before.set(m.row.pid, { ...m.row }),
+    (m) => m.owned.set(m.row.pid, { ...m.row }),
+    (m) => (m.row.pgid = m.leader),
+    (m) => (m.row.ppid = m.leader),
+    (m) => m.all.set(m.row.pid, { ...m.row, birth: '00000000000000915107' }),
+    (m) => m.all.set(m.row.pid, { ...m.row, version: m.row.version + 1 }),
+    (m) => m.all.set(m.row.pid, { ...m.row, argv: '/owned/WebKitWebProcess' }),
+    (m) => m.all.set(m.row.pid, { ...m.row, pathInspection: 'unavailable' }),
+  ]) {
+    const m = observedMetalCompilerModel();
+    mutate(m);
+    assert.equal(metalWitness(m), null, String(mutate));
+    assert.equal(m.record.foreignSystemProcesses.length, 0);
+  }
+});
+
+test('Metal exception preserves simultaneous unknowns, bounded witness overflow and first failure latch', () => {
+  const m = observedMetalCompilerModel();
+  const unknown = { ...m.row, pid: 15108, pgid: 15108, birth: '00000000000000015108', argv: '' };
+  m.all.set(unknown.pid, unknown);
+  assert.deepEqual(collectModel(m), [unknown]);
+  assert.equal(m.record.foreignSystemProcesses.length, 1);
+  assert.equal(m.record.firstAmbiguousInventory.row.pid, unknown.pid);
+  m.all.delete(unknown.pid);
+  assert.deepEqual(collectModel(m), []);
+  assert.equal(m.record.firstAmbiguousInventory.row.pid, unknown.pid);
+  const cap = observedMetalCompilerModel();
+  for (let i = 0; i < 64; i++) {
+    const pid = 16000 + i;
+    cap.all.set(pid, { ...cap.row, pid, pgid: pid, birth: String(pid).padStart(20, '0') });
+  }
+  assert.equal(collectModel(cap).length, 1);
+  assert.equal(cap.record.foreignSystemProcesses.length, 64);
+  assert.equal(cap.record.foreignSystemProcessOverflow, true);
+  assert.deepEqual([...cap.owned.keys()], [3266]);
 });

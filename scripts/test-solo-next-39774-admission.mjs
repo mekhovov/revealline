@@ -20,6 +20,7 @@ const {
 } = await import(pathToFileURL(join(root, 'scripts/solo-qualification-next-route.mjs')).href);
 const {
   bindSustainedJob,
+  prepareSustainedMode,
   sustainedMatrix,
   GEOMETRIC_NEXT_39774_SOURCE,
   geometricNextAssessment,
@@ -30,6 +31,61 @@ const original = JSON.parse(await readFile(join(root, historicalPath)));
 const heldPath = 'docs/performance/solo-next-geometric-39774-plan.json';
 const workflowPath = '.github/workflows/solo-remote-next-geometric-39774-temporary.yml';
 const held = JSON.parse(await readFile(join(proposal, heldPath)));
+// This exact source already executed. The additive Git witness is historical only;
+// future declarations must still admit their own current helper bytes.
+const executed816Bytes = await readFile(
+  new URL(
+    'docs/performance/fixtures/solo-native-816/executed-source.json',
+    process.env.SOLO_EXECUTED_816_PROPOSAL || new URL('../', import.meta.url),
+  ),
+);
+function executed816Bindings(bytes, bindings) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '017ca49b181d9e2aece4fc059dfac32b21ecea47f2759f262255efd93d1ff45f',
+  );
+  const value = JSON.parse(bytes);
+  assert.equal(value.format, 'Solo816ExecutedSourceWitnessV1');
+  assert.equal(value.revision, '8161953a10b9c37e603d78f236e277da380e57ad');
+  assert.equal(value.tree, '3cc69ce4de5367590e9bd11e4eeed38ddd510d9a');
+  assert.equal(value.postHocExactGitReadback, true);
+  assert.deepEqual(
+    value.runs.map((r) => r.run),
+    [39073210040, 39073210270, 39073210265, 39073210308],
+  );
+  assert.equal(value.records.length, 73);
+  assert.equal(new Set(value.records.map((r) => r.path)).size, value.records.length);
+  for (const ref of value.records) assert.match(ref.blob, /^[a-f0-9]{40}$/);
+  for (const [path, input] of bindings) {
+    const ref = value.records.find((r) => r.path === path);
+    assert(ref, path);
+    assert.equal(input.length, ref.bytes, path);
+    assert.equal(createHash('sha256').update(input).digest('hex'), ref.sha256, path);
+  }
+  return value;
+}
+function executed816Ref(execution, ref) {
+  const entry = execution.records.find((r) => r.path === ref.path);
+  assert(entry, ref.path);
+  assert.equal(entry.bytes, ref.bytes, ref.path);
+  assert.equal(entry.sha256, ref.sha256, ref.path);
+}
+
+const executed816 = executed816Bindings(executed816Bytes, [
+  [heldPath, await readFile(join(proposal, heldPath))],
+  [workflowPath, await readFile(join(proposal, workflowPath))],
+]);
+test('executed816 rejects changed witness bytes and original declaration or workflow bytes', () => {
+  assert.throws(() => executed816Bindings(Buffer.from('{}'), []));
+  const ref = executed816.records.find((r) => r.path === heldPath);
+  assert.throws(() => executed816Bindings(executed816Bytes, [[ref.path, Buffer.from('{}')]]));
+  const workflowRef = executed816.records.find((r) => r.path === workflowPath);
+  assert.throws(() =>
+    executed816Bindings(executed816Bytes, [[workflowRef.path, Buffer.from('{}')]]),
+  );
+  assert.throws(() => executed816Ref(executed816, { ...ref, sha256: '0'.repeat(64) }));
+  assert.throws(() => executed816Ref(executed816, { ...ref, bytes: ref.bytes + 1 }));
+});
 const bytes = await readFile(join(root, original.recipes.next.path));
 const recipe = JSON.parse(bytes);
 const flags = (revision) => [
@@ -252,7 +308,7 @@ test('each one-shot condition is required and no alternate dispatch is admitted'
     assert.throws(() => assertReleaseGuard(text.replace(releaseConditions.join(' && '), wrong)));
 });
 
-test('current frozen runtime inputs and sparse support are exact; historical declarations stay immutable', async () => {
+test('executed816 frozen inputs and original sparse support stay exact and immutable', async () => {
   const workflow = await readFile(join(proposal, workflowPath), 'utf8');
   const lists = [
     ...workflow.matchAll(/          sparse-checkout: \|\n((?:            .+\n)+)/g),
@@ -265,12 +321,7 @@ test('current frozen runtime inputs and sparse support are exact; historical dec
   assert.equal(lists.length, 2);
   for (const list of lists) assert.equal(new Set(list).size, list.length);
   for (const ref of [...held.frozenTools, ...held.adapterInputs, ...Object.values(held.recipes)]) {
-    const value = await readFile(join(proposal, ref.path)).catch((error) => {
-      if (error.code !== 'ENOENT') throw error;
-      return readFile(join(root, ref.path));
-    });
-    assert.equal(value.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(value).digest('hex'), ref.sha256, ref.path);
+    executed816Ref(executed816, ref);
     for (const list of lists) assert(list.includes(ref.path), ref.path);
   }
   for (const path of lists[1])
@@ -364,6 +415,7 @@ test('new source preserves actual transition assessment and binary-journal failu
   const context = {
     assert,
     bindSustainedJob,
+    prepareSustainedMode,
     geometricNextAssessment,
     verifyTimingHitchJournal,
     createBrowserHitchJournal,
@@ -389,4 +441,37 @@ test('new source preserves actual transition assessment and binary-journal failu
       '];',
   );
   for (const run of evaluate(...Object.values(context))) await run(t);
+});
+
+test('historical witness cannot replace current Next input admission before any native command', async () => {
+  const target = 'scripts/run-solo-remote-correctness.mjs';
+  const calls = [];
+  let native = 0;
+  await assert.rejects(
+    prepareSustainedMode({
+      plan: bindSustainedJob(held, 'webkit', 1),
+      repository: root,
+      digest: async (path) => {
+        calls.push(path);
+        const bytes = await readFile(path);
+        return {
+          bytes: bytes.length,
+          sha256: path.endsWith('/' + target)
+            ? '0'.repeat(64)
+            : createHash('sha256').update(bytes).digest('hex'),
+        };
+      },
+      ensureBaseline: async () => {
+        native++;
+        throw new Error('native must not run');
+      },
+      required: async () => {
+        native++;
+        throw new Error('native must not run');
+      },
+    }),
+    /Changed input: scripts\/run-solo-remote-correctness/,
+  );
+  assert(calls.includes(join(root, target)));
+  assert.equal(native, 0);
 });

@@ -64,6 +64,59 @@ const flags = [
   '--server-fixture-access',
 ];
 
+// Exact prior execution source, never a substitute for current prospective inputs.
+const priorToolBytes = await readFile(
+  new URL(
+    'docs/performance/fixtures/solo-native-816/legacy-tool-supplement.json',
+    process.env.SOLO_EXECUTED_816_PROPOSAL || new URL('../', import.meta.url),
+  ),
+);
+function priorToolBindings(bytes, declarationBytes, workflowBytes) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    'ed447c4cf0031ab5767539a617344a9a1eb402c54d5959adfe07a2f2744dc067',
+  );
+  const supplement = JSON.parse(bytes);
+  assert.equal(supplement.format, 'SoloPriorExecutedToolSupplementV1');
+  assert.equal(supplement.postHocExactGitReadback, true);
+  const execution = supplement.executions.find(
+    (v) => v.revision === '34d95cb9fe471ca56c243f05c4330826ba822fb9',
+  );
+  assert(execution);
+  assert.equal(execution.tree, 'de4ea7b4c23988eeee54f5d082dd3d9fa65eddbb');
+  assert.equal(execution.records.length, 56);
+  assert.equal(new Set(execution.records.map((r) => r.path)).size, execution.records.length);
+  for (const ref of execution.records) assert.match(ref.blob, /^[a-f0-9]{40}$/);
+  for (const [p, b] of [
+    [path, declarationBytes],
+    [workflowPath, workflowBytes],
+  ]) {
+    const ref = execution.records.find((r) => r.path === p);
+    assert(ref, p);
+    assert.equal(b.length, ref.bytes, p);
+    assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256, p);
+  }
+  return execution;
+}
+const priorTools = priorToolBindings(priorToolBytes, await read(path), await read(workflowPath));
+function priorToolRef(ref) {
+  const exact = priorTools.records.find((r) => r.path === ref.path);
+  assert(exact, ref.path);
+  assert.equal(exact.bytes, ref.bytes, ref.path);
+  assert.equal(exact.sha256, ref.sha256, ref.path);
+}
+test('prior tool supplement rejects changed original source, declaration, workflow and reference', () => {
+  assert.throws(() => priorToolBindings(Buffer.from('{}'), Buffer.from('{}'), Buffer.from('{}')));
+  assert.throws(() => priorToolBindings(priorToolBytes, Buffer.from('{}'), Buffer.from(workflow)));
+  assert.throws(() =>
+    priorToolBindings(priorToolBytes, Buffer.from(JSON.stringify(manifest)), Buffer.from('{}')),
+  );
+  const ref = manifest.frozenTools.find(
+    (r) => r.path === 'scripts/run-solo-remote-correctness.mjs',
+  );
+  priorToolRef(ref);
+  assert.throws(() => priorToolRef({ ...ref, sha256: '0'.repeat(64) }));
+});
 test('only exact Settings route/source/bytes replace the hidden Home summary; all later audio/replay actions stay exact', () => {
   assert.equal(qualificationReadinessOptions(flags, fixture, raw), OPTIONAL_AUDIO_SETTINGS_PILOT);
   assert.equal(
@@ -204,13 +257,10 @@ test('exact before92ff one-shot guard, both installed engines, all current refs 
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(sparse.length, new Set(sparse).size);
   for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools, manifest.fixture]) {
+    priorToolRef(ref);
     if (historicalPaths.has(ref.path)) {
       const r = historical.records.find((r) => r.path === ref.path);
       assert.deepEqual({ path: r.path, bytes: r.bytes, sha256: r.sha256 }, ref);
-    } else {
-      const b = await read(ref.path);
-      assert.equal(b.length, ref.bytes, ref.path);
-      assert.equal(hash(b), ref.sha256, ref.path);
     }
     assert(sparse.includes(ref.path));
   }
