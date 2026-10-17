@@ -245,6 +245,37 @@ export function admitDarwinBuildReceipt(environment = process.env, sourceRevisio
   ]);
   return { bytes, receipt };
 }
+export const DARWIN_TOOLCHAIN_DISCOVERY_TIMEOUT_MS = 30000;
+// Tool discovery is setup work, independent of the 3-second native inventory bound.
+export function discoverDarwinToolchain(execute = execFileSync, now = () => performance.now()) {
+  let previous = now();
+  assert(Number.isFinite(previous) && previous >= 0, 'Toolchain discovery clock');
+  const deadline = previous + DARWIN_TOOLCHAIN_DISCOVERY_TIMEOUT_MS;
+  const remaining = () => {
+    const current = now();
+    assert(Number.isFinite(current) && current >= previous, 'Toolchain discovery clock');
+    previous = current;
+    assert(current < deadline, 'Toolchain discovery deadline');
+    return Math.max(1, Math.floor(deadline - current));
+  };
+  const capture = (command, args) => {
+    const value = execute(command, args, {
+      encoding: 'utf8',
+      timeout: remaining(),
+      maxBuffer: 65536,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    remaining();
+    return value.trim();
+  };
+  const compiler = { path: capture('xcrun', ['--find', 'clang']) };
+  compiler.version = capture(compiler.path, ['--version']);
+  const sdk = {
+    path: capture('xcrun', ['--show-sdk-path']),
+    version: capture('xcrun', ['--show-sdk-version']),
+  };
+  return { compiler, sdk };
+}
 function build(directory, receiptPath) {
   assert.equal(process.platform, 'darwin');
   assert.equal(realpathSync(directory), directory);
@@ -260,12 +291,7 @@ function build(directory, receiptPath) {
     }).trim();
   const sourceRevision = capture('git', ['-C', resolve(here, '..'), 'rev-parse', 'HEAD']);
   assert.equal(sourceRevision, process.env.SOLO_TOOLING_REVISION);
-  const compiler = { path: capture('xcrun', ['--find', 'clang']) };
-  compiler.version = capture(compiler.path, ['--version']);
-  const sdk = {
-    path: capture('xcrun', ['--show-sdk-path']),
-    version: capture('xcrun', ['--show-sdk-version']),
-  };
+  const { compiler, sdk } = discoverDarwinToolchain();
   const args = [
     '-Wall',
     '-Wextra',

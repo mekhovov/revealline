@@ -9,6 +9,8 @@ import {
   createDarwinProcessInventory,
   admitDarwinBuildReceipt,
   DARWIN_INVENTORY_LIMITS,
+  DARWIN_TOOLCHAIN_DISCOVERY_TIMEOUT_MS,
+  discoverDarwinToolchain,
   DARWIN_INVENTORY_FORMAT,
   DARWIN_IDENTITY_KIND,
   parseDarwinInventory,
@@ -601,4 +603,117 @@ test('fresh full-inventory provider rejects identity-only and unobserved-token l
       ),
     /omitted owner tag/,
   );
+});
+
+const commands = [
+  ['xcrun', ['--find', 'clang']],
+  ['/selected/clang', ['--version']],
+  ['xcrun', ['--show-sdk-path']],
+  ['xcrun', ['--show-sdk-version']],
+];
+const values = ['/selected/clang\n', 'selected clang version\n', '/selected/sdk\n', '15.5\n'];
+function modeledQueries(durations, failAt = -1, error = new Error('query failed')) {
+  let clock = 100;
+  const calls = [];
+  return {
+    calls,
+    now: () => clock,
+    execute(command, args, options) {
+      const index = calls.length;
+      calls.push({ command, args, options });
+      if (index === failAt) throw error;
+      const elapsed = durations[index];
+      if (elapsed > options.timeout)
+        throw Object.assign(new Error('modeled timeout'), { code: 'ETIMEDOUT' });
+      clock += elapsed;
+      return values[index];
+    },
+  };
+}
+
+test('discovery admits a slow first query within one shrinking setup budget', () => {
+  const model = modeledQueries([7000, 1000, 1000, 1000]);
+  assert.deepEqual(discoverDarwinToolchain(model.execute, model.now), {
+    compiler: { path: '/selected/clang', version: 'selected clang version' },
+    sdk: { path: '/selected/sdk', version: '15.5' },
+  });
+  assert.deepEqual(
+    model.calls.map(({ command, args }) => [command, args]),
+    commands,
+  );
+  assert.deepEqual(
+    model.calls.map(({ options }) => options.timeout),
+    [30000, 23000, 22000, 21000],
+  );
+  for (const { options } of model.calls) {
+    assert.equal(options.encoding, 'utf8');
+    assert.equal(options.maxBuffer, 65536);
+    assert.deepEqual(options.stdio, ['ignore', 'pipe', 'pipe']);
+  }
+  // This is the observed old setup boundary, modeled without running xcrun.
+  const old = modeledQueries([7000]);
+  assert.throws(() => old.execute(...commands[0], { timeout: 5000 }), { code: 'ETIMEDOUT' });
+});
+
+test('discovery never renews its budget for later metadata queries', () => {
+  const model = modeledQueries([25000, 3000, 3000, 1]);
+  assert.throws(() => discoverDarwinToolchain(model.execute, model.now), { code: 'ETIMEDOUT' });
+  assert.equal(model.calls.length, 3);
+  assert.deepEqual(
+    model.calls.map(({ options }) => options.timeout),
+    [30000, 5000, 2000],
+  );
+});
+
+test('a returned result at the aggregate deadline fails before the next stage', () => {
+  const model = modeledQueries([30000]);
+  assert.throws(() => discoverDarwinToolchain(model.execute, model.now), /discovery deadline/);
+  assert.equal(model.calls.length, 1);
+});
+
+test('query failures keep their original identity and do not retry or discover later fields', () => {
+  for (let failAt = 0; failAt < 4; failAt++) {
+    const error = Object.assign(new Error('original failure'), {
+      code: failAt ? 'ENOENT' : 'ETIMEDOUT',
+    });
+    const model = modeledQueries([1, 1, 1, 1], failAt, error);
+    assert.throws(
+      () => discoverDarwinToolchain(model.execute, model.now),
+      (actual) => actual === error,
+    );
+    assert.equal(model.calls.length, failAt + 1);
+  }
+});
+
+test('invalid, backwards and late clocks cannot create a larger query allowance', () => {
+  for (const sequence of [[NaN], [Infinity], [-1], [10, 9], [10, Infinity], [10, 30010]]) {
+    let i = 0;
+    let calls = 0;
+    assert.throws(
+      () =>
+        discoverDarwinToolchain(
+          () => {
+            calls++;
+          },
+          () => sequence[i++],
+        ),
+      /discovery (?:clock|deadline)/,
+    );
+    assert.equal(calls, 0);
+  }
+});
+
+test('setup discovery leaves inventory and compilation bounds separate', async () => {
+  assert.equal(DARWIN_INVENTORY_LIMITS.timeoutMs, 3000);
+  assert.equal(DARWIN_TOOLCHAIN_DISCOVERY_TIMEOUT_MS, 30000);
+  const source = await readFile(
+    new URL('./solo-darwin-process-inventory.mjs', import.meta.url),
+    'utf8',
+  );
+  const build = source.slice(source.indexOf('function build('));
+  assert.match(build, /const \{ compiler, sdk \} = discoverDarwinToolchain\(\);/);
+  assert.match(build, /const sourceRevision = capture\('git'/);
+  assert.match(build, /timeout: 5000/);
+  assert.match(build, /execFileSync\(compiler.path, args, \{\s+timeout: 30000,/);
+  assert.equal(5000 + DARWIN_TOOLCHAIN_DISCOVERY_TIMEOUT_MS + 30000, 65000);
 });
