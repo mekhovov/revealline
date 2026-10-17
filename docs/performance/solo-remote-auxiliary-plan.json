@@ -1,7 +1,7 @@
 {
   "format": "SoloHostedAuxiliaryManifestV1",
   "status": "reviewed-diagnostic-only",
-  "createdAt": "2026-10-17T02:31:53.019764+00:00",
+  "createdAt": "2026-10-17T03:00:03.926056+00:00",
   "repository": "mekhovov/revealline",
   "node": "22.13.1",
   "playwright": "1.62.1",
@@ -67,7 +67,7 @@
   "evidenceBytes": 268435456,
   "rowEvidenceBytes": 33554432,
   "release": {
-    "scope": "independent-audio-and-synthetic-recovery",
+    "scope": "independent-audio-import-duration-diagnostic",
     "predecessorRun": 38985941469,
     "automaticRetries": 0,
     "performanceQualification": "excluded",
@@ -92,19 +92,26 @@
         "artifactId": 12087010011,
         "artifactSHA256": "0625db4967bae72a383e999884c120c43bc57130343eb5caaa974a33f3b2cec8",
         "summarySHA256": "a5e62f5b610ad2c30544a6297650fc39ec920ed7d40bd1873b6f1fe6d54bddb3"
+      },
+      {
+        "runId": 38995660514,
+        "artifactId": 12087685762,
+        "artifactSHA256": "266b71d7ca5f9775a154ab5862bfb1be4ae3d0d3d130f654d5a8eae0410e5471",
+        "summarySHA256": "18eb2bb8653acf7e8363acc86a9a9cf416764beaf97887d410dd408e0f1aef72"
+      },
+      {
+        "runId": 38995660514,
+        "artifactId": 12087097855,
+        "artifactSHA256": "f54a7cad5016a7464c5fcb33c75f4b5b3d6ffff4522d5bf687e4f09edb4da646",
+        "summarySHA256": "16ebb8b68fc6eaa1a8dfac66a2b65001eab0c9e424f2d5206bddbca63d66d268"
       }
     ],
-    "selectedJobs": ["music-chromium", "music-webkit"],
+    "selectedJobs": ["music-webkit"],
     "correction": {
-      "previousRun": 38992974900,
-      "sourceRecords": 128,
-      "previousAggregateEncodedBytes": 16777216,
-      "musicAggregateEncodedBytes": 33554432,
-      "speechAggregateEncodedBytes": 16777216,
-      "encodedBytesPerSource": 2097152,
+      "previousRun": 38995660514,
+      "reason": "Both WebKit sources retain the exact public import duration error before Apply listening; the value and event sequence remain unobserved. One candidate-only original-source arm adds passive load/metadata capture to distinguish non-finite, non-positive or excessive duration before source cleanup. No native behavior, recipe, source, validation, deadline, audio limits or pass threshold changes. Chromium already passed and is not repeated.",
       "unchangedScenarioDeadlines": true,
-      "productionBudgetsChanged": false,
-      "reason": "The completed original-source run exhausted the 16 MiB intrusive identity budget in Chromium baseline (5 capped requests) and candidate (1). Both WebKit arms stopped at the missing imported playlist option before playback; the bounded import-boundary and failure public status witness will retain that unobserved cause. This separate music-only successor keeps the exact recipes, sources, input controls, strict replay, zero-capped identity requirement and numerical gates. Speech and recovery are not repeated here; no attribution or previous result is changed."
+      "productionBudgetsChanged": false
     },
     "musicProofBytes": 33554432,
     "priorCorrections": [
@@ -116,8 +123,24 @@
         "unchangedScenarioDeadlines": true,
         "reason": "Both baseline speech probes exhausted64 source records after95 requests; Chromium music never reached a browser after checkout timeout; WebKit music never reached a browser because archived original URL returned404. Finite successor preserves sources, inputs, deadlines and numerical gates; uses128 diagnostic source records, shallowtools checkout and existing explicit creator-download intake verified against unchanged original hashes. WebKit candidate309ms interruption remains unattributed; recovery is not repeated.",
         "creatorFixtureSHA256": "0534575a1604bf9f228fffe31e5e21370324fe1a80bf4e1d6006a59e72e0b265"
+      },
+      {
+        "previousRun": 38992974900,
+        "sourceRecords": 128,
+        "previousAggregateEncodedBytes": 16777216,
+        "musicAggregateEncodedBytes": 33554432,
+        "speechAggregateEncodedBytes": 16777216,
+        "encodedBytesPerSource": 2097152,
+        "unchangedScenarioDeadlines": true,
+        "productionBudgetsChanged": false,
+        "reason": "The completed original-source run exhausted the 16 MiB intrusive identity budget in Chromium baseline (5 capped requests) and candidate (1). Both WebKit arms stopped at the missing imported playlist option before playback; the bounded import-boundary and failure public status witness will retain that unobserved cause. This separate music-only successor keeps the exact recipes, sources, input controls, strict replay, zero-capped identity requirement and numerical gates. Speech and recovery are not repeated here; no attribution or previous result is changed."
       }
-    ]
+    ],
+    "format": "SoloMusicImportDiagnosticReleaseV1",
+    "importProbe": {
+      "elements": 8,
+      "records": 64
+    }
   },
   "recipes": {
     "speech": {
@@ -159,13 +182,13 @@
   "frozenTools": [
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 58963,
-      "sha256": "b1509f3f4f79862effd1c2e749c5b7915eb02e6d71c73d30abbe413707d613aa"
+      "bytes": 59605,
+      "sha256": "90db5e035dafe5538d347f3cc1b0c38e8e18ffef3c11db3e7b6f803f4619e01f"
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",
-      "bytes": 14479,
-      "sha256": "604a32fa40b361408dbc0b538afbd36695e834be0fbc7d463f38951959002757"
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
     },
     {
       "path": "scripts/prepare-solo-audio-fixtures.mjs",
@@ -370,8 +393,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-auxiliary.mjs",
-      "bytes": 20186,
-      "sha256": "7171e72c0576edae42ed774c8cb1fbc82180c979b581cf3ef83ea2fd03c12ddf"
+      "bytes": 21813,
+      "sha256": "9c21ecfe357b4008a4317348311e5acfd25c9561a027319be8495bf54aa7f900"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -388,5 +411,5 @@
     "sourceAssets": "Full source/archive/static-worker/CSP admission passed in38985941469 and must be repeated in each consumer.",
     "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
   },
-  "cohort": "linux-music-identity-capacity-3ad-v3"
+  "cohort": "linux-webkit-native-import-duration-3ad-v4"
 }

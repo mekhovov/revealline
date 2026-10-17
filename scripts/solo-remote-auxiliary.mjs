@@ -15,6 +15,8 @@ const PREPARATION_SOURCE = 'bffcbd838a7bb925da8aaf030695773f893d8bda';
 const PREPARATION_FIX = 'b5b985f7049537a278632ba82228bb671f7f135a';
 const preparationConfirmation = (plan) =>
   plan.release?.format === 'SoloStartPreparationConfirmationReleaseV1';
+const importDiagnostic = (plan) => plan.release?.format === 'SoloMusicImportDiagnosticReleaseV1';
+const rolesFor = (plan, spec) => (importDiagnostic(plan) ? ['candidate'] : spec.roles);
 function sourceRevision(plan, role) {
   assert(['baseline', 'candidate'].includes(role));
   return role === 'candidate' && preparationConfirmation(plan) ? PREPARATION_SOURCE : SOURCE[role];
@@ -87,12 +89,21 @@ function validateRelease(plan) {
       plan.release.scope,
       preparationConfirmation(plan)
         ? 'independent-start-preparation-confirmation'
-        : 'independent-audio-and-synthetic-recovery',
+        : importDiagnostic(plan)
+          ? 'independent-audio-import-duration-diagnostic'
+          : 'independent-audio-and-synthetic-recovery',
     );
     assert.equal(plan.release.predecessorRun, 38985941469);
     assert.equal(plan.release.automaticRetries, 0);
     assert.equal(plan.release.performanceQualification, 'excluded');
   }
+  if (importDiagnostic(plan)) {
+    assert(diagnostic);
+    assert.deepEqual(plan.release.selectedJobs, ['music-webkit']);
+    assert.equal(plan.release.correction.previousRun, 38995660514);
+    assert.deepEqual(plan.release.importProbe, { elements: 8, records: 64 });
+    assert.equal(plan.release.musicProofBytes, 32 * MiB);
+  } else assert.equal(plan.release.importProbe, undefined);
   if (preparationConfirmation(plan)) {
     assert(diagnostic, 'Start confirmation remains independent correctness evidence');
     assert.equal(plan.release.runtimeFix, PREPARATION_FIX);
@@ -169,7 +180,7 @@ export function validateAuxiliaryPlan(plan) {
       timeoutMs,
       performanceExclusion,
     })),
-    spec.roles.map((source) => ({
+    rolesFor(plan, spec).map((source) => ({
       id: `${plan.observationId ?? plan.job}-${source}`,
       source,
       kind: 'auxiliary',
@@ -220,7 +231,7 @@ export function bindAuxiliaryJob(manifest, job, repetition = 1) {
     plan.observationId = `${job}-r${repetition}`;
   } else assert.equal(repetition, 1);
   plan.helperTimeoutMs = spec.helperMinutes * 60000;
-  plan.rows = spec.roles.map((source) => ({
+  plan.rows = rolesFor(plan, spec).map((source) => ({
     id: `${plan.observationId ?? job}-${source}`,
     source,
     kind: 'auxiliary',
@@ -290,7 +301,7 @@ export async function prepareAuxiliaryMode(ctx) {
   validateAuxiliaryPlan(ctx.plan);
   await verifyInputs(ctx);
   const spec = AUXILIARY_JOBS[ctx.plan.job];
-  if (spec.roles.includes('baseline')) await ctx.ensureBaseline();
+  if (rolesFor(ctx.plan, spec).includes('baseline')) await ctx.ensureBaseline();
   const inputs = join(ctx.work, 'auxiliary-inputs');
   await mkdir(inputs);
   const recipe = ctx.plan.recipes[spec.recipe];
@@ -362,6 +373,7 @@ export function auxiliaryArguments(ctx, row, url, dir) {
     ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
     ...(row.engine === 'webkit' ? ['--context=persistent'] : []),
     ...(spec.recipe !== 'recovery' ? ['--audio-proof'] : []),
+    ...(importDiagnostic(ctx.plan) ? ['--audio-proof-import-events'] : []),
     ...(spec.recipe === 'music' && ctx.plan.release.musicProofBytes
       ? ['--audio-proof-music-capacity']
       : []),
@@ -403,6 +415,21 @@ export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
     !plan.release.musicProofBytes ||
     spec.recipe !== 'music' ||
     raw?.audioProofOptions?.aggregateEncodedBytes === plan.release.musicProofBytes;
+  const importProbe =
+    raw?.actions?.find((action) => action.audioPublicContext?.importProbe?.records?.length)
+      ?.audioPublicContext.importProbe ?? raw?.finalState?.audioProof?.importProbe;
+  const importProbeComplete =
+    !importDiagnostic(plan) ||
+    (raw?.audioProofOptions?.importEvents === true &&
+      importProbe?.records?.length > 0 &&
+      importProbe.records.length <= 64 &&
+      importProbe.observedElements > 0 &&
+      importProbe.observedElements <= 8 &&
+      importProbe.droppedElements === 0 &&
+      importProbe.droppedRecords === 0 &&
+      importProbe.observerErrors === 0 &&
+      importProbe.limits?.elements === 8 &&
+      importProbe.limits?.records === 64);
   const admitted =
     spec.recipe === 'recovery'
       ? raw?.performanceGateStatus === 'excluded-synthetic-recovery'
@@ -416,7 +443,10 @@ export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
           audio.droppedMediaEvents,
         ].every((n) => n === 0);
   return {
-    status: common && admitted && capacityMatches ? 'passed' : 'failed',
+    status: common && admitted && capacityMatches && importProbeComplete ? 'passed' : 'failed',
+    ...(importDiagnostic(plan)
+      ? { importProbe: importProbeComplete ? 'recorded-within-bounds' : 'incomplete' }
+      : {}),
     correctness: common ? 'pass' : 'fail',
     performanceQualification: 'excluded',
     firstEightAllCorrectnessPassed: plan.release.firstEightAllCorrectnessPassed,
