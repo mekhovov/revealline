@@ -441,6 +441,7 @@ try {
     new URLSearchParams(location.search).get('performance') === '1'
       ? createPerformanceSession()
       : null;
+  let modalNavigation = null;
   let fieldScene = null,
     performanceRunGeneration = 0,
     performanceResultGeneration = 0,
@@ -2012,17 +2013,20 @@ try {
     legacyPictureButton.hidden = true;
     resume();
   };
-  function soundtrackContext() {
-    const edition = activeEntry.baseCampaignKey || campaignKey(campaign);
-    const level = scenario?.level || (activeEntry.baseCampaign || campaign).levels[levelIndex];
+  function currentSoundtrackScene() {
     if (
       $('shell-home').open ||
       ($('shell-missions').open && $('shell-missions').dataset.view !== 'brief')
     )
       soundtrackScene = 'menu';
     else if (started && !paused) soundtrackScene = 'gameplay';
+    return soundtrackScene;
+  }
+  function soundtrackContext() {
+    const edition = activeEntry.baseCampaignKey || campaignKey(campaign);
+    const level = scenario?.level || (activeEntry.baseCampaign || campaign).levels[levelIndex];
     return {
-      scene: soundtrackScene,
+      scene: currentSoundtrackScene(),
       themeId: theme.id,
       campaignKey: edition,
       mapKey: JSON.stringify([edition, level.id, level.revision, theme.id]),
@@ -2790,7 +2794,9 @@ try {
     return flightInformation.warning(message, cue, role);
   }
   function dialogOpen() {
-    return !!document.querySelector('dialog[open]');
+    return modalNavigation
+      ? modalNavigation.hasOpenDialog()
+      : !!document.querySelector('dialog[open]');
   }
   const soloRadio = createSoloRadioInput({
     readPads: controllerPreview ? controllerPreview.readPads : () => navigator.getGamepads(),
@@ -2846,7 +2852,7 @@ try {
     navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
       ? 'touch'
       : 'keyboard';
-  const modalNavigation = attachModalNavigation({
+  modalNavigation = attachModalNavigation({
     getFallbackFocus: ({ dialog, top }) =>
       dialog.id === 'settings-dialog' && !top ? $('shell-menu') : null,
   });
@@ -11838,8 +11844,11 @@ try {
     });
     storyDialog.syncSettings();
     if (soundtrackPlayer) {
-      const context = soundtrackContext();
-      if (context.scene !== soundtrackLastScene) {
+      // The ordinary callback only needs the scene. Full context construction
+      // validates/hashes a raw practice campaign; retain that work at actual
+      // scene transitions and the existing accepted mission/theme boundaries.
+      if (currentSoundtrackScene() !== soundtrackLastScene) {
+        const context = soundtrackContext();
         soundtrackLastScene = context.scene;
         soundtrackPlayer.setContext(context);
       }
