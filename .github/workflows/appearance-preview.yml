@@ -24,6 +24,8 @@ on:
       - 'game/ui/game-shell.mjs'
       - 'game/ui/modal-navigation.mjs'
       - 'game/ui/controller-confirm-trace.mjs'
+      - 'game/ui/controller-router.mjs'
+      - 'game/couch/controller-session.mjs'
       - 'game/ui/audio.mjs'
       - 'game/ui/published-audio.mjs'
       - 'game/published-cue-inspection.mjs'
@@ -126,6 +128,8 @@ on:
       - 'game/test/helpers/immutable-presentation-fixture.mjs'
       - 'game/test/helpers/solo-dom.mjs'
       - 'game/test/controller-confirm-trace.test.mjs'
+      - 'game/test/controller-router.test.mjs'
+      - 'game/test/controller-restore.test.mjs'
       - 'game/test/demo-audio.test.mjs'
       - 'game/test/demo-audio-host.test.mjs'
       - 'game/test/demo-context-recovery-host.test.mjs'
@@ -266,6 +270,8 @@ jobs:
         game/test/modal-navigation.test.mjs
         game/test/immutable-presentation-fixture.test.mjs
         game/test/controller-confirm-trace.test.mjs
+        game/test/controller-router.test.mjs
+        game/test/controller-restore.test.mjs
         game/test/demo-audio.test.mjs
         game/test/demo-audio-host.test.mjs
         game/test/demo-context-recovery-host.test.mjs
