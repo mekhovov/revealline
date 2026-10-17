@@ -61,3 +61,24 @@ are 1,352 bytes: baseline SHA-256
 candidate SHA-256
 `d1aa6c0c1d1f5dee25c2932493be222e16f6e8271c5ecf96a68a3d0ee88be964`.
 The separate detail output lists the largest files and design/studio dependencies.
+
+## Current packaged-source boundary: ab45
+
+The same read-only inventory on exact `ab45bfde5d54d612cbba9b038a46f13d13f417ec`
+finds 584 eager Solo modules and 7,969,834 UTF-8 source bytes, compared with
+654 and 8,415,591 at the fixed 8b baseline. This is 70 fewer modules and
+445,757 fewer source bytes across all intervening changes, not an isolated
+optimization result or a measured transfer/startup improvement. Its 1,352-byte
+output has SHA-256 `fa2dbd8419c226247b87cbe9b571267b998eb268028274e29b681b97dd25a5f2`,
+retained as `.cache/solo-followup/readiness-eager-ab45.json`; no module was evaluated.
+
+Review of the remaining imports does not justify moving them into the first
+active frame. In particular, soundtrack-panel attachment also owns persisted
+online sources and playback settings; the library panel also owns gallery,
+backup, export, cancellation and recovery callbacks used before opening.
+These boundaries require an ownership extraction before any further deferral.
+The current runtime completes required evaluation before play and defers the
+proved unnecessary constructions. Preserve this boundary while measuring ab45;
+a blind dynamic-import replacement would not satisfy preparation or user-gesture
+requirements. This is a recorded tradeoff, not a claim that every remaining
+static module is essential or that startup qualification is complete.
