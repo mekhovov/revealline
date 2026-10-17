@@ -1,4 +1,4 @@
-name: Temporary Solo warm and saved Resume plus public effects diagnostic
+name: Solo selected-font and compact-route readiness
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - 'scripts/solo-qualification-readiness.mjs'
       - 'scripts/solo-readiness-gpu.mjs'
       - '.github/workflows/solo-remote-readiness-ab45-temporary.yml'
-      - 'docs/performance/solo-readiness-4bf-plan.json'
+      - 'docs/performance/solo-readiness-font-c696-plan.json'
       - 'docs/performance/fixtures/solo-readiness-resume/**'
       - 'docs/performance/fixtures/solo-remote-timing/public-effects-*.qualification.fixture'
       - 'scripts/solo-qualification-observation.mjs'
@@ -18,7 +18,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: solo-linux-readiness-4bf-${{ github.event.pull_request.number }}
+  group: solo-linux-readiness-font-c696-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 
 jobs:
@@ -29,7 +29,7 @@ jobs:
       matrix:
         engine: [chromium, webkit]
     # Reviewed excluded diagnostics on one exact prospective push edge only.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7'
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'
     runs-on: ubuntu-24.04
     timeout-minutes: 130
     env:
@@ -48,6 +48,12 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-remote-readiness-ab45-temporary.yml
+            /docs/performance/fixtures/solo-readiness-font/c696-executed-workflow.yml
+            /docs/performance/fixtures/solo-readiness-font/c696-execution-source.json
+            /docs/performance/fixtures/solo-readiness-font/public-effects-full-compact-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-font/public-effects-reduced-compact-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-font/saved-compact-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-font/selected-font-cancel.qualification.fixture
             /docs/performance/fixtures/solo-readiness-resume/saved.qualification.fixture
             /docs/performance/fixtures/solo-readiness-resume/warm.qualification.fixture
             /docs/performance/fixtures/solo-readiness/4bf-executed-workflow.yml
@@ -59,6 +65,7 @@ jobs:
             /docs/performance/fixtures/solo-remote-timing/public-effects-reduced-first30.qualification.fixture
             /docs/performance/solo-readiness-4bf-plan.json
             /docs/performance/solo-readiness-ab45-plan.json
+            /docs/performance/solo-readiness-font-c696-plan.json
             /docs/performance/solo-remote-correctness-plan.json
             /game/build-config.json
             /game/campaign-contexts.mjs
@@ -183,6 +190,7 @@ jobs:
             /game/ui/actor-recipes.mjs
             /game/ui/analog-signal.mjs
             /game/ui/combat-view.mjs
+            /game/ui/fonts/field-kit/handjet-display-600.woff2
             /game/ui/fpv-body-recipes.mjs
             /game/ui/jammer-picture.mjs
             /game/ui/music.mjs
@@ -247,6 +255,9 @@ jobs:
             /scripts/test-solo-readiness-resume.mjs
             /scripts/test-solo-remote-correctness.mjs
             /scripts/test-solo-remote-readiness.mjs
+            /scripts/test-solo-selected-font-readiness.mjs
+            /scripts/test-solo-selected-font-release.mjs
+            /scripts/test-solo-selected-font-transport.mjs
             /scripts/test-solo-source-verifier-smoke.mjs
             /scripts/verify-solo-build.mjs
       - timeout-minutes: 3
@@ -259,7 +270,7 @@ jobs:
       - timeout-minutes: 3
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: 4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7
+          ref: c696af41857840359ae473558b90682f3d71f2db
           path: candidate
           persist-credentials: false
           fetch-depth: 1
@@ -276,7 +287,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-readiness-4bf-${{ matrix.engine }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-readiness-font-c696-${{ matrix.engine }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -295,8 +306,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-remote-readiness.mjs scripts/test-solo-qualification-readiness.mjs scripts/test-solo-readiness-gpu.mjs scripts/test-solo-qualification-hitch-journal.mjs scripts/test-solo-long29-journal-wiring.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-readiness-release.mjs scripts/test-solo-readiness-resume.mjs scripts/test-solo-readiness-4bf-release.mjs scripts/test-solo-quality-comparison.mjs scripts/test-solo-qualification.mjs scripts/test-solo-qualification-cadence.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-readiness.mjs bind-plan docs/performance/solo-readiness-4bf-plan.json "$RUNNER_TEMP/readiness-plan.json" "${{ matrix.engine }}"
+          node --test --test-concurrency=2 scripts/test-solo-remote-readiness.mjs scripts/test-solo-qualification-readiness.mjs scripts/test-solo-readiness-gpu.mjs scripts/test-solo-qualification-hitch-journal.mjs scripts/test-solo-long29-journal-wiring.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-readiness-resume.mjs scripts/test-solo-readiness-release.mjs scripts/test-solo-quality-comparison.mjs scripts/test-solo-qualification.mjs scripts/test-solo-qualification-cadence.mjs scripts/test-solo-readiness-4bf-release.mjs scripts/test-solo-selected-font-readiness.mjs scripts/test-solo-selected-font-transport.mjs scripts/test-solo-selected-font-release.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-readiness.mjs bind-plan docs/performance/solo-readiness-font-c696-plan.json "$RUNNER_TEMP/readiness-plan.json" "${{ matrix.engine }}"
       - name: Observe declared Resume and public effects diagnostics
         timeout-minutes: 78
         working-directory: tools
@@ -332,9 +343,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-readiness-4bf-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-readiness-font-c696-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-readiness-4bf-${{ matrix.engine }}/evidence/
+            ${{ runner.temp }}/solo-linux-readiness-font-c696-${{ matrix.engine }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6

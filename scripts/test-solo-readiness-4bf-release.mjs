@@ -13,8 +13,19 @@ const root = new URL('../', import.meta.url);
 const manifestPath = 'docs/performance/solo-readiness-4bf-plan.json';
 const workflowPath = '.github/workflows/solo-remote-readiness-ab45-temporary.yml';
 const read = (path) => readFile(new URL(path, root));
-const plan = JSON.parse(await read(manifestPath));
-const workflow = (await read(workflowPath)).toString();
+const planBytes = await read(manifestPath);
+const plan = JSON.parse(planBytes);
+const executedWorkflowArchive =
+  'docs/performance/fixtures/solo-readiness-font/c696-executed-workflow.yml';
+const workflow = (await read(executedWorkflowArchive)).toString();
+const witnessBytes = await read(
+  'docs/performance/fixtures/solo-readiness-font/c696-execution-source.json',
+);
+assert.equal(
+  createHash('sha256').update(witnessBytes).digest('hex'),
+  'e8c74c47cd10706fcb60a0e07ef62b998e2164af01a10a9788fbc4dc6c208819',
+);
+const witness = JSON.parse(witnessBytes);
 const expectedCandidate = {
   revision: '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7',
   tree: 'e87e64d0e14584c2a569d06bae8e7c602c5ed105',
@@ -153,12 +164,51 @@ function check(value, text) {
 }
 test('reviewed combined declaration binds the verified112 package and fixed eight excluded observations', () =>
   check(plan, workflow));
-test('current frozen tooling and all four recipe bytes are read back independently', async () => {
-  for (const ref of paths(plan)) {
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+function executedBindings(value, text, proof) {
+  assert.equal(proof.format, 'SoloReadinessExecutedSourceV1');
+  assert.equal(proof.revision, 'c696af41857840359ae473558b90682f3d71f2db');
+  assert.equal(proof.tree, 'b70ce1c4b15023a38628c5e958b166e44898eccf');
+  assert.equal(proof.manifest, manifestPath);
+  assert.equal(proof.workflow, workflowPath);
+  assert.equal(proof.files.length, 47);
+  assert.deepEqual(
+    proof.files.map((r) => r.path).sort(),
+    [manifestPath, workflowPath, ...paths(value).map((r) => r.path)].sort(),
+  );
+  for (const ref of paths(value)) {
+    const row = proof.files.find((r) => r.path === ref.path);
+    assert.deepEqual({ path: row.path, bytes: row.bytes, sha256: row.sha256 }, ref);
+    assert.match(row.gitBlob, /^[a-f0-9]{40}$/);
   }
+  assert.deepEqual(value, JSON.parse(planBytes));
+  for (const [path, bytes] of [
+    [manifestPath, planBytes],
+    [workflowPath, Buffer.from(text)],
+  ]) {
+    const row = proof.files.find((r) => r.path === path);
+    assert.equal(bytes.length, row.bytes);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), row.sha256);
+  }
+}
+test('executed c696 source authority preserves the original4bf declaration and every frozen input', () =>
+  executedBindings(plan, workflow, witness));
+test('executed c696 witness rejects changed source, declaration, workflow or duplicate/missing refs', () => {
+  for (const mutate of [
+    (w) => w.files.pop(),
+    (w) => w.files.push(w.files[0]),
+    (w) => (w.revision = '0'.repeat(40)),
+    (w) => (w.tree = '0'.repeat(40)),
+    (w) =>
+      (w.files.find((r) => r.path === 'scripts/qualify-solo-runtime.mjs').sha256 = '0'.repeat(64)),
+  ]) {
+    const w = structuredClone(witness);
+    mutate(w);
+    assert.throws(() => executedBindings(plan, workflow, w));
+  }
+  const p = structuredClone(plan);
+  p.frozenTools[0].bytes++;
+  assert.throws(() => executedBindings(p, workflow, witness));
+  assert.throws(() => executedBindings(plan, workflow + ' ', witness));
 });
 test('combined release rejects changed package, protocol, gates and missing actual closure', () => {
   for (const mutate of [

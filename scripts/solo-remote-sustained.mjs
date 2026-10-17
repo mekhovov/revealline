@@ -307,11 +307,42 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     assert(planHasHitchJournal(plan), 'Journal was not declared');
     const resumeReadiness =
       plan.format === 'SoloHostedReadinessPlanV1' &&
-      plan.sourceCohort === 'readiness-resume-candidate4bf';
+      ['readiness-resume-candidate4bf', 'readiness-resume-candidatec696'].includes(
+        plan.sourceCohort,
+      );
     const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
     if (plan.format === 'SoloHostedReadinessPlanV1') {
       assert.equal(plan.performanceExclusion, true);
-      if (plan.sourceCohort === 'readiness-public-effects-candidate4bf') {
+      if (plan.sourceCohort === 'readiness-selected-font-candidatec696') {
+        assert.equal(plan.phase, 'selected-font-cancel');
+        assert.equal(plan.candidate.revision, 'c696af41857840359ae473558b90682f3d71f2db');
+        assert.equal(plan.runtimeRevision, 'c696af41857840359ae473558b90682f3d71f2db');
+        assert.equal(plan.candidate.tree, 'b70ce1c4b15023a38628c5e958b166e44898eccf');
+        assert.deepEqual(plan.fixture, {
+          path: 'docs/performance/fixtures/solo-readiness-font/selected-font-cancel.qualification.fixture',
+          bytes: 5738,
+          sha256: 'd4c774b80df93896cfd4a1f82d66c16f58a9ed68938ed88229449a2bb001cc67',
+        });
+      } else if (
+        ['readiness-public-effects-candidatec696', 'readiness-resume-candidatec696'].includes(
+          plan.sourceCohort,
+        )
+      ) {
+        assert.equal(plan.candidate.revision, 'c696af41857840359ae473558b90682f3d71f2db');
+        assert.equal(plan.runtimeRevision, 'c696af41857840359ae473558b90682f3d71f2db');
+        assert.equal(plan.candidate.tree, 'b70ce1c4b15023a38628c5e958b166e44898eccf');
+        const { COMPACT_READINESS_FIXTURES } = await import('./solo-remote-readiness.mjs');
+        if (resumeReadiness) {
+          assert.equal(plan.phase, 'saved-resume');
+          assert.deepEqual(plan.fixture, COMPACT_READINESS_FIXTURES.saved);
+        } else {
+          assert(['public-effects-full', 'public-effects-reduced'].includes(plan.phase));
+          assert.deepEqual(
+            plan.fixture,
+            COMPACT_READINESS_FIXTURES[plan.phase.slice('public-effects-'.length)],
+          );
+        }
+      } else if (plan.sourceCohort === 'readiness-public-effects-candidate4bf') {
         assert(['public-effects-full', 'public-effects-reduced'].includes(plan.phase));
         assert.equal(plan.candidate.revision, '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7');
         assert.equal(plan.runtimeRevision, '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7');
