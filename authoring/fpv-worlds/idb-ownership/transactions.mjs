@@ -53,7 +53,7 @@ export function listingObservation(row) {
     return found.length === 1 &&
       found[0].unfiltered &&
       found[0].state === "complete"
-      ? found[0].rows
+      ? found[0]
       : null;
   };
   const world =
@@ -76,15 +76,15 @@ export function listingObservation(row) {
       scope,
       outcome: row.state === "pending" ? "pending" : "unknown",
     };
-  const activeRows = read(records ? "records" : "projects");
-  const retainedRows = hasRetained ? read("revisions") : null;
-  if (activeRows === null || (hasRetained && retainedRows === null))
+  const active = read(records ? "records" : "projects");
+  const retained = hasRetained ? read("revisions") : null;
+  if (active === null || (hasRetained && retained === null))
     return { ...unknown, scope };
   return {
     scope,
-    outcome: activeRows + (retainedRows ?? 0) === 0 ? "empty" : "nonempty",
-    activeRows,
-    retainedRows,
+    outcome: active.rows + (retained?.rows ?? 0) === 0 ? "empty" : "nonempty",
+    activeRows: active.rowsExact ? active.rows : null,
+    retainedRows: retained?.rowsExact ? retained.rows : null,
   };
 }
 
@@ -229,7 +229,14 @@ export function createTransactionObservation({
         row.incomplete = true;
         return;
       }
-      const read = { store, method, unfiltered, state: "pending", rows: null };
+      const read = {
+        store,
+        method,
+        unfiltered,
+        state: "pending",
+        rows: null,
+        rowsExact: null,
+      };
       row.reads.push(read);
       let traversed = 0;
       listen(
@@ -245,9 +252,14 @@ export function createTransactionObservation({
                 return;
               }
               read.rows = request.result.length;
+              read.rowsExact = true;
               read.state = "complete";
             } else if (request.result === null) {
               read.rows = traversed;
+              // Caller-owned advance(n) / continue(key) may skip rows. We do not
+              // intercept progression, so nonzero deliveries are only a lower bound.
+              // No delivered row followed by exhaustion still establishes zero.
+              read.rowsExact = traversed === 0;
               read.state = "complete";
             } else traversed = count(traversed);
           }),

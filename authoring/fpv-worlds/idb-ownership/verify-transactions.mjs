@@ -100,8 +100,11 @@ test("actual main741 WorldStore listing distinguishes successful empty, active-o
     scope: "active-and-retained",
     outcome: "nonempty",
     activeRows: 1,
-    retainedRows: 2,
+    retainedRows: null,
   });
+  const retained = last(tool).reads.find((row) => row.store === "revisions");
+  assert.equal(retained.rows, 2);
+  assert.equal(retained.rowsExact, false);
   await store.list();
   assert.deepEqual(last(tool).listing, {
     scope: "active-only",
@@ -386,4 +389,63 @@ test("bounded history and read cap disclose incomplete coverage instead of empty
   assert.equal(Object.hasOwn(db, "transaction"), false);
   db.close();
   await tick();
+});
+
+test("cursor deliveries are a lower bound even when a caller skips to exhaustion", async () => {
+  const tool = observer(),
+    db = await opened(tool.indexedDB);
+  const seed = db.transaction("revisions", "readwrite");
+  for (let i = 0; i < 5; i++)
+    seed.objectStore("revisions").put({ id: "synthetic", sha256: String(i) });
+  await done(seed);
+  for (const [method, expected] of [
+    ["continue", 5],
+    ["advance", 1],
+    ["continue-key", 2],
+  ]) {
+    const read = listing(db);
+    let delivered = 0;
+    read.cursor.onsuccess = () => {
+      const cursor = read.cursor.result;
+      if (!cursor) return;
+      delivered++;
+      if (method === "advance") cursor.advance(10);
+      else if (method === "continue-key" && delivered === 1)
+        cursor.continue(["synthetic", "4"]);
+      else cursor.continue();
+    };
+    await read.done;
+    assert.equal(delivered, expected, "Only the caller advances the cursor");
+    const row = last(tool),
+      retained = row.reads.find((entry) => entry.store === "revisions");
+    assert.equal(row.listing.outcome, "nonempty");
+    assert.equal(row.listing.activeRows, 0);
+    assert.equal(
+      row.listing.retainedRows,
+      null,
+      "An exhausted cursor does not establish the store total",
+    );
+    assert.equal(
+      retained.rows,
+      expected,
+      "Preserve the observed delivery count",
+    );
+    assert.equal(
+      retained.rowsExact,
+      false,
+      "Cursor progression is not intercepted",
+    );
+  }
+  const cleared = db.transaction("revisions", "readwrite");
+  cleared.objectStore("revisions").clear(); // Only this fresh memory fixture is mutated.
+  await done(cleared);
+  await listing(db).done;
+  assert.equal(last(tool).listing.outcome, "empty");
+  assert.equal(last(tool).listing.retainedRows, 0);
+  assert.equal(
+    last(tool).reads.find((entry) => entry.store === "revisions").rowsExact,
+    true,
+  );
+  tool.stop();
+  db.close();
 });
