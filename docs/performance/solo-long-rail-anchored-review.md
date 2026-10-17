@@ -99,3 +99,58 @@ by this note.
 Model scratch results and the failed exploratory route attempts are retained
 alongside the original artifact directories. They must not be presented as
 native-browser runs or discarded in favor of only the successful model route.
+
+## Native preflight retained 17 October 2026
+
+[Run 38995660502](https://github.com/mekhovov/revealline/actions/runs/38995660502)
+ran the reviewed four observations on tooling
+`1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f`. The actual packages remained candidate
+`3adcd53792043ef02459e86168c6b33a66d6ef00` and baseline
+`b11745223861c3973ad4bf440cc536198b8e0371`; newer runtime changes are not measured
+by these results. Full source/archive setup passed for both engine jobs.
+
+| Observation        | Preflight            | Native strict replay | Keyboard render samples | External work p95 / max | External missed opportunities |
+| ------------------ | -------------------- | -------------------- | ----------------------: | ----------------------: | ----------------------------: |
+| Chromium baseline  | Pass                 | Pass                 |              Unobserved |         15.0 / 390.9 ms |                        4.932% |
+| Chromium candidate | Pass                 | Pass                 |                      28 |          10.3 / 30.8 ms |                        0.303% |
+| WebKit baseline    | **Fail: page error** | Pass                 |              Unobserved |             15 / 159 ms |                       54.075% |
+| WebKit candidate   | Pass                 | Pass                 |                      28 |              10 / 28 ms |                       52.292% |
+
+Every native reconstruction verified the exact mission/options and checkpoint,
+one closure, 34 trail cells, 68 claimed cells and 25 direction changes with
+movement. Chromium was 151.0.7922.34; WebKit was 26.5. These are the declared
+hosted Linux desktop/mobile context strata, not physical-device observations.
+The separate Node reconstructions mismatch floating-point player/enemy state in
+all four recordings and remain retained as portability evidence; they do not
+replace the successful same-engine verifications.
+
+WebKit baseline retained one empty page-error message during action 4 (`follow`)
+at `2026-10-17T02:44:17.560Z`, with the observed top-level URL still the playground.
+Its final assertion correctly failed even though all controls and native replay
+completed. The available witness cannot attribute that empty error to a specific
+script or browser operation. It is not ignored, retried, or labeled a route
+failure. All four command owners closed normally without forced cleanup,
+violations, ambiguity or survivors; no page errors occurred in the other rows.
+
+All four raw numerical statuses are **fail**. Both candidates record zero internal
+interruptions, but internal pre-play cadence admission is unavailable, leaving
+their input-latency gates unobserved despite 28 samples. The independent external
+cadence B remains 16.7 ms for Chromium and 16 ms for WebKit; it is not substituted
+for internal calibration. Candidate keyboard-to-render p95 upper bounds are
+24.8 ms and 50 ms respectively. The WebKit candidate's largest prior-running
+interval is 110 ms at the explicit transition to paused; that boundary observation
+must not be silently dropped or asserted to be an active-play stall. No numerical
+or prerequisite gate is promoted by the three passing preflight rows.
+
+Both archives passed exact API size/digest, bounded ZIP extraction and every-member
+readback checks. Local evidence is
+`.cache/solo-followup/remote-supplemental-38995660502/{chromium,webkit}/retained`.
+
+| Engine   |    Artifact | ZIP SHA-256                                                        | Summary SHA-256                                                    |
+| -------- | ----------: | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| Chromium | 12086798338 | `fe95b56d5dc19374341c73895e2f795b8ae6a1a78cec4489f4b77c67fc535226` | `38bd192eb0f169bd256f99857b7c9bcefe071f0387fe9842cd329af9e0fcf0c8` |
+| WebKit   | 12087695323 | `0eee46546743a9b93812de15409692b2a7c672b5a692b13dd5058ba4a5cc6eeb` | `48176474e445f656fee158a9d0d12f92cfd5250074c6eeadbc9f127df33b7e77` |
+
+The independently recomputed assessment agrees with all four stored outcomes.
+Its compact `independent-analysis.json` is 23,598 bytes with SHA-256
+`99ecc2748dcf7ef64a97d5b8e6be648de5c8bffaa173aca52ebc337fb7695c1a`.
