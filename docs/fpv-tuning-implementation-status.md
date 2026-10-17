@@ -1,24 +1,30 @@
 # FPV tuning implementation status
 
-Updated 2026-10-17. The previous boundary corrections are merged in
-[PR #1564](https://github.com/mekhovov/revealline/pull/1564) and published as
-`fb3caf12bd43743670f47c42dc21f7a406223379`. Available software work and delivery
-for that prior continuation are complete. The input-availability continuation
-below is awaiting fresh checks and publication. Physical and wider-platform qualification
-remain deferred; Advanced remains optional, unscored and default-ineligible.
-Historical reports below retain their original source hashes and scope.
+Updated 2026-10-17. The latest correction is merged in
+[PR #1565](https://github.com/mekhovov/revealline/pull/1565) and published as
+`3e744a5ef7bede48eafcb79a8377bb46fb37d76f`. Available software work and delivery are complete.
+Physical and wider-platform qualification remain deferred; Advanced remains
+optional, unscored and default-ineligible. Historical reports below retain their
+original source hashes and scope.
 
-## Input availability continuation
+## Input availability completion
 
 The [latest review](fpv-tuning-input-recovery-review.md) preserves the completed
-rates/profile/import scope and opens one reproduced recovery defect: unavailable
-radio input disables a healthy Advanced practice worker and its exports. The
-correction keeps input failure recoverable while preserving fatal worker handling.
-The live-test runner also gains bounded startup diagnostics so future failures
-retain more evidence than the earlier unexplained timeout. Review prompted a
-correction that restricts request/capture error metadata to fixed categories.
-All 741 practice tests and browser/native recovery pass. Fresh release checks and
-publication for this correction are in progress.
+rates/profile/import scope and closes a reproduced recovery defect: unavailable
+radio input now pauses a healthy Advanced practice worker while retaining its
+recording, export and explicit resume. Genuine worker failures remain unavailable.
+The live-test runner retains bounded startup diagnostics. Review prompted a
+correction restricting request/capture error metadata to fixed categories.
+
+All **741 practice tests**, EN/UK browser recovery, actual Electron export/resume,
+release validation and 12 non-skipped product checks pass. Fresh Academy and World
+password/offline/replay acceptance passes on the deployed revision. Additional live
+UI checks confirm missing-radio recording retention and explicit keyboard resume
+on both routes, with six exported records replayed. The original
+startup timeout remains failed and unexplained. The
+[delivery receipt](fpv-input-recovery-delivery-verification.json) binds the exact
+sources and evidence. No new physics benchmark or physical-device qualification
+is claimed.
 
 ## Boundary completion review
 

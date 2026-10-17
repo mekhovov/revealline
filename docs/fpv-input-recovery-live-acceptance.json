@@ -1,0 +1,286 @@
+{
+  "format": "FpvLiveInputRecoveryAcceptance.v1",
+  "startedAt": "2026-10-17T15:43:33.981Z",
+  "expectedRevision": "3e744a5ef7bede48eafcb79a8377bb46fb37d76f",
+  "runner": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/docs/fpv-input-recovery-delivery/live-input-recovery.mjs",
+    "sha256": "5ac0b62188a51343d7d72bf5346ceffff2cd0428128f8d91ce4c2e7ff6b124e5",
+    "finalSha256": "5ac0b62188a51343d7d72bf5346ceffff2cd0428128f8d91ce4c2e7ff6b124e5",
+    "stable": true
+  },
+  "installReport": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/docs/fpv-input-recovery-public-acceptance.json",
+    "sha256": "8d18678d9d7a7807708aeae78730666915c7572f480233d85be53e6e1475ac99",
+    "stable": true
+  },
+  "passed": true,
+  "phase": "complete",
+  "packages": [
+    {
+      "id": "civilian-fpv",
+      "base": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+      "profile": "/tmp/fpv-public-fresh-civilian-fpv-c6Jpxl",
+      "passed": true,
+      "pageErrors": [],
+      "recordings": [
+        {
+          "label": "before-input-loss",
+          "path": "docs/fpv-input-recovery-live-acceptance-civilian-fpv-before-input-loss.json",
+          "bytes": 4400,
+          "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91",
+          "missionTicks": 62,
+          "finalHash": "e2fa474a",
+          "replay": {
+            "verified": true,
+            "verificationScope": "complete",
+            "verifiedThroughMission": 62
+          }
+        },
+        {
+          "label": "input-unavailable",
+          "path": "docs/fpv-input-recovery-live-acceptance-civilian-fpv-input-unavailable.json",
+          "bytes": 4400,
+          "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91",
+          "missionTicks": 62,
+          "finalHash": "e2fa474a",
+          "replay": {
+            "verified": true,
+            "verificationScope": "complete",
+            "verifiedThroughMission": 62
+          }
+        },
+        {
+          "label": "resumed",
+          "path": "docs/fpv-input-recovery-live-acceptance-civilian-fpv-resumed.json",
+          "bytes": 5496,
+          "sha256": "8bade9dcf2de7163dd68355794e0c63557f5ea5e0501c05cabe1b22c505751a8",
+          "missionTicks": 123,
+          "finalHash": "b6d3ef68",
+          "replay": {
+            "verified": true,
+            "verificationScope": "complete",
+            "verifiedThroughMission": 123
+          }
+        }
+      ],
+      "checks": {
+        "unavailableRadioRetainsFlight": {
+          "message": "Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained.",
+          "missionTick": 62
+        },
+        "recordingUnchangedAfterInputFailure": true,
+        "keyboardSelectionDoesNotResume": true,
+        "exactPrefixAndContinuousSequences": {
+          "inputs": 62,
+          "hashes": 1,
+          "totalInputs": 123
+        },
+        "explicitRestartCreatesNewFlight": true
+      },
+      "servedSources": [
+        {
+          "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+          "bytes": 50056,
+          "sha256": "d3c5a16e6686da3c57dc8abcea6b9846c0f3f686681068f972c88b5ce27589a4",
+          "fromServiceWorker": true
+        },
+        {
+          "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+          "bytes": 64132,
+          "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070",
+          "fromServiceWorker": true
+        },
+        {
+          "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+          "bytes": 64132,
+          "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070",
+          "fromServiceWorker": true
+        },
+        {
+          "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+          "bytes": 64132,
+          "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070",
+          "fromServiceWorker": true
+        }
+      ],
+      "rememberedUnlock": true,
+      "gamepadsPresent": 0,
+      "installedWorker": {
+        "revision": "63a3c3aa4882412d3d7d00a2fbc376634517bbcf3af470f16cd90a2f6c5e06f5",
+        "ready": true,
+        "scope": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+        "controllerURL": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/worker.js"
+      },
+      "workerCleanup": [
+        {
+          "id": 0,
+          "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "steps": 123,
+          "missionTick": 123
+        },
+        {
+          "id": 1,
+          "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "steps": 0,
+          "missionTick": 0
+        }
+      ]
+    },
+    {
+      "id": "fpv-worlds",
+      "base": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/",
+      "profile": "/tmp/fpv-public-fresh-fpv-worlds-dVDpag",
+      "passed": true,
+      "pageErrors": [],
+      "recordings": [
+        {
+          "label": "before-input-loss",
+          "path": "docs/fpv-input-recovery-live-acceptance-fpv-worlds-before-input-loss.json",
+          "bytes": 4400,
+          "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91",
+          "missionTicks": 62,
+          "finalHash": "e2fa474a",
+          "replay": {
+            "verified": true,
+            "verificationScope": "complete",
+            "verifiedThroughMission": 62
+          }
+        },
+        {
+          "label": "input-unavailable",
+          "path": "docs/fpv-input-recovery-live-acceptance-fpv-worlds-input-unavailable.json",
+          "bytes": 4400,
+          "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91",
+          "missionTicks": 62,
+          "finalHash": "e2fa474a",
+          "replay": {
+            "verified": true,
+            "verificationScope": "complete",
+            "verifiedThroughMission": 62
+          }
+        },
+        {
+          "label": "resumed",
+          "path": "docs/fpv-input-recovery-live-acceptance-fpv-worlds-resumed.json",
+          "bytes": 5496,
+          "sha256": "8bade9dcf2de7163dd68355794e0c63557f5ea5e0501c05cabe1b22c505751a8",
+          "missionTicks": 123,
+          "finalHash": "b6d3ef68",
+          "replay": {
+            "verified": true,
+            "verificationScope": "complete",
+            "verifiedThroughMission": 123
+          }
+        }
+      ],
+      "checks": {
+        "unavailableRadioRetainsFlight": {
+          "message": "Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained.",
+          "missionTick": 62
+        },
+        "recordingUnchangedAfterInputFailure": true,
+        "keyboardSelectionDoesNotResume": true,
+        "exactPrefixAndContinuousSequences": {
+          "inputs": 62,
+          "hashes": 1,
+          "totalInputs": 123
+        },
+        "explicitRestartCreatesNewFlight": true
+      },
+      "servedSources": [
+        {
+          "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+          "bytes": 50056,
+          "sha256": "d3c5a16e6686da3c57dc8abcea6b9846c0f3f686681068f972c88b5ce27589a4",
+          "fromServiceWorker": true
+        },
+        {
+          "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+          "bytes": 64132,
+          "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070",
+          "fromServiceWorker": true
+        },
+        {
+          "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+          "bytes": 64132,
+          "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070",
+          "fromServiceWorker": true
+        },
+        {
+          "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+          "bytes": 64132,
+          "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070",
+          "fromServiceWorker": true
+        }
+      ],
+      "rememberedUnlock": true,
+      "gamepadsPresent": 0,
+      "installedWorker": {
+        "revision": "2d4ba97528a301ac2661bd79758721fef9d4fbf13f5715e54a173b87becc5e4f",
+        "ready": true,
+        "scope": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/",
+        "controllerURL": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/worker.js"
+      },
+      "workerCleanup": [
+        {
+          "id": 0,
+          "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "steps": 123,
+          "missionTick": 123
+        },
+        {
+          "id": 1,
+          "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "steps": 0,
+          "missionTick": 0
+        }
+      ]
+    }
+  ],
+  "scope": "Actual public Academy and World UI in previously accepted task-owned fresh-install Chrome profiles. Existing remembered unlock and saved Actual profile are used normally. No credentials, unlock/storage injection, simulated getControls, application edits or forced worker activation.",
+  "limits": [
+    "One Chrome desktop in English. No physical radio is available; selecting the real calibrated-radio path exercises its ordinary unavailable state.",
+    "Short unscored flights validate retained recording, keyboard recovery, exact replay, prefix preservation, restart and disposal; not physical-device fidelity, Regional streaming, throughput or maximum-duration qualification.",
+    "Worker instrumentation observes transport/telemetry and passes requests/responses unchanged. Replay calls the published production simulation module; it is not the comparison import UI."
+  ],
+  "publicRoot": "https://mekhovov.github.io/revealline/",
+  "publicBinding": {
+    "metadata": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "3e744a5ef7bede48eafcb79a8377bb46fb37d76f",
+      "sourceCommittedAt": "2026-10-17T15:27:14Z",
+      "buildVersion": "main-3e744a5ef7be",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    },
+    "metadataSha256": "ac2612f13129b482b4cfed537321a7570fb46bf465817d84ee2be768bc1addf3",
+    "manifestSha256": "b51961937becf808a423b96a998c17488f3a362fc0377c2b42686059cf8af8be",
+    "pins": {
+      "optional-practice/civilian-fpv/advanced-practice.mjs": {
+        "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+        "bytes": 50056,
+        "sha256": "d3c5a16e6686da3c57dc8abcea6b9846c0f3f686681068f972c88b5ce27589a4"
+      },
+      "optional-practice/civilian-fpv/advanced-simulation.mjs": {
+        "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+        "bytes": 64132,
+        "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070"
+      }
+    }
+  },
+  "browser": {
+    "channel": "chrome",
+    "version": "155.0.8059.85"
+  },
+  "publicBindingStable": true,
+  "completedAt": "2026-10-17T15:43:45.759Z"
+}

@@ -1,6 +1,6 @@
 # FPV input recovery and completion review — 17 October 2026
 
-The continuation fetched main and rebased before edits. Main remains
+The continuation fetched main and rebased before edits. The starting main was
 `fb3caf12bd43743670f47c42dc21f7a406223379`; the previous delivery evidence is
 preserved at `6018a0f5d113759ad7a13ad06208366cbd5d652e`. Unrelated local files
 remain untouched.
@@ -84,10 +84,26 @@ pins; this is one desktop fixture, not production authentication or iOS executio
 A separate [public baseline observation](fpv-input-recovery-startup-public-baseline.json)
 used the pre-privacy-correction diagnostic helper for three independent World password logins.
 All became ready, with no page errors or pending requests at the observation end.
-This does not explain the original timeout or qualify the unpublished correction;
+This does not explain the original timeout or qualify the correction before publication;
 it is explicitly bound to the existing `fb3caf12b` deployment metadata.
 
-[PR #1565](https://github.com/mekhovov/revealline/pull/1565) contains the correction
-plus the diagnostic privacy correction. Fresh checks/publication and current live acceptance are in
-progress. Earlier delivery reports apply to `fb3caf12b`; they do not automatically
-qualify this correction.
+[PR #1565](https://github.com/mekhovov/revealline/pull/1565) was checked at
+`13675fd0070ef5efb0b6bdb901f33922d27a6484` and merged as `3e744a5ef7bede48eafcb79a8377bb46fb37d76f`.
+All 12 non-skipped product checks passed; general test/build jobs were explicitly
+skipped. The normal [Pages publication](https://github.com/mekhovov/revealline/actions/runs/39045107325) passed build, deploy and verify.
+Fresh ordinary password entry, saved 900°/s rates, visible offline installation,
+a new offline browser process, recording export/replay and worker disposal pass
+for both Academy and World. All eight startup observations pass. A separate live
+UI check on each route uses the saved Actual profile and the ordinary unavailable
+radio path: the exported recording is unchanged after failed Start; keyboard
+selection stays paused; explicit Start continues the same flight. The six saved
+exports replay through the published production module with retained hash/input
+prefixes, and restart/return dispose all four workers. These checks do
+not establish the cause of the earlier timeout or qualify startup reliability.
+
+The [final delivery receipt](fpv-input-recovery-delivery-verification.json)
+verifies all 16 public source pins against the hosted inventory, current native
+and local evidence, and unchanged numerical sources. The hosted Pages archive is
+963,368,960 bytes with 16,631,040 bytes of
+headroom below the unchanged 980,000,000-byte limit. Available software and this
+delivery scope are complete; the stated physical and promotion gates remain open.

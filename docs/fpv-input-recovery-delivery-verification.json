@@ -1,0 +1,541 @@
+{
+  "format": "FpvInputRecoveryDeliveryVerification.v1",
+  "createdAt": "2026-10-17T15:44:27.545804+00:00",
+  "pass": true,
+  "softwareDeliveryComplete": true,
+  "scope": "Available input-recovery software, reviewed diagnostic metadata correction, ordinary publication, current desktop fixture and fresh public Chrome installs. Deferred physical and wider-platform gates remain open.",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/1565",
+  "implementationHead": "13675fd0070ef5efb0b6bdb901f33922d27a6484",
+  "deployedRevision": "3e744a5ef7bede48eafcb79a8377bb46fb37d76f",
+  "publication": "https://github.com/mekhovov/revealline/actions/runs/39045107325",
+  "checks": {
+    "practiceTests": 741,
+    "nonSkippedProductChecks": 12,
+    "skippedGeneralJobs": [
+      "build",
+      "test"
+    ],
+    "publicationJobs": {
+      "build": "success",
+      "deploy": "success",
+      "verify": "success"
+    },
+    "localSourcePins": 6,
+    "localEvidencePins": 10,
+    "publicPasswordAndOfflinePackages": 2,
+    "publicSourcePinsMatchHostedInventory": 16,
+    "publishedChangedRuntimeMatchesRepository": true,
+    "publicRunnerStable": true,
+    "startupStagesPassed": 8,
+    "liveInputRecoveryPackages": 2,
+    "liveInputRecoveryRecordingsReplayed": 6,
+    "liveInputRecoveryWorkersDisposed": 4,
+    "nativeSourcePins": 209,
+    "nativeArtifactHashesVerified": 8,
+    "priorNumericalSourcesStillMatch": 20,
+    "newNumericalBenchmarkPerformed": false,
+    "iosRuntimeVerified": false
+  },
+  "capacity": {
+    "files": 3425,
+    "stagedBytes": 960385171,
+    "actualArchiveBytes": 963368960,
+    "maximumBytes": 980000000,
+    "archiveHeadroomBytes": 16631040,
+    "inventoryCountSumAndUniquePathsVerified": true,
+    "inventoryDigestVerified": true,
+    "hostedArchiveArtifactIdVerified": "12105747740",
+    "hostedArchiveSha256": "11b9208e75cf489e5c13a9a74339073ffc811ced9f7e40bc0c8e75b7397c170d",
+    "archiveDownloadRepeatedLocally": false
+  },
+  "publicAcceptance": {
+    "browser": {
+      "engine": "chrome",
+      "version": "155.0.8059.85"
+    },
+    "packages": [
+      {
+        "id": "civilian-fpv",
+        "missionTicks": 12,
+        "finalHash": "1d473fbb",
+        "recordingSha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94",
+        "workerCleanup": {
+          "created": 1,
+          "terminated": 1,
+          "tick": 12
+        },
+        "startupStages": [
+          {
+            "stage": "fresh-password",
+            "passed": true,
+            "elapsedMs": 6115,
+            "pendingRequests": 0
+          },
+          {
+            "stage": "saved-profile-reload",
+            "passed": true,
+            "elapsedMs": 376,
+            "pendingRequests": 6
+          },
+          {
+            "stage": "installed-worker-reload",
+            "passed": true,
+            "elapsedMs": 291,
+            "pendingRequests": 0
+          },
+          {
+            "stage": "offline-process-reopen",
+            "passed": true,
+            "elapsedMs": 375,
+            "pendingRequests": 0
+          }
+        ]
+      },
+      {
+        "id": "fpv-worlds",
+        "missionTicks": 11,
+        "finalHash": "13902221",
+        "recordingSha256": "ed75fdb3f4cafb8a83d87e7bd653d458cb98626227264ad9237baa926295dcb7",
+        "workerCleanup": {
+          "created": 1,
+          "terminated": 1,
+          "tick": 11
+        },
+        "startupStages": [
+          {
+            "stage": "fresh-password",
+            "passed": true,
+            "elapsedMs": 7607,
+            "pendingRequests": 0
+          },
+          {
+            "stage": "saved-profile-reload",
+            "passed": true,
+            "elapsedMs": 326,
+            "pendingRequests": 0
+          },
+          {
+            "stage": "installed-worker-reload",
+            "passed": true,
+            "elapsedMs": 318,
+            "pendingRequests": 0
+          },
+          {
+            "stage": "offline-process-reopen",
+            "passed": true,
+            "elapsedMs": 397,
+            "pendingRequests": 0
+          }
+        ]
+      }
+    ],
+    "neutralInputLifecycleOnly": true
+  },
+  "liveInputRecovery": {
+    "report": "docs/fpv-input-recovery-live-acceptance.json",
+    "packages": [
+      {
+        "id": "civilian-fpv",
+        "recordings": [
+          {
+            "label": "before-input-loss",
+            "path": "docs/fpv-input-recovery-live-acceptance-civilian-fpv-before-input-loss.json",
+            "bytes": 4400,
+            "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91",
+            "missionTicks": 62,
+            "finalHash": "e2fa474a",
+            "replay": {
+              "verified": true,
+              "verificationScope": "complete",
+              "verifiedThroughMission": 62
+            }
+          },
+          {
+            "label": "input-unavailable",
+            "path": "docs/fpv-input-recovery-live-acceptance-civilian-fpv-input-unavailable.json",
+            "bytes": 4400,
+            "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91",
+            "missionTicks": 62,
+            "finalHash": "e2fa474a",
+            "replay": {
+              "verified": true,
+              "verificationScope": "complete",
+              "verifiedThroughMission": 62
+            }
+          },
+          {
+            "label": "resumed",
+            "path": "docs/fpv-input-recovery-live-acceptance-civilian-fpv-resumed.json",
+            "bytes": 5496,
+            "sha256": "8bade9dcf2de7163dd68355794e0c63557f5ea5e0501c05cabe1b22c505751a8",
+            "missionTicks": 123,
+            "finalHash": "b6d3ef68",
+            "replay": {
+              "verified": true,
+              "verificationScope": "complete",
+              "verifiedThroughMission": 123
+            }
+          }
+        ],
+        "checks": {
+          "unavailableRadioRetainsFlight": {
+            "message": "Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained.",
+            "missionTick": 62
+          },
+          "recordingUnchangedAfterInputFailure": true,
+          "keyboardSelectionDoesNotResume": true,
+          "exactPrefixAndContinuousSequences": {
+            "inputs": 62,
+            "hashes": 1,
+            "totalInputs": 123
+          },
+          "explicitRestartCreatesNewFlight": true
+        },
+        "workerCleanup": [
+          {
+            "id": 0,
+            "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/advanced-worker.mjs",
+            "terminated": true,
+            "pendingSteps": 0,
+            "steps": 123,
+            "missionTick": 123
+          },
+          {
+            "id": 1,
+            "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/advanced-worker.mjs",
+            "terminated": true,
+            "pendingSteps": 0,
+            "steps": 0,
+            "missionTick": 0
+          }
+        ]
+      },
+      {
+        "id": "fpv-worlds",
+        "recordings": [
+          {
+            "label": "before-input-loss",
+            "path": "docs/fpv-input-recovery-live-acceptance-fpv-worlds-before-input-loss.json",
+            "bytes": 4400,
+            "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91",
+            "missionTicks": 62,
+            "finalHash": "e2fa474a",
+            "replay": {
+              "verified": true,
+              "verificationScope": "complete",
+              "verifiedThroughMission": 62
+            }
+          },
+          {
+            "label": "input-unavailable",
+            "path": "docs/fpv-input-recovery-live-acceptance-fpv-worlds-input-unavailable.json",
+            "bytes": 4400,
+            "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91",
+            "missionTicks": 62,
+            "finalHash": "e2fa474a",
+            "replay": {
+              "verified": true,
+              "verificationScope": "complete",
+              "verifiedThroughMission": 62
+            }
+          },
+          {
+            "label": "resumed",
+            "path": "docs/fpv-input-recovery-live-acceptance-fpv-worlds-resumed.json",
+            "bytes": 5496,
+            "sha256": "8bade9dcf2de7163dd68355794e0c63557f5ea5e0501c05cabe1b22c505751a8",
+            "missionTicks": 123,
+            "finalHash": "b6d3ef68",
+            "replay": {
+              "verified": true,
+              "verificationScope": "complete",
+              "verifiedThroughMission": 123
+            }
+          }
+        ],
+        "checks": {
+          "unavailableRadioRetainsFlight": {
+            "message": "Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained.",
+            "missionTick": 62
+          },
+          "recordingUnchangedAfterInputFailure": true,
+          "keyboardSelectionDoesNotResume": true,
+          "exactPrefixAndContinuousSequences": {
+            "inputs": 62,
+            "hashes": 1,
+            "totalInputs": 123
+          },
+          "explicitRestartCreatesNewFlight": true
+        },
+        "workerCleanup": [
+          {
+            "id": 0,
+            "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/advanced-worker.mjs",
+            "terminated": true,
+            "pendingSteps": 0,
+            "steps": 123,
+            "missionTick": 123
+          },
+          {
+            "id": 1,
+            "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/advanced-worker.mjs",
+            "terminated": true,
+            "pendingSteps": 0,
+            "steps": 0,
+            "missionTick": 0
+          }
+        ]
+      }
+    ]
+  },
+  "limitations": [
+    "Advanced remains optional, unscored and default-ineligible. Physical radio/touch, pilot feedback, aircraft measurements, iOS execution and wider hardware remain deferred. Validated propwash/ground effect and scored/default promotion remain gated.",
+    "Current public acceptance covers fresh password entry, saved rates, offline process reopen and short neutral-input recording replay/disposal. It does not qualify physical controls, maximum-duration native flight, every installed-update path or startup reliability.",
+    "The earlier World readiness timeout remains failed and unexplained in docs/fpv-boundary-public-acceptance.json. Three later baseline observations and this acceptance do not establish its cause.",
+    "New startup request/capture metadata uses finite error categories. This does not claim unchanged outer action-error stacks or page-error logs are globally URL-free.",
+    "Desktop execution is a labelled Electron fixture on one ARM64 Mac; production authentication, signed installers and iOS runtime were not exercised.",
+    "Archive capacity uses retained hosted verification bound to inventory and artifact ID; the large Pages archive was not downloaded again locally. No gate bypass, manual merge or deployment was used."
+  ],
+  "evidence": [
+    {
+      "path": "docs/fpv-advanced-runtime-post-publication-qualification.json",
+      "bytes": 585777,
+      "sha256": "fddb2cc4a0bb37162ccc71c36d3ffaa8d5b1322fb4f63b0f24e0f03070538017"
+    },
+    {
+      "path": "docs/fpv-input-recovery-browser.json",
+      "bytes": 12340,
+      "sha256": "52ebd2e978f1293b244dee78504bb0d7b20fd46bbded68b7ca4a481d01fed849"
+    },
+    {
+      "path": "docs/fpv-input-recovery-ci.json",
+      "bytes": 6531,
+      "sha256": "65da44c90b93fd59e21591bc103d44435ef9fc98c73efb300c1d57af071d2d62"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/archive/main-pages-archive-receipt.json",
+      "bytes": 599,
+      "sha256": "0f6877e1409b2b56ea263841a04d7be8c44cc15c94b4eed8a3ad9d162c955985"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/artifact-index.json",
+      "bytes": 2896,
+      "sha256": "922ea2aab97ca46b4c2d5d8f118346534468374a5e7f75c5a32092716d557f75"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/live-acceptance.log",
+      "bytes": 1294,
+      "sha256": "a96ef2371d547016f827102044035dea730b231fedaeb41f6c5b9b4c2cd89585"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/live-input-recovery.mjs",
+      "bytes": 21384,
+      "sha256": "5ac0b62188a51343d7d72bf5346ceffff2cd0428128f8d91ce4c2e7ff6b124e5"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/local-temporary-cleanup.json",
+      "bytes": 2990,
+      "sha256": "bdffee1ac19eeb57c9f44f8957ebdf65f55ed5f421c7858b5c419433dd70fa7b"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/merge.json",
+      "bytes": 283,
+      "sha256": "d35e570a02cf52bb7e85727d1b552a75b8c2555a88e57fd1aee7bc8e9854040a"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/practice/practice-site-receipt.json",
+      "bytes": 132,
+      "sha256": "a78f1a58d0a714f920cc9bb88b5bc930b936b0e6bf6cf1a1e9136b8d1c207e14"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/public-acceptance.log",
+      "bytes": 252,
+      "sha256": "d002dddbda1ee47202083995ba834b84a7eff6cfaac7ae7a27ce506f30878ae1"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/publication-final.json",
+      "bytes": 6274,
+      "sha256": "960c1d8bbfd27d977822b0170a15e3b0bb98d5dcc55879f339d56458330d4649"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/publication-start.json",
+      "bytes": 3400,
+      "sha256": "79edef5e7f6380565e620fda0db7f04c953c6d403bd3a99390574d2991f2e69c"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/review-resolution.json",
+      "bytes": 4163,
+      "sha256": "08e36afaad9cc6903a1a6b8c6cdb4f9ac73e32afe9d41cdcbc48140f7fdc74f9"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/staged/main-pages-inventory.json",
+      "bytes": 508129,
+      "sha256": "7a7bf229c769cbfaf5af91d330e3b64d284aac999ef20919466931e0ce1de9b1"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/staged/main-pages-receipt.json",
+      "bytes": 4429,
+      "sha256": "414325e077b7214083959a2b5c06a42e4c0f52c425c1cbf813e183b95a89b00e"
+    },
+    {
+      "path": "docs/fpv-input-recovery-delivery/verify.py",
+      "bytes": 21805,
+      "sha256": "9e4f1cf68551168944b0bae548555d57ed885428f1b0b6aa51915f1a8c4ebda9"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/host-test-observations.json",
+      "bytes": 1437,
+      "sha256": "475a87b18960f97a3f0177fed52ce65a2fa99d51a6f996b7a4fee12d598c3a23"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/practice.tap",
+      "bytes": 182541,
+      "sha256": "abea57814d86a844cceea2eccce96005bd5c65f8a35a2cbd640dba7a4373e053"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/pre-fix-host-regression.tap",
+      "bytes": 6145,
+      "sha256": "1701683e4eeb058882ca91af41a179ac36f215b9aa6b70e6434e48d2b58c468d"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/privacy-regression-after.tap",
+      "bytes": 1354,
+      "sha256": "b40f717b749d29052b0b995502790cb584abeb27abdc69ca445b0ba83b260fb1"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/privacy-regression-before.tap",
+      "bytes": 1253,
+      "sha256": "543d1d4a7936c843a0ed65f7660377aa3a18252c3f4e6ce69319a07b29a1fdce"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/startup-fixture-before-privacy.json",
+      "bytes": 1636,
+      "sha256": "6fb064a64909a3aa396b31fb4b6570d5c7eeceee70db6b731bd7025de11da6fb"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/startup-fixture.mjs",
+      "bytes": 3026,
+      "sha256": "20b72dc14031b88d18972df6eb55fde229e271a4c6dc1659288fbb6a77b27d3b"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/validation.txt",
+      "bytes": 3885,
+      "sha256": "dd1dc4ca206fbce320df97d2eaeeeb234d26d45bf0c7e892f071d11adb051b61"
+    },
+    {
+      "path": "docs/fpv-input-recovery-live-acceptance-civilian-fpv-before-input-loss.json",
+      "bytes": 4400,
+      "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91"
+    },
+    {
+      "path": "docs/fpv-input-recovery-live-acceptance-civilian-fpv-input-unavailable.json",
+      "bytes": 4400,
+      "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91"
+    },
+    {
+      "path": "docs/fpv-input-recovery-live-acceptance-civilian-fpv-resumed.json",
+      "bytes": 5496,
+      "sha256": "8bade9dcf2de7163dd68355794e0c63557f5ea5e0501c05cabe1b22c505751a8"
+    },
+    {
+      "path": "docs/fpv-input-recovery-live-acceptance-fpv-worlds-before-input-loss.json",
+      "bytes": 4400,
+      "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91"
+    },
+    {
+      "path": "docs/fpv-input-recovery-live-acceptance-fpv-worlds-input-unavailable.json",
+      "bytes": 4400,
+      "sha256": "48f3340ccc8bfc805bce408ecbdcd4e8f8ff2546da7af2817a9d3b97681e6f91"
+    },
+    {
+      "path": "docs/fpv-input-recovery-live-acceptance-fpv-worlds-resumed.json",
+      "bytes": 5496,
+      "sha256": "8bade9dcf2de7163dd68355794e0c63557f5ea5e0501c05cabe1b22c505751a8"
+    },
+    {
+      "path": "docs/fpv-input-recovery-live-acceptance.json",
+      "bytes": 11427,
+      "sha256": "dfb849f60be00c5e800d56e78d2a5ac1f8af6b21e5130207cae728b48ca217ee"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native-runtime.json",
+      "bytes": 9970,
+      "sha256": "36b3c000816ace7ad5c2e908c884202ef1d0399b2b7704837fa63e81f047262c"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native-staging.json",
+      "bytes": 31056,
+      "sha256": "6deaa5fee56b4dc518a2977d5a30b4416b1ea3a2f515d329711d7f746e57d72c"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/fixture-manifest.json",
+      "bytes": 33944,
+      "sha256": "9fbd101e4fcb8028ad94c9c6e60756ef121c9ce833c26c1a010eae562e3a83c2"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/fixture-metadata.json",
+      "bytes": 448,
+      "sha256": "25c844967802e2c078e6dcb2e30d431320f6f46729119a32c77826c7d7aff30b"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/paused-recording.json",
+      "bytes": 7513,
+      "sha256": "6e852c4d9d105cb21306627b6c0eeb399ed58e230c928067047b2bb03df4afd0"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/resumed-recording.json",
+      "bytes": 12531,
+      "sha256": "7bd4f36bc31ea657f99ee68e4325f49265280ee28c34b5029c120adea6580c56"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/session.json",
+      "bytes": 55516,
+      "sha256": "49f8b2d006acb506985813d617adb1842f60ab4c1ad850bb9da8edb579faf8e6"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/staging.mjs",
+      "bytes": 7458,
+      "sha256": "68419a6f8b86dc987f411b1f7eff6b831d6b7ec64b47bad1f693966d8be836b3"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/verification.json",
+      "bytes": 696,
+      "sha256": "835aa567b1b721753f8c6e5ae0f594ba3c97de08e7e48ca79032651b4f620dea"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/verify.mjs",
+      "bytes": 2354,
+      "sha256": "5fbf1c71d66a8b09fdbc5aac6519240941fc33b0bc7819cac0d27348c9af97da"
+    },
+    {
+      "path": "docs/fpv-input-recovery-public-acceptance-civilian-fpv-recording.json",
+      "bytes": 3562,
+      "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94"
+    },
+    {
+      "path": "docs/fpv-input-recovery-public-acceptance-fpv-worlds-recording.json",
+      "bytes": 3547,
+      "sha256": "ed75fdb3f4cafb8a83d87e7bd653d458cb98626227264ad9237baa926295dcb7"
+    },
+    {
+      "path": "docs/fpv-input-recovery-public-acceptance.json",
+      "bytes": 236896,
+      "sha256": "8d18678d9d7a7807708aeae78730666915c7572f480233d85be53e6e1475ac99"
+    },
+    {
+      "path": "docs/fpv-input-recovery-startup-fixture.json",
+      "bytes": 1636,
+      "sha256": "2524e43b405faf8f41c3d07cbe1bc73fff0a2bc6ac5c3fe5e30795eb11f7241f"
+    },
+    {
+      "path": "docs/fpv-input-recovery-startup-public-baseline.json",
+      "bytes": 109575,
+      "sha256": "e1681a2fc2b4ad4c37304250804e4faf5705d35a8c3c93f545adaa90ae5dfe11"
+    },
+    {
+      "path": "docs/fpv-input-recovery-verification.json",
+      "bytes": 5983,
+      "sha256": "2f3aaca5baad2718acbd85f5100f6c94ec50f37627e553f0c08126db701c07d8"
+    }
+  ]
+}
