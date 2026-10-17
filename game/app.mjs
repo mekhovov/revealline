@@ -400,7 +400,12 @@ import { createRecorder, recordInput, exportReplay, MAX_REPLAY_TICKS } from './r
 import { exportReplayPresentation } from './replay-presentation.mjs';
 
 const $ = (id) => document.getElementById(id),
-  show = (id, on) => ($(id).hidden = !on);
+  show = (id, on) => {
+    const element = $(id),
+      hidden = !on;
+    if (element.hidden !== hidden) element.hidden = hidden;
+    return hidden;
+  };
 const getJSON = async (path) => {
   const r = await fetch(
     communityRouteFromURL(location.href) ? new URL(path, gameDocumentURL(location.href)) : path,
