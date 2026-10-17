@@ -100,6 +100,22 @@ function harness({ serialized = false, entries = [], original } = {}) {
       if (windows.get(n) === f) windows.delete(n);
     },
   };
+  const links = env.document.styleSheets.map((sheet) => {
+    const link = {
+      ownerDocument: env.document,
+      isConnected: true,
+      get href() {
+        return sheet.href;
+      },
+      sheet,
+    };
+    sheet.ownerNode = link;
+    return link;
+  });
+  env.document.querySelectorAll = (selector) => {
+    assert.equal(selector, 'link[rel="stylesheet"][data-boot-href="ui/field-kit-fonts.css"]');
+    return links;
+  };
   const make = serialized
     ? runInNewContext(`(${createSelectedFontSettlementProbe.toString()})`, { TextEncoder, URL })
     : createSelectedFontSettlementProbe;
@@ -542,7 +558,10 @@ test('late readback, pre-invocation clock jump, invalid clock, failed cleanup an
 test('direct source rule observation rejects changed path, weight, display, duplicate and oversized rule lists', () => {
   for (const mutate of [
     (h) => (h.env.document.styleSheets[0].href = 'https://other.test/game/ui/field-kit-fonts.css'),
-    (h) => h.env.document.styleSheets.push(h.env.document.styleSheets[0]),
+    (h) => {
+      const link = h.env.document.styleSheets[0].ownerNode;
+      h.env.document.querySelectorAll = () => [link, link];
+    },
     (h) => (h.env.document.styleSheets[0].cssRules = Array(9).fill({})),
     (h) => {
       const original = h.env.document.styleSheets[0].cssRules[0].style.getPropertyValue;
@@ -561,6 +580,49 @@ test('direct source rule observation rejects changed path, weight, display, dupl
       h.probe.boundary('before-selection');
       assertSelectedFontSettlementEvidence(h.probe.export(), 1);
     });
+    h.probe.dispose();
+  }
+});
+
+test('selected CSS observation reads only the original connected link with many unrelated stylesheets', () => {
+  for (const serialized of [false, true]) {
+    const h = harness({ serialized, entries: [face()] });
+    // The real admitted source has 39 links and two inline styles; no full
+    // stylesheet inventory or unrelated CSS rule read is needed for one owner.
+    Object.defineProperty(h.env.document, 'styleSheets', {
+      get() {
+        throw Error('Unrelated stylesheet inventory must not be read');
+      },
+    });
+    h.probe.boundary('before-selection');
+    assertSelectedFontSettlementEvidence(JSON.parse(JSON.stringify(h.probe.export())), 1);
+    assert.equal(h.count(), 0, 'Observing CSS must not demand a font.');
+    h.probe.dispose();
+  }
+});
+
+test('selected CSS observation rejects missing, disconnected and foreign link ownership', () => {
+  for (const mutate of [
+    (h, link) => {
+      link.sheet = null;
+    },
+    (h, link) => {
+      link.isConnected = false;
+    },
+    (h, link) => {
+      link.ownerDocument = {};
+    },
+    (h, link) => {
+      link.sheet.ownerNode = {};
+    },
+    (h) => {
+      h.env.document.querySelectorAll = () => [];
+    },
+  ]) {
+    const h = harness({ entries: [face()] });
+    const link = h.env.document.styleSheets[0].ownerNode;
+    mutate(h, link);
+    assert.throws(() => h.probe.boundary('before-selection'));
     h.probe.dispose();
   }
 });

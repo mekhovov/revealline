@@ -437,9 +437,31 @@ export const SELECTED_FONT_SETTLEMENT_FIXTURE = Object.freeze({
   bytes: 5773,
   sha256: 'de25a01e745fb70db09642d5f419969e2ca31a69db19aa252f04eb87b015bd3b',
 });
-const fontSettlementPlan = (plan) => plan?.sourceCohort === SELECTED_FONT_SETTLEMENT_COHORT;
+export const SELECTED_FONT_DIRECT_COHORT = 'readiness-selected-font-direct-sheet-candidatee1cc';
+export const SELECTED_FONT_DIRECT_CORRECTION = Object.freeze({
+  format: 'SoloSelectedFontDirectStylesheetSuccessorV1',
+  priorRun: 39066188215,
+  priorArtifact: 12113228769,
+  priorTooling: '39774cce8697d412d138ef4da11ac547a5f8e535',
+  priorConclusion: 'failure',
+  priorRowStatus: 'failed',
+  priorFailure: 'Bounded selected-font stylesheet inventory unavailable',
+  priorSelectedThemeActivated: false,
+  sourceStylesheetLinks: 39,
+  sourceInlineStyles: 2,
+  targetLinkCount: 1,
+  protocol: 'selected-font-request-settlement-v4',
+  cssObservation: 'exact-boot-link-sheet-v1',
+  originalDemandOnly: true,
+  runtimeChanged: false,
+  publicActionsChanged: false,
+  numericalGatesChanged: false,
+  automaticRetries: 0,
+});
+const fontSettlementPlan = (plan) =>
+  [SELECTED_FONT_SETTLEMENT_COHORT, SELECTED_FONT_DIRECT_COHORT].includes(plan?.sourceCohort);
 export function selectedFontSettlementSelection(plan) {
-  assert.equal(plan.sourceCohort, SELECTED_FONT_SETTLEMENT_COHORT);
+  assert(fontSettlementPlan(plan));
   assert.equal(plan.phase, 'selected-font-cancel');
   assert.equal(plan.engine, 'webkit');
   return {
@@ -877,21 +899,26 @@ export function validateReadinessPlan(plan) {
       '23f555db20036838cc1601f2cebf8f1a75eb62fb0c6cf36f1e1988035b3e1b64',
     );
     if (selected.settlement) {
-      assert.equal(plan.release.onceOnlyBefore, 'bab3b2790944c6257f9c1f9b346839996bbefebb');
-      assert.deepEqual(plan.release.observationCorrection, {
-        format: 'SoloSelectedFontRequestedSettlementV1',
-        priorRun: 39049194995,
-        priorArtifact: 12107311023,
-        priorTooling: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
-        priorConclusion: 'failure',
-        priorRowStatus: 'failed',
-        protocol: 'selected-font-request-settlement-v4',
-        originalDemandOnly: true,
-        runtimeChanged: false,
-        publicActionsChanged: false,
-        numericalGatesChanged: false,
-        automaticRetries: 0,
-      });
+      if (plan.sourceCohort === SELECTED_FONT_DIRECT_COHORT) {
+        assert.equal(plan.release.onceOnlyBefore, '39774cce8697d412d138ef4da11ac547a5f8e535');
+        assert.deepEqual(plan.release.observationCorrection, SELECTED_FONT_DIRECT_CORRECTION);
+      } else {
+        assert.equal(plan.release.onceOnlyBefore, 'bab3b2790944c6257f9c1f9b346839996bbefebb');
+        assert.deepEqual(plan.release.observationCorrection, {
+          format: 'SoloSelectedFontRequestedSettlementV1',
+          priorRun: 39049194995,
+          priorArtifact: 12107311023,
+          priorTooling: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
+          priorConclusion: 'failure',
+          priorRowStatus: 'failed',
+          protocol: 'selected-font-request-settlement-v4',
+          originalDemandOnly: true,
+          runtimeChanged: false,
+          publicActionsChanged: false,
+          numericalGatesChanged: false,
+          automaticRetries: 0,
+        });
+      }
       for (const key of ['setupCorrection', 'routeCorrection', 'observerCorrection'])
         assert.equal(plan.release[key], undefined);
     } else if (plan.release.setupCorrection !== undefined) {

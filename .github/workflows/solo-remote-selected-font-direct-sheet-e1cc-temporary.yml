@@ -1,0 +1,491 @@
+name: HELD Solo e1cc selected font direct stylesheet successor
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/solo-remote-readiness.mjs'
+      - '.github/workflows/solo-remote-selected-font-direct-sheet-e1cc-temporary.yml'
+      - 'docs/performance/solo-selected-font-direct-sheet-e1cc-plan.json'
+      - 'scripts/solo-qualification-readiness.mjs'
+      - 'scripts/solo-readiness-gpu.mjs'
+      - '.github/workflows/solo-remote-readiness-ab45-temporary.yml'
+      - 'docs/performance/solo-readiness-font-dpr-c696-plan.json'
+      - 'docs/performance/fixtures/solo-readiness-resume/**'
+      - 'docs/performance/fixtures/solo-remote-timing/public-effects-*.qualification.fixture'
+      - 'scripts/solo-qualification-observation.mjs'
+      - 'scripts/qualify-solo-runtime.mjs'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: solo-linux-selected-font-direct-sheet-e1cc-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  readiness:
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        engine: [webkit]
+    # Reviewed excluded diagnostics on one exact prospective push edge only.
+    # Held until reviewed release of the exact existing-link observation correction.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '39774cce8697d412d138ef4da11ac547a5f8e535'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 130
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
+      SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline
+      SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate
+      PYTHONDONTWRITEBYTECODE: 1
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: tools
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/solo-remote-native-lifecycle-e1cc-temporary.yml
+            /.github/workflows/solo-remote-native-lifecycle-temporary.yml
+            /.github/workflows/solo-remote-native-lifecycle-v2-temporary.yml
+            /.github/workflows/solo-remote-next-geometric-c696-temporary.yml
+            /.github/workflows/solo-remote-next-geometric-e1cc-temporary.yml
+            /.github/workflows/solo-remote-offline-candidate-v3-temporary.yml
+            /.github/workflows/solo-remote-optional-start-audio-e1cc-temporary.yml
+            /.github/workflows/solo-remote-optional-start-audio-e1cc-v2-temporary.yml
+            /.github/workflows/solo-remote-optional-start-audio-e1cc-v3-temporary.yml
+            /.github/workflows/solo-remote-optional-start-audio-e1cc-v4-temporary.yml
+            /.github/workflows/solo-remote-readiness-ab45-temporary.yml
+            /.github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml
+            /.github/workflows/solo-remote-readiness-preparation-e1cc-v2-temporary.yml
+            /.github/workflows/solo-remote-selected-font-direct-sheet-e1cc-temporary.yml
+            /.github/workflows/solo-remote-selected-font-settlement-e1cc-temporary.yml
+            /docs/performance/fixtures/solo-native-lifecycle/696-execution-source.json
+            /docs/performance/fixtures/solo-native-lifecycle/696-runner-source.json
+            /docs/performance/fixtures/solo-next-geometric/e1cc-execution-source.json
+            /docs/performance/fixtures/solo-optional-start-audio/239-execution-source.json
+            /docs/performance/fixtures/solo-optional-start-audio/34d95-execution-source.json
+            /docs/performance/fixtures/solo-optional-start-audio/92ff-execution-source.json
+            /docs/performance/fixtures/solo-optional-start-audio/bab3-execution-source.json
+            /docs/performance/fixtures/solo-readiness-diagnosed/92ff-execution-source.json
+            /docs/performance/fixtures/solo-readiness-font/06bfe-held-source.json
+            /docs/performance/fixtures/solo-readiness-font/06bfe-held-workflow.yml
+            /docs/performance/fixtures/solo-readiness-font/0feb-executed-workflow.yml
+            /docs/performance/fixtures/solo-readiness-font/0feb-execution-source.json
+            /docs/performance/fixtures/solo-readiness-font/397-settlement-execution-source.json
+            /docs/performance/fixtures/solo-readiness-font/c696-executed-workflow.yml
+            /docs/performance/fixtures/solo-readiness-font/c696-execution-source.json
+            /docs/performance/fixtures/solo-readiness-font/e1cc-executed-workflow.yml
+            /docs/performance/fixtures/solo-readiness-font/e1cc-execution-source.json
+            /docs/performance/fixtures/solo-readiness-font/public-effects-full-compact-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-font/public-effects-reduced-compact-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-font/saved-compact-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-font/selected-font-cancel-joined-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-font/selected-font-cancel-post-command-v3.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-font/selected-font-cancel.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-font/selected-font-request-settlement-v4.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-geometry/7c7-execution-source.json
+            /docs/performance/fixtures/solo-readiness-geometry/default-cancel-observation.json
+            /docs/performance/fixtures/solo-readiness-geometry/default-observation.json
+            /docs/performance/fixtures/solo-readiness-media/optional-audio-start-missing-settings-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-media/optional-audio-start-missing-v1.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-media/optional-icon-missing-v1.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-media/required-original-cancel-start-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-media/required-original-cancel-v1.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-resume/saved.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-resume/warm-compact-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-resume/warm.qualification.fixture
+            /docs/performance/fixtures/solo-readiness/4bf-executed-workflow.yml
+            /docs/performance/fixtures/solo-readiness/4bf-execution-source.json
+            /docs/performance/fixtures/solo-remote-offline/c41-evidence-source.json
+            /docs/performance/fixtures/solo-remote-offline/installed-starter.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture
+            /docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next-first-return-anchored.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next-geometric-model.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next-geometric.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/retry-first-return-anchored.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/retry.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture
+            /docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture
+            /docs/performance/fixtures/solo-remote-timing/public-effects-full-first30.qualification.fixture
+            /docs/performance/fixtures/solo-remote-timing/public-effects-reduced-first30.qualification.fixture
+            /docs/performance/solo-final-long29-plan.json
+            /docs/performance/solo-final-next-plan.json
+            /docs/performance/solo-final-retry-plan.json
+            /docs/performance/solo-final-soak-plan.json
+            /docs/performance/solo-joined-font-dpr-outcomes-20261017.md
+            /docs/performance/solo-native-lifecycle-e1cc-plan.json
+            /docs/performance/solo-native-lifecycle-plan.json
+            /docs/performance/solo-native-lifecycle-v2-plan.json
+            /docs/performance/solo-next-geometric-c696-plan.json
+            /docs/performance/solo-next-geometric-e1cc-plan.json
+            /docs/performance/solo-optional-start-audio-e1cc-plan.json
+            /docs/performance/solo-optional-start-audio-e1cc-v2-plan.json
+            /docs/performance/solo-optional-start-audio-e1cc-v3-plan.json
+            /docs/performance/solo-optional-start-audio-e1cc-v4-plan.json
+            /docs/performance/solo-readiness-4bf-plan.json
+            /docs/performance/solo-readiness-ab45-plan.json
+            /docs/performance/solo-readiness-diagnosed-239-plan.json
+            /docs/performance/solo-readiness-font-c696-plan.json
+            /docs/performance/solo-readiness-font-dpr-0feb-plan.json
+            /docs/performance/solo-readiness-font-dpr-c696-plan.json
+            /docs/performance/solo-readiness-preparation-e1cc-plan.json
+            /docs/performance/solo-readiness-preparation-e1cc-v2-plan.json
+            /docs/performance/solo-remote-correctness-plan.json
+            /docs/performance/solo-remote-offline-candidate-plan.json
+            /docs/performance/solo-remote-offline-candidate-v2-plan.json
+            /docs/performance/solo-remote-offline-candidate-v3-plan.json
+            /docs/performance/solo-selected-font-direct-sheet-e1cc-plan.json
+            /docs/performance/solo-selected-font-settlement-e1cc-plan.json
+            /game/app.mjs
+            /game/audio/effects/start.wav
+            /game/build-config.json
+            /game/campaign-contexts.mjs
+            /game/campaign-difficulty.mjs
+            /game/content-design/assets.mjs
+            /game/content-design/assets/horizon-r1/first-return.png
+            /game/content-design/catalogs.mjs
+            /game/content-design/limits.mjs
+            /game/content-design/map.mjs
+            /game/content-launch.mjs
+            /game/content.mjs
+            /game/content/campaign.json
+            /game/content/soundtrack-catalogue.mjs
+            /game/controller-bindings.mjs
+            /game/controller-boost.mjs
+            /game/coop/bonus-opportunity.mjs
+            /game/coop/combat-patrols.mjs
+            /game/coop/core.mjs
+            /game/coop/expedition-environment.mjs
+            /game/coop/expedition-version.mjs
+            /game/coop/first-connection.mjs
+            /game/coop/foundations.mjs
+            /game/coop/geometry.mjs
+            /game/coop/library.mjs
+            /game/coop/recipes.mjs
+            /game/coop/relay-yard.mjs
+            /game/coop/roamers.mjs
+            /game/coop/running-enemies.mjs
+            /game/coop/terrain.mjs
+            /game/coop/threats.mjs
+            /game/coop/timed-bonuses.mjs
+            /game/core/abilities.mjs
+            /game/core/arcade-actions.mjs
+            /game/core/bonus-opportunity.mjs
+            /game/core/capture-regions.mjs
+            /game/core/capture.mjs
+            /game/core/classic-contour.mjs
+            /game/core/classic-definition.mjs
+            /game/core/classic-motion.mjs
+            /game/core/classic-state.mjs
+            /game/core/classic-step.mjs
+            /game/core/classic-topology.mjs
+            /game/core/combat-definition.mjs
+            /game/core/combat-motion.mjs
+            /game/core/combat-patrols.mjs
+            /game/core/contacts.mjs
+            /game/core/coverage.mjs
+            /game/core/directional-fields.mjs
+            /game/core/encounter.mjs
+            /game/core/enemy-pressure.mjs
+            /game/core/field-course.mjs
+            /game/core/foundations.mjs
+            /game/core/geometry.mjs
+            /game/core/index.mjs
+            /game/core/level.mjs
+            /game/core/line-impact.mjs
+            /game/core/movement.mjs
+            /game/core/registry.mjs
+            /game/core/relay-gates.mjs
+            /game/core/systems.mjs
+            /game/core/timed-bonuses.mjs
+            /game/core/versions.mjs
+            /game/data-json.mjs
+            /game/display-preferences.mjs
+            /game/download-catalogue.mjs
+            /game/enemy-catalog.mjs
+            /game/external-chapter-source.mjs
+            /game/external-chapter.mjs
+            /game/first-flight.mjs
+            /game/flight-media-pins.mjs
+            /game/hunt/actor-facing.mjs
+            /game/hunt/pursuit-goals-v2.mjs
+            /game/hunt/pursuit-goals.mjs
+            /game/hunt/pursuit-specialists.mjs
+            /game/hunt/rules.mjs
+            /game/hunt/running-enemy-definition.mjs
+            /game/hunt/running-enemy-placement.mjs
+            /game/i18n/bootstrap.mjs
+            /game/i18n/catalogs.mjs
+            /game/i18n/content-registry.mjs
+            /game/i18n/content.mjs
+            /game/i18n/index.mjs
+            /game/imports.mjs
+            /game/input-presentation.mjs
+            /game/key-bindings.mjs
+            /game/library.mjs
+            /game/managed-media-store.mjs
+            /game/mastery-catalog.mjs
+            /game/mastery-equipment.mjs
+            /game/mastery-records.mjs
+            /game/mastery.mjs
+            /game/media-bundle.mjs
+            /game/media-library.mjs
+            /game/media-presentation.mjs
+            /game/media-still.mjs
+            /game/media-storage-record.mjs
+            /game/menu-style-preferences.mjs
+            /game/mission-library/included-bundled-pack.mjs
+            /game/mp3-inspection.mjs
+            /game/mp3.mjs
+            /game/official-downloads.mjs
+            /game/online-soundtrack-catalogue.mjs
+            /game/online-soundtrack-sources.mjs
+            /game/optional-chapters.mjs
+            /game/packs.mjs
+            /game/picture-receipts.mjs
+            /game/platform.mjs
+            /game/presentation-pins.mjs
+            /game/presentation/compiled/assets/d5227e40b6ef6c1d722bbfb09c828789facf18b0021d6e600a456fdd37ba7e11.png
+            /game/presentation/theme-host.mjs
+            /game/presentation/theme-preferences.mjs
+            /game/presentation/theme-system.mjs
+            /game/progress.mjs
+            /game/replay.mjs
+            /game/snake/rules.mjs
+            /game/soundtrack-album-download.mjs
+            /game/soundtrack-albums.mjs
+            /game/soundtrack-archive.mjs
+            /game/soundtrack-bundle.mjs
+            /game/soundtrack-portable.mjs
+            /game/soundtrack-rights.mjs
+            /game/soundtrack-style-selection.mjs
+            /game/soundtrack-style-taxonomy.mjs
+            /game/soundtrack.mjs
+            /game/story-bindings.mjs
+            /game/story-receipts.mjs
+            /game/story-storage-record.mjs
+            /game/test/helpers/couch-dom.mjs
+            /game/text-face.mjs
+            /game/text-size.mjs
+            /game/touch-controls.mjs
+            /game/ui/actor-recipes.mjs
+            /game/ui/analog-signal.mjs
+            /game/ui/combat-view.mjs
+            /game/ui/controller-field-editor.mjs
+            /game/ui/controller-navigation.mjs
+            /game/ui/controller-text-draft.mjs
+            /game/ui/field-kit-fonts.css
+            /game/ui/fonts/field-kit/handjet-display-600.woff2
+            /game/ui/fpv-body-recipes.mjs
+            /game/ui/jammer-picture.mjs
+            /game/ui/menu-navigation-groups.mjs
+            /game/ui/music.mjs
+            /game/ui/settings-panels.mjs
+            /game/vendor/LZ-STRING-LICENSE.txt
+            /game/vendor/i18next-26.4.2.min.js
+            /game/vendor/lz-string-1.5.0.min.js
+            /game/victory-story.mjs
+            /game/video-poster.mjs
+            /package-lock.json
+            /package.json
+            /publishing/vendor/acorn-8.18.0.mjs
+            /scripts/brand-icons.mjs
+            /scripts/build-entry-writer.mjs
+            /scripts/calibrate-solo-performance.mjs
+            /scripts/core-soundtrack-publication.mjs
+            /scripts/default-runtime-metadata.mjs
+            /scripts/edition-code-indentation.mjs
+            /scripts/external-distribution.mjs
+            /scripts/game-cli.mjs
+            /scripts/hosted-soundtrack-publication.mjs
+            /scripts/localization-audit.mjs
+            /scripts/localization-content.mjs
+            /scripts/localization.mjs
+            /scripts/observe-solo-native-lifecycle.mjs
+            /scripts/observe-solo-offline-persistence.mjs
+            /scripts/offline-core-closure.mjs
+            /scripts/optional-artwork.mjs
+            /scripts/optional-distribution.mjs
+            /scripts/optional-installation-observer-helpers.mjs
+            /scripts/pack-indexes.mjs
+            /scripts/qualify-solo-runtime.mjs
+            /scripts/reviewed-soundtrack-batches.mjs
+            /scripts/run-solo-remote-correctness.mjs
+            /scripts/serve-production-preview.mjs
+            /scripts/solo-build-archive.mjs
+            /scripts/solo-build-worker-closure.mjs
+            /scripts/solo-offline-gameplay.mjs
+            /scripts/solo-owned-resource-assessment.mjs
+            /scripts/solo-qualification-audio.mjs
+            /scripts/solo-qualification-browser-context.mjs
+            /scripts/solo-qualification-cadence.mjs
+            /scripts/solo-qualification-cpu-profile.mjs
+            /scripts/solo-qualification-export.mjs
+            /scripts/solo-qualification-hitch-journal.mjs
+            /scripts/solo-qualification-native-replay.mjs
+            /scripts/solo-qualification-next-route.mjs
+            /scripts/solo-qualification-observation.mjs
+            /scripts/solo-qualification-readiness.mjs
+            /scripts/solo-qualification-replay-core.mjs
+            /scripts/solo-qualification-replay-identity.mjs
+            /scripts/solo-qualification-replay.mjs
+            /scripts/solo-qualification-snapshot-store.mjs
+            /scripts/solo-qualification.mjs
+            /scripts/solo-readiness-gpu.mjs
+            /scripts/solo-remote-archive.py
+            /scripts/solo-remote-baseline.mjs
+            /scripts/solo-remote-lifecycle.mjs
+            /scripts/solo-remote-offline.mjs
+            /scripts/solo-remote-readiness.mjs
+            /scripts/solo-remote-sustained.mjs
+            /scripts/solo-source-verifier-smoke.mjs
+            /scripts/soundtrack-archive-admissions.mjs
+            /scripts/soundtrack-distribution.mjs
+            /scripts/test-solo-build-worker-closure.mjs
+            /scripts/test-solo-c41-setup-successors.mjs
+            /scripts/test-solo-final-lifecycle-admission.mjs
+            /scripts/test-solo-font-dpr-c696-proposal.mjs
+            /scripts/test-solo-font-dpr-proposal.mjs
+            /scripts/test-solo-hidden-preparation-workload.mjs
+            /scripts/test-solo-lifecycle-e1cc-admission.mjs
+            /scripts/test-solo-long29-journal-wiring.mjs
+            /scripts/test-solo-native-lifecycle-release.mjs
+            /scripts/test-solo-native-lifecycle.mjs
+            /scripts/test-solo-next-baseline-dispatch.mjs
+            /scripts/test-solo-next-e1cc-admission.mjs
+            /scripts/test-solo-next-geometric-admission.mjs
+            /scripts/test-solo-optional-audio-observer-correction.mjs
+            /scripts/test-solo-optional-audio-observer-successor.mjs
+            /scripts/test-solo-optional-audio-readiness.mjs
+            /scripts/test-solo-optional-audio-settings-successor.mjs
+            /scripts/test-solo-optional-audio-setup-successor.mjs
+            /scripts/test-solo-optional-start-audio-release.mjs
+            /scripts/test-solo-preparation-readiness-v2.mjs
+            /scripts/test-solo-preparation-readiness.mjs
+            /scripts/test-solo-qualification-cadence.mjs
+            /scripts/test-solo-qualification-hitch-journal.mjs
+            /scripts/test-solo-qualification-next-route.mjs
+            /scripts/test-solo-qualification-readiness.mjs
+            /scripts/test-solo-qualification-replay-identity.mjs
+            /scripts/test-solo-qualification.mjs
+            /scripts/test-solo-quality-comparison.mjs
+            /scripts/test-solo-readiness-4bf-release.mjs
+            /scripts/test-solo-readiness-cancel-boundary.mjs
+            /scripts/test-solo-readiness-dispatch.mjs
+            /scripts/test-solo-readiness-geometry-integration.mjs
+            /scripts/test-solo-readiness-geometry.mjs
+            /scripts/test-solo-readiness-gpu.mjs
+            /scripts/test-solo-readiness-release.mjs
+            /scripts/test-solo-readiness-resume.mjs
+            /scripts/test-solo-remote-baseline.mjs
+            /scripts/test-solo-remote-correctness.mjs
+            /scripts/test-solo-remote-readiness.mjs
+            /scripts/test-solo-required-media-transport.mjs
+            /scripts/test-solo-selected-font-direct-sheet-release.mjs
+            /scripts/test-solo-selected-font-post-command.mjs
+            /scripts/test-solo-selected-font-readiness.mjs
+            /scripts/test-solo-selected-font-release.mjs
+            /scripts/test-solo-selected-font-settlement-release.mjs
+            /scripts/test-solo-selected-font-settlement.mjs
+            /scripts/test-solo-selected-font-transport.mjs
+            /scripts/test-solo-source-verifier-smoke.mjs
+            /scripts/vendor/devtools-benchmark.mjs
+            /scripts/verify-solo-build.mjs
+      - timeout-minutes: 3
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: 8b01991942dc764b8aa4726851699ce1985e53ae
+          path: baseline
+          persist-credentials: false
+          fetch-depth: 1
+      - timeout-minutes: 3
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: e1cc5dd7656bab349715cd1c3ce6e9f783508c17
+          path: candidate
+          persist-credentials: false
+          fetch-depth: 1
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Record setup and install exact source dependencies
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
+            "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
+            "OUTPUT=$RUNNER_TEMP/solo-linux-selected-font-direct-sheet-e1cc-${{ matrix.engine }}" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/solo-linux-setup"
+          test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
+          npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
+      - name: Install the separately pinned browser cohort
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/solo-browser-tools"
+          npm install --prefix "$RUNNER_TEMP/solo-browser-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-install.log"
+          "$RUNNER_TEMP/solo-browser-tools/node_modules/.bin/playwright" install --with-deps chromium webkit 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-dependencies.log"
+          cp "$RUNNER_TEMP/solo-browser-tools/package-lock.json" "$RUNNER_TEMP/solo-linux-setup/browser-package-lock.json"
+      - name: Exercise archive rejection and owned timeout cleanup
+        timeout-minutes: 3
+        working-directory: tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test --test-concurrency=2 scripts/test-solo-selected-font-direct-sheet-release.mjs scripts/test-solo-selected-font-settlement.mjs scripts/test-solo-selected-font-post-command.mjs scripts/test-solo-selected-font-transport.mjs scripts/test-solo-selected-font-settlement-release.mjs scripts/test-solo-optional-audio-observer-successor.mjs scripts/test-solo-remote-readiness.mjs scripts/test-solo-readiness-dispatch.mjs scripts/test-solo-qualification-hitch-journal.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-readiness.mjs bind-plan docs/performance/solo-selected-font-direct-sheet-e1cc-plan.json "$RUNNER_TEMP/readiness-plan.json" "${{ matrix.engine }}"
+      - name: Observe original selected font demand and settlement
+        timeout-minutes: 78
+        working-directory: tools
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: timeout --signal=TERM --kill-after=30s 4620s node scripts/run-solo-remote-correctness.mjs "$RUNNER_TEMP/readiness-plan.json" "$OUTPUT"
+      - name: Describe bounded setup evidence without claiming truncated output complete
+        if: ${{ always() }}
+        timeout-minutes: 2
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import hashlib,json,os,pathlib
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'solo-linux-setup'
+          root.mkdir(exist_ok=True)
+          rows=[]
+          failed=False
+          for name in ['tools-npm.log','baseline-npm.log','browser-install.log','browser-dependencies.log','wrapper-tests.tap','browser-package-lock.json']:
+              path=root/name
+              if not path.exists():
+                  rows.append({'path':name,'status':'not-retained-setup-incomplete'})
+                  continue
+              size=path.stat().st_size
+              assert size <= 4*1024*1024, 'Setup file exceeded fixed bound'
+              capped=size == 4*1024*1024
+              failed |= capped
+              rows.append({'path':name,'bytes':size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'status':'cap-reached-completeness-unconfirmed' if capped else 'retained'})
+          (root/'retention.json').write_text(json.dumps({'status':'failed-output-cap' if failed else 'retained','files':rows,'maximumTotalBytes':24*1024*1024},indent=2)+'\n')
+          if failed: raise SystemExit(1)
+          PYCODE
+      - name: Retain all complete, failed and partial evidence
+        if: ${{ always() }}
+        timeout-minutes: 10
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-linux-selected-font-direct-sheet-e1cc-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-linux-selected-font-direct-sheet-e1cc-${{ matrix.engine }}/evidence/
+            ${{ runner.temp }}/solo-linux-setup/
+          if-no-files-found: warn
+          compression-level: 6
+          retention-days: 14

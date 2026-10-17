@@ -31,6 +31,45 @@ const manifest = JSON.parse(await read(manifestPath)),
 const before = 'bab3b2790944c6257f9c1f9b346839996bbefebb';
 const plan = () => bindReadinessJob(manifest, 'webkit');
 
+const executedBytes = await read(
+  'docs/performance/fixtures/solo-readiness-font/397-settlement-execution-source.json',
+);
+function executedBindings(bytes, declaration, workflowBytes) {
+  assert.equal(hash(bytes), '1a76da62793199a23c9de1cb749ae11db5a4f9895e0d6d8e3a29d9f865be7f6d');
+  const value = JSON.parse(bytes);
+  assert.equal(value.format, 'SoloSelectedFont397ExecutedSourceV1');
+  assert.equal(value.revision, '39774cce8697d412d138ef4da11ac547a5f8e535');
+  assert.equal(value.tree, 'cac2369a26cac5282e4260c638b934540d17ced6');
+  assert.equal(value.run, 39066188215);
+  assert.equal(value.artifact, 12113228769);
+  assert.equal(value.records.length, 52);
+  assert.equal(new Set(value.records.map((r) => r.path)).size, value.records.length);
+  for (const [path, input] of [
+    [manifestPath, declaration],
+    [workflowPath, workflowBytes],
+  ]) {
+    const ref = value.records.find((r) => r.path === path);
+    assert.equal(input.length, ref.bytes);
+    assert.equal(hash(input), ref.sha256);
+  }
+  for (const ref of value.records) assert.match(ref.blob, /^[a-f0-9]{40}$/);
+  return value;
+}
+const executed = executedBindings(executedBytes, await read(manifestPath), Buffer.from(workflow));
+test('executed397 V4 rejects changed source witness, declaration or workflow', () => {
+  assert.throws(() =>
+    executedBindings(Buffer.from('{}'), Buffer.from('{}'), Buffer.from(workflow)),
+  );
+  assert.throws(() => executedBindings(executedBytes, Buffer.from('{}'), Buffer.from(workflow)));
+  assert.throws(() =>
+    executedBindings(
+      executedBytes,
+      Buffer.from(JSON.stringify(manifest)),
+      Buffer.from(workflow + ' '),
+    ),
+  );
+});
+
 test('one exact e1cc WebKit settlement row retains the original public actions and source/package limits', async () => {
   const p = plan(),
     old = JSON.parse(await read('docs/performance/solo-optional-start-audio-e1cc-v4-plan.json'));
@@ -147,7 +186,7 @@ test('actual one-module CLI and enriched row arguments select V4 without changin
   assert(!args.includes('--baseline-runtime'));
 });
 
-test('concrete four-condition one-shot workflow and every current frozen input are exact', async () => {
+test('executed four-condition one-shot workflow and every immutable frozen input are exact', async () => {
   const terms = [
     'github.event.pull_request.number == 1544',
     'github.event.pull_request.head.repo.full_name == github.repository',
@@ -174,9 +213,9 @@ test('concrete four-condition one-shot workflow and every current frozen input a
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(new Set(sparse).size, sparse.length);
   for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools, manifest.fixture]) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(hash(b), ref.sha256, ref.path);
+    const historical = executed.records.find((r) => r.path === ref.path);
+    assert.equal(historical?.bytes, ref.bytes, ref.path);
+    assert.equal(historical?.sha256, ref.sha256, ref.path);
     assert(sparse.includes(ref.path));
   }
   for (const p of [

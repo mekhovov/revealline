@@ -379,7 +379,12 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
     if (plan.format === 'SoloHostedReadinessPlanV1') {
       assert.equal(plan.performanceExclusion, true);
-      if (plan.sourceCohort === 'readiness-selected-font-settlement-candidatee1cc') {
+      if (
+        [
+          'readiness-selected-font-settlement-candidatee1cc',
+          'readiness-selected-font-direct-sheet-candidatee1cc',
+        ].includes(plan.sourceCohort)
+      ) {
         const { selectedFontSettlementSelection } = await import('./solo-remote-readiness.mjs');
         const selected = selectedFontSettlementSelection(plan);
         assert.equal(plan.candidate.revision, selected.source.revision);

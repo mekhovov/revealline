@@ -3055,11 +3055,25 @@ export function createSelectedFontSettlementProbe(environment = globalThis) {
     return result;
   }
   function directCss() {
-    const sheets = doc.styleSheets;
-    if (!sheets || !Number.isSafeInteger(sheets.length) || sheets.length > 32)
-      throw new Error('Bounded selected-font stylesheet inventory unavailable');
+    // The admitted page has more than 32 stylesheets. Observe only the exact
+    // existing boot link; unrelated stylesheets do not belong to this witness.
+    const links = doc.querySelectorAll?.(
+      'link[rel="stylesheet"][data-boot-href="ui/field-kit-fonts.css"]',
+    );
+    if (!links || links.length !== 1) throw new Error('One selected-font stylesheet link required');
+    const link = links[0],
+      sheet = link.sheet;
+    if (
+      link.ownerDocument !== doc ||
+      link.isConnected !== true ||
+      !sheet ||
+      sheet.ownerNode !== link ||
+      typeof link.href !== 'string' ||
+      sheet.href !== link.href
+    )
+      throw new Error('Selected-font stylesheet owner unavailable');
     const matched = [];
-    for (const sheet of sheets) {
+    for (const sheet of [link.sheet]) {
       if (typeof sheet.href !== 'string') continue;
       const href = new URL(sheet.href, doc.baseURI);
       if (
