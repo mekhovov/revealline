@@ -1,0 +1,11 @@
+# Controller focus checks during preparation
+
+An engaged controller runs neutral menu samples while Solo is paused and preparing. Each sample previously validated the current focus by enumerating every control in the root, filtering all of them through ancestor style and rectangle checks, and then testing whether the current control was in that array. This recurring work could compete with loading and preparation even without a directional input.
+
+The navigation owner now checks the focused element's existing selector, scope, visibility and acceptance directly. It excludes the root itself, matching `querySelectorAll` semantics, and verifies that an acceptance callback has not replaced focus. Real navigation and invalid-focus repair still enumerate the current controls. There is no stale control cache or reduced controller polling rate.
+
+A modeled 64-control menu over 120 neutral samples records whole-root queries falling from 120 to zero, style reads from 31,200 to 960 and rectangle reads from 7,800 to 240. Focus, scrolling and click counts are unchanged. These are operation counts, not a measured device speedup. The complete controller/navigation, reading and field-editor files pass 253/253. The original cost regression and a rejected intermediate callback-invalidation variant are retained.
+
+After integrating main `fe1bb1cecbfcead7edaad24e802242d62b4e3b99` in `c45e1b40a8a3a1c467f9bcf462037b801c1837b0`, seven complete controller/shared-shell/reward/Sky Watch files pass 351/351 in 75.23 seconds with unchanged tracked source throughout. This group includes the controller checks and must not be added to their earlier count. The exact output is `.cache/solo-followup/integration-397-batch/main-shared-integration/tests.tap` (81,840 bytes, SHA-256 `8c9bd34d1a3c6a3c081bf41fe0d4c7da02c68b0d5af1feca7adc05a3572cfaaf`), with its adjacent receipt. The two-path controller proposal and original failures are indexed by `.cache/solo-followup/controller-current-membership/review-final.json`.
+
+Repository-wide lint and validation pass after this main integration. Formatting reports nine files byte-identical to that main revision, including its newly changed reward-media test; this patch's files pass formatting. Native startup and sustained comparisons remain separate obligations.
