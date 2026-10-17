@@ -20,9 +20,9 @@ concurrency:
 
 jobs:
   diagnostic:
-    # Held prospective one-shot. Root review must bind the exact next push edge.
+    # One reviewed synchronize edge only; subsequent pushes cannot repeat this control.
     # Native macOS codec observation only; no game or timing qualification.
-    if: ${{ false }}
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'adb1c0c7b7dd1a526a0693917f2012d1dbc08b22'
     runs-on: macos-15-intel
     timeout-minutes: 28
     env:

@@ -786,12 +786,24 @@ test('Cocoa is a distinct diagnostic format and cannot inherit a Linux backend r
   assert.equal(environment.GST_DEBUG_FILE, '/unowned');
 });
 
-test('macOS control remains held with finite resource bounds, retained failures and no package work', async () => {
+test('macOS control admits only its declared predecessor edge with finite bounds and no package work', async () => {
   const workflow = await readFile(
     new URL('../.github/workflows/solo-native-mp3-cocoa-temporary.yml', import.meta.url),
     'utf8',
   );
-  assert.match(workflow, /if: \$\{\{ false \}\}/);
+  const guard = workflow.match(/^    if: (.+)$/m)?.[1];
+  assert.equal(
+    guard,
+    [
+      'github.event.pull_request.number == 1544',
+      'github.event.pull_request.head.repo.full_name == github.repository',
+      "github.event.action == 'synchronize'",
+      `github.event.before == '${cocoaPlan.predecessorTools}'`,
+    ].join(' && '),
+  );
+  assert.match(workflow, /SOLO_TOOLING_REVISION: \$\{\{ github.event.pull_request.head.sha \}\}/);
+  assert.match(workflow, /ref: \$\{\{ github.event.pull_request.head.sha \}\}/);
+  assert.doesNotMatch(workflow, /workflow_dispatch/);
   assert.match(workflow, /runs-on: macos-15-intel/);
   assert.match(workflow, /timeout-minutes: 28/);
   assert.match(workflow, /cancel-in-progress: false/);
