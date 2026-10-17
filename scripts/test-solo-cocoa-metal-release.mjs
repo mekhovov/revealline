@@ -27,34 +27,46 @@ const expectedPaths = [
   'solo-darwin-process-inventory.c',
   'solo-darwin-process-inventory.mjs',
 ].map((path) => 'scripts/' + path);
-function currentInputs(plan, inputs) {
+const witnessPath = 'docs/performance/fixtures/solo-cocoa-identity/2c-executed-source.json';
+async function executedInputs(plan) {
+  const bytes = await read(witnessPath);
+  assert.equal(bytes.length, 2969);
+  assert.equal(sha(bytes), '250d3bc287b377a72574002de24e0a13d2b6eb2531af253f48300d5608f91448');
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.format, 'SoloCocoaExecutedSourceV1');
+  assert.equal(witness.sourceRevision, '2c519bfe94b6364a57c71ba40b7212c71f0994ab');
+  assert.equal(witness.sourceTree, '76f5c88845d0340ae27e13f5ab61b0c82a9ac1bf');
+  assert.equal(witness.run, 39076890164);
+  assert.equal(witness.artifact, 12117935204);
+  assert.equal(witness.records.length, 10);
+  const refs = new Map(witness.records.map((r) => [r.path, r]));
+  assert.equal(refs.size, 10);
   assert.equal(plan.format, 'SoloNativeCocoaMetalReleaseV1');
   assert.deepEqual(
-    plan.currentInputs.map((ref) => ref.path),
+    plan.currentInputs.map((r) => r.path),
     expectedPaths,
   );
   for (const ref of plan.currentInputs) {
-    const bytes = inputs.get(ref.path);
-    assert(bytes, ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(sha(bytes), ref.sha256, ref.path);
+    const original = refs.get(ref.path);
+    assert(original);
+    assert.deepEqual(ref, { path: original.path, bytes: original.bytes, sha256: original.sha256 });
+  }
+  for (const path of [planPath, workflowPath]) {
+    const b = await read(path),
+      ref = refs.get(path);
+    assert.equal(b.length, ref.bytes, path);
+    assert.equal(sha(b), ref.sha256, path);
   }
 }
-test('new Cocoa release freezes the seven actual current native admission and provider inputs', async () => {
-  const inputs = new Map(
-    await Promise.all(expectedPaths.map(async (path) => [path, await read(path)])),
-  );
-  currentInputs(manifest, inputs);
+test('executed2c Cocoa release retains immutable seven-input, declaration and workflow identity', async () => {
+  await executedInputs(manifest);
   for (const path of expectedPaths) {
-    const missing = new Map(inputs);
-    missing.delete(path);
-    assert.throws(() => currentInputs(manifest, missing));
-    const changed = new Map(inputs);
-    changed.set(path, Buffer.concat([inputs.get(path), Buffer.from(' ')]));
-    assert.throws(() => currentInputs(manifest, changed));
-    const plan = structuredClone(manifest);
-    plan.currentInputs.find((ref) => ref.path === path).sha256 = '0'.repeat(64);
-    assert.throws(() => currentInputs(plan, inputs));
+    const changed = structuredClone(manifest);
+    changed.currentInputs.find((r) => r.path === path).sha256 = '0'.repeat(64);
+    await assert.rejects(executedInputs(changed));
+    const missing = structuredClone(manifest);
+    missing.currentInputs = missing.currentInputs.filter((r) => r.path !== path);
+    await assert.rejects(executedInputs(missing));
   }
 });
 function previousAttempt(plan) {

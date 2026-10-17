@@ -270,6 +270,101 @@ export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, lea
     },
   };
 }
+// Optional failed-observation evidence only. These are parser-accepted identity
+// maps, never new ownership inputs. Full-or-overflow avoids a partial inventory
+// looking complete; only kernel paths are retained, never argv/environment text.
+function ambiguityIdentityMap(map, maximumBytes, owned = false) {
+  const totalRows = map.size;
+  if (totalRows >= 16384)
+    return { status: 'overflow', reason: 'row-cap', totalRows, maximumBytes, rows: null };
+  const rows = [];
+  let serializationBytes = 2;
+  for (const row of map.values()) {
+    if (
+      !darwinKernelIdentity(row) ||
+      !['R', 'Z'].includes(row.state) ||
+      (!owned &&
+        (!['unobserved', 'complete', 'unavailable'].includes(row.pathInspection) ||
+          !['unobserved', 'complete', 'unavailable'].includes(row.rssInspection) ||
+          !['unobserved', 'absent', 'present', 'unavailable'].includes(row.ownerTagInspection) ||
+          (row.pathInspection === 'complete' &&
+            (typeof row.argv !== 'string' ||
+              !row.argv.startsWith('/') ||
+              row.argv.includes('\0') ||
+              Buffer.byteLength(row.argv) > 4096)) ||
+          (row.rssInspection === 'complete' && (!Number.isSafeInteger(row.rss) || row.rss < 0))))
+    )
+      return {
+        status: 'unavailable',
+        reason: 'invalid-identity',
+        totalRows,
+        maximumBytes,
+        rows: null,
+      };
+    const selected = {
+      pid: row.pid,
+      ppid: row.ppid,
+      pgid: row.pgid,
+      birth: row.birth,
+      identityKind: row.identityKind,
+      version: row.version,
+      euid: row.euid,
+      ruid: row.ruid,
+      parentUniqueId: row.parentUniqueId,
+      state: row.state,
+      ...(!owned
+        ? {
+            executable: row.pathInspection === 'complete' ? row.argv : null,
+            pathInspection: row.pathInspection,
+            rss: row.rssInspection === 'complete' ? row.rss : null,
+            rssInspection: row.rssInspection,
+            ownerTagged:
+              row.ownerTagInspection === 'present'
+                ? true
+                : row.ownerTagInspection === 'absent'
+                  ? false
+                  : null,
+            ownerTagInspection: row.ownerTagInspection,
+          }
+        : {}),
+    };
+    const encoded = JSON.stringify(selected, null, 2);
+    // Reserve up to 24 extra indent bytes per line for the existing nested
+    // command/host receipts; the budget is conservative, not truncation.
+    serializationBytes += Buffer.byteLength(encoded) + 24 * encoded.split('\n').length + 2;
+    if (serializationBytes > maximumBytes)
+      return {
+        status: 'overflow',
+        reason: 'byte-cap',
+        totalRows,
+        maximumBytes,
+        minimumSerializationBytes: serializationBytes,
+        rows: null,
+      };
+    rows.push(selected);
+  }
+  return {
+    status: 'complete',
+    totalRows,
+    maximumBytes,
+    bytes: Buffer.byteLength(JSON.stringify(rows)),
+    serializationBytes,
+    sha256: hash(JSON.stringify(rows)),
+    rows,
+  };
+}
+function ambiguityIdentityMaps(before, all, owned, leaderPid) {
+  return {
+    format: 'SoloFirstAmbiguousIdentityMapsV1',
+    scope:
+      'First ambiguous observation only; no ownership, signalling, classification or argument authority.',
+    leaderPid,
+    before: ambiguityIdentityMap(before, 256 * 1024),
+    current: ambiguityIdentityMap(all, 256 * 1024),
+    owned: ambiguityIdentityMap(owned, 64 * 1024, true),
+  };
+}
+
 export function collectUnattributedProcesses(
   all,
   before,
@@ -277,6 +372,7 @@ export function collectUnattributedProcesses(
   leaderPid,
   record,
   darwin = false,
+  retainInventories = false,
 ) {
   const ambiguous = [];
   for (const row of all.values()) {
@@ -308,6 +404,8 @@ export function collectUnattributedProcesses(
   // separately so a later empty sample cannot erase the reason for failure.
   // This is bounded evidence only, never ownership or signal authority.
   if (ambiguous.length && !record.firstAmbiguousInventory) {
+    if (darwin && retainInventories)
+      record.firstAmbiguousIdentityMaps = ambiguityIdentityMaps(before, all, owned, leaderPid);
     const row = ambiguous[0],
       argv = row.argv ?? '';
     record.firstAmbiguousInventory = {
@@ -354,6 +452,7 @@ export async function ownedCommand(
     outputBytes = 4 * MiB,
     inspect = async () => {},
     receipt = null,
+    retainAmbiguityInventories = env?.SOLO_DARWIN_AMBIGUITY_EVIDENCE === 'identity-maps-v1',
   },
 ) {
   assert(['linux', 'darwin'].includes(process.platform));
@@ -480,6 +579,7 @@ export async function ownedCommand(
       child.pid,
       record,
       Boolean(darwin),
+      retainAmbiguityInventories,
     );
     return current;
   };

@@ -209,6 +209,8 @@ test(
         env: process.env,
         log: join(dir, `${id}.log`),
         timeoutMs,
+        retainAmbiguityInventories:
+          process.env.SOLO_DARWIN_AMBIGUITY_EVIDENCE === 'identity-maps-v1',
       });
       if (process.env.SOLO_DARWIN_OWNER_EVIDENCE) {
         const bytes = JSON.stringify({ case: id, result }, null, 2) + '\n';
@@ -705,7 +707,7 @@ test('actual owner collection and cancellation keep incomplete owned rows failed
     'signal',
     `
     const {all,before,owned,leader,record}=model;
-    const child={pid:leader},darwin=true,ownerToken='modeled';let violation=null;
+    const child={pid:leader},darwin=true,ownerToken='modeled',retainAmbiguityInventories=Boolean(model.retain);let violation=null;
     const same=(a,b)=>a&&b&&a.pid===b.pid&&a.birth===b.birth;
     const live=row=>row&&!['Z','X'].includes(row.state);
     const process={kill:signal};
@@ -713,8 +715,15 @@ test('actual owner collection and cancellation keep incomplete owned rows failed
     return {collect,signalOwned,violation:()=>violation};
   `,
   );
-  for (const recycled of [false, true]) {
+  for (const [recycled, retain] of [
+    [false, false],
+    [true, false],
+    [false, true],
+    [true, true],
+  ]) {
     const m = observedPsModel();
+    m.retain = retain;
+    if (retain) m.row.argv = '/bin/bash';
     const owned = {
       ...m.row,
       pid: 3300,
@@ -745,6 +754,10 @@ test('actual owner collection and cancellation keep incomplete owned rows failed
     assert.equal(api.violation(), 'owned-process-inspection-incomplete');
     assert.equal(m.owned.has(owned.pid), true);
     assert.equal(m.owned.has(3296), false);
+    assert.equal(
+      m.record.firstAmbiguousIdentityMaps?.current.status,
+      retain ? 'complete' : undefined,
+    );
     await api.signalOwned('SIGTERM');
     assert.equal(
       kills.some((k) => k.pid === 3296),
@@ -1201,4 +1214,194 @@ test('Metal exception preserves simultaneous unknowns, bounded witness overflow 
   assert.equal(cap.record.foreignSystemProcesses.length, 64);
   assert.equal(cap.record.foreignSystemProcessOverflow, true);
   assert.deepEqual([...cap.owned.keys()], [3266]);
+});
+
+function shellAmbiguityModel() {
+  const m = observedPsModel();
+  // Actual first failed2c row, run39076890164/artifact12117935204.
+  // Surrounding maps are modeled; historical full snapshots were not retained.
+  m.all.delete(m.row.pid);
+  m.row = {
+    pid: 9762,
+    ppid: 1,
+    pgid: 9762,
+    birth: '00000000000000009762',
+    state: 'R',
+    rss: 0,
+    argv: '/bin/bash',
+    ownerTagged: false,
+    inspectionIncomplete: true,
+    identityKind: 'private-unique-id-uint64',
+    euid: 0,
+    ruid: 0,
+    parentUniqueId: '1',
+    version: 20190,
+    pathInspection: 'complete',
+    rssInspection: 'unavailable',
+    ownerTagInspection: 'unavailable',
+  };
+  m.all.set(m.row.pid, m.row);
+  const old = {
+    ...m.row,
+    pid: 900,
+    birth: '00000000000000000900',
+    ppid: 1,
+    pgid: 900,
+    parentUniqueId: '1',
+  };
+  m.before.set(old.pid, old);
+  m.all.set(old.pid, { ...old });
+  return m;
+}
+const captureIdentityMaps = (m, darwin = true, enabled = true) =>
+  collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, m.record, darwin, enabled);
+
+test('opt-in first ambiguity captures complete before/current/owned identities without changing classification', () => {
+  const m = shellAmbiguityModel(),
+    plain = shellAmbiguityModel();
+  assert.deepEqual(captureIdentityMaps(m), collectModel(plain));
+  assert.deepEqual(m.record.firstAmbiguousInventory, plain.record.firstAmbiguousInventory);
+  assert.equal(plain.record.firstAmbiguousIdentityMaps, undefined);
+  const proof = m.record.firstAmbiguousIdentityMaps;
+  assert.equal(proof.format, 'SoloFirstAmbiguousIdentityMapsV1');
+  assert.equal(proof.leaderPid, m.leader);
+  for (const [name, map] of [
+    ['before', m.before],
+    ['current', m.all],
+    ['owned', m.owned],
+  ]) {
+    const snapshot = proof[name];
+    assert.equal(snapshot.status, 'complete');
+    assert.equal(snapshot.totalRows, map.size);
+    assert.equal(snapshot.rows.length, map.size);
+    const bytes = Buffer.from(JSON.stringify(snapshot.rows));
+    assert.equal(snapshot.bytes, bytes.length);
+    assert.equal(snapshot.sha256, createHash('sha256').update(bytes).digest('hex'));
+  }
+  const shell = proof.current.rows.find((r) => r.pid === m.row.pid);
+  assert.equal(shell.executable, '/bin/bash');
+  assert.equal(shell.rss, null);
+  assert.equal(shell.ownerTagged, null);
+  assert.deepEqual([...m.owned.keys()], [m.leader]);
+});
+
+test('latched identity maps own scalar values through clearing, mutation and PID reuse', () => {
+  const m = shellAmbiguityModel();
+  captureIdentityMaps(m);
+  const retained = structuredClone(m.record.firstAmbiguousIdentityMaps);
+  m.row.argv = '/changed';
+  m.row.version++;
+  m.before.get(900).version++;
+  m.owned.get(m.leader).ppid++;
+  m.all.delete(m.row.pid);
+  assert.deepEqual(captureIdentityMaps(m), []);
+  m.all.set(m.row.pid, { ...m.row, birth: '00000000000000009999' });
+  assert.equal(captureIdentityMaps(m).length, 1);
+  assert.deepEqual(m.record.firstAmbiguousIdentityMaps, retained);
+});
+
+test('identity snapshot byte and row overflow are explicit and never retain a misleading partial map', () => {
+  const m = shellAmbiguityModel();
+  for (let i = 0; i < 100; i++)
+    m.all.set(10000 + i, {
+      ...m.row,
+      pid: 10000 + i,
+      birth: String(10000 + i).padStart(20, '0'),
+      argv: '/' + '"'.repeat(4094),
+    });
+  assert.equal(captureIdentityMaps(m).length, 101);
+  const snapshot = m.record.firstAmbiguousIdentityMaps.current;
+  assert.equal(snapshot.status, 'overflow');
+  assert.equal(snapshot.reason, 'byte-cap');
+  assert(snapshot.minimumSerializationBytes > 256 * 1024);
+  assert.equal(snapshot.rows, null);
+  assert.equal(snapshot.sha256, undefined);
+  const many = shellAmbiguityModel();
+  for (let i = 0; i < 16384; i++) many.before.set(20000 + i, {});
+  assert.equal(captureIdentityMaps(many).length, 1);
+  assert.equal(many.record.firstAmbiguousIdentityMaps.before.reason, 'row-cap');
+  assert.equal(many.record.firstAmbiguousIdentityMaps.before.rows, null);
+});
+
+test('default, Linux and nonambiguous paths retain no new identity maps', () => {
+  for (const [darwin, enabled] of [
+    [true, false],
+    [false, true],
+  ]) {
+    const m = shellAmbiguityModel();
+    assert.equal(captureIdentityMaps(m, darwin, enabled).length, 1);
+    assert.equal(m.record.firstAmbiguousIdentityMaps, undefined);
+  }
+  const known = observedPsModel();
+  assert.deepEqual(captureIdentityMaps(known), []);
+  assert.equal(known.record.firstAmbiguousIdentityMaps, undefined);
+});
+
+test('identity snapshots exclude input arguments, arbitrary fields and unavailable executable guesses', () => {
+  const m = shellAmbiguityModel();
+  m.owned.set(m.leader, {
+    ...m.owned.get(m.leader),
+    argv: 'node --token=must-not-be-copied',
+    secret: 'must-not-be-copied',
+  });
+  m.row.pathInspection = 'unavailable';
+  m.row.argv = 'must-not-be-copied';
+  captureIdentityMaps(m);
+  const proof = m.record.firstAmbiguousIdentityMaps;
+  assert.equal(proof.current.rows.find((r) => r.pid === m.row.pid).executable, null);
+  assert(!JSON.stringify(proof).includes('must-not-be-copied'));
+  assert(!('argv' in proof.owned.rows[0]));
+  assert(!('executable' in proof.owned.rows[0]));
+});
+
+test('invalid diagnostic identities are unavailable while the original ambiguity remains', () => {
+  const m = shellAmbiguityModel();
+  m.before.get(900).version = -1;
+  assert.deepEqual(captureIdentityMaps(m), [m.row]);
+  assert.equal(m.record.firstAmbiguousIdentityMaps.before.status, 'unavailable');
+  assert.equal(m.record.firstAmbiguousIdentityMaps.before.reason, 'invalid-identity');
+  assert.equal(m.record.firstAmbiguousIdentityMaps.before.rows, null);
+});
+
+test('complete bounded identity maps fit the existing hosted one-MiB receipt and include every parsed row', () => {
+  const m = shellAmbiguityModel();
+  for (let i = 0; i < 180; i++) {
+    const row = { ...m.row, pid: 20000 + i, birth: String(20000 + i).padStart(20, '0') };
+    m.before.set(row.pid, row);
+    m.all.set(row.pid, { ...row });
+  }
+  assert.equal(captureIdentityMaps(m).length, 1);
+  const proof = m.record.firstAmbiguousIdentityMaps;
+  for (const name of ['before', 'current', 'owned']) assert.equal(proof[name].status, 'complete');
+  const retained = JSON.stringify({ case: 'deadline', result: m.record }, null, 2) + '\n';
+  assert(Buffer.byteLength(retained) < 1048576);
+  assert.equal(proof.before.rows.length, m.before.size);
+  assert.equal(proof.current.rows.length, m.all.size);
+});
+
+test('actual owner opts in only to the exact identity evidence protocol when the option is omitted', async () => {
+  const source = await readFile(
+    new URL('./run-solo-remote-correctness.mjs', import.meta.url),
+    'utf8',
+  );
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const owner = ast.body.find(
+    (n) => n.type === 'ExportNamedDeclaration' && n.declaration?.id?.name === 'ownedCommand',
+  ).declaration;
+  const option = owner.params[1].properties.find(
+    (p) => p.key.name === 'retainAmbiguityInventories',
+  );
+  assert.equal(option.value.type, 'AssignmentPattern');
+  const choose = new Function(
+    'env',
+    'return (' + source.slice(option.value.right.start, option.value.right.end) + ')',
+  );
+  for (const value of [
+    undefined,
+    {},
+    { SOLO_DARWIN_AMBIGUITY_EVIDENCE: true },
+    { SOLO_DARWIN_AMBIGUITY_EVIDENCE: 'identity-maps-v2' },
+  ])
+    assert.equal(choose(value), false);
+  assert.equal(choose({ SOLO_DARWIN_AMBIGUITY_EVIDENCE: 'identity-maps-v1' }), true);
 });
