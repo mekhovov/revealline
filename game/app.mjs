@@ -10975,8 +10975,19 @@ try {
         : status;
     });
   }
-  function refreshHUD(frame = false) {
+  function refreshHUD(frame = false, terminalHUD = false) {
     const workStart = performanceSession ? performance.now() : 0;
+    // Only the same callback that completed terminal work opts into these
+    // bounded numeric marks. Ordinary HUD frames allocate no diagnostic row.
+    const terminalGeneration = terminalHUD && performanceSession ? performanceRunGeneration : 0;
+    const terminalTick = terminalGeneration ? run.tick : 0;
+    if (terminalGeneration)
+      performanceSession.markEvent(
+        'terminal-hud-begin',
+        terminalGeneration,
+        terminalTick,
+        workStart,
+      );
     try {
       const now = performance.now();
       const changed =
@@ -10996,11 +11007,21 @@ try {
       if (frame && !hudDirty && !changed && now - hudAt < 100) return;
       hudAt = now;
       refreshHUDClocks();
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-clocks', terminalGeneration, terminalTick);
       const switchCraft = craftSwitchAvailable();
       const nearHangar =
         run.hangars?.some((h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius) ??
         false;
       const signalState = `${run.signal?.zoneIds?.join(',') ?? ''}:${run.signal?.resistant ?? false}`;
+      const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
+      const picturePhase = enjoyingPicture
+        ? celebrationActive && winRevealAge < REWARD_BOARD_SECONDS
+          ? 'revealing'
+          : celebrationActive
+            ? 'celebrating'
+            : 'settled'
+        : 'off';
       if (
         frame &&
         !hudDirty &&
@@ -11008,7 +11029,7 @@ try {
         hudState.switchCraft === switchCraft &&
         hudState.nearHangar === nearHangar &&
         hudState.signalState === signalState &&
-        !celebrationActive
+        hudState.picturePhase === picturePhase
       ) {
         huntStatus?.render(run);
         huntResultStatus?.render(run);
@@ -11035,6 +11056,7 @@ try {
         switchCraft,
         nearHangar,
         signalState,
+        picturePhase,
       };
       huntStatus?.render(run);
       huntResultStatus?.render(run);
@@ -11052,6 +11074,8 @@ try {
         encounter: !!run?.level.encounter,
         relays: !!run?.level.relayGates?.gates?.length,
       });
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-owners', terminalGeneration, terminalTick);
       show(
         'pause-button',
         started &&
@@ -11072,27 +11096,19 @@ try {
               : t('interface:tacticalEdition'),
       );
       document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
-      const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
       const previousPicturePhase = document.body.dataset.winPicture;
-      const phase = enjoyingPicture
-        ? celebrationActive && winRevealAge < REWARD_BOARD_SECONDS
-          ? 'revealing'
-          : celebrationActive
-            ? 'celebrating'
-            : 'settled'
-        : 'off';
       const arrival =
-        previousPicturePhase === 'revealing' && ['celebrating', 'settled'].includes(phase)
+        previousPicturePhase === 'revealing' && ['celebrating', 'settled'].includes(picturePhase)
           ? $('game-canvas').getBoundingClientRect()
           : null;
-      document.body.dataset.winPicture = phase;
+      document.body.dataset.winPicture = picturePhase;
       if (arrival)
         animateRewardArrival(
           $('game-canvas'),
           arrival,
           displayPreferences.snapshot().effectiveReducedEffects,
         );
-      show('win-picture-caption', enjoyingPicture && phase !== 'revealing');
+      show('win-picture-caption', enjoyingPicture && picturePhase !== 'revealing');
       document.body.dataset.flightState =
         defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
           ? 'picture'
@@ -11103,6 +11119,8 @@ try {
               : paused
                 ? 'paused'
                 : 'running';
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-picture', terminalGeneration, terminalTick);
       const coverageLabel = (run.coverage * 100).toFixed(1);
       if ($('coverage').firstChild.textContent !== coverageLabel)
         $('coverage').firstChild.textContent = coverageLabel;
@@ -11200,6 +11218,8 @@ try {
                         ? t('interface:reclaimedGround')
                         : t('interface:safeGround'),
       );
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-values', terminalGeneration, terminalTick);
       $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
       const canSwitchCraft = craftSwitchAvailable();
       $('hangar-button').disabled = !canSwitchCraft;
@@ -11235,6 +11255,8 @@ try {
                 )
               : contentText(run.classRecipe, 'label'),
       );
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-controls', terminalGeneration, terminalTick);
       const encounter = encounterView(run),
         classic = classicView(run);
       show('encounter-status', !!(encounter || classic) && !campaignOverview);
@@ -11253,6 +11275,8 @@ try {
       refreshMastery();
       refreshCourse();
       flightDetails?.reconcile();
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-end', terminalGeneration, terminalTick);
     } finally {
       if (performanceSession) hudWorkMs += performance.now() - workStart;
     }
@@ -11515,6 +11539,7 @@ try {
     else gameWakeLock.dispose();
   });
   function update(elapsed) {
+    let terminalHUD = false;
     gameWakeLock.setActive(
       !demoHost?.active && started && !paused && run.status === 'running' && !document.hidden,
     );
@@ -12069,6 +12094,7 @@ try {
           );
         }
         performanceSession?.markEvent('terminal-work-end', performanceRunGeneration, run.tick);
+        terminalHUD = !!performanceSession;
       }
     } else {
       pendingAction = false;
@@ -12141,7 +12167,7 @@ try {
     } else sound.update(!paused && started, theme, run);
     if (!sound.previewActive && $('music-preview').textContent.startsWith('Playing'))
       localizedText($('music-preview'), () => t('interface:previewMusic'));
-    refreshHUD(true);
+    refreshHUD(true, terminalHUD);
   }
   for (const t of themesFile.themes)
     $('theme-select').append(localizedOption(() => themeLabel(t), t.id));

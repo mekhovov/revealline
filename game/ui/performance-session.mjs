@@ -34,6 +34,15 @@ const EVENT_KINDS = Object.freeze([
   'terminal-work-begin',
   'terminal-work-end',
   'result-overlay-shown',
+  // Terminal HUD substage stamps share the existing numeric ring. They are
+  // emitted only by the immediate post-terminal HUD, never ordinary frames.
+  'terminal-hud-begin',
+  'terminal-hud-clocks',
+  'terminal-hud-owners',
+  'terminal-hud-picture',
+  'terminal-hud-values',
+  'terminal-hud-controls',
+  'terminal-hud-end',
 ]);
 const EVENT_CAPACITY = 256;
 const clean = (value) => (Number.isFinite(value) && value >= 0 ? value : 0);
@@ -435,7 +444,7 @@ export function createPerformanceSession({
         eventWitnesses: {
           version: 1,
           definition:
-            'Host observations on the performance.now time origin. Accepted events are observed after stepRun returns; generation identifies a host-local accepted run, not a persistent identity. rAF stamps share this origin but are not callback execution start times. Markers do not change frame attribution or establish asynchronous durability.',
+            'Host observations on the performance.now time origin. Accepted events are observed after stepRun returns; generation identifies a host-local accepted run, not a persistent identity. rAF stamps share this origin but are not callback execution start times. Markers do not change frame attribution or establish asynchronous durability. Terminal HUD markers delimit inclusive elapsed substages in the immediate post-terminal callback, not CPU time; a missing end marker remains incomplete.',
           capacity: EVENT_CAPACITY,
           total: eventCount,
           retained: recentEvents.length,

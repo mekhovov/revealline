@@ -149,6 +149,32 @@ test('accepted capture, victory and public result have bounded witnesses without
   );
   assert.ok(terminal.every((row) => row.tick === run.tick));
   assert.ok(terminal[0].atMs <= terminal[1].atMs && terminal[1].atMs <= terminal[2].atMs);
+  const hudKinds = [
+    'terminal-hud-begin',
+    'terminal-hud-clocks',
+    'terminal-hud-owners',
+    'terminal-hud-picture',
+    'terminal-hud-values',
+    'terminal-hud-controls',
+    'terminal-hud-end',
+  ];
+  const hud = rowsForRun.filter((row) => row.kind.startsWith('terminal-hud-'));
+  assert.deepEqual(
+    hud.map((row) => row.kind),
+    hudKinds,
+  );
+  assert.ok(hud.every((row) => row.tick === run.tick));
+  assert.ok(hud[0].atMs >= terminal[2].atMs);
+  assert.ok(hud.every((row, index) => index === 0 || row.atMs >= hud[index - 1].atMs));
+  for (let i = 0; i < 12; i++) page.frame(1000 / 60);
+  assert.deepEqual(
+    page.win.RevealLineSoloPerformance.export().eventWitnesses.recent.filter((row) =>
+      row.kind.startsWith('terminal-hud-'),
+    ),
+    hud,
+    'Later reveal callbacks must not emit another terminal HUD sample',
+  );
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.equal(report.eventWitnesses.byKind['result-overlay-shown'].total, 0);
   if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
   page.$('show-result').click();
