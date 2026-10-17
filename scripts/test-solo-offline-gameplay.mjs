@@ -214,14 +214,14 @@ test('the added finite work cannot change the original diagnostic timeout or exp
   }
 });
 
-test('the independent diagnostic retains its PR guard, qualification exclusions and fixed budgets', async () => {
+test('the dispatched diagnostic retains its exact-head guard, qualification exclusions and fixed budgets', async () => {
   const workflow = await readFile(
     new URL('../.github/workflows/solo-remote-offline-temporary.yml', import.meta.url),
     'utf8',
   );
   assert.match(
     workflow,
-    /^    if: github\.event\.pull_request\.number == 1544 && github\.event\.pull_request\.head\.repo\.full_name == github\.repository$/m,
+    /^    if: github\.event\.pull_request\.number == 1544 && github\.event\.pull_request\.head\.repo\.full_name == github\.repository && github\.event\.pull_request\.head\.sha == 'c0ab548e50c00ba30cc7e188df64fb135ff8cf99'$/m,
   );
   const plan = JSON.parse(
     await readFile(
