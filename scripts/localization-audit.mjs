@@ -4,7 +4,7 @@ import path from 'node:path';
 import { parse as parseJS } from 'acorn';
 import { parse as parseHTML, parseFragment } from 'parse5';
 
-const messageKey = /^(?:common|interface|gameplay|content|tools|website|errors):[\w.]+$/;
+const messageKey = /^[A-Za-z]\w*:\w+(?:\.\w+)*$/;
 const humanAttributes = new Set(['aria-label', 'title', 'placeholder', 'alt', 'data-menu-label']);
 const displayFields = new Set(['textContent', 'innerText', 'title', 'placeholder', 'alt']);
 const metadataFields = new Set([
@@ -28,6 +28,7 @@ const invariantLabels = new Set([
   'REVEAL / LINE',
   'FPV',
   'English',
+  'Українська',
   'MIT',
   'JSON',
   'PNG',
@@ -86,10 +87,10 @@ function factoryArguments(tree) {
 function readable(value, direct = false) {
   if (typeof value !== 'string') return false;
   const text = value.replace(/\{\{[^}]*\}\}/g, '').trim();
-  if (!/[A-Za-z]{2}/.test(text) || messageKey.test(text) || invariantLabels.has(text)) return false;
+  if (!/\p{L}{2}/u.test(text) || messageKey.test(text) || invariantLabels.has(text)) return false;
   if (/^(?:https?:|data:|blob:|\.\.?\/)|^[\w/-]+\.(?:m?js|css|json|png|svg|woff2?|ttf)$/.test(text))
     return false;
-  return direct || /[a-zA-Z][ ,;?!][A-Za-z]|^[A-Z][a-z]{2,}(?:[ !?.…]|$)/.test(text);
+  return direct || /\p{L}[ ,;?!]\p{L}|^\p{Lu}\p{Ll}{2,}(?:[ !?.…]|$)/u.test(text);
 }
 
 export function auditSource(source, file) {
@@ -162,7 +163,17 @@ export function auditSource(source, file) {
         return 'metadata';
       if (!['CallExpression', 'NewExpression'].includes(node.type)) continue;
       const name = callName(node);
-      if (['t', 'localizedMessage'].includes(name)) return 'interpolation';
+      if (['t', 'localizedMessage'].includes(name)) {
+        // Namespace/key expressions are handled by the contract scanner. Their
+        // fragments are not display copy; unresolved expressions stay advisory.
+        if (
+          child === node.arguments[0] &&
+          (child.type === 'BinaryExpression' ||
+            (child.type === 'TemplateLiteral' && child.expressions.length))
+        )
+          return 'key-expression';
+        return 'interpolation';
+      }
       if (name === 'localizedText' && child === node.arguments[1]) return 'dom';
       if (
         name === 'localizedAttribute' &&
@@ -222,7 +233,12 @@ export function auditSource(source, file) {
   return candidates;
 }
 
-export async function auditSources(directory, files, resources) {
+export async function auditSources(
+  directory,
+  files,
+  resources,
+  read = (file) => fs.readFile(path.join(directory, file), 'utf8'),
+) {
   const byText = new Map();
   for (const [namespace, entries] of Object.entries(resources.en))
     for (const [key, text] of Object.entries(entries)) {
@@ -232,7 +248,7 @@ export async function auditSources(directory, files, resources) {
     }
   const candidates = [];
   for (const file of files) {
-    const source = await fs.readFile(path.join(directory, file), 'utf8');
+    const source = await read(file);
     for (const candidate of auditSource(source, file))
       candidates.push({ ...candidate, existingKeys: byText.get(candidate.text) || [] });
   }

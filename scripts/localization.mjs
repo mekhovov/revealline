@@ -3,24 +3,23 @@ import { readFileSync } from 'node:fs';
 import LZString from 'lz-string';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { parse as parseJS } from 'acorn';
-import { parse as parseHTML } from 'parse5';
 import { extractContent } from './localization-content.mjs';
 import { auditSources } from './localization-audit.mjs';
+import { localizationSources } from './localization-sources.mjs';
+import { inspectTranslationSource, parseCatalog } from './localization-contracts.mjs';
+export { isTranslationKeyLiteral } from './localization-contracts.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const locales = ['en', 'uk'];
-export const isTranslationKeyLiteral = (value) =>
-  typeof value === 'string' &&
-  /^(?:common|interface|gameplay|content|tools|website|errors):\w+(?:\.\w+)*$/.test(value);
 export async function readCatalogs(directory = root) {
   const resources = {};
   for (const locale of locales) {
     resources[locale] = {};
     for (const file of (await fs.readdir(path.join(directory, 'game/locales', locale))).sort()) {
       if (!file.endsWith('.json')) continue;
-      resources[locale][file.slice(0, -5)] = JSON.parse(
+      resources[locale][file.slice(0, -5)] = parseCatalog(
         await fs.readFile(path.join(directory, 'game/locales', locale, file), 'utf8'),
+        `game/locales/${locale}/${file}`,
       );
     }
   }
@@ -116,94 +115,28 @@ export function compactContentRegistry(registry) {
       : 'export default Object.fromEntries(records.map(([identity, index]) => [identity, groups[index]]));\n');
   return Buffer.byteLength(packed) < Buffer.byteLength(plain) ? packed : plain;
 }
-async function sourceFiles(directory = root) {
-  const output = [];
-  const walk = async (relative) => {
-    for (const entry of await fs.readdir(path.join(directory, relative), { withFileTypes: true })) {
-      const file = path.posix.join(relative, entry.name);
-      if (
-        [
-          'vendor',
-          'i18n',
-          'locales',
-          'library',
-          'test',
-          'node_modules',
-          'assets',
-          'fonts',
-          'art',
-        ].includes(entry.name)
-      )
-        continue;
-      if (entry.isDirectory()) await walk(file);
-      else if (/\.(mjs|js|html)$/.test(entry.name) && !/\.test\.|\/test-/.test(file))
-        output.push(file);
+export async function translationContracts(directory = root, resources) {
+  resources ||= await readCatalogs(directory);
+  const references = new Map();
+  const issues = [],
+    unverified = [];
+  for (const { file, read } of await localizationSources(directory)) {
+    const result = inspectTranslationSource(await read(), file, resources);
+    for (const { key, line } of result.references) {
+      if (!references.has(key)) references.set(key, []);
+      references.get(key).push({ file, line });
     }
-  };
-  for (const dir of ['game', 'site', 'authoring']) await walk(dir);
-  for (const file of [
-    'scripts/game-cli.mjs',
-    'scripts/pages-current-entry.mjs',
-    'scripts/produce-field-kit-sprites.mjs',
-    'scripts/release-catalog.mjs',
-    'authoring/library/fpv-enemy-presentations/index.html',
-  ]) {
-    try {
-      await fs.access(path.join(directory, file));
-      output.push(file);
-    } catch {
-      /* Small build fixtures may omit public pages. */
-    }
+    issues.push(...result.issues);
+    unverified.push(...result.unverified);
   }
-  return output.sort();
+  return {
+    references: Object.fromEntries([...references].sort(([a], [b]) => a.localeCompare(b))),
+    issues,
+    unverified,
+  };
 }
 export async function extractTranslations(directory = root) {
-  const references = new Map();
-  const add = (key, file, line) => {
-    if (typeof key !== 'string' || !key.includes(':')) return;
-    if (!references.has(key)) references.set(key, []);
-    references.get(key).push({ file, line });
-  };
-  for (const file of await sourceFiles(directory)) {
-    const source = await fs.readFile(path.join(directory, file), 'utf8');
-    if (file.endsWith('.html')) {
-      const walk = (node) => {
-        for (const attribute of node.attrs || [])
-          if (
-            /^data-i18n(?:$|-(?:rich|aria-label|title|placeholder|alt|content|data-menu-label)$)/.test(
-              attribute.name,
-            )
-          )
-            add(attribute.value, file, node.sourceCodeLocation?.startLine);
-        node.childNodes?.forEach(walk);
-      };
-      walk(parseHTML(source, { sourceCodeLocationInfo: true }));
-    } else {
-      const walk = (node) => {
-        if (!node || typeof node !== 'object') return;
-        if (node.type === 'CallExpression' && ['t', 'localizedMessage'].includes(node.callee?.name))
-          add(node.arguments[0]?.value, file, node.loc.start.line);
-        // Explicit key registries keep compatibility adapters visible to validation.
-        if (node.type === 'Literal' && isTranslationKeyLiteral(node.value))
-          add(node.value, file, node.loc.start.line);
-        const markup =
-          node.type === 'TemplateElement'
-            ? node.value.cooked
-            : node.type === 'Literal' && typeof node.value === 'string'
-              ? node.value
-              : '';
-        for (const match of (markup || '').matchAll(
-          /data-i18n(?:-(?:rich|aria-label|title|placeholder|alt|content|data-menu-label))?=["']([^"']+)["']/g,
-        ))
-          add(match[1], file, node.loc.start.line);
-        for (const value of Object.values(node))
-          if (Array.isArray(value)) value.forEach(walk);
-          else if (value && typeof value === 'object') walk(value);
-      };
-      walk(parseJS(source, { ecmaVersion: 'latest', sourceType: 'module', locations: true }));
-    }
-  }
-  return Object.fromEntries([...references].sort(([a], [b]) => a.localeCompare(b)));
+  return (await translationContracts(directory)).references;
 }
 const placeholders = (text) =>
   [...text.matchAll(/\{\{\s*([^}]+?)\s*\}\}|\[\[([^\]]+)\]\]/g)]
@@ -244,7 +177,7 @@ export function validateCatalogMessages(resources) {
 }
 export async function validateLocalization(directory = root, { checkBundle = true } = {}) {
   const resources = await readCatalogs(directory);
-  const references = await extractTranslations(directory);
+  const { references } = await translationContracts(directory, resources);
   const errors = validateCatalogMessages(resources);
   for (const key of Object.keys(references)) {
     const [namespace, name] = key.split(':');
@@ -278,8 +211,16 @@ export async function validateLocalization(directory = root, { checkBundle = tru
 async function main() {
   const command = process.argv[2] || 'check';
   if (command === 'audit') {
+    const inputs = await localizationSources(root);
+    const readers = new Map(inputs.map(({ file, read }) => [file, read]));
     console.log(
-      JSON.stringify(await auditSources(root, await sourceFiles(), await readCatalogs()), null, 2),
+      JSON.stringify(
+        await auditSources(root, [...readers.keys()], await readCatalogs(), (file) =>
+          readers.get(file)(),
+        ),
+        null,
+        2,
+      ),
     );
     return;
   }
@@ -312,7 +253,7 @@ async function main() {
     console.log(
       JSON.stringify(
         {
-          references: await extractTranslations(),
+          ...(await translationContracts(root, resources)),
           content,
           missingContent: content.filter((item) => !item.key),
           sharedKeyCandidates: [...groups]

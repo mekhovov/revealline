@@ -9,6 +9,10 @@ import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint, recordInput, exportReplay, verifyReplay } from '../replay.mjs';
 import { CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS } from '../content-design/limits.mjs';
+import { getLocale, setLocale, t } from '../i18n/index.mjs';
+import { flightPictureStatus } from '../ui/flight-picture-copy.mjs';
+import { createOperationStatus } from '../ui/operation-status.mjs';
+import { Document } from './helpers/couch-dom.mjs';
 
 const { themes } = JSON.parse(
   await readFile(new URL('../content-design/themes.json', import.meta.url)),
@@ -30,6 +34,92 @@ const deferred = () => {
   });
   return { promise, resolve, reject };
 };
+
+test('candidate preparation phases repaint in the current language without restarting the attempt', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const source = createOpeningCandidates({ artwork: true });
+  const asset = source.assets[0];
+  const bytes = await readFile(new URL(`../${asset.path}`, import.meta.url));
+  const media = await loadPreviewArtwork(asset, {
+    fetchAsset: async () => new Response(bytes),
+    digest: (value) => webcrypto.subtle.digest('SHA-256', value),
+  });
+  const artwork = deferred(),
+    decoding = deferred(),
+    verifying = deferred(),
+    decoderStarted = deferred();
+  let loads = 0,
+    decodes = 0;
+  const host = setup(
+    {
+      loadArtwork: () => {
+        loads++;
+        return artwork.promise;
+      },
+      decodeImage: () => {
+        decodes++;
+        decoderStarted.resolve();
+        return decoding.promise;
+      },
+    },
+    source,
+  );
+  context.after(() => host.dispose());
+  const document = new Document();
+  const target = document.createElement('p');
+  document.body.append(target);
+  const presenter = createOperationStatus(target);
+  context.after(() => {
+    presenter.dispose();
+    target.remove();
+  });
+  const lease = presenter.begin({ message: '' }),
+    seen = [];
+  const assertLanguages = (key) => {
+    const reports = seen.length;
+    for (const language of ['uk', 'en']) {
+      setLocale(language, { persist: false });
+      assert.equal(target.textContent, t(key));
+      assert.equal(target.dataset.state, 'busy');
+      assert.equal(document.activeElement, document.body);
+      assert.equal(seen.length, reports, 'Repainting does not report another preparation phase.');
+    }
+  };
+  const preparing = host.prepare(requestFor(host), {
+    onStatus(status) {
+      seen.push(status);
+      lease.update({ message: () => flightPictureStatus(status), stage: status.stage });
+      if (status.stage === 'verifying') verifying.resolve();
+    },
+  });
+  await verifying.promise;
+  assertLanguages('interface:solo.candidateVerifying');
+  assert.equal(loads, 1);
+  assert.equal(decodes, 0);
+  artwork.resolve(media);
+  await decoderStarted.promise;
+  assertLanguages('interface:solo.candidatePicture');
+  assert.equal(loads, 1);
+  assert.equal(decodes, 1);
+  decoding.resolve({ width: asset.width, height: asset.height });
+  const prepared = await preparing;
+  assertLanguages('interface:solo.candidateRules');
+  assert.deepEqual(
+    seen.map((status) => [status.stage, status.messageKey]),
+    [
+      ['verifying', 'interface:solo.candidateVerifying'],
+      ['decoding', 'interface:solo.candidatePicture'],
+      ['preparing', 'interface:solo.candidateRules'],
+    ],
+  );
+  assert.ok(seen.every((status) => typeof status.message === 'string'));
+  assert.equal(loads, 1);
+  assert.equal(decodes, 1);
+  assert.equal(prepared.run.tick, 0);
+  assert.equal(host.current(prepared), true);
+});
 
 test('all sixty candidate attempts use the exact compiler and produce replay-verifiable full clears', async () => {
   const host = setup(),

@@ -1,0 +1,58 @@
+{
+  "base": "c72867c73ba18358e34b15ad8d2cd44d7bd4dcc9",
+  "catalog": {
+    "localization": {
+      "locales": ["en", "uk"],
+      "messages": 13658,
+      "references": 9562
+    }
+  },
+  "contentExtraction": {
+    "fields": 188902,
+    "missingMessages": 0,
+    "note": "Content extraction completed before the final argument-analysis correction; content/generator inputs were unchanged. Final source contracts and change gate reran afterward."
+  },
+  "sourceContracts": {
+    "references": 9562,
+    "issues": [
+      {
+        "file": "game/studio/studio.mjs",
+        "line": 1387,
+        "kind": "missing-arguments",
+        "key": "tools:studio.preview.preparing",
+        "missing": ["label", "slot"],
+        "message": "Missing interpolation arguments for tools:studio.preview.preparing: label, slot"
+      }
+    ],
+    "unverified": 555,
+    "unverifiedByKind": {
+      "dynamic-key": 235,
+      "dynamic-plural": 120,
+      "unqualified-marker": 200
+    }
+  },
+  "changeGate": {
+    "base": "c72867c73ba18358e34b15ad8d2cd44d7bd4dcc9",
+    "files": 2020,
+    "errors": [],
+    "exceptions": [],
+    "status": "passed-with-manual-review",
+    "manualReview": 555
+  },
+  "focusedTests": {
+    "toolingPassed": 36,
+    "soloCandidateStartupPassedAcrossBoundedRuns": 40,
+    "existingFlightStatusContinuousNextPassed": 15,
+    "neonProjectionPassed": 3,
+    "neonLevelIdentities": 648
+  },
+  "limits": {
+    "resultContinuation": "12/18 passed; six original waits timed out, one isolated retry also timed out. Cause not established.",
+    "earlierJourney": "Eight unchanged waits timed out. One representative baseline control only.",
+    "typedPictureStorageRecovery": "Source reviewed; outer catch not directly qualified.",
+    "staticBuild": "Blocked by absent authoring/company-studio in sparse checkout.",
+    "offlineNativeStaging": "Not run.",
+    "browser": "Sampled local live-switch and Large-text UI evidence; not cumulative public/package acceptance.",
+    "audio": "Sound off; no listening acceptance."
+  }
+}

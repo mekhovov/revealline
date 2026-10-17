@@ -6,6 +6,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { Script, createContext, constants as vmConstants } from 'node:vm';
 import { Document, Events } from './helpers/couch-dom.mjs';
+import { getLocale, setLocale, onLocaleChange, t as translate } from '../i18n/index.mjs';
 
 const source = await readFile(new URL('../boot.mjs', import.meta.url), 'utf8');
 const landing = await readFile(new URL('../../site/launch.mjs', import.meta.url), 'utf8');
@@ -217,6 +218,43 @@ test('early renderer or stylesheet errors retain inert controls and close partia
     assert.equal(page.screen.hidden, false);
     assert.equal(page.context.RevealLineBoot.ready(), false);
     assert.equal(page.document.activeElement, page.retry);
+  }
+});
+
+test('classic boot failure detail follows its safe message producer and preserves native focus', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const page = boundary();
+  let unsubscribe;
+  page.context.RevealLineI18n = {
+    t: translate,
+    onLocaleChange(listener) {
+      unsubscribe = onLocaleChange(listener);
+      return unsubscribe;
+    },
+  };
+  context.after(() => unsubscribe?.());
+  page.run();
+  page.context.RevealLineBoot.fail({
+    get message() {
+      return translate('interface:solo.startupFailed');
+    },
+  });
+  await page.mount();
+  page.online.focus();
+  page.document.documentElement.scrollTop = 29;
+  for (const language of ['uk', 'en']) {
+    setLocale(language, { persist: false });
+    assert.equal(
+      page.document.getElementById('boot-detail').textContent,
+      translate('interface:solo.startupFailed'),
+    );
+    assert.equal(page.document.getElementById('boot-detail').hidden, false);
+    assert.equal(page.game.inert, true);
+    assert.equal(page.document.documentElement.dataset.bootState, 'failed');
+    assert.equal(page.document.activeElement, page.online);
+    assert.equal(page.document.documentElement.scrollTop, 29);
   }
 });
 

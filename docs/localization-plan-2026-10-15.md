@@ -1,12 +1,25 @@
 # Localization plan — 15 October 2026
 
-Status: refreshed source review and recommended delivery order. This update changes documentation only; it does not implement the proposed fixes or qualify a release.
+Status: player-clarity and prevention batches implemented for review on `codex/localization-clarity-guards-20261015`. Final release qualification remains separate; see the [implementation receipt](localization-clarity-guards-2026-10-15.md).
 
 Reviewed main: `4244ece94c25c9e5fb23391e62c3db269a6c999e`. Previous review: `fba236ef80bd0310ae3b9c33fd7c26b1529b245c` (13 October). Main was fetched in the isolated localization worktree. The closed historical localization source branch is preserved; the continuation branch is `codex/localization-plan-20261015`.
 
 The final fetch advanced main from `da0b010820` through PRs #1340–#1342. Their regional package/scenery and delivery-record changes were reviewed separately; the canonical catalogs, shared localization runtime and known application-copy paths are unchanged by that delta.
 
-## Decision and current status
+## Implementation update — requested items 1 and 2
+
+The user authorized **player clarity** (LOC-01/02) and **prevent recurrence** (the bounded LOC-03 checks and LOC-04 contributor workflow). Implementation began on main `55a9f55c742e4a9b78a3a79ff578f62ef819342c`; main was fetched again before qualification and the implementation was rebased onto `c72867c73ba18358e34b15ad8d2cd44d7bd4dcc9`. The original source review below remains historical context, not a claim that old gaps remain unchanged.
+
+- **LOC-01 catalog batch implemented:** 200 Neon catalog entries translated, covering the original 128-entry review and 72 additional confirmed gaps. All 205 Neon entries now have Ukrainian text, with five existing translations retained. The route-coverage objective is also translated. Actual word-art inscriptions remain literal. Canonical mission data is unchanged. Exact built-in Neon gameplay projections are now registered, preserving all existing registry records; the real browser confirmed the translated title, objective and full briefing. Compact Large-text card/footer clipping is also corrected. Cumulative release acceptance remains pending.
+- **LOC-02 source complete:** armed Skip and preparation/failure copy resolve official names lazily; custom names stay literal. Candidate phase statuses carry translation keys. Unknown exceptions stay in diagnostics, while known campaign mismatch and picture-storage recovery retain actionable localized guidance. The startup overlay and classic boot receiver get safe, live translated copy.
+- **LOC-03 bounded implementation complete:** canonical namespace discovery, explicit maintained-source coverage, aliases/simple wrappers/finite registries, duplicate catalog detection, statically provable caller contracts, and an explicit-base new-copy gate. Dynamic cases remain unverified; existing debt is not silently certified. The new gate is separately invoked, not automatically enforced in every existing CI lane.
+- **LOC-04 concise workflow complete:** [contributor recipe](localization-contributing.md). Richer machine-readable metadata and declarations remain optional follow-up work.
+- **LOC-07 remains a release gate:** focused evidence and actual failures/blocked checks are recorded in the implementation receipt. Source completion is not visual, package, or release acceptance.
+- **LOC-05/06 remain deferred:** bounded bilingual-table consolidation and generator/data separation were not part of this implementation request.
+
+The release coordinator owns queue placement, cumulative acceptance, versions, publication and the independent Pages capacity decision. Do not merge this batch merely because its source is ready for review.
+
+## Decision and historical source review
 
 Keep the existing i18next runtime and its presentation bindings. Prioritize understandable Ukrainian gameplay instructions and recovery messages, add essential prevention checks alongside the fixes, then consolidate inline translation tables in bounded batches. No framework migration, version allocation, release metadata change, or translation-service adoption is proposed for the next batch.
 
@@ -22,7 +35,7 @@ Keep the existing i18next runtime and its presentation bindings. Prioritize unde
 
 The prior reports are retained evidence, not an instruction to reopen or repeat merged PRs. Historical releases and integrated source branches must not be restored wholesale.
 
-## Remaining work, value and acceptance
+## Work-item definitions, value and acceptance
 
 ### LOC-01 — Finish confirmed Ukrainian prose gaps (P1)
 
@@ -109,7 +122,7 @@ Start with the minimum safeguards needed by LOC-01/02. Do not hold small player 
 | C — structural cleanup                 | LOC-06 and any remaining justified metadata work.                                                                                     | Exact output/identity preservation and affected packaging evidence.                                     |
 | Every source batch                     | LOC-07 proportional checks, plus cumulative checks before release.                                                                    | Only the release coordinator assigns versions, integrates release batches and publishes.                |
 
-These are recommended priorities for user review, not an assertion that implementation or release acceptance is complete.
+The implementation update above records current source progress. These batch boundaries do not imply release acceptance; continue with LOC-07, then LOC-05 only when separately prioritized.
 
 The October 13 observation of zero open PRs is obsolete. The October 15 snapshot includes coordinator-owned FPV quality/Urban/Canyon/Tropical work: #1310, #1316, #1320, #1333, #1328, #1335, #1338 and #1339; separate Snake public-verification work is queued as #1343. Leave their branches and release artifacts frozen. Re-read **🔥 Releases** before source changes and coordinate the next base/sequence there. A draft or queued check is not an available branch to adopt.
 
@@ -128,6 +141,6 @@ Reviewed source: [main 4244ece94c](https://github.com/mekhovov/revealline/commit
 - [Test policy](../publishing/test-policy.json) requires automated suites. Historical waiver receipts do not describe current policy.
 - [Saved-place package qualification](fpv-saved-places-package-qualification.md) covers one exact non-public package and a cached journey with its own origin unavailable. It does not establish all-network offline, physical-device or general localization acceptance.
 
-This update performed source inventory and history review only. Documentation formatting and Git diff checks are the applicable validation for the plan change. Catalog generation, automated product suites, browser/live-switch, glyph/layout, static/offline and native-staging qualification were not run for this documentation-only change. No current product pass is claimed.
+The original plan refresh performed source inventory and history review only, with documentation formatting and Git diff checks. Catalog generation, automated product suites, browser/live-switch, glyph/layout, static/offline and native-staging qualification were not run for that documentation-only change. The linked implementation receipt records the new implementation batch and supersedes this historical verification status.
 
 Framework replacement, translation-service adoption, broad key renaming and further catalog partitioning remain deferred. Reconsider them only against a demonstrated unmet requirement or measured bottleneck.

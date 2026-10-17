@@ -10,6 +10,21 @@ import { FIRST_FLIGHT_LESSONS } from '../game/first-flight.mjs';
 import { ENEMY_CATALOG } from '../game/enemy-catalog.mjs';
 import { COOP_STARTER_PACK } from '../game/coop/library.mjs';
 import { SOURCE_EXTERNAL_EDITIONS } from '../game/external-chapter-source.mjs';
+import {
+  CLASSIC_RULES_ORIGINAL,
+  CLASSIC_RULES_CURRENT,
+  projectClassicCurrentRulesEntry,
+} from '../game/mission-library/classic-current-rules.mjs';
+import {
+  applyGameplayTuning,
+  resolveGameplayTuning,
+  GAMEPLAY_PRESSURE_PRESETS,
+} from '../game/gameplay-tuning.mjs';
+
+const NEON_PROJECTION_SOURCES = new Set([
+  'game/content/packs/neon-reference-pack.json',
+  'game/content/packs/neon-mosaic-pack.json',
+]);
 
 // Explicit presentation fields. Attribution, authors, legal notices, IDs, paths,
 // recordings and user-authored files are deliberately not extraction inputs.
@@ -313,6 +328,27 @@ export async function contentSources(root) {
           });
         } catch {
           /* Nonplayable catalogue summaries have no difficulty projection. */
+        }
+      }
+      if (NEON_PROJECTION_SOURCES.has(source)) {
+        // These accepted levels have new identities even at the default
+        // pressure. Derive only exact shipped projections through the host's
+        // public policies; names and IDs alone never grant translation rights.
+        for (const rules of [CLASSIC_RULES_ORIGINAL, CLASSIC_RULES_CURRENT]) {
+          const entry = projectClassicCurrentRulesEntry({ campaign: owned }, rules);
+          for (const mode of ['standard', 'gentle']) {
+            const projected = createDifficultyContext(entry.campaign, mode).campaign;
+            const projectionSource = `${source}#${campaign.id}/${rules}/${mode}`;
+            if (rules === CLASSIC_RULES_CURRENT)
+              sources.push({ source: projectionSource, data: projected });
+            for (const pressure of Object.keys(GAMEPLAY_PRESSURE_PRESETS))
+              sources.push({
+                source: `${projectionSource}/pressure/${pressure}`,
+                data: projected.levels.map((level) =>
+                  applyGameplayTuning(level, resolveGameplayTuning(pressure)),
+                ),
+              });
+          }
         }
       }
     }

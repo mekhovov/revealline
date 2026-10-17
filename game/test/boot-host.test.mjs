@@ -1,13 +1,25 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, memoryStorage, SoloElement } from './helpers/solo-dom.mjs';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 
 test('actual app initialization failure retains inert gameplay and does not overwrite saved profile', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
   const storage = memoryStorage({ 'owned-profile-sentinel': 'keep my saved data' });
   const before = [...storage.map];
+  let bootFailure;
   await assert.rejects(
     soloPage(t, {
       storage,
+      browserSetup({ globals }) {
+        globals.RevealLineBoot = {
+          fail(error) {
+            bootFailure = error;
+          },
+        };
+      },
       fetchJSON(path) {
         if (path === 'content/campaign.json')
           throw new Error('Owned boot fixture: chapter unavailable');
@@ -25,6 +37,21 @@ test('actual app initialization failure retains inert gameplay and does not over
   assert.equal(doc.getElementById('start-button').hidden, true);
   assert.equal(doc.getElementById('boot-screen').hidden, false);
   assert.equal(doc.getElementById('game-canvas').children.length, 0);
+  const focused = doc.activeElement;
+  doc.documentElement.scrollTop = 37;
+  for (const language of ['uk', 'en']) {
+    setLocale(language, { persist: false });
+    assert.equal(bootFailure.message, translate('interface:solo.startupFailed'));
+    assert.doesNotMatch(bootFailure.message, /Owned boot fixture/);
+    assert.equal(
+      doc.getElementById('overlay-copy').textContent,
+      translate('interface:solo.startupFailed'),
+    );
+    assert.doesNotMatch(doc.getElementById('overlay-copy').textContent, /Owned boot fixture/);
+    assert.equal(doc.activeElement, focused);
+    assert.equal(doc.documentElement.scrollTop, 37);
+    assert.equal(doc.getElementById('start-button').hidden, true);
+  }
   assert.deepEqual([...storage.map], before);
   assert.deepEqual(storage.writes, []);
 });
