@@ -70,8 +70,8 @@ function actualDispatch() {
   );
 }
 const dispatch = actualDispatch();
-async function execute(engine, { mutate = null, invoke = null } = {}) {
-  const plan = adapter.bindReadinessJob(manifest, engine);
+async function execute(engine, { mutate = null, invoke = null, suppliedPlan = null } = {}) {
+  const plan = suppliedPlan ?? adapter.bindReadinessJob(manifest, engine);
   const report = {
     rows: structuredClone(plan.rows),
     scratchOwner: { path: '/scratch', device: 1, inode: 2 },
@@ -261,11 +261,66 @@ test('restoring the historical whole-object comparison reproduces the observed d
     "\nassert.deepEqual(row, expected, 'Exact preparation row');\nreturn expected;\n}";
   const old = vm.runInNewContext(
     '(' + restore + ')',
-    { assert, preparationReadinessRows: legacy.preparationReadinessRows },
+    {
+      assert,
+      preparationReadinessRows: legacy.preparationReadinessRows,
+      diagnosedReadinessRows: legacy.diagnosedReadinessRows,
+      diagnosedPlan: vm.runInNewContext(
+        '(' +
+          adapterSource.slice(
+            ...['start', 'end'].map(
+              (key) =>
+                nodes(
+                  adapterSource,
+                  (n) => n.type === 'VariableDeclarator' && n.id?.name === 'diagnosedPlan',
+                )[0].init[key],
+            ),
+          ) +
+          ')',
+        { DIAGNOSED_READINESS_COHORT: legacy.DIAGNOSED_READINESS_COHORT },
+        { timeout: 1000 },
+      ),
+    },
     { timeout: 1000 },
   );
   for (const engine of ['chromium', 'webkit'])
     await execute(engine, {
       invoke: async (plan, row) => assert.throws(() => old(plan, row), /Exact preparation row/),
     });
+});
+
+test('actual239 exact diagnosed rows traverse actual common-runner enrichment without weakening package admission', async () => {
+  const actual = JSON.parse(
+    await readFile(join(root, 'docs/performance/solo-readiness-diagnosed-239-plan.json'), 'utf8'),
+  );
+  const suppliedPlan = adapter.bindReadinessJob(actual, 'webkit');
+  const { outputs } = await execute('webkit', {
+    suppliedPlan,
+    invoke: async (plan, live, selected) => {
+      const withRuntimeMetadata = {
+        ...live,
+        served: { url: 'http://127.0.0.1:1/game/' },
+        artifactAdmission: { status: 'passed' },
+      };
+      // Production selects before adding served metadata, then supplies that exact
+      // subplan to command assembly through the same existing boundary.
+      const args = adapter.readinessArguments(
+        { plan: selected, here: '/tools/scripts', repository: '/tools' },
+        withRuntimeMetadata,
+        'http://127.0.0.1:1/game/',
+        '/evidence',
+      );
+      assert(args.includes('--source-revision=' + actual.candidate.revision));
+      assert(args.includes('/tools/' + selected.fixture.path));
+      assert(!args.includes('--readiness-probe=selected-font-cancel-post-command-v3'));
+    },
+  });
+  assert.deepEqual(
+    outputs.map((p) => p.phase),
+    ['warm-resume', 'required-original-cancel'],
+  );
+  for (const key of ['phase', 'timeoutMs', 'engine'])
+    await assert.rejects(
+      execute('webkit', { suppliedPlan, mutate: (row) => (row[key] = 'changed') }),
+    );
 });

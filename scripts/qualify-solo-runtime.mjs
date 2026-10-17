@@ -293,6 +293,12 @@ const report = {
 if (readinessOptions) {
   report.readinessPilot = {
     protocol: readinessOptions.protocol,
+    ...(readinessOptions.requiredStartRetention
+      ? { requiredStartRetention: readinessOptions.requiredStartRetention }
+      : {}),
+    ...(readinessOptions.cancelBoundaryObservation
+      ? { cancelBoundaryObservation: readinessOptions.cancelBoundaryObservation }
+      : {}),
     ...(readinessOptions.geometryObservation
       ? { geometryObservation: readinessOptions.geometryObservation }
       : {}),
@@ -588,6 +594,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       readinessCancelBoundary,
       readinessGeometry,
       requiredOriginal,
+      requiredStartRetention,
       faultEntryURL,
       qualityObservation,
       nextRoute,
@@ -663,6 +670,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             readinessProtocol,
             readinessGeometry,
             readinessCancelBoundary === true,
+            requiredStartRetention ? (event) => requiredWitness.captureStart(event) : null,
           )
         : null;
       let requiredCheckpoint = null;
@@ -675,6 +683,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             },
             faultEntryURL,
             window,
+            requiredStartRetention ? { startRetention: requiredStartRetention } : undefined,
           )
         : null;
       const nextRouteRead = nextRoute
@@ -930,6 +939,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       readinessProtocol: readinessOptions?.protocol,
       ...(selectedFontPostCommand ? { readinessCancelBoundary: true } : {}),
       requiredOriginal: requiredOriginalReadiness,
+      ...(readinessOptions?.requiredStartRetention
+        ? { requiredStartRetention: readinessOptions.requiredStartRetention }
+        : {}),
       ...(requiredOriginalReadiness ? { faultEntryURL: url.href } : {}),
       ...(readinessOptions?.geometryObservation ? { readinessGeometry: true } : {}),
       qualityObservation: Boolean(qualityOptions),
@@ -1887,6 +1899,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         fallback: report.optionalIconFallback,
         cleanupFailure: report.mediaFaultCleanupFailure,
         audioCheck: report.audioCheck,
+        startRetention: readinessOptions.requiredStartRetention ?? null,
       });
     } else if (selectedFontReadiness) {
       report.readinessAssessment = selectedFontPostCommand

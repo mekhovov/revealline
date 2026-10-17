@@ -293,3 +293,41 @@ test('qualifier executes fresh capture only after the native key command and bef
     records: ['new'],
   });
 });
+
+test('actual qualifier report initializer forwards the admitted post-command policy and preserves other protocols', async () => {
+  const source = await readFile(new URL('./qualify-solo-runtime.mjs', import.meta.url), 'utf8');
+  const start = source.indexOf('if (readinessOptions) {\n  report.readinessPilot = {');
+  const end = source.indexOf('\nconst resumeReadiness', start);
+  assert(start >= 0 && end > start);
+  const initialize = (options) => {
+    const report = {};
+    runInNewContext(source.slice(start, end), { report, readinessOptions: options });
+    return clone(report);
+  };
+  assert.deepEqual(initialize(null), {});
+  const options = { ...SELECTED_FONT_POST_COMMAND_PILOT };
+  const actual = initialize(options);
+  assert.equal(actual.readinessPilot.protocol, 'selected-font-cancel-post-command-v3');
+  assert.equal(actual.readinessPilot.cancelBoundaryObservation, 'post-command-v3');
+  assert.equal(actual.readinessPilot.performanceQualification, false);
+  assert.equal(Object.hasOwn(actual.readinessPilot, 'geometryObservation'), false);
+  const old = initialize({ protocol: 'selected-font-cancel-joined-v2' });
+  assert.equal(Object.hasOwn(old.readinessPilot, 'cancelBoundaryObservation'), false);
+  const geometry = initialize({
+    protocol: 'first-running-v1',
+    geometryObservation: 'phase-boundary-v1',
+  });
+  assert.equal(geometry.readinessPilot.geometryObservation, 'phase-boundary-v1');
+  assert.equal(Object.hasOwn(geometry.readinessPilot, 'cancelBoundaryObservation'), false);
+  const broken = source
+    .slice(start, end)
+    .replace(/    \.\.\.\(readinessOptions\.cancelBoundaryObservation[\s\S]*?: \{\}\),\n/, '');
+  assert.notEqual(broken, source.slice(start, end));
+  const report = {};
+  runInNewContext(broken, { report, readinessOptions: options });
+  assert.equal(
+    report.readinessPilot.cancelBoundaryObservation,
+    undefined,
+    'the retained failure is reproduced when the real forwarding hunk is absent',
+  );
+});

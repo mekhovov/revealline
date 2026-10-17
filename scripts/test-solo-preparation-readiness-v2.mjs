@@ -85,6 +85,40 @@ function descriptiveMetadata(m) {
   assert.equal(m.candidate.artifact, 12104590541);
 }
 
+// These manifests were dispatched at239. Their exact source is independently Git-derived.
+const historicalBytes = await readFile(
+  new URL(
+    '../docs/performance/fixtures/solo-optional-start-audio/239-execution-source.json',
+    import.meta.url,
+  ),
+);
+function executed239(bytes, declaration, workflowBytes) {
+  assert.equal(hash(bytes), '842dbb4a020b5df5ae02b0ff9ca7aa6e751f86aae60e85c3ed091d5b79452ba0');
+  const proof = JSON.parse(bytes);
+  assert.equal(proof.head, '239c574ecddd5bb6d5896e621d9edc53e7f6a313');
+  assert.equal(proof.tree, '1ac7f17971498d2a8be19085f00a9f732db42798');
+  for (const [path, input] of [
+    ['docs/performance/solo-readiness-preparation-e1cc-v2-plan.json', declaration],
+    ['.github/workflows/solo-remote-readiness-preparation-e1cc-v2-temporary.yml', workflowBytes],
+  ]) {
+    const record = proof.records.find((r) => r.path === path);
+    assert(record, path);
+    assert.equal(input.length, record.bytes, path);
+    assert.equal(hash(input), record.sha256, path);
+  }
+  return proof;
+}
+const executionDeclaration239 = await read(currentPath);
+const execution239 = executed239(historicalBytes, executionDeclaration239, Buffer.from(workflow));
+test('immutable239 source rejects altered witness, declaration and workflow', () => {
+  const raw = Buffer.from(historicalBytes);
+  raw[0] ^= 1;
+  assert.throws(() => executed239(raw, Buffer.from(JSON.stringify(value)), Buffer.from(workflow)));
+  assert.throws(() => executed239(historicalBytes, Buffer.from('{}'), Buffer.from(workflow)));
+  assert.throws(() =>
+    executed239(historicalBytes, executionDeclaration239, Buffer.from(workflow + ' ')),
+  );
+});
 test('prospective descriptions bind actual118 metadata and the failed7c7 dispatcher without reassigning history', () => {
   descriptiveMetadata(value);
   for (const change of [
@@ -142,7 +176,7 @@ test('setup-only successor preserves actual e1cc artifact, all twelve rows and e
   }
 });
 
-test('new declaration freezes the current adapter and every helper; sparse checkout includes actual dispatch control', async () => {
+test('executed239 declaration preserves its original adapter and every helper; sparse checkout includes actual dispatch control', async () => {
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(new Set(sparse).size, sparse.length);
   for (const ref of [
@@ -151,9 +185,10 @@ test('new declaration freezes the current adapter and every helper; sparse check
     value.fixture,
     ...value.additionalFixtures,
   ]) {
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(hash(bytes), ref.sha256, ref.path);
+    const record = execution239.records.find((r) => r.path === ref.path);
+    assert(record, ref.path);
+    assert.equal(record.bytes, ref.bytes, ref.path);
+    assert.equal(record.sha256, ref.sha256, ref.path);
     assert(sparse.includes(ref.path), ref.path);
   }
   for (const path of [
