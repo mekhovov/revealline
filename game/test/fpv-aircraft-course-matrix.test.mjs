@@ -50,7 +50,7 @@ function createClient() {
   };
 }
 
-test('all twelve aircraft launch every Academy, World and Beginner course in both modes', async (t) => {
+test('all catalog aircraft launch every Academy, World and Beginner course in both modes', async (t) => {
   await initAdvancedRuntime();
   await initWorldRuntime();
   for (const preset of listAircraftPresets()) {

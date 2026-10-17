@@ -31,8 +31,8 @@ const neutral = () => ({ roll: 0, pitch: 0, yaw: 0, throttle: 0 });
 const near = (a, b, tolerance = 1e-9) => assert.ok(Math.abs(a - b) <= tolerance, `${a} ≠ ${b}`);
 const selected = () => createPresetConfiguration('meteor75-analog-2022').aircraft;
 
-test('all twelve built-in aircraft have valid physical configurations and hover authority', () => {
-  assert.equal(listAircraftPresets().length, 12);
+test('all catalog built-in aircraft have valid physical configurations and hover authority', () => {
+  assert.ok(listAircraftPresets().length >= 13);
   for (const preset of listAircraftPresets()) {
     const { aircraft, controller } = createPresetConfiguration(preset.id);
     assert.deepEqual(validateAircraftPhysics(aircraft), aircraft);
@@ -301,7 +301,7 @@ function rotationalFixture(id, frequency, axis) {
   return { peak, area };
 }
 
-test('all twelve aircraft rotational step metrics converge within 2% of 2 kHz reference', () => {
+test('all catalog aircraft rotational step metrics converge within 2% of 2 kHz reference', () => {
   for (const preset of listAircraftPresets())
     for (const axis of ['roll', 'pitch', 'yaw']) {
       const reference = rotationalFixture(preset.id, 2000, axis);

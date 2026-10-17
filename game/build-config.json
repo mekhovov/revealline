@@ -202,6 +202,8 @@
     "optional-practice/civilian-fpv/aircraft-physics.mjs",
     "optional-practice/civilian-fpv/aircraft-response.mjs",
     "optional-practice/civilian-fpv/aircraft-presets.mjs",
+    "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+    "optional-practice/civilian-fpv/aircraft-preview.mjs",
     "optional-practice/civilian-fpv/aircraft-recording.mjs",
     "optional-practice/civilian-fpv/aircraft-terrain.mjs",
     "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
