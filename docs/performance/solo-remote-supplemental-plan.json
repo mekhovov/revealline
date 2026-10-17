@@ -60,8 +60,8 @@
   "playwright": "1.62.1",
   "format": "SoloHostedSupplementalManifestV1",
   "status": "reviewed-diagnostic-only",
-  "cohort": "linux-supplemental-native-preflight-3ad-v1",
-  "phase": "latency-long-rail",
+  "cohort": "linux-supplemental-anchored-preflight-3ad-v1",
+  "phase": "latency-long-rail-anchored",
   "engines": ["chromium", "webkit"],
   "performanceExclusion": true,
   "cpu": 1,
@@ -147,13 +147,28 @@
         "stagedName": "signal-07.xonix.json"
       },
       "scenarioTimeoutMs": 240000
+    },
+    "latency-long-rail-anchored": {
+      "recipe": {
+        "path": "docs/performance/fixtures/solo-latency-supplement/long-rail-anchored.qualification.fixture",
+        "bytes": 7512,
+        "sha256": "95521abcc88e38128b574dbea8d12e5958c1a98fd7a7789a4a8cfbd7df079768",
+        "stagedName": "scenario.qualification.json"
+      },
+      "upload": {
+        "path": "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+        "bytes": 3563,
+        "sha256": "821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c",
+        "stagedName": "long-rail.xonix.json"
+      },
+      "scenarioTimeoutMs": 240000
     }
   },
   "release": {
     "scope": "supplemental-native-preflight",
     "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
     "predecessorRun": 38985941469,
-    "previousPhase": "reviewed-first-eight-diagnostic",
+    "previousPhase": "latency-long-rail",
     "firstEightAllCorrectnessPassed": false,
     "performanceQualification": "excluded",
     "priorProofInspected": true,
@@ -165,8 +180,29 @@
         "artifactId": 12083397932,
         "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
         "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929"
+      },
+      {
+        "runId": 38992974770,
+        "artifactId": 12085853457,
+        "artifactSHA256": "829e95e20a3abf029df41daee377ad69e8678f1400e6fb8f32001caf264144e7",
+        "summarySHA256": "d5b1bfe3904fe1cd8ab6029f0a390f5ddea6e8e03bd8e3936a29dbef402d222c"
+      },
+      {
+        "runId": 38992974770,
+        "artifactId": 12086092968,
+        "artifactSHA256": "0cc2e7a10c21474667bcc985f3b73e0452442df2e60ddab373d4cac0445332e0",
+        "summarySHA256": "cc685b99a838594b9ea45f8bca817e3a41561cfe23e4ba6dcd8976c4c25191de"
       }
-    ]
+    ],
+    "diagnosticPredecessor": {
+      "run": 38992974770,
+      "phase": "latency-long-rail",
+      "conclusion": "failure",
+      "passedRows": 1,
+      "failedRows": 3,
+      "allOwnersClosed": true,
+      "allFailuresRetained": true
+    }
   },
   "scope": "One explicitly released diagnostic phase, four observations in two engine jobs with serial baseline/candidate pairs. All numerical results retained but excluded from performance qualification. Same-engine replay validates exact accepted mission and actual mechanics. No retries, auto Resume or automatic next phase. Original48 timing observations and failed prerequisite remain unchanged.",
   "acceptance": {
@@ -217,8 +253,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-supplemental.mjs",
-      "bytes": 15895,
-      "sha256": "a476a7db0f056111a0b579f000ce18eb19e87001fc2bdbf8f831460621eb3234"
+      "bytes": 16612,
+      "sha256": "1b6bf962595e663b1fa606657444e30e6c03f5e254e65783d9333bb08771b3fa"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -364,8 +400,8 @@
     },
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 58150,
-      "sha256": "7db5478c4c4c921c6bf2fff36c3d3b93d87147bcdf2eed796fcf61bbff05bcfe"
+      "bytes": 58645,
+      "sha256": "efbd404d90ba8ae861be6d9eaefc2415654d052d0d40fe7d3508ce0e259e7fee"
     },
     {
       "path": "scripts/reviewed-soundtrack-batches.mjs",
@@ -394,8 +430,8 @@
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",
-      "bytes": 12875,
-      "sha256": "3bfdf145d2ea6eb4e81eb2394c9ac79ec56b201ab8b24d2bfd6345142af569d1"
+      "bytes": 14479,
+      "sha256": "d5940bd0126abd978c21da192d79632e3b2dbf174b1115b7851804aa4b163e51"
     },
     {
       "path": "scripts/solo-qualification-browser-context.mjs",
@@ -467,5 +503,16 @@
       "bytes": 16212,
       "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
     }
-  ]
+  ],
+  "routeReview": {
+    "document": "docs/performance/solo-long-rail-anchored-review.md",
+    "modelSchedules": 313,
+    "modelIsBrowserEvidence": false,
+    "timedMs": 27200,
+    "cardinalKeyHolds": 28,
+    "steeringCommands": 22,
+    "nominalModelClaimedCells": 68,
+    "minimumActualCandidateKeyboardRenderSamples": 20,
+    "scope": "Separate smaller-capture workload: one full-height cut. Cannot replace original two-cut route, original48 timing observations or first supplemental failures. All other phases remain held; same source pair, gates, deadlines and no retries."
+  }
 }

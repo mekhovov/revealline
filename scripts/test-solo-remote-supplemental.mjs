@@ -27,15 +27,53 @@ function reviewed(phase = 'latency-long-rail') {
     noUnclosedOwners: true,
     allPriorPlannedJobsClosed: true,
     previousPhase:
-      Object.keys(SUPPLEMENTAL_PHASES)[Object.keys(SUPPLEMENTAL_PHASES).indexOf(phase) - 1] ??
-      'reviewed-first-eight-diagnostic',
-    evidence: [
-      { runId: 1, artifactId: 2, artifactSHA256: 'a'.repeat(64), summarySHA256: 'b'.repeat(64) },
-    ],
+      phase === 'latency-long-rail-anchored'
+        ? 'latency-long-rail'
+        : (Object.keys(SUPPLEMENTAL_PHASES)[Object.keys(SUPPLEMENTAL_PHASES).indexOf(phase) - 1] ??
+          'reviewed-first-eight-diagnostic'),
+    evidence:
+      phase === 'latency-long-rail-anchored'
+        ? structuredClone(manifest.release.evidence)
+        : [
+            {
+              runId: 1,
+              artifactId: 2,
+              artifactSHA256: 'a'.repeat(64),
+              summarySHA256: 'b'.repeat(64),
+            },
+          ],
   });
   return m;
 }
 const plan = (engine = 'chromium', phase) => bindSupplementalJob(reviewed(phase), engine);
+test('anchored successor retains the failed route and releases only its distinct native preflight', () => {
+  assert.equal(manifest.phase, 'latency-long-rail-anchored');
+  assert.deepEqual(
+    supplementalMatrix(manifest).include.map(({ phase, engine }) => [phase, engine]),
+    [
+      ['latency-long-rail-anchored', 'chromium'],
+      ['latency-long-rail-anchored', 'webkit'],
+    ],
+  );
+  assert.equal(manifest.release.firstEightAllCorrectnessPassed, false);
+  assert.equal(manifest.release.diagnosticPredecessor.conclusion, 'failure');
+  assert.equal(manifest.routeReview.minimumActualCandidateKeyboardRenderSamples, 20);
+  assert.equal(manifest.routeReview.modelIsBrowserEvidence, false);
+  assert.match(manifest.routeReview.scope, /Cannot replace original two-cut route/);
+  for (const mutate of [
+    (p) => p.release.diagnosticPredecessor.run++,
+    (p) => p.release.diagnosticPredecessor.failedRows--,
+    (p) => (p.release.diagnosticPredecessor.conclusion = 'success'),
+    (p) => (p.release.diagnosticPredecessor.allOwnersClosed = false),
+    (p) => (p.release.diagnosticPredecessor.allFailuresRetained = false),
+    (p) => p.release.evidence.splice(1, 1),
+    (p) => (p.release.previousPhase = 'jammer-steering'),
+  ]) {
+    const p = bindSupplementalJob(manifest, 'chromium');
+    mutate(p);
+    assert.throws(() => validateSupplementalPlan(p));
+  }
+});
 const closed = {
   status: 'closed',
   exitCode: 0,
@@ -281,7 +319,12 @@ test('scenario, exact mission replay, context, source and cleanup failures remai
   assert.equal(supplementalAssessment(p, row, raw(p, row), closed, 'other').status, 'failed');
 });
 test('steering native admission needs twenty actual candidate samples without pooling or guessing absent baseline observations', () => {
-  for (const phase of ['latency-long-rail', 'latency-sentry', 'jammer-steering']) {
+  for (const phase of [
+    'latency-long-rail',
+    'latency-long-rail-anchored',
+    'latency-sentry',
+    'jammer-steering',
+  ]) {
     const p = plan('chromium', phase),
       row = p.rows[1];
     for (const count of [null, undefined, -1, 0, 19, 19.5]) {
@@ -324,7 +367,7 @@ test('one-shot workflow and common owner registration keep one phase and all par
   );
   assert.match(workflow, /max-parallel: 2/);
   assert(!workflow.includes('fetch-depth: 0'));
-  assert(workflow.includes("github.event.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'"));
+  assert(workflow.includes("github.event.before == 'bffcbd838a7bb925da8aaf030695773f893d8bda'"));
   assert.match(workflow, /cancel-in-progress: false/);
   assert.match(
     workflow,
@@ -335,6 +378,7 @@ test('one-shot workflow and common owner registration keep one phase and all par
     /name: solo-linux-supplemental-\$\{\{ matrix\.phase \}\}-\$\{\{ matrix\.engine \}\}-\$\{\{ github\.run_id \}\}/,
   );
   assert.match(workflow, /if: \$\{\{ always\(\) \}\}/);
+  assert.match(workflow, /scripts\/test-solo-latency-anchored\.mjs/);
   assert(!workflow.includes('matrix.repetition'));
   const runner = await readFile(new URL('scripts/run-solo-remote-correctness.mjs', root), 'utf8');
   for (const value of [

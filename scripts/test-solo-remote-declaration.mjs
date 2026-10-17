@@ -57,7 +57,7 @@ for (const lane of ['timing', 'sustained', 'supplemental']) {
     assert(declaration && observation);
     assert(
       declaration.includes(
-        `github.event.before == '${lane === 'timing' ? '69fdc854ecc07eca46a3becc3e38c233a3865fb0' : 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'}'`,
+        `github.event.before == '${lane === 'timing' ? '69fdc854ecc07eca46a3becc3e38c233a3865fb0' : lane === 'supplemental' ? 'bffcbd838a7bb925da8aaf030695773f893d8bda' : 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'}'`,
       ),
     );
     assert.match(declaration, /timeout-minutes: 5/);
