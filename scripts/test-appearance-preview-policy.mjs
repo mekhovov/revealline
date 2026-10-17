@@ -21,18 +21,25 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     /\n  pull_request:\n    paths:\n([\s\S]*?)(?=\n(?:  \S|\S)|$)/,
   )?.[1];
   assert.ok(changedPaths, 'The preview has an explicit pull-request path filter.');
-  const preparationHostTest = 'game/test/solo-preparation-invalidation-host.test.mjs';
-  await access(new URL(`../${preparationHostTest}`, import.meta.url));
-  assert.ok(changedPaths.includes(`      - '${preparationHostTest}'`));
   const focusedTests = workflow
     .match(/\n      APPEARANCE_TEST_FILES: >-\n([\s\S]*?)(?=\n {0,6}\S|$)/)?.[1]
     ?.trim()
     .split(/\s+/);
-  assert.ok(
-    focusedTests?.includes(preparationHostTest),
-    'The complete preparation invalidation host file gates the playable package.',
-  );
   for (const path of [
+    'game/test/solo-preparation-invalidation-host.test.mjs',
+    'game/test/modal-navigation.test.mjs',
+    'game/test/controller-confirm-trace.test.mjs',
+  ]) {
+    await access(new URL(`../${path}`, import.meta.url));
+    assert.ok(changedPaths.includes(`      - '${path}'`));
+    assert.ok(
+      focusedTests?.includes(path),
+      `The complete regression file gates the package: ${path}`,
+    );
+  }
+  for (const path of [
+    'game/ui/modal-navigation.mjs',
+    'game/ui/controller-confirm-trace.mjs',
     'game/editions/package-budget.mjs',
     'game/build-config.json',
     'scripts/game-cli.mjs',

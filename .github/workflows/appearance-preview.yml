@@ -22,6 +22,8 @@ on:
       - 'game/ui/native-menus.mjs'
       - 'game/ui/field-kit-surfaces.mjs'
       - 'game/ui/game-shell.mjs'
+      - 'game/ui/modal-navigation.mjs'
+      - 'game/ui/controller-confirm-trace.mjs'
       - 'game/ui/demo-audio.mjs'
       - 'game/ui/demo-host.mjs'
       - 'game/ui/soundtrack-panel.mjs'
@@ -66,6 +68,8 @@ on:
       - 'game/test/menu-scene-motion.test.mjs'
       - 'game/test/solo-render-submission.test.mjs'
       - 'game/test/solo-preparation-invalidation-host.test.mjs'
+      - 'game/test/modal-navigation.test.mjs'
+      - 'game/test/controller-confirm-trace.test.mjs'
       - 'game/test/demo-audio.test.mjs'
       - 'game/test/demo-audio-host.test.mjs'
       - 'game/test/demo-context-recovery-host.test.mjs'
@@ -169,6 +173,8 @@ jobs:
         game/test/menu-scene-motion.test.mjs
         game/test/solo-render-submission.test.mjs
         game/test/solo-preparation-invalidation-host.test.mjs
+        game/test/modal-navigation.test.mjs
+        game/test/controller-confirm-trace.test.mjs
         game/test/demo-audio.test.mjs
         game/test/demo-audio-host.test.mjs
         game/test/demo-context-recovery-host.test.mjs
