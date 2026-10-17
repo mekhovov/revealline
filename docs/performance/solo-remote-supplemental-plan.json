@@ -217,8 +217,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-supplemental.mjs",
-      "bytes": 15871,
-      "sha256": "1e43e73deae989f00c242fd61c970f85b64f993e1a034f69102f2df1737167a7"
+      "bytes": 15895,
+      "sha256": "a476a7db0f056111a0b579f000ce18eb19e87001fc2bdbf8f831460621eb3234"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -374,8 +374,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 50572,
-      "sha256": "9a2c0b4c865c7655b9f101494964efb3ab0d423405545bf7a8253fa2af958e04"
+      "bytes": 51780,
+      "sha256": "ea1400a0d1f3bd8b2072e4304bdcb4b451b29acb24d691509a453197a413157a"
     },
     {
       "path": "scripts/serve-production-preview.mjs",
@@ -394,8 +394,8 @@
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",
-      "bytes": 12873,
-      "sha256": "a516127f0068bf05ce3a2f828f6d793844ddb6f214a0b5623ee13e1d6f91e28c"
+      "bytes": 12875,
+      "sha256": "3bfdf145d2ea6eb4e81eb2394c9ac79ec56b201ab8b24d2bfd6345142af569d1"
     },
     {
       "path": "scripts/solo-qualification-browser-context.mjs",
