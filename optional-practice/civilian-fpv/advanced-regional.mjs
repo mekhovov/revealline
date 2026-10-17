@@ -607,7 +607,7 @@ export function createAdvancedRegionalSession(
     if (checkpointJob) return checkpointJob.then(() => readArchive(afterIndex, finalize));
     const pendingStep = stepJob,
       pendingFrame = frameJob;
-    checkpointKind = 'archive';
+    checkpointKind = finalize ? 'archive-finalize' : 'archive';
     const operation = (async () => {
       await pendingStep;
       await pendingFrame;
@@ -654,7 +654,7 @@ export function createAdvancedRegionalSession(
         frameCommitOwner ||
         frameJob ||
         recoveryJob ||
-        checkpointJob ||
+        checkpointKind === 'archive-finalize' ||
         !terrain.snapshot().terrainReady ||
         !Number.isFinite(input?.throttle) ||
         input.throttle < 0 ||

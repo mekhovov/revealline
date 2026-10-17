@@ -333,7 +333,7 @@ export function createAircraftCourseSession(
     if (preparing && !ready) return preparing.then(() => readArchive(afterIndex, finalize));
     if (checkpointing) return checkpointing.then(() => readArchive(afterIndex, finalize));
     const pendingStep = stepping;
-    checkpointKind = 'archive';
+    checkpointKind = finalize ? 'archive-finalize' : 'archive';
     checkpointing = (async () => {
       await pendingStep;
       required(ready && !disposed, 'Aircraft practice is not ready');
@@ -480,7 +480,10 @@ export function createAircraftCourseSession(
     response: () => mission.response(),
     objectiveFeedback: () => mission.objectiveFeedback?.(),
     arm() {
-      if (ready && !error && !disposed && !checkpointing) mission.arm();
+      // Background checkpoint reads must not consume the player's Arm click.
+      // The step lock still holds motion until the accepted boundary is copied.
+      if (ready && !error && !disposed && !['restore', 'archive-finalize'].includes(checkpointKind))
+        mission.arm();
     },
     pause() {
       mission.pause();

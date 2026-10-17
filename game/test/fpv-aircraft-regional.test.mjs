@@ -121,7 +121,9 @@ test('Regional archive bridge shares accepted boundaries with recovery and expos
   const h = await sessionFixture(t, 'meteor75-analog-2022');
   const initial = await h.session.readSealedSegment();
   assert.equal(initial.generation, h.session.snapshot().advancedTelemetry.archiveStatus.generation);
-  h.session.arm();
+  const backgroundRead = h.session.readSealedSegment();
+  assert.equal(h.session.arm(), true, 'a background archive read must retain Arm');
+  await backgroundRead;
   await h.session.step(neutral);
   assert.throws(() => h.session.finalizeArchive(), /Pause before/);
   const [read, recovery] = await Promise.all([
@@ -131,7 +133,9 @@ test('Regional archive bridge shares accepted boundaries with recovery and expos
   assert.equal(read.format, 'AircraftSealedRead.v1');
   assert.equal(recovery.format, 'AdvancedRegionalRecovery.v2');
   h.session.pause();
-  const final = await h.session.finalizeArchive();
+  const ending = h.session.finalizeArchive();
+  assert.equal(h.session.arm(), false, 'final tail sealing retains its pause guard');
+  const final = await ending;
   assert.equal(final.segment.endTick, 1);
   assert.equal(final.finalizedThroughIndex, 0);
   await h.session.restoreRecovery(recovery);
