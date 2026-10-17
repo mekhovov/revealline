@@ -23,6 +23,23 @@ export function qualificationHitchJournalOptions(flags, scenario, scenarioBytes)
   assert(flags.includes('--work-probe'), 'Hitch journal requires the work probe');
   assert(scenario.timeoutMs <= HITCH_LIMITS.durationMs, 'Hitch journal forty-minute bound');
   if (preparation.length) {
+    if (preparation[0] === '--hitch-journal-preparation=timing-heavy-v1') {
+      assert.deepEqual(preparation, ['--hitch-journal-preparation=timing-heavy-v1']);
+      const hash = createHash('sha256').update(scenarioBytes).digest('hex');
+      const ids = {
+        '86cc1eea19e1d229dae865b368a94238de900ad83be5d9a4ee469b2e4dc3c0fd':
+          'sentry-detour-capture-projectile-v2',
+        b9afaecaadcbd0f657dd8064b9f7932c0c7ec12d6433f7d2b76f60de7ef19528: 'long-rail-captures-v2',
+      };
+      assert(ids[hash], 'Unreviewed heavy timing recipe');
+      assert.deepEqual(scenario, JSON.parse(scenarioBytes), 'Preparation recipe bytes changed');
+      assert.equal(scenario.id, ids[hash]);
+      assert.equal(scenario.entryPath, 'playground/');
+      assert.equal(scenario.readySelector, '#import-file');
+      assert.equal(scenario.actions[4].type, 'follow');
+      assert.equal(scenario.actions[4].selector, '#open-preview');
+      return { ...HITCH_LIMITS, preparationPolicy: 'timing-heavy-v1' };
+    }
     assert.deepEqual(preparation, ['--hitch-journal-preparation=first-return-anchored-v1']);
     assert.equal(
       createHash('sha256').update(scenarioBytes).digest('hex'),
@@ -447,7 +464,7 @@ export async function verifyHitchJournalFile(path, expectedBytes, expectedSha256
 export function createHitchJournalStore(output, now = () => performance.now(), options = {}) {
   assert(
     options.preparationPolicy === undefined ||
-      options.preparationPolicy === 'first-return-anchored-v1',
+      ['first-return-anchored-v1', 'timing-heavy-v1'].includes(options.preparationPolicy),
   );
   const soloURL = options.soloURL ? new URL(options.soloURL) : null;
   assert(!options.preparationPolicy || soloURL, 'Preparation requires the admitted Solo URL');

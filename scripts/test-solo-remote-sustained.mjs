@@ -173,11 +173,55 @@ test('independent soak diagnostic changes neither observations nor numerical, re
 });
 test('soak diagnostic release freezes tools and runs only the declared event edge', async () => {
   assert(manifest.frozenTools.some((ref) => ref.path === 'scripts/solo-qualification-audio.mjs'));
-  for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools]) {
+  // These declarations are historical source records. Their two older tool
+  // refs already differed from a6 and are not authority to execute evolving HEAD.
+  const witnessBytes = await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-final-timing/historical-a6-source.json',
+      import.meta.url,
+    ),
+  );
+  const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const verifyHistorical = (bytes, value) => {
+    assert.equal(digest(bytes), 'b68fddaca8d7548202790479dc5803270ef7df2b64d57b659770401131311f49');
+    const witness = JSON.parse(bytes);
+    assert.equal(witness.sourceRevision, 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4');
+    assert.equal(witness.sourceTree, '6b13627e324f695b6ee8d9f2dee2eeeb7217c332');
+    assert.equal(witness.status, 'historical-held-declarations-not-executable-at-a6');
+    const declaration = witness.declarations.sustained;
+    assert.deepEqual(
+      [...value.adapterInputs, ...value.frozenTools].map(({ path, bytes, sha256 }) => ({
+        path,
+        bytes,
+        sha256,
+      })),
+      declaration.refs.map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 })),
+    );
+    for (const ref of declaration.refs) {
+      assert.match(ref.gitBlob, /^[a-f0-9]{40}$/);
+      assert.equal(
+        ref.sourceRevision,
+        {
+          'scripts/game-cli.mjs': '49b777477d572f0cff6fa4a6f0a332e55af03b12',
+          'scripts/run-solo-remote-correctness.mjs': '9f81414ff28fa21db8d68af2b7b4a06c9343eb21',
+        }[ref.path] ?? witness.sourceRevision,
+      );
+      assert.match(ref.sourceTree, /^[a-f0-9]{40}$/);
+    }
+    return declaration;
+  };
+  const historical = verifyHistorical(witnessBytes, manifest);
+  for (const ref of [historical.manifest, historical.workflow]) {
     const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+    assert.equal(bytes.length, ref.bytes);
+    assert.equal(digest(bytes), ref.sha256, 'Historical declaration/workflow must stay immutable');
   }
+  const changed = structuredClone(manifest);
+  changed.adapterInputs[0].sha256 = 'f'.repeat(64);
+  assert.throws(() => verifyHistorical(witnessBytes, changed));
+  const changedWitness = JSON.parse(witnessBytes);
+  changedWitness.declarations.sustained.refs[0].bytes++;
+  assert.throws(() => verifyHistorical(Buffer.from(JSON.stringify(changedWitness)), manifest));
   const workflow = await readFile(
     new URL('../.github/workflows/solo-remote-sustained-temporary.yml', import.meta.url),
     'utf8',
@@ -500,6 +544,18 @@ test('preparation materializes exact upload and recipe bytes without a browser o
   const work = join(temporary, 'work');
   await mkdir(work);
   const p = bindSustainedJob(manifest, 'webkit', 1);
+  // Prospective unit preparation explicitly binds current tools in memory.
+  // No historical declaration or executable artifact identity is rewritten.
+  p.adapterInputs = await Promise.all(
+    p.adapterInputs.map(async (ref) => {
+      const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
+      return {
+        ...ref,
+        bytes: bytes.length,
+        sha256: createHash('sha256').update(bytes).digest('hex'),
+      };
+    }),
+  );
   const moduleBytes = await readFile(new URL('./solo-remote-sustained.mjs', import.meta.url));
   p.frozenTools = [
     {
