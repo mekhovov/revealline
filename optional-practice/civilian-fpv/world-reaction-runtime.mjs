@@ -26,7 +26,7 @@ const sourceHashes={
 'game/ui/contextual-reactions.mjs':
 'e02752554b2651b19713c4039e31b4570c480bb0fad3c1093b953edfdfee1113',
 'game/ui/hunt-feedback-layout.mjs':
-'697525f452578880c62102b984da3ff51ec794913c3a2708187c62815c816de5',
+'54f9755b9fb40953d106b3c0d181948b5eb0983f6b360dba1a1435cf69808a53',
 'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
 'game/journey/reaction-portraits.mjs':
 '39cbf1428dca4e3d6f71e71fed4b41e280b3c0bc284e3bcacf580fca5552952f',
@@ -4162,11 +4162,15 @@ typeof win?.requestAnimationFrame!=='function'
 )
 return()=>{};
 let frame=null,
-closed=false;
+closed=false,
+observedHeight=null;
 const measure=()=>{
 frame=null;
 if(closed)return;
-const height=Math.ceil(container.getBoundingClientRect().height);
+// The feedback rail uses horizontal writing, so blockSize is its height.
+// Reserve the border box (including padding), not just the text content.
+// Older observers without box sizes retain the original measurement path.
+const height=Math.ceil(observedHeight??container.getBoundingClientRect().height);
 const value=`${Math.max(0,height)}px`;
 if(body.style.getPropertyValue('--hunt-feedback-height')!==value)
 body.style.setProperty('--hunt-feedback-height',value);
@@ -4174,9 +4178,29 @@ body.style.setProperty('--hunt-feedback-height',value);
 const schedule=()=>{
 if(!closed&&frame===null)frame=win.requestAnimationFrame(measure);
 };
-const resize=win.ResizeObserver?new win.ResizeObserver(schedule):null;
-resize?.observe(container);
-const mutation=win.MutationObserver?new win.MutationObserver(schedule):null;
+const resize=win.ResizeObserver
+?new win.ResizeObserver((entries)=>{
+for(const entry of entries){
+if(entry.target!==container)continue;
+const boxes=entry.borderBoxSize,
+box=boxes?.[0]??boxes,
+height=box?.blockSize;
+observedHeight=Number.isFinite(height)&&height>=0?height:null;
+schedule();
+}
+})
+:null;
+if(resize){
+try{
+resize.observe(container,{box:'border-box'});
+}catch{
+// Early ResizeObserver implementations only accept a target.
+resize.observe(container);
+}
+}
+// Text/style mutations that do not resize the rail need no measurement.
+// ResizeObserver also covers font loading, wrapping and viewport changes.
+const mutation= !resize&&win.MutationObserver?new win.MutationObserver(schedule):null;
 mutation?.observe(container,{
 childList:true,
 subtree:true,
@@ -4184,8 +4208,10 @@ characterData:true,
 attributes:true,
 attributeFilter:['hidden','style'],
 });
+if(!resize){
 win.addEventListener('resize',schedule);
 schedule();
+}
 return()=>{
 closed=true;
 if(frame!==null)win.cancelAnimationFrame(frame);
