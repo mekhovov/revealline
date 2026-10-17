@@ -58,14 +58,21 @@ Browser elapsed times do not establish physical input-to-display latency.
 ## Verification and delivery status
 
 The [local verification receipt](fpv-input-recovery-verification.json) records
-**740 passing practice tests**, release validation, lint and scoped formatting.
-Five new host regressions cover absent, malformed and failing inputs; four cover
+**741 passing practice tests**, release validation, lint and scoped formatting.
+Five new host regressions cover absent, malformed and failing inputs; five cover
 startup diagnostics. The real Chrome fixture passes English and Ukrainian, keeps
 continuous accepted sequences, exports/replays six short recordings, and disposes
 all ten workers. A separate local browser with a deliberately stalled script and
 404 proves the new observer retains a failed startup without hiding its cause.
 All 20 existing numerical qualification sources are unchanged; no new benchmark
-is claimed. Two independent reviews found no further actionable issue.
+is claimed. The initial independent reviews missed unconstrained network/capture error strings.
+A subsequent PR review used synthetic URL-bearing errors to demonstrate that those
+metadata fields could retain URL details; no actual credential leak was reported.
+The correction retains only fixed error categories, with a fail-before/pass-after
+regression and a repeated real-browser stalled-script check. The original action
+result/error, request status/timing and bounded cleanup remain intact. An independent
+review of the correction found no further issue. Existing outer failure stacks and
+page-error logs are outside this narrow metadata claim.
 
 The [actual Electron fixture](fpv-input-recovery-native-runtime.json) also passes:
 unavailable-radio Start preserves export/restart at 220 mission ticks, and explicit
@@ -75,12 +82,12 @@ practice dispose both workers. Ordinary desktop/iOS staging passes all 209 sourc
 pins; this is one desktop fixture, not production authentication or iOS execution.
 
 A separate [public baseline observation](fpv-input-recovery-startup-public-baseline.json)
-used the new diagnostic helper for three independent World password logins.
+used the pre-privacy-correction diagnostic helper for three independent World password logins.
 All became ready, with no page errors or pending requests at the observation end.
 This does not explain the original timeout or qualify the unpublished correction;
 it is explicitly bound to the existing `fb3caf12b` deployment metadata.
 
 [PR #1565](https://github.com/mekhovov/revealline/pull/1565) contains the correction
-at `af4cd146f`. Ordinary checks/publication and current live acceptance are in
+plus the diagnostic privacy correction. Fresh checks/publication and current live acceptance are in
 progress. Earlier delivery reports apply to `fb3caf12b`; they do not automatically
 qualify this correction.

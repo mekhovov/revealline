@@ -10,6 +10,19 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const runner = fileURLToPath(import.meta.url);
 const ids = ['civilian-fpv', 'fpv-worlds'];
 const libraryKey = 'revealline.fpv.tuning.v1';
+const startupNetworkErrors = new Set([
+  'net::ERR_ABORTED',
+  'net::ERR_FAILED',
+  'net::ERR_BLOCKED_BY_CLIENT',
+  'net::ERR_CONNECTION_CLOSED',
+  'net::ERR_CONNECTION_REFUSED',
+  'net::ERR_CONNECTION_RESET',
+  'net::ERR_CONNECTION_TIMED_OUT',
+  'net::ERR_INTERNET_DISCONNECTED',
+  'net::ERR_NAME_NOT_RESOLVED',
+  'net::ERR_NETWORK_CHANGED',
+  'net::ERR_TIMED_OUT',
+]);
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 const jsonWrite = (target, value) =>
   writeFile(target, JSON.stringify(value, null, 2) + '\n', { mode: 0o600 });
@@ -153,7 +166,8 @@ export async function observeFPVStartup(
     const entry = requests.get(item);
     if (entry) {
       entry.failedMs = elapsed();
-      entry.failure = redact(item.failure()?.errorText ?? 'request failed').slice(0, 256);
+      const failure = item.failure()?.errorText;
+      entry.failure = startupNetworkErrors.has(failure) ? failure : 'request-failed';
     }
   };
   const listeners = { request, response, requestfinished: finished, requestfailed: failed };
@@ -184,7 +198,10 @@ export async function observeFPVStartup(
         'Startup state capture timed out',
       );
     } catch (error) {
-      report.captureFailure = redact(error.message).slice(0, 256);
+      report.captureFailure =
+        error?.message === 'Startup state capture timed out'
+          ? 'state-timeout'
+          : 'state-unavailable';
     }
     report.pendingRequests = report.requests.filter(
       (entry) => entry.finishedMs === undefined && entry.failedMs === undefined,

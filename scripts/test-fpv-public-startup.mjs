@@ -125,7 +125,7 @@ test('failed and hung state capture stays bounded and never masks the startup re
     }),
     (error) => error === expected,
   );
-  assert.equal(failedEvidence.startups[0].captureFailure, 'page closed');
+  assert.equal(failedEvidence.startups[0].captureFailure, 'state-unavailable');
   const hungPage = page(() => new Promise(() => {}));
   assert.equal(
     await observeFPVStartup(hungPage, hungEvidence, 'reload', async () => 'ok', {
@@ -133,6 +133,35 @@ test('failed and hung state capture stays bounded and never masks the startup re
     }),
     'ok',
   );
-  assert.equal(hungEvidence.startups[0].captureFailure, 'Startup state capture timed out');
+  assert.equal(hungEvidence.startups[0].captureFailure, 'state-timeout');
   assert.deepEqual(hungPage.eventNames(), []);
+});
+
+test('arbitrary network and capture errors cannot retain URL secrets in diagnostic metadata', async () => {
+  const sensitive =
+    'https://user:synthetic-userinfo@example.test/start.mjs?token=synthetic-query-secret#synthetic-fragment';
+  const expected = new Error('original readiness failure');
+  const host = page(async () => {
+    throw new Error(`capture failed at ${sensitive}`);
+  });
+  const evidence = {};
+  await assert.rejects(
+    observeFPVStartup(host, evidence, 'reload', async () => {
+      const item = request('https://example.test/start.mjs', `request failed for ${sensitive}`);
+      host.emit('request', item);
+      host.emit('response', { request: () => item, status: () => 503 });
+      host.emit('requestfailed', item);
+      throw expected;
+    }),
+    (error) => error === expected,
+  );
+  const row = evidence.startups[0];
+  assert.equal(row.requests[0].failure, 'request-failed');
+  assert.equal(row.captureFailure, 'state-unavailable');
+  assert.equal(row.requests[0].status, 503);
+  assert.equal(row.pendingRequests, 0);
+  assert.equal(typeof row.requests[0].failedMs, 'number');
+  for (const marker of ['synthetic-userinfo', 'synthetic-query-secret', 'synthetic-fragment'])
+    assert.equal(JSON.stringify(evidence).includes(marker), false);
+  assert.deepEqual(host.eventNames(), []);
 });

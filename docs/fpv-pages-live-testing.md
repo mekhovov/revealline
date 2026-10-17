@@ -20,8 +20,8 @@ review and product-release policies still apply.
 ## Input recovery correction — 17 October 2026
 
 [PR #1565](https://github.com/mekhovov/revealline/pull/1565) preserves Advanced
-practice when the selected radio is unavailable. Its source commit is
-`af4cd146f4ed05c79a404642978ae682e3486757`. Local acceptance passes 740 practice
+practice when the selected radio is unavailable. It also restricts new startup
+request/capture error metadata to fixed categories. Local acceptance passes 741 practice
 tests, English/Ukrainian real browser-worker checks, actual Electron export and
 resume, and release validation. Ordinary publication is in progress; the public
 site is not yet claimed to contain this correction.
