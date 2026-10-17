@@ -38,7 +38,7 @@
     {
       "path": "scripts/solo-remote-readiness.mjs",
       "bytes": 81282,
-      "sha256": "ce934dab3fa83cb2a1d6c56dedea59de09e5e6a9574871006e08203158d0d09f"
+      "sha256": "deaf3f7c002d1b9c600cc0cf946621a6c8a3f6d0f8a4ab53233b7a53025a0eb2"
     }
   ],
   "frozenTools": [
@@ -254,8 +254,8 @@
     },
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 87426,
-      "sha256": "9ed82517010604ad23f9d98732e0cb001f550949401a8cdff009d81010ac5417"
+      "bytes": 87551,
+      "sha256": "54993cfbb3392bf087d4304a53b2f55c1b043807954311b74ee85d3cc6920030"
     },
     {
       "path": "scripts/soundtrack-archive-admissions.mjs",
@@ -299,7 +299,7 @@
   },
   "release": {
     "candidateRevision": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
-    "onceOnlyBefore": "39774cce8697d412d138ef4da11ac547a5f8e535",
+    "onceOnlyBefore": "5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0",
     "performanceQualification": "excluded",
     "priorProofInspected": true,
     "noUnclosedOwners": true,
@@ -337,11 +337,11 @@
     }
   },
   "releaseTrigger": {
-    "status": "activated-once-before-397",
+    "status": "activated-once-before-5e9",
     "pullRequest": 1544,
     "sameRepositoryRequired": true,
     "action": "synchronize",
-    "onceOnlyBefore": "39774cce8697d412d138ef4da11ac547a5f8e535"
+    "onceOnlyBefore": "5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0"
   },
   "metadataAdmission": {
     "candidatePins": {
@@ -385,5 +385,17 @@
       "interpretation": "Public unloaded/error statuses do not resolve original Promise settlement; the old gate/result remains unchanged."
     }
   },
-  "cohort": "linux-selected-font-direct-sheet-e1cc-v1"
+  "cohort": "linux-selected-font-direct-sheet-e1cc-v1",
+  "dispatchSupersession": {
+    "toolingRevision": "5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0",
+    "observedAt": "2026-10-17T21:40:58.671026+00:00",
+    "runCount": 0,
+    "pullRequestMergeable": "CONFLICTING",
+    "receipt": {
+      "path": ".cache/solo-followup/integration-397-batch/no-dispatch-5e9/receipt.json",
+      "bytes": 621,
+      "sha256": "07ca45eba16843a6b3e37080d28fbb4d21ddcee2f30671120a2d1942fc902595"
+    },
+    "scope": "No workflow/native observation existed for this head at the retained API readback. This edge replacement is not a native retry; fresh owners and original runtime/package/source gates remain required."
+  }
 }

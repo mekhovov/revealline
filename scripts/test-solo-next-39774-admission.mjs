@@ -49,7 +49,7 @@ function synthetic() {
   plan.latestRuntimeRevision = source.runtime;
   plan.release.sourceCohort = source.name;
   plan.release.candidateRevision = source.candidate;
-  plan.release.onceOnlyBefore = source.candidate;
+  plan.release.onceOnlyBefore = '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0';
   plan.candidate = {
     revision: source.candidate,
     tree: source.candidateTree,
@@ -133,6 +133,7 @@ test('mixed final-source bindings and widened route controls remain rejected', (
     (p) => (p.latestRuntimeRevision = original.candidate.revision),
     (p) => (p.latestSourceRevision = original.candidate.revision),
     (p) => (p.release.onceOnlyBefore = original.candidate.revision),
+    (p) => (p.release.onceOnlyBefore = NEXT_ROUTE_39774_SOURCE),
     (p) => (p.release.sourceCohort = original.sourceCohort),
     (p) => (p.candidateOnly = false),
     (p) => (p.baseline.reusableArtifact = {}),
@@ -177,9 +178,22 @@ test('actual397 package and scoped prior owners bind six rows at the reviewed on
   });
   assert.equal(held.release.status, 'reviewed-diagnostic-only');
   assert.equal(held.releaseTrigger.status, 'reviewed-one-shot');
-  assert.equal(held.releaseTrigger.onceOnlyBefore, NEXT_ROUTE_39774_SOURCE);
-  assert.equal(held.release.onceOnlyBefore, NEXT_ROUTE_39774_SOURCE);
+  assert.equal(held.releaseTrigger.onceOnlyBefore, '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0');
+  assert.equal(held.release.onceOnlyBefore, '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0');
   assert.equal(held.release.firstEightRequired, false);
+  assert.deepEqual(held.dispatchSupersession, {
+    toolingRevision: '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0',
+    observedAt: '2026-10-17T21:40:58.671026+00:00',
+    runCount: 0,
+    pullRequestMergeable: 'CONFLICTING',
+    receipt: {
+      path: '.cache/solo-followup/integration-397-batch/no-dispatch-5e9/receipt.json',
+      bytes: 621,
+      sha256: '07ca45eba16843a6b3e37080d28fbb4d21ddcee2f30671120a2d1942fc902595',
+    },
+    scope:
+      'No workflow/native observation existed for this head at the retained API readback. This edge replacement is not a native retry; fresh owners and original runtime/package/source gates remain required.',
+  });
   assert.equal(held.currentSourceCorrectness.status, 'unobserved');
   assert.equal(held.performanceExclusion, true);
   for (const key of ['noUnclosedOwners', 'allPriorPlannedJobsClosed', 'priorProofInspected'])
@@ -216,7 +230,7 @@ const releaseConditions = [
   'github.event.pull_request.number == 1544',
   'github.event.pull_request.head.repo.full_name == github.repository',
   "github.event.action == 'synchronize'",
-  "github.event.before == '39774cce8697d412d138ef4da11ac547a5f8e535'",
+  "github.event.before == '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0'",
 ];
 function assertReleaseGuard(text) {
   assert.equal(text.match(/^    if: (.+)$/m)?.[1], releaseConditions.join(' && '));
