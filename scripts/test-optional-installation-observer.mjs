@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
+import { parse } from 'acorn';
+import { selectHistoricalInstallationMode } from './practice-historical-ui.mjs';
 import {
   OBSERVED_PACKAGES,
   TRANSFER_TIMEOUT_MS,
@@ -18,6 +20,32 @@ import {
   trackObservedResource,
   resourceCleanupIssues,
 } from './optional-installation-observer-helpers.mjs';
+
+const historicalObserverSource = await readFile(
+  new URL('./observe-optional-installation.mjs', import.meta.url),
+  'utf8',
+);
+const historicalObserverAST = parse(historicalObserverSource, {
+  ecmaVersion: 'latest',
+  sourceType: 'module',
+});
+function findObserverNode(predicate) {
+  const pending = [historicalObserverAST];
+  while (pending.length) {
+    const node = pending.pop();
+    if (predicate(node)) return node;
+    for (const value of Object.values(node)) {
+      if (Array.isArray(value)) pending.push(...value.filter((child) => child?.type));
+      else if (value?.type) pending.push(value);
+    }
+  }
+  assert.fail('Expected observer integration node is absent.');
+}
+const observerNodeSource = (node) => historicalObserverSource.slice(node.start, node.end);
+const observerFunction = (name) =>
+  observerNodeSource(
+    findObserverNode((node) => node.type === 'FunctionDeclaration' && node.id.name === name),
+  );
 
 test('browser restart requires all pages closed and a confirmed persistent-context shutdown', async () => {
   let listener;
@@ -165,6 +193,7 @@ test('offline action requires fresh observable work, native Enter and a fresh te
     const page = {
       evaluate: async (fn, input) => invoke(fn, input),
       locator: () => ({
+        waitFor: async ({ state }) => assert.equal(state, 'visible'),
         press: async (key) => {
           assert.equal(key, 'Enter');
           if (progressOnly)
@@ -195,10 +224,43 @@ test('offline action requires fresh observable work, native Enter and a fresh te
     exercise({ changes: ['Preparing…', 'Storage quota denied'] }),
     /Offline action failed/,
   );
+  await assert.rejects(
+    exercise({ changes: ['Preparing…', 'Download stalled for 30 seconds. Retry online.'] }),
+    /Offline action failed/,
+  );
+  await exercise({
+    changes: ['Preparing…', 'Download stalled for 30 seconds. Retry online.'],
+    expected: /stalled/i,
+  });
   await exercise({
     changes: ['Preparing…', 'Verification failed'],
     expected: /verification failed/i,
   });
+  await assert.rejects(
+    exercise({ changes: ['Preparing…', 'Ready offline'], expected: /quota denied/i }),
+    /Unexpected offline action result: Ready offline/,
+  );
+});
+
+test('offline actions reject hidden controls before creating a witness or sending a key', async () => {
+  const actions = [];
+  await assert.rejects(
+    activateOfflineAction(
+      {
+        locator: () => ({
+          waitFor: async ({ state }) => {
+            assert.equal(state, 'visible');
+            throw new Error('Hidden control');
+          },
+          press: async () => actions.push('key'),
+        }),
+        evaluate: async () => actions.push('witness'),
+      },
+      { button: '#hidden', status: '#status', expected: /removed/i },
+    ),
+    /Hidden control/,
+  );
+  assert.deepEqual(actions, []);
 });
 
 test('overall observation deadline encloses the journey but preserves report and cleanup', async () => {
@@ -360,8 +422,201 @@ test('Academy offline controls expand the ordinary closed Workshop disclosure in
   assert.equal(
     observer.match(/await revealFPVOffline\(page, \(\) => clickFPV\('#help'\)\)/g)?.length,
     3,
-    'Preparation, failed download, and removal share the same public disclosure action.',
+    'Preparation, failed download, quota denial/retry removal share the same public disclosure action.',
   );
+});
+
+test('opt-in quota denial preserves pointers, resets before retry and retains exact helper authority', async () => {
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(observer, /OPTIONAL_INSTALLATION_QUOTA_PROBE === '1'/);
+  assert.match(observer, /origin: new URL\(served.url\).origin/);
+  assert.match(observer, /assert.equal\(result.completed, true/);
+  assert.match(observer, /assertQuotaPointers\(denied, upgraded, packageIds, keyFor\)/);
+  assert.match(
+    observer,
+    /sourceStable: quotaProbeSha256 === sha\(await readFile\(quotaProbeURL\)\)/,
+  );
+  const denial = observer.indexOf("'controlled-quota-denial-preserves-all-pointers'");
+  const rollback = observer.indexOf("'candidate-removed-retained-path-restored'");
+  const retry = observer.indexOf("'quota-restored-pristine-retry-prepared'");
+  assert(denial > 0 && rollback > denial && retry > rollback);
+  assert.match(observer, /quotaProbePerPackage\[id\]\?\.retryPreparedAndRemoved === true/);
+  assert.doesNotMatch(observer, /Storage.clearDataForOrigin|quotaSize: null/);
+});
+
+async function quotaAssertions() {
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  return runInNewContext(
+    observer.slice(
+      observer.indexOf('function selectQuotaPackages('),
+      observer.indexOf('\nconst [\n'),
+    ) +
+      '\n({ selectQuotaPackages, quotaRetryPrevious, assertQuotaPointers, assertQuotaFailedScopeAbsent })',
+    { assert },
+  );
+}
+
+test('quota selection defaults to Academy and accepts only the explicit all-packages enum', async () => {
+  const { selectQuotaPackages, quotaRetryPrevious } = await quotaAssertions();
+  assert.deepEqual(Array.from(selectQuotaPackages()), ['civilian-fpv']);
+  assert.deepEqual(Array.from(selectQuotaPackages('all')), [
+    'civilian-fpv',
+    'civilian-flight',
+    'fpv-worlds',
+  ]);
+  for (const invalid of ['', 'ALL', 'academy', '1', null])
+    assert.throws(() => selectQuotaPackages(invalid), /must be omitted or all/);
+  assert.equal(quotaRetryPrevious('civilian-fpv', 'v9', 'v8'), 'v8');
+  assert.equal(quotaRetryPrevious('civilian-flight', 'v9', 'v8'), undefined);
+  assert.equal(quotaRetryPrevious('fpv-worlds', 'v9', 'v8'), 'v9');
+  assert.throws(() => quotaRetryPrevious('unknown', 'v9', 'v8'), /Unknown/);
+});
+
+test('every quota-denied package preserves all pointers and leaves no package-scoped staging or worker', async () => {
+  const { selectQuotaPackages, assertQuotaPointers, assertQuotaFailedScopeAbsent } =
+    await quotaAssertions();
+  const ids = Array.from(selectQuotaPackages('all'));
+  const keyFor = (id) => `installed.${id}`;
+  const baseline = { keys: Object.fromEntries(ids.map((id) => [keyFor(id), `${id}:retained`])) };
+  for (const selected of ids) {
+    const scope = `/practice/${selected}/releases/v0.0.1/site/`;
+    const state = {
+      keys: { ...baseline.keys },
+      caches: ['unrelated-cache'],
+      workers: [{ scope: '/unrelated/' }],
+    };
+    assertQuotaPointers(state, baseline, ids, keyFor);
+    assertQuotaFailedScopeAbsent(state, scope);
+    for (const changed of ids) {
+      assert.throws(() =>
+        assertQuotaPointers(
+          { ...state, keys: { ...state.keys, [keyFor(changed)]: '{}' } },
+          baseline,
+          ids,
+          keyFor,
+        ),
+      );
+    }
+    assert.throws(
+      () => assertQuotaFailedScopeAbsent({ ...state, caches: [`staging:${scope}`] }, scope),
+      /staging cache/,
+    );
+    assert.throws(
+      () => assertQuotaFailedScopeAbsent({ ...state, workers: [{ scope }] }, scope),
+      /worker registered/,
+    );
+    const retry = { ...state, keys: { ...state.keys, [keyFor(selected)]: 'new retry pointer' } };
+    assertQuotaPointers(retry, baseline, ids, keyFor, selected);
+    assert.throws(
+      () => assertQuotaPointers(retry, baseline, ids, keyFor),
+      'Removal must restore even the selected package exactly.',
+    );
+  }
+});
+
+test('all-package quota orchestration keeps native controls, scoped fixtures and default receipt compatibility', async () => {
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(observer, /selectQuotaPackages\(process.env.OPTIONAL_INSTALLATION_QUOTA_PACKAGES\)/);
+  assert.match(observer, /if \(id !== fpv\) await stage\(id, failedFixture\)/);
+  assert.equal(observer.match(/for \(const quotaId of quotaPackageIds\)/g)?.length, 2);
+  assert.match(observer, /await revealOfflineUI\(quotaId\)/);
+  assert.match(
+    observer,
+    /assertQuotaFailedScopeAbsent\(denied, '\/' \+ site\(quotaId, failedFixture\)\)/,
+  );
+  assert.match(observer, /assertQuotaPointers\(restored, afterGymRemoval, packageIds, keyFor\)/);
+  assert.match(observer, /const removeButton = await revealOfflineRemoval\(quotaId\)/);
+  assert.match(observer, /button: removeButton/);
+  assert.match(observer, /if \(quotaId === fpv\) quotaProbeReport = result/);
+  assert.match(
+    observer,
+    /result: quotaProbeReport,[\s\S]*selectedIDs: quotaPackageIds,[\s\S]*perPackage: quotaProbePerPackage/,
+  );
+  assert.match(observer, /quotaPackageIds.length === 1 \? label :/);
+  const reset = observer.indexOf('assert.equal(result.completed, true');
+  const exportAfterReset = observer.indexOf(
+    'assert.equal(await exportedProof(), savedProof)',
+    reset,
+  );
+  assert.ok(reset > 0 && exportAfterReset > reset);
+  for (const [id, selector] of [
+    ['civilian-flight', 'remove-offline'],
+    ['civilian-fpv', 'remove-offline'],
+    ['fpv-worlds', 'remove-runtime'],
+  ]) {
+    const html = await readFile(
+      new URL(`../optional-practice/${id}/index.html`, import.meta.url),
+      'utf8',
+    );
+    assert.ok(html.includes(`id="${selector}"`));
+  }
+});
+
+test('Worlds removal opens the public Library and requires its actual removal control to be visible', async () => {
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  const source = observer.slice(
+    observer.indexOf('async function revealOfflineRemoval('),
+    observer.indexOf('async function prepare('),
+  );
+  for (const id of ['civilian-fpv', 'civilian-flight', 'fpv-worlds']) {
+    const actions = [];
+    let libraryOpen = false;
+    const reveal = runInNewContext(`${source}\nrevealOfflineRemoval`, {
+      worlds: 'fpv-worlds',
+      revealOfflineUI: async (selected) => actions.push(`content:${selected}`),
+      page: {
+        locator: (selector) => ({
+          waitFor: async ({ state }) => {
+            assert.equal(state, 'visible');
+            if (selector === '#packs' || selector === '#remove-runtime')
+              assert.equal(libraryOpen, true, 'Removal cannot target the hidden Library.');
+            actions.push(`visible:${selector}`);
+          },
+          press: async (key) => {
+            assert.equal(selector, '[data-tab="packs"]');
+            assert.equal(key, 'Enter');
+            libraryOpen = true;
+            actions.push('open Library');
+          },
+        }),
+      },
+    });
+    assert.equal(await reveal(id), id === 'fpv-worlds' ? '#remove-runtime' : '#remove-offline');
+    assert.deepEqual(
+      actions,
+      id === 'fpv-worlds'
+        ? [
+            `content:${id}`,
+            'visible:[data-tab="packs"]',
+            'open Library',
+            'visible:#packs',
+            'visible:#remove-runtime',
+          ]
+        : [`content:${id}`, 'visible:#remove-offline'],
+    );
+  }
+  const html = await readFile(
+    new URL('../optional-practice/fpv-worlds/index.html', import.meta.url),
+    'utf8',
+  );
+  assert.match(html, /<button data-tab="packs"/);
+  assert.match(
+    html,
+    /<section id="packs"[^>]*hidden>[\s\S]*?id="remove-runtime"[\s\S]*?id="runtime-offline-status"/,
+  );
+  assert.equal(OBSERVED_PACKAGES['fpv-worlds'].status, '#runtime-offline-status');
 });
 
 test('profile import and every export open the ordinary transfer disclosure without toggling it closed', async () => {
@@ -483,4 +738,284 @@ test('access-gated candidates require normal-form credentials and never expose t
   });
   page.locator = () => ({ getAttribute: async () => 'unlocked' });
   assert.equal(await unlockObservedPage(page), false);
+});
+
+test('historical UI routing requires explicit mode and exact prior Academy origin/path', () => {
+  const expected =
+    'http://127.0.0.1:1234/revealline/practice/civilian-fpv/releases/v0.142.4/site/optional-practice/civilian-fpv/index.html';
+  const run = (current, enabled = true) =>
+    runInNewContext(`(${observerFunction('isHistoricalAcademy')})()`, {
+      URL,
+      page: { url: () => current },
+      historicalPrevious: enabled,
+      fpv: 'civilian-fpv',
+      priorVersion: 'v0.142.4',
+      entry: () => expected,
+      url: (value) => value,
+    });
+  assert.equal(run(expected), true);
+  assert.equal(run(`${expected}?lang=uk`), true);
+  assert.equal(run(expected, false), false);
+  for (const changed of [
+    expected.replace(':1234', ':1235'),
+    expected.replace('http:', 'https:'),
+    expected.replace('/v0.142.4/', '/v0.152.0/'),
+    expected.replaceAll('civilian-fpv', 'fpv-worlds'),
+    expected.replaceAll('civilian-fpv', 'civilian-flight'),
+    `${expected}/extra`,
+    expected.replace('/revealline/', '/other/'),
+  ])
+    assert.equal(run(changed), false);
+});
+
+test('current candidate always uses current admission and historical admission is explicitly prior-only', async () => {
+  const body = historicalObserverAST.body;
+  const start = body.findIndex(
+    (node) =>
+      node.type === 'VariableDeclaration' &&
+      node.declarations.some(
+        (row) =>
+          row.id.type === 'ObjectPattern' &&
+          row.id.properties.some((item) => item.key?.name === 'envelopeBytes'),
+      ),
+  );
+  const end = body.findIndex(
+    (node) =>
+      node.type === 'VariableDeclaration' &&
+      node.declarations.some((row) => row.id.name === 'previous'),
+  );
+  assert(start >= 0 && end > start);
+  const selection = historicalObserverSource.slice(body[start].start, body[end].end);
+  async function scenario(flag, prior = 'prior-A', rejectCurrent = false) {
+    const calls = [];
+    const operation = runInNewContext(
+      `(async()=>{${selection};return {envelope,previous,historicalPrevious};})()`,
+      {
+        assert,
+        bundlePath: 'current-B',
+        previousBundlePath: prior,
+        process: { env: { OPTIONAL_INSTALLATION_PREVIOUS_HISTORICAL: flag } },
+        selectHistoricalInstallationMode,
+        admitBundle: async (directory) => {
+          calls.push(['current', directory]);
+          if (rejectCurrent) throw Error('Current candidate denied');
+          return {
+            envelope: { id: directory },
+            envelopeBytes: Buffer.from(''),
+            admittedBytes: new Map(),
+          };
+        },
+        admitPinnedHistoricalPractice: async (directory) => {
+          calls.push(['historical', directory]);
+          return { envelope: { id: directory } };
+        },
+      },
+    );
+    return { calls, operation };
+  }
+  let item = await scenario('v0.142.4-98ad851');
+  await item.operation;
+  assert.deepEqual(item.calls, [
+    ['current', 'current-B'],
+    ['historical', 'prior-A'],
+  ]);
+  item = await scenario(undefined);
+  await item.operation;
+  assert.deepEqual(item.calls, [
+    ['current', 'current-B'],
+    ['current', 'prior-A'],
+  ]);
+  item = await scenario(undefined, null);
+  await item.operation;
+  assert.deepEqual(item.calls, [['current', 'current-B']]);
+  for (const [flag, prior] of [
+    ['unknown', 'prior-A'],
+    ['v0.142.4-98ad851', null],
+  ]) {
+    item = await scenario(flag, prior);
+    await assert.rejects(item.operation);
+    assert.deepEqual(item.calls, [['current', 'current-B']]);
+  }
+  item = await scenario('v0.142.4-98ad851', 'prior-A', true);
+  await assert.rejects(item.operation, /Current candidate denied/);
+  assert.deepEqual(item.calls, [['current', 'current-B']]);
+});
+
+test('historical reveal mapping receives exactly one final Enter; current path retains current action', async () => {
+  const source = ['revealControl', 'isHistoricalAcademy', 'clickFPV']
+    .map(observerFunction)
+    .join('\n');
+  for (const historical of [true, false]) {
+    const events = [],
+      expected = 'http://127.0.0.1:1234/prior-A/academy.html';
+    const click = runInNewContext(`(()=>{${source};return clickFPV;})()`, {
+      assert,
+      URL,
+      fpv: 'civilian-fpv',
+      priorVersion: 'v0.142.4',
+      historicalPrevious: historical,
+      entry: () => expected,
+      url: (value) => value,
+      OBSERVED_PACKAGES,
+      page: {
+        url: () => expected,
+        locator: (selector) => ({
+          isVisible: async () => true,
+          press: async (key) => events.push(['press', selector, key]),
+          click: async () => events.push(['click', selector]),
+        }),
+      },
+      revealHistoricalAcademyControl: async (page, selector, { category }) => {
+        events.push(['reveal', selector, category]);
+        return { selector: '#academy-shell-action-help', activated: false };
+      },
+    });
+    await click('#help', 'extras');
+    assert.deepEqual(
+      events,
+      historical
+        ? [
+            ['reveal', '#help', 'extras'],
+            ['press', '#academy-shell-action-help', 'Enter'],
+          ]
+        : [['click', '#help']],
+    );
+  }
+});
+
+test('historical authority pins both helpers and refuses changed authority at completion', async () => {
+  const declaration = findObserverNode(
+    (node) =>
+      node.type === 'VariableDeclaration' &&
+      node.declarations.some((row) => row.id.name === 'historicalAuthority'),
+  );
+  const recheck = findObserverNode(
+    (node) => node.type === 'ForOfStatement' && node.right?.name === 'historicalAuthority',
+  );
+  const capture = observerNodeSource(declaration).replaceAll('import.meta.url', 'observerURL');
+  const verify = observerNodeSource(recheck).replaceAll('import.meta.url', 'observerURL');
+  const paths = [],
+    scope = {
+      assert,
+      URL,
+      observerURL: 'file:///trusted/scripts/observe-optional-installation.mjs',
+      historicalPrevious: true,
+      sha: (bytes) => bytes.toString('hex'),
+      readFile: async (url) => {
+        paths.push(url.pathname);
+        return Buffer.from(url.pathname);
+      },
+    };
+  const pinned = await runInNewContext(
+    `(async()=>{${capture};return historicalAuthority;})()`,
+    scope,
+  );
+  assert.deepEqual(
+    [...pinned].map((row) => row.path),
+    ['practice-historical-admission.mjs', 'practice-historical-ui.mjs'],
+  );
+  await runInNewContext(`(async()=>{${verify}})()`, { ...scope, historicalAuthority: pinned });
+  await assert.rejects(
+    runInNewContext(`(async()=>{${verify}})()`, {
+      ...scope,
+      historicalAuthority: pinned,
+      readFile: async () => Buffer.from('changed'),
+    }),
+    /Historical observer authority changed/,
+  );
+  paths.length = 0;
+  const none = await runInNewContext(`(async()=>{${capture};return historicalAuthority;})()`, {
+    ...scope,
+    historicalPrevious: false,
+  });
+  assert.equal(none.length, 0);
+  assert.deepEqual(paths, []);
+});
+
+test('download retry restoration rejects changed pointers, missing original workers and temporary resources', () => {
+  const scope = '/revealline/practice/civilian-flight/releases/v0.0.1/site/',
+    baseline = {
+      keys: { gym: 'prepared' },
+      workers: [{ scope: '/original/', active: 'activated' }],
+    },
+    valid = { ...baseline, caches: ['original-cache'] };
+  const check = (state) =>
+    runInNewContext(`(${observerFunction('retainedDownloadOwnership')})(state,'civilian-flight')`, {
+      assert,
+      baseline,
+      state,
+      failedFixture: 'v0.0.1',
+      site: () => scope.slice(1),
+      assertQuotaFailedScopeAbsent: runInNewContext(
+        `(${observerFunction('assertQuotaFailedScopeAbsent')})`,
+        { assert },
+      ),
+    });
+  check(valid);
+  for (const state of [
+    { ...valid, keys: { gym: 'changed' } },
+    { ...valid, workers: [] },
+    { ...valid, workers: [{ scope: '/original/', active: 'installing' }] },
+    { ...valid, caches: [...valid.caches, 'temporary:' + scope] },
+    {
+      ...valid,
+      workers: [
+        ...valid.workers,
+        { scope: scope + 'optional-practice/civilian-flight/', active: null },
+      ],
+    },
+  ])
+    assert.throws(() => check(state));
+});
+
+test('download restoration freshly exports both Academy records and reads the saved World again', async () => {
+  for (const changed of [null, 'proof', 'profiles', 'world']) {
+    const events = [],
+      world = { card: { id: 'same', title: 'retained' }, database: { hash: 'same' } };
+    const operation = runInNewContext(`(${observerFunction('retainedDownloadRecords')})()`, {
+      assert,
+      fpv: 'civilian-fpv',
+      worlds: 'fpv-worlds',
+      priorVersion: 'prior',
+      page: {},
+      savedProof: 'exact-proof',
+      savedProfiles: 'exact-profiles',
+      worldSeed: { baseline: world },
+      open: async (id, version) => events.push(['open', id, version]),
+      exportedProof: async () => {
+        events.push('proof');
+        return changed === 'proof' ? 'changed' : 'exact-proof';
+      },
+      exportedProfiles: async () => {
+        events.push('profiles');
+        return changed === 'profiles' ? 'changed' : 'exact-profiles';
+      },
+      openInstallationWorldTab: async () => events.push('world-tab'),
+      readInstallationWorldCard: async () => {
+        events.push('card');
+        return world.card;
+      },
+      readWorldDatabase: async () => {
+        events.push('database');
+        return changed === 'world' ? { hash: 'changed' } : world.database;
+      },
+      assertInstallationWorldSeed: (actual, expected) => {
+        assert.deepEqual(actual.card, expected.card);
+        assert.deepEqual(actual.database, expected.database);
+      },
+    });
+    if (changed) await assert.rejects(operation);
+    else {
+      await operation;
+      assert.deepEqual(events, [
+        ['open', 'civilian-fpv', 'prior'],
+        'proof',
+        'profiles',
+        ['open', 'fpv-worlds', undefined],
+        'world-tab',
+        'card',
+        'database',
+      ]);
+    }
+  }
 });

@@ -8,6 +8,7 @@ import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { parse } from 'parse5';
 import { Document, Events } from './helpers/couch-dom.mjs';
+import { ADVANCED_REGIONAL_RECOVERY_BYTES } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
 import { mountWorldApp, routeThumbnail } from '../../optional-practice/civilian-fpv/world-app.mjs';
 import {
   WORLD_CATALOGUE,
@@ -28,6 +29,7 @@ import { preparePack } from '../../optional-practice/civilian-fpv/world-content.
 import { exportEditableZip } from '../../optional-practice/civilian-fpv/world-zip.mjs';
 import { worldRecordIdentity } from '../../optional-practice/civilian-fpv/world-records.mjs';
 import { openWorldStore } from '../../optional-practice/civilian-fpv/world-store.mjs';
+import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
 
 const requireAuthoring = createRequire(
   new URL('../../authoring/fpv-worlds/package.json', import.meta.url),
@@ -83,6 +85,7 @@ function fixture(t, options = {}) {
       if (name === 'class') element.className = value;
       if (name === 'hidden') element.hidden = true;
       if (name === 'value') element.value = value;
+      if (name === 'type') element.type = value;
       if (['min', 'max'].includes(name)) element[name] = value;
     }
     parent.append(element);
@@ -119,6 +122,7 @@ function fixture(t, options = {}) {
       frames.delete(id);
     },
     matchMedia: () => ({ matches: false }),
+    getComputedStyle: doc.defaultView.getComputedStyle,
     setTimeout,
     clearTimeout,
     MutationObserver: class {
@@ -181,11 +185,7 @@ function fixture(t, options = {}) {
 }
 
 async function settleUntil(predicate, message) {
-  for (let i = 0; i < 100; i++) {
-    if (predicate()) return;
-    await new Promise((resolve) => setImmediate(resolve));
-  }
-  assert.ok(predicate(), message);
+  await waitFor(predicate, { message });
 }
 
 test('World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats', async (t) => {
@@ -208,7 +208,10 @@ test('World random flight from the shared chooser follows displayed filters, pre
   }
   const expected = new Set(
     WORLD_CATALOGUE.filter(
-      (entry) => entry.theme === 'snake-hunt' && entry.activity === 'hunt' && entry.difficulty === 'beginner',
+      (entry) =>
+        entry.theme === 'snake-hunt' &&
+        entry.activity === 'hunt' &&
+        entry.difficulty === 'beginner',
     ).map((entry) => entry.id),
   );
   h.$('worlds-shell-action-missions').click();
@@ -769,6 +772,31 @@ test('World terminal preview offers Retry and prepares a fresh disarmed attempt'
   assert.match(h.$('flight-status').textContent, /Preview: completion does not earn rewards/);
 });
 
+test('World native HUD details retain instructions across blur and focus', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-viewport').querySelector('[data-hud-part="explain"]').click();
+  h.tick(2);
+  const dialog = h.$('sim-flight-hud-details'),
+    hint = dialog.querySelector('.sim-menu-hint');
+  assert.equal(dialog.open, true);
+  assert.ok(hint, 'the native dialog owns its navigation instructions');
+  const instructions = hint.textContent,
+    state = h.app.snapshot().state;
+  assert.ok(instructions.length > 0);
+  h.doc.focused = false;
+  h.win.emit('blur');
+  h.tick(2);
+  assert.equal(hint.textContent, instructions, 'blur must not resize the native dialog');
+  assert.equal(hint.hidden, false);
+  h.doc.focused = true;
+  h.win.emit('focus');
+  h.tick(2);
+  assert.equal(hint.textContent, instructions, 'refocus must not reflow the clicked control');
+  assert.deepEqual(h.app.snapshot().state, state, 'suspension and refocus cannot arm a flight');
+});
+
 test('World menu Back dismisses the visible surface without closing its paused native flight', async (t) => {
   const h = fixture(t);
   await h.app.ready;
@@ -1067,6 +1095,172 @@ test('World categories retain every authored preference and restore Home and Pau
   h.$('close-sim-settings').click();
   assert.equal(h.doc.activeElement, pauseSettings);
   assert.equal(h.app.snapshot().state.status, 'paused');
+});
+
+test('Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK', async (t) => {
+  for (const locale of ['en', 'uk']) {
+    const h = fixture(t, {
+      url: `https://example.test/optional-practice/fpv-worlds/index.html?lang=${locale}`,
+    });
+    await h.app.ready;
+    h.$('worlds-shell-action-settings').click();
+    h.$('worlds-settings-tab-accessibility').click();
+    const section = h.doc.querySelector('[data-sim-hud-preferences]');
+    assert.ok(section);
+    assert.equal(section.parentNode, h.$('worlds-settings-panel-accessibility'));
+    assert.equal(section.closest('[hidden],[inert]'), null);
+    assert.equal(h.doc.querySelectorAll('[data-sim-hud-preferences]').length, 1);
+    assert.equal(section.querySelectorAll('select').length, 3);
+    const mode = section.querySelector('[data-hud-preference="mode"]');
+    mode.value = 'detailed';
+    mode.emit('change');
+    assert.equal(h.doc.querySelector('[data-sim-hud="flight"]').dataset.hudMode, 'detailed');
+    assert.equal(h.$('sim-settings').open, true, 'Changing guidance must not leave Settings.');
+    assert.equal(
+      h.$('worlds-settings-tab-accessibility').textContent,
+      locale === 'uk' ? 'Доступність' : 'Accessibility',
+    );
+  }
+});
+
+test('World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener', async (t) => {
+  const prior = getLocale();
+  t.after(() => setLocale(prior, { persist: false }));
+  const h = fixture(t, {
+    url: 'https://example.test/optional-practice/fpv-worlds/index.html?lang=en#packs',
+  });
+  await h.app.ready;
+  h.doc.defaultView.innerWidth = 390;
+  const shortcut = h.$('library-flight-records'),
+    backup = h.$('backup-proofs'),
+    restore = h.$('import-proofs'),
+    recovery = h.$('proof-records').closest('details'),
+    records = h.app.snapshot().records;
+  assert.equal(shortcut.closest('dialog').id, 'worlds-shell-missions-dialog');
+  assert.equal(shortcut.closest('[hidden],[inert]'), null);
+  assert.equal(shortcut.textContent, 'Recorded flights & recovery');
+  assert.equal(shortcut.getAttribute('type'), 'button');
+  shortcut.focus();
+  const enter = h.doc.emit('keydown', { key: 'Enter', code: 'Enter', target: shortcut });
+  assert.equal(enter.defaultPrevented, false, 'The native button retains keyboard activation.');
+  shortcut.click(); // Model the browser's default button activation, not a synthetic key handler.
+  h.doc.emit('keyup', { key: 'Enter', code: 'Enter', target: shortcut });
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('sim-settings').dataset.settingsView, 'panel');
+  assert.equal(h.$('worlds-settings-tab-data').getAttribute('aria-selected'), 'true');
+  assert.equal(h.doc.activeElement, backup);
+  for (const control of [backup, restore, recovery]) {
+    assert(h.$('worlds-settings-panel-data').contains(control));
+    assert.equal(control.closest('[hidden],[inert]'), null);
+  }
+  assert.equal(h.doc.querySelectorAll('#backup-proofs').length, 1);
+  assert.equal(h.doc.querySelectorAll('#import-proofs').length, 1);
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.equal(shortcut.textContent, 'Записи польотів і відновлення');
+  assert.equal(h.$('worlds-settings-tab-data').textContent, 'Прогрес і колекція');
+  assert.equal(h.$('backup-proofs'), backup);
+  assert.equal(h.doc.activeElement, backup);
+  const escape = () => {
+    h.doc.emit('keydown', { key: 'Escape', code: 'Escape', target: h.doc.activeElement });
+    h.doc.emit('keyup', { key: 'Escape', code: 'Escape', target: h.doc.activeElement });
+  };
+  escape();
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('sim-settings').dataset.settingsView, 'categories');
+  escape();
+  assert.equal(h.$('sim-settings').open, false);
+  assert.equal(h.doc.activeElement, shortcut);
+  assert.deepEqual(h.app.snapshot().records, records);
+  assert.equal(h.app.snapshot().state, undefined);
+});
+
+test('World Library records controller confirmation cannot activate backup or resume its paused flight', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  h.doc.defaultView.innerWidth = 390;
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-arm').click();
+  assert.equal(h.app.snapshot().state.status, 'active');
+  h.$('worlds-shell-action-menu').click();
+  h.$('worlds-shell-action-missions').click();
+  h.doc.querySelector('[data-sim-mission-tools] > summary').click();
+  h.doc.querySelector('[data-sim-mission-tool="packs"]').click();
+  const paused = h.app.snapshot().state,
+    records = h.app.snapshot().records,
+    shortcut = h.$('library-flight-records'),
+    pad = menuPad();
+  assert.equal(paused.status, 'paused');
+  let backups = 0;
+  h.$('backup-proofs').addEventListener('click', () => backups++);
+  h.pads.push(pad);
+  h.tick(2);
+  shortcut.focus();
+  // The first deliberate press/release joins the normal menu owner.
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.tick(2);
+  shortcut.focus();
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.tick(3);
+  assert.equal(h.$('sim-settings').open, false, 'Confirm still requires release.');
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(
+    h.$('sim-settings').open,
+    true,
+    JSON.stringify({
+      active: h.doc.activeElement?.id,
+      dialogs: h.doc.modalDialogs.map((node) => node.id),
+      shortcutDialog: shortcut.closest('dialog')?.id,
+      hidden: shortcut.closest('[hidden],[inert]')?.id,
+      hint: h.doc.querySelector('.sim-menu-hint')?.textContent,
+    }),
+  );
+  assert.equal(h.doc.activeElement, h.$('backup-proofs'));
+  h.tick(3);
+  assert.equal(backups, 0, 'The opener confirm cannot leak into the newly opened settings panel.');
+  for (let press = 0; press < 2; press++) {
+    pad.buttons[1] = { pressed: true, value: 1 };
+    h.tick();
+    pad.buttons[1] = { pressed: false, value: 0 };
+    h.tick();
+  }
+  assert.equal(h.$('sim-settings').open, false);
+  assert.equal(h.doc.activeElement, shortcut);
+  assert.equal(backups, 0);
+  assert.deepEqual(h.app.snapshot().state, paused);
+  assert.deepEqual(h.app.snapshot().records, records);
+});
+
+test('World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host', async (t) => {
+  const h = fixture(t, {
+    url: 'https://example.test/optional-practice/fpv-worlds/index.html?lang=en#packs',
+  });
+  await h.app.ready;
+  const shortcut = h.$('library-flight-records'),
+    settings = h.$('sim-settings'),
+    tab = h.$('worlds-settings-tab-data'),
+    ownedId = tab.getAttribute('aria-controls'),
+    foreign = h.doc.createElement('section'),
+    field = h.doc.createElement('input');
+  foreign.id = 'foreign-records-panel';
+  foreign.append(field);
+  h.doc.body.append(foreign);
+  tab.setAttribute('aria-controls', foreign.id);
+  shortcut.focus();
+  shortcut.click();
+  assert.equal(settings.open, true);
+  assert.equal(h.$('worlds-settings-tab-gameplay').getAttribute('aria-selected'), 'true');
+  assert.equal(foreign.contains(h.doc.activeElement), false);
+  assert.equal(h.$('backup-proofs').closest('[role="tabpanel"]').id, ownedId);
+  tab.setAttribute('aria-controls', ownedId);
+  h.$('close-sim-settings').click();
+  await h.app.dispose();
+  shortcut.click();
+  assert.equal(settings.open, false);
+  assert.equal(h.app.snapshot().state, undefined);
 });
 
 test('Worlds uses shared display and master settings ahead of old SIM-local preferences', async (t) => {
@@ -1588,3 +1782,643 @@ test('World shared chooser remains usable when native scene loading fails', asyn
   assert.ok(h.doc.querySelectorAll('.journey-card').every((item) => !item.disabled));
   assert.notEqual(h.app.snapshot().state.status, 'active');
 });
+
+function worldTuningControl(h, label, tag = 'input', scope = h.doc.querySelector('.fpv-tuning')) {
+  const control = scope
+    .querySelectorAll('label')
+    .find((node) => node._text === label)
+    ?.querySelectorAll(tag)
+    .find((node) => tag !== 'input' || node.type !== 'range');
+  assert.ok(control, `Missing tuning control: ${label}`);
+  return control;
+}
+async function worldTuningClick(h, label) {
+  const button = h.doc
+    .querySelector('.fpv-tuning')
+    .querySelectorAll('button')
+    .find((node) => node.textContent === label);
+  assert.ok(button, `Missing tuning action: ${label}`);
+  button.click();
+  await new Promise((resolve) => setImmediate(resolve));
+}
+async function openWorldTuning(h) {
+  const button = h.doc
+    .querySelectorAll('button')
+    .find((node) => Object.hasOwn(node.dataset, 'fpvTuning'));
+  assert.ok(button);
+  button.click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
+}
+
+test('World tuning retains the committed keyboard sample and never presents radio data for that owner', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const h = fixture(t);
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((item) => !item.legacy && !item.beginner && item.activity !== 'hunt');
+  await h.app.startFlight(entry);
+  h.$('world-arm').click();
+  h.tick(2);
+  h.win.emit('keydown', { code: 'ArrowRight', key: 'ArrowRight', target: h.$('world-viewport'), repeat: false });
+  h.tick(4);
+  const committed = h.app.snapshot().state;
+  assert.ok(committed.ticks > 0);
+  assert.equal(committed.lastInput.roll, 500);
+  await openWorldTuning(h);
+  h.tick(40);
+  const text = h.doc.querySelector('[aria-label="Input diagnostics"]').textContent;
+  assert.match(text, /Input source: Keyboard/);
+  assert.match(text, /Last committed flight input; flight is paused/);
+  assert.match(text, /Raw input: \{"keys":\["ArrowRight"\]\}/);
+  assert.match(text, /Calibrated: \{"roll":0.5/);
+  assert.match(text, new RegExp(`Flight tick: ${committed.ticks}`));
+  assert.match(text, /Browser sample age \(ms\): unavailable/);
+});
+
+// These exercise the mounted host and its real recording exporter. The renderer
+// is a fixture; they do not claim browser rendering or physical-controller qualification.
+test('World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const h = fixture(t),
+    blobs = [];
+  await h.app.ready;
+  h.win.URL = {
+    createObjectURL(blob) {
+      blobs.push(blob);
+      return 'blob:tuning-proof';
+    },
+    revokeObjectURL() {},
+  };
+  h.win.setTimeout = (fn) => {
+    fn();
+    return 0;
+  };
+  const entry = WORLD_CATALOGUE.find(
+    (item) => !item.legacy && !item.beginner && item.activity !== 'hunt',
+  );
+  await h.app.startFlight(entry);
+  const exported = async () => {
+    const index = blobs.length;
+    h.$('export-flight').click();
+    await settleUntil(() => blobs.length > index, 'Recording export should finish');
+    return JSON.parse(await blobs[index].text()).records[0].proof;
+  };
+  const initial = await exported();
+  await openWorldTuning(h);
+  const algorithm = worldTuningControl(h, 'Rate algorithm', 'select');
+  algorithm.value = 'actual';
+  algorithm.emit('change');
+  const yaw = h.doc
+    .querySelector('.fpv-tuning')
+    .querySelectorAll('fieldset')
+    .find((node) => node.querySelector('legend')?.textContent === 'Yaw');
+  const rate = worldTuningControl(h, 'Maximum rate (°/s)', 'input', yaw);
+  rate.value = '870';
+  rate.emit('input');
+  const fov = worldTuningControl(h, 'Vertical FOV (degrees)');
+  fov.value = '109';
+  fov.emit('input');
+  await worldTuningClick(h, 'Save for next flight');
+  assert.deepEqual(await exported(), initial);
+  await worldTuningClick(h, 'Close');
+  await h.app.startFlight(entry);
+  const next = await exported();
+  assert.equal(next.response.format, 'FlightResponseProfile.v2');
+  assert.equal(next.response.rates.axes.yaw.rate, 87);
+  assert.equal(h.$('world-fov').value, '109');
+  assert.equal(initial.response.format, 'FlightResponseProfile.v1');
+});
+
+test('World draft testing enters unscored free flight and returns to the unsaved camera and rate draft', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const storage = new Map(),
+    h = fixture(t, { storage });
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find(
+    (item) => !item.legacy && !item.beginner && item.activity !== 'hunt',
+  );
+  await h.app.startFlight(entry);
+  const records = h.app.snapshot().records;
+  await openWorldTuning(h);
+  const algorithm = worldTuningControl(h, 'Rate algorithm', 'select');
+  algorithm.value = 'quick';
+  algorithm.emit('change');
+  const fov = worldTuningControl(h, 'Vertical FOV (degrees)');
+  fov.value = '104';
+  fov.emit('input');
+  await worldTuningClick(h, 'Test draft · unscored');
+  await settleUntil(
+    () => h.$('world-fov').value === '104' && h.app.snapshot().state?.status === 'disarmed',
+    'Draft flight should launch with its camera',
+  );
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, false);
+  assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+  assert.equal(h.$('export-flight').disabled, true);
+  assert.deepEqual(h.app.snapshot().records, records);
+  assert.equal(storage.has('revealline.fpv.tuning.v1'), false);
+  h.doc.querySelector('.tuning-return').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
+  assert.equal(worldTuningControl(h, 'Rate algorithm', 'select').value, 'quick');
+  assert.equal(worldTuningControl(h, 'Vertical FOV (degrees)').value, '104');
+  await worldTuningClick(h, 'Revert draft');
+  assert.equal(worldTuningControl(h, 'Rate algorithm', 'select').value, 'legacy');
+});
+
+for (const destination of ['World', 'Regional']) test(`a normal ${destination} launch replaces the prior tuning-test origin`, async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const h = fixture(t, { rendererFactory: () => ({
+    available: true, setPresentation() {}, setCourse() {}, setQuality() {},
+    setDrone() {}, setGhost() {}, setPath() {}, setRegional() {}, draw() {}, dispose() {},
+    async prepareRegionalFrame() {}, async prepare() { return true; },
+  }) });
+  await h.app.ready;
+  const entries = WORLD_CATALOGUE.filter((item) => !item.legacy && !item.beginner && item.activity !== 'hunt');
+  await h.app.startFlight(entries[0]);
+  await openWorldTuning(h);
+  worldTuningControl(h, 'Vertical FOV (degrees)').value = '105';
+  await worldTuningClick(h, 'Test draft · unscored');
+  await settleUntil(() => h.$('world-fov').value === '105', 'The first draft must be adopted');
+  let next = entries[1];
+  if (destination === 'Regional') {
+    const [{ createEnduranceFixture }, { regionalReviewEntry }] = await Promise.all([
+      import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+      import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+    ]);
+    const { terrain } = await createEnduranceFixture();
+    next = regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source });
+  }
+  await h.app.startFlight(next);
+  await openWorldTuning(h);
+  worldTuningControl(h, 'Vertical FOV (degrees)').value = '107';
+  await worldTuningClick(h, 'Test draft · unscored');
+  await settleUntil(() => h.$('world-fov').value === '107', 'The new draft must be adopted');
+  assert.equal(h.app.snapshot().course, next.id, 'Test uses the newly selected environment');
+  h.doc.querySelector('.tuning-return').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  worldTuningControl(h, 'Vertical FOV (degrees)').value = '113';
+  await worldTuningClick(h, 'Apply & restart');
+  await settleUntil(() => h.$('world-fov').value === '113', 'The saved restart must be adopted');
+  assert.equal(h.app.snapshot().course, next.id, 'Apply returns to this draft’s environment');
+});
+
+test('Regional host freezes its assigned rates and camera until the next flight', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const [{ createEnduranceFixture }, { regionalReviewEntry }, tuning, rates, responses] =
+    await Promise.all([
+      import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+      import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+      import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
+      import('../../optional-practice/civilian-fpv/rates.mjs'),
+      import('../../optional-practice/civilian-fpv/flight-response.mjs'),
+    ]);
+  const { terrain } = await createEnduranceFixture();
+  const library = tuning.initialTuningLibrary({
+    response: responses.createTunedResponse(
+      rates.createRateProfile({ axes: { yaw: { rate: 95 } } }),
+      { responseTicks: 1 },
+    ),
+    camera: { tilt: 26, verticalFov: 102 },
+  });
+  const storage = new Map([[tuning.TUNING_LIBRARY_KEY, JSON.stringify(library)]]),
+    sessions = [];
+  const h = fixture(t, {
+    storage,
+    rendererFactory: () => ({
+      available: true,
+      setPresentation() {},
+      setCourse() {},
+      setQuality() {},
+      setDrone() {},
+      setGhost() {},
+      setPath() {},
+      setRegional(session) {
+        sessions.push(session);
+      },
+      async prepareRegionalFrame() {},
+      draw() {},
+      dispose() {},
+    }),
+  });
+  await h.app.ready;
+  const entry = regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source });
+  await h.app.startFlight(entry, { mode: 'acro' });
+  const first = sessions.at(-1),
+    stick = { roll: 0, pitch: 0, yaw: 1, throttle: 0.5 };
+  assert.equal(h.$('world-fov').value, '102');
+  assert.equal(h.$('world-tilt').value, '26');
+  assert.equal(first.arm(), true);
+  assert.equal(first.step(stick).angular.yaw, 95000);
+  await openWorldTuning(h);
+  const yaw = h.doc
+    .querySelector('.fpv-tuning')
+    .querySelectorAll('fieldset')
+    .find((node) => node.querySelector('legend')?.textContent === 'Yaw');
+  const maximum = worldTuningControl(h, 'Maximum rate (°/s)', 'input', yaw);
+  maximum.value = '1370';
+  maximum.emit('input');
+  const camera = worldTuningControl(h, 'Vertical FOV (degrees)');
+  camera.value = '117';
+  camera.emit('input');
+  await worldTuningClick(h, 'Save for next flight');
+  await worldTuningClick(h, 'Close');
+  assert.equal(h.$('world-fov').value, '102');
+  assert.equal(first.arm(), true);
+  assert.equal(
+    first.step(stick).angular.yaw,
+    95000,
+    'The current Regional attempt keeps its rates',
+  );
+  await h.app.startFlight(entry, { mode: 'acro' });
+  const second = sessions.at(-1);
+  assert.notEqual(second, first);
+  assert.equal(h.$('world-fov').value, '117');
+  assert.equal(second.arm(), true);
+  assert.equal(
+    second.step(stick).angular.yaw,
+    137000,
+    'The next Regional attempt uses the saved rates',
+  );
+  assert.equal(h.$('export-flight').disabled, true);
+  assert.equal(second.snapshot().unscored, true);
+});
+
+class RegionalWorker extends Events {
+  static instances = [];
+  constructor(url, options) {
+    super();
+    this.url = url;
+    this.options = options;
+    this.messages = [];
+    this.terminated = false;
+    this.handler = createAdvancedWorkerHandler((data) => {
+      if (!this.terminated) this.emit('message', { data });
+    });
+    RegionalWorker.instances.push(this);
+  }
+  postMessage(message) {
+    this.messages.push(structuredClone(message));
+    void this.handler.receive(message).finally(() => {
+      if (this.terminated) this.handler.dispose();
+    });
+  }
+  terminate() {
+    this.terminated = true;
+    this.handler.dispose();
+  }
+}
+
+test('Regional host explicitly switches into the real Advanced worker and preserves pause, export and recovery ownership', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const [{ createEnduranceFixture }, { regionalReviewEntry }] = await Promise.all([
+    import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+    import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+  ]);
+  const { terrain } = await createEnduranceFixture();
+  const sessions = [],
+    exports = [];
+  const h = fixture(t, {
+    rendererFactory: () => ({
+      available: true,
+      setPresentation() {},
+      setCourse() {},
+      setQuality() {},
+      setDrone() {},
+      setGhost() {},
+      setPath() {},
+      draw() {},
+      dispose() {},
+      setRegional(session) {
+        sessions.push(session);
+      },
+      async prepareRegionalFrame() {},
+      async prepare() {
+        return true;
+      },
+    }),
+  });
+  h.win.Worker = RegionalWorker;
+  const timerDelays = [];
+  h.win.setTimeout = (callback, delay) => {
+    timerDelays.push(delay);
+    const timer = setTimeout(callback, delay);
+    if (delay === 60000) timer.unref();
+    return timer;
+  };
+  h.win.URL = {
+    createObjectURL: (blob) => {
+      exports.push(blob);
+      return 'blob:regional-export';
+    },
+    revokeObjectURL() {},
+  };
+  await h.app.ready;
+  const entry = regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source });
+  await h.app.startFlight(entry);
+  const toggle = h.doc.querySelector('[data-regional-advanced="toggle"]');
+  assert.match(toggle.textContent, /Try Advanced here/);
+  toggle.click();
+  await settleUntil(
+    () =>
+      h.app.snapshot().state?.advanced &&
+      h.app.snapshot().state?.reason === 'prepared' &&
+      !toggle.disabled,
+    'Advanced Regional should prepare',
+  );
+  assert.equal(h.$('flight-mode').value, 'acro');
+  assert.equal(h.$('flight-mode').disabled, true);
+  assert.match(h.$('flight-collection').textContent, /ADVANCED.*UNSCORED/);
+  assert.match(
+    h.doc.getElementById('regional-advanced-help').textContent,
+    /Landings and collisions use the verified terrain/,
+  );
+  const worker = RegionalWorker.instances.at(-1);
+  const workerURL = new URL('../../optional-practice/fpv-worlds/advanced-worker.mjs', import.meta.url).href;
+  assert.equal(worker.url.href, workerURL, 'Regional flight uses the World-scoped offline entry');
+  assert.equal(worker.options.type, 'module');
+  h.$('world-arm').click();
+  assert.equal(h.app.snapshot().state.status, 'active');
+  for (let tick = 0; tick < 8; tick++) {
+    h.tick();
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert.ok(h.app.snapshot().state.ticks > 0);
+  assert.ok(worker.messages.some((row) => row.type === 'propose'));
+  assert.ok(worker.messages.some((row) => row.type === 'commit' && row.decision.accepted));
+  assert.equal(
+    h.$('export-flight').disabled,
+    true,
+    'Unqualified Advanced flights never enter normal records',
+  );
+  h.doc.emit('visibilitychange');
+  h.win.emit('blur');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.app.snapshot().state.status, 'paused');
+  const exportButton = h.doc
+    .querySelectorAll('button')
+    .find((row) => row.textContent === 'Export recovery');
+  exportButton.click();
+  await settleUntil(
+    () => exports.length === 1,
+    'Paused recovery exports through the platform adapter',
+  );
+  const recoveryFile = await exports[0].text();
+  const saved = JSON.parse(recoveryFile);
+  assert.equal(saved.format, 'AdvancedRegionalRecovery.v1');
+  assert.equal(saved.simulation.recording.scored, false);
+  await settleUntil(() => !exportButton.disabled, 'Export controls should unlock');
+  const current = sessions.at(-1);
+  assert.equal(current.arm(), true);
+  await current.step({ roll: 0, pitch: 0, yaw: 0.1, throttle: 0.4 });
+  const restoreButton = h.doc
+    .querySelectorAll('button')
+    .find((row) => row.textContent === 'Restore recovery file');
+  restoreButton.click();
+  const file = restoreButton.parentElement.querySelector('input[type="file"]');
+  const largeRecovery = recoveryFile.padEnd(17 * 1024 * 1024, ' ');
+  file.files = [{ size: largeRecovery.length, text: async () => largeRecovery }];
+  file.emit('change');
+  await settleUntil(
+    () =>
+      h.app.snapshot().state.ticks === saved.simulation.state.missionTick &&
+      h.app.snapshot().state.reason === 'prepared',
+    'Recovery should return to the saved mission without auto-arming',
+  );
+  assert.equal(h.app.snapshot().state.status, 'paused');
+  const recoveredWorker = RegionalWorker.instances.at(-1);
+  assert.ok(timerDelays.includes(420000), 'Recovery uses the complete replay verification allowance');
+  assert.notEqual(recoveredWorker, worker, 'Recovery creates a detached worker before adoption');
+  assert.equal(recoveredWorker.url.href, workerURL, 'Recovery preserves the World-scoped entry');
+  assert.equal(recoveredWorker.options.type, 'module');
+  await settleUntil(() => !toggle.disabled, 'Recovery should release menu controls');
+  let oversizedRead = false;
+  file.files = [{ size: ADVANCED_REGIONAL_RECOVERY_BYTES + 1, text: async () => { oversizedRead = true; return recoveryFile; } }];
+  file.emit('change');
+  await settleUntil(() => !toggle.disabled, 'Oversized recovery releases controls');
+  assert.equal(oversizedRead, false, 'The shared recovery limit rejects oversized files before reading');
+  assert.equal(h.app.snapshot().state.status, 'paused');
+  const beforeCancelledRecovery = h.app.snapshot().state;
+  const cancelRecovery = h.doc.querySelectorAll('button').find((row) => row.textContent === 'Cancel recovery verification');
+  let finishFileRead;
+  file.files = [{ size: recoveryFile.length, text: () => new Promise((resolve) => { finishFileRead = resolve; }) }];
+  file.emit('change');
+  await settleUntil(() => typeof finishFileRead === 'function' && !cancelRecovery.hidden, 'File reading should be pending before worker verification');
+  cancelRecovery.click();
+  await settleUntil(() => !toggle.disabled && cancelRecovery.hidden, 'Cancelling file reading promptly releases the menu');
+  assert.deepEqual(h.app.snapshot().state, beforeCancelledRecovery, 'Cancelling before restore leaves the prepared terrain and flight unchanged');
+  assert.equal(RegionalWorker.instances.at(-1), recoveredWorker, 'File reading never creates a detached worker');
+  finishFileRead(recoveryFile);
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.deepEqual(h.app.snapshot().state, beforeCancelledRecovery, 'A late file read cannot adopt after cancellation');
+  assert.equal(RegionalWorker.instances.at(-1), recoveredWorker);
+  h.win.Worker = class extends RegionalWorker {
+    postMessage(message) {
+      if (message.type === 'restore') this.messages.push(structuredClone(message));
+      else super.postMessage(message);
+    }
+  };
+  file.files = [{ size: recoveryFile.length, text: async () => recoveryFile }];
+  file.emit('change');
+  await settleUntil(() => RegionalWorker.instances.at(-1) !== recoveredWorker && RegionalWorker.instances.at(-1).messages.some((message) => message.type === 'restore'), 'Detached verification should be pending');
+  const cancelledWorker = RegionalWorker.instances.at(-1);
+  assert.equal(cancelRecovery.hidden, false);
+  assert.equal(cancelRecovery.disabled, false);
+  cancelRecovery.click();
+  await settleUntil(() => !toggle.disabled && cancelRecovery.hidden, 'Cancellation promptly releases the menu');
+  assert.equal(cancelledWorker.terminated, true, 'Cancel retires the detached verification owner');
+  assert.equal(recoveredWorker.terminated, false, 'Cancel preserves the existing verified flight');
+  assert.deepEqual(h.app.snapshot().state, beforeCancelledRecovery);
+  assert.match(cancelRecovery.parentElement.textContent, /cancelled/);
+  toggle.click();
+  await settleUntil(
+    () => !h.app.snapshot().state.advanced && h.app.snapshot().state.reason === 'prepared',
+    'Return to Legacy should recreate the Regional session',
+  );
+  assert.equal(worker.terminated, true);
+  assert.equal(
+    RegionalWorker.instances.at(-1).terminated,
+    true,
+    'Detached recovery worker is also released on leaving Advanced',
+  );
+  assert.equal(h.$('flight-mode').disabled, false);
+});
+
+test('Regional Advanced is explicitly unavailable when workers cannot run', async (t) => {
+  const [{ createEnduranceFixture }, { regionalReviewEntry }] = await Promise.all([
+    import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+    import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+  ]);
+  const { terrain } = await createEnduranceFixture();
+  const h = fixture(t, {
+    rendererFactory: () => ({
+      available: true,
+      setPresentation() {},
+      setCourse() {},
+      setQuality() {},
+      setDrone() {},
+      setGhost() {},
+      setPath() {},
+      draw() {},
+      dispose() {},
+      setRegional() {},
+      async prepareRegionalFrame() {},
+      async prepare() {
+        return true;
+      },
+    }),
+  });
+  await h.app.ready;
+  await h.app.startFlight(
+    regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source }),
+  );
+  assert.equal(h.doc.querySelector('[data-regional-advanced="toggle"]').disabled, true);
+  assert.match(
+    h.doc.getElementById('regional-advanced-help').textContent,
+    /unavailable|недоступний/,
+  );
+});
+
+test('World tuning owns Back without closing the underlying settings dialog', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  h.$('lobby-settings').click();
+  assert.equal(h.$('sim-settings').open, true);
+  await openWorldTuning(h);
+  const tuning = h.doc.querySelector('.fpv-tuning');
+  h.doc.emit('keydown', { key: 'Escape', code: 'Escape', target: tuning.querySelector('h2') });
+  h.doc.emit('keyup', { key: 'Escape', code: 'Escape', target: h.doc.activeElement });
+  assert.equal(tuning.open, false);
+  assert.equal(h.$('sim-settings').open, true);
+});
+
+test('World tuning keeps its hint through pointer blur and releases it after closing', async (t) => {
+  const previousLocale = getLocale();
+  setLocale('en');
+  t.after(() => setLocale(previousLocale));
+  const storage = new Map();
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  h.$('lobby-settings').click();
+  await openWorldTuning(h);
+  const tuning = h.doc.querySelector('.fpv-tuning');
+  const name = worldTuningControl(h, 'Profile name');
+  name.value = 'Pointer saved profile';
+  name.focus();
+  h.doc.emit('keydown', { key: 'Shift', code: 'ShiftLeft', target: name });
+  const hint = tuning.querySelector('.sim-menu-hint');
+  const instructions = hint.textContent;
+  assert.ok(instructions.length > 0);
+  const save = tuning
+    .querySelectorAll('button')
+    .find((node) => node.textContent === 'Save for next flight');
+  save.emit('pointerdown');
+  h.win.emit('blur', { target: name, bubbles: false });
+  assert.equal(hint.textContent, instructions, 'pointer blur must not shrink the tuning dialog');
+  assert.equal(hint.hidden, false);
+  assert.equal(hint.parentElement, tuning);
+  save.emit('pointerup');
+  await worldTuningClick(h, 'Save for next flight');
+  assert.ok(
+    JSON.parse(storage.get('revealline.fpv.tuning.v1')).profiles.some(
+      (profile) => profile.name === 'Pointer saved profile',
+    ),
+  );
+  h.win.emit('focus');
+  await worldTuningClick(h, 'Close');
+  h.doc.emit('keydown', { key: 'Shift', code: 'ShiftLeft', target: h.doc.activeElement });
+  assert.equal(tuning.open, false);
+  assert.equal(
+    tuning.contains(hint),
+    false,
+    'the closed tuning dialog does not retain hint ownership',
+  );
+  assert.equal(h.$('sim-settings').contains(hint), true);
+});
+
+for (const kind of [
+  'legacy comfort camera',
+  'saved drone camera',
+  'unreadable comfort camera',
+  'World settings camera',
+]) {
+  test(`World captures ${kind} before its first tuning configuration`, async (t) => {
+    const priorLocale = getLocale();
+    setLocale('en', { persist: false });
+    t.after(() => setLocale(priorLocale, { persist: false }));
+    const { initialTuningLibrary } = await import(
+      '../../optional-practice/civilian-fpv/tuning-library.mjs'
+    );
+    const response = {
+      format: 'FlightResponseProfile.v1',
+      id: 'historical',
+      name: 'Historical',
+      maxRate: 480,
+      maxTilt: 42,
+      expo: 45,
+      responseTicks: 11,
+    };
+    const cameraKey = 'revealline.fpv.flight-comfort.v1.worlds.camera';
+    const data = new Map([
+      [
+        'revealline.flight-profiles.v1',
+        JSON.stringify({ format: 'FlightProfiles.v1', radio: null, response }),
+      ],
+      [
+        'revealline.fpv.world-settings.v1',
+        JSON.stringify({ 'world-tilt': '18', 'world-fov': '96' }),
+      ],
+      [cameraKey, JSON.stringify({ fov: 108, tilt: 27 })],
+    ]);
+    if (kind === 'World settings camera') data.delete(cameraKey);
+    if (kind === 'saved drone camera')
+      data.set(
+        'revealline.fpv.tuning.v1',
+        JSON.stringify(initialTuningLibrary({ response, camera: { tilt: 49, verticalFov: 121 } })),
+      );
+    const saved = data.get('revealline.fpv.tuning.v1');
+    const h = fixture(t, {
+      storage: {
+        get(key) {
+          if (kind === 'unreadable comfort camera' && key === cameraKey)
+            throw new Error('Camera storage unavailable');
+          return data.get(key);
+        },
+        set: (key, value) => data.set(key, value),
+      },
+    });
+    await h.app.ready;
+    const entry = WORLD_CATALOGUE.find(
+      (item) => !item.legacy && !item.beginner && item.activity !== 'hunt',
+    );
+    await h.app.startFlight(entry);
+    const expected =
+      kind === 'saved drone camera'
+        ? { tilt: 49, fov: 121 }
+        : kind === 'legacy comfort camera'
+          ? { tilt: 27, fov: 108 }
+          : { tilt: 18, fov: 96 };
+    assert.equal(Number(h.$('world-tilt').value), expected.tilt);
+    assert.equal(Number(h.$('world-fov').value), expected.fov);
+    await openWorldTuning(h);
+    assert.equal(worldTuningControl(h, 'Camera tilt (degrees)').value, String(expected.tilt));
+    assert.equal(worldTuningControl(h, 'Vertical FOV (degrees)').value, String(expected.fov));
+    assert.equal(
+      data.get('revealline.fpv.tuning.v1'),
+      saved,
+      'Opening must not persist or replace a library',
+    );
+    assert.deepEqual(JSON.parse(data.get('revealline.flight-profiles.v1')).response, response);
+  });
+}

@@ -28,6 +28,7 @@ test('public company directory can display and navigate without a community back
   assert.deepEqual(
     scripts.map((node) => attribute(node, 'src')).sort(),
     [
+      '../access-gate.mjs',
       '../i18n/bootstrap.mjs',
       '../i18n/catalogs.mjs',
       '../presentation/theme-bootstrap.mjs',
@@ -35,11 +36,13 @@ test('public company directory can display and navigate without a community back
       '../vendor/i18next-26.4.2.min.js',
       './directory.mjs',
     ],
-    'Only local localization, appearance and directory navigation run; no catalog/auth/client bootstrap is loaded.',
+    'Only the local access gate, localization, appearance and directory navigation load; no catalog/auth/client bootstrap is loaded.',
   );
   for (const node of scripts) {
+    const isGate = attribute(node, 'src') === '../access-gate.mjs';
+    assert.equal(attribute(node, 'type'), isGate ? undefined : 'application/x-revealline-locked');
     assert.equal(
-      attribute(node, 'type') === 'module',
+      attribute(node, 'data-access-type') === 'module',
       ['../presentation/theme-entry.mjs', './directory.mjs'].includes(attribute(node, 'src')),
     );
     assert.equal(

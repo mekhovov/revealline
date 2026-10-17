@@ -60,6 +60,26 @@ export function overflightCombatEditor({
   });
   field(words('Guarded supply cases', 'Ящики під охороною'), enabled);
   const hunt = project.format.startsWith('OverflightHuntProject');
+  if (!hunt && /V4$/.test(project.survivorFormat ?? project.format)) {
+    const separation = document.createElement('select');
+    separation.setAttribute('data-crowd-separation', '');
+    for (const [value, en, uk] of [
+      ['legacy', 'Original crowd movement', 'Початковий рух натовпу'],
+      ['local-v1', 'Local spacing · experimental', 'Локальні відстані · експеримент'],
+    ]) {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = words(en, uk);
+      separation.append(option);
+    }
+    separation.value = project.combat.crowdSeparation ?? 'legacy';
+    separation.addEventListener('change', () => {
+      if (separation.value === 'local-v1') project.combat.crowdSeparation = 'local-v1';
+      else delete project.combat.crowdSeparation;
+      onChange();
+    });
+    field(words('Crowd movement', 'Рух натовпу'), separation);
+  }
   if (modern && !hunt) {
     const overdrive = document.createElement('input');
     overdrive.type = 'checkbox';

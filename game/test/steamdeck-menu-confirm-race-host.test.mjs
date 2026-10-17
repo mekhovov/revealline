@@ -337,3 +337,53 @@ test('disconnect after a committed Confirm immediately restores genuine touchscr
   );
   assert.deepEqual(page.errors, []);
 });
+
+test('public Journey entry accepts repeated pure Gamepad Sound taps without any native input', async (t) => {
+  const { page, frame, hold } = await deckPage(t, {
+    titleScreen: true,
+    search: '',
+    waitForPictures: false,
+  });
+  const sound = page.$('shell-sound');
+  sound.focus();
+  for (let press = 0; press < 3; press++) {
+    const before = sound.getAttribute('aria-pressed');
+    hold(true);
+    frame();
+    assert.equal(sound.getAttribute('aria-pressed'), before, 'A-down does not activate');
+    hold(false);
+    frame();
+    assert.notEqual(sound.getAttribute('aria-pressed'), before, 'A-up activates once');
+  }
+  assert.deepEqual(page.errors, []);
+});
+
+test('native-first pointer Confirm captures a control before browser focus transfers', async (t) => {
+  const { page, frame, hold, elapse } = await deckPage(t, {
+    titleScreen: true,
+    search: '',
+    waitForPictures: false,
+  });
+  const sound = page.$('shell-sound');
+  page.$('shell-options').focus();
+  const before = sound.getAttribute('aria-pressed');
+  const mouse = pointer('mouse', 121);
+  // pointerdown precedes the compatibility mousedown that transfers focus.
+  sound.emit('pointerdown', mouse);
+  elapse(10);
+  hold(true);
+  sound.emit('mousedown', mouse);
+  frame();
+  assert.equal(sound.getAttribute('aria-pressed'), before);
+  hold(false);
+  sound.emit('pointerup', { ...mouse, buttons: 0 });
+  sound.emit('mouseup', { ...mouse, buttons: 0 });
+  sound.emit('click', { ...mouse, buttons: 0 });
+  frame();
+  assert.notEqual(
+    sound.getAttribute('aria-pressed'),
+    before,
+    'captured pointer target activates once',
+  );
+  assert.equal(page.$('settings-dialog').open, false, 'old focus must not activate');
+});

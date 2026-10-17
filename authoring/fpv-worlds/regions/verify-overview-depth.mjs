@@ -184,6 +184,16 @@ for (const spawn of manifest.spawns)
         z: Math.min(8, z + 2) * cellSize,
       },
     };
+    // The production host now supplies measured resident heights, rather than the
+    // previously unused nominal 450m ceiling. Preserve the same depth thresholds.
+    bounds.min.y = Infinity;
+    bounds.max.y = -Infinity;
+    for (const cell of cells.filter((c) => Math.abs(c.x - x) <= 1 && Math.abs(c.z - z) <= 1))
+      for (const surface of cell.surfaces)
+        for (let i = 1; i < surface.positionsMm.length; i += 3) {
+          bounds.min.y = Math.min(bounds.min.y, surface.positionsMm[i]);
+          bounds.max.y = Math.max(bounds.max.y, surface.positionsMm[i]);
+        }
     const a = make(oldFactory, aspect, 2000),
       b = make(currentFactory, aspect, 2000);
     for (const row of [a, b]) {
