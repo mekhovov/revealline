@@ -178,7 +178,12 @@ export function createAircraftCourseSession(
     checkpointKind = null,
     telemetry = null,
     error = null,
+    archiveGeneration = 0,
     sequence = -1;
+  const archiveEnvelope = (value) => ({
+    ...value,
+    generation: `${archiveGeneration}:${value.generation}`,
+  });
   const identity = Object.freeze({
     model: 'aircraft-course-practice.v1',
     course: source.id,
@@ -197,7 +202,12 @@ export function createAircraftCourseSession(
       unscored: true,
       aircraftRadiusMm: aircraft.radius * 1000,
       aircraftSupportHeightMm: (telemetry?.supportHeight ?? supportHeight) * 1000,
-      advancedTelemetry: telemetry && copy(telemetry),
+      advancedTelemetry: telemetry && {
+        ...copy(telemetry),
+        ...(telemetry.archiveStatus
+          ? { archiveStatus: archiveEnvelope(telemetry.archiveStatus) }
+          : {}),
+      },
       recordingStatus: telemetry?.recordingStatus ?? null,
       reason: error ? 'worker-error' : ready ? 'prepared' : 'preparing-aircraft',
       failure: error,
@@ -290,9 +300,7 @@ export function createAircraftCourseSession(
   }
   function exportRecovery() {
     if (checkpointing)
-      return checkpointKind === 'restore'
-        ? checkpointing.then(() => exportRecovery())
-        : checkpointing;
+      return checkpointKind !== 'save' ? checkpointing.then(() => exportRecovery()) : checkpointing;
     checkpointKind = 'save';
     checkpointing = (async () => {
       await stepping;
@@ -311,6 +319,40 @@ export function createAircraftCourseSession(
         sequence,
       };
       return { ...packet, checksum: dataIdentity(packet) };
+    })().finally(() => {
+      checkpointing = null;
+      checkpointKind = null;
+    });
+    return checkpointing;
+  }
+  function readArchive(afterIndex = -1, finalize = false) {
+    required(
+      !finalize || mission.snapshot().status !== 'active',
+      'Pause before ending the session archive',
+    );
+    if (preparing && !ready) return preparing.then(() => readArchive(afterIndex, finalize));
+    if (checkpointing) return checkpointing.then(() => readArchive(afterIndex, finalize));
+    const pendingStep = stepping;
+    checkpointKind = 'archive';
+    checkpointing = (async () => {
+      await pendingStep;
+      required(ready && !disposed, 'Aircraft practice is not ready');
+      required(
+        !finalize || mission.snapshot().status !== 'active',
+        'Pause before ending the session archive',
+      );
+      const result = await (finalize
+        ? client.finalizeArchive(afterIndex)
+        : client.readSealedSegment(afterIndex));
+      if (telemetry)
+        telemetry.archiveStatus = {
+          generation: result.generation,
+          origin: result.origin,
+          earliestIndex: result.earliestIndex,
+          lastSealedIndex: result.lastSealedIndex,
+          latestTick: result.latestTick,
+        };
+      return archiveEnvelope(result);
     })().finally(() => {
       checkpointing = null;
       checkpointKind = null;
@@ -406,6 +448,7 @@ export function createAircraftCourseSession(
         mission = candidateMission;
         candidateMission = null;
         client = candidate;
+        archiveGeneration++;
         adopted = true;
         telemetry = restored;
         sequence = saved.sequence;
@@ -447,6 +490,8 @@ export function createAircraftCourseSession(
       return client.recording();
     },
     exportRecovery,
+    readSealedSegment: (afterIndex) => readArchive(afterIndex),
+    finalizeArchive: (afterIndex) => readArchive(afterIndex, true),
     restoreRecovery,
     async reportPersistence(status) {
       const result = await client.reportPersistence(status);

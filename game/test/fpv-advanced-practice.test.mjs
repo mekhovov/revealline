@@ -18,6 +18,9 @@ import {
 } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 import { DEFAULT_RESPONSE } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 import { createTuningLibraryStore } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
+import { createAircraftArchiveStore } from '../../optional-practice/civilian-fpv/aircraft-archive.mjs';
+import { verifyAircraftArchive } from '../../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 class LocalWorker extends Events {
   static instances = [];
@@ -191,6 +194,68 @@ test('aircraft preview reports insufficient thrust instead of a zero-percent hov
   preset.aircraft.mass = 1;
   const f = await fixture(t, { configuration: preset, response: preset.response });
   assert.match(f.container.textContent, /Estimated hover throttle: Insufficient thrust for hover/);
+});
+
+test('aircraft arena archives its final tail, continues flying and retires its owner on restart', async (t) => {
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  const store = createAircraftArchiveStore({ indexedDB: managedIndexedDB().indexedDB });
+  const workerURL = new URL(
+    '../../optional-practice/fpv-worlds/advanced-worker.mjs',
+    import.meta.url,
+  );
+  const f = await fixture(t, {
+    configuration: preset,
+    response: preset.response,
+    archiveStore: store,
+    workerURL,
+  });
+  f.win.Worker = LocalWorker;
+  async function rowsWhen(predicate) {
+    for (let i = 0; i < 500; i++) {
+      const rows = await store.list();
+      if (predicate(rows)) return rows;
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.fail('Arena archive did not settle');
+  }
+  assert.equal(f.container.querySelector('.aircraft-archive-controls').hidden, false);
+  await rowsWhen((rows) => rows.length === 1);
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry().missionTick === 1);
+  f.button('Finish current archive').click();
+  const first = (await rowsWhen((rows) => rows[0].state === 'ended'))[0];
+  assert.equal(first.endTick, 1);
+  assert.equal(first.host, 'arena');
+  assert.equal(
+    (await verifyAircraftArchive(await store.exportPackage(first.id))).verificationScope,
+    'complete-session',
+  );
+  await waitFor(() => !f.button('Start practice').disabled);
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry().missionTick === 2);
+  f.button('Pause').click();
+  f.button('Verify selected archive').click();
+  await waitFor(() =>
+    f.container.textContent.includes('Complete session physics verified from reset'),
+  );
+  assert.equal(LocalWorker.instances.at(-1).url, workerURL);
+  assert.equal(LocalWorker.instances.at(-1).terminated, true);
+  f.button('Restart practice').click();
+  await rowsWhen((rows) => rows.length === 2);
+  assert.equal(f.session.getTelemetry().missionTick, 0);
+  const choose = f.container
+    .querySelectorAll('select')
+    .find((select) => select.children.some((option) => option.value === 'freestyle'));
+  choose.value = 'freestyle';
+  choose.emit('change');
+  f.button('Restart practice').click();
+  await waitFor(
+    () =>
+      !f.button('Start practice').disabled &&
+      f.session.getTelemetry().backend === 'civilian-quad-advanced-experimental.v2',
+  );
+  assert.equal(f.container.querySelector('.aircraft-archive-controls').hidden, true);
+  assert.equal((await store.list()).find((row) => row.id !== first.id).state, 'interrupted');
 });
 
 test('aircraft arena verifies checkpoint clips and retains usable practice controls', async (t) => {

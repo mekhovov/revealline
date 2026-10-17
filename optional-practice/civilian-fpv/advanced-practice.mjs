@@ -22,6 +22,7 @@ import {
 } from './aircraft-presets.mjs';
 import { AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
 import { exportJSONFile, onNativeInactive } from '../../game/platform.mjs';
+import { mountAircraftArchiveControls } from './aircraft-archive-controls.mjs';
 
 const COPY = {
   en: {
@@ -250,6 +251,7 @@ export function mountAdvancedPractice({
   workerURL,
   rendererFactory = (options) => new THREE.WebGLRenderer(options),
   platformOptions = {},
+  archiveStore,
 }) {
   const copy = COPY[locale] ?? COPY.en,
     doc = container.ownerDocument;
@@ -284,6 +286,7 @@ export function mountAdvancedPractice({
     verificationGeneration = 0;
   let disposed = false,
     client,
+    archiveSession = null,
     renderer,
     frame,
     timer,
@@ -1182,6 +1185,7 @@ export function mountAdvancedPractice({
       const result = await client.step(sample);
       if (disposed || owner !== generation) return;
       telemetry = result.telemetry;
+      publishArchive();
       keepComparison.disabled = verifying || !telemetry.missionTick;
       if (telemetry.consumedSequence === sample.sequence) lastConsumedPollAt = started;
       const elapsed = win.performance.now() - started;
@@ -1216,6 +1220,8 @@ export function mountAdvancedPractice({
     keepComparison.disabled = true;
     comparisonFile.disabled = true;
     generation++;
+    archiveSession = null;
+    publishArchive();
     const owner = generation;
     client?.dispose();
     sequence = 0;
@@ -1241,6 +1247,29 @@ export function mountAdvancedPractice({
       if (disposed || owner !== generation) return;
       telemetry = result.telemetry;
       activeOptions = structuredClone(options);
+      if (options.aircraft.format === 'AdvancedAircraft.v2') {
+        const ownedClient = client;
+        const liveArchive = () => {
+          if (disposed || owner !== generation || ownedClient !== client)
+            throw new Error('This aircraft archive belongs to an earlier practice flight');
+        };
+        const envelope = (value) => ({ ...value, generation: `${owner}:${value.generation}` });
+        archiveSession = {
+          async readSealedSegment(afterIndex) {
+            liveArchive();
+            const value = await ownedClient.readSealedSegment(afterIndex);
+            liveArchive();
+            return envelope(value);
+          },
+          async finalizeArchive(afterIndex) {
+            liveArchive();
+            if (running) throw new Error('Pause before ending the session archive');
+            const value = await ownedClient.finalizeArchive(afterIndex);
+            liveArchive();
+            return envelope(value);
+          },
+        };
+      }
       rebuildGhost(draftConfiguration.aircraft);
       view.fov = Math.max(30, Math.min(150, Number(draftCamera.fov) || 82));
       view.updateProjectionMatrix();
@@ -1250,6 +1279,7 @@ export function mountAdvancedPractice({
       );
       activeComparison = result.comparison;
       initialized = true;
+      publishArchive();
       flightStopCode = null;
       status.textContent = copy.ready;
       start.disabled = graphicsLost;
@@ -1391,6 +1421,7 @@ export function mountAdvancedPractice({
     win.clearTimeout(timer);
     win.cancelAnimationFrame(frame);
     client?.dispose();
+    archiveControls.dispose();
     verificationClient?.dispose();
     verificationClient = null;
     verificationGeneration++;
@@ -1403,6 +1434,33 @@ export function mountAdvancedPractice({
     else grid.material.dispose();
     renderer?.dispose();
     root.remove();
+  }
+  const archiveControls = mountAircraftArchiveControls({
+    parent: root,
+    window: win,
+    locale: () => locale,
+    getSession: () => archiveSession,
+    onPause: () => pause(),
+    key: 'arena',
+    workerURL,
+    platformOptions,
+    store: archiveStore,
+  });
+  function publishArchive() {
+    archiveControls.update({
+      ticks: telemetry?.missionTick ?? 0,
+      advancedTelemetry: telemetry && {
+        ...telemetry,
+        ...(telemetry.archiveStatus
+          ? {
+              archiveStatus: {
+                ...telemetry.archiveStatus,
+                generation: `${generation}:${telemetry.archiveStatus.generation}`,
+              },
+            }
+          : {}),
+      },
+    });
   }
   try {
     renderer = rendererFactory({ canvas, antialias: true });

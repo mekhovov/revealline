@@ -1,6 +1,7 @@
 import { boundedJSON } from '../../game/data-json.mjs';
 import { AIRCRAFT_RECORDING_FORMAT, AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
 import { AIRCRAFT_BACKEND } from './advanced-aircraft-runtime.mjs';
+import { verifyAircraftArchive } from './aircraft-archive-verifier.mjs';
 import {
   ADVANCED_BACKEND,
   ADVANCED_RECORDING_BYTES,
@@ -16,6 +17,7 @@ import {
 export function createAdvancedWorkerHandler(postMessage) {
   let simulation = null,
     session = null,
+    archiveVerification = null,
     queue = Promise.resolve();
   async function execute(message) {
     const { id, session: requestSession, type } = message ?? {};
@@ -90,6 +92,29 @@ export function createAdvancedWorkerHandler(postMessage) {
           case 'recording-persistence':
             result = simulation.reportPersistence?.(message.status) ?? null;
             break;
+          case 'read-sealed-segment':
+            if (!simulation.readSealedSegment)
+              throw new Error('Session archives require aircraft physics');
+            result = simulation.readSealedSegment(message.afterIndex);
+            break;
+          case 'finalize-archive':
+            if (!simulation.finalizeArchive)
+              throw new Error('Session archives require aircraft physics');
+            result = simulation.finalizeArchive(message.afterIndex);
+            break;
+          case 'verify-archive': {
+            const controller = new AbortController();
+            archiveVerification = controller;
+            try {
+              result = await verifyAircraftArchive(message.archive, {
+                signal: controller.signal,
+                onProgress: (progress) => postMessage({ id, session: requestSession, progress }),
+              });
+            } finally {
+              if (archiveVerification === controller) archiveVerification = null;
+            }
+            break;
+          }
           case 'verify-recording': {
             const record = boundedJSON(message.recording, {
               maxBytes: AIRCRAFT_RECORDING_BYTES,
@@ -176,6 +201,7 @@ export function createAdvancedWorkerHandler(postMessage) {
       return queue;
     },
     dispose() {
+      archiveVerification?.abort();
       simulation?.dispose();
       simulation = null;
       session = null;
