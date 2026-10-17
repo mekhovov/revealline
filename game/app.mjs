@@ -414,12 +414,22 @@ const $ = (id) => document.getElementById(id),
     if (element.hidden !== hidden) element.hidden = hidden;
     return hidden;
   };
-const getJSON = async (path) => {
+const getJSON = async (path, assertCurrent) => {
+  assertCurrent?.();
   const r = await fetch(
     communityRouteFromURL(location.href) ? new URL(path, gameDocumentURL(location.href)) : path,
   );
+  try {
+    assertCurrent?.();
+  } catch (error) {
+    await r.body?.cancel?.().catch(() => {});
+    throw error;
+  }
   if (!r.ok) throw new Error(t('gameplay:couldNotLoad', { value1: path }));
-  return r.json();
+  if (!assertCurrent) return r.json();
+  const text = await r.text();
+  assertCurrent();
+  return JSON.parse(text);
 };
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 let startupEditionWriter = null;
@@ -820,6 +830,7 @@ try {
     retainedLibraryOwner = null,
     unifiedLibrary = null,
     unifiedLibraryLoading = null,
+    unifiedBuildRevision = 0,
     unifiedChooser = null,
     disposeUnifiedPreview = null,
     cancelUnifiedOpening = null,
@@ -1454,6 +1465,7 @@ try {
     const effective = demoHost?.preparationPhase ?? phase;
     if (effective === mediaPreparationPhase) return;
     mediaPreparationPhase = effective;
+    if (effective === 'playing' || effective === 'suspended') ++unifiedBuildRevision;
     sound.setPreparationPhase(effective);
   }
   sound.setActorPresentation(() => ({
@@ -3668,6 +3680,7 @@ try {
     enemyGuide.open();
   };
   handlePageHide = (event) => {
+    ++unifiedBuildRevision;
     const demoActive = demoHost?.active;
     demoHost?.suspend();
     cancelUnifiedOpening?.();
@@ -6551,12 +6564,16 @@ try {
     );
     preparationButtonBusy(operation.button, true);
     try {
-      const host = await getUnifiedMissionLibrary();
+      const isCurrent = () =>
+        librarySkipResolution === operation &&
+        !operation.controller.signal.aborted &&
+        skipSnapshotCurrent(operation.snapshot);
+      const host = await getUnifiedMissionLibrary(isCurrent);
       if (librarySkipResolution !== operation || !skipSnapshotCurrent(operation.snapshot)) {
         cancelSkipResolution({ announce: false });
         return;
       }
-      await host.refreshInstalled();
+      await refreshUnifiedInstalled(host, isCurrent);
       if (librarySkipResolution !== operation || !skipSnapshotCurrent(operation.snapshot)) {
         cancelSkipResolution({ announce: false });
         return;
@@ -9617,9 +9634,9 @@ try {
       document.addEventListener('focusin', changedFocus);
       document.addEventListener('visibilitychange', lostForeground);
       window.addEventListener('blur', windowBlur);
-      const host = await getUnifiedMissionLibrary();
+      const host = await getUnifiedMissionLibrary(current);
       if (!current()) return;
-      await host.refreshInstalled();
+      await refreshUnifiedInstalled(host, current);
       if (!current()) return;
       const row = currentSoloLibraryMission(host);
       const next = librarySuccessor(host.library, row, 'solo');
@@ -12597,7 +12614,8 @@ try {
     document,
     onPictureReady: (record) => editionUI?.pictureReady(record),
     getState: async () => {
-      if (!collectionJourneyState) await getUnifiedMissionLibrary();
+      if (!collectionJourneyState)
+        await getUnifiedMissionLibrary(() => $('collection-dialog').open);
       return collectionJourneyState;
     },
   });
@@ -12743,6 +12761,7 @@ try {
     lastReplay && downloadCurrentReplay(lastReplayPresentation ?? lastReplay);
   $('download-raw-replay').onclick = () => lastReplay && downloadCurrentReplay(lastReplay);
   function suspendInteraction() {
+    ++unifiedBuildRevision;
     retireMissionThumbnails();
     cancelUnifiedOpening?.();
     // Returning to focus must not revive a picker or launch requested before
@@ -13679,7 +13698,7 @@ try {
     // The first source catalogue contains exact installed Classic originals.
     if (candidateHost?.owns(entry))
       throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostSelectIt'));
-    const host = await getUnifiedMissionLibrary();
+    const host = await getUnifiedMissionLibrary(isCurrent);
     assertIntent();
     const baseKey = entry.baseCampaignKey || campaignKey(entry.baseCampaign ?? entry.campaign);
     const row = host.library
@@ -13713,484 +13732,590 @@ try {
     handedOff = true;
     return true;
   }
-  async function getUnifiedMissionLibrary() {
+  function unifiedLibraryGuard(isCurrent = () => true) {
+    const revision = unifiedBuildRevision,
+      oldRun = run;
+    return () => {
+      if (
+        unifiedDisposed ||
+        revision !== unifiedBuildRevision ||
+        run !== oldRun ||
+        !paused ||
+        document.hidden ||
+        document.hasFocus?.() === false ||
+        mediaPreparationPhase === 'playing' ||
+        mediaPreparationPhase === 'suspended' ||
+        !isCurrent()
+      )
+        throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
+    };
+  }
+  async function refreshUnifiedInstalled(host, isCurrent) {
+    const assertCurrent = unifiedLibraryGuard(isCurrent);
+    assertCurrent();
+    return host.refreshInstalled({ assertCurrent });
+  }
+  async function getUnifiedMissionLibrary(isCurrent = () => true) {
+    const callerCurrent = unifiedLibraryGuard(isCurrent);
+    callerCurrent();
     if (unifiedLibrary) return unifiedLibrary;
-    if (unifiedLibraryLoading) return unifiedLibraryLoading;
-    unifiedLibraryLoading = (async () => {
-      const [
-        { createInstalledMissionLibrary },
-        { publishedJourneyLibrarySources },
-        { combineJourneyLibrarySources },
-        { createDuel },
-      ] = await Promise.all([
-        import('./mission-library/installed-library.mjs'),
-        import('./mission-library/published-routes.mjs'),
-        import('./mission-library/cross-mode-journey.mjs'),
-        import('./multiplayer.mjs'),
-      ]);
-      const index =
-        runtimeContent?.missionIndex ?? (await getJSON('content/mission-library-index.json'));
-      actorMissionIndex = Promise.resolve(index);
-      actorMissionIndexValue = index;
-      const route = authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo));
-      const originalThemes =
-        runtimeContent?.themes ?? (await getJSON('content-design/themes.json')).themes;
-      const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
-        ? journeyActorThemeCandidates(originalThemes, {
-            includeOriginals: route.preserveOriginalThemes === true,
-          })
-        : originalThemes;
-      const views = publishedRouteViews(route);
-      const host =
-        candidateHost ||
-        views?.solo ||
-        (await createSoloRouteHost(route, {
-          themes: libraryThemes,
-          buildVersion,
-          corePackIds: route.corePackIds,
-          optionalCampaignIds: route.optionalCampaignIds,
-          ...(!runtimeContent
-            ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
-            : {}),
-        }));
-      const profile = candidateHost
-        ? journeyProfile
-        : createJourneyProfileStore({
-            profileKey: route.profileKey,
-            ...(previewSession?.journeyOptions(route.profileKey) ?? {}),
-          });
-      if (!candidateHost) await profile.load();
-      collectionJourneyState = { profile, catalog: host.catalog, editionId: route.id };
-      const launchSolo = async (mission, context) => {
-        if (context.isCurrent?.() === false) return false;
-        if (!candidateHost || context.mode !== 'solo') {
-          if (context.skip && context.mode === 'solo') {
-            let validationHost = host,
-              disposeValidationHost = false;
-            if (!validationHost.preparer) {
-              validationHost = await createSoloRouteHost(route, {
-                themes: libraryThemes,
-                buildVersion,
-                corePackIds: route.corePackIds,
-                optionalCampaignIds: route.optionalCampaignIds,
-                ...(!runtimeContent
-                  ? {
-                      ensurePackage: (groupId, options) =>
-                        gameplayDownloads.ensure(groupId, options),
-                    }
-                  : {}),
-              });
-              disposeValidationHost = true;
-            }
-            try {
-              const candidate = await validationHost.preparer.prepare(
-                {
-                  missionId: mission.id,
-                  difficulty: browsingJourneyPreferences.snapshot().difficulty,
-                  seed,
-                  turnPolicy,
-                },
-                { signal: context.signal, onStatus: context.onStatus },
-              );
-              if (context.isCurrent?.() === false) {
-                if (validationHost.preparer.current(candidate)) validationHost.preparer.cancel();
-                return false;
-              }
-              validationHost.preparer.cancel();
-            } finally {
-              if (disposeValidationHost) validationHost.preparer.dispose();
-            }
-          }
-          return departLibraryMission(context);
+    let attempt = unifiedLibraryLoading;
+    if (attempt) {
+      // A new explicit owner may join a still-admitted request. A retired
+      // generation cannot recover authority merely because play paused again.
+      for (const current of attempt.callers) {
+        try {
+          current();
+        } catch (error) {
+          if (error?.name !== 'AbortError') throw error;
+          attempt.callers.delete(current);
         }
-        if ($('shell-home').open) $('shell-home').close();
-        if (context.transferContinuation && !context.transferContinuation()) return false;
-        return launchJourneyMission(mission, {
-          kind: context.skip ? 'skip' : context.continuation ? 'next' : 'choose',
-          skipped: context.skip ? journeySkipMission() : null,
-        });
-      };
-      let journeySources,
-        spatialEditions = { dispose() {} };
-      if (runtimeContent) {
-        const manifestFor = (
-          mission,
-          difficulty = browsingJourneyPreferences.snapshot().difficulty,
-        ) =>
-          host
-            .select(mission, difficulty)
-            ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
-        const source = journeyLibrarySource({
-          editionId: route.id,
-          edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-          editionLabel: () =>
-            route.id === DEFAULT_JOURNEY_ROUTES.solo
-              ? t('interface:newJourney')
-              : contentText(route, 'label'),
-          catalog: host.catalog,
-          profile,
-          details: (mission) => journeyMissionDetails(manifestFor(mission)),
-          tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
-          card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
-          launch: launchSolo,
-        });
-        journeySources = [source];
-      } else if (views) {
-        journeySources = publishedJourneyLibrarySources({
-          route,
-          views,
-          soloHost: candidateHost,
-          profile,
-          difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-          launchSolo,
-          launchRemote: departLibraryMission,
-        });
-      } else {
-        // Compile the other mode through its own validated runtime adapter. The
-        // combined browsing identity never grants this Solo host Versus ownership.
-        const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
-        const versusPreview = createCandidateVersusHost(route.source, {
-          themes: libraryThemes,
-          corePackIds: route.corePackIds,
-          optionalCampaignIds: route.optionalCampaignIds,
-        });
-        const manifestFor = (
-          mission,
-          difficulty = browsingJourneyPreferences.snapshot().difficulty,
-        ) =>
-          host
-            .select(mission, difficulty)
-            ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
-        const source = journeyLibrarySource({
-          editionId: route.id,
-          edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-          editionLabel: () =>
-            route.id === DEFAULT_JOURNEY_ROUTES.solo
-              ? t('interface:newJourney')
-              : contentText(route, 'label'),
-          catalog: host.catalog,
-          profile,
-          details: (mission) => journeyMissionDetails(manifestFor(mission)),
-          tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
-          card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
-          launch: launchSolo,
-        });
-        const versusSource = journeyLibrarySource({
-          editionId: route.id,
-          edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-          editionLabel: () =>
-            route.id === DEFAULT_JOURNEY_ROUTES.solo
-              ? t('interface:newJourney')
-              : contentText(route, 'label'),
-          catalog: versusPreview.catalog,
-          profile,
-          details: (mission) =>
-            journeyMissionDetails(
-              versusPreview.manifest(mission, browsingJourneyPreferences.snapshot().difficulty),
-            ),
-          tags: (mission) => authoredJourneyMissionTags(mission, versusPreview.manifest(mission)),
-          card: (mission) =>
-            versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
-          launch: (_mission, context) => departLibraryMission(context),
-        });
-        const { createRemoteTeamLibrarySources } = await import(
-          './mission-library/remote-team.mjs'
-        );
-        const teamSources = createRemoteTeamLibrarySources({
-          launch: departLibraryMission,
-          difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-        });
-        const { createSpatialNextEditionSources } = await import(
-          './mission-library/spatial-next-editions.mjs'
-        );
-        spatialEditions = await createSpatialNextEditionSources({
-          activeRouteId: route.id,
-          originalThemes,
-          difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-          launch: departLibraryMission,
-        });
-        journeySources = [
-          combineJourneyLibrarySources([
-            { mode: 'solo', source },
-            { mode: 'versus', source: versusSource },
-          ]),
-          ...spatialEditions.sources,
-          ...teamSources,
-        ];
       }
-      if (!runtimeContent) {
-        const { duelExpeditionLibrarySources, teamExpeditionLibrarySource } = await import(
-          './mission-library/multiplayer-expeditions.mjs'
-        );
-        const expansionSources = [
-          ...duelExpeditionLibrarySources({
-            themes: originalThemes,
-            activeRouteId: route.id,
-            launch: departLibraryMission,
-            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-          }),
-          teamExpeditionLibrarySource({
-            launch: departLibraryMission,
-            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-          }),
-        ];
-        journeySources = [
-          ...journeySources,
-          ...expansionSources.filter(
-            (source) => !journeySources.some((existing) => existing.id === source.id),
-          ),
-        ];
+      attempt.callers.add(callerCurrent);
+      try {
+        attempt.assertCurrent();
+      } catch (error) {
+        if (error?.name !== 'AbortError') throw error;
+        attempt = null;
       }
-      const classicProjectionCache = new WeakMap();
-      const classicRuntimeEntry = (row) => {
-        const pack =
-          row.source === 'base' ? null : packs.packs.find((item) => item.id === row.packId);
-        const source =
-          row.source === 'base'
-            ? baseEntry
-            : pack
-              ? resolvePackCampaign(pack, row.campaignId)
-              : null;
-        if (!source) return null;
-        if (!classicProjectionCache.has(source)) classicProjectionCache.set(source, new Map());
-        const projections = classicProjectionCache.get(source);
-        if (!projections.has(row.rulesEdition))
-          projections.set(
-            row.rulesEdition,
-            projectClassicCurrentRulesEntry(source, row.rulesEdition),
-          );
-        return projections.get(row.rulesEdition);
-      };
-      const libraryRowRuntimeCampaignKey = (row) => {
-        if (row.collection !== 'Classic') return JSON.parse(row.campaignKey)[2];
-        const entry = classicRuntimeEntry(row);
-        return entry ? campaignKey(entry.campaign) : null;
-      };
-      const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
-      const result = await createInstalledMissionLibrary({
-        getProjectSources: async () => {
-          if (runtimeContent) return [];
-          const { installedCreatorLibrarySources } = await import(
-            './mission-library/creator-source.mjs'
-          );
-          try {
-            return await installedCreatorLibrarySources();
-          } catch (error) {
-            contentStatus(
-              `Creator campaigns could not be read: ${error.message} Open My creations to recover or reinstall them.`,
-              true,
-            );
-            return [];
+    }
+    if (attempt) return attempt.promise;
+    const callers = new Set([callerCurrent]);
+    const admitted = unifiedLibraryGuard();
+    const assertCurrent = () => {
+      admitted();
+      for (const current of callers) {
+        try {
+          current();
+          return;
+        } catch (error) {
+          if (error?.name !== 'AbortError') throw error;
+        }
+      }
+      throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
+    };
+    attempt = { callers, assertCurrent, promise: null };
+    unifiedLibraryLoading = attempt;
+    attempt.promise = (async () => {
+      let ownedHost = null,
+        spatialEditions = { dispose() {} },
+        result = null,
+        committed = false;
+      try {
+        const [
+          { createInstalledMissionLibrary },
+          { publishedJourneyLibrarySources },
+          { combineJourneyLibrarySources },
+          { createDuel },
+        ] = await Promise.all([
+          import('./mission-library/installed-library.mjs'),
+          import('./mission-library/published-routes.mjs'),
+          import('./mission-library/cross-mode-journey.mjs'),
+          import('./multiplayer.mjs'),
+        ]);
+        assertCurrent();
+        const index =
+          runtimeContent?.missionIndex ??
+          (await getJSON('content/mission-library-index.json', assertCurrent));
+        assertCurrent();
+        actorMissionIndex = Promise.resolve(index);
+        actorMissionIndexValue = index;
+        const route =
+          authoredRoute ||
+          (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo, { assertCurrent }));
+        assertCurrent();
+        const originalThemes =
+          runtimeContent?.themes ??
+          (await getJSON('content-design/themes.json', assertCurrent)).themes;
+        assertCurrent();
+        const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
+          ? journeyActorThemeCandidates(originalThemes, {
+              includeOriginals: route.preserveOriginalThemes === true,
+            })
+          : originalThemes;
+        const views = publishedRouteViews(route);
+        const host =
+          candidateHost ||
+          views?.solo ||
+          (await createSoloRouteHost(route, {
+            assertCurrent,
+            themes: libraryThemes,
+            buildVersion,
+            corePackIds: route.corePackIds,
+            optionalCampaignIds: route.optionalCampaignIds,
+            ...(!runtimeContent
+              ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
+              : {}),
+          }));
+        if (!candidateHost && !views?.solo) ownedHost = host;
+        assertCurrent();
+        const profile = candidateHost
+          ? journeyProfile
+          : createJourneyProfileStore({
+              profileKey: route.profileKey,
+              ...(previewSession?.journeyOptions(route.profileKey) ?? {}),
+              canRunProgressWork: () => {
+                if (!committed) assertCurrent();
+                return (
+                  !unifiedDisposed &&
+                  paused &&
+                  !document.hidden &&
+                  document.hasFocus?.() !== false &&
+                  mediaPreparationPhase !== 'playing' &&
+                  mediaPreparationPhase !== 'suspended'
+                );
+              },
+            });
+        if (!candidateHost) await profile.load();
+        assertCurrent();
+        const launchSolo = async (mission, context) => {
+          if (context.isCurrent?.() === false) return false;
+          if (!candidateHost || context.mode !== 'solo') {
+            if (context.skip && context.mode === 'solo') {
+              let validationHost = host,
+                disposeValidationHost = false;
+              if (!validationHost.preparer) {
+                validationHost = await createSoloRouteHost(route, {
+                  themes: libraryThemes,
+                  buildVersion,
+                  corePackIds: route.corePackIds,
+                  optionalCampaignIds: route.optionalCampaignIds,
+                  ...(!runtimeContent
+                    ? {
+                        ensurePackage: (groupId, options) =>
+                          gameplayDownloads.ensure(groupId, options),
+                      }
+                    : {}),
+                });
+                disposeValidationHost = true;
+              }
+              try {
+                const candidate = await validationHost.preparer.prepare(
+                  {
+                    missionId: mission.id,
+                    difficulty: browsingJourneyPreferences.snapshot().difficulty,
+                    seed,
+                    turnPolicy,
+                  },
+                  { signal: context.signal, onStatus: context.onStatus },
+                );
+                if (context.isCurrent?.() === false) {
+                  if (validationHost.preparer.current(candidate)) validationHost.preparer.cancel();
+                  return false;
+                }
+                validationHost.preparer.cancel();
+              } finally {
+                if (disposeValidationHost) validationHost.preparer.dispose();
+              }
+            }
+            return departLibraryMission(context);
           }
-        },
-        index,
-        journeySources,
-        getPacks: () => selectedEditionPacks ?? packs,
-        baseEntry,
-        compatibility: ({ entry, level }) => {
-          const supported = [];
-          try {
-            createRun(level, {
-              classRecipes: entry.classRecipes,
-              classId: entry.classRecipes[0].id,
-            });
-            supported.push('solo');
-          } catch {}
-          try {
-            createDuel(level, {
-              classRecipes: entry.classRecipes,
-              classId: entry.classRecipes[0].id,
-            });
-            supported.push('versus');
-          } catch {}
-          return supported;
-        },
-        describe: ({ level }) => {
-          const actual = normalizedLevel(level);
-          return {
-            rules: `${actual.classic?.hunt ? missionBriefing(actual).goal : `${Math.round(actual.goal.coverage * 100)}% coverage`} · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
-          };
-        },
-        prepareClassic: prepareLibraryClassic,
-        availabilityExternal: (row, pack) => {
-          if (!pack)
-            return isRelease
-              ? { state: 'download', bytes: row.download.bytes }
+          if ($('shell-home').open) $('shell-home').close();
+          if (context.transferContinuation && !context.transferContinuation()) return false;
+          return launchJourneyMission(mission, {
+            kind: context.skip ? 'skip' : context.continuation ? 'next' : 'choose',
+            skipped: context.skip ? journeySkipMission() : null,
+          });
+        };
+        let journeySources;
+        if (runtimeContent) {
+          const manifestFor = (
+            mission,
+            difficulty = browsingJourneyPreferences.snapshot().difficulty,
+          ) =>
+            host
+              .select(mission, difficulty)
+              ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
+          const source = journeyLibrarySource({
+            editionId: route.id,
+            edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+            editionLabel: () =>
+              route.id === DEFAULT_JOURNEY_ROUTES.solo
+                ? t('interface:newJourney')
+                : contentText(route, 'label'),
+            catalog: host.catalog,
+            profile,
+            details: (mission) => journeyMissionDetails(manifestFor(mission)),
+            tags: (mission) =>
+              authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
+            card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
+            launch: launchSolo,
+          });
+          journeySources = [source];
+        } else if (views) {
+          journeySources = publishedJourneyLibrarySources({
+            route,
+            views,
+            soloHost: candidateHost,
+            profile,
+            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            launchSolo,
+            launchRemote: departLibraryMission,
+          });
+        } else {
+          // Compile the other mode through its own validated runtime adapter. The
+          // combined browsing identity never grants this Solo host Versus ownership.
+          const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
+          assertCurrent();
+          const versusPreview = createCandidateVersusHost(route.source, {
+            themes: libraryThemes,
+            corePackIds: route.corePackIds,
+            optionalCampaignIds: route.optionalCampaignIds,
+          });
+          const manifestFor = (
+            mission,
+            difficulty = browsingJourneyPreferences.snapshot().difficulty,
+          ) =>
+            host
+              .select(mission, difficulty)
+              ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
+          const source = journeyLibrarySource({
+            editionId: route.id,
+            edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+            editionLabel: () =>
+              route.id === DEFAULT_JOURNEY_ROUTES.solo
+                ? t('interface:newJourney')
+                : contentText(route, 'label'),
+            catalog: host.catalog,
+            profile,
+            details: (mission) => journeyMissionDetails(manifestFor(mission)),
+            tags: (mission) =>
+              authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
+            card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
+            launch: launchSolo,
+          });
+          const versusSource = journeyLibrarySource({
+            editionId: route.id,
+            edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+            editionLabel: () =>
+              route.id === DEFAULT_JOURNEY_ROUTES.solo
+                ? t('interface:newJourney')
+                : contentText(route, 'label'),
+            catalog: versusPreview.catalog,
+            profile,
+            details: (mission) =>
+              journeyMissionDetails(
+                versusPreview.manifest(mission, browsingJourneyPreferences.snapshot().difficulty),
+              ),
+            tags: (mission) => authoredJourneyMissionTags(mission, versusPreview.manifest(mission)),
+            card: (mission) =>
+              versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
+            launch: (_mission, context) => departLibraryMission(context),
+          });
+          const { createRemoteTeamLibrarySources } = await import(
+            './mission-library/remote-team.mjs'
+          );
+          assertCurrent();
+          const teamSources = createRemoteTeamLibrarySources({
+            launch: departLibraryMission,
+            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+          });
+          const { createSpatialNextEditionSources } = await import(
+            './mission-library/spatial-next-editions.mjs'
+          );
+          assertCurrent();
+          spatialEditions = await createSpatialNextEditionSources({
+            assertCurrent,
+            activeRouteId: route.id,
+            originalThemes,
+            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            launch: departLibraryMission,
+          });
+          assertCurrent();
+          journeySources = [
+            combineJourneyLibrarySources([
+              { mode: 'solo', source },
+              { mode: 'versus', source: versusSource },
+            ]),
+            ...spatialEditions.sources,
+            ...teamSources,
+          ];
+        }
+        if (!runtimeContent) {
+          const { duelExpeditionLibrarySources, teamExpeditionLibrarySource } = await import(
+            './mission-library/multiplayer-expeditions.mjs'
+          );
+          assertCurrent();
+          const expansionSources = [
+            ...duelExpeditionLibrarySources({
+              themes: originalThemes,
+              activeRouteId: route.id,
+              launch: departLibraryMission,
+              difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            }),
+            teamExpeditionLibrarySource({
+              launch: departLibraryMission,
+              difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            }),
+          ];
+          journeySources = [
+            ...journeySources,
+            ...expansionSources.filter(
+              (source) => !journeySources.some((existing) => existing.id === source.id),
+            ),
+          ];
+        }
+        const classicProjectionCache = new WeakMap();
+        const classicRuntimeEntry = (row) => {
+          const pack =
+            row.source === 'base' ? null : packs.packs.find((item) => item.id === row.packId);
+          const source =
+            row.source === 'base'
+              ? baseEntry
+              : pack
+                ? resolvePackCampaign(pack, row.campaignId)
+                : null;
+          if (!source) return null;
+          if (!classicProjectionCache.has(source)) classicProjectionCache.set(source, new Map());
+          const projections = classicProjectionCache.get(source);
+          if (!projections.has(row.rulesEdition))
+            projections.set(
+              row.rulesEdition,
+              projectClassicCurrentRulesEntry(source, row.rulesEdition),
+            );
+          return projections.get(row.rulesEdition);
+        };
+        const libraryRowRuntimeCampaignKey = (row) => {
+          if (row.collection !== 'Classic') return JSON.parse(row.campaignKey)[2];
+          const entry = classicRuntimeEntry(row);
+          return entry ? campaignKey(entry.campaign) : null;
+        };
+        const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
+        assertCurrent();
+        result = await createInstalledMissionLibrary({
+          assertCurrent,
+          getProjectSources: async ({ assertCurrent }) => {
+            if (runtimeContent) return [];
+            const { installedCreatorLibrarySources } = await import(
+              './mission-library/creator-source.mjs'
+            );
+            assertCurrent();
+            try {
+              return await installedCreatorLibrarySources({ assertCurrent });
+            } catch (error) {
+              assertCurrent();
+              contentStatus(
+                `Creator campaigns could not be read: ${error.message} Open My creations to recover or reinstall them.`,
+                true,
+              );
+              return [];
+            }
+          },
+          index,
+          journeySources,
+          getPacks: () => selectedEditionPacks ?? packs,
+          baseEntry,
+          compatibility: ({ entry, level }) => {
+            const supported = [];
+            try {
+              createRun(level, {
+                classRecipes: entry.classRecipes,
+                classId: entry.classRecipes[0].id,
+              });
+              supported.push('solo');
+            } catch {}
+            try {
+              createDuel(level, {
+                classRecipes: entry.classRecipes,
+                classId: entry.classRecipes[0].id,
+              });
+              supported.push('versus');
+            } catch {}
+            return supported;
+          },
+          describe: ({ level }) => {
+            const actual = normalizedLevel(level);
+            return {
+              rules: `${actual.classic?.hunt ? missionBriefing(actual).goal : `${Math.round(actual.goal.coverage * 100)}% coverage`} · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
+            };
+          },
+          prepareClassic: prepareLibraryClassic,
+          availabilityExternal: (row, pack) => {
+            if (!pack)
+              return isRelease
+                ? { state: 'download', bytes: row.download.bytes }
+                : {
+                    state: 'unavailable',
+                    reason: t('interface:originalPictureDownloadIsAvailableInPublishedBuilds'),
+                  };
+            const present = chapterSnapshot?.index?.chapters.some(
+              (chapter) => chapter.id === row.packId,
+            );
+            return present
+              ? { state: 'ready' }
               : {
                   state: 'unavailable',
-                  reason: t('interface:originalPictureDownloadIsAvailableInPublishedBuilds'),
+                  reason: t('interface:installThisChapterWithItsOriginalPicturesInWorlds'),
                 };
-          const present = chapterSnapshot?.index?.chapters.some(
-            (chapter) => chapter.id === row.packId,
-          );
-          return present
-            ? { state: 'ready' }
-            : {
-                state: 'unavailable',
-                reason: t('interface:installThisChapterWithItsOriginalPicturesInWorlds'),
-              };
-        },
-        launchClassic: async (row, context) => {
-          if (row.source === 'external') {
-            const snapshot = await checkedChapters();
-            await externalChapters.readiness(snapshot, row.packId);
-            if (packs.packs.find((pack) => pack.id === row.packId) !== context.pack)
-              throw new Error(t('interface:installedOriginalsChangedChoosePlayAgain'));
-          }
-          return launchLibraryClassic(context.pack, context.selection, context);
-        },
-        launchCustom: (binding, context) => {
-          // The verified library classified this exact immutable prepared pack,
-          // including same-ID modifications. Do not add an actor-download
-          // dependency to its existing authored gameplay path.
-          actorCustomPacks.add(binding.pack);
-          return launchLibraryClassic(binding.pack, binding.selection, context);
-        },
-        progressClassic: (row) => {
-          const entry = classicRuntimeEntry(row);
-          return entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId]
-            ? t('interface:cleared')
-            : '';
-        },
-        progressStateClassic: (row) => {
-          const entry = classicRuntimeEntry(row);
-          const clear =
-            entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId];
-          return clear
-            ? { state: 'completed', bestStars: clear.medals ?? null }
-            : { state: 'new', bestStars: null };
-        },
-        progressCustom: (binding) =>
-          library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId]
-            ? t('interface:cleared')
-            : '',
-        progressStateCustom: (binding) => {
-          const clear =
-            library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId];
-          return clear
-            ? { state: 'completed', bestStars: clear.medals ?? null }
-            : { state: 'new', bestStars: null };
-        },
-      });
-      if (unifiedDisposed) {
-        result.library.dispose();
-        spatialEditions.dispose();
-        if (!candidateHost) host.preparer?.dispose();
-        throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
-      }
-      disposeUnifiedPreview = () => {
-        spatialEditions.dispose();
-        if (!candidateHost) host.preparer?.dispose();
-      };
-      const state = createMissionLibrarySessionState({ mode: 'solo' });
-      // Checked return restores the retained runtime independently of browsing.
-      // Preserve the source chooser's validated filters/card; use its runtime
-      // selection only as a fallback for older returns without browse state.
-      // Neither UI state grants runtime ownership or launch authority.
-      const returnedRow = exactReturn
-        ? result.library.missions.find((row) => {
-            if (!['Classic', 'Custom'].includes(row.collection) || !row.modes.includes('solo'))
-              return false;
-            const owner = JSON.parse(row.ownerId);
-            const sourcePackId =
-              owner[0] === 'classic' ? owner[2] : owner[0] === 'custom' ? owner[1] : undefined;
-            return (
-              row.runtimeId === returnedSelection.levelId &&
-              libraryRowRuntimeCampaignKey(row) === returnedSelection.campaignKey &&
-              sourcePackId === (activeEntry.sourcePackId ?? null) &&
-              row.modes.includes('solo') &&
-              result.library.availability(row, 'solo').state === 'ready'
-            );
-          })
-        : null;
-      unifiedChooser = attachJourneyChooser({
-        library: result.library,
-        profile,
-        goalPreferenceOptions: {
-          editionId: runtimeContent?.editionId ?? 'default',
-          getStorage: profileStorage,
-        },
-        ...(runtimeContent
-          ? {
-              supportedModes: runtimeContent.selection.edition.modes,
-              availableCollectionsOnly: true,
-              description: runtimeContent.selection.edition.name,
+          },
+          launchClassic: async (row, context) => {
+            if (row.source === 'external') {
+              const snapshot = await checkedChapters();
+              await externalChapters.readiness(snapshot, row.packId);
+              if (packs.packs.find((pack) => pack.id === row.packId) !== context.pack)
+                throw new Error(t('interface:installedOriginalsChangedChoosePlayAgain'));
             }
-          : {}),
-        getCurrentId: () => {
-          const mission = candidateHost && journeyMission();
-          if (mission)
-            return result.library.missions.find(
-              (row) =>
-                row.ownerId === `journey:${authoredRoute.id}` &&
-                row.editionId === authoredRoute.id &&
-                row.runtimeId === mission.id &&
-                row.modes.includes('solo'),
-            )?.id;
-          try {
-            return retainedLibraryMission(result.library, {
-              mode: 'solo',
-              levelId: campaign.levels[levelIndex].id,
-              campaignKey: activeEntry.classicRulesSourceCampaignKey
-                ? `${activeEntry.classicRulesSourceCampaignKey}::${activeEntry.classicRulesEdition}`
-                : activeEntry.baseCampaignKey || campaignKey(campaign),
-              sourcePackId: activeEntry.sourcePackId ?? null,
-              rulesEdition: activeEntry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL,
-              ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
-            })?.id;
-          } catch {
-            // Focus is a browsing hint, never authority to replace an unavailable edition.
-            return null;
-          }
-        },
-        readState: () =>
-          state.read() ??
-          (returnedRow
+            return launchLibraryClassic(context.pack, context.selection, context);
+          },
+          launchCustom: (binding, context) => {
+            // The verified library classified this exact immutable prepared pack,
+            // including same-ID modifications. Do not add an actor-download
+            // dependency to its existing authored gameplay path.
+            actorCustomPacks.add(binding.pack);
+            return launchLibraryClassic(binding.pack, binding.selection, context);
+          },
+          progressClassic: (row) => {
+            const entry = classicRuntimeEntry(row);
+            return entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId]
+              ? t('interface:cleared')
+              : '';
+          },
+          progressStateClassic: (row) => {
+            const entry = classicRuntimeEntry(row);
+            const clear =
+              entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId];
+            return clear
+              ? { state: 'completed', bestStars: clear.medals ?? null }
+              : { state: 'new', bestStars: null };
+          },
+          progressCustom: (binding) =>
+            library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId]
+              ? t('interface:cleared')
+              : '',
+          progressStateCustom: (binding) => {
+            const clear =
+              library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId];
+            return clear
+              ? { state: 'completed', bestStars: clear.medals ?? null }
+              : { state: 'new', bestStars: null };
+          },
+        });
+        assertCurrent();
+        const state = createMissionLibrarySessionState({ mode: 'solo' });
+        // Checked return restores the retained runtime independently of browsing.
+        // Preserve the source chooser's validated filters/card; use its runtime
+        // selection only as a fallback for older returns without browse state.
+        // Neither UI state grants runtime ownership or launch authority.
+        const returnedRow = exactReturn
+          ? result.library.missions.find((row) => {
+              if (!['Classic', 'Custom'].includes(row.collection) || !row.modes.includes('solo'))
+                return false;
+              const owner = JSON.parse(row.ownerId);
+              const sourcePackId =
+                owner[0] === 'classic' ? owner[2] : owner[0] === 'custom' ? owner[1] : undefined;
+              return (
+                row.runtimeId === returnedSelection.levelId &&
+                libraryRowRuntimeCampaignKey(row) === returnedSelection.campaignKey &&
+                sourcePackId === (activeEntry.sourcePackId ?? null) &&
+                row.modes.includes('solo') &&
+                result.library.availability(row, 'solo').state === 'ready'
+              );
+            })
+          : null;
+        unifiedChooser = attachJourneyChooser({
+          library: result.library,
+          profile,
+          goalPreferenceOptions: {
+            editionId: runtimeContent?.editionId ?? 'default',
+            getStorage: profileStorage,
+          },
+          ...(runtimeContent
             ? {
-                search: '',
-                collection: '',
-                campaign: '',
-                mode: 'solo',
-                selectedId: returnedRow.id,
-                scroll: 0,
+                supportedModes: runtimeContent.selection.edition.modes,
+                availableCollectionsOnly: true,
+                description: runtimeContent.selection.edition.name,
               }
-            : null),
-        writeState: state.write,
-        launchContext: libraryActivationContext,
-        onPause: () => {
-          pause(true);
-          clearInput();
-          clearSkipConfirmation();
-        },
-        onReturn: (opener) => {
-          clearInput();
-          (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({
-            preventScroll: true,
-          });
-        },
-      });
-      if (!journeyPreferences)
-        browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
-      // Keep the native settings and their guarded handlers, but not the old
-      // pack/level/campaign browser. Settings describe the current Solo host,
-      // independently of the library's cross-mode browsing filter.
-      const setup = $('mission-picker-setup');
-      if (setup) {
-        setup.querySelector('.mission-picker-setup-fields').append($('shell-mode-choice'));
-        setup.classList.add('mission-library-setup');
-        setup.open = false;
-        localizedText(setup.querySelector('summary'), () => t('interface:currentSoloFlightSetup'));
-        for (const id of ['pack-select', 'level-select', 'campaign-select'])
-          $(id).closest('label').hidden = true;
-        $('journey-chooser').querySelector('.journey-footer').append(setup);
+            : {}),
+          getCurrentId: () => {
+            const mission = candidateHost && journeyMission();
+            if (mission)
+              return result.library.missions.find(
+                (row) =>
+                  row.ownerId === `journey:${authoredRoute.id}` &&
+                  row.editionId === authoredRoute.id &&
+                  row.runtimeId === mission.id &&
+                  row.modes.includes('solo'),
+              )?.id;
+            try {
+              return retainedLibraryMission(result.library, {
+                mode: 'solo',
+                levelId: campaign.levels[levelIndex].id,
+                campaignKey: activeEntry.classicRulesSourceCampaignKey
+                  ? `${activeEntry.classicRulesSourceCampaignKey}::${activeEntry.classicRulesEdition}`
+                  : activeEntry.baseCampaignKey || campaignKey(campaign),
+                sourcePackId: activeEntry.sourcePackId ?? null,
+                rulesEdition: activeEntry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL,
+                ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
+              })?.id;
+            } catch {
+              // Focus is a browsing hint, never authority to replace an unavailable edition.
+              return null;
+            }
+          },
+          readState: () =>
+            state.read() ??
+            (returnedRow
+              ? {
+                  search: '',
+                  collection: '',
+                  campaign: '',
+                  mode: 'solo',
+                  selectedId: returnedRow.id,
+                  scroll: 0,
+                }
+              : null),
+          writeState: state.write,
+          launchContext: libraryActivationContext,
+          onPause: () => {
+            pause(true);
+            clearInput();
+            clearSkipConfirmation();
+          },
+          onReturn: (opener) => {
+            clearInput();
+            (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({
+              preventScroll: true,
+            });
+          },
+        });
+        if (!journeyPreferences)
+          browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
+        // Keep the native settings and their guarded handlers, but not the old
+        // pack/level/campaign browser. Settings describe the current Solo host,
+        // independently of the library's cross-mode browsing filter.
+        const setup = $('mission-picker-setup');
+        if (setup) {
+          setup.querySelector('.mission-picker-setup-fields').append($('shell-mode-choice'));
+          setup.classList.add('mission-library-setup');
+          setup.open = false;
+          localizedText(setup.querySelector('summary'), () =>
+            t('interface:currentSoloFlightSetup'),
+          );
+          for (const id of ['pack-select', 'level-select', 'campaign-select'])
+            $(id).closest('label').hidden = true;
+          $('journey-chooser').querySelector('.journey-footer').append(setup);
+        }
+        collectionJourneyState = { profile, catalog: host.catalog, editionId: route.id };
+        disposeUnifiedPreview = () => {
+          spatialEditions.dispose();
+          ownedHost?.preparer?.dispose();
+        };
+        unifiedLibrary = result;
+        committed = true;
+        return result;
+      } finally {
+        if (!committed) {
+          result?.library.dispose();
+          spatialEditions.dispose();
+          ownedHost?.preparer?.dispose();
+        }
       }
-      unifiedLibrary = result;
-      return result;
     })();
     try {
-      return await unifiedLibraryLoading;
+      return await attempt.promise;
     } finally {
-      unifiedLibraryLoading = null;
+      attempt.callers.clear();
+      if (unifiedLibraryLoading === attempt) unifiedLibraryLoading = null;
     }
   }
   function libraryActivationContext() {
@@ -14266,14 +14391,21 @@ try {
       onRetire: cancel,
     });
     cancelUnifiedOpening = cancel;
+    const isCurrent = () =>
+      revision === unifiedOpenRevision &&
+      opening.current() &&
+      controllerDialog() === parent &&
+      $('shell-home').open === homeWasOpen &&
+      run === oldRun &&
+      started === wasStarted;
     try {
-      const host = await getUnifiedMissionLibrary();
+      const host = await getUnifiedMissionLibrary(isCurrent);
       // The installed-card refresh may move focus while it reconciles an owned
       // catalogue. Claim the still-current opener before that internal work;
       // newer input still retires the claim while the state/revision checks
       // below also reject replaced navigation and game state.
       if (!opening.claim()) return;
-      await host.refreshInstalled();
+      await refreshUnifiedInstalled(host, isCurrent);
       const openingCurrent = opening.current();
       opening.dispose();
       if (
@@ -15092,7 +15224,13 @@ try {
     // opening lease still retires on genuinely newer input or lost foreground.
     await (async () => {
       try {
-        const host = await getUnifiedMissionLibrary();
+        const host = await getUnifiedMissionLibrary(
+          () =>
+            revision === unifiedOpenRevision &&
+            opening.current() &&
+            run === incomingRun &&
+            started === incomingStarted,
+        );
         // The boot picture may still own a media-generation write. Finish it
         // before the requested mission prepares its distinct exact original.
         // Its failure is not authority to replace or reject the requested art.
