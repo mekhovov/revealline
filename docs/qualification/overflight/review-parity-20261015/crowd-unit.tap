@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: local crowd force crosses grid boundaries continuously and uses neighboring cells
+ok 1 - local crowd force crosses grid boundaries continuously and uses neighboring cells
+  ---
+  duration_ms: 2.966625
+  ...
+# Subtest: coincident bodies receive finite opposite separation and distant bodies have no force
+ok 2 - coincident bodies receive finite opposite separation and distant bodies have no force
+  ---
+  duration_ms: 0.351208
+  ...
+# Subtest: Survival authors local separation explicitly without rewriting earlier content or records
+ok 3 - Survival authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 114.350458
+  ...
+# Subtest: Riy authors local separation explicitly without rewriting earlier content or records
+ok 4 - Riy authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 40.958875
+  ...
+# Subtest: the native simulation uses authored local spacing and preserves complete area damage
+ok 5 - the native simulation uses authored local spacing and preserves complete area damage
+  ---
+  duration_ms: 117.978833
+  ...
+# Subtest: same and new-seed sorties preserve explicitly authored local crowd rules
+ok 6 - same and new-seed sorties preserve explicitly authored local crowd rules
+  ---
+  duration_ms: 6.39925
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 863.710833
