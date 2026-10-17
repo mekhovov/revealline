@@ -139,7 +139,7 @@ test('one-shot non-browser workflow declares finite setup, native observation an
   );
   assert.equal(
     workflow.match(/^    if: (.+)$/m)?.[1],
-    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'",
+    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '0febd334619731adc26dfa3df78aab02991563af'",
   );
   assert.match(workflow, /runs-on: macos-15-intel/);
   assert.match(workflow, /timeout-minutes: 24/);
@@ -241,7 +241,7 @@ test('successor workflow requires every exact one-shot condition before c696', a
     'utf8',
   );
   const expected =
-    "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'";
+    "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '0febd334619731adc26dfa3df78aab02991563af'";
   const check = (value) => {
     assert.deepEqual(
       value.split('\n').filter((s) => s.startsWith('    if: ')),
@@ -254,7 +254,7 @@ test('successor workflow requires every exact one-shot condition before c696', a
     'github.event.pull_request.number == 1544',
     'github.event.pull_request.head.repo.full_name == github.repository',
     "github.event.action == 'synchronize'",
-    "github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'",
+    "github.event.before == '0febd334619731adc26dfa3df78aab02991563af'",
   ])
     assert.throws(() => check(text.replace(condition, 'true')));
   assert.throws(() => check(text.replace(expected, '')));

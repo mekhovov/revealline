@@ -18,8 +18,8 @@ concurrency:
 
 jobs:
   preflight:
-    # One observation after the verified argument-capacity fix; prior 4bf results stay failed.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'
+    # One setup-corrected observation; the exact 0feb discovery failure remains failed.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '0febd334619731adc26dfa3df78aab02991563af'
     runs-on: macos-15-intel
     timeout-minutes: 24
     env:
