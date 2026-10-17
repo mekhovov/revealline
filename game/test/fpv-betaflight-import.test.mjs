@@ -406,6 +406,94 @@ set yaw_expo = 70
   assert.equal(result.warnings.length, 1);
 });
 
+test('preset option matching agrees with the tagged App while preserving original labels', async () => {
+  const cases = JSON.parse(
+    readFileSync(
+      new URL('./fixtures/fpv/betaflight-preset-option-case.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  for (const observation of cases.observations) {
+    const resolution = resolveBetaflightPresetBundle({
+      files: cases.files,
+      entry: cases.entry,
+      options: observation.options,
+    });
+    assert.deepEqual(
+      resolution.text.trim().split('\n').filter(Boolean),
+      observation.upstreamCommands,
+      observation.name,
+    );
+    assert.deepEqual(
+      resolution.options.map((option) => option.name),
+      ['Race rates', 'Smooth rates'],
+    );
+    assert.deepEqual(
+      resolution.options.filter((option) => option.checked).map((option) => option.name),
+      observation.checkedOptions,
+    );
+    assert.deepEqual(resolution.warnings, []);
+    assert.deepEqual(
+      JSON.parse(resolution.identity).options,
+      resolution.options.map((option) => [option.name, option.checked]),
+    );
+    const { provenance } = await previewBetaflightImport(resolution.text, {
+      kind: 'patch',
+      baseline: createRateProfile(),
+      presetBundle: { files: cases.files, entry: cases.entry, options: observation.options },
+    });
+    assert.deepEqual(
+      provenance.preset.options.entries.map((entry) => JSON.parse(entry)),
+      resolution.options,
+    );
+    for (const [path, contents] of Object.entries(cases.files))
+      assert.ok(
+        provenance.preset.files.entries.includes(
+          `${sha(contents)} ${Buffer.byteLength(contents)} ${path}`,
+        ),
+      );
+  }
+  const explicit = resolveBetaflightPresetBundle({
+    files: cases.files,
+    entry: cases.entry,
+    options: { 'RACE RATES': false, 'smooth rates': true },
+  });
+  assert.equal(explicit.text.trim(), 'set roll_srate = 80');
+  fails(
+    () =>
+      resolveBetaflightPresetBundle({
+        files: cases.files,
+        entry: cases.entry,
+        options: { 'SMOOTH RATES': true },
+      }),
+    'exclusive-options',
+  );
+});
+
+test('case-only duplicate preset options and selections are rejected without mutating inputs', () => {
+  const files = {
+    'main.txt': '#$ OPTION BEGIN (CHECKED): Race\n#$ OPTION END\n#$ INCLUDE: child.txt',
+    'child.txt': '#$ OPTION BEGIN (UNCHECKED): RACE\nset roll_srate = 90\n#$ OPTION END',
+  };
+  const options = { Race: true, RACE: false };
+  const before = JSON.stringify({ files, options });
+  fails(
+    () => resolveBetaflightPresetBundle({ files, entry: 'main.txt', options }),
+    'duplicate-option',
+  );
+  assert.equal(JSON.stringify({ files, options }), before);
+  for (const path of ['main.txt', 'child.txt']) {
+    const duplicate = {
+      ...files,
+      [path]: `${files[path]}\n#$ OPTION BEGIN (UNCHECKED): race\n#$ OPTION END`,
+    };
+    fails(
+      () => resolveBetaflightPresetBundle({ files: duplicate, entry: 'main.txt' }),
+      'duplicate-option',
+    );
+  }
+});
+
 test('preset includes reject missing, cyclic, escaping and unsupported nested dependencies before apply', () => {
   const resolve = (files) => resolveBetaflightPresetBundle({ files, entry: 'main.txt' });
   fails(() => resolve({ 'main.txt': '#$ INCLUDE: missing.txt' }), 'missing-dependency');
