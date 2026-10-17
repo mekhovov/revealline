@@ -53,6 +53,11 @@ import {
 } from './ui/gameplay-copy.mjs';
 import { contentText } from './i18n/content.mjs';
 import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';
+import {
+  createPreparationCadence,
+  PreparationCadenceTimeoutError,
+} from './ui/preparation-cadence.mjs';
+import { ThemePreparationTimeoutError } from './presentation/theme-host.mjs';
 import { profileWriterMessage } from './ui/profile-writer-copy.mjs';
 import { milestoneName, achievementName, achievementDescription } from './ui/reward-copy.mjs';
 import { soloControllerFlightHint } from './ui/controller-flight-copy.mjs';
@@ -1604,6 +1609,10 @@ try {
           stage: status.stage,
           progress: status.progress ?? null,
         });
+      },
+      message(message) {
+        if (preparationOperation === operation)
+          operation.status.update({ message, stage: 'preparing', progress: null });
       },
       finish(message = '', state = 'ready') {
         if (preparationOperation !== operation) return;
@@ -3235,11 +3244,17 @@ try {
           buildVersion,
           sourceRevision: buildSourceRevision,
           userAgent: navigator.userAgent,
+          secureContext:
+            typeof globalThis.isSecureContext === 'boolean' ? globalThis.isSecureContext : null,
+          protocol: location.protocol,
           viewport: { width: innerWidth, height: innerHeight },
-          cadenceCalibration: {
-            samples: fieldScene?.readyCount ?? 0,
+          cadenceCalibration: fieldScene?.cadence.snapshot() ?? {
+            samples: 0,
             required: 30,
-            status: fieldScene?.readyCount === 30 ? 'measured-before-play' : 'provisional-60hz',
+            baselineMs: null,
+            restartedSamples: 0,
+            waiting: false,
+            status: 'pending-quiet-preparation',
           },
           quality: qualityPolicy.snapshot(),
           audio: audioMaster.snapshot(),
@@ -10447,7 +10462,12 @@ try {
       needsFreshVisuals ||
       needsFreshActors ||
       needsCaptureEnvironment;
-    if (needsFlightAssets || !fieldScene?.prepared()) {
+    if (
+      needsFlightAssets ||
+      !fieldScene?.prepared() ||
+      !fieldScene?.cadence.ready ||
+      menuStyle.themeHost.preparing
+    ) {
       if (pictureResume) return;
       clearPictureRecovery();
       const owner = flightPictures,
@@ -10514,6 +10534,12 @@ try {
             });
         })
         .then(async () => {
+          // The existing shared theme owner includes its selected fonts. Wait
+          // under this attempt's lease before accepting appearance or painting.
+          if (menuStyle.themeHost.preparing) {
+            feedback.message(() => t('interface:gettingReadyGameplayIsPaused'));
+            await menuStyle.themeHost.whenReady({ signal: controller.signal });
+          }
           if (
             controller.signal.aborted ||
             pictureResume !== ticket ||
@@ -10557,6 +10583,14 @@ try {
             });
           painter.setAttemptAppearance(acceptedCaptureAppearance);
           await fieldScene.prepareBoard(controller.signal);
+          if (!fieldScene.cadence.ready) {
+            feedback.message(() => t('interface:gettingReadyGameplayIsPaused'));
+            await fieldScene.prepareCadence(controller.signal);
+          }
+          // A late paint/theme acceptance can invalidate caches during quiet
+          // callbacks without replacing the attempt. Submit its replacement
+          // board before granting play; the completed cadence is not rewritten.
+          if (!fieldScene.prepared()) await fieldScene.prepareBoard(controller.signal);
           if (
             controller.signal.aborted ||
             pictureResume !== ticket ||
@@ -10570,6 +10604,12 @@ try {
             rendererLost.size
           )
             return;
+          if (menuStyle.themeHost.preparing) {
+            // A new selection after the awaited owner needs a fresh explicit
+            // activation, not an unbounded renewal of preparation's deadline.
+            feedback.finish(() => t('interface:gameNotReadyTryStartOrResumeAgain'));
+            return;
+          }
           feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
           pictureResume = null;
           pictureVisualController = null;
@@ -10578,6 +10618,21 @@ try {
         .catch((error) => {
           // Lifecycle and ownership cancellation are not missing-original failures.
           if (error?.name === 'AbortError') return;
+          if (
+            pictureResume === ticket &&
+            (error instanceof PreparationCadenceTimeoutError ||
+              error instanceof ThemePreparationTimeoutError)
+          ) {
+            performanceSession?.reportFailure(
+              error instanceof PreparationCadenceTimeoutError
+                ? 'Preparation: quiet cadence deadline exceeded.'
+                : 'Preparation: selected theme deadline exceeded.',
+            );
+            const message = () => t('interface:gameNotReadyTryStartOrResumeAgain');
+            feedback.finish(message, 'error');
+            notify(message);
+            return;
+          }
           if (pictureResume === ticket) {
             performanceSession?.reportFailure(`Preparation: ${error.message ?? String(error)}`);
             feedback.finish(() => flightPictureFailure(error), 'error');
@@ -12615,8 +12670,12 @@ try {
       this.lastPaint = null;
       this.displayedBoardValid = false;
       this.renderSuppressed = false;
-      this.readyFrames = new Float64Array(30);
-      this.readyCount = 0;
+      this.cadence = createPreparationCadence({
+        onReady(baseline) {
+          qualityPolicy.setBaseline(baseline);
+          performanceSession?.setBaseline(baseline);
+        },
+      });
       this.observedTitleOwner = null;
       this.frameTitleQuality = null;
       this.lastInterfaceAt = -Infinity;
@@ -12637,6 +12696,7 @@ try {
         this.game.events.off(Phaser.Core.Events.PRE_STEP, preStep);
         this.game.events.off(Phaser.Core.Events.POST_RENDER, postRender);
         this.preparedCancel?.();
+        this.cadence.cancel();
         this.framePending = this.pendingSubmission = false;
       };
       this.events.once('shutdown', retireFrameHooks);
@@ -12799,25 +12859,14 @@ try {
       if (boardSubmitted && this.pendingSubmission && this.submittedRun === run)
         this.displayedBoardValid = true;
       const visibleBoard = boardSubmitted && foreground && !demoHost?.active && !dialogOpen();
-      if (
+      this.cadence.observe(
+        this.frameRawMs,
+        workMs,
         timed &&
-        !started &&
-        !pictureResume &&
-        !demoHost?.active &&
-        foreground &&
-        workMs < 3 &&
-        this.frameRawMs >= 4 &&
-        this.frameRawMs <= 50 &&
-        this.readyCount < this.readyFrames.length
-      ) {
-        this.readyFrames[this.readyCount++] = this.frameRawMs;
-        if (this.readyCount === this.readyFrames.length) {
-          this.readyFrames.sort();
-          const baseline = this.readyFrames[this.readyCount >> 1];
-          qualityPolicy.setBaseline(baseline);
-          performanceSession?.setBaseline(baseline);
-        }
-      }
+          !demoHost?.active &&
+          foreground &&
+          ((!started && !pictureResume) || (paused && this.cadence.waiting)),
+      );
       if (timed) {
         if (
           (this.frameActive && !demoHost?.active) ||
@@ -12922,6 +12971,31 @@ try {
             ? defeatEffectsRunning()
             : started && !paused && !document.hidden && document.hasFocus() && !dialogOpen(),
       };
+    }
+    // Preserve the existing native observer's read-only sample-count contract.
+    get readyCount() {
+      return this.cadence.samples;
+    }
+    async prepareCadence(signal) {
+      const selectedRun = run,
+        selectedPictures = flightPictures,
+        selectedTheme = theme.id,
+        selectedActors = flightActorLease,
+        selectedGeneration = painter.preparationGeneration;
+      await this.cadence.wait({
+        signal,
+        current: () =>
+          run === selectedRun &&
+          flightPictures === selectedPictures &&
+          theme.id === selectedTheme &&
+          flightActorLease === selectedActors &&
+          painter.preparationGeneration === selectedGeneration &&
+          paused &&
+          !rendererLost.size &&
+          !document.hidden &&
+          document.hasFocus() &&
+          !dialogOpen(),
+      });
     }
     async prepareBoard(signal) {
       const owner = {

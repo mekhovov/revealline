@@ -12,6 +12,53 @@ import { audioHarness } from './soundtrack-audio.mjs';
 import { memoryIndexedDB } from './soundtrack-fixtures.mjs';
 import { waitFor } from './wait-for.mjs';
 
+// Model only the known theme stylesheet's asynchronous native load boundary.
+// CSS bytes remain real; this host makes no parsing, layout or font claim.
+export function installSoloStylesheets(document, { read = readFile } = {}) {
+  const href = new URL('../../presentation/industrial-workshop.css', import.meta.url).href;
+  const head = document.head,
+    original = head.append;
+  const controller = new AbortController(),
+    seen = new WeakSet();
+  let disposed = false;
+  const append = function (...nodes) {
+    const result = original.apply(this, nodes);
+    for (const node of nodes) {
+      if (
+        node.tagName !== 'LINK' ||
+        node.rel !== 'stylesheet' ||
+        node.href !== href ||
+        seen.has(node)
+      )
+        continue;
+      seen.add(node);
+      const current = () =>
+        !disposed && node.isConnected && node.parentNode === head && node.href === href;
+      Promise.resolve()
+        .then(() => read(new URL(href), { signal: controller.signal }))
+        .then((bytes) => {
+          if (!current()) return;
+          assert(
+            bytes.byteLength > 0 && bytes.byteLength <= 256 * 1024,
+            'Modeled stylesheet must have bounded local bytes.',
+          );
+          node.sheet = { cssRules: [{}] };
+          node.emit('load');
+        })
+        .catch(() => {
+          if (current()) node.emit('error');
+        });
+    }
+    return result;
+  };
+  head.append = append;
+  return () => {
+    disposed = true;
+    controller.abort();
+    if (head.append === append) head.append = original;
+  };
+}
+
 export class SoloElement extends Element {
   constructor(document, tag, options) {
     super(document, tag, options);
@@ -76,6 +123,7 @@ class SoloDocument extends Document {
     this.documentElement = new SoloElement(this, 'html');
     this.documentElement.parentNode = this;
     this.children = [this.documentElement];
+    this.documentElement.append(this.head);
     this.body = new SoloElement(this, 'body');
     this.documentElement.append(this.body);
     this.activeElement = this.body;
@@ -223,6 +271,7 @@ export async function soloPage(
     waitForPictures = true,
     animationFrames = false,
     automaticPreparationFrames = true,
+    loadStylesheets = true,
     initialReadyTimeoutMs = 5000,
     browserSetup,
     readPads = () => [],
@@ -310,9 +359,17 @@ export async function soloPage(
     displayDraws = 0,
     displayClears = 0;
   const globals = {
+    // This host models scene time and inert drawing, not native browser work.
+    // An explicit browserSetup clock still overrides this default.
+    performance: { now: () => now },
     document: doc,
     window: win,
-    location: { href: `http://localhost/game/${search}`, search, origin: 'http://localhost' },
+    location: {
+      href: `http://localhost/game/${search}`,
+      search,
+      origin: 'http://localhost',
+      protocol: 'http:',
+    },
     localStorage: storage,
     sessionStorage: previewStorage,
     indexedDB: mediaDB
@@ -537,6 +594,8 @@ export async function soloPage(
   win.URL = globals.URL;
   // Real browser Window and global sessionStorage refer to the same tab store.
   win.sessionStorage = previewStorage;
+  if (loadStylesheets) t.after(installSoloStylesheets(doc));
+  // Explicit browserSetup overrides may suppress or fail the modeled boundary.
   browserSetup?.({ document: doc, window: win, globals });
   for (const [key, value] of Object.entries(globals)) {
     originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
@@ -646,14 +705,15 @@ export async function soloPage(
       'Actual host must finish its initial picture choice before synchronous input tests.',
     );
   frame(0);
-  waitingHosts.add(frame);
-  t.after(() => waitingHosts.delete(frame));
+  const preparationFrame = () => frame(scene.cadence?.waiting ? 1000 / 60 : 0);
+  waitingHosts.add(preparationFrame);
+  t.after(() => waitingHosts.delete(preparationFrame));
   if (automaticPreparationFrames) {
     // Native rendering continues while a caller awaits a Start/Next promise.
-    // Only submit a pending prepared board: never advance the simulation clock
-    // or poll ordinary active gameplay on a background fixture timer.
+    // A pending cadence check needs real positive scene intervals while paused.
+    // Neither that check nor board submission advances active simulation ticks.
     const preparationFrames = setInterval(() => {
-      if (scene.preparedFrame && !doc.hidden) frame(0);
+      if (!doc.hidden && (scene.preparedFrame || scene.cadence?.waiting)) preparationFrame();
     }, 16);
     t.after(() => clearInterval(preparationFrames));
   }

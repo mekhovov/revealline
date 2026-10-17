@@ -39,19 +39,9 @@ async function fixture(t) {
     search: '?journey=opening&performance=1',
     journeyIndexedDB: managedIndexedDB().indexedDB,
     automaticPreparationFrames: false,
-    browserSetup({ globals, document }) {
+    browserSetup({ globals }) {
       globals.innerWidth = 1280;
       globals.innerHeight = 720;
-      // The minimal host has no CSS loader. Complete only that native boundary
-      // so the real theme host accepts its presentation and notifies subscribers.
-      const append = document.head.append.bind(document.head);
-      document.head.append = (...nodes) => {
-        append(...nodes);
-        for (const node of nodes) {
-          if (node.tagName === 'LINK' && node.rel === 'stylesheet')
-            queueMicrotask(() => node.emit('load'));
-        }
-      };
       const Scene = globals.Phaser.Scene;
       globals.Phaser.Scene = class extends Scene {
         constructor(...args) {
@@ -116,7 +106,13 @@ async function fixture(t) {
   }
   async function running() {
     page.submitRender();
-    await waitFor(() => page.doc.body.dataset.flightState === 'running', { timeoutMs: 20000 });
+    await waitFor(
+      () => {
+        page.frame(1000 / 60);
+        return page.doc.body.dataset.flightState === 'running';
+      },
+      { timeoutMs: 20000 },
+    );
     assert.equal(page.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   }
