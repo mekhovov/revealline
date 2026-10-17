@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: native Raid uses current rules at every difficulty without changing legacy authoring defaults
+ok 1 - native Raid uses current rules at every difficulty without changing legacy authoring defaults # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.600333
+  ...
+# Subtest: pre-run variant record lookup uses the same revision as its completed run
+ok 2 - pre-run variant record lookup uses the same revision as its completed run # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.069292
+  ...
+# Subtest: Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages
+ok 3 - Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045917
+  ...
+# Subtest: custom V4 Marathon previews preserve optional battlefield and movement authoring
+not ok 4 - custom V4 Marathon previews preserve optional battlefield and movement authoring
+  ---
+  duration_ms: 13.173
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-raid-variants.test.mjs:128:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /reverse|new layout|reflected|shifted/i. Input:
+    
+    'Crossing columns · alternating packs reverse their route'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'Crossing columns · alternating packs reverse their route'
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-raid-variants.test.mjs:161:14)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Time Attack and Marathon reject experimental terrain rather than silently changing routes
+ok 5 - Time Attack and Marathon reject experimental terrain rather than silently changing routes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.063375
+  ...
+# Subtest: Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+ok 6 - Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0415
+  ...
+# Subtest: bank/continue transactions settle once and preserve resources without free repairs
+ok 7 - bank/continue transactions settle once and preserve resources without free repairs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033875
+  ...
+# Subtest: losing the last airframe forfeits the entire unbanked chain, retry restarts it
+ok 8 - losing the last airframe forfeits the entire unbanked chain, retry restarts it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.094458
+  ...
+# Subtest: five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+ok 9 - five contracts are bounded and auto-bank; generated escalation keeps project safety floors # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.07925
+  ...
+# Subtest: variant records have independent contexts and shared durable/session storage semantics
+ok 10 - variant records have independent contexts and shared durable/session storage semantics # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.099125
+  ...
+# Subtest: pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+ok 11 - pause freezes variant clocks, and exhausted carried builds never offer an illegal draft # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042542
+  ...
+# Subtest: an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+ok 12 - an ordinary-input pilot can complete all five escalated contracts with carried upgrades # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034084
+  ...
+# Subtest: Marathon next-contract prose has its own result panel while numeric scores remain compact
+ok 13 - Marathon next-contract prose has its own result panel while numeric scores remain compact # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030708
+  ...
+# Subtest: Marathon buttons bank once, refresh results and continue only with the host guard
+ok 14 - Marathon buttons bank once, refresh results and continue only with the host guard # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.067084
+  ...
+# Subtest: Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+ok 15 - Time Attack renders hundredths and an old async result cannot overwrite a new attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032542
+  ...
+# Subtest: medal formatting carries rounded hundredths across minute boundaries
+ok 16 - medal formatting carries rounded hundredths across minute boundaries # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.09475
+  ...
+# Subtest: the last legal three-card choice cannot immediately open an exhausted queued draft
+ok 17 - the last legal three-card choice cannot immediately open an exhausted queued draft # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035459
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 16
+# todo 0
+# duration_ms 232.072709
