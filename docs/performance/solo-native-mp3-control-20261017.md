@@ -1,12 +1,71 @@
-# Native MP3 control — declared, not yet executed
+# Native MP3 controls — retained incomplete result and bounded successor
 
 This control follows the captured finite-zero import in run 38998342774. The
 implementation adds a separate one-shot diagnostic, with no game runtime change
-or performance credit. Browser execution is still pending. The application's
+or performance credit. The original four-arm execution is retained below as
+incomplete; the separate one-arm backend observation has not run. The application's
 finite, positive, at-most-720-second duration and
 structural-duration agreement checks remain intact.
 
-## Question and fixed inputs
+## Original four-arm result
+
+[Run 39001646076](https://github.com/mekhovov/revealline/actions/runs/39001646076)
+finished with failure on tooling/source
+`cce49c81d82b79aefc24898f32eeebc609e569fb`. Artifact `12089406092` is 20,428 bytes,
+SHA-256 `280027f5534dff769fb54559a8a093a768c8acaa49699055d79a975a4b257dab`.
+The API identity/digest, complete ZIP CRC, all eight member hashes and extracted
+readback passed. The 283,425-byte original report has SHA-256
+`431f5b5f6f2260c6b8e111195f3489c2cd1c6c626212b88cc4f43936fca704f7`.
+Local retention is `.cache/solo-followup/remote-native-mp3-39001646076/retained`;
+the compact 24,362-byte analysis has SHA-256
+`a15c923dbb58f42749e7aa27fa08d24911ed5506a16971012251825b328f1745`.
+
+Every arm retained native `loadedmetadata` with **finite 0**, `readyState=4`,
+`networkState=1` and no media error. Duration remained 0 at the five-second
+passive boundary. Each trusted Play gesture fulfilled and emitted `playing`.
+Each then emitted 42 duration-change events, exhausting the shared 64-record
+buffer before any playback-period sample was retained. The separate pre-cleanup
+snapshot survived the cap:
+
+| Arm          | Metadata at (ms) | Terminal duration (seconds) | Terminal currentTime (seconds) | Dropped records | Diagnostic          |
+| ------------ | ---------------: | --------------------------: | -----------------------------: | --------------: | ------------------- |
+| Bossa / Blob |               91 |                 0.009644639 |                   10.008043717 |              23 | Failed / incomplete |
+| Bossa / HTTP |               71 |                 0.006761478 |                   10.008522295 |              23 | Failed / incomplete |
+| Party / Blob |               63 |                 0.007589570 |                   10.006357459 |              22 | Failed / incomplete |
+| Party / HTTP |               64 |                 0.006512923 |                   10.009751648 |              22 | Failed / incomplete |
+
+These durations differ substantially from the unchanged structural durations
+59.61142857142857 and 96.05224489795918 seconds. All terminal snapshots still
+referenced the assigned original source, with `readyState=4`, `networkState=1`,
+no media error, `paused=false` and `ended=true`. Their currentTime values alone
+cannot prove continuous native progress, decoded audio, audible output or complete
+recording playback. The original `nativeProgressObserved=false` / zero-continuous-
+progress fields remain unchanged and **inconclusive**, because all playback
+samples were dropped. Cleanup was submitted, but its before/after records also
+fell beyond the cap; no retained post-cleanup metadata is claimed.
+
+All original asset hashes matched. Requests completed with status 200 and no
+request, range or page-error overflow. HTTP response-header fields in the server
+receipt are null because this recorder reads `getHeader()` after `writeHead()`;
+this is a receipt limitation, not evidence that response headers were missing.
+The full preliminary fetch separately validated MIME, length and hash. All four
+contexts/profiles and the server closed within the declared bounds. The owned
+preparation and browser processes closed without forced cleanup, unattributed
+processes or survivors; browser exit 1 preserves the four cap failures.
+
+The observed processes were WPE MiniBrowser/WebProcess/NetworkProcess, on Linux
+with Playwright 1.62.1, WebKit revision 2336 / reported version 26.5. The executable
+launcher SHA-256 is
+`a85baad3d8c07173ac387a59b41500c382b21ed692afe0964d29aac247ccc63b`.
+The installed host GStreamer package inventory is incomplete (`gst-inspect-1.0`
+was unavailable), and cannot identify the plugins actually loaded by the bundled
+browser. The 93-byte browser log contains no useful native pipeline diagnostics.
+
+This demonstrates neither a Blob-only nor a Bossa-only early-zero condition.
+It does not support a game guard change or an iPhone Safari diagnosis. All four
+results remain failed and excluded from gameplay/performance qualification.
+
+## Original declaration: question and fixed inputs
 
 Does the exact audio produce a later valid native duration or playback progression
 when application cleanup is absent, and does the result depend on Blob delivery?
@@ -122,3 +181,65 @@ repair or promote the previous failed music recipe, historical first-eight,
 raw timing gates or sustained observations. A production change must have its
 own causal regression, unchanged validation contracts and actual-source native
 confirmation.
+
+## Separate held backend observation
+
+The next question is narrow: **does the unchanged Bossa/Blob source produce
+continuous currentTime samples while native duration queries remain invalid or
+near zero, and what does this exact Linux backend report about those queries?**
+This requires a fresh observation; no old dropped samples are reconstructed.
+
+The explicit `run-backend` entry point declares `SoloNativeMP3BackendControlV1`
+and only `bossa-blob`. The original `run` entry point, four-arm order and V1 record
+cap remain unchanged. This mode separates up to **64 native/lifecycle records**
+from **32 periodic samples**. Either overflow still fails completeness. Both
+passive and playback samples must be present (at least two playback samples);
+seeks, resets, source changes and implausible jumps still invalidate continuity.
+Native returns, events, media values and source cleanup are unchanged.
+
+The original Bossa/bundle identities, 1280 × 800 / DPR 1 / CPU 1, same pinned
+WPE headless browser, five-second passive and ten-second trusted-Play windows,
+500 ms sampling, 60-second arm limit, 300-second browser command and 180-second
+preparation command remain fixed. There are no seeks, retries, media re-encodes,
+new decoder flags or game/runtime changes. No timing credit is available.
+
+Only the browser command adds `GST_DEBUG=2,webkitmediaplayer:6`,
+`GST_DEBUG_NO_COLOR=1` and `DEBUG=pw:browser`. It clears inherited
+`GST_DEBUG_FILE` / `GST_DEBUG_DUMP_DOT_DIR` so backend output cannot bypass the
+existing **4 MiB process-log cap**. The 16 MiB evidence cap and its 4 MiB final
+reservation remain unchanged. Log saturation is a failed control, even if media
+values are otherwise captured. A small summary hashes the complete retained log
+and counts actual category/source-line records, excluding merely echoed launch
+configuration. Missing category output is explicit and prevents a complete
+backend diagnostic; it does not establish a codec cause. The exact installed
+launcher source is retained separately with a 64 KiB bound and its hash.
+
+The new workflow `.github/workflows/solo-native-mp3-backend-temporary.yml` admits
+one synchronization from `cce49c81d82b79aefc24898f32eeebc609e569fb`, with the same
+22-minute setup/job budget, owned command/context/server finalization and always-
+upload failure path. All other modes and historical artifacts remain separate.
+This declaration is prepared for root review; it has not been dispatched.
+
+The mode selection is supported by the exact
+[Playwright 1.62.1 Linux launcher](https://github.com/microsoft/playwright/blob/v1.62.1/browser_patches/webkit/pw_run.sh#L21):
+its headless branch chooses WPE, while its default Linux branch chooses GTK.
+Changing to headed mode would therefore be a different backend comparison,
+not a correction of this cohort. The pinned
+[WebKit media source](https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/platform/graphics/gstreamer/MediaPlayerPrivateGStreamer.cpp#L304)
+registers `webkitmediaplayer`; its duration-query path emits `GST_LOG_OBJECT`,
+which motivates the narrowly selected level 6 rather than unrestricted verbose
+logging. These source paths identify a useful observation point, **not the cause
+of the recorded zero**. GStreamer documents
+[category-specific logging](https://gstreamer.freedesktop.org/documentation/tutorials/basic/debugging-tools.html),
+and Playwright documents
+[browser process logs](https://playwright.dev/docs/ci#debugging-browser-launches).
+
+After this single Linux control, the next media compatibility comparison should
+use separately declared **macOS WebKit** with the same exact recordings and byte
+proofs. Playwright explicitly recommends macOS for the closest Safari media
+behavior because available codecs vary across operating systems.
+[Official browser guidance](https://playwright.dev/docs/browsers#webkit).
+Actual iPhone 17 Pro Safari remains authoritative for the reported device issue;
+macOS WebKit is useful supporting evidence. Successive WPE probes must not be
+treated as evidence of an application failure without a causal application
+regression. This step does not itself authorize another browser dispatch.

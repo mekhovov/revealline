@@ -42,6 +42,32 @@ export const MP3_CONTROL = Object.freeze({
   minimumFreeBytes: 1024 * 1024 * 1024,
   maximumLogBytes: 4 * 1024 * 1024,
 });
+// A separate observation, never a reinterpretation of the saturated V1 records.
+export const MP3_BACKEND_CONTROL = Object.freeze({
+  ...MP3_CONTROL,
+  format: 'SoloNativeMP3BackendControlV1',
+  predecessorTools: 'cce49c81d82b79aefc24898f32eeebc609e569fb',
+  predecessorRun: 39001646076,
+  predecessorSource: 'cce49c81d82b79aefc24898f32eeebc609e569fb',
+  arms: Object.freeze(['bossa-blob']),
+  captureMode: 'independent-events-samples-v1',
+  maximumSamples: 32,
+  backendEnvironment: Object.freeze({
+    GST_DEBUG: '2,webkitmediaplayer:6',
+    GST_DEBUG_NO_COLOR: '1',
+    DEBUG: 'pw:browser',
+  }),
+});
+function requirePlan(plan) {
+  assert(plan === MP3_CONTROL || plan === MP3_BACKEND_CONTROL, 'Unknown native control plan');
+}
+export function nativeBackendEnvironment(environment) {
+  const result = { ...environment, ...MP3_BACKEND_CONTROL.backendEnvironment };
+  // Route all backend output through the existing bounded process log only.
+  delete result.GST_DEBUG_FILE;
+  delete result.GST_DEBUG_DUMP_DOT_DIR;
+  return result;
+}
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -74,9 +100,12 @@ async function bounded(label, run, ms = MP3_CONTROL.operationTimeoutMs) {
 
 // This function is the complete external script of the native control page. It
 // does not import the application, patch native methods or replace media values.
-export function installNativeMP3Control() {
+export function installNativeMP3Control(captureMode = null) {
+  if (captureMode !== null && captureMode !== 'independent-events-samples-v1')
+    throw Error('Unknown native observation mode');
   const plan = { maximumRecords: 64, maximumRanges: 8, sampleMs: 500 };
   const records = [],
+    samples = [],
     eventCounts = {};
   let audio,
     timer,
@@ -85,6 +114,7 @@ export function installNativeMP3Control() {
     started,
     phase = 'setup',
     droppedRecords = 0,
+    droppedSamples = 0,
     droppedRanges = 0;
   let playResult = { status: 'not-requested' },
     gesture = null,
@@ -125,6 +155,11 @@ export function installNativeMP3Control() {
     played: ranges(audio.played),
   });
   const record = (kind) => {
+    if (captureMode && kind === 'sample') {
+      if (samples.length >= 32) droppedSamples++;
+      else samples.push({ kind, ...state() });
+      return;
+    }
     if (records.length >= plan.maximumRecords) {
       droppedRecords++;
       return;
@@ -132,6 +167,7 @@ export function installNativeMP3Control() {
     records.push({ kind, ...state() });
   };
   const snapshot = () => ({
+    ...(captureMode ? { captureMode, samples, droppedSamples } : {}),
     identity,
     records,
     eventCounts,
@@ -278,7 +314,11 @@ export function playbackObservation(data) {
     continuous = 0,
     maximum = 0,
     discontinuities = 0;
-  for (const item of data.records ?? []) {
+  const records =
+    data.captureMode === MP3_BACKEND_CONTROL.captureMode
+      ? [...(data.records ?? []), ...(data.samples ?? [])].sort((a, b) => a.atMs - b.atMs)
+      : (data.records ?? []);
+  for (const item of records) {
     if (['seeking', 'seeked', 'emptied', 'abort'].includes(item.kind)) {
       previous = null;
       continuous = 0;
@@ -371,7 +411,8 @@ export function attachRequestReceipts(server, rows, limit = MP3_CONTROL.maximumR
   };
 }
 
-export async function createNativeControlRoot(destination, assets) {
+export async function createNativeControlRoot(destination, assets, plan = MP3_CONTROL) {
+  requirePlan(plan);
   await mkdir(destination);
   await mkdir(join(destination, 'game'));
   const include = ['index.html', 'control.mjs'];
@@ -388,11 +429,15 @@ export async function createNativeControlRoot(destination, assets) {
     join(destination, 'index.html'),
     '<!doctype html><html lang="en"><meta charset="utf-8"><title>Native MP3 control</title><link rel="icon" href="data:,"><body><h1>Native MP3 control</h1><button disabled>Play recording</button><script type="module" src="control.mjs"></script></body></html>',
   );
-  await writeFile(join(destination, 'control.mjs'), `(${installNativeMP3Control.toString()})();\n`);
+  await writeFile(
+    join(destination, 'control.mjs'),
+    `(${installNativeMP3Control.toString()})(${JSON.stringify(plan.captureMode ?? null)});\n`,
+  );
 }
 
-export async function observeNativeArm({ id, owner, preview, pin, record }) {
-  assert(MP3_CONTROL.arms.includes(id));
+export async function observeNativeArm({ id, owner, preview, pin, record, plan = MP3_CONTROL }) {
+  requirePlan(plan);
+  assert(plan.arms.includes(id));
   const row = {
     id,
     status: 'running',
@@ -498,6 +543,7 @@ export async function observeNativeArm({ id, owner, preview, pin, record }) {
       !row.transportComplete ||
       row.droppedRequests ||
       row.data?.droppedRecords ||
+      row.data?.droppedSamples ||
       row.data?.droppedRanges ||
       row.pageErrors?.length ||
       row.droppedPageErrors
@@ -508,18 +554,23 @@ export async function observeNativeArm({ id, owner, preview, pin, record }) {
   return row;
 }
 
-export function nativeControlComplete(report, command) {
+export function nativeControlComplete(report, command, plan = MP3_CONTROL) {
+  requirePlan(plan);
   return (
-    report?.format === MP3_CONTROL.format &&
+    report?.format === plan.format &&
     report.status === 'completed-diagnostic' &&
     report.qualificationEligible === false &&
     report.firstEightAllCorrectnessPassed === false &&
+    (plan === MP3_CONTROL ||
+      Object.entries(plan.backendEnvironment).every(
+        ([key, value]) => report.backendEnvironment?.[key] === value,
+      )) &&
     report.playwrightVersion === MP3_CONTROL.playwright &&
     report.serverClosed === true &&
-    report.rows?.length === 4 &&
+    report.rows?.length === plan.arms.length &&
     report.rows.every(
       (row, index) =>
-        row.id === MP3_CONTROL.arms[index] &&
+        row.id === plan.arms[index] &&
         row.status === 'observed' &&
         row.browserVersion === MP3_CONTROL.browserVersion &&
         row.owner?.cleanup?.status === 'closed' &&
@@ -534,6 +585,14 @@ export function nativeControlComplete(report, command) {
           MP3_CONTROL.playbackMs &&
         !row.droppedRequests &&
         !row.data?.droppedRecords &&
+        (plan === MP3_CONTROL ||
+          (row.data?.captureMode === plan.captureMode &&
+            Array.isArray(row.data.samples) &&
+            row.data.samples.some((sample) => sample.phase === 'passive') &&
+            row.data.samples.filter((sample) => sample.phase === 'playback').length >= 2 &&
+            row.data.samples.length <= plan.maximumSamples &&
+            row.data.records.length <= plan.maximumRecords &&
+            row.data.droppedSamples === 0)) &&
         !row.data?.droppedRanges &&
         row.transportComplete &&
         row.mediaCleanup === 'submitted',
@@ -548,7 +607,19 @@ export function nativeControlComplete(report, command) {
   );
 }
 
-async function child(output, scratch, previewRoot) {
+async function child(output, scratch, previewRoot, plan = MP3_CONTROL) {
+  requirePlan(plan);
+  if (plan === MP3_BACKEND_CONTROL)
+    for (const [key, value] of Object.entries(plan.backendEnvironment))
+      assert.equal(process.env[key], value, 'Backend logging declaration differs');
+  if (plan === MP3_BACKEND_CONTROL) {
+    assert.equal(process.env.GST_DEBUG_FILE, undefined, 'Unowned backend log destination');
+    assert.equal(
+      process.env.GST_DEBUG_DUMP_DOT_DIR,
+      undefined,
+      'Unowned backend graph destination',
+    );
+  }
   const { startProductionPreview } = await import('./serve-production-preview.mjs');
   const { createPersistentQualificationOwner } = await import(
     './solo-qualification-browser-context.mjs'
@@ -563,8 +634,16 @@ async function child(output, scratch, previewRoot) {
   const registryWebKit = JSON.parse(registry).browsers.find((item) => item.name === 'webkit');
   assert.equal(registryWebKit.revision, MP3_CONTROL.webkitRevision);
   assert.equal(registryWebKit.browserVersion, MP3_CONTROL.browserVersion);
+  if (plan === MP3_BACKEND_CONTROL)
+    assert((await lstat(webkit.executablePath())).size <= 65536, 'Launcher source bound');
+  const launcher = await readFile(webkit.executablePath());
+  if (plan === MP3_BACKEND_CONTROL) {
+    assert(launcher.length <= 65536, 'Launcher source bound');
+    await writeFile(join(output, 'webkit-launcher.txt'), launcher);
+  }
   const report = {
-    format: MP3_CONTROL.format,
+    format: plan.format,
+    ...(plan === MP3_BACKEND_CONTROL ? { backendEnvironment: plan.backendEnvironment } : {}),
     sourceRevision: process.env.SOLO_TOOLING_REVISION,
     status: 'running',
     qualificationEligible: false,
@@ -577,7 +656,17 @@ async function child(output, scratch, previewRoot) {
       webkit: registryWebKit,
     },
     executable: webkit.executablePath(),
-    executableSha256: sha256(await readFile(webkit.executablePath())),
+    executableSha256: sha256(launcher),
+    ...(plan === MP3_BACKEND_CONTROL
+      ? {
+          launcherSource: {
+            file: 'webkit-launcher.txt',
+            bytes: launcher.length,
+            sha256: sha256(launcher),
+            headless: true,
+          },
+        }
+      : {}),
     host: {
       platform: process.platform,
       release: release(),
@@ -627,7 +716,7 @@ async function child(output, scratch, previewRoot) {
       headers: preview.headers,
       cache: preview.cache,
     };
-    for (const id of MP3_CONTROL.arms) {
+    for (const id of plan.arms) {
       const original = pinFor(id);
       const durationSeconds = provenance.recordings.find((item) => item.sha256 === original.sha256)
         ?.asset?.durationSeconds;
@@ -645,6 +734,7 @@ async function child(output, scratch, previewRoot) {
         },
       });
       const row = await observeNativeArm({
+        plan,
         id,
         owner,
         preview,
@@ -689,7 +779,7 @@ async function child(output, scratch, previewRoot) {
         report.serverFailure = failure(error);
       }
     }
-    report.notObserved = MP3_CONTROL.arms.filter((id) => !report.rows.some((row) => row.id === id));
+    report.notObserved = plan.arms.filter((id) => !report.rows.some((row) => row.id === id));
     await save(reportPath, report);
     if (report.status !== 'completed-diagnostic') process.exitCode = 1;
   }
@@ -713,7 +803,23 @@ async function treeBytes(directory) {
   await walk(directory);
   return bytes;
 }
-async function parent(output) {
+export function backendLogObservation(bytes) {
+  assert(Buffer.isBuffer(bytes), 'Bounded original log bytes required');
+  assert(bytes.length <= MP3_BACKEND_CONTROL.maximumLogBytes, 'Backend log cap exceeded');
+  const lines = bytes.toString('utf8').split('\n');
+  const nativeLines = lines.filter((line) => /\bwebkitmediaplayer\b.*\.cpp:\d+/.test(line));
+  return {
+    bytes: bytes.length,
+    sha256: sha256(bytes),
+    category: 'webkitmediaplayer',
+    categoryLines: nativeLines.length,
+    durationQueryLines: nativeLines.filter((line) => /Duration query/.test(line)).length,
+    status: nativeLines.length ? 'observed-category' : 'unavailable-category',
+    qualificationEligible: false,
+  };
+}
+async function parent(output, plan = MP3_CONTROL) {
+  requirePlan(plan);
   assert.equal(process.platform, 'linux');
   const source = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
   assert.equal(source, process.env.SOLO_TOOLING_REVISION);
@@ -750,7 +856,7 @@ async function parent(output) {
   }
   await save(join(output, 'admission.json'), {
     sourceRevision: source,
-    plan: MP3_CONTROL,
+    plan,
     sources,
     scratch: { path: scratch, dev: identity.dev, ino: identity.ino },
     automaticRetries: 0,
@@ -765,7 +871,7 @@ async function parent(output) {
   };
   let preparation, command, report;
   const summary = {
-    format: MP3_CONTROL.format,
+    format: plan.format,
     sourceRevision: source,
     status: 'failed',
     qualificationEligible: false,
@@ -813,11 +919,19 @@ async function parent(output) {
         bytes: verifyAudioFixtureBytes(await readFile(join(fixtures, `${pin.sha256}.mp3`)), pin),
       });
     const previewRoot = join(scratch, 'control');
-    await createNativeControlRoot(previewRoot, assets);
+    await createNativeControlRoot(previewRoot, assets, plan);
     command = await ownedCommand(
-      [process.execPath, fileURLToPath(import.meta.url), 'child', output, scratch, previewRoot],
+      [
+        process.execPath,
+        fileURLToPath(import.meta.url),
+        plan === MP3_BACKEND_CONTROL ? 'child-backend' : 'child',
+        output,
+        scratch,
+        previewRoot,
+      ],
       {
         ...options,
+        env: plan === MP3_BACKEND_CONTROL ? nativeBackendEnvironment(options.env) : options.env,
         timeoutMs: MP3_CONTROL.commandTimeoutMs,
         log: join(output, 'browser.log'),
         receipt: join(output, 'browser-command.json'),
@@ -827,7 +941,17 @@ async function parent(output) {
     assert(data.length <= MP3_CONTROL.maximumReportBytes);
     report = JSON.parse(data);
     assert.equal(report.sourceRevision, source);
-    summary.status = nativeControlComplete(report, command) ? 'completed-diagnostic' : 'failed';
+    if (plan === MP3_BACKEND_CONTROL) {
+      const logPath = join(output, 'browser.log');
+      assert((await lstat(logPath)).size <= plan.maximumLogBytes, 'Backend log cap exceeded');
+      summary.backendLog = backendLogObservation(await readFile(logPath));
+      await save(join(output, 'backend-log-summary.json'), summary.backendLog);
+    }
+    summary.status =
+      nativeControlComplete(report, command, plan) &&
+      (plan === MP3_CONTROL || summary.backendLog.status === 'observed-category')
+        ? 'completed-diagnostic'
+        : 'failed';
   } catch (error) {
     summary.failure = failure(error);
   } finally {
@@ -848,12 +972,18 @@ async function parent(output) {
   }
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  if (process.argv[2] === 'run') {
+  if (['run', 'run-backend'].includes(process.argv[2])) {
     assert.equal(process.argv.length, 4);
-    await parent(resolve(process.argv[3]));
+    await parent(
+      resolve(process.argv[3]),
+      process.argv[2] === 'run-backend' ? MP3_BACKEND_CONTROL : MP3_CONTROL,
+    );
   } else {
-    assert.equal(process.argv[2], 'child');
+    assert(['child', 'child-backend'].includes(process.argv[2]));
     assert.equal(process.argv.length, 6);
-    await child(...process.argv.slice(3).map((path) => resolve(path)));
+    await child(
+      ...process.argv.slice(3).map((path) => resolve(path)),
+      process.argv[2] === 'child-backend' ? MP3_BACKEND_CONTROL : MP3_CONTROL,
+    );
   }
 }

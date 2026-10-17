@@ -8,10 +8,13 @@ import { join } from 'node:path';
 import { runInNewContext } from 'node:vm';
 import {
   MP3_CONTROL as plan,
+  MP3_BACKEND_CONTROL as backendPlan,
   attachRequestReceipts,
+  backendLogObservation,
   createNativeControlRoot,
   installNativeMP3Control,
   nativeControlComplete,
+  nativeBackendEnvironment,
   observeNativeArm,
   playbackObservation,
 } from './solo-native-mp3-control.mjs';
@@ -28,6 +31,7 @@ function nativePage({
   badHash = false,
   type = 'audio/mpeg',
   ranges = 0,
+  captureMode = null,
 } = {}) {
   const bytes = Buffer.from('exact test bytes'),
     calls = [],
@@ -133,7 +137,10 @@ function nativePage({
         bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.length),
     }),
   };
-  runInNewContext(`(${installNativeMP3Control.toString()})();`, sandbox);
+  runInNewContext(
+    `(${installNativeMP3Control.toString()})(${JSON.stringify(captureMode)});`,
+    sandbox,
+  );
   return {
     api: sandbox.nativeMP3Control,
     media,
@@ -243,6 +250,109 @@ test('records/ranges remain bounded with explicit saturation and timeupdate coun
   assert(data.droppedRecords > 0 && data.droppedRanges > 0);
   assert(data.records.every((row) => row.buffered.length <= plan.maximumRanges));
   assert.equal(data.eventCounts.timeupdate, 80);
+});
+
+test('explicit backend capture preserves samples through the observed native duration burst', async () => {
+  const host = nativePage({ captureMode: backendPlan.captureMode, playback: 'fulfills' });
+  await host.api.prepare(host.pin);
+  host.media.currentSrc = host.media.src;
+  host.media.duration = 0;
+  host.event('loadedmetadata');
+  for (let i = 1; i <= 10; i++) host.sample(i * 500);
+  host.api.passiveBoundary();
+  host.click();
+  await Promise.resolve();
+  for (let i = 0; i < 42; i++) host.event('durationchange');
+  for (let i = 1; i <= 20; i++) {
+    host.media.currentTime = i * 0.5;
+    host.sample(5000 + i * 500);
+  }
+  const data = normalize(host.api.cleanup());
+  assert.equal(data.samples.length, 30);
+  assert.equal(data.droppedSamples, 0);
+  assert.equal(data.droppedRecords, 0);
+  assert.equal(data.records.filter((row) => row.kind === 'sample').length, 0);
+  assert.equal(data.records.at(-1).kind, 'cleanup-after');
+  assert.equal(data.preCleanup.currentTime.value, 10);
+  assert.equal(playbackObservation(data).nativeProgressObserved, true);
+  assert.equal(playbackObservation(data).nativeDurationMatchesFrames, false);
+  assert.deepEqual(data.preCleanup.duration, tagged(0));
+});
+
+test('backend sample and event limits are independent and each saturation remains explicit', async () => {
+  for (const saturated of ['samples', 'events']) {
+    const host = nativePage({ captureMode: backendPlan.captureMode });
+    await host.api.prepare(host.pin);
+    for (let i = 0; i < 80; i++) {
+      if (saturated === 'samples') host.sample(i * 500);
+      else host.event('durationchange');
+    }
+    if (saturated === 'samples') host.event('loadedmetadata');
+    else host.sample(500);
+    const data = normalize(host.api.cleanup());
+    assert.equal(data.samples.length, saturated === 'samples' ? 32 : 1);
+    assert.equal(data.droppedSamples > 0, saturated === 'samples');
+    assert.equal(data.droppedRecords > 0, saturated === 'events');
+    assert.equal(data.records.length <= 64, true);
+    assert.equal(Boolean(data.preCleanup), true);
+  }
+  assert.throws(() => nativePage({ captureMode: 'invented' }), /Unknown native/);
+});
+
+test('backend observations keep seeks ordered across independent samples and native events', () => {
+  const sample = (atMs, time) => ({
+    kind: 'sample',
+    phase: 'playback',
+    atMs,
+    currentTime: tagged(time),
+    playbackRate: 1,
+    sourceMatches: true,
+  });
+  const data = {
+    captureMode: backendPlan.captureMode,
+    records: [{ kind: 'seeking', atMs: 750 }],
+    samples: [sample(0, 0), sample(500, 0.5), sample(1000, 10), sample(1500, 10.5)],
+    gesture: { isTrusted: true },
+    playResult: { status: 'fulfilled' },
+  };
+  assert.equal(playbackObservation(data).nativeProgressObserved, false);
+  assert.equal(playbackObservation({ ...data, records: [] }).discontinuities, 1);
+});
+
+test('bounded backend log identity distinguishes actual category lines from a launch declaration', () => {
+  const bytes = Buffer.from(
+    'pw:browser GST_DEBUG=2,webkitmediaplayer:6\n' +
+      '[pid=12][err] 0:00:01 LOG webkitmediaplayer MediaPlayerPrivateGStreamer.cpp:1294: Duration query: 0\n',
+  );
+  const result = backendLogObservation(bytes);
+  assert.equal(result.bytes, bytes.length);
+  assert.equal(result.sha256, hash(bytes));
+  assert.equal(result.categoryLines, 1);
+  assert.equal(result.durationQueryLines, 1);
+  assert.equal(result.status, 'observed-category');
+  assert.equal(
+    backendLogObservation(Buffer.from('GST_DEBUG=2,webkitmediaplayer:6')).status,
+    'unavailable-category',
+  );
+  assert.throws(() => backendLogObservation(Buffer.alloc(backendPlan.maximumLogBytes + 1)), /cap/);
+});
+
+test('backend logging keeps one bounded destination without mutating the inherited environment', () => {
+  const source = {
+    PATH: '/original',
+    GST_DEBUG: '9',
+    GST_DEBUG_FILE: '/unowned',
+    GST_DEBUG_DUMP_DOT_DIR: '/unowned-graphs',
+    DEBUG: '*',
+  };
+  const result = nativeBackendEnvironment(source);
+  assert.equal(result.PATH, source.PATH);
+  assert.equal(result.GST_DEBUG_FILE, undefined);
+  assert.equal(result.GST_DEBUG_DUMP_DOT_DIR, undefined);
+  for (const [key, value] of Object.entries(backendPlan.backendEnvironment))
+    assert.equal(result[key], value);
+  assert.equal(source.GST_DEBUG_FILE, '/unowned');
+  assert.equal(source.GST_DEBUG, '9');
 });
 
 test('progress excludes seeks, resets, jumps, stale samples and untrusted input', () => {
@@ -481,4 +591,91 @@ test('one-shot workflow and source-specific scope retain all failed evidence and
   assert.doesNotMatch(text, /game-cli\.mjs build|qualify-solo\.mjs/);
   assert.equal(plan.armTimeoutMs, 60000);
   assert.equal(plan.commandTimeoutMs, 300000);
+});
+
+test('backend completeness is separate, exact-arm and fails closed on independent sample loss', () => {
+  const command = { status: 'closed', exitCode: 0, ambiguous: [], survivors: [] };
+  const make = () => {
+    const report = completed();
+    report.format = backendPlan.format;
+    report.backendEnvironment = { ...backendPlan.backendEnvironment };
+    report.rows = report.rows.slice(0, 1);
+    Object.assign(report.rows[0].data, {
+      captureMode: backendPlan.captureMode,
+      samples: [
+        { kind: 'sample', phase: 'passive', atMs: 1000 },
+        { kind: 'sample', phase: 'playback', atMs: 10000 },
+        { kind: 'sample', phase: 'playback', atMs: 10500 },
+      ],
+      droppedSamples: 0,
+    });
+    return report;
+  };
+  assert.equal(nativeControlComplete(make(), command, backendPlan), true);
+  assert.equal(nativeControlComplete(make(), command), false);
+  assert.equal(nativeControlComplete(completed(), command, backendPlan), false);
+  for (const mutate of [
+    (r) => {
+      r.backendEnvironment.GST_DEBUG = '9';
+    },
+    (r) => {
+      r.rows[0].data.droppedSamples = 1;
+    },
+    (r) => {
+      r.rows[0].data.samples = [];
+    },
+    (r) => {
+      r.rows[0].data.samples = Array(33).fill({});
+    },
+    (r) => {
+      r.rows[0].data.captureMode = null;
+    },
+    (r) => {
+      r.rows[0].data.records = Array(65).fill({});
+    },
+    (r) => {
+      r.rows[0].id = 'bossa-http';
+    },
+  ]) {
+    const report = make();
+    mutate(report);
+    assert.equal(nativeControlComplete(report, command, backendPlan), false);
+  }
+  assert.equal(
+    nativeControlComplete(make(), { ...command, violation: 'log-limit' }, backendPlan),
+    false,
+  );
+  assert.throws(() => nativeControlComplete(make(), command, { ...backendPlan }), /Unknown/);
+});
+
+test('backend workflow is a single declared WPE arm without changing legacy delivery controls', async () => {
+  const text = await readFile(
+    new URL('../.github/workflows/solo-native-mp3-backend-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  assert(text.includes(`github.event.before == '${backendPlan.predecessorTools}'`));
+  assert.match(text, /cancel-in-progress: false/);
+  assert.match(text, /install --with-deps webkit/);
+  assert.match(text, /if: always\(\)/);
+  assert.match(text, /timeout-minutes: 22/);
+  assert.match(text, /solo-native-mp3-control\.mjs run-backend/);
+  assert.doesNotMatch(text, /headed|xvfb|game-cli\.mjs build|qualify-solo\.mjs/);
+  assert.deepEqual(backendPlan.arms, ['bossa-blob']);
+  for (const key of [
+    'passiveMs',
+    'playbackMs',
+    'sampleMs',
+    'armTimeoutMs',
+    'commandTimeoutMs',
+    'preparationTimeoutMs',
+    'maximumRecords',
+    'maximumLogBytes',
+    'maximumEvidenceBytes',
+  ])
+    assert.equal(backendPlan[key], plan[key]);
+  assert.deepEqual(backendPlan.backendEnvironment, {
+    GST_DEBUG: '2,webkitmediaplayer:6',
+    GST_DEBUG_NO_COLOR: '1',
+    DEBUG: 'pw:browser',
+  });
 });
