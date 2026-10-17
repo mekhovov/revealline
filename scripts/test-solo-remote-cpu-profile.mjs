@@ -272,7 +272,13 @@ test('workflow is single-shot and keeps source/command/profile ownership bounds'
     /timeout --signal=TERM --kill-after=30s \$\{\{ matrix\.outerSeconds \}\}s/,
   );
   assert.match(workflow, /scripts\/test-solo-qualification-cpu-profile\.mjs/);
+  assert.match(workflow, /install --with-deps chromium 2>&1/);
+  assert(!workflow.includes('install --with-deps chromium webkit'));
   const runner = await readFile(new URL('scripts/run-solo-remote-correctness.mjs', root), 'utf8');
+  assert.match(
+    runner,
+    /\['offline', 'demo', 'demo-active', 'cpu-profile'\]\.includes\(extension\)/,
+  );
   for (const value of [
     'SoloHostedCpuProfilePlanV1',
     'validateCpuProfilePlan',

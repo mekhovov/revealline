@@ -724,7 +724,7 @@ async function main() {
       moduleIdentity: await digest(browserModule),
       engines: {},
     };
-    for (const engine of ['offline', 'demo', 'demo-active'].includes(extension)
+    for (const engine of ['offline', 'demo', 'demo-active', 'cpu-profile'].includes(extension)
       ? ['chromium']
       : ['chromium', 'webkit'])
       report.playwright.engines[engine] = {

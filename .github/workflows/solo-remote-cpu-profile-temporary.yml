@@ -112,7 +112,7 @@ jobs:
           set -euo pipefail
           mkdir "$RUNNER_TEMP/solo-browser-tools"
           npm install --prefix "$RUNNER_TEMP/solo-browser-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-install.log"
-          "$RUNNER_TEMP/solo-browser-tools/node_modules/.bin/playwright" install --with-deps chromium webkit 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-dependencies.log"
+          "$RUNNER_TEMP/solo-browser-tools/node_modules/.bin/playwright" install --with-deps chromium 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-dependencies.log"
           cp "$RUNNER_TEMP/solo-browser-tools/package-lock.json" "$RUNNER_TEMP/solo-linux-setup/browser-package-lock.json"
       - name: Exercise archive rejection and owned timeout cleanup
         timeout-minutes: 3
