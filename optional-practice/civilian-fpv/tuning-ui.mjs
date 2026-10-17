@@ -67,6 +67,7 @@ export function mountFlightTuning({
     camera,
     editRevision,
     algorithmDrafts = {},
+    numericDrafts = {},
     axisInputs = {},
     evaluator,
     savedEvaluator,
@@ -254,6 +255,7 @@ export function mountFlightTuning({
       draftProvenance = clone(previous.provenance ?? null);
       profileName.value = previous.name;
       algorithmDrafts = {};
+      numericDrafts = {};
       paintFields();
     },
     management,
@@ -562,6 +564,7 @@ export function mountFlightTuning({
     draft = createTunedResponse(result.profile, draft);
     draftProvenance = clone(result.provenance);
     algorithmDrafts = {};
+    numericDrafts = {};
     paintFields();
     status.textContent = t(
       'Preview only. Save as a new profile, then assign it explicitly.',
@@ -1008,6 +1011,7 @@ export function mountFlightTuning({
         provenance: clone(draftProvenance),
         name: profileName.value,
         algorithms: clone(algorithmDrafts),
+        numeric: clone(numericDrafts),
         baseRevision: editRevision,
       });
     if (library) {
@@ -1043,6 +1047,7 @@ export function mountFlightTuning({
     draft = clone(cached?.response ?? saved.response);
     draftProvenance = clone(cached ? (cached.provenance ?? null) : (saved.provenance ?? null));
     algorithmDrafts = clone(cached?.algorithms ?? {});
+    numericDrafts = clone(cached?.numeric ?? {});
     editRevision = Math.min(
       cached?.baseRevision ?? library.revision,
       pendingSetup?.baseRevision ?? library.revision,
@@ -1177,11 +1182,13 @@ export function mountFlightTuning({
       throw failure;
     }
   }
-  function number(label, value, min, max, step, change, parent = values) {
+  function number(key, label, value, min, max, step, change, parent = values) {
     const row = el('div', undefined, parent);
     row.className = 'tuning-number';
     const input = field(label, 'number', row),
       slider = field(label, 'range', row);
+    const algorithm = draft.format === TUNED_RESPONSE_FORMAT ? draft.rates.algorithm : 'legacy',
+      pending = (numericDrafts[algorithm] ??= {});
     let applied = value;
     const precision = String(step).split('.')[1]?.length ?? 0;
     const invalid = (message) => {
@@ -1189,6 +1196,9 @@ export function mountFlightTuning({
       input.setCustomValidity?.(message);
     };
     const update = (node, commit) => {
+      // Keep unfinished text separately from evaluated values. Repainting or
+      // navigating drafts must not turn an invalid entry into a valid old rate.
+      if (node === input) pending[key] = input.value;
       const n = node.value.trim() ? Number(node.value) : Number.NaN;
       if (!Number.isFinite(n) || n < min || n > max) {
         const message = t(
@@ -1208,6 +1218,7 @@ export function mountFlightTuning({
       }
       slider.value = String(normalized);
       if (commit) input.value = String(normalized);
+      delete pending[key];
       input.removeAttribute('aria-invalid');
       input.setCustomValidity?.('');
       if (numericFailure && status.textContent === numericFailure) status.textContent = '';
@@ -1235,6 +1246,10 @@ export function mountFlightTuning({
       listen(node, 'input', () => checkedUpdate(node, node === slider));
       listen(node, 'change', () => checkedUpdate(node, true));
     }
+    if (Object.hasOwn(pending, key)) {
+      input.value = pending[key];
+      checkedUpdate(input, false);
+    }
     return {
       input,
       slider,
@@ -1243,6 +1258,7 @@ export function mountFlightTuning({
         // synchronized so typing the peer's former value is still a new edit.
         applied = value;
         input.value = slider.value = String(value);
+        delete pending[key];
         input.removeAttribute('aria-invalid');
         input.setCustomValidity?.('');
       },
@@ -1261,7 +1277,7 @@ export function mountFlightTuning({
         ['maxRate', t('Maximum rate (°/s)', 'Максимальний рейт (°/с)'), 60, 720],
         ['expo', 'Expo (%)', 0, 80],
       ])
-        number(label, draft[key], min, max, 1, (value) => {
+        number(key, label, draft[key], min, max, 1, (value) => {
           draft[key] = value;
         });
     } else {
@@ -1302,6 +1318,7 @@ export function mountFlightTuning({
           ['limit', t('Rate limit (°/s)', 'Обмеження рейту (°/с)'), 1],
         ]) {
           axisInputs[axis][key] = number(
+            `axes.${axis}.${key}`,
             label,
             draft.rates.axes[axis][key] * factor,
             (key === 'rcRate' ? 1 : key === 'limit' ? 200 : 0) * factor,
@@ -1350,6 +1367,7 @@ export function mountFlightTuning({
           : []),
       ])
         number(
+          `throttle.${key}`,
           label,
           draft.rates.throttle[key],
           0,
@@ -1375,6 +1393,7 @@ export function mountFlightTuning({
         paintPreview();
       });
       number(
+        'throttle.limitPercent',
         t('Limit (%)', 'Обмеження (%)'),
         draft.rates.throttle.limitPercent,
         25,
@@ -1387,6 +1406,7 @@ export function mountFlightTuning({
       );
     }
     number(
+      'maxTilt',
       t('Self-level maximum tilt (°)', 'Максимальний нахил самовирівнювання (°)'),
       draft.maxTilt,
       5,
@@ -1397,6 +1417,7 @@ export function mountFlightTuning({
       },
     );
     number(
+      'responseTicks',
       t('Legacy airframe response (50 Hz ticks)', 'Реакція класичної моделі (такти 50 Гц)'),
       draft.responseTicks,
       1,

@@ -191,6 +191,64 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 .inputValue()) === '900',
               'Algorithm draft was reinterpreted',
             );
+            const unfinishedRate = roll.getByRole('spinbutton', {
+                name: 'Maximum rate (°/s)',
+                exact: true,
+              }),
+              unfinishedProfile = await page
+                .getByLabel('Rate profile', { exact: true })
+                .inputValue(),
+              beforeUnfinishedRate = await page.evaluate(() => window.qualificationStore.export());
+            await unfinishedRate.fill('');
+            const checkUnfinishedRate = async (transition) => {
+              check(
+                (await unfinishedRate.inputValue()) === '' &&
+                  (await unfinishedRate.getAttribute('aria-invalid')) === 'true',
+                `${transition} discarded the unfinished rate entry`,
+              );
+              for (const action of ['Save for next flight', 'Test draft · unscored']) {
+                await button(action).click();
+                await page.getByRole('status').filter({ hasText: 'enter a value' }).waitFor();
+              }
+              check(
+                (await page.evaluate(() => window.qualificationStore.export())) ===
+                  beforeUnfinishedRate &&
+                  (await page.evaluate(() =>
+                    Object.values(window.qualificationEvents).every(
+                      (events) => events.length === 0,
+                    ),
+                  )),
+                `${transition} allowed saving or flying the previous hidden rate`,
+              );
+            };
+            await page.getByLabel('Rate algorithm', { exact: true }).selectOption('quick');
+            await page.getByLabel('Rate algorithm', { exact: true }).selectOption('actual');
+            await checkUnfinishedRate('Algorithm navigation');
+            await page.getByLabel('Rate profile', { exact: true }).selectOption('legacy-feel');
+            await page.getByLabel('Rate profile', { exact: true }).selectOption(unfinishedProfile);
+            await checkUnfinishedRate('Profile navigation');
+            await button('Close').click();
+            await button('Rates & throttle').click();
+            await checkUnfinishedRate('Editor reopening');
+            await page.evaluate(() => {
+              window.qualificationLocale = 'uk';
+              window.qualificationUI.refresh();
+            });
+            check(
+              (await page
+                .getByRole('group', { name: 'Крен', exact: true })
+                .getByRole('spinbutton', { name: 'Максимальний рейт (°/с)', exact: true })
+                .inputValue()) === '',
+              'Language change discarded the unfinished rate entry',
+            );
+            await page.evaluate(() => {
+              window.qualificationLocale = 'en';
+              window.qualificationUI.refresh();
+            });
+            await checkUnfinishedRate('Language round trip');
+            await unfinishedRate.fill('900');
+            await page.keyboard.press('Tab');
+            evidence.checks.unfinishedRateDraftNavigation = true;
             const cameraTilt = page.getByLabel('Camera tilt (degrees)', { exact: true }),
               cameraFov = page.getByLabel('Vertical FOV (degrees)', { exact: true });
             await cameraTilt.fill('');

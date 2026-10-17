@@ -494,6 +494,113 @@ test('Save and Test commit pending numeric text, while blank values block stale-
   assert.equal(f.store.effective().response.rates.axes.roll.rate, 92);
 });
 
+for (const transition of ['algorithm', 'profile', 'close', 'locale', 'throttle version'])
+  test(`unfinished rates survive ${transition} navigation and still block stale-value saves`, async (t) => {
+    const f = fixture(t);
+    await f.click('New Actual profile');
+    const profileId = f.find('Rate profile', 'select').value;
+    f.edit('Maximum rate (°/s)', '', { scope: f.axis('Roll'), type: 'number' });
+    if (transition === 'algorithm') {
+      f.edit('Rate algorithm', 'betaflight', { tag: 'select', event: 'change' });
+      f.edit('RC rate', 1.25, { scope: f.axis('Roll'), type: 'number' });
+      assert.equal((await f.draft()).axes.roll.rcRate, 125);
+      f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+    } else if (transition === 'profile') {
+      f.edit('Rate profile', 'legacy-feel', { tag: 'select', event: 'change' });
+      f.edit('Rate profile', profileId, { tag: 'select', event: 'change' });
+    } else if (transition === 'close') {
+      f.ui.close();
+      f.ui.open();
+    } else if (transition === 'locale') {
+      f.setLocale('uk');
+      f.setLocale('en');
+    } else {
+      f.edit('Throttle curve version', 'betaflight-2025.12', { tag: 'select', event: 'change' });
+    }
+    const input = f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number');
+    assert.equal(input.value, '');
+    assert.equal(input.getAttribute('aria-invalid'), 'true');
+    assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Pitch'), 'number').value, '670');
+    const before = f.store.export();
+    for (const action of ['Save for next flight', 'Test draft · unscored']) {
+      await f.click(action);
+      assert.equal(f.store.export(), before);
+      assert.equal(f.tested.length, 0);
+      assert.match(f.ui.root.querySelector('[role="status"]').textContent, /enter a value/);
+    }
+    f.edit('Maximum rate (°/s)', 910, { scope: f.axis('Roll'), type: 'number' });
+    await f.click('Save for next flight');
+    assert.equal(
+      f.store.snapshot().profiles.find((p) => p.id === profileId).response.rates.axes.roll.rate,
+      91,
+    );
+  });
+
+test('algorithm drafts retain invalid ranges and fractional pending units without crossing algorithms', async (t) => {
+  const f = fixture(t);
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  f.edit('Maximum rate (°/s)', '3000', { scope: f.axis('Roll'), type: 'number' });
+  f.edit('Rate algorithm', 'betaflight', { tag: 'select', event: 'change' });
+  f.edit('RC rate', '1.235', { scope: f.axis('Roll'), type: 'number' });
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number').value, '3000');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested.length, 0);
+  f.edit('Rate algorithm', 'betaflight', { tag: 'select', event: 'change' });
+  assert.equal(f.find('RC rate', 'input', f.axis('Roll'), 'number').value, '1.235');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].response.rates.axes.roll.rcRate, 124);
+  assert.equal(f.store.snapshot().revision, 0);
+});
+
+test('unfinished throttle and assistance fields survive repaint while linked edits replace their peer text', async (t) => {
+  const f = fixture(t);
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  f.edit('Midpoint (%)', '', { type: 'number' });
+  f.edit('Self-level maximum tilt (°)', '70', { type: 'number' });
+  f.edit('Maximum rate (°/s)', '', { scope: f.axis('Pitch'), type: 'number' });
+  f.setLocale('uk');
+  f.setLocale('en');
+  assert.equal(f.find('Midpoint (%)', 'input', f.ui.root, 'number').value, '');
+  assert.equal(f.find('Self-level maximum tilt (°)', 'input', f.ui.root, 'number').value, '70');
+  f.find('Link roll and pitch edits').checked = true;
+  f.edit('Maximum rate (°/s)', 900, { scope: f.axis('Roll'), type: 'number' });
+  f.edit('Midpoint (%)', 40, { type: 'number' });
+  f.edit('Self-level maximum tilt (°)', 50, { type: 'number' });
+  f.ui.close();
+  f.ui.open();
+  assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Pitch'), 'number').value, '900');
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().response.rates.axes.pitch.rate, 90);
+  assert.equal(f.store.effective().response.rates.throttle.mid, 40);
+  assert.equal(f.store.effective().response.maxTilt, 50);
+});
+
+for (const replacement of ['Revert draft', 'Restore revision to draft', 'Preview import'])
+  test(`${replacement} explicitly replaces unfinished numeric drafts`, async (t) => {
+    const f = fixture(t);
+    f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+    await f.click('Save for next flight');
+    f.edit('Maximum rate (°/s)', 900, { scope: f.axis('Roll'), type: 'number' });
+    await f.click('Save for next flight');
+    f.edit('Maximum rate (°/s)', '', { scope: f.axis('Roll'), type: 'number' });
+    if (replacement === 'Preview import') {
+      const profile = createRateProfile();
+      profile.axes.roll.rate = 88;
+      f.edit('Paste CLI or a SIM rate profile', exportNativeRateProfile(profile), {
+        tag: 'textarea',
+      });
+    }
+    await f.click(replacement);
+    const expected =
+      replacement === 'Revert draft' ? '900' : replacement === 'Preview import' ? '880' : '670';
+    const input = f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number');
+    assert.equal(input.value, expected);
+    assert.equal(input.getAttribute('aria-invalid'), null);
+    await f.click('Test draft · unscored');
+    assert.equal(f.tested[0].response.rates.axes.roll.rate, Number(expected) / 10);
+  });
+
 test('committing untouched linked axes preserves unequal rates and a pending pitch edit wins', async (t) => {
   const f = fixture(t);
   f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });

@@ -1,12 +1,63 @@
 # FPV tuning implementation status
 
-Updated 2026-10-16. Work is on `codex/fpv-rates-and-tuning`, rebased onto
-`origin/main` at `0597edff7` before the fifth review. The earlier feature commits
-are now `6f04efd1f`, `e89af7a15`, `61454f37d`, `054e19d37` and `54ad967de`;
+Updated 2026-10-17. Work is on `codex/fpv-rates-and-tuning`, rebased onto
+`origin/main` at `b133a5ec8` before the sixth review. The earlier feature commits
+are now `1fc0a8d9b`, `f42388124`, `96769b66d`, `9641b7e71`, `c60c5421b` and `059c7bf9b`;
 historical reports keep their original hashes. Unrelated local files are
 preserved. A local commit does not deploy GitHub Pages.
 
-## Fifth review — firmware identity and pending aircraft saves
+## Sixth review — incomplete numeric drafts
+
+The [updated plan](fpv-tuning-completion-plan.md#sixth-review--preserve-incomplete-numeric-drafts)
+adds primary examples from Keymap PROPWASH, TRYP, DRL and Orqa. They reinforce
+portable rates, independent profiles/calibration and preserved replay identities;
+no new physics effects or firmware compatibility claims are added.
+
+The audit reproduced and fixed an editor transition bug: an unfinished numeric
+entry could revert to the previous valid value after algorithm/profile navigation,
+reopening or language refresh. The editor now retains unresolved text per profile,
+algorithm and field, keeps its invalid state visible, and requires correction
+before save/test/export. Native-step normalization and linked edits still work;
+explicit revert, revision restore and import replacement replace their drafts.
+Unsaved text remains session-local and is not promised across browser reloads.
+
+Ten new regressions pass. All **683 practice tests**, **120 upstream publication
+integration tests**, three-module lint/formatting and the six
+[Chrome/Firefox/WebKit editor cases](fpv-tuning-browser-sixth-review-qualification.json)
+pass. Browser checks cover desktop and narrow touch emulation, not physical touch
+hardware. Independent review and additional stale-tab/action checks found no
+further actionable issue.
+
+The independent Advanced audit passes 55 focused tests and a 45-case sweep of
+complete rollback, verified recovery, exact continuation, replay and reset across
+five rate models, three templates and three frequencies with smoothing/noise.
+It makes no new physical, performance or native-runtime claim. All 20 source pins
+in the third-review numerical report and all 23 pins in the fifth-review Advanced
+comparison report remain identical; those observations remain historical.
+
+The [native staging receipt](fpv-native-sixth-review-staging.json) records
+**75 passing tests** and 200 stable source hashes. Ordinary desktop staging
+contains 183 files / 18,281,358 bytes; iOS staging contains 188 files / 18,355,585
+bytes. Access pages, CSP, resource routing and package limits are unchanged.
+This review does not launch or qualify Electron/iOS runtime behavior.
+
+Release validation passes 3,328 distribution files, 13,651 EN/UK messages,
+9,049 references and generated runtime/assets checks. The seven existing
+navigation warnings are unchanged.
+
+The normal production build and [generated Pages checks](fpv-pages-sixth-review-live-testing-evidence.json)
+pass Academy and World online and in isolated offline contexts. All 3,433 manifest
+entries and the ZIP checksum verify; the changed module matches current source.
+The publication contains 3,435 files / 963,654,909 bytes, with 7,722,752 bytes
+of conservative archive headroom under the unchanged cap.
+
+The [combined sixth-review receipt](fpv-tuning-sixth-review-verification.json)
+binds these final sources and results. The reproduced defect is closed and the
+available software scope is complete. Original physical/platform/public-rollout
+gates remain open; Advanced stays optional, unscored and default-ineligible.
+The commit is ready for normal reviewed Pages integration and does not deploy.
+
+## Fifth review — historical firmware identity and pending aircraft saves
 
 The [updated plan](fpv-tuning-completion-plan.md#fifth-review--exact-firmware-headers-and-asynchronous-saves)
 adds primary examples from FPVSIM, CurryKitten, FPV Freerider and Uncrashed.
