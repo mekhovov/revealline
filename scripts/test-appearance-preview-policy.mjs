@@ -49,6 +49,7 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     'game/test/audio-master.test.mjs',
     'game/test/soundtrack-master.test.mjs',
     'game/test/modal-navigation.test.mjs',
+    'game/test/immutable-presentation-fixture.test.mjs',
     'game/test/controller-confirm-trace.test.mjs',
   ]) {
     await access(new URL(`../${path}`, import.meta.url));
@@ -67,6 +68,8 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     'game/ui/mp3-inspector.mjs',
     'game/mp3-inspection-worker.mjs',
     'game/test/helpers/pcm-wave.mjs',
+    'game/test/helpers/immutable-presentation-fixture.mjs',
+    'game/test/helpers/solo-dom.mjs',
     'game/ui/flight-information-source.mjs',
     'game/ui/flight-information-bridge.mjs',
     'game/ui/flight-information-host.mjs',

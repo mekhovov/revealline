@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { rasterDimensions } from './raster-image.mjs';
 import { readFile } from 'node:fs/promises';
+import { hrtime } from 'node:process';
 import { BoardPainter } from '../../ui/render.mjs';
 import { Document, Element, Events } from './couch-dom.mjs';
 import { SOUNDTRACK_DATABASE } from '../../soundtrack-store.mjs';
@@ -209,6 +210,7 @@ export async function soloPage(
     titleScreen = false,
     fetchJSON,
     fetchResponse,
+    presentationFixture,
     buildInfo,
     audio,
     soundtrackIndexedDB,
@@ -232,6 +234,12 @@ export async function soloPage(
       initialReadyTimeoutMs <= 180000,
     'Initial readiness allowance must be an integer from 1 to 180000ms.',
   );
+  if (presentationFixture)
+    assert.ok(
+      typeof presentationFixture.read === 'function' &&
+        typeof presentationFixture.snapshot === 'function',
+      'An opted-in presentation fixture must expose its reader and bounded provenance.',
+    );
   const doc = new SoloDocument(),
     win = new Events(),
     db = soloDatabase(assetIndexedDB);
@@ -353,9 +361,10 @@ export async function soloPage(
       const presentation = String(path).match(/(?:^|\/)presentation\/(.+)$/);
       if (presentation) {
         if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
-        const bytes = await readFile(
-          new URL(`../../presentation/${presentation[1]}`, import.meta.url),
-        );
+        const source = new URL(`../../presentation/${presentation[1]}`, import.meta.url);
+        const bytes = presentationFixture
+          ? await presentationFixture.read(source)
+          : await readFile(source);
         if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
         return new Response(bytes);
       }
@@ -580,17 +589,20 @@ export async function soloPage(
   // Bulk installed-original fixtures can declare their existing bounded
   // inventory allowance. Ordinary hosts retain the same five-second deadline.
   async function initialReady(predicate, phase) {
+    const started = hrtime.bigint();
     try {
       await waitFor(predicate, { message: phase, timeoutMs: initialReadyTimeoutMs });
     } catch (error) {
       error.message += `\n${JSON.stringify({
         phase,
         timeoutMs: initialReadyTimeoutMs,
+        elapsedMs: Number((Number(hrtime.bigint() - started) / 1e6).toFixed(3)),
         pack: $('pack-select').value,
         pictureState: doc.body.dataset.pictureState,
         packStatus: $('pack-status').textContent,
         runMessage: $('run-message').textContent,
         start: $('start-button').textContent,
+        presentationFixture: presentationFixture?.snapshot(),
         errors: errors.map((value) => String(value?.stack ?? value)),
       })}`;
       throw error;

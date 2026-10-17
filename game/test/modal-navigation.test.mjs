@@ -12,6 +12,7 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
+import { createImmutablePresentationFixture } from './helpers/immutable-presentation-fixture.mjs';
 
 function surface() {
   const doc = new Document();
@@ -571,10 +572,32 @@ function nativeDialogs(t) {
   });
 }
 
+// These two input assertions revisit the same immutable source images in one
+// process. Reuse only verified transport bytes; each page still runs the real
+// manifest, image/header/hash and readiness paths within its unchanged deadline.
+const collectionPresentationFixture = createImmutablePresentationFixture();
 for (const activation of ['keyboard', 'touch'])
   test(`Collection ${activation} disclosure activation toggles exactly once and preserves the paused attempt`, async (t) => {
     nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: false, initialReadyTimeoutMs: 15000 });
+    const before = collectionPresentationFixture.snapshot();
+    const h = await soloPage(t, {
+      titleScreen: false,
+      initialReadyTimeoutMs: 15000,
+      presentationFixture: collectionPresentationFixture,
+    });
+    const provenance = collectionPresentationFixture.snapshot();
+    t.diagnostic(
+      `Collection fixture transport: ${JSON.stringify({
+        activation,
+        reads: provenance.reads - before.reads,
+        hits: provenance.hits - before.hits,
+        joined: provenance.joined - before.joined,
+        retainedBytes: provenance.retainedBytes,
+        retainedEntries: provenance.retainedEntries,
+        pending: provenance.pending.length,
+        firstRead: provenance.sources[0],
+      })}`,
+    );
     h.$('collection-button').click();
     const details = h.$('collection-progress'),
       summary = details.querySelector('summary'),

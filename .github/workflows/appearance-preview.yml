@@ -103,6 +103,9 @@ on:
       - 'game/test/audio-master.test.mjs'
       - 'game/test/soundtrack-master.test.mjs'
       - 'game/test/modal-navigation.test.mjs'
+      - 'game/test/immutable-presentation-fixture.test.mjs'
+      - 'game/test/helpers/immutable-presentation-fixture.mjs'
+      - 'game/test/helpers/solo-dom.mjs'
       - 'game/test/controller-confirm-trace.test.mjs'
       - 'game/test/demo-audio.test.mjs'
       - 'game/test/demo-audio-host.test.mjs'
@@ -229,6 +232,7 @@ jobs:
         game/test/audio-master.test.mjs
         game/test/soundtrack-master.test.mjs
         game/test/modal-navigation.test.mjs
+        game/test/immutable-presentation-fixture.test.mjs
         game/test/controller-confirm-trace.test.mjs
         game/test/demo-audio.test.mjs
         game/test/demo-audio-host.test.mjs
