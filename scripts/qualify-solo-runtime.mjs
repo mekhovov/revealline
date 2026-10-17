@@ -272,6 +272,7 @@ const hitchStore = hitchOptions
   ? hitchModule.createHitchJournalStore(output, undefined, {
       soloURL: url.href,
       preparationPolicy: hitchOptions.preparationPolicy,
+      activeDocumentPolicy: hitchOptions.activeDocumentPolicy,
     })
   : null;
 if (hitchStore) {
