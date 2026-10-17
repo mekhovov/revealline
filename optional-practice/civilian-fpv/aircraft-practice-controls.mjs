@@ -15,6 +15,18 @@ const bounds = {
 const abortError = () => new DOMException('Recovery operation cancelled', 'AbortError');
 const tickValid = (tick) => Number.isSafeInteger(tick) && tick >= 0;
 export function aircraftRecoveryTick(data) {
+  if (data?.format === 'AircraftChallengeRecovery.v1') {
+    required(
+      data.session?.format !== 'AircraftChallengeRecovery.v1',
+      'Nested challenge recovery is unsupported',
+    );
+    const missionTick = aircraftRecoveryTick(data.session);
+    required(
+      data.progress?.missionTick === missionTick,
+      'Challenge and physics recovery clocks do not match',
+    );
+    return missionTick;
+  }
   const tick =
     data?.physical?.checkpoint?.state?.missionTick ??
     data?.simulation?.checkpoint?.state?.missionTick;

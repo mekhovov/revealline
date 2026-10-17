@@ -3,6 +3,10 @@ import { validateAircraftArchivePackage } from './aircraft-archive.mjs';
 import { createAircraftSimulation, replayAircraftSegment } from './advanced-aircraft-runtime.mjs';
 import { initWorldRuntime } from './world-collision.mjs';
 import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
+import {
+  createAircraftChallengeProgress,
+  validateAircraftChallengeRules,
+} from './aircraft-challenge.mjs';
 
 /** Browser entry point: cancellation and worker failures affect this detached
  * verifier only, never the worker that owns a currently flying aircraft. */
@@ -60,6 +64,21 @@ export async function verifyAircraftArchive(source, { signal, onProgress } = {})
       first.previous === null &&
       canonicalJSON(simulation.checkpoint()) === canonicalJSON(first.checkpoint) &&
       simulation.stateHash() === first.initialHash;
+    const challengeRules =
+      manifest.config.configuration.challenge === undefined
+        ? null
+        : validateAircraftChallengeRules(manifest.config.configuration.challenge);
+    required(
+      challengeRules?.kind !== 'battery-endurance' || manifest.config.aircraft.battery.depletion,
+      'Battery endurance requires battery depletion',
+    );
+    const freshChallenge = manifest.origin.kind === 'fresh' && canonicalOrigin;
+    const challenge =
+      challengeRules && freshChallenge
+        ? createAircraftChallengeProgress(challengeRules, {
+            capacityAh: manifest.config.aircraft.battery.capacityAh,
+          })
+        : null;
     let verifiedSegments = 0;
     const report = (verifiedThroughMission) =>
       onProgress?.({
@@ -86,6 +105,7 @@ export async function verifyAircraftArchive(source, { signal, onProgress } = {})
         signal,
         yieldEvery: 25,
         onMissionTelemetry: (telemetry) => {
+          challenge?.advance(telemetry);
           if (telemetry.missionTick % 25 === 0) report(telemetry.missionTick);
         },
       });
@@ -107,6 +127,18 @@ export async function verifyAircraftArchive(source, { signal, onProgress } = {})
       comparison: simulation.comparison(),
       experimental: true,
       scored: false,
+      ...(challengeRules
+        ? {
+            challenge: challenge
+              ? {
+                  verified: Boolean(challenge.snapshot().result),
+                  progress: challenge.snapshot(),
+                  scored: false,
+                  ...(challenge.snapshot().result ? {} : { reason: 'incomplete-challenge' }),
+                }
+              : { verified: false, reason: 'checkpoint-origin', scored: false },
+          }
+        : {}),
     };
   } catch (error) {
     cancelled();

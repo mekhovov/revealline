@@ -26,6 +26,8 @@ import { mountAdvancedPractice } from './advanced-practice.mjs';
 import { createAircraftCourseSession } from './aircraft-course-session.mjs';
 import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
 import { mountAircraftPracticeControls } from './aircraft-practice-controls.mjs';
+import { prepareAircraftChallenge, withAircraftChallenge } from './aircraft-challenge.mjs';
+import { mountAircraftChallengeControls } from './aircraft-challenge-ui.mjs';
 import { aircraftCourseAdvice, mountAircraftCourseFilter } from './aircraft-course-advice.mjs';
 import {
   mountFlightFullscreen,
@@ -156,6 +158,8 @@ export function mountFlightApp({
   let tuningStorage,
     tuning = null,
     aircraftControls = null,
+    aircraftChallengeControls = null,
+    aircraftAttemptConfiguration = null,
     aircraftAdvice = null,
     aircraftAdviceText = null,
     courseClassFilter = null,
@@ -700,20 +704,24 @@ export function mountFlightApp({
     nextMode = mode,
     previewCourse = authoringCourse,
     tuningDraft = null,
+    challenge = null,
   ) {
     continuousPlay.cancel('new-attempt');
     launchIntent = null;
     tuningPractice = Boolean(tuningDraft);
     if (!tuningDraft) tuning?.endDraftTest();
     if (!tuningDraft) tuningStore.refresh();
-    const configuration = tuningDraft ?? tuningStore.effective();
-    const physicalAircraft = configuration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
+    const baselineConfiguration = tuningDraft ?? tuningStore.effective();
+    const physicalAircraft = baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
+    const configuration = physicalAircraft
+      ? prepareAircraftChallenge(baselineConfiguration, challenge)
+      : baselineConfiguration;
     tuningPractice ||= physicalAircraft;
     response = structuredClone(configuration.response);
     $('camera-fov').value = String(configuration.camera.verticalFov);
     $('camera-tilt').value = String(configuration.camera.tilt);
     input.ratesApplied(response.format === TUNED_RESPONSE_FORMAT);
-    const nextFlight = physicalAircraft
+    let nextFlight = physicalAircraft
       ? createAircraftCourseSession(
           {
             course: previewCourse ?? courses[index],
@@ -729,6 +737,12 @@ export function mountFlightApp({
           response,
           unscoredPractice: tuningPractice,
         });
+    if (physicalAircraft)
+      nextFlight = withAircraftChallenge(nextFlight, {
+        rules: configuration.challenge,
+        capacityAh: configuration.advanced.aircraft.battery.capacityAh,
+      });
+    aircraftAttemptConfiguration = physicalAircraft ? structuredClone(baselineConfiguration) : null;
     cancelReview();
     epoch++;
     gamepad.reset();
@@ -1053,6 +1067,7 @@ export function mountFlightApp({
     if (!flight || disposed) return;
     const state = replay ? replay.flight.snapshot() : flight.snapshot();
     aircraftControls?.update(state);
+    aircraftChallengeControls?.update(state);
     if (aircraftAdviceText) {
       aircraftAdviceText.hidden = !aircraftAdvice;
       aircraftAdviceText.textContent = aircraftAdvice?.advisories[locale] ?? '';
@@ -2366,6 +2381,18 @@ export function mountFlightApp({
     getSession: () => (replay ? null : flight),
     onPause: () => pause(),
   });
+  aircraftChallengeControls = mountAircraftChallengeControls({
+    parents: [shellBriefing, playShell.elements.content.pause],
+    statusParent: $('viewport'),
+    locale: () => locale,
+    getSession: () => (replay ? null : flight),
+    async onRestart(rules) {
+      if (!aircraftAttemptConfiguration) return;
+      playShell?.enterPlay();
+      reset(selected, mode, authoringCourse, aircraftAttemptConfiguration, rules);
+      await pendingScene;
+    },
+  });
   $('viewport').append(tuning.returnButton);
   for (const cameraId of ['camera-fov', 'camera-tilt'])
     listen($(cameraId), 'change', () => {
@@ -2712,6 +2739,7 @@ export function mountFlightApp({
       setup?.dispose();
       tuning?.dispose();
       aircraftControls?.dispose();
+      aircraftChallengeControls?.dispose();
       advancedPractice?.dispose();
       void flight?.dispose?.();
       void notebook?.dispose();

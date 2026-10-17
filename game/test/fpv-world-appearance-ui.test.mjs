@@ -2237,6 +2237,49 @@ test('saved aircraft prepares World, Beginner and Regional hosts with physical g
       assert.ok(h.app.snapshot().state.ticks > 0);
       assert.equal(h.app.snapshot().state.advancedTelemetry.usedAh, 0);
       assert.ok(worker.messages.some((message) => ['step', 'propose'].includes(message.type)));
+      const challengeKind = h.doc.querySelector('[data-aircraft-challenge="kind"]'),
+        challengeDuration = h.doc.querySelector('[data-aircraft-challenge="duration"]'),
+        challengeRestart = h.doc.querySelector('[data-aircraft-challenge="restart"]');
+      assert.equal(h.app.snapshot().state.challenge, undefined);
+      for (const challenge of ['timed-practice', 'battery-endurance', 'none']) {
+        h.app.pause();
+        challengeKind.value = challenge;
+        challengeKind.emit('change');
+        challengeDuration.value = '30';
+        challengeDuration.emit('input');
+        challengeRestart.click();
+        await settleUntil(
+          () => !challengeRestart.disabled,
+          'challenge restart prepares the same host',
+        );
+        const next = h.app.snapshot().state;
+        assert.equal(next.reason, 'prepared');
+        assert.equal(next.ticks, 0);
+        assert.equal(next.challenge?.missionTick, challenge === 'none' ? undefined : 0);
+        assert.equal(next.advancedTelemetry.usedAh, 0);
+        const freshWorker = RegionalWorker.instances.at(-1);
+        const freshOptions = freshWorker.messages.find(
+          (message) => message.type === 'init',
+        ).options;
+        assert.equal(
+          freshOptions.configuration.challenge?.kind,
+          challenge === 'none' ? undefined : challenge,
+        );
+        assert.equal(freshOptions.aircraft.battery.depletion, challenge === 'battery-endurance');
+        const coachStart = h.doc.querySelector('[data-coach-action="start"]');
+        if (coachStart) coachStart.click();
+        else h.$('world-arm').click();
+        for (let tick = 0; tick < 8; tick++) {
+          h.tick();
+          await new Promise((resolve) => setImmediate(resolve));
+        }
+        assert.ok(h.app.snapshot().state.ticks > 0);
+        assert.equal(
+          h.app.snapshot().state.advancedTelemetry.usedAh > 0,
+          challenge === 'battery-endurance',
+        );
+      }
+      assert.equal(store.effective().advanced.aircraft.battery.depletion, false);
       if (kind === 'World')
         for (const [action, fov] of [
           ['Apply & restart', '106'],

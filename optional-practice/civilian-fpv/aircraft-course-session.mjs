@@ -4,6 +4,7 @@ import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
 import { createAircraftTerrainFrame } from './aircraft-terrain.mjs';
 import { attitude, Q } from './math.mjs';
 import { relativeFlightTilt } from './flight-support.mjs';
+import { validateAircraftChallengeRules } from './aircraft-challenge.mjs';
 
 const axes = ['x', 'y', 'z'];
 const copy = (value) => structuredClone(value);
@@ -114,6 +115,14 @@ export function createAircraftCourseSession(
   { createClient = createAdvancedWorkerClient, createMission = createFlight } = {},
 ) {
   const aircraft = copy(configuration.advanced.aircraft);
+  const challenge =
+    configuration.challenge === undefined
+      ? null
+      : validateAircraftChallengeRules(configuration.challenge);
+  required(
+    challenge?.kind !== 'battery-endurance' || aircraft.battery.depletion,
+    'Battery endurance requires battery depletion',
+  );
   const missionOptions = {
     course: copy(course),
     mode,
@@ -143,6 +152,7 @@ export function createAircraftCourseSession(
     configuration: {
       response: copy(configuration.response),
       environment: { course: dataIdentity(source), host: legacy ? 'academy' : 'world' },
+      ...(challenge ? { challenge } : {}),
     },
     assist: { format: 'AircraftAssist.v1', mode, maxTilt: configuration.response.maxTilt ?? 30 },
     spawn: point({ ...source.spawn, y: source.spawn.y + supportHeight * 1000 }, 0.001),
@@ -193,6 +203,7 @@ export function createAircraftCourseSession(
       aircraft,
       controller: configuration.advanced.controller,
       response: configuration.response,
+      ...(challenge ? { challenge } : {}),
     }),
   });
   function snapshot() {
