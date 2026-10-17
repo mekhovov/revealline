@@ -437,24 +437,32 @@ async function main() {
       ? 'offline'
       : ['SoloHostedSustainedPlanV1', 'SoloHostedTimingPlanV1'].includes(plan.format)
         ? 'sustained'
-        : plan.format === 'SoloHostedAuxiliaryPlanV1'
-          ? 'auxiliary'
-          : plan.format === 'SoloHostedDemoActivePlanV1'
-            ? 'demo-active'
-            : plan.format === 'SoloHostedDemoRecoveryPlanV1'
-              ? 'demo'
-              : plan.format === 'SoloHostedRasterPlanV1'
-                ? 'raster'
-                : plan.format === 'SoloHostedWorkerDiagnosticPlanV1'
-                  ? 'worker-diagnostic'
-                  : null;
+        : plan.format === 'SoloHostedSupplementalPlanV1'
+          ? 'supplemental'
+          : plan.format === 'SoloHostedAuxiliaryPlanV1'
+            ? 'auxiliary'
+            : plan.format === 'SoloHostedDemoActivePlanV1'
+              ? 'demo-active'
+              : plan.format === 'SoloHostedDemoRecoveryPlanV1'
+                ? 'demo'
+                : plan.format === 'SoloHostedRasterPlanV1'
+                  ? 'raster'
+                  : plan.format === 'SoloHostedWorkerDiagnosticPlanV1'
+                    ? 'worker-diagnostic'
+                    : null;
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
     setupActive =
-      ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster', 'worker-diagnostic'].includes(
-        extension,
-      ) ||
+      [
+        'sustained',
+        'auxiliary',
+        'demo',
+        'demo-active',
+        'raster',
+        'worker-diagnostic',
+        'supplemental',
+      ].includes(extension) ||
       (extension === 'offline' && Boolean(plan.offline.gameplay));
   if (extension) {
     adapter = await import(`./solo-remote-${extension}.mjs`);
@@ -467,6 +475,7 @@ async function main() {
         'demo-active': 'validateDemoActivePlan',
         raster: 'validateRasterPlan',
         'worker-diagnostic': 'validateWorkerDiagnosticPlan',
+        supplemental: 'validateSupplementalPlan',
       }[extension]
     ](plan);
   }
@@ -488,7 +497,9 @@ async function main() {
                   ? 'SoloHostedNativeRasterCohortV1'
                   : extension === 'worker-diagnostic'
                     ? 'SoloHostedWorkerDiagnosticCohortV1'
-                    : 'SoloHostedCorrectness.v1',
+                    : extension === 'supplemental'
+                      ? 'SoloHostedSupplementalPreflightV1'
+                      : 'SoloHostedCorrectness.v1',
     status: 'failed',
     performanceExclusion: ['sustained', 'demo-active'].includes(extension)
       ? plan.performanceExclusion
@@ -969,13 +980,20 @@ async function main() {
       if (
         extension === 'offline' ||
         (extension === 'sustained' && plan.phase !== 'diagnostics') ||
-        (extension === 'auxiliary' && plan.rows.some((row) => row.source === 'baseline'))
+        (['auxiliary', 'supplemental'].includes(extension) &&
+          plan.rows.some((row) => row.source === 'baseline'))
       )
         await ensureBaseline();
       if (
-        ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster', 'worker-diagnostic'].includes(
-          extension,
-        ) ||
+        [
+          'sustained',
+          'auxiliary',
+          'demo',
+          'demo-active',
+          'raster',
+          'worker-diagnostic',
+          'supplemental',
+        ].includes(extension) ||
         (extension === 'offline' && Boolean(plan.offline.gameplay))
       )
         await inspect();
@@ -992,6 +1010,7 @@ async function main() {
             'demo-active': 'prepareDemoActiveMode',
             raster: 'prepareRasterMode',
             'worker-diagnostic': 'prepareWorkerDiagnosticMode',
+            supplemental: 'prepareSupplementalMode',
           }[extension]
         ](context);
       context.modeState = modeState;
@@ -1058,6 +1077,7 @@ async function main() {
               'demo-active': 'runDemoActiveRow',
               raster: 'runRasterRow',
               'worker-diagnostic': 'runWorkerDiagnosticRow',
+              supplemental: 'runSupplementalRow',
             }[extension]
           ](context, row, dir, tmp);
         } else {

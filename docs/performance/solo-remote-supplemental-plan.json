@@ -1,0 +1,464 @@
+{
+  "repository": "mekhovov/revealline",
+  "candidate": {
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "producer": "Retained exact-source normal Linux b117 producer38978329593/attempt1 under Node22.13.1; no source flags or budgets changed. Each consumer must verify the complete pinned outer/ready/inner/source/CSP before admission. No fallback rebuild or historical macOS artifact substitution.",
+    "historicalArtifactInvestigation": {
+      "mainRun": 38817575550,
+      "pagesArtifact": 12011437947,
+      "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
+      "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
+    },
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV1",
+      "run": 38978329593,
+      "artifact": 12080662080,
+      "name": "solo-normal-baseline-b1174522-38978329593-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-correctness-temporary.yml",
+        "run": 38978329593,
+        "attempt": 1,
+        "toolingRevision": "d569ce092db47d14f974da24063f82f4a280a19a",
+        "toolingTree": "ee4d756b04fd512849cb19ceb613edfbb04c7c68"
+      },
+      "outer": {
+        "bytes": 1073744615,
+        "sha256": "abf5d8ae1f277cc2b640f103a3ab3471ebf13fe78eba518cc7630c7c316b9e62"
+      },
+      "inner": {
+        "bytes": 1073181451,
+        "sha256": "1e9bb6ad49ced329fecd66f9976c024dad2949bdf4b008f376ee50d6bbf36290"
+      },
+      "manifestSHA256": "2a19dfb7227e5d528fe4f072d1eef9e753ac987396a8f5b8248247483814e8a8",
+      "ready": {
+        "bytes": 1602,
+        "sha256": "4e90b38ad8e3d871f122798643c87173dde7d2a006c1e282485c124fcaa2132a"
+      }
+    },
+    "reuse": "Exact API/producer-small-evidence pins only locally; full large outer and ready-body readback remain mandatory in each remote consumer. This binding grants no performance qualification or candidate release."
+  },
+  "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "format": "SoloHostedSupplementalManifestV1",
+  "status": "held-diagnostic-only",
+  "cohort": "linux-supplemental-native-preflight-3ad-v1",
+  "phase": "latency-long-rail",
+  "engines": ["chromium", "webkit"],
+  "performanceExclusion": true,
+  "cpu": 1,
+  "maxParallel": 2,
+  "automaticRetries": 0,
+  "automaticPhaseContinuation": false,
+  "setupTimeoutMs": 2400000,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 33554432,
+  "phases": {
+    "latency-long-rail": {
+      "recipe": {
+        "path": "docs/performance/fixtures/solo-latency-supplement/long-rail.qualification.fixture",
+        "bytes": 7391,
+        "sha256": "6815653eadf5a4e05435be5e87bc933ba5e17b7d10fb51032988c274dd651802",
+        "stagedName": "scenario.qualification.json"
+      },
+      "upload": {
+        "path": "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+        "bytes": 3563,
+        "sha256": "821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c",
+        "stagedName": "long-rail.xonix.json"
+      },
+      "scenarioTimeoutMs": 240000
+    },
+    "latency-sentry": {
+      "recipe": {
+        "path": "docs/performance/fixtures/solo-latency-supplement/sentry.qualification.fixture",
+        "bytes": 8290,
+        "sha256": "225c05486cb28516086acf3bbefb2bd4bcdabe30d5e1a990c7c07137f583a5d9",
+        "stagedName": "scenario.qualification.json"
+      },
+      "upload": {
+        "path": "docs/performance/fixtures/solo-remote-timing/sentry-detour.xonix.fixture",
+        "bytes": 4049,
+        "sha256": "caad15d6f4770bc5e48935db1655e2892cfb5bd9093a72d0d7795125e8d2d3fa",
+        "stagedName": "sentry-detour.xonix.json"
+      },
+      "scenarioTimeoutMs": 240000
+    },
+    "erosion-first-fracture": {
+      "recipe": {
+        "path": "docs/performance/fixtures/solo-representative/first-fracture.qualification.fixture",
+        "bytes": 3755,
+        "sha256": "3e2c56b4c5aae3343986a8a68d39e402a9822f66093c6556b99042e24947604e",
+        "stagedName": "scenario.qualification.json"
+      },
+      "upload": {
+        "path": "docs/performance/fixtures/solo-representative/first-fracture.xonix.fixture",
+        "bytes": 3194,
+        "sha256": "312d005cf9f548804016ed08afd4688187a76249de174bae9a534beb472934b4",
+        "stagedName": "first-fracture.xonix.json"
+      },
+      "scenarioTimeoutMs": 240000
+    },
+    "jammer-neutral": {
+      "recipe": {
+        "path": "docs/performance/fixtures/solo-representative/signal-07-neutral.qualification.fixture",
+        "bytes": 3466,
+        "sha256": "aa2cbdbba30450e296b75f7458afa101dcd6ad0bc5858dd2de5ffc2dcc1e2c34",
+        "stagedName": "scenario.qualification.json"
+      },
+      "upload": {
+        "path": "docs/performance/fixtures/solo-remote-auxiliary/signal-07.xonix.fixture",
+        "bytes": 3011,
+        "sha256": "5c9c935dac1049314c7ce644a1dcb747e7770bac3d8e1dd9f14b75e7c3dab015",
+        "stagedName": "signal-07.xonix.json"
+      },
+      "scenarioTimeoutMs": 240000
+    },
+    "jammer-steering": {
+      "recipe": {
+        "path": "docs/performance/fixtures/solo-representative/signal-07-steering.qualification.fixture",
+        "bytes": 7300,
+        "sha256": "9169d2a4d583b563cb322d5e374bb62179ef5d6dfa2c2f3d5351926969e5b78f",
+        "stagedName": "scenario.qualification.json"
+      },
+      "upload": {
+        "path": "docs/performance/fixtures/solo-remote-auxiliary/signal-07.xonix.fixture",
+        "bytes": 3011,
+        "sha256": "5c9c935dac1049314c7ce644a1dcb747e7770bac3d8e1dd9f14b75e7c3dab015",
+        "stagedName": "signal-07.xonix.json"
+      },
+      "scenarioTimeoutMs": 240000
+    }
+  },
+  "release": {
+    "scope": "supplemental-native-preflight",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "predecessorRun": 38985941469,
+    "previousPhase": "reviewed-first-eight-diagnostic",
+    "firstEightAllCorrectnessPassed": false,
+    "performanceQualification": "excluded",
+    "priorProofInspected": false,
+    "allPriorPlannedJobsClosed": false,
+    "noUnclosedOwners": false,
+    "evidence": []
+  },
+  "scope": "One explicitly released diagnostic phase, four observations in two engine jobs with serial baseline/candidate pairs. All numerical results retained but excluded from performance qualification. Same-engine replay validates exact accepted mission and actual mechanics. No retries, auto Resume or automatic next phase. Original48 timing observations and failed prerequisite remain unchanged.",
+  "acceptance": {
+    "publicActions": "Complete exact declared controls, expected running/paused outcomes and no page errors or unclosed contexts. Retain every failed/partial attempt.",
+    "replay": "Exact same-engine/version verification using the served admitted artifact modules; full expected mission/options and every required actual mechanic must pass. Node model is not a substitute.",
+    "latency": "Fewer than20 accepted application keyboard-to-render samples is unobserved, never passed. Model direction changes do not count as measured latency samples. Original one-key erosion and neutral jammer control remain limited by design.",
+    "successor": "Only after separately retained preflight proof and review may a new three-pair-per-engine timing declaration be considered. Preserve original48rows, same numerical gates, explicit per-engine/source/recipe identities and each result; no pooling input samples or rerunning until green."
+  },
+  "resources": {
+    "setup": "Full pinned candidate and baseline package/member/source/CSP/worker admission under existing40min setup bound; no fallback rebuild.75min helper plus2min outer and1min step shutdown margins.",
+    "row": "Original240s scenario;480s command;32MiB evidence. Common owner/birth identity and bounded TERM/KILL cleanup; unknown/surviving owner blocks next row.",
+    "workflowBudgetMinutes": {
+      "checkouts": 6,
+      "node": 1,
+      "dependencies": 20,
+      "ownerTests": 3,
+      "helper": 78,
+      "retention": 2,
+      "upload": 10,
+      "sum": 120,
+      "job": 130
+    },
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "finalizationReserveBytes": 4194304
+  },
+  "largeProfileFollowup": {
+    "builder": "scripts/prepare-solo-qualification.mjs",
+    "command": [
+      "node",
+      "scripts/prepare-solo-qualification.mjs",
+      "<new-owned-preparation-directory>"
+    ],
+    "generatedRecipe": "<new-owned-preparation-directory>/large-profile.qualification.json",
+    "generatedUpload": "<new-owned-preparation-directory>/large-profile.library.json",
+    "knownSupportedLoad": {
+      "campaigns": 480,
+      "gallery": 3840,
+      "scores": 960,
+      "logicalBytes": 2056905,
+      "budgetBytes": 4194304
+    },
+    "scope": "Public import/reload and steering; regenerated recipe/upload bytes, model/native replay and provenance must be frozen in a separate later declaration. Metadata pressure only, no artwork/audio storage-pressure claim."
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-supplemental.mjs",
+      "bytes": 15871,
+      "sha256": "1e43e73deae989f00c242fd61c970f85b64f993e1a034f69102f2df1737167a7"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 13941,
+      "sha256": "b7bd4c75ce4ff04e26545aee7d488d8d674173379d372bb815b47a7935567887"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/access-pages.mjs",
+      "bytes": 5658,
+      "sha256": "00653eb54444d49b15c08796e3e6a7633205e75d69876123f8fafa0a78219a81"
+    },
+    {
+      "path": "scripts/authored-runtime-snapshots.mjs",
+      "bytes": 6663,
+      "sha256": "8a6a77906fd385e0b79ceafe9ea296d4f70869aaadc01477d5f0a0f93b3cf1c0"
+    },
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1552,
+      "sha256": "bf98a95cefe1ddcc9fe9092ac3c1de4ebfc1a928299bc3dbc6af03cabace89b7"
+    },
+    {
+      "path": "scripts/build-optional-practice.mjs",
+      "bytes": 17929,
+      "sha256": "52d688ff987d18495f88c3e3c87230b2cf6d3d5facfe8334bb6398f53fd964cb"
+    },
+    {
+      "path": "scripts/company-offline-packages.mjs",
+      "bytes": 3828,
+      "sha256": "2f04993a92378c1de2b1f956e73ea0503249054412676b9375bb8da76c3413aa"
+    },
+    {
+      "path": "scripts/core-soundtrack-publication.mjs",
+      "bytes": 5789,
+      "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+    },
+    {
+      "path": "scripts/external-distribution.mjs",
+      "bytes": 6651,
+      "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10450,
+      "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+    },
+    {
+      "path": "scripts/mission-library-index.mjs",
+      "bytes": 12253,
+      "sha256": "4a64a6d24622cccfc09051bebcf0a41f7dc2038beabbd8829fc2df3969f6b535"
+    },
+    {
+      "path": "scripts/offline-content.mjs",
+      "bytes": 27538,
+      "sha256": "f4f28d1b45a8c03479a9e3a0dfcde5eedf56794efe9090bb6d0e07480ff1641d"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+    },
+    {
+      "path": "scripts/offline-destinations.mjs",
+      "bytes": 5129,
+      "sha256": "4708aef5582f983bb178b6f73012c2d91225c61f62592bd4ff05472e5cc5a0b6"
+    },
+    {
+      "path": "scripts/offline-experiences.mjs",
+      "bytes": 4462,
+      "sha256": "3bcedaabb4be3cd0b83a1e6c12d6a403b9af140b041c8ad3bce4846b204c46e0"
+    },
+    {
+      "path": "scripts/offline-finalize.mjs",
+      "bytes": 1400,
+      "sha256": "7983017f5291c0a0b37adcade90730a75c6ad9988360b7c5b5ea8c59725c623d"
+    },
+    {
+      "path": "scripts/offline-launcher.mjs",
+      "bytes": 21680,
+      "sha256": "44ffb18488d1091207d5876ebd35425a26651420dcbf8d8ae28a28229b9566fa"
+    },
+    {
+      "path": "scripts/optional-artwork.mjs",
+      "bytes": 4613,
+      "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+    },
+    {
+      "path": "scripts/optional-distribution.mjs",
+      "bytes": 2584,
+      "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+    },
+    {
+      "path": "scripts/optional-launcher.mjs",
+      "bytes": 4925,
+      "sha256": "5c01a3cb3eaef26701f9f27052b32b21a88d1a45003d513b5dc340c6b86a3b14"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "scripts/published-navigation.mjs",
+      "bytes": 3518,
+      "sha256": "0abe392f5951ff5afa9bc2e5639f575eca74ccd950d71f8ccd241c45e757aff3"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 58150,
+      "sha256": "7db5478c4c4c921c6bf2fff36c3d3b93d87147bcdf2eed796fcf61bbff05bcfe"
+    },
+    {
+      "path": "scripts/reviewed-soundtrack-batches.mjs",
+      "bytes": 16280,
+      "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 50313,
+      "sha256": "e118b8fbf1f86a56a1d6aa472e808fcd77ddbaa699611c6c6b874b497e4f8037"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 12873,
+      "sha256": "a516127f0068bf05ce3a2f828f6d793844ddb6f214a0b5623ee13e1d6f91e28c"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/solo-qualification-cadence.mjs",
+      "bytes": 7999,
+      "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+    },
+    {
+      "path": "scripts/solo-qualification-cpu-profile.mjs",
+      "bytes": 3270,
+      "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-observation.mjs",
+      "bytes": 14584,
+      "sha256": "0195f26910e35c68f6dc29e472b84b151b9910f2afd8ce9183ed5ef577d21a7b"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-core.mjs",
+      "bytes": 5930,
+      "sha256": "1e96e592ee289685607515bbe14c8845f2c03dc81191a0772071fd9995ceb3ea"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-identity.mjs",
+      "bytes": 1866,
+      "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+    },
+    {
+      "path": "scripts/solo-qualification-replay.mjs",
+      "bytes": 1260,
+      "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 24877,
+      "sha256": "556ac41f48b67c776a46dd899f56ada6f7c832d4eb3e74ac9cf9a75762feb6a6"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22428,
+      "sha256": "f6d6187792c5b64e3b36a51a2731b3ae34987018c2220d3f43b055fb28db0691"
+    },
+    {
+      "path": "scripts/soundtrack-archive-admissions.mjs",
+      "bytes": 5614,
+      "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 15378,
+      "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    }
+  ]
+}
