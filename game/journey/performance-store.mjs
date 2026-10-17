@@ -26,6 +26,7 @@ export function createJourneyPerformanceController({
   getProfile,
   flushProfile,
   acceptBinding,
+  scheduleChunk,
   canWrite,
   onChange = () => {},
 }) {
@@ -86,7 +87,7 @@ export function createJourneyPerformanceController({
     const identity = canonicalJSON(input);
     let row = cache.get(identity)?.row;
     if (!row) {
-      row = await verifyPerformanceRecord(input, { profile, acceptBinding, signal });
+      row = await verifyPerformanceRecord(input, { profile, acceptBinding, signal, scheduleChunk });
       const bytes = new TextEncoder().encode(identity).byteLength;
       const previous = cache.get(identity);
       cachedBytes += bytes - (previous?.bytes ?? 0);

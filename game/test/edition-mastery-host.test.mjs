@@ -13,7 +13,7 @@ import { createRewardBackend } from '../rewards/store.mjs';
 import { t as translate } from '../i18n/index.mjs';
 
 test(
-  'the actual Solo app observes a no-loss win before immediate Retry without another presentation interval',
+  'the actual Solo app retains no-loss verification across Retry and completes it only on Pause',
   // CI's concurrent qualification exceeded 30s with 469 separate 120Hz UI
   // renders. Keep every simulation step, render at an ordinary 60Hz cadence,
   // and allow the same bounded host budget as the personal-best replay tests.
@@ -98,13 +98,20 @@ test(
     assert.equal(page.$('retry-button').disabled, false);
     page.$('retry-button').click();
     const proofKey = 'revealline.journey-mastery-proofs.sample-public.v1';
-    await waitFor(() => {
+    await settle(() => {
       page.frame(0);
-      return storage.getItem(proofKey);
+      return page.rendered.run !== acceptedRun && page.doc.body.dataset.flightState === 'running';
     });
-    await settle(
-      () => page.rendered.run !== acceptedRun && page.doc.body.dataset.flightState === 'running',
-    );
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    assert.equal(storage.getItem(proofKey), null, 'Active play holds the original optional proof.');
+    const active = page.rendered.run;
+    page.$('pause-button').click();
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    page.frame(0);
+    const pausedCheckpoint = authoritativeCheckpoint(active);
+    await waitFor(() => storage.getItem(proofKey));
+    assert.equal(page.rendered.run, active);
+    assert.deepEqual(authoritativeCheckpoint(active), pausedCheckpoint);
     assert.equal(page.rendered.run.tick, 0, 'The retry has not borrowed presentation time.');
     assert.deepEqual(authoritativeCheckpoint(acceptedRun), authoritativeCheckpoint(expected));
     const proof = JSON.parse(storage.getItem(proofKey)).proofs[0];

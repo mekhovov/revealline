@@ -768,9 +768,18 @@ try {
   let editionWriter = null,
     editionUI = null,
     journeyRewardsDurable = false;
+  // Early hydration precedes Soundscape creation. It can execute bootstrap
+  // work; once its existing admission owner exists, every later verification
+  // chunk waits while play/suspension owns the main thread.
+  let optionalVerificationPreparation = null;
+  const scheduleOptionalReplayChunk = (work, { signal }) =>
+    optionalVerificationPreparation
+      ? optionalVerificationPreparation.run('main', work, { signal })
+      : work();
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
+        schedulePerformanceChunk: scheduleOptionalReplayChunk,
         ...(candidateHost
           ? {
               acceptPerformanceBinding: createSoloPerformanceBinding({
@@ -1262,9 +1271,10 @@ try {
   let playedLevelLinkGeneration = 0;
   let playedLevelLinkController = null;
   let demoHost = null;
-  const demoLibrary = createDemoLibrary();
+  const demoLibrary = createDemoLibrary({ scheduleChunk: scheduleOptionalReplayChunk });
   const courseVisit = Object.create(null);
   const masteryAwards = createMasteryAwards({
+    scheduleChunk: scheduleOptionalReplayChunk,
     getGeneration: () => libraryGeneration,
     commit: (record) => {
       library = withMasteryRecords(library, [record]);
@@ -1420,6 +1430,7 @@ try {
   }
   refreshAppearanceDefault();
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
+  optionalVerificationPreparation = sound.mediaPreparation;
   let mediaPreparationPhase = 'menu';
   function setMediaPreparationPhase(phase) {
     const effective = demoHost?.preparationPhase ?? phase;
@@ -7234,7 +7245,11 @@ try {
     if (saved.ok) {
       try {
         const raw = profileStorage().getItem(sessionKey);
-        if (attemptReadbackMatches(raw, session)) lastOwnedAttempt = raw;
+        // The serializer already validated these bytes and their storage limit.
+        // Keep semantic readback for equivalent encodings; changed content must
+        // still pass the original validation before it grants slot ownership.
+        if (raw === saved.serialized || attemptReadbackMatches(raw, session))
+          lastOwnedAttempt = raw;
       } catch {
         /* A successful write result alone is not readback authority. */
       }
@@ -14810,6 +14825,7 @@ try {
   mountWorkshopLinks({ document, href: workshopContext.href });
   editionUI = runtimeContent
     ? await mountEditionSoloUI({
+        scheduleReplayChunk: scheduleOptionalReplayChunk,
         provider: runtimeContent,
         document,
         window,
