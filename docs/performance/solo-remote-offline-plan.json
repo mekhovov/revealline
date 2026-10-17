@@ -4,7 +4,7 @@
   "playwright": "1.62.1",
   "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
   "performanceExclusion": true,
-  "helperTimeoutMs": 4500000,
+  "helperTimeoutMs": 6000000,
   "evidenceBytes": 268435456,
   "candidate": {
     "revision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
@@ -71,39 +71,42 @@
     "minimumInitialMemoryBytes": 12884901888,
     "minimumInitialDiskBytes": 8589934592,
     "minimumRemainingDiskBytes": 1073741824,
-    "setupBounds": "Pinned baseline reuse through the unchanged full outer/ready/inner/source/CSP branch; no normal build or baseline publication in this job. Existing command caps and75min helper/145min job remain fixed; removed12min publication steps are unused job margin, not observation time. Profile limits/readback and every row deadline are unchanged.",
+    "setupBounds": "Original full candidate/source/ZIP/CSP plus pinned original normal baseline full readback, bounded40min sharedsetup; no rebuild fallback.",
     "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
     "finalizationReserveBytes": 4194304,
     "setupEvidenceMaximumBytes": 29360128,
     "scratch": "Fresh exact common RUNNER_TEMP/sc-sixchars/rNN root and child path/device/inode authority; <=52-byte row path. Profile admission requires matching common scratch-authority receipt in addition to command/raw/plan closure.",
     "workflowBudgetMinutes": {
-      "initialize": 1,
-      "threeCheckouts": 9,
-      "node": 3,
-      "sourceDependencies": 10,
-      "browserDependencies": 10,
-      "display": 3,
-      "ownerTests": 3,
-      "helperStep": 79,
+      "preHelper": 39,
+      "helper": 100,
+      "outerHelperStep": 104,
       "setupRetention": 2,
-      "evidenceUpload": 10,
-      "sum": 130,
-      "job": 145
+      "upload": 10,
+      "stepSum": 155,
+      "wholeJob": 165,
+      "jobReserve": 10
+    },
+    "helperBudgetMinutes": {
+      "artifactPreparation": 40,
+      "twoDriverCommands": 40,
+      "twoPreservationAndRetirementPairs": 12,
+      "modePreparationAndFinalizationRemainder": 8,
+      "sum": 100
     }
   },
   "format": "SoloHostedOfflinePairPlan.v1",
-  "status": "integrated-pending-current-artifact-and-first-eight-review",
-  "cohort": "linux-offline-persistence-2ec-pair-v1",
+  "status": "integrated-pending-successor-artifact-first8-and-gameplay-review",
+  "cohort": "linux-offline-success-gameplay-unreleased",
   "profileEvidenceBytes": 1082130432,
   "rowEvidenceBytes": 33554432,
-  "scope": "Exactly one fresh Linux b117 baseline and one retained exact2ec candidate. Public Starter install, passive worker/cache hash premise, full browser/server shutdown, same-profile offline restart. Original access fixture only; no authentication/gameplay/physical/PWA/performance qualification. Local failures remain failed. No retry.",
+  "scope": "Linux instrumented offline persistence diagnostic, with explicit public Opening capture/Next and two same-engine strict replay checks ONLY after exact successful offline launch. Failed launch remains original negative diagnostic; no gameplay/default-mission/physical-PWA/thermal credit.",
   "rows": [
     {
       "id": "offline-baseline-p1",
       "kind": "offline-persistence",
       "engine": "chromium",
       "source": "baseline",
-      "timeoutMs": 900000,
+      "timeoutMs": 1200000,
       "performanceExclusion": true
     },
     {
@@ -111,13 +114,13 @@
       "kind": "offline-persistence",
       "engine": "chromium",
       "source": "candidate",
-      "timeoutMs": 900000,
+      "timeoutMs": 1200000,
       "performanceExclusion": true
     }
   ],
   "offline": {
     "serverPort": 18791,
-    "observationTimeoutMs": 600000,
+    "observationTimeoutMs": 960000,
     "downloadTimeoutMs": 300000,
     "maximumReportBytes": 2097152,
     "profileMaximumBytes": 536870912,
@@ -127,31 +130,51 @@
     "retirementTimeoutMs": 180000,
     "driver": {
       "path": "scripts/observe-solo-offline-persistence.mjs",
-      "bytes": 39643,
-      "sha256": "62749f55c4332e0180c8fb08a48b737009e9e492ea929e530afc4b005a0392de"
+      "bytes": 44220,
+      "sha256": "c5d6df6b4e702f8f6da1451af5967d9036a632ab22d9f9bf6f4de7189a7de0c2"
+    },
+    "gameplay": {
+      "format": "SoloOfflinePublicGameplayV1",
+      "diagnosticTimeoutMs": 600000,
+      "playTimeoutMs": 120000,
+      "replayTimeoutMs": 120000,
+      "maximumExports": 2,
+      "maximumExportBytes": 262144
+    },
+    "openingRecipe": {
+      "path": "docs/performance/fixtures/solo-remote-offline/original-art-opening.qualification.fixture",
+      "bytes": 2707,
+      "sha256": "f5459da998a91a3e401bf69306d08e7fd2dd3850058d4580dae6f042dce090d8"
     }
   },
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-offline.mjs",
-      "bytes": 17622,
-      "sha256": "59c7cc921cd83040878b87fd530c5a69cdfb43f7073069229e9edd3d545898c2"
+      "bytes": 19252,
+      "sha256": "7cc6424c122609593b059a722654358b8f293f105c14af8407d3fa5076d4c65c"
     },
     {
       "path": "scripts/observe-solo-offline-persistence.mjs",
-      "bytes": 39643,
-      "sha256": "62749f55c4332e0180c8fb08a48b737009e9e492ea929e530afc4b005a0392de"
+      "bytes": 44220,
+      "sha256": "c5d6df6b4e702f8f6da1451af5967d9036a632ab22d9f9bf6f4de7189a7de0c2"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
       "bytes": 13941,
       "sha256": "b7bd4c75ce4ff04e26545aee7d488d8d674173379d372bb815b47a7935567887"
+    },
+    {
+      "path": "scripts/solo-offline-gameplay.mjs",
+      "bytes": 9933,
+      "sha256": "83a4abafe3a686cf850a4b66aa6ccb3258d3ebc0b58a8fc242580dedb0b0e13b"
     }
   ],
   "acceptance": {
     "execution": "Exact public pre-close premise, settled observation and clean common process closure; completed-diagnostic is not product success.",
     "negativeOutcome": "Observed restart/cache failure remains negative but does not prevent candidate after valid baseline premise/closure/preservation.",
     "preservation": "Bounded full type/mode/member hash archive readback and unchanged source rehash, then separate exact-profile retirement; uncertainty stops dependent work.",
-    "failure": "No retry or repair. Every failed/partial/not-run row retained. No aggregate offline qualification pass."
-  }
+    "failure": "No retry or repair. Every failed/partial/not-run row retained. No aggregate offline qualification pass.",
+    "successOnlyGameplay": "Original600s restart stage unchanged; optional120s public play/export plus2x120s replay stages, no repair/retry/state injection. Never equate completed-diagnostic with gameplay pass."
+  },
+  "setupTimeoutMs": 2400000
 }

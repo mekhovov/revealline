@@ -2,6 +2,10 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile, lstat, realpath, open } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
+import {
+  offlineGameplayAssessment,
+  validateOfflineGameplayPlan,
+} from './solo-offline-gameplay.mjs';
 
 const BASE = 'b11745223861c3973ad4bf440cc536198b8e0371';
 const CANDIDATE = '2ec605eb76e38f9c9a3e21b7fa82dd80c580c457';
@@ -39,6 +43,19 @@ export function validateOfflinePlan(plan) {
   assert.equal(plan.format, 'SoloHostedOfflinePairPlan.v1');
   assert.equal(plan.status, 'pinned-for-execution');
   assert.equal(plan.performanceExclusion, true);
+  if (plan.offline.gameplay) {
+    validateOfflineGameplayPlan(plan.offline.gameplay);
+    assert.equal(plan.setupTimeoutMs, 2400000);
+    assert.equal(
+      plan.offline.openingRecipe.path,
+      'docs/performance/fixtures/solo-remote-offline/original-art-opening.qualification.fixture',
+    );
+    assert.equal(
+      plan.offline.openingRecipe.sha256,
+      'f5459da998a91a3e401bf69306d08e7fd2dd3850058d4580dae6f042dce090d8',
+    );
+    assert.equal(plan.offline.openingRecipe.bytes, 2707);
+  }
   assert.equal(plan.baseline.revision, BASE);
   assert.equal(plan.candidate.revision, CANDIDATE);
   assert.deepEqual(
@@ -56,7 +73,7 @@ export function validateOfflinePlan(plan) {
         source: 'baseline',
         kind: 'offline-persistence',
         engine: 'chromium',
-        timeoutMs: 900000,
+        timeoutMs: plan.offline.gameplay ? 1200000 : 900000,
         performanceExclusion: true,
       },
       {
@@ -64,16 +81,16 @@ export function validateOfflinePlan(plan) {
         source: 'candidate',
         kind: 'offline-persistence',
         engine: 'chromium',
-        timeoutMs: 900000,
+        timeoutMs: plan.offline.gameplay ? 1200000 : 900000,
         performanceExclusion: true,
       },
     ],
   );
-  assert.equal(plan.helperTimeoutMs, 4500000);
+  assert.equal(plan.helperTimeoutMs, plan.offline.gameplay ? 6000000 : 4500000);
   assert.equal(plan.evidenceBytes, 256 * MiB);
   assert.equal(plan.profileEvidenceBytes, 1024 * MiB + 8 * MiB);
   assert.equal(plan.offline.serverPort, 18791);
-  assert.equal(plan.offline.observationTimeoutMs, 600000);
+  assert.equal(plan.offline.observationTimeoutMs, plan.offline.gameplay ? 960000 : 600000);
   assert.equal(plan.offline.downloadTimeoutMs, 300000);
   assert.equal(plan.offline.maximumReportBytes, 2 * MiB);
   assert.equal(plan.offline.profileMaximumBytes, 512 * MiB);
@@ -115,6 +132,7 @@ export function offlineExecutionValid(raw, command, source, browserVersion) {
       raw.performanceGateStatus === 'excluded-offline-persistence-diagnostic' &&
       raw.observationSettled === true &&
       raw.offlineNavigation?.responseWaitSettled === true &&
+      offlineGameplayAssessment(raw) !== 'failed' &&
       before?.identityMatches &&
       before.keysMatch &&
       before.indexMatches &&
@@ -127,6 +145,7 @@ export function offlineExecutionValid(raw, command, source, browserVersion) {
         'serverCleanupFailure',
         'launchDrainFailure',
         'observationDrainFailure',
+        'gameplayDrainFailure',
         'errorOverflow',
         'requestFailureOverflow',
         'responseOverflow',
@@ -216,6 +235,14 @@ export async function prepareOfflineMode(ctx) {
     'scripts/optional-installation-observer-helpers.mjs',
     'scripts/solo-qualification-export.mjs',
     'scripts/solo-remote-offline.mjs',
+    'scripts/solo-offline-gameplay.mjs',
+    ...(plan.offline.gameplay
+      ? [
+          'scripts/solo-qualification-native-replay.mjs',
+          'scripts/solo-qualification-replay-core.mjs',
+          plan.offline.openingRecipe.path,
+        ]
+      : []),
   ]) {
     frozenInputs.push({ path, ...(await digest(join(repository, path))) });
   }
@@ -328,7 +355,7 @@ export async function bindOfflineCase(ctx, row, dir, tmp) {
       selectedArtifactRecord: selected,
     },
     limits: {
-      observationTimeoutMs: 600000,
+      observationTimeoutMs: plan.offline.observationTimeoutMs,
       downloadTimeoutMs: 300000,
       maximumReportBytes: 2 * MiB,
       minimumInitialScratchFreeBytes: 768 * MiB,
@@ -343,7 +370,9 @@ export async function bindOfflineCase(ctx, row, dir, tmp) {
       sameActualBrowserVersionRequired: true,
     },
     scope:
-      'Distinct Linux passive offline-persistence diagnostic; authentication access fixture only. No repair/retry/cache or readiness injection. Prior Mac failures unchanged; no gameplay/physical/PWA/performance qualification.',
+      'Distinct Linux passive offline-persistence diagnostic; authentication access fixture only. No repair/retry/cache or readiness injection. Prior Mac failures unchanged. Restart diagnostic alone gives no gameplay qualification; optional public Opening play/replay is separately labeled. No physical PWA or performance qualification.',
+    gameplay: plan.offline.gameplay ?? null,
+    openingRecipe: plan.offline.openingRecipe ?? null,
     firstArmReport: null,
     firstArmClosure: null,
     firstArmArgv: null,
@@ -395,6 +424,12 @@ export async function runOfflineRow(ctx, row, dir, tmp) {
   row.browserVersion = raw.browserVersion;
   row.diagnosticOutcome = raw.diagnosticOutcome ?? null;
   row.offlineQualification = 'not-qualified-diagnostic-only';
+  assert.equal(Boolean(raw.gameplayRequested), Boolean(plan.offline.gameplay));
+  row.gameplayAssessment = offlineGameplayAssessment(raw);
+  row.offlineGameplayQualification =
+    row.gameplayAssessment === 'passed'
+      ? 'public-opening-capture-next-strict-replay-only'
+      : row.gameplayAssessment;
   assert.equal(raw.plan.path, bound.ref.path);
   assert.equal(raw.plan.sha256, bound.ref.sha256);
   const observationValid = offlineExecutionValid(
