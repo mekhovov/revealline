@@ -153,3 +153,22 @@ WebKit fixed unnecessary native cache retention of completed Blob reads in commi
 WebKit's frame-rate explainer describes refresh-rate adaptation and power tradeoffs. It is a proposal and historical rationale, not a current device capability table. Keep native callbacks and the measured pre-play reference; record actual cadence and power state on both target devices. A stable inexpensive 30 Hz session must remain distinguishable from loaded gameplay missing a previously established faster cadence. No user-agent-based frame-rate cap follows from this source. [WebKit explainer](https://webkit.github.io/explainers/animation-frame-rate/).
 
 App diagnostics and the new hitch journal require separate overhead comparisons. The existing application-work stopwatch does not cover all journal work: the journal's end-of-work callback, rAF wrapper and native-observer delivery have costs outside that window. A journal comparison must therefore include a symmetric bounded observer-envelope measurement in both arms, alongside application work and callback cadence. Keep all matched results and use normal browser timer precision; the smallest observed timer step is not a guaranteed error bound because the specification permits coarsening and jitter. Neither an app-diagnostics pass nor a journal's bounded storage proves the journal's five-percent overhead gate. [High Resolution Time](https://w3c.github.io/hr-time/#coarsen-time).
+
+## Safari 27 diagnostic refinement — 17 October
+
+Safari 27's Web Inspector now associates layout/render events with their nodes
+and identifies the layout root. Use that view in the already-required separate
+iPhone startup trace to distinguish overlay/focus/HUD layout from canvas work
+after accepted Start. Its release also fixes an unnecessary 2D-canvas
+compositing layer, which reinforces recording actual engine and layer behavior
+instead of adding speculative CSS layer promotion. These release notes neither
+identify this game's slowdown nor replace native timing.
+[Safari 27 Web Inspector and canvas notes](https://webkit.org/blog/18325/webkit-features-for-safari-27-0/).
+
+Keep the existing offline implementation for this performance batch. The new
+Service Worker static-routing API is not justified by a measured worker-routing
+bottleneck here; changing routing while installed-game qualification is still
+open would add a separate compatibility and cache-ownership variable. First
+complete the exact-package offline controls and attribute any observed cost.
+This is a scope decision based on the current evidence, not a claim that static
+routing is ineffective.
