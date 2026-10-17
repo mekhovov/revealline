@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdtemp, mkdir, writeFile, realpath, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import * as core from '../game/core/index.mjs';
 import * as replay from '../game/replay.mjs';
 import { createActorPresentation } from '../game/ui/actor-presentation.mjs';
@@ -23,6 +26,14 @@ const fixturePath =
 const fixtureBytes = await readFile(new URL('../' + fixturePath, import.meta.url));
 const fixture = JSON.parse(fixtureBytes);
 const source = 'cce49c81d82b79aefc24898f32eeebc609e569fb';
+const finalSource = {
+  cohort: 'earned-raster-candidatea6e',
+  revision: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
+  tree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
+  runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
+  baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  baselineTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+};
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 test('earned fixture is the accepted standard First Fracture level and exact existing legal route', async () => {
@@ -195,6 +206,136 @@ async function manifest() {
   value.frozenTools.push({ path, bytes: bytes.length, sha256: hash(bytes) });
   return value;
 }
+async function finalManifest() {
+  const value = await manifest();
+  // Unit-only shape identities; no successful package or release is asserted.
+  value.candidate = {
+    revision: finalSource.revision,
+    tree: finalSource.tree,
+    run: 1,
+    artifact: 2,
+    outer: { bytes: 100, sha256: 'a'.repeat(64) },
+    inner: { bytes: 90, sha256: 'b'.repeat(64) },
+    manifestSHA256: 'c'.repeat(64),
+  };
+  value.baseline = {
+    revision: finalSource.baseline,
+    tree: finalSource.baselineTree,
+    role: 'Source identity only; no baseline build or browser in candidate raster.',
+  };
+  value.runtimeRevision = finalSource.runtime;
+  value.sourceCohort = finalSource.cohort;
+  value.release.sourceCohort = finalSource.cohort;
+  value.release.candidateRevision = finalSource.revision;
+  return value;
+}
+test('final earned source admission keeps exact cases and limits while rejecting source or protocol substitution', async () => {
+  for (const engine of ['chromium', 'webkit']) {
+    const plan = bindRasterJob(await finalManifest(), `raster-${engine}`);
+    assert.equal(plan.candidate.revision, finalSource.revision);
+    assert.equal(plan.rows.length, 1);
+    assert.equal(plan.rows[0].timeoutMs, 1200000);
+    assert.equal(plan.raster.cases.length, 21);
+    assert.deepEqual(plan.raster.cases, EARNED_RASTER_CASES);
+    assert.equal(plan.raster.pixelTolerance, 0);
+    assert.equal(plan.raster.observationTimeoutMs, 120000);
+    assert.equal(plan.helperTimeoutMs, 75 * 60000);
+    assert.equal(plan.rowEvidenceBytes, 128 * 1024 ** 2);
+    assert.equal(plan.evidenceBytes, 256 * 1024 ** 2);
+    assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
+    assert.equal(plan.performanceExclusion, true);
+    for (const mutate of [
+      (p) => {
+        delete p.sourceCohort;
+      },
+      (p) => {
+        p.sourceCohort = 'unknown';
+      },
+      (p) => {
+        delete p.release.sourceCohort;
+      },
+      (p) => {
+        p.runtimeRevision = source;
+      },
+      (p) => {
+        p.candidate.revision = source;
+        p.release.candidateRevision = source;
+      },
+      (p) => {
+        p.candidate.tree = 'a'.repeat(40);
+      },
+      (p) => {
+        p.baseline.revision = 'b11745223861c3973ad4bf440cc536198b8e0371';
+      },
+      (p) => {
+        p.baseline.tree = 'b'.repeat(40);
+      },
+      (p) => {
+        p.baseline.reusableArtifact = {};
+      },
+      (p) => {
+        p.baseline.publisher = {};
+      },
+      (p) => {
+        delete p.raster.protocol;
+      },
+      (p) => {
+        p.raster.fixture.sha256 = 'd'.repeat(64);
+      },
+      (p) => {
+        p.raster.cases.pop();
+      },
+      (p) => {
+        p.raster.pixelTolerance = 1;
+      },
+      (p) => {
+        p.raster.retryCount = 1;
+      },
+      (p) => {
+        p.raster.observationTimeoutMs++;
+      },
+      (p) => {
+        p.release.firstEightAllCorrectnessPassed = true;
+      },
+      (p) => {
+        p.frozenTools = p.frozenTools.filter(
+          (r) => !r.path.endsWith('solo-earned-raster-protocol.mjs'),
+        );
+      },
+    ]) {
+      const changed = structuredClone(plan);
+      mutate(changed);
+      assert.throws(() => validateRasterPlan(changed));
+    }
+  }
+  const legacy = bindRasterJob(await manifest(), 'raster-chromium');
+  assert.equal(legacy.candidate.revision, source);
+  assert.equal(legacy.sourceCohort, undefined);
+});
+test('final earned matrix and job declarations execute from the unchanged one-module sparse closure', async (t) => {
+  const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-earned-raster-declare-')));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  await mkdir(join(dir, 'scripts'));
+  const script = join(dir, 'scripts/solo-remote-raster.mjs');
+  await writeFile(script, await readFile(new URL('./solo-remote-raster.mjs', import.meta.url)));
+  const value = await finalManifest(),
+    input = join(dir, 'manifest.json');
+  await writeFile(input, JSON.stringify(value));
+  const options = { encoding: 'utf8', timeout: 10000, maxBuffer: 1024 ** 2, cwd: dir };
+  assert.equal(
+    execFileSync(process.execPath, [script, 'matrix-plan', input], options),
+    'matrix={"include":[{"job":"raster-chromium"},{"job":"raster-webkit"}]}\n',
+  );
+  for (const engine of ['chromium', 'webkit']) {
+    const output = join(dir, engine + '.json');
+    execFileSync(
+      process.execPath,
+      [script, 'bind-plan', input, output, `raster-${engine}`],
+      options,
+    );
+    assert.deepEqual(JSON.parse(await readFile(output)), bindRasterJob(value, `raster-${engine}`));
+  }
+});
 test('earned admission is explicit and retains historical diagnostic exclusion, exact source and all old caps', async () => {
   const plan = bindRasterJob(await manifest(), 'raster-chromium');
   assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
