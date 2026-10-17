@@ -37,3 +37,5 @@ These examples support implementation choices, not a claim that our game is now 
 The locally executable implementation and qualification gates from the preceding plan are complete within their recorded coverage. This batch adds one bounded compatibility fix and the integration PR. Further seeds, new art, additional modes and a fresh exhaustive benchmark matrix are not silently introduced as new requirements. The imported-library anomaly remains unreproduced and documented; only a recurrence warrants another storage investigation.
 
 See the [17 October completion report](qualification/overflight/integration-20261017/README.md) for fresh checks, preservation receipts and the final PR state.
+
+Delivery checkpoint: [PR1560](https://github.com/mekhovov/revealline/pull/1560) now collects the preserved stack and correction directly against main. The usual source/feature workflows have started; required-check completion and maintainer merge remain separate from local completion.

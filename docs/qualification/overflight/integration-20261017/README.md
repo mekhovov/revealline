@@ -27,7 +27,7 @@ Corrected runtime source: `4d053f96f` (new preview regression included). The rep
 - [Variant suite](custom-preview-after.tap):17/17 passed. New regression covers absent battlefield, absent movement on the returning original layout, contracts2–5, EN/UK/fallback locale, actual route geometry, source immutability and unchanged original identity. Existing built-in/V3 comparisons still pass.
 - [Integration cohort](integration-checks.tap):101/101 passed, zero skipped. Includes Raid variants/records, battlefield progression, late pacing, Riy community packages, world audio, host transitions and crowd steering.
 - Changed JavaScript passes ESLint with zero warnings; formatting and whitespace checks pass.
-- [Content validation](validate.log) passed; its retained output inventories the checked content.
+- [Content validation](validate.json) passed; its retained output inventories the checked content and navigation warnings.
 - Independent read-only review found no blocking issue in the fix or tests.
 - [Review entry screenshot](review-page.png) confirms the visible17 October plan link alongside the retained native captures and sound/build comparisons. This is a documentation navigation check, not new native combat evidence.
 
@@ -40,3 +40,5 @@ Implemented/local finite gates: worlds/layouts, five-operation family, shared co
 Still review judgments: visual appeal, audible mix, enjoyment, ordinary-player challenge and provisional medal targets. Reference-device and five-player checks remain skipped at the user's direction, not passed. A short retry test does not establish ten full sorties or heap-disposal correctness; an M4 Pro soak does not establish Iris Xe performance.
 
 Delivery still requires the main-target PR's exact-head checks and eventual maintainer merge. No policy bypass, automatic merge or deployment is part of this batch.
+
+The complete successor is published as [PR1560](https://github.com/mekhovov/revealline/pull/1560), targeting main. Main's source preflight and the normal feature checks started successfully on creation; their final conclusions are reported on the PR. Existing PRs remain preserved. This is source publication, not a claim of merge or production release.
