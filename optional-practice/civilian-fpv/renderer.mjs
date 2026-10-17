@@ -1,6 +1,7 @@
 import * as THREE from './vendor/three.module.js';
 import { resolveIndustrialEnvironment } from '../../game/presentation/industrial-environments.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
+import { validateAircraftPhysics } from './aircraft-physics.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
 import { sharedActorAppearance, runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
@@ -138,6 +139,137 @@ export function configureWorldGLTFLoader(loader, { onImageError = () => {} } = {
     });
 }
 
+/** Procedural presentation of the actual aircraft geometry. The surrounding
+ * renderer retains its historical radius/220 scaling, so this group is first
+ * normalized to that scale. A skin changes paint, never rotor spacing or size. */
+export function buildPhysicalAircraftVisual({
+  configuration,
+  parent,
+  mesh,
+  material,
+  kind = 'racer',
+  quality = 'balanced',
+}) {
+  const aircraft = validateAircraftPhysics(configuration);
+  const unit = 0.22 / aircraft.radius;
+  const body = aircraft.geometry.bodyHalfExtents,
+    radius = aircraft.geometry.propellerRadius;
+  const tint = material(kind === 'pixel' ? 0xf3a870 : kind === 'utility' ? 0xaec8af : 0x60c5e5, {
+    roughness: 0.5,
+    side: THREE.DoubleSide,
+  });
+  const carbon = material(0x25313b, { roughness: 0.72 });
+  const hardware = material(0x8f9aa3, { roughness: 0.35, metalness: 0.65 });
+  const rubber = material(0x17232b, { roughness: 0.9 });
+  const propPaint = material(0xa1d9e7, { roughness: 0.55, transparent: true, opacity: 0.7 });
+  const parts = new THREE.Group();
+  parts.name = 'physical-aircraft';
+  parts.scale.setScalar(unit);
+  parts.userData.aircraftId = aircraft.id;
+  parts.userData.geometryFormat = aircraft.format;
+  parent.add(parts);
+  parent.userData.modelRole = 'physical-aircraft';
+  parent.userData.ownedMaterials = [tint, carbon, hardware, rubber, propPaint];
+  const bodyParts = new THREE.Group();
+  bodyParts.position.set(
+    -aircraft.geometry.centerOfMass.x,
+    -aircraft.geometry.centerOfMass.y,
+    -aircraft.geometry.centerOfMass.z,
+  );
+  parts.add(bodyParts);
+  const part = (shape, paint, name, position, group = parts) => {
+    const item = mesh(shape, paint, group);
+    item.name = name;
+    if (position) item.position.copy(position);
+    item.castShadow = true;
+    return item;
+  };
+  part(
+    new THREE.BoxGeometry(body.x * 2, body.y * 1.4, body.z * 2),
+    carbon,
+    'aircraft-body',
+    new THREE.Vector3(0, -body.y * 0.3, 0),
+    bodyParts,
+  );
+  // The visual battery sits inside the model's central-body collision envelope.
+  // Its size is illustrative; physics uses the complete battery-inclusive mass.
+  part(
+    new THREE.BoxGeometry(body.x * 1.65, body.y * 0.6, body.z * 1.5),
+    tint,
+    'aircraft-battery',
+    new THREE.Vector3(0, body.y * 0.7, 0),
+    bodyParts,
+  );
+  for (const z of [-body.z * 0.4, body.z * 0.4])
+    part(
+      new THREE.BoxGeometry(body.x * 1.72, body.y * 0.04, body.z * 0.12),
+      rubber,
+      'battery-strap',
+      new THREE.Vector3(0, body.y * 0.98, z),
+      bodyParts,
+    );
+  const cameraRadius = Math.min(body.x * 0.36, body.y * 0.35);
+  const lens = part(
+    new THREE.CylinderGeometry(cameraRadius, cameraRadius, cameraRadius * 0.5, 10),
+    hardware,
+    'aircraft-camera',
+    new THREE.Vector3(0, body.y * 0.25, -body.z + cameraRadius * 0.25),
+    bodyParts,
+  );
+  lens.rotation.x = Math.PI / 2;
+  const up = new THREE.Vector3(0, 1, 0),
+    rotors = [];
+  const segments = quality === 'low' ? 12 : 24;
+  aircraft.geometry.rotors.forEach((rotor, index) => {
+    const position = new THREE.Vector3(rotor.position.x, rotor.position.y, rotor.position.z);
+    const armDirection = position.clone().sub(bodyParts.position);
+    const length = armDirection.length(),
+      thickness = Math.max(0.0008, radius * 0.07);
+    const arm = part(
+      new THREE.CylinderGeometry(thickness, thickness, length, 6),
+      carbon,
+      `aircraft-arm-${index}`,
+      position.clone().add(bodyParts.position).multiplyScalar(0.5),
+    );
+    arm.quaternion.setFromUnitVectors(up, armDirection.normalize());
+    part(
+      new THREE.CylinderGeometry(radius * 0.16, radius * 0.16, radius * 0.2, 12),
+      hardware,
+      `aircraft-motor-${index}`,
+      position,
+    );
+    const spinner = new THREE.Group();
+    spinner.name = `aircraft-propeller-${index}`;
+    spinner.position.copy(position);
+    // Geometry spin describes body reaction torque; blade motion is opposite.
+    spinner.userData.spin = -rotor.spin;
+    spinner.userData.radius = radius;
+    parts.add(spinner);
+    for (let blade = 0; blade < 3; blade++) {
+      const item = part(
+        new THREE.BoxGeometry(radius * 0.94, radius * 0.025, radius * 0.13),
+        propPaint,
+        'propeller-blade',
+        null,
+        spinner,
+      );
+      const angle = (blade * Math.PI * 2) / 3;
+      item.position.set(Math.cos(angle) * radius * 0.47, 0, Math.sin(angle) * radius * 0.47);
+      item.rotation.y = -angle;
+    }
+    rotors.push(spinner);
+    if (aircraft.geometry.ducted) {
+      part(
+        new THREE.CylinderGeometry(radius, radius, Math.max(body.y, 0.006) * 2, segments, 1, true),
+        tint,
+        `aircraft-duct-${index}`,
+        position,
+      );
+    }
+  });
+  return { rotors, tint, physical: true, root: parts };
+}
+
 /** Shared presentation only. Hosts supply admitted bounds and poses; no physics or ownership. */
 export function createFlightViewFrame({ camera, aircraft }) {
   const framePosition = new THREE.Vector3(),
@@ -163,6 +295,7 @@ export function createFlightViewFrame({ camera, aircraft }) {
     bounds: null,
     originMm: null,
     throttlePermille: null,
+    cameraOffsetMm: null,
     rotors: [],
     editorCamera: { yaw: 0.65, pitch: 0.72, distance: null },
     reset() {
@@ -188,7 +321,8 @@ export function createFlightViewFrame({ camera, aircraft }) {
       }
       const position = framePosition.set(
         (state.position.x - (frame.originMm?.x ?? 0)) / 1000,
-        (state.position.y - (frame.originMm?.y ?? 0)) / 1000 + frame.radiusMm / 1000,
+        (state.position.y - (frame.originMm?.y ?? 0)) / 1000 +
+          (state.aircraftSupportHeightMm ?? frame.radiusMm) / 1000,
         (state.position.z - (frame.originMm?.z ?? 0)) / 1000,
       );
       const rotation = frameRotation
@@ -201,7 +335,7 @@ export function createFlightViewFrame({ camera, aircraft }) {
         .normalize();
       aircraft.position.copy(position);
       aircraft.quaternion.copy(rotation);
-      aircraft.scale.setScalar(frame.radiusMm / 220);
+      aircraft.scale.setScalar((state.aircraftRadiusMm ?? frame.radiusMm) / 220);
       aircraft.visible = view !== 'fpv';
       // Integrate only elapsed simulation ticks. Changing throttle changes angular
       // speed without reinterpreting the entire flight's already elapsed phase.
@@ -218,9 +352,20 @@ export function createFlightViewFrame({ camera, aircraft }) {
       }
       rotorTick = state.ticks;
       for (const [index, rotor] of frame.rotors.entries())
-        rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
+        rotor.rotation.y =
+          rotorPhase * (rotor.userData?.spin ?? (index === 0 || index === 3 ? -1 : 1));
       if (view === 'fpv') {
         camera.position.copy(position);
+        if (frame.cameraOffsetMm)
+          camera.position.add(
+            cameraOffset
+              .set(
+                frame.cameraOffsetMm.x / 1000,
+                frame.cameraOffsetMm.y / 1000,
+                frame.cameraOffsetMm.z / 1000,
+              )
+              .applyQuaternion(rotation),
+          );
         camera.quaternion
           .copy(rotation)
           .multiply(cameraTiltRotation.setFromAxisAngle(cameraTiltAxis, (tilt * Math.PI) / 180));
@@ -241,10 +386,9 @@ export function createFlightViewFrame({ camera, aircraft }) {
           cz = (bounds.max.z + bounds.min.z) / 2000 - (frame.originMm?.z ?? 0) / 1000,
           halfWidth = Math.abs(overviewRight.x) * hx + Math.abs(overviewRight.z) * hz,
           halfHeight =
-            Math.abs(overviewUp.x) * hx +
-            Math.abs(overviewUp.y) * hy +
-            Math.abs(overviewUp.z) * hz,
-          halfDepth = overviewDirection.x * hx + overviewDirection.y * hy + overviewDirection.z * hz,
+            Math.abs(overviewUp.x) * hx + Math.abs(overviewUp.y) * hy + Math.abs(overviewUp.z) * hz,
+          halfDepth =
+            overviewDirection.x * hx + overviewDirection.y * hy + overviewDirection.z * hz,
           tangent = Math.tan((camera.fov * Math.PI) / 360),
           distance =
             halfDepth +
@@ -404,6 +548,7 @@ export function createFlightRenderer({
     lastHeight = 0,
     pathLine = null,
     droneVisual = null,
+    physicalAircraft = null,
     ghostVisual = null,
     ghostSamples = [],
     ghostPose = null,
@@ -665,27 +810,58 @@ export function createFlightRenderer({
     presentationGeneration++;
     droneKind = value;
     releaseGroup(aircraft);
-    droneVisual = buildDroneVisual({
-      parent: aircraft,
-      mesh,
-      material,
-      box,
-      kind: value,
-      profile: themeProfile ?? resolveSimThemeProfile({}, activePresentation),
-      quality,
-      maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
-      reviewRevision: machineryRevision,
-    });
+    droneVisual = physicalAircraft
+      ? buildPhysicalAircraftVisual({
+          configuration: physicalAircraft,
+          parent: aircraft,
+          mesh,
+          material,
+          kind: value,
+          quality,
+        })
+      : buildDroneVisual({
+          parent: aircraft,
+          mesh,
+          material,
+          box,
+          kind: value,
+          profile: themeProfile ?? resolveSimThemeProfile({}, activePresentation),
+          quality,
+          maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+          reviewRevision: machineryRevision,
+        });
     if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
-    if ((themeProfile?.id ?? activePresentation?.collectionId) === 'military-field') {
+    if (
+      !physicalAircraft &&
+      (themeProfile?.id ?? activePresentation?.collectionId) === 'military-field'
+    ) {
       for (const [index, color] of [0x4eb8ee, 0xffd74d].entries()) {
         const stripe = mesh(new THREE.BoxGeometry(0.045, 0.002, 0.018), material(color), aircraft);
         stripe.position.set(0, value === 'pixel' ? 0.064 : 0.06, 0.009 + index * 0.018);
       }
     }
     for (const [index, rotor] of droneVisual.rotors.entries())
-      rotor.rotation.y = flightViewFrame.rotorPhase * (index === 0 || index === 3 ? -1 : 1);
+      rotor.rotation.y =
+        flightViewFrame.rotorPhase *
+        (rotor.userData?.spin ?? (index === 0 || index === 3 ? -1 : 1));
     setSurfaceQuality(materials, quality, renderer.capabilities.getMaxAnisotropy());
+  }
+  function setAircraft(value) {
+    physicalAircraft = value === null ? null : validateAircraftPhysics(value);
+    flightViewFrame.cameraOffsetMm = physicalAircraft
+      ? {
+          x: -physicalAircraft.geometry.centerOfMass.x * 1000,
+          y:
+            (physicalAircraft.geometry.bodyHalfExtents.y * 0.25 -
+              physicalAircraft.geometry.centerOfMass.y) *
+            1000,
+          z:
+            (-physicalAircraft.geometry.bodyHalfExtents.z -
+              physicalAircraft.geometry.centerOfMass.z) *
+            1000,
+        }
+      : null;
+    setDrone(droneKind);
   }
   function setPresentation(value) {
     // A prepared choice takes effect only when the owner installs a fresh course.
@@ -2671,7 +2847,7 @@ export function createFlightRenderer({
     flightViewFrame.view = view;
     flightViewFrame.fov = fov;
     flightViewFrame.tilt = tilt;
-    flightViewFrame.radiusMm = course.rules?.droneRadius ?? 220;
+    flightViewFrame.radiusMm = state.aircraftRadiusMm ?? course.rules?.droneRadius ?? 220;
     flightViewFrame.bounds = course.bounds;
     flightViewFrame.editorCamera = editorCamera;
     flightViewFrame.reducedMotion = reducedMotion;
@@ -3643,7 +3819,7 @@ export function createFlightRenderer({
     flightViewFrame.fov = cameraFov;
     flightViewFrame.tilt = cameraTilt;
     flightViewFrame.originMm = state.originMm;
-    flightViewFrame.radiusMm = 220;
+    flightViewFrame.radiusMm = state.aircraftRadiusMm ?? 220;
     flightViewFrame.reducedMotion = reducedMotion;
     flightViewFrame.rotors = droneVisual.rotors;
     flightViewFrame.draw(state);
@@ -3663,6 +3839,7 @@ export function createFlightRenderer({
     setPresentation,
     setQuality,
     setDrone,
+    setAircraft,
     setPath,
     setGhost,
     ghostSnapshot: () => ({

@@ -13,9 +13,10 @@ export function createAdvancedWorkerClient({
     throw new Error('Advanced practice requires Web Workers on this platform.');
   if (!Number.isFinite(watchdogMs) || watchdogMs < 1 || watchdogMs > 60000)
     throw new Error('Invalid Advanced worker deadline');
-  // A complete twelve-minute recording may need six minutes at the minimum
-  // qualified 2x capacity, plus one minute of setup margin. Flight/init requests
-  // keep their short watchdog; recording and recovery verification use this bound.
+  // Historical twelve-minute recordings may need six minutes at the minimum
+  // qualified 2x capacity, plus setup margin. New aircraft clips retain at most
+  // three minutes. This bounds verification, never the duration of flying.
+  // Flight/init requests keep their short watchdog.
   if (
     !Number.isFinite(verificationWatchdogMs) ||
     verificationWatchdogMs < 1 ||
@@ -84,8 +85,8 @@ export function createAdvancedWorkerClient({
     session,
     initialize: (options) => request('init', { options }),
     input: (sample) => request('input', { sample }),
-    step: (sample) => request('step', { sample }),
-    propose: (sample) => request('propose', { sample }),
+    step: (sample, motions) => request('step', { sample, motions }),
+    propose: (sample, motions) => request('propose', { sample, motions }),
     commit: (decision) => request('commit', { decision }),
     stageTerrainFrame: (frame) => request('stage-terrain', { frame }),
     commitTerrainFrame: (decision) => request('commit-terrain', { decision }),
@@ -93,6 +94,8 @@ export function createAdvancedWorkerClient({
     snapshot: () => request('snapshot'),
     restore: (snapshot) => request('restore', { snapshot }),
     recording: () => request('recording'),
+    recordingStatus: () => request('recording-status'),
+    reportPersistence: (status) => request('recording-persistence', { status }),
     verifyRecording: (recording) => request('verify-recording', { recording }),
     reset: () => request('reset'),
     dispose,

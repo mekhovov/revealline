@@ -231,10 +231,12 @@ export async function smokeFPVHistoricalUpdate({
         await page.locator('[data-mode-action="settings"]:visible').click();
         await page.getByRole('tab', { name: 'Controls', exact: true }).click();
         await page
-          .getByRole('button', { name: 'Rates & throttle', exact: true })
+          .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
           .filter({ visible: true })
           .click();
-        await page.getByRole('dialog', { name: 'Rates & throttle', exact: true }).waitFor();
+        await page
+          .getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true })
+          .waitFor();
       };
       await page.goto(`${base}index.html?lang=en`);
       await page.locator('#access-gate').waitFor();
@@ -301,7 +303,7 @@ export async function smokeFPVHistoricalUpdate({
       assert.equal(beforeValues.comfort, 'large');
       assert.equal(beforeValues.opacity, 'strong');
       assert.equal(
-        await page.getByRole('button', { name: 'Rates & throttle', exact: true }).count(),
+        await page.getByRole('button', { name: 'Aircraft, rates & throttle', exact: true }).count(),
         0,
       );
       assert.equal(
