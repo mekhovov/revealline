@@ -15,6 +15,8 @@ const cueNames = new Set([
   ...HUMAN_REACTION_CUES,
 ]);
 const CUE_CACHE_BYTES = 32 * 1024 * 1024;
+// Match optional effect/reaction reads; queue wait and native decoding are separate.
+const CUE_READ_TIMEOUT_MS = 10000;
 
 /** Read-only session cache. An unavailable cue uses its existing procedural
  * fallback; a late decode never replays an event that has already happened. */
@@ -78,10 +80,31 @@ export function createPublishedCues({ sound, readAudio }) {
       !sound.audioMaster?.muted &&
       sound.audioMaster?.volume !== 0;
     const admission = { signal: controller.signal, priority, eligible };
+    let timedOut = false;
     pending.add(controller);
     cache.set(name, 'loading');
     const promise = preparation
-      .run('fetch', () => readAudio(`audio.${name}`, { signal: controller.signal }), admission)
+      .run(
+        'fetch',
+        async () => {
+          // Start only after admission. Abort cooperative reads, but retain the
+          // shared slot until the underlying promise actually settles.
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (!closed && loads.get(name) === promise) cache.set(name, false);
+            controller.abort();
+          }, CUE_READ_TIMEOUT_MS);
+          const clear = () => clearTimeout(timer);
+          controller.signal.addEventListener('abort', clear, { once: true });
+          try {
+            return await readAudio(`audio.${name}`, { signal: controller.signal });
+          } finally {
+            clear();
+            controller.signal.removeEventListener('abort', clear);
+          }
+        },
+        admission,
+      )
       .then(async (result) => {
         if (!result || !eligible()) return null;
         const seconds = HUMAN_REACTION_CUES.includes(name)
@@ -113,7 +136,10 @@ export function createPublishedCues({ sound, readAudio }) {
       })
       .catch((error) => {
         if (error?.name === 'AbortError') {
-          if (!closed && loads.get(name) === promise) cache.delete(name);
+          if (!closed && loads.get(name) === promise) {
+            if (timedOut) cache.set(name, false);
+            else cache.delete(name);
+          }
         } else if (!closed && !controller.signal.aborted) cache.set(name, false);
       })
       .finally(() => {
