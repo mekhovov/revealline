@@ -1,0 +1,310 @@
+TAP version 13
+# Subtest: offline actions serialize button intent and retain the invoking dialog owner
+ok 1 - offline actions serialize button intent and retain the invoking dialog owner
+  ---
+  duration_ms: 10.444125
+  ...
+# Subtest: native offload uses only the runtime remover and retains world and proof data
+ok 2 - native offload uses only the runtime remover and retains world and proof data
+  ---
+  duration_ms: 6.994083
+  ...
+# Subtest: unavailable workers disable both native controls without invoking operations
+ok 3 - unavailable workers disable both native controls without invoking operations
+  ---
+  duration_ms: 0.425667
+  ...
+# Subtest: disposal aborts the download and a late success cannot repaint the removed host
+ok 4 - disposal aborts the download and a late success cannot repaint the removed host
+  ---
+  duration_ms: 0.340459
+  ...
+# Subtest: pagehide cancels preparation, reports cancellation and releases busy ownership
+ok 5 - pagehide cancels preparation, reports cancellation and releases busy ownership
+  ---
+  duration_ms: 6.217042
+  ...
+# Subtest: failed removal remains retryable and never reports a removed installation
+ok 6 - failed removal remains retryable and never reports a removed installation
+  ---
+  duration_ms: 9.07
+  ...
+# Subtest: overflight: all 18 authored maps retain compiled rules through export and fresh native profile import
+ok 7 - overflight: all 18 authored maps retain compiled rules through export and fresh native profile import
+  ---
+  duration_ms: 4142.610334
+  ...
+# Subtest: overflight-riy: all 18 authored maps retain compiled rules through export and fresh native profile import
+ok 8 - overflight-riy: all 18 authored maps retain compiled rules through export and fresh native profile import
+  ---
+  duration_ms: 3924.068584
+  ...
+# Subtest: overflight-hunt: all 18 authored maps retain compiled rules through export and fresh native profile import
+ok 9 - overflight-hunt: all 18 authored maps retain compiled rules through export and fresh native profile import
+  ---
+  duration_ms: 6988.16775
+  ...
+# Subtest: V4 Marathon rotates all five layouts with carried resources, fresh terrain and a reproducible retry
+ok 10 - V4 Marathon rotates all five layouts with carried resources, fresh terrain and a reproducible retry
+  ---
+  duration_ms: 2116.103417
+  ...
+# Subtest: 18 authored layouts retain distinct paths and compile all three rule families in every difficulty
+ok 11 - 18 authored layouts retain distinct paths and compile all three rule families in every difficulty
+  ---
+  duration_ms: 3082.699416
+  ...
+# Subtest: ordinary opening and relief keep direct pursuit; later decks cover all coordinated behaviors
+ok 12 - ordinary opening and relief keep direct pursuit; later decks cover all coordinated behaviors
+  ---
+  duration_ms: 3.593334
+  ...
+# Subtest: V1–V3 imports retain identities; upgrading creates a copy and keeps Riy squad semantics
+ok 13 - V1–V3 imports retain identities; upgrading creates a copy and keeps Riy squad semantics
+  ---
+  duration_ms: 143.012958
+  ...
+# Subtest: terrain revisions do not reinterpret old experiments and enforce bounded cover clearance
+ok 14 - terrain revisions do not reinterpret old experiments and enforce bounded cover clearance
+  ---
+  duration_ms: 2.671208
+  ...
+# Subtest: all 18 Marathon selections retain five valid contracts, escort offsets and fresh terrain
+ok 15 - all 18 Marathon selections retain five valid contracts, escort offsets and fresh terrain
+  ---
+  duration_ms: 1000.531833
+  ...
+# Subtest: layout changes preserve explicit options and same-layout application is idempotent
+ok 16 - layout changes preserve explicit options and same-layout application is idempotent
+  ---
+  duration_ms: 131.95375
+  ...
+# Subtest: mismatched snapshot, cover art, invalid profiles and buried Raid targets are rejected
+ok 17 - mismatched snapshot, cover art, invalid profiles and buried Raid targets are rejected
+  ---
+  duration_ms: 15.832292
+  ...
+# Subtest: bounded navigation goes around cover and barrier destruction invalidates cached paths
+ok 18 - bounded navigation goes around cover and barrier destruction invalidates cached paths
+  ---
+  duration_ms: 4.110625
+  ...
+# Subtest: global family and publisher admission preserve Overflight bytes and reject resource closure changes
+ok 19 - global family and publisher admission preserve Overflight bytes and reject resource closure changes
+  ---
+  duration_ms: 99.259084
+  ...
+# Subtest: global install, exact recovery, offload and reinstall use the native Overflight library
+ok 20 - global install, exact recovery, offload and reinstall use the native Overflight library
+  ---
+  duration_ms: 985.261625
+  ...
+# Subtest: atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions
+ok 21 - atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions
+  ---
+  duration_ms: 1042.737667
+  ...
+# Subtest: existing Studio v1 installations migrate as local owners without altering their content
+ok 22 - existing Studio v1 installations migrate as local owners without altering their content
+  ---
+  duration_ms: 92.099042
+  ...
+# Subtest: failed profile transactions roll back edition installation and offload without losing a local owner
+ok 23 - failed profile transactions roll back edition installation and offload without losing a local owner
+  ---
+  duration_ms: 418.995333
+  ...
+# Subtest: survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+ok 24 - survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 637.621959
+  ...
+# Subtest: survivor: previous authored/imported V4 projects retain exact rules and identity
+ok 25 - survivor: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 17.562666
+  ...
+# Subtest: survivor: old and new balance records survive a mixed-profile reopen
+ok 26 - survivor: old and new balance records survive a mixed-profile reopen
+  ---
+  duration_ms: 44.822584
+  ...
+# Subtest: riy: new V4 sorties shorten only the last two choices and identify the balance revision
+ok 27 - riy: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 1657.602
+  ...
+# Subtest: riy: previous authored/imported V4 projects retain exact rules and identity
+ok 28 - riy: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 58.992208
+  ...
+# Subtest: riy: old and new balance records survive a mixed-profile reopen
+ok 29 - riy: old and new balance records survive a mixed-profile reopen
+  ---
+  duration_ms: 73.319083
+  ...
+# Subtest: Raid V3 round-trips authored escort links, medal budgets and balance identity without changing old defaults
+ok 30 - Raid V3 round-trips authored escort links, medal budgets and balance identity without changing old defaults
+  ---
+  duration_ms: 517.962167
+  ...
+# Subtest: guarded machinery has a readable rear-half opening; recovery exposes all sides
+ok 31 - guarded machinery has a readable rear-half opening; recovery exposes all sides
+  ---
+  duration_ms: 8.022042
+  ...
+# Subtest: fresh boosted passes can remove two plates in one opening; the same boost cannot repeat after exiting
+ok 32 - fresh boosted passes can remove two plates in one opening; the same boost cannot repeat after exiting
+  ---
+  duration_ms: 98.386375
+  ...
+# Subtest: frontal machinery contact still hurts and width does not expand the rear angle
+ok 33 - frontal machinery contact still hurts and width does not expand the rear angle
+  ---
+  duration_ms: 19.014375
+  ...
+# Subtest: guard interruption opens a shield or brace but never machinery or independent fired projectiles
+ok 34 - guard interruption opens a shield or brace but never machinery or independent fired projectiles
+  ---
+  duration_ms: 17.7895
+  ...
+# Subtest: an objective restores only one shield charge and escorts move with the defended target
+ok 35 - an objective restores only one shield charge and escorts move with the defended target
+  ---
+  duration_ms: 147.50225
+  ...
+# Subtest: Marathon refits preserve eight invested ranks, compatibility and useful choices
+ok 36 - Marathon refits preserve eight invested ranks, compatibility and useful choices
+  ---
+  duration_ms: 719.370292
+  ...
+# Subtest: authored provisional medals and V3 records retain raw/adjusted time in a separate bucket
+ok 37 - authored provisional medals and V3 records retain raw/adjusted time in a separate bucket
+  ---
+  duration_ms: 29.388959
+  ...
+# Subtest: interrupted shields recover their committed facing rather than staying permanently open
+ok 38 - interrupted shields recover their committed facing rather than staying permanently open
+  ---
+  duration_ms: 292.655083
+  ...
+# Subtest: capped Marathon opens native refit drafts and carries the budget to the next contract
+ok 39 - capped Marathon opens native refit drafts and carries the budget to the next contract
+  ---
+  duration_ms: 115.665791
+  ...
+# Subtest: Raid reports actual hull loss for contact, lane, fan and ground result breakdowns
+ok 40 - Raid reports actual hull loss for contact, lane, fan and ground result breakdowns
+  ---
+  duration_ms: 35.072667
+  ...
+# Subtest: native Raid uses current rules at every difficulty without changing legacy authoring defaults
+ok 41 - native Raid uses current rules at every difficulty without changing legacy authoring defaults
+  ---
+  duration_ms: 124.946125
+  ...
+# Subtest: pre-run variant record lookup uses the same revision as its completed run
+ok 42 - pre-run variant record lookup uses the same revision as its completed run
+  ---
+  duration_ms: 201.396833
+  ...
+# Subtest: Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages
+ok 43 - Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages
+  ---
+  duration_ms: 52.124125
+  ...
+# Subtest: Time Attack and Marathon reject experimental terrain rather than silently changing routes
+ok 44 - Time Attack and Marathon reject experimental terrain rather than silently changing routes
+  ---
+  duration_ms: 3.074834
+  ...
+# Subtest: Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+ok 45 - Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+  ---
+  duration_ms: 12.6525
+  ...
+# Subtest: bank/continue transactions settle once and preserve resources without free repairs
+ok 46 - bank/continue transactions settle once and preserve resources without free repairs
+  ---
+  duration_ms: 34.787625
+  ...
+# Subtest: losing the last airframe forfeits the entire unbanked chain, retry restarts it
+ok 47 - losing the last airframe forfeits the entire unbanked chain, retry restarts it
+  ---
+  duration_ms: 23.619125
+  ...
+# Subtest: five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+ok 48 - five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+  ---
+  duration_ms: 259.326583
+  ...
+# Subtest: variant records have independent contexts and shared durable/session storage semantics
+ok 49 - variant records have independent contexts and shared durable/session storage semantics
+  ---
+  duration_ms: 71.318292
+  ...
+# Subtest: pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+ok 50 - pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+  ---
+  duration_ms: 28.574917
+  ...
+# Subtest: an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+ok 51 - an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+  ---
+  duration_ms: 4512.018125
+  ...
+# Subtest: Marathon buttons bank once, refresh results and continue only with the host guard
+ok 52 - Marathon buttons bank once, refresh results and continue only with the host guard
+  ---
+  duration_ms: 70.342875
+  ...
+# Subtest: Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+ok 53 - Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+  ---
+  duration_ms: 15.661417
+  ...
+# Subtest: medal formatting carries rounded hundredths across minute boundaries
+ok 54 - medal formatting carries rounded hundredths across minute boundaries
+  ---
+  duration_ms: 0.22275
+  ...
+# Subtest: the last legal three-card choice cannot immediately open an exhausted queued draft
+ok 55 - the last legal three-card choice cannot immediately open an exhausted queued draft
+  ---
+  duration_ms: 11.166667
+  ...
+# Subtest: Survivor records separate fastest victories, most cleared, failure details and chosen branches
+ok 56 - Survivor records separate fastest victories, most cleared, failure details and chosen branches
+  ---
+  duration_ms: 18.460458
+  ...
+# Subtest: mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+ok 57 - mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+  ---
+  duration_ms: 11.4295
+  ...
+# Subtest: storage failures retain session achievements and recover without dropping a stronger record
+ok 58 - storage failures retain session achievements and recover without dropping a stronger record
+  ---
+  duration_ms: 1.81675
+  ...
+# Subtest: record captures result before asynchronous profile access or retry changes the run
+ok 59 - record captures result before asynchronous profile access or retry changes the run
+  ---
+  duration_ms: 0.516042
+  ...
+# Subtest: invalid and review results cannot overwrite records; disposal closes access
+ok 60 - invalid and review results cannot overwrite records; disposal closes access
+  ---
+  duration_ms: 2.10175
+  ...
+1..60
+# tests 60
+# suites 0
+# pass 60
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18464.795333

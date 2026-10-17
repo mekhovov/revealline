@@ -1,0 +1,235 @@
+TAP version 13
+# Subtest: local crowd force crosses grid boundaries continuously and uses neighboring cells
+ok 1 - local crowd force crosses grid boundaries continuously and uses neighboring cells
+  ---
+  duration_ms: 1.291
+  ...
+# Subtest: coincident bodies receive finite opposite separation and distant bodies have no force
+ok 2 - coincident bodies receive finite opposite separation and distant bodies have no force
+  ---
+  duration_ms: 0.187542
+  ...
+# Subtest: Survival authors local separation explicitly without rewriting earlier content or records
+ok 3 - Survival authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 37.243625
+  ...
+# Subtest: Riy authors local separation explicitly without rewriting earlier content or records
+ok 4 - Riy authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 22.846208
+  ...
+# Subtest: the native simulation uses authored local spacing and preserves complete area damage
+ok 5 - the native simulation uses authored local spacing and preserves complete area damage
+  ---
+  duration_ms: 21.681375
+  ...
+# Subtest: same and new-seed sorties preserve explicitly authored local crowd rules
+ok 6 - same and new-seed sorties preserve explicitly authored local crowd rules
+  ---
+  duration_ms: 31.544208
+  ...
+# Subtest: Raid does not advertise or silently accept the Survivor-only movement experiment
+ok 7 - Raid does not advertise or silently accept the Survivor-only movement experiment
+  ---
+  duration_ms: 3.34725
+  ...
+# Subtest: local broad phase matches every nearby body across rebuilds, radii and arena edges
+ok 8 - local broad phase matches every nearby body across rebuilds, radii and arena edges
+  ---
+  duration_ms: 17.565
+  ...
+# Subtest: local spacing freezes coordinates before its first query and allocates its fine index only on demand
+ok 9 - local spacing freezes coordinates before its first query and allocates its fine index only on demand
+  ---
+  duration_ms: 0.288917
+  ...
+# Subtest: diagnostic fixtures explicitly select local spacing without enabling it in ordinary play or Raid
+ok 10 - diagnostic fixtures explicitly select local spacing without enabling it in ordinary play or Raid
+  ---
+  duration_ms: 0.378542
+  ...
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 11 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 1.609916
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 12 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 48.648833
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 13 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 80.393542
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 14 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 25.421458
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 15 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 298.80825
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 16 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.456542
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 17 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.063916
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 18 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.113917
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 19 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.149708
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 20 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 2.042125
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 21 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 0.520208
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 22 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.118042
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 23 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.151625
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 24 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 15.282542
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 25 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 3.519709
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 26 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 1.317625
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 27 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.153041
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 28 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 0.563459
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 29 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.402041
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 30 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.841458
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 31 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.156292
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 32 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.045708
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 33 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 0.9065
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 34 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 2.491416
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 35 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 10.804417
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 36 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.105209
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 37 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.11425
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 38 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 24.829125
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 39 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.846958
+  ...
+# Subtest: opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+ok 40 - opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+  ---
+  duration_ms: 119.423916
+  ...
+# Subtest: finished review download captures terminal state instead of an older inspector snapshot
+ok 41 - finished review download captures terminal state instead of an older inspector snapshot
+  ---
+  duration_ms: 11.705833
+  ...
+# Subtest: native late timing requires an explicit finite benchmark trial and admitted earned review build
+ok 42 - native late timing requires an explicit finite benchmark trial and admitted earned review build
+  ---
+  duration_ms: 1.44425
+  ...
+# Subtest: pending late timing collects no cadence or submissions and retains the complete threshold-crossing interval
+ok 43 - pending late timing collects no cadence or submissions and retains the complete threshold-crossing interval
+  ---
+  duration_ms: 3.218625
+  ...
+# Subtest: lifecycle interruptions before arming remain invalid after the full late window
+ok 44 - lifecycle interruptions before arming remain invalid after the full late window
+  ---
+  duration_ms: 0.720458
+  ...
+# Subtest: late measurement keeps long foreground intervals and an absent option preserves the original protocol
+ok 45 - late measurement keeps long foreground intervals and an absent option preserves the original protocol
+  ---
+  duration_ms: 0.756875
+  ...
+1..45
+# tests 45
+# suites 0
+# pass 45
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 987.819459

@@ -79,3 +79,37 @@ test('review avoidance predicts the actual V4 crossing, independently of obsolet
   assert.ok(Math.hypot(rx + sx * t, ry + sy * t) > run.player.radius + enemy.radius + 6);
   assert.equal(input.boost, false);
 });
+
+test('lure-and-return review route commits to a salvage patch instead of switching every input sample', () => {
+  const run = quiet();
+  run.player.boostCooldown = 1;
+  dropOverflightSalvage(run, 1450, 540, 1);
+  const first = pilot(run, 'lure-and-return');
+  assert.ok(first.x > 0.5);
+  dropOverflightSalvage(run, 1000, 540, 100);
+  const before = JSON.stringify(run);
+  const committed = pilot(run, 'lure-and-return');
+  assert.equal(JSON.stringify(run), before, 'only private review route state can change');
+  assert.ok(committed.x > 0.5, 'new salvage cannot reverse a committed pass immediately');
+  run.time = 2.5;
+  const reconsidered = pilot(run, 'lure-and-return');
+  assert.ok(reconsidered.x < -0.5, 'later passes can return for a more valuable patch');
+});
+
+test('lure-and-return review route leaves a rear-weapon pass before making another approach', () => {
+  const run = quiet();
+  run.player.boostCooldown = 1;
+  spawnOverflightEnemy(run, { x: 1050, y: 540, role: 'final', speed: 0, warning: 0, hp: 5000 });
+  const before = JSON.stringify(run);
+  const leaving = pilot(run, 'lure-and-return');
+  assert.equal(JSON.stringify(run), before);
+  assert.ok(leaving.x > 0.5, 'move away to release the rear payload rather than circling inward');
+  run.player.x = 1400;
+  run.time = 1.6;
+  const returning = pilot(run, 'lure-and-return');
+  assert.ok(returning.x < -0.5, 'the next approach remains possible');
+  const fresh = quiet();
+  fresh.player.boostCooldown = 1;
+  dropOverflightSalvage(fresh, 1000, 540, 10);
+  assert.ok(pilot(fresh, 'lure-and-return').x < -0.5, 'retry has independent route state');
+});

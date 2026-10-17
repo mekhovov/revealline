@@ -1,0 +1,46 @@
+{
+  "format": "FlightPracticeWorldRestartEvidenceInventory.v1",
+  "scope": "Original native receipts, corrected observer authority, exact historical builder receipts and logs; excludes this inventory. No publishing or hardware approval.",
+  "files": [
+    {
+      "path": "failed.json",
+      "bytes": 22832,
+      "sha256": "ef52022b977727da50916c9f1825afd884daac54b2e2cd49681ea872567791d6"
+    },
+    {
+      "path": "focused-tests.log",
+      "bytes": 6176,
+      "sha256": "d19ba523ff5d0ab6423787a26fd207d575c8efaa85a35b4d594ba160c096de49"
+    },
+    {
+      "path": "historical-build.log",
+      "bytes": 456,
+      "sha256": "c044fb54b7fe54fe1999d0dc13016732d8a78c276c502a12dcef6239ca4de45b"
+    },
+    {
+      "path": "historical-builder-verification.json",
+      "bytes": 1142,
+      "sha256": "d68468a069d32b06a5c4bcd42711de91d2f608f055009eb5e52ac168f6ea029b"
+    },
+    {
+      "path": "historical-envelope.json",
+      "bytes": 2633,
+      "sha256": "9bd5187f27e7cb794fd9d686a180e594c609fd0908237d21e01a6863b0159d55"
+    },
+    {
+      "path": "observer-authority.tar.gz",
+      "bytes": 21986,
+      "sha256": "c124c48b645f039d1cdb96491f335a5bc8a91ca0f7656a8d4ec0b7b7b0f6fc21"
+    },
+    {
+      "path": "observer-tests.log",
+      "bytes": 24533,
+      "sha256": "86bd92f4d2a612bfb1ebadd8287cd7c2b90db201c448447c40690f96fc86f96f"
+    },
+    {
+      "path": "passed.json",
+      "bytes": 242782,
+      "sha256": "c2943fb7f359c82cb1350690955facd8b165e1fb7aebd226b7a580c8212ddb5e"
+    }
+  ]
+}
