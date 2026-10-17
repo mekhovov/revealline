@@ -6,6 +6,10 @@ all-environment unscored practice, and flying independently of recording capacit
 It supplements the earlier rates/profile/Betaflight compatibility work; it does not
 replace historical simulation or recording identities.
 
+Later archive, optional challenge and propulsion-evidence increments are tracked in
+[the implementation and evidence-gate record](fpv-aircraft-completion.md). This
+document retains the scope and measurements of the first playable release.
+
 ## First-release behavior
 
 - Open **Aircraft, rates & throttle** from Settings, Hangar, preflight, or pause.

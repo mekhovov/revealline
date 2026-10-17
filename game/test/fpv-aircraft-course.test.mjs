@@ -74,11 +74,62 @@ function createClient() {
     async reportPersistence(value) {
       return simulation.reportPersistence(value);
     },
+    async readSealedSegment(afterIndex) {
+      return simulation.readSealedSegment(afterIndex);
+    },
+    async finalizeArchive(afterIndex) {
+      return simulation.finalizeArchive(afterIndex);
+    },
     dispose() {
       simulation?.dispose();
     },
   };
 }
+
+test('optional course challenges freeze separate worker and recovery identities without changing ordinary practice', async (t) => {
+  await initAdvancedRuntime();
+  const challenge = {
+    format: 'AircraftChallengeRules.v1',
+    kind: 'timed-practice',
+    durationTicks: 1500,
+  };
+  const build = (rules) =>
+    createAircraftCourseSession(
+      {
+        course: FLIGHT_COURSES[0],
+        mode: 'acro',
+        legacy: true,
+        configuration: { ...configuration(), ...(rules ? { challenge: rules } : {}) },
+      },
+      { createClient },
+    );
+  const ordinary = build(),
+    timed = build(challenge);
+  t.after(() => Promise.all([ordinary.dispose(), timed.dispose()]));
+  await ordinary.prepare();
+  await timed.prepare();
+  assert.equal(
+    Object.hasOwn((await ordinary.readSealedSegment()).config.configuration, 'challenge'),
+    false,
+  );
+  assert.deepEqual((await timed.readSealedSegment()).config.configuration.challenge, challenge);
+  assert.notEqual(ordinary.identity.configuration, timed.identity.configuration);
+  const saved = await timed.exportRecovery();
+  await assert.rejects(ordinary.restoreRecovery(saved), /configuration/);
+  assert.equal(ordinary.snapshot().ticks, 0);
+  const invalid = { ...challenge, durationTicks: 1 };
+  assert.throws(() => build(invalid), /duration/);
+  assert.throws(
+    () =>
+      build({
+        format: 'AircraftChallengeRules.v1',
+        kind: 'battery-endurance',
+        takeoffHoldTicks: 25,
+        landingHoldTicks: 50,
+      }),
+    /requires battery depletion/,
+  );
+});
 
 test('every preset flies Academy and World in both modes with its real geometry and portable response', async () => {
   await initAdvancedRuntime();
@@ -220,6 +271,42 @@ test('course checkpoint recovers exact physical and mission state, remains pause
   } finally {
     await flight.dispose();
   }
+});
+
+test('course archive bridge serializes with recovery, seals only paused tails and changes generation on repeated restore', async (t) => {
+  await initAdvancedRuntime();
+  const flight = createAircraftCourseSession(
+    { course: FLIGHT_COURSES[0], mode: 'acro', legacy: true, configuration: configuration() },
+    { createClient },
+  );
+  t.after(() => flight.dispose());
+  const preparing = flight.prepare();
+  const initialReading = flight.readSealedSegment();
+  await preparing;
+  const initial = await initialReading;
+  assert.equal(initial.generation, flight.snapshot().advancedTelemetry.archiveStatus.generation);
+  const backgroundRead = flight.readSealedSegment();
+  flight.arm();
+  assert.equal(flight.snapshot().status, 'active', 'a background archive read must retain Arm');
+  await backgroundRead;
+  await flight.step(controls);
+  assert.throws(() => flight.finalizeArchive(), /Pause before/);
+  const [read, recovery] = await Promise.all([flight.readSealedSegment(), flight.exportRecovery()]);
+  assert.equal(read.format, 'AircraftSealedRead.v1');
+  assert.equal(recovery.format, 'AircraftCourseRecovery.v1');
+  flight.pause();
+  const ending = flight.finalizeArchive();
+  flight.arm();
+  assert.equal(flight.snapshot().status, 'paused', 'final tail sealing retains its pause guard');
+  const ended = await ending;
+  assert.equal(ended.segment.endTick, 1);
+  assert.equal(ended.finalizedThroughIndex, 0);
+  await flight.restoreRecovery(recovery);
+  const firstRestore = await flight.readSealedSegment();
+  assert.notEqual(firstRestore.generation, initial.generation);
+  assert.equal(firstRestore.origin.kind, 'checkpoint');
+  await flight.restoreRecovery(recovery);
+  assert.notEqual((await flight.readSealedSegment()).generation, firstRestore.generation);
 });
 
 test('landing metrics use physical impact speed and hull support height', () => {

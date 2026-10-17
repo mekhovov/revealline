@@ -145,6 +145,42 @@ test('older saved preset setups acquire component metadata without resetting exp
   );
 });
 
+test('optional depletion is a frozen per-flight preference and survives component edits and backups', async () => {
+  const storage = memory(),
+    store = createTuningLibraryStore({ storage });
+  await store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor',
+    profileId: 'meteor-rates',
+    rates: 'defaults',
+  });
+  const initialFlight = store.effective(),
+    profile = store.snapshot().profiles.find((item) => item.id === 'meteor-rates');
+  const setup = store.snapshot().setups.find((item) => item.id === 'meteor');
+  setup.advanced.aircraft.battery.depletion = true;
+  await store.saveSetup(setup);
+  const enduranceFlight = store.effective();
+  assert.equal(initialFlight.advanced.aircraft.battery.depletion, false);
+  assert.equal(enduranceFlight.advanced.aircraft.battery.depletion, true);
+  assert.notEqual(enduranceFlight.simulationIdentity, initialFlight.simulationIdentity);
+  assert.deepEqual(
+    store.snapshot().profiles.find((item) => item.id === 'meteor-rates'),
+    profile,
+  );
+  await store.saveAircraftComponents({
+    setupId: 'meteor',
+    battery: { massGrams: 16, capacityMah: 600 },
+    cameraPayload: { massGrams: 4 },
+  });
+  assert.equal(store.effective().advanced.aircraft.battery.depletion, true);
+  assert.equal(enduranceFlight.advanced.aircraft.mass, 0.03768);
+  const reopened = createTuningLibraryStore({ storage });
+  assert.equal(reopened.effective().advanced.aircraft.battery.depletion, true);
+  const restored = createTuningLibraryStore({ storage: memory() });
+  await restored.restore(store.export());
+  assert.deepEqual(restored.effective(), store.effective());
+});
+
 test('explicit same-preset selection resets installed component metadata while ordinary Advanced edits retain it', async () => {
   const store = createTuningLibraryStore({ storage: memory() });
   await store.createPresetSetup({
