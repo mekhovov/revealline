@@ -3,6 +3,8 @@ import {
   overflightAttackLayers,
   overflightCacheLayers,
   overflightFinalTargetLayers,
+  overflightPendingPayloadLayers,
+  overflightEscortShotLayers,
 } from './tactical-view.mjs';
 import { bakeOverflightAtlas, OVERFLIGHT_HERO_FRAMES } from './atlas.mjs';
 import { createOverflightPresentationState } from './presentation-state.mjs';
@@ -696,8 +698,27 @@ export async function createOverflightRenderer({
           cue.rotation,
         );
     }
+    for (const payload of run._echoes ?? []) {
+      if (!payload.active) continue;
+      for (const cue of overflightPendingPayloadLayers(payload)) {
+        if (!insideOverflightCamera(cue.x, cue.y, camera, Math.max(cue.width, cue.height)))
+          continue;
+        pools.effects.take(
+          cue.frame,
+          cue.x,
+          cue.y,
+          cue.width,
+          cue.height,
+          cue.tint,
+          cue.alpha,
+          cue.rotation,
+        );
+      }
+    }
     for (const effect of run.effects ?? []) {
       if (!effect.active) continue;
+      // The simulation queue supplies all actual fan/echo footprints above.
+      if (effect.kind === 'drop-warning' && run._echoes) continue;
       const radius = effect.radius ?? 20;
       if (effect.kind === 'warning') {
         danger(effect.x, effect.y, radius, camera, run.time);
@@ -800,18 +821,16 @@ export async function createOverflightRenderer({
             phase === 'returning' ? Math.PI : 0,
           );
       }
-      if (escort.beamRemaining > 0) {
-        const dx = escort.targetX - escort.x,
-          dy = escort.targetY - escort.y;
+      for (const cue of overflightEscortShotLayers(escort, reduced)) {
         pools.projectiles.take(
-          'bar',
-          escort.x + dx / 2,
-          escort.y + dy / 2,
-          Math.hypot(dx, dy),
-          2,
-          tint,
-          reduced ? 0.45 : 0.8,
-          Math.atan2(dy, dx),
+          cue.frame,
+          cue.x,
+          cue.y,
+          cue.width,
+          cue.height,
+          cue.tint,
+          cue.alpha,
+          cue.rotation,
         );
       }
     }

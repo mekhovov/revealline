@@ -1,0 +1,457 @@
+{
+  "format": "ContinuousPlayPointerComponentObservation.v1",
+  "createdAt": "2026-10-16T03:09:10.156Z",
+  "source": {
+    "path": "game/ui/continuous-play.mjs",
+    "bytes": 10875,
+    "sha256": "3ce6d84e8fb1681372d16cda55f2dab4d18a07bb1b10cd75d9d79cc43e05ef3a"
+  },
+  "qualified": false,
+  "completed": false,
+  "cases": [
+    {
+      "width": 1440,
+      "locale": "en",
+      "method": "pointer",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 894.953125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 786.453125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Expected values to be strictly equal:\n\n'none' !== 'home'\n",
+      "screenshot": {
+        "path": "1440-en-pointer.png",
+        "bytes": 17139,
+        "sha256": "da09ef73539440faab27825b617096120a42eee2291cad68d7a75cf77535357c"
+      }
+    },
+    {
+      "width": 1440,
+      "locale": "en",
+      "method": "release-outside",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 894.953125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 786.453125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Pointer-down moved the result target.\n+ actual - expected\n\n  {\n    height: 44,\n    width: 67.140625,\n+   x: 786.453125,\n-   x: 894.953125,\n    y: 80.875\n  }",
+      "screenshot": {
+        "path": "1440-en-release-outside.png",
+        "bytes": 17139,
+        "sha256": "da09ef73539440faab27825b617096120a42eee2291cad68d7a75cf77535357c"
+      }
+    },
+    {
+      "width": 1440,
+      "locale": "en",
+      "method": "keyboard",
+      "passed": true,
+      "errors": [],
+      "before": {
+        "x": 894.953125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "activated": "home",
+      "screenshot": {
+        "path": "1440-en-keyboard.png",
+        "bytes": 20732,
+        "sha256": "a6dab091da430ceeff987a05a44db77f13c12013acbdebdc263d049d282c45aa"
+      }
+    },
+    {
+      "width": 1440,
+      "locale": "uk",
+      "method": "pointer",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 948.109375,
+        "y": 80.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 815.53125,
+        "y": 80.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Expected values to be strictly equal:\n\n'none' !== 'home'\n",
+      "screenshot": {
+        "path": "1440-uk-pointer.png",
+        "bytes": 17519,
+        "sha256": "58c4d1caada8690fdeda7a93eeffe3ce6c2e79c4b4ced236c62c801fc1ce7d8d"
+      }
+    },
+    {
+      "width": 1440,
+      "locale": "uk",
+      "method": "release-outside",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 948.109375,
+        "y": 80.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 815.53125,
+        "y": 80.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Pointer-down moved the result target.\n+ actual - expected\n\n  {\n    height: 44,\n    width: 83.84375,\n+   x: 815.53125,\n-   x: 948.109375,\n    y: 80.875\n  }",
+      "screenshot": {
+        "path": "1440-uk-release-outside.png",
+        "bytes": 17519,
+        "sha256": "58c4d1caada8690fdeda7a93eeffe3ce6c2e79c4b4ced236c62c801fc1ce7d8d"
+      }
+    },
+    {
+      "width": 1440,
+      "locale": "uk",
+      "method": "keyboard",
+      "passed": true,
+      "errors": [],
+      "before": {
+        "x": 948.109375,
+        "y": 80.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "activated": "home",
+      "screenshot": {
+        "path": "1440-uk-keyboard.png",
+        "bytes": 21158,
+        "sha256": "572388a7cb105fb5bf85ff322c234169752a4c940edf125b7b72d267549cd7dc"
+      }
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "method": "pointer",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 474.953125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 366.453125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Expected values to be strictly equal:\n\n'none' !== 'home'\n",
+      "screenshot": {
+        "path": "600-en-pointer.png",
+        "bytes": 14143,
+        "sha256": "caa7d9767538c177e0ba0e7b863c9a8bcbead4c846364fafa0e8dadeb31ea5e5"
+      }
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "method": "release-outside",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 474.953125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 366.453125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Pointer-down moved the result target.\n+ actual - expected\n\n  {\n    height: 44,\n    width: 67.140625,\n+   x: 366.453125,\n-   x: 474.953125,\n    y: 80.875\n  }",
+      "screenshot": {
+        "path": "600-en-release-outside.png",
+        "bytes": 14143,
+        "sha256": "caa7d9767538c177e0ba0e7b863c9a8bcbead4c846364fafa0e8dadeb31ea5e5"
+      }
+    },
+    {
+      "width": 600,
+      "locale": "en",
+      "method": "keyboard",
+      "passed": true,
+      "errors": [],
+      "before": {
+        "x": 474.953125,
+        "y": 80.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "activated": "home",
+      "screenshot": {
+        "path": "600-en-keyboard.png",
+        "bytes": 17504,
+        "sha256": "57eba606a5175e7239c70587e83c87f0a56ef1a1c0230207ccc9cb40739bc214"
+      }
+    },
+    {
+      "width": 600,
+      "locale": "uk",
+      "method": "pointer",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 258.078125,
+        "y": 132.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 395.53125,
+        "y": 80.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Expected values to be strictly equal:\n\n'none' !== 'home'\n",
+      "screenshot": {
+        "path": "600-uk-pointer.png",
+        "bytes": 14523,
+        "sha256": "81c626e8fcae6c0b141f65193b662f69fe76eb9bb6503f562e52e1de62d8370c"
+      }
+    },
+    {
+      "width": 600,
+      "locale": "uk",
+      "method": "release-outside",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 258.078125,
+        "y": 132.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 395.53125,
+        "y": 80.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Pointer-down moved the result target.\n+ actual - expected\n\n  {\n    height: 44,\n    width: 83.84375,\n+   x: 395.53125,\n+   y: 80.875\n-   x: 258.078125,\n-   y: 132.875\n  }",
+      "screenshot": {
+        "path": "600-uk-release-outside.png",
+        "bytes": 14523,
+        "sha256": "81c626e8fcae6c0b141f65193b662f69fe76eb9bb6503f562e52e1de62d8370c"
+      }
+    },
+    {
+      "width": 600,
+      "locale": "uk",
+      "method": "keyboard",
+      "passed": true,
+      "errors": [],
+      "before": {
+        "x": 258.078125,
+        "y": 132.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "activated": "home",
+      "screenshot": {
+        "path": "600-uk-keyboard.png",
+        "bytes": 18786,
+        "sha256": "d799af80db3d9fbfcc6ba8f098c48f3b9f6f6b66ee72f83ab095db03952e8919"
+      }
+    },
+    {
+      "width": 375,
+      "locale": "en",
+      "method": "pointer",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 153.921875,
+        "y": 222.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 253.953125,
+        "y": 118.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Expected values to be strictly equal:\n\n'none' !== 'home'\n",
+      "screenshot": {
+        "path": "375-en-pointer.png",
+        "bytes": 14613,
+        "sha256": "21352736c558f6c084dfdfb541f1d2f3ed1c249e2bbfefb0ca2cda924e61a7ec"
+      }
+    },
+    {
+      "width": 375,
+      "locale": "en",
+      "method": "release-outside",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 153.921875,
+        "y": 222.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 253.953125,
+        "y": 118.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Pointer-down moved the result target.\n+ actual - expected\n\n  {\n    height: 44,\n    width: 67.140625,\n+   x: 253.953125,\n+   y: 118.875\n-   x: 153.921875,\n-   y: 222.875\n  }",
+      "screenshot": {
+        "path": "375-en-release-outside.png",
+        "bytes": 14613,
+        "sha256": "21352736c558f6c084dfdfb541f1d2f3ed1c249e2bbfefb0ca2cda924e61a7ec"
+      }
+    },
+    {
+      "width": 375,
+      "locale": "en",
+      "method": "keyboard",
+      "passed": true,
+      "errors": [],
+      "before": {
+        "x": 153.921875,
+        "y": 222.875,
+        "width": 67.140625,
+        "height": 44
+      },
+      "activated": "home",
+      "screenshot": {
+        "path": "375-en-keyboard.png",
+        "bytes": 18573,
+        "sha256": "2d0583cbb4cd69759885b68010108e44bdf97e075ed772e5ffab6ebc228668c5"
+      }
+    },
+    {
+      "width": 375,
+      "locale": "uk",
+      "method": "pointer",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 202.328125,
+        "y": 222.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 145.578125,
+        "y": 170.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Expected values to be strictly equal:\n\n'none' !== 'home'\n",
+      "screenshot": {
+        "path": "375-uk-pointer.png",
+        "bytes": 15460,
+        "sha256": "c97a4dc37fbb69a7cf9217a01b667c31f5bb9551a35e63928d0c2f6b9ff33bed"
+      }
+    },
+    {
+      "width": 375,
+      "locale": "uk",
+      "method": "release-outside",
+      "passed": false,
+      "errors": [],
+      "before": {
+        "x": 202.328125,
+        "y": 222.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "afterDown": {
+        "x": 145.578125,
+        "y": 170.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "phaseAfterDown": "cancelled",
+      "activated": "none",
+      "failure": "Pointer-down moved the result target.\n+ actual - expected\n\n  {\n    height: 44,\n    width: 83.84375,\n+   x: 145.578125,\n+   y: 170.875\n-   x: 202.328125,\n-   y: 222.875\n  }",
+      "screenshot": {
+        "path": "375-uk-release-outside.png",
+        "bytes": 15460,
+        "sha256": "c97a4dc37fbb69a7cf9217a01b667c31f5bb9551a35e63928d0c2f6b9ff33bed"
+      }
+    },
+    {
+      "width": 375,
+      "locale": "uk",
+      "method": "keyboard",
+      "passed": true,
+      "errors": [],
+      "before": {
+        "x": 202.328125,
+        "y": 222.875,
+        "width": 83.84375,
+        "height": 44
+      },
+      "activated": "home",
+      "screenshot": {
+        "path": "375-uk-keyboard.png",
+        "bytes": 19025,
+        "sha256": "4285dbd2b0aeac46ccafc652a0084fdabd232a5840b2fad217930b77ac6fc880"
+      }
+    }
+  ],
+  "limitations": [
+    "Native mouse and keyboard in an isolated result-row component fixture, not actual flight completion or physical touch/controller evidence.",
+    "Exact source module is served unchanged; fixture supplies result state and centered/wrapping layout."
+  ],
+  "browser": "155.0.8059.80",
+  "cleanup": true
+}

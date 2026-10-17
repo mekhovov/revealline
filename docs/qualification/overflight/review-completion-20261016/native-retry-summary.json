@@ -1,0 +1,22 @@
+{
+  "scope": "Native shared Settings Retry, one retained page/renderer, original baseline plus ten same-seed restarts. Nine receipts are about 0.25s after restart; this is not ten complete sorties or a memory-heap disposal certificate. Measurements deliberately pause before export; visible playing state is recorded immediately beforehand. A separate fresh soak measures sustained resource behavior.",
+  "runtime": "Survivor runtime unchanged from cf16eea20; Marathon preview-only source successor 79354e383.",
+  "checks": {
+    "tenReceipts": true,
+    "sameIdentity": true,
+    "playingBeforeExport": true,
+    "pausedByExport": true,
+    "population1500_700": true,
+    "atlasStable": true,
+    "spritePoolStable": true,
+    "noContextFailure": true,
+    "oneCanvas": true
+  },
+  "baselineTime": 65.9,
+  "retryTimes": [
+    21.266666666666666, 0.25, 0.25, 0.25, 0.25, 0.25, 0.23333333333333334, 0.23333333333333334,
+    0.23333333333333334, 0.25
+  ],
+  "atlasBytes": 28467840,
+  "allocatedSprites": 1812
+}

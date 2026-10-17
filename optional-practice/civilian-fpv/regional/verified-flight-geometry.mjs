@@ -45,6 +45,7 @@ export function createVerifiedFlightGeometry(
   return Object.freeze({
     snapshot,
     collisionSnapshot: () => owner.collisionSnapshot(),
+    collisionFrame: () => owner.collisionFrame(),
     get group() {
       return owner.group;
     },
@@ -54,6 +55,9 @@ export function createVerifiedFlightGeometry(
     },
     flightSupport(...args) {
       return owner.flightSupport(...args);
+    },
+    motionCoverage(...args) {
+      return owner.motionCoverage(...args);
     },
     castMotion(...args) {
       return owner.castMotion(...args);

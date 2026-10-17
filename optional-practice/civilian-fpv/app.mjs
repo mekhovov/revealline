@@ -19,11 +19,16 @@ import {
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
+import { createTuningLibraryStore } from './tuning-library.mjs';
+import { mountFlightTuning } from './tuning-ui.mjs';
+import { TUNED_RESPONSE_FORMAT } from './flight-response.mjs';
+import { mountAdvancedPractice } from './advanced-practice.mjs';
 import {
   mountFlightFullscreen,
   mountFlightCameraControls,
   mountFlightSetup,
   mountFlightComfort,
+  restoreFlightComfortCamera,
   mountFlightPractice,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
@@ -62,6 +67,7 @@ import {
 } from './sim-presentation.mjs';
 import {
   createFlightInput,
+  createFlightInputDiagnostics,
   createFlightMenuNavigation,
   createFlightGamepad,
   keyboardFlightPreset,
@@ -143,6 +149,27 @@ export function mountFlightApp({
   } catch {
     /* default response remains available */
   }
+  let tuningStorage,
+    tuning = null,
+    tuningPractice = false,
+    advancedPractice = null;
+  try {
+    tuningStorage = win.localStorage;
+  } catch {
+    /* The editor reports unavailable storage. */
+  }
+  restoreFlightComfortCamera({
+    window: win,
+    host: 'academy',
+    fov: $('camera-fov'),
+    tilt: $('camera-tilt'),
+  });
+  const tuningStore = createTuningLibraryStore({
+    storage: tuningStorage,
+    locks: win.navigator?.locks,
+    response,
+    camera: { tilt: Number($('camera-tilt').value), verticalFov: Number($('camera-fov').value) },
+  });
   let flight,
     recorder,
     lastProof = null,
@@ -212,6 +239,7 @@ export function mountFlightApp({
     'sim-flight-hud-details',
   ];
   const modalOpen = () =>
+    Boolean(tuning?.root.open || advancedPractice) ||
     dialogIds.some((id) => $(id).open) ||
     Boolean($('academy-flight-options')?.open) ||
     Boolean(missionChooser?.elements.dialog.open) ||
@@ -376,6 +404,7 @@ export function mountFlightApp({
     document: doc,
     onPause: (reason) => (reason === 'paused' ? setFlightMenu(true) : pause(reason)),
   });
+  const inputDiagnostics = createFlightInputDiagnostics({ now: () => win.performance.now() });
   input.touchResponse($('touch-response').value);
   input.keyboardPreset($('keyboard-preset').value);
   const controllerHint = doc.createElement('p');
@@ -453,6 +482,7 @@ export function mountFlightApp({
     }
   }
   const radio = createRadioRuntime({
+    now: () => win.performance.now(),
     getGamepads:
       typeof win.navigator?.getGamepads === 'function'
         ? () => win.navigator.getGamepads()
@@ -654,13 +684,27 @@ export function mountFlightApp({
     }
     return false;
   }
-  function reset(index = selected, nextMode = mode, previewCourse = authoringCourse) {
+  function reset(
+    index = selected,
+    nextMode = mode,
+    previewCourse = authoringCourse,
+    tuningDraft = null,
+  ) {
     continuousPlay.cancel('new-attempt');
     launchIntent = null;
+    tuningPractice = Boolean(tuningDraft);
+    if (!tuningDraft) tuning?.endDraftTest();
+    if (!tuningDraft) tuningStore.refresh();
+    const configuration = tuningDraft ?? tuningStore.effective();
+    response = structuredClone(configuration.response);
+    $('camera-fov').value = String(configuration.camera.verticalFov);
+    $('camera-tilt').value = String(configuration.camera.tilt);
+    input.ratesApplied(response.format === TUNED_RESPONSE_FORMAT);
     const nextFlight = createFlight({
       course: previewCourse ?? courses[index],
       mode: nextMode,
       response,
+      unscoredPractice: tuningPractice,
     });
     cancelReview();
     epoch++;
@@ -681,9 +725,11 @@ export function mountFlightApp({
     audio.pause();
     flight = nextFlight;
     audio.setCourse(flight.course());
-    recorder = createFlightRecorder(flight, {
-      session: authoringCourse ? 'authoring' : 'practice',
-    });
+    recorder = tuningPractice
+      ? null
+      : createFlightRecorder(flight, {
+          session: authoringCourse ? 'authoring' : 'practice',
+        });
     $('mode').value = mode;
     $('complete').hidden = true;
     $('try').hidden = !authoringCourse;
@@ -801,6 +847,10 @@ export function mountFlightApp({
         window: win,
         runtime: radio,
         locale,
+        onOpenRates() {
+          closeDialog('setup-dialog');
+          tuning.open();
+        },
         onProfile() {
           message = 'radioReady';
         },
@@ -813,8 +863,12 @@ export function mountFlightApp({
           pause();
         },
         onResponse(value) {
-          response = value;
-          reset();
+          void tuningStore
+            .saveProfile(tuningStore.snapshot().defaultProfileId, { response: value })
+            .then(() => reset())
+            .catch((error) => {
+              message = error.message;
+            });
         },
       });
     }
@@ -929,6 +983,7 @@ export function mountFlightApp({
     presentation.refresh();
     playShell?.setLocale(locale);
     modeSettingsView?.refresh(locale);
+    tuning?.refresh();
     flightComfort?.refresh();
     globalSettingsView?.refresh(locale);
     globalTools?.refresh();
@@ -1222,6 +1277,18 @@ export function mountFlightApp({
     input.enable(false);
     radio.freeze('paused');
     message = null;
+    if (tuningPractice) {
+      lastProof = null;
+      $('complete').hidden = false;
+      $('complete-title').textContent =
+        locale === 'uk' ? 'Перевірку чернетки завершено' : 'Draft test finished';
+      $('lesson').textContent =
+        locale === 'uk'
+          ? 'Без заліку й запису. Поверніться до рейтів для порівняння.'
+          : 'Unscored, without a recording. Return to tuning to compare.';
+      $('next').hidden = $('review').hidden = true;
+      return;
+    }
     lastProof = recorder.export();
     lastPresentation = appearanceSession.current();
     if (state.status !== 'complete') {
@@ -1361,7 +1428,19 @@ export function mountFlightApp({
           audio.update(flight.snapshot(), { active: true });
           flight.step(command);
           audio.update(flight.snapshot(), { active: flight.snapshot().status === 'active' });
-          if (flight.snapshot().ticks !== before) recorder.record(command);
+          if (flight.snapshot().ticks !== before) {
+            inputDiagnostics.record(
+              flight,
+              input.owner(),
+              command,
+              input.owner() === 'radio'
+                ? radio.diagnostics({ refresh: false })
+                : input.owner() === 'controller'
+                  ? gamepad.diagnostics()
+                  : input.diagnostics(),
+            );
+            recorder?.record(command);
+          }
           completed();
         }
       }
@@ -1585,6 +1664,9 @@ export function mountFlightApp({
   menuHint.id = 'academy-menu-hint';
   $('flight-app').append(menuHint);
   const menuContext = () => {
+    // The reference arena owns its flight keys and raw controller preview.
+    if (advancedPractice) return null;
+    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: true };
     const globalToolRoot = globalTools?.root();
     if (globalToolRoot)
       return {
@@ -1630,9 +1712,10 @@ export function mountFlightApp({
         menuHint.hidden = true;
         return;
       }
-      // Suspending device input must not reflow an open shared menu beneath
-      // the pointer. Its instructions remain valid while the page is blurred.
-      if (!value && context?.root.dataset.modeSurface) return;
+      // Suspending device input must not reflow an open menu or native tool
+      // dialog beneath the pointer. Instructions remain valid while blurred;
+      // removing them here can move the next click between press and release.
+      if (!value && context) return;
       menuHint.hidden = !context;
       const hintContainer =
         context?.root === playShell?.elements.dialogs.settings
@@ -1644,6 +1727,10 @@ export function mountFlightApp({
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
+      if (tuning?.root.open) {
+        tuning.close();
+        return;
+      }
       const dialog = dialogIds.find((id) => $(id).open);
       if (globalTools?.back()) return;
       if (dialog) closeDialog(dialog);
@@ -1716,6 +1803,7 @@ export function mountFlightApp({
   });
   listen($('export-attempt'), 'click', () => {
     pause();
+    if (!recorder && !replay) return;
     const proof = replay?.proof ?? recorder.export();
     const recording = academyRecording(proof, replay?.presentation ?? appearanceSession.current());
     const url = win.URL.createObjectURL(
@@ -2088,6 +2176,96 @@ export function mountFlightApp({
     focusPlay: () => $('viewport').focus(),
   });
   const settingLabel = (id) => $(id)?.closest('label');
+  tuning = mountFlightTuning({
+    document: doc,
+    window: win,
+    store: tuningStore,
+    locale: () => locale,
+    onOpen: () => pause(),
+    onApply() {
+      playShell?.enterPlay();
+      reset();
+    },
+    onTest(configuration) {
+      playShell?.enterPlay();
+      reset(selected, mode, authoringCourse, configuration);
+    },
+    getDiagnostics: () =>
+      inputDiagnostics.read(
+        flight,
+        replay ? 'recording' : input.owner(),
+        !replay && input.owner() === 'radio' ? radio.diagnostics() : null,
+      ),
+    onAdvanced(configuration) {
+      pause();
+      const container = doc.createElement('dialog');
+      container.className = 'fpv-advanced-dialog';
+      doc.body.append(container);
+      container.showModal();
+      const session = mountAdvancedPractice({
+        container,
+        window: win,
+        locale,
+        configuration: configuration.advanced,
+        profile: configuration.response.rates,
+        camera: { tilt: configuration.camera.tilt, fov: configuration.camera.verticalFov },
+        getControls: () => {
+          const sample = radio.preview();
+          return sample.verified ? sample.controls : null;
+        },
+        onPause: () => pause(),
+        async onSaveConfiguration(advanced) {
+          const library = tuningStore.snapshot(),
+            setup = library.setups.find((item) => item.id === library.selectedSetupId);
+          await tuningStore.saveSetup({ ...setup, advanced }, library.revision);
+          tuning.acceptOwnSave(library.revision);
+        },
+        onClose() {
+          advancedPractice?.dispose();
+          advancedPractice = null;
+          container.close();
+          container.remove();
+          tuning.open({ keepDraft: true });
+        },
+      });
+      advancedPractice = {
+        ...session,
+        dispose() {
+          session.dispose();
+          container.close();
+          container.remove();
+        },
+      };
+      container.addEventListener('cancel', (event) => {
+        event.preventDefault();
+        advancedPractice?.dispose();
+        advancedPractice = null;
+        tuning.open({ keepDraft: true });
+      });
+    },
+  });
+  tuning.button(playShell.elements.content.pause);
+  $('viewport').append(tuning.returnButton);
+  for (const cameraId of ['camera-fov', 'camera-tilt'])
+    listen($(cameraId), 'change', () => {
+      tuningStore.refresh();
+      const library = tuningStore.snapshot(),
+        setup = library.setups.find((item) => item.id === library.selectedSetupId);
+      void tuningStore
+        .saveSetup(
+          {
+            ...setup,
+            camera: {
+              tilt: Number($('camera-tilt').value),
+              verticalFov: Number($('camera-fov').value),
+            },
+          },
+          library.revision,
+        )
+        .catch((error) => {
+          say(error.message);
+        });
+    });
   const languageLabel = doc.createElement('label');
   languageLabel.textContent = 'Language / Мова';
   languageLabel.append($('language'));
@@ -2104,6 +2282,7 @@ export function mountFlightApp({
     groups: {
       gameplay: [settingLabel('mode'), playShell.elements.buttons['home-retry']],
       controls: [
+        tuning.button(),
         settingLabel('input-source'),
         $('setup'),
         settingLabel('keyboard-preset'),
@@ -2123,6 +2302,7 @@ export function mountFlightApp({
         shellSettings.querySelector('.sim-appearance-controls'),
       ],
       accessibility: [
+        shellSettings.querySelector('[data-sim-hud-preferences]'),
         settingLabel('academy-stick-display'),
         settingLabel('academy-drone-guide'),
         settingLabel('academy-guide-scale'),
@@ -2408,6 +2588,8 @@ export function mountFlightApp({
       offlineRequest?.abort();
       if (frameId !== null) win.cancelAnimationFrame(frameId);
       setup?.dispose();
+      tuning?.dispose();
+      advancedPractice?.dispose();
       void notebook?.dispose();
       studio?.dispose();
       globalTools?.dispose();

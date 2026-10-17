@@ -12,6 +12,7 @@ import {
 } from '../overflight/riy-upgrades.mjs';
 import { rebuildOverflightGrid } from '../overflight/grid.mjs';
 import { overflightTerrainClear } from '../overflight/terrain.mjs';
+import { overflightEscortShotLayers } from '../overflight/tactical-view.mjs';
 
 function covered(role = 'breaker', rulesVersion = 4) {
   const compiled = structuredClone(
@@ -114,6 +115,8 @@ test('a covered chain victim cannot take a damage share or bridge to another vic
   assert.ok(Math.abs(run.stats.damageDealt - 39.6) < 1e-8);
   assert.equal(run.stats.hits, 1);
   assert.equal(escort.shots, 1);
+  assert.equal(escort.shotSegmentCount, 1);
+  assert.equal(escort.shotSegments[0].targetX, first.x);
 });
 
 test('chain divides the unchanged damage budget only among reachable link victims', () => {
@@ -142,6 +145,29 @@ test('chain can turn around a corner when every individual link has clear line o
   assert.ok(victims.every((target) => Math.abs(target.hp - 986.8) < 1e-8));
   assert.ok(Math.abs(run.stats.damageDealt - 39.6) < 1e-8);
   assert.equal(run.stats.hits, 3);
+  assert.equal(escort.shotSegmentCount, 3);
+  assert.deepEqual(
+    escort.shotSegments.map((s) => [s.x, s.y, s.targetX, s.targetY]),
+    [
+      [escort.x, escort.y, 1260, 650],
+      [1260, 650, 1260, 590],
+      [1260, 590, 1320, 590],
+    ],
+  );
+  const normal = overflightEscortShotLayers(escort);
+  const reduced = overflightEscortShotLayers(escort, true);
+  assert.equal(normal.length, 3);
+  assert.deepEqual(
+    normal.map(({ alpha, ...geometry }) => geometry),
+    reduced.map(({ alpha, ...geometry }) => geometry),
+  );
+  // Presentation records the accepted hit, not a new straight beam through the
+  // wall when the escort and victims move during the 120ms impact feedback.
+  escort.x += 100;
+  victims[1].x += 100;
+  assert.deepEqual(overflightEscortShotLayers(escort), normal);
+  escort.beamRemaining = 0;
+  assert.deepEqual(overflightEscortShotLayers(escort), []);
 });
 
 test('a burst second hit respects newly obstructed contact without drawing a false beam', () => {

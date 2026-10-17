@@ -1,0 +1,152 @@
+{
+  "format": "FpvInputRecoveryVerification.v1",
+  "createdAt": "2026-10-17T15:02:32.871360+00:00",
+  "pass": true,
+  "baseRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+  "scope": "Local software acceptance for recoverable Advanced input loss and public startup observation; native follow-up and publication are separate.",
+  "checks": {
+    "practiceTests": 741,
+    "practiceFailed": 0,
+    "practiceSkipped": 0,
+    "newInputHostRegressions": 5,
+    "newStartupDiagnosticRegressions": 5,
+    "realBrowserLocales": [
+      "en",
+      "uk"
+    ],
+    "browserRecordingsVerified": 6,
+    "browserWorkersCreated": 10,
+    "browserWorkersTerminated": 10,
+    "browserSourcePins": 23,
+    "syntheticStartupFailureObserved": true,
+    "lint": true,
+    "scopedFormatting": true,
+    "releaseValidation": true,
+    "independentDiffReviews": 2,
+    "privacyCorrectionIndependentReviews": 2
+  },
+  "numericalEvidenceReuse": {
+    "report": "docs/fpv-advanced-runtime-post-publication-qualification.json",
+    "sourcePins": 20,
+    "allStillMatch": true,
+    "freshTimingBenchmarkPerformed": false
+  },
+  "sources": [
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "bytes": 50056,
+      "sha256": "d3c5a16e6686da3c57dc8abcea6b9846c0f3f686681068f972c88b5ce27589a4"
+    },
+    {
+      "path": "game/test/fpv-advanced-practice.test.mjs",
+      "bytes": 37413,
+      "sha256": "aa68a84a879844cd83c68699781dc3f69200f4d612f54a7e0e03d9a49ecb977b"
+    },
+    {
+      "path": "scripts/smoke-fpv-public-fresh-install.mjs",
+      "bytes": 23175,
+      "sha256": "ca5c7ade10c45c016ab57e55c318e6b0fc1f0a39bb1ff0c16c68686d4a42fed9"
+    },
+    {
+      "path": "scripts/test-fpv-public-startup.mjs",
+      "bytes": 6010,
+      "sha256": "cdf0059c6b12e77e0b14f07b459ba892cb6016529a67543287fb89c2f6d1ef82"
+    },
+    {
+      "path": "scripts/smoke-fpv-input-recovery.mjs",
+      "bytes": 16490,
+      "sha256": "0b7b3d9b0acf903d521143016d01b02b448aeaf36edfd547f56e6f30e97b79ce"
+    },
+    {
+      "path": "package.json",
+      "bytes": 9649,
+      "sha256": "8879183a47bf9035d08b0e04dcb05b553f763e8b7abea6ea3737da6c24e65dcf"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "docs/fpv-input-recovery-browser.json",
+      "bytes": 12340,
+      "sha256": "52ebd2e978f1293b244dee78504bb0d7b20fd46bbded68b7ca4a481d01fed849"
+    },
+    {
+      "path": "docs/fpv-input-recovery-startup-fixture.json",
+      "bytes": 1636,
+      "sha256": "2524e43b405faf8f41c3d07cbe1bc73fff0a2bc6ac5c3fe5e30795eb11f7241f"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/host-test-observations.json",
+      "bytes": 1437,
+      "sha256": "475a87b18960f97a3f0177fed52ce65a2fa99d51a6f996b7a4fee12d598c3a23"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/practice.tap",
+      "bytes": 182541,
+      "sha256": "abea57814d86a844cceea2eccce96005bd5c65f8a35a2cbd640dba7a4373e053"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/pre-fix-host-regression.tap",
+      "bytes": 6145,
+      "sha256": "1701683e4eeb058882ca91af41a179ac36f215b9aa6b70e6434e48d2b58c468d"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/startup-fixture.mjs",
+      "bytes": 3026,
+      "sha256": "20b72dc14031b88d18972df6eb55fde229e271a4c6dc1659288fbb6a77b27d3b"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/validation.txt",
+      "bytes": 3885,
+      "sha256": "dd1dc4ca206fbce320df97d2eaeeeb234d26d45bf0c7e892f071d11adb051b61"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/privacy-regression-before.tap",
+      "bytes": 1253,
+      "sha256": "543d1d4a7936c843a0ed65f7660377aa3a18252c3f4e6ce69319a07b29a1fdce"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/privacy-regression-after.tap",
+      "bytes": 1354,
+      "sha256": "b40f717b749d29052b0b995502790cb584abeb27abdc69ca445b0ba83b260fb1"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/startup-fixture-before-privacy.json",
+      "bytes": 1636,
+      "sha256": "6fb064a64909a3aa396b31fb4b6570d5c7eeceee70db6b731bd7025de11da6fb"
+    }
+  ],
+  "limitations": [
+    "No physical radio was used; injected sample availability validates software recovery.",
+    "The synthetic local stalled-script check validates diagnostics, not the unknown cause of the earlier public timeout.",
+    "Advanced remains optional, unscored and default-ineligible. Physical controls, pilot feedback, aircraft fitting, iOS and wider hardware remain deferred.",
+    "Historical public/native reports retain their original source scope; this local receipt does not claim deployment or current native execution.",
+    "Raw copied tool logs normalize trailing whitespace only; the host-test observations file is explicitly a summary rather than reconstructed stdout."
+  ],
+  "desktopFollowup": {
+    "report": "docs/fpv-input-recovery-native-runtime.json",
+    "sha256": "36b3c000816ace7ad5c2e908c884202ef1d0399b2b7704837fa63e81f047262c",
+    "pass": true,
+    "sourcePins": 209,
+    "retainedFlightPrefix": true,
+    "recordingMissionTicks": [
+      220,
+      478
+    ],
+    "finalHashes": [
+      "2dd2786e",
+      "3830ae85"
+    ],
+    "workersCreated": 2,
+    "workersTerminated": 2,
+    "productionAuthentication": false,
+    "iosRuntimeVerified": false
+  },
+  "privacyCorrection": {
+    "finding": "Synthetic review probe demonstrated that arbitrary request/capture exception strings could retain URL userinfo, query or fragment in diagnostic metadata; no actual credential leak was reported.",
+    "resolution": "Network failures retain only exact known codes or request-failed. Capture failures retain state-timeout or state-unavailable. Original action result/error and bounded cleanup remain unchanged.",
+    "regressionFailsBefore": true,
+    "regressionPassesAfter": true,
+    "originalEvidenceCommit": "cce90a419",
+    "scope": "New startup request/capture metadata only; unchanged outer failure stacks and page-error strings are not asserted to be globally URL-free."
+  }
+}

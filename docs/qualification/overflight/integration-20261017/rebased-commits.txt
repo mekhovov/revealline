@@ -1,0 +1,20 @@
+3a2a1755379b72e24aa7ba7b386a2f885d7bcbd7 fix(overflight): make room for priority cues in the music mix
+afbe7f5f6e90bee8a53d292db2eafd28fa005faa test(overflight): compare committed lure and return flight
+fcf9fdb18d3e860f870438e52ded2c6bf79e68da docs(overflight): retain mixed native and headless balance evidence
+2fcc1e336483c9b3f30a8a1ec4567922790812ab test(overflight): trace opt-in native review input boundaries
+6e46ef4f1204c64c02f0640daf6bd5b027232685 test(overflight): replay earned runs through the native controller
+4e4be6c3aef16bc06056cb1730b23a3e6045c9b4 test(overflight): bound detailed actor snapshots around a review decision
+a47e74ad8c766d4d16895d2525ada76e1aa4527d fix(overflight): export final diagnostics from review results
+89787dcae27a1e52ade0d0db1405c662c6409a77 feat(overflight): prototype smooth local crowd spacing with authored opt-in
+d5ff11608f84b53544fba9bcf058b0201da074fe test(overflight): allow earned no-input crowd comparison
+a46a9af6814f24afbfe242dda5a375413d551d86 docs(overflight): preserve native divergence and crowd qualification evidence
+061629db8eecb1a1db34c3c0553210775f4cd744 docs(overflight): record native local-spacing win and preserve trial failures
+fcf04906d725e0a361da6869b0086fc26618220b perf(overflight): index local crowd spacing independently of damage queries
+333f1c5c9192d83c1a77567f625060ad2155f141 docs(overflight): qualify local spacing capacity with fresh native trials
+ef253909dd20017a1cb252c2f65aae8f6b71609e fix(overflight): shorten late upgrade gaps without retuning saved sorties
+f270e8648f33e76b6596d97b77e967f2cb4e31e2 docs(overflight): preserve paired pacing outcomes and compatibility evidence
+c4c9fd874ae1fdc42ebd8f6368b5670a483662d9 docs(overflight): verify native pacing parity and capture shared sound examples
+342f7d7c6c1f3aca0ca390819a3b5c1d46ff0238 fix(overflight): describe actual Marathon approaches and refresh remaining delivery plan
+bf0bc761bafdaf661af36fd93aa536bb4fcb1174 fix(overflight): give contract previews a readable full-width result panel
+e25dce3d9aba5e180c15765164937b224dc297f2 docs(overflight): complete local lifecycle and earned-build review evidence
+876698c37cad386bf499c45968511a3a5bc78d1f docs(overflight): link completed local delivery to PR 1549
