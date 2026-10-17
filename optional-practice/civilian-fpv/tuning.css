@@ -96,6 +96,22 @@
   overflow-wrap: anywhere;
   margin-block: 6px;
 }
+.tuning-aircraft-preview {
+  margin: 12px 0;
+  max-width: 560px;
+  margin-inline: auto;
+}
+.tuning-aircraft-preview svg {
+  display: block;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.tuning-aircraft-preview figcaption {
+  margin-top: 8px;
+  color: #c4d5e5;
+  font-size: 13px;
+  line-height: 1.5;
+}
 .fpv-tuning fieldset {
   min-width: 0;
   border: 1px solid #52718b;
