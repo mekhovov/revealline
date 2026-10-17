@@ -8,6 +8,7 @@ review rebased onto `1cdf442dc` before edits; earlier source-bound reports retai
 their original hashes.
 The fifth review rebased onto `0597edff7` before its corrections.
 The sixth review rebased onto `b133a5ec8` before its correction.
+The seventh review rebased onto `8b0199194` before its work.
 This document supplements the original plan; the
 [implementation status](fpv-tuning-implementation-status.md) retains earlier
 results and limitations.
@@ -502,3 +503,74 @@ Academy/World online/offline checks pass within unchanged limits. The
 No further actionable software defect emerged from this bounded review. All
 available software items are complete; the original measurement, device and
 public-rollout gates remain explicitly open. Advanced promotion is still gated.
+
+## Seventh review — late imports and installed updates
+
+Reviewed 17 October after rebasing all seven feature commits onto current `main`
+at `8b0199194`. Main adds Overflight pacing, audio and host corrections. Its
+changed tests must pass; source hashes confirm the previously qualified tuning,
+native and Advanced modules were unchanged by that rebase.
+
+| Additional primary example | Finding and bounded recommendation |
+| --- | --- |
+| [Nicholas Young preset](https://raw.githubusercontent.com/betaflight/firmware-presets/master/presets/2025.12/rates/FaderFPV.txt) and [included defaults](https://raw.githubusercontent.com/betaflight/firmware-presets/master/presets/2025.12/rates/defaults.txt) | This community preset in Betaflight's repository includes root-relative defaults, sets Actual 720°/s and offers 540°/s. Exercise ordered local resolution and preserve a selected throttle baseline. Its firmware-family metadata does not identify an exact supported firmware release. |
+| [Betaflight PWA update change](https://github.com/betaflight/betaflight-configurator/pull/4059) and [2026.6.2 tagged configuration](https://raw.githubusercontent.com/betaflight/betaflight-configurator/2026.6.2/vite.config.js) | Maintainers replaced forced refresh with a user decision to avoid interrupting work; current tagged configuration retains prompt-based registration. Verify that discovering an update neither reloads an active flight nor discards tuning. |
+| [Liftoff 1.0.1, 11 August 2025](https://www.liftoff-game.com/news/update-101-released) | Fixes the editor selecting the wrong rates model for a non-Betaflight drone setup. Keep assigned profiles, visible algorithms and evaluated settings consistent across navigation; prior regressions cover those transitions. |
+
+These examples concern documented behavior, not independently verified flight
+fidelity. They do not justify new algorithms, automatic family-wide compatibility,
+a preset catalog or unmeasured aircraft effects.
+
+The literal Nicholas Young bundle was checked through the production resolver
+and importer with explicitly selected `2025.12.5`: the default and optional cases
+produce 720°/s and 540°/s on all axes while preserving a nondefault throttle curve
+and scale limit. Source hashes and observations belong in this review's receipt.
+No third-party preset commands were executed.
+
+The review identified two concrete software tasks:
+
+1. **Protect newer edits from a late import preview.** A held source digest
+   reproduced an import replacing blank/off-step numeric input entered while the
+   preview was pending. Such text does not change the last valid evaluator, so
+   comparing evaluated values alone is insufficient. Cancel admission on numeric
+   edits, retain the newer draft and require explicit re-preview. Cover native
+   and CLI input, edit-back, navigation/revert and real-browser digest completion.
+2. **Qualify an existing local offline installation updating.** Use two normal
+   generated package revisions with an inert fixture difference. Keep an active
+   flight open while discovering/preparing the update; verify its immutable
+   configuration, retained library/profile history and absence of forced reload.
+   Activate through the existing lifecycle, reopen with the same browser profile
+   and verify saved rates/setup plus offline operation. Do not clear caches or
+   repopulate storage to produce a pass. Distinguish this local update fixture
+   from historical migration, public HTTPS, production authentication, eviction
+   and untested physical platforms.
+
+Run meaningful targeted regressions, the full practice suite, current-main
+integration checks, actual browser editor/update tests, native staging, release
+validation and normal production Pages online/offline checks. Reuse prior
+numerical results only where all their source hashes still match. Preserve
+original failure reports and unchanged limits/rollout gates.
+
+This closes additional software evidence without treating the user's unavailable
+radio/pilot sessions, absent aircraft measurements, wider physical platforms or
+public rollout as completed. Advanced remains optional, unscored and ineligible
+as the default. New research is an audit lead, not a reason to keep adding scope.
+
+### Seventh-review completion
+
+Both tasks are implemented and independently reviewed. The late-preview fix has
+nine new regressions and real-browser coverage. The generated-package update
+check passes Academy and World through waiting-worker discovery, natural
+activation and a full offline browser-process restart with saved tuning intact.
+
+All 692 practice tests, 105 current-main integration tests, 75 native tests, six
+editor-browser cases, release validation and four-module lint/formatting pass.
+The normal production build, full manifest/archive verification and Academy/World
+online/offline checks pass within unchanged capacity limits. The
+[combined receipt](fpv-tuning-seventh-review-verification.json) binds the final
+sources and preserves the initial browser-harness failure. Prior numerical and
+Advanced comparison evidence is reused only after matching every source hash.
+
+All available software items are complete. The original physical, platform,
+public-rollout and Advanced promotion gates remain open as documented above;
+this local result does not claim completion of those measurements or deployment.

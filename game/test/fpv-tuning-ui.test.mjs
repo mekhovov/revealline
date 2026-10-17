@@ -1314,6 +1314,101 @@ for (const interruption of ['edit', 'reopen'])
     );
   });
 
+for (const source of ['native', 'CLI'])
+  for (const value of ['', '905', '920'])
+    test(`a pending ${source} import cannot replace a newer numeric draft (${value || 'blank'})`, async (t) => {
+      const f = fixture(t);
+      await f.click('New Actual profile');
+      const before = f.store.export(),
+        realDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
+      let release,
+        first = true;
+      t.mock.method(globalThis.crypto.subtle, 'digest', (...args) => {
+        if (!first) return realDigest(...args);
+        first = false;
+        return new Promise((resolve, reject) => {
+          release = () => realDigest(...args).then(resolve, reject);
+        });
+      });
+      f.edit(
+        'Paste CLI or a SIM rate profile',
+        source === 'native'
+          ? exportNativeRateProfile(createRateProfile({ axes: { roll: { rate: 88 } } }))
+          : 'set roll_srate = 88',
+        { tag: 'textarea' },
+      );
+      f.ui.root
+        .querySelectorAll('button')
+        .find((node) => node.textContent === 'Preview import')
+        .emit('click');
+      await settle();
+      assert.equal(typeof release, 'function');
+      f.edit('Maximum rate (°/s)', value, { scope: f.axis('Roll'), type: 'number' });
+      await release();
+      for (let turn = 0; turn < 8; turn++) await settle();
+      const input = f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number');
+      assert.equal(input.value, value);
+      if (value !== '920') assert.equal(input.getAttribute('aria-invalid'), 'true');
+      assert.match(f.ui.root.querySelector('[role="status"]').textContent, /Preview again/);
+      await f.click('Save import as new profile');
+      assert.equal(f.store.export(), before);
+      assert.match(
+        f.ui.root.querySelector('[role="status"]').textContent,
+        /Preview the import first/,
+      );
+      // A deliberate new preview still replaces the draft, even when the text
+      // it replaces is incomplete or not yet a representable native rate.
+      await f.click('Preview import');
+      assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number').value, '880');
+      await f.click('Save import as new profile');
+      assert.equal(f.store.snapshot().profiles.at(-1).response.rates.axes.roll.rate, 88);
+    });
+
+for (const transition of ['algorithm round trip', 'edit back to saved value', 'revert'])
+  test(`a cancelled pending import stays cancelled after ${transition}`, async (t) => {
+    const f = fixture(t);
+    await f.click('New Actual profile');
+    const realDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
+    let release,
+      first = true;
+    t.mock.method(globalThis.crypto.subtle, 'digest', (...args) => {
+      if (!first) return realDigest(...args);
+      first = false;
+      return new Promise((resolve, reject) => {
+        release = () => realDigest(...args).then(resolve, reject);
+      });
+    });
+    f.edit(
+      'Paste CLI or a SIM rate profile',
+      exportNativeRateProfile(createRateProfile({ axes: { roll: { rate: 88 } } })),
+      { tag: 'textarea' },
+    );
+    f.ui.root
+      .querySelectorAll('button')
+      .find((node) => node.textContent === 'Preview import')
+      .emit('click');
+    await settle();
+    f.edit('Maximum rate (°/s)', '', { scope: f.axis('Roll'), type: 'number' });
+    if (transition === 'algorithm round trip') {
+      f.edit('Rate algorithm', 'betaflight', { tag: 'select', event: 'change' });
+      f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+    } else if (transition === 'edit back to saved value')
+      f.edit('Maximum rate (°/s)', '670', { scope: f.axis('Roll'), type: 'number' });
+    else await f.click('Revert draft');
+    await release();
+    for (let turn = 0; turn < 8; turn++) await settle();
+    assert.equal(
+      f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number').value,
+      transition === 'algorithm round trip' ? '' : '670',
+    );
+    await f.click('Save import as new profile');
+    assert.equal(f.store.snapshot().profiles.length, 2);
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      /Preview the import first/,
+    );
+  });
+
 test('saving an import rejects changed preview rates instead of replacing visible edits', async (t) => {
   const f = fixture(t),
     initialCount = f.store.snapshot().profiles.length;

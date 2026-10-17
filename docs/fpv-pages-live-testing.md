@@ -30,7 +30,26 @@ node scripts/game-cli.mjs build --out NEW_SITE --publication-profile main-pages
 node scripts/smoke-fpv-pages.mjs NEW_SITE PLAYWRIGHT_MODULE REPORT.json
 ```
 
-The [current sixth-review check](fpv-pages-sixth-review-live-testing-evidence.json)
+The [current seventh-review check](fpv-pages-seventh-review-live-testing-evidence.json)
+passes against the normal production build at
+`/private/tmp/fpv-rates-seventh-review-20261017-pages`, version `0.151.1`, after
+rebasing onto `8b0199194` and protecting numeric edits from late import previews.
+Academy and World pass online and in isolated offline contexts, including saved
+rates, keyboard installer activation, Advanced start/restart/export and worker
+disposal. All 3,433 manifest entries and the archive checksum verify; the changed
+tuning module matches current source. Served bytes and the runner remain stable.
+
+The publication contains 3,435 files / 963,672,685 bytes. Its conservative archive
+forecast is 972,295,168 bytes, leaving 7,704,832 bytes below the unchanged cap.
+The distribution ZIP digest is
+`5b5575dae69c19b9b279761acfc72b04ea22a8d10e6356590b018e848859fcd6`.
+This is a local working-tree build (`sourceRevision: null`), ready for the normal
+reviewed integration process. The separate two-revision update check below covers
+local generated packages. Public HTTPS, the real password form, historical-version
+updates and exact committed publication remain separate gates. No deployment was
+performed.
+
+The [historical sixth-review check](fpv-pages-sixth-review-live-testing-evidence.json)
 passes against the normal production build at
 `/private/tmp/fpv-rates-sixth-review-20261017-pages`, version `0.151.1`, after the
 rebase onto `b133a5ec8` and the incomplete-numeric-draft correction. Academy and
@@ -46,6 +65,9 @@ The distribution ZIP digest is
 This remains a local working-tree build (`sourceRevision: null`), ready for normal
 reviewed integration. Public HTTPS, the real password form and existing-install
 update checks remain separate; this review does not publish Pages.
+Its superseded temporary output was removed only after verifying the recorded
+manifest and ZIP digests, to make room for the seventh-review build. The
+repository receipts remain unchanged.
 
 The [historical fifth-review check](fpv-pages-fifth-review-live-testing-evidence.json)
 passes against the normal production build at
@@ -212,6 +234,40 @@ workflow independently checks the final staged inventory and the actual
 uploaded tar archive against **980,000,000 bytes**. Its optional overlay, rolling
 metadata and exact committed build must pass those gates; local browser success
 does not waive them.
+
+## Local existing-install update and browser restart
+
+Run the focused package check without building two complete Pages sites:
+
+```sh
+node scripts/smoke-fpv-offline-update.mjs PLAYWRIGHT_MODULE REPORT.json
+```
+
+The [seventh-review update evidence](fpv-offline-update-seventh-review.json)
+passes for Academy and World in Chrome. The normal optional-package builder
+creates two revisions; the earlier fixture differs only by an inert stylesheet
+comment. The test uses the real generated service workers, a disposable
+persistent browser profile, the normal tuning-library API, the visible Advanced
+practice controls, and actual recording exports. It preserves the production
+access gate and uses the same remembered-unlock fixture as the separate Pages
+probe after checking that a fresh profile is locked.
+
+For both packages, the new worker reaches **installed / waiting** while the old
+worker continues controlling an open, paused flight. Saving 900°/s rates for the
+next flight leaves the active 800°/s recording byte-for-byte unchanged. Only
+closing every page in the simulator's scope permits natural activation. The
+probe neither sends `skipWaiting` nor clears caches or saved data; both revision
+caches remain present. It then closes the entire browser process and relaunches
+the same profile with networking disabled. The current stylesheet, exact saved
+library bytes, named profile history, assigned drone setup and 33° tilt / 105°
+vertical FOV survive. A new Advanced recording uses the saved 900°/s rate.
+
+This closes the local generated-package update/restart gap. It does not qualify
+historical schema migration, storage eviction, an OS installation prompt, the
+real password, public HTTPS, or an installed full Pages release. Full Pages
+publication still requires its ordinary reviewed build and live update check.
+The report binds the runner and all package source inputs and verifies they
+remain unchanged during the test.
 
 ## Commit and live verification
 
