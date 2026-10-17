@@ -14,6 +14,9 @@ import {
   diagnosticsOwnerClosed,
   diagnosticsReadback,
   DIAGNOSTICS_SOURCE,
+  FINAL_DIAGNOSTICS_COHORT,
+  journalCostArguments,
+  prepareDiagnosticsMode,
   runDiagnosticsCohort,
   validateDiagnosticsPlan,
 } from './solo-remote-diagnostics.mjs';
@@ -151,6 +154,121 @@ test('separate engine jobs freeze one exact 10-pair cohort with the original bou
     mutate(plan);
     assert.throws(() => validateDiagnosticsPlan(plan));
   }
+});
+
+async function finalManifest() {
+  // Unit-only identities inherited from manifest(); no executable declaration.
+  const input = await manifest();
+  input.sourceCohort = FINAL_DIAGNOSTICS_COHORT;
+  input.runtimeRevision = '32abd322afd8243e4537ce4784e2f78ee45ecbec';
+  input.candidate.revision = 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4';
+  input.candidate.tree = '6b13627e324f695b6ee8d9f2dee2eeeb7217c332';
+  input.candidate.manifestSHA256 = '2'.repeat(64);
+  Object.assign(input.release, {
+    sourceCohort: input.sourceCohort,
+    candidateRevision: input.candidate.revision,
+    onceOnlyBefore: input.candidate.revision,
+  });
+  return input;
+}
+
+test('the successor source is explicit and preserves every cohort observation and limit', async () => {
+  const old = await manifest();
+  const current = await finalManifest();
+  assert.deepEqual(diagnosticsMatrix(current), diagnosticsMatrix(old));
+  for (const engine of ['chromium', 'webkit']) {
+    const before = bindDiagnosticsJob(old, engine);
+    const after = bindDiagnosticsJob(current, engine);
+    assert.deepEqual(after.rows, before.rows);
+    assert.deepEqual(after.observation, before.observation);
+    for (const field of ['setupTimeoutMs', 'helperTimeoutMs', 'evidenceBytes', 'rowEvidenceBytes'])
+      assert.equal(after[field], before[field]);
+    const config = diagnosticsConfiguration(
+      { plan: after },
+      'http://127.0.0.1:9000/game/?journey=opening',
+      '/tmp/new',
+    );
+    assert.equal(config.sourceRevision, current.candidate.revision);
+  }
+  for (const mutate of [
+    (p) => delete p.sourceCohort,
+    (p) => (p.sourceCohort = 'other'),
+    (p) => (p.candidate.revision = DIAGNOSTICS_SOURCE),
+    (p) => (p.candidate.tree = old.candidate.tree),
+    (p) => delete p.runtimeRevision,
+    (p) => (p.runtimeRevision = '0'.repeat(40)),
+    (p) => delete p.release.sourceCohort,
+    (p) => (p.release.candidateRevision = DIAGNOSTICS_SOURCE),
+    (p) => (p.release.onceOnlyBefore = DIAGNOSTICS_SOURCE),
+    (p) => (p.release.firstEightAllCorrectnessPassed = true),
+    (p) => (p.release.gameplayPerformanceQualification = true),
+    (p) => (p.observation.pairs = 9),
+    (p) => (p.observation.overheadLimit = 0.06),
+  ]) {
+    const changed = bindDiagnosticsJob(current, 'chromium');
+    mutate(changed);
+    assert.throws(() => validateDiagnosticsPlan(changed));
+  }
+  assert.equal(bindDiagnosticsJob(old, 'chromium').candidate.revision, DIAGNOSTICS_SOURCE);
+});
+
+test('successor preparation requires its own admitted source, tree and archive identity', async (t) => {
+  const plan = bindDiagnosticsJob(await finalManifest(), 'chromium');
+  const admitted = {
+    sourceRevision: plan.candidate.revision,
+    sourceTree: plan.candidate.tree,
+    manifestSHA256: plan.candidate.manifestSHA256,
+    archiveIdentity: plan.candidate.inner,
+  };
+  const ctx = {
+    plan,
+    repository,
+    work: await temporary(t),
+    report: {},
+    admitted: { status: 'passed', artifacts: { candidate: admitted } },
+    digest: async (path) => {
+      const bytes = await readFile(path);
+      return { bytes: bytes.length, sha256: sha(bytes) };
+    },
+  };
+  assert.deepEqual(await prepareDiagnosticsMode(ctx), { browserVersion: null });
+  assert.equal(ctx.report.gameplayPerformanceQualification, false);
+  for (const [key, wrong] of [
+    ['sourceRevision', DIAGNOSTICS_SOURCE],
+    ['sourceTree', '71f7e4cb3b0a39c1d281635774371a693794dd22'],
+    ['archiveIdentity', { bytes: 2, sha256: '0'.repeat(64) }],
+    ['manifestSHA256', '3'.repeat(64)],
+  ]) {
+    await assert.rejects(
+      prepareDiagnosticsMode({
+        ...ctx,
+        admitted: { status: 'passed', artifacts: { candidate: { ...admitted, [key]: wrong } } },
+      }),
+    );
+  }
+});
+
+test('both successor journal arms bind the selected source without altering instrumentation policy', async () => {
+  const plan = bindDiagnosticsJob(await finalManifest(), 'webkit');
+  plan.probe = 'journal-hook-cost-v1';
+  const ctx = { plan, here: '/tools', modeState: { recipePath: '/input/recipe.json' } };
+  const off = journalCostArguments(
+    ctx,
+    { diagnostics: false },
+    'http://localhost/game/',
+    '/out/off.json',
+  );
+  const on = journalCostArguments(
+    ctx,
+    { diagnostics: true },
+    'http://localhost/game/',
+    '/out/on.json',
+  );
+  assert(off.includes(`--source-revision=${plan.candidate.revision}`));
+  assert(on.includes(`--source-revision=${plan.candidate.revision}`));
+  assert(!off.includes('--hitch-journal') && on.includes('--hitch-journal'));
+  for (const args of [off, on])
+    assert(args.includes('--journal-cost-probe') && args.includes('--cpu=1'));
 });
 
 test('observer commands differ only by declared mode and report path; no intrusive flags', async () => {
