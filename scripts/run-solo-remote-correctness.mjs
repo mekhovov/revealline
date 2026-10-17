@@ -1246,7 +1246,9 @@ async function main() {
     if (extension) {
       if (
         extension === 'offline' ||
-        (extension === 'sustained' && plan.phase !== 'diagnostics') ||
+        (extension === 'sustained' &&
+          plan.phase !== 'diagnostics' &&
+          plan.rows.some((row) => row.source === 'baseline')) ||
         (['auxiliary', 'supplemental'].includes(extension) &&
           plan.rows.some((row) => row.source === 'baseline'))
       )
