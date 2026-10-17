@@ -62,7 +62,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--hitch-journal [--hitch-journal-preparation=first-return-anchored-v1]] [--journal-cost-probe (exact 30-second border recipe only)] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--readiness-probe=first-running-v1 (ab45 cold correctness pilot only)] [--hitch-journal [--hitch-journal-preparation=first-return-anchored-v1]] [--journal-cost-probe (exact 30-second border recipe only)] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -99,6 +99,11 @@ const hitchModule = flags.some((flag) => flag.startsWith('--hitch-journal'))
   ? await import('./solo-qualification-hitch-journal.mjs')
   : null;
 const hitchOptions = hitchModule?.qualificationHitchJournalOptions(flags, scenario, bytes);
+const readinessModule = flags.some((flag) => flag.startsWith('--readiness-probe'))
+  ? await import('./solo-qualification-readiness.mjs')
+  : null;
+const readinessOptions = readinessModule?.qualificationReadinessOptions(flags, scenario, bytes);
+let readinessDocuments = 0;
 const journalCostModule = flags.some((flag) => flag.startsWith('--journal-cost-probe'))
   ? await import('./solo-qualification-journal-cost.mjs')
   : null;
@@ -156,7 +161,7 @@ url.searchParams.set('performance', '1');
 const report = {
   format: 'SoloQualificationReportV1',
   scenario: scenario.id,
-  kind: profileMode ?? scenario.kind,
+  kind: readinessOptions ? 'readiness-diagnostic' : (profileMode ?? scenario.kind),
   scenarioKind: scenario.kind,
   cacheMode,
   baselineRuntime,
@@ -250,6 +255,16 @@ const report = {
   startupCadenceObservations: [],
   failure: null,
 };
+if (readinessOptions) {
+  report.readinessPilot = {
+    protocol: readinessOptions.protocol,
+    performanceQualification: false,
+    startupObservation:
+      'Immediate partial observation; the optional startup-sample wait is omitted only for this correctness pilot.',
+    scope:
+      'Fixed external settled120 B and original first30 actions/raw gates are retained. This is not an equivalent ordinary timing comparator.',
+  };
+}
 const replayIdentity = scenario.replayIdentity ? createQualificationReplayIdentity() : null;
 if (replayIdentity) report.replayIdentity = replayIdentity.report;
 await mkdir(dirname(resolve(output)), { recursive: true });
@@ -453,6 +468,10 @@ try {
     await save();
   }
   if (audioProof) await page.addInitScript(installAudioProof, audioOptions);
+  if (readinessOptions)
+    page.on('framenavigated', (frame) => {
+      if (frame === page.mainFrame()) readinessDocuments++;
+    });
   const observationInitScript = `window.soloQualificationReadiness = ${readPrePlayReadiness.toString()};
      window.soloQualificationIntervalClock = ${createRafIntervalClock.toString()};
      window.soloQualificationFrozenCadence = ${frozenExternalCadence.toString()};`;
@@ -462,19 +481,28 @@ try {
     });
   if (!hitchStore && !journalCostOptions) await page.addInitScript(observationInitScript);
   function addQualificationProbe(install, options) {
-    const cost = options.journalCost === true;
-    if (!hitchStore && !cost) return page.addInitScript(install, options);
+    const cost = options.journalCost === true,
+      readiness = options.readinessProbe === true;
+    if (!hitchStore && !cost && !readiness) return page.addInitScript(install, options);
     // Ordering across separate addInitScript calls is unspecified. Construct all
     // opted-in dependencies and the probe in one synchronous installation.
     return page.addInitScript(`if (window.top === window) {
 ${observationInitScript}
+${readiness ? `window.soloQualificationCreateReadinessProbe = ${readinessModule.createBrowserReadinessProbe.toString()};` : ''}
 ${cost ? journalCostModule.journalCostInitScript() : ''}
 ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
 (${install.toString()})(${JSON.stringify(options)});
 }`);
   }
   await addQualificationProbe(
-    ({ bounds, workProbe, externalCadenceCalibration, hitchJournal, journalCost }) => {
+    ({
+      bounds,
+      workProbe,
+      externalCadenceCalibration,
+      hitchJournal,
+      journalCost,
+      readinessProbe,
+    }) => {
       const cost = journalCost ? window.soloQualificationJournalCost : null;
       const phases = ['boot', 'briefing', 'running', 'paused', 'result', 'picture', 'other'];
       const counts = phases.map(() => new Float64Array(bounds.length));
@@ -531,6 +559,14 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
           };
         },
       });
+      const readiness = readinessProbe
+        ? window.soloQualificationCreateReadinessProbe(() => {
+            const scenes =
+              observedGame?.scene?.scenes?.filter((scene) => scene.lastPaint?.run) ?? [];
+            if (scenes.length !== 1) return null;
+            return scenes[0];
+          })
+        : null;
       const intervalClock = window.soloQualificationIntervalClock(performance.now());
       let phase = 0,
         previousPhase = 0,
@@ -581,6 +617,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
           const update = () => {
             const n = phases.indexOf(document.body.dataset.flightState);
             phase = n < 0 ? 6 : n;
+            if (readiness) readiness.phase(document.body.dataset.flightState);
             if (cost) {
               cost.begin(2);
               cost.phase(phase);
@@ -713,6 +750,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             'Retained last submitted paint record only; sparse action-boundary observations do not establish the tier between samples.',
         }),
         export: () => ({
+          ...(readiness ? { readiness: readiness.export() } : {}),
           firstRafCallback: intervalClock.snapshot(),
           phases,
           bounds,
@@ -747,6 +785,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       externalCadenceCalibration: report.externalCadenceCalibration,
       hitchJournal: Boolean(hitchStore),
       journalCost: Boolean(journalCostOptions),
+      readinessProbe: Boolean(readinessOptions),
     },
   );
   if (cpuProfile) {
@@ -856,11 +895,12 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
     await page.evaluate(() => window.soloQualificationProbe.startApplicationProbe());
     let deadlineFailure = null;
     try {
-      await page.waitForFunction(
-        () => window.soloQualificationProbe.calibrationProgress().count === 30,
-        null,
-        { timeout: 5000 },
-      );
+      if (!readinessOptions)
+        await page.waitForFunction(
+          () => window.soloQualificationProbe.calibrationProgress().count === 30,
+          null,
+          { timeout: 5000 },
+        );
     } catch (error) {
       deadlineFailure = String(error.message);
     }
@@ -878,6 +918,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       url: page.url(),
       ...startupObservation,
       deadlineFailure,
+      ...(readinessOptions
+        ? { pilotStartupWait: 'omitted; immediate partial samples retained' }
+        : {}),
     });
   }
   if (!scenario.readySelector) await prepareObservation('initial-ready');
@@ -1483,6 +1526,20 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
     report.performanceGateStatus = 'invalid-evidence';
     report.journalCostFailure =
       'Complete single-document bounded synchronous-hook cost unavailable.';
+  }
+  if (readinessOptions) {
+    report.readinessObservation = report.finalState?.probe?.readiness ?? null;
+    report.readinessAssessment = readinessModule.assessReadinessPilot(
+      report.readinessObservation,
+      report.snapshots.at(-1)?.application,
+      readinessDocuments,
+    );
+    if (report.readinessAssessment.status !== 'passed') {
+      report.scenarioStatus = 'fail';
+      report.readinessFailure =
+        'Complete pre-play readiness was not observed; all original numeric and replay evidence is retained.';
+      process.exitCode = 1;
+    }
   }
   if (nativeReplay) {
     try {
