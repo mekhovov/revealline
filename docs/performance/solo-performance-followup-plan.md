@@ -23,6 +23,8 @@ The next work is to finish the first-use regression corrections, produce a new v
 
 The preparation/raster rows below retain historical failures for chronology. The two diagnosed WebKit behaviors above are now supported on runtime `239c574ec`; final-source repetition, selected-font cancellation, audio transitions, sustained timing, memory plateaus and physical-device qualification remain open.
 
+The first-use follow-up now passes **257 cases across eighteen distinct complete files** in separate groups, including title/actor preparation, session-only Next, pending reward/backup races and both authored chapter restores. Runtime behavior and deadlines are unchanged by those regression corrections. The separate optional-audio v4 observer/release suite passes **477 controls with four platform skips** in its exact 333-input isolated checkout; the new observation preserves the e1cc runtime, fixture and limits. These are source checks, not a final package or numerical performance pass. [CI corrections and retained originals](solo-library-first-use-ci-20261017.md), [audio observer correction](solo-optional-start-audio-outcomes-20261017.md).
+
 ## Phase status
 
 | Phase                            | Implemented direction                                                                                                                                                                                                             | Remaining exit evidence                                                                                                                                                                           |
