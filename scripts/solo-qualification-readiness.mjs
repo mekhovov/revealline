@@ -96,6 +96,14 @@ export function geometryReadinessPilot(protocol) {
 }
 // Exact prospective source/recipe support. No remote declaration or package is admitted here.
 export const MEDIA_FAULT_PILOTS = Object.freeze({
+  'optional-audio-start-missing-v1': Object.freeze({
+    protocol: 'optional-audio-start-missing-v1',
+    sourceRevision: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+    scenarioSHA256: '05ce2d60b858eff3f1ee67d23c17c815efe1a0c7f3da196c89b98b931139d096',
+    documents: 1,
+    records: 8,
+    bytes: 16384,
+  }),
   'required-original-cancel-v1': Object.freeze({
     protocol: 'required-original-cancel-v1',
     sourceRevision: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
@@ -251,6 +259,7 @@ export function createBrowserReadinessProbe(
       'selected-font-cancel-post-command-v3',
       'required-original-cancel-v1',
       'optional-icon-missing-v1',
+      'optional-audio-start-missing-v1',
     ].includes(protocol)
   )
     throw new Error('Unknown readiness protocol');
@@ -481,6 +490,10 @@ export function createBrowserReadinessProbe(
             }
           : null,
       };
+      if (protocol === 'optional-audio-start-missing-v1') {
+        const style = scene?.lastPaint?.actorAppearance?.style;
+        row.actorStyle = ['campaign', 'fpv'].includes(style) ? style : null;
+      }
       if (geometryObservation && ['first-running', 'resumed-running'].includes(kind)) {
         const canvas = scene?.game?.canvas;
         // These reflected layout reads are restricted to the declared phase boundary.
@@ -1376,6 +1389,23 @@ export const optionalPageIcon = Object.freeze({
 export function createSelectedFontHold(entryURL, options = {}) {
   return createReadinessOriginalOwner(entryURL, options);
 }
+export const optionalStartAudio = Object.freeze({
+  relativePath: 'audio/effects/start.wav',
+  bytes: 28844,
+  sha256: '4f9093b56201eca492f784986446c247fbde5dcd6f67e364e145984e03c80135',
+  fetchTimeoutMs: 10000,
+  maximumHoldMs: 20000,
+  cleanupReserveMs: 2000,
+  records: 8,
+  maximumEvidenceBytes: 8192,
+});
+export function createOptionalStartAudio404(entryURL, options = {}) {
+  return createReadinessOriginalOwner(
+    entryURL,
+    { ...options, requestPolicy: 'single-v1' },
+    'optional-audio',
+  );
+}
 // Exact opt-in fault owners; executable remote package admission remains separate.
 export function createRequiredOriginalHold(entryURL, options = {}) {
   return createReadinessOriginalOwner(
@@ -1408,7 +1438,9 @@ function createReadinessOriginalOwner(
       ? requiredOriginal
       : fault === 'optional-icon'
         ? optionalPageIcon
-        : selectedFont;
+        : fault === 'optional-audio'
+          ? optionalStartAudio
+          : selectedFont;
   assert(['single-v1', 'same-url-two-v2'].includes(requestPolicy));
   const joined = fault !== null || requestPolicy === 'same-url-two-v2';
   assert(['public-cancellation', 'native-hidden'].includes(releaseBoundary));
@@ -1416,7 +1448,9 @@ function createReadinessOriginalOwner(
     releaseBoundary !== 'native-hidden' || (fault === null && joined),
     'Hidden completion requires joined ownership',
   );
-  const requestLimit = fault === 'optional-icon' ? 1 : joined ? 2 : 1;
+  const injected404 = ['optional-icon', 'optional-audio'].includes(fault);
+  const contentType = fault === 'optional-audio' ? 'audio/wav' : fault ? 'image/png' : 'font/woff2';
+  const requestLimit = injected404 ? 1 : joined ? 2 : 1;
   const routes = [];
   let forwarding = false,
     rejectedOwned = 0;
@@ -1463,9 +1497,11 @@ function createReadinessOriginalOwner(
         ? 'SoloRequiredOriginalHoldV1'
         : fault === 'optional-icon'
           ? 'SoloOptionalIcon404V1'
-          : joined
-            ? 'SoloSelectedFontHoldV2'
-            : 'SoloSelectedFontHoldV1',
+          : fault === 'optional-audio'
+            ? 'SoloOptionalStartAudio404V1'
+            : joined
+              ? 'SoloSelectedFontHoldV2'
+              : 'SoloSelectedFontHoldV1',
     ...(releaseBoundary === 'native-hidden' ? { releaseBoundary } : {}),
     ...(joined ? { requestPolicy, maximumRequests: requestLimit } : {}),
     ...(fault ? { fault, cancellationObserved: false, injected404: false } : {}),
@@ -1638,10 +1674,7 @@ function createReadinessOriginalOwner(
           assert.equal(response.url(), target.href, 'Redirected font response');
           assert.equal(response.status(), 200, 'Original font must be available');
           const headers = response.headers();
-          assert.equal(
-            headers['content-type']?.split(';')[0].trim().toLowerCase(),
-            fault ? 'image/png' : 'font/woff2',
-          );
+          assert.equal(headers['content-type']?.split(';')[0].trim().toLowerCase(), contentType);
           assert.equal(headers['content-length'], String(spec.bytes));
           const bytes = await operation('response-body', () => response.body(), deadline);
           assert.equal(bytes.length, spec.bytes);
@@ -1653,7 +1686,7 @@ function createReadinessOriginalOwner(
           report.status = 'held';
           record('original-response-validated');
           validated(true);
-          const shouldRelease = fault === 'optional-icon' ? true : await releaseDecision;
+          const shouldRelease = injected404 ? true : await releaseDecision;
           assert(shouldRelease && !closing && !report.failure, 'Font hold was cancelled');
           if (fault === 'required-original') {
             assert.equal(shouldRelease, 'cancel-original');
@@ -1670,8 +1703,8 @@ function createReadinessOriginalOwner(
                 'response-fulfill',
                 async () => {
                   await item.route.fulfill(
-                    fault === 'optional-icon'
-                      ? { status: 404, contentType: 'image/png', body: Buffer.alloc(0) }
+                    injected404
+                      ? { status: 404, contentType, body: Buffer.alloc(0) }
                       : { response },
                   );
                   item.fulfillmentSettled = true;
@@ -1682,12 +1715,8 @@ function createReadinessOriginalOwner(
           );
           fulfilled = true;
           report.released = true;
-          if (fault === 'optional-icon') report.injected404 = true;
-          record(
-            fault === 'optional-icon'
-              ? 'declared-optional-404-settled'
-              : 'original-response-forwarded',
-          );
+          if (injected404) report.injected404 = true;
+          record(injected404 ? 'declared-optional-404-settled' : 'original-response-forwarded');
         } catch (error) {
           fail(error);
         } finally {
@@ -2510,9 +2539,17 @@ export function assertOptionalIconFallback(value) {
 }
 export function assertReadinessMediaTransport(value, protocol) {
   const required = protocol === 'required-original-cancel-v1';
-  assert(required || protocol === 'optional-icon-missing-v1');
-  const spec = required ? requiredOriginal : optionalPageIcon;
-  assert.equal(value?.format, required ? 'SoloRequiredOriginalHoldV1' : 'SoloOptionalIcon404V1');
+  const audio = protocol === 'optional-audio-start-missing-v1';
+  assert(required || audio || protocol === 'optional-icon-missing-v1');
+  const spec = required ? requiredOriginal : audio ? optionalStartAudio : optionalPageIcon;
+  assert.equal(
+    value?.format,
+    required
+      ? 'SoloRequiredOriginalHoldV1'
+      : audio
+        ? 'SoloOptionalStartAudio404V1'
+        : 'SoloOptionalIcon404V1',
+  );
   assert(Buffer.byteLength(JSON.stringify(value)) <= spec.maximumEvidenceBytes);
   assert.equal(value.status, 'complete');
   assert.equal(value.failure, null);
@@ -2557,6 +2594,7 @@ export function assessReadinessMediaFault({
   witness,
   fallback,
   cleanupFailure,
+  audioCheck,
 }) {
   const failures = [];
   let projected;
@@ -2585,6 +2623,18 @@ export function assessReadinessMediaFault({
       assert(fresh.trusted && fresh.atMs >= after.atMs);
       assert(['briefing', 'paused'].includes(fresh.phase));
       assert(fresh.visible && fresh.focused);
+    } else if (protocol === 'optional-audio-start-missing-v1') {
+      assertOptionalAudioFallback(application, audioCheck);
+      assert.equal(
+        records[1].actorStyle,
+        'campaign',
+        'Actual launch appearance must use start.wav',
+      );
+      assert.equal(
+        records[2].actorStyle,
+        'campaign',
+        'Final appearance must retain campaign style',
+      );
     } else {
       assertOptionalIconFallback(fallback);
       assert(fallback.atMs <= records[0].atMs, 'Optional failure must be observed before Start');
@@ -2611,5 +2661,74 @@ export function assessReadinessMediaFault({
     performanceQualification: false,
     scope:
       'Injected media acquisition correctness only. Raw failed responses/numerical gates and strict source-native replay remain independent; no decoder-stall, display-completion or performance credit.',
+  };
+}
+
+// Explicit paused diagnostic settlement only; this does not create or activate owners.
+// Serialized into the browser; retain a compact pre-wait observation, then use the
+// same fixed predicate under the existing action/scenario deadline.
+export function observeOptionalAudioSettlement(reportOnly = false) {
+  const phase = globalThis.document.body.dataset.flightState;
+  if (phase !== 'paused') throw new Error('Optional audio settlement requires public Pause');
+  const application = globalThis.RevealLineSoloPerformance?.export();
+  const media = application?.resources?.media;
+  const observation = {
+    phase,
+    effectsLoading: application?.resources?.pcm?.effects?.loading ?? null,
+    queued: media?.queued ?? null,
+    active: Object.fromEntries(
+      ['fetch', 'decode', 'inspect', 'main'].map((key) => [key, media?.active?.[key] ?? null]),
+    ),
+    reservedDecodeBytes: media?.reservedDecodeBytes ?? null,
+  };
+  const idle =
+    observation.effectsLoading === 0 &&
+    observation.queued === 0 &&
+    observation.reservedDecodeBytes === 0 &&
+    Object.values(observation.active).every((value) => value === 0);
+  return reportOnly ? { ...observation, idle } : idle && observation;
+}
+
+// Existing paused diagnostic snapshots only; no audible-output claim.
+export function assertOptionalAudioFallback(application, audioCheck) {
+  assert.equal(application?.audio?.muted, false, 'Public unmute required');
+  assert(
+    Number.isFinite(application.audio.volume) &&
+      application.audio.volume > 0 &&
+      application.audio.volume <= 1,
+  );
+  assert.deepEqual(audioCheck?.master, application.audio);
+  assert.deepEqual(audioCheck.requirement, { unmuted: true, nativeStartsAtLeast: 1 });
+  const counts = audioCheck.observed;
+  for (const key of [
+    'sourceStarts',
+    'oscillatorStarts',
+    'sourceStartFailures',
+    'mediaPlayRequests',
+    'mediaPlayResolved',
+    'mediaPlayRejected',
+  ])
+    assert(
+      Number.isSafeInteger(counts?.[key]) && counts[key] >= 0 && counts[key] <= 1000000,
+      'Bounded observed audio operations',
+    );
+  assert(
+    counts.sourceStarts + counts.oscillatorStarts + counts.mediaPlayResolved >= 1,
+    'Native audio activation unobserved',
+  );
+  assert.equal(counts.sourceStartFailures, 0);
+  assert.equal(counts.mediaPlayRejected, 0);
+  assert.equal(
+    application.resources?.pcm?.effects?.loading,
+    0,
+    'Optional effect requests must settle',
+  );
+  const media = application.resources?.media;
+  assert.equal(media?.queued, 0, 'Shared preparation must be idle at the retained paused boundary');
+  assert.equal(media.reservedDecodeBytes, 0);
+  assert.deepEqual(media.active, { fetch: 0, decode: 0, inspect: 0, main: 0 });
+  return {
+    scope:
+      'Nonblocking gameplay fallback and observed native operation calls only; no specific replacement tone, audibility, native decoder memory or timing proof.',
   };
 }

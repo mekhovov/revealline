@@ -132,6 +132,7 @@ const mediaFaultReadiness = Boolean(
   readinessModule?.MEDIA_FAULT_PILOTS[readinessOptions?.protocol],
 );
 const requiredOriginalReadiness = readinessOptions?.protocol === 'required-original-cancel-v1';
+const optionalAudioReadiness = readinessOptions?.protocol === 'optional-audio-start-missing-v1';
 const qualityOptions = qualificationQualityOptions(
   flags,
   scenario,
@@ -463,7 +464,9 @@ try {
     mediaFaultOwner = (
       requiredOriginalReadiness
         ? readinessModule.createRequiredOriginalHold
-        : readinessModule.createOptionalIcon404
+        : optionalAudioReadiness
+          ? readinessModule.createOptionalStartAudio404
+          : readinessModule.createOptionalIcon404
     )(url.href);
   if (mirrored || fixtureAccess || selectedFontReadiness || mediaFaultReadiness)
     await page.route('**/*', async (route) => {
@@ -1438,6 +1441,50 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
           if (replayIdentity) record.identity = replayIdentity.observe(text);
           if (resumeReplay) record.readinessIdentity = resumeReplay.observe(action.label, text);
         } else if (action.type === 'snapshot') {
+          if (optionalAudioReadiness && action.group === 'after-media-fault') {
+            const settlementDeadline = Math.min(deadline, Date.now() + Math.min(10000, timeout));
+            let settlementStopped = false,
+              settlementTimer;
+            const settlementRemaining = () => {
+              const remainingMs = settlementDeadline - Date.now();
+              assert(
+                !settlementStopped && remainingMs > 0,
+                'Optional audio settlement deadline expired',
+              );
+              return remainingMs;
+            };
+            try {
+              await Promise.race([
+                (async () => {
+                  const before = await page.evaluate(
+                    readinessModule.observeOptionalAudioSettlement,
+                    true,
+                  );
+                  settlementRemaining();
+                  record.optionalAudioBeforeSettlement = before;
+                  await save();
+                  await page.waitForFunction(
+                    readinessModule.observeOptionalAudioSettlement,
+                    false,
+                    {
+                      timeout: settlementRemaining(),
+                      polling: 100,
+                    },
+                  );
+                  settlementRemaining();
+                })(),
+                new Promise((_, reject) => {
+                  settlementTimer = setTimeout(() => {
+                    settlementStopped = true;
+                    reject(new Error('Optional audio settlement deadline expired'));
+                  }, settlementRemaining());
+                }),
+              ]);
+            } finally {
+              settlementStopped = true;
+              clearTimeout(settlementTimer);
+            }
+          }
           const snapshot = await page.evaluate(() => {
             const phase = document.body.dataset.flightState;
             if (phase === 'running')
@@ -1839,6 +1886,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         witness: report.requiredOriginalWitness,
         fallback: report.optionalIconFallback,
         cleanupFailure: report.mediaFaultCleanupFailure,
+        audioCheck: report.audioCheck,
       });
     } else if (selectedFontReadiness) {
       report.readinessAssessment = selectedFontPostCommand

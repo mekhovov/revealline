@@ -21,6 +21,37 @@ const read = (path) => readFile(new URL('../' + path, import.meta.url));
 const manifest = JSON.parse(
   await read('docs/performance/solo-readiness-preparation-e1cc-plan.json'),
 );
+const executedWitnessBytes = await read(
+  'docs/performance/fixtures/solo-readiness-geometry/7c7-execution-source.json',
+);
+const executedWitnessSHA256 = 'a54fa43e5f89dc2ccce08f69892421213d5a6a0deb107ebc6dc320f174665613';
+function executedBindings(bytes, declarationBytes, workflowBytes) {
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), executedWitnessSHA256);
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.head, '7c7cc2648331870683ac7b76850bbeff859f802e');
+  assert.equal(witness.tree, 'e20aabb50c0e82c52c0970a14934b2d05611f53e');
+  for (const [path, value] of [
+    ['docs/performance/solo-readiness-preparation-e1cc-plan.json', declarationBytes],
+    ['.github/workflows/solo-remote-readiness-ab45-temporary.yml', workflowBytes],
+  ]) {
+    const entry = witness.records.find((r) => r.path === path);
+    assert.equal(value.length, entry.bytes);
+    assert.equal(createHash('sha256').update(value).digest('hex'), entry.sha256);
+  }
+  const declaration = JSON.parse(declarationBytes);
+  for (const ref of [
+    ...declaration.adapterInputs,
+    ...declaration.frozenTools,
+    declaration.fixture,
+    ...declaration.additionalFixtures,
+  ]) {
+    const entry = witness.records.find((r) => r.path === ref.path);
+    assert(entry, ref.path);
+    assert.equal(entry.bytes, ref.bytes, ref.path);
+    assert.equal(entry.sha256, ref.sha256, ref.path);
+  }
+  return witness;
+}
 test('exact package admits six serial correctness rows per engine, preserved source/limits and all real fixture hashes', async () => {
   assert.equal(manifest.candidate.revision, 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17');
   assert.equal(manifest.candidate.tree, '58f19392e25384620d896098fce8616b538e318d');
@@ -160,7 +191,7 @@ test('all six exact row policies reuse positive binary journal verification; sav
   }
 });
 
-test('one-shot release has actual artifact pins, current frozen inputs and a complete sparse test inventory', async () => {
+test('executed one-shot release retains exact7c7 bindings, artifact pins and original sparse test inventory', async () => {
   assert.deepEqual(manifest.candidate.outer, {
     bytes: 1091965213,
     sha256: 'fb85094a61cdc329ccf8a1488b6e3ca1043ef5f249a6b33729bb04141336af1e',
@@ -179,6 +210,11 @@ test('one-shot release has actual artifact pins, current frozen inputs and a com
   assert(workflow.includes('timeout-minutes: 78'));
   assert(workflow.includes('4620s node scripts/run-solo-remote-correctness.mjs'));
   assert(workflow.includes('bind-plan docs/performance/solo-readiness-preparation-e1cc-plan.json'));
+  executedBindings(
+    executedWitnessBytes,
+    await read('docs/performance/solo-readiness-preparation-e1cc-plan.json'),
+    Buffer.from(workflow),
+  );
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(new Set(sparse).size, sparse.length);
   for (const ref of [
@@ -187,9 +223,8 @@ test('one-shot release has actual artifact pins, current frozen inputs and a com
     manifest.fixture,
     ...manifest.additionalFixtures,
   ]) {
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+    // The complete executed Git binding above remains historical; the v2
+    // release contract independently requires every prospective current byte.
     assert(sparse.includes(ref.path), ref.path);
   }
   const command = workflow.match(/node --test --test-concurrency=2 ([^\n]+) 2>&1/)[1];
@@ -222,4 +257,15 @@ test('each exact release condition remains mandatory without alternate dispatch'
   for (const condition of releaseConditions) {
     assert.throws(() => assertReleaseGuard(workflow.replace(condition, 'true')));
   }
+});
+
+test('mutated executed witness, declaration or original workflow cannot acquire historical authority', async () => {
+  const declaration = await read('docs/performance/solo-readiness-preparation-e1cc-plan.json'),
+    workflow = await read('.github/workflows/solo-remote-readiness-ab45-temporary.yml');
+  for (const args of [
+    [Buffer.concat([executedWitnessBytes, Buffer.from(' ')]), declaration, workflow],
+    [executedWitnessBytes, Buffer.concat([declaration, Buffer.from(' ')]), workflow],
+    [executedWitnessBytes, declaration, Buffer.concat([workflow, Buffer.from(' ')])],
+  ])
+    assert.throws(() => executedBindings(...args));
 });

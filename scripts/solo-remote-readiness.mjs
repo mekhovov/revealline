@@ -133,17 +133,26 @@ export function preparationReadinessSelection(plan) {
 }
 function preparationRowPlan(plan, row) {
   const expected = preparationReadinessRows(plan.engine).find((item) => item.id === row.id);
-  assert.deepEqual(row, expected, 'Exact preparation row');
+  assert(expected, 'Undeclared preparation row');
+  // The common runner adds these report fields before adapter dispatch. They
+  // carry no scenario authority; all declared fields remain exact below.
+  const runnerMetadata = ['storage', 'startedAt', 'status'];
+  for (const key of Object.keys(row))
+    assert(
+      Object.hasOwn(expected, key) || runnerMetadata.includes(key),
+      `Unexpected row field: ${key}`,
+    );
+  for (const [key, value] of Object.entries(expected)) assert.deepEqual(row[key], value, key);
   const scoped = {
     ...plan,
     sourceCohort: 'readiness-preparation-row-candidatee1cc',
-    phase: row.phase,
+    phase: expected.phase,
   };
   const selected = preparationReadinessSelection(scoped);
   return {
     ...scoped,
     fixture: selected.fixture,
-    rows: [readinessRow(plan.engine, row.phase)],
+    rows: [readinessRow(plan.engine, expected.phase)],
     protocol: {
       name: selected.protocol,
       ...(selected.geometry ? { geometryObservation: 'phase-boundary-v1' } : {}),
@@ -295,7 +304,28 @@ export function geometryReadinessSelection(plan) {
     documents: plan.phase === 'saved-resume' ? 2 : 1,
   };
 }
+export const OPTIONAL_AUDIO_READINESS_COHORT = 'readiness-optional-start-audio-candidatee1cc';
+export const OPTIONAL_AUDIO_READINESS_FIXTURE = Object.freeze({
+  path: 'docs/performance/fixtures/solo-readiness-media/optional-audio-start-missing-v1.qualification.fixture',
+  bytes: 4520,
+  sha256: '05ce2d60b858eff3f1ee67d23c17c815efe1a0c7f3da196c89b98b931139d096',
+});
+const optionalAudioPlan = (plan) => plan?.sourceCohort === OPTIONAL_AUDIO_READINESS_COHORT;
+export function optionalAudioReadinessSelection(plan) {
+  assert(optionalAudioPlan(plan));
+  assert.equal(plan.phase, 'optional-audio-start-missing');
+  assert.equal(plan.engine, 'chromium');
+  return {
+    source: GEOMETRY_READINESS_SOURCE,
+    fixture: OPTIONAL_AUDIO_READINESS_FIXTURE,
+    protocol: 'optional-audio-start-missing-v1',
+    mediaFault: true,
+    audioFault: true,
+    documents: 1,
+  };
+}
 function selection(plan) {
+  if (optionalAudioPlan(plan)) return optionalAudioReadinessSelection(plan);
   if (preparationPlan(plan))
     return preparationReadinessSelection({
       ...plan,
@@ -534,6 +564,7 @@ export function readinessRow(engine, phase = 'cold-first30') {
       'selected-font-cancel',
       'required-original-cancel',
       'optional-icon-missing',
+      'optional-audio-start-missing',
     ].includes(phase),
   );
   assert(READINESS_ENGINES.includes(engine));
@@ -630,6 +661,23 @@ export function validateReadinessPlan(plan) {
   assert.equal(plan.candidate.revision, selected.source.revision);
   assert.equal(plan.candidate.tree, selected.source.tree);
   assert.equal(plan.runtimeRevision, selected.source.revision);
+  if (selected.audioFault) {
+    assert.deepEqual(plan.candidate.run, 39037874955);
+    assert.deepEqual(plan.candidate.artifact, 12104590541);
+    assert.deepEqual(plan.candidate.outer, {
+      bytes: 1091965213,
+      sha256: 'fb85094a61cdc329ccf8a1488b6e3ca1043ef5f249a6b33729bb04141336af1e',
+    });
+    assert.deepEqual(plan.candidate.inner, {
+      bytes: 1073790972,
+      sha256: '6c8bbb6aafe3f9d55e2fb445d5846a5e9d02ebd648c4e630889743bf76ec421e',
+    });
+    assert.deepEqual(
+      plan.candidate.manifestSHA256,
+      '23f555db20036838cc1601f2cebf8f1a75eb62fb0c6cf36f1e1988035b3e1b64',
+    );
+    assert.equal(plan.release.onceOnlyBefore, '7c7cc2648331870683ac7b76850bbeff859f802e');
+  }
   assert.deepEqual(plan.baseline, {
     revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
     tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
@@ -663,7 +711,10 @@ export function validateReadinessPlan(plan) {
     'diagnosticStatus-passed-and-readinessCorrectness-pass',
   );
   assert.equal(plan.release.candidateRevision, selected.source.revision);
-  assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
+  if (selected.audioFault) {
+    assert.equal(plan.release.firstEightRequired, false);
+    assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+  } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.performanceQualification, 'excluded');
   assert.equal(plan.release.physicalQualification, 'unobserved');
   assert.equal(plan.release.automaticRetries, 0);
@@ -725,7 +776,11 @@ export function validateReadinessPlan(plan) {
 }
 export function bindReadinessJob(manifest, engine) {
   assert.equal(manifest.format, 'SoloHostedReadinessManifestV1');
-  assert.deepEqual(manifest.engines, READINESS_ENGINES);
+  assert.deepEqual(
+    manifest.engines,
+    optionalAudioPlan(manifest) ? ['chromium'] : READINESS_ENGINES,
+  );
+  assert(manifest.engines.includes(engine));
   const plan = structuredClone(manifest);
   delete plan.engines;
   plan.format = 'SoloHostedReadinessPlanV1';
@@ -743,7 +798,7 @@ export function bindReadinessJob(manifest, engine) {
 }
 export function readinessMatrix(manifest) {
   return {
-    include: READINESS_ENGINES.map((engine) => {
+    include: (optionalAudioPlan(manifest) ? ['chromium'] : READINESS_ENGINES).map((engine) => {
       bindReadinessJob(manifest, engine);
       return { engine, jobMinutes: 130, stepMinutes: 78, outerSeconds: 4620 };
     }),
@@ -769,17 +824,20 @@ export async function prepareReadinessMode(ctx) {
   assert.equal(a.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(a.archiveIdentity, ctx.plan.candidate.inner);
   ctx.report.performanceExclusion = true;
-  ctx.report.firstEightAllCorrectnessPassed = false;
+  if (selected.audioFault) ctx.report.firstEightRequired = false;
+  else ctx.report.firstEightAllCorrectnessPassed = false;
   return {
-    scope: preparationPlan(ctx.plan)
-      ? 'Six serial candidate-only preparation observations per engine: geometry cold/warm/saved, joined-font Cancel boundary, required-original Cancel and optional icon 404. All original numerical failures and prior native failures remain; no display-completion, timing or physical-device qualification.'
-      : combinedPlan(ctx.plan)
-        ? fontDprPlan(ctx.plan)
-          ? 'One joined selected-font correctness observation per engine; WebKit additionally has two counterbalanced Full-effects DPR pairs at the same viewport. All original failures and numeric verdicts retained; no automatic retry or physical qualification.'
-          : fontCompactPlan(ctx.plan)
-            ? 'One exact selected-font cancellation per engine; WebKit additionally observes the compact saved Resume route and two muted public-effects pairs. Old failed routes remain failed; all numerical verdicts retained.'
-            : 'Fixed serial warm/saved readiness observations; WebKit additionally has two muted public-effects pairs. All numerical failures retained; no physical qualification or automatic retry.'
-        : 'One candidate correctness pilot per engine; no timing comparison, forced calibration delay, automatic retry or physical-device qualification.',
+    scope: selected.audioFault
+      ? 'One Chromium candidate-only missing start.wav correctness observation: public unmute and Start, movement, paused owner settlement and strict native replay. No audibility, specific replacement tone, timing or physical qualification.'
+      : preparationPlan(ctx.plan)
+        ? 'Six serial candidate-only preparation observations per engine: geometry cold/warm/saved, joined-font Cancel boundary, required-original Cancel and optional icon 404. All original numerical failures and prior native failures remain; no display-completion, timing or physical-device qualification.'
+        : combinedPlan(ctx.plan)
+          ? fontDprPlan(ctx.plan)
+            ? 'One joined selected-font correctness observation per engine; WebKit additionally has two counterbalanced Full-effects DPR pairs at the same viewport. All original failures and numeric verdicts retained; no automatic retry or physical qualification.'
+            : fontCompactPlan(ctx.plan)
+              ? 'One exact selected-font cancellation per engine; WebKit additionally observes the compact saved Resume route and two muted public-effects pairs. Old failed routes remain failed; all numerical verdicts retained.'
+              : 'Fixed serial warm/saved readiness observations; WebKit additionally has two muted public-effects pairs. All numerical failures retained; no physical qualification or automatic retry.'
+          : 'One candidate correctness pilot per engine; no timing comparison, forced calibration delay, automatic retry or physical-device qualification.',
   };
 }
 export function readinessArguments(ctx, row, url, dir) {
@@ -869,6 +927,7 @@ export async function readinessAssessment(
         witness: raw?.requiredOriginalWitness,
         fallback: raw?.optionalIconFallback,
         cleanupFailure: raw?.mediaFaultCleanupFailure,
+        ...(selected.audioFault ? { audioCheck: raw?.audioCheck } : {}),
       })
     : selected.font
       ? (selected.cancelBoundary
@@ -1035,7 +1094,9 @@ export async function readinessAssessment(
     rawPerformanceGateStatus: numeric,
     numericObservationStatus: numeric,
     hitchJournalVerification: journal,
-    firstEightAllCorrectnessPassed: false,
+    ...(selected.audioFault
+      ? { firstEightRequired: false }
+      : { firstEightAllCorrectnessPassed: false }),
     performanceQualification: 'excluded',
     scope:
       'Independent readiness acknowledgment only. Raw timing failures remain non-passing; one observation per engine cannot qualify general performance.',
@@ -1079,7 +1140,15 @@ export async function runReadinessRow(ctx, row, dir, tmp) {
     row.artifactAdmission = ctx.admitted.artifacts.candidate;
     row.command = await ctx.run(
       row.id,
-      [process.execPath, ...readinessArguments(ctx, row, url, dir)],
+      [
+        process.execPath,
+        ...readinessArguments(
+          preparationPlan(ctx.plan) ? { ...ctx, plan: activePlan } : ctx,
+          row,
+          url,
+          dir,
+        ),
+      ],
       row.timeoutMs,
       {
         env: { ...ctx.cleanEnv, TMPDIR: tmp },

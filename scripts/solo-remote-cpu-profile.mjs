@@ -13,13 +13,29 @@ export const CPU_PROFILE_RECIPE =
 export const LONG_RAIL_CPU_SOURCE = 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4';
 export const LONG_RAIL_CPU_RECIPE =
   'b9afaecaadcbd0f657dd8064b9f7932c0c7ec12d6433f7d2b76f60de7ef19528';
+export const FIRST_VICTORY_CPU_SOURCE = 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17';
+export const FIRST_VICTORY_CPU_RECIPE =
+  '561510be9786c949f65e6fcf0c0352e7e892c710ec80958e7139040e3911caa1';
+const firstVictory = (plan) => plan?.phase === 'first-victory-cpu-profile';
 const longRail = (plan) => plan?.phase === 'long-rail-cpu-profile';
-const source = (plan) => (longRail(plan) ? LONG_RAIL_CPU_SOURCE : CPU_PROFILE_SOURCE);
-const recipeHash = (plan) => (longRail(plan) ? LONG_RAIL_CPU_RECIPE : CPU_PROFILE_RECIPE);
+const source = (plan) =>
+  firstVictory(plan)
+    ? FIRST_VICTORY_CPU_SOURCE
+    : longRail(plan)
+      ? LONG_RAIL_CPU_SOURCE
+      : CPU_PROFILE_SOURCE;
+const recipeHash = (plan) =>
+  firstVictory(plan)
+    ? FIRST_VICTORY_CPU_RECIPE
+    : longRail(plan)
+      ? LONG_RAIL_CPU_RECIPE
+      : CPU_PROFILE_RECIPE;
 const rowDefinition = (plan) => ({
-  id: longRail(plan)
-    ? 'long-rail-cpu-profile-chromium-candidate'
-    : 'cold-cpu-profile-chromium-candidate',
+  id: firstVictory(plan)
+    ? 'first-victory-cpu-profile-chromium-candidate'
+    : longRail(plan)
+      ? 'long-rail-cpu-profile-chromium-candidate'
+      : 'cold-cpu-profile-chromium-candidate',
   kind: 'cpu-profile',
   source: 'candidate',
   engine: 'chromium',
@@ -57,14 +73,64 @@ export function longRailProfileOrigin() {
   };
 }
 
+export function firstVictoryProfileOrigin() {
+  return {
+    run: 39044567236,
+    job: 117430670106,
+    artifact: 12105263002,
+    artifactBytes: 321167,
+    artifactSHA256: '144684a77dc08ef29353dc3a7f5f57d2cac72425f488998e01ed8b2f697cf0d3',
+    calibrationSHA256: 'ca43b506baa91e8d124dac9f4579d0e6d737416b29c2114904c264e647ef3549',
+    reportSHA256: 'cd3e2bac36df06e262f2a562be4b9d31ec9c936a66cc348afdcf784d872dd63a',
+    commandSHA256: 'cb0e3b3a776fed9c88b29c64dd29e312d13958a4ee8a71502a63b29622b52d9f',
+    rate: 2.42,
+    originalTarget: 1000,
+    originalVerification: [927.5, 986, 865],
+    newHostCalibration: false,
+    scope: 'fixed-diagnostic-factor-only',
+    predecessorScenarioStatus: 'fail',
+    predecessorCommandStatus: 'closed',
+    predecessorExitCode: 1,
+    predecessorForcedCleanup: false,
+    predecessorSurvivors: 0,
+    predecessorAmbiguous: 0,
+  };
+}
+
 export function validateCpuProfilePlan(plan) {
   assert.equal(plan.format, 'SoloHostedCpuProfilePlanV1');
   assert.equal(plan.status, 'reviewed-diagnostic-only');
-  assert(['cold-cpu-profile', 'long-rail-cpu-profile'].includes(plan.phase));
-  const current = longRail(plan);
+  assert(
+    ['cold-cpu-profile', 'long-rail-cpu-profile', 'first-victory-cpu-profile'].includes(plan.phase),
+  );
+  const victory = firstVictory(plan),
+    current = longRail(plan) || victory;
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.candidate.revision, source(plan));
-  if (current) {
+  if (victory) {
+    assert.equal(plan.sourceCohort, 'first-victory-e1cc-main8b-v1');
+    assert.equal(plan.candidate.tree, '58f19392e25384620d896098fce8616b538e318d');
+    assert.equal(plan.runtimeRevision, FIRST_VICTORY_CPU_SOURCE);
+    assert.equal(plan.candidate.run, 39037874955);
+    assert.equal(plan.candidate.artifact, 12104590541);
+    assert.deepEqual(plan.candidate.outer, {
+      bytes: 1091965213,
+      sha256: 'fb85094a61cdc329ccf8a1488b6e3ca1043ef5f249a6b33729bb04141336af1e',
+    });
+    assert.deepEqual(plan.candidate.inner, {
+      bytes: 1073790972,
+      sha256: '6c8bbb6aafe3f9d55e2fb445d5846a5e9d02ebd648c4e630889743bf76ec421e',
+    });
+    assert.equal(
+      plan.candidate.manifestSHA256,
+      '23f555db20036838cc1601f2cebf8f1a75eb62fb0c6cf36f1e1988035b3e1b64',
+    );
+    assert.equal(plan.baseline.revision, '8b01991942dc764b8aa4726851699ce1985e53ae');
+    assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
+    for (const key of ['artifact', 'reusableArtifact', 'publisher', 'buildCommand'])
+      assert.equal(plan.baseline[key], undefined);
+    assert.equal(plan.upload, undefined);
+  } else if (current) {
     assert.equal(plan.sourceCohort, 'long-rail-a6-main8b-v1');
     assert.equal(plan.candidate.tree, '6b13627e324f695b6ee8d9f2dee2eeeb7217c332');
     assert.equal(plan.runtimeRevision, '32abd322afd8243e4537ce4784e2f78ee45ecbec');
@@ -99,7 +165,7 @@ export function validateCpuProfilePlan(plan) {
   }
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
-  assert.equal(plan.cpu, current ? 4.19 : 2.46);
+  assert.equal(plan.cpu, victory ? 2.42 : current ? 4.19 : 2.46);
   assert.equal(plan.performanceExclusion, true);
   assert.equal(plan.automaticRetries, 0);
   assert.equal(plan.automaticPhaseContinuation, false);
@@ -110,12 +176,14 @@ export function validateCpuProfilePlan(plan) {
   assert.equal(plan.rowEvidenceBytes, 128 * MiB);
   assert.deepEqual(plan.rows, [rowDefinition(plan)]);
   assert.equal(plan.recipe.sha256, recipeHash(plan));
-  if (current) assert.equal(plan.recipe.bytes, 4562);
+  if (current) assert.equal(plan.recipe.bytes, victory ? 3527 : 4562);
   assert.equal(
     plan.recipe.path,
-    current
-      ? 'docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture'
-      : 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
+    victory
+      ? 'docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-e1cc.qualification.fixture'
+      : current
+        ? 'docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture'
+        : 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
   );
   assert.deepEqual(plan.profile, {
     maximumMs: 240000,
@@ -126,9 +194,20 @@ export function validateCpuProfilePlan(plan) {
     heap: false,
   });
   assert.equal(plan.release.scope, 'single-causal-cpu-profile');
-  assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
+  if (victory) {
+    assert.equal(plan.release.firstEightRequired, false);
+    assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+  } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.performanceQualification, 'excluded-cpu-profiling');
-  if (current) {
+  if (victory) {
+    assert.equal(plan.release.predecessorRun, 39044567236);
+    assert.equal(plan.release.priorProofInspected, true);
+    assert.equal(plan.release.noUnclosedOwners, true);
+    assert.equal(plan.release.ownerClosureScope, 'specific-next-chromium-r2-command-only');
+    assert.equal(plan.release.allPriorPlannedJobsClosed, undefined);
+    assert.equal(plan.release.onceOnlyBefore, '7c7cc2648331870683ac7b76850bbeff859f802e');
+    assert.deepEqual(plan.stressOrigin, firstVictoryProfileOrigin());
+  } else if (current) {
     assert.equal(plan.release.predecessorRun, 39015298582);
     assert.equal(plan.release.priorProofInspected, true);
     assert.equal(plan.release.noUnclosedOwners, true);
@@ -158,6 +237,12 @@ export function validateCpuProfilePlan(plan) {
     'scripts/solo-remote-supplemental.mjs',
     'scripts/qualify-solo-runtime.mjs',
     'scripts/run-solo-remote-correctness.mjs',
+    ...(victory
+      ? [
+          'scripts/solo-qualification-next-route.mjs',
+          'scripts/solo-qualification-hitch-journal.mjs',
+        ]
+      : []),
     ...(current
       ? [
           'scripts/soundtrack-distribution.mjs',
@@ -237,7 +322,9 @@ export async function prepareCpuProfileMode(ctx) {
   Object.assign(ctx.report, {
     performanceExclusion: true,
     performanceQualification: 'excluded-cpu-profiling',
-    firstEightAllCorrectnessPassed: false,
+    ...(firstVictory(ctx.plan)
+      ? { firstEightRequired: false }
+      : { firstEightAllCorrectnessPassed: false }),
     releaseScope: ctx.plan.release.scope,
     stressOrigin: ctx.plan.stressOrigin,
   });
@@ -252,10 +339,13 @@ export function cpuProfileArguments(ctx, url, dir) {
     '--server-fixture-access',
     '--work-probe',
     '--cadence=settled120',
-    `--cpu=${longRail(ctx.plan) ? 4.19 : 2.46}`,
+    `--cpu=${firstVictory(ctx.plan) ? 2.42 : longRail(ctx.plan) ? 4.19 : 2.46}`,
     '--browser=chromium',
     `--source-revision=${source(ctx.plan)}`,
     '--cpu-profile',
+    ...(firstVictory(ctx.plan)
+      ? ['--hitch-journal', '--authored-next-route=authored-next-geometric-v1']
+      : []),
   ];
 }
 export function cpuProfileAssessment(plan, raw, command, profileReadback) {
@@ -298,7 +388,20 @@ export function cpuProfileAssessment(plan, raw, command, profileReadback) {
     !raw.finalReadFailure &&
     !raw.failureCleanupFailure &&
     !raw.contextCleanupFailure &&
-    !raw.replayFailure;
+    !raw.replayFailure &&
+    (!firstVictory(plan) ||
+      (raw.hitchJournal?.status === 'complete' &&
+        !raw.hitchJournalFailure &&
+        raw.actions?.filter((a) => a.type === 'authored-next-route').length === 1 &&
+        raw.actions.some(
+          (a) =>
+            a.type === 'authored-next-route' &&
+            a.status === 'pass' &&
+            a.protocol === 'authored-next-geometric-v1' &&
+            a.mission === 'first-return' &&
+            a.unsettled === 0 &&
+            a.heldKeys?.length === 0,
+        )));
   const retained =
     profileReadback?.status === 'passed' &&
     profile?.status === 'retained' &&
@@ -325,7 +428,9 @@ export function cpuProfileAssessment(plan, raw, command, profileReadback) {
     profileRetention: retained ? 'pass' : 'fail',
     rawPerformanceGateStatus: raw?.performanceGateStatus ?? 'unobserved',
     performanceQualification: 'excluded-cpu-profiling',
-    firstEightAllCorrectnessPassed: false,
+    ...(firstVictory(plan)
+      ? { firstEightRequired: false }
+      : { firstEightAllCorrectnessPassed: false }),
     scope:
       'One causal JavaScript CPU profile; no timing, device, thermal, trace or prerequisite credit. Fixed stress factor is not calibrated on this host.',
   };

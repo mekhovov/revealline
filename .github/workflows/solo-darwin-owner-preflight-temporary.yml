@@ -18,8 +18,8 @@ concurrency:
 
 jobs:
   preflight:
-    # One test-closure-corrected observation; the exact e1cc preflight failure remains failed.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'
+    # One evidence-latch observation; the exact 7c7 process-tree failure remains failed.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '7c7cc2648331870683ac7b76850bbeff859f802e'
     runs-on: macos-15-intel
     timeout-minutes: 24
     outputs:
