@@ -1,0 +1,20 @@
+{
+  "format": "FpvWorldStartupDiagnostic.v1",
+  "createdAt": "2026-10-17T14:16:53.952Z",
+  "scope": "Reopen the failed public test profile without clearing caches, altering unlock state, or using another credential.",
+  "profile": "/tmp/fpv-public-fresh-fpv-worlds-fiwH3Q",
+  "first": {
+    "access": "unlocked",
+    "pending": "true",
+    "settings": false,
+    "text": "FPV / LINE\n\nPreparing game… / Підготовка гри…\n\nReload / Оновити\nBack / Назад"
+  },
+  "later": {
+    "access": "unlocked",
+    "settings": true,
+    "text": "Skip to flight selection\nFPV SIM · Worlds\nPause\nSolo\n1P\nTeam\n2P\nDuel\n2P\nSnake\nFPV Survivals\nbeta\nSIM\nbeta\nLess\nFly now\nLearn to fly\nExplore worlds\nSettings\nSound: off\nFull screen\n\nTab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back."
+  },
+  "errors": [],
+  "requests": [],
+  "consoleRows": []
+}

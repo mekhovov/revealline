@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+    # Subtest: ADVANCED_DURATION_LIMIT · en
+    not ok 1 - ADVANCED_DURATION_LIMIT · en
+      ---
+      duration_ms: 520.823459
+      type: 'test'
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2272:14'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+
+        + null
+        - 'duration-limit'
+
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'duration-limit'
+      actual: ~
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2311:12)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2272:6)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: ADVANCED_RECORDING_LIMIT · uk
+    not ok 2 - ADVANCED_RECORDING_LIMIT · uk
+      ---
+      duration_ms: 397.459625
+      type: 'test'
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2272:14'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+
+        + null
+        - 'recording-limit'
+
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'recording-limit'
+      actual: ~
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2311:12)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2272:6)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: UNKNOWN_LIMIT · en
+    not ok 3 - UNKNOWN_LIMIT · en
+      ---
+      duration_ms: 375.402375
+      type: 'test'
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2272:14'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+
+        + null
+        - 'worker-error'
+
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'worker-error'
+      actual: ~
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2311:12)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2272:6)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: untyped limit text · en
+    not ok 4 - untyped limit text · en
+      ---
+      duration_ms: 353.769959
+      type: 'test'
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2272:14'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+
+        + null
+        - 'worker-error'
+
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'worker-error'
+      actual: ~
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2311:12)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2272:6)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    1..4
+not ok 1 - Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+  ---
+  duration_ms: 1657.014042
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-world-appearance-ui.test.mjs:2258:1'
+  failureType: 'subtestsFailed'
+  error: '4 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 5
+# suites 0
+# pass 0
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2131.028709

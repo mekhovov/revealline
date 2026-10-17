@@ -1,0 +1,102 @@
+{
+  "format": "FPVExistingFailureBoundaryReview.v1",
+  "createdUTC": "2026-10-17T15:35:13.212335+00:00",
+  "scope": "Read-only arithmetic on one preserved failed native report; no new run, causal diagnosis, runtime change, performance or endurance pass.",
+  "source": {
+    "commit": "3e744a5ef7bede48eafcb79a8377bb46fb37d76f",
+    "path": "docs/fpv-authored-urban-preparation-observer-invalid-20261015.json",
+    "gitBlob": "9ce2c69cedbb06bd9b22441362cf0d4be6f078bc",
+    "bytes": 230908,
+    "sha256": "4461a69aebb553a52387ad3f75943f3b4cc143681e0b736a03f79292568d94b7",
+    "url": "https://github.com/mekhovov/revealline/blob/3e744a5ef7bede48eafcb79a8377bb46fb37d76f/docs/fpv-authored-urban-preparation-observer-invalid-20261015.json"
+  },
+  "unchangedFailure": {
+    "accepted": false,
+    "clock": {
+      "status": "invalid",
+      "reason": "Frame gap exceeded 250 ms",
+      "targetMs": 300000,
+      "elapsedMs": 176332.09999999404,
+      "wallElapsedMs": 176331,
+      "simulationMs": 175800,
+      "ticks": 8790,
+      "remainingAccumulatorMs": 15.200000002980232
+    },
+    "startedUTC": "2026-10-15T21:00:50.317Z"
+  },
+  "terminalBoundary": {
+    "previousFrame": {
+      "id": 101444,
+      "frame": 18680,
+      "phase": "frame-callback",
+      "elapsedMs": 175815.09999999404,
+      "durationMs": 1.2000000029802322,
+      "completed": true
+    },
+    "nextFrame": {
+      "id": 101448,
+      "frame": 18681,
+      "phase": "frame-callback",
+      "elapsedMs": 176332,
+      "durationMs": null,
+      "completed": false
+    },
+    "lastLifecycleInterval": {
+      "elapsedMs": 176332,
+      "intervalMs": 516.9000000059605
+    },
+    "previousEndMarkElapsedMs": 175816.29999999702,
+    "timeBetweenPreviousEndMarkAndNextBeginMarkMs": 515.7000000029802,
+    "wholeIntervalMs": 516.9000000059605,
+    "timeAfterPreviousEndMarkIncludes": "Unmarked callback epilogue, browser/task/microtask/render/scheduling time; current evidence cannot partition it."
+  },
+  "retainedObserverEvidence": {
+    "overlappingLongTasks": 0,
+    "overlappingLongAnimationFrames": 0,
+    "latestRetainedLongAnimationFrameEndElapsedMs": 171554.5,
+    "longTasksDropped": 0,
+    "longAnimationFramesDropped": 35,
+    "attributionReadFailures": 0,
+    "attributionMalformed": 0,
+    "preparationsOverlappingBoundary": 0
+  },
+  "limitations": [
+    "Previous complete mark is a synchronous authoring wall span, not exclusive CPU or exact browser callback return.",
+    "The terminal frame-callback mark is incomplete because stop precedes its finally; do not replace null with zero.",
+    "Observer stop drains only already available records; zero retained terminal overlap is not proof of absent long work.",
+    "No sampled descendants, garbage-collection events, browser scheduler, GPU completion, driver or machine-state trace exists in this report.",
+    "No changed acceptance clock or maximum-gap threshold."
+  ],
+  "recommendedNextDiagnostic": {
+    "type": "One bounded native sampled runtime trace of exact authored workload after safe headroom and approved visible profiler surface exist",
+    "maxObservationSeconds": 300,
+    "maximumGapMs": 250,
+    "sameRunInputs": [
+      "production closure and authoring hashes",
+      "Urban package/descriptor",
+      "route",
+      "quality",
+      "camera",
+      "viewport and DPR",
+      "browser version",
+      "observation policy"
+    ],
+    "capture": [
+      "JS samples and Main track",
+      "available GC/render/event-loop/compositor information",
+      "complete original endurance report even on failure",
+      "time alignment and acquisition/observer overhead limitations"
+    ],
+    "rules": [
+      "No forced GC, CPU/network throttle, hidden profiler connection, inspector bypass, new storage access or simultaneous renderer.",
+      "Set profiler/UI and viewport before starting the measured segment; any focus/viewport interruption invalidates the segment normally.",
+      "If the profiler surface is unavailable/refused, record that limitation and require a user-provided native trace; do not change the gate.",
+      "Separate profiled diagnosis from subsequent unprofiled same-workload validation and fresh actual two-hour endurance."
+    ]
+  },
+  "officialReferences": [
+    "https://developer.chrome.com/docs/web-platform/long-animation-frames",
+    "https://developer.chrome.com/docs/devtools/performance/reference",
+    "https://developer.chrome.com/docs/devtools/memory-problems"
+  ]
+}

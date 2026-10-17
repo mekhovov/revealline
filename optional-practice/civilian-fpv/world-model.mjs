@@ -1,3 +1,4 @@
+import { validateAircraftMissionCheckpoint } from './aircraft-mission-checkpoint.mjs';
 import {
   applyFlightSupport,
   initializeFlightSupport,
@@ -926,8 +927,11 @@ export function createWorldFlight({
   response = DEFAULT_RESPONSE,
   unscoredPractice = false,
   practiceEndStep = null,
+  physicalPractice = false,
+  physicalRadius = null,
 }) {
   required(typeof unscoredPractice === 'boolean', 'Invalid world practice policy');
+  required(!physicalPractice || unscoredPractice, 'Physical mission hosting requires practice');
   const source = validateWorldCourse(course);
   const rates = validateFlightResponse(response);
   required(MODES.includes(mode), 'Unsupported flight mode');
@@ -944,7 +948,8 @@ export function createWorldFlight({
     !hasSkills || mode === 'acro' || unscoredPractice,
     'Skill courses require Acro mode for scored flight',
   );
-  const rules = source.rules;
+  required(!physicalPractice || int(physicalRadius, 10, 3000), 'Invalid physical aircraft radius');
+  const rules = physicalPractice ? { ...source.rules, droneRadius: physicalRadius } : source.rules;
   const contactHunt = huntContact(source, mode);
   const momentumCatch = contactHunt?.contactPolicy === HUNT_MOMENTUM_CONTACT;
   const contactTargets = new Set(contactHunt?.targets ?? []);
@@ -960,6 +965,7 @@ export function createWorldFlight({
   let collision;
   let state;
   let disposed = false;
+  let physicalTransaction = null;
   const descriptors = new Map(source.actors.map((a) => [a.id, a]));
   const assertLive = () => {
     if (disposed) throw new Error('World flight has been disposed');
@@ -988,7 +994,7 @@ export function createWorldFlight({
     collision = createWorldCollision(source);
     try {
       required(
-        collision.clearSpawn(source.spawn, rules.droneRadius),
+        physicalPractice || collision.clearSpawn(source.spawn, rules.droneRadius),
         'Drone spawn overlaps solid geometry',
       );
       state = {
@@ -1299,10 +1305,11 @@ export function createWorldFlight({
         state.status = 'complete';
     }
   }
-  function step(input, { quantized = false } = {}) {
+  function step(input, { quantized = false, motion = null } = {}) {
     assertLive();
     const command = quantized ? validateCommand(input) : quantizeWorldInput(input);
     if (state.status !== 'active') return snapshot();
+    required(Boolean(motion) === physicalPractice, 'Physical mission motion is required');
     if (!unscoredPractice && state.ticks >= rules.maxTicks) {
       state.status = 'expired';
       return snapshot();
@@ -1320,22 +1327,29 @@ export function createWorldFlight({
       : null;
     const wasGrounded = state.grounded;
     const contactPoses = pursuit
-      ? new Map(state.actors.filter((a) => a.pursuit).map((a) => [a.id, clone(a)]))
+      ? new Map(
+          (physicalTransaction?.saved.actors ?? state.actors)
+            .filter((a) => a.pursuit)
+            .map((a) => [a.id, clone(a)]),
+        )
       : null;
     const pendingCatches = [];
-    const motions = moveActors();
+    const motions = physicalTransaction?.motions ?? moveActors();
     const delta = {};
-    advanceFlightAir(state, command, mode, rates, delta);
-    const impactSpeed = length(state.velocity);
+    if (motion) {
+      state.velocity = { ...motion.velocity };
+      state.orientation = [...motion.orientation];
+      state.angular = { ...motion.angular };
+    } else advanceFlightAir(state, command, mode, rates, delta);
+    const impactSpeed = motion?.landingSpeed ?? length(state.velocity);
     const tailMotions = (state.hunt?.tail ?? []).map((point, index) => ({
       id: huntTailId(index),
       from: { ...point, y: point.y - contactHunt.tail.radius },
       to: { ...point, y: point.y - contactHunt.tail.radius },
     }));
-    const moved = collision.moveSphere(before, delta, rules.droneRadius, [
-      ...motions,
-      ...tailMotions,
-    ]);
+    const moved =
+      motion ??
+      collision.moveSphere(before, delta, rules.droneRadius, [...motions, ...tailMotions]);
     state.position = moved.position;
     if (state.contactCooldown > 0) state.contactCooldown--;
     for (const hit of moved.contacts) {
@@ -1372,7 +1386,7 @@ export function createWorldFlight({
       );
       // Only an accepted opt-in catch retains its incoming momentum. Keep the
       // swept contact position and all other hull/support responses unchanged.
-      if (!momentumCatch || !caught) {
+      if (!motion && (!momentumCatch || !caught)) {
         state.velocity = projectContactVelocity(state.velocity, hit, into);
       }
       const hard = hit.moving || hit.normal.y < 866025 || impactSpeed > 1500;
@@ -1398,7 +1412,7 @@ export function createWorldFlight({
         }
       }
     }
-    for (const k of AXES) {
+    for (const k of motion ? [] : AXES) {
       const n = clamp(state.position[k], source.bounds.min[k], source.bounds.max[k]);
       if (n !== state.position[k]) {
         state.position[k] = n;
@@ -1406,8 +1420,15 @@ export function createWorldFlight({
         state.contacts++;
       }
     }
-    const ground = collision.support(state.position, rules.droneRadius, 60);
-    applyFlightSupport(state, ground, wasGrounded, impactSpeed);
+    if (motion) {
+      state.grounded = motion.grounded;
+      state.support = clone(motion.support);
+      state.landingSpeed = motion.landingSpeed;
+      state.landingTilt = motion.landingTilt;
+    } else {
+      const ground = collision.support(state.position, rules.droneRadius, 60);
+      applyFlightSupport(state, ground, wasGrounded, impactSpeed);
+    }
     weapons(command, motions, before);
     // Successor contacts are committed only after all native hull damage and
     // projectile impacts. A fatal transaction cannot also award a catch.
@@ -1437,6 +1458,7 @@ export function createWorldFlight({
     else evaluate(before, command, skillBefore, motions);
     if (!unscoredPractice && state.status === 'active' && state.ticks >= rules.maxTicks)
       state.status = 'expired';
+    physicalTransaction = null;
     return snapshot();
   }
   const flight = {
@@ -1461,6 +1483,44 @@ export function createWorldFlight({
       }
     },
   };
+  if (physicalPractice) {
+    flight.physicalTail = () =>
+      contactHunt
+        ? {
+            radius: contactHunt.tail.radius,
+            ids: Array.from({ length: HUNT_TAIL_LIMITS.links }, (_, index) => huntTailId(index)),
+          }
+        : null;
+    flight.physicalCheckpoint = () => ({
+      format: 'AircraftMissionCheckpoint.v1',
+      identity: dataIdentity(identity),
+      state: clone(state),
+      feedback: null,
+    });
+    flight.validatePhysicalCheckpoint = (value) =>
+      validateAircraftMissionCheckpoint(value, { identity, source, mode, world: true });
+    flight.restorePhysicalCheckpoint = (value) => {
+      required(!physicalTransaction, 'A physical mission is pending');
+      const saved = flight.validatePhysicalCheckpoint(value);
+      state = clone(saved.state);
+      state.status = state.status === 'active' ? 'paused' : state.status;
+      for (const actor of state.actors) collision.placeActor(actor);
+      return snapshot();
+    };
+    flight.preparePhysicalStep = () => {
+      required(!physicalTransaction, 'A physical mission is pending');
+      const saved = clone(state);
+      const motions = moveActors();
+      physicalTransaction = { saved, motions };
+      return clone(motions);
+    };
+    flight.cancelPhysicalStep = () => {
+      if (!physicalTransaction) return;
+      state = physicalTransaction.saved;
+      for (const actor of state.actors) collision.placeActor(actor);
+      physicalTransaction = null;
+    };
+  }
   if (unscoredPractice) unscoredWorldFlights.add(flight);
   return flight;
 }
