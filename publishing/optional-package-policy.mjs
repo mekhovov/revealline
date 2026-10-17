@@ -635,7 +635,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ...policy,
         // Original aggregate locale files are retained as source hashes, while
         // only selected messages ship. Academy's reviewed input inventory is
-        // 12,992,824 bytes with archives, bench inspection and optional challenges.
+        // 12,993,305 bytes with archives, bench inspection and optional challenges.
         // The 12 MiB + 448 KiB input allowance retains aggregate locale hashes;
         // those full locale inputs do not ship in standalone SIM archives.
         ...(id === 'civilian-fpv' ? { sourceInputBytes: 12 * 1024 * 1024 + 448 * 1024 } : {}),
@@ -703,7 +703,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           // Ghost sampling, bench inspection and optional challenges add five explicit
           // files to each complete runtime/source envelope. The installed-core
           // Academy cache includes the shared full locale catalog; its measured
-          // 12,819,406-byte closure requires a 256 KiB allowance above 12 MiB.
+          // 12,819,887-byte closure requires a 256 KiB allowance above 12 MiB.
           // Standalone Academy remains below 12 MiB; World stays at 20 MiB.
           // World also admits its single Regional Advanced adapter.
           // Academy now carries the same pinned 4.35 MB Rapier build as World.
