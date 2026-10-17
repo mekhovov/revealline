@@ -1,0 +1,415 @@
+{
+  "format": "AdvancedRegionalCapacityEvidence.v1",
+  "generatedAt": "2026-10-16T04:19:21.795Z",
+  "host": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "release": "25.6.0",
+    "node": "v22.22.2",
+    "cpu": "Apple M4 Pro",
+    "logicalProcessors": 14
+  },
+  "status": "experimental",
+  "scored": false,
+  "minimumRealTimeCapacity": 2,
+  "scope": "Actual dedicated Node worker, production message protocol, verified terrain admission, complete rollback snapshots, compact recording and landing. Initialization is measured separately.",
+  "limits": [
+    "One macOS host; does not qualify supported browsers, architectures, mobile/native wrappers, or the full device matrix.",
+    "Small stationary fixture with one terrain frame; does not establish dense-scene, streamed-frame, or maximum-duration capacity.",
+    "Single measurement per profile; runtime load and warm-up can change measured capacity."
+  ],
+  "passed": true,
+  "runs": [
+    {
+      "profile": "terrain-v1",
+      "missionTicks": 500,
+      "simulatedSeconds": 10,
+      "elapsedMs": 1815.6171659999998,
+      "realTimeCapacity": 5.507769031525009,
+      "passesCapacityGate": true,
+      "observation": {
+        "timing": "CPU counter snapshots bracket this measured loop; initialization, export and recovery are outside it. Process CPU includes all process threads. Event-loop utilization describes the main thread only.",
+        "startedAt": "2026-10-16T04:19:17.049Z",
+        "endedAt": "2026-10-16T04:19:18.866Z",
+        "hostSampleElapsedMs": 1816.9587500000002,
+        "loadAveragesBefore": [
+          48.60888671875,
+          29.40771484375,
+          22.7216796875
+        ],
+        "loadAveragesAfter": [
+          48.60888671875,
+          29.40771484375,
+          22.7216796875
+        ],
+        "hostCpuBusyPercent": [
+          98.9010989010989,
+          98.35164835164835,
+          98.9010989010989,
+          98.9010989010989,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "meanHostCpuBusyPercent": 99.64678178963894,
+        "processCpuMicroseconds": {
+          "user": 2122548,
+          "system": 180924
+        },
+        "processCpuToWallRatio": 1.2686991746584975,
+        "mainEventLoop": {
+          "idle": 1122.789261,
+          "active": 692.8896970006153,
+          "utilization": 0.38161465381721993
+        },
+        "freeBytesBefore": 780058624,
+        "freeBytesAfter": 145719296,
+        "totalBytes": 51539607552,
+        "processMemoryBefore": {
+          "rss": 367558656,
+          "heapTotal": 66895872,
+          "heapUsed": 42638480,
+          "external": 7895572,
+          "arrayBuffers": 2352774
+        },
+        "processMemoryAfter": {
+          "rss": 614367232,
+          "heapTotal": 67682304,
+          "heapUsed": 41129840,
+          "external": 7757366,
+          "arrayBuffers": 2214528
+        },
+        "missionIntervalMs": {
+          "median": 2.3607500000000528,
+          "p95": 9.949124999999867,
+          "maximum": 44.28370800000016
+        }
+      },
+      "preparationMs": 719.679084,
+      "grounded": true,
+      "contacts": 1,
+      "recordingBytes": 112242,
+      "recoveryBytes": 662339,
+      "terrainColliders": 2,
+      "triangles": 4096,
+      "terrainFrames": 1,
+      "terrainEvents": 1
+    },
+    {
+      "profile": "terrain-scenery-v1",
+      "missionTicks": 500,
+      "simulatedSeconds": 10,
+      "elapsedMs": 1577.4246249999997,
+      "realTimeCapacity": 6.339447122552688,
+      "passesCapacityGate": true,
+      "observation": {
+        "timing": "CPU counter snapshots bracket this measured loop; initialization, export and recovery are outside it. Process CPU includes all process threads. Event-loop utilization describes the main thread only.",
+        "startedAt": "2026-10-16T04:19:20.140Z",
+        "endedAt": "2026-10-16T04:19:21.718Z",
+        "hostSampleElapsedMs": 1577.5783339999998,
+        "loadAveragesBefore": [
+          47.27880859375,
+          29.45068359375,
+          22.77587890625
+        ],
+        "loadAveragesAfter": [
+          47.27880859375,
+          29.45068359375,
+          22.77587890625
+        ],
+        "hostCpuBusyPercent": [
+          99.35897435897436,
+          98.08917197452229,
+          98.72611464968153,
+          98.73417721518987,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          99.36708860759494,
+          99.36708860759494,
+          100,
+          99.36708860759494
+        ],
+        "meanHostCpuBusyPercent": 99.50069314436806,
+        "processCpuMicroseconds": {
+          "user": 928686,
+          "system": 78637
+        },
+        "processCpuToWallRatio": 0.6385870893831141,
+        "mainEventLoop": {
+          "idle": 930.1361710000001,
+          "active": 647.3171629999615,
+          "utilization": 0.4103558241932609
+        },
+        "freeBytesBefore": 120832000,
+        "freeBytesAfter": 144015360,
+        "totalBytes": 51539607552,
+        "processMemoryBefore": {
+          "rss": 612941824,
+          "heapTotal": 69287936,
+          "heapUsed": 46281960,
+          "external": 8082080,
+          "arrayBuffers": 2539242
+        },
+        "processMemoryAfter": {
+          "rss": 592052224,
+          "heapTotal": 69812224,
+          "heapUsed": 43254216,
+          "external": 7943742,
+          "arrayBuffers": 2400904
+        },
+        "missionIntervalMs": {
+          "median": 2.203667000000678,
+          "p95": 6.965709000000061,
+          "maximum": 73.90541699999994
+        }
+      },
+      "preparationMs": 1234.7714580000002,
+      "grounded": true,
+      "contacts": 1,
+      "recordingBytes": 113036,
+      "recoveryBytes": 665871,
+      "terrainColliders": 6,
+      "triangles": 4104,
+      "terrainFrames": 1,
+      "terrainEvents": 1
+    }
+  ],
+  "sources": [
+    {
+      "path": "authoring/fpv-worlds/regions/endurance-fixture.mjs",
+      "sha256": "7b627678c4ff2ff9d2bc11d0b67ab16e04322aedca22b436901a9e366e3d4c12",
+      "bytes": 4736
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "bytes": 13117
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816",
+      "bytes": 1265063
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "bytes": 417
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "bytes": 43702
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-controller.mjs",
+      "sha256": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30",
+      "bytes": 9865
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+      "sha256": "ecdc2b84abaf06e7fcdbbd87929402deb200d9a540a6a52b02b01fad7b98dc66",
+      "bytes": 24165
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "sha256": "3d0fddb60a45bf5e5bb4e8a57bb5329d8eefa7a5ff8c8e8b0d6f858d78c73691",
+      "bytes": 62846
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "sha256": "bb03e8493a578d9d845637fcc1f90a9820400a1b75474fce71c73d4b83c7e5ee",
+      "bytes": 11986
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "sha256": "0e2e763c4bf25005158b8af15a581228fd6f51ec0f5a77f5667fa6a42d5a4581",
+      "bytes": 4000
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "sha256": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3",
+      "bytes": 6216
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-contact.mjs",
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6",
+      "bytes": 2482
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-support.mjs",
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af",
+      "bytes": 1815
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "bytes": 3062
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rates.mjs",
+      "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5",
+      "bytes": 9599
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-locations.mjs",
+      "sha256": "acf37b9a20ac955e49c3bad30822d909ab4db5fa6a7f85a35de4bab512f99902",
+      "bytes": 7936
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/frame-transaction.mjs",
+      "sha256": "b059fead0f4e67e5401175b2e12f43c8f58d98ceadadcda3ddd65b7e1f781988",
+      "bytes": 3529
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs",
+      "sha256": "b9a4afcdce5f9d02f9210f501b474c09e17220bd656e108712b828f8f3c78233",
+      "bytes": 5727
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs",
+      "sha256": "a57dcc5eff03a659fd918cbc933e3a49f1d29241732623887e3caf3d9c3fb832",
+      "bytes": 14759
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs",
+      "sha256": "8802491835a0f42834bf920e21dc9b6b938ca9c00c6b2829ba033d7cea50d883",
+      "bytes": 5192
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/region-manifest.mjs",
+      "sha256": "c07631c6661450b7a59e1ce069e2ce100064327c1e76c2e422f3ff29eea1cc68",
+      "bytes": 12708
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/region-motion-query.mjs",
+      "sha256": "fba3960fe9e90c0d56d7fbf77711843342b8c9230cd7502dffa9df2bda9686ce",
+      "bytes": 3931
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/restore-containment.mjs",
+      "sha256": "8b23f3519141e29894827ebb84ab7bce8449b87136468d4f46f3df352db762c3",
+      "bytes": 8320
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs",
+      "sha256": "a284324fcd0cceeec6ec398df11c20a5382fa4cedfeb7af9caacef5cff5b290f",
+      "bytes": 12760
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+      "sha256": "184d34c5cff615fd17a00097d8f3cd450a086573bf1e88953a7e92226e389765",
+      "bytes": 16032
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+      "sha256": "f11a55b1cbb3144dbe896eb9156a3d9bb7eb4938596f8903459e025d688c9cf6",
+      "bytes": 7182
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-surface.mjs",
+      "sha256": "c676d16f9c1690f1e8d095c1bdbae5f1b5aac11675fbe8253012881a0428ef56",
+      "bytes": 14816
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/source-window.mjs",
+      "sha256": "42a9b850704000900c16855bccfef6adf4e5925565677eb2d99c4401651fe3f9",
+      "bytes": 10162
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-admission.mjs",
+      "sha256": "35b9af942b3b1526c63f6b41ab030e43806cee74715adbf0a71ada1cbf023c59",
+      "bytes": 9420
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-cell.mjs",
+      "sha256": "9e1d97897578999d1d9c3641b31fdaca96110d7bb848bf0f6e55bbf4138cdc54",
+      "bytes": 6116
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-normals.mjs",
+      "sha256": "94c319af2ca720e8224ac7a975cff8af36b0dd988998e3f559ad820d10505c2e",
+      "bytes": 1384
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-surface.mjs",
+      "sha256": "b5ad2a8b8da1331ae9d7c1d940e00806ca4a50eec0c56463627be09468f91b9f",
+      "bytes": 20457
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/urban-ground-surface.mjs",
+      "sha256": "0ef2eadfd74b7901cd87732769967d5fea2b716d0d918073d1e78c32f8c81ff0",
+      "bytes": 9408
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
+      "sha256": "18573585c1b1f59fe62a9eaefe62275135716291cea072d4acdd3e5a361ecbb2",
+      "bytes": 2562
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+      "sha256": "812b46df0d4c4fef9c76c1b2fc6c7c570b31d9ba83b72bca97ae2e5c1979ad0c",
+      "bytes": 16559
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+      "sha256": "07d5b719b8a37a1f6deec0838c594f575fabce6d1203f3adab96b2723a771fb5",
+      "bytes": 14405
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-terrain-window.mjs",
+      "sha256": "4a4df9f20e84f20cb2c66f2dbc1ea1b38bed12937a5b363509dd90ddea46bca0",
+      "bytes": 12375
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "bytes": 7509
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "bytes": 4340292
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "bytes": 1458113
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "bytes": 662772
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "sha256": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538",
+      "bytes": 12607
+    },
+    {
+      "path": "scripts/fpv-regional-contact-capacity.mjs",
+      "sha256": "5a357d574cc721018f13d04674db8795f42589a80886a3846925c9bdb6f71545",
+      "bytes": 8570
+    },
+    {
+      "path": "scripts/fpv-regional-contact-worker.mjs",
+      "sha256": "91a0b9d8fa00113c81897043f25dfc41655cc5ae137533b8504e15674d7a7638",
+      "bytes": 551
+    }
+  ]
+}

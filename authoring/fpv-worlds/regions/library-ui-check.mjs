@@ -5,7 +5,11 @@ const hash = 'a'.repeat(64),
     revision: 'r1',
     title: { en: 'Fixture region', uk: 'Тестовий регіон' },
   };
-const pin = { url: 'https://example.invalid/delivery.json', bytes: 100, sha256: hash };
+const pin = {
+  url: 'https://example.invalid/delivery.json',
+  bytes: 100,
+  sha256: hash,
+};
 const row = { id: descriptor.id, title: descriptor.title, pin };
 const record = {
   id: descriptor.id,
@@ -40,9 +44,13 @@ document.getElementById('run').onclick = async () => {
     delayedLoad = null,
     delayedHost = null,
     delayedCommit = null,
+    delayedMetadata = null,
+    nextList = null,
     delayedTransfer = null,
     locale = 'en',
-    removedGeneration = null;
+    removedGeneration = null,
+    rejectRemoval = false,
+    installFailure = null;
   const el = (tag, text, className) => {
     const node = document.createElement(tag);
     if (text !== undefined) node.textContent = text;
@@ -78,7 +86,11 @@ document.getElementById('run').onclick = async () => {
     simulatedTime = end;
   };
   const store = {
-    list: async () => [...stored],
+    list: async () => {
+      const pending = nextList;
+      nextList = null;
+      return pending ? pending.promise : [...stored];
+    },
     inspect: async () => ({ descriptor, sha256: hash, pin }),
     async install(value, { signal, onProgress }) {
       signal.throwIfAborted();
@@ -99,9 +111,11 @@ document.getElementById('run').onclick = async () => {
         }
       }
       signal.throwIfAborted();
+      if (installFailure) throw installFailure;
       onProgress({ phase: 'commit', loadedBytes: 1000, totalBytes: 1000 });
       if (delayedCommit) await delayedCommit.promise;
-      stored = [record];
+      stored = [...stored.filter((item) => item.sha256 !== hash), record];
+      nextList = delayedMetadata;
       return record;
     },
     async load(id, { sha256 }) {
@@ -109,13 +123,21 @@ document.getElementById('run').onclick = async () => {
       if (delayedLoad) await delayedLoad.promise;
       return { verifiedFixture: true };
     },
-    removalSnapshot: async () => ({
+    removalSnapshot: async (id, { sha256 } = {}) => ({
       id: descriptor.id,
       title: descriptor.title,
       generation: 7,
-      revisions: [record],
-      bytes: 1000,
+      revisions: [...stored],
+      sha256,
+      revision: descriptor.revision,
+      bytes: sha256 ? 1000 : stored.length * 1000,
     }),
+    async removeRevision(id, sha256, { expectedGeneration }) {
+      assert(id === descriptor.id && sha256 === hash, 'Removal must match reviewed version');
+      if (rejectRemoval) throw new Error('Generation changed');
+      removedGeneration = expectedGeneration;
+      stored = stored.filter((item) => item.sha256 !== sha256);
+    },
     async remove(id, { expectedGeneration }) {
       removedGeneration = expectedGeneration;
       stored = [];
@@ -173,12 +195,64 @@ document.getElementById('run').onclick = async () => {
     lines.push('PASS navigation invalidates an asynchronous host preparation lease');
     ui.open();
     await settled();
+    stored.push({
+      ...record,
+      sha256: 'b'.repeat(64),
+      descriptor: { ...descriptor, revision: 'r2' },
+    });
+    ui.open();
+    await settled();
+    click('remove');
+    await settled();
+    assert(
+      fixture.textContent.includes('Remove version r1') &&
+        fixture.textContent.includes('Other saved versions and saved places are kept'),
+      'Default confirmation names one version and retention',
+    );
+    ui.deactivate();
+    ui.open();
+    await settled();
+    assert(
+      !fixture.querySelector('[data-region-action="confirm-remove"]') && stored.length === 2,
+      'Leaving the confirmation never deletes a revision',
+    );
+    click('remove');
+    await settled();
+    rejectRemoval = true;
+    click('confirm-remove');
+    await settled();
+    ((rejectRemoval = false), (installFailure = null));
+    assert(
+      stored.length === 2 && fixture.textContent.includes('Existing downloads are retained'),
+      'Stale review failure preserves both revisions and exposes retry',
+    );
     click('remove');
     await settled();
     click('confirm-remove');
     await settled();
+    assert(
+      stored.length === 1 && stored[0].sha256 === 'b'.repeat(64),
+      'Default removal preserves other revision',
+    );
+    assert(
+      fixture.querySelector('[data-region-action="fly"]'),
+      'Retained revision remains flyable',
+    );
+    stored.push(record);
+    ui.open();
+    await settled();
+    click('remove-all');
+    await settled();
+    assert(
+      fixture.textContent.includes('Remove all 2'),
+      'All-version removal has its own explicit confirmation',
+    );
+    click('confirm-remove');
+    await settled();
     assert(removedGeneration === 7 && stored.length === 0, 'Removal must use reviewed generation');
-    lines.push('PASS reviewed, generation-guarded removal');
+    lines.push(
+      'PASS exact-version default preserves another revision; separate guarded all-version confirmation',
+    );
     delayedCommit = deferred();
     click('install');
     await settled();
@@ -211,7 +285,11 @@ document.getElementById('run').onclick = async () => {
     await settled();
     for (let i = 1; i <= 4; i++) {
       advance(60000);
-      delayedTransfer.progress({ phase: 'download', loadedBytes: i * 100, totalBytes: 1000 });
+      delayedTransfer.progress({
+        phase: 'download',
+        loadedBytes: i * 100,
+        totalBytes: 1000,
+      });
       await settled();
     }
     assert(
@@ -251,6 +329,91 @@ document.getElementById('run').onclick = async () => {
       delayedTransfer = null;
     }
     lines.push('PASS EN/UK timeout feedback, no stale commit/launch and reachable retry');
+
+    stored = [
+      { ...record, sha256: 'b'.repeat(64), descriptor: { ...descriptor, revision: 'retained' } },
+    ];
+    ui.open();
+    await settled();
+    installFailure = new DOMException('Unexposed browser detail', 'QuotaExceededError');
+    for (const language of ['en', 'uk']) {
+      locale = language;
+      ui.refresh();
+      click('install');
+      await settled();
+      assert(
+        fixture.textContent.includes(
+          language === 'en' ? 'Not enough device storage' : 'Недостатньо місця',
+        ) &&
+          fixture.textContent.includes(
+            language === 'en' ? 'Remove this version' : 'Вилучити цю версію',
+          ),
+        'Storage-full guidance offers explicit scenery management in both languages',
+      );
+      assert(
+        stored.length === 1 && stored[0].sha256 === 'b'.repeat(64) && flights === 1,
+        'Quota failure keeps the prior revision without automatic removal or flight',
+      );
+      assert(
+        !fixture.textContent.includes('Unexposed browser detail'),
+        'Browser details remain private',
+      );
+    }
+    installFailure = null;
+    click('install');
+    await settled();
+    assert(
+      stored.length === 2 && flights === 1,
+      'Explicit retry saves alongside the retained revision',
+    );
+    lines.push(
+      'PASS EN/UK storage-full guidance preserves the old revision and allows explicit retry',
+    );
+
+    locale = 'en';
+    ui.refresh();
+    for (const recovery of ['reopen', 'deadline']) {
+      click('remove');
+      await settled();
+      click('confirm-remove');
+      await settled();
+      delayedMetadata = deferred();
+      click('install');
+      await settled();
+      assert(stored.length === 2, 'Save completed before the metadata refresh stalled');
+      if (recovery === 'reopen') {
+        ui.deactivate();
+        ui.open();
+      } else {
+        advance(120000);
+        await settled();
+        assert(
+          fixture.textContent.includes('Saved changes are retained'),
+          'A metadata timeout must not report the committed save as lost',
+        );
+        ui.open();
+      }
+      await settled();
+      assert(
+        fixture.querySelectorAll('[data-region-action="fly"]').length === 2,
+        'Recovery shows both committed revisions',
+      );
+      assert(
+        !fixture.querySelector('[data-region-action="fly"]').disabled,
+        'Recovered cards remain usable',
+      );
+      delayedMetadata.resolve([]);
+      delayedMetadata = null;
+      await settled();
+      assert(
+        fixture.querySelectorAll('[data-region-action="fly"]').length === 2,
+        'Late metadata cannot overwrite the recovered list',
+      );
+      assert(flights === 1 && timers.size === 0, 'Recovery never launches and releases all timers');
+    }
+    lines.push(
+      'PASS committed metadata stall recovers on reopen or deadline; retained versions and late-read ownership remain safe',
+    );
 
     output.textContent = `${lines.join('\n')}\nPASS ${lines.length}/${lines.length}`;
   } catch (error) {

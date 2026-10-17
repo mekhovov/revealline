@@ -1,8 +1,16 @@
 import { createRestoreContainment } from './restore-containment.mjs';
-import { createRegionMotionQuery, createRegionFlightSupportQuery } from './region-motion-query.mjs';
+import {
+  createRegionMotionQuery,
+  createRegionMotionCoverageQuery,
+  createRegionFlightSupportQuery,
+} from './region-motion-query.mjs';
 import * as THREE from '../vendor/three.module.js';
 import RAPIER from '../vendor/rapier/rapier.mjs';
-import { validateRegionManifest, SPARSE_SCENERY_FORMAT } from './region-manifest.mjs';
+import {
+  validateRegionManifest,
+  regionalOriginReachMm,
+  SPARSE_SCENERY_FORMAT,
+} from './region-manifest.mjs';
 import {
   validateScenerySource,
   scenerySourceCell,
@@ -11,7 +19,7 @@ import {
 } from './indexed-scenery-cell.mjs';
 import { initWorldRuntime } from '../world-collision.mjs';
 
-import { createScenerySurface, validateScenerySurface } from './scenery-surface.mjs';
+import { createScenerySurface, validateScenerySurface, sceneryMaterialStyle } from './scenery-surface.mjs';
 
 const fail = (condition, message) => {
   if (!condition) throw new TypeError(message);
@@ -83,6 +91,7 @@ export async function prepareSceneryWindow(
     originMm = { x: 0, y: 0, z: 0 },
     maxGeometryBytes = 8 * 1024 * 1024,
     surfaceStyle = 'plain',
+    surfaceQuality = 'balanced',
   } = {},
 ) {
   const manifest = validateRegionManifest(manifestInput),
@@ -91,7 +100,7 @@ export async function prepareSceneryWindow(
     Array.isArray(cellsInput) && (cellsInput.length > 0 || sparse) && cellsInput.length <= 25,
     'Scenery needs 1–25 cells',
   );
-  validateScenerySurface(surfaceStyle);
+  validateScenerySurface(surfaceStyle, surfaceQuality);
   const sources = cellsInput.map(validateScenerySource),
     cells = sources.map(scenerySourceCell);
   fail(integerPosition(originMm), 'Invalid local origin');
@@ -130,8 +139,10 @@ export async function prepareSceneryWindow(
       'Scenery exceeds region vertical bounds',
     );
     fail(
-      Math.abs(cell.x * cell.cellSizeMm - originMm.x) <= 640000 &&
-        Math.abs(cell.z * cell.cellSizeMm - originMm.z) <= 640000 &&
+      Math.abs(cell.x * cell.cellSizeMm - originMm.x) <=
+        regionalOriginReachMm(manifest.grid.cellSizeMm) &&
+        Math.abs(cell.z * cell.cellSizeMm - originMm.z) <=
+          regionalOriginReachMm(manifest.grid.cellSizeMm) &&
         Math.abs(originMm.y) <= 2000000,
       'Scenery window must use a nearby origin',
     );
@@ -142,7 +153,9 @@ export async function prepareSceneryWindow(
     'Duplicate scenery cells',
   );
   fail(
-    requiredChunkIds.every((id) => suppliedIds.has(id) || (sparse && chunks.get(id)?.assets.length === 0)),
+    requiredChunkIds.every(
+      (id) => suppliedIds.has(id) || (sparse && chunks.get(id)?.assets.length === 0),
+    ),
     'Required scenery missing',
   );
   // Known-empty coverage comes only from this validated, hash-bound manifest.
@@ -151,10 +164,14 @@ export async function prepareSceneryWindow(
     const chunk = chunks.get(id);
     fail(chunk, 'Unknown required scenery cell');
     if (sparse && chunk.assets.length === 0) {
-      fail(Math.abs(chunk.x * manifest.grid.cellSizeMm - originMm.x) <= 640000 &&
-        Math.abs(chunk.z * manifest.grid.cellSizeMm - originMm.z) <= 640000 &&
-        Math.abs(originMm.y) <= 2000000,
-      'Scenery window must use a nearby origin');
+      fail(
+        Math.abs(chunk.x * manifest.grid.cellSizeMm - originMm.x) <=
+          regionalOriginReachMm(manifest.grid.cellSizeMm) &&
+          Math.abs(chunk.z * manifest.grid.cellSizeMm - originMm.z) <=
+            regionalOriginReachMm(manifest.grid.cellSizeMm) &&
+          Math.abs(originMm.y) <= 2000000,
+        'Scenery window must use a nearby origin',
+      );
       byCell.set(`${chunk.x},${chunk.z}`, chunk);
     }
   }
@@ -197,7 +214,9 @@ export async function prepareSceneryWindow(
       for (const surface of compileScenerySource(source).surfaces) {
         const { positions, indices } = surface;
         const textureKey = surface.textureKey ?? '';
+        const materialStyle = sceneryMaterialStyle(surfaceStyle, surface);
         const key = JSON.stringify([
+          materialStyle,
           surface.color,
           textureKey,
           surface.alphaMode ?? 'OPAQUE',
@@ -208,7 +227,8 @@ export async function prepareSceneryWindow(
         let material = byColor.get(key);
         if (!material) {
           material = createScenerySurface({
-            style: surface.texture ? 'plain' : surfaceStyle,
+            style: materialStyle,
+            quality: surfaceQuality,
             color: surface.color,
             originMm,
           });
@@ -279,11 +299,22 @@ export async function prepareSceneryWindow(
     return true;
   }
   return Object.freeze({
-    prepareRestoreProof: (assertCurrent) => { live(); return restoreContainment.prepare(assertCurrent); },
+    motionCoverage: createRegionMotionCoverageQuery({ covers, live }),
+    prepareRestoreProof: (assertCurrent) => {
+      live();
+      return restoreContainment.prepare(assertCurrent);
+    },
     restoreClearance(positionMm, radiusMm = 220) {
       live();
-      fail(finitePosition(positionMm) && Number.isSafeInteger(radiusMm) && radiusMm > 0 && radiusMm <= 2000, 'Invalid restore query');
-      if (!covers(positionMm, positionMm, radiusMm)) return { status: 'ambiguous', reason: 'unknown-cell' };
+      fail(
+        finitePosition(positionMm) &&
+          Number.isSafeInteger(radiusMm) &&
+          radiusMm > 0 &&
+          radiusMm <= 2000,
+        'Invalid restore query',
+      );
+      if (!covers(positionMm, positionMm, radiusMm))
+        return { status: 'ambiguous', reason: 'unknown-cell' };
       return restoreContainment.classify(local(positionMm));
     },
     restoreSnapshot: restoreContainment.snapshot,
@@ -306,6 +337,23 @@ export async function prepareSceneryWindow(
     }),
     group,
     // Read actual Rapier sets only on explicit diagnostic demand, never after free().
+    collisionMeshes() {
+      live();
+      return sources.flatMap((source) => {
+        const cell = scenerySourceCell(source);
+        return compileScenerySource(source).surfaces.flatMap((surface, index) =>
+          surface.collision === 'visual-only' ? [] : [{
+            id: `scenery:${cell.chunkId}:${index}`,
+            vertices: Array.from(surface.positions),
+            indices: Array.from(surface.indices),
+            translation: {
+              x: (cell.x * cell.cellSizeMm - originMm.x) / 1000,
+              y: -originMm.y / 1000,
+              z: (cell.z * cell.cellSizeMm - originMm.z) / 1000,
+            },
+          }]);
+      });
+    },
     collisionSnapshot: () => ({
       worlds: disposed ? 0 : 1,
       colliders: disposed ? 0 : world.colliders.len(),

@@ -1,0 +1,281 @@
+{
+  "phase": "playing",
+  "time": 292.98,
+  "renderer": "Phaser 4.2.1 WebGL",
+  "logicalWidth": 960,
+  "logicalHeight": 540,
+  "backingWidth": 960,
+  "backingHeight": 540,
+  "atlas": {
+    "width": 2040,
+    "height": 1964,
+    "maxTextureSize": 2048,
+    "spriteRGBABytes": 16026240,
+    "pages": [
+      {
+        "index": 0,
+        "width": 2040,
+        "height": 1964,
+        "frameCount": 1327
+      }
+    ],
+    "textures": 7,
+    "worldRGBABytes": 12441600,
+    "worldTiles": [
+      {
+        "index": 0,
+        "x": 0,
+        "y": 0,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 1,
+        "x": 960,
+        "y": 0,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 2,
+        "x": 1920,
+        "y": 0,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 3,
+        "x": 0,
+        "y": 540,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 4,
+        "x": 960,
+        "y": 540,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 5,
+        "x": 1920,
+        "y": 540,
+        "width": 960,
+        "height": 540
+      }
+    ],
+    "baseRGBABytes": 28467840,
+    "groundRGBABytes": 0,
+    "groundTileEdge": 256,
+    "retainedCanvasBytes": 28467840,
+    "preparationScratchBytes": 16384,
+    "customActorFrames": 0,
+    "acceptedActorOverrides": [],
+    "combatStateFrames": 420,
+    "escortFrames": 24,
+    "soldierFrames": 216,
+    "machineryFrames": 36,
+    "heroFrames": 12,
+    "equipmentFrames": 13,
+    "remainsFrames": 120,
+    "defeatFrames": 480,
+    "frameCount": 1327
+  },
+  "heroArtwork": {
+    "assetId": "player.scout.detailed.field-kit",
+    "playerSlot": "player.scout.detailed",
+    "rotorCount": 4,
+    "visibleDiameter": 34,
+    "bakedFrameSize": 64,
+    "rotorFrames": 12,
+    "rotorRadii": [
+      9.254350728498977,
+      9.254350728498977,
+      9.254350728498977,
+      9.254350728498977
+    ],
+    "paintedWidth": 44.06833680237608,
+    "paintedHeight": 44.06833680237608
+  },
+  "counts": {
+    "alive": 931,
+    "visible": 535,
+    "rendered": 553,
+    "effects": 8,
+    "pickups": 190,
+    "warnings": 0,
+    "behaviorCues": 456,
+    "remains": 320,
+    "defeats": 0,
+    "quads": 1581
+  },
+  "allocatedSprites": 1994,
+  "remains": {
+    "stored": 1024,
+    "capacity": 1024,
+    "sequence": 1571,
+    "evicted": 547,
+    "missed": 0,
+    "limits": {
+      "capacity": 1024,
+      "visible": 320,
+      "moving": 24,
+      "settleSeconds": 0.34
+    }
+  },
+  "destruction": {
+    "showRemains": true,
+    "brutal": false,
+    "blood": true
+  },
+  "fixture": null,
+  "reducedEffects": false,
+  "preparationMs": 83.1000000089407,
+  "contextLosses": 0,
+  "contextRestores": 0,
+  "contextRecoveryTests": 0,
+  "lost": false,
+  "failed": false,
+  "valid": false,
+  "invalidReasons": [
+    "interrupted"
+  ],
+  "cadenceMs": {
+    "samples": 37047,
+    "p50": 8.299999997019768,
+    "p95": 9.5,
+    "p99": 10.399999991059303,
+    "worst": 57.599999994039536
+  },
+  "submissionMs": {
+    "samples": 37049,
+    "p50": 0.4000000059604645,
+    "p95": 1.0000000149011612,
+    "p99": 1.2000000029802322,
+    "worst": 1.7000000029802322
+  },
+  "cadenceHz": 119.84964687591001,
+  "measuredIntervals": 37047,
+  "measuredSeconds": 309.112299999997,
+  "retainedIntervals": 37047,
+  "sampleCapacity": 120000,
+  "submissionTotalMs": 17376.599999547005,
+  "over33Ms": 8,
+  "over50Ms": 6,
+  "over100Ms": 0,
+  "exclusions": {},
+  "highWater": {
+    "alive": 948,
+    "visible": 587,
+    "rendered": 605,
+    "effects": 77,
+    "pickups": 258
+  },
+  "protocol": {
+    "arrangement": "One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.",
+    "warmupSeconds": 30,
+    "measurementSeconds": 120,
+    "repetitions": 3,
+    "renderClock": "Foreground rendering continues through ordinary upgrade drafts; draft wall-time is included while the simulation is paused.",
+    "phaseAttribution": "Intervals are labelled by the run phase at completed render; transition intervals include work leading into that phase.",
+    "windows": [
+      {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.9994999999851,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13480,
+            "seconds": 112.49289999997312
+          },
+          "upgrade": {
+            "samples": 894,
+            "seconds": 7.506600000008945
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14374,
+          "p50": 8.299999997019768,
+          "p95": 9.299999997019768,
+          "p99": 9.700000002980232,
+          "worst": 56.29999999701977
+        },
+        "cadenceHz": 119.78383243265002,
+        "slowFraction": 0.0002782802281897871,
+        "passes": true
+      },
+      {
+        "index": 2,
+        "complete": true,
+        "measuredSeconds": 120.00090000000596,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13854,
+            "seconds": 115.49299999999691
+          },
+          "upgrade": {
+            "samples": 538,
+            "seconds": 4.507900000005968
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14392,
+          "p50": 8.300000011920929,
+          "p95": 9.399999991059303,
+          "p99": 10.299999997019768,
+          "worst": 57.599999994039536
+        },
+        "cadenceHz": 119.93243384007357,
+        "slowFraction": 0.00006948304613674263,
+        "passes": true
+      },
+      {
+        "index": 3,
+        "complete": false,
+        "measuredSeconds": 39.10820000000298,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 4688,
+            "seconds": 39.10820000000337
+          },
+          "upgrade": {
+            "samples": 0,
+            "seconds": 0
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 4688,
+          "p50": 8.399999991059303,
+          "p95": 10.299999997019768,
+          "p99": 11,
+          "worst": 53.1000000089407
+        },
+        "cadenceHz": 119.87255869612109,
+        "slowFraction": 0.00021331058020477816,
+        "passes": null
+      }
+    ],
+    "acceptance": null,
+    "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+  },
+  "clock": {
+    "steps": 17579,
+    "droppedSeconds": 0,
+    "accumulator": 0.006516666675608605
+  },
+  "longFrames": 6,
+  "trialValid": false
+}

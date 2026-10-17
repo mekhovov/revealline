@@ -1,0 +1,375 @@
+{
+  "sourceRevision": "b066cf5dabab1f9395c50e04d249c54a68ac8caf",
+  "publicSIM": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?lang=en#packs",
+  "regionalEditions": 23,
+  "uniqueRegionIds": 13,
+  "allRegionalDescriptorsExact": true,
+  "regionalDependentURLs": 11492,
+  "regionalDependentBytes": 401401444,
+  "allRegionalDependentBytesExact": true,
+  "retryRows": 0,
+  "initialStream": "Retained incomplete initial stream;1032 completed verified rows reused against identical pinned URLs/length/hash in persistent-connection continuation. No missing URLs or relaxed checks.",
+  "groups": [
+    {
+      "index": 0,
+      "id": "alpine-highlands-study",
+      "title": "Alpine Highlands \u2014 connected mountain study",
+      "edition": "Station concourse",
+      "revision": "station-r5",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json",
+      "files": 722,
+      "bytes": 22584529,
+      "checked": 722,
+      "allExact": true,
+      "rowIdentitySHA256": "fd71b6eafbd4a89cadc0067244d5a94353abbbd9a412bcf6ef875f5fb5d67990"
+    },
+    {
+      "index": 1,
+      "id": "lunar-basin-study",
+      "title": "Lunar Basin \u2014 flight study",
+      "edition": "Shelter detail",
+      "revision": "composition-r3",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/f58a1b5197a78243e30e42858d45ded1f55baa31/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r3/delivery.json",
+      "files": 116,
+      "bytes": 2079110,
+      "checked": 116,
+      "allExact": true,
+      "rowIdentitySHA256": "20379d6a233237d75a86c87a83b5ae8e7240cf5d7ce237f0b316b94a86e8eced"
+    },
+    {
+      "index": 2,
+      "id": "alpine-highlands-study",
+      "title": "Alpine Highlands \u2014 connected mountain study",
+      "edition": "Quieter station surfaces",
+      "revision": "station-r4",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/02f2b140d06cc930d8d4dd6b01abcd860db75436/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/delivery.json",
+      "files": 722,
+      "bytes": 22578804,
+      "checked": 722,
+      "allExact": true,
+      "rowIdentitySHA256": "6ca2e53bddb5374bc1310b3bd071e6e73c820f809c35efa4700b537bdfcbc00e"
+    },
+    {
+      "index": 3,
+      "id": "alpine-highlands-study",
+      "title": "Alpine Highlands \u2014 connected mountain study",
+      "edition": "Station surface details",
+      "revision": "station-r3",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/ffb79b67479f9ed5c8104610695ac8b5cb04edc7/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r3/delivery.json",
+      "files": 722,
+      "bytes": 22578814,
+      "checked": 722,
+      "allExact": true,
+      "rowIdentitySHA256": "1d1669be493318e200a83652a788f10ccc955a3ae6cc57cc939bb79068814c25"
+    },
+    {
+      "index": 4,
+      "id": "lunar-basin-study",
+      "title": "Lunar Basin \u2014 flight study",
+      "edition": null,
+      "revision": "composition-r2",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/423f60966ec5dd4946a05ae1ea3c59f4910216ef/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r2/delivery.json",
+      "files": 116,
+      "bytes": 1963042,
+      "checked": 116,
+      "allExact": true,
+      "rowIdentitySHA256": "09760dd58c315b3187e96ad2d15b87081e2527880d04bbc82fde1887d8630227"
+    },
+    {
+      "index": 5,
+      "id": "alpine-highlands-study",
+      "title": "Alpine Highlands \u2014 connected mountain study",
+      "edition": "Refined contours",
+      "revision": "review-r2",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2/delivery.json",
+      "files": 722,
+      "bytes": 21644516,
+      "checked": 722,
+      "allExact": true,
+      "rowIdentitySHA256": "86a9b1766b418a854b6e15fa6e3411a42a11f3a6748a722db611bbbf39a48792"
+    },
+    {
+      "index": 6,
+      "id": "alpine-highlands-study",
+      "title": "Alpine Highlands \u2014 connected mountain study",
+      "edition": "Original study",
+      "revision": "review-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/07be16fe40ade4c398299c4e64cb542b7523856c/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r1/delivery.json",
+      "files": 720,
+      "bytes": 20951894,
+      "checked": 720,
+      "allExact": true,
+      "rowIdentitySHA256": "d02b45d29f930b11e4dd1e4e11fc0836a36bc8042953c292a6aeb9be661bf326"
+    },
+    {
+      "index": 7,
+      "id": "canal-city-study",
+      "title": "Canal City \u2014 bridges and courtyards",
+      "edition": null,
+      "revision": "district-r2",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/04b0d9c5db0687d8df2ea9a3ea07b9ca9ddcaa5a/authoring/fpv-worlds/regions/canal-city/delivery-district-r2/delivery.json",
+      "files": 38,
+      "bytes": 6765271,
+      "checked": 38,
+      "allExact": true,
+      "rowIdentitySHA256": "b64957d1286d53abe2098d60b6089f06438b9f167616914b1dc7c89eed091a91"
+    },
+    {
+      "index": 8,
+      "id": "desert-expedition-study",
+      "title": "Desert Expedition \u2014 rock routes",
+      "edition": "Rock practice routes",
+      "revision": "landmarks-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json",
+      "files": 2062,
+      "bytes": 47835247,
+      "checked": 2062,
+      "allExact": true,
+      "rowIdentitySHA256": "1556797b76ea6964014d35266dea8d4d5773e73411b9c918e3341aedf30ac187"
+    },
+    {
+      "index": 9,
+      "id": "desert-expedition-study",
+      "title": "Desert Expedition \u2014 16 km relief study",
+      "edition": "Open desert terrain",
+      "revision": "natural-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/2ccdf059d9d0d55c6eb7e668da6cee9496288255/authoring/fpv-worlds/regions/desert-expedition/delivery-natural-r1/delivery.json",
+      "files": 2050,
+      "bytes": 47556515,
+      "checked": 2050,
+      "allExact": true,
+      "rowIdentitySHA256": "b965e9a1ab8ddbab5b697119423b56b6c089101d12b9cab4521542f30a137d4a"
+    },
+    {
+      "index": 10,
+      "id": "tropical-coastal-districts",
+      "title": "Tropical coast \u2014 connected harbour",
+      "edition": "Connected harbour",
+      "revision": "harbour-r3",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json",
+      "files": 38,
+      "bytes": 7952305,
+      "checked": 38,
+      "allExact": true,
+      "rowIdentitySHA256": "52730269540b9b23bf6560da05b9be1e32b7da6180a5e6615481f411895d79be"
+    },
+    {
+      "index": 11,
+      "id": "railway-valley-expanse",
+      "title": "Railway Valley \u2014 six districts",
+      "edition": null,
+      "revision": "review-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/53c3c5dc25ac0639c93ec663a10beb492844032b/authoring/fpv-worlds/regions/railway-valley/delivery-expanse-r1/delivery.json",
+      "files": 618,
+      "bytes": 17844865,
+      "checked": 618,
+      "allExact": true,
+      "rowIdentitySHA256": "5d1d662c52c2079362d69da1610229b1a04aa8b60aa19f8ff2481a52850174c0"
+    },
+    {
+      "index": 12,
+      "id": "coaster-gardens-study",
+      "title": "Coaster Gardens \u2014 connected park study",
+      "edition": "Connected park routes",
+      "revision": "review-r2",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json",
+      "files": 202,
+      "bytes": 34181566,
+      "checked": 202,
+      "allExact": true,
+      "rowIdentitySHA256": "bdd17ccd4a58a63b376fc280a80f6966e0b61cd7d839e2fe6a4d4ddaa9576259"
+    },
+    {
+      "index": 13,
+      "id": "coaster-gardens-study",
+      "title": "Coaster Gardens \u2014 2 km study",
+      "edition": "Original park study",
+      "revision": "review-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json",
+      "files": 182,
+      "bytes": 33878943,
+      "checked": 182,
+      "allExact": true,
+      "rowIdentitySHA256": "1b0335fa77a03e00921d727a8c528fc9ca037e3e03c37334a864e82f03190862"
+    },
+    {
+      "index": 14,
+      "id": "hillside-town-study",
+      "title": "Hillside Town \u2014 civic court materials",
+      "edition": "Civic courtyard materials",
+      "revision": "courtyard-r5",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json",
+      "files": 38,
+      "bytes": 8660487,
+      "checked": 38,
+      "allExact": true,
+      "rowIdentitySHA256": "d4146f9a44b7e5fb3fbed18e2b0a1d473708e09ed6e83a47a0b30fbcbf5ec56c"
+    },
+    {
+      "index": 15,
+      "id": "hillside-town-study",
+      "title": "Hillside Town \u2014 terraces and courtyards",
+      "edition": "Terraces and courtyards",
+      "revision": "town-r2",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json",
+      "files": 38,
+      "bytes": 8352486,
+      "checked": 38,
+      "allExact": true,
+      "rowIdentitySHA256": "716eb97f239aa47358dde0dfda9d0a6411afd2e31386c764d4a332baa1370da6"
+    },
+    {
+      "index": 16,
+      "id": "tropical-coastal-districts",
+      "title": "Tropical coast \u2014 six flight districts",
+      "edition": "Six coastal districts",
+      "revision": "review-r2",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json",
+      "files": 38,
+      "bytes": 7857157,
+      "checked": 38,
+      "allExact": true,
+      "rowIdentitySHA256": "93766ef160e2a2063e8ed6214a2e129c3a278af6c02dbab2048327fbef239152"
+    },
+    {
+      "index": 17,
+      "id": "canyon-expanse-study",
+      "title": "Canyon Expanse \u2014 broad relief study",
+      "edition": null,
+      "revision": "relief-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/e561b41bb06d39775bf1bc5f9e078cabeeb84fef/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json",
+      "files": 2050,
+      "bytes": 47646152,
+      "checked": 2050,
+      "allExact": true,
+      "rowIdentitySHA256": "211962f6237a392cd6cc34eef8da3478e8b3dbaf562d83b7218ca892f53b3aa9"
+    },
+    {
+      "index": 18,
+      "id": "tropical-coastal-study",
+      "title": "Tropical coast \u2014 bounded flight study",
+      "edition": null,
+      "revision": "review-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json",
+      "files": 38,
+      "bytes": 5982641,
+      "checked": 38,
+      "allExact": true,
+      "rowIdentitySHA256": "2ca28bd451a7f142911c956b4f0a3e55afb52584d595a53984ff582b920d56dc"
+    },
+    {
+      "index": 19,
+      "id": "canyon-arrival-landmarks-study",
+      "title": "Canyon Badlands \u2014 six districts",
+      "edition": null,
+      "revision": "districts-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/dbfa4cef92866938ce05815ee9beb4830d935647/authoring/fpv-worlds/regions/canyon-badlands/delivery-districts-r1/delivery.json",
+      "files": 146,
+      "bytes": 3380298,
+      "checked": 146,
+      "allExact": true,
+      "rowIdentitySHA256": "2f8a214da22bde6ea33ef2a9131981565f02c7a6a1213ce652ab68e777987aed"
+    },
+    {
+      "index": 20,
+      "id": "canyon-arrival-landmarks-study",
+      "title": "Canyon Badlands \u2014 regional preview",
+      "edition": null,
+      "revision": "rounded-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/5591a1ccbc9302665cc2e97c0cc13f96affae4e8/authoring/fpv-worlds/regions/canyon-badlands/delivery-rounded-r1/delivery.json",
+      "files": 38,
+      "bytes": 1173350,
+      "checked": 38,
+      "allExact": true,
+      "rowIdentitySHA256": "12ed9f37dc914cf88fa5a33e8678ff670e692c2e216d37c89244b39f46181194"
+    },
+    {
+      "index": 21,
+      "id": "railway-valley-study",
+      "title": "Railway Valley \u2014 regional preview",
+      "edition": null,
+      "revision": "structure-r1",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/31c0b54b668fa004be03f46f7ddcfa195ee734b3/authoring/fpv-worlds/regions/railway-valley/delivery-structure-r1/delivery.json",
+      "files": 38,
+      "bytes": 5684606,
+      "checked": 38,
+      "allExact": true,
+      "rowIdentitySHA256": "b4ad5f8879b2b3823bd63822b6ec4b542b91b8bcf16617467ed07e7bfdb2c95b"
+    },
+    {
+      "index": 22,
+      "id": "urban-earthworks-study",
+      "title": "Urban earthworks \u2014 regional preview",
+      "edition": null,
+      "revision": "review-r2",
+      "descriptorURL": "https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json",
+      "files": 38,
+      "bytes": 2268846,
+      "checked": 38,
+      "allExact": true,
+      "rowIdentitySHA256": "bd8df4c0db7c65f12eeb73775ddbc257ef268517855211bc721badac3cb27dc9"
+    }
+  ],
+  "worldpacks": 20,
+  "worldpackCourses": 41,
+  "worldpackAssets": 20,
+  "worldpackProductionValidation": true,
+  "files": [
+    {
+      "path": "http-receipt.json",
+      "bytes": 5021,
+      "sha256": "7098f329dcc524fac7a2e9745922ba6eeb856e0d1225fb4dc3d78f12f4ee3255"
+    },
+    {
+      "path": "source-module-audit.json",
+      "bytes": 1923,
+      "sha256": "c33b3db28597bd4aeaeea096f7b3dbac80c4e94a84a84ef12fcb7a481461b296"
+    },
+    {
+      "path": "region-capability-http-receipt.json",
+      "bytes": 209,
+      "sha256": "8daee6fd06b41bf8143cddd4469c2ef4722c1206a92f3a3c3db33318bcf934c6"
+    },
+    {
+      "path": "landing-navigation-source-receipt.json",
+      "bytes": 1832,
+      "sha256": "8fe8b713e5c6d6e47c6fc1bf9bea8893e0fe371da7fa66183db36ef95bb95ca4"
+    },
+    {
+      "path": "landing-navigation-ast-receipt.json",
+      "bytes": 2122,
+      "sha256": "82c91aada1eed8c8c85faa5b43d1328888f4f7613635a997080eb4c2410c1839"
+    },
+    {
+      "path": "regional-descriptor-http-receipt.json",
+      "bytes": 15721,
+      "sha256": "ac2721f4728e024b69225f1ea55eacaef176f01617ce3793ba59858d5d229ff0"
+    },
+    {
+      "path": "regional-member-plan.json",
+      "bytes": 10305,
+      "sha256": "82cdbe0362d78537ce876225f1f96e50d796199e254b7bcb998c16b713353d99"
+    },
+    {
+      "path": "regional-member-initial-stream-interruption.json",
+      "bytes": 601,
+      "sha256": "c6063955e30b81c946dd633c9b3eef906fe0f164813925615b04c491ccbd8a41"
+    },
+    {
+      "path": "regional-member-r2-http-receipt.json",
+      "bytes": 5129089,
+      "sha256": "8ac89dce556234a860a45cb6d9850fb889962350c18c78c2919153f6b70af0ac"
+    },
+    {
+      "path": "worldpack-http-receipt.json",
+      "bytes": 21170,
+      "sha256": "8a49eb7f98c9d17ef2e56af526bc34f23ebb49adbf2ae17ff90a82572882ecfe"
+    },
+    {
+      "path": "worldpack-production-validation.json",
+      "bytes": 8816,
+      "sha256": "0e878285b454eed89fcae0995923b3f0af5622d60baaab4e834f39c7b2e44276"
+    }
+  ],
+  "scope": "Actual read-only public HTTP bytes and current offered immutable metadata/assets; root owns separate native launch evidence. No storage access, browser render, first-attempt UI/offline/device/performance/all-plan claim."
+}

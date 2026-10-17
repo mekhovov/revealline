@@ -1,0 +1,184 @@
+
+> revealline@0.151.1 practice:observer:test
+> node --test scripts/test-observe-practice-cache-repair.mjs scripts/test-observe-practice-first-flight.mjs scripts/test-optional-installation-diagnostics.mjs scripts/test-optional-installation-quota-probe.mjs
+
+TAP version 13
+# Subtest: C7 plan pins all three packages and refuses credentials, scripts and unbounded input
+ok 1 - C7 plan pins all three packages and refuses credentials, scripts and unbounded input
+  ---
+  duration_ms: 1.283958
+  ...
+# Subtest: fault scopes require one known app, exact version and local server
+ok 2 - fault scopes require one known app, exact version and local server
+  ---
+  duration_ms: 5.310583
+  ...
+# Subtest: v2 requires exactly the declared public-UI world seed without changing v1
+ok 3 - v2 requires exactly the declared public-UI world seed without changing v1
+  ---
+  duration_ms: 0.407375
+  ...
+# Subtest: seed evidence requires fingerprinted nonempty projects/revisions and exact retained card identity
+ok 4 - seed evidence requires fingerprinted nonempty projects/revisions and exact retained card identity
+  ---
+  duration_ms: 1.952041
+  ...
+# Subtest: missing-dependency fault removes exactly one original owned entry for each app
+ok 5 - missing-dependency fault removes exactly one original owned entry for each app
+  ---
+  duration_ms: 17.055083
+  ...
+# Subtest: missing-worker fault never opens or alters cache bytes
+ok 6 - missing-worker fault never opens or alters cache bytes
+  ---
+  duration_ms: 0.49175
+  ...
+# Subtest: fault refuses foreign, malformed, redirected ownership or changed dependency before mutation
+ok 7 - fault refuses foreign, malformed, redirected ownership or changed dependency before mutation
+  ---
+  duration_ms: 6.811833
+  ...
+# Subtest: read-only state fingerprints exact cache contents and empty pointer without credentials
+ok 8 - read-only state fingerprints exact cache contents and empty pointer without credentials
+  ---
+  duration_ms: 8.162375
+  ...
+# Subtest: preservation permits target installation changes but rejects sibling pointer/cache/data changes
+ok 9 - preservation permits target installation changes but rejects sibling pointer/cache/data changes
+  ---
+  duration_ms: 0.559875
+  ...
+# Subtest: failed admission retains a failure report and refuses existing evidence output
+ok 10 - failed admission retains a failure report and refuses existing evidence output
+  ---
+  duration_ms: 15.668875
+  ...
+# Subtest: requires exact artifact binding and complete declared EN four-case matrix
+ok 11 - requires exact artifact binding and complete declared EN four-case matrix
+  ---
+  duration_ms: 2.792375
+  ...
+# Subtest: public HUD parsing ignores elapsed time for Worlds and includes Gym position
+ok 12 - public HUD parsing ignores elapsed time for Worlds and includes Gym position
+  ---
+  duration_ms: 0.244541
+  ...
+# Subtest: time/throttle/speed alone never count as altitude movement; fixed threshold tolerates floating rounding
+ok 13 - time/throttle/speed alone never count as altitude movement; fixed threshold tolerates floating rounding
+  ---
+  duration_ms: 0.060166
+  ...
+# Subtest: retry must restore launch height, position and zero FPV speed
+ok 14 - retry must restore launch height, position and zero FPV speed
+  ---
+  duration_ms: 0.2035
+  ...
+# Subtest: Pause uses an ordinary pointer click rather than a focus-and-Enter toggle
+ok 15 - Pause uses an ordinary pointer click rather than a focus-and-Enter toggle
+  ---
+  duration_ms: 0.1265
+  ...
+# Subtest: settings Back follows the visible stack and never presses a hidden second Back
+ok 16 - settings Back follows the visible stack and never presses a hidden second Back
+  ---
+  duration_ms: 0.188667
+  ...
+# Subtest: FPV Retry targets the visible tutorial action within the open pause dialog
+ok 17 - FPV Retry targets the visible tutorial action within the open pause dialog
+  ---
+  duration_ms: 0.139833
+  ...
+# Subtest: adapters correspond to native public source controls and keyboard mappings
+ok 18 - adapters correspond to native public source controls and keyboard mappings
+  ---
+  duration_ms: 7.545
+  ...
+# Subtest: bad frozen envelope fails before browser launch and retains honest receipt
+ok 19 - bad frozen envelope fails before browser launch and retains honest receipt
+  ---
+  duration_ms: 17.87625
+  ...
+# Subtest: diagnostics preserve channel construction, native post arguments and port lifetime
+ok 20 - diagnostics preserve channel construction, native post arguments and port lifetime
+  ---
+  duration_ms: 2.896709
+  ...
+# Subtest: registration witness returns the exact original promise and records resolution/rejection
+ok 21 - registration witness returns the exact original promise and records resolution/rejection
+  ---
+  duration_ms: 3.649292
+  ...
+# Subtest: post exceptions are observed and rethrown unchanged; unrelated messages remain unrecorded
+ok 22 - post exceptions are observed and rethrown unchanged; unrelated messages remain unrecorded
+  ---
+  duration_ms: 0.750917
+  ...
+# Subtest: diagnostic failures and bounded event volume cannot alter native operations
+ok 23 - diagnostic failures and bounded event volume cannot alter native operations
+  ---
+  duration_ms: 10.310166
+  ...
+# Subtest: only exact explicit-port IPv4 loopback HTTP origins are eligible
+ok 24 - only exact explicit-port IPv4 loopback HTTP origins are eligible
+  ---
+  duration_ms: 3.443709
+  ...
+# Subtest: verified measured usage plus positive headroom surrounds callback and reset omits quotaSize
+ok 25 - verified measured usage plus positive headroom surrounds callback and reset omits quotaSize
+  ---
+  duration_ms: 2.773875
+  ...
+# Subtest: callback failure is retained and override still reset
+ok 26 - callback failure is retained and override still reset
+  ---
+  duration_ms: 0.935291
+  ...
+# Subtest: unsupported or ineffective override never executes callback but attempts reset
+ok 27 - unsupported or ineffective override never executes callback but attempts reset
+  ---
+  duration_ms: 0.81025
+  ...
+# Subtest: existing override is not replaced or cleared
+ok 28 - existing override is not replaced or cleared
+  ---
+  duration_ms: 0.220542
+  ...
+# Subtest: reset failure cannot report a completed probe
+ok 29 - reset failure cannot report a completed probe
+  ---
+  duration_ms: 1.117375
+  ...
+# Subtest: timed-out callback is aborted and never reclassifies late success
+ok 30 - timed-out callback is aborted and never reclassifies late success
+  ---
+  duration_ms: 15.6955
+  ...
+# Subtest: late bounded-quota response triggers another reset and stays unverified
+ok 31 - late bounded-quota response triggers another reset and stays unverified
+  ---
+  duration_ms: 12.965125
+  ...
+# Subtest: zero is never sent even on an unused origin
+ok 32 - zero is never sent even on an unused origin
+  ---
+  duration_ms: 1.178833
+  ...
+# Subtest: invalid or overflowing measured usage cannot trigger an override
+ok 33 - invalid or overflowing measured usage cannot trigger an override
+  ---
+  duration_ms: 0.846875
+  ...
+# Subtest: a different active quota is not accepted as the requested control
+ok 34 - a different active quota is not accepted as the requested control
+  ---
+  duration_ms: 0.652625
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 492.028125

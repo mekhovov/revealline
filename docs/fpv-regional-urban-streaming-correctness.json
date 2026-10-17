@@ -1,0 +1,1068 @@
+{
+  "format": "AdvancedRegionalStreamingEvidence.v1",
+  "generatedAt": "2026-10-17T02:23:02.404Z",
+  "mode": "correctness-only",
+  "host": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "release": "25.6.0",
+    "node": "v22.22.2",
+    "cpu": "Apple M4 Pro",
+    "logicalProcessors": 14
+  },
+  "status": "experimental",
+  "scored": false,
+  "defaultEligible": false,
+  "frequency": 250,
+  "fixture": {
+    "descriptor": {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json",
+      "bytes": 6603,
+      "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+    },
+    "terrainManifestSHA256": "66ef229f0812c31432bb8b3daac6f16e3dcaea19f44be00395a614bfa587afd7",
+    "sceneryManifestSHA256": "9ae41033e9a73261eeee3ff2339ceaa0e2f6b47367b212fc1f2de470ca8dacb6",
+    "verifiedPayloadFiles": 38,
+    "verifiedPayloadBytes": 2268846,
+    "source": "Immutable admitted Urban review-r2; road/court circuit, no geometry or spawn edits",
+    "route": [
+      {
+        "id": "mill-road",
+        "position": {
+          "x": 64000,
+          "y": 12000,
+          "z": 16000
+        }
+      },
+      {
+        "id": "container-road",
+        "position": {
+          "x": 320000,
+          "y": 12000,
+          "z": 16000
+        }
+      },
+      {
+        "id": "tower-court",
+        "position": {
+          "x": 320000,
+          "y": 12000,
+          "z": 200000
+        }
+      },
+      {
+        "id": "parking-approach",
+        "position": {
+          "x": 64000,
+          "y": 12000,
+          "z": 200000
+        }
+      },
+      {
+        "id": "west-service-road",
+        "position": {
+          "x": 16000,
+          "y": 12000,
+          "z": 200000
+        }
+      },
+      {
+        "id": "mill-west-approach",
+        "position": {
+          "x": 16000,
+          "y": 12000,
+          "z": 16000
+        }
+      }
+    ],
+    "solidScenerySurfaces": 115,
+    "colliderUpperBound": 248
+  },
+  "mixedAdmission": {
+    "windows": [
+      {
+        "x": 0,
+        "z": 0,
+        "colliders": 79,
+        "vertices": 16997,
+        "triangles": 12983,
+        "jsonBytes": 784689
+      },
+      {
+        "x": 1,
+        "z": 0,
+        "colliders": 91,
+        "vertices": 25670,
+        "triangles": 19244,
+        "jsonBytes": 1221857
+      },
+      {
+        "x": 2,
+        "z": 0,
+        "colliders": 45,
+        "vertices": 21074,
+        "triangles": 14170,
+        "jsonBytes": 1061850
+      },
+      {
+        "x": 0,
+        "z": 1,
+        "colliders": 103,
+        "vertices": 20045,
+        "triangles": 17369,
+        "jsonBytes": 874229
+      },
+      {
+        "x": 1,
+        "z": 1,
+        "colliders": 124,
+        "vertices": 33419,
+        "triangles": 26882,
+        "jsonBytes": 1549467
+      },
+      {
+        "x": 2,
+        "z": 1,
+        "colliders": 60,
+        "vertices": 27068,
+        "triangles": 19538,
+        "jsonBytes": 1337599
+      },
+      {
+        "x": 0,
+        "z": 2,
+        "colliders": 55,
+        "vertices": 9330,
+        "triangles": 10022,
+        "jsonBytes": 366857
+      },
+      {
+        "x": 1,
+        "z": 2,
+        "colliders": 68,
+        "vertices": 18096,
+        "triangles": 16314,
+        "jsonBytes": 808749
+      },
+      {
+        "x": 2,
+        "z": 2,
+        "colliders": 27,
+        "vertices": 13626,
+        "triangles": 11282,
+        "jsonBytes": 651204
+      }
+    ],
+    "jsonBytes": 784689,
+    "vertices": 16997,
+    "colliders": 79,
+    "triangles": 12983,
+    "accepted": true,
+    "unstartedFlightPreserved": true,
+    "status": "paused",
+    "reason": "prepared",
+    "colliderLimit": 128
+  },
+  "measuredGeometryProfile": "terrain-scenery-v1",
+  "scope": "Unmodified, digest-admitted Urban review-r2 terrain/scenery; authored road/court route driven by an explicitly synthetic acro test pilot through production Regional adapter and real worker protocol.",
+  "timing": "Measured loop includes pilot computation, main-thread admission, actual worker round trips, snapshots/recording inside mission transactions, automatic streaming preparation/adoption, and an explicit event-loop yield after every mission call. Initial preparation, source verification, export/replay and correctness injections are excluded from capacity runs. No render, network download or USB hardware is included.",
+  "limits": [
+    "One Apple host and Node worker runtime only; no broader browser/device qualification.",
+    "Two-minute moving authored-region workload, not maximum-duration capacity or arbitrary dense scenes.",
+    "Local verified asset cache excludes network transfer; Three.js scene preparation is included but no GPU rendering.",
+    "Automated test pilot validates software workload only; not physical input, pilot evaluation or measured aircraft fidelity."
+  ],
+  "minimumRealTimeCapacity": 2,
+  "passed": true,
+  "runs": [
+    {
+      "repetition": 1,
+      "missionTicks": 6000,
+      "simulatedSeconds": 120,
+      "preparationMs": 848.1962920000001,
+      "calls": 9877,
+      "terrainWaits": [],
+      "frameWaitCalls": 3877,
+      "stagedFrames": 9,
+      "frameSummaries": [
+        {
+          "colliders": 79,
+          "triangles": 12983
+        },
+        {
+          "colliders": 79,
+          "triangles": 12983
+        },
+        {
+          "colliders": 91,
+          "triangles": 19244
+        },
+        {
+          "colliders": 45,
+          "triangles": 14170
+        },
+        {
+          "colliders": 60,
+          "triangles": 19538
+        },
+        {
+          "colliders": 124,
+          "triangles": 26882
+        },
+        {
+          "colliders": 103,
+          "triangles": 17369
+        },
+        {
+          "colliders": 79,
+          "triangles": 12983
+        },
+        {
+          "colliders": 79,
+          "triangles": 12983
+        }
+      ],
+      "route": {
+        "waypoint": 5,
+        "visits": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ]
+      },
+      "points": [
+        {
+          "tick": 250,
+          "positionMm": {
+            "x": 74238.72756958008,
+            "y": 12063.13159942627,
+            "z": 15999.999999999995
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 500,
+          "positionMm": {
+            "x": 114113.19351196289,
+            "y": 12005.053787231445,
+            "z": 16000.00000000001
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 750,
+          "positionMm": {
+            "x": 154147.65167236328,
+            "y": 12000.800399780273,
+            "z": 15999.999999999918
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 1000,
+          "positionMm": {
+            "x": 194201.96533203125,
+            "y": 12000.574378967285,
+            "z": 16000.000000000042
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 1250,
+          "positionMm": {
+            "x": 234256.28662109375,
+            "y": 12001.323013305664,
+            "z": 16000.000000000055
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 1500,
+          "positionMm": {
+            "x": 274310.60791015625,
+            "y": 12001.664428710938,
+            "z": 15999.9999999998
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 1750,
+          "positionMm": {
+            "x": 314057.11364746094,
+            "y": 11976.887969970703,
+            "z": 15999.99999999999
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 2000,
+          "positionMm": {
+            "x": 319958.0841064453,
+            "y": 11938.97274017334,
+            "z": 35156.1393737793
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 2250,
+          "positionMm": {
+            "x": 320000,
+            "y": 12002.98526763916,
+            "z": 75140.55633544922
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 2500,
+          "positionMm": {
+            "x": 320000,
+            "y": 12002.579956054688,
+            "z": 115187.92724609375
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 2750,
+          "positionMm": {
+            "x": 320000,
+            "y": 12002.078323364258,
+            "z": 155242.24853515625
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 3000,
+          "positionMm": {
+            "x": 320000,
+            "y": 11977.622299194336,
+            "z": 194834.3963623047
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 3250,
+          "positionMm": {
+            "x": 299896.484375,
+            "y": 11942.127494812012,
+            "z": 199955.078125
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 3500,
+          "positionMm": {
+            "x": 259851.1962890625,
+            "y": 12001.652030944824,
+            "z": 200002.38037109375
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 3750,
+          "positionMm": {
+            "x": 219796.875,
+            "y": 12001.168518066406,
+            "z": 200002.38037109375
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 4000,
+          "positionMm": {
+            "x": 179742.5537109375,
+            "y": 12001.869468688965,
+            "z": 200002.38037109375
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 4250,
+          "positionMm": {
+            "x": 139688.232421875,
+            "y": 12003.411560058594,
+            "z": 200002.38037109375
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 4500,
+          "positionMm": {
+            "x": 99674.43466186523,
+            "y": 12004.86400604248,
+            "z": 200002.38037109375
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 4750,
+          "positionMm": {
+            "x": 63964.07363563776,
+            "y": 12039.600639343262,
+            "z": 200002.38037109375
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 5000,
+          "positionMm": {
+            "x": 30858.402252197266,
+            "y": 11995.888977050781,
+            "z": 200002.38037109375
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 5250,
+          "positionMm": {
+            "x": 15835.334777832031,
+            "y": 11966.147689819336,
+            "z": 189841.46118164062
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 5500,
+          "positionMm": {
+            "x": 15997.28775024414,
+            "y": 12004.498748779297,
+            "z": 149981.09436035156
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 5750,
+          "positionMm": {
+            "x": 15997.28775024414,
+            "y": 12001.990585327148,
+            "z": 109926.77307128906
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 192000
+          },
+          "grounded": false
+        },
+        {
+          "tick": 6000,
+          "positionMm": {
+            "x": 15997.28775024414,
+            "y": 12004.785804748535,
+            "z": 69886.92092895508
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 64000
+          },
+          "grounded": false
+        }
+      ],
+      "rejection": {
+        "missionTick": 10,
+        "completeSnapshotSHA256": "f621561d1af78ba70a29e8665b11aaa23f2fd2ab271222c8278ad78e8613b101",
+        "exactSnapshotPreserved": true
+      },
+      "waitEvidence": {
+        "missionTick": 1053,
+        "completeSnapshotSHA256": "60d42ff05b836c02f60453a2c8e6e4069a13827af3a05cbadb5d5e9fb0a04415",
+        "exactSnapshotPreserved": true
+      },
+      "recordingBytes": 1656257,
+      "recoveryBytes": 3574867,
+      "terrainFrames": 6,
+      "terrainEvents": 7,
+      "colliderPayloads": 124,
+      "finalHash": "3f4312d6",
+      "recoveryVerified": {
+        "exactConsumedHistoryPreserved": true,
+        "exactControllerAndDynamicsPreserved": true,
+        "additionalTerrainReadmissionEvents": 0,
+        "readmittedRecordingReplayVerified": true,
+        "elapsedMs": 15294.735583,
+        "physicsSnapshotBytes": 1434038
+      },
+      "replay": {
+        "verified": true,
+        "verificationScope": "complete",
+        "elapsedMs": 6922.2352500000015,
+        "finalPositionExact": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "authoring/fpv-worlds/regions/authored-endurance-fixture.mjs",
+      "bytes": 6422,
+      "sha256": "ce3cab50afd9475f4e38cd5e32f86880a3640257ced99f8d2dfa6a98795fb712"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/.gitattributes",
+      "bytes": 140,
+      "sha256": "69c004a0e9e2e5690bed43d19b8275016e79ed93beebefa3c98ed04a8f0415ea"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json",
+      "bytes": 6603,
+      "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/license-provenance.json",
+      "bytes": 2733,
+      "sha256": "68ec564541de04d76afd571df44cd7e90557cdb351feebc97ac6be5b57b78373"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/License.txt",
+      "bytes": 708,
+      "sha256": "60a8c5c31191256ec9779dc18745dea6d69c46f4b29703459ce064c1765a59ea"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/original-provenance.json",
+      "bytes": 761,
+      "sha256": "27562e2c7d4a85127b56cd2eb6bb10540e2915e03d106236001c69222b87d0f3"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/preparation.json",
+      "bytes": 11036,
+      "sha256": "5a87ea09102d2939041aa34494a8d56e2ddb5c5b3a236a549e4448cf90bb5c15"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/provenance.json",
+      "bytes": 2107,
+      "sha256": "0a04f19b785b5fbcf7ebf7aa22d6f8569697202446443d0d4da487b434212bc5"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/region.json",
+      "bytes": 5793,
+      "sha256": "9ae41033e9a73261eeee3ff2339ceaa0e2f6b47367b212fc1f2de470ca8dacb6"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-0-0.glb",
+      "bytes": 24396,
+      "sha256": "ea88472d836bdfbfeeecf2b26c9e33b340c6d4390a8532818de4169414eea3bf"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-0-0.json",
+      "bytes": 47621,
+      "sha256": "bfdf16df8d6b5f204e54961ef1886bcdc0c7c644b351835fb6c390250ad3651a"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-0-1.glb",
+      "bytes": 40288,
+      "sha256": "ad827ea8e11bc107cb7a5b1a55f9b2d6bcb14fc0180ed4258f3d99fd3a43da51"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-0-1.json",
+      "bytes": 101940,
+      "sha256": "1dc117b144137dde8b17c14b992407d92345c1370ad9124d423366dd035bb9b6"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-0-2.glb",
+      "bytes": 19796,
+      "sha256": "66761db49021f4615d4dc48880dd52aedfe63c72780f5364e82ee7ec71224e05"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-0-2.json",
+      "bytes": 39343,
+      "sha256": "871bc12b5bbdac48b6bb16e7fa40d6f86055b77cf7bb9b6c8e36cc8afa5f6df4"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-1-0.glb",
+      "bytes": 142132,
+      "sha256": "ac2c79051fbe6c590a1c75c1b5f230d445dc0a5049b83526de0e0a0767df6e5e"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-1-0.json",
+      "bytes": 459529,
+      "sha256": "8756a17022fe503dcf49e33414260f6e63b3f88a47bff99eac031eaa975c0e4c"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-1-1.glb",
+      "bytes": 43588,
+      "sha256": "0d8c6e43c8963d8ae8fdf7fdbd61170c586d7040b6bdd4b61cddc08ae8375e4d"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-1-1.json",
+      "bytes": 141661,
+      "sha256": "3f20fe48dee5493e209dbf01770073455ed439c022fa55b29c31f7da545e36aa"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-1-2.glb",
+      "bytes": 6060,
+      "sha256": "3101e74d00d7f831b23da942ceb3a5ab7a65c534a97f8f916de2cdca45c08f17"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-1-2.json",
+      "bytes": 11913,
+      "sha256": "ed48ac6b708e03a50a14182829542d70e980d33cdc25d6dfb396535073a0f9f7"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-2-0.glb",
+      "bytes": 60452,
+      "sha256": "0dbf4872ffec556a53ba113c4c2e3fe7d848b846a0e7c0e0ef7a399f02eced59"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-2-0.json",
+      "bytes": 200210,
+      "sha256": "c114a5fd7c4cca71228a80552547b3b13a759af63f12a203fece546cf52fd2dc"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-2-1.glb",
+      "bytes": 49456,
+      "sha256": "229fbdf3f9666cfa241c7a13c2f3f5490b43208d96f3b14d617644e0952f571e"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-2-1.json",
+      "bytes": 175601,
+      "sha256": "357bacefebef823efd5f35f84f9f47a4d6ef437d5a647d7e00220f643d753468"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-2-2.glb",
+      "bytes": 62256,
+      "sha256": "c00b2cfb0358a0fc9dd8e4aa843747968c3c1d27f5d49ca014db838e6d5f3035"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/scenery/urban-2-2.json",
+      "bytes": 214348,
+      "sha256": "2cb94395248e57fa939a19ffc659d4bc42cce905a6ebeeee1319d2b5765aff16"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/region.json",
+      "bytes": 5778,
+      "sha256": "66ef229f0812c31432bb8b3daac6f16e3dcaea19f44be00395a614bfa587afd7"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-0-0.glb",
+      "bytes": 38404,
+      "sha256": "ef72d57cd102a17c63c8dd390b79a6369666741bc814c93a76830018d50cb82d"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-0-0.json",
+      "bytes": 7826,
+      "sha256": "5092461f2f7e5e1404c078b5ed09ecc7846a993f206562d4bcef5d35ad8e01e9"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-0-1.glb",
+      "bytes": 38388,
+      "sha256": "c099282cf60bda2cb84e30051e675fd11656e1ac43dec362fde0ebcdf26ccdff"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-0-1.json",
+      "bytes": 8088,
+      "sha256": "fac844c2a8946b181af11881607bfdcebf404771db79e5e2330744a3778f7bda"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-0-2.glb",
+      "bytes": 38388,
+      "sha256": "3cd9d2c0e3d8e1136da710dc7978a36c61885f1154329f54633959760c0625a4"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-0-2.json",
+      "bytes": 7771,
+      "sha256": "c68fc44b0b7c02deadbe69b78b2b582b6b1d12d941c5093c62879819f7ce6636"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-1-0.glb",
+      "bytes": 38404,
+      "sha256": "7b9ac0bb3725eec3fddb839700feb7270981c5bc11094043148f0e9264e74e13"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-1-0.json",
+      "bytes": 7775,
+      "sha256": "184d28f0bc7bd63f2e4661447f79708d158be579c42e90dcde18667d69cf652c"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-1-1.glb",
+      "bytes": 38404,
+      "sha256": "fbef12c0f0eacb34d2b2f940fa8783890907ce1b0aa703e5b448cdb745aa8acc"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-1-1.json",
+      "bytes": 8021,
+      "sha256": "cdc8276a907dc303e981b5632a3e6c678b68903406694e28538ccc7bee531f84"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-1-2.glb",
+      "bytes": 38388,
+      "sha256": "2595e7e01e03c52cc09af06de88674114fc676676b205b897fcb3ed7a8e54731"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-1-2.json",
+      "bytes": 7771,
+      "sha256": "2970a55598f8ccdc3fe1d1f93d47424eb6b327d9484c5fbf0d3bc54a516ca00e"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-2-0.glb",
+      "bytes": 38404,
+      "sha256": "346950c01db4ad82e0c5027c6d5344cd07daf2eab8708402661b408797dff4de"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-2-0.json",
+      "bytes": 7882,
+      "sha256": "d8f36d38f1d83dd2d84450cd535ffdec892f3a17e035272eda0567b3b1bd8c86"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-2-1.glb",
+      "bytes": 38404,
+      "sha256": "a0261ec550bcf520930edd6f07e93dfcd5b70315bbc7b433fbd1be8ffc28fd64"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-2-1.json",
+      "bytes": 8208,
+      "sha256": "10d2c0278113a9aebbae5486d5f5bd7af8ab7072513d9ebb3d7450cee68e49c1"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-2-2.glb",
+      "bytes": 38388,
+      "sha256": "256f31c06c760eabe7b29495a8720f7531af8a5f62d9da85cd301d6af80d6b99"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/terrain/urban-2-2.json",
+      "bytes": 7771,
+      "sha256": "03ffee01ab31c6537f4fa38a1cfd084f878b62aebb807b1b02da7a50062eaaba"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1265063,
+      "sha256": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-controller.mjs",
+      "bytes": 9865,
+      "sha256": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+      "bytes": 24165,
+      "sha256": "ecdc2b84abaf06e7fcdbbd87929402deb200d9a540a6a52b02b01fad7b98dc66"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "bytes": 63447,
+      "sha256": "bd606bf22bd1dc80f26e11f23b7f368d5139885b433c5a9e8e36b9df26b2de4d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "bytes": 11987,
+      "sha256": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "bytes": 4000,
+      "sha256": "0e2e763c4bf25005158b8af15a581228fd6f51ec0f5a77f5667fa6a42d5a4581"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "bytes": 6216,
+      "sha256": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-contact.mjs",
+      "bytes": 2482,
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-support.mjs",
+      "bytes": 1815,
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rates.mjs",
+      "bytes": 9599,
+      "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+      "bytes": 17560,
+      "sha256": "7276ecdcf7798741bda92c361da8e417bbff1fa0fbf7885f8e9005f78a0b5997"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-locations.mjs",
+      "bytes": 7936,
+      "sha256": "acf37b9a20ac955e49c3bad30822d909ab4db5fa6a7f85a35de4bab512f99902"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/frame-transaction.mjs",
+      "bytes": 3529,
+      "sha256": "b059fead0f4e67e5401175b2e12f43c8f58d98ceadadcda3ddd65b7e1f781988"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs",
+      "bytes": 5727,
+      "sha256": "b9a4afcdce5f9d02f9210f501b474c09e17220bd656e108712b828f8f3c78233"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs",
+      "bytes": 14759,
+      "sha256": "a57dcc5eff03a659fd918cbc933e3a49f1d29241732623887e3caf3d9c3fb832"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs",
+      "bytes": 5192,
+      "sha256": "8802491835a0f42834bf920e21dc9b6b938ca9c00c6b2829ba033d7cea50d883"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/region-manifest.mjs",
+      "bytes": 12708,
+      "sha256": "c07631c6661450b7a59e1ce069e2ce100064327c1e76c2e422f3ff29eea1cc68"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/region-motion-query.mjs",
+      "bytes": 3931,
+      "sha256": "fba3960fe9e90c0d56d7fbf77711843342b8c9230cd7502dffa9df2bda9686ce"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/restore-containment.mjs",
+      "bytes": 8320,
+      "sha256": "8b23f3519141e29894827ebb84ab7bce8449b87136468d4f46f3df352db762c3"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs",
+      "bytes": 12760,
+      "sha256": "a284324fcd0cceeec6ec398df11c20a5382fa4cedfeb7af9caacef5cff5b290f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+      "bytes": 16032,
+      "sha256": "184d34c5cff615fd17a00097d8f3cd450a086573bf1e88953a7e92226e389765"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+      "bytes": 7182,
+      "sha256": "f11a55b1cbb3144dbe896eb9156a3d9bb7eb4938596f8903459e025d688c9cf6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-surface.mjs",
+      "bytes": 14816,
+      "sha256": "c676d16f9c1690f1e8d095c1bdbae5f1b5aac11675fbe8253012881a0428ef56"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/source-window.mjs",
+      "bytes": 10162,
+      "sha256": "42a9b850704000900c16855bccfef6adf4e5925565677eb2d99c4401651fe3f9"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-admission.mjs",
+      "bytes": 9420,
+      "sha256": "35b9af942b3b1526c63f6b41ab030e43806cee74715adbf0a71ada1cbf023c59"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-cell.mjs",
+      "bytes": 6116,
+      "sha256": "9e1d97897578999d1d9c3641b31fdaca96110d7bb848bf0f6e55bbf4138cdc54"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-normals.mjs",
+      "bytes": 1384,
+      "sha256": "94c319af2ca720e8224ac7a975cff8af36b0dd988998e3f559ad820d10505c2e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-surface.mjs",
+      "bytes": 20457,
+      "sha256": "b5ad2a8b8da1331ae9d7c1d940e00806ca4a50eec0c56463627be09468f91b9f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/urban-ground-surface.mjs",
+      "bytes": 9408,
+      "sha256": "0ef2eadfd74b7901cd87732769967d5fea2b716d0d918073d1e78c32f8c81ff0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
+      "bytes": 2562,
+      "sha256": "18573585c1b1f59fe62a9eaefe62275135716291cea072d4acdd3e5a361ecbb2"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+      "bytes": 16559,
+      "sha256": "812b46df0d4c4fef9c76c1b2fc6c7c570b31d9ba83b72bca97ae2e5c1979ad0c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+      "bytes": 14405,
+      "sha256": "07d5b719b8a37a1f6deec0838c594f575fabce6d1203f3adab96b2723a771fb5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-terrain-window.mjs",
+      "bytes": 12375,
+      "sha256": "4a4df9f20e84f20cb2c66f2dbc1ea1b38bed12937a5b363509dd90ddea46bca0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "bytes": 12607,
+      "sha256": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "bytes": 17516,
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+    },
+    {
+      "path": "scripts/fpv-regional-contact-worker.mjs",
+      "bytes": 551,
+      "sha256": "91a0b9d8fa00113c81897043f25dfc41655cc5ae137533b8504e15674d7a7638"
+    },
+    {
+      "path": "scripts/fpv-regional-streaming-capacity.mjs",
+      "bytes": 27208,
+      "sha256": "e838bbaed952f0d8e711e53f1f8656629f88039236504f7728b48effeedb71eb"
+    }
+  ]
+}

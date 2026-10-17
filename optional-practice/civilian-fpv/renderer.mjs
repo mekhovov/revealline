@@ -144,12 +144,18 @@ export function createFlightViewFrame({ camera, aircraft }) {
     frameRotation = new THREE.Quaternion(),
     cameraOffset = new THREE.Vector3(),
     cameraTiltRotation = new THREE.Quaternion(),
-    cameraTiltAxis = new THREE.Vector3(1, 0, 0);
+    cameraTiltAxis = new THREE.Vector3(1, 0, 0),
+    flightNear = camera.near,
+    overviewDirection = new THREE.Vector3(0.55, 0.8, 0.65).normalize(),
+    overviewRight = new THREE.Vector3(overviewDirection.z, 0, -overviewDirection.x).normalize(),
+    overviewUp = new THREE.Vector3().crossVectors(overviewDirection, overviewRight);
   let rotorTick = null,
     rotorPhase = 0;
   // Mutable configuration is retained by the host: no per-frame option/pose copies.
   const frame = {
     view: 'fpv',
+    regionalOverview: false,
+    regionalFar: camera.far,
     fov: 82,
     tilt: 0,
     radiusMm: 220,
@@ -224,6 +230,33 @@ export function createFlightViewFrame({ camera, aircraft }) {
           .add(cameraOffset.set(0, 1.35, 3.2).applyQuaternion(rotation));
         camera.up.set(0, 1, 0);
         camera.lookAt(position);
+      } else if (frame.regionalOverview && view === 'overview') {
+        // Fit the actual resident three-dimensional envelope, including elevated terrain.
+        // Keep the familiar direction; only this regional overview owns this framing.
+        const hx = (bounds.max.x - bounds.min.x) / 2000,
+          hy = (bounds.max.y - bounds.min.y) / 2000,
+          hz = (bounds.max.z - bounds.min.z) / 2000,
+          cx = (bounds.max.x + bounds.min.x) / 2000 - (frame.originMm?.x ?? 0) / 1000,
+          cy = (bounds.max.y + bounds.min.y) / 2000 - (frame.originMm?.y ?? 0) / 1000,
+          cz = (bounds.max.z + bounds.min.z) / 2000 - (frame.originMm?.z ?? 0) / 1000,
+          halfWidth = Math.abs(overviewRight.x) * hx + Math.abs(overviewRight.z) * hz,
+          halfHeight =
+            Math.abs(overviewUp.x) * hx +
+            Math.abs(overviewUp.y) * hy +
+            Math.abs(overviewUp.z) * hz,
+          halfDepth = overviewDirection.x * hx + overviewDirection.y * hy + overviewDirection.z * hz,
+          tangent = Math.tan((camera.fov * Math.PI) / 360),
+          distance =
+            halfDepth +
+            1.08 * Math.max(halfWidth / (tangent * camera.aspect), halfHeight / tangent, 1);
+        camera.position.set(cx, cy, cz).addScaledVector(overviewDirection, distance);
+        camera.up.set(0, 1, 0);
+        camera.lookAt(cx, cy, cz);
+        const far = Math.max(frame.regionalFar, distance + halfDepth + 10);
+        if (camera.far !== far) {
+          camera.far = far;
+          camera.updateProjectionMatrix();
+        }
       } else {
         const cx = (bounds.max.x + bounds.min.x) / 2000 - (frame.originMm?.x ?? 0) / 1000,
           cz = (bounds.max.z + bounds.min.z) / 2000 - (frame.originMm?.z ?? 0) / 1000;
@@ -243,6 +276,38 @@ export function createFlightViewFrame({ camera, aircraft }) {
           );
         camera.up.set(0, 1, 0);
         camera.lookAt(cx, -(frame.originMm?.y ?? 0) / 1000, cz);
+      }
+      if (frame.regionalOverview && view !== 'overview' && camera.far !== frame.regionalFar) {
+        camera.far = frame.regionalFar;
+        camera.updateProjectionMatrix();
+      }
+      let near = flightNear;
+      if (frame.regionalOverview && view === 'overview') {
+        // The overview camera is outside the admitted horizontal cell prism.
+        // Any point visible in its frustum has view depth at least this planar
+        // distance times the diagonal-frustum cosine. Keep a fourfold margin;
+        // this improves distant depth precision without clipping resident geometry.
+        const ox = (frame.originMm?.x ?? 0) / 1000,
+          oz = (frame.originMm?.z ?? 0) / 1000,
+          dx = Math.max(
+            bounds.min.x / 1000 - ox - camera.position.x,
+            0,
+            camera.position.x - (bounds.max.x / 1000 - ox),
+          ),
+          dz = Math.max(
+            bounds.min.z / 1000 - oz - camera.position.z,
+            0,
+            camera.position.z - (bounds.max.z / 1000 - oz),
+          ),
+          tangent = Math.tan((camera.fov * Math.PI) / 360),
+          visibleDepth =
+            Math.hypot(dx, dz) /
+            Math.sqrt(1 + tangent * tangent * (1 + camera.aspect * camera.aspect));
+        near = Math.max(flightNear, Math.min(10, visibleDepth / 4));
+      }
+      if (camera.near !== near) {
+        camera.near = near;
+        camera.updateProjectionMatrix();
       }
     },
   };
@@ -313,6 +378,16 @@ export function createFlightRenderer({
   );
   let regional = null;
   const regionalPreparations = new Set();
+  // Weak keys do not retain released windows. Bounds are computed once while detached.
+  const regionalViewBounds = new WeakMap();
+  function measureRegionalBounds(group) {
+    let bounds = regionalViewBounds.get(group);
+    if (!bounds) {
+      bounds = new THREE.Box3().setFromObject(group);
+      regionalViewBounds.set(group, bounds);
+    }
+    return bounds;
+  }
   let regionalPreparationReceipt = null,
     regionalPreparationSequence = 0;
   let course = null,
@@ -1508,6 +1583,8 @@ export function createFlightRenderer({
     regional?.root.removeFromParent();
     regional = null;
     flightViewFrame.originMm = null;
+    flightViewFrame.regionalOverview = false;
+    camera.near = 0.035;
     camera.far = 300;
     camera.updateProjectionMatrix();
     const environment = resolveIndustrialEnvironment(options.industrialEnvironment ?? null);
@@ -3411,6 +3488,10 @@ export function createFlightRenderer({
         uploadScene.fog = scene.fog;
         for (const light of [hemisphere, sunlight, fillLight, rimLight]) {
           const clone = light.clone();
+          // Cold preparation and quality changes can precede the first shadow
+          // render. A PCF sampler requires a real depth map; a null map falls
+          // back to a colour texture and rejects the upload draw in WebGL.
+          clone.castShadow = light.castShadow && Boolean(light.shadow?.map);
           if (light.target) {
             clone.target = light.target.clone();
             uploadScene.add(clone.target);
@@ -3428,7 +3509,7 @@ export function createFlightRenderer({
         before = performance.now();
         try {
           renderer.setRenderTarget(target);
-          compiled = renderer.compileAsync(batch, preparedCamera, scene);
+          compiled = renderer.compileAsync(batch, preparedCamera, uploadScene);
         } finally {
           restore(saved);
         }
@@ -3466,6 +3547,7 @@ export function createFlightRenderer({
         await yieldFrame();
       }
       current();
+      measureRegionalBounds(group);
       status = 'prepared';
     } catch (error) {
       if (error?.name !== 'AbortError') status = 'failed';
@@ -3507,8 +3589,11 @@ export function createFlightRenderer({
     importedGroundFog = null;
     scene.environment = null;
     flightViewFrame.reset();
+    flightViewFrame.regionalOverview = true;
+    camera.near = 0.035;
     // Keep the full bounded resident window visible at either supported lattice size.
     camera.far = 1000 * (manifest.grid.cellSizeMm / 128000);
+    flightViewFrame.regionalFar = camera.far;
     camera.updateProjectionMatrix();
     setDrone(droneKind);
     setQuality(quality);
@@ -3542,6 +3627,18 @@ export function createFlightRenderer({
         z: (Math.max(...loaded.map((row) => row.z)) + 1) * regional.cellSizeMm,
       },
     };
+    // The prototype root also contains two empty pose anchors; only its admitted group
+    // contributes geometry. A newly adopted group already has staged bounds when prewarmed.
+    const admitted = regional.root.children.find((child) => child.isGroup);
+    if (admitted) {
+      const measured = measureRegionalBounds(admitted);
+      if (!measured.isEmpty()) {
+        for (const axis of ['x', 'y', 'z']) {
+          flightViewFrame.bounds.min[axis] = measured.min[axis] * 1000 + state.originMm[axis];
+          flightViewFrame.bounds.max[axis] = measured.max[axis] * 1000 + state.originMm[axis];
+        }
+      }
+    }
     flightViewFrame.view = cameraMode;
     flightViewFrame.fov = cameraFov;
     flightViewFrame.tilt = cameraTilt;

@@ -186,6 +186,9 @@ export async function inspectRegionalDownload(
 }
 export async function prepareRegionalDownload(pin, options = {}) {
   const checked = await inspectRegionalDownload(pin, options);
+  return prepareInspectedRegionalDownload(checked, options);
+}
+async function prepareInspectedRegionalDownload(checked, options) {
   const { descriptor, bytes } = checked;
   const base = new URL('.', checked.pin.url),
     blobs = new Map();
@@ -313,7 +316,8 @@ export async function openRegionalLibrary({
   indexedDB = globalThis.indexedDB,
   name = 'revealline-fpv-regions-v1',
 } = {}) {
-  const store = await openWorldStore({ indexedDB, name });
+  // The approved scenery budget is independent of the 256 MiB Worldpack default.
+  const store = await openWorldStore({ indexedDB, name, maxRetainedBytes: 512 * 1024 * 1024 });
   const metadata = (row) => ({
     id: row.id,
     sha256: row.sha256,
@@ -322,60 +326,96 @@ export async function openRegionalLibrary({
     descriptor: row.project.descriptor,
     bytes: row.project.descriptor.totalBytes,
   });
+  async function save(pin, options = {}, repair = false) {
+    const generation = await store.generation();
+    if (repair) {
+      assert(
+        options.id && hashPattern.test(pin?.sha256),
+        'Repair requires an exact offered identity',
+      );
+      const existing = await store.get(options.id, { sha256: pin.sha256 });
+      assert(existing, 'The exact regional revision is no longer installed');
+    }
+    const checked = await inspectRegionalDownload(pin, options);
+    const { descriptor, sha256 } = checked;
+    if (repair) assert(descriptor.id === options.id, 'Regional repair identity mismatch');
+    const project = {
+      id: descriptor.id,
+      title: descriptor.title.en,
+      format: descriptor.format,
+      descriptor,
+      pin: checked.pin,
+    };
+    await store.checkInstallCapacity({
+      project,
+      sha256,
+      assetBytes: descriptor.totalBytes + checked.bytes.length,
+    });
+    options.signal?.throwIfAborted();
+    const { assets } = await prepareInspectedRegionalDownload(checked, options);
+    options.signal?.throwIfAborted();
+    // Once this atomic commit starts, success is reported even if UI cancellation arrives later.
+    options.onProgress?.({
+      phase: 'commit',
+      loadedBytes: descriptor.totalBytes,
+      totalBytes: descriptor.totalBytes,
+    });
+    const result = await store.install({
+      project,
+      assets,
+      sha256,
+      expectedGeneration: generation,
+      repair,
+    });
+    return {
+      id: descriptor.id,
+      sha256,
+      generation: result.generation,
+      descriptor,
+    };
+  }
   return {
     inspect: inspectRegionalDownload,
     generation: store.generation,
     async list(options) {
       return (await store.list(options)).map(metadata);
     },
-    async install(pin, options = {}) {
-      const generation = await store.generation();
-      const checked = await prepareRegionalDownload(pin, options);
-      const { descriptor, sha256, assets } = checked;
-      options.signal?.throwIfAborted();
-      // Once this atomic commit starts, success is reported even if UI cancellation arrives later.
-      options.onProgress?.({
-        phase: 'commit',
-        loadedBytes: descriptor.totalBytes,
-        totalBytes: descriptor.totalBytes,
-      });
-      const result = await store.install({
-        project: {
-          id: descriptor.id,
-          title: descriptor.title.en,
-          format: descriptor.format,
-          descriptor,
-          pin: checked.pin,
-        },
-        assets,
-        sha256,
-        expectedGeneration: generation,
-      });
-      return {
-        id: descriptor.id,
-        sha256,
-        generation: result.generation,
-        descriptor,
-      };
-    },
-    async load(id, { sha256 } = {}) {
+    install: (pin, options) => save(pin, options),
+    repair: (pin, options) => save(pin, options, true),
+    async load(id, { sha256, signal } = {}) {
+      signal?.throwIfAborted();
       const record = await store.get(id, { sha256 });
-      assert(record, 'This exact regional revision is not installed');
-      const descriptorBlob = record.assets.get('__descriptor.json');
-      assert(descriptorBlob, 'Installed regional descriptor is missing');
-      const descriptorBytes = await verifiedBytes(new Response(descriptorBlob), {
-        bytes: record.project.pin.bytes,
-        sha256: record.sha256,
-      });
-      const descriptor = validateRegionalDescriptor(decode(descriptorBytes));
-      assert(descriptor.id === id, 'Installed regional identity mismatch');
+      signal?.throwIfAborted();
+      let descriptor, manifest, sceneryManifest;
       const blobs = new Map();
-      for (const item of descriptor.files) {
-        const blob = record.assets.get(item.path);
-        assert(blob, 'Installed regional file is missing');
-        blobs.set(item.path, await verifiedBytes(new Response(blob), item));
+      try {
+        assert(record, 'This exact regional revision is not installed');
+        const descriptorBlob = record.assets.get('__descriptor.json');
+        assert(descriptorBlob, 'Installed regional descriptor is missing');
+        const descriptorBytes = await verifiedBytes(
+          new Response(descriptorBlob),
+          {
+            bytes: record.project.pin.bytes,
+            sha256: record.sha256,
+          },
+          signal,
+        );
+        descriptor = validateRegionalDescriptor(decode(descriptorBytes));
+        assert(descriptor.id === id, 'Installed regional identity mismatch');
+        for (const item of descriptor.files) {
+          signal?.throwIfAborted();
+          const blob = record.assets.get(item.path);
+          assert(blob, 'Installed regional file is missing');
+          blobs.set(item.path, await verifiedBytes(new Response(blob), item, signal));
+        }
+        [manifest, sceneryManifest] = validatePair(descriptor, blobs);
+      } catch (cause) {
+        signal?.throwIfAborted();
+        if (!(cause instanceof TypeError || cause instanceof SyntaxError)) throw cause;
+        const error = new TypeError(cause.message, { cause });
+        error.code = 'regional-cache-invalid';
+        throw error;
       }
-      const [manifest, sceneryManifest] = validatePair(descriptor, blobs);
       // A synthetic origin binds requests to this exact retained revision; no network fallback.
       const base = new URL(`https://regional-cache.invalid/${record.sha256}/`);
       const fetchImpl = async (input, { signal } = {}) => {
@@ -404,14 +444,32 @@ export async function openRegionalLibrary({
       };
     },
     activate: store.activate,
-    async removalSnapshot(id) {
+    async removalSnapshot(id, { sha256 } = {}) {
       const snapshot = await store.removalSnapshot(id);
       if (!snapshot) return null;
       const entries = (await store.list({ includeRevisions: true })).filter((row) => row.id === id);
+      if (sha256 !== undefined) {
+        assert(/^[a-f0-9]{64}$/.test(sha256), 'Review an exact regional revision');
+        const selected = entries.find((row) => row.sha256 === sha256);
+        assert(
+          selected && snapshot.revisions.some((row) => row.sha256 === sha256),
+          'This regional revision is no longer installed',
+        );
+        return {
+          ...snapshot,
+          sha256,
+          revision: selected.project.descriptor.revision,
+          bytes: selected.project.descriptor.totalBytes,
+        };
+      }
       return {
         ...snapshot,
         bytes: entries.reduce((n, row) => n + row.project.descriptor.totalBytes, 0),
       };
+    },
+    removeRevision(id, sha256, { expectedGeneration } = {}) {
+      assert(Number.isSafeInteger(expectedGeneration), 'Review regional removal before deleting');
+      return store.removeRevision(id, sha256, { expectedGeneration });
     },
     remove(id, { expectedGeneration } = {}) {
       assert(Number.isSafeInteger(expectedGeneration), 'Review regional removal before deleting');

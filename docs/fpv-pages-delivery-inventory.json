@@ -1,0 +1,35 @@
+{
+  "format": "FPVDeliveryPagesInventory.v1",
+  "passed": true,
+  "manifestSha256": "b0a180c6d5aea1cf8a56f2b117e52c1804af2027565d54b45163a1c21d320616",
+  "verifiedEntries": 3433,
+  "zipSha256": "f790928a38f0cf61c20b49ab3e7b18628180eba7de61a099174046aeeeaff4f4",
+  "zipBytes": 964254306,
+  "sourcePins": [
+    {
+      "path": "game/platform.mjs",
+      "sha256": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec",
+      "bytes": 4198
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "sha256": "cdbb034b2142651d819381045b69642d07b337518e597f332c2ede12c6e48933",
+      "bytes": 97364
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha256": "93f8f7906182f50df92376ed50e07a107b99f8621750983c8d71d70d2d79fdac",
+      "bytes": 402518
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "sha256": "b739a4e192bf1f12d3c6aea4d6e9775ccc135769657e20fbd2a1e35eeea207a5",
+      "bytes": 323406
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "sha256": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95",
+      "bytes": 11987
+    }
+  ]
+}

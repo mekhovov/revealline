@@ -1,0 +1,12 @@
+{
+  "scope": "Source preservation and geometry budget, not native appearance or player admission",
+  "previousRevision": "districts-r2",
+  "revision": "harbour-r3",
+  "identicalFiles": 34,
+  "geometryDelta": 48336,
+  "textureDelta": 0,
+  "retainedAndCandidateBytes": 8147128,
+  "terrainManifestSHA256": "afd29e7dc274087cc3cae309942c6a4b64d4858fd1a86fa39fbcffff73b78b7a",
+  "sceneryManifestSHA256": "7e973e3651fea67852f7a235a33465364160398c31463f8efa54a07bcf1752fc",
+  "previousPreparationSHA256": "0d0fcd89d6ba7c5815f8a7fc498759f668693fd2a9e323ab6a37d67e9fe2c772"
+}

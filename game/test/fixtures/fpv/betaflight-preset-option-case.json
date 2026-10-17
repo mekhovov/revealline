@@ -1,0 +1,43 @@
+{
+  "description": "Case-insensitive root/dummy option matching independently reproduced with the exact Betaflight App 2026.6.2 parser. This fixture extends no firmware-version claim. Display labels stay unchanged; case-only duplicate definitions remain invalid SIM input.",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/betaflight/betaflight-configurator/2026.6.2/src/components/tabs/presets/PresetsRepoIndexed/PresetParser.js",
+      "sha256": "effdb390286b4d2b6499f04cb0ddee9d19cef8eeaf1ae6a0f2dd61fb2c7846c3",
+      "evidence": "removeUncheckedOptions lowercases the checked names and each option name before matching; readPresetProperties preserves display labels and checked defaults."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/betaflight/betaflight-configurator/2026.6.2/src/components/tabs/presets/PresetDetailsDialog.vue",
+      "sha256": "2d64be8ecdbc51cb21c043aab356589ecca173e08573ccad566f2110c67a509f",
+      "evidence": "Exclusive groups render radio controls sharing a group name, selecting at most one option. The SIM rejects an invalid multi-selection atomically."
+    }
+  ],
+  "entry": "presets/root.txt",
+  "files": {
+    "presets/root.txt": "#$ TITLE: Case matching regression\n#$ FIRMWARE_VERSION: 2026.6\n#$ CATEGORY: RATES\n#$ STATUS: EXPERIMENTAL\n#$ OPTION_GROUP BEGIN: (EXCLUSIVE) Feel\n#$ OPTION BEGIN (CHECKED): Race rates\n#$ OPTION END\n#$ OPTION BEGIN (UNCHECKED): Smooth rates\n#$ OPTION END\n#$ OPTION_GROUP END\n#$ INCLUDE: presets/included.txt",
+    "presets/included.txt": "#$ OPTION BEGIN (UNCHECKED): RACE RATES\nset roll_srate = 90\n#$ OPTION END\n#$ OPTION BEGIN (CHECKED): SMOOTH RATES\nset roll_srate = 80\n#$ OPTION END"
+  },
+  "observations": [
+    {
+      "name": "root checked default controls differently cased included option",
+      "options": {},
+      "checkedOptions": ["Race rates"],
+      "upstreamCommands": ["set roll_srate = 90"],
+      "beforeFixSimCommands": []
+    },
+    {
+      "name": "explicit root selection overrides both included defaults",
+      "options": { "Race rates": false, "Smooth rates": true },
+      "checkedOptions": ["Smooth rates"],
+      "upstreamCommands": ["set roll_srate = 80"],
+      "beforeFixSimCommands": []
+    },
+    {
+      "name": "all unchecked keeps included checked defaults inactive",
+      "options": { "Race rates": false, "Smooth rates": false },
+      "checkedOptions": [],
+      "upstreamCommands": [],
+      "beforeFixSimCommands": []
+    }
+  ]
+}

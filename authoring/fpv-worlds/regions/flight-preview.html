@@ -48,6 +48,12 @@
         border: 1px solid var(--iw-line, #53636d);
         border-radius: 8px;
       }
+      header,
+      #status {
+        max-height: calc((100dvh - 36px - var(--preview-touch-reserve, 0px)) / 2);
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
       summary {
         cursor: pointer;
         font-weight: 700;
@@ -158,6 +164,9 @@
         font-size: 12px;
         background: #101922b0;
       }
+      body[data-input="touch"] {
+        --preview-touch-reserve: 150px;
+      }
       body[data-input="touch"] #status {
         bottom: 162px;
       }
@@ -217,6 +226,8 @@
               <option value="auto">Authored appearance</option>
               <option value="plain">Plain terrain</option>
               <option value="canyon">Canyon sediment</option>
+              <option value="railway-expanse">Railway valley districts (4 km study)</option>
+              <option value="desert">Desert sand, salt and stone</option>
             </select>
             <select
               id="surface-quality"

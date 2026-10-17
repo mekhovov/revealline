@@ -439,3 +439,118 @@ test('native adapter admits damage and armor ahead of ordinary impacts while Cla
   assert.equal(encounterSoundRecipe(...heard[2]).priority, 3);
   assert.ok(heard.every(([, details]) => details.brutal && details.vocals === false));
 });
+
+test('audible charge briefly attenuates shared music once, using the accepted gameplay clock', () => {
+  const acquired = [],
+    released = [],
+    calls = [];
+  const state = run();
+  delete state.compiled.presentation;
+  const audio = createOverflightWorldAudio(
+    { encounter: (...args) => calls.push(args) },
+    {
+      acquireGain: (settings) => {
+        acquired.push(settings);
+        return { release: () => released.push(true) };
+      },
+    },
+  );
+  const attack = { active: true, owner: 1, stage: 'warning', remaining: 1, x: 100, y: 0 };
+  state.priorityAttacks = [attack];
+  audio.update(state);
+  assert.equal(
+    acquired.length,
+    0,
+    'observing a warning alone does not mute music for its whole duration',
+  );
+  state.time = 0.55;
+  attack.remaining = 0.45;
+  audio.update(state);
+  assert.deepEqual(acquired, [{ factor: 0.55 }]);
+  for (let frame = 0; frame < 100; frame++) audio.update(state);
+  assert.equal(acquired.length, 1, 'render frequency cannot stack attenuation');
+  assert.equal(released.length, 0, 'wall time does not advance this gameplay cue');
+  state.time = 0.8;
+  attack.remaining = 0.15;
+  audio.update(state);
+  assert.equal(acquired.length, 1, 'overlapping charge tails share one lease');
+  state.time = 1.14;
+  attack.active = false;
+  audio.update(state);
+  assert.equal(released.length, 0);
+  state.time = 1.16;
+  audio.update(state);
+  assert.equal(released.length, 1);
+  audio.update(state);
+  assert.equal(released.length, 1);
+  assert.equal(calls.filter(([cue]) => cue === 'warning-charge').length, 2);
+});
+
+test('distant warnings and friendly fire do not attenuate music; pause, fixtures and retry release only the owned lease', () => {
+  let acquired = 0,
+    released = 0;
+  const audio = createOverflightWorldAudio(
+    { encounter() {} },
+    {
+      acquireGain: () => {
+        acquired++;
+        return { release: () => released++ };
+      },
+    },
+  );
+  const state = run();
+  state.priorityAttacks = [
+    { active: true, owner: 1, stage: 'warning', remaining: 1, x: 1000, y: 0 },
+  ];
+  audio.update(state);
+  state.priorityAttacks[0].remaining = 0.15;
+  audio.update(state);
+  assert.equal(acquired, 0);
+  audio.update(state, { foreground: true });
+  assert.equal(acquired, 1);
+  audio.suspend();
+  audio.suspend();
+  assert.equal(released, 1);
+  audio.update(state, { foreground: true });
+  state.phase = 'upgrade';
+  audio.update(state);
+  assert.equal(released, 2);
+  state.phase = 'playing';
+  audio.update(state, { foreground: true });
+  audio.reset();
+  assert.equal(released, 3);
+  audio.update(state, { foreground: true });
+  state.fixture = true;
+  audio.update(state);
+  assert.equal(released, 4);
+  audio.reset();
+  assert.equal(released, 4);
+});
+
+test('native audio forwards music gain ownership and only local priority events request it', () => {
+  let acquired = 0,
+    released = 0;
+  const state = run();
+  const audio = createOverflightAudio(
+    { encounter() {}, feedbackDirector: { flight() {} } },
+    {
+      acquireGain: () => {
+        acquired++;
+        return { release: () => released++ };
+      },
+    },
+  );
+  for (const event of [
+    { type: 'payload' },
+    { type: 'warning', x: 1000, y: 0 },
+    { type: 'armor-break', x: 100, y: 0 },
+  ]) {
+    state.tick++;
+    state.time += 1 / 60;
+    state.events = [event];
+    audio.update(state);
+  }
+  assert.equal(acquired, 1);
+  audio.dispose();
+  assert.equal(released, 1);
+});
