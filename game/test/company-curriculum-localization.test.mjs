@@ -28,6 +28,11 @@ test('all 108 mission detail sidecars provide exact English and authored Ukraini
       bindings = createRewardMissionBindings(source);
     const localized = createCurriculumLocalization({ definition, source });
     assert.deepEqual(
+      localized,
+      await json(`../content/company-campaigns/${definition.id}.localization.json`),
+      `${definition.id} must preserve the checked-in localization sidecar exactly`,
+    );
+    assert.deepEqual(
       validateCampaignLocalization(localized, source, source.campaigns[0]),
       localized,
     );

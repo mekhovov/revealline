@@ -1,0 +1,377 @@
+{
+  "format": "FpvInputRecoveryBrowserQualification.v1",
+  "startedAt": "2026-10-17T14:34:36.897Z",
+  "completedAt": "2026-10-17T14:34:45.168Z",
+  "engine": "chromium",
+  "channel": "chrome",
+  "version": "155.0.8059.85",
+  "fixture": "Isolated loopback Advanced reference-practice component, real WebGL renderer and dedicated production module workers. getControls availability is simulated. Worker instrumentation observes requests and responses without altering them. Production authentication and application HTML are untouched.",
+  "limits": [
+    "One desktop Chrome runtime, English and Ukrainian; no physical radio, touch device, calibration, native wrapper or platform-matrix qualification.",
+    "Short unscored flights verify input-loss retention, explicit recovery, recording replay and disposal; not aircraft fidelity, Regional streaming, maximum-duration storage or throughput.",
+    "Exported bytes are replayed through the production comparison import UI. Their byte hashes and replay summaries are retained; temporary browser downloads are not durable artifacts."
+  ],
+  "cases": [
+    {
+      "locale": "en",
+      "pass": true,
+      "checks": {
+        "unavailableStartRetainsFlight": {
+          "missionTick": 6,
+          "message": "Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained."
+        },
+        "keyboardResumesSameFlight": 13,
+        "midFlightInputLossRetainsFlight": {
+          "missionTick": 18,
+          "message": "Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained."
+        },
+        "returnedInputRequiresExplicitStart": true,
+        "acceptedInputSequenceContinuous": true,
+        "explicitRestartCreatesNewFlight": true
+      },
+      "recordings": [
+        {
+          "scenario": "unavailable-start",
+          "bytes": 3493,
+          "sha256": "e262c1bb4ef82fcc36337ebe556939c3d0cf75ba45be0e953c8e4c8ef3bcc385",
+          "missionTicks": 6,
+          "finalHash": "c74c083c",
+          "replay": {
+            "verified": true,
+            "missionTicks": 6,
+            "samples": 7
+          }
+        },
+        {
+          "scenario": "input-lost",
+          "bytes": 3670,
+          "sha256": "9ee42d6d948b0a30000339c5b893139c433aca572bcc97f9cb136fc472ade8a4",
+          "missionTicks": 18,
+          "finalHash": "3cf78b24",
+          "replay": {
+            "verified": true,
+            "missionTicks": 18,
+            "samples": 19
+          }
+        },
+        {
+          "scenario": "resumed-flight",
+          "bytes": 3780,
+          "sha256": "903e1d2fd961807a406641cdfc35d3099db7ada841310e1f2995352fcf1dd5e1",
+          "missionTicks": 25,
+          "finalHash": "08f2cc7f",
+          "replay": {
+            "verified": true,
+            "missionTicks": 25,
+            "samples": 26
+          }
+        }
+      ],
+      "errors": [],
+      "workers": [
+        {
+          "id": 0,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24
+          ]
+        },
+        {
+          "id": 1,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": []
+        },
+        {
+          "id": 2,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": []
+        },
+        {
+          "id": 3,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": []
+        },
+        {
+          "id": 4,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": []
+        }
+      ]
+    },
+    {
+      "locale": "uk",
+      "pass": true,
+      "checks": {
+        "unavailableStartRetainsFlight": {
+          "missionTick": 6,
+          "message": "Керування недоступне. Практику призупинено. Підключіть пульт знову або виберіть «Клавіатура / дотик», потім почніть вручну. Запис збережено."
+        },
+        "keyboardResumesSameFlight": 13,
+        "midFlightInputLossRetainsFlight": {
+          "missionTick": 18,
+          "message": "Керування недоступне. Практику призупинено. Підключіть пульт знову або виберіть «Клавіатура / дотик», потім почніть вручну. Запис збережено."
+        },
+        "returnedInputRequiresExplicitStart": true,
+        "acceptedInputSequenceContinuous": true,
+        "explicitRestartCreatesNewFlight": true
+      },
+      "recordings": [
+        {
+          "scenario": "unavailable-start",
+          "bytes": 3493,
+          "sha256": "e262c1bb4ef82fcc36337ebe556939c3d0cf75ba45be0e953c8e4c8ef3bcc385",
+          "missionTicks": 6,
+          "finalHash": "c74c083c",
+          "replay": {
+            "verified": true,
+            "missionTicks": 6,
+            "samples": 7
+          }
+        },
+        {
+          "scenario": "input-lost",
+          "bytes": 3670,
+          "sha256": "9ee42d6d948b0a30000339c5b893139c433aca572bcc97f9cb136fc472ade8a4",
+          "missionTicks": 18,
+          "finalHash": "3cf78b24",
+          "replay": {
+            "verified": true,
+            "missionTicks": 18,
+            "samples": 19
+          }
+        },
+        {
+          "scenario": "resumed-flight",
+          "bytes": 3780,
+          "sha256": "903e1d2fd961807a406641cdfc35d3099db7ada841310e1f2995352fcf1dd5e1",
+          "missionTicks": 25,
+          "finalHash": "08f2cc7f",
+          "replay": {
+            "verified": true,
+            "missionTicks": 25,
+            "samples": 26
+          }
+        }
+      ],
+      "errors": [],
+      "workers": [
+        {
+          "id": 0,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24
+          ]
+        },
+        {
+          "id": 1,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": []
+        },
+        {
+          "id": 2,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": []
+        },
+        {
+          "id": 3,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": []
+        },
+        {
+          "id": 4,
+          "url": "http://127.0.0.1:49465/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "terminated": true,
+          "pendingSteps": 0,
+          "sequences": []
+        }
+      ]
+    }
+  ],
+  "failure": null,
+  "sources": [
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1265063,
+      "sha256": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/platform.mjs",
+      "bytes": 4198,
+      "sha256": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-controller.mjs",
+      "bytes": 9865,
+      "sha256": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "bytes": 50056,
+      "sha256": "d3c5a16e6686da3c57dc8abcea6b9846c0f3f686681068f972c88b5ce27589a4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "bytes": 64132,
+      "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "bytes": 11987,
+      "sha256": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "bytes": 4156,
+      "sha256": "6f3aea322fbffaac5addca8d6817eeced332fe58d182a5708a56e3dc2f99379f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "bytes": 6436,
+      "sha256": "cd1a15105af58561e67dd05b38c99f42207452f92be4046737cb853f8009c9d8"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-contact.mjs",
+      "bytes": 2482,
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-support.mjs",
+      "bytes": 1815,
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rates.mjs",
+      "bytes": 9599,
+      "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "bytes": 12607,
+      "sha256": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/advanced-worker.mjs",
+      "bytes": 170,
+      "sha256": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514"
+    },
+    {
+      "path": "scripts/smoke-fpv-input-recovery.mjs",
+      "bytes": 16490,
+      "sha256": "0b7b3d9b0acf903d521143016d01b02b448aeaf36edfd547f56e6f30e97b79ce"
+    }
+  ],
+  "sourceStable": true,
+  "changedSources": [],
+  "pass": true
+}

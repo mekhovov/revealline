@@ -114,12 +114,14 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page.goto(url);
             await page.waitForFunction(() => window.qualificationReady);
             const button = (name) => page.getByRole('button', { name, exact: true });
-            if (touch) await button('Rates & throttle').tap();
+            if (touch) await button('Aircraft, rates & throttle').tap();
             else {
-              await button('Rates & throttle').focus();
+              await button('Aircraft, rates & throttle').focus();
               await page.keyboard.press('Enter');
             }
-            await page.getByRole('dialog', { name: 'Rates & throttle', exact: true }).waitFor();
+            await page
+              .getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true })
+              .waitFor();
             check(
               await page.locator('h2').evaluate((node) => node === document.activeElement),
               'Heading did not receive keyboard focus',
@@ -232,7 +234,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page.getByLabel('Rate profile', { exact: true }).selectOption(unfinishedProfile);
             await checkUnfinishedRate('Profile navigation');
             await button('Close').click();
-            await button('Rates & throttle').click();
+            await button('Aircraft, rates & throttle').click();
             await checkUnfinishedRate('Editor reopening');
             await page.evaluate(() => {
               window.qualificationLocale = 'uk';
@@ -339,7 +341,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               'Changing profiles coerced a blank camera draft',
             );
             await button('Close').click();
-            await button('Rates & throttle').click();
+            await button('Aircraft, rates & throttle').click();
             check((await cameraTilt.inputValue()) === '', 'Reopening coerced a blank camera draft');
             await cameraTilt.pressSequentially('35.25');
             await cameraFov.fill('999');
@@ -426,6 +428,78 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 download.suggestedFilename().endsWith('.json'),
               'Browser export differs from preview',
             );
+            // A name-only save gives history the same evaluated rates. Restoring
+            // it must cancel older import intent even though value comparison
+            // alone cannot distinguish the two drafts.
+            await page.getByLabel('Profile name', { exact: true }).fill('Race practice history');
+            await button('Save for next flight').click();
+            await page.waitForFunction(
+              (id) =>
+                window.qualificationStore.snapshot().profiles.find((profile) => profile.id === id)
+                  ?.name === 'Race practice history',
+              profileId,
+            );
+            const beforeHistoryImport = await page.evaluate(() =>
+                window.qualificationStore.export(),
+              ),
+              historyCandidate = JSON.parse(native);
+            historyCandidate.profile.axes.roll.rate = 88;
+            await transfer.fill(JSON.stringify(historyCandidate));
+            await page.evaluate(() => {
+              const subtle = crypto.subtle,
+                original = subtle.digest;
+              subtle.digest = function (...args) {
+                subtle.digest = original;
+                return new Promise((resolve, reject) => {
+                  window.qualificationReleaseHistoryDigest = async () => {
+                    try {
+                      resolve(await original.apply(subtle, args));
+                    } catch (error) {
+                      reject(error);
+                    }
+                    // Let the preview's continuation run before assertions.
+                    await new Promise((done) => setTimeout(done, 0));
+                  };
+                });
+              };
+            });
+            await button('Preview import').click();
+            await page.waitForFunction(
+              () => typeof window.qualificationReleaseHistoryDigest === 'function',
+            );
+            await button('Restore revision to draft').click();
+            check(
+              (await page.getByLabel('Profile name', { exact: true }).inputValue()) ===
+                'Race practice',
+              'History did not restore the earlier profile name',
+            );
+            await page.evaluate(() => window.qualificationReleaseHistoryDigest());
+            check(
+              (await roll
+                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .inputValue()) === '900' &&
+                (await page.getByLabel('Profile name', { exact: true }).inputValue()) ===
+                  'Race practice' &&
+                (await page.evaluate(() => window.qualificationStore.export())) ===
+                  beforeHistoryImport,
+              'Late import replaced restored same-rate history or changed the saved library',
+            );
+            await button('Save import as new profile').click();
+            await page
+              .getByRole('status')
+              .filter({ hasText: 'Preview the import first' })
+              .waitFor();
+            check(
+              (await page.evaluate(() => window.qualificationStore.export())) ===
+                beforeHistoryImport,
+              'Cancelled history import remained eligible to save',
+            );
+            await button('Save for next flight').click();
+            await page
+              .getByRole('status')
+              .filter({ hasText: 'Saved for the next flight' })
+              .waitFor();
+            evidence.checks.historyRestoreCancelsPendingImport = true;
             const firmware = page.getByLabel('Source / export firmware version', { exact: true });
             await firmware.selectOption('4.5.2');
             await button('Export rate-only CLI').click();
@@ -735,7 +809,9 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             const other = await context.newPage();
             await other.goto(url);
             await other.waitForFunction(() => window.qualificationReady);
-            await other.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
+            await other
+              .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
+              .click();
             await other.getByRole('button', { name: 'New Actual profile', exact: true }).click();
             await page.getByRole('status').filter({ hasText: 'Another tab changed' }).waitFor();
             await page.getByLabel('Drone setup', { exact: true }).selectOption(secondSetup);
@@ -753,7 +829,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await other.close();
             await page.reload();
             await page.waitForFunction(() => window.qualificationReady);
-            await button('Rates & throttle').click();
+            await button('Aircraft, rates & throttle').click();
             check(
               await page.evaluate((id) => {
                 const config = window.qualificationStore.effective();
@@ -781,7 +857,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               window.qualificationLocale = 'uk';
               window.qualificationUI.refresh();
             });
-            await page.getByRole('dialog', { name: 'Рейти й газ', exact: true }).waitFor();
+            await page.getByRole('dialog', { name: 'Дрон, рейти й газ', exact: true }).waitFor();
             await page.getByLabel('Алгоритм рейтів', { exact: true }).waitFor();
             const size = await page.locator('dialog').evaluate((node) => ({
               clientWidth: node.clientWidth,
