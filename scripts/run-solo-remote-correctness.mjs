@@ -382,6 +382,10 @@ export async function evidenceSize(
   assert.equal(current.ino, owner.ino, 'Evidence root identity changed');
   return size;
 }
+export function liveEvidenceSize(root, filesystem = evidenceFilesystem) {
+  return evidenceSize(root, { transient: true, filesystem });
+}
+
 async function sourceIdentity(path, revision) {
   const git = (...args) =>
     execFileSync('git', args, { cwd: path, encoding: 'utf8', timeout: 15000 }).trim();
@@ -630,13 +634,12 @@ async function main() {
     const fs = await statfs(output);
     assert(fs.bavail * fs.bsize >= GiB + 4 * MiB, 'disk-floor-plus-finalization-reserve');
     assert(
-      (await evidenceSize(evidence, { transient: true })) <= plan.evidenceBytes - 4 * MiB,
+      (await liveEvidenceSize(evidence)) <= plan.evidenceBytes - 4 * MiB,
       'aggregate-evidence-cap',
     );
     if (profileEvidence)
       assert(
-        (await evidenceSize(profileEvidence, { transient: true })) <=
-          plan.profileEvidenceBytes - 4 * MiB,
+        (await liveEvidenceSize(profileEvidence)) <= plan.profileEvidenceBytes - 4 * MiB,
         'profile-evidence-cap',
       );
   };
@@ -1067,7 +1070,9 @@ async function main() {
       run,
       required,
       digest,
-      evidenceSize,
+      // Adapter sizing is used only by live row/cohort inspection callbacks.
+      // Settled row and final inventories below use strict evidenceSize directly.
+      evidenceSize: liveEvidenceSize,
       here,
       repository,
       output,
@@ -1250,7 +1255,7 @@ async function main() {
             timeoutMs: row.timeoutMs,
             inspect: async () => {
               await inspect();
-              assert((await evidenceSize(dir)) <= 32 * MiB, 'row-evidence-cap');
+              assert((await liveEvidenceSize(dir)) <= 32 * MiB, 'row-evidence-cap');
             },
           });
           row.command = command;
