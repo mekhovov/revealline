@@ -49,6 +49,9 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
   }
   for (const path of [
     'game/ui/audio.mjs',
+    'game/ui/flight-information-source.mjs',
+    'game/ui/flight-information-bridge.mjs',
+    'game/ui/flight-information-host.mjs',
     'game/ui/soundtrack-player.mjs',
     'game/ui/modal-navigation.mjs',
     'game/ui/controller-confirm-trace.mjs',

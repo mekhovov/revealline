@@ -1,0 +1,15 @@
+# Bounded native offline-emulation attribution
+
+The fourth installed-Starter comparison stopped before Start because `navigator.onLine` was true. Unlock, remembered access, service-worker control, hash/CSP-checked offline documents and public boot all passed. This narrows the failed admission to the browser automation state; it does not prove a game defect or excuse the unchanged offline assertion.
+
+The exact observer creates a second CDP session, enables `ServiceWorker`, and later reads storage quota. It never calls `Network.enable`. Pinned Playwright 1.62.1 internally enables the network domain and uses `Network.emulateNetworkConditions` to implement offline contexts. A second session's effect on native navigator state remains a hypothesis. [Pinned implementation](https://github.com/microsoft/playwright/blob/v1.62.1/packages/playwright-core/src/server/chromium/crNetworkManager.ts). The protocol separates request-condition emulation from explicit navigator state in its newer methods; that does not establish which command caused the retained failure. [Native protocol](https://chromedevtools.github.io/devtools-protocol/tot/Network/#method-overrideNetworkState).
+
+One prospective workflow is declared for the next reviewed push after `1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f`. It runs pinned Playwright 1.62.1 / Chromium 151.0.7922.34 on Linux with a headed display. It downloads no game package and starts no HTTP server. Each of three branches has a fresh owned persistent profile:
+
+1. Record native `navigator.onLine` immediately after `offline: true` launch, auxiliary CDP attachment, the existing `ServiceWorker.enable`, data-document navigation and auxiliary-session detachment.
+2. Repeat in an independent profile, adding `Network.enable` only after retaining all three original stages. This is a counterfactual control, not a claim that the game observer sends that command.
+3. Repeat independently with explicit `Network.overrideNetworkState(offline: true)` after the original stages, then inspect navigation and detachment. No JavaScript property override is used.
+
+True and false values are retained as observations. Completion requires every stage and clean process closure; it grants no offline gameplay, performance or first-eight qualification. Failures retain completed stages and have no automatic retry. The common process owner enforces a 120-second command deadline, 2 GiB aggregate RSS and 4 MiB output limit; each ordinary operation has 5 seconds and each launch 15 seconds. Profile scratch is capped at 256 MiB / 5,000 members with a 512 MiB free-space reserve. Evidence is bounded to 1 MiB per JSON report. Fresh profiles are not reopened and remain on their exact hosted owner until job teardown. Source and executable version are recorded; the workflow edge is single-use.
+
+This experiment isolates the automation commands before considering another installed-game comparison. The existing game admission, selected Starter recipe, server-off negative probe, cache checks, ownership, timeouts and profile-preservation requirements stay unchanged.

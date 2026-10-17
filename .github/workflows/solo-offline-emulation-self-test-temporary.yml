@@ -1,0 +1,62 @@
+name: Temporary Solo offline emulation self-test
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/solo-offline-emulation-self-test-temporary.yml'
+      - 'scripts/solo-offline-emulation-self-test.mjs'
+      - 'scripts/test-solo-offline-emulation-self-test.mjs'
+      - 'docs/performance/solo-offline-emulation-self-test.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: solo-offline-emulation-self-test-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  diagnostic:
+    # This is one browser-setup experiment, without a game build or gameplay credit.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Install the exact tools and exercise owner controls
+        timeout-minutes: 2
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          node --test scripts/test-solo-offline-emulation-self-test.mjs scripts/test-solo-remote-correctness.mjs
+      - name: Install the pinned Chromium and headed display
+        timeout-minutes: 5
+        run: |
+          npm install --prefix "$RUNNER_TEMP/solo-offline-self-test-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1
+          echo "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-offline-self-test-tools/node_modules/playwright/index.mjs" >> "$GITHUB_ENV"
+          echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-offline-self-test-browsers" >> "$GITHUB_ENV"
+          PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/solo-offline-self-test-browsers" node "$RUNNER_TEMP/solo-offline-self-test-tools/node_modules/playwright/cli.js" install --with-deps chromium
+          sudo apt-get install -y --no-install-recommends xvfb xauth
+      - name: Observe three fresh native contexts without a game
+        timeout-minutes: 4
+        run: node scripts/solo-offline-emulation-self-test.mjs run "$RUNNER_TEMP/solo-offline-emulation-evidence"
+      - name: Retain every observed stage and owned closure
+        if: always()
+        timeout-minutes: 1
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-offline-emulation-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/solo-offline-emulation-evidence
+          if-no-files-found: warn
+          retention-days: 14
