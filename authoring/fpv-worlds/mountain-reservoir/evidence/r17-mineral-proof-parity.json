@@ -1,0 +1,236 @@
+{
+  "format": "FPVReservoirMineralFinishProofParity.v1",
+  "status": "passed",
+  "beforeArchiveSHA256": "073ee3e359764d35039f607d02d0815ac0768b892d046b1426c5c4a55f4cacfb",
+  "afterArchiveSHA256": "0693f952b9ce1b42a3841c0af863d08a0a71c8e790b2dadf21a418e11042b17a",
+  "beforePack": "fpv-pack:50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+  "candidatePack": "fpv-pack:52b5dcbc2be428bc5f7daabb280a03771c526696fb92fe80bbad82265cd4630a",
+  "candidateChecks": 575,
+  "pairs": [
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "ticks": 2990,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "acro",
+      "ticks": 3002,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "self-level",
+      "ticks": 2293,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "acro",
+      "ticks": 2331,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "self-level",
+      "ticks": 2016,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "acro",
+      "ticks": 2185,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "self-level",
+      "ticks": 2691,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "acro",
+      "ticks": 2674,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "self-level",
+      "ticks": 3458,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "acro",
+      "ticks": 3447,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "self-level",
+      "ticks": 1809,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "acro",
+      "ticks": 1743,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "self-level",
+      "ticks": 3931,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "acro",
+      "ticks": 3972,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "self-level",
+      "ticks": 1616,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "acro",
+      "ticks": 1675,
+      "inputsAndPhysicalResultExact": true,
+      "sampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    }
+  ],
+  "scope": "Sixteen fresh ordinary-control software completions plus independent complete/archive replays are compared with published r16 recordings/results. All inputs and physical results remain exact; only revision-bound identity/checksum changes. Original r16 archives remain untouched. Candidate proof files stay external/unpublished until native art decision. No native clock, rendered quality, hardware, package, player, offline or public acceptance."
+}

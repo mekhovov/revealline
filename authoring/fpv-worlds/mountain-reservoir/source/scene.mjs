@@ -3,6 +3,7 @@
 import * as THREE from '../../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { encodeWorldGLB } from '../../../../optional-practice/civilian-fpv/world-content.mjs';
 import { mineralPNG, noise } from './mineral.mjs';
+import { finishedMineralPNG } from './mineral-finish.mjs';
 import { grassPNG, gravelPNG } from './ground-maps.mjs';
 import { addReservoirEngineering } from './engineering.mjs';
 import { rootTrunks } from './rooting.mjs';
@@ -526,29 +527,36 @@ export const anchors = [
   { id: 'shore-return', kind: 'landing', position: [-30, 0.45, 26], order: 3 },
 ];
 
-export function createScene({ groundMaterials = false } = {}) {
+export function createScene({ groundMaterials = false, mineralFinish = false } = {}) {
+  if (
+    mineralFinish &&
+    !(groundMaterials && maintenanceAdded && treesRooted && retainingCoating && requiredCoating)
+  )
+    throw Error('The mineral finish study requires the complete unchanged r16 foundation');
   const document = {
     asset: {
       version: '2.0',
       generator:
         'RevealLine original Mountain Reservoir source ' +
-        (groundMaterials
-          ? retainingAdded
-            ? retainingCoating
-              ? requiredCoating
-                ? treesRooted
-                  ? maintenanceAdded
-                    ? 'r16-maintenance-inlays-candidate'
-                    : 'r15-rooted-vegetation-candidate'
-                  : 'r14-required-surface-coating-candidate'
-                : 'r13-opaque-retaining-coating-candidate'
-              : 'r12-retaining-finish-candidate'
-            : 'r11-ground-material-candidate'
-          : terrainStitched
-            ? 'r9-terrain-stitching-candidate'
-            : engineeringAdded
-              ? 'r7'
-              : 'r4'),
+        (mineralFinish
+          ? 'r17-mineral-finish-candidate'
+          : groundMaterials
+            ? retainingAdded
+              ? retainingCoating
+                ? requiredCoating
+                  ? treesRooted
+                    ? maintenanceAdded
+                      ? 'r16-maintenance-inlays-candidate'
+                      : 'r15-rooted-vegetation-candidate'
+                    : 'r14-required-surface-coating-candidate'
+                  : 'r13-opaque-retaining-coating-candidate'
+                : 'r12-retaining-finish-candidate'
+              : 'r11-ground-material-candidate'
+            : terrainStitched
+              ? 'r9-terrain-stitching-candidate'
+              : engineeringAdded
+                ? 'r7'
+                : 'r4'),
     },
     scene: 0,
     ...(requiredCoating
@@ -690,7 +698,12 @@ export function createScene({ groundMaterials = false } = {}) {
     );
   }
   document.images = [];
-  const images = [['original-mineral-grain-256', mineralPNG()]];
+  const images = [
+    [
+      mineralFinish ? 'original-mineral-finish-256' : 'original-mineral-grain-256',
+      mineralFinish ? finishedMineralPNG() : mineralPNG(),
+    ],
+  ];
   if (groundMaterials)
     images.push(['original-short-grass-128', grassPNG()], ['original-gravel-128', gravelPNG()]);
   if (groundMaterials && images[1][1].length + images[2][1].length > 48 * 1024)
