@@ -27,6 +27,8 @@ in 38.476 seconds, with stable source hashes. It includes the complete new host
 test, `win-picture-host`, `continuous-play`, and `global-settings-view` files.
 Scoped lint and formatting also pass.
 
+The existing result-continuation and save/Continue consumer files also pass all 24 controls against this app. Their combined run with the Appearance policy retained 33 passes and one policy failure: the gate now contained 110 complete files but the count assertion still expected 109. Updating both total and uniqueness assertions to 110 makes the complete policy file pass 10/10. The original combined and policy-repeat reds remain retained in `auto-next-consumer-regression-review.json`; no gameplay or deadline change was needed. The new complete host file now gates the next production package.
+
 The new test preserves default automatic advancement, disables it through the
 public checkbox before a win, cancels an active countdown through the existing
 storage notification, and proves that re-enabling does not resurrect the same

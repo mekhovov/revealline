@@ -73,6 +73,7 @@ on:
       - 'game/test/menu-audio-localization.test.mjs'
       - 'game/test/menu-style-host.test.mjs'
       - 'game/test/win-picture-host.test.mjs'
+      - 'game/test/solo-auto-next-preferences-host.test.mjs'
       - 'game/test/demo-reward.test.mjs'
       - 'game/test/visual-quality-policy.test.mjs'
       - 'game/test/title-visual-quality-host.test.mjs'
@@ -219,6 +220,7 @@ jobs:
         game/test/menu-style-host.test.mjs
         game/test/fpv-acceptance-workflow.test.mjs
         game/test/win-picture-host.test.mjs
+        game/test/solo-auto-next-preferences-host.test.mjs
         game/test/demo-reward.test.mjs
         game/test/solo-demo-media-admission-host.test.mjs
         game/test/visual-quality-policy.test.mjs
