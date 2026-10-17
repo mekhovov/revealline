@@ -61,6 +61,9 @@ async function publicBinding(root, expected) {
       'tuning-library.mjs',
       'rates.mjs',
       'advanced-simulation.mjs',
+      'advanced-practice.mjs',
+      'advanced-regional.mjs',
+      'betaflight-import.mjs',
     ].map((name) => `optional-practice/civilian-fpv/${name}`),
     ...ids.flatMap((id) =>
       ['index.html', 'worker.js', 'advanced-worker.mjs'].map(
@@ -99,6 +102,95 @@ const ready = (page) =>
     null,
     { timeout: 60000 },
   );
+
+// Observe only bounded startup metadata. Never read form values, storage, request
+// bodies, headers, query strings, fragments, or page text into the report.
+export async function observeFPVStartup(
+  page,
+  evidence,
+  stage,
+  action,
+  { redact = String, now = () => performance.now(), captureTimeoutMs = 3000 } = {},
+) {
+  const started = now();
+  const elapsed = () => Math.max(0, Math.round(now() - started));
+  const resource = (value) => {
+    try {
+      const url = new URL(value);
+      return ['https:', 'http:'].includes(url.protocol)
+        ? redact(url.pathname).slice(0, 256)
+        : `[${url.protocol} resource]`;
+    } catch {
+      return '[invalid resource URL]';
+    }
+  };
+  const report = { stage, passed: false, requestsSeen: 0, requestsOmitted: 0, requests: [] };
+  (evidence.startups ??= []).push(report);
+  const requests = new Map();
+  const request = (item) => {
+    report.requestsSeen++;
+    if (requests.size >= 256) {
+      report.requestsOmitted++;
+      return;
+    }
+    const entry = {
+      resource: resource(item.url()),
+      type: item.resourceType(),
+      startedMs: elapsed(),
+    };
+    requests.set(item, entry);
+    report.requests.push(entry);
+  };
+  const response = (item) => {
+    const entry = requests.get(item.request());
+    if (entry) entry.status = item.status();
+  };
+  const finished = (item) => {
+    const entry = requests.get(item);
+    if (entry) entry.finishedMs = elapsed();
+  };
+  const failed = (item) => {
+    const entry = requests.get(item);
+    if (entry) {
+      entry.failedMs = elapsed();
+      entry.failure = redact(item.failure()?.errorText ?? 'request failed').slice(0, 256);
+    }
+  };
+  const listeners = { request, response, requestfinished: finished, requestfailed: failed };
+  for (const [event, handler] of Object.entries(listeners)) page.on(event, handler);
+  try {
+    const result = await action();
+    report.passed = true;
+    return result;
+  } finally {
+    report.elapsedMs = elapsed();
+    for (const [event, handler] of Object.entries(listeners)) page.off(event, handler);
+    try {
+      report.state = await bounded(
+        page.evaluate(() => ({
+          access: ['locked', 'unlocked', 'failed'].includes(
+            document.documentElement.dataset.accessState,
+          )
+            ? document.documentElement.dataset.accessState
+            : 'unknown',
+          documentReady: document.readyState,
+          shellPending: !!document.documentElement.dataset.modeShellPending,
+          settingsPresent: !!document.querySelector('[data-mode-action="settings"]'),
+          passwordFormPresent: !!document.querySelector('#access-gate input[type="password"]'),
+          inertScriptCount: document.querySelectorAll('script[data-access-type]').length,
+          serviceWorkerControlled: !!navigator.serviceWorker?.controller,
+        })),
+        captureTimeoutMs,
+        'Startup state capture timed out',
+      );
+    } catch (error) {
+      report.captureFailure = redact(error.message).slice(0, 256);
+    }
+    report.pendingRequests = report.requests.filter(
+      (entry) => entry.finishedMs === undefined && entry.failedMs === undefined,
+    ).length;
+  }
+}
 
 async function launch(chromium, profile, offline) {
   const env = { ...process.env };
@@ -227,6 +319,7 @@ export async function smokeFPVPublicFreshInstall({
       'Advanced reference practice is optional and unscored. Short neutral-input recordings test offline worker loading/export/replay/disposal, not flight fidelity, Regional streaming or throughput.',
       'Replay verification calls the published production evaluator. This is not coverage of the recording import interface or all profile transfer workflows.',
       'No existing user profiles, production mutations, forced service-worker activation or cache clearing. Test profiles and short recordings are retained for diagnosis.',
+      'Startup diagnostics retain at most 256 request paths and coarse browser state per stage; timing is observer elapsed time, not physical input latency. Truncation is explicit and no credential, request body, headers, query or page text is captured.',
     ],
   };
   let context;
@@ -255,16 +348,24 @@ export async function smokeFPVPublicFreshInstall({
       let page = context.pages()[0];
       page.setDefaultTimeout(60000);
       page.on('pageerror', (error) => evidence.pageErrors.push(redact(error.message)));
-      await page.goto(`${base}index.html?lang=en`);
-      await page.locator('#access-gate').waitFor();
-      assert.equal(await page.locator('html').getAttribute('data-access-state'), 'locked');
-      evidence.initiallyLocked = true;
-      await page.locator('#access-gate input[type="password"]').fill(password);
-      await page
-        .locator('#access-gate')
-        .getByRole('button', { name: 'Unlock', exact: true })
-        .click();
-      await ready(page);
+      await observeFPVStartup(
+        page,
+        evidence,
+        'fresh-password',
+        async () => {
+          await page.goto(`${base}index.html?lang=en`);
+          await page.locator('#access-gate').waitFor();
+          assert.equal(await page.locator('html').getAttribute('data-access-state'), 'locked');
+          evidence.initiallyLocked = true;
+          await page.locator('#access-gate input[type="password"]').fill(password);
+          await page
+            .locator('#access-gate')
+            .getByRole('button', { name: 'Unlock', exact: true })
+            .click();
+          await ready(page);
+        },
+        { redact },
+      );
       evidence.passwordFormAccepted = true;
       report.phase = `${id}:save-rates`;
       await openTuning(page);
@@ -288,12 +389,28 @@ export async function smokeFPVPublicFreshInstall({
       );
       assert.equal(saved.response.rates.axes.roll.rate, 90);
       evidence.savedProfile = { id: saved.id, name: saved.name, rollDegreesPerSecond: 900 };
-      await page.reload();
-      await ready(page);
+      await observeFPVStartup(
+        page,
+        evidence,
+        'saved-profile-reload',
+        async () => {
+          await page.reload();
+          await ready(page);
+        },
+        { redact },
+      );
       report.phase = `${id}:visible-install`;
       evidence.installation = await installThroughUI(page, id);
-      await page.reload();
-      await ready(page);
+      await observeFPVStartup(
+        page,
+        evidence,
+        'installed-worker-reload',
+        async () => {
+          await page.reload();
+          await ready(page);
+        },
+        { redact },
+      );
       await page.waitForFunction(() => !!navigator.serviceWorker.controller);
       evidence.installedWorker = await workerStatus(page, base);
       assert.equal(evidence.installedWorker.revision, binding.workers[id]);
@@ -306,13 +423,21 @@ export async function smokeFPVPublicFreshInstall({
       page = context.pages()[0];
       page.setDefaultTimeout(60000);
       page.on('pageerror', (error) => evidence.pageErrors.push(redact(error.message)));
-      const response = await page.goto(`${base}index.html?lang=en`);
-      assert.equal(
-        response.fromServiceWorker(),
-        true,
-        'Offline navigation did not come from installed worker',
+      await observeFPVStartup(
+        page,
+        evidence,
+        'offline-process-reopen',
+        async () => {
+          const response = await page.goto(`${base}index.html?lang=en`);
+          assert.equal(
+            response.fromServiceWorker(),
+            true,
+            'Offline navigation did not come from installed worker',
+          );
+          await ready(page);
+        },
+        { redact },
       );
-      await ready(page);
       evidence.offlineWorker = await workerStatus(page, base);
       assert.equal(evidence.offlineWorker.revision, binding.workers[id]);
       assert.equal(evidence.offlineWorker.ready, true);

@@ -7,6 +7,16 @@ for this continuation are complete. Physical and wider-platform qualification
 remain deferred; Advanced remains optional, unscored and default-ineligible.
 Historical reports below retain their original source hashes and scope.
 
+## Input availability continuation
+
+The [latest review](fpv-tuning-input-recovery-review.md) preserves the completed
+rates/profile/import scope and opens one reproduced recovery defect: unavailable
+radio input disables a healthy Advanced practice worker and its exports. The
+correction keeps input failure recoverable while preserving fatal worker handling.
+The live-test runner also gains bounded startup diagnostics so future failures
+retain more evidence than the earlier unexplained timeout. Verification and
+publication for this correction are in progress.
+
 ## Boundary completion review
 
 Rebased on main `1d631986a` before this continuation. The

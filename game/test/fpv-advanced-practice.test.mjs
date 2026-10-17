@@ -545,6 +545,128 @@ test('uncoded and unknown worker failures do not reopen export or restart based 
   }
 });
 
+for (const [locale, labels] of [
+  [
+    'en',
+    {
+      start: 'Start practice',
+      reset: 'Restart practice',
+      record: 'Export practice recording',
+      input: 'Input source',
+      unavailable: 'Input unavailable. Practice is paused.',
+    },
+  ],
+  [
+    'uk',
+    {
+      start: 'Почати практику',
+      reset: 'Почати заново',
+      record: 'Експортувати запис практики',
+      input: 'Джерело керування',
+      unavailable: 'Керування недоступне. Практику призупинено.',
+    },
+  ],
+])
+  test(`an unavailable radio before start preserves the healthy session and keyboard restart (${locale})`, async (t) => {
+    const f = await fixture(t, { locale, waitReady: false });
+    await waitFor(() => !f.button(labels.start).disabled);
+    const worker = LocalWorker.instances.at(-1);
+    const input = f.container
+      .querySelectorAll('select')
+      .find((node) => node.parentNode.textContent.startsWith(labels.input));
+    input.value = 'radio';
+    input.emit('change');
+    f.button(labels.start).click();
+    assert.match(f.container.textContent, new RegExp(labels.unavailable));
+    assert.equal(f.session.getTelemetry().missionTick, 0);
+    assert.equal(
+      worker.messages.some((message) => message.type === 'step'),
+      false,
+    );
+    assert.equal(worker.terminated, false);
+    for (const label of [labels.start, labels.reset, labels.record])
+      assert.equal(f.button(label).disabled, false);
+    input.value = 'keyboard';
+    input.emit('change');
+    f.button(labels.reset).click();
+    await waitFor(() => !f.button(labels.start).disabled);
+    assert.equal(worker.terminated, true);
+    f.button(labels.start).click();
+    await waitFor(() => f.session.getTelemetry()?.missionTick === 1);
+    assert.deepEqual(f.session.getTelemetry().calibratedInput, {
+      roll: 0,
+      pitch: 0,
+      yaw: 0,
+      throttle: 0,
+    });
+  });
+
+for (const unavailable of ['missing', 'malformed', 'throws'])
+  test(`radio input becoming ${unavailable} pauses before dispatch and preserves export and explicit resume`, async (t) => {
+    let available = true;
+    const exports = [];
+    const f = await fixture(t, {
+      getControls() {
+        if (available) return { roll: 0.2, pitch: 0, yaw: 0, throttle: 0.05 };
+        if (unavailable === 'throws') throw new Error('Input provider unavailable');
+        return unavailable === 'missing'
+          ? null
+          : { roll: Number.NaN, pitch: 0, yaw: 0, throttle: 0 };
+      },
+      platformOptions: {
+        locationRef: { href: 'capacitor://localhost/optional-practice/civilian-fpv/' },
+        loadBridge: async () => ({
+          onInactive: () => () => {},
+          exportJSON(value) {
+            exports.push(value);
+            return { status: 'shared' };
+          },
+        }),
+      },
+    });
+    const input = f.container
+      .querySelectorAll('select')
+      .find((node) => node.parentNode.textContent.startsWith('Input source'));
+    input.value = 'radio';
+    input.emit('change');
+    f.button('Start practice').click();
+    await waitFor(() => f.session.getTelemetry()?.missionTick === 1);
+    const worker = LocalWorker.instances.at(-1),
+      before = f.session.getTelemetry();
+    available = false;
+    const [timer, callback] = f.timers.entries().next().value;
+    f.timers.delete(timer);
+    await callback();
+    assert.match(f.container.textContent, /Input unavailable\. Practice is paused\./);
+    assert.deepEqual(f.session.getTelemetry(), before);
+    assert.equal(worker.messages.filter((message) => message.type === 'step').length, 1);
+    assert.equal(worker.terminated, false);
+    assert.equal(f.timers.size, 0);
+    assert.equal(f.button('Pause').disabled, true);
+    for (const label of [
+      'Start practice',
+      'Restart practice',
+      'Export practice recording',
+      'Keep this practice as reference',
+    ])
+      assert.equal(f.button(label).disabled, false);
+    f.button('Export practice recording').click();
+    await waitFor(() => exports.length === 1 && !f.button('Export practice recording').disabled);
+    const record = JSON.parse(exports[0].text);
+    assert.equal(record.missionTicks, 1);
+    assert.equal((await replayAdvancedRecording(record)).verified, true);
+    available = true;
+    assert.equal(f.timers.size, 0);
+    assert.deepEqual(f.session.getTelemetry(), before);
+    f.button('Start practice').click();
+    await waitFor(() => f.session.getTelemetry()?.missionTick === 2);
+    assert.equal(LocalWorker.instances.at(-1), worker);
+    assert.equal(
+      worker.messages.filter((message) => message.type === 'step').at(-1).sample.sequence,
+      1,
+    );
+  });
+
 for (const limit of ['duration', 'recording'])
   test(
     `the real ${limit} limit preserves an exportable practice and requires explicit restart`,
