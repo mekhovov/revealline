@@ -1,0 +1,80 @@
+{
+  "UTC": "2026-10-17T21:13:34.401909+00:00",
+  "status": "PREPARED_NOT_AUTHORIZED_TO_INVOKE",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "tree": "cfa62c47c9f27d55c889b5fc6be0a10172c3802e",
+  "base": "fe1bb1cecbfcead7edaad24e802242d62b4e3b99",
+  "run": 39069936864,
+  "externalRoot": "<external-qualification-root>",
+  "helpers": [
+    {
+      "path": "<internal-evidence-root>/qualify-combined-optional.py",
+      "bytes": 7924,
+      "SHA256": "7deac9ae68faf34a190ebecb21209837a0c88cd6622f3ae134a889b0ffa65109",
+      "parentHelper": "<prior-a105-evidence-root>/qualify-combined-optional.py",
+      "parentSHA256": "0717d0027ad31341880b4b81d10da91f8ced7e0026b9834e63b51faadc0cdca0"
+    },
+    {
+      "path": "<internal-evidence-root>/qualify-combined-company.py",
+      "bytes": 5694,
+      "SHA256": "8da5c914f5d3366b1115347268f4621aaa946f5bbab0c4f57802e3c0c23b9373",
+      "parentHelper": "<prior-a105-evidence-root>/qualify-combined-company.py",
+      "parentSHA256": "f47ca70b27ea7b9218736b78e253b5c75cee35e7aaa364ae0ccdab9b6bb75d93"
+    },
+    {
+      "path": "<internal-evidence-root>/qualify-combined-family-labels.py",
+      "bytes": 3769,
+      "SHA256": "f9f5bb7c19d5b3fc260a2fb3069c8906fff22d62dc97de6d174f74ccb69283f6",
+      "parentHelper": "<prior-a105-evidence-root>/qualify-combined-family-labels.py",
+      "parentSHA256": "e61c26f4f4ff7e822a4df366827f0132083f7b4d7e44ed82b91a04a48f945da1"
+    }
+  ],
+  "controller": {
+    "path": "<internal-evidence-root>/run-new-combined-once.py",
+    "bytes": 3947,
+    "SHA256": "96156f2a7b028de7c03ab7d11c4ddeca6590f792aa98e608c6638ecaddf3f6f6",
+    "parentHelper": "<prior-a105-evidence-root>/run-new-combined-once.py",
+    "parentSHA256": "d4837afe1e8f78c91e32564e0d6e912f971eb14b45cf1c88fe6a0a94f60c9a76"
+  },
+  "currentPolicySources": [
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "local": "<internal-evidence-root>/source-company-edition-candidate.yml",
+      "bytes": 8471,
+      "sha256": "9f9e77e7994b4eedff63dbac48c53c6d8746f4bf6e0848a3851ddd4ade889570",
+      "gitBlob": "f6f23c753f21267442300579d2cae31041a3e809"
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "local": "<internal-evidence-root>/source-optional-package-policy.mjs",
+      "bytes": 31364,
+      "sha256": "aa37d204f94c2592967c64813864647b5b84d65979d50c3abbf90314146ab6bc",
+      "gitBlob": "ac2d0cfae806761817cbe2015922cf224153ab70"
+    },
+    {
+      "path": "game/editions/package-budget.mjs",
+      "local": "<internal-evidence-root>/source-package-budget.mjs",
+      "bytes": 1259,
+      "sha256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+      "gitBlob": "1709c3dc71a4c2282e378db940dac2c899669323"
+    }
+  ],
+  "scope": "One optional original download, packaged family/label software check, one Company original download from existing focused exact-head run. No a105 or earlier repeated qualification. Root review required before any helper/controller execution or artifact download.",
+  "limits": {
+    "optionalArtifactBytes": 67108864,
+    "companyArtifactBytes": 268435456,
+    "externalReserveBytes": 3221225472,
+    "optionalRemainingAllowanceBytes": 536870912,
+    "companyRemainingAllowanceBytes": 1073741824,
+    "familyRemainingAllowanceBytes": 134217728,
+    "noInternalHeavyWork": true,
+    "noNativeRenderer": true,
+    "noRetries": true
+  },
+  "changedGuards": [
+    "Optional source policy hash pinned to exact combined source before download; manifest limits must equal committed 98/8MiB,139/(12MiB+256KiB),198/20MiB.",
+    "Company source budget hash is pinned; existing 2000-file/80MiB and stricter observed 72MiB checks unchanged.",
+    "Family runtime must equal fresh accepted receipt member count and decoded bytes, within committed198/20MiB; replaces obsolete178 count. Exact24/24 software groups unchanged."
+  ],
+  "laterPresentation": "Reuse automatic Industrial run39069885991. Pin its actual artifact metadata only when available; verify actual current receipt/TAP/source/manifest/command, unchanged family suite pins, zero failures/skips. Do not inherit old405 count or artifact."
+}

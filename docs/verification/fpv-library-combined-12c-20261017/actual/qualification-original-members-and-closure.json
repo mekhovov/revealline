@@ -1,0 +1,106 @@
+{
+  "UTC": "2026-10-17T21:22:13.576228+00:00",
+  "sourceRevision": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "sourceTree": "cfa62c47c9f27d55c889b5fc6be0a10172c3802e",
+  "run": 39069936864,
+  "artifactId": 12114574542,
+  "archiveBytes": 27240479,
+  "archiveSHA256": "b6518b6cfa5716d8568ccd693cb368f32cebb40ba82eb72c0b75ada0d2fba996",
+  "topLevelChecksums": 15,
+  "archives": [
+    {
+      "id": "civilian-flight",
+      "kind": "distribution",
+      "verifiedMembers": 96,
+      "uncompressedBytes": 3771978,
+      "limits": {
+        "files": 98,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3785994,
+      "archiveSHA256": "10229fd40d70367565b068b858fd14b0fd592db20c66720a8c9dfb1cd83ef875"
+    },
+    {
+      "id": "civilian-flight",
+      "kind": "source",
+      "verifiedMembers": 98,
+      "uncompressedBytes": 3806954,
+      "limits": {
+        "files": 98,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3821306,
+      "archiveSHA256": "fcb8138a3187b24d2ff1cb0ce133cba6ea4449ceb7b9ab8174aecf60fba1c078"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "distribution",
+      "verifiedMembers": 137,
+      "uncompressedBytes": 11812526,
+      "limits": {
+        "files": 139,
+        "bytes": 12845056
+      },
+      "archiveBytes": 11834024,
+      "archiveSHA256": "a3c4cac1aae578fc33886e68125a6ee38e9239f05ef910c8bd0eb849328e916c"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "source",
+      "verifiedMembers": 139,
+      "uncompressedBytes": 11853448,
+      "limits": {
+        "files": 139,
+        "bytes": 12845056
+      },
+      "archiveBytes": 11875250,
+      "archiveSHA256": "3a51ddc3c7ca68604719bf3b4ab4dbcb8fc084811212c89c541ba794d00e0f1b"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "distribution",
+      "verifiedMembers": 196,
+      "uncompressedBytes": 18314778,
+      "limits": {
+        "files": 198,
+        "bytes": 20971520
+      },
+      "archiveBytes": 18347300,
+      "archiveSHA256": "918c7b651aaf34b457ded59f60bc9d5a058fa61f0199fa1c9ed3204bb2c3c079"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "source",
+      "verifiedMembers": 198,
+      "uncompressedBytes": 18363552,
+      "limits": {
+        "files": 198,
+        "bytes": 20971520
+      },
+      "archiveBytes": 18396378,
+      "archiveSHA256": "54a45f2890319c0c507d20292084f9c01d06ca02915248d2dd3c7a0a268bc95d"
+    }
+  ],
+  "moduleClosure": {
+    "validatorSource": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "modules": 70,
+        "imports": 100
+      },
+      {
+        "id": "civilian-fpv",
+        "modules": 114,
+        "imports": 275
+      },
+      {
+        "id": "fpv-worlds",
+        "modules": 167,
+        "imports": 485
+      }
+    ],
+    "scope": "Finished original archive imports only; no checkout source fallback or execution"
+  },
+  "scope": "Exact optional original artifact, all six original source/runtime inventories and member hashes/budgets, finished import closures. No native/player/public acceptance. Combined source includes exact main fe1bb1. This is new 12c3101e evidence; a105 and older evidence are not inherited."
+}

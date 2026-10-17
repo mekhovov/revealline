@@ -1,0 +1,10 @@
+{
+  "UTC": "2026-10-17T21:35:20.295453+00:00",
+  "actualPreparationExitCode": 1,
+  "error": "AssertionError: helper-static-diff.patch contains an unredacted local root",
+  "cause": "Initial replacement map covered full stage paths but omitted the shorter external package-base literal used by the helper.",
+  "partialPreparation": "evidence-publication (retained untouched)",
+  "publicationOccurred": false,
+  "artifactReadOrDownloadOccurred": false,
+  "correctionScope": "Add disclosed generic parent-root aliases and prepare a separate v2 copy of the same explicitly listed small metadata/method files."
+}

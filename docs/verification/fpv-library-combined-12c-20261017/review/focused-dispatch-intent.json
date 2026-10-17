@@ -1,0 +1,10 @@
+{
+  "UTC": "2026-10-17T21:12:09.385384+00:00",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "branch": "codex/fpv-regional-family-library-20261016",
+  "workflow": "company-edition-candidate.yml",
+  "editions": "fpv-learning",
+  "existingExactHeadDispatches": 0,
+  "reason": "PR event excludes original Company ZIP; one current-head focused dispatch required.",
+  "noRetryUnknownOutcome": true
+}

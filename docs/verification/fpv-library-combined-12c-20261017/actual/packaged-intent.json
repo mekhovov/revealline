@@ -1,0 +1,13 @@
+{
+  "UTC": "2026-10-17T21:22:13.733533+00:00",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "run": 39069936864,
+  "helper": {
+    "path": "<internal-evidence-root>/qualify-combined-family-labels.py",
+    "bytes": 3769,
+    "SHA256": "f9f5bb7c19d5b3fc260a2fb3069c8906fff22d62dc97de6d174f74ccb69283f6",
+    "parentHelper": "<prior-a105-evidence-root>/qualify-combined-family-labels.py",
+    "parentSHA256": "e61c26f4f4ff7e822a4df366827f0132083f7b4d7e44ed82b91a04a48f945da1"
+  },
+  "oneInvocation": true
+}

@@ -1,0 +1,26 @@
+{
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "sources": [
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "local": "<internal-evidence-root>/source-company-edition-candidate.yml",
+      "bytes": 8471,
+      "sha256": "9f9e77e7994b4eedff63dbac48c53c6d8746f4bf6e0848a3851ddd4ade889570",
+      "gitBlob": "f6f23c753f21267442300579d2cae31041a3e809"
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "local": "<internal-evidence-root>/source-optional-package-policy.mjs",
+      "bytes": 31364,
+      "sha256": "aa37d204f94c2592967c64813864647b5b84d65979d50c3abbf90314146ab6bc",
+      "gitBlob": "ac2d0cfae806761817cbe2015922cf224153ab70"
+    },
+    {
+      "path": "game/editions/package-budget.mjs",
+      "local": "<internal-evidence-root>/source-package-budget.mjs",
+      "bytes": 1259,
+      "sha256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+      "gitBlob": "1709c3dc71a4c2282e378db940dac2c899669323"
+    }
+  ]
+}

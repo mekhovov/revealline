@@ -1,0 +1,21 @@
+{
+  "UTC": "2026-10-17T21:22:13.716472+00:00",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "run": 39069936864,
+  "helper": {
+    "path": "<internal-evidence-root>/qualify-combined-optional.py",
+    "bytes": 7924,
+    "SHA256": "7deac9ae68faf34a190ebecb21209837a0c88cd6622f3ae134a889b0ffa65109",
+    "parentHelper": "<prior-a105-evidence-root>/qualify-combined-optional.py",
+    "parentSHA256": "0717d0027ad31341880b4b81d10da91f8ced7e0026b9834e63b51faadc0cdca0"
+  },
+  "actualExitCode": 0,
+  "stdoutSHA256": "3f2e6dc374bb889524dce558423da0db6a029beb1fd95d508b552f4dce530446",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receipt": {
+    "originalPath": "<external-qualification-root>/qualification-original-members-and-closure.json",
+    "internalCopy": "<internal-evidence-root>/actual-once/qualification-original-members-and-closure.json",
+    "bytes": 3163,
+    "SHA256": "3ea54bca803fc25530310c9e893e5805cdcc2550798067f6314213f15d80b67e"
+  }
+}

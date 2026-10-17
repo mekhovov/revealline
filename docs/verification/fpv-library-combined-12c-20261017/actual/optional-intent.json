@@ -1,0 +1,13 @@
+{
+  "UTC": "2026-10-17T21:21:23.215416+00:00",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "run": 39069936864,
+  "helper": {
+    "path": "<internal-evidence-root>/qualify-combined-optional.py",
+    "bytes": 7924,
+    "SHA256": "7deac9ae68faf34a190ebecb21209837a0c88cd6622f3ae134a889b0ffa65109",
+    "parentHelper": "<prior-a105-evidence-root>/qualify-combined-optional.py",
+    "parentSHA256": "0717d0027ad31341880b4b81d10da91f8ced7e0026b9834e63b51faadc0cdca0"
+  },
+  "oneInvocation": true
+}

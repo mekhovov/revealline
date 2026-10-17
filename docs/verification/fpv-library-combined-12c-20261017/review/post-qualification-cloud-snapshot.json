@@ -1,0 +1,61 @@
+{
+  "UTC": "2026-10-17T21:33:09.771834+00:00",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "evidenceParent": "38e5d798b95baac36e92f48751eaa09e198c55aa",
+  "runs": [
+    {
+      "id": 39069936864,
+      "name": "Company edition candidates",
+      "event": "workflow_dispatch",
+      "head_sha": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39069936864"
+    },
+    {
+      "id": 39069886001,
+      "name": "Company edition candidates",
+      "event": "pull_request",
+      "head_sha": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39069886001"
+    },
+    {
+      "id": 39069885970,
+      "name": "Appearance preview",
+      "event": "pull_request",
+      "head_sha": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39069885970"
+    },
+    {
+      "id": 39069886004,
+      "name": "Fastline exact-head auto-merge",
+      "event": "pull_request",
+      "head_sha": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39069886004"
+    },
+    {
+      "id": 39069885975,
+      "name": "Validate source for continuous main",
+      "event": "pull_request",
+      "head_sha": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39069885975"
+    },
+    {
+      "id": 39069885991,
+      "name": "Industrial feature verification",
+      "event": "pull_request",
+      "head_sha": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39069885991"
+    }
+  ]
+}

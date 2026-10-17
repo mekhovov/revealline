@@ -1,0 +1,25 @@
+{
+  "UTC": "2026-10-17T21:17:50.214277+00:00",
+  "status": "PREPARED_AWAITING_ROOT_REVIEW_NOT_INVOKED",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "tree": "cfa62c47c9f27d55c889b5fc6be0a10172c3802e",
+  "run": 39069885991,
+  "job": 117505116888,
+  "artifact": 12114603626,
+  "artifactBytes": 24806,
+  "artifactSHA256": "9ba3e41be73c4f8aa37c3559a7954d257d54418f8e0ac6629511f6200dca2096",
+  "helper": {
+    "path": "<internal-evidence-root>/verify-presentation-once.py",
+    "bytes": 4188,
+    "sha256": "a591e3b737075145def811300a93b106026f5ae0e5d2a713674834e4c5dff280"
+  },
+  "diff": {
+    "path": "<internal-evidence-root>/presentation-helper-static-diff.patch",
+    "bytes": 5287,
+    "sha256": "3c45dd850d4989d2d81e6c2938f5161396a3417b5ac13da338854585da7d042d"
+  },
+  "manifestSHA256": "c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2",
+  "selection": "Exactly all41 current presentation manifest files and exact Node command; family and label test source hashes retained. Actual current TAP counts reported, no inherited405 assumption; require tests=pass>0 and zero failures/skips/cancellations/todos.",
+  "scope": "One current tiny original receipt/TAP artifact download and static receipt validation only. No test execution, browser or inherited qualification.",
+  "negativePreserved": "presentation-preparation-schema-negative.json records metadata display error before corrected local-only array interpretation; no repeated source GET or artifact invocation."
+}

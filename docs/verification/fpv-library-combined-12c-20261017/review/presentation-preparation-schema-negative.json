@@ -1,0 +1,11 @@
+{
+  "UTC": "2026-10-17T21:17:19.912274+00:00",
+  "operation": "Metadata preparation print after exact source copy",
+  "actualToolExitCode": 1,
+  "error": "TypeError: list indices must be integers or slices, not str",
+  "cause": "Preparation assumed phases object; actual checked-in phases is an array",
+  "sourceCopyPreserved": true,
+  "artifactDownloaded": false,
+  "verifierInvoked": false,
+  "noRepeatGET": true
+}

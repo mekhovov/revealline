@@ -1,0 +1,550 @@
+{
+  "format": "fpv-verification-redacted-evidence.v1",
+  "scope": "Explicit metadata/method/receipt copies only. Raw originals remain preserved; receipt hashes identify actual originals, not the redacted public copies.",
+  "replacementTokens": {
+    "<external-qualification-root>": "Private local root withheld; replace with a chosen fresh directory for reproduction.",
+    "<internal-evidence-root>": "Private local root withheld; replace with a chosen fresh directory for reproduction.",
+    "<prior-a105-evidence-root>": "Private local root withheld; replace with a chosen fresh directory for reproduction.",
+    "<external-package-base>": "Private local root withheld; replace with a chosen fresh directory for reproduction.",
+    "<internal-lane-base>": "Private local root withheld; replace with a chosen fresh directory for reproduction."
+  },
+  "files": [
+    {
+      "publicPath": "review/source-identity.json",
+      "rawBytes": 1340,
+      "rawSHA256": "637d89ffb39a5f95a0a07a07e11aaf33ed443d35d7bb33986444d625ac74c2e2",
+      "publicBytes": 1340,
+      "publicSHA256": "637d89ffb39a5f95a0a07a07e11aaf33ed443d35d7bb33986444d625ac74c2e2",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/merge-intent.json",
+      "rawBytes": 1078,
+      "rawSHA256": "58cc3a59a765d3f7732f4d12dbc4de4da6b04d48bb41246f12c83dd21f9728ab",
+      "publicBytes": 1078,
+      "publicSHA256": "58cc3a59a765d3f7732f4d12dbc4de4da6b04d48bb41246f12c83dd21f9728ab",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/merge-complete-terminal.json",
+      "rawBytes": 195,
+      "rawSHA256": "fafb5040d849622dc4017b9a8c1bfac7fa27d8a98a22b943f71b8a9fee44462a",
+      "publicBytes": 195,
+      "publicSHA256": "fafb5040d849622dc4017b9a8c1bfac7fa27d8a98a22b943f71b8a9fee44462a",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/focused-dispatch-intent.json",
+      "rawBytes": 405,
+      "rawSHA256": "04f8d89e8672cacd7b72fde1a8c0190266881c328a14e991c880aeb67a13a638",
+      "publicBytes": 405,
+      "publicSHA256": "04f8d89e8672cacd7b72fde1a8c0190266881c328a14e991c880aeb67a13a638",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/focused-dispatch-terminal.json",
+      "rawBytes": 120,
+      "rawSHA256": "0283bdfe13d9f423c2a24508fac2619a583777e33987310a07c2a1d40074efc4",
+      "publicBytes": 120,
+      "publicSHA256": "0283bdfe13d9f423c2a24508fac2619a583777e33987310a07c2a1d40074efc4",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/focused-run-pin.json",
+      "rawBytes": 284,
+      "rawSHA256": "9857ab4453605b64cb81e6b4d1087e3586f72bfd8bf83123801fb2df0ddf8085",
+      "publicBytes": 284,
+      "publicSHA256": "9857ab4453605b64cb81e6b4d1087e3586f72bfd8bf83123801fb2df0ddf8085",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/qualification-source-pins.json",
+      "rawBytes": 1120,
+      "rawSHA256": "1f1e54628da3da6bd8c2bc2eb9ac195c7b5f66f6abbd8f892fdfa8e59870b96f",
+      "publicBytes": 1009,
+      "publicSHA256": "1f551999be213f22ff002f77c9fc6375d1d2db889fd43bb4dd9f67ee85de19ae",
+      "redactions": [
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "review/qualification-plan.json",
+      "rawBytes": 4624,
+      "rawSHA256": "9f737de559f878543268f44ae2464f25d0a2f890c136cbf6c3b4dea1c0f27cf7",
+      "publicBytes": 4153,
+      "publicSHA256": "bce5fc286f975b4225d522c5ca29620ac2ac1f34316b8c836312d6ef61bedd8f",
+      "redactions": [
+        {
+          "replacementToken": "<external-qualification-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 7
+        },
+        {
+          "replacementToken": "<prior-a105-evidence-root>",
+          "occurrences": 4
+        }
+      ]
+    },
+    {
+      "publicPath": "review/helper-static-diff.patch",
+      "rawBytes": 13545,
+      "rawSHA256": "fafb62c23f5acdd6234544ea6561abdf58abd2a555408bed6c2b316809c53983",
+      "publicBytes": 13146,
+      "publicSHA256": "167ecdedc92ad6c249d5302848e2413be2b9f012781f4b26e01b93e63aa9986e",
+      "redactions": [
+        {
+          "replacementToken": "<external-qualification-root>",
+          "occurrences": 2
+        },
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<prior-a105-evidence-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<external-package-base>",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "review/qualify-combined-optional.py",
+      "rawBytes": 7924,
+      "rawSHA256": "7deac9ae68faf34a190ebecb21209837a0c88cd6622f3ae134a889b0ffa65109",
+      "publicBytes": 7877,
+      "publicSHA256": "c91cf0410d276c6f341efbb32e61c5ebde7f4610fc51a53d6c5838e6cb67584c",
+      "redactions": [
+        {
+          "replacementToken": "<external-package-base>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "review/qualify-combined-company.py",
+      "rawBytes": 5694,
+      "rawSHA256": "8da5c914f5d3366b1115347268f4621aaa946f5bbab0c4f57802e3c0c23b9373",
+      "publicBytes": 5598,
+      "publicSHA256": "346758cdac968e967c5cd5a6797307e94958bf446a1a65874394bccf65dd72c6",
+      "redactions": [
+        {
+          "replacementToken": "<external-qualification-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "review/qualify-combined-family-labels.py",
+      "rawBytes": 3769,
+      "rawSHA256": "f9f5bb7c19d5b3fc260a2fb3069c8906fff22d62dc97de6d174f74ccb69283f6",
+      "publicBytes": 3673,
+      "publicSHA256": "373c7887e27c16bb022ff7f7dffe90e2838f6c17c052a3e4538b03bba34c4485",
+      "redactions": [
+        {
+          "replacementToken": "<external-qualification-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "review/run-new-combined-once.py",
+      "rawBytes": 3947,
+      "rawSHA256": "96156f2a7b028de7c03ab7d11c4ddeca6590f792aa98e608c6638ecaddf3f6f6",
+      "publicBytes": 3910,
+      "publicSHA256": "f36d9bba033e4b084a5e831f601b206952b9ae2b98f528e01b9f1e0b53a79fa0",
+      "redactions": [
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "review/OWNED-CONTROLLER-SESSION-25987-TERMINAL.json",
+      "rawBytes": 354,
+      "rawSHA256": "64aa97bafc0692a46f343ed97a388bc82e634565de02a3b6e90da638de245d25",
+      "publicBytes": 354,
+      "publicSHA256": "64aa97bafc0692a46f343ed97a388bc82e634565de02a3b6e90da638de245d25",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/industrial-feature-tests.json",
+      "rawBytes": 8987,
+      "rawSHA256": "c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2",
+      "publicBytes": 8987,
+      "publicSHA256": "c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/presentation-verification-plan.json",
+      "rawBytes": 1572,
+      "rawSHA256": "f59108b20b4d0da2e5b617848dd171e39ad90a06990cbfa773517f7b0057ba61",
+      "publicBytes": 1498,
+      "publicSHA256": "e71db08402558dcab5848df4d410486f3567ea4b4aeede2e2bc6fb15203f6cc3",
+      "redactions": [
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 2
+        }
+      ]
+    },
+    {
+      "publicPath": "review/verify-presentation-once.py",
+      "rawBytes": 4188,
+      "rawSHA256": "a591e3b737075145def811300a93b106026f5ae0e5d2a713674834e4c5dff280",
+      "publicBytes": 4151,
+      "publicSHA256": "cb8bc074e57a1065ebb2f3b6823e723050645c24a74763e4aad07d8cb9527f7b",
+      "redactions": [
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "review/presentation-helper-static-diff.patch",
+      "rawBytes": 5287,
+      "rawSHA256": "3c45dd850d4989d2d81e6c2938f5161396a3417b5ac13da338854585da7d042d",
+      "publicBytes": 5221,
+      "publicSHA256": "c6c41dfa18b3d80ba96e267eb8adbdb8ed98dd224b9445209cc49fa9890200b4",
+      "redactions": [
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<prior-a105-evidence-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "review/presentation-preparation-schema-negative.json",
+      "rawBytes": 417,
+      "rawSHA256": "6b85704fa0ed37246f753961e8f33702a9849b4a76579279ac5104da73bd90fc",
+      "publicBytes": 417,
+      "publicSHA256": "6b85704fa0ed37246f753961e8f33702a9849b4a76579279ac5104da73bd90fc",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/evidence-redaction-preparation-negative.json",
+      "rawBytes": 608,
+      "rawSHA256": "55ec35ab72f6685b082cbbec54546b12eafaec6dcd61414b52767451c734b1af",
+      "publicBytes": 608,
+      "publicSHA256": "55ec35ab72f6685b082cbbec54546b12eafaec6dcd61414b52767451c734b1af",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/presentation-actual-intent.json",
+      "rawBytes": 358,
+      "rawSHA256": "ab64450a5c0d81d2f44c5a93ca918a2c5da0e7a88b73c0e9110571c444798e0c",
+      "publicBytes": 358,
+      "publicSHA256": "ab64450a5c0d81d2f44c5a93ca918a2c5da0e7a88b73c0e9110571c444798e0c",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/presentation-actual-terminal.json",
+      "rawBytes": 267,
+      "rawSHA256": "04b876105363b59ba94d3588a6aafb8a88ef56eaf3a811c9e97af19a12de72e1",
+      "publicBytes": 267,
+      "publicSHA256": "04b876105363b59ba94d3588a6aafb8a88ef56eaf3a811c9e97af19a12de72e1",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/presentation-exact-head-verification.json",
+      "rawBytes": 11331,
+      "rawSHA256": "e5162673a797a4963d7ee54f31a3f02ff5891a0301fcc1e0b6e4198ce13b94f3",
+      "publicBytes": 11331,
+      "publicSHA256": "e5162673a797a4963d7ee54f31a3f02ff5891a0301fcc1e0b6e4198ce13b94f3",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/presentation-original-artifact-metadata.json",
+      "rawBytes": 850,
+      "rawSHA256": "db9e445f440c8ff2ac0d69171b10280234ee4addb61a6f1252239d698ce29d4e",
+      "publicBytes": 850,
+      "publicSHA256": "db9e445f440c8ff2ac0d69171b10280234ee4addb61a6f1252239d698ce29d4e",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/presentation-download-terminal.json",
+      "rawBytes": 36,
+      "rawSHA256": "e6a10e00d2c33708d71cc4e9d9250d129e14cd0f1488869e828680c4c9b24b41",
+      "publicBytes": 36,
+      "publicSHA256": "e6a10e00d2c33708d71cc4e9d9250d129e14cd0f1488869e828680c4c9b24b41",
+      "redactions": []
+    },
+    {
+      "publicPath": "review/post-qualification-cloud-snapshot.json",
+      "rawBytes": 2105,
+      "rawSHA256": "4cb9942b8a017405925784228f2a4f6b006ea6798fc5aa5c36bb4d951a5f4632",
+      "publicBytes": 2105,
+      "publicSHA256": "4cb9942b8a017405925784228f2a4f6b006ea6798fc5aa5c36bb4d951a5f4632",
+      "redactions": []
+    },
+    {
+      "publicPath": "actual/controller-intent.json",
+      "rawBytes": 448,
+      "rawSHA256": "a9b24fae26bdd84d578550b85c3bfa4464af147dcfa094443db9205b1e3c5c3d",
+      "publicBytes": 448,
+      "publicSHA256": "a9b24fae26bdd84d578550b85c3bfa4464af147dcfa094443db9205b1e3c5c3d",
+      "redactions": []
+    },
+    {
+      "publicPath": "actual/optional-intent.json",
+      "rawBytes": 570,
+      "rawSHA256": "207c1d28a34706750e84e4951c97f540b30b5d8cef0eb968a67aa86b020e4b78",
+      "publicBytes": 504,
+      "publicSHA256": "dae9f82643e2d45e2a7975e1c6133aa4ffe545037388dbf4af170976ce91d794",
+      "redactions": [
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<prior-a105-evidence-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "actual/optional-terminal.json",
+      "rawBytes": 1202,
+      "rawSHA256": "5fb30fd19c70f4be6d0497c051f4b412c2125dfbb0a7fbddfc57ff2bca222181",
+      "publicBytes": 1003,
+      "publicSHA256": "4d0a8898e96eb2af606d6464e8df2cc01b746f478c77e46a981a87e37287d979",
+      "redactions": [
+        {
+          "replacementToken": "<external-qualification-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 2
+        },
+        {
+          "replacementToken": "<prior-a105-evidence-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "actual/packaged-intent.json",
+      "rawBytes": 580,
+      "rawSHA256": "a1e5b973d3de2c8eea4b6e1d4261d628760426145e6bbbc47d360cd18690389e",
+      "publicBytes": 514,
+      "publicSHA256": "0d5a5a55de862a0f21ecf5d4e6908d52653758cd680294a1d820ba1aaa58c57d",
+      "redactions": [
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<prior-a105-evidence-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "actual/packaged-terminal.json",
+      "rawBytes": 1186,
+      "rawSHA256": "b4b6950f592e435e6dfffdcdf1ee743c174cadd96723411903b07b18e3454761",
+      "publicBytes": 987,
+      "publicSHA256": "e1491d3fac43236f29170a3794c038e1654caa37ba151117b3aefe8c157d78f0",
+      "redactions": [
+        {
+          "replacementToken": "<external-qualification-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 2
+        },
+        {
+          "replacementToken": "<prior-a105-evidence-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "actual/company-intent.json",
+      "rawBytes": 568,
+      "rawSHA256": "d3f877b34c45b082a2515e47ab7a5738ff2632215577b333b898eb54d9a5d25d",
+      "publicBytes": 502,
+      "publicSHA256": "aa347ccf0d9a7d48e41426c3e0260493f3cb17bee053fa1908610a7bfdd433d3",
+      "redactions": [
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<prior-a105-evidence-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "actual/company-terminal.json",
+      "rawBytes": 1180,
+      "rawSHA256": "28550832e6f565e62017924c44ec74c9d347024adb7f7b568109be4f8a49fc65",
+      "publicBytes": 981,
+      "publicSHA256": "b605d48ea40439edecaae15d8d04eff5883de5ea1990f39b85550e363eff4a2c",
+      "redactions": [
+        {
+          "replacementToken": "<external-qualification-root>",
+          "occurrences": 1
+        },
+        {
+          "replacementToken": "<internal-evidence-root>",
+          "occurrences": 2
+        },
+        {
+          "replacementToken": "<prior-a105-evidence-root>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "actual/controller-result.json",
+      "rawBytes": 263,
+      "rawSHA256": "9ed37afde9147b90efda4790ac1c051eba5e7b0a4b0d0c3fa4e030bbf56d00a7",
+      "publicBytes": 263,
+      "publicSHA256": "9ed37afde9147b90efda4790ac1c051eba5e7b0a4b0d0c3fa4e030bbf56d00a7",
+      "redactions": []
+    },
+    {
+      "publicPath": "actual/qualification-original-members-and-closure.json",
+      "rawBytes": 3163,
+      "rawSHA256": "3ea54bca803fc25530310c9e893e5805cdcc2550798067f6314213f15d80b67e",
+      "publicBytes": 3163,
+      "publicSHA256": "3ea54bca803fc25530310c9e893e5805cdcc2550798067f6314213f15d80b67e",
+      "redactions": []
+    },
+    {
+      "publicPath": "actual/packaged-family-label-receipt.json",
+      "rawBytes": 2426,
+      "rawSHA256": "56e74372f4d6bc3634f9941f54b9451ed79108253940230736ca7afb6993c923",
+      "publicBytes": 2138,
+      "publicSHA256": "209335e2d1dbe5a3f7bcb4c41a27d7ed1953529cd8f81085fc83c6b67321386b",
+      "redactions": [
+        {
+          "replacementToken": "<external-qualification-root>",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "actual/company-original-members-receipt.json",
+      "rawBytes": 1507,
+      "rawSHA256": "a147d416fd13e490ebd43f9640dcd8e5b34d368bfb48fc820d0c244f8aff09dd",
+      "publicBytes": 1507,
+      "publicSHA256": "a147d416fd13e490ebd43f9640dcd8e5b34d368bfb48fc820d0c244f8aff09dd",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/github-artifact-metadata.json",
+      "rawBytes": 855,
+      "rawSHA256": "e4e6282b9bd486d41056e4938227780ec3e0abd9a17a6b52a7ff7a31b02b8b4f",
+      "publicBytes": 855,
+      "publicSHA256": "e4e6282b9bd486d41056e4938227780ec3e0abd9a17a6b52a7ff7a31b02b8b4f",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/github-company-artifact-metadata.json",
+      "rawBytes": 847,
+      "rawSHA256": "fa5de1ce648ad9ae41cd39dd1cc4951b4ad905e9afddff57eaeb1a26680c579d",
+      "publicBytes": 847,
+      "publicSHA256": "fa5de1ce648ad9ae41cd39dd1cc4951b4ad905e9afddff57eaeb1a26680c579d",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/download-terminal.json",
+      "rawBytes": 81,
+      "rawSHA256": "5f7b4df91e905ab9c2926c6e190aaae4da3682fb14b202fa1ba213a24c6ba064",
+      "publicBytes": 81,
+      "publicSHA256": "5f7b4df91e905ab9c2926c6e190aaae4da3682fb14b202fa1ba213a24c6ba064",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/company-download-terminal.json",
+      "rawBytes": 81,
+      "rawSHA256": "8a47d1519db3dfcc627582e30fd98cb30b3588d8660fda13b6db416b67ebc461",
+      "publicBytes": 81,
+      "publicSHA256": "8a47d1519db3dfcc627582e30fd98cb30b3588d8660fda13b6db416b67ebc461",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/optional-checksums.json",
+      "rawBytes": 2141,
+      "rawSHA256": "bf7a62f05ac764e7601d9bdfbf59ee0b3baa82742013c6e5ec2df3f469f0564a",
+      "publicBytes": 2141,
+      "publicSHA256": "bf7a62f05ac764e7601d9bdfbf59ee0b3baa82742013c6e5ec2df3f469f0564a",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/optional-packages.json",
+      "rawBytes": 2638,
+      "rawSHA256": "e6d40d715a49b09983eb88865d4d84b84c961f547cb045d8fdf9ba41c28f2451",
+      "publicBytes": 2638,
+      "publicSHA256": "e6d40d715a49b09983eb88865d4d84b84c961f547cb045d8fdf9ba41c28f2451",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/optional-candidate-verification.json",
+      "rawBytes": 1145,
+      "rawSHA256": "80761f17af3e7db5994b63f94641879dcf83114dce9fe4c58c053302ba92d860",
+      "publicBytes": 1145,
+      "publicSHA256": "80761f17af3e7db5994b63f94641879dcf83114dce9fe4c58c053302ba92d860",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/company-checksums.json",
+      "rawBytes": 949,
+      "rawSHA256": "647d2ace8d157e462fbc1c48b908f6f1bb92c13c8bbc187920e3f605942e1b74",
+      "publicBytes": 949,
+      "publicSHA256": "647d2ace8d157e462fbc1c48b908f6f1bb92c13c8bbc187920e3f605942e1b74",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/company-editions.json",
+      "rawBytes": 1835,
+      "rawSHA256": "c8a30860a5b30df337c26956d5e78bcdd7c466a4f53b3514cd0e7bd0f1501742",
+      "publicBytes": 1835,
+      "publicSHA256": "c8a30860a5b30df337c26956d5e78bcdd7c466a4f53b3514cd0e7bd0f1501742",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/company-candidate-verification.json",
+      "rawBytes": 2143,
+      "rawSHA256": "af74d49ab57d191c15e226867dffd1f6e6c8d4da4eb412f7f1966baf9c27f8f2",
+      "publicBytes": 2143,
+      "publicSHA256": "af74d49ab57d191c15e226867dffd1f6e6c8d4da4eb412f7f1966baf9c27f8f2",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/packaged-family-label-checks.tap",
+      "rawBytes": 6444,
+      "rawSHA256": "9780232146fd98fe44719fefb1c5369359cd820248df96e9a5b2dc85b480b8d5",
+      "publicBytes": 6444,
+      "publicSHA256": "9780232146fd98fe44719fefb1c5369359cd820248df96e9a5b2dc85b480b8d5",
+      "redactions": []
+    },
+    {
+      "publicPath": "artifacts/archive-import-closure-receipt.json",
+      "rawBytes": 435,
+      "rawSHA256": "26b42d94f4ad0297e6ae6479cbb435cccbb3c3015775d3146a418bb9c8b66a2b",
+      "publicBytes": 435,
+      "publicSHA256": "26b42d94f4ad0297e6ae6479cbb435cccbb3c3015775d3146a418bb9c8b66a2b",
+      "redactions": []
+    }
+  ]
+}

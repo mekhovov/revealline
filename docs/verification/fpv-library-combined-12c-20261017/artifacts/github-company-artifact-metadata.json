@@ -1,0 +1,20 @@
+{
+  "id": 12114714971,
+  "node_id": "MDg6QXJ0aWZhY3QxMjExNDcxNDk3MQ==",
+  "name": "company-candidate-12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "size_in_bytes": 78427389,
+  "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12114714971",
+  "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12114714971/zip",
+  "expired": false,
+  "digest": "sha256:2bc4745124c38da914f87f1601f077109bd365c9715a4dad3d8bb92f8a3b6b9e",
+  "created_at": "2026-10-17T21:29:56Z",
+  "updated_at": "2026-10-17T21:29:56Z",
+  "expires_at": "2026-10-31T21:29:52Z",
+  "workflow_run": {
+    "id": 39069936864,
+    "repository_id": 1367404328,
+    "head_repository_id": 1367404328,
+    "head_branch": "codex/fpv-regional-family-library-20261016",
+    "head_sha": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af"
+  }
+}

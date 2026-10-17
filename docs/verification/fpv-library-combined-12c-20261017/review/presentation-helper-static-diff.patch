@@ -1,0 +1,31 @@
+--- a105/verify-presentation-once.py
++++ 12c3101e/verify-presentation-once.py
+@@ -1,18 +1,24 @@
+ from pathlib import Path,PurePosixPath
+-import subprocess,json,hashlib,zipfile,io,re,datetime
+-N=Path('<prior-a105-evidence-root>');H='a105e0fa4697930030fbb3afce3d6c0771d02d54';TREE='19395b9bc3a874d0916890e1e3d3d67be87395a9';RUN=39048107120;AID=12107055852;JOB=117440835007
++import subprocess,json,hashlib,zipfile,io,re,datetime,os
++N=Path('<internal-evidence-root>');H='12c3101e7e38bd1a8314da6428bf3c36a4cd85af';TREE='cfa62c47c9f27d55c889b5fc6be0a10172c3802e';RUN=39069885991;AID=12114603626;JOB=117505116888
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+ def api(p):return json.loads(subprocess.check_output(['gh','api','repos/mekhovov/revealline/'+p]))
+ def put(p,b):
+  with p.open('xb')as f:f.write(b)
++space=os.statvfs(N);assert space.f_bavail*space.f_frsize>=65*1024**2+256*1024
++manifestBytes=(N/'industrial-feature-tests.json').read_bytes();assert sha(manifestBytes)=='c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2'
++manifest=json.loads(manifestBytes);expectedFiles=next(x['files']for x in manifest['phases']if x['id']=='presentation');assert len(expectedFiles)==41 and len(set(expectedFiles))==41
+ job=api('actions/jobs/'+str(JOB));assert job['run_id']==RUN and job['head_sha']==H and job['conclusion']=='success'
+-m=api('actions/artifacts/'+str(AID));assert m['workflow_run']['head_sha']==H and m['workflow_run']['id']==RUN and m['name']=='industrial-presentation-'+H and not m['expired']and m['size_in_bytes']==24786 and m['digest']=='sha256:ceb8fe3353200f2b4c9d2bed9d91738b62a973b0578414194537f3b636d5ae65'
++m=api('actions/artifacts/'+str(AID));assert m['workflow_run']['head_sha']==H and m['workflow_run']['id']==RUN and m['name']=='industrial-presentation-'+H and not m['expired']and m['size_in_bytes']==24806 and m['digest']=='sha256:9ba3e41be73c4f8aa37c3559a7954d257d54418f8e0ac6629511f6200dca2096'
+ put(N/'presentation-original-artifact-metadata.json',(json.dumps(m,indent=2)+'\n').encode());r=subprocess.run(['gh','api','--allow-escape-sequences','repos/mekhovov/revealline/actions/artifacts/'+str(AID)+'/zip'],capture_output=True);put(N/'presentation-download-terminal.json',(json.dumps({'exitCode':r.returncode,'stderr':r.stderr.decode()},indent=2)+'\n').encode());assert r.returncode==0 and len(r.stdout)==m['size_in_bytes']and'sha256:'+sha(r.stdout)==m['digest'];put(N/'presentation-original-receipts.zip',r.stdout)
+ with zipfile.ZipFile(io.BytesIO(r.stdout))as z:
+  assert len(z.infolist())==3 and sum(x.file_size for x in z.infolist())<256*1024
+  for x in z.infolist():assert not PurePosixPath(x.filename).is_absolute()and'..'not in PurePosixPath(x.filename).parts
+  p=json.loads(z.read(next(x for x in z.namelist()if x.endswith('/presentation.json'))));tap=z.read(next(x for x in z.namelist()if x.endswith('/presentation.tap')))
+ assert p['source']['revision']==H and p['source']['tree']==TREE and not p['source']['dirty'];assert p['passed']and p['sourceUnchanged']and p['testedFilesUnchanged']and not p['timedOut']and not p['interrupted']and p['executionError']is None and p['logSha256']==sha(tap)
+-summary={k:int(re.findall(r'^# '+k+r' (\d+)$',tap.decode(),re.M)[-1])for k in['tests','pass','fail','cancelled','skipped','todo']};assert summary=={'tests':405,'pass':405,'fail':0,'cancelled':0,'skipped':0,'todo':0};assert p['summary']['exitCode']==0 and p['summary']['passed'];assert all(p['summary'][k]==v for k,v in summary.items());assert p['manifestSha256']==sha((N/'industrial-feature-tests.json').read_bytes())
++summary={k:int(re.findall(r'^# '+k+r' (\d+)$',tap.decode(),re.M)[-1])for k in['tests','pass','fail','cancelled','skipped','todo']};assert summary['tests']==summary['pass']>0 and all(summary[k]==0 for k in ['fail','cancelled','skipped','todo']);assert p['summary']['exitCode']==0 and p['summary']['passed'];assert all(p['summary'][k]==v for k,v in summary.items());assert p['manifestSha256']==sha((N/'industrial-feature-tests.json').read_bytes())
++assert p['phase']=='presentation' and p['logReadError']is None and p['sourceVerificationError']is None
++assert p['command']==['node','--test','--test-reporter=tap','--test-concurrency=2',*expectedFiles]
++assert [x['file']for x in p['files']]==expectedFiles
+ for f,s in [('game/test/fpv-regional-library-families.test.mjs','62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394'),('game/test/fpv-regional-library-labels.test.mjs','baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272')]:assert f in p['command']and next(x for x in p['files']if x['file']==f)['sha256']==s
+ out={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':H,'tree':TREE,'run':RUN,'job':JOB,'artifactId':AID,'archiveBytes':len(r.stdout),'archiveSHA256':sha(r.stdout),'sourceBoundReceipt':p,'summary':summary,'scope':'Current combined-head actual software presentation execution with original receipt/TAP hash binding. No native/player/public acceptance.'};put(N/'presentation-exact-head-verification.json',(json.dumps(out,indent=2)+'\n').encode());print(json.dumps({'head':H,'artifactId':AID,'summary':summary,'receiptSHA256':sha((N/'presentation-exact-head-verification.json').read_bytes())},indent=2))

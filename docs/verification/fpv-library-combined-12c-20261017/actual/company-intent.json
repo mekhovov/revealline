@@ -1,0 +1,13 @@
+{
+  "UTC": "2026-10-17T21:30:29.742125+00:00",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "run": 39069936864,
+  "helper": {
+    "path": "<internal-evidence-root>/qualify-combined-company.py",
+    "bytes": 5694,
+    "SHA256": "8da5c914f5d3366b1115347268f4621aaa946f5bbab0c4f57802e3c0c23b9373",
+    "parentHelper": "<prior-a105-evidence-root>/qualify-combined-company.py",
+    "parentSHA256": "f47ca70b27ea7b9218736b78e253b5c75cee35e7aaa364ae0ccdab9b6bb75d93"
+  },
+  "oneInvocation": true
+}

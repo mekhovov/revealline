@@ -1,0 +1,41 @@
+{
+  "UTC": "2026-10-17T21:11:27.073504+00:00",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "tree": "cfa62c47c9f27d55c889b5fc6be0a10172c3802e",
+  "parents": [
+    "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+    "fe1bb1cecbfcead7edaad24e802242d62b4e3b99"
+  ],
+  "base": "fe1bb1cecbfcead7edaad24e802242d62b4e3b99",
+  "branch": "codex/fpv-regional-family-library-20261016",
+  "draft": true,
+  "unchangedLibraryBlobs": [
+    {
+      "path": "docs/fpv-regional-family-library-20261016.md",
+      "blob": "bbccbe8547901435b0b27cc2774dfd54a1279d0a",
+      "bytes": 5441
+    },
+    {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "blob": "5d32059b6ef03211d4998b0e83112be30614c018",
+      "bytes": 30924
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "blob": "74100dd421dfe7d23d4c80c1b748552c330b7902",
+      "bytes": 74392
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "blob": "320028f3c02d16f36a644c18525995faa5cd7102",
+      "bytes": 119168
+    },
+    {
+      "path": "publishing/industrial-feature-tests.json",
+      "blob": "37c8269b0cefb7db383c35b9032ccf9e3453f5c7",
+      "bytes": 8987
+    }
+  ],
+  "fiveFileDeltaExact": true,
+  "scope": "Normal existing-branch merge; no local checkout, rebuild or inherited qualification."
+}
