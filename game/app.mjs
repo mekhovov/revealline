@@ -294,7 +294,7 @@ import {
 import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
 import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
 import { availableCommunitySoundtrackStyles } from './community-soundtrack-styles.mjs';
-import { attachLibraryPanel } from './ui/library-panel.mjs';
+import { attachLibraryEntry } from './ui/library-entry.mjs';
 import { masteryFor, masteryText } from './ui/mastery-view.mjs';
 import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
 import { createMasteryAwards } from './mastery-awards.mjs';
@@ -7842,7 +7842,7 @@ try {
         ? profileLocks.request(`${libraryKey}.backup-lock`, { signal }, work)
         : work(),
   });
-  const libraryPanel = attachLibraryPanel({
+  const libraryPanelOptions = {
     // Selected editions already scope their pack catalogue; omitted examples
     // must not trigger a request for the default game's unrelated catalogue.
     examplePackIndex: runtimeContent ? packCatalog : undefined,
@@ -8092,6 +8092,12 @@ try {
       }
     },
     setPacks: replacePackLibrary,
+  };
+  const libraryPanel = attachLibraryEntry({
+    document,
+    window,
+    api: libraryPanelOptions,
+    admit: (work, options) => sound.mediaPreparation.run('main', work, options),
   });
   courseView = attachFirstFlightView({
     onEnter: enterFirstFlight,
@@ -12495,7 +12501,6 @@ try {
     storyDialog.close();
     pause(true);
     prepareCollectionProgress();
-    libraryPanel.populateGallery();
     localizedText($('collection-back'), () =>
       opener?.closest('#settings-dialog')
         ? t('interface:backToSettings')
@@ -12513,6 +12518,7 @@ try {
     )
       opener.focus({ preventScroll: true });
     $('collection-dialog').showModal();
+    void libraryPanel.populateGallery();
     return journeyCollection.open();
   };
   $('choose-appearance').onclick = focusAppearance;
