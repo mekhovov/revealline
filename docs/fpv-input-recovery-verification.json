@@ -105,5 +105,24 @@
     "Advanced remains optional, unscored and default-ineligible. Physical controls, pilot feedback, aircraft fitting, iOS and wider hardware remain deferred.",
     "Historical public/native reports retain their original source scope; this local receipt does not claim deployment or current native execution.",
     "Raw copied tool logs normalize trailing whitespace only; the host-test observations file is explicitly a summary rather than reconstructed stdout."
-  ]
+  ],
+  "desktopFollowup": {
+    "report": "docs/fpv-input-recovery-native-runtime.json",
+    "sha256": "36b3c000816ace7ad5c2e908c884202ef1d0399b2b7704837fa63e81f047262c",
+    "pass": true,
+    "sourcePins": 209,
+    "retainedFlightPrefix": true,
+    "recordingMissionTicks": [
+      220,
+      478
+    ],
+    "finalHashes": [
+      "2dd2786e",
+      "3830ae85"
+    ],
+    "workersCreated": 2,
+    "workersTerminated": 2,
+    "productionAuthentication": false,
+    "iosRuntimeVerified": false
+  }
 }
