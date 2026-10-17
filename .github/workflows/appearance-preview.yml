@@ -24,6 +24,12 @@ on:
       - 'game/ui/library-panel.mjs'
       - 'game/capture-presentation-session.mjs'
       - 'game/test/journey-performance-admission.test.mjs'
+      - 'game/test/journey-performance-observation-admission.test.mjs'
+      - 'game/test/journey-profile-owned-transition.test.mjs'
+      - 'game/test/journey-required-progress-admission.test.mjs'
+      - 'game/test/solo-required-progress-preparation-host.test.mjs'
+      - 'game/test/owned-recorder.test.mjs'
+      - 'game/test/demo-library-indexeddb.test.mjs'
       - 'game/test/optional-learning-admission.test.mjs'
       - 'game/test/optional-replay-admission.test.mjs'
       - 'game/test/solo-pending-verification-gameplay-host.test.mjs'
@@ -232,6 +238,12 @@ concurrency:
 env:
   APPEARANCE_ADMISSION_TEST_FILES: >-
     game/test/journey-performance-admission.test.mjs
+    game/test/journey-performance-observation-admission.test.mjs
+    game/test/journey-profile-owned-transition.test.mjs
+    game/test/journey-required-progress-admission.test.mjs
+    game/test/solo-required-progress-preparation-host.test.mjs
+    game/test/owned-recorder.test.mjs
+    game/test/demo-library-indexeddb.test.mjs
     game/test/optional-learning-admission.test.mjs
     game/test/optional-replay-admission.test.mjs
     game/test/solo-pending-verification-gameplay-host.test.mjs
