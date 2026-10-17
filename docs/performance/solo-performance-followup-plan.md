@@ -1,8 +1,10 @@
 # Solo performance: qualification follow-up
 
-Updated 2026-10-16 for [PR #1544](https://github.com/mekhovov/revealline/pull/1544). The implementation and historical results remain in [the original report](solo-performance.md). Historical failed, interrupted and partial observations are retained. New work uses `.cache/solo-followup/` until its reports are archived.
+Updated 2026-10-17 for [PR #1544](https://github.com/mekhovov/revealline/pull/1544). The implementation and historical results remain in [the original report](solo-performance.md). Historical failed, interrupted and partial observations are retained. New work uses `.cache/solo-followup/` until its reports are archived.
 
 ## Latest source and open work
+
+The current runtime is `0d9fef1120face4c0f9998ebd24a94e6df0d85c0`. Exact-source full lint, content/localization/generated-output validation, the eight Appearance-policy tests, changed-code formatting and diff checks pass. The separate baseline-helper negative fixtures pass 44/44 after correcting their premise; neither that test correction nor later qualification tooling changes the runtime. Production packaging is running at `3adcd53792043ef02459e86168c6b33a66d6ef00`, with 72 complete focused files declared. A declared file count is not a completed CI result.
 
 The latest independently verified development package is exact source `2ec605eb76e38f9c9a3e21b7fa82dd80c580c457`, including runtime `fd96e86cf4b689d9bb9511035eba38424057043b`. Its CI focused suite passes **819/819 across 65 complete files**. All 3,502 ZIP members, supported source projections, static workers, offline resource closure and exact CSP pass independent verification. Full lint and validation pass; eight formatting failures match original main byte for byte. The original archive and proof readbacks are retained locally, and the previous baseline/8c1 payloads remain untouched. This is package evidence, not native or physical qualification. [Package identities and limits](solo-artifact-2ec605eb.md).
 
@@ -14,7 +16,14 @@ The title-owner correction now applies the existing decorative quality policy to
 
 The safe save-readback experiment passes eight semantic controls but improves the two fixed local kernel medians by only 16.84% and 17.04%, below the predeclared 20% engineering floor. That optional optimization was dropped. The unsafe raw-byte-only shortcut was also rejected because it could miss mutation of the intended session; neither proposal changes the runtime or durable-save contract. These local kernel measurements are not device timing results.
 
-The remaining execution order is: finish final source checks; package that exact runtime; repeat the eight correctness checks; then release the prepared offline, audio, renderer-recovery and raster diagnostics and the sustained stages. Sustained stages retain three equivalent runs per engine, followed by Next, Retry, diagnostics overhead and a separate dense 29-minute recording/reload test. The latter stays below the authoritative 216,000-tick recorder limit; it does not replace the required 30-minute sustained workload. Failures, absent calibration, incomplete samples and earlier macOS results remain separate. Physical regular Safari, installed PWA, Deck and heat checks remain open.
+The remaining execution order is: verify that exact production package; repeat the eight correctness checks; then release the prepared offline, audio, renderer-recovery and raster diagnostics, repeated timing scenarios and sustained stages. Each consumer must verify the full package and original-main baseline before opening a browser; compact publication metadata alone does not qualify either payload. Sustained stages retain three equivalent runs per engine, followed by Next, Retry, diagnostics overhead and a separate dense 29-minute recording/reload test. The latter stays below the authoritative 216,000-tick recorder limit; it does not replace the required 30-minute sustained workload. Review each stage's raw failures before releasing its successor. Failures, absent calibration, incomplete samples and earlier macOS results remain separate. Physical regular Safari, installed PWA, Deck and heat checks remain open.
+
+Two qualification gaps now have tested, held implementations:
+
+- Recorded speech and streamed music include paired Chromium **and WebKit** observations. The auxiliary lane now has six jobs and ten observation arms, retains its original deadlines and at most two concurrent jobs, and passes all fourteen contract tests.
+- Latest-source cold Start, warm Start, Sentry combat and Long Rail each have three equivalent baseline/candidate runs per engine. Their separate timing lane keeps exact existing recipes, fresh Chromium CPU calibration, persistent WebKit contexts, strict replay checks and unchanged numerical gates. Its integration group passes 51 tests, with three explicitly Linux-only process tests skipped locally. These four stages comprise 48 planned observations; none has run yet.
+
+The offline success-only continued-play/replay extension and a separate 30-second active Demo observer are still being reviewed. Neither is execution evidence. The Demo observer measures scoped animation-frame callbacks; timers, MessageChannel catch-up, browser/GPU work and physical temperature remain outside that measurement. After repeated Retry, inspect the retained heap/DOM owners and trends explicitly: stable application counters alone cannot establish native or GPU memory stability.
 
 The original six phases remain the acceptance structure:
 
