@@ -172,6 +172,7 @@ test('independent soak diagnostic changes neither observations nor numerical, re
   }
 });
 test('soak diagnostic release freezes tools and runs only the declared event edge', async () => {
+  assert(manifest.frozenTools.some((ref) => ref.path === 'scripts/solo-qualification-audio.mjs'));
   for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools]) {
     const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
     assert.equal(bytes.length, ref.bytes, ref.path);
@@ -183,7 +184,7 @@ test('soak diagnostic release freezes tools and runs only the declared event edg
   );
   assert.match(
     workflow,
-    /github\.event\.action == 'synchronize' && github\.event\.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'/,
+    /github\.event\.action == 'synchronize' && github\.event\.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'/,
   );
   assert.match(workflow, /max-parallel: 6/);
   assert.match(workflow, /fail-fast: false/);

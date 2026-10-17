@@ -219,6 +219,7 @@ test('diagnostic admission preserves cold/warm/combat recipe commands and every 
 });
 
 test('cold diagnostic release freezes tools and runs only the declared event edge', async () => {
+  assert(draft.frozenTools.some((ref) => ref.path === 'scripts/solo-qualification-audio.mjs'));
   for (const ref of [...draft.adapterInputs, ...draft.frozenTools]) {
     const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
     assert.equal(bytes.length, ref.bytes, ref.path);

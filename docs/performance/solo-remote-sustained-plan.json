@@ -181,8 +181,13 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 50572,
-      "sha256": "9a2c0b4c865c7655b9f101494964efb3ab0d423405545bf7a8253fa2af958e04"
+      "bytes": 51780,
+      "sha256": "ea1400a0d1f3bd8b2072e4304bdcb4b451b29acb24d691509a453197a413157a"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 12875,
+      "sha256": "3bfdf145d2ea6eb4e81eb2394c9ac79ec56b201ab8b24d2bfd6345142af569d1"
     }
   ],
   "release": {
@@ -337,6 +342,7 @@
   },
   "performanceExclusion": true,
   "admissionReview": {
+    "setupSuccessor": "Run38991754600 on aeadf7f43a8c1aba3af78d6cc8713666b4af49f1 failed its2min full declaration checkout before matrix creation; all workload jobs skipped and no observations/artifacts existed. Retain that failed run. This separately reviewed one-shot successor loads only the3Node declaration modules and this manifest via noncone sparse blobless checkout. Original2min checkout/5min declaration limits and all source/browser/watchdog bounds remain unchanged. Supplemental run38991754643 is a distinct failed declaration with missing lz-string, retained separately; it grants no sustained evidence.",
     "distinction": "Admission permits collecting independently declared diagnostic observations. It neither certifies the failed first-eight prerequisite nor weakens any raw timing, replay, resource, sample-count or duration gate.",
     "prerequisite": "Run38985941469 remains failed:7/8rows passed, WebKit active worker row failed. Both source/archive proofs passed and all8owned commands closed. This retained failure can be investigated while independent comparisons run.",
     "ownershipScope": "Prior closure refers to this declared predecessor cohort, not unrelated concurrent jobs on separately owned hosted machines. Current job archive/source/RSS/disk/process ownership guards remain mandatory.",
