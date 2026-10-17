@@ -55,6 +55,8 @@ import { mountAdvancedPractice } from './advanced-practice.mjs';
 import { createAdvancedRegionalSession } from './advanced-regional.mjs';
 import { createAircraftCourseSession } from './aircraft-course-session.mjs';
 import { mountAircraftPracticeControls } from './aircraft-practice-controls.mjs';
+import { prepareAircraftChallenge, withAircraftChallenge } from './aircraft-challenge.mjs';
+import { mountAircraftChallengeControls } from './aircraft-challenge-ui.mjs';
 import { aircraftCourseAdvice, mountAircraftCourseFilter } from './aircraft-course-advice.mjs';
 import {
   createAdvancedWorkerClient,
@@ -1099,6 +1101,8 @@ export function mountWorldApp({
     radioSetup = null,
     tuning = null,
     aircraftControls = null,
+    aircraftChallengeControls = null,
+    aircraftAttemptConfiguration = null,
     aircraftAdvice = null,
     aircraftAdviceText = null,
     courseClassFilter = null,
@@ -5141,6 +5145,7 @@ export function mountWorldApp({
   }
   function updateHUD(state) {
     aircraftControls?.update(state);
+    aircraftChallengeControls?.update(state);
     if (aircraftAdviceText) {
       aircraftAdviceText.hidden = !aircraftAdvice;
       aircraftAdviceText.textContent = aircraftAdvice?.advisories[locale] ?? '';
@@ -6307,7 +6312,10 @@ export function mountWorldApp({
     if (!canAdopt()) return;
     // Validate paired sources before releasing a usable previous flight.
     tuningStore.refresh();
-    const tuningConfiguration = options.tuningDraft ?? tuningStore.effective();
+    const baselineConfiguration = options.tuningDraft ?? tuningStore.effective();
+    const tuningConfiguration = baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
+      ? prepareAircraftChallenge(baselineConfiguration, options.challenge)
+      : baselineConfiguration;
     const physicalAircraft =
       tuningConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
     const regionalAdvanced = Boolean(entry.regionalAdvanced || physicalAircraft);
@@ -6335,13 +6343,14 @@ export function mountWorldApp({
         regionalAdvanced && !physicalAircraft ? 'acro' : (options.mode ?? $('flight-mode').value),
       response,
       ...(regionalAdvanced ? { advanced: tuningConfiguration.advanced, rateProfile: response.rates } : {}),
+      ...(tuningConfiguration.challenge ? { challenge: tuningConfiguration.challenge } : {}),
       prepareFrame: async (group, options) => {
         if (flight === nextFlight) regionalPreparationStage = 'graphics';
         await renderer.prepareRegionalFrame(group, options);
         if (flight === nextFlight) regionalPreparationStage = 'source';
       },
     };
-    const nextFlight = regionalAdvanced
+    let nextFlight = regionalAdvanced
       ? createAdvancedRegionalSession(sessionConfiguration, {
           createClient: () => createAdvancedWorkerClient({
             Worker: win.Worker,
@@ -6349,6 +6358,11 @@ export function mountWorldApp({
           }),
         })
       : createRegionalSession(sessionConfiguration);
+    if (physicalAircraft)
+      nextFlight = withAircraftChallenge(nextFlight, {
+        rules: tuningConfiguration.challenge,
+        capacityAh: tuningConfiguration.advanced.aircraft.battery.capacityAh,
+      });
     try {
       await flight?.dispose?.();
     } catch (error) {
@@ -6361,6 +6375,7 @@ export function mountWorldApp({
     }
     regionalPreparing = null;
     flight = nextFlight;
+    aircraftAttemptConfiguration = physicalAircraft ? clone(baselineConfiguration) : null;
     current = entry;
     if (!options.tuningDraft) tuningReturnEntry = null;
     recorder = null;
@@ -6834,7 +6849,10 @@ export function mountWorldApp({
       $('flight-mode').value = options.recover.mode;
     } else {
       tuningStore.refresh();
-      const tuningConfiguration = options.tuningDraft ?? tuningStore.effective();
+      const baselineConfiguration = options.tuningDraft ?? tuningStore.effective();
+      const tuningConfiguration = !replayProof && baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
+        ? prepareAircraftChallenge(baselineConfiguration, options.challenge)
+        : baselineConfiguration;
       const physicalAircraft =
         !replayProof && tuningConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
       if ((!learning || physicalAircraft) && !replayProof) {
@@ -6865,6 +6883,12 @@ export function mountWorldApp({
             response: replayProof?.response ?? response,
             unscoredPractice: modePractice || Boolean(entry.freeFlight),
           });
+      if (physicalAircraft)
+        flight = withAircraftChallenge(flight, {
+          rules: tuningConfiguration.challenge,
+          capacityAh: tuningConfiguration.advanced.aircraft.battery.capacityAh,
+        });
+      aircraftAttemptConfiguration = physicalAircraft ? clone(baselineConfiguration) : null;
       recorder =
         physicalAircraft || modePractice || entry.freeFlight
           ? null
@@ -9019,10 +9043,26 @@ export function mountWorldApp({
   aircraftControls = mountAircraftPracticeControls({
     parent: playShell.elements.content.pause,
     window: win,
+    workerURL: new URL('../fpv-worlds/advanced-worker.mjs', import.meta.url),
     key: 'world',
     locale: () => locale,
     getSession: () => (replayProof ? null : flight),
     onPause: () => pauseFlight(),
+  });
+  aircraftChallengeControls = mountAircraftChallengeControls({
+    parents: [shellBriefing, playShell.elements.content.pause],
+    statusParent: $('world-viewport'),
+    locale: () => locale,
+    getSession: () => (replayProof ? null : flight),
+    async onRestart(rules) {
+      if (!aircraftAttemptConfiguration || !current) return;
+      await startFlight(current, {
+        preview: true,
+        mode: $('flight-mode').value,
+        tuningDraft: aircraftAttemptConfiguration,
+        challenge: rules,
+      });
+    },
   });
   $('world-viewport').append(tuning.returnButton);
   for (const cameraId of ['world-fov', 'world-tilt'])
@@ -9445,6 +9485,7 @@ export function mountWorldApp({
           practiceFlow?.dispose();
           tuning?.dispose();
           aircraftControls?.dispose();
+          aircraftChallengeControls?.dispose();
           advancedPractice?.dispose();
           cameraControls?.dispose();
           playShell?.dispose();

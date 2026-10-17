@@ -222,8 +222,48 @@
     transform: none !important;
   }
 }
-.aircraft-practice-controls input[type='file'] {
+.aircraft-practice-controls input[type='file'],
+.aircraft-archive-controls input[type='file'] {
   display: block;
   max-width: 100%;
   min-height: 44px;
+}
+.aircraft-challenge-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+  min-width: 0;
+}
+.aircraft-challenge-controls > label {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.aircraft-challenge-controls > p,
+.aircraft-challenge-controls > output {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.aircraft-challenge-controls [hidden] {
+  display: none;
+}
+.aircraft-challenge-controls[hidden],
+.aircraft-challenge-hud[hidden] {
+  display: none;
+}
+.aircraft-challenge-hud {
+  position: absolute;
+  top: 4rem;
+  left: 50%;
+  z-index: 12;
+  transform: translateX(-50%);
+  display: grid;
+  gap: 0.25rem;
+  max-width: 70%;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.5rem;
+  color: white;
+  background: rgb(0 0 0 / 75%);
+  text-align: center;
+  pointer-events: none;
 }
