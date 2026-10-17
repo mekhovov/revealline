@@ -98,48 +98,49 @@ export function isOwnedProcess(row, all, owned, leaderPid, tagged) {
   );
 }
 
+const uid = (n) => Number.isInteger(n) && n >= 0 && n <= 0xffffffff;
+const darwinKernelIdentity = (r) =>
+  r &&
+  Number.isSafeInteger(r.pid) &&
+  r.pid > 0 &&
+  r.pid <= 0x7fffffff &&
+  Number.isSafeInteger(r.ppid) &&
+  r.ppid >= 0 &&
+  r.ppid <= 0x7fffffff &&
+  Number.isSafeInteger(r.pgid) &&
+  r.pgid >= 0 &&
+  r.pgid <= 0x7fffffff &&
+  /^(?:0|[1-9]\d{0,19})$/.test(r.parentUniqueId ?? '') &&
+  BigInt(r.parentUniqueId) <= (1n << 64n) - 1n &&
+  r.identityKind === 'private-unique-id-uint64' &&
+  /^\d{20}$/.test(r.birth ?? '') &&
+  BigInt(r.birth) > 0n &&
+  BigInt(r.birth) <= (1n << 64n) - 1n &&
+  Number.isInteger(r.version) &&
+  r.version >= 0 &&
+  r.version <= 0x7fffffff &&
+  uid(r.euid) &&
+  uid(r.ruid);
+const stableDarwinKernelIdentity = (a, b) =>
+  darwinKernelIdentity(a) &&
+  darwinKernelIdentity(b) &&
+  same(a, b) &&
+  a.version === b.version &&
+  a.euid === b.euid &&
+  a.ruid === b.ruid &&
+  a.ppid === b.ppid &&
+  a.pgid === b.pgid &&
+  a.parentUniqueId === b.parentUniqueId;
+
 // One narrow foreign system observer, only with positive kernel path provenance and
 // an unchanged pre-existing root parent/group. It never grants ownership or signals.
 export function darwinForeignSystemProcessWitness(row, before, all, owned, leaderPid) {
-  const uid = (n) => Number.isInteger(n) && n >= 0 && n <= 0xffffffff;
-  const identity = (r) =>
-    r &&
-    Number.isSafeInteger(r.pid) &&
-    r.pid > 0 &&
-    r.pid <= 0x7fffffff &&
-    Number.isSafeInteger(r.ppid) &&
-    r.ppid >= 0 &&
-    r.ppid <= 0x7fffffff &&
-    Number.isSafeInteger(r.pgid) &&
-    r.pgid >= 0 &&
-    r.pgid <= 0x7fffffff &&
-    /^(?:0|[1-9]\d{0,19})$/.test(r.parentUniqueId ?? '') &&
-    BigInt(r.parentUniqueId) <= (1n << 64n) - 1n &&
-    r.identityKind === 'private-unique-id-uint64' &&
-    /^\d{20}$/.test(r.birth ?? '') &&
-    BigInt(r.birth) > 0n &&
-    BigInt(r.birth) <= (1n << 64n) - 1n &&
-    Number.isInteger(r.version) &&
-    r.version >= 0 &&
-    r.version <= 0x7fffffff &&
-    uid(r.euid) &&
-    uid(r.ruid);
-  const stable = (a, b) =>
-    identity(a) &&
-    identity(b) &&
-    same(a, b) &&
-    a.version === b.version &&
-    a.euid === b.euid &&
-    a.ruid === b.ruid &&
-    a.ppid === b.ppid &&
-    a.pgid === b.pgid &&
-    a.parentUniqueId === b.parentUniqueId;
-  const root = (r) => identity(r) && r.euid === 0 && r.ruid === 0;
+  const root = (r) => darwinKernelIdentity(r) && r.euid === 0 && r.ruid === 0;
   const leader = owned.get(leaderPid),
     parent = all.get(row?.ppid),
     group = all.get(row?.pgid);
   if (
-    !identity(row) ||
+    !darwinKernelIdentity(row) ||
     row.state !== 'R' ||
     !root(row) ||
     row.argv !== '/bin/ps' ||
@@ -147,12 +148,12 @@ export function darwinForeignSystemProcessWitness(row, before, all, owned, leade
     !['complete', 'unavailable'].includes(row.rssInspection) ||
     !['absent', 'unavailable'].includes(row.ownerTagInspection) ||
     row.ownerTagged !== false ||
-    !stable(row, all.get(row.pid)) ||
+    !stableDarwinKernelIdentity(row, all.get(row.pid)) ||
     same(before.get(row.pid), row) ||
     same(owned.get(row.pid), row) ||
     row.pgid === leaderPid ||
     isOwnedProcess(row, all, owned, leaderPid, false) ||
-    !identity(leader) ||
+    !darwinKernelIdentity(leader) ||
     leader.euid <= 0 ||
     leader.ruid <= 0 ||
     row.ppid <= 1 ||
@@ -160,8 +161,8 @@ export function darwinForeignSystemProcessWitness(row, before, all, owned, leade
     !root(group) ||
     parent.state !== 'R' ||
     group.state !== 'R' ||
-    !stable(before.get(parent.pid), parent) ||
-    !stable(before.get(group.pid), group) ||
+    !stableDarwinKernelIdentity(before.get(parent.pid), parent) ||
+    !stableDarwinKernelIdentity(before.get(group.pid), group) ||
     same(owned.get(parent.pid), parent) ||
     same(owned.get(group.pid), group) ||
     parent.ownerTagged !== false ||
@@ -203,6 +204,66 @@ export function darwinForeignSystemProcessWitness(row, before, all, owned, leade
     group: selected(group),
   };
 }
+// A known executable is not an unknown browser merely because unrelated RSS or
+// environment reads failed. V3 complete paths come only from proc_pidpath inside
+// an unchanged short-BSD/unique-ID/exec-version bracket, never argv or comm.
+// This exact root /bin/ps case is classification only: no foreign-lineage proof,
+// ownership, zero-RSS claim, owner-tag absence claim, or signal authority.
+export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, leaderPid) {
+  const leader = owned.get(leaderPid);
+  if (
+    !darwinKernelIdentity(row) ||
+    row.state !== 'R' ||
+    row.euid !== 0 ||
+    row.ruid !== 0 ||
+    row.argv !== '/bin/ps' ||
+    row.pathInspection !== 'complete' ||
+    !['complete', 'unavailable'].includes(row.rssInspection) ||
+    !['absent', 'unavailable'].includes(row.ownerTagInspection) ||
+    row.ownerTagged !== false ||
+    row.inspectionIncomplete !==
+      (row.rssInspection === 'unavailable' || row.ownerTagInspection === 'unavailable') ||
+    !Number.isSafeInteger(row.rss) ||
+    row.rss < 0 ||
+    (row.rssInspection === 'unavailable' && row.rss !== 0) ||
+    !stableDarwinKernelIdentity(row, all.get(row.pid)) ||
+    all.get(row.pid).argv !== row.argv ||
+    all.get(row.pid).pathInspection !== 'complete' ||
+    same(before.get(row.pid), row) ||
+    same(owned.get(row.pid), row) ||
+    row.ppid <= 1 ||
+    row.pgid <= 1 ||
+    row.pgid === leaderPid ||
+    isOwnedProcess(row, all, owned, leaderPid, false) ||
+    !darwinKernelIdentity(leader) ||
+    leader.euid <= 0 ||
+    leader.ruid <= 0
+  )
+    return null;
+  return {
+    format: 'SoloKnownNonBrowserProcessWitnessV1',
+    scope:
+      'Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.',
+    process: {
+      pid: row.pid,
+      ppid: row.ppid,
+      pgid: row.pgid,
+      birth: row.birth,
+      identityKind: row.identityKind,
+      parentUniqueId: row.parentUniqueId,
+      version: row.version,
+      euid: row.euid,
+      ruid: row.ruid,
+      state: row.state,
+      executable: row.argv,
+      pathInspection: row.pathInspection,
+      rssInspection: row.rssInspection,
+      ownerTagInspection: row.ownerTagInspection,
+      rss: row.rssInspection === 'complete' ? row.rss : null,
+      ownerTagged: row.ownerTagInspection === 'absent' ? false : null,
+    },
+  };
+}
 export function collectUnattributedProcesses(
   all,
   before,
@@ -221,7 +282,8 @@ export function collectUnattributedProcesses(
     )
       continue;
     const witness = darwin
-      ? darwinForeignSystemProcessWitness(row, before, all, owned, leaderPid)
+      ? (darwinForeignSystemProcessWitness(row, before, all, owned, leaderPid) ??
+        darwinKnownNonBrowserProcessWitness(row, before, all, owned, leaderPid))
       : null;
     if (!witness) {
       ambiguous.push(row);
