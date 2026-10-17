@@ -6,6 +6,7 @@ import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { CELEBRATION_SECONDS } from '../ui/celebration.mjs';
 import { REWARD_SETTLED_SECONDS } from '../ui/reward-arrival.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const campaign = {
   version: 'xonix-campaign.v1',
@@ -102,6 +103,15 @@ async function win(t, { reduced = false, readPads, beforeFrame } = {}) {
 for (const reduced of [false, true])
   test(`${reduced ? 'reduced' : 'full'} effects: a legal win presents its earned picture before the automatic result`, async (t) => {
     const { page, surface } = await win(t, { reduced });
+    const canvas = page.$('game-canvas');
+    const geometryPhases = [],
+      animations = [];
+    const rect = canvas.getBoundingClientRect;
+    t.mock.method(canvas, 'getBoundingClientRect', function () {
+      geometryPhases.push(page.doc.body.dataset.winPicture);
+      return rect.call(this);
+    });
+    canvas.animate = (...args) => animations.push(args);
     assert.equal(
       page.doc.body.dataset.winPicture,
       'revealing',
@@ -149,6 +159,13 @@ for (const reduced of [false, true])
     );
     assert.equal(page.$('show-result').hidden, false);
     assert.equal(page.doc.body.dataset.winPicture, 'settled');
+    assert.deepEqual(
+      geometryPhases,
+      reduced ? ['revealing'] : ['revealing', 'celebrating'],
+      'Measure the original board once before the phase edge and only full motion after it',
+    );
+    assert.equal(animations.length, reduced ? 0 : 1);
+
     assert.equal(page.$('next-button').hidden, true, 'Next appears after the short picture hold.');
     for (let i = 0; i < Math.ceil(REWARD_SETTLED_SECONDS * 10) + 2; i++) page.frame(100);
     assert.equal(
@@ -230,6 +247,48 @@ test('held controller Confirm cannot interrupt the automatic victory presentatio
   for (let i = 0; i < 24; i++) frame();
   assert.equal(page.$('skip-celebration').hidden, true);
   assert.equal(page.$('game-overlay').hidden, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
+
+test('unchanged celebration HUD skips structural writes while locale, preferences and visibility remain live', async (t) => {
+  const { page } = await win(t);
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  assert.equal(page.win.RevealLineSoloPerformance, undefined, 'Diagnostic collection stays opt-in');
+  let coverageWrites = 0;
+  const coverage = page.$('coverage'),
+    original = coverage.setAttribute;
+  t.mock.method(coverage, 'setAttribute', function (name, value) {
+    if (name === 'aria-valuenow') coverageWrites++;
+    return original.call(this, name, value);
+  });
+  for (let i = 0; i < 24; i++) page.frame(1000 / 60);
+  assert.equal(page.doc.body.dataset.winPicture, 'revealing');
+  assert.equal(coverageWrites, 0, 'Stable reward callbacks must not rewrite unchanged coverage');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  const locale = getLocale(),
+    oldText = page.$('flight-state').textContent;
+  try {
+    setLocale(locale === 'en' ? 'uk' : 'en', { persist: false });
+    assert.notEqual(page.$('flight-state').textContent, oldText);
+    assert.ok(coverageWrites > 0, 'Explicit locale refresh still owns a full HUD update');
+  } finally {
+    setLocale(locale, { persist: false });
+  }
+  page.$('reduced-effects').checked = true;
+  page.$('reduced-effects').emit('change');
+  assert.equal(page.doc.body.dataset.effects, 'reduced');
+  assert.equal(page.doc.body.dataset.winPicture, 'revealing');
+  page.doc.hidden = true;
+  page.doc.emit('visibilitychange');
+  for (let i = 0; i < 40; i++) page.frame(100);
+  assert.equal(page.doc.body.dataset.winPicture, 'revealing');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  page.doc.hidden = false;
+  page.doc.emit('visibilitychange');
+  page.win.emit('focus');
+  page.frame(100);
+  assert.equal(page.doc.body.dataset.winPicture, 'revealing');
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });

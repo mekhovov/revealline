@@ -269,3 +269,56 @@ test('terminal witnesses do not reclassify prior-playing hitches or manufacture 
   delete expected.eventWitnesses;
   assert.deepEqual(actual, expected);
 });
+
+test('terminal HUD substages share bounded numeric event storage without changing frame attribution', () => {
+  let now = 0;
+  const session = createPerformanceSession({ now: () => now });
+  const ordinary = createPerformanceSession({ now: () => now });
+  const kinds = [
+    'terminal-hud-begin',
+    'terminal-hud-clocks',
+    'terminal-hud-owners',
+    'terminal-hud-picture',
+    'terminal-hud-values',
+    'terminal-hud-controls',
+    'terminal-hud-end',
+  ];
+  for (const value of [ordinary, session]) value.setPhase('playing');
+  for (let generation = 1; generation <= 40; generation++) {
+    for (const kind of kinds) session.markEvent(kind, generation, 632, ++now);
+  }
+  // A partial final HUD remains partial. No successful end is synthesized.
+  session.markEvent('terminal-hud-begin', 41, 632, ++now);
+  session.reportFailure('HUD failed', now);
+  ordinary.reportFailure('HUD failed', now);
+  for (const value of [ordinary, session]) value.recordFrame(now + 16, 106, 0, 74, 5);
+  const actual = session.export({ paused: true });
+  const expected = ordinary.export({ paused: true });
+  assert.equal(actual.eventWitnesses.capacity, 256);
+  assert.equal(actual.eventWitnesses.total, 281);
+  assert.equal(actual.eventWitnesses.retained, 256);
+  assert.equal(actual.eventWitnesses.omitted, 25);
+  assert.equal(actual.eventWitnesses.byKind['terminal-hud-end'].total, 40);
+  assert.equal(actual.eventWitnesses.recent.at(-1).kind, 'terminal-hud-begin');
+  assert.equal(actual.eventWitnesses.recent.at(-1).runGeneration, 41);
+  const exported = structuredClone(actual.eventWitnesses);
+  actual.eventWitnesses.recent[0].tick = -1;
+  assert.deepEqual(session.export({ paused: true }).eventWitnesses, exported);
+  delete actual.eventWitnesses;
+  delete expected.eventWitnesses;
+  assert.deepEqual(
+    actual,
+    expected,
+    'Inclusive substage stamps cannot rewrite raw numerical gates',
+  );
+});
+
+test('disabled terminal HUD substages do not read the clock or retain event data', () => {
+  let reads = 0;
+  const session = createPerformanceSession({ now: () => ++reads, enabled: false });
+  const before = reads;
+  for (const kind of ['terminal-hud-begin', 'terminal-hud-clocks', 'terminal-hud-end'])
+    session.markEvent(kind, 1, 0);
+  assert.equal(reads, before);
+  assert.equal(session.export({ paused: true }).eventWitnesses.total, 0);
+});
