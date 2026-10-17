@@ -37,6 +37,7 @@ import {
   qualificationDisplayOptions,
   qualificationCacheMode,
   qualificationProfileMode,
+  qualificationSnapshotStorage,
   resourceStability,
   createManifestMirror,
   evaluateQualificationBudgets,
@@ -60,13 +61,14 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--work-probe] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--work-probe] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
 const bytes = await readFile(resolve(scenarioPath)),
   scenario = validateQualification(JSON.parse(bytes));
 const display = qualificationDisplayOptions(flags);
+const snapshotStorageOptions = qualificationSnapshotStorage(flags, scenario);
 const engine = option('browser', 'chromium'),
   cpu = Number(option('cpu', '1'));
 const contextMode = qualificationContextMode(flags, engine);
@@ -238,7 +240,13 @@ const report = {
 const replayIdentity = scenario.replayIdentity ? createQualificationReplayIdentity() : null;
 if (replayIdentity) report.replayIdentity = replayIdentity.report;
 await mkdir(dirname(resolve(output)), { recursive: true });
+const snapshotStore = snapshotStorageOptions
+  ? await (
+      await import('./solo-qualification-snapshot-store.mjs')
+    ).createQualificationSnapshotStore(output, snapshotStorageOptions)
+  : null;
 async function save() {
+  if (snapshotStore) return snapshotStore.save(report);
   const target = resolve(output),
     temporary = target + '.partial';
   await writeFile(temporary, JSON.stringify(report, null, 2) + '\n');
@@ -1329,6 +1337,11 @@ try {
   } else report.performanceGateStatus = 'excluded-synthetic-recovery';
   if (nativeReplay) {
     try {
+      if (snapshotStore)
+        assert(
+          Buffer.byteLength(nativeReplay) <= 16 * 1024 ** 2,
+          'Chunked lifecycle replay exceeds its reserved 16 MiB evidence budget',
+        );
       const file = resolve(output) + '.replay.json';
       await writeFile(file, nativeReplay, { flag: 'wx' });
       report.replay = {

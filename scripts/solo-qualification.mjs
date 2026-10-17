@@ -98,11 +98,43 @@ export function qualificationProfileMode(flags, engine, scenario) {
   return mode;
 }
 
+/** Storage-only opt-in for a separately declared long lifecycle recipe. The
+ * outer row still owns its 128 MiB cap, including replay, logs and receipts. */
+export function qualificationSnapshotStorage(flags, scenario) {
+  const matching = flags.filter((flag) => flag.startsWith('--snapshot-chunks'));
+  assert(
+    matching.length <= 1 && matching.every((flag) => flag === '--snapshot-chunks'),
+    'Snapshot storage requires one Boolean --snapshot-chunks flag',
+  );
+  const declared = scenario.evidenceStorage !== undefined;
+  assert.equal(
+    matching.length === 1,
+    declared,
+    'Snapshot storage requires matching explicit recipe and CLI declarations',
+  );
+  if (!declared) return null;
+  assert.equal(scenario.evidenceStorage, 'snapshot-chunks-v1');
+  assert.equal(scenario.kind, 'lifecycle', 'Chunked storage is limited to long lifecycle evidence');
+  assert(
+    scenario.timeoutMs >= 1800000 &&
+      scenario.actions?.some((action) => action.type === 'repeat' && action.atLeastMs >= 1800000),
+    'Chunked storage requires an explicitly declared 30-minute repeat',
+  );
+  return {
+    maximumBytes: 96 * 1024 ** 2,
+    maximumIndexBytes: 4 * 1024 ** 2,
+    maximumSnapshotBytes: 1024 ** 2,
+    maximumSnapshots: 512,
+  };
+}
+
 export function validateQualification(scenario) {
   assert.equal(scenario.format, QUALIFICATION_FORMAT);
   string(scenario.id, 'scenario id');
   if (scenario.cacheMode !== undefined) assert.equal(scenario.cacheMode, 'warm-http-reload');
   assert(['performance', 'lifecycle', 'recovery'].includes(scenario.kind), 'Invalid evidence kind');
+  if (scenario.evidenceStorage !== undefined)
+    qualificationSnapshotStorage(['--snapshot-chunks'], scenario);
   if (scenario.query !== undefined) {
     assert(scenario.query && typeof scenario.query === 'object' && !Array.isArray(scenario.query));
     for (const [key, value] of Object.entries(scenario.query)) {
