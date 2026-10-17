@@ -6,6 +6,7 @@ import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
+import { rasterDimensions } from './helpers/raster-image.mjs';
 import { createCouchChapterInstaller } from '../couch/couch-chapter-install.mjs';
 import { libraryMissionId } from '../mission-library/library.mjs';
 
@@ -117,9 +118,9 @@ function mediaBoundary() {
         this.bytes = source.startsWith('data:')
           ? Buffer.from(source.split(',')[1], 'base64')
           : Buffer.from(await urls.get(source).arrayBuffer());
-        assert.equal(this.bytes.subarray(1, 4).toString(), 'PNG');
-        this.width = this.naturalWidth = this.bytes.readUInt32BE(16);
-        this.height = this.naturalHeight = this.bytes.readUInt32BE(20);
+        const { width, height } = await rasterDimensions(new Blob([this.bytes]));
+        this.width = this.naturalWidth = width;
+        this.height = this.naturalHeight = height;
         this.onload?.();
       });
     }
