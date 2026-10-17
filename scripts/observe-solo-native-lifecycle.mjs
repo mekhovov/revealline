@@ -13,6 +13,7 @@ import { readPublicQualificationReplay } from './solo-qualification-export.mjs';
 import { verifyNativeQualificationReplay } from './solo-qualification-native-replay.mjs';
 import {
   LIFECYCLE_PROTOCOL,
+  LIFECYCLE_RUN_RETENTION_POLICY,
   LIFECYCLE_SOURCE,
   LIFECYCLE_FIXTURE,
   LIFECYCLE_PREDECESSOR,
@@ -26,8 +27,12 @@ import {
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const message = (error) => String(error.stack ?? error).slice(0, 16384);
 
-export function installLifecycleProbe(_, environment = globalThis) {
+export function installLifecycleProbe(config, environment = globalThis) {
   if (environment.top !== environment) return;
+  const policy = config?.runRetentionPolicy;
+  if (policy !== undefined && policy !== 'retained-paused-run-with-visible-rejoin-v1')
+    throw Error('Unknown lifecycle run retention policy');
+  const retainRun = policy !== undefined;
   const documentRef = environment.document;
   let phaser,
     game,
@@ -35,16 +40,35 @@ export function installLifecycleProbe(_, environment = globalThis) {
     nextRunId = 1,
     armed = null,
     resumeGesture = null,
-    resumePhase = null;
+    resumePhase = null,
+    retained = null,
+    identityFailure = false;
   const runIds = new WeakMap(),
     events = [],
     frames = [],
     phases = [];
   const dropped = { events: 0, phases: 0 };
   const read = (label, checkpoint = false) => {
-    const scene = game?.scene?.scenes?.find((entry) => entry.lastPaint?.run),
+    const scenes = game?.scene?.scenes ?? [],
+      candidates = retainRun
+        ? scenes.length <= 64
+          ? scenes.filter((entry) => entry.lastPaint?.run)
+          : []
+        : [scenes.find((entry) => entry.lastPaint?.run)],
+      scene = candidates[0],
       paint = scene?.lastPaint,
-      run = paint?.run;
+      phase = documentRef.body?.dataset.flightState ?? null;
+    if (retainRun && (scenes.length > 64 || candidates.length > 1)) identityFailure = true;
+    if (
+      retained &&
+      (game !== retained.game ||
+        !game?.scene?.scenes?.includes(retained.scene) ||
+        (paint?.run && (scene !== retained.scene || paint.run !== retained.run)))
+    )
+      identityFailure = true;
+    const samePaint = !!retained && paint?.run === retained.run && scene === retained.scene,
+      allowReference = retained && !identityFailure && !paint?.run && phase === 'paused',
+      run = paint?.run ?? (allowReference ? retained.run : null);
     if (run && !runIds.has(run)) runIds.set(run, nextRunId++);
     const result = {
       label,
@@ -59,6 +83,17 @@ export function installLifecycleProbe(_, environment = globalThis) {
       levelId: run?.level?.id ?? null,
       runTick: run?.tick ?? null,
       submittedPaintTick: paint?.tick ?? null,
+      ...(retainRun
+        ? {
+            runEvidence: paint?.run
+              ? 'submitted-board'
+              : allowReference
+                ? 'retained-paused-reference'
+                : 'unavailable',
+            retainedIdentityMatched: samePaint,
+            identityFailure,
+          }
+        : {}),
       status: run?.status ?? null,
       lives: run?.lives ?? null,
       player: run
@@ -140,6 +175,28 @@ export function installLifecycleProbe(_, environment = globalThis) {
     documentRef.addEventListener(type, observe, true);
   environment.soloLifecycleProbe = {
     snapshot: read,
+    ...(retainRun
+      ? {
+          retainObservedRun: () => {
+            if (retained) throw Error('Only one lifecycle run may be retained');
+            const scenes = game?.scene?.scenes ?? [],
+              candidates =
+                scenes.length <= 64 ? scenes.filter((entry) => entry.lastPaint?.run) : [];
+            if (scenes.length > 64 || candidates.length > 1) identityFailure = true;
+            const scene = candidates[0];
+            if (
+              identityFailure ||
+              !scene ||
+              documentRef.body?.dataset.flightState !== 'running' ||
+              documentRef.visibilityState !== 'visible' ||
+              !documentRef.hasFocus()
+            )
+              throw Error('Current visible running board required');
+            retained = { game, scene, run: scene.lastPaint.run };
+            return read('retained-initial-running');
+          },
+        }
+      : {}),
     installCheckpoint: (fn) => {
       checkpointFn = fn;
     },
@@ -148,17 +205,22 @@ export function installLifecycleProbe(_, environment = globalThis) {
       resumeGesture = resumePhase = null;
       armed = { label, remaining: 16 };
     },
-    export: () => ({
-      events: events.slice(),
-      frames: frames.slice(),
-      phases: phases.slice(),
-      dropped: { ...dropped },
-      resumeGesture,
-      resumePhase,
-      current: read('export'),
-    }),
+    export: () => {
+      const current = read('export');
+      return {
+        ...(retainRun ? { runRetentionPolicy: policy, identityFailure } : {}),
+        events: events.slice(),
+        frames: frames.slice(),
+        phases: phases.slice(),
+        dropped: { ...dropped },
+        resumeGesture,
+        resumePhase,
+        current,
+      };
+    },
   };
 }
+
 export async function writeLifecycleReport(output, report) {
   const bytes = Buffer.from(JSON.stringify(report, null, 2) + '\n');
   assert(bytes.length <= LIFECYCLE_PROTOCOL.reportBytes, 'Lifecycle report byte bound');
@@ -286,6 +348,8 @@ export async function observeLifecycle(planArg, outputArg) {
     plan = await readLifecycleJSON(resolve(planArg), 65536);
   assert.equal(plan.format, 'SoloHostedLifecycleExecutionV1');
   assert.deepEqual(plan.protocol, LIFECYCLE_PROTOCOL);
+  if (plan.runRetentionPolicy !== undefined)
+    assert.equal(plan.runRetentionPolicy, LIFECYCLE_RUN_RETENTION_POLICY);
   assert.deepEqual(plan.job, lifecycleCase());
   assert.equal(plan.runtimeRevision, LIFECYCLE_SOURCE.runtime);
   assert.equal(plan.artifact.sourceRevision, LIFECYCLE_SOURCE.revision);
@@ -308,6 +372,7 @@ export async function observeLifecycle(planArg, outputArg) {
     status: 'running',
     job: plan.job,
     protocol: LIFECYCLE_PROTOCOL,
+    ...(plan.runRetentionPolicy ? { runRetentionPolicy: plan.runRetentionPolicy } : {}),
     runtimeRevision: plan.runtimeRevision,
     artifact: plan.artifact,
     plan: { path: resolve(planArg), sha256: digest(await readFile(planArg)) },
@@ -465,7 +530,12 @@ export async function observeLifecycle(planArg, outputArg) {
         });
       else report.failedRequestOverflow = true;
     });
-    await checked(page.addInitScript(installLifecycleProbe));
+    await checked(
+      page.addInitScript(
+        installLifecycleProbe,
+        plan.runRetentionPolicy ? { runRetentionPolicy: plan.runRetentionPolicy } : undefined,
+      ),
+    );
     await checked(page.bringToFront());
     const url = new URL(plan.address);
     url.searchParams.set('journey', 'opening');
@@ -522,6 +592,13 @@ export async function observeLifecycle(planArg, outputArg) {
     assert.equal(started.levelId, 'first-return');
     assert.equal(started.visibility, 'visible');
     assert(started.focused);
+    if (plan.runRetentionPolicy) {
+      const retained = await checked(
+        page.evaluate(() => window.soloLifecycleProbe.retainObservedRun()),
+      );
+      assert.equal(retained.runId, started.runId);
+      report.snapshots.push(retained);
+    }
     await checked(page.keyboard.down('ArrowRight'));
     action('keydown-border-right');
     await checked(wait(100));

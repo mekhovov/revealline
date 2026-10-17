@@ -6,6 +6,7 @@ import { join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import {
   LIFECYCLE_SOURCE,
+  LIFECYCLE_RUN_RETENTION_POLICY,
   LIFECYCLE_PROTOCOL,
   LIFECYCLE_FIXTURE,
   LIFECYCLE_PREDECESSOR,
@@ -582,4 +583,206 @@ test('actual recorder trailing release exports the same paused checkpoint withou
   // An internally valid shorter recorder is still insufficient evidence for the observed full run.
   r.nativeReplay.observation.ticks--;
   assert.throws(() => assertLifecycleReplay(r), /final live tick/);
+});
+
+function setup(install = installLifecycleProbe) {
+  const e = environment();
+  install({ runRetentionPolicy: LIFECYCLE_RUN_RETENTION_POLICY }, e.env);
+  e.env.Phaser = e.Phaser;
+  const game = new e.env.Phaser.Game();
+  const probe = e.env.soloLifecycleProbe;
+  probe.installCheckpoint((run) => ({ hash: String(run.tick).padStart(16, '0'), x: run.player.x }));
+  return { ...e, game, probe };
+}
+function latch(e) {
+  e.env.document.hasFocus = () => true;
+  e.env.document.visibilityState = 'visible';
+  e.env.document.body.dataset.flightState = 'running';
+  return e.probe.retainObservedRun();
+}
+test('immutable dispatched observer reproduces presentation-cache loss while original run survives', () => {
+  const e = environment();
+  installLifecycleProbe(null, e.env);
+  e.env.Phaser = e.Phaser;
+  e.game = new e.env.Phaser.Game();
+  e.probe = e.env.soloLifecycleProbe;
+  e.probe.installCheckpoint((run) => ({ hash: String(run.tick).padStart(16, '0') }));
+  const before = e.probe.snapshot('hidden', true);
+  e.game.scene.scenes[0].lastPaint = null;
+  assert.throws(() => e.probe.snapshot('hidden-after10s', true), /unavailable/);
+  assert.equal(e.run.tick, before.runTick);
+});
+test('explicit retention labels retained paused checkpoint and never invents submitted pixels', () => {
+  const e = setup();
+  const initial = latch(e);
+  e.env.document.body.dataset.flightState = 'paused';
+  e.env.document.visibilityState = 'hidden';
+  const before = e.probe.snapshot('hidden', true);
+  e.game.scene.scenes[0].lastPaint = null;
+  e.setNow(10000);
+  const held = e.probe.snapshot('hidden-after10s', true);
+  assert.equal(held.runId, initial.runId);
+  assert.deepEqual(held.checkpoint, before.checkpoint);
+  assert.equal(held.runEvidence, 'retained-paused-reference');
+  assert.equal(held.submittedPaintTick, null);
+  assert.equal(held.retainedIdentityMatched, false);
+});
+test('mutable retained run is measured anew, not a frozen copied checkpoint', () => {
+  const e = setup();
+  latch(e);
+  e.env.document.body.dataset.flightState = 'paused';
+  const before = e.probe.snapshot('before', true);
+  e.game.scene.scenes[0].lastPaint = null;
+  e.run.tick++;
+  assert.notDeepEqual(e.probe.snapshot('after', true).checkpoint, before.checkpoint);
+});
+test('running without current submission cannot use retained reference', () => {
+  const e = setup();
+  latch(e);
+  e.game.scene.scenes[0].lastPaint = null;
+  const r = e.probe.snapshot('resumed');
+  assert.equal(r.runId, null);
+  assert.equal(r.runEvidence, 'unavailable');
+  assert.equal(r.retainedIdentityMatched, false);
+});
+test('same visible submitted run re-establishes identity after cache invalidation', () => {
+  const e = setup();
+  const first = latch(e);
+  const scene = e.game.scene.scenes[0];
+  scene.lastPaint = null;
+  e.env.document.body.dataset.flightState = 'paused';
+  assert.equal(e.probe.snapshot('hidden', true).runId, first.runId);
+  scene.lastPaint = { run: e.run, tick: e.run.tick };
+  e.env.document.body.dataset.flightState = 'running';
+  const r = e.probe.snapshot('resumed');
+  assert.equal(r.runId, first.runId);
+  assert.equal(r.retainedIdentityMatched, true);
+  assert.equal(r.runEvidence, 'submitted-board');
+  assert.equal(r.identityFailure, false);
+});
+test('different run object permanently marks failure even if original paint later returns', () => {
+  const e = setup();
+  latch(e);
+  const scene = e.game.scene.scenes[0];
+  scene.lastPaint = { run: structuredClone(e.run), tick: 7 };
+  assert.equal(e.probe.snapshot('replacement').identityFailure, true);
+  scene.lastPaint = { run: e.run, tick: 7 };
+  assert.equal(e.probe.snapshot('restored').identityFailure, true);
+  scene.lastPaint = null;
+  e.env.document.body.dataset.flightState = 'paused';
+  assert.throws(() => e.probe.snapshot('hidden', true), /unavailable/);
+});
+test('removed original scene or new Game cannot reuse held reference', () => {
+  for (const mode of ['scene', 'game']) {
+    const e = setup();
+    latch(e);
+    e.env.document.body.dataset.flightState = 'paused';
+    if (mode === 'scene') e.game.scene.scenes = [];
+    else new e.env.Phaser.Game();
+    assert.equal(e.probe.snapshot('replacement').identityFailure, true);
+  }
+});
+test('latch requires one actual visible running board, and checkpoints remain pause-only', () => {
+  const e = setup();
+  assert.throws(() => e.probe.retainObservedRun(), /visible/);
+  latch(e);
+  assert.throws(() => e.probe.retainObservedRun(), /one lifecycle/);
+  assert.throws(() => e.probe.snapshot('active', true), /pause-only/);
+});
+
+test('ambiguous painted scenes fail before latch and permanently after latch', () => {
+  for (const initial of [true, false]) {
+    const e = setup();
+    if (!initial) latch(e);
+    e.game.scene.scenes.push({ lastPaint: { run: structuredClone(e.run), tick: 7 } });
+    if (initial) assert.throws(() => latch(e), /visible/);
+    assert.equal(e.probe.snapshot('ambiguous').identityFailure, true);
+    e.game.scene.scenes.pop();
+    assert.equal(e.probe.snapshot('cleared').identityFailure, true);
+  }
+});
+
+function retainedRaw() {
+  const value = raw();
+  value.runRetentionPolicy = LIFECYCLE_RUN_RETENTION_POLICY;
+  for (const row of [
+    ...value.snapshots,
+    ...value.lifecycle.frames,
+    value.lifecycle.resumeGesture,
+    value.lifecycle.resumePhase,
+  ]) {
+    Object.assign(row, {
+      runEvidence: 'submitted-board',
+      retainedIdentityMatched: true,
+      identityFailure: false,
+    });
+  }
+  value.snapshots.push({ ...value.snapshots[0], label: 'retained-initial-running' });
+  value.lifecycle.runRetentionPolicy = LIFECYCLE_RUN_RETENTION_POLICY;
+  value.lifecycle.identityFailure = false;
+  value.lifecycle.current = { ...value.snapshots[10], label: 'export' };
+  value.resumeProbe = structuredClone(value.lifecycle);
+  value.resumeWitness = resumeBounds(value.snapshots[6], value.resumeProbe);
+  return value;
+}
+test('retained checkpoints require current visible same-run submissions before any complete lifecycle credit', () => {
+  const value = retainedRaw();
+  for (const index of [2, 3, 4, 5, 6])
+    Object.assign(value.snapshots[index], {
+      runEvidence: 'retained-paused-reference',
+      retainedIdentityMatched: false,
+      submittedPaintTick: null,
+    });
+  assertLifecycleProof(value);
+  for (const mutate of [
+    (r) => r.snapshots.pop(),
+    (r) => r.snapshots[11].runId++,
+    (r) => (r.lifecycle.identityFailure = true),
+    (r) => (r.resumeProbe.identityFailure = true),
+    (r) => (r.lifecycle.current.runEvidence = 'retained-paused-reference'),
+    (r) => r.lifecycle.current.runId++,
+    (r) => (r.snapshots[7].retainedIdentityMatched = false),
+    (r) => (r.snapshots[9].runEvidence = 'retained-paused-reference'),
+    (r) => (r.snapshots[10].visibility = 'hidden'),
+    (r) => (r.resumeProbe.frames[0].visibility = 'hidden'),
+    (r) => (r.resumeProbe.frames[0].runEvidence = 'retained-paused-reference'),
+    (r) => (r.resumeProbe.frames[0].retainedIdentityMatched = false),
+    (r) => (r.snapshots[3].identityFailure = true),
+    (r) => (r.snapshots[3].runEvidence = 'unavailable'),
+  ]) {
+    const changed = retainedRaw();
+    mutate(changed);
+    assert.throws(() => assertLifecycleProof(changed));
+  }
+  const before = value.snapshots[6],
+    probe = structuredClone(value.resumeProbe);
+  Object.assign(probe.resumePhase, {
+    runId: null,
+    runEvidence: 'unavailable',
+    retainedIdentityMatched: false,
+  });
+  assert.equal(resumeBounds(before, probe).anchorKind, 'trusted-public-Resume-click');
+});
+test('retention policy is exact in declaration, execution report and assessment while legacy remains readable', async () => {
+  const m = manifest();
+  m.runRetentionPolicy = LIFECYCLE_RUN_RETENTION_POLICY;
+  const p = bindLifecycleJob(m, 'chromium-background'),
+    value = retainedRaw();
+  assert.equal((await lifecycleAssessment(p, p.rows[0], value, owner())).status, 'passed');
+  delete value.runRetentionPolicy;
+  assert.equal((await lifecycleAssessment(p, p.rows[0], value, owner())).status, 'failed');
+  const wrong = structuredClone(p);
+  wrong.runRetentionPolicy = 'invented';
+  assert.throws(() => validateLifecyclePlan(wrong));
+  assert.equal(
+    (
+      await lifecycleAssessment(
+        bindLifecycleJob(manifest(), 'chromium-background'),
+        p.rows[0],
+        raw(),
+        owner(),
+      )
+    ).status,
+    'passed',
+  );
 });
