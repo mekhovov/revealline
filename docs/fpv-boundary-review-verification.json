@@ -183,5 +183,18 @@
     "The browser duration fixture verifies real simulation history reconstructed from a browser snapshot and extends it offline before verified browser-worker recovery; it is not twelve minutes of physical-device flight.",
     "Unknown and uncoded worker failures remain unavailable, not exportable limit stops.",
     "Historical delivery reports retain their exact source scope. New code is not yet claimed deployed by this local receipt."
-  ]
+  ],
+  "desktopFollowup": {
+    "report": "docs/fpv-native-boundary-review-runtime.json",
+    "sha256": "59972d5505287a6657c6b544dfc88ae683f4665ce7ae75451c9f59abeae0f5d7",
+    "pass": true,
+    "processes": 2,
+    "sourcePins": 209,
+    "recordingMissionTicks": 26,
+    "finalHash": "0b26acd5",
+    "exactLibraryRetention": true,
+    "productionAuthentication": false,
+    "iosRuntimeVerified": false,
+    "nativeDurationBoundaryTested": false
+  }
 }

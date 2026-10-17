@@ -1,0 +1,182 @@
+{
+  "format": "FpvInputRecoveryNativeRuntime.v1",
+  "pass": true,
+  "startedAt": "2026-10-17T14:35:18.252Z",
+  "completedAt": "2026-10-17T14:39:11.915112+00:00",
+  "sourceRevisionAtCompletion": "af4cd146f4ed05c79a404642978ae682e3486757",
+  "scope": "One actual Electron process using the existing labelled test fixture and production rates editor, Advanced arena host, worker, renderer, native resource protocol and OS Save dialogs. Fresh isolated profile; bounded input-availability recovery check.",
+  "desktopFixtureRuntimeVerified": true,
+  "nativeRuntimeVerified": false,
+  "iosRuntimeVerified": false,
+  "advancedScored": false,
+  "sourceBinding": {
+    "report": "docs/fpv-input-recovery-native-staging.json",
+    "sha256": "6deaa5fee56b4dc518a2977d5a30b4416b1ea3a2f515d329711d7f746e57d72c",
+    "sourceHashCount": 209,
+    "sourceStable": true,
+    "advancedPracticeSha256": "d3c5a16e6686da3c57dc8abcea6b9846c0f3f686681068f972c88b5ce27589a4",
+    "description": "All 209 staged source pins were rechecked after native process exit. Current runtime remains byte-identical to the tested bundle."
+  },
+  "environment": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "macOS": "26.7.1 (25G241)",
+    "electron": "44.3.0",
+    "chromium": "152.0.7977.78",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) FPV/LINE/0.21.0 Chrome/152.0.7977.78 Electron/44.3.0 Safari/537.36",
+    "replayNode": "v22.22.2"
+  },
+  "fixture": {
+    "builder": "scripts/build-fpv-native-smoke.mjs",
+    "harness": "platforms/desktop/test/fpv-smoke-harness.mjs",
+    "source": "/private/tmp/fpv-input-recovery-native-fixture",
+    "stage": "/private/tmp/fpv-input-recovery-native-fixture-desktop",
+    "entry": "revealline://app/optional-practice/fpv-worlds/native-test-fixture.html?lang=en",
+    "profile": "/private/tmp/fpv-input-recovery-native-profile",
+    "qualification": "simulators-only-explicit-test-fixture",
+    "files": 187,
+    "bytes": 18351571,
+    "manifestSha256": "9fbd101e4fcb8028ad94c9c6e60756ef121c9ce833c26c1a010eae562e3a83c2",
+    "productionFilesCompared": 182,
+    "productionFilesUnchanged": 182,
+    "exception": "Only the launcher gains a visibly labelled test link and four fixture-only files are added. All other 182 ordinary inventory files, including locked Academy/World access pages, remain byte-identical.",
+    "productionAuthenticationExercised": false,
+    "productionAccessPagesRemainLocked": true,
+    "credentialsUsed": false
+  },
+  "runnerProvenance": {
+    "scripts/build-fpv-native.mjs": "5199fa8260303a58f31c0ce830bfce11cb24ce6d7bbd73036f923221ad15de08",
+    "scripts/build-fpv-native-smoke.mjs": "3f9fe78a92b3ca67933ce12ee3b70cbe1681db03f848fc60319d3feb600fbab2",
+    "scripts/native-cli.mjs": "8f9b830dc30c884f9ed9d9e3ab1903428d4ea24b49118c71d1cbc0a1ee2ab3d1",
+    "platforms/desktop/test/fpv-smoke-harness.mjs": "6d882d572da4ee5941d176033d6bc61d96c1c0f551bac40aedc502729985ce58",
+    "platforms/desktop/main.mjs": "a89a54828ede8dfa2bc32dc60f4aa889eb8bb546bb8bb8451343c59c17750980",
+    "platforms/desktop/policy.mjs": "92ff61da8d8b74700157d9c77d0f179050a9c45ee9446cedfca3f85a6810cc75",
+    "platforms/desktop/resources.mjs": "3de16ace66c1c435e50865314f7b5f7222431e7c174b4b78f7b4eb24366a7cfe",
+    "platforms/desktop/package.json": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8",
+    "platforms/desktop/package-lock.json": "e8add4e03916f8f5ea8fd429bfc84ce7f00126794f0f65cb170078a11ac343a7"
+  },
+  "reproduction": {
+    "prerequisites": [
+      "Existing Node 22.22.2 and Electron 44.3.0 installation; no dependency installation needed.",
+      "Fresh task-owned build and profile directories; no production access or security policy changes."
+    ],
+    "commands": [
+      "node docs/fpv-input-recovery-native/staging.mjs",
+      "node scripts/build-fpv-native-smoke.mjs --base /private/tmp/fpv-input-recovery-native-source --out /private/tmp/fpv-input-recovery-native-fixture",
+      "node scripts/native-cli.mjs stage --site /private/tmp/fpv-input-recovery-native-fixture --out /private/tmp/fpv-input-recovery-native-fixture-desktop --platform desktop",
+      "env -u ELECTRON_RUN_AS_NODE REVEALLINE_SITE_DIR=/private/tmp/fpv-input-recovery-native-fixture-desktop REVEALLINE_USER_DATA_DIR=/private/tmp/fpv-input-recovery-native-profile platforms/desktop/node_modules/.bin/electron platforms/desktop",
+      "node docs/fpv-input-recovery-native/verify.mjs"
+    ],
+    "interaction": "Actual native app operated through cua_repl accessibility controls and keyboard events. No DOM/CDP mutation. The verifier replays saved exports and checks pins; it does not automate a fresh UI execution."
+  },
+  "observations": [
+    {
+      "check": "Initial expected profile guard",
+      "result": "Attempting Advanced with Legacy feel returned Legacy feel has no Betaflight equivalent. Created a new Actual profile and opened the arena normally. This expected guard was not counted as a runtime failure."
+    },
+    {
+      "check": "Unavailable input preserves valid flight",
+      "result": "After a short keyboard flight, paused and selected Calibrated radio with no radio connected. Start displayed the exact new input-unavailable guidance. Start, Restart and Export remained enabled, Pause remained disabled, observed polling was unavailable, and the same worker remained live.",
+      "message": "Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained."
+    },
+    {
+      "check": "Retained recording can be exported while radio remains unavailable",
+      "result": "Native OS Save wrote paused-recording.json, containing 220 accepted mission ticks. Complete production replay verifies hash 2dd2786e."
+    },
+    {
+      "check": "Keyboard selection requires explicit resume",
+      "result": "Switching input to Keyboard / touch remained paused. Explicit Start continued the existing worker and accepted keyboard yaw input. A second native OS Save wrote resumed-recording.json, containing 478 mission ticks and exact replay hash 3830ae85. Its complete earlier input/hash prefix matches the retained recording; sequences remain contiguous across the input failure."
+    },
+    {
+      "check": "Explicit restart and disposal",
+      "result": "Restart returned to the ready launch point with neutral controls and unavailable polling. Return to tuning terminated its worker. Final fixture disposal retained zero live workers, with two created and two terminated in total, and no captured runtime errors."
+    }
+  ],
+  "process": {
+    "exitCode": 0,
+    "capturedOutput": "",
+    "normalQuit": "Command-Q",
+    "workers": {
+      "created": 2,
+      "terminated": 2,
+      "live": 0
+    }
+  },
+  "recordings": [
+    {
+      "file": "paused-recording.json",
+      "missionTicks": 220,
+      "finalHash": "2dd2786e",
+      "frequency": 250,
+      "verified": true,
+      "verificationScope": "complete",
+      "contiguousInputSequences": true
+    },
+    {
+      "file": "resumed-recording.json",
+      "missionTicks": 478,
+      "finalHash": "3830ae85",
+      "frequency": 250,
+      "verified": true,
+      "verificationScope": "complete",
+      "contiguousInputSequences": true
+    }
+  ],
+  "verification": {
+    "path": "docs/fpv-input-recovery-native/verification.json",
+    "retainedFlightPrefix": true,
+    "sourceStable": true
+  },
+  "failures": [],
+  "limitations": [
+    "One macOS arm64 Electron host and explicit test fixture; no signed installer or general native platform qualification.",
+    "No physical radio reconnection, physical touch, pilot assessment, aircraft fidelity, iOS runtime or wider device matrix. Selecting unavailable radio was an actual UI operation with no device attached.",
+    "Native acceptance used English. Separate actual-browser evidence covers English and Ukrainian and simulated mid-flight radio loss/return.",
+    "Two short native exports cover 4.4 and 9.56 simulation seconds; no native 12-minute, dense-world, timing-capacity or two-process persistence claim.",
+    "Production authentication was preserved but not exercised. No credential was used, captured or saved.",
+    "Replay ran through the production Node implementation on the same architecture; this is not new cross-architecture qualification.",
+    "Advanced remains optional and unscored; limits, physics frequency, default eligibility and native budgets remain unchanged."
+  ],
+  "artifacts": [
+    {
+      "path": "docs/fpv-input-recovery-native/fixture-manifest.json",
+      "bytes": 33944,
+      "sha256": "9fbd101e4fcb8028ad94c9c6e60756ef121c9ce833c26c1a010eae562e3a83c2"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/fixture-metadata.json",
+      "bytes": 448,
+      "sha256": "25c844967802e2c078e6dcb2e30d431320f6f46729119a32c77826c7d7aff30b"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/paused-recording.json",
+      "bytes": 7513,
+      "sha256": "6e852c4d9d105cb21306627b6c0eeb399ed58e230c928067047b2bb03df4afd0"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/resumed-recording.json",
+      "bytes": 12531,
+      "sha256": "7bd4f36bc31ea657f99ee68e4325f49265280ee28c34b5029c120adea6580c56"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/session.json",
+      "bytes": 55516,
+      "sha256": "49f8b2d006acb506985813d617adb1842f60ab4c1ad850bb9da8edb579faf8e6"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/staging.mjs",
+      "bytes": 7458,
+      "sha256": "68419a6f8b86dc987f411b1f7eff6b831d6b7ec64b47bad1f693966d8be836b3"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/verification.json",
+      "bytes": 696,
+      "sha256": "835aa567b1b721753f8c6e5ae0f594ba3c97de08e7e48ca79032651b4f620dea"
+    },
+    {
+      "path": "docs/fpv-input-recovery-native/verify.mjs",
+      "bytes": 2354,
+      "sha256": "5fbf1c71d66a8b09fdbc5aac6519240941fc33b0bc7819cac0d27348c9af97da"
+    }
+  ]
+}
