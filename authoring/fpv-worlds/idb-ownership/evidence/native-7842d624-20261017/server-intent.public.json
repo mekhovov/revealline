@@ -1,0 +1,22 @@
+{
+  "kind": "App-only public projection; original retained locally",
+  "original": {
+    "file": "server-intent.json",
+    "bytes": 616,
+    "sha256": "cac1acc1001a2aaf25eea4eb4dde97dee6bd8129dba4a3b19b464f9df7ba7395"
+  },
+  "redactions": [
+    "Exact local fixture root replaced; public fixture membership/identity remains bound in the prior evidence commit."
+  ],
+  "evidence": {
+    "UTC": "2026-10-17T21:10:56.339900+00:00",
+    "candidate": "7842d6249217eade6d4ea5f7220b6dd8d4ff01af",
+    "fixture": "<prepared-7842-fixture-root>",
+    "url": "http://127.0.0.1:50097/site/optional-practice/fpv-worlds/diagnostic.html?lang=en&idbTransactions=1&idbCloseCalls=1#packs",
+    "pid": 84788,
+    "internalAvailableBytes": 4457603072,
+    "scope": "One bounded native authoring observer check on frozen7842; not current-main or original-public-context qualification",
+    "originalAffectedPublicContextAccess": false,
+    "newDownloadOrBuild": false
+  }
+}

@@ -1,0 +1,823 @@
+{
+  "format": "FPVIDBConnectionObservation.v1",
+  "stopped": false,
+  "limits": {
+    "events": 128,
+    "connections": 32,
+    "pendingRequests": 64,
+    "callerFrames": 4
+  },
+  "counts": {
+    "opens": 5,
+    "droppedEvents": 0,
+    "droppedConnections": 0,
+    "droppedRequests": 0,
+    "diagnosticErrors": 0,
+    "closeInterceptions": 5,
+    "closeInterceptionRefused": 0,
+    "restorationSkipped": 0
+  },
+  "pendingRequests": 0,
+  "ownedRetireActions": 15,
+  "connections": [
+    {
+      "connection": 1,
+      "name": "revealline-journey-v1",
+      "version": 1,
+      "openCaller": [
+        {
+          "path": "game/profile-storage.mjs",
+          "line": 92,
+          "column": 29
+        },
+        {
+          "path": "game/profile-storage.mjs",
+          "line": 83,
+          "column": 23
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": 0,
+      "closeInterception": "instance-method-wrapper"
+    },
+    {
+      "connection": 2,
+      "name": "revealline.fpv.world-records.v1",
+      "version": 1,
+      "openCaller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 94,
+          "column": 31
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 93,
+          "column": 20
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": 0,
+      "closeInterception": "instance-method-wrapper",
+      "transactionInterception": "instance-method-wrapper"
+    },
+    {
+      "connection": 3,
+      "name": "revealline-fpv-regions-v1",
+      "version": 2,
+      "openCaller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-store.mjs",
+          "line": 33,
+          "column": 29
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+          "line": 320,
+          "column": 23
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional-library.mjs",
+          "line": 733,
+          "column": 48
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": 0,
+      "closeInterception": "instance-method-wrapper",
+      "transactionInterception": "instance-method-wrapper"
+    },
+    {
+      "connection": 4,
+      "name": "revealline-fpv-worlds-v1",
+      "version": 2,
+      "openCaller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-store.mjs",
+          "line": 33,
+          "column": 29
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "line": 8166,
+          "column": 7
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "line": 8195,
+          "column": 5
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": 0,
+      "closeInterception": "instance-method-wrapper",
+      "transactionInterception": "instance-method-wrapper"
+    },
+    {
+      "connection": 5,
+      "name": "revealline-journey-v1",
+      "version": 1,
+      "openCaller": [
+        {
+          "path": "game/profile-storage.mjs",
+          "line": 92,
+          "column": 29
+        },
+        {
+          "path": "game/profile-storage.mjs",
+          "line": 83,
+          "column": 23
+        }
+      ],
+      "openEventTrusted": true,
+      "forcedCloseEvents": 0,
+      "versionChangeEvents": 0,
+      "explicitCloseCalls": 0,
+      "closeInterception": "instance-method-wrapper"
+    }
+  ],
+  "events": [
+    {
+      "sequence": 1,
+      "atMs": 12076.79999999702,
+      "kind": "open-success",
+      "connection": 1,
+      "name": "revealline-journey-v1",
+      "version": 1,
+      "trusted": true
+    },
+    {
+      "sequence": 2,
+      "atMs": 12077.09999999404,
+      "kind": "open-success",
+      "connection": 2,
+      "name": "revealline.fpv.world-records.v1",
+      "version": 1,
+      "trusted": true
+    },
+    {
+      "sequence": 3,
+      "atMs": 12078,
+      "kind": "open-success",
+      "connection": 3,
+      "name": "revealline-fpv-regions-v1",
+      "version": 2,
+      "trusted": true
+    },
+    {
+      "sequence": 4,
+      "atMs": 12078.39999999106,
+      "kind": "transaction-start",
+      "connection": 3,
+      "transaction": 1,
+      "mode": "readonly",
+      "stores": [
+        "projects",
+        "revisions"
+      ],
+      "caller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-store.mjs",
+          "line": 247,
+          "column": 19
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+          "line": 381,
+          "column": 27
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional-library.mjs",
+          "line": 1097,
+          "column": 39
+        }
+      ]
+    },
+    {
+      "sequence": 5,
+      "atMs": 12078.699999988079,
+      "kind": "open-success",
+      "connection": 4,
+      "name": "revealline-fpv-worlds-v1",
+      "version": 2,
+      "trusted": true
+    },
+    {
+      "sequence": 6,
+      "atMs": 12083,
+      "kind": "open-success",
+      "connection": 5,
+      "name": "revealline-journey-v1",
+      "version": 1,
+      "trusted": true
+    },
+    {
+      "sequence": 7,
+      "atMs": 12083.199999988079,
+      "kind": "transaction-complete",
+      "connection": 3,
+      "transaction": 1,
+      "trusted": true,
+      "error": null
+    },
+    {
+      "sequence": 8,
+      "atMs": 12104.699999988079,
+      "kind": "transaction-start",
+      "connection": 2,
+      "transaction": 2,
+      "mode": "readonly",
+      "stores": [
+        "session"
+      ],
+      "caller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 105,
+          "column": 21
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 104,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "sequence": 9,
+      "atMs": 12105.59999999404,
+      "kind": "transaction-complete",
+      "connection": 2,
+      "transaction": 2,
+      "trusted": true,
+      "error": null
+    },
+    {
+      "sequence": 10,
+      "atMs": 12105.699999988079,
+      "kind": "transaction-start",
+      "connection": 4,
+      "transaction": 3,
+      "mode": "readonly",
+      "stores": [
+        "projects",
+        "revisions"
+      ],
+      "caller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-store.mjs",
+          "line": 247,
+          "column": 19
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "line": 3564,
+          "column": 36
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "line": 8181,
+          "column": 11
+        }
+      ]
+    },
+    {
+      "sequence": 11,
+      "atMs": 12105.89999999106,
+      "kind": "transaction-complete",
+      "connection": 4,
+      "transaction": 3,
+      "trusted": true,
+      "error": null
+    },
+    {
+      "sequence": 12,
+      "atMs": 12105.89999999106,
+      "kind": "transaction-start",
+      "connection": 4,
+      "transaction": 4,
+      "mode": "readonly",
+      "stores": [
+        "projects",
+        "revisions"
+      ],
+      "caller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-store.mjs",
+          "line": 247,
+          "column": 19
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "line": 3566,
+          "column": 36
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "line": 8181,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "sequence": 13,
+      "atMs": 12106,
+      "kind": "transaction-complete",
+      "connection": 4,
+      "transaction": 4,
+      "trusted": true,
+      "error": null
+    },
+    {
+      "sequence": 14,
+      "atMs": 12106.09999999404,
+      "kind": "transaction-start",
+      "connection": 2,
+      "transaction": 5,
+      "mode": "readonly",
+      "stores": [
+        "records"
+      ],
+      "caller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 105,
+          "column": 21
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 104,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "sequence": 15,
+      "atMs": 12106.199999988079,
+      "kind": "transaction-complete",
+      "connection": 2,
+      "transaction": 5,
+      "trusted": true,
+      "error": null
+    },
+    {
+      "sequence": 16,
+      "atMs": 12106.29999999702,
+      "kind": "transaction-start",
+      "connection": 2,
+      "transaction": 6,
+      "mode": "readonly",
+      "stores": [
+        "session"
+      ],
+      "caller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 105,
+          "column": 21
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-records.mjs",
+          "line": 104,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "sequence": 17,
+      "atMs": 12106.39999999106,
+      "kind": "transaction-complete",
+      "connection": 2,
+      "transaction": 6,
+      "trusted": true,
+      "error": null
+    },
+    {
+      "sequence": 18,
+      "atMs": 26977.5,
+      "kind": "transaction-start",
+      "connection": 3,
+      "transaction": 7,
+      "mode": "readonly",
+      "stores": [
+        "projects",
+        "revisions"
+      ],
+      "caller": [
+        {
+          "path": "optional-practice/civilian-fpv/world-store.mjs",
+          "line": 247,
+          "column": 19
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+          "line": 381,
+          "column": 27
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional-library.mjs",
+          "line": 1097,
+          "column": 39
+        }
+      ]
+    },
+    {
+      "sequence": 19,
+      "atMs": 26994.5,
+      "kind": "transaction-complete",
+      "connection": 3,
+      "transaction": 7,
+      "trusted": true,
+      "error": null
+    }
+  ],
+  "transactions": {
+    "enabled": true,
+    "stopped": false,
+    "limits": {
+      "history": 128,
+      "active": 32,
+      "reads": 4
+    },
+    "counts": {
+      "starts": 7,
+      "failedStarts": 0,
+      "droppedHistory": 0,
+      "droppedActive": 0,
+      "refused": 0,
+      "restorationSkipped": 0
+    },
+    "activeTransactions": 0,
+    "ownedRetireActions": 3,
+    "history": [
+      {
+        "transaction": 1,
+        "connection": 3,
+        "name": "revealline-fpv-regions-v1",
+        "stores": [
+          "projects",
+          "revisions"
+        ],
+        "mode": "readonly",
+        "caller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-store.mjs",
+            "line": 247,
+            "column": 19
+          },
+          {
+            "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+            "line": 381,
+            "column": 27
+          },
+          {
+            "path": "optional-practice/civilian-fpv/regional-library.mjs",
+            "line": 1097,
+            "column": 39
+          }
+        ],
+        "state": "complete",
+        "reads": [
+          {
+            "store": "projects",
+            "method": "getAll",
+            "unfiltered": true,
+            "state": "complete",
+            "rows": 0,
+            "rowsExact": true,
+            "successEventsTrusted": true
+          },
+          {
+            "store": "revisions",
+            "method": "openCursor",
+            "unfiltered": true,
+            "state": "complete",
+            "rows": 0,
+            "rowsExact": true,
+            "successEventsTrusted": true
+          }
+        ],
+        "incomplete": false,
+        "errorEvents": 0,
+        "precedingExplicitCloseCalls": 0,
+        "precedingVersionChangeEvents": 0,
+        "precedingAbnormalCloseEvents": 0,
+        "terminalEventTrusted": true,
+        "listing": {
+          "scope": "active-and-retained",
+          "outcome": "empty",
+          "activeRows": 0,
+          "retainedRows": 0
+        }
+      },
+      {
+        "transaction": 2,
+        "connection": 2,
+        "name": "revealline.fpv.world-records.v1",
+        "stores": [
+          "session"
+        ],
+        "mode": "readonly",
+        "caller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-records.mjs",
+            "line": 105,
+            "column": 21
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-records.mjs",
+            "line": 104,
+            "column": 12
+          }
+        ],
+        "state": "complete",
+        "reads": [],
+        "incomplete": false,
+        "errorEvents": 0,
+        "precedingExplicitCloseCalls": 0,
+        "precedingVersionChangeEvents": 0,
+        "precedingAbnormalCloseEvents": 0,
+        "terminalEventTrusted": true,
+        "listing": {
+          "scope": "unknown",
+          "outcome": "unknown",
+          "activeRows": null,
+          "retainedRows": null
+        }
+      },
+      {
+        "transaction": 3,
+        "connection": 4,
+        "name": "revealline-fpv-worlds-v1",
+        "stores": [
+          "projects",
+          "revisions"
+        ],
+        "mode": "readonly",
+        "caller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-store.mjs",
+            "line": 247,
+            "column": 19
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-app.mjs",
+            "line": 3564,
+            "column": 36
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-app.mjs",
+            "line": 8181,
+            "column": 11
+          }
+        ],
+        "state": "complete",
+        "reads": [
+          {
+            "store": "projects",
+            "method": "getAll",
+            "unfiltered": true,
+            "state": "complete",
+            "rows": 0,
+            "rowsExact": true,
+            "successEventsTrusted": true
+          }
+        ],
+        "incomplete": false,
+        "errorEvents": 0,
+        "precedingExplicitCloseCalls": 0,
+        "precedingVersionChangeEvents": 0,
+        "precedingAbnormalCloseEvents": 0,
+        "terminalEventTrusted": true,
+        "listing": {
+          "scope": "active-only",
+          "outcome": "empty",
+          "activeRows": 0,
+          "retainedRows": null
+        }
+      },
+      {
+        "transaction": 4,
+        "connection": 4,
+        "name": "revealline-fpv-worlds-v1",
+        "stores": [
+          "projects",
+          "revisions"
+        ],
+        "mode": "readonly",
+        "caller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-store.mjs",
+            "line": 247,
+            "column": 19
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-app.mjs",
+            "line": 3566,
+            "column": 36
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-app.mjs",
+            "line": 8181,
+            "column": 5
+          }
+        ],
+        "state": "complete",
+        "reads": [
+          {
+            "store": "projects",
+            "method": "getAll",
+            "unfiltered": true,
+            "state": "complete",
+            "rows": 0,
+            "rowsExact": true,
+            "successEventsTrusted": true
+          },
+          {
+            "store": "revisions",
+            "method": "openCursor",
+            "unfiltered": true,
+            "state": "complete",
+            "rows": 0,
+            "rowsExact": true,
+            "successEventsTrusted": true
+          }
+        ],
+        "incomplete": false,
+        "errorEvents": 0,
+        "precedingExplicitCloseCalls": 0,
+        "precedingVersionChangeEvents": 0,
+        "precedingAbnormalCloseEvents": 0,
+        "terminalEventTrusted": true,
+        "listing": {
+          "scope": "active-and-retained",
+          "outcome": "empty",
+          "activeRows": 0,
+          "retainedRows": 0
+        }
+      },
+      {
+        "transaction": 5,
+        "connection": 2,
+        "name": "revealline.fpv.world-records.v1",
+        "stores": [
+          "records"
+        ],
+        "mode": "readonly",
+        "caller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-records.mjs",
+            "line": 105,
+            "column": 21
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-records.mjs",
+            "line": 104,
+            "column": 12
+          }
+        ],
+        "state": "complete",
+        "reads": [
+          {
+            "store": "records",
+            "method": "getAll",
+            "unfiltered": true,
+            "state": "complete",
+            "rows": 0,
+            "rowsExact": true,
+            "successEventsTrusted": true
+          }
+        ],
+        "incomplete": false,
+        "errorEvents": 0,
+        "precedingExplicitCloseCalls": 0,
+        "precedingVersionChangeEvents": 0,
+        "precedingAbnormalCloseEvents": 0,
+        "terminalEventTrusted": true,
+        "listing": {
+          "scope": "records",
+          "outcome": "empty",
+          "activeRows": 0,
+          "retainedRows": null
+        }
+      },
+      {
+        "transaction": 6,
+        "connection": 2,
+        "name": "revealline.fpv.world-records.v1",
+        "stores": [
+          "session"
+        ],
+        "mode": "readonly",
+        "caller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-records.mjs",
+            "line": 105,
+            "column": 21
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-records.mjs",
+            "line": 104,
+            "column": 12
+          }
+        ],
+        "state": "complete",
+        "reads": [],
+        "incomplete": false,
+        "errorEvents": 0,
+        "precedingExplicitCloseCalls": 0,
+        "precedingVersionChangeEvents": 0,
+        "precedingAbnormalCloseEvents": 0,
+        "terminalEventTrusted": true,
+        "listing": {
+          "scope": "unknown",
+          "outcome": "unknown",
+          "activeRows": null,
+          "retainedRows": null
+        }
+      },
+      {
+        "transaction": 7,
+        "connection": 3,
+        "name": "revealline-fpv-regions-v1",
+        "stores": [
+          "projects",
+          "revisions"
+        ],
+        "mode": "readonly",
+        "caller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-store.mjs",
+            "line": 247,
+            "column": 19
+          },
+          {
+            "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+            "line": 381,
+            "column": 27
+          },
+          {
+            "path": "optional-practice/civilian-fpv/regional-library.mjs",
+            "line": 1097,
+            "column": 39
+          }
+        ],
+        "state": "complete",
+        "reads": [
+          {
+            "store": "projects",
+            "method": "getAll",
+            "unfiltered": true,
+            "state": "complete",
+            "rows": 0,
+            "rowsExact": true,
+            "successEventsTrusted": true
+          },
+          {
+            "store": "revisions",
+            "method": "openCursor",
+            "unfiltered": true,
+            "state": "complete",
+            "rows": 0,
+            "rowsExact": true,
+            "successEventsTrusted": true
+          }
+        ],
+        "incomplete": false,
+        "errorEvents": 0,
+        "precedingExplicitCloseCalls": 0,
+        "precedingVersionChangeEvents": 0,
+        "precedingAbnormalCloseEvents": 0,
+        "terminalEventTrusted": true,
+        "listing": {
+          "scope": "active-and-retained",
+          "outcome": "empty",
+          "activeRows": 0,
+          "retainedRows": 0
+        }
+      }
+    ],
+    "boundary": "Application requests only; no extra read, probe, open, reconnect or storage mutation. Counts do not prove original-context contents or loss. Failed starts have unknown scope because arguments are not coerced twice."
+  },
+  "coverage": {
+    "factoryFacade": true,
+    "ambientFactoryOrPrototypePatched": false,
+    "explicitCloseInterceptionRequested": true,
+    "transactionInterceptionRequested": true,
+    "nativeRequestAndDatabaseIdentityPreserved": true,
+    "connectionsOutsideFacade": "not-observed",
+    "borrowedCloseReceivers": "not-observed",
+    "synchronousOpenExceptions": "delegated; not-observed",
+    "connectionState": "events-only; no liveness probe",
+    "rootCause": "not-established",
+    "nativeOfflineRestartEviction": "not-measured"
+  }
+}

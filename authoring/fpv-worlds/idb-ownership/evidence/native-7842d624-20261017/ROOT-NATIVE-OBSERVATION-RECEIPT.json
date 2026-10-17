@@ -1,0 +1,95 @@
+{
+  "UTC": "2026-10-17T21:14:12.700959+00:00",
+  "result": "PASS_BOUNDED_NATIVE_OBSERVER_INTERCEPTION_AND_VISIBLE_STOP_7842",
+  "candidate": "7842d6249217eade6d4ea5f7220b6dd8d4ff01af",
+  "url": "http://127.0.0.1:50097/site/optional-practice/fpv-worlds/diagnostic.html?lang=en&idbTransactions=1&idbCloseCalls=1#packs",
+  "browser": "Codex in-app browser via CUA; one renderer",
+  "viewportScreenshot": {
+    "width": 1280,
+    "height": 720
+  },
+  "nativeOpens": 5,
+  "completedReadonlyTransactions": 7,
+  "observedListingReads": 8,
+  "observedRows": "zero on newly created test origin, not original public contents",
+  "trustedNativeOpenReadTerminalEvents": true,
+  "stop": {
+    "bothStopped": true,
+    "pendingActiveRetireActions": 0,
+    "closeWrappersReportedRestored": 5,
+    "postStopLibraryRefreshWorked": true,
+    "postStopReportByteIdentical": true,
+    "independentMethodPointerIdentityProof": false
+  },
+  "scope": {
+    "originalPublicContextAccessed": false,
+    "extraDiagnosticStorageRead": false,
+    "downloadsOrImportsOrResets": false,
+    "playerFlight": false,
+    "publicAcceptance": false,
+    "currentMainAcceptance": false,
+    "physicalAcceptance": false,
+    "enduranceAcceptance": false
+  },
+  "remaining": [
+    "Native nonempty or skipped cursor path",
+    "Actual explicit-close-call observation",
+    "Native pagehide restoration after document disposal",
+    "Current-main combined-player qualification",
+    "Original affected public storage contents/connection owner/cause",
+    "Offline/process restart/eviction/physical/endurance gates"
+  ],
+  "negativesAndLimits": [
+    "Initial AX Library click raised Node does not have a layout object during ordinary startup transition; fresh state then showed expected Library, no blind retry",
+    "Fresh context empty listing does not establish original public contents or loss",
+    "transactionInterception retains historical wrapper label after Stop",
+    "Owned server intentionally stopped with SIGINT; actual process exit130, finally serverClosedtrue",
+    "favicon.ico HTTP404 retained; server log output truncated, no fullHTTP success claim"
+  ],
+  "tabClosed": true,
+  "serverSession": 61687,
+  "serverActualExit": 130,
+  "internalAvailableBytes": 4392288256,
+  "files": [
+    {
+      "file": "before-stop.json",
+      "bytes": 20879,
+      "sha256": "2ebbee2c5ecebc26036fd39e1785f8fffb66dc229662e8d2ef3d2f9a4b434894"
+    },
+    {
+      "file": "after-stop.json",
+      "bytes": 20801,
+      "sha256": "798fd625d8615b37faa2b04961ade84f81034bf0e5de1a6db77e774ef50ba579"
+    },
+    {
+      "file": "after-stop-refresh.json",
+      "bytes": 20801,
+      "sha256": "798fd625d8615b37faa2b04961ade84f81034bf0e5de1a6db77e774ef50ba579"
+    },
+    {
+      "file": "observer-stopped.jpg",
+      "bytes": 80330,
+      "sha256": "b80276db503e7097df19f64aec672756055d749bf6753652c30b88bf9a4b848e"
+    },
+    {
+      "file": "server-intent.json",
+      "bytes": 616,
+      "sha256": "cac1acc1001a2aaf25eea4eb4dde97dee6bd8129dba4a3b19b464f9df7ba7395"
+    },
+    {
+      "file": "server-stop-intent.json",
+      "bytes": 139,
+      "sha256": "5fede1cf9ecbeb3ce80a3643d48a34123a381ce6464079c4f4cadba5bdcbefa3"
+    },
+    {
+      "file": "server-terminal.json",
+      "bytes": 72,
+      "sha256": "d333a2bd15b0845fa0dda9b85467856cd610e4d728ec2086a266a2d44678a634"
+    },
+    {
+      "file": "server-tool-terminal.json",
+      "bytes": 3230,
+      "sha256": "dec87018d5f41992ae72e6ac92e58d74e091c344603bb14a70d0cd61dd9fc33e"
+    }
+  ]
+}

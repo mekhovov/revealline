@@ -1,0 +1,113 @@
+{
+  "reviewedAtUTC": "2026-10-17T21:15:29.220181+00:00",
+  "qualifiedHead": "7842d6249217eade6d4ea5f7220b6dd8d4ff01af",
+  "scope": "Independent review of three existing visible-UI exports; no new runtime/test/browser/server action. Root actual action receipt supplies UI provenance.",
+  "files": [
+    {
+      "path": "before-stop.json",
+      "bytes": 20879,
+      "sha256": "2ebbee2c5ecebc26036fd39e1785f8fffb66dc229662e8d2ef3d2f9a4b434894"
+    },
+    {
+      "path": "after-stop.json",
+      "bytes": 20801,
+      "sha256": "798fd625d8615b37faa2b04961ade84f81034bf0e5de1a6db77e774ef50ba579"
+    },
+    {
+      "path": "after-stop-refresh.json",
+      "bytes": 20801,
+      "sha256": "798fd625d8615b37faa2b04961ade84f81034bf0e5de1a6db77e774ef50ba579"
+    },
+    {
+      "path": "observer-stopped.jpg",
+      "bytes": 80330,
+      "sha256": "b80276db503e7097df19f64aec672756055d749bf6753652c30b88bf9a4b848e"
+    }
+  ],
+  "before": {
+    "nativeOpenSuccessEvents": 5,
+    "readonlyCompleteTransactions": 7,
+    "trustedGetAllReads": 5,
+    "trustedEmptyCursorExhaustions": 3,
+    "emptyListingObservations": 5,
+    "sessionOnlyUnknownObservations": 2,
+    "eventCount": 19,
+    "diagnosticErrorsRefusalsDroppedOrRestorationSkips": 0,
+    "ownedRetireActions": 15,
+    "transactionRetireActions": 3
+  },
+  "stopDelta": [
+    {
+      "path": "/stopped",
+      "before": false,
+      "after": true
+    },
+    {
+      "path": "/ownedRetireActions",
+      "before": 15,
+      "after": 0
+    },
+    {
+      "path": "/connections/0/closeInterception",
+      "before": "instance-method-wrapper",
+      "after": "restored"
+    },
+    {
+      "path": "/connections/1/closeInterception",
+      "before": "instance-method-wrapper",
+      "after": "restored"
+    },
+    {
+      "path": "/connections/2/closeInterception",
+      "before": "instance-method-wrapper",
+      "after": "restored"
+    },
+    {
+      "path": "/connections/3/closeInterception",
+      "before": "instance-method-wrapper",
+      "after": "restored"
+    },
+    {
+      "path": "/connections/4/closeInterception",
+      "before": "instance-method-wrapper",
+      "after": "restored"
+    },
+    {
+      "path": "/transactions/stopped",
+      "before": false,
+      "after": true
+    },
+    {
+      "path": "/transactions/ownedRetireActions",
+      "before": 3,
+      "after": 0
+    }
+  ],
+  "postStopRefreshByteIdentical": true,
+  "allEventsHistoryAndCountersOtherwiseUnchanged": true,
+  "observedSourcePaths": [
+    "game/profile-storage.mjs",
+    "optional-practice/civilian-fpv/regional-delivery.mjs",
+    "optional-practice/civilian-fpv/regional-library.mjs",
+    "optional-practice/civilian-fpv/world-app.mjs",
+    "optional-practice/civilian-fpv/world-records.mjs",
+    "optional-practice/civilian-fpv/world-store.mjs"
+  ],
+  "privacyReview": "Exports contain allowlisted database/store names, scalar counts/event trust and sanitized source locations; no row contents, keys, raw stacks, origins or unrelated browser/profile data. Screenshot reviewed: observer UI only.",
+  "limits": [
+    "Native empty listing and explicit Stop only at frozen 7842; not current-main combined acceptance.",
+    "Reported restoration and continuing visible UI are observed; native method pointer identity was not independently inspected.",
+    "Actual explicit close call, nonempty cursor lower-bound, abort/failure and pagehide restoration remain untested natively.",
+    "No original affected public storage context, persistence repair, public play, all-edition coexistence, offline/restart/eviction, endurance or physical device claim.",
+    "Root reported transient startup AX no-layout click, favicon404 and truncated HTTP log; retain those limits and do not call this full HTTP qualification.",
+    "Export equality after Stop supports frozen observation only; it does not prove the second export is an independent image or a new database contents measurement."
+  ],
+  "result": "PASS_INDEPENDENT_REVIEW_OF_BOUNDED_NATIVE_EMPTY_LISTING_AND_STOP_EVIDENCE",
+  "rootReceipt": {
+    "file": "ROOT-NATIVE-OBSERVATION-RECEIPT.json",
+    "bytes": 3507,
+    "sha256": "f01c664b2909acfb9460651aef17960a05822c9b24525a1cc71dc3db193bac15",
+    "result": "PASS_BOUNDED_NATIVE_OBSERVER_INTERCEPTION_AND_VISIBLE_STOP_7842"
+  },
+  "rootReceiptAgreement": "All original file pins, seven complete transactions/eight zero-row reads, explicit Stop, post-Stop equality and disclosed remaining gates agree. Root receipt supplies the CUA/action/source fixture provenance; this agent did not repeat native actions."
+}

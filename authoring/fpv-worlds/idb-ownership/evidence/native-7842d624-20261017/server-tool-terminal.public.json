@@ -1,0 +1,19 @@
+{
+  "kind": "App-only public projection; original retained locally",
+  "original": {
+    "file": "server-tool-terminal.json",
+    "bytes": 3230,
+    "sha256": "dec87018d5f41992ae72e6ac92e58d74e091c344603bb14a70d0cd61dd9fc33e"
+  },
+  "redactions": [
+    "Two local Python installation paths replaced; original exit130, KeyboardInterrupt, favicon404 and truncated output are retained."
+  ],
+  "evidence": {
+    "chunk_id": "fdd9e1",
+    "wall_time_seconds": 6.584e-06,
+    "exit_code": 130,
+    "original_token_count": 4193,
+    "output": "Warning: truncated output (original token count: 4193)\nTotal output lines: 156\n\n127.0.0.1 - - [17/Oct/2026 23:11:06] \"GET /site/optional-practice/fpv-worlds/diagnostic.html?lang=en&idbTransactions=1&idbCloseCalls=1 HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:06] \"GET /site/optional-practice/civilian-fpv/world-style.css HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:06] \"GET /site/game/access-gate.css HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:06] \"GET /site/optional-practice/civilian-fpv/tuning.css HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:06] \"GET /site/game/access-gate.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:06] \"GET /site/optional-practice/civilian-fpv/style.css HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:06] \"GET /site/game/ui/art/identity/fpv-line/wordmark.png HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:06] code 404, message File not found\n127.0.0.1 - - [17/Oct/2026 23:11:06] \"GET /favicon.ico HTTP/1.1\" 404 -\n127.0.0.1 - - [17/Oct/2026 23:11:15] \"GET /site/game/ui/art/menu-scenes/fpv.webp HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:15] \"GET /site/optional-practice/civilian-fpv/sim-boot.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:15] \"GET /authoring/fpv-worlds/idb-ownership/host.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:15] \"GET /authoring/fpv-worlds/idb-ownership/observe.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:15] \"GET /authoring/fpv-worlds/idb-ownership/access.mjs HTTP/1\u20263493 tokens truncated\u2026site/game/profile-database.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:17] \"GET /site/game/overflight/terrain.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:17] \"GET /site/game/overflight/world-layout-presentation.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:17] \"GET /site/game/presentation/overflight-world-art-v2.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:17] \"GET /site/game/presentation/overflight-world-slots.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:17] \"GET /site/optional-practice/civilian-fpv/regional/terrain-normals.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:17] \"GET /site/optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:17] \"GET /site/game/snake/classic-structure-art.mjs HTTP/1.1\" 200 -\n127.0.0.1 - - [17/Oct/2026 23:11:18] \"GET /site/optional-practice/fpv-worlds/worker.js HTTP/1.1\" 200 -\nTraceback (most recent call last):\n  File \"<stdin>\", line 20, in <module>\n  File \"<python-runtime>/socketserver.py\", line 235, in serve_forever\n    ready = selector.select(poll_interval)\n  File \"<python-runtime>/selectors.py\", line 398, in select\n    fd_event_list = self._selector.poll(timeout)\nKeyboardInterrupt\n",
+    "scope": "Intentional root SIGINT after test tab closed; HTTP output truncated, not full HTTP qualification"
+  }
+}
