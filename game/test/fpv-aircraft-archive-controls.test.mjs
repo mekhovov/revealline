@@ -16,7 +16,7 @@ test('shared archive file chooser stays visible when mounted directly in the Adv
     /\.aircraft-archive-controls input\[type=['"]file['"]\]\s*\{[^}]*display:\s*block/,
   );
 });
-function fixture(t, { verify, append } = {}) {
+function fixture(t, { verify, append, key = 'academy' } = {}) {
   const document = new Document(),
     window = new Events(),
     records = new Map(),
@@ -107,6 +107,7 @@ function fixture(t, { verify, append } = {}) {
   window.confirm = () => true;
   const ui = mountAircraftArchiveControls({
     parent: document.body,
+    key,
     window,
     locale: () => locale,
     getSession: () => session,
@@ -317,4 +318,25 @@ test('verification cancellation has no flight mutation and checkpoint clips are 
   f.update();
   assert.ok(f.button('Експортувати вибраний архів'));
   assert.match(f.ui.root.textContent, /Усі архіви дронів без заліку/);
+});
+
+test('archive names identify the real host in English and Ukrainian', async (t) => {
+  for (const [key, en, uk] of [
+    ['academy', 'Academy', 'Академія'],
+    ['world', 'World', 'Світ'],
+    ['arena', 'Advanced practice', 'Розширена практика'],
+  ]) {
+    for (const [language, name] of [
+      ['en', en],
+      ['uk', uk],
+    ]) {
+      const f = fixture(t, { key });
+      f.setLocale(language);
+      f.update();
+      await settle();
+      const record = [...f.records.values()][0];
+      assert.equal(record.host, key);
+      assert.ok(record.name.startsWith(`${name} · `));
+    }
+  }
 });
