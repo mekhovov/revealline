@@ -1,0 +1,62 @@
+{
+  "format": "SoloDarwin239ExecutionSourceV1",
+  "head": "239c574ecddd5bb6d5896e621d9edc53e7f6a313",
+  "tree": "1ac7f17971498d2a8be19085f00a9f732db42798",
+  "run": 39049194885,
+  "conclusion": "failure",
+  "nativeCases": {
+    "leader": "passed",
+    "tree": "passed",
+    "deadline": "failed"
+  },
+  "cocoa": "skipped",
+  "artifact": {
+    "id": 12106841810,
+    "bytes": 13389,
+    "sha256": "776e38758c3c3fdc65e976f88baa01c770355083acfdb4462a6857ca09200c74"
+  },
+  "report": {
+    "path": "solo-owner-v2-preflight/report.json",
+    "bytes": 13621,
+    "sha256": "77961326f3e45f250ea2cfe3af80151649a7e4507e6df349588b16d4da785623"
+  },
+  "scope": "Exact executed Git inputs and retained failed native evidence; does not establish a future owner pass or grant signal authority.",
+  "records": [
+    {
+      "path": ".github/workflows/solo-darwin-owner-preflight-temporary.yml",
+      "blob": "099a626501e562f0b413564e876f51f4b947d58a",
+      "bytes": 24926,
+      "sha256": "10232e04a9f6f7b3399ed983a52f47432782660b22d9fecf6bbfcf67cdfa772f"
+    },
+    {
+      "path": "scripts/test-solo-darwin-owner-preflight.mjs",
+      "blob": "4084b9b4c9c3775d814eb2fb73ec85b497adc0c9",
+      "bytes": 18552,
+      "sha256": "a36c8bd4eb563862ce7aca7e923349b19fc8e747f3548d36b5f0aba50ff3cba8"
+    },
+    {
+      "path": "scripts/solo-darwin-owner-preflight.mjs",
+      "blob": "aea2f6bd59ebd71efeb1db4681d37449c7c89042",
+      "bytes": 12739,
+      "sha256": "041f764b4a944fe2cac0793aa10c64f16847d88c73a74041887a417a7ce70d77"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.mjs",
+      "blob": "70ec20f65f9c4671eedcc13b59d2cee9624b9997",
+      "bytes": 13716,
+      "sha256": "bc3c1976364478f8cfb06776c54edb06701b8a43b0526db2c974e38229209783"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.c",
+      "blob": "48cff29f1e62f91019b4576ec0f288ecbfe4a26d",
+      "bytes": 7955,
+      "sha256": "72ff466c653ddb987a4e5df5df024aabd952cf45d659e7872809412aa996db9f"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "blob": "348f72299a980ab72dae8f2e2d61db4794df0612",
+      "bytes": 63712,
+      "sha256": "ce9a6b04977a4fa1f472b8c8df3cabaab2f7d5b66b15a9e70ad24fc4b71f4a48"
+    }
+  ]
+}

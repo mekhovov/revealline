@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { couchPage } from './helpers/couch-host.mjs';
 import { page as teamPage } from './helpers/coop-host.mjs';
 
@@ -119,7 +143,7 @@ for (const mode of ['Versus', 'Team']) {
     f.control('data-read').focus();
     f.press('Enter');
     assert.deepEqual(hintsAtReveal, [f.control('data-reading-hint').textContent]);
-    assert.equal(f.doc.activeElement, f.region);
+    boundedIdentity(f.doc.activeElement, f.region);
     f.unchanged();
   });
 
@@ -152,8 +176,8 @@ for (const mode of ['Versus', 'Team']) {
       f.control('data-read').click();
       assert.equal(activeHints, 2);
       assert.deepEqual(reveals, []);
-      assert.equal(f.doc.activeElement, retiredFocus);
-      if (interruption === 'Back') assert.equal(retiredFocus, f.opener);
+      boundedIdentity(f.doc.activeElement, retiredFocus);
+      if (interruption === 'Back') boundedIdentity(retiredFocus, f.opener);
       assert.equal(f.control('data-reading-done').disabled, true);
       assert.equal(f.region.hasAttribute('data-controller-reading'), false);
       f.unchanged({ advance: interruption !== 'disposal' });
@@ -163,9 +187,9 @@ for (const mode of ['Versus', 'Team']) {
     const f = await host(t, mode);
     f.open();
     f.press('Tab');
-    assert.equal(f.doc.activeElement, f.control('data-read'));
+    boundedIdentity(f.doc.activeElement, f.control('data-read'));
     f.press('Enter');
-    assert.equal(f.doc.activeElement, f.region);
+    boundedIdentity(f.doc.activeElement, f.region);
     assert.equal(f.region.tabIndex, 0);
     assert.match(f.region.getAttribute('aria-label'), /game data/);
     assert.match(f.region.textContent, /Solo/);
@@ -177,11 +201,11 @@ for (const mode of ['Versus', 'Team']) {
     assert.equal(f.region.scrollTop, 0);
     assert.match(f.control('data-reading-hint').textContent, /Enter, Space or Escape returns/);
     f.press('Escape');
-    assert.equal(f.doc.activeElement, f.control('data-read'));
+    boundedIdentity(f.doc.activeElement, f.control('data-read'));
     assert.equal(f.control('data-reading-done').disabled, true);
     assert.equal(f.control('settings-panel-data').hidden, false);
     f.press('Escape');
-    assert.equal(f.doc.activeElement, f.opener);
+    boundedIdentity(f.doc.activeElement, f.opener);
     f.unchanged();
   });
 
@@ -191,13 +215,13 @@ for (const mode of ['Versus', 'Team']) {
     f.open(false);
     const reach = (target) => {
       for (let i = 0; i < 24 && f.doc.activeElement !== target; i++) f.pulse(13);
-      assert.equal(f.doc.activeElement, target);
+      boundedIdentity(f.doc.activeElement, target);
     };
     reach(f.control('settings-tab-data'));
     f.pulse(0);
     reach(f.control('data-read'));
     f.pulse(0);
-    assert.equal(f.doc.activeElement, f.region);
+    boundedIdentity(f.doc.activeElement, f.region);
     f.pulse(13);
     assert.ok(f.region.scrollTop > 0);
     assert.match(f.control('data-reading-hint').textContent, /South or East returns/);
@@ -207,10 +231,10 @@ for (const mode of ['Versus', 'Team']) {
       'The reading region owns its status instead of duplicating it in a hidden panel.',
     );
     f.pulse(1);
-    assert.equal(f.doc.activeElement, f.control('data-read'));
+    boundedIdentity(f.doc.activeElement, f.control('data-read'));
     assert.equal(f.region.hasAttribute('data-controller-reading'), false);
     f.pulse(1);
-    assert.equal(f.doc.activeElement, f.opener);
+    boundedIdentity(f.doc.activeElement, f.opener);
     f.unchanged();
   });
 
@@ -218,7 +242,7 @@ for (const mode of ['Versus', 'Team']) {
     const f = await host(t, mode);
     f.open();
     f.control('data-read').click();
-    assert.equal(f.doc.activeElement, f.region);
+    boundedIdentity(f.doc.activeElement, f.region);
     const audio = f.control('settings-tab-audio');
     audio.focus();
     audio.click();
@@ -226,14 +250,14 @@ for (const mode of ['Versus', 'Team']) {
     assert.equal(f.control('data-reading-done').disabled, true);
     assert.equal(f.region.hasAttribute('data-controller-reading'), false);
     f.control('data-reading-done').click();
-    assert.equal(f.doc.activeElement, audio);
+    boundedIdentity(f.doc.activeElement, audio);
     f.control('settings-tab-data').click();
     f.control('data-read').click();
     f.back.click();
     assert.equal(f.control('data-reading-done').disabled, true);
     assert.equal(f.region.hasAttribute('data-controller-reading'), false);
     f.control('data-reading-done').click();
-    assert.equal(f.doc.activeElement, f.opener);
+    boundedIdentity(f.doc.activeElement, f.opener);
     f.unchanged();
   });
 
@@ -263,7 +287,7 @@ for (const mode of ['Versus', 'Team']) {
     );
     done.emit('pointerdown', { pointerType: 'touch', pointerId: 3, button: 0 });
     done.click();
-    assert.equal(f.doc.activeElement, entry);
+    boundedIdentity(f.doc.activeElement, entry);
     assert.equal(done.disabled, true);
     f.unchanged();
   });

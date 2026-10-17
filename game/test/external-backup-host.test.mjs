@@ -1,5 +1,6 @@
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 // Actual app/Library/core with finite DOM, locks and IndexedDB. Prepared JSON
 // authority is real; this does not claim native file download or disk recovery.
 import test from 'node:test';
@@ -205,7 +206,7 @@ function direction(p, value) {
 }
 
 async function exportCurrent(p) {
-  p.$('library-button').click();
+  await activateHostAction(p.$('library-button'));
   await p.$('export-backup').onclick();
   assert.match(
     p.$('save-status').textContent,
@@ -215,7 +216,7 @@ async function exportCurrent(p) {
   return JSON.parse(p.$('save-json').value);
 }
 async function importCurrent(p, value) {
-  p.$('library-button').click();
+  await activateHostAction(p.$('library-button'));
   p.$('save-json').value = JSON.stringify(value);
   const pendingImport = p.$('import-save').onclick();
   await acceptGameDataReplacement(p);
@@ -284,7 +285,7 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
       assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
       assert.deepEqual(p.rendered.backdrop.pin, pin);
       assert.equal(p.rendered.paused, true);
-      p.$('library-button').click();
+      await activateHostAction(p.$('library-button'));
       await p.$('undo-backup').onclick();
       assert.match(
         p.$('save-status').textContent,
@@ -311,7 +312,7 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
     'missing original metadata refuses before any target profile or asset write',
     async (t) => {
       const p = await page(t);
-      p.$('library-button').click();
+      await activateHostAction(p.$('library-button'));
       const local = new Map(p.storage.map),
         assets = p.fixture.assets.contents();
       const puts = p.fixture.assets.allPuts.length;
@@ -331,7 +332,7 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
     'native asset transaction refusal keeps the old target and does not report a restore',
     async (t) => {
       const p = await page(t, { media: f.media });
-      p.$('library-button').click();
+      await activateHostAction(p.$('library-button'));
       const local = new Map(p.storage.map),
         assets = p.fixture.assets.contents();
       p.fixture.assets.failAnyPutAt = 1;
@@ -382,7 +383,7 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
         p.fixture.assets.afterAnyCommit = null;
         await deletion;
       });
-      p.$('library-button').click();
+      await activateHostAction(p.$('library-button'));
       p.$('save-json').value = JSON.stringify(backup);
       const pendingImport = p.$('import-save').onclick();
       await acceptGameDataReplacement(p);
@@ -419,7 +420,7 @@ test('closing during descriptor hashing cancels export and a changed flight cann
   await play(p);
   direction(p, 'down');
   ticks(p, 25);
-  p.$('library-button').click();
+  await activateHostAction(p.$('library-button'));
   p.$('save-json').value = 'previous prepared export';
   const before = authoritativeCheckpoint(p.rendered.run);
   const originalISO = Date.prototype.toISOString;

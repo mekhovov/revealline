@@ -1,0 +1,410 @@
+{
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "helperTimeoutMs": 6000000,
+  "evidenceBytes": 268435456,
+  "candidate": {
+    "revision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+    "tree": "6b13627e324f695b6ee8d9f2dee2eeeb7217c332",
+    "run": 39008793814,
+    "artifact": 12092903788,
+    "outer": {
+      "bytes": 1091879339,
+      "sha256": "a61fd756ce362abacf5dd5f329bed1a936db2b888b9f814cf5924a781964e14a"
+    },
+    "inner": {
+      "bytes": 1073755490,
+      "sha256": "52a9f82f48b3e657755f2c5735826b827caa1e866430d30939d05113b1fa67b1"
+    },
+    "manifestSHA256": "b0e56f24e4d49c6c9ee42000f472ca895c883ca02e1063db741e2eddfe428fb7",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "producer": "Exact previously verified normal main8b V2 package; complete archive, readiness, source and CSP verification remains mandatory. No rebuild, fallback or republishing.",
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV2",
+      "sourceRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "sourceTree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+      "run": 38998342742,
+      "artifact": 12088541389,
+      "name": "solo-normal-baseline-8b019919-38998342742-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-baseline-temporary.yml",
+        "run": 38998342742,
+        "attempt": 1,
+        "toolingRevision": "c9e637ad81fadf49caec884155d1bd0c2496c59c",
+        "toolingTree": "4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c"
+      },
+      "outer": {
+        "bytes": 1073805912,
+        "sha256": "63545549d9d087e96dcade7e549369a3e2cc00eaa8ae292c314686d0b0563230"
+      },
+      "inner": {
+        "bytes": 1073243091,
+        "sha256": "8f8808fe79390429308cb4637c66ea34aeb5043947616a14b9cffcacf044dc1e"
+      },
+      "manifestSHA256": "3b448d181f75bf54aa1f2929e30f8b6a3fbc39a8b4eeb58914f5b29a704a85e8",
+      "ready": {
+        "bytes": 1599,
+        "sha256": "22b6a3cfdba87f242daa41309611ba2671dac18bcf6455cd7ebb68cb6b741d88"
+      }
+    }
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "Original full candidate/source/ZIP/CSP plus pinned original normal baseline full readback, bounded40min sharedsetup; no rebuild fallback.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 29360128,
+    "scratch": "Fresh exact common RUNNER_TEMP/sc-sixchars/rNN root and child path/device/inode authority; <=52-byte row path. Profile admission requires matching common scratch-authority receipt in addition to command/raw/plan closure.",
+    "workflowBudgetMinutes": {
+      "preHelper": 39,
+      "helper": 100,
+      "outerHelperStep": 104,
+      "setupRetention": 2,
+      "upload": 10,
+      "stepSum": 155,
+      "wholeJob": 165,
+      "jobReserve": 10
+    },
+    "helperBudgetMinutes": {
+      "artifactPreparation": 40,
+      "twoDriverCommands": 40,
+      "twoPreservationAndRetirementPairs": 12,
+      "modePreparationAndFinalizationRemainder": 8,
+      "sum": 100,
+      "reservedUnusedBaselineCommand": 20,
+      "reservedUnusedBaselinePreservationAndRetirement": 6,
+      "scope": "Original fixed100minute helper bound retained; one candidate command and one profile pair consume a subset, with unused predecessor capacity explicitly reserved, never extra retries or prolonged gameplay."
+    }
+  },
+  "format": "SoloHostedOfflineCandidatePlan.v1",
+  "status": "pinned-for-execution",
+  "cohort": "independent-offline-final-a6",
+  "profileEvidenceBytes": 1082130432,
+  "rowEvidenceBytes": 33554432,
+  "scope": "Prospective independent exact final a6 candidate offline observation after the retained baseline Next failure. Normal8b package admission remains unchanged; no baseline gameplay row, comparison, performance or physical-device qualification.",
+  "rows": [
+    {
+      "id": "offline-candidate-p1",
+      "kind": "offline-persistence",
+      "engine": "chromium",
+      "source": "candidate",
+      "timeoutMs": 1200000,
+      "performanceExclusion": true
+    }
+  ],
+  "offline": {
+    "serverPort": 18791,
+    "observationTimeoutMs": 960000,
+    "downloadTimeoutMs": 300000,
+    "maximumReportBytes": 2097152,
+    "profileMaximumBytes": 536870912,
+    "archiveMaximumBytes": 536870912,
+    "profileMaximumMembers": 20000,
+    "preservationTimeoutMs": 180000,
+    "retirementTimeoutMs": 180000,
+    "driver": {
+      "path": "scripts/observe-solo-offline-persistence.mjs",
+      "bytes": 47307,
+      "sha256": "0c78e72198530bfbc5d5347f93421c273ab9943f0e203fe761e6956eaec982de"
+    },
+    "gameplay": {
+      "format": "SoloOfflinePublicGameplayV1",
+      "diagnosticTimeoutMs": 600000,
+      "playTimeoutMs": 120000,
+      "replayTimeoutMs": 120000,
+      "maximumExports": 2,
+      "maximumExportBytes": 262144
+    },
+    "openingRecipe": {
+      "path": "docs/performance/fixtures/solo-remote-offline/installed-starter.qualification.fixture",
+      "bytes": 5811,
+      "sha256": "21b2d99269a7a21cc1ac7c6e960f17531c5d2cfd1ec7ac4d4b523520b25e0cb5"
+    },
+    "nativeStatePolicy": "owned-cdp-after-navigation-v1",
+    "expectedBrowserVersion": "151.0.7922.34",
+    "failureWitnessPolicy": "failed-public-play-dom-v1"
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1815,
+      "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+    },
+    {
+      "path": "scripts/core-soundtrack-publication.mjs",
+      "bytes": 5789,
+      "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+    },
+    {
+      "path": "scripts/external-distribution.mjs",
+      "bytes": 6651,
+      "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10450,
+      "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+    },
+    {
+      "path": "scripts/observe-solo-offline-persistence.mjs",
+      "bytes": 47307,
+      "sha256": "0c78e72198530bfbc5d5347f93421c273ab9943f0e203fe761e6956eaec982de"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+    },
+    {
+      "path": "scripts/optional-artwork.mjs",
+      "bytes": 4613,
+      "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+    },
+    {
+      "path": "scripts/optional-distribution.mjs",
+      "bytes": 2584,
+      "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+    },
+    {
+      "path": "scripts/optional-installation-observer-helpers.mjs",
+      "bytes": 9585,
+      "sha256": "f9dc958bed7445d284a0d906ab18f55f87ef7779d475963b219a3ac44baccb88"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "scripts/reviewed-soundtrack-batches.mjs",
+      "bytes": 16280,
+      "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 57545,
+      "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/solo-offline-gameplay.mjs",
+      "bytes": 19735,
+      "sha256": "b1fbc7fd643390cd75d8d9e304d693e9b81abc8346f7631bc6f3764fcd771733"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-core.mjs",
+      "bytes": 5930,
+      "sha256": "1e96e592ee289685607515bbe14c8845f2c03dc81191a0772071fd9995ceb3ea"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 15700,
+      "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+    },
+    {
+      "path": "scripts/solo-remote-offline.mjs",
+      "bytes": 31551,
+      "sha256": "05ddfd0c9c475a31b461798029104bc6ba42770c0ce4a9135cbb6cdc9587329b"
+    },
+    {
+      "path": "scripts/soundtrack-archive-admissions.mjs",
+      "bytes": 5614,
+      "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 15378,
+      "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    }
+  ],
+  "acceptance": {
+    "execution": "Exact public pre-close premise, settled observation and clean common process closure; completed-diagnostic is not product success.",
+    "negativeOutcome": "Any observed restart/cache failure remains negative. The independent candidate has its own source, transport, public-play, strict replay, owner closure and profile preservation checks; the prior failed baseline is historical rationale only.",
+    "preservation": "Bounded full type/mode/member hash archive readback and unchanged source rehash, then separate exact-profile retirement; uncertainty stops dependent work.",
+    "failure": "No retry or repair. Every failed/partial/not-run row retained. No aggregate offline qualification pass.",
+    "successOnlyGameplay": "Original600s restart stage unchanged; optional120s public play/export plus2x120s replay stages, no repair/retry/state injection. Never equate completed-diagnostic with gameplay pass.",
+    "nativeState": "Same retained CDP session owns the real state-only correction after both owned navigations; unchanged URL/nativefalse checks, Playwright transportoffline, stoppedserver, serviceworker responses/cache, strict replay and closure remain independently required."
+  },
+  "setupTimeoutMs": 2400000,
+  "bindingScope": {
+    "status": "actual-final-package-metadata-admitted",
+    "sourceRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+    "sourceTree": "6b13627e324f695b6ee8d9f2dee2eeeb7217c332",
+    "performanceQualification": false,
+    "comparison": "not-attempted",
+    "required": "Full actual outer/inner/source/CSP admission, native state plus transport/cache/replay and owner/profile closure remain required in this independent observation.",
+    "runtimeRevision": "32abd322afd8243e4537ce4784e2f78ee45ecbec"
+  },
+  "diagnosticRelease": {
+    "format": "SoloIndependentOfflineCandidateReleaseV1",
+    "status": "reviewed-for-cause-analysis",
+    "candidateRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+    "baselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "firstEightAllCorrectnessPassed": false,
+    "successorQualificationReleased": false,
+    "performanceQualificationReleased": false,
+    "onceOnlyBefore": "a7e0219818842f02399317ca6d2a14bdd506da3d",
+    "nativeStateEvidence": {
+      "run": 39001646012,
+      "sourceRevision": "cce49c81d82b79aefc24898f32eeebc609e569fb",
+      "browserVersion": "151.0.7922.34",
+      "conclusion": "failure",
+      "qualificationEligible": false,
+      "artifact": 12089228265,
+      "outer": {
+        "bytes": 6153,
+        "sha256": "110af2d9831ab58830da6d6e3a644cd9b06aeccbef4bf9460d46cada4e7a8bf1"
+      },
+      "interpretation": "All19 native states observed across3 closed contexts; post-navigation same-session override changes native state tofalse, detachment reversesit. Separate scratch-observer failure remains failed. This evidence does not prove offline transport."
+    },
+    "ownerCorrection": {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 57545,
+      "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7"
+    },
+    "outcomePolicy": "Preserve all prior failures. No automatic retry, first-eight waiver, changed gate, profile repair or aggregate performance qualification.",
+    "cleanupRecheckEvidence": {
+      "run": 39004951685,
+      "sourceRevision": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+      "browserVersion": "151.0.7922.34",
+      "conclusion": "success",
+      "qualificationEligible": false,
+      "artifact": 12090446791,
+      "outer": {
+        "bytes": 6111,
+        "sha256": "b13ffb02a6d361db1ca35ab0083b5952f79b41597a993c8341f447b325413116"
+      },
+      "scope": "Separate native data-page observation and owner cleanup only; no network transport or game credit."
+    },
+    "independentAdmission": {
+      "format": "SoloIndependentOfflineCandidateAdmissionV1",
+      "comparison": "not-attempted",
+      "priorRun": 39008793888,
+      "priorTooling": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+      "priorConclusion": "failure",
+      "priorBaselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "priorCandidateObservation": "not-run",
+      "baselineGameplay": "failed-next-deadline",
+      "baselineOwner": "closed-without-forced-cleanup-or-uncertainty",
+      "baselineReportSHA256": "bb858c82b76ee6699b5a1f4c49caf1c7c642fe6795447f443a8576e4fbd23fd9",
+      "baselineCommandSHA256": "fba4086c34bc205885ce7524130305d3cbd79987388517075c17dbafd3543819",
+      "baselinePreservationSHA256": "d06fece88cf2970d0b5090dd89395c5e78d5ec4b0628ff756635a2711d62d2a6",
+      "performanceQualification": false,
+      "physicalQualification": false
+    }
+  },
+  "createdAt": "2026-10-17T07:01:50.604Z",
+  "packageMetadataProof": {
+    "path": ".cache/solo-followup/remote-39008793814/appearance-retained/members/package-binding.json",
+    "bytes": 7285,
+    "sha256": "0b22f74bf0c08adef7d8a26d0485fa013100cc2cd5df355b71a7363ee48f535b"
+  },
+  "setupSuccessor": {
+    "format": "SoloVerifierClosureSuccessorV1",
+    "priorRun": 39012635518,
+    "priorConclusion": "failure",
+    "priorNativeObservations": 0,
+    "priorManifest": {
+      "path": "docs/performance/solo-remote-offline-candidate-plan.json",
+      "bytes": 11859,
+      "sha256": "071508d3f743b73eab7fcf5e1fe26b33a5a3692f09934da4b2dc09448f4f1605"
+    },
+    "dynamicRoots": [
+      "scripts/soundtrack-distribution.mjs",
+      "scripts/optional-distribution.mjs",
+      "scripts/external-distribution.mjs",
+      "scripts/optional-artwork.mjs"
+    ],
+    "smokeTest": "scripts/test-solo-source-verifier-smoke.mjs",
+    "runtimeChanged": false,
+    "scenarioChanged": false,
+    "gateChanged": false,
+    "automaticRetries": 0,
+    "reason": "Sparse tooling omitted selected source-verifier validators. Original failed admission and not-run row are retained; complete verifier smoke is required before new artifact admission."
+  }
+}

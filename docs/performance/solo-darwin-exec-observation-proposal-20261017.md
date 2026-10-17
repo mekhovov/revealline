@@ -1,0 +1,11 @@
+# Darwin launcher successor observation
+
+The failed [34d95 prerequisite](https://github.com/mekhovov/revealline/actions/runs/39057302520) retained an unknown root xpcproxy process. Its executable path was observed; RSS and owner-tag inspection were unavailable. It remains failed, with process-tree/deadline cases withheld and Cocoa skipped.
+
+The new preflight-only mode observes whether the same PID and private unique lifetime later reports a different kernel executable path with a greater exec version. It runs only after the original case's owned cleanup has finished without survivors or unconfirmed cleanup. It calls the existing pinned, unprivileged read-only inventory at most three times, using one 10-second allowance within the existing 240-second preflight envelope. Each inventory call retains its 3-second bound. The original latch plus at most three scalar snapshots occupy at most 16 KiB. No environment values, argv or service labels are collected.
+
+The observation never changes the original command, assessment, classification or signal authority. Disappearance, PID reuse, incomplete path, exhausted bounds and inconsistent identity remain unresolved. Even a recorded WebKit exec successor is evidence only. The separate workflow has no Cocoa job, positive-admission output or privileged invocation; it retains failed and partial reports. Its sole release edge is a same-repository PR 1544 synchronize event whose prior head is `bab3b2790944c6257f9c1f9b346839996bbefebb`.
+
+The normal preflight entry point remains unchanged. The new explicit `run-exec-observation` entry point is reviewed separately. The five-record immutable Git witness binds the old workflow, preflight, provider, C helper and common owner at the actual failed execution. No historical report or workflow is rewritten.
+
+Complete controls cover unchanged/gone/reused processes, exact lifetime and exec association, unknown detail, browser successors, cleanup uncertainty, malformed inputs, bounded records, nonrenewing/late/backwards clocks and the actual conditional integration hook. Native ownership and service identity remain unobserved until the separately declared hosted execution; a launcher that disappears before the post-cleanup read is not inferred unrelated.

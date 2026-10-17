@@ -1,0 +1,522 @@
+name: Temporary non-browser Darwin ownership preflight
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/solo-darwin-owner-preflight-temporary.yml'
+      - 'scripts/solo-darwin-owner-preflight.mjs'
+      - 'scripts/test-solo-darwin-owner-preflight.mjs'
+      - 'scripts/solo-darwin-process-inventory.*'
+      - 'scripts/test-solo-darwin-process-inventory*.mjs'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: solo-darwin-owner-preflight-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    # One evidence-latch observation; the exact 7c7 process-tree failure remains failed.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '7c7cc2648331870683ac7b76850bbeff859f802e'
+    runs-on: macos-15-intel
+    timeout-minutes: 24
+    outputs:
+      owner-source: ${{ steps.owner-proof.outputs.source }}
+      owner-report-sha256: ${{ steps.owner-proof.outputs.reportSha256 }}
+      owner-report-bytes: ${{ steps.owner-proof.outputs.reportBytes }}
+      owner-status: ${{ steps.owner-proof.outputs.status }}
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/solo-darwin-inventory-diagnostic-temporary.yml
+            /.github/workflows/solo-darwin-owner-preflight-temporary.yml
+            /.github/workflows/solo-native-mp3-backend-temporary.yml
+            /.github/workflows/solo-native-mp3-cocoa-temporary.yml
+            /.github/workflows/solo-native-mp3-control-temporary.yml
+            /authoring/library/licensed-audio/provenance/expansion-downloads.json
+            /docs/performance/fixtures/solo-darwin-inventory/696-v1-source.json
+            /game/audio/reactions/guide-capture-0-en.m4a
+            /game/audio/reactions/pilot.mjs
+            /game/campaign-contexts.mjs
+            /game/campaign-difficulty.mjs
+            /game/content-design/catalogs.mjs
+            /game/content-design/map.mjs
+            /game/content-launch.mjs
+            /game/content.mjs
+            /game/content/soundtrack-catalogue.mjs
+            /game/controller-bindings.mjs
+            /game/controller-boost.mjs
+            /game/coop/bonus-opportunity.mjs
+            /game/coop/combat-patrols.mjs
+            /game/coop/core.mjs
+            /game/coop/expedition-environment.mjs
+            /game/coop/expedition-version.mjs
+            /game/coop/first-connection.mjs
+            /game/coop/foundations.mjs
+            /game/coop/geometry.mjs
+            /game/coop/library.mjs
+            /game/coop/recipes.mjs
+            /game/coop/relay-yard.mjs
+            /game/coop/roamers.mjs
+            /game/coop/running-enemies.mjs
+            /game/coop/terrain.mjs
+            /game/coop/threats.mjs
+            /game/coop/timed-bonuses.mjs
+            /game/core/abilities.mjs
+            /game/core/arcade-actions.mjs
+            /game/core/bonus-opportunity.mjs
+            /game/core/capture-regions.mjs
+            /game/core/capture.mjs
+            /game/core/classic-contour.mjs
+            /game/core/classic-definition.mjs
+            /game/core/classic-motion.mjs
+            /game/core/classic-state.mjs
+            /game/core/classic-step.mjs
+            /game/core/classic-topology.mjs
+            /game/core/combat-definition.mjs
+            /game/core/combat-motion.mjs
+            /game/core/combat-patrols.mjs
+            /game/core/contacts.mjs
+            /game/core/coverage.mjs
+            /game/core/directional-fields.mjs
+            /game/core/encounter.mjs
+            /game/core/enemy-pressure.mjs
+            /game/core/field-course.mjs
+            /game/core/foundations.mjs
+            /game/core/geometry.mjs
+            /game/core/index.mjs
+            /game/core/level.mjs
+            /game/core/line-impact.mjs
+            /game/core/movement.mjs
+            /game/core/registry.mjs
+            /game/core/relay-gates.mjs
+            /game/core/systems.mjs
+            /game/core/timed-bonuses.mjs
+            /game/core/versions.mjs
+            /game/data-json.mjs
+            /game/enemy-catalog.mjs
+            /game/external-chapter-source.mjs
+            /game/external-chapter.mjs
+            /game/first-flight.mjs
+            /game/flight-media-pins.mjs
+            /game/hunt/actor-facing.mjs
+            /game/hunt/pursuit-goals-v2.mjs
+            /game/hunt/pursuit-goals.mjs
+            /game/hunt/pursuit-specialists.mjs
+            /game/hunt/rules.mjs
+            /game/hunt/running-enemy-definition.mjs
+            /game/hunt/running-enemy-placement.mjs
+            /game/i18n/bootstrap.mjs
+            /game/i18n/catalogs.mjs
+            /game/i18n/index.mjs
+            /game/imports.mjs
+            /game/input-presentation.mjs
+            /game/key-bindings.mjs
+            /game/library.mjs
+            /game/managed-media-store.mjs
+            /game/mastery-catalog.mjs
+            /game/mastery-equipment.mjs
+            /game/mastery-records.mjs
+            /game/mastery.mjs
+            /game/media-bundle.mjs
+            /game/media-library.mjs
+            /game/media-presentation.mjs
+            /game/media-still.mjs
+            /game/media-storage-record.mjs
+            /game/mission-library/included-bundled-pack.mjs
+            /game/mp3-inspection.mjs
+            /game/mp3.mjs
+            /game/official-downloads.mjs
+            /game/online-soundtrack-catalogue.mjs
+            /game/online-soundtrack-sources.mjs
+            /game/packs.mjs
+            /game/picture-receipts.mjs
+            /game/platform.mjs
+            /game/presentation-pins.mjs
+            /game/progress.mjs
+            /game/snake/rules.mjs
+            /game/soundtrack-bundle.mjs
+            /game/soundtrack-portable.mjs
+            /game/soundtrack-rights.mjs
+            /game/soundtrack-style-selection.mjs
+            /game/soundtrack-style-taxonomy.mjs
+            /game/soundtrack.mjs
+            /game/story-bindings.mjs
+            /game/story-receipts.mjs
+            /game/story-storage-record.mjs
+            /game/text-face.mjs
+            /game/text-size.mjs
+            /game/touch-controls.mjs
+            /game/ui/actor-recipes.mjs
+            /game/ui/fpv-body-recipes.mjs
+            /game/ui/music.mjs
+            /game/vendor/LZ-STRING-LICENSE.txt
+            /game/vendor/i18next-26.4.2.min.js
+            /game/vendor/lz-string-1.5.0.min.js
+            /game/victory-story.mjs
+            /game/video-poster.mjs
+            /package-lock.json
+            /package.json
+            /publishing/vendor/acorn-8.18.0.mjs
+            /scripts/brand-icons.mjs
+            /scripts/build-entry-writer.mjs
+            /scripts/game-cli.mjs
+            /scripts/localization-audit.mjs
+            /scripts/localization-content.mjs
+            /scripts/localization.mjs
+            /scripts/offline-core-closure.mjs
+            /scripts/pack-indexes.mjs
+            /scripts/prepare-solo-audio-fixtures.mjs
+            /scripts/run-solo-remote-correctness.mjs
+            /scripts/serve-production-preview.mjs
+            /scripts/solo-darwin-owner-preflight.mjs
+            /scripts/solo-darwin-process-inventory.c
+            /scripts/solo-darwin-process-inventory.mjs
+            /scripts/solo-native-mp3-control.mjs
+            /scripts/solo-qualification-browser-context.mjs
+            /scripts/solo-remote-archive.py
+            /scripts/test-solo-darwin-owner-preflight.mjs
+            /scripts/test-solo-darwin-process-inventory-sdk.mjs
+            /scripts/test-solo-darwin-process-inventory.mjs
+            /scripts/test-solo-native-mp3-control.mjs
+            /scripts/test-solo-qualification-browser-context.mjs
+            /scripts/test-solo-remote-correctness.mjs
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 1
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Install the pinned owner tooling dependencies
+        timeout-minutes: 6
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-owner-v2-dependencies.log"
+      - name: Compile and retain the exact V3 read-only process inventory
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          owner_dir=$(mktemp -d /tmp/solo-process-owner-v2.XXXXXX)
+          owner_dir=$(cd "$owner_dir" && pwd -P)
+          node scripts/solo-darwin-process-inventory.mjs build "$owner_dir" "$RUNNER_TEMP/solo-owner-v2-build.json"
+      - name: Run pure and mocked SDK contracts before any native owned family
+        timeout-minutes: 3
+        env:
+          SOLO_DARWIN_FAULT_EVIDENCE: ${{ runner.temp }}/solo-owner-v2-sdk-observations.json
+        run: |
+          set -euo pipefail
+          node --test --test-concurrency=2 scripts/test-solo-darwin-process-inventory.mjs scripts/test-solo-darwin-process-inventory-sdk.mjs scripts/test-solo-darwin-owner-preflight.mjs > "$RUNNER_TEMP/solo-owner-v2-contracts.tap" 2>&1
+      - name: Observe the three declared non-browser process cases once
+        id: owner-proof
+        timeout-minutes: 6
+        run: |
+          set -euo pipefail
+          node scripts/solo-darwin-owner-preflight.mjs run "$RUNNER_TEMP/solo-owner-v2-preflight"
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { readFile, appendFile, lstat } from 'node:fs/promises';
+          import { createHash } from 'node:crypto';
+          import { assessDarwinOwnerCase } from './scripts/solo-darwin-owner-preflight.mjs';
+          const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+          // BEGIN OWNER HANDOFF ADMISSION
+          function admitOwnerHandoff(report, source, sources) {
+            assert.match(source, /^[a-f0-9]{40}$/);
+            assert.equal(report.format, 'SoloDarwinNonBrowserOwnerPreflightV1');
+            assert.equal(report.sourceRevision, source);
+            assert.equal(report.status, 'passed');
+            assert.equal(report.platform, 'darwin');
+            assert.equal(report.architecture, 'x64');
+            assert(!report.failure);
+            assert.equal(report.ownershipQualification, false);
+            assert.equal(report.browserObservations, 0);
+            assert.equal(report.mediaObservations, 0);
+            assert.equal(report.performanceQualification, false);
+            assert.deepEqual(report.sources, sources);
+            assert.deepEqual(report.cases.map(row => row.id), ['leader', 'tree', 'deadline']);
+            for (const row of report.cases) {
+              assert(!row.failure);
+              const assessed = assessDarwinOwnerCase(row.id, row.command, row.observations, source);
+              assert.deepEqual(row.assessment, assessed);
+              assert.equal(row.status, row.id === 'deadline' ? 'expected-negative-observed' : 'passed');
+              assert.equal(assessed.status, row.status);
+            }
+            return true;
+          }
+          // END OWNER HANDOFF ADMISSION
+          const source = process.env.SOLO_TOOLING_REVISION;
+          const reportPath = process.env.RUNNER_TEMP + '/solo-owner-v2-preflight/report.json';
+          const before = await lstat(reportPath);
+          assert(before.isFile() && !before.isSymbolicLink() && before.size <= 262144);
+          const bytes = await readFile(reportPath), after = await lstat(reportPath);
+          assert(bytes.length === before.size && after.ino === before.ino && after.dev === before.dev && after.size === before.size && after.mtimeMs === before.mtimeMs);
+          const sources = [];
+          for (const path of ['scripts/solo-darwin-owner-preflight.mjs', 'scripts/solo-darwin-process-inventory.mjs', 'scripts/solo-darwin-process-inventory.c', 'scripts/run-solo-remote-correctness.mjs']) {
+            const stat = await lstat(path);
+            assert(stat.isFile() && !stat.isSymbolicLink() && stat.size <= 262144);
+            const data = await readFile(path);
+            assert.equal(data.length, stat.size);
+            sources.push({ path, bytes: data.length, sha256: hash(data) });
+          }
+          admitOwnerHandoff(JSON.parse(bytes), source, sources);
+          await appendFile(process.env.GITHUB_OUTPUT, `status=passed\nsource=${source}\nreportSha256=${hash(bytes)}\nreportBytes=${bytes.length}\n`);
+          NODE
+      - name: Retain complete, failed, partial and withheld ownership results
+        if: always()
+        timeout-minutes: 2
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-darwin-owner-v2-preflight-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-owner-v2-preflight
+            ${{ runner.temp }}/solo-owner-v2-build.json
+            ${{ runner.temp }}/solo-owner-v2-contracts.tap
+            ${{ runner.temp }}/solo-owner-v2-dependencies.log
+            ${{ runner.temp }}/solo-owner-v2-sdk-observations.json
+          if-no-files-found: warn
+          retention-days: 14
+
+  cocoa:
+    needs: preflight
+    # Reviewed dependent observation; no execution unless the exact preflight passes.
+    if: needs.preflight.result == 'success' && needs.preflight.outputs.owner-status == 'passed' && needs.preflight.outputs.owner-source == github.event.pull_request.head.sha
+    runs-on: macos-15-intel
+    timeout-minutes: 28
+    env:
+      PRIOR_OWNER_SOURCE: ${{ needs.preflight.outputs.owner-source }}
+      PRIOR_OWNER_REPORT_SHA256: ${{ needs.preflight.outputs.owner-report-sha256 }}
+      PRIOR_OWNER_REPORT_BYTES: ${{ needs.preflight.outputs.owner-report-bytes }}
+      PRIOR_OWNER_STATUS: ${{ needs.preflight.outputs.owner-status }}
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+          # Exact source/test/data closure; this pinned action uses blob:none for sparse fetch.
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/solo-darwin-inventory-diagnostic-temporary.yml
+            /docs/performance/fixtures/solo-darwin-inventory/696-v1-source.json
+            /.github/workflows/solo-native-mp3-backend-temporary.yml
+            /.github/workflows/solo-native-mp3-cocoa-temporary.yml
+            /.github/workflows/solo-native-mp3-control-temporary.yml
+            /authoring/library/licensed-audio/provenance/expansion-downloads.json
+            /game/audio/reactions/guide-capture-0-en.m4a
+            /game/audio/reactions/pilot.mjs
+            /game/campaign-contexts.mjs
+            /game/campaign-difficulty.mjs
+            /game/content-design/catalogs.mjs
+            /game/content-design/map.mjs
+            /game/content-launch.mjs
+            /game/content.mjs
+            /game/content/soundtrack-catalogue.mjs
+            /game/controller-bindings.mjs
+            /game/controller-boost.mjs
+            /game/coop/bonus-opportunity.mjs
+            /game/coop/combat-patrols.mjs
+            /game/coop/core.mjs
+            /game/coop/expedition-environment.mjs
+            /game/coop/expedition-version.mjs
+            /game/coop/first-connection.mjs
+            /game/coop/foundations.mjs
+            /game/coop/geometry.mjs
+            /game/coop/library.mjs
+            /game/coop/recipes.mjs
+            /game/coop/relay-yard.mjs
+            /game/coop/roamers.mjs
+            /game/coop/running-enemies.mjs
+            /game/coop/terrain.mjs
+            /game/coop/threats.mjs
+            /game/coop/timed-bonuses.mjs
+            /game/core/abilities.mjs
+            /game/core/arcade-actions.mjs
+            /game/core/bonus-opportunity.mjs
+            /game/core/capture-regions.mjs
+            /game/core/capture.mjs
+            /game/core/classic-contour.mjs
+            /game/core/classic-definition.mjs
+            /game/core/classic-motion.mjs
+            /game/core/classic-state.mjs
+            /game/core/classic-step.mjs
+            /game/core/classic-topology.mjs
+            /game/core/combat-definition.mjs
+            /game/core/combat-motion.mjs
+            /game/core/combat-patrols.mjs
+            /game/core/contacts.mjs
+            /game/core/coverage.mjs
+            /game/core/directional-fields.mjs
+            /game/core/encounter.mjs
+            /game/core/enemy-pressure.mjs
+            /game/core/field-course.mjs
+            /game/core/foundations.mjs
+            /game/core/geometry.mjs
+            /game/core/index.mjs
+            /game/core/level.mjs
+            /game/core/line-impact.mjs
+            /game/core/movement.mjs
+            /game/core/registry.mjs
+            /game/core/relay-gates.mjs
+            /game/core/systems.mjs
+            /game/core/timed-bonuses.mjs
+            /game/core/versions.mjs
+            /game/data-json.mjs
+            /game/enemy-catalog.mjs
+            /game/external-chapter-source.mjs
+            /game/external-chapter.mjs
+            /game/first-flight.mjs
+            /game/flight-media-pins.mjs
+            /game/hunt/actor-facing.mjs
+            /game/hunt/pursuit-goals-v2.mjs
+            /game/hunt/pursuit-goals.mjs
+            /game/hunt/pursuit-specialists.mjs
+            /game/hunt/rules.mjs
+            /game/hunt/running-enemy-definition.mjs
+            /game/hunt/running-enemy-placement.mjs
+            /game/i18n/bootstrap.mjs
+            /game/i18n/catalogs.mjs
+            /game/i18n/index.mjs
+            /game/imports.mjs
+            /game/input-presentation.mjs
+            /game/key-bindings.mjs
+            /game/library.mjs
+            /game/managed-media-store.mjs
+            /game/mastery-catalog.mjs
+            /game/mastery-equipment.mjs
+            /game/mastery-records.mjs
+            /game/mastery.mjs
+            /game/media-bundle.mjs
+            /game/media-library.mjs
+            /game/media-presentation.mjs
+            /game/media-still.mjs
+            /game/media-storage-record.mjs
+            /game/mission-library/included-bundled-pack.mjs
+            /game/mp3-inspection.mjs
+            /game/mp3.mjs
+            /game/official-downloads.mjs
+            /game/online-soundtrack-catalogue.mjs
+            /game/online-soundtrack-sources.mjs
+            /game/packs.mjs
+            /game/picture-receipts.mjs
+            /game/platform.mjs
+            /game/presentation-pins.mjs
+            /game/progress.mjs
+            /game/snake/rules.mjs
+            /game/soundtrack-bundle.mjs
+            /game/soundtrack-portable.mjs
+            /game/soundtrack-rights.mjs
+            /game/soundtrack-style-selection.mjs
+            /game/soundtrack-style-taxonomy.mjs
+            /game/soundtrack.mjs
+            /game/story-bindings.mjs
+            /game/story-receipts.mjs
+            /game/story-storage-record.mjs
+            /game/text-face.mjs
+            /game/text-size.mjs
+            /game/touch-controls.mjs
+            /game/ui/actor-recipes.mjs
+            /game/ui/fpv-body-recipes.mjs
+            /game/ui/music.mjs
+            /game/vendor/LZ-STRING-LICENSE.txt
+            /game/vendor/i18next-26.4.2.min.js
+            /game/vendor/lz-string-1.5.0.min.js
+            /game/victory-story.mjs
+            /game/video-poster.mjs
+            /package-lock.json
+            /package.json
+            /publishing/vendor/acorn-8.18.0.mjs
+            /scripts/brand-icons.mjs
+            /scripts/build-entry-writer.mjs
+            /scripts/game-cli.mjs
+            /scripts/localization-audit.mjs
+            /scripts/localization-content.mjs
+            /scripts/localization.mjs
+            /scripts/offline-core-closure.mjs
+            /scripts/pack-indexes.mjs
+            /scripts/prepare-solo-audio-fixtures.mjs
+            /scripts/run-solo-remote-correctness.mjs
+            /scripts/serve-production-preview.mjs
+            /scripts/solo-darwin-process-inventory.c
+            /scripts/solo-darwin-process-inventory.mjs
+            /scripts/solo-native-mp3-control.mjs
+            /scripts/solo-qualification-browser-context.mjs
+            /scripts/solo-remote-archive.py
+            /scripts/test-solo-darwin-process-inventory.mjs
+            /scripts/test-solo-native-mp3-control.mjs
+            /scripts/test-solo-qualification-browser-context.mjs
+            /scripts/test-solo-remote-correctness.mjs
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Retain the exact successful prerequisite identity before native setup
+        timeout-minutes: 1
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { writeFile } from 'node:fs/promises';
+          const env = process.env;
+          assert.equal(env.PRIOR_OWNER_STATUS, 'passed');
+          assert.equal(env.PRIOR_OWNER_SOURCE, env.SOLO_TOOLING_REVISION);
+          assert.match(env.PRIOR_OWNER_SOURCE, /^[a-f0-9]{40}$/);
+          assert.match(env.PRIOR_OWNER_REPORT_SHA256, /^[a-f0-9]{64}$/);
+          assert.match(env.PRIOR_OWNER_REPORT_BYTES, /^[1-9][0-9]*$/);
+          assert(Number(env.PRIOR_OWNER_REPORT_BYTES) <= 262144);
+          assert.match(env.GITHUB_RUN_ID, /^[1-9][0-9]*$/);
+          assert.match(env.GITHUB_RUN_ATTEMPT, /^[1-9][0-9]*$/);
+          await writeFile(env.RUNNER_TEMP + '/solo-native-mp3-prerequisite.json', JSON.stringify({
+            format: 'SoloCocoaPrerequisiteJobReceiptV1',
+            workflowRun: env.GITHUB_RUN_ID, attempt: env.GITHUB_RUN_ATTEMPT,
+            sourceRevision: env.PRIOR_OWNER_SOURCE,
+            report: {bytes: Number(env.PRIOR_OWNER_REPORT_BYTES), sha256: env.PRIOR_OWNER_REPORT_SHA256},
+            prerequisiteJob: 'preflight', status: 'passed-declared-non-browser-cases',
+            scope: 'Same-workflow prior-host case proof only; this Cocoa host still requires its own inventory and blank-browser owner gate.',
+          }, null, 2) + '\n', {flag: 'wx'});
+          NODE
+      - name: Compile the exact read-only SDK inventory and pin its owned binary
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          owner_dir=$(mktemp -d /tmp/solo-process-owner.XXXXXX)
+          owner_dir=$(cd "$owner_dir" && pwd -P)
+          node scripts/solo-darwin-process-inventory.mjs build "$owner_dir" "$RUNNER_TEMP/solo-native-mp3-owner-build.json"
+      - name: Verify native inventory and existing process/media ownership contracts
+        timeout-minutes: 2
+        env:
+          SOLO_RUN_DARWIN_OWNER_TESTS: '1'
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          node --test --test-concurrency=2 scripts/test-solo-darwin-process-inventory.mjs scripts/test-solo-native-mp3-control.mjs scripts/test-solo-qualification-browser-context.mjs scripts/test-solo-remote-correctness.mjs
+      - name: Install exact Cocoa WebKit without changing the declared browser version
+        timeout-minutes: 5
+        run: |
+          npm install --prefix "$RUNNER_TEMP/solo-native-mp3-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1
+          echo "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-native-mp3-tools/node_modules/playwright/index.mjs" >> "$GITHUB_ENV"
+          echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-native-mp3-browsers" >> "$GITHUB_ENV"
+          PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/solo-native-mp3-browsers" node "$RUNNER_TEMP/solo-native-mp3-tools/node_modules/playwright/cli.js" install webkit
+      - name: Require clean blank-context ownership then observe the original Bossa Blob
+        timeout-minutes: 12
+        run: node scripts/solo-native-mp3-control.mjs run-cocoa "$RUNNER_TEMP/solo-native-mp3-evidence"
+      - name: Retain all original values, failures and process/context closure receipts
+        if: always()
+        timeout-minutes: 1
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-native-mp3-cocoa-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-native-mp3-evidence
+            ${{ runner.temp }}/solo-native-mp3-owner-build.json
+            ${{ runner.temp }}/solo-native-mp3-prerequisite.json
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import test from 'node:test';
+import { createMediaPreparation } from '../ui/media-preparation.mjs';
 import {
   createOnlineSoundtrackSourceManager,
   DEFAULT_ONLINE_SOUNDTRACK_SOURCES,
@@ -617,4 +618,137 @@ test('same licence with different attribution keeps streaming credits but cannot
   assert.equal(await h.player.playRemotePlaylist(state.tracks), true);
   assert.deepEqual(h.player.snapshot().track.sourceCredits, track.sourceCredits);
   assert.equal(track.sourceCredits[1].credit, 'Additional contributor attribution');
+});
+
+test('late catalogue adoption waits for a safe phase without owning a fetch slot or invalidating active authority', async (t) => {
+  const preparation = createMediaPreparation({ fetches: 1 });
+  t.after(() => preparation.close());
+  let release,
+    calls = 0;
+  const feed = manager(t, {
+    preparation,
+    fetch: async (url) =>
+      ++calls === 1
+        ? response(url)
+        : new Promise((resolve) => {
+            release = () => resolve(response(url, catalogue(url, ['b'])));
+          }),
+  });
+  const original = (await feed.refresh()).tracks[0];
+  const phases = [];
+  feed.subscribe(() => phases.push(preparation.snapshot().phase));
+  const pending = feed.refresh();
+  await settleUntil(() => release);
+  const before = feed.snapshot(),
+    notifications = phases.length;
+  preparation.setPhase('playing');
+  release();
+  await settleUntil(
+    () => preparation.snapshot().queued === 1 && preparation.snapshot().active.fetch === 0,
+  );
+  assert.equal(feed.snapshot(), before, 'Snapshot reads do not rebuild track unions while playing');
+  assert.equal(isResolvedOnlineSoundtrackTrack(original), true);
+  assert.equal(phases.length, notifications);
+  assert.equal(await preparation.run('fetch', () => 'next music may load'), 'next music may load');
+  preparation.setPhase('paused');
+  const updated = await pending;
+  assert.equal(updated.tracks[0].sha256, 'b'.padStart(64, '0'));
+  assert.equal(isResolvedOnlineSoundtrackTrack(original), false);
+  assert.ok(phases.every((phase) => phase !== 'playing'));
+});
+
+test('cancelled late catalogue preserves accepted authority and removed sources cannot republish', async (t) => {
+  const preparation = createMediaPreparation();
+  t.after(() => preparation.close());
+  let release,
+    calls = 0;
+  const feed = manager(t, {
+    preparation,
+    fetch: async (url) =>
+      ++calls === 1
+        ? response(url)
+        : new Promise((resolve) => {
+            release = () => resolve(response(url, catalogue(url, ['b'])));
+          }),
+  });
+  const original = (await feed.refresh()).tracks[0],
+    controller = new AbortController();
+  const pending = feed.refresh({ signal: controller.signal });
+  await settleUntil(() => release);
+  preparation.setPhase('playing');
+  release();
+  await settleUntil(
+    () => preparation.snapshot().queued > 0 && preparation.snapshot().active.fetch === 0,
+  );
+  controller.abort();
+  let settled = false;
+  pending.then(() => {
+    settled = true;
+  });
+  await settleUntil(() => settled);
+  assert.equal(isResolvedOnlineSoundtrackTrack(original), true);
+  feed.setSources([{ url: main, enabled: false }]);
+  assert.equal(
+    isResolvedOnlineSoundtrackTrack(original),
+    false,
+    'Explicit source revocation remains immediate',
+  );
+  preparation.setPhase('paused');
+  await pending;
+  await settleUntil(() => preparation.snapshot().queued === 0);
+  assert.deepEqual(feed.snapshot().tracks, []);
+  assert.equal(feed.snapshot().sources[0].enabled, false);
+});
+
+test('saved online styles reuse validated catalogue during gameplay without waiting for a fresh lookup', async (t) => {
+  const preparation = createMediaPreparation();
+  t.after(() => preparation.close());
+  let calls = 0;
+  const feed = manager(t, {
+    preparation,
+    fetch: async (url) => {
+      calls++;
+      return response(url);
+    },
+  });
+  const accepted = await feed.refresh(),
+    h = player(t, feed);
+  h.player.setLibrary(upgradeSoundtrackLibrary(emptySoundtrackLibrary()), {
+    publicStyles: ['synth'],
+  });
+  preparation.setPhase('playing');
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.player.snapshot().track.id, accepted.tracks[0].id);
+  assert.equal(calls, 1);
+  assert.equal(preparation.snapshot().queued, 0);
+});
+
+test('catalogue network failure defers revocation and listeners until a safe phase', async (t) => {
+  const preparation = createMediaPreparation();
+  t.after(() => preparation.close());
+  let fail,
+    calls = 0;
+  const feed = manager(t, {
+    preparation,
+    fetch: async (url) =>
+      ++calls === 1
+        ? response(url)
+        : new Promise((_resolve, reject) => {
+            fail = reject;
+          }),
+  });
+  const accepted = (await feed.refresh()).tracks[0];
+  const pending = feed.refresh();
+  await settleUntil(() => fail);
+  preparation.setPhase('playing');
+  fail(new Error('Offline'));
+  await settleUntil(
+    () => preparation.snapshot().queued > 0 && preparation.snapshot().active.fetch === 0,
+  );
+  assert.equal(isResolvedOnlineSoundtrackTrack(accepted), true);
+  preparation.setPhase('paused');
+  const failed = await pending;
+  assert.equal(failed.sources[0].status, 'error');
+  assert.equal(isResolvedOnlineSoundtrackTrack(accepted), false);
+  assert.deepEqual(failed.tracks, []);
 });

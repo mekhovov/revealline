@@ -7,12 +7,23 @@ import {
   verifyIndexedInstalledPack,
 } from '../mission-library/pack-identity.mjs';
 import { customLibrarySources } from '../mission-library/custom-source.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 
 const readJSON = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const source = await readJSON('../content/packs/night-shift.json');
 const index = await readJSON('../content/mission-library-index.json');
 const row = index.missions.find((item) => item.packId === source.id);
-const ready = async (value) => (await preparePack(value)).pack;
+const ready = async (value) =>
+  (
+    await preparePack(value, {
+      decodeImage: async (dataUrl) => {
+        const image = new RasterImage();
+        image.src = dataUrl;
+        await image.decode();
+        return image;
+      },
+    })
+  ).pack;
 
 test('indexed identity verifies the complete prepared pack with no network or decoding', async () => {
   const pack = await ready(source);
@@ -41,6 +52,24 @@ test('same ID/version/campaign does not disguise a presentation-only Custom modi
   );
   assert.equal(custom.length, 1);
   assert.equal(custom[0].editionId, (await preparedPackIdentity(pack)).sha256);
+});
+
+test('retired optional identity verification stops after hashing before cloning artwork', async (t) => {
+  const pack = await ready(source);
+  await preparedPackIdentity(pack);
+  let current = true,
+    clones = 0;
+  const clone = globalThis.structuredClone;
+  t.mock.method(globalThis, 'structuredClone', (...args) => {
+    clones++;
+    return clone(...args);
+  });
+  const verification = verifyIndexedInstalledPack(pack, row, { isCurrent: () => current });
+  current = false;
+  assert.equal(await verification, false);
+  assert.equal(clones, 0, 'A late identity result must not copy the prepared artwork.');
+  assert.equal(await verifyIndexedInstalledPack(pack, row), true);
+  assert.ok(clones > 0, 'Ordinary verification still resolves and checks the exact campaign.');
 });
 
 test('identity includes author content and rejects wrong metadata even if pack bytes match', async () => {

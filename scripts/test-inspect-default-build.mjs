@@ -121,6 +121,8 @@ async function committedInspectorFixture(t) {
     'game/mission-library/included-bundled-pack.mjs',
     'publishing/edition-admission.mjs',
     'publishing/edition-zip.mjs',
+    'publishing/vendor/acorn-8.18.0.mjs',
+    'publishing/vendor/acorn-LICENSE.txt',
     'game/data-json.mjs',
     'game/presentation/theme-system.mjs',
     'game/content-launch.mjs',

@@ -20,6 +20,10 @@ test('an edition uses its explicit empty example catalogue without fetching omit
     },
   });
   const examples = page.$('builtin-packs');
+  assert.equal(examples.children.length, 0);
+  page.$('shell-workshop').click();
+  page.$('shell-library').click();
+  page.doc.querySelector('[data-library-panel="packs"]').click();
   await settle(() => ['ready', 'error'].includes(examples.children[0]?.dataset.state));
   assert.equal(page.doc.body.dataset.editionId, 'sample-public');
   assert.equal(requested.includes('/game/content/packs/index.json'), false);
@@ -43,6 +47,10 @@ test('the default Library still fetches examples and installs the selected pack 
     },
   });
   const examples = page.$('builtin-packs');
+  assert.equal(examples.children.length, 0);
+  page.$('shell-workshop').click();
+  page.$('shell-library').click();
+  page.doc.querySelector('[data-library-panel="packs"]').click();
   await settle(() => examples.querySelectorAll('button').length === 1);
   assert.equal(requested.filter((url) => url === 'content/packs/index.json').length, 1);
   assert.equal(examples.children[0].dataset.state, 'ready');

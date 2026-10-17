@@ -2,7 +2,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachDemoClock } from '../ui/demo-clock.mjs';
 
-function harness({ hidden = false, frames = true, messages = true, advance, state } = {}) {
+function harness({
+  hidden = false,
+  frames = true,
+  messages = true,
+  advance,
+  state,
+  observeFrame,
+  frameBoundary,
+  frameOwner,
+  costs = {},
+} = {}) {
   const doc = new EventTarget();
   doc.hidden = hidden;
   doc.hasFocus = () => false;
@@ -39,12 +49,22 @@ function harness({ hidden = false, frames = true, messages = true, advance, stat
     clearTimer: (id) => tasks.delete(id),
     MessageChannelClass: messages ? Channel : undefined,
     getPlaybackState: () => playback,
+    observeFrame,
+    frameBoundary,
+    getFrameOwner: frameOwner ?? (() => playback),
     advance: (seconds, meta) => {
       advances.push({ seconds, ...meta });
       advance?.(seconds, meta, playback);
+      time += costs.advance ?? 0;
     },
-    paint: (seconds) => paints.push(seconds),
-    updateAudio: () => audio++,
+    paint: (seconds) => {
+      paints.push(seconds);
+      time += costs.paint ?? 0;
+    },
+    updateAudio: () => {
+      audio++;
+      time += costs.audio ?? 0;
+    },
   });
   return {
     clock,
@@ -409,4 +429,95 @@ test('two accelerated hours rotate hidden scenes across focus, pause and freeze 
   h.clock.destroy();
   assert.equal(h.tasks.size, 0);
   assert.equal(h.closedPorts, 2);
+});
+
+test('quality samples only ordinary native frame work without changing admitted simulation', () => {
+  const samples = [];
+  const h = harness({
+    observeFrame: (...args) => samples.push(args),
+    costs: { audio: 2, advance: 3, paint: 7 },
+  });
+  h.doc.hasFocus = () => true;
+  h.clock.start();
+  h.wake(16, 'frame');
+  h.wake(16, 'frame');
+  assert.deepEqual(
+    samples,
+    [[44, 28, 12]],
+    'Audio, advance and paint work share one native callback sample.',
+  );
+  assert.deepEqual(h.advances, [
+    { seconds: 0.016, fresh: true },
+    { seconds: 0.028, fresh: true },
+  ]);
+  h.clock.destroy();
+});
+
+test('quality sampling excludes fallback, catch-up and hidden or unfocused transport', () => {
+  const samples = [];
+  const h = harness({ observeFrame: (...args) => samples.push(args) });
+  h.doc.hasFocus = () => true;
+  h.clock.start();
+  h.wake(16, 'frame');
+  h.wake(16, 'frame');
+  assert.equal(samples.length, 1);
+  h.wake(1000, 'timer');
+  h.drain();
+  assert.equal(
+    samples.length,
+    1,
+    'Timer recovery and its MessageChannel debt are not native frame costs.',
+  );
+  const tickTime = h.advances.reduce((sum, value) => sum + value.seconds, 0);
+  assert.equal(tickTime, 1.032, 'Sampling cannot remove background-safe catch-up transport.');
+  h.doc.hasFocus = () => false;
+  h.wake(16, 'frame');
+  h.wake(16, 'frame');
+  assert.equal(samples.length, 1);
+  h.doc.hidden = true;
+  h.doc.dispatchEvent(new Event('visibilitychange'));
+  h.wake(50, 'timer');
+  assert.equal(samples.length, 1);
+  assert.equal(h.advances.at(-1).seconds, 0.05);
+  h.doc.hidden = false;
+  h.doc.hasFocus = () => true;
+  h.doc.dispatchEvent(new Event('visibilitychange'));
+  h.wake(16, 'frame');
+  assert.equal(samples.length, 1, 'Return begins a fresh ordinary-frame interval.');
+  h.wake(16, 'frame');
+  assert.equal(samples.length, 2);
+  h.clock.destroy();
+});
+
+test('quality observation cannot cross owner, pause or generation boundaries', () => {
+  const samples = [];
+  let owner = {},
+    replaced = false;
+  const h = harness({
+    observeFrame: (...args) => samples.push(args),
+    frameOwner: () => owner,
+    advance: () => {
+      if (replaced) owner = {};
+    },
+  });
+  h.doc.hasFocus = () => true;
+  h.clock.start();
+  h.wake(16, 'frame');
+  h.wake(16, 'frame');
+  assert.equal(samples.length, 1);
+  replaced = true;
+  h.wake(16, 'frame');
+  assert.equal(samples.length, 1, 'A transition inside advance has no old-owner cost sample.');
+  replaced = false;
+  h.playback.phase = 'paused';
+  h.clock.reset();
+  h.wake(16, 'frame');
+  h.wake(16, 'frame');
+  assert.equal(samples.length, 1);
+  h.playback.phase = 'playing';
+  h.clock.reset();
+  h.wake(16, 'frame');
+  h.wake(16, 'frame');
+  assert.equal(samples.length, 2);
+  h.clock.destroy();
 });

@@ -202,10 +202,12 @@
   }
   .meter i {
     display: block;
-    width: 0;
+    width: 100%;
     height: 100%;
     background: #507d83;
-    transition: width 0.25s;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
   }
   .meter b {
     position: absolute;
@@ -567,6 +569,10 @@
     color: #d8e9df;
     font: 10px/1.4 var(--fk-font-mono, monospace);
     letter-spacing: 0.35px;
+  }
+  .game-overlay[data-kind='won'] .result-auto-next[hidden][data-reserve-space='true'] {
+    display: block !important;
+    visibility: hidden;
   }
   .landing-version {
     margin: 10px 0 0;

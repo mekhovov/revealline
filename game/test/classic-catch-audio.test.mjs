@@ -43,6 +43,18 @@ const cueBytes = new Uint8Array(
   await readFile(new URL('../audio/effects/pickup.wav', import.meta.url)),
 );
 const cueHash = await hashPresentationBytes(cueBytes);
+function decodedFixture(bytes, sampleRate) {
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength),
+    frames = view.getUint32(40, true) / view.getUint16(32, true),
+    length = Math.ceil((frames * sampleRate) / view.getUint32(24, true));
+  return {
+    duration: length / sampleRate,
+    length,
+    numberOfChannels: view.getUint16(22, true),
+    sampleRate,
+    getChannelData: () => new Float32Array(length).fill(0.03),
+  };
+}
 let releasePromise;
 function release() {
   releasePromise ??= (async () => {
@@ -79,7 +91,7 @@ async function audio(t, { custom = false, delayed = false } = {}) {
     connect() {},
     disconnect() {},
   });
-  const decoded = { duration: 0.2, length: 1600, numberOfChannels: 1, identity: 'studio-pickup' };
+  const decoded = { ...decodedFixture(cueBytes, h.context.sampleRate), identity: 'studio-pickup' };
   let finishDecode,
     decodes = 0;
   h.context.decodeAudioData = async () => {
@@ -325,11 +337,7 @@ test('compiled destruction recordings play through the board host and ship in Co
   t.mock.method(globalThis, 'fetch', async () => new Response(null, { status: 404 }));
   const h = audioHarness();
   h.context.decodeAudioData = async (bytes) => ({
-    duration: 0.4,
-    length: 3200,
-    numberOfChannels: 1,
-    sampleRate: 8000,
-    getChannelData: () => new Float32Array(3200).fill(0.03),
+    ...decodedFixture(new Uint8Array(bytes), h.context.sampleRate),
     identity: await hashPresentationBytes(new Uint8Array(bytes)),
   });
   h.soundscape.setPublishedAudio((slot, options) => host.readAudio(slot, options));

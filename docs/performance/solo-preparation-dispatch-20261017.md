@@ -1,0 +1,22 @@
+# Preparation diagnostic dispatch correction
+
+The two-engine preparation run [39044567357](https://github.com/mekhovov/revealline/actions/runs/39044567357), dispatched by tooling `7c7cc2648331870683ac7b76850bbeff859f802e` against the verified e1cc package, stopped before any native observation. Both jobs passed remote outer archive, inner payload and source admission. Each failed its first row at the preparation adapter; the remaining five rows were not run. No geometry, Cancel, media, replay, journal or timing result was produced, and the preview/CSP stage was not reached.
+
+The adapter compared a live report row with its original static declaration. The common runner had added its existing `storage`, `startedAt` and `status` metadata, so the whole-object assertion rejected the correct row. The correction retains exact checks for every declared field, permits only those three report metadata names, and chooses the phase from the canonical declaration. Native command assembly reuses that admitted plan after the adapter adds its own served-source metadata. The application, package, twelve recipes, deadlines, owner rules and numerical gates are unchanged.
+
+Both failed artifacts remain retained as verified ZIPs, with every member CRC and SHA read back and no expanded duplicates:
+
+| Engine   |    Artifact | ZIP bytes | SHA256                                                             |
+| -------- | ----------: | --------: | ------------------------------------------------------------------ |
+| Chromium | 12104934902 |   278,911 | `c052f6eec1f9783666c70fa29f0b9252e56ed7575e9268631d77bb9c9d34f010` |
+| WebKit   | 12104904972 |   278,806 | `686b163241e11218bb33b4758769be8ee0980e7852f39a9fa4d588dba63881dd` |
+
+All six package setup command owners closed with exit 0, no forced cleanup, ambiguity, violations or survivors. Terminal analysis: `.cache/solo-followup/readiness-preparation-e1cc-observations/terminal-analysis.json`, 16,761 bytes, SHA256 `5c942fe27d6ead79147e8325ce446b7185a38b318af89ff3705b57cd02ff61ef`. The successor’s separate prior-owner receipt also rereads the completed first-eight run’s fourteen commands; it does not clear Darwin or unrelated active/future cohorts.
+
+Four regression controls execute the actual common-runner enrichment and dispatch statements, then the actual adapter command expression, without starting a server or browser. They cover both engines and all twelve canonical rows, changed or missing declared fields, unsupported metadata, and reproduction of the old comparison failure. Six complete affected files pass 54/54. The final integrated release includes these dispatch controls and the separate audio-failure lane’s tool contracts in its exact 313-file sparse checkout. Its 38 complete test files pass 442 tests with four platform-only skips (446 total) in 6.12 seconds; no failures, with all 48 runtime references and source identities stable throughout. Raw TAP is 124,913 bytes with SHA256 `ad6e69decc545bdcac373eb4435fdd28b852596fc1d45f6b183aa149aa436a07`. The current helper references include the separately reviewed owner latch and optional-audio support, while the native workload remains the original twelve rows. The initial cache test realm/path failures remain retained and confer no product result.
+
+The separately named v2 declaration and workflow retain the original 7c7 declaration/workflow unchanged and bind the same e1cc package to one reviewed before-7c7 edge. The immutable Git witness preserves the historical references after the adapter and common owner runner changed. A successful successor must still earn every required native preparation predicate, strict replay, journal and closure check; this setup correction supplies no native or performance credit.
+
+The prospective v2 metadata now names the actual e1cc/118 compact package receipt and the failed 7c7 dispatcher. Earlier c696 package/result fields were inherited descriptive metadata; they have been corrected only in the undispatched successor, with exact identity and mutation controls. The executed declaration remains unchanged.
+
+The legacy `firstEightAllCorrectnessPassed: false` value remains required by this independent-pilot schema; it is not a measurement of the separate first-eight cohort. The [actual e1cc eight-row result](solo-e1cc-correctness-outcomes-20261017.md) is eight correctness passes with independent numerical failures retained. No runtime or admission rule is changed to reconcile that historical schema label.

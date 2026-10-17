@@ -1,0 +1,203 @@
+{
+  "nodeVersion": "v22.22.2",
+  "CI": "1",
+  "maxParallel": 2,
+  "resourceBoundary": {
+    "minimumAvailableBytes": 536870912,
+    "maximumOwnedGroupRSSBytes": 12884901888,
+    "maximumWallSeconds": 8700,
+    "terminate": "Only child-owned process group: SIGTERM,5-second cleanup allowance, thenSIGKILL. Clean surviving owned descendants after normal parent exit too.",
+    "result": "Resource exhaustion, interruption or outer deadline remains incomplete evidence; no assertion or internal test deadline changes.",
+    "admission": "Check memory before child launch; do not launch another file if owned live descendants survive cleanup."
+  },
+  "commandTemplate": [
+    "node",
+    "[--import exactObserverForDiagnosticModeOnly]",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "selectedTestPath"
+  ],
+  "format": "SoloFinalTenJobFollowupV1",
+  "purpose": "Two complete Couch encounter formatter observations plus seven untouched-b117 comparisons for newly retained script failures. Source roles remain separate. One additional complete canonical soundtrack distribution file copies its existing MP3 inspection dependency into the isolated fixture; original nine entries otherwise unchanged.",
+  "entries": [
+    {
+      "label": "candidate",
+      "case": "couch-encounter-proven-identities",
+      "mode": "original",
+      "sourceRevision": "087d067b03881bbb15f4b91f8f61c2fe235e414c",
+      "runtimeRevision": "138e3284b94ccff2b53dbab397949faf91442482",
+      "file": "game/test/couch-encounter-help.test.mjs",
+      "testSHA256": "d7606d7a6497de83e82b8d96994760871427f3db7cb00050dfc9cb8eb368e157",
+      "bytes": 11832,
+      "originalInventoryCoverageEligible": true,
+      "role": "canonical-proven-identity-formatting"
+    },
+    {
+      "label": "candidate",
+      "case": "soundtrack-distribution-closed-fixture",
+      "mode": "original",
+      "sourceRevision": "087d067b03881bbb15f4b91f8f61c2fe235e414c",
+      "runtimeRevision": "138e3284b94ccff2b53dbab397949faf91442482",
+      "file": "scripts/test-soundtrack-distribution.mjs",
+      "testSHA256": "c258b822bfbdb06e29184809fbffbea0d8c6f6979844ddd716256bfd0b0fee03",
+      "bytes": 30674,
+      "originalInventoryCoverageEligible": true,
+      "role": "canonical-fixture-dependency-closure"
+    },
+    {
+      "label": "baseline",
+      "case": "couch-encounter-proven-identities",
+      "mode": "declared-source-diagnostic",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/couch-encounter-help.test.mjs",
+      "testSHA256": "02665cd4dd93ac3f52be5037ef42b6a238d94c777f228a9be07383f3083419bc",
+      "bytes": 11071,
+      "originalInventoryCoverageEligible": false,
+      "role": "diagnostic-only",
+      "declaredSourceDiagnostic": {
+        "sourcePath": "game/test/couch-encounter-help.test.mjs",
+        "sourceSHA256": "02665cd4dd93ac3f52be5037ef42b6a238d94c777f228a9be07383f3083419bc",
+        "diagnosticSource": "import test from 'node:test';\nimport assert from 'node:assert/strict';\n// Preserve strict identity without recursively formatting the fixture DOM.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return (\n      [value.tagName, value.id]\n        .filter((part) => typeof part === 'string')\n        .map((part) => part.slice(0, 80))\n        .join('#') || typeof value\n    );\n  };\n  assert.ok(\n    false,\n    (message ?? 'Strict identity mismatch.') +\n      ' Actual: ' +\n      label(actual) +\n      '; expected: ' +\n      label(expected) +\n      '.',\n  );\n}\nimport { couchPage } from './helpers/couch-host.mjs';\nimport { combatLevel } from './helpers/combat-fixture.mjs';\nimport { memoryStorage } from './helpers/solo-dom.mjs';\nimport { waitFor } from './helpers/wait-for.mjs';\nimport { getLocale, setLocale } from '../i18n/index.mjs';\nimport { encounterGuideEntry } from '../encounter-guide.mjs';\nimport { createCombatCandidates } from '../content-design/combat-candidates.mjs';\nimport { compileContentProject, resolveMission } from '../content-design/project.mjs';\nimport { Document } from './helpers/couch-dom.mjs';\nimport { attachEncounterHelp } from '../ui/encounter-help.mjs';\n\nconst campaignFor = (level) => ({\n  version: 'xonix-campaign.v1',\n  id: 'encounter-help-host',\n  revision: '1',\n  title: 'Encounter Help host fixture',\n  levels: [level],\n});\nasync function host(t, level = combatLevel(), options = {}) {\n  const storage = memoryStorage();\n  const page = await couchPage(t, {\n    campaign: campaignFor(level),\n    storage,\n    nativeKeyboard: true,\n    fetchResponse: async (path) =>\n      path === '../content/packs/fpv-arcade-r5.json'\n        ? new Response('Isolated Base fixture', { status: 503 })\n        : undefined,\n    ...options,\n  });\n  return { ...page, storage };\n}\nfunction key(page, code) {\n  page.key(code, true, page.doc.activeElement);\n  page.key(code, false, page.doc.activeElement);\n}\nasync function start(page) {\n  page.$('race-start').click();\n  await waitFor(() => {\n    page.frame(0);\n    return page.state() === 'running';\n  });\n}\n\ntest('Help before board admission stays empty and preserves the existing loading or failure owner', () => {\n  const doc = new Document(),\n    root = doc.createElement('section'),\n    status = doc.createElement('p');\n  status.setAttribute('role', 'status');\n  doc.body.append(status, root);\n  let match;\n  const help = attachEncounterHelp({\n    root,\n    getLevels: () => match?.runs?.map((run) => run.level) ?? [],\n  });\n  for (const message of ['Preparing both boards.', 'Picture unavailable; retry preparation.']) {\n    status.textContent = message;\n    help.refresh();\n    assert.equal(root.hidden, true);\n    assert.equal(root.textContent, '');\n    assert.equal(status.textContent, message);\n    assert.equal(root.querySelectorAll('[role=\"status\"],[aria-live]').length, 0);\n  }\n  match = { runs: [{ level: combatLevel() }, { level: combatLevel() }] };\n  help.refresh();\n  assert.equal(root.hidden, false);\n  assert.match(root.textContent, /Optional sentry/);\n  match = { runs: [{ level: { version: 'unknown' } }] };\n  help.refresh();\n  assert.equal(root.hidden, false);\n  assert.match(root.textContent, /board rules could not be validated/);\n  assert.doesNotMatch(root.textContent, /Optional sentry|Practice/);\n  assert.equal(status.textContent, 'Picture unavailable; retry preparation.');\n  help.dispose();\n  match = { runs: [{ level: combatLevel() }] };\n  help.refresh();\n  assert.equal(root.hidden, true);\n  assert.equal(root.textContent, '');\n});\n\ntest('Versus Help reads actual optional board rules without advancing either paused run', async (t) => {\n  const p = await host(t);\n  assert.equal(p.renders[0].ruleset, 'xonix-core.v6');\n  assert.equal(p.renders[0].level.classic.combatPatrols.enabled, true);\n  await start(p);\n  p.key('KeyD');\n  p.frames(12);\n  p.key('KeyD', false);\n  p.$('race-pause').click();\n  p.frame(0);\n  const checkpoints = p.checkpoint(),\n    boards = [...p.renders],\n    writes = p.storage.writes.length;\n  p.$('race-help').focus();\n  key(p, 'Enter');\n  const section = p.$('race-encounter-help');\n  assert.ok(section, 'Current optional encounters need a section in the existing Help reader.');\n  assert.equal(section.hidden, false);\n  assert.equal(p.$('race-help-reading').contains(section), true);\n  assert.match(section.textContent, /Optional sentry.*Player 1.*Player 2/s);\n  assert.ok(section.textContent.includes(encounterGuideEntry('optional-sentry').risk));\n  assert.ok(section.textContent.includes(encounterGuideEntry('optional-sentry').try));\n  assert.doesNotMatch(section.textContent, /Practice|Solo|Return to field guide/);\n  const content = [...section.children];\n  assert.equal(p.doc.activeElement, p.$('race-help-read'));\n  key(p, 'Enter');\n  assert.equal(p.doc.activeElement, p.$('race-help-reading'));\n  assert.equal(p.$('race-help-reading-done').disabled, false);\n  p.frames(180);\n  assert.deepEqual([...section.children], content, 'Help has no per-frame rebuild.');\n  assert.deepEqual(p.checkpoint(), checkpoints);\n  assert.deepEqual(p.renders, boards);\n  assert.equal(p.storage.writes.length, writes);\n  key(p, 'Escape');\n  assert.equal(p.doc.activeElement, p.$('race-help-read'));\n  p.$('race-help-back').focus();\n  key(p, 'Enter');\n  assert.equal(p.doc.activeElement, p.$('race-help'));\n  assert.equal(p.state(), 'paused');\n  assert.deepEqual(p.checkpoint(), checkpoints);\n});\n\ntest('combined mission Help localizes its existing reader and preserves paused boards with staged setup values', async (t) => {\n  const source = createCombatCandidates();\n  source.missions[0].actors[0].role = 'trail-pursuer';\n  source.missions[0].actors[1].role = 'heading-interceptor';\n  source.missions[0].actors.push(structuredClone(source.missions[1].actors[2]));\n  const level = resolveMission(compileContentProject(source), source.missions[0].id).level;\n  const locale = getLocale();\n  t.after(() => setLocale(locale, { persist: false }));\n  setLocale('en', { persist: false });\n  const p = await host(t, level, { turnPolicy: 'grid-center' });\n  await start(p);\n  p.frames(12);\n  p.$('race-pause').click();\n  p.frame(0);\n  const checkpoint = p.checkpoint(),\n    boards = [...p.renders];\n  // Uncommitted setup controls must not become the rules of the held round.\n  p.$('race-level').value = 'an-uncommitted-choice';\n  p.$('race-class').value = 'carrier';\n  p.$('race-help').click();\n  const section = p.$('race-encounter-help');\n  const rows = section.querySelectorAll('[data-encounter-topic]');\n  assert.deepEqual(\n    rows.map((row) => row.dataset.encounterTopic),\n    ['optional-scout', 'optional-sentry', 'trail-pursuit', 'head-intercept'],\n  );\n  assert.equal(section.children[0].textContent, 'Mission threats');\n  const content = [...section.children];\n  p.$('race-help-read').focus();\n  key(p, 'Enter');\n  const reader = p.$('race-help-reading');\n  assert.equal(p.doc.activeElement, reader);\n  setLocale('uk', { persist: false });\n  assert.equal(section.children[0].textContent, '\u0417\u0430\u0433\u0440\u043e\u0437\u0438 \u043c\u0456\u0441\u0456\u0457');\n  assert.equal(p.doc.activeElement, reader);\n  assert.equal(p.$('race-help-reading-done').disabled, false);\n  assert.deepEqual(\n    [...section.children],\n    content,\n    'Locale refresh keeps the active content nodes.',\n  );\n  for (const row of rows) {\n    const entry = encounterGuideEntry(row.dataset.encounterTopic);\n    assert.ok(row.textContent.includes(entry.label));\n    assert.ok(row.textContent.includes(entry.spot));\n    assert.ok(row.textContent.includes(entry.risk));\n    assert.ok(row.textContent.includes(entry.try));\n    assert.match(row.textContent, /\u0413\u0440\u0430\u0432\u0435\u0446\u044c 1.*\u0413\u0440\u0430\u0432\u0435\u0446\u044c 2/s);\n    assert.doesNotMatch(row.textContent, /encounterGuide\\.|encounterHelp\\./);\n  }\n  p.frames(90);\n  assert.deepEqual(p.checkpoint(), checkpoint);\n  assert.deepEqual(p.renders, boards);\n  key(p, 'Escape');\n  assert.equal(p.doc.activeElement, p.$('race-help-read'));\n  p.$('race-help-back').click();\n  boundedIdentity(p.doc.activeElement, p.$('race-help'));\n  assert.equal(p.doc.body.dataset.couchStatus, 'paused');\n  assert.deepEqual(p.checkpoint(), checkpoint);\n});\n\ntest('absent and disabled patrol rules add no Help section or actions', async (t) => {\n  for (const enabled of [false, null])\n    await t.test(String(enabled), async (t) => {\n      const level = combatLevel();\n      if (enabled === null) delete level.classic.combatPatrols;\n      else level.classic.combatPatrols.enabled = enabled;\n      const p = await host(t, level);\n      const checkpoint = p.checkpoint();\n      p.$('race-help').click();\n      const section = p.$('race-encounter-help');\n      assert.equal(section.hidden, true);\n      assert.equal(section.textContent, '');\n      assert.equal(section.querySelectorAll('button,input,select,a').length, 0);\n      p.frames(60);\n      assert.deepEqual(p.checkpoint(), checkpoint);\n      assert.equal(p.doc.activeElement, p.$('race-help-read'));\n    });\n});\n\ntest('reading encounter guidance after the real time limit retains both result boards', async (t) => {\n  const p = await host(t, combatLevel('scout'));\n  await start(p);\n  for (let i = 0; i < 200 && p.doc.body.dataset.couchStatus !== 'finished'; i++) p.frame(200);\n  assert.equal(p.doc.body.dataset.couchStatus, 'finished');\n  const checkpoint = p.checkpoint(),\n    boards = [...p.renders],\n    writes = p.storage.writes.length;\n  p.$('race-help').click();\n  assert.equal(p.$('race-encounter-help').hidden, false);\n  p.$('race-help-read').focus();\n  key(p, 'Enter');\n  p.frames(60);\n  key(p, 'Escape');\n  p.$('race-help-back').focus();\n  key(p, 'Enter');\n  assert.equal(p.doc.body.dataset.couchStatus, 'finished');\n  assert.deepEqual(p.checkpoint(), checkpoint);\n  assert.deepEqual(p.renders, boards);\n  assert.equal(p.storage.writes.length, writes);\n  boundedIdentity(p.doc.activeElement, p.$('race-help'));\n});\n\ntest('controller reading uses the existing end-only Help return and survives cached page restore', async (t) => {\n  const pad = {\n    index: 0,\n    id: 'Encounter Help controller',\n    connected: true,\n    mapping: 'standard',\n    axes: [0, 0, 0, 0],\n    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),\n  };\n  const p = await host(t, combatLevel(), { pads: [pad] });\n  await start(p);\n  p.frames(12);\n  p.$('race-pause').click();\n  p.frame(0);\n  p.join(0);\n  // A separate pointer entry follows the controller's neutral/echo interval.\n  p.frames(200);\n  p.$('race-help').click();\n  p.frame(0);\n  p.$('race-help-reading').scrollHeight = 600;\n  p.$('race-help-read').focus();\n  p.pulse(0, 0);\n  assert.equal(p.doc.activeElement, p.$('race-help-reading'));\n  assert.match(p.$('race-help-reading-hint').textContent, /South or East returns/);\n  const checkpoint = p.checkpoint();\n  p.pulse(0, 13);\n  assert.ok(p.$('race-help-reading').scrollTop > 0);\n  p.pulse(0, 1);\n  assert.equal(p.doc.activeElement, p.$('race-help-read'));\n  assert.equal(p.$('race-help-reading-done').disabled, true);\n  assert.deepEqual(p.checkpoint(), checkpoint);\n  p.win.emit('pagehide', { persisted: true });\n  p.win.emit('pageshow', { persisted: true });\n  p.frames(180);\n  assert.equal(p.doc.body.dataset.couchStatus, 'paused');\n  assert.equal(p.$('race-encounter-help').hidden, false);\n  assert.deepEqual(p.checkpoint(), checkpoint);\n  p.$('race-help-read').click();\n  assert.equal(p.doc.activeElement, p.$('race-help-reading'));\n  p.win.emit('pagehide', { persisted: false });\n  assert.equal(p.$('race-encounter-help').hidden, true);\n  assert.equal(p.$('race-encounter-help').textContent, '');\n  assert.equal(p.pendingFrames(), 0);\n});\n",
+        "diagnosticSHA256": "d7606d7a6497de83e82b8d96994760871427f3db7cb00050dfc9cb8eb368e157",
+        "scope": "Identical two-call bounded identity formatter on exact b117 runtime; no expected-focus/assertion/deadline change. Complete unfiltered diagnostic classification only, zero canonical inventory credit."
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "external-distribution",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "scripts/test-external-distribution.mjs",
+      "testSHA256": "135a18cf99e79878f7a8dd31126ed8f9e5b5f0a27385156307a55e9b5e1b1048",
+      "bytes": 10106,
+      "originalInventoryCoverageEligible": false,
+      "role": "exact-baseline-classification",
+      "resourceBoundary": {
+        "maximumWallSeconds": 600,
+        "maximumOwnedGroupRSSBytes": 4294967296
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "hosted-soundtrack-publication",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "scripts/test-hosted-soundtrack-publication.mjs",
+      "testSHA256": "94021063dcb4367f4cae8a58c096d1ab411cca9c46fdf73d42a693b3fa23f930",
+      "bytes": 5573,
+      "originalInventoryCoverageEligible": false,
+      "role": "exact-baseline-classification",
+      "resourceBoundary": {
+        "maximumWallSeconds": 600,
+        "maximumOwnedGroupRSSBytes": 4294967296
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "pack-indexes",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "scripts/test-pack-indexes.mjs",
+      "testSHA256": "435a78da6e697a0345cdd182911c15c57669f4678944337793edd21f42a0a02a",
+      "bytes": 5801,
+      "originalInventoryCoverageEligible": false,
+      "role": "exact-baseline-classification",
+      "resourceBoundary": {
+        "maximumWallSeconds": 600,
+        "maximumOwnedGroupRSSBytes": 4294967296
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "pages-current-entry",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "scripts/test-pages-current-entry.mjs",
+      "testSHA256": "a69f109e3bf15aff232162a54cac98e52640b2e84c8cd1e431d814afc7f859a2",
+      "bytes": 16831,
+      "originalInventoryCoverageEligible": false,
+      "role": "exact-baseline-classification",
+      "resourceBoundary": {
+        "maximumWallSeconds": 600,
+        "maximumOwnedGroupRSSBytes": 4294967296
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "production-countercurrent",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "scripts/test-production-countercurrent.mjs",
+      "testSHA256": "5163bdf974d5e355cc0df32dfa485cce063f7e75f734232661ed6c51f6feaa4c",
+      "bytes": 11044,
+      "originalInventoryCoverageEligible": false,
+      "role": "exact-baseline-classification",
+      "resourceBoundary": {
+        "maximumWallSeconds": 600,
+        "maximumOwnedGroupRSSBytes": 4294967296
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "release-catalog",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "scripts/test-release-catalog.mjs",
+      "testSHA256": "316d6088b56dd7f52fd1f59d210ab47420d88dc565d39688633bebcd5ac2e558",
+      "bytes": 5865,
+      "originalInventoryCoverageEligible": false,
+      "role": "exact-baseline-classification",
+      "resourceBoundary": {
+        "maximumWallSeconds": 600,
+        "maximumOwnedGroupRSSBytes": 4294967296
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "soundtrack-distribution",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "scripts/test-soundtrack-distribution.mjs",
+      "testSHA256": "e73682ea3ec1c9522372034aa4c9853ab92832955ce094ef3531ade9ade6f3ec",
+      "bytes": 30643,
+      "originalInventoryCoverageEligible": false,
+      "role": "exact-baseline-classification",
+      "resourceBoundary": {
+        "maximumWallSeconds": 600,
+        "maximumOwnedGroupRSSBytes": 4294967296
+      }
+    }
+  ],
+  "scope": "Candidate canonical completion is eligible only after full clean unfiltered TAP. Identical corrected fixture on b117 is declared-source diagnostic-only, not untouched-baseline coverage. All original failures and resource stops retained. Case6 is not preclassified. Seven baseline files are original mode but baseline-only/no candidate coverage; all seven have600s/4GiB guards.",
+  "priorEvidence": {
+    "proposalPath": ".cache/solo-followup/regression-audit/couch-encounter-two-identities-01/proposal.json",
+    "proposalSHA256": "430ad6f1fa517acb4beb4e59d421d73a4d65e98df218d17062ef2fb5f7f94713",
+    "retainedResults": [
+      {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/verified-results-final.json",
+        "sha256": "1d014596810c44f1e78d97bdd4f8f8d5c05d4c19f752c2a149396715d1161e09"
+      },
+      {
+        "path": ".cache/solo-followup/regression-audit/remote-followup-11-38945838622/verified-results-1831.json",
+        "sha256": "22e727774b834fd9dbd4a33ad25b0e8cf443509d5e83e4c5245573048722bbd4"
+      }
+    ],
+    "scriptBaselineProposal": {
+      "path": ".cache/solo-followup/regression-audit/final-seven-script-baselines-01/proposal.json",
+      "sha256": "0a68d87d2bc144a1d5041913aa9ef9bd2b2abf5fc65fa3838bfe254f1c3b3565"
+    },
+    "soundtrackFixtureProposal": {
+      "path": ".cache/solo-followup/regression-audit/soundtrack-fixture-dependency-01/proposal.json",
+      "sha256": "2baaae5e10333816b40f2772d0bb37784d27c8e62feddfc654235c6753325f9f"
+    }
+  }
+}

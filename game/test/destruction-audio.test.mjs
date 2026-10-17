@@ -1,3 +1,4 @@
+import { pcmWaveBlob } from './helpers/pcm-wave.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
@@ -119,6 +120,7 @@ test('published destruction uses its category slot, bounded gain/tail and shared
   const h = audioHarness(),
     reads = [];
   t.after(() => h.soundscape.dispose());
+  h.context.sampleRate = 48000;
   h.context.decodeAudioData = async () => ({
     duration: 0.95,
     length: 45600,
@@ -128,7 +130,7 @@ test('published destruction uses its category slot, bounded gain/tail and shared
   });
   h.soundscape.setPublishedAudio(async (slot) => {
     reads.push(slot);
-    return { blob: new Blob([new Uint8Array(8)]) };
+    return { blob: pcmWaveBlob({ seconds: 0.95, sampleRate: 48000 }) };
   });
   await h.soundscape.enable();
   await h.soundscape.publishedAudio.prepare(DESTRUCTION_CUES);

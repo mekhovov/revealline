@@ -9,6 +9,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { parse as parseModule } from '../publishing/vendor/acorn-8.18.0.mjs';
 import {
   readPackIndexes,
   packNavigationSummary,
@@ -296,7 +297,46 @@ function resolveReference(from, reference) {
   return resolved;
 }
 
-/** Checks literal imports and HTML resources; dynamic runtime bindings still need browser review. */
+const literalString = (node) =>
+  node?.type === 'Literal' && typeof node.value === 'string'
+    ? node.value
+    : node?.type === 'TemplateLiteral' && node.expressions.length === 0
+      ? node.quasis[0].value.cooked
+      : null;
+const constructorName = (node) =>
+  node?.type === 'Identifier'
+    ? node.name
+    : node?.type === 'MemberExpression' &&
+        !node.computed &&
+        ['window', 'globalThis'].includes(node.object?.name)
+      ? node.property.name
+      : null;
+function moduleWorkerReference(node) {
+  if (
+    node.type !== 'NewExpression' ||
+    !['Worker', 'SharedWorker', 'WorkerClass'].includes(constructorName(node.callee))
+  )
+    return null;
+  const url = node.arguments[0],
+    base = url?.arguments?.[1];
+  // URL-based worker entry points resolve against this module. A raw Worker
+  // string resolves against its owning document and needs a runtime review.
+  if (
+    url?.type !== 'NewExpression' ||
+    constructorName(url.callee) !== 'URL' ||
+    base?.type !== 'MemberExpression' ||
+    base.computed ||
+    base.property?.name !== 'url' ||
+    base.object?.type !== 'MetaProperty' ||
+    base.object.meta?.name !== 'import' ||
+    base.object.property?.name !== 'meta'
+  )
+    return null;
+  return literalString(url.arguments[0]);
+}
+
+/** Checks literal imports, module-relative workers and HTML resources.
+ * Computed bindings and document-relative worker URLs still need browser review. */
 export async function validateBuildReferences(root, files) {
   const available = new Set(files);
   const missing = [],
@@ -323,14 +363,34 @@ export async function validateBuildReferences(root, files) {
             }
           } else refs.push(m[2]);
         }
-    if (/\.m?js$/.test(file))
-      for (const m of source.matchAll(
-        /(?:^|[;\r\n])\s*(?:import\b\s*(?:[^;"']*?\bfrom\s*)?|export\b[^;"']*?\bfrom\s*)["']([^"']+)["']/g,
-      )) {
-        if (m[1].startsWith('.')) refs.push(m[1]);
-        else if (!m[1].includes(':'))
-          fail(`Browser build has an unresolved bare import: ${file} → ${m[1]}`);
+    if (/\.m?js$/.test(file)) {
+      const pending = [parseModule(source, { ecmaVersion: 'latest', sourceType: 'module' })];
+      while (pending.length) {
+        const node = pending.pop();
+        if (!node || typeof node !== 'object') continue;
+        if (
+          [
+            'ImportDeclaration',
+            'ExportNamedDeclaration',
+            'ExportAllDeclaration',
+            'ImportExpression',
+          ].includes(node.type)
+        ) {
+          const ref = literalString(node.source);
+          if (ref !== null) {
+            if (ref.startsWith('.') || ref.startsWith('/')) refs.push(ref);
+            else if (!ref.includes(':'))
+              fail(`Browser build has an unresolved bare import: ${file} → ${ref}`);
+          }
+        }
+        const worker = moduleWorkerReference(node);
+        if (worker !== null) refs.push(worker);
+        for (const child of Object.values(node)) {
+          if (Array.isArray(child)) pending.push(...child);
+          else if (child && typeof child === 'object') pending.push(child);
+        }
       }
+    }
     if (file.endsWith('.css'))
       for (const m of source.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)) refs.push(m[1].trim());
     for (const ref of refs) {

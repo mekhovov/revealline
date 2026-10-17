@@ -1,0 +1,3524 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
+  "scope": "Historical stopped broad-suite attempt and representative baseline comparisons, followed by final frozen-source targeted checks and generated-build verification. Neither a clean full-suite result nor physical-device qualification is claimed.",
+  "candidateLog": ".cache/solo-evidence/full-test.log",
+  "logSnapshot": {
+    "capturedAt": "2026-10-16T00:14:38.508456+00:00",
+    "lastReportedTopLevelTest": 5317,
+    "topLevelFailures": 234,
+    "topLevelOkRows": 5083,
+    "topLevelSkipRows": 0,
+    "topLevelTodoRows": 0,
+    "complete": false,
+    "logBytes": 1585036,
+    "sha256": "c26ccbd73d5fc7ab226d58aabd231139d5f0b983e6294e9416629007fc0957c5",
+    "preservedLog": ".cache/solo-evidence/full-test-stopped-c26ccbd73d5f.log",
+    "aggregateTapFooterPresent": false,
+    "terminalMessage": "Game CLI error: Tests failed with exit 1",
+    "countScope": "Exact emitted top-level TAP rows before stop; not aggregate suite totals. ok rows may include skipped/todo results; unreported tests are unobserved."
+  },
+  "baselineSetup": {
+    "directory": ".cache/solo-baseline",
+    "source": "Original baseline commit, isolated from the modified worktree; node_modules is shared.",
+    "verifiedOriginalFiles": [
+      "game/app.mjs",
+      "game/ui/audio.mjs",
+      "game/ui/render.mjs",
+      "game/test/helpers/solo-dom.mjs",
+      "game/test/actor-appearance-solo-host.test.mjs"
+    ],
+    "additionalOriginalFixtures": [
+      "scripts",
+      "authoring/asset-studio",
+      "authoring/production",
+      "authoring/viewport-lab",
+      "authoring/company-studio",
+      "authoring/library/fpv-pressure-art/originals/orchard-crossing.png",
+      "authoring/library/neon-artwork/index.html"
+    ],
+    "limitations": [
+      "The baseline snapshot does not contain every publishing and optional-practice asset. Missing-fixture failures would be inconclusive.",
+      "Only representative failures were rerun; sibling classifications based on a shared failing assertion are identified separately.",
+      "Wall-clock durations were measured while other validation was running and are not gameplay benchmarks."
+    ]
+  },
+  "groups": [
+    {
+      "file": "game/test/acceptance-inspector.test.mjs",
+      "candidateTestNumbers": [125],
+      "classification": "baseline-reproduced",
+      "failure": "ReferenceError: currentDraftSnapshot is not defined",
+      "baselineRepresentative": "Studio owns the inspector and synchronizes it when the applied board selection changes"
+    },
+    {
+      "file": "game/test/access-gate.test.mjs",
+      "candidateTestNumbers": [133],
+      "classification": "baseline-source-proof",
+      "failure": "Page is missing password protection: authoring/library/neon-artwork/index.html",
+      "evidence": "The page, scripts/access-pages.mjs and this test are byte-identical to the baseline commit. The original page lacks the access-gate marker and fails the scanner's exact gate predicate.",
+      "limitation": "The entire baseline inventory gate test was not executed because the isolated snapshot excludes some unrelated publication assets."
+    },
+    {
+      "file": "game/test/actor-appearance-solo-host.test.mjs",
+      "candidateTestNumbers": [170, 171, 172, 173, 174, 175, 176, 177, 178],
+      "classification": "representative-baseline-failures-with-load-sensitive-timeouts",
+      "failures": [
+        "Stale saved-actor wrapper expectations read undefined style/presentation.",
+        "Custom-pack fixtures call browser image decoding without a decoder.",
+        "Some broad-run tests time out during initial host setup before reaching their assertions."
+      ],
+      "baselineRepresentatives": [
+        {
+          "name": "new campaign choice is pinned without loading an actor lease or changing simulation",
+          "baselineResult": "Cannot read properties of undefined (reading 'style') at line 121",
+          "isolatedCandidateResult": "Same undefined.style failure at line 121; broad-run setup timeout did not recur."
+        },
+        {
+          "name": "a same-ID modified Custom pack retains authored actors through selector with unavailable authority",
+          "baselineResult": "Browser image decoding is unavailable. Supply a decoder in non-browser tools. (decoder-unavailable)",
+          "candidateResult": "Same decoder-unavailable error in the broad run."
+        }
+      ],
+      "limitation": "Other actor tests were not individually rerun; their timeouts are not proven identical baseline failures."
+    },
+    {
+      "file": "game/test/actor-team-next-host.test.mjs",
+      "candidateTestNumbers": [270],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "earned Legacy Team Next starts Relay Yard with fpv actors and the accepted difficulty",
+      "failure": "assert.ok(firstActors.every((image) => image.closes === 1)) fails at line 133",
+      "baselineDurationMs": 47000.543625
+    },
+    {
+      "file": "game/test/asset-studio-picture-context.test.mjs",
+      "candidateTestNumbers": [651],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "registered local picture owners retain exact level, theme and fit without image downloads",
+      "failure": "Registered-owner count is 161; assertion expects 107."
+    },
+    {
+      "file": "game/test/authored-mode-bootstrap.test.mjs",
+      "candidateTestNumbers": [922],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "duel-expedition-v1: native boot escape matches ready destinations before any host modules load",
+      "failure": "Actual ../?journey=legacy differs from expected ../?journey=duel-expedition-v1."
+    },
+    {
+      "file": "game/test/authored-mode-entry-host.test.mjs",
+      "candidateTestNumbers": [977, 978, 979, 980],
+      "classification": "baseline-reproduced-representative-shared-assertion",
+      "baselineRepresentative": "opening: ready Solo opens the corresponding Versus library without save/hint conversion",
+      "failure": "The word-boundary Team regex does not match the existing Team2P label.",
+      "limitation": "One of the four cases was rerun; all four broad-run failures show the same label assertion."
+    },
+    {
+      "file": "game/test/authoring-host-display.test.mjs",
+      "candidateTestNumbers": [
+        995, 996, 997, 998, 999, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008
+      ],
+      "classification": "baseline-reproduced-representatives-shared-harness",
+      "baselineRepresentatives": [
+        "Production adopts saved text and the effective system cap before its held register read, without writes",
+        "Viewport adopts saved host preferences without loading a game or altering a pending selection"
+      ],
+      "failure": "The harness expects script type module but the password-gated markup has application/x-revealline-locked.",
+      "limitation": "The two host families were rerun; all fourteen broad-run failures occur at the same early harness assertion."
+    },
+    {
+      "file": "game/test/backup-content-feedback-host.test.mjs",
+      "candidateTestNumbers": [1028],
+      "classification": "load-sensitive-unreproduced-in-isolation",
+      "baselineRepresentative": "blur during the actual held backup lock does not announce a pack cancellation or autoplay",
+      "broadRunFailure": "Initial picture preparation did not finish within the fixture's 5000ms timeout, before the test's backup-lock action.",
+      "isolatedBaselineResult": "pass",
+      "isolatedCandidateResult": "pass",
+      "baselineDurationMs": 5747.202125,
+      "candidateDurationMs": 5691.495542,
+      "limitation": "The isolated passes do not prove that the broad-run timing issue can never recur."
+    },
+    {
+      "file": "game/test/backup.test.mjs",
+      "candidateTestNumbers": [1092, 1093, 1094, 1095, 1097, 1098, 1099, 1100, 1101, 1102, 1103],
+      "classification": "baseline-reproduced-representatives-with-unrerun-cancellations",
+      "baselineRepresentatives": [
+        "a full archive preserves all member formats, original image bytes and prepared-pack capability",
+        "a suspended pack campaign resolves only from included prepared content"
+      ],
+      "failure": "Original baseline reproduces night-shift-01/background decoded dimensions mismatch and Per-map artwork refers to an unknown or repeated level. Later cancelled tests were not individually rerun."
+    },
+    {
+      "file": "game/test/boot-build.test.mjs",
+      "candidateTestNumbers": [1127],
+      "classification": "baseline-source-proof",
+      "failure": "The first inline style is the access gate, while the assertion expects the boot-screen guard in that first style. Original baseline HTML is byte-identical and fails the exact assertion predicate."
+    },
+    {
+      "file": "game/test/boot-build.test.mjs",
+      "candidateTestNumbers": [1129],
+      "classification": "newly-enforced-fixture-dependency-gap-repaired",
+      "failure": "The stricter literal dynamic import validation correctly rejected a synthetic build fixture lacking boot-updates.mjs and editions/bootstrap.mjs.",
+      "repair": "Copy both real deferred module entries through the fixture static dependency closure and assert their exact offline inventory bytes and hashes.",
+      "verification": {
+        "pass": 1,
+        "fail": 0,
+        "skipped": 2,
+        "durationMs": 41851.632,
+        "log": ".cache/solo-evidence/final-boot-build.log"
+      }
+    },
+    {
+      "file": "game/test/classic-host.test.mjs",
+      "candidateTestNumbers": [1735, 1736, 1737],
+      "classification": "unreproduced-preparation-timeouts",
+      "failure": "Start/Resume did not finish selected-asset preparation; failures occur before timing, movement, or checkpoint assertions."
+    },
+    {
+      "file": "game/test/collection-context-host.test.mjs",
+      "candidateTestNumbers": [212],
+      "classification": "baseline-reproduced",
+      "failure": "Module initialization fails with Per-map artwork refers to an unknown or repeated level, at preparePack before tests execute."
+    },
+    {
+      "file": "game/test/collection-records-return-host.test.mjs",
+      "candidateTestNumbers": [
+        2162, 2163, 2164, 2165, 2166, 2167, 2168, 2169, 2171, 2172, 2173, 2174, 2175, 2176, 2177
+      ],
+      "classification": "unreproduced-startup-timeouts",
+      "failure": "Most fail in setup while waiting for Start to enter running, before exercising the requested gallery focus behavior. One fails initial picture preparation. These have not been proved baseline failures."
+    },
+    {
+      "file": "game/test/combat-board-adapter.test.mjs",
+      "candidateTestNumbers": [
+        2196, 2197, 2198, 2199, 2200, 2201, 2202, 2203, 2204, 2205, 2206, 2207, 2208, 2209, 2210
+      ],
+      "classification": "baseline-historical-patch-fixture-failure-repaired",
+      "baselineEvidence": "An exact b1174522 renderer copied to a temporary directory also fails git apply --reverse -C0 --check for the immutable combat-board-e9434d03 patch at render.mjs:14.",
+      "repair": "Retain historical pinned patch hash and reversible application, derive the current no-combat comparison from exact asserted combat import/call anchors, compare full retained-surface drawing evidence instead of fake canvas instance IDs, and assert the original baseline clean full-reveal behavior while retaining live scrap order/toggle checks.",
+      "verification": {
+        "pass": 15,
+        "fail": 0,
+        "durationMs": 3624.711541,
+        "log": ".cache/solo-evidence/final-combat-adapter.log"
+      }
+    },
+    {
+      "file": "game/test/combat-pressure-authoring.test.mjs",
+      "candidateTestNumbers": [2315],
+      "classification": "baseline-reproduced",
+      "failure": "The rejection regex expects not qualified for Team; the actual baseline message is Optional combat requires the explicitly qualified Team hunt edition."
+    },
+    {
+      "files": [
+        "game/test/community-native-families.test.mjs",
+        "game/test/community-ownership-concurrency.test.mjs"
+      ],
+      "candidateTestNumbers": [236, 237],
+      "classification": "environment-dependency-unavailable",
+      "failure": "The authoring/fpv-worlds package cannot resolve fake-indexeddb. No runtime assertions execute."
+    },
+    {
+      "file": "game/test/content-route-loader.test.mjs",
+      "candidateTestNumbers": [3135, 3136, 3138, 3139, 3140, 3141],
+      "classification": "baseline-reproduced-representatives-missing-snapshots",
+      "baselineRepresentatives": [
+        "all supported routes are covered by pinned edition snapshots",
+        "duel-expedition-v1: async and synchronous routes retain exact historical content and fresh ownership"
+      ],
+      "failure": "The pinned snapshot inventory lacks already-supported routes. The original route ID list mismatch and missing duel-expedition-v1 snapshot both reproduce; the other four missing-route cases were not rerun individually."
+    },
+    {
+      "file": "game/test/content.test.mjs",
+      "candidateTestNumbers": [3376],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "class appearance maps survive pack preparation and scenario resolution as presentation only",
+      "failure": "Browser image decoding is unavailable. Supply a decoder in non-browser tools. (decoder-unavailable)"
+    },
+    {
+      "file": "game/test/controller-preference-library.test.mjs",
+      "candidateTestNumbers": [3808, 3809, 3811, 3812],
+      "classification": "baseline-reproduced-representative-shared-decoder-fixture",
+      "baselineRepresentative": "complete backup migrates omitted controller preferences without changing content or suspended flight",
+      "failure": "night-shift-01/background: decoded dimensions do not match the image header. The representative reproduces on exact b117; the three sibling cases were not individually rerun."
+    },
+    {
+      "file": "game/test/coop-actor-layout.test.mjs",
+      "candidateTestNumbers": [4042],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "Standard Team commands retain the accepted main baseline with current pilot contacts",
+      "failure": "Exact baseline and candidate drawing hash f49acf033d3f8304dfaf49c20ac0cda22d0460f1031703f5c8da2fde42b5f862 differs from pinned expectation 4365a07e4a8ac210ac53f638255ed1f983fa809d9b65e6528b3f0182dda53740."
+    },
+    {
+      "file": "game/test/coop-bonus-slow-cue.test.mjs",
+      "candidateTestNumbers": [4152],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "legacy boards preserve accepted wide-board painting and readable compact identity without slow cues",
+      "failure": "Exact baseline and candidate drawing hash 7842aac2ad612d8271da61f24b7aeacc74be51e1f63c96d0930ecfb8e3d6d39e differs from pinned expectation 3c4b89c5c6b97ec4b0c5822c0123161c4102ac040eedc3747822f7ae452e3fcb."
+    },
+    {
+      "file": "game/test/coop-entry-memory.test.mjs",
+      "candidateTestNumbers": [4324],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "a fresh first visit shows and starts the exact First Connection without creating a bookmark",
+      "failure": "The test expects no storage writes, but the original host writes its enemy-stats writer and contextual teaching state. Sibling storage-count failures were not individually rerun."
+    },
+    {
+      "file": "game/test/coop-host.test.mjs",
+      "candidateTestNumbers": [4380],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "the same Team mode choices belong to the lobby and active pause panel, never the live arena",
+      "failure": "The original host has additional current mode choices beyond the stale solo/versus/team list. Other navigation and lifecycle failures in this file were not individually rerun."
+    },
+    {
+      "file": "game/test/controller-practice-pause-host.test.mjs",
+      "candidateTestNumbers": [3797],
+      "classification": "baseline-reproduced-assertion-after-load-sensitive-timeout",
+      "baselineRepresentative": "repeated forced Pause keeps the chosen menu action after Settings closes",
+      "broadFailure": "Asynchronous host action did not settle during Start.",
+      "isolatedBaselineResult": "Tab traversal reaches overlay-random-level where the test expects overlay-missions.",
+      "isolatedCandidateResult": "Same overlay-random-level versus overlay-missions assertion; the original broad Start timeout did not recur.",
+      "limitation": "The isolated shared assertion is a confirmed baseline failure. This does not prove the broad timeout had the same cause."
+    },
+    {
+      "file": "game/test/coop-terrain-trail.test.mjs",
+      "candidateTestNumbers": [5112],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "a complete snapshot without a wall keeps flat backing and a missing reader fails closed",
+      "failure": "Missing expected exception for a prepared terrain snapshot without its reader."
+    },
+    {
+      "file": "game/test/coop-shared-settings.test.mjs",
+      "candidateTestNumbers": [5066],
+      "classification": "baseline-reproduced",
+      "baselineRepresentative": "Settings stays above a retained paused Team attempt and reopens its selected category",
+      "failure": "The original host writes revealline-enemy-stats.v1:writer; the test expects no storage writes. Other Settings failures were not individually rerun."
+    },
+    {
+      "file": "game/test/couch-brand-title.test.mjs",
+      "candidateTestNumbers": [5298, 5299],
+      "classification": "baseline-reproduced",
+      "baselineRepresentatives": [
+        "real Versus ready renders and locale changes keep one wordmark; pause owns its localized status",
+        "Versus busy/ready transitions replace only retired brand owners and destroy releases the latest image"
+      ],
+      "failures": [
+        "PAUSED differs from Both boards paused.",
+        "FPV / LINE differs from Loading the shared picture."
+      ]
+    },
+    {
+      "file": "game/test/couch-catalogue-host.test.mjs",
+      "candidateTestNumbers": [5302, 5303, 5304, 5305, 5306, 5307, 5308],
+      "classification": "untriaged-chooser-availability-failure",
+      "failure": "The real All missions chooser does not expose the exact indexed chapter mission within its existing forty-five-second deadline.",
+      "limitation": "The worker continues completing timed failures while consuming CPU. The isolated baseline snapshot lacks the required 10,719,959-byte original-fpv-pressure chapter fixture. No baseline reproduction was attempted and no deadline was changed."
+    }
+  ],
+  "reproductions": [
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "node --test --test-name-pattern='Studio owns the inspector|duel-expedition-v1: native boot escape' game/test/acceptance-inspector.test.mjs game/test/authored-mode-bootstrap.test.mjs",
+      "result": {
+        "pass": 0,
+        "fail": 2,
+        "skipped": 59
+      }
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "node --test --test-name-pattern='opening: ready Solo|new campaign choice|modified Custom pack retains authored actors through selector' game/test/authored-mode-entry-host.test.mjs game/test/actor-appearance-solo-host.test.mjs",
+      "result": {
+        "pass": 0,
+        "fail": 3,
+        "skipped": 20
+      }
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "node --test --test-name-pattern='registered local picture owners|Production adopts saved text|Viewport adopts saved host' game/test/asset-studio-picture-context.test.mjs game/test/authoring-host-display.test.mjs",
+      "result": {
+        "pass": 0,
+        "fail": 3,
+        "skipped": 16
+      }
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "node --test --test-name-pattern='earned Legacy Team Next starts Relay Yard with fpv actors' game/test/actor-team-next-host.test.mjs",
+      "result": {
+        "pass": 0,
+        "fail": 1,
+        "skipped": 1
+      }
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "node --test --test-name-pattern='blur during the actual held backup lock' game/test/backup-content-feedback-host.test.mjs",
+      "result": {
+        "pass": 1,
+        "fail": 0,
+        "skipped": 9
+      }
+    },
+    {
+      "directory": ".",
+      "command": "node --test --test-name-pattern='new campaign choice|blur during the actual held backup lock' game/test/actor-appearance-solo-host.test.mjs game/test/backup-content-feedback-host.test.mjs",
+      "result": {
+        "pass": 1,
+        "fail": 1,
+        "skipped": 17
+      }
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "CI=1 node --test --test-name-pattern='a full archive preserves|a suspended pack campaign|v9 optional scout' game/test/backup.test.mjs game/test/combat-pressure-authoring.test.mjs",
+      "result": {
+        "pass": 0,
+        "fail": 3,
+        "skipped": 15
+      }
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "CI=1 node --test game/test/collection-context-host.test.mjs",
+      "result": {
+        "pass": 0,
+        "fail": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "CI=1 node --test --test-name-pattern='all supported routes|duel-expedition-v1: async|class appearance maps' game/test/content-route-loader.test.mjs game/test/content.test.mjs",
+      "result": {
+        "pass": 0,
+        "fail": 3,
+        "skipped": 108
+      }
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "CI=1 node --test --test-concurrency=1 --test-name-pattern='Standard Team commands retain|legacy boards preserve accepted|complete backup migrates omitted controller|a fresh first visit shows and starts the exact First Connection|the same Team mode choices belong' game/test/coop-actor-layout.test.mjs game/test/coop-bonus-slow-cue.test.mjs game/test/controller-preference-library.test.mjs game/test/coop-entry-memory.test.mjs game/test/coop-host.test.mjs",
+      "log": ".cache/solo-evidence/baseline-late-representatives.log",
+      "result": {
+        "pass": 0,
+        "fail": 5,
+        "skipped": 146
+      },
+      "durationMs": 23478.446625
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "CI=1 node --test --test-name-pattern='repeated forced Pause keeps' game/test/controller-practice-pause-host.test.mjs",
+      "result": {
+        "pass": 0,
+        "fail": 1,
+        "skipped": 4
+      },
+      "durationMs": 13313.719833
+    },
+    {
+      "directory": ".",
+      "command": "CI=1 node --test --test-name-pattern='repeated forced Pause keeps' game/test/controller-practice-pause-host.test.mjs",
+      "result": {
+        "pass": 0,
+        "fail": 1,
+        "skipped": 4
+      },
+      "durationMs": 14555.43025
+    },
+    {
+      "directory": ".cache/solo-baseline",
+      "command": "CI=1 node --test --test-concurrency=1 --test-name-pattern='a complete snapshot without a wall|real Versus ready renders|Versus busy/ready transitions|Settings stays above a retained paused Team attempt' game/test/coop-terrain-trail.test.mjs game/test/couch-brand-title.test.mjs game/test/coop-shared-settings.test.mjs",
+      "log": ".cache/solo-evidence/baseline-final-representatives.log",
+      "result": {
+        "pass": 0,
+        "fail": 4,
+        "skipped": 44
+      },
+      "durationMs": 18910.518875
+    }
+  ],
+  "confirmedIntroducedFailures": [
+    {
+      "file": "game/app.mjs",
+      "failure": "Resume preparation replaced the saved/restored warning cue, producing Picture ready instead of the expected Flight resumed caption.",
+      "status": "repaired and verified by the complete nineteen-test lifecycle/render run",
+      "repair": "Capture the Resume cue at the original invocation and retain it through only the owned preparation continuation.",
+      "verificationLog": ".cache/solo-evidence/final-continuous-submission-rerun.log"
+    },
+    {
+      "file": "game/test/helpers/solo-dom.mjs",
+      "failure": "Tests directly awaiting a Start action had no background prepared-board POST_RENDER submission and could remain pending indefinitely.",
+      "status": "repaired and verified by the complete nineteen-test lifecycle/render run",
+      "repair": "Submit only pending preparation frames at a fixed simulation timestamp; preserve explicit held-render tests with an opt-out.",
+      "verificationLog": ".cache/solo-evidence/final-continuous-submission-rerun.log"
+    }
+  ],
+  "followUp": [
+    "The broad run was deliberately stopped incomplete with 234 emitted top-level not-ok rows; no aggregate TAP footer exists. Do not describe the full suite as passing or classify unrerun failures as baseline defects.",
+    "The introduced direct-await preparation fixture deadlock and Resume-caption regression are repaired; the complete nineteen-test lifecycle/render rerun passes. The original broad attempt still includes its manually terminated old fixture worker.",
+    "All four new Solo host cases have passed across the recorded runs, but the first concurrent run includes a Start preparation timeout and is not an all-green run.",
+    "The authored run demonstrated twelve clears and eleven successful Next transitions. The full fifteen-clear campaign run remains failed at the next release-media preparation deadline.",
+    "Do not classify unrerun host Start/Next timeouts as baseline failures or raise deadlines without additional evidence.",
+    "Other new failures remain untriaged unless a group above explicitly records reproduction or source proof.",
+    "The final paused-render checks pass in Chromium and WebKit; retain the prior settling-draw probe failures and the failed cold-start pass0 in the evidence.",
+    "New Couch catalogue, picture parity and unrerun Team failures remain unresolved or unclassified unless a representative above explicitly records exact baseline reproduction.",
+    "Runtime review identified additional admission and Legacy optional-link readiness defects after the 72f observations. Their repair and targeted revalidation belong to a later revision; existing 72f browser evidence does not qualify that later runtime."
+  ],
+  "focusedHostQualification": {
+    "startingCommit": "6f19914ba9777610f40ae00051bbbd57a65f6273",
+    "initialRun": {
+      "command": "CI=1 node --test --test-name-pattern='direct Start prepares|raw scene interruptions|canvas loss and restoration|twenty earned-result Retry|authored Solo clears continue' game/test/solo-performance-host.test.mjs game/test/candidate-solo-host.test.mjs",
+      "log": ".cache/solo-evidence/final-solo-host.log",
+      "result": {
+        "pass": 3,
+        "fail": 2,
+        "skipped": 17
+      },
+      "passed": [
+        "direct Start and twenty pause/resume cycles",
+        "canvas loss/restoration, explicit Resume, fresh clock and authoritative input continuation",
+        "twenty actual earned win/Retry cycles, one Phaser host, exact fresh authoritative checkpoint and accepted artwork on each Retry"
+      ],
+      "retryDurationMs": 254879.199208,
+      "failed": [
+        "raw scene interruption case times out at its initial asset-preparing Start, before gap assertions",
+        "authored campaign continuation times out after a Next click while awaiting running(nextLevel), not while awaiting Next button enablement"
+      ]
+    },
+    "diagnosticReproduction": {
+      "command": "CI=1 node --test --test-concurrency=1 --test-name-pattern='raw scene interruptions|authored Solo clears continue' game/test/solo-performance-host.test.mjs game/test/candidate-solo-host.test.mjs",
+      "log": ".cache/solo-evidence/final-solo-diagnostics.log",
+      "status": "complete",
+      "notes": "Same twenty-second deadlines; failure-only diagnostics capture expected/actual mission, run and preparation state, focus, errors, and submitted frames. settle already pumps frame(0)/postrender for registered hosts.",
+      "result": {
+        "pass": 1,
+        "fail": 1,
+        "skipped": 20
+      },
+      "durationMs": 446472.668667,
+      "timingBoundaryResult": "pass: exact 100/249/250/251/500ms boundaries, hidden time and explicit Resume, 9211.673958ms",
+      "authoredResult": {
+        "status": "failed during preparation after partial successful qualification",
+        "clears": 12,
+        "successfulNextTransitions": 11,
+        "previousLevel": "long-rail",
+        "requestedLevel": "new-frontier",
+        "durationMs": 432763.470166,
+        "preparationMessage": "Loading release artwork and fonts…",
+        "preparationState": {
+          "state": "busy",
+          "stage": "downloading"
+        },
+        "retainedRunStatus": "won",
+        "pictureState": "ready",
+        "flightState": "picture",
+        "nextBusy": true,
+        "focus": "next-button",
+        "submittedFramesInFailedWait": 49,
+        "reportedErrors": [],
+        "interpretation": "The wait pumps preparation frames, and all completed clears match the independent core. The failure occurs after Next while awaiting release asset preparation, not button enablement. At failure, presentation/host.mjs reports downloading before bytesAt. The evidence does not prove a resource leak or establish that every such timeout is only scheduler load."
+      }
+    },
+    "authoredScope": {
+      "missions": 15,
+      "hostTicks": 36273,
+      "additionalChecks": "Independent authoritative core checkpoints, public replay verification, all fourteen Next handoffs, final browser return and persisted campaign receipts."
+    },
+    "continuousLifecycle": {
+      "initialRun": {
+        "command": "CI=1 node --test --test-concurrency=1 game/test/continuous-host.test.mjs game/test/solo-render-submission.test.mjs",
+        "log": ".cache/solo-evidence/final-continuous-submission.log",
+        "result": {
+          "pass": 10,
+          "fail": 9,
+          "skipped": 0
+        },
+        "durationMs": 82544.305125,
+        "failures": [
+          "Three Resume captions lost their saved/restored cue through preparation (runtime regression).",
+          "Four lifecycle fixtures advanced a new clock before establishing its deliberate first-active zero-time origin.",
+          "Two hidden-frame fixtures inspected stale painter options although hidden frames now intentionally retain previous pixels."
+        ]
+      },
+      "repairs": [
+        "Keep the exact expected Resume captions and preserve their cue in the owned runtime continuation.",
+        "After foreground Resume activation, establish frame(0) before counting simulated ticks; keep the no-frame-before-activation race coverage.",
+        "Assert the host paused state immediately while hidden; retain authoritative checkpoint, save-byte, controller-poll and explicit foreground Resume invariants.",
+        "Exercise directly awaited Start without manual fixture pumping and verify that its preparation timer consumes no simulation time, including after readiness."
+      ],
+      "finalRun": {
+        "log": ".cache/solo-evidence/final-continuous-submission-rerun.log",
+        "status": "complete",
+        "result": {
+          "pass": 19,
+          "fail": 0,
+          "skipped": 0
+        },
+        "durationMs": 110700.466167,
+        "coverage": "All fourteen continuous-host tests plus held POST_RENDER, directly awaited Start with no simulation advancement, complete-frame/input metrics, persisted/final teardown, and unchanged paused-display retention."
+      }
+    }
+  },
+  "broadRunInterventions": [
+    {
+      "file": "game/test/continuous-host.test.mjs",
+      "reason": "Introduced fixture deadlock: activateHostAction awaited Start while its prepared-board promise awaited POST_RENDER; no fixture frame loop ran during that direct await.",
+      "action": "Parent terminated only continuous-host worker PID 46067 with SIGTERM after 12 minutes 18 seconds so the broad attempt could continue. This termination is not a baseline failure or a passing test.",
+      "repair": "The Solo fixture automatically submits zero-time frames only while a prepared-board submission is pending; tests that deliberately hold render submission explicitly opt out. The shared action helper joins readiness with the ordinary zero-time frame pump.",
+      "verification": {
+        "log": ".cache/solo-evidence/final-continuous-submission-rerun.log",
+        "status": "complete",
+        "result": {
+          "pass": 19,
+          "fail": 0,
+          "skipped": 0
+        },
+        "durationMs": 110700.466167,
+        "coverage": "All fourteen continuous-host tests plus held POST_RENDER, directly awaited Start with no simulation advancement, complete-frame/input metrics, persisted/final teardown, and unchanged paused-display retention."
+      }
+    },
+    {
+      "action": "Root stopped the remaining broad attempt to reduce host contention.",
+      "reportedAt": "2026-10-16T00:14:38.508456+00:00",
+      "reason": "The shared host was under concurrent validation/browser/build load; the run already contained many failures, including unresolved/unclassified failures. Stopping is not a passing result and does not classify unexplained failures.",
+      "preservedLog": ".cache/solo-evidence/full-test-stopped-c26ccbd73d5f.log",
+      "sha256": "c26ccbd73d5fc7ab226d58aabd231139d5f0b983e6294e9416629007fc0957c5",
+      "result": "Stopped incomplete; terminal game CLI reports exit1, with no aggregate TAP footer.",
+      "exactReportedCounts": {
+        "lastTopLevelTest": 5317,
+        "okRows": 5083,
+        "notOkRows": 234,
+        "skipRows": 0,
+        "todoRows": 0
+      },
+      "processTerminationDetails": "Root authorized/reported the stop. This documentation step did not signal processes; exact final signals are not recorded here."
+    }
+  ],
+  "broadRunState": {
+    "status": "stopped incomplete; failed",
+    "observedCommitAtFinalInspection": "72f498abb6b0d5b522bd47ee163f5131b134a13c",
+    "runnerPid": 6219,
+    "runnerSession": 58071,
+    "warning": "The broad attempt started before final repairs and includes a manually terminated old continuous-host fixture worker. It is not an all-green run or a clean full-suite qualification of the final frozen commit.",
+    "hangAssessment": "Earlier worker snapshots showed progress and CPU activity; final stop was deliberate resource-contention control, not a newly proven hang.",
+    "lastProcessSnapshot": [
+      {
+        "pid": 68215,
+        "file": "game/test/couch-catalogue-host.test.mjs",
+        "elapsed": "05:59",
+        "cpuPercent": 66.8
+      },
+      {
+        "pid": 69432,
+        "file": "game/test/couch-external-picture-parity.test.mjs",
+        "elapsed": "03:44",
+        "cpuPercent": 115.6
+      },
+      {
+        "pid": 70074,
+        "file": "game/test/couch-installed-chapters.test.mjs",
+        "elapsed": "02:30",
+        "cpuPercent": 73.6
+      },
+      {
+        "pid": 70178,
+        "file": "game/test/couch-installed-release-parity.test.mjs",
+        "elapsed": "02:16",
+        "cpuPercent": 76.0
+      }
+    ],
+    "stopReason": "Stop requested by root to reduce shared-host contention while repairing newly identified admission and optional-link readiness defects; preserve all failures and unclassified outcomes.",
+    "lastProcessSnapshotScope": "Historical pre-stop snapshot; these entries do not assert processes remain running."
+  },
+  "finalValidationEvidence": {
+    "validate": {
+      "log": ".cache/solo-evidence/validate-final.log",
+      "exitCode": 0,
+      "confirmation": "Root agent confirmed the completed tool result; the log includes references and generated projection validations."
+    },
+    "continuousLifecycle": {
+      "log": ".cache/solo-evidence/final-continuous-submission-rerun.log",
+      "pass": 19,
+      "fail": 0,
+      "skipped": 0,
+      "durationMs": 110700.466167
+    },
+    "nativePausedRender": [
+      {
+        "artifact": ".cache/solo-evidence/chrome-paused-render-final.json",
+        "status": "passed",
+        "engine": "chromium",
+        "browser": "155.0.8059.80",
+        "scope": "Native paused Canvas pixel retention and draw suppression; not performance qualification",
+        "pageErrors": [],
+        "cases": [
+          {
+            "name": "paused-initial-settling",
+            "draws": 0,
+            "clears": 0,
+            "polls": 18,
+            "pixelsUnchanged": true
+          },
+          {
+            "name": "startup-settling",
+            "draws": 1,
+            "clears": 1,
+            "polls": 60,
+            "pixelsUnchanged": null
+          },
+          {
+            "name": "paused",
+            "draws": 0,
+            "clears": 0,
+            "polls": 18,
+            "pixelsUnchanged": true
+          },
+          {
+            "name": "covered-by-settings",
+            "draws": 0,
+            "clears": 0,
+            "polls": 18,
+            "pixelsUnchanged": true
+          },
+          {
+            "name": "resize-invalidation",
+            "draws": 1,
+            "clears": 1,
+            "polls": null,
+            "pixelsUnchanged": null
+          },
+          {
+            "name": "resumed",
+            "draws": 5,
+            "clears": 5,
+            "polls": null,
+            "pixelsUnchanged": null
+          }
+        ]
+      },
+      {
+        "artifact": ".cache/solo-evidence/webkit-paused-render-final.json",
+        "status": "passed",
+        "engine": "webkit",
+        "browser": "26.5",
+        "scope": "Native paused Canvas pixel retention and draw suppression; not performance qualification",
+        "pageErrors": [],
+        "cases": [
+          {
+            "name": "paused-initial-settling",
+            "draws": 0,
+            "clears": 0,
+            "polls": 18,
+            "pixelsUnchanged": true
+          },
+          {
+            "name": "startup-settling",
+            "draws": 1,
+            "clears": 1,
+            "polls": 60,
+            "pixelsUnchanged": null
+          },
+          {
+            "name": "paused",
+            "draws": 0,
+            "clears": 0,
+            "polls": 18,
+            "pixelsUnchanged": true
+          },
+          {
+            "name": "covered-by-settings",
+            "draws": 0,
+            "clears": 0,
+            "polls": 18,
+            "pixelsUnchanged": true
+          },
+          {
+            "name": "resize-invalidation",
+            "draws": 1,
+            "clears": 1,
+            "polls": null,
+            "pixelsUnchanged": null
+          },
+          {
+            "name": "resumed",
+            "draws": 5,
+            "clears": 5,
+            "polls": null,
+            "pixelsUnchanged": null
+          }
+        ]
+      }
+    ],
+    "nativePausedRenderPriorAttempts": {
+      "logs": [
+        ".cache/solo-evidence/chrome-paused-render.log",
+        ".cache/solo-evidence/webkit-paused-render.log"
+      ],
+      "status": "failed prior probe assertions are retained",
+      "explanation": "Each initial probe observed one startup-settling draw. The final probe explicitly retains that settling observation, then separately verifies steady paused and Settings-covered frames: zero draws, zero clears, preserved pixel hashes and continuing polls."
+    },
+    "candidateCold": {
+      "log": ".cache/solo-evidence/candidate-final-cold.log",
+      "pass0": {
+        "status": "failed",
+        "reason": "Active observation interrupted by the greater-than-250ms safety pause.",
+        "superseded": false
+      },
+      "pass1": {
+        "status": "completed",
+        "reportedErrors": []
+      },
+      "pass2": {
+        "status": "completed",
+        "reportedErrors": []
+      },
+      "limitation": "These are desktop software-browser observations under concurrent validation load, not physical Steam Deck or iPhone qualification."
+    },
+    "soak": {
+      "log": ".cache/solo-evidence/candidate-soak.log",
+      "status": "functional thirty-minute observation completed",
+      "warning": "At thirty minutes the bounded replay recording was discarded and gameplay continued.",
+      "reportedErrors": [],
+      "performanceAssessment": "pending; functional completion alone is not a smoothness claim."
+    },
+    "finalMediaAndOptionalLinkReview": {
+      "log": ".cache/solo-evidence/final-review-regressions.log",
+      "sha256": "401e3c0d23a78c824c3e0ce98dd29529c99e22e5c077f77bc3cee3cc1586f7dc",
+      "status": "passed",
+      "tests": 26,
+      "passed": 26,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 18692.494167,
+      "scope": "Required media re-admission, Legacy optional link nonblocking Start/Resume, deferred safe parsing/fingerprinting, cancellation and lifecycle retirement.",
+      "revisionQualification": "Executed on the final review working tree before its freeze commit, based on 4f36abcbae60184af697d0210f0dc7c3338e8afc. These focused results do not convert the earlier stopped broad attempt into a pass."
+    },
+    "finalRendererPreferenceReview": {
+      "log": ".cache/solo-evidence/final-render-preference-regressions.log",
+      "sha256": "b4aaa29a5329ecbc203ebc907c7212704fdc718b87fd4c67d3f2b296a3333496",
+      "status": "passed",
+      "tests": 30,
+      "passed": 30,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 19898.1955,
+      "scope": "Visible submission, retained paused/hidden display, local/external/borrowed display owner invalidation, repaint-once grid/text face/remains/destruction/ground choices, and adapted Team frame generation restoration.",
+      "revisionQualification": "Executed on the final review working tree before its freeze commit, based on 4f36abcbae60184af697d0210f0dc7c3338e8afc. These focused results do not convert the earlier stopped broad attempt into a pass."
+    },
+    "frozenSource": {
+      "sourceRevision": "b893d466176f6703d7b472418fc49619f4ff6b52",
+      "identityEvidence": "Operator identifies the source revision served on production-policy preview port 8773; the raw probe reports capture URL/browser/CSP but do not embed a git revision.",
+      "scope": "Desktop source correctness under production security headers; not a generated-build, physical-device, sustained-frame-time or GPU/thermal qualification.",
+      "nativePausedRender": [
+        {
+          "path": ".cache/solo-evidence/chrome-paused-render-b893-retry1.json",
+          "sha256": "c352bb462d81d67813c064776bd8e0d0c129182cee7677d72387c7bf8224a23d",
+          "bytes": 2908,
+          "status": "passed",
+          "engine": "chromium",
+          "browser": "155.0.8059.80",
+          "rasterScope": "native software Canvas2D",
+          "fixtureAccess": true,
+          "pageErrors": [],
+          "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+          "cases": [
+            {
+              "name": "paused-initial-settling",
+              "settling": true,
+              "draws": 0,
+              "clears": 0,
+              "polls": 18,
+              "pixelsUnchanged": true,
+              "retainedPixelHash": "4bc4a25481746f3529e3d57e9c652a429064b1e1efd880c2d1566ba47f6c45ca"
+            },
+            {
+              "name": "startup-settling",
+              "settling": true,
+              "frames": 61,
+              "elapsedMs": 1014.7999999970198,
+              "draws": 0,
+              "clears": 0,
+              "polls": 61
+            },
+            {
+              "name": "paused",
+              "settling": false,
+              "draws": 0,
+              "clears": 0,
+              "polls": 18,
+              "pixelsUnchanged": true,
+              "retainedPixelHash": "4bc4a25481746f3529e3d57e9c652a429064b1e1efd880c2d1566ba47f6c45ca"
+            },
+            {
+              "name": "covered-by-settings",
+              "settling": false,
+              "draws": 0,
+              "clears": 0,
+              "polls": 18,
+              "pixelsUnchanged": true,
+              "retainedPixelHash": "4bc4a25481746f3529e3d57e9c652a429064b1e1efd880c2d1566ba47f6c45ca"
+            },
+            {
+              "name": "resize-invalidation",
+              "draws": 1,
+              "clears": 1
+            },
+            {
+              "name": "resumed",
+              "draws": 5,
+              "clears": 5,
+              "state": "running"
+            }
+          ]
+        },
+        {
+          "path": ".cache/solo-evidence/webkit-paused-render-b893-retry1.json",
+          "sha256": "6136cda9d768eb4086edb3a6818ed8d480a7a5eaf50b1649a95bfc73fba43ed6",
+          "bytes": 2881,
+          "status": "passed",
+          "engine": "webkit",
+          "browser": "26.5",
+          "rasterScope": "native WebKit Canvas2D",
+          "fixtureAccess": true,
+          "pageErrors": [],
+          "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+          "cases": [
+            {
+              "name": "paused-initial-settling",
+              "settling": true,
+              "draws": 1,
+              "clears": 1,
+              "polls": 18,
+              "pixelsUnchanged": true,
+              "retainedPixelHash": "56f8795ecfc4fe81d6bd014ccf707c9d1ec713b18dcfd5a80aea9603055042cc"
+            },
+            {
+              "name": "startup-settling",
+              "settling": true,
+              "frames": 61,
+              "elapsedMs": 1015,
+              "draws": 0,
+              "clears": 0,
+              "polls": 61
+            },
+            {
+              "name": "paused",
+              "settling": false,
+              "draws": 0,
+              "clears": 0,
+              "polls": 18,
+              "pixelsUnchanged": true,
+              "retainedPixelHash": "56f8795ecfc4fe81d6bd014ccf707c9d1ec713b18dcfd5a80aea9603055042cc"
+            },
+            {
+              "name": "covered-by-settings",
+              "settling": false,
+              "draws": 0,
+              "clears": 0,
+              "polls": 18,
+              "pixelsUnchanged": true,
+              "retainedPixelHash": "56f8795ecfc4fe81d6bd014ccf707c9d1ec713b18dcfd5a80aea9603055042cc"
+            },
+            {
+              "name": "resize-invalidation",
+              "draws": 1,
+              "clears": 1
+            },
+            {
+              "name": "resumed",
+              "draws": 5,
+              "clears": 5,
+              "state": "running"
+            }
+          ]
+        }
+      ],
+      "staticMP3Worker": [
+        {
+          "path": ".cache/solo-evidence/chrome-worker-b893.json",
+          "sha256": "d4a276059321b3f23becf376c0dde3c1cefb9400a1d4abf35a0bdfbeb334f6ff",
+          "bytes": 2467,
+          "status": "passed",
+          "engine": "chromium",
+          "browser": "155.0.8059.80",
+          "fixtureAccess": true,
+          "workerURLs": ["http://127.0.0.1:8773/game/mp3-inspection-worker.mjs"],
+          "pageErrors": [],
+          "policyErrors": [
+            "Connecting to 'https://mekhovov.github.io/revealline-soundtracks/catalogue.json' violates the following Content Security Policy directive: \"connect-src 'self'\". The action has been blocked.",
+            "Fetch API cannot load https://mekhovov.github.io/revealline-soundtracks/catalogue.json. Refused to connect because it violates the document's Content Security Policy."
+          ],
+          "cspHeader": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+          "active": {
+            "settled": true,
+            "cases": [
+              {
+                "name": "valid",
+                "status": "fulfilled",
+                "value": {
+                  "sha256": "54a1cbf7f98d7b263dae389576f50dc8507e3b3b40aec9c5793dc4480b14d913",
+                  "bytes": 4170,
+                  "mime": "audio/mpeg",
+                  "mpegVersion": "1",
+                  "sampleRate": 44100,
+                  "channels": 1,
+                  "frames": 10,
+                  "durationSeconds": 0.2612244897959184
+                }
+              },
+              {
+                "name": "malformed",
+                "status": "rejected",
+                "error": {
+                  "name": "TypeError",
+                  "message": "Unsupported or malformed MPEG Layer III frame."
+                }
+              },
+              {
+                "name": "truncated",
+                "status": "rejected",
+                "error": {
+                  "name": "TypeError",
+                  "message": "Truncated MP3 frame."
+                }
+              }
+            ],
+            "admission": {
+              "phase": "playing",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0
+            },
+            "inspector": {
+              "workerActive": false,
+              "workerOwnedBytes": 0,
+              "pendingRequests": 0
+            },
+            "flightBefore": "running",
+            "flightAfter": "running"
+          },
+          "mode": "worker",
+          "validationPassed": true,
+          "policyErrorScope": "The reported policy errors block the external soundtrack catalogue under the unchanged production connect-src policy. The same-origin static worker ran and passed all three MP3 cases; this does not validate remote catalogue availability."
+        },
+        {
+          "path": ".cache/solo-evidence/webkit-worker-b893.json",
+          "sha256": "849fc36a2e3dfdfb5fa399af27c698c16170c0a26b82c70fa47f976d82061f3b",
+          "bytes": 2265,
+          "status": "passed",
+          "engine": "webkit",
+          "browser": "26.5",
+          "fixtureAccess": true,
+          "workerURLs": ["http://127.0.0.1:8773/game/mp3-inspection-worker.mjs"],
+          "pageErrors": [],
+          "policyErrors": [
+            "Refused to connect to https://mekhovov.github.io/revealline-soundtracks/catalogue.json because it does not appear in the connect-src directive of the Content Security Policy."
+          ],
+          "cspHeader": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+          "active": {
+            "settled": true,
+            "cases": [
+              {
+                "name": "valid",
+                "status": "fulfilled",
+                "value": {
+                  "sha256": "54a1cbf7f98d7b263dae389576f50dc8507e3b3b40aec9c5793dc4480b14d913",
+                  "bytes": 4170,
+                  "mime": "audio/mpeg",
+                  "mpegVersion": "1",
+                  "sampleRate": 44100,
+                  "channels": 1,
+                  "frames": 10,
+                  "durationSeconds": 0.2612244897959184
+                }
+              },
+              {
+                "name": "malformed",
+                "status": "rejected",
+                "error": {
+                  "name": "TypeError",
+                  "message": "Unsupported or malformed MPEG Layer III frame."
+                }
+              },
+              {
+                "name": "truncated",
+                "status": "rejected",
+                "error": {
+                  "name": "TypeError",
+                  "message": "Truncated MP3 frame."
+                }
+              }
+            ],
+            "admission": {
+              "phase": "playing",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0
+            },
+            "inspector": {
+              "workerActive": false,
+              "workerOwnedBytes": 0,
+              "pendingRequests": 0
+            },
+            "flightBefore": "running",
+            "flightAfter": "running"
+          },
+          "mode": "worker",
+          "validationPassed": true,
+          "policyErrorScope": "The reported policy errors block the external soundtrack catalogue under the unchanged production connect-src policy. The same-origin static worker ran and passed all three MP3 cases; this does not validate remote catalogue availability."
+        }
+      ],
+      "missingReportAttempts": [
+        {
+          "attempt": "chrome-paused-render-b893",
+          "exitCode": 1,
+          "status": "failed-without-report",
+          "exitCodeEvidence": "Operator confirmed process completion with exit 1.",
+          "log": {
+            "path": ".cache/solo-evidence/chrome-paused-render-b893.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "expectedMissingReport": ".cache/solo-evidence/chrome-paused-render-b893.json",
+          "reportPresent": false,
+          "attribution": "Infrastructure/unattributed missing-report attempt. The shell separately reported no space during the same period; causation for this attempt is not established.",
+          "superseded": false
+        },
+        {
+          "attempt": "webkit-paused-render-b893",
+          "exitCode": 1,
+          "status": "failed-without-report",
+          "exitCodeEvidence": "Operator confirmed process completion with exit 1.",
+          "log": {
+            "path": ".cache/solo-evidence/webkit-paused-render-b893.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "expectedMissingReport": ".cache/solo-evidence/webkit-paused-render-b893.json",
+          "reportPresent": false,
+          "attribution": "Infrastructure/unattributed missing-report attempt. The shell separately reported no space during the same period; causation for this attempt is not established.",
+          "superseded": false
+        }
+      ],
+      "lint": {
+        "path": ".cache/solo-evidence/lint-frozen.log",
+        "sha256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c",
+        "bytes": 196,
+        "exitCode": 0,
+        "exitCodeEvidence": "Operator confirmed completed full frozen-source lint."
+      },
+      "priorFullValidate": {
+        "path": ".cache/solo-evidence/validate-final-revised.log",
+        "sha256": "83e13ade483c62e00ff8f8bd96a816763d3e9763f42158bd05ef6ceaf1b63fce",
+        "bytes": 3885,
+        "exitCode": 0,
+        "qualification": "Historical validation before four renderer/preference callbacks. This earlier pass is not promoted to a final frozen-source pass; completed later validation is recorded under latestFrozenRuntime."
+      },
+      "frozenBuildValidation": {
+        "status": "passed",
+        "artifactVersion": "0.151.1-solo-perf.3",
+        "declaredSourceRevision": "b893d466176f6703d7b472418fc49619f4ff6b52",
+        "evidence": "finalValidationEvidence.previousVerifiedArtifact",
+        "qualification": "Historical b893 .3 artifact integrity/ZIP/CSP checks passed. Its native boot was not qualified. Final fa820 stable-package checks and failed superseded .4 boot are recorded under latestFrozenRuntime."
+      }
+    },
+    "previousVerifiedArtifact": {
+      "version": "0.151.1-solo-perf.3",
+      "declaredSourceRevision": "b893d466176f6703d7b472418fc49619f4ff6b52",
+      "relationshipToLatestFrozenRuntime": "Previous verified candidate. This .3 archive predates the catalogue admission and PCM accounting changes frozen at fa8201638b6d75edef4ac5552a5a9dc918668aaa; it is not the forthcoming .4 artifact.",
+      "integrity": {
+        "path": ".cache/solo-evidence/final-artifact-verification.json",
+        "bytes": 30894,
+        "sha256": "11ef9b1c720079cbdef832505f62410885a114ed3002385a2be8a3f23cce3f6f",
+        "status": "passed",
+        "failures": [],
+        "manifest": {
+          "sha256": "80ba3c076622acfbf7dea3f7bbca5bd00ff43b2ad299d8dac650f46f292edb14",
+          "version": "0.151.1-solo-perf.3",
+          "declaredSourceRevision": "b893d466176f6703d7b472418fc49619f4ff6b52",
+          "files": 3501,
+          "bytes": 1072161583
+        },
+        "verifiedArtifactBytes": 1072161583,
+        "runtimeSourcesCompared": 1616,
+        "supportedSourceProjectionCount": 84,
+        "transformedSourcesSkipped": ["game/content-design/route-loader.mjs"],
+        "generatedRouteDescriptors": 52,
+        "references": {
+          "valid": true,
+          "navigationWarnings": [
+            "game/index.html → ../diagnostics/",
+            "site/about.html → ../releases/"
+          ]
+        },
+        "workerClosure": [
+          {
+            "path": "game/ui/media-preparation.mjs",
+            "inManifest": true,
+            "inCore": true,
+            "inInventory": true
+          },
+          {
+            "path": "game/ui/mp3-inspector.mjs",
+            "inManifest": true,
+            "inCore": true,
+            "inInventory": true
+          },
+          {
+            "path": "game/mp3-inspection-worker.mjs",
+            "inManifest": true,
+            "inCore": true,
+            "inInventory": true
+          },
+          {
+            "path": "game/mp3-inspection.mjs",
+            "inManifest": true,
+            "inCore": true,
+            "inInventory": true
+          }
+        ],
+        "offline": {
+          "buildId": "e54b09f9f598193e9a0a755fb6f58b17e5e05f57a0af8f0635896213fedb1717",
+          "coreFiles": 1701,
+          "downloadFiles": 1850,
+          "inventoryFiles": 3576
+        },
+        "sourceIdentity": {
+          "headContextOnly": "94c3ff224008ae2b3d5d048f0a89d88af8335acc",
+          "comparisonBase": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "dirty": true,
+          "wholeTreeRevision": null,
+          "status": [
+            "?? docs/performance/solo-observations.json",
+            "?? docs/performance/solo-performance.md",
+            "?? docs/performance/solo-startup-profile.json",
+            "?? docs/performance/solo-test-baseline.json"
+          ],
+          "dirtyDirectBuildInputs": [],
+          "otherDirtyPaths": [
+            "docs/performance/solo-observations.json",
+            "docs/performance/solo-performance.md",
+            "docs/performance/solo-startup-profile.json",
+            "docs/performance/solo-test-baseline.json"
+          ],
+          "directBuildInputsRevision": "94c3ff224008ae2b3d5d048f0a89d88af8335acc",
+          "declaredBuildRevision": "b893d466176f6703d7b472418fc49619f4ff6b52",
+          "declaredRevisionIsAncestor": true,
+          "changedDirectInputsSinceDeclaredRevision": [],
+          "statusAtFinish": [
+            "?? docs/performance/solo-observations.json",
+            "?? docs/performance/solo-performance.md",
+            "?? docs/performance/solo-startup-profile.json",
+            "?? docs/performance/solo-test-baseline.json"
+          ],
+          "dirtyDirectBuildInputsAtFinish": []
+        }
+      },
+      "zipMembers": {
+        "path": ".cache/solo-evidence/final-artifact-zip-verification.json",
+        "bytes": 440,
+        "sha256": "a3c51e5efdf1f43326711e0f55de09382253ddf3cb84de0e6b8c4d745b2443bb",
+        "status": "passed",
+        "failures": [],
+        "members": 3502,
+        "verifiedBytes": 1072682497,
+        "embeddedManifestSha256": "80ba3c076622acfbf7dea3f7bbca5bd00ff43b2ad299d8dac650f46f292edb14",
+        "declaredSourceRevision": "b893d466176f6703d7b472418fc49619f4ff6b52",
+        "version": "0.151.1-solo-perf.3"
+      },
+      "securityHeaders": {
+        "path": ".cache/solo-evidence/final-artifact-csp-verification.json",
+        "bytes": 714,
+        "sha256": "90e7021f40e0854427b11a2e807facecca6ada52bfabaaec175547fdcc265283",
+        "status": "passed",
+        "policy": "Exact PUBLIC_SECURITY_HEADERS"
+      },
+      "preservation": {
+        "path": ".cache/solo-evidence/artifact-preservation-b893.json",
+        "bytes": 2263,
+        "sha256": "816ba71508605fe9b365fc1d78fd8280b03ca70b59a5a3ec8b759b99eded1fa2",
+        "status": "passed",
+        "archiveDirectory": "/Volumes/alex/solo-performance-b1174522/artifacts/0.151.1-solo-perf.3",
+        "layout": "Archive and selected verification metadata only; expanded runtime is inside distribution.zip.",
+        "files": [
+          {
+            "path": "distribution.zip",
+            "bytes": 1073277907,
+            "sha256": "978d0fc43d379933948d5655550bc96f12ecee25b5a4cb6b64c2816bc9ba0dca",
+            "destinationReadbackVerified": true
+          },
+          {
+            "path": "distribution.zip.sha256",
+            "bytes": 83,
+            "sha256": "6667173b54adc50bfef5520375cc9de8bb3b4c7ce549a4dd5ba35f1964243623",
+            "destinationReadbackVerified": true
+          },
+          {
+            "path": "manifest.json",
+            "bytes": 520914,
+            "sha256": "80ba3c076622acfbf7dea3f7bbca5bd00ff43b2ad299d8dac650f46f292edb14",
+            "destinationReadbackVerified": true
+          },
+          {
+            "path": "build-info.json",
+            "bytes": 155,
+            "sha256": "981ca6b78fc0a0938e8baf0bf64a515d69563a5288d81a6c128ce5fe85f08052",
+            "destinationReadbackVerified": true
+          },
+          {
+            "path": ".xonix-build.json",
+            "bytes": 53,
+            "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa",
+            "destinationReadbackVerified": true
+          },
+          {
+            "path": "_headers",
+            "bytes": 528,
+            "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8",
+            "destinationReadbackVerified": true
+          },
+          {
+            "path": "artifact-verification.json",
+            "bytes": 30894,
+            "sha256": "11ef9b1c720079cbdef832505f62410885a114ed3002385a2be8a3f23cce3f6f",
+            "destinationReadbackVerified": true
+          },
+          {
+            "path": "zip-verification.json",
+            "bytes": 440,
+            "sha256": "a3c51e5efdf1f43326711e0f55de09382253ddf3cb84de0e6b8c4d745b2443bb",
+            "destinationReadbackVerified": true
+          },
+          {
+            "path": "csp-verification.json",
+            "bytes": 714,
+            "sha256": "90e7021f40e0854427b11a2e807facecca6ada52bfabaaec175547fdcc265283",
+            "destinationReadbackVerified": true
+          }
+        ],
+        "completedAtUnixSeconds": 1792112039.778982
+      },
+      "qualification": "Historical .3 package integrity/archive verification only; native boot was not qualified. The same unsupported prerelease channel family later failed .4 boot. This archive is not a ready rollback artifact.",
+      "bootQualification": "not-qualified",
+      "rollbackReady": false
+    },
+    "observerLaunchFailureRetention": {
+      "path": ".cache/solo-evidence/observer-launch-failure-retention.json",
+      "bytes": 1733,
+      "sha256": "e515c0de567833c347d226c333c49ff8f6f98ce38c877db365a6bf696d1334f6",
+      "log": {
+        "path": ".cache/solo-evidence/observer-launch-failure-retention.log",
+        "bytes": 117,
+        "sha256": "b6dca6a4b3d0d40c6e01cd15c291d90780bd426bdb84b78105edb39a419f68bb"
+      },
+      "purpose": "Intentional observer failure-retention smoke using a nonexistent browser executable. No browser or gameplay was observed.",
+      "outcome": "expected missing-browser failures retained for all three requested passes",
+      "runtimeSourceLabelInRawReport": "b893d466176f6703d7b472418fc49619f4ff6b52",
+      "requestedPasses": 3,
+      "observedPasses": 0,
+      "passes": [
+        {
+          "pass": 0,
+          "status": "not-observed",
+          "observedAt": null,
+          "failure": "browserType.launch: Failed to launch chromium because executable doesn't exist at /nonexistent/solo-observer-browser",
+          "applicationMetricsPresent": false,
+          "externalMetricsPresent": false
+        },
+        {
+          "pass": 1,
+          "status": "not-observed",
+          "observedAt": null,
+          "failure": "browserType.launch: Failed to launch chromium because executable doesn't exist at /nonexistent/solo-observer-browser",
+          "applicationMetricsPresent": false,
+          "externalMetricsPresent": false
+        },
+        {
+          "pass": 2,
+          "status": "not-observed",
+          "observedAt": null,
+          "failure": "browserType.launch: Failed to launch chromium because executable doesn't exist at /nonexistent/solo-observer-browser",
+          "applicationMetricsPresent": false,
+          "externalMetricsPresent": false
+        }
+      ],
+      "qualification": "Observer robustness evidence only; not three failed gameplay runs or a runtime performance result."
+    },
+    "latestFrozenRuntime": {
+      "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+      "plannedArtifactVersion": "0.151.1",
+      "changeScope": "First-frame soundtrack metadata reuse: own initial empty library; cache policy-adjusted immutable library by library and override; reuse one prevalidated context selection; clear selection references on library replacement. Untrusted validation preserved.",
+      "focusedTests": {
+        "path": ".cache/solo-evidence/soundtrack-context-tests.log",
+        "bytes": 25740,
+        "sha256": "10e3b76c7bf0cdea31b05f0e399dbe7299b22b8fbfb2f6a16ae305d8bf918293",
+        "command": "CI=1 node --test game/test/soundtrack-player.test.mjs game/test/soundtrack.test.mjs game/test/soundtrack-catalogue.test.mjs > /tmp/solo-context-tests.log 2>&1",
+        "status": "passed",
+        "tests": 111,
+        "passed": 111,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "durationMs": 847.694958,
+        "scope": "Soundtrack player/library/catalogue compatibility,256-track no-library-traversal transitions for local/online modes, override, invalid-context atomicity and library replacement.",
+        "revisionQualification": "Run before the1c505 freeze commit, after final runtime edit clearing baseSelection/selectionLibrary in setLibrary; copied retained log. Test owner confirmed no later owned edits."
+      },
+      "fullLint": {
+        "status": "passed",
+        "exitCode": 0,
+        "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+        "path": ".cache/solo-evidence/lint-final-corrected.log",
+        "bytes": 196,
+        "sha256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c",
+        "command": "npm run lint",
+        "resultProvenance": "Parent confirmed full lint completed cleanly; finalized retained log read and hashed.",
+        "qualification": "Completed full-source check; completed static artifact, native-browser and generated-build timing evidence is recorded separately under this frozen runtime."
+      },
+      "fullValidation": {
+        "status": "passed",
+        "exitCode": 0,
+        "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+        "path": ".cache/solo-evidence/validate-final-corrected.log",
+        "bytes": 3885,
+        "sha256": "5b08e5e23343919c857891c2b1b0b92832fc483bcce11f454877f2481c2a429d",
+        "command": "npm run validate",
+        "resultProvenance": "Parent confirmed validation session47005 exited0; finalized retained log read and hashed.",
+        "qualification": "Completed full-source check; completed static artifact, native-browser and generated-build timing evidence is recorded separately under this frozen runtime.",
+        "navigationWarnings": [
+          "game/downloads.html → ../app/update.html",
+          "game/downloads.html → ../app/",
+          "game/index.html → ../app/update.html",
+          "game/index.html → ../diagnostics/",
+          "site/about.html → ../releases/",
+          "site/about.html → ../privacy.html",
+          "site/about.html → ../credits.html"
+        ],
+        "literalReferencesValid": true,
+        "generatedOutputs": "All configured generated-output checks completed; retained log reports byte-identical projections."
+      },
+      "generatedBuild": {
+        "status": "static-integrity-passed",
+        "buildExitCode": 0,
+        "buildResultProvenance": "Parent confirmed build session56478 completed with exit0; completed build log and all six proof files were read and hashed.",
+        "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+        "version": "0.151.1",
+        "buildLog": {
+          "path": ".cache/solo-evidence/build-final-corrected.log",
+          "bytes": 241,
+          "sha256": "2c39270d7d90cb170ac406f2af8ecc1013c11eade8d9e8864d25faa877a2e1bc"
+        },
+        "artifactDirectory": "/Volumes/SoloPerfRAM/candidate-corrected",
+        "manifest": {
+          "sha256": "8638445db310b6ae7a255523c1abedd41008d5b7a73b10d958dec1b2ee61c45d",
+          "version": "0.151.1",
+          "declaredSourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+          "files": 3501,
+          "bytes": 1072166594
+        },
+        "verifiedArtifactBytes": 1072166594,
+        "runtimeSourcesCompared": 1616,
+        "supportedSourceProjectionCount": 84,
+        "transformedSourcesSkipped": ["game/content-design/route-loader.mjs"],
+        "generatedRouteDescriptors": 52,
+        "references": {
+          "valid": true,
+          "navigationWarnings": [
+            "game/index.html → ../diagnostics/",
+            "site/about.html → ../releases/"
+          ]
+        },
+        "workerClosure": [
+          {
+            "path": "game/ui/media-preparation.mjs",
+            "inManifest": true,
+            "inCore": true,
+            "inInventory": true
+          },
+          {
+            "path": "game/ui/mp3-inspector.mjs",
+            "inManifest": true,
+            "inCore": true,
+            "inInventory": true
+          },
+          {
+            "path": "game/mp3-inspection-worker.mjs",
+            "inManifest": true,
+            "inCore": true,
+            "inInventory": true
+          },
+          {
+            "path": "game/mp3-inspection.mjs",
+            "inManifest": true,
+            "inCore": true,
+            "inInventory": true
+          }
+        ],
+        "offline": {
+          "buildId": "d1fa70516ca88d44e9193889e0c7129aa57b30f9e65365d7d6638b7d0163df24",
+          "coreFiles": 1701,
+          "downloadFiles": 1850,
+          "inventoryFiles": 3576
+        },
+        "sourceVerification": {
+          "headContextOnly": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+          "comparisonBase": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "dirty": true,
+          "wholeTreeRevision": null,
+          "status": [
+            "?? docs/performance/solo-observations.json",
+            "?? docs/performance/solo-performance.md",
+            "?? docs/performance/solo-startup-profile.json",
+            "?? docs/performance/solo-test-baseline.json"
+          ],
+          "dirtyDirectBuildInputs": [],
+          "otherDirtyPaths": [
+            "docs/performance/solo-observations.json",
+            "docs/performance/solo-performance.md",
+            "docs/performance/solo-startup-profile.json",
+            "docs/performance/solo-test-baseline.json"
+          ],
+          "directBuildInputsRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+          "declaredBuildRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+          "declaredRevisionIsAncestor": true,
+          "changedDirectInputsSinceDeclaredRevision": [],
+          "statusAtFinish": [
+            "?? docs/performance/solo-observations.json",
+            "?? docs/performance/solo-performance.md",
+            "?? docs/performance/solo-startup-profile.json",
+            "?? docs/performance/solo-test-baseline.json"
+          ],
+          "dirtyDirectBuildInputsAtFinish": []
+        },
+        "distribution": {
+          "bytes": 1073282905,
+          "sha256": "932dc8c8ca7ab1d6a5e15b13f8843920d06a0afa508ae842494cee2e0f330664",
+          "check": "sidecar digest; ZIP members are not independently re-expanded"
+        },
+        "independentZipVerification": {
+          "kind": "read-only ZIP member verification against the completed artifact manifest",
+          "artifact": "/Volumes/SoloPerfRAM/candidate-corrected",
+          "status": "passed",
+          "failures": [],
+          "members": 3502,
+          "verifiedBytes": 1072687495,
+          "embeddedManifestSha256": "8638445db310b6ae7a255523c1abedd41008d5b7a73b10d958dec1b2ee61c45d",
+          "declaredSourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+          "version": "0.151.1"
+        },
+        "publicPolicy": {
+          "status": "passed",
+          "artifact": "/Volumes/SoloPerfRAM/candidate-corrected/_headers",
+          "policy": "Exact PUBLIC_SECURITY_HEADERS",
+          "buildInfo": {
+            "formatVersion": 1,
+            "version": "0.151.1",
+            "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+            "entry": "game/index.html"
+          },
+          "headers": {
+            "Content-Security-Policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "no-referrer",
+            "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+            "Cache-Control": "no-cache"
+          },
+          "headersSha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8",
+          "manifestSha256": "8638445db310b6ae7a255523c1abedd41008d5b7a73b10d958dec1b2ee61c45d",
+          "declaredSourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+          "version": "0.151.1"
+        },
+        "evidence": [
+          {
+            "path": ".cache/solo-evidence/final-corrected/final-artifact-verification.json",
+            "bytes": 30884,
+            "sha256": "723b8eec1cd1b7da22debb6b814f2b27d956f7de4d513b99a8c1db3e3c955c24"
+          },
+          {
+            "path": ".cache/solo-evidence/final-corrected/final-artifact-verification.log",
+            "bytes": 103,
+            "sha256": "c659b9e0233933b8400f53222e04c8aa5b0d67f2ad70bc963025c6823d160c05"
+          },
+          {
+            "path": ".cache/solo-evidence/final-corrected/final-artifact-zip-verification.json",
+            "bytes": 430,
+            "sha256": "e9e499eabd357a26cc6d9e62c53c47854880a26b6d509e8f8006066aae6e95b4"
+          },
+          {
+            "path": ".cache/solo-evidence/final-corrected/final-artifact-zip-verification.log",
+            "bytes": 410,
+            "sha256": "5737b575e6150b3da2aeff6c7d761100c0ed16575a4b761e506636761131a70c"
+          },
+          {
+            "path": ".cache/solo-evidence/final-corrected/final-artifact-csp-verification.json",
+            "bytes": 1156,
+            "sha256": "36582f55fe9f20bd93a3ef92ebf8b9da9aa2e51f6360d50f87106ef9d1d605b5"
+          },
+          {
+            "path": ".cache/solo-evidence/final-corrected/final-artifact-csp-verification.log",
+            "bytes": 1059,
+            "sha256": "038801d6eed75c4a91613c1bd6bf4c209b1c956c7f243a6daaa06ae8ebf7fbf2"
+          }
+        ],
+        "bootQualification": "Passed four desktop native worker/paused-render checks and all twelve generated-build timing observations. Physical-device and release-wide qualification are separate.",
+        "preservation": {
+          "status": "passed",
+          "receipt": {
+            "path": ".cache/solo-evidence/final-corrected/artifact-preservation.json",
+            "bytes": 2251,
+            "sha256": "a68f1e29ebb9760d47f8295957f8a477dac540dab36faaa30e51dfc56e27fe3c"
+          },
+          "copyLog": {
+            "path": ".cache/solo-evidence/artifact-preservation-1c505-corrected.log",
+            "bytes": 978,
+            "sha256": "e6f4b31e6c28e45b645f7ab474032421c2873401e6a8f0acc014eafad4702fa0"
+          },
+          "result": {
+            "format": "solo-artifact-preservation.v1",
+            "status": "passed",
+            "sourceArtifact": "/Volumes/SoloPerfRAM/candidate-corrected",
+            "archiveDirectory": "/Volumes/alex/solo-performance-b1174522/artifacts/1c505dcd/0.151.1",
+            "version": "0.151.1",
+            "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+            "layout": "Archive and selected verification metadata only; expanded runtime is inside distribution.zip.",
+            "files": [
+              {
+                "path": "distribution.zip",
+                "bytes": 1073282905,
+                "sha256": "932dc8c8ca7ab1d6a5e15b13f8843920d06a0afa508ae842494cee2e0f330664",
+                "destinationReadbackVerified": true
+              },
+              {
+                "path": "distribution.zip.sha256",
+                "bytes": 83,
+                "sha256": "02069da4f744f55ed282a3fe537c3366c8ca537ce780a810be4dbcb55714fa06",
+                "destinationReadbackVerified": true
+              },
+              {
+                "path": "manifest.json",
+                "bytes": 520901,
+                "sha256": "8638445db310b6ae7a255523c1abedd41008d5b7a73b10d958dec1b2ee61c45d",
+                "destinationReadbackVerified": true
+              },
+              {
+                "path": "build-info.json",
+                "bytes": 143,
+                "sha256": "76f6046e7cb490d6be8ae6902fa0106020d3d8d23ff2241318468d8d89fc2100",
+                "destinationReadbackVerified": true
+              },
+              {
+                "path": ".xonix-build.json",
+                "bytes": 53,
+                "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa",
+                "destinationReadbackVerified": true
+              },
+              {
+                "path": "_headers",
+                "bytes": 528,
+                "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8",
+                "destinationReadbackVerified": true
+              },
+              {
+                "path": "artifact-verification.json",
+                "bytes": 30884,
+                "sha256": "723b8eec1cd1b7da22debb6b814f2b27d956f7de4d513b99a8c1db3e3c955c24",
+                "destinationReadbackVerified": true
+              },
+              {
+                "path": "zip-verification.json",
+                "bytes": 430,
+                "sha256": "e9e499eabd357a26cc6d9e62c53c47854880a26b6d509e8f8006066aae6e95b4",
+                "destinationReadbackVerified": true
+              },
+              {
+                "path": "csp-verification.json",
+                "bytes": 1156,
+                "sha256": "36582f55fe9f20bd93a3ef92ebf8b9da9aa2e51f6360d50f87106ef9d1d605b5",
+                "destinationReadbackVerified": true
+              }
+            ],
+            "completedAtUnixSeconds": 1792117684.693438
+          },
+          "qualification": "All nine archived files were copied and destination readback hashes verified by the preservation operator. This update read and hashed the completed receipt/log; it did not independently re-read the1.07GB ZIP."
+        },
+        "artifactDirectoryState": "Temporary expanded build removed when task volume detached after verified preservation; use archived distribution.zip."
+      },
+      "sourceTiming": {
+        "status": "completed observations",
+        "report": {
+          "path": ".cache/solo-evidence/corrected-source-cpu4.json",
+          "bytes": 1196942,
+          "sha256": "2ba8c91f64231e5e02d47fb0401019361b2372028553e266461da579efe9a2f5"
+        },
+        "log": {
+          "path": ".cache/solo-evidence/corrected-source-cpu4.log",
+          "bytes": 419,
+          "sha256": "0fe125da8837ee5d04f25a68645bb03b06ad4e8e25aee4f4390090b5ebd9dca7"
+        },
+        "exitCode": 0,
+        "summaryRecord": "docs/performance/solo-observations.json#correctedSourceSummary"
+      },
+      "productionTiming": {
+        "status": "completed; declared numerical scenario gates satisfied",
+        "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+        "artifactVersion": "0.151.1",
+        "observations": 12,
+        "jobs": 8,
+        "completedObservations": 12,
+        "diagnosticsOn": 9,
+        "diagnosticsOff": 3,
+        "timingExecutions": {
+          "path": ".cache/solo-evidence/final-corrected/timing/executions.json",
+          "bytes": 3616,
+          "sha256": "e95df61e28b8e4ee9c54f1a3bad880bce0d76da55eed76543c18ede918fdb3ac"
+        },
+        "summaryRecord": "docs/performance/solo-observations.json#finalProductionSummary",
+        "overheadRecord": "docs/performance/solo-observations.json#diagnosticsOverhead",
+        "qualification": "Numerical qualification only for the declared desktop opening-route revealed-border keyboard-input scenario. Not a physical-device or release-wide performance pass.",
+        "remainingQualification": "Physical iPhone 17 Pro/Safari and Steam Deck OLED/Chrome qualification remains pending. Enabled audio/remote catalogue, representative heavy captures/combat/jammers, real HTTP-cache behavior, final-runtime 30-minute sustained/resource-growth evidence and a causally established diagnostics-overhead cap are absent. No universal no-stutter claim is made."
+      },
+      "qualificationState": "Focused/full-source/static/native checks complete; declared numerical desktop scenario passes. Physical-device, broader workload, sustained resource/thermal and diagnostics-overhead qualification remain open.",
+      "nativeGeneratedBuildChecks": [
+        {
+          "path": ".cache/solo-evidence/final-corrected/native/chromium-mp3-worker.json",
+          "bytes": 2467,
+          "sha256": "7aba478d0336dbc0c216e22b96823ab131a111a1acce6eafd66436027b3c489a",
+          "log": {
+            "path": ".cache/solo-evidence/final-corrected/native/chromium-mp3-worker.log",
+            "bytes": 184,
+            "sha256": "212edf09a4f086f67a9647f6bf2c7816b3c65f84613fb123a2a36e08db76cc77"
+          },
+          "execution": {
+            "scenario": "chromium-mp3-worker",
+            "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+            "buildVersion": "0.151.1",
+            "exitCode": 0,
+            "elapsedSeconds": 16.680910110473633,
+            "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-corrected/native/chromium-mp3-worker.json",
+            "reportExists": true,
+            "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-corrected/native/chromium-mp3-worker.log"
+          },
+          "result": {
+            "kind": "real static MP3 worker correctness smoke; not a performance measurement",
+            "address": "http://127.0.0.1:8776/game/?journey=opening",
+            "engine": "chromium",
+            "fixtureAccess": true,
+            "status": "passed",
+            "workerURLs": ["http://127.0.0.1:8776/game/mp3-inspection-worker.mjs"],
+            "pageErrors": [],
+            "policyErrors": [
+              "Connecting to 'https://mekhovov.github.io/revealline-soundtracks/catalogue.json' violates the following Content Security Policy directive: \"connect-src 'self'\". The action has been blocked.",
+              "Fetch API cannot load https://mekhovov.github.io/revealline-soundtracks/catalogue.json. Refused to connect because it violates the document's Content Security Policy."
+            ],
+            "browser": "155.0.8059.80",
+            "cspHeader": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+            "cspMeta": [],
+            "expectedWorkerURL": "http://127.0.0.1:8776/game/mp3-inspection-worker.mjs",
+            "active": {
+              "settled": true,
+              "cases": [
+                {
+                  "name": "valid",
+                  "status": "fulfilled",
+                  "value": {
+                    "sha256": "54a1cbf7f98d7b263dae389576f50dc8507e3b3b40aec9c5793dc4480b14d913",
+                    "bytes": 4170,
+                    "mime": "audio/mpeg",
+                    "mpegVersion": "1",
+                    "sampleRate": 44100,
+                    "channels": 1,
+                    "frames": 10,
+                    "durationSeconds": 0.2612244897959184
+                  }
+                },
+                {
+                  "name": "malformed",
+                  "status": "rejected",
+                  "error": {
+                    "name": "TypeError",
+                    "message": "Unsupported or malformed MPEG Layer III frame."
+                  }
+                },
+                {
+                  "name": "truncated",
+                  "status": "rejected",
+                  "error": {
+                    "name": "TypeError",
+                    "message": "Truncated MP3 frame."
+                  }
+                }
+              ],
+              "admission": {
+                "phase": "playing",
+                "queued": 0,
+                "active": {
+                  "fetch": 0,
+                  "decode": 0,
+                  "inspect": 0,
+                  "main": 0
+                },
+                "reservedDecodeBytes": 0
+              },
+              "inspector": {
+                "workerActive": false,
+                "workerOwnedBytes": 0,
+                "pendingRequests": 0
+              },
+              "flightBefore": "running",
+              "flightAfter": "running"
+            },
+            "mode": "worker",
+            "validationPassed": true
+          }
+        },
+        {
+          "path": ".cache/solo-evidence/final-corrected/native/chromium-paused-render.json",
+          "bytes": 2908,
+          "sha256": "a5d29d444943592cccf5da0ef24e585b3cb71b8ace3942e53ae6449e7c9235a2",
+          "log": {
+            "path": ".cache/solo-evidence/final-corrected/native/chromium-paused-render.log",
+            "bytes": 171,
+            "sha256": "67736b9bd2b03112d9cfd90c2513e26229906c66bf4bd5b43e05fc80e1840770"
+          },
+          "execution": {
+            "scenario": "chromium-paused-render",
+            "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+            "buildVersion": "0.151.1",
+            "exitCode": 0,
+            "elapsedSeconds": 17.41921377182007,
+            "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-corrected/native/chromium-paused-render.json",
+            "reportExists": true,
+            "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-corrected/native/chromium-paused-render.log"
+          },
+          "result": {
+            "kind": "Native paused Canvas pixel retention and draw suppression; not performance qualification",
+            "address": "http://127.0.0.1:8776/game/?journey=opening",
+            "engine": "chromium",
+            "fixtureAccess": true,
+            "status": "passed",
+            "pageErrors": [],
+            "browser": "155.0.8059.80",
+            "rasterScope": "native software Canvas2D",
+            "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+            "observation": {
+              "cases": [
+                {
+                  "name": "paused-initial-settling",
+                  "settling": true,
+                  "before": {
+                    "hash": "f4f802c1ee3924a7db366748be8e577943de91a4d17c151e66e4339092d3e83a",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "after": {
+                    "hash": "f4f802c1ee3924a7db366748be8e577943de91a4d17c151e66e4339092d3e83a",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "draws": 0,
+                  "clears": 0,
+                  "polls": 18
+                },
+                {
+                  "name": "startup-settling",
+                  "settling": true,
+                  "frames": 61,
+                  "elapsedMs": 1015.0999999940395,
+                  "draws": 0,
+                  "clears": 0,
+                  "polls": 61
+                },
+                {
+                  "name": "paused",
+                  "settling": false,
+                  "before": {
+                    "hash": "f4f802c1ee3924a7db366748be8e577943de91a4d17c151e66e4339092d3e83a",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "after": {
+                    "hash": "f4f802c1ee3924a7db366748be8e577943de91a4d17c151e66e4339092d3e83a",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "draws": 0,
+                  "clears": 0,
+                  "polls": 18
+                },
+                {
+                  "name": "covered-by-settings",
+                  "settling": false,
+                  "before": {
+                    "hash": "f4f802c1ee3924a7db366748be8e577943de91a4d17c151e66e4339092d3e83a",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "after": {
+                    "hash": "f4f802c1ee3924a7db366748be8e577943de91a4d17c151e66e4339092d3e83a",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "draws": 0,
+                  "clears": 0,
+                  "polls": 18
+                },
+                {
+                  "name": "resize-invalidation",
+                  "draws": 1,
+                  "clears": 1,
+                  "pixels": {
+                    "hash": "f4f802c1ee3924a7db366748be8e577943de91a4d17c151e66e4339092d3e83a",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  }
+                },
+                {
+                  "name": "resumed",
+                  "draws": 5,
+                  "clears": 5,
+                  "state": "running"
+                }
+              ],
+              "gamepadPollingAvailable": true
+            }
+          }
+        },
+        {
+          "path": ".cache/solo-evidence/final-corrected/native/webkit-mp3-worker.json",
+          "bytes": 2265,
+          "sha256": "1595d503166c50a1e2768469da11ababa373fcaefe2003d9768f2dde7cb35ef4",
+          "log": {
+            "path": ".cache/solo-evidence/final-corrected/native/webkit-mp3-worker.log",
+            "bytes": 182,
+            "sha256": "da9bbcaf6e7773c0e2bc649cb46b0be85fc10b40f30175f70d9b52233d2fe531"
+          },
+          "execution": {
+            "scenario": "webkit-mp3-worker",
+            "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+            "buildVersion": "0.151.1",
+            "exitCode": 0,
+            "elapsedSeconds": 5.800595998764038,
+            "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-corrected/native/webkit-mp3-worker.json",
+            "reportExists": true,
+            "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-corrected/native/webkit-mp3-worker.log"
+          },
+          "result": {
+            "kind": "real static MP3 worker correctness smoke; not a performance measurement",
+            "address": "http://127.0.0.1:8776/game/?journey=opening",
+            "engine": "webkit",
+            "fixtureAccess": true,
+            "status": "passed",
+            "workerURLs": ["http://127.0.0.1:8776/game/mp3-inspection-worker.mjs"],
+            "pageErrors": [],
+            "policyErrors": [
+              "Refused to connect to https://mekhovov.github.io/revealline-soundtracks/catalogue.json because it does not appear in the connect-src directive of the Content Security Policy."
+            ],
+            "browser": "26.5",
+            "cspHeader": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+            "cspMeta": [],
+            "expectedWorkerURL": "http://127.0.0.1:8776/game/mp3-inspection-worker.mjs",
+            "active": {
+              "settled": true,
+              "cases": [
+                {
+                  "name": "valid",
+                  "status": "fulfilled",
+                  "value": {
+                    "sha256": "54a1cbf7f98d7b263dae389576f50dc8507e3b3b40aec9c5793dc4480b14d913",
+                    "bytes": 4170,
+                    "mime": "audio/mpeg",
+                    "mpegVersion": "1",
+                    "sampleRate": 44100,
+                    "channels": 1,
+                    "frames": 10,
+                    "durationSeconds": 0.2612244897959184
+                  }
+                },
+                {
+                  "name": "malformed",
+                  "status": "rejected",
+                  "error": {
+                    "name": "TypeError",
+                    "message": "Unsupported or malformed MPEG Layer III frame."
+                  }
+                },
+                {
+                  "name": "truncated",
+                  "status": "rejected",
+                  "error": {
+                    "name": "TypeError",
+                    "message": "Truncated MP3 frame."
+                  }
+                }
+              ],
+              "admission": {
+                "phase": "playing",
+                "queued": 0,
+                "active": {
+                  "fetch": 0,
+                  "decode": 0,
+                  "inspect": 0,
+                  "main": 0
+                },
+                "reservedDecodeBytes": 0
+              },
+              "inspector": {
+                "workerActive": false,
+                "workerOwnedBytes": 0,
+                "pendingRequests": 0
+              },
+              "flightBefore": "running",
+              "flightAfter": "running"
+            },
+            "mode": "worker",
+            "validationPassed": true
+          }
+        },
+        {
+          "path": ".cache/solo-evidence/final-corrected/native/webkit-paused-render.json",
+          "bytes": 2881,
+          "sha256": "46e88560b4cc855a26d5cb165da91976a1cd3c1f1a14a666e57404a45466bf10",
+          "log": {
+            "path": ".cache/solo-evidence/final-corrected/native/webkit-paused-render.log",
+            "bytes": 169,
+            "sha256": "35d0439e9e08fde142853debf0c6412d60a76d315ef857243e547f9b7f4d4c82"
+          },
+          "execution": {
+            "scenario": "webkit-paused-render",
+            "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+            "buildVersion": "0.151.1",
+            "exitCode": 0,
+            "elapsedSeconds": 8.826889991760254,
+            "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-corrected/native/webkit-paused-render.json",
+            "reportExists": true,
+            "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-corrected/native/webkit-paused-render.log"
+          },
+          "result": {
+            "kind": "Native paused Canvas pixel retention and draw suppression; not performance qualification",
+            "address": "http://127.0.0.1:8776/game/?journey=opening",
+            "engine": "webkit",
+            "fixtureAccess": true,
+            "status": "passed",
+            "pageErrors": [],
+            "browser": "26.5",
+            "rasterScope": "native WebKit Canvas2D",
+            "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+            "observation": {
+              "cases": [
+                {
+                  "name": "paused-initial-settling",
+                  "settling": true,
+                  "before": {
+                    "hash": "a3ade82ee8b4f3909be054f47e8a29da5c53a66cb107419366a5899454f845a4",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "after": {
+                    "hash": "a3ade82ee8b4f3909be054f47e8a29da5c53a66cb107419366a5899454f845a4",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "draws": 0,
+                  "clears": 0,
+                  "polls": 18
+                },
+                {
+                  "name": "startup-settling",
+                  "settling": true,
+                  "frames": 61,
+                  "elapsedMs": 1015,
+                  "draws": 0,
+                  "clears": 0,
+                  "polls": 61
+                },
+                {
+                  "name": "paused",
+                  "settling": false,
+                  "before": {
+                    "hash": "a3ade82ee8b4f3909be054f47e8a29da5c53a66cb107419366a5899454f845a4",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "after": {
+                    "hash": "a3ade82ee8b4f3909be054f47e8a29da5c53a66cb107419366a5899454f845a4",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "draws": 0,
+                  "clears": 0,
+                  "polls": 18
+                },
+                {
+                  "name": "covered-by-settings",
+                  "settling": false,
+                  "before": {
+                    "hash": "a3ade82ee8b4f3909be054f47e8a29da5c53a66cb107419366a5899454f845a4",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "after": {
+                    "hash": "a3ade82ee8b4f3909be054f47e8a29da5c53a66cb107419366a5899454f845a4",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  },
+                  "draws": 0,
+                  "clears": 0,
+                  "polls": 18
+                },
+                {
+                  "name": "resize-invalidation",
+                  "draws": 1,
+                  "clears": 1,
+                  "pixels": {
+                    "hash": "a3ade82ee8b4f3909be054f47e8a29da5c53a66cb107419366a5899454f845a4",
+                    "colors": 16,
+                    "width": 1152,
+                    "height": 576
+                  }
+                },
+                {
+                  "name": "resumed",
+                  "draws": 5,
+                  "clears": 5,
+                  "state": "running"
+                }
+              ],
+              "gamepadPollingAvailable": true
+            }
+          }
+        }
+      ],
+      "cleanup": {
+        "servers": {
+          "receipt": {
+            "path": ".cache/solo-evidence/server-cleanup.json",
+            "bytes": 884,
+            "sha256": "ce7ae313d2ff94c07c98bcdeb5cea17733dc4ec51420dfab09590f37127f4940"
+          },
+          "result": {
+            "atUnixSeconds": 1792117674.88416,
+            "servers": [
+              {
+                "pid": 41549,
+                "command": "node scripts/serve-production-preview.mjs --port=8773",
+                "action": "SIGTERM after completed final timing and correctness checks"
+              },
+              {
+                "pid": 52218,
+                "command": "node scripts/serve-production-preview.mjs --root=/Volumes/SoloPerfBuild/candidate-stable --port=8775",
+                "action": "SIGTERM after completed final timing and correctness checks"
+              },
+              {
+                "pid": 79907,
+                "command": "node scripts/game-cli.mjs serve --port 8772",
+                "action": "SIGTERM after completed final timing and correctness checks"
+              },
+              {
+                "pid": 88580,
+                "command": "node scripts/serve-production-preview.mjs --root=/Volumes/SoloPerfRAM/candidate-corrected --port=8776",
+                "action": "SIGTERM after completed final timing and correctness checks"
+              }
+            ]
+          }
+        },
+        "volumes": {
+          "receipt": {
+            "path": ".cache/solo-evidence/volume-cleanup.json",
+            "bytes": 468,
+            "sha256": "c739dcf799cf4085ef1f2a530472a20f01f8bbfd31b3a084f56187fa889a260c"
+          },
+          "result": {
+            "retainedArtifactArchives": [
+              "/Volumes/alex/solo-performance-b1174522/artifacts/1c505dcd/0.151.1",
+              "/Volumes/alex/solo-performance-b1174522/artifacts/0.151.1"
+            ],
+            "precondition": "all preserved files read-back hash verified",
+            "detachedVolumes": ["/Volumes/SoloPerfRAM", "/Volumes/SoloPerfBuild"],
+            "backingImage": "/Volumes/alex/solo-performance-b1174522/solo-build.sparseimage",
+            "backingImageRemovedAfterVerifiedPreservation": true
+          }
+        },
+        "qualification": "Parent confirmed task-owned servers stopped, temporary RAM/HFS volumes detached, and task sparseimage removed only after verified artifact preservation. Archived ZIPs remain retained."
+      }
+    },
+    "startupFollowUpDiagnostic": {
+      "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+      "artifactVersion": "0.151.1",
+      "purpose": "Diagnostic attribution of early active startup tails after the twelve unprofiled observations; not a performance-qualification run.",
+      "cpuProfile": "Requested uncalibrated 4x desktop CPU; tracing and sampling overhead present.",
+      "attempts": [
+        {
+          "name": "start-profile-cpu4",
+          "status": "failed before diagnostic capture",
+          "failure": "Initial boot readiness timed out after30000ms",
+          "reportProduced": false,
+          "evidence": [
+            {
+              "path": ".cache/solo-evidence/final-stable/start-profile-cpu4.log",
+              "bytes": 309,
+              "sha256": "abd1128f59454b1fd42bed67dd7f46116377e4977c55346472f9a2b1dff61d2e"
+            }
+          ]
+        },
+        {
+          "name": "start-transition-cpu4",
+          "status": "diagnostic ended before active gameplay",
+          "firstActiveObserved": false,
+          "flightAtEnd": "briefing",
+          "evidence": [
+            {
+              "path": ".cache/solo-evidence/final-stable/start-transition-cpu4.json",
+              "bytes": 151078,
+              "sha256": "e8067a32fee9e09583cfcd0906a514619f910dfe8f0b3bfad1d9a2f1971063c8"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-transition-cpu4.log",
+              "bytes": 1286,
+              "sha256": "b4e73f12a56f6606c2b87d20e81887c6286ea725be83bc0abd52ef8067ae1d57"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-transition-cpu4.cpuprofile",
+              "bytes": 172740,
+              "sha256": "97652a84bdc38b35822111e45c631df3d0ac936628c2ea5872e976b94db19a07"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-transition-cpu4.trace.json",
+              "bytes": 8404097,
+              "sha256": "147775be36b76e895a66406ef527eb5180175a4e63bbfb9c1192b032b4753afb"
+            }
+          ]
+        },
+        {
+          "name": "start-active-cpu4",
+          "status": "captured first active gameplay after explicit wait",
+          "firstActiveAtMs": 16334.199999988079,
+          "launchAtMs": 10276.79999999702,
+          "errors": [],
+          "evidence": [
+            {
+              "path": ".cache/solo-evidence/final-stable/start-active-cpu4.json",
+              "bytes": 217920,
+              "sha256": "9abdad8e0dbe0ad79b11fb15699b1dbdc21075786156133a2768dcb582f84b9e"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-active-cpu4.log",
+              "bytes": 1588,
+              "sha256": "ff7c193a3b9b3019a8e6918d0aa4a68ea44c6619ee5355aeefaea6bff1f8b627"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-active-cpu4.cpuprofile",
+              "bytes": 360019,
+              "sha256": "74a81027e896772f36de033c42d2489851caec2d509ffea1a72f9699f011701d"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-active-cpu4.trace.json",
+              "bytes": 7116617,
+              "sha256": "83e9d268f556e8da01c3118a9f10e0237d9351efbed89bd39e78a4c206cdcb9f"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-active-cpu4.analysis.json",
+              "bytes": 24385,
+              "sha256": "4208d058b4401e6873117849258cc91b655960cc457db97d684650d8f5de396a"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-active-cpu4.analysis.log",
+              "bytes": 24386,
+              "sha256": "c2936efb3c407ebd0c20d5911d154d3649b598646c773fb4914eaa78b03c4b19"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-active-cpu4.firstframes.json",
+              "bytes": 33704,
+              "sha256": "d15dabfa63ef5d90a23a4ca3bb754031f2754ed1bf22ff427d533c0cb36dcdaa"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/start-active-cpu4.firstframes.log",
+              "bytes": 33705,
+              "sha256": "1163978c21f3f4516dbe2d6f173358d6b6eec707b3dc986aa8a2cb6cecf7a7fc"
+            }
+          ]
+        }
+      ],
+      "finding": {
+        "windowStartMs": 16334.199999988079,
+        "windowDurationMs": 200,
+        "inclusiveSampledHotspots": [
+          {
+            "ms": 61.1,
+            "frame": "setContext http://127.0.0.1:8775/game/ui/soundtrack-player.mjs:1141"
+          },
+          {
+            "ms": 29.6,
+            "frame": "resolveSoundtrackLibrary http://127.0.0.1:8775/game/soundtrack.mjs:215"
+          },
+          {
+            "ms": 27,
+            "frame": "resolveSoundtrackLibrary http://127.0.0.1:8775/game/soundtrack.mjs:215"
+          }
+        ],
+        "firstAnimationCallbacks": [
+          {
+            "atMs": 16345.3,
+            "durationMs": 70.9
+          },
+          {
+            "atMs": 16423.9,
+            "durationMs": 31.4
+          },
+          {
+            "atMs": 16466.8,
+            "durationMs": 11.2
+          }
+        ],
+        "interpretation": "During the first200ms of active state, soundtrack setContext includes61.1ms sampled time and two resolveSoundtrackLibrary paths include29.6ms and27ms. The first two traced animation callbacks take70.9ms and31.4ms. These are nested inclusive sample totals, not additive independent durations. The trace supports redundant validated-library resolution on the first active frame as an actionable startup cost; exact unprofiled timing and overall causal contribution still require a corrected-build comparison."
+      },
+      "followUp": "Focused correction frozen at1c505dcd038ed908c9f0ede696143d4f6d59251e passed111targeted tests, full lint/validation, three source CPU4 observations, complete generated artifact verification, four native checks and twelve generated-package observations. The large early-playing metadata gaps did not recur. Historical fa820 profiling and failed attempts remain unchanged; physical/broader qualification stays open."
+    },
+    "priorFrozenRuntimeEvidence": {
+      "fa8201638b6d75edef4ac5552a5a9dc918668aaa": {
+        "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+        "plannedArtifactVersion": "0.151.1",
+        "changeScope": "Adds safe-phase online catalogue parsing/publication and late soundtrack player/panel/library adoption, plus retained PCM accounting. Existing timing observations are not relabeled.",
+        "catalogueValidation": [
+          {
+            "path": ".cache/solo-evidence/catalogue-admission-unit.log",
+            "bytes": 12168,
+            "sha256": "9cf6e8c77f8d17d5b4b3bed060477580cc0796132d1aafe14c02cb4c35972869",
+            "command": "CI=1 node --test game/test/online-soundtrack-catalogue.test.mjs game/test/online-soundtrack-sources.test.mjs",
+            "status": "passed",
+            "tests": 62,
+            "passed": 62,
+            "failed": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "durationMs": 404.855166,
+            "scope": "Catalogue schema/rights, source authority and playlist regressions, late safe-phase publication, cancellation, fetch slot release, cached saved-style playback.",
+            "revisionQualification": "Executed on the reviewed working tree incorporated into fa8201638b6d75edef4ac5552a5a9dc918668aaa before the freeze commit; no production or physical-device timing qualification."
+          },
+          {
+            "path": ".cache/solo-evidence/catalogue-admission-host-panel.log",
+            "bytes": 36555,
+            "sha256": "a87bc4d6313886105cde7fc92da13c60fc649c387823f54565e5db069388b14d",
+            "command": "CI=1 node --test game/test/solo-soundtrack-admission-host.test.mjs game/test/solo-render-submission.test.mjs game/test/soundtrack-panel.test.mjs",
+            "status": "passed",
+            "tests": 159,
+            "passed": 159,
+            "failed": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "durationMs": 21399.001875,
+            "scope": "Full soundtrack panel tests plus Solo visible submission/retention and delayed official-music lookup startup. This execution precedes the final teardown catch guard; the following host rerun covers that guard.",
+            "revisionQualification": "Executed on the reviewed working tree incorporated into fa8201638b6d75edef4ac5552a5a9dc918668aaa before the freeze commit; no production or physical-device timing qualification."
+          },
+          {
+            "path": ".cache/solo-evidence/catalogue-admission-host-retirement.log",
+            "bytes": 602,
+            "sha256": "845268647fc8a1e78576b309679b7e08e65237e0cce043878dea62c32de13d8b",
+            "command": "CI=1 node --test game/test/solo-soundtrack-admission-host.test.mjs",
+            "status": "passed",
+            "tests": 2,
+            "passed": 2,
+            "failed": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "durationMs": 11449.364916,
+            "scope": "Final delayed player/panel creation and page teardown cancellation; authoritative game state unchanged.",
+            "revisionQualification": "Executed on the reviewed working tree incorporated into fa8201638b6d75edef4ac5552a5a9dc918668aaa before the freeze commit; no production or physical-device timing qualification."
+          }
+        ],
+        "pcmValidation": [
+          {
+            "status": "passed",
+            "failed": 0,
+            "evidenceType": "direct tool output reported by test owner",
+            "savedLog": null,
+            "resultProvenance": "review_timing_plan confirmed exact commands, counts and durations; no saved log file exists.",
+            "revisionQualification": "Executed immediately before the freeze against the final PCM edits incorporated into fa8201638b6d75edef4ac5552a5a9dc918668aaa; not a post-commit rerun or native timing qualification.",
+            "command": "CI=1 node --test --test-concurrency=1 game/test/media-preparation.test.mjs",
+            "tests": 14,
+            "passed": 14,
+            "skipped": 0,
+            "durationMs": 268.309458,
+            "scope": "Published PCM eviction while a live source retains the buffer; published close/reset; effect retention, eviction and disposal; reaction cancel with clear; procedural noise disposal; manual diagnostics without audio context construction or sample-array access."
+          },
+          {
+            "status": "passed",
+            "failed": 0,
+            "evidenceType": "direct tool output reported by test owner",
+            "savedLog": null,
+            "resultProvenance": "review_timing_plan confirmed exact commands, counts and durations; no saved log file exists.",
+            "revisionQualification": "Executed immediately before the freeze against the final PCM edits incorporated into fa8201638b6d75edef4ac5552a5a9dc918668aaa; not a post-commit rerun or native timing qualification.",
+            "command": "CI=1 node --test --test-concurrency=1 game/test/feedback-director.test.mjs game/test/published-audio.test.mjs game/test/audio-master.test.mjs",
+            "tests": 56,
+            "passed": 56,
+            "skipped": 0,
+            "durationMs": 2454.38025,
+            "scope": "Shared voice and transport lifecycle compatibility, including twenty simulated minutes of two-board feedback. Simulated elapsed time is not a native-browser endurance measurement."
+          },
+          {
+            "status": "passed",
+            "failed": 0,
+            "evidenceType": "direct tool output reported by test owner",
+            "savedLog": null,
+            "resultProvenance": "review_timing_plan confirmed exact commands, counts and durations; no saved log file exists.",
+            "revisionQualification": "Executed immediately before the freeze against the final PCM edits incorporated into fa8201638b6d75edef4ac5552a5a9dc918668aaa; not a post-commit rerun or native timing qualification.",
+            "command": "CI=1 node --test --test-name-pattern='manual diagnostics expose' game/test/solo-performance-host.test.mjs",
+            "tests": 5,
+            "passed": 1,
+            "skipped": 4,
+            "durationMs": 9511.020375,
+            "selectedTestDurationMs": 1663.831875,
+            "scope": "Real app manual export includes PCM limits/accounting, constructs no AudioContext, plays no sources and preserves checkpoint; four unrelated cases were filtered out."
+          }
+        ],
+        "fullLint": {
+          "status": "passed",
+          "exitCode": 0,
+          "path": ".cache/solo-evidence/lint-final-v4.log",
+          "bytes": 196,
+          "sha256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c",
+          "command": "npm run lint",
+          "resultProvenance": "Parent confirmed final lint session 96269 exited 0; completed log read and hashed.",
+          "revisionQualification": "Full lint on frozen source fa8201638b6d75edef4ac5552a5a9dc918668aaa; no runtime timing qualification."
+        },
+        "fullValidation": {
+          "status": "passed",
+          "exitCode": 0,
+          "path": ".cache/solo-evidence/validate-final-v4.log",
+          "bytes": 3885,
+          "sha256": "5b08e5e23343919c857891c2b1b0b92832fc483bcce11f454877f2481c2a429d",
+          "command": "npm run validate",
+          "resultProvenance": "Parent confirmed final validation session 72323 exited 0; completed log read and hashed.",
+          "revisionQualification": "Full validation on frozen source fa8201638b6d75edef4ac5552a5a9dc918668aaa. Generated stable-version 0.151.1 integrity/native/timing evidence is recorded separately; the superseded .4 package passed integrity but failed boot.",
+          "literalReferencesValid": true,
+          "navigationWarnings": [
+            "game/downloads.html → ../app/update.html",
+            "game/downloads.html → ../app/",
+            "game/index.html → ../app/update.html",
+            "game/index.html → ../diagnostics/",
+            "site/about.html → ../releases/",
+            "site/about.html → ../privacy.html",
+            "site/about.html → ../credits.html"
+          ]
+        },
+        "generatedBuild": {
+          "status": "static-integrity-passed",
+          "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+          "version": "0.151.1",
+          "buildLog": {
+            "path": ".cache/solo-evidence/build-final-stable.log",
+            "bytes": 240,
+            "sha256": "48f848d3c86cae6ef1bc327f1ecb2ed73c1eaeb7b1149d860f252f36bca76a19"
+          },
+          "artifactDirectory": "/Volumes/SoloPerfBuild/candidate-stable",
+          "manifest": {
+            "sha256": "ab5027ce4cd13937cf8434117b9c10a21eebdf40d9a8073204206a0f61b73a5e",
+            "version": "0.151.1",
+            "declaredSourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "files": 3501,
+            "bytes": 1072165945
+          },
+          "verifiedArtifactBytes": 1072165945,
+          "runtimeSourcesCompared": 1616,
+          "supportedSourceProjectionCount": 84,
+          "transformedSourcesSkipped": ["game/content-design/route-loader.mjs"],
+          "generatedRouteDescriptors": 52,
+          "references": {
+            "valid": true,
+            "navigationWarnings": [
+              "game/index.html → ../diagnostics/",
+              "site/about.html → ../releases/"
+            ]
+          },
+          "workerClosure": [
+            {
+              "path": "game/ui/media-preparation.mjs",
+              "inManifest": true,
+              "inCore": true,
+              "inInventory": true
+            },
+            {
+              "path": "game/ui/mp3-inspector.mjs",
+              "inManifest": true,
+              "inCore": true,
+              "inInventory": true
+            },
+            {
+              "path": "game/mp3-inspection-worker.mjs",
+              "inManifest": true,
+              "inCore": true,
+              "inInventory": true
+            },
+            {
+              "path": "game/mp3-inspection.mjs",
+              "inManifest": true,
+              "inCore": true,
+              "inInventory": true
+            }
+          ],
+          "offline": {
+            "buildId": "414946f61dc81064134ef74cd97ae15e81743a542ec70177c19552a40bdcaba1",
+            "coreFiles": 1701,
+            "downloadFiles": 1850,
+            "inventoryFiles": 3576
+          },
+          "sourceVerification": {
+            "headContextOnly": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "comparisonBase": "b11745223861c3973ad4bf440cc536198b8e0371",
+            "dirty": true,
+            "wholeTreeRevision": null,
+            "status": [
+              "?? docs/performance/solo-observations.json",
+              "?? docs/performance/solo-performance.md",
+              "?? docs/performance/solo-startup-profile.json",
+              "?? docs/performance/solo-test-baseline.json"
+            ],
+            "dirtyDirectBuildInputs": [],
+            "otherDirtyPaths": [
+              "docs/performance/solo-observations.json",
+              "docs/performance/solo-performance.md",
+              "docs/performance/solo-startup-profile.json",
+              "docs/performance/solo-test-baseline.json"
+            ],
+            "directBuildInputsRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "declaredBuildRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "declaredRevisionIsAncestor": true,
+            "changedDirectInputsSinceDeclaredRevision": [],
+            "statusAtFinish": [
+              "?? docs/performance/solo-observations.json",
+              "?? docs/performance/solo-performance.md",
+              "?? docs/performance/solo-startup-profile.json",
+              "?? docs/performance/solo-test-baseline.json"
+            ],
+            "dirtyDirectBuildInputsAtFinish": []
+          },
+          "distribution": {
+            "bytes": 1073282256,
+            "sha256": "d3c0a9218e586bde834abe383b579b1767fe6f6e8d64bb02b3e031076bbcdaf7",
+            "check": "sidecar digest; ZIP members are not independently re-expanded"
+          },
+          "independentZipVerification": {
+            "kind": "read-only ZIP member verification against the completed artifact manifest",
+            "artifact": "/Volumes/SoloPerfBuild/candidate-stable",
+            "status": "passed",
+            "failures": [],
+            "members": 3502,
+            "verifiedBytes": 1072686846,
+            "embeddedManifestSha256": "ab5027ce4cd13937cf8434117b9c10a21eebdf40d9a8073204206a0f61b73a5e",
+            "declaredSourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "version": "0.151.1"
+          },
+          "publicPolicy": {
+            "status": "passed",
+            "artifact": "/Volumes/SoloPerfBuild/candidate-stable/_headers",
+            "policy": "Exact PUBLIC_SECURITY_HEADERS",
+            "buildInfo": {
+              "formatVersion": 1,
+              "version": "0.151.1",
+              "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+              "entry": "game/index.html"
+            },
+            "headers": {
+              "Content-Security-Policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+              "X-Content-Type-Options": "nosniff",
+              "Referrer-Policy": "no-referrer",
+              "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+              "Cache-Control": "no-cache"
+            },
+            "headersSha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8",
+            "manifestSha256": "ab5027ce4cd13937cf8434117b9c10a21eebdf40d9a8073204206a0f61b73a5e",
+            "declaredSourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "version": "0.151.1"
+          },
+          "evidence": [
+            {
+              "path": ".cache/solo-evidence/final-stable/final-artifact-verification.json",
+              "bytes": 30883,
+              "sha256": "68bc158c75e8d35c8e17917cae54945651e23fcbdf1573c3931d64430f0f5061"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/final-artifact-verification.log",
+              "bytes": 100,
+              "sha256": "f0d41b4540fd6aec5fa77a0f56cc58a18cd7da877a6a6db2987e23e652c6fcbf"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/final-artifact-zip-verification.json",
+              "bytes": 429,
+              "sha256": "90394c457077aa7532bb6c66185433d466b614304c180d854cd48c5587a8cdcc"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/final-artifact-zip-verification.log",
+              "bytes": 409,
+              "sha256": "359d95db54a2c6073eb6d094628de51caf48743c7e60bff4f1e5da9648b37ea4"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/final-artifact-csp-verification.json",
+              "bytes": 1155,
+              "sha256": "2f8ebccae1b48eb59a40afd9ecefd9908a0164778b324b3dc2f85b04f05d4496"
+            },
+            {
+              "path": ".cache/solo-evidence/final-stable/final-artifact-csp-verification.log",
+              "bytes": 1058,
+              "sha256": "d2d1dd7f12242456560c5be0e5a3853c9eacda9905f737c50d05b5e4966c3d55"
+            }
+          ],
+          "bootQualification": "Passed Chromium and WebKit static-worker and paused-render native checks, and all twelve final timing observations. Physical-device and representative-workload release qualification remains pending.",
+          "preservation": {
+            "status": "passed",
+            "receipt": {
+              "path": "/Volumes/alex/solo-performance-b1174522/artifacts/0.151.1/preservation.json",
+              "bytes": 2242,
+              "sha256": "b169a158a1ecc392bc0229999f29b032db0da44328fb9b18559114160fa29a86"
+            },
+            "result": {
+              "format": "solo-artifact-preservation.v1",
+              "status": "passed",
+              "sourceArtifact": "/Volumes/SoloPerfBuild/candidate-stable",
+              "archiveDirectory": "/Volumes/alex/solo-performance-b1174522/artifacts/0.151.1",
+              "version": "0.151.1",
+              "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+              "layout": "Archive and selected verification metadata only; expanded runtime is inside distribution.zip.",
+              "files": [
+                {
+                  "path": "distribution.zip",
+                  "bytes": 1073282256,
+                  "sha256": "d3c0a9218e586bde834abe383b579b1767fe6f6e8d64bb02b3e031076bbcdaf7",
+                  "destinationReadbackVerified": true
+                },
+                {
+                  "path": "distribution.zip.sha256",
+                  "bytes": 83,
+                  "sha256": "c9b4d09cccbefe3985b6720b54b381f673f7cd5281b91f5da55c0481374661c0",
+                  "destinationReadbackVerified": true
+                },
+                {
+                  "path": "manifest.json",
+                  "bytes": 520901,
+                  "sha256": "ab5027ce4cd13937cf8434117b9c10a21eebdf40d9a8073204206a0f61b73a5e",
+                  "destinationReadbackVerified": true
+                },
+                {
+                  "path": "build-info.json",
+                  "bytes": 143,
+                  "sha256": "8b930d3a41f40bb9d61a7cb42fd5a972af0d8c4b388692e6b4ca5fbcfbfd4b68",
+                  "destinationReadbackVerified": true
+                },
+                {
+                  "path": ".xonix-build.json",
+                  "bytes": 53,
+                  "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa",
+                  "destinationReadbackVerified": true
+                },
+                {
+                  "path": "_headers",
+                  "bytes": 528,
+                  "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8",
+                  "destinationReadbackVerified": true
+                },
+                {
+                  "path": "artifact-verification.json",
+                  "bytes": 30883,
+                  "sha256": "68bc158c75e8d35c8e17917cae54945651e23fcbdf1573c3931d64430f0f5061",
+                  "destinationReadbackVerified": true
+                },
+                {
+                  "path": "zip-verification.json",
+                  "bytes": 429,
+                  "sha256": "90394c457077aa7532bb6c66185433d466b614304c180d854cd48c5587a8cdcc",
+                  "destinationReadbackVerified": true
+                },
+                {
+                  "path": "csp-verification.json",
+                  "bytes": 1155,
+                  "sha256": "2f8ebccae1b48eb59a40afd9ecefd9908a0164778b324b3dc2f85b04f05d4496",
+                  "destinationReadbackVerified": true
+                }
+              ],
+              "completedAtUnixSeconds": 1792115707.1778188
+            },
+            "qualification": "Destination readback verification is recorded by the preservation operator. This evidence update read and hashed the completed receipt; it did not re-read the 1.07GB distribution archive."
+          }
+        },
+        "productionTiming": {
+          "status": "completed-observations; release qualification pending",
+          "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+          "artifactVersion": "0.151.1",
+          "observations": 12,
+          "jobs": 8,
+          "completedObservations": 12,
+          "diagnosticsOn": 9,
+          "diagnosticsOff": 3,
+          "timingExecutions": {
+            "path": ".cache/solo-evidence/final-stable/timing/executions.json",
+            "bytes": 3570,
+            "sha256": "5bd7c04854fc7d4b7ba2d48d449af8878b07e7f47bb46222128ecda077628688"
+          },
+          "summaryRecord": "docs/performance/solo-observations.json#finalProductionSummary",
+          "overheadRecord": "docs/performance/solo-observations.json#diagnosticsOverhead",
+          "qualification": "Not qualified for a no-stutter or physical-device release claim: representative heavy gameplay, enabled audio, real HTTP-cache behavior, physical iPhone/Deck power/thermal conditions, final-runtime sustained soak and resource-growth evidence remain absent. The diagnostics-overhead cap is unproven.",
+          "qualificationScope": "Twelve observations qualify only the measured fa820 prior-candidate profile; they are not measurements of the pending corrected runtime."
+        },
+        "supersededTestArtifactVersion": "0.151.1-solo-perf.4",
+        "unsupportedPrereleaseAttempt": {
+          "status": "static-integrity-passed; boot-failed",
+          "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+          "version": "0.151.1-solo-perf.4",
+          "buildLog": {
+            "path": ".cache/solo-evidence/build-final-v4.log",
+            "bytes": 251,
+            "sha256": "9d2e1c02e79316d87f95f7c10ffccad4203e2b9f5f20fe38bc1357fd8d523c47"
+          },
+          "artifactDirectory": "/Volumes/SoloPerfBuild/candidate-final",
+          "manifest": {
+            "sha256": "13549f57302d57541ed7a7be1e70c0b4ea882ba03df42d92b3fb34684167b05b",
+            "version": "0.151.1-solo-perf.4",
+            "declaredSourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "files": 3501,
+            "bytes": 1072166608
+          },
+          "verifiedArtifactBytes": 1072166608,
+          "runtimeSourcesCompared": 1616,
+          "supportedSourceProjectionCount": 84,
+          "transformedSourcesSkipped": ["game/content-design/route-loader.mjs"],
+          "generatedRouteDescriptors": 52,
+          "references": {
+            "valid": true,
+            "navigationWarnings": [
+              "game/index.html → ../diagnostics/",
+              "site/about.html → ../releases/"
+            ]
+          },
+          "workerClosure": [
+            {
+              "path": "game/ui/media-preparation.mjs",
+              "inManifest": true,
+              "inCore": true,
+              "inInventory": true
+            },
+            {
+              "path": "game/ui/mp3-inspector.mjs",
+              "inManifest": true,
+              "inCore": true,
+              "inInventory": true
+            },
+            {
+              "path": "game/mp3-inspection-worker.mjs",
+              "inManifest": true,
+              "inCore": true,
+              "inInventory": true
+            },
+            {
+              "path": "game/mp3-inspection.mjs",
+              "inManifest": true,
+              "inCore": true,
+              "inInventory": true
+            }
+          ],
+          "offline": {
+            "buildId": "28bb46dcd350460cbdc46dce247d0387f66500bb7aa58383132d91ebbb6ff9e4",
+            "coreFiles": 1701,
+            "downloadFiles": 1850,
+            "inventoryFiles": 3576
+          },
+          "sourceVerification": {
+            "headContextOnly": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "comparisonBase": "b11745223861c3973ad4bf440cc536198b8e0371",
+            "dirty": true,
+            "wholeTreeRevision": null,
+            "status": [
+              "?? docs/performance/solo-observations.json",
+              "?? docs/performance/solo-performance.md",
+              "?? docs/performance/solo-startup-profile.json",
+              "?? docs/performance/solo-test-baseline.json"
+            ],
+            "dirtyDirectBuildInputs": [],
+            "otherDirtyPaths": [
+              "docs/performance/solo-observations.json",
+              "docs/performance/solo-performance.md",
+              "docs/performance/solo-startup-profile.json",
+              "docs/performance/solo-test-baseline.json"
+            ],
+            "directBuildInputsRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "declaredBuildRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "declaredRevisionIsAncestor": true,
+            "changedDirectInputsSinceDeclaredRevision": [],
+            "statusAtFinish": [
+              "?? docs/performance/solo-observations.json",
+              "?? docs/performance/solo-performance.md",
+              "?? docs/performance/solo-startup-profile.json",
+              "?? docs/performance/solo-test-baseline.json"
+            ],
+            "dirtyDirectBuildInputsAtFinish": []
+          },
+          "distribution": {
+            "bytes": 1073282932,
+            "sha256": "bc957cef02c6507bb47fcea68ce7c04be365cc6cc156db3132cc60677de7be71",
+            "check": "sidecar digest; ZIP members are not independently re-expanded"
+          },
+          "independentZipVerification": {
+            "kind": "read-only ZIP member verification against the completed artifact manifest",
+            "artifact": "/Volumes/SoloPerfBuild/candidate-final",
+            "status": "passed",
+            "failures": [],
+            "members": 3502,
+            "verifiedBytes": 1072687522,
+            "embeddedManifestSha256": "13549f57302d57541ed7a7be1e70c0b4ea882ba03df42d92b3fb34684167b05b",
+            "declaredSourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "version": "0.151.1-solo-perf.4"
+          },
+          "publicPolicy": {
+            "status": "passed",
+            "artifact": "/Volumes/SoloPerfBuild/candidate-final/_headers",
+            "policy": "Exact PUBLIC_SECURITY_HEADERS",
+            "buildInfo": {
+              "formatVersion": 1,
+              "version": "0.151.1-solo-perf.4",
+              "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+              "entry": "game/index.html"
+            },
+            "headers": {
+              "Content-Security-Policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+              "X-Content-Type-Options": "nosniff",
+              "Referrer-Policy": "no-referrer",
+              "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+              "Cache-Control": "no-cache"
+            },
+            "headersSha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8",
+            "manifestSha256": "13549f57302d57541ed7a7be1e70c0b4ea882ba03df42d92b3fb34684167b05b",
+            "declaredSourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "version": "0.151.1-solo-perf.4"
+          },
+          "evidence": [
+            {
+              "path": ".cache/solo-evidence/final-v4/final-artifact-verification.json",
+              "bytes": 30894,
+              "sha256": "9095e463f4a0a3bb46fdf515925a48a66cdee476debc0e650f84828f229a114f"
+            },
+            {
+              "path": ".cache/solo-evidence/final-v4/final-artifact-verification.log",
+              "bytes": 96,
+              "sha256": "1ed8e29c2c568bebd42389bea61f9c17cea6e32890010598a3e03775971c6f09"
+            },
+            {
+              "path": ".cache/solo-evidence/final-v4/final-artifact-zip-verification.json",
+              "bytes": 440,
+              "sha256": "2f0d07747c93091ee79f84c6ba6da93f7d470f3f2ec2d5e3dda606717b7c1d09"
+            },
+            {
+              "path": ".cache/solo-evidence/final-v4/final-artifact-zip-verification.log",
+              "bytes": 420,
+              "sha256": "3eeb84eed8dd592f20b6397e302d260c4e6dcc23c1e7ebd64df64dc1bf01cbd1"
+            },
+            {
+              "path": ".cache/solo-evidence/final-v4/final-artifact-csp-verification.json",
+              "bytes": 1178,
+              "sha256": "d3556154af82020fc83fa143403db8bfc055c764004a3cf9e5e79206cdaa27d5"
+            },
+            {
+              "path": ".cache/solo-evidence/final-v4/final-artifact-csp-verification.log",
+              "bytes": 1081,
+              "sha256": "7c6070aaa872467403aa59e5a511ac8583fdea2d2aa8f905a8154b3469415668"
+            }
+          ],
+          "bootQualification": "failed before gameplay",
+          "rollbackReady": false,
+          "bootFailure": {
+            "diagnostic": {
+              "path": ".cache/solo-evidence/final-v4/native/boot-diagnostic.json",
+              "bytes": 68937,
+              "sha256": "0f310fdc109f2da3a83cbe6621b6ab10c26a6a8a0b4c82ce4a2e51db14e5b30e"
+            },
+            "root": {
+              "buildVersion": "v0.151.1-solo-perf.4",
+              "bootState": "failed",
+              "accessState": "unlocked",
+              "interfaceTheme": "industrial-workshop",
+              "themeFamily": "industrial-workshop",
+              "themeStyled": "true",
+              "themeContrast": "normal",
+              "themeTexture": "on",
+              "themeSurface": "bevel",
+              "themeMaterial": "steel",
+              "themeFinish": "steel",
+              "themeHud": "normal",
+              "themeMotion": "full",
+              "themeDensity": "player",
+              "themeTextSize": "standard",
+              "themeBootstrapped": "true"
+            },
+            "caughtConsoleErrors": [
+              "TypeError: Use an exact supported profile channel.\n    at required (http://127.0.0.1:8774/game/data-json.mjs:120:25)\n    at pointerKeys (http://127.0.0.1:8774/game/external-chapter-pointer.mjs:20:3)\n    at createExternalChapterPointerStore (http://127.0.0.1:8774/game/external-chapter-pointer.mjs:50:16)\n    at createExternalChapterHost (http://127.0.0.1:8774/game/external-chapter-host.mjs:90:15)\n    at http://127.0.0.1:8774/game/app.mjs:892:2"
+            ],
+            "pageErrors": [],
+            "cause": "Test-only prerelease version 0.151.1-solo-perf.4 violates the pre-existing stable profile-channel contract; rebuilt identical frozen runtime using supported repository version 0.151.1. No runtime source change was made for this failure."
+          },
+          "nativeAttempts": [
+            {
+              "path": ".cache/solo-evidence/final-v4/native/chromium-mp3-worker.json",
+              "bytes": 718,
+              "sha256": "d338a9dc91ba9bfdefa8b439c9b95b367f40ca8e55af1d9b375729b7bef36228",
+              "engine": "chromium",
+              "status": "failed",
+              "pageErrors": [],
+              "browser": "155.0.8059.80",
+              "failure": "page.waitForFunction: Timeout 120000ms exceeded.",
+              "log": {
+                "path": ".cache/solo-evidence/final-v4/native/chromium-mp3-worker.log",
+                "bytes": 161,
+                "sha256": "f995f138982b69a11d9d76a9ad7ff5dc101d4ee647170c34821462e1a0c755a5"
+              }
+            },
+            {
+              "path": ".cache/solo-evidence/final-v4/native/chromium-paused-render.json",
+              "bytes": 850,
+              "sha256": "34bcd3a074e309007b253e03506b21410bf1fe482e0c609b3f243e44e0c433c7",
+              "engine": "chromium",
+              "status": "failed",
+              "pageErrors": [],
+              "browser": "155.0.8059.80",
+              "error": "page.waitForFunction: Timeout 120000ms exceeded.\n    at /Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/scripts/verify-solo-paused-render.mjs:79:14",
+              "log": {
+                "path": ".cache/solo-evidence/final-v4/native/chromium-paused-render.log",
+                "bytes": 343,
+                "sha256": "2122d330879787862b3ced233281940d19be3085f1f6089f132a88ac344de322"
+              }
+            }
+          ],
+          "batchStop": {
+            "status": "stopped",
+            "exitCode": 143,
+            "reason": "The first two Chromium checks timed out before ready. A separate diagnostic confirmed that the test-only prerelease version violates the existing stable-only profile-channel contract. The parent batch was terminated to avoid repeating a known invalid package scenario.",
+            "completedReports": ["chromium-mp3-worker.json", "chromium-paused-render.json"],
+            "interrupted": [
+              {
+                "scenario": "webkit-mp3-worker",
+                "reportProduced": false,
+                "status": "interrupted-without-result"
+              }
+            ],
+            "notStarted": [
+              {
+                "scenario": "webkit-paused-render",
+                "status": "not-observed"
+              }
+            ],
+            "timingBatch": "not run",
+            "diagnostic": "boot-diagnostic.json",
+            "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "buildVersion": "0.151.1-solo-perf.4",
+            "evidence": {
+              "path": ".cache/solo-evidence/final-v4/native/batch-stop.json",
+              "bytes": 786,
+              "sha256": "26e7e06b6e50a7d016b5947628761c00ce45f7b6be6085cbdc6c9e400a56a312"
+            },
+            "executionLog": {
+              "path": ".cache/solo-evidence/final-v4/native/executions.json",
+              "bytes": 1078,
+              "sha256": "a14c8e92805d1b6312e5c4dda5c2713ec458bde760290703a4004d129ca06776"
+            }
+          },
+          "timing": {
+            "status": "not-run",
+            "requestedObservationsProduced": 0
+          }
+        },
+        "nativeGeneratedBuildChecks": [
+          {
+            "path": ".cache/solo-evidence/final-stable/native/chromium-mp3-worker.json",
+            "bytes": 2467,
+            "sha256": "183b43a1a8e7c13c289ec23d5ce64f9bf59c2280d63b0c90d265a791eaf1701e",
+            "log": {
+              "path": ".cache/solo-evidence/final-stable/native/chromium-mp3-worker.log",
+              "bytes": 181,
+              "sha256": "df54a9240756a9722b882402b0b4c8e43769e997ef9451834c3349b2548be18c"
+            },
+            "execution": {
+              "scenario": "chromium-mp3-worker",
+              "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+              "buildVersion": "0.151.1",
+              "exitCode": 0,
+              "elapsedSeconds": 26.759104013442993,
+              "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-stable/native/chromium-mp3-worker.json",
+              "reportExists": true,
+              "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-stable/native/chromium-mp3-worker.log"
+            },
+            "result": {
+              "kind": "real static MP3 worker correctness smoke; not a performance measurement",
+              "address": "http://127.0.0.1:8775/game/?journey=opening",
+              "engine": "chromium",
+              "fixtureAccess": true,
+              "status": "passed",
+              "workerURLs": ["http://127.0.0.1:8775/game/mp3-inspection-worker.mjs"],
+              "pageErrors": [],
+              "policyErrors": [
+                "Connecting to 'https://mekhovov.github.io/revealline-soundtracks/catalogue.json' violates the following Content Security Policy directive: \"connect-src 'self'\". The action has been blocked.",
+                "Fetch API cannot load https://mekhovov.github.io/revealline-soundtracks/catalogue.json. Refused to connect because it violates the document's Content Security Policy."
+              ],
+              "browser": "155.0.8059.80",
+              "cspHeader": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+              "cspMeta": [],
+              "expectedWorkerURL": "http://127.0.0.1:8775/game/mp3-inspection-worker.mjs",
+              "active": {
+                "settled": true,
+                "cases": [
+                  {
+                    "name": "valid",
+                    "status": "fulfilled",
+                    "value": {
+                      "sha256": "54a1cbf7f98d7b263dae389576f50dc8507e3b3b40aec9c5793dc4480b14d913",
+                      "bytes": 4170,
+                      "mime": "audio/mpeg",
+                      "mpegVersion": "1",
+                      "sampleRate": 44100,
+                      "channels": 1,
+                      "frames": 10,
+                      "durationSeconds": 0.2612244897959184
+                    }
+                  },
+                  {
+                    "name": "malformed",
+                    "status": "rejected",
+                    "error": {
+                      "name": "TypeError",
+                      "message": "Unsupported or malformed MPEG Layer III frame."
+                    }
+                  },
+                  {
+                    "name": "truncated",
+                    "status": "rejected",
+                    "error": {
+                      "name": "TypeError",
+                      "message": "Truncated MP3 frame."
+                    }
+                  }
+                ],
+                "admission": {
+                  "phase": "playing",
+                  "queued": 0,
+                  "active": {
+                    "fetch": 0,
+                    "decode": 0,
+                    "inspect": 0,
+                    "main": 0
+                  },
+                  "reservedDecodeBytes": 0
+                },
+                "inspector": {
+                  "workerActive": false,
+                  "workerOwnedBytes": 0,
+                  "pendingRequests": 0
+                },
+                "flightBefore": "running",
+                "flightAfter": "running"
+              },
+              "mode": "worker",
+              "validationPassed": true
+            }
+          },
+          {
+            "path": ".cache/solo-evidence/final-stable/native/chromium-paused-render.json",
+            "bytes": 2908,
+            "sha256": "f26eaf1a15beb2c9a4e543a2310cbff2818ccb7d4a66ee6a0ae96f04db623881",
+            "log": {
+              "path": ".cache/solo-evidence/final-stable/native/chromium-paused-render.log",
+              "bytes": 168,
+              "sha256": "b0454ad62b39396d9d2fabdcaa848d00f972b83726681fcbd0c4321a4d000abd"
+            },
+            "execution": {
+              "scenario": "chromium-paused-render",
+              "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+              "buildVersion": "0.151.1",
+              "exitCode": 0,
+              "elapsedSeconds": 18.743345975875854,
+              "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-stable/native/chromium-paused-render.json",
+              "reportExists": true,
+              "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-stable/native/chromium-paused-render.log"
+            },
+            "result": {
+              "kind": "Native paused Canvas pixel retention and draw suppression; not performance qualification",
+              "address": "http://127.0.0.1:8775/game/?journey=opening",
+              "engine": "chromium",
+              "fixtureAccess": true,
+              "status": "passed",
+              "pageErrors": [],
+              "browser": "155.0.8059.80",
+              "rasterScope": "native software Canvas2D",
+              "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+              "observation": {
+                "cases": [
+                  {
+                    "name": "paused-initial-settling",
+                    "settling": true,
+                    "before": {
+                      "hash": "bfeee46b002b4339240ca5665c6801fab4a7430964e1a75b819351d692431250",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "after": {
+                      "hash": "bfeee46b002b4339240ca5665c6801fab4a7430964e1a75b819351d692431250",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "draws": 0,
+                    "clears": 0,
+                    "polls": 18
+                  },
+                  {
+                    "name": "startup-settling",
+                    "settling": true,
+                    "frames": 61,
+                    "elapsedMs": 1014.9000000059605,
+                    "draws": 0,
+                    "clears": 0,
+                    "polls": 61
+                  },
+                  {
+                    "name": "paused",
+                    "settling": false,
+                    "before": {
+                      "hash": "bfeee46b002b4339240ca5665c6801fab4a7430964e1a75b819351d692431250",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "after": {
+                      "hash": "bfeee46b002b4339240ca5665c6801fab4a7430964e1a75b819351d692431250",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "draws": 0,
+                    "clears": 0,
+                    "polls": 18
+                  },
+                  {
+                    "name": "covered-by-settings",
+                    "settling": false,
+                    "before": {
+                      "hash": "bfeee46b002b4339240ca5665c6801fab4a7430964e1a75b819351d692431250",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "after": {
+                      "hash": "bfeee46b002b4339240ca5665c6801fab4a7430964e1a75b819351d692431250",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "draws": 0,
+                    "clears": 0,
+                    "polls": 18
+                  },
+                  {
+                    "name": "resize-invalidation",
+                    "draws": 1,
+                    "clears": 1,
+                    "pixels": {
+                      "hash": "bfeee46b002b4339240ca5665c6801fab4a7430964e1a75b819351d692431250",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    }
+                  },
+                  {
+                    "name": "resumed",
+                    "draws": 5,
+                    "clears": 5,
+                    "state": "running"
+                  }
+                ],
+                "gamepadPollingAvailable": true
+              }
+            }
+          },
+          {
+            "path": ".cache/solo-evidence/final-stable/native/webkit-mp3-worker.json",
+            "bytes": 2265,
+            "sha256": "bf7310d4acf33cf4bf8ab6d6d92cc0a697763e04e50062294c412b888fbc8b12",
+            "log": {
+              "path": ".cache/solo-evidence/final-stable/native/webkit-mp3-worker.log",
+              "bytes": 179,
+              "sha256": "2c173dc100ed091e4972f2a5b0f130b98cbd283c4ecab90869435775500a749b"
+            },
+            "execution": {
+              "scenario": "webkit-mp3-worker",
+              "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+              "buildVersion": "0.151.1",
+              "exitCode": 0,
+              "elapsedSeconds": 5.537689924240112,
+              "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-stable/native/webkit-mp3-worker.json",
+              "reportExists": true,
+              "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-stable/native/webkit-mp3-worker.log"
+            },
+            "result": {
+              "kind": "real static MP3 worker correctness smoke; not a performance measurement",
+              "address": "http://127.0.0.1:8775/game/?journey=opening",
+              "engine": "webkit",
+              "fixtureAccess": true,
+              "status": "passed",
+              "workerURLs": ["http://127.0.0.1:8775/game/mp3-inspection-worker.mjs"],
+              "pageErrors": [],
+              "policyErrors": [
+                "Refused to connect to https://mekhovov.github.io/revealline-soundtracks/catalogue.json because it does not appear in the connect-src directive of the Content Security Policy."
+              ],
+              "browser": "26.5",
+              "cspHeader": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+              "cspMeta": [],
+              "expectedWorkerURL": "http://127.0.0.1:8775/game/mp3-inspection-worker.mjs",
+              "active": {
+                "settled": true,
+                "cases": [
+                  {
+                    "name": "valid",
+                    "status": "fulfilled",
+                    "value": {
+                      "sha256": "54a1cbf7f98d7b263dae389576f50dc8507e3b3b40aec9c5793dc4480b14d913",
+                      "bytes": 4170,
+                      "mime": "audio/mpeg",
+                      "mpegVersion": "1",
+                      "sampleRate": 44100,
+                      "channels": 1,
+                      "frames": 10,
+                      "durationSeconds": 0.2612244897959184
+                    }
+                  },
+                  {
+                    "name": "malformed",
+                    "status": "rejected",
+                    "error": {
+                      "name": "TypeError",
+                      "message": "Unsupported or malformed MPEG Layer III frame."
+                    }
+                  },
+                  {
+                    "name": "truncated",
+                    "status": "rejected",
+                    "error": {
+                      "name": "TypeError",
+                      "message": "Truncated MP3 frame."
+                    }
+                  }
+                ],
+                "admission": {
+                  "phase": "playing",
+                  "queued": 0,
+                  "active": {
+                    "fetch": 0,
+                    "decode": 0,
+                    "inspect": 0,
+                    "main": 0
+                  },
+                  "reservedDecodeBytes": 0
+                },
+                "inspector": {
+                  "workerActive": false,
+                  "workerOwnedBytes": 0,
+                  "pendingRequests": 0
+                },
+                "flightBefore": "running",
+                "flightAfter": "running"
+              },
+              "mode": "worker",
+              "validationPassed": true
+            }
+          },
+          {
+            "path": ".cache/solo-evidence/final-stable/native/webkit-paused-render.json",
+            "bytes": 2881,
+            "sha256": "5ac17fce49c95e073ef96a8a74b4ba62f143115c5370995826ab146a64ff3dbb",
+            "log": {
+              "path": ".cache/solo-evidence/final-stable/native/webkit-paused-render.log",
+              "bytes": 166,
+              "sha256": "52ca083e5dc6c456107d047e5305f8120303f92c40772845626a01379fb4f38c"
+            },
+            "execution": {
+              "scenario": "webkit-paused-render",
+              "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+              "buildVersion": "0.151.1",
+              "exitCode": 0,
+              "elapsedSeconds": 8.0638108253479,
+              "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-stable/native/webkit-paused-render.json",
+              "reportExists": true,
+              "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-evidence/final-stable/native/webkit-paused-render.log"
+            },
+            "result": {
+              "kind": "Native paused Canvas pixel retention and draw suppression; not performance qualification",
+              "address": "http://127.0.0.1:8775/game/?journey=opening",
+              "engine": "webkit",
+              "fixtureAccess": true,
+              "status": "passed",
+              "pageErrors": [],
+              "browser": "26.5",
+              "rasterScope": "native WebKit Canvas2D",
+              "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+              "observation": {
+                "cases": [
+                  {
+                    "name": "paused-initial-settling",
+                    "settling": true,
+                    "before": {
+                      "hash": "e8b18c342f79bb7e7a689ffa1102cb3ad88d8c801a74b8f88e1870c23c1933b2",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "after": {
+                      "hash": "e8b18c342f79bb7e7a689ffa1102cb3ad88d8c801a74b8f88e1870c23c1933b2",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "draws": 0,
+                    "clears": 0,
+                    "polls": 18
+                  },
+                  {
+                    "name": "startup-settling",
+                    "settling": true,
+                    "frames": 60,
+                    "elapsedMs": 1084,
+                    "draws": 1,
+                    "clears": 1,
+                    "polls": 60
+                  },
+                  {
+                    "name": "paused",
+                    "settling": false,
+                    "before": {
+                      "hash": "e8b18c342f79bb7e7a689ffa1102cb3ad88d8c801a74b8f88e1870c23c1933b2",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "after": {
+                      "hash": "e8b18c342f79bb7e7a689ffa1102cb3ad88d8c801a74b8f88e1870c23c1933b2",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "draws": 0,
+                    "clears": 0,
+                    "polls": 18
+                  },
+                  {
+                    "name": "covered-by-settings",
+                    "settling": false,
+                    "before": {
+                      "hash": "e8b18c342f79bb7e7a689ffa1102cb3ad88d8c801a74b8f88e1870c23c1933b2",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "after": {
+                      "hash": "e8b18c342f79bb7e7a689ffa1102cb3ad88d8c801a74b8f88e1870c23c1933b2",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    },
+                    "draws": 0,
+                    "clears": 0,
+                    "polls": 18
+                  },
+                  {
+                    "name": "resize-invalidation",
+                    "draws": 1,
+                    "clears": 1,
+                    "pixels": {
+                      "hash": "e8b18c342f79bb7e7a689ffa1102cb3ad88d8c801a74b8f88e1870c23c1933b2",
+                      "colors": 16,
+                      "width": 1152,
+                      "height": 576
+                    }
+                  },
+                  {
+                    "name": "resumed",
+                    "draws": 5,
+                    "clears": 5,
+                    "state": "running"
+                  }
+                ],
+                "gamepadPollingAvailable": true
+              }
+            }
+          }
+        ],
+        "finalHostQualification": [
+          {
+            "path": ".cache/solo-evidence/final-classic-host.log",
+            "bytes": 1406,
+            "sha256": "2f54b09c249501ac3d3b1dd799b169a81a8423f507be92cb1a1b6ffe94e3f323",
+            "command": "CI=1 node --test --test-concurrency=1 game/test/classic-host.test.mjs",
+            "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "scope": "Frozen-source Classic host readiness, capture, pause/resume, pickup and recovery checks.",
+            "tests": 5,
+            "passed": 5,
+            "failed": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "durationMs": 67800.771667,
+            "status": "passed"
+          },
+          {
+            "path": ".cache/solo-evidence/final-collection-records-host.log",
+            "bytes": 5311,
+            "sha256": "3535faa463d11a872415c580e67e56433989864a83a573d1a98ac345871d8668",
+            "command": "CI=1 node --test --test-concurrency=1 game/test/collection-records-return-host.test.mjs",
+            "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "scope": "Frozen-source full collection-records return host file.",
+            "tests": 17,
+            "passed": 16,
+            "failed": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "durationMs": 195903.477875,
+            "status": "failed",
+            "failure": {
+              "test": "actual Flight records return waits for still metadata refusal before revealing",
+              "stage": "Initial 5000 ms picture readiness before Start",
+              "pictureState": "pending",
+              "pack": "",
+              "pageErrors": [],
+              "classification": "Unresolved intermittent initial loading timeout; unchanged selected retry passes. No baseline reproduction or load-only causation is established."
+            }
+          },
+          {
+            "path": ".cache/solo-evidence/final-collection-records-refusal-rerun.log",
+            "bytes": 4243,
+            "sha256": "a6ac5a4e308afeb387d3abac0720393fc63ac75f16359d4588b46fb731aaaf17",
+            "command": "CI=1 node --test --test-concurrency=1 --test-name-pattern='^actual Flight records return waits for still metadata refusal before revealing$' game/test/collection-records-return-host.test.mjs",
+            "sourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+            "scope": "Single unchanged retry of the failed full-file case; sixteen unrelated cases filtered out.",
+            "tests": 17,
+            "passed": 1,
+            "failed": 0,
+            "cancelled": 0,
+            "skipped": 16,
+            "todo": 0,
+            "durationMs": 9661.1445,
+            "status": "passed",
+            "selectedTestDurationMs": 3545.262916,
+            "qualification": "Passing retry is retained alongside, and does not erase, the failed full-file execution."
+          }
+        ],
+        "qualificationState": "Retained prior candidate; runtime freeze subsequently lifted for the confirmed soundtrack startup correction. No corrected-source qualification is claimed."
+      }
+    }
+  },
+  "priorLogSnapshots": [
+    {
+      "capturedAt": "2026-10-16T00:06:42.616046+00:00",
+      "lastReportedTopLevelTest": 5309,
+      "topLevelFailures": 226,
+      "complete": false,
+      "logBytes": 1574395,
+      "logAgeSecondsAtInspection": 31.002
+    }
+  ],
+  "evidenceArchives": [
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/startup-profile-evidence.tar.gz",
+      "bytes": 5468076,
+      "purpose": "Large startup trace and profile evidence",
+      "verification": "Operator reports archive verified before cleanup; this summary confirms archive existence and size, without re-reading the large archive.",
+      "taskCopyRemoved": false
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/baseline-source-b1174522.tar.gz",
+      "bytes": 593404784,
+      "purpose": "Original b1174522 baseline source cache",
+      "verification": "Operator reports archive verified before cleanup; this summary confirms archive existence and size, without re-reading the large archive.",
+      "taskCopyRemoved": true
+    },
+    {
+      "status": "passed",
+      "path": "/Volumes/alex/solo-performance-b1174522/solo-evidence-1c505dcd.tar.gz",
+      "bytes": 8139557,
+      "sha256": "739fe1b85115dc06d55fb72e74289169df07ebaedc3441335510ed1eefd41020",
+      "sourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+      "memberFiles": 240,
+      "readback": "All regular archive members read back and compared with source hashes; no extraction required.",
+      "createdAtUnixSeconds": 1792117850.897281,
+      "purpose": "Frozen raw performance evidence, including all completed/failed/interrupted historical, prior-candidate and corrected observations, native checks, diagnostics and finalized logs.",
+      "receipt": {
+        "path": "/Volumes/alex/solo-performance-b1174522/solo-evidence-1c505dcd.tar.gz.json",
+        "bytes": 41055,
+        "sha256": "3aa357b77ca0684469376c44ca5b5ecf3626c9ed3dea98e2014e2befe1b7ed5e"
+      },
+      "verificationScope": "Parent verified archive readback and every regular member against the source inventory. This update byte-compared the retained local/external receipts, without independently re-reading the archive.",
+      "taskCacheFrozen": true
+    }
+  ],
+  "confirmedDeviceTargets": {
+    "provenance": "User confirmation relayed by parent; target identification is not evidence of an executed device test.",
+    "devices": [
+      {
+        "model": "iPhone 17 Pro",
+        "browser": "Safari",
+        "osVersion": null,
+        "browserVersion": null,
+        "activeRefreshRateHz": null,
+        "physicalQualification": "pending"
+      },
+      {
+        "model": "Steam Deck OLED",
+        "browser": "Chrome",
+        "osVersion": null,
+        "browserVersion": null,
+        "activeRefreshRateHz": null,
+        "physicalQualification": "pending"
+      }
+    ],
+    "cadencePolicy": "Measure foreground pre-play interval B for each actual browser, display setting and power mode; do not infer active refresh rate from the device model.",
+    "remainingConditions": [
+      "OS and browser versions",
+      "foreground browser cadence and active display refresh setting",
+      "power saving, battery and thermal state",
+      "orientation and input method",
+      "enabled music and speech",
+      "representative capture/combat/jammer workload",
+      "transition and recovery coverage",
+      "30-minute sustained gameplay"
+    ]
+  },
+  "historicalFollowUpScope": "Existing followUp, broadRunState and focusedHostQualification sections preserve earlier results. Final frozen-source/package evidence is in finalValidationEvidence.latestFrozenRuntime; later passes do not erase earlier failures.",
+  "currentWorkState": {
+    "status": "corrected build verified and observed; declared numerical scenario passes; broader qualification remains open",
+    "priorCandidateSourceRevision": "fa8201638b6d75edef4ac5552a5a9dc918668aaa",
+    "priorCandidateArtifactVersion": "0.151.1",
+    "reason": "Diagnostic trace confirmed duplicated soundtrack-library resolution in the first active frame.",
+    "correctedSourceRevision": "1c505dcd038ed908c9f0ede696143d4f6d59251e",
+    "correctedArtifactVerification": "passed integrity/source/closure/offline, independent ZIP, exact CSP/build-info and four native checks",
+    "correctedTiming": "all twelve generated-package observations complete; nine diagnostics-on observations meet aggregate gates",
+    "preservation": "Corrected and historical artifacts are retained separately with destination readback verification. Frozen raw evidence is archived with all 240 regular members verified. Task servers and temporary volumes were cleaned after artifact preservation."
+  }
+}

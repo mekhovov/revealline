@@ -1,0 +1,297 @@
+{
+  "format": "SoloArtifactQualificationSummaryV1",
+  "sourceRevision": "14ac29e27df9d78283a1d93b5a16a23121212371",
+  "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+  "version": "0.151.1",
+  "payload": {
+    "sha256": "765d983f17ddb9bf2244960427a1fca54ca3900d0a9d7fdd30e9cef7977797c2",
+    "version": "0.151.1",
+    "declaredSourceRevision": "14ac29e27df9d78283a1d93b5a16a23121212371",
+    "files": 3501,
+    "bytes": 1072171933
+  },
+  "archive": {
+    "bytes": 1073288244,
+    "sha256": "0b06583f64de3c7d873418b98c9051e237ea88670d9b08d8c6fe35172e867e94"
+  },
+  "independentZIPMembers": 3502,
+  "packageStatus": "passed",
+  "nativeCorrectnessStatus": "passed",
+  "nativeReports": [
+    {
+      "engine": "chromium",
+      "script": "scripts/verify-solo-mp3-worker.mjs",
+      "scriptSHA256": "d0815e3e053ae905cadf8db3069f83127ed084e0350357ec73b036a787590524",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/verify-solo-mp3-worker.mjs",
+        "http://127.0.0.1:8780/game/",
+        "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/chromium-mp3-worker.json",
+        "--fixture-access"
+      ],
+      "startedAt": "2026-10-16T11:31:54.185522+00:00",
+      "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/chromium-mp3-worker.json",
+      "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/chromium-mp3-worker.log",
+      "exitCode": 0,
+      "completedAt": "2026-10-16T11:32:08.744960+00:00",
+      "logSHA256": "8974d7bd926f62835c25e180f22aa4dc4c3ba304660638cd32fa4001ac8344c3",
+      "status": "passed",
+      "reportSHA256": "d0bbc2b6f3dde7d89ea4238d6a0949c26898adb6cd4952e756ea18b5070cc3da",
+      "browser": "155.0.8059.85",
+      "pageErrors": [],
+      "policyErrors": [
+        "Connecting to 'https://mekhovov.github.io/revealline-soundtracks/catalogue.json' violates the following Content Security Policy directive: \"connect-src 'self'\". The action has been blocked.",
+        "Fetch API cannot load https://mekhovov.github.io/revealline-soundtracks/catalogue.json. Refused to connect because it violates the document's Content Security Policy."
+      ]
+    },
+    {
+      "engine": "chromium",
+      "script": "scripts/verify-solo-paused-render.mjs",
+      "scriptSHA256": "4d07139b1e20fef9615e1325d9c8ff95631205e18a7f2dc311106eb0c5c7940d",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/verify-solo-paused-render.mjs",
+        "http://127.0.0.1:8780/game/",
+        "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/chromium-paused-render.json",
+        "--fixture-access"
+      ],
+      "startedAt": "2026-10-16T11:32:08.745738+00:00",
+      "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/chromium-paused-render.json",
+      "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/chromium-paused-render.log",
+      "exitCode": 0,
+      "completedAt": "2026-10-16T11:32:14.584303+00:00",
+      "logSHA256": "df2ea8f74641432b199af5bc745c5c5f365ce2d96657627c006d92c7486e1f67",
+      "status": "passed",
+      "reportSHA256": "42557340c700eeea84e4896ad863bf15bf4c37fb0d67d2632a0449143e976400",
+      "browser": "155.0.8059.85",
+      "pageErrors": [],
+      "policyErrors": null
+    },
+    {
+      "engine": "webkit",
+      "script": "scripts/verify-solo-mp3-worker.mjs",
+      "scriptSHA256": "d0815e3e053ae905cadf8db3069f83127ed084e0350357ec73b036a787590524",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/verify-solo-mp3-worker.mjs",
+        "http://127.0.0.1:8780/game/",
+        "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/webkit-mp3-worker.json",
+        "--fixture-access",
+        "--browser=webkit"
+      ],
+      "startedAt": "2026-10-16T11:32:14.585055+00:00",
+      "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/webkit-mp3-worker.json",
+      "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/webkit-mp3-worker.log",
+      "exitCode": 0,
+      "completedAt": "2026-10-16T11:32:19.366478+00:00",
+      "logSHA256": "2926fb010b3bed119ddc5af19b2b4800068dca38935e4bf5cf87572f96305b80",
+      "status": "passed",
+      "reportSHA256": "d9a25d4d1dec929947e9bb53fdc864c500ed0b95a72392b79955c6abb6a7659c",
+      "browser": "26.5",
+      "pageErrors": [],
+      "policyErrors": [
+        "Refused to connect to https://mekhovov.github.io/revealline-soundtracks/catalogue.json because it does not appear in the connect-src directive of the Content Security Policy."
+      ]
+    },
+    {
+      "engine": "webkit",
+      "script": "scripts/verify-solo-paused-render.mjs",
+      "scriptSHA256": "4d07139b1e20fef9615e1325d9c8ff95631205e18a7f2dc311106eb0c5c7940d",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/verify-solo-paused-render.mjs",
+        "http://127.0.0.1:8780/game/",
+        "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/webkit-paused-render.json",
+        "--fixture-access",
+        "--browser=webkit"
+      ],
+      "startedAt": "2026-10-16T11:32:19.367053+00:00",
+      "report": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/webkit-paused-render.json",
+      "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-14ac29e2/webkit-paused-render.log",
+      "exitCode": 0,
+      "completedAt": "2026-10-16T11:32:26.963657+00:00",
+      "logSHA256": "dd2c390830a9ab94fe61c42d877e6bf1e1c1d61fe4f6c58a3f897ddda2a0de40",
+      "status": "passed",
+      "reportSHA256": "6bc97b02f6e93d5c092ba163f5e297b14ca035c2621fe1da8a22c99f61e925cf",
+      "browser": "26.5",
+      "pageErrors": [],
+      "policyErrors": null
+    }
+  ],
+  "sourceChecks": [
+    {
+      "script": "lint",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/npm",
+        "run",
+        "lint"
+      ],
+      "startedAt": "2026-10-16T10:59:48.998227+00:00",
+      "startSource": "14ac29e27df9d78283a1d93b5a16a23121212371",
+      "log": ".cache/solo-followup/final-source-checks-20261016T105948Z-14ac29e2/lint.log",
+      "pid": 78104,
+      "exitCode": 0,
+      "finishedAt": "2026-10-16T11:00:03.938446+00:00",
+      "elapsedSeconds": 14.923289292000845,
+      "logSha256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c",
+      "endSource": "14ac29e27df9d78283a1d93b5a16a23121212371",
+      "endStatus": ""
+    },
+    {
+      "script": "validate",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/npm",
+        "run",
+        "validate"
+      ],
+      "startedAt": "2026-10-16T11:00:04.145190+00:00",
+      "startSource": "14ac29e27df9d78283a1d93b5a16a23121212371",
+      "log": ".cache/solo-followup/final-source-checks-20261016T105948Z-14ac29e2/validate.log",
+      "pid": 78238,
+      "exitCode": 0,
+      "finishedAt": "2026-10-16T11:02:50.196490+00:00",
+      "elapsedSeconds": 166.02968416699878,
+      "logSha256": "5b08e5e23343919c857891c2b1b0b92832fc483bcce11f454877f2481c2a429d",
+      "endSource": "14ac29e27df9d78283a1d93b5a16a23121212371",
+      "endStatus": ""
+    },
+    {
+      "script": "format:check",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/npm",
+        "run",
+        "format:check"
+      ],
+      "startedAt": "2026-10-16T11:02:50.424679+00:00",
+      "startSource": "14ac29e27df9d78283a1d93b5a16a23121212371",
+      "log": ".cache/solo-followup/final-source-checks-20261016T105948Z-14ac29e2/format-check.log",
+      "pid": 79478,
+      "exitCode": 1,
+      "finishedAt": "2026-10-16T11:03:17.595432+00:00",
+      "elapsedSeconds": 27.15400750000117,
+      "logSha256": "03228f9fce4671a928b5cf35eaf39b957269ecc944a80e306f551dc2c2372d06",
+      "endSource": "14ac29e27df9d78283a1d93b5a16a23121212371",
+      "endStatus": "",
+      "warningFiles": [
+        {
+          "path": "game/test/fixtures/classic-snake-v4-proofs.json",
+          "currentSha256": "4b21b832853ed6734dce435e37aea831d813dea2f732c6873c0f9dbde917027e",
+          "baselineExists": true,
+          "baselineSha256": "4b21b832853ed6734dce435e37aea831d813dea2f732c6873c0f9dbde917027e",
+          "byteIdenticalToB117": true
+        },
+        {
+          "path": "game/test/fpv-regional-preparation-clock.test.mjs",
+          "currentSha256": "f96b662d52ba8cf678446ff2de12223dffb11c60dc0f4c1fba51c4795410172c",
+          "baselineExists": true,
+          "baselineSha256": "f96b662d52ba8cf678446ff2de12223dffb11c60dc0f4c1fba51c4795410172c",
+          "byteIdenticalToB117": true
+        },
+        {
+          "path": "game/test/fpv-regional-preparation-controls.test.mjs",
+          "currentSha256": "1570f42b9b670ce1c93fece59e8fcd180b36c1b4410db61976a1af9e74613b69",
+          "baselineExists": true,
+          "baselineSha256": "1570f42b9b670ce1c93fece59e8fcd180b36c1b4410db61976a1af9e74613b69",
+          "byteIdenticalToB117": true
+        },
+        {
+          "path": "game/test/fpv-world-appearance-ui.test.mjs",
+          "currentSha256": "b05b624ad14c47403ebc764397a7b0d19650f4d1f8bbc3a1f2cbf2d1fb6057d7",
+          "baselineExists": true,
+          "baselineSha256": "b05b624ad14c47403ebc764397a7b0d19650f4d1f8bbc3a1f2cbf2d1fb6057d7",
+          "byteIdenticalToB117": true
+        },
+        {
+          "path": "game/test/journey-performance-host.test.mjs",
+          "currentSha256": "fabf7ac1719edd3e635983d65fa2210bec1df32e587f388c411f88b7c472e8b7",
+          "baselineExists": true,
+          "baselineSha256": "fabf7ac1719edd3e635983d65fa2210bec1df32e587f388c411f88b7c472e8b7",
+          "byteIdenticalToB117": true
+        },
+        {
+          "path": "game/test/menu-style-host.test.mjs",
+          "currentSha256": "d0c88b0b7ab73ef83745e86171dfb58d83dfd1509882ea7a5976ce5ec91e7b5a",
+          "baselineExists": true,
+          "baselineSha256": "d0c88b0b7ab73ef83745e86171dfb58d83dfd1509882ea7a5976ce5ec91e7b5a",
+          "byteIdenticalToB117": true
+        },
+        {
+          "path": "game/test/mission-library-solo-host.test.mjs",
+          "currentSha256": "8a7801ab3b62613a45fb9fd78224933a4075b5cafc89d1dd474f03c89e267d46",
+          "baselineExists": true,
+          "baselineSha256": "8a7801ab3b62613a45fb9fd78224933a4075b5cafc89d1dd474f03c89e267d46",
+          "byteIdenticalToB117": true
+        },
+        {
+          "path": "game/test/overflight-battlefield-progression.test.mjs",
+          "currentSha256": "a59a638fb355cbd052444644c6f07ba2241823bebfe8db48202cd23ec1f74878",
+          "baselineExists": true,
+          "baselineSha256": "a59a638fb355cbd052444644c6f07ba2241823bebfe8db48202cd23ec1f74878",
+          "byteIdenticalToB117": true
+        },
+        {
+          "path": "game/test/team-installed-host.test.mjs",
+          "currentSha256": "aaa063026692a7fff1d1d0e7427af26422acdb0beeb7692dbe9e8bd32d68a222",
+          "baselineExists": true,
+          "baselineSha256": "aaa063026692a7fff1d1d0e7427af26422acdb0beeb7692dbe9e8bd32d68a222",
+          "byteIdenticalToB117": true
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "build": {
+      "path": ".cache/solo-followup/artifact-demo-final-14ac29e2-v2/receipt.json",
+      "sha256": "19b5d48f990afc124c2c9108fcdd0e693a1c5d46adcc3f65efbb51f45c37131d"
+    },
+    "recovery": {
+      "path": ".cache/solo-followup/artifact-demo-final-14ac29e2-v2-recovery/receipt.json",
+      "sha256": "fb68448983dc35c850282ba966e255fc0b26c7862c1f3400547634cd22d3354b"
+    },
+    "zip": {
+      "path": ".cache/solo-followup/artifact-demo-final-14ac29e2-v2/zip-verification.json",
+      "sha256": "a2ce78797aa526ba1421f66fde2f85a8e36c35c0ee0221125051d11e28ff88cd"
+    },
+    "source": {
+      "path": ".cache/solo-followup/artifact-demo-final-14ac29e2-v2/source-verification.json",
+      "sha256": "756dee876d1fb3e2edc7a7d9fea427503d5cbbf7529fa9e4159fcd4473b6b822"
+    },
+    "csp": {
+      "path": ".cache/solo-followup/artifact-demo-final-14ac29e2-v2/csp.json",
+      "sha256": "cd2f294b91073cd85adcd822ac5e1b478cb86bf41044b93eec12dcf34a320d9b"
+    },
+    "preservation": {
+      "path": ".cache/solo-followup/artifact-demo-final-14ac29e2-v2/preservation.json",
+      "sha256": "a3bfe4bd83584a17d070bc6bbe82bd9de326ff580449c3c0eadb0213d28e84c2"
+    },
+    "preview": {
+      "path": ".cache/solo-followup/artifact-demo-final-14ac29e2-v2-recovery/preview-verification.json",
+      "sha256": "0957009c68beaf0293136898302f4cbc6c86c626563be2bf5e20547ceb30c892"
+    },
+    "native": {
+      "path": ".cache/solo-followup/native-14ac29e2/receipt.json",
+      "sha256": "731d3fc1fc8c7da57a8641b642a0ba20c1282bc9268288c61e25091677fb5ec8"
+    },
+    "sourceChecks": {
+      "path": ".cache/solo-followup/final-source-checks-20261016T105948Z-14ac29e2/receipt.json",
+      "sha256": "5e5b42ec1d5becf76025d362876f91d26ef357c2569ac5529f9a207efbfb7f38"
+    }
+  },
+  "retainedFailedAttempt": {
+    "status": "failed",
+    "reason": "AssertionError('Durable build preserved; free owned cache space before preview extraction. Keep the owned RAM volume mounted.')",
+    "recoveryReceipt": {
+      "path": ".cache/solo-followup/artifact-demo-final-14ac29e2-v2-recovery/receipt.json",
+      "sha256": "fb68448983dc35c850282ba966e255fc0b26c7862c1f3400547634cd22d3354b"
+    },
+    "scope": "Build and durable artifact verification succeeded; preview extraction was refused by the storage admission guard. A separate recovery retained all proofs and passed without changing the reserve or original receipt."
+  },
+  "limitations": [
+    "Native worker and paused-render checks are correctness only, separate from timing, recovery, touch, Demo and sustained qualification.",
+    "Actual Chrome is155.0.8059.85; older e025 cohorts used155.0.8059.80 and retain their original identity.",
+    "Desktop WebKit26.5 is not iPhone Safari.",
+    "Optional remote soundtrack catalogue CSP refusals remain in worker reports; exact production policy was preserved.",
+    "Full format check fails on nine files byte-identical to original main; full lint and generated/content validation pass.",
+    "No physical device, energy, thermal or universal no-stutter claim."
+  ]
+}

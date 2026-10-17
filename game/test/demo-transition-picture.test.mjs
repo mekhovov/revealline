@@ -10,10 +10,28 @@ const theme = read('../content/themes.json').themes[0];
 const level = read('../content/campaign.json').levels[0];
 function canvasFactory(created) {
   return () => {
-    const canvas = { width: 0, height: 0, writes: 0 };
-    canvas.getContext = () => ({
-      drawImage(source) {
+    const canvas = { width: 0, height: 0, writes: 0, calls: [] };
+    const stack = [],
+      state = { globalAlpha: 1, globalCompositeOperation: 'source-over' };
+    const context = {
+      clearRect(...args) {
+        canvas.calls.push({ key: 'clearRect', args });
+      },
+      fillRect(...args) {
+        canvas.calls.push({ key: 'fillRect', args, ...state });
+      },
+      save() {
+        stack.push({ ...state });
+      },
+      restore() {
+        Object.assign(state, stack.pop());
+      },
+      drawImage(source, ...args) {
         canvas.original = source;
+        canvas.calls.push({ key: 'drawImage', args: [source, ...args], ...state });
+      },
+      createImageData(width, height) {
+        return { data: new Uint8ClampedArray(width * height * 4), width, height };
       },
       getImageData() {
         return {
@@ -26,7 +44,17 @@ function canvasFactory(created) {
         canvas.pixels = pixels.data.slice();
         canvas.writes++;
       },
-    });
+    };
+    canvas.getContext = () =>
+      new Proxy(context, {
+        get(target, key) {
+          return key in target ? target[key] : state[key];
+        },
+        set(_, key, value) {
+          state[key] = value;
+          return true;
+        },
+      });
     created.push(canvas);
     return canvas;
   };
@@ -83,7 +111,11 @@ test('scene transition modifies only the already concealed picture and releases 
   f.painter.draw(a.ctx, run, 0, { paused: true, pictureVisibility: 'blurred' });
   f.painter.draw(b.ctx, run, 0, { paused: true, pictureVisibility: 'blurred', demoTransition: 1 });
   assert.equal(f.concealed.length, 1);
-  assert.equal(f.transition.length, 1);
+  assert.equal(f.transition.length, 2, 'The output surface and prepared noise atlas are owned.');
+  const [output, noise] = f.transition;
+  assert.equal(noise.width, 256);
+  assert.equal(noise.height, 64);
+  assert.equal(noise.writes, 4, 'Each bounded noise frame is prepared once.');
   assert.equal(
     f.transition[0].original,
     f.concealed[0],
@@ -91,6 +123,16 @@ test('scene transition modifies only the already concealed picture and releases 
   );
   assert.equal(pictureCall(a).args[0], f.concealed[0]);
   assert.equal(pictureCall(b).args[0], f.transition[0]);
+  assert.deepEqual(
+    output.calls.filter((call) => call.key === 'drawImage').map((call) => call.args[0]),
+    [f.concealed[0], noise, f.concealed[0]],
+    'Only protected pixels and the independent noise atlas enter the compositor.',
+  );
+  assert.equal(
+    output.calls.filter((call) => call.key === 'drawImage').at(-1).globalCompositeOperation,
+    'destination-in',
+    'The protected source also owns the output alpha mask.',
+  );
   assert.deepEqual(
     b.calls.filter((call) => call !== pictureCall(b)),
     a.calls.filter((call) => call !== pictureCall(a)),
@@ -108,7 +150,10 @@ test('scene transition modifies only the already concealed picture and releases 
   assert.equal(pictureCall(end).args[0], f.concealed[0]);
   f.painter.dispose();
   assert.equal(f.concealed[0].width, 0);
-  assert.equal(f.transition[0].width, 0);
+  for (const canvas of f.transition) {
+    assert.equal(canvas.width, 0);
+    assert.equal(canvas.height, 0);
+  }
 });
 
 test('reduced effects and invalid transition inputs skip transition work, and failed filtering cannot expose raw art', () => {
@@ -183,4 +228,8 @@ test('clear previews cannot disable active gameplay jammers; protected images re
   });
   assert.equal(pictureCall(recovered).args[0], f.painter.background);
   f.painter.dispose();
+  for (const canvas of [...f.concealed, ...f.transition]) {
+    assert.equal(canvas.width, 0);
+    assert.equal(canvas.height, 0);
+  }
 });

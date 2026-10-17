@@ -1,3 +1,4 @@
+import { pcmWaveBlob } from './helpers/pcm-wave.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { destructionBufferGain } from '../ui/destruction-level.mjs';
@@ -80,13 +81,16 @@ test('invalid decoded destruction content is rejected before caching', () => {
 
 test('published preparation joins a pending decode, exposes readiness, and applies calibrated gain', async (t) => {
   const h = audioHarness();
+  h.context.sampleRate = 48000;
   t.after(() => h.soundscape.dispose());
   let finish;
   h.context.decodeAudioData = () =>
     new Promise((resolve) => {
       finish = resolve;
     });
-  h.soundscape.setPublishedAudio(async () => ({ blob: new Blob([new Uint8Array(8)]) }));
+  h.soundscape.setPublishedAudio(async () => ({
+    blob: pcmWaveBlob({ seconds: 0.2, sampleRate: 48000 }),
+  }));
   await h.soundscape.enable();
   const published = h.soundscape.publishedAudio;
   assert.equal(published.has('destroy-soft'), false);
@@ -123,9 +127,12 @@ test('published preparation joins a pending decode, exposes readiness, and appli
 test('failed published scheduling retires owned nodes and invalid cues never report ready', async (t) => {
   for (const failure of ['start', 'stop']) {
     const h = audioHarness();
+    h.context.sampleRate = 48000;
     t.after(() => h.soundscape.dispose());
     h.context.decodeAudioData = async () => buffer(0.1);
-    h.soundscape.setPublishedAudio(async () => ({ blob: new Blob([new Uint8Array(8)]) }));
+    h.soundscape.setPublishedAudio(async () => ({
+      blob: pcmWaveBlob({ seconds: 0.2, sampleRate: 48000 }),
+    }));
     await h.soundscape.enable();
     await h.soundscape.publishedAudio.prepare(['destroy-heavy']);
     let disconnected = 0;
@@ -145,9 +152,12 @@ test('failed published scheduling retires owned nodes and invalid cues never rep
     assert.equal(disconnected, 1);
   }
   const h = audioHarness();
+  h.context.sampleRate = 48000;
   t.after(() => h.soundscape.dispose());
   h.context.decodeAudioData = async () => buffer(NaN);
-  h.soundscape.setPublishedAudio(async () => ({ blob: new Blob([new Uint8Array(8)]) }));
+  h.soundscape.setPublishedAudio(async () => ({
+    blob: pcmWaveBlob({ seconds: 0.2, sampleRate: 48000 }),
+  }));
   await h.soundscape.enable();
   await h.soundscape.publishedAudio.prepare(['destroy-soft']);
   assert.equal(h.soundscape.publishedAudio.has('destroy-soft'), false);

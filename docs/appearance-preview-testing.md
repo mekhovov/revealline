@@ -88,6 +88,12 @@ Use Node 22.13.1 and the PR head. First read the accepted policy with
   test-file list in `.github/workflows/appearance-preview.yml` with
   `node --test --test-concurrency=1`.
 
+The workflow first runs a separate ten-file prerequisite for optional replay
+work, save readback and deferred Library ownership. Its five-minute test bound
+is separate from the existing 118-file preview gate. Both results are bound to
+the same source, test policy and uploaded package; a failure retains its output
+and prevents packaging. These source controls do not establish native timing.
+
 In both cases, run the workflow's generated presentation and marking source
 checks before building. Manual playback review remains available in either mode:
 use the SIM lifecycle steps above and record the exact source and observations.

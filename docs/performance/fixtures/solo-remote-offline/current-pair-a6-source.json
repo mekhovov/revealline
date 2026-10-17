@@ -1,0 +1,54 @@
+{
+  "format": "SoloHistoricalOfflinePairSourceV2",
+  "run": 39008793888,
+  "conclusion": "failure",
+  "sourceRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+  "sourceTree": "6b13627e324f695b6ee8d9f2dee2eeeb7217c332",
+  "declaration": {
+    "path": "docs/performance/solo-remote-offline-current-plan.json",
+    "bytes": 10731,
+    "sha256": "4d38c7ddab04ac425872778d7ed16f1b2e77a45c568d4f648f52bbac642266bc"
+  },
+  "workflow": {
+    "path": ".github/workflows/solo-remote-offline-current-temporary.yml",
+    "bytes": 7579,
+    "sha256": "eda2a84579837b2d201ade78b75325eb85f1ef0a0c6a5bc5e3a599cbaae76221"
+  },
+  "refs": [
+    {
+      "path": "scripts/solo-remote-offline.mjs",
+      "bytes": 27362,
+      "sha256": "2a5c677e34cdd563e691a2ea5293268d00a69b3d644a02bd880db89ab0f0fd65"
+    },
+    {
+      "path": "scripts/observe-solo-offline-persistence.mjs",
+      "bytes": 45724,
+      "sha256": "56d25493b2feed06c2b3644286b71c8b333798c2463fbddcdd485b2f2bdd8582"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 15700,
+      "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+    },
+    {
+      "path": "scripts/solo-offline-gameplay.mjs",
+      "bytes": 13885,
+      "sha256": "f973ca1841213a7fe832175427a7aa9adf56f4db961f0834e2da6ede63435963"
+    },
+    {
+      "path": "scripts/observe-solo-offline-persistence.mjs",
+      "bytes": 45724,
+      "sha256": "56d25493b2feed06c2b3644286b71c8b333798c2463fbddcdd485b2f2bdd8582"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-remote-offline/installed-starter.qualification.fixture",
+      "bytes": 5811,
+      "sha256": "21b2d99269a7a21cc1ac7c6e960f17531c5d2cfd1ec7ac4d4b523520b25e0cb5"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 54513,
+      "sha256": "d5d4e03934a3f016d0e1125516959b2cc5568d244f3bf50c770ebeb0c8e3b58f"
+    }
+  ]
+}

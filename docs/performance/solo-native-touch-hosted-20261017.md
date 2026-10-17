@@ -1,0 +1,32 @@
+# Hosted native touch continuation
+
+This is a port of the retained touch protocol to the existing bounded hosted owner. It has not run natively yet. The exact candidate is `a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4` (tree `6b13627e324f695b6ee8d9f2dee2eeeb7217c332`, runtime `32abd322afd8243e4537ce4784e2f78ee45ecbec`), from successful Appearance run `39008793814`. The adapter pins its actual archive, manifest and source identities. The `8b019` checkout supplies source identity only; this lane neither builds nor measures a baseline.
+
+Four jobs each retain three fresh observations: Chromium D-pad, WebKit D-pad, Chromium stick and Chromium swipe. Every observation starts with the original 400×850 CSS viewport, DPR 3 and touch-enabled context; Chromium is mobile-emulated and WebKit retains the original non-mobile context. The 24 commands alternate right/left along First Return's safe top boundary, with 600 ms holds. Continuous Chromium cases retain one initial neutral touch for 250 ms, then 24 moves displaced 40 CSS pixels around the same contact. No capture, movement rule, mission identity or simulation change is introduced.
+
+The protocol comes from these retained drivers:
+
+- `.cache/solo-followup/native-touch-final-settled120-plan01/driver.mjs`: 20,275 bytes, SHA256 `36d8b638f594b904e8ef36b79be356139220aa87d187a110830c897790a5578c`.
+- `.cache/solo-followup/native-touch-webkit-native-8c-plan02/driver.mjs`: 21,410 bytes, SHA256 `20889111f12eaf262be637d3b06b90b4bc2530883af853e3edf71488a10add27`.
+
+Their full expected replay definition equals the existing `cold-first30.qualification.fixture` definition. The new observer uses this committed fixture unchanged. It replaces the local RAM-specific launch guard with the existing hosted process, evidence and cleanup owners. It retains failures, partial replay exports, bounded atomic reports and a separate same-engine, full-browser-version native replay after the observation browser disconnects. Public Start, Settings, Pause and replay export remain the only gameplay controls besides touch.
+
+## What a successful row establishes
+
+The adapter independently checks all 24 movements, advancing ticks, unchanged lives and top-row position, no cut trail, and visible/focused running state. D-pad observations require exactly 24 trusted accepted touch events; continuous observations require exactly 25, including the neutral down. All must have matching application tick/render samples, no overwritten/dropped observations and no interruption or application failure. WebKit's reported `maxTouchPoints` remains descriptive: actual trusted touch and movement are the capability evidence. There is no continuous WebKit fallback and no DOM `dispatchEvent` path.
+
+The unchanged cadence protocol retains a fixed two-second blank-page settle and 120 consecutive intervals within one ten-second deadline, before game navigation. It never retries, trims, selects a better window or recalibrates during play. The observer and post-row assessment compute the same conservative histogram bound for p95 application touch-to-render submission, compared with twice that fixed cadence. Failed, straddling and unavailable bounds remain respectively failed, inconclusive and unobserved. A clean input/replay correctness result remains separate from the numerical bound: a failed latency gate fails the overall row, and inconclusive or unobserved latency makes the row inconclusive. None of these results grants general frame-performance qualification.
+
+[Playwright's touchscreen API](https://playwright.dev/docs/api/class-touchscreen) provides native taps. Chromium continuous contacts use the browser's [Input.dispatchTouchEvent protocol](https://chromedevtools.github.io/devtools-protocol/tot/Input/#method-dispatchTouchEvent). Manually constructed DOM touch events do not provide the same trusted-event witness; the [Playwright touch-event guide](https://playwright.dev/docs/touch-events) describes that distinction. This observer does not bypass trust checks.
+
+## Bounds and evidence
+
+Each row has 480 seconds, including a 240-second observation deadline, bounded context/browser close attempts and a separate 120-second strict replay. The existing owner still decides process closure; a timeout, forced cleanup, ambiguous process or survivor cannot pass. Reports are capped at 4 MiB, native event storage at 64 entries with explicit overflow, replay at 32 MiB, complete row evidence at 32 MiB and job evidence at 256 MiB. A replay near its own maximum may exhaust the stricter total row budget; that is retained as a failure, never a cap increase or silent truncation. The helper/setup/job envelopes are 75/40/130 minutes with three serial rows and no automatic retries.
+
+No new per-frame loop, work probe, screenshot, heap/CPU profile or hitch journal is added. Existing application diagnostics and retained state reads at action boundaries provide the application-latency evidence. Browser scheduling, automation transport, physical touch-to-photon delay, thermal conditions and the actual iPhone 17 Pro Safari or Steam Deck OLED remain outside the claim.
+
+The initial contract run retained 9 passes and two test-environment failures caused by macOS `/tmp` aliases in isolated-file controls. The tests now canonicalize only their own temporary directory; production path checks remain strict. The next complete focused run passed all 11 controls. After the added headed-display contract, the seven-file group passed 56 controls with four Linux-only skips; it additionally covers cadence, replay mechanics/identity, worker closure, archive provenance and common process ownership. The copied-source eight-file group, including the actual source-verifier branch, passed 62 controls with the same four skips. The independent review retained latency failures separately from native correctness and found no further issue. No local browser or preview server was launched.
+
+## Release remains held
+
+The first a7e wave exposed a missing dynamic source-verification dependency in sparse tooling before raster or offline browsers ran. This touch workflow must use the audited dynamic closure and exercise the actual source-verifier branch before release. Existing executed declarations and their failed results stay immutable. The future one-shot workflow must bind current reviewed tooling, the same successful a6 package, and an explicitly reviewed push edge; no new package or success is inferred from this port.

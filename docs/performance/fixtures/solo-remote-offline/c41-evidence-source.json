@@ -1,0 +1,25 @@
+{
+  "format": "SoloOfflineC41SourceWitnessV1",
+  "revision": "c41a02216c0811952232a387fd1743e09452c269",
+  "tree": "7fff7e134c67aa268e63cab5b08a7f3473bb5703",
+  "files": [
+    {
+      "path": "docs/performance/solo-remote-offline-candidate-v2-plan.json",
+      "bytes": 17555,
+      "sha256": "e9aaaaa9c5643e72874be701d986b7b0c647ee3f2889dab4e80959ba0767a807",
+      "gitBlob": "55d80aae887079588df2896063e272873ecd939a"
+    },
+    {
+      "path": ".github/workflows/solo-remote-offline-candidate-v2-temporary.yml",
+      "bytes": 18262,
+      "sha256": "24e0662e0bcd38f914b3efdaf786bbe27e55096dd309bfa3ff75cb393fe67183",
+      "gitBlob": "f26bb03509803d71143db890360e1354febbcf81"
+    },
+    {
+      "path": "scripts/solo-remote-offline.mjs",
+      "bytes": 31551,
+      "sha256": "05ddfd0c9c475a31b461798029104bc6ba42770c0ce4a9135cbb6cdc9587329b",
+      "gitBlob": "e405f232a1373238cba24b4ffa006231f48fb553"
+    }
+  ]
+}

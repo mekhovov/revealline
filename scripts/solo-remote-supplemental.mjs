@@ -1,0 +1,647 @@
+// Diagnostic native admission for new public-control recipes. Timing results
+// remain raw evidence and never release a performance prerequisite.
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { copyFile, lstat, mkdir, open, readFile, realpath, writeFile } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { setTimeout as delay } from 'node:timers/promises';
+
+const MiB = 1024 ** 2;
+const SOURCE = {
+  baseline: 'b11745223861c3973ad4bf440cc536198b8e0371',
+  candidate: '3adcd53792043ef02459e86168c6b33a66d6ef00',
+};
+export const FIRST_RETURN_COHORT = 'first-return-main8b-candidateadb';
+const FIRST_RETURN_SOURCE = {
+  baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  candidate: 'adb1c0c7b7dd1a526a0693917f2012d1dbc08b22',
+};
+export const FIRST_RETURN_PHASES = Object.freeze({
+  'first-return-retry': 'cb575fd56d6ab8ab796ce5924b0154dc8e18aca4b62502b2028e2fd932f63bee',
+  'first-return-next': 'eb859ade98235a43c22858bcf5748daa8d951bd9aa1790f26fc13787c77b8fb5',
+});
+const firstReturn = (plan) => plan?.sourceCohort === FIRST_RETURN_COHORT;
+export const LARGE_PROFILE_COHORT = 'large-profile-main8b-candidatea6e';
+const largeProfile = (plan) => plan?.sourceCohort === LARGE_PROFILE_COHORT;
+const LARGE_PROFILE_SOURCE = {
+  baseline: FIRST_RETURN_SOURCE.baseline,
+  candidate: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
+};
+export const LARGE_PROFILE_PHASE = Object.freeze({
+  recipe: {
+    path: 'docs/performance/fixtures/solo-remote-supplemental/large-profile.qualification.fixture',
+    bytes: 4804,
+    sha256: '228647a8fbceaf368872adecc8ee88c6b4fc57f55567ea9d8ea79ef4ee87f30e',
+    stagedName: 'scenario.qualification.json',
+  },
+  upload: {
+    path: 'docs/performance/fixtures/solo-remote-supplemental/large-profile.library.fixture',
+    bytes: 2788121,
+    sha256: 'a71209967e8c3e3b687a0488075d59301a7adea62ea43fa60eba7a83d7df4e07',
+    stagedName: 'large-profile.library.json',
+  },
+  scenarioTimeoutMs: 360000,
+});
+function sources(plan) {
+  assert(
+    plan?.sourceCohort === undefined || firstReturn(plan) || largeProfile(plan),
+    'Unknown supplemental source cohort',
+  );
+  return largeProfile(plan)
+    ? LARGE_PROFILE_SOURCE
+    : firstReturn(plan)
+      ? FIRST_RETURN_SOURCE
+      : SOURCE;
+}
+const phases = (plan) =>
+  largeProfile(plan)
+    ? { 'large-profile': LARGE_PROFILE_PHASE.recipe.sha256 }
+    : firstReturn(plan)
+      ? FIRST_RETURN_PHASES
+      : SUPPLEMENTAL_PHASES;
+function firstReturnPhase(name) {
+  const retry = name === 'first-return-retry';
+  assert(retry || name === 'first-return-next');
+  return {
+    recipe: {
+      path: `docs/performance/fixtures/solo-remote-sustained/${retry ? 'retry' : 'next'}-first-return-anchored-preflight.qualification.fixture`,
+      bytes: retry ? 4349 : 3336,
+      sha256: FIRST_RETURN_PHASES[name],
+      stagedName: 'scenario.qualification.json',
+    },
+    upload: retry
+      ? {
+          path: 'docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture',
+          bytes: 2897,
+          sha256: 'd36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e',
+          stagedName: 'first-return.xonix.json',
+        }
+      : null,
+    scenarioTimeoutMs: 240000,
+  };
+}
+function validateFirstReturnSources(plan) {
+  assert.equal(
+    plan.candidate.tree,
+    largeProfile(plan)
+      ? '6b13627e324f695b6ee8d9f2dee2eeeb7217c332'
+      : 'fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508',
+  );
+  assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
+  assert.equal(
+    plan.runtimeRevision,
+    largeProfile(plan)
+      ? '32abd322afd8243e4537ce4784e2f78ee45ecbec'
+      : '488eae03aee7f58dd5837451363015888faa429f',
+  );
+  assert(!plan.baseline.publishVerifiedNormal && !plan.baseline.publisher);
+  // Keep matrix declaration standalone. The common runner subsequently calls
+  // validateBaselineReuse and fully reads both archives, ready proof and source.
+  const reuse = plan.baseline.reusableArtifact;
+  assert.equal(reuse.format, 'SoloHostedNormalBaselineReuseV2');
+  assert.equal(reuse.sourceRevision, FIRST_RETURN_SOURCE.baseline);
+  assert.equal(reuse.sourceTree, plan.baseline.tree);
+  assert.equal(reuse.producer.repository, plan.repository);
+  assert.equal(reuse.producer.workflow, '.github/workflows/solo-remote-baseline-temporary.yml');
+  assert.equal(reuse.producer.run, reuse.run);
+  assert(Number.isSafeInteger(reuse.producer.attempt) && reuse.producer.attempt > 0);
+  for (const key of ['toolingRevision', 'toolingTree'])
+    assert.match(reuse.producer[key], /^[a-f0-9]{40}$/);
+  assert.equal(reuse.name, `solo-normal-baseline-8b019919-${reuse.run}-${reuse.producer.attempt}`);
+  for (const identity of [plan.candidate, reuse]) {
+    for (const key of ['run', 'artifact'])
+      assert(Number.isSafeInteger(identity[key]) && identity[key] > 0);
+    for (const name of ['outer', 'inner']) {
+      const ref = identity[name];
+      assert(Number.isSafeInteger(ref?.bytes) && ref.bytes > 0 && ref.bytes <= 2 * 1024 ** 3);
+      assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+    }
+    assert.match(identity.manifestSHA256, /^[a-f0-9]{64}$/);
+  }
+  assert(
+    Number.isSafeInteger(reuse.ready?.bytes) &&
+      reuse.ready.bytes > 0 &&
+      reuse.ready.bytes <= 2 * MiB,
+  );
+  assert.match(reuse.ready.sha256, /^[a-f0-9]{64}$/);
+}
+export const SUPPLEMENTAL_PHASES = Object.freeze({
+  'latency-long-rail': '6815653eadf5a4e05435be5e87bc933ba5e17b7d10fb51032988c274dd651802',
+  'latency-sentry': '225c05486cb28516086acf3bbefb2bd4bcdabe30d5e1a990c7c07137f583a5d9',
+  'erosion-first-fracture': '3e2c56b4c5aae3343986a8a68d39e402a9822f66093c6556b99042e24947604e',
+  'jammer-neutral': 'aa2cbdbba30450e296b75f7458afa101dcd6ad0bc5858dd2de5ffc2dcc1e2c34',
+  'jammer-steering': '9169d2a4d583b563cb322d5e374bb62179ef5d6dfa2c2f3d5351926969e5b78f',
+  'latency-long-rail-anchored': '95521abcc88e38128b574dbea8d12e5958c1a98fd7a7789a4a8cfbd7df079768',
+});
+const engines = ['chromium', 'webkit'];
+function validateRelease(plan) {
+  assert.equal(plan.status, 'reviewed-diagnostic-only');
+  assert.equal(plan.performanceExclusion, true);
+  assert.equal(plan.release?.firstEightAllCorrectnessPassed, false);
+  assert.equal(plan.release?.performanceQualification, 'excluded');
+  assert.equal(
+    plan.release?.scope,
+    largeProfile(plan)
+      ? 'large-profile-public-import-diagnostics'
+      : firstReturn(plan)
+        ? 'first-return-native-preflight'
+        : 'supplemental-native-preflight',
+  );
+  assert.equal(plan.release?.predecessorRun, largeProfile(plan) ? 39008793892 : 38985941469);
+  assert.equal(plan.release?.candidateRevision, sources(plan).candidate);
+  for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
+    assert.equal(plan.release[key], true);
+  const previous = Object.keys(SUPPLEMENTAL_PHASES).indexOf(plan.phase) - 1;
+  assert.equal(
+    plan.release.previousPhase,
+    largeProfile(plan)
+      ? 'final-source-package-admission'
+      : firstReturn(plan)
+        ? 'latency-long-rail-anchored'
+        : plan.phase === 'latency-long-rail-anchored'
+          ? 'latency-long-rail'
+          : previous < 0
+            ? 'reviewed-first-eight-diagnostic'
+            : Object.keys(SUPPLEMENTAL_PHASES)[previous],
+  );
+  if (largeProfile(plan)) {
+    assert.equal(plan.release.sourceCohort, LARGE_PROFILE_COHORT);
+    assert.equal(plan.release.baselineRevision, LARGE_PROFILE_SOURCE.baseline);
+    assert.deepEqual(plan.release.diagnosticPredecessor, {
+      run: 39008793892,
+      conclusion: 'failure',
+      nativeObservations: 0,
+      allOwnersClosed: true,
+      allFailuresRetained: true,
+    });
+    assert(
+      plan.release.evidence.some(
+        (row) => row.runId === 39008793892 && row.artifactId === 12092316097,
+      ),
+    );
+  }
+  if (firstReturn(plan)) {
+    assert.equal(plan.release.baselineRevision, FIRST_RETURN_SOURCE.baseline);
+    assert.deepEqual(plan.release.diagnosticPredecessor, {
+      run: 38995660502,
+      phase: 'latency-long-rail-anchored',
+      conclusion: 'failure',
+      passedRows: 3,
+      failedRows: 1,
+      allOwnersClosed: true,
+      allFailuresRetained: true,
+    });
+    for (const artifactId of [12086798338, 12087695323])
+      assert(
+        plan.release.evidence.some(
+          (row) => row.runId === 38995660502 && row.artifactId === artifactId,
+        ),
+      );
+  }
+  if (plan.phase === 'latency-long-rail-anchored') {
+    assert.deepEqual(plan.release.diagnosticPredecessor, {
+      run: 38992974770,
+      phase: 'latency-long-rail',
+      conclusion: 'failure',
+      passedRows: 1,
+      failedRows: 3,
+      allOwnersClosed: true,
+      allFailuresRetained: true,
+    });
+    for (const artifactId of [12085853457, 12086092968])
+      assert(
+        plan.release.evidence.some(
+          (row) => row.runId === 38992974770 && row.artifactId === artifactId,
+        ),
+      );
+  }
+  assert(Array.isArray(plan.release.evidence) && plan.release.evidence.length > 0);
+  assert(plan.release.evidence.length <= 32);
+  for (const row of plan.release.evidence) {
+    assert(Number.isSafeInteger(row.runId) && row.runId > 0);
+    assert(Number.isSafeInteger(row.artifactId) && row.artifactId > 0);
+    for (const key of ['artifactSHA256', 'summarySHA256']) assert.match(row[key], /^[a-f0-9]{64}$/);
+  }
+}
+function expectedRows(plan, engine) {
+  const roles =
+    largeProfile(plan) && (plan.repetition + engines.indexOf(engine)) % 2 === 0
+      ? ['candidate', 'baseline']
+      : ['baseline', 'candidate'];
+  return roles.map((source) => ({
+    id: `${plan.phase}-${engine}${largeProfile(plan) ? `-r${plan.repetition}` : ''}-${source}`,
+    kind: 'supplemental',
+    source,
+    engine,
+    timeoutMs: 480000,
+    performanceExclusion: true,
+  }));
+}
+export function validateSupplementalPlan(plan) {
+  assert.equal(plan.format, 'SoloHostedSupplementalPlanV1');
+  const source = sources(plan),
+    phaseHashes = phases(plan);
+  assert(Object.hasOwn(phaseHashes, plan.phase));
+  validateRelease(plan);
+  assert.equal(plan.repository, 'mekhovov/revealline');
+  assert.equal(plan.candidate.revision, source.candidate);
+  assert.equal(plan.baseline.revision, source.baseline);
+  assert(plan.baseline.reusableArtifact);
+  if (firstReturn(plan) || largeProfile(plan)) validateFirstReturnSources(plan);
+  if (largeProfile(plan)) {
+    assert.equal(plan.phase, 'large-profile');
+    assert([1, 2, 3].includes(plan.repetition));
+    assert.equal(
+      plan.hitchJournal,
+      undefined,
+      'This correctness lane does not claim complete timing coverage',
+    );
+  }
+  assert.equal(plan.node, '22.13.1');
+  assert.equal(plan.playwright, '1.62.1');
+  assert.equal(plan.cpu, 1);
+  assert.equal(plan.maxParallel, 2);
+  assert.equal(plan.automaticRetries, 0);
+  assert.equal(plan.automaticPhaseContinuation, false);
+  assert.equal(plan.setupTimeoutMs, 40 * 60000);
+  assert.equal(plan.helperTimeoutMs, 75 * 60000);
+  assert.equal(plan.evidenceBytes, 256 * MiB);
+  assert.equal(plan.rowEvidenceBytes, 32 * MiB);
+  assert(engines.includes(plan.engine));
+  assert.deepEqual(plan.rows, expectedRows(plan, plan.engine));
+  assert.deepEqual(Object.keys(plan.phases), Object.keys(phaseHashes));
+  for (const [name, phase] of Object.entries(plan.phases)) {
+    if (largeProfile(plan)) {
+      assert.deepEqual(phase, LARGE_PROFILE_PHASE);
+      continue;
+    }
+    if (firstReturn(plan)) assert.deepEqual(phase, firstReturnPhase(name));
+    assert.equal(phase.recipe.sha256, phaseHashes[name]);
+    assert.equal(phase.scenarioTimeoutMs, 240000);
+    if (phase.upload) assert(/^[a-z0-9-]+\.xonix\.json$/.test(phase.upload.stagedName));
+    else assert(firstReturn(plan) && name === 'first-return-next');
+  }
+  assert.deepEqual(
+    plan.adapterInputs.map(({ path }) => path),
+    ['scripts/solo-remote-supplemental.mjs', 'scripts/solo-remote-baseline.mjs'],
+  );
+  assert(plan.frozenTools.length > 0 && plan.frozenTools.length <= 64);
+  assert.equal(new Set(plan.frozenTools.map(({ path }) => path)).size, plan.frozenTools.length);
+  for (const name of [
+    'qualify-solo-runtime.mjs',
+    'solo-qualification.mjs',
+    'solo-qualification-native-replay.mjs',
+    'solo-qualification-replay-core.mjs',
+    'solo-qualification-observation.mjs',
+    'solo-qualification-browser-context.mjs',
+    'solo-qualification-cadence.mjs',
+    'solo-qualification-export.mjs',
+    'solo-qualification-replay-identity.mjs',
+    'run-solo-remote-correctness.mjs',
+    'solo-remote-archive.py',
+    'verify-solo-build.mjs',
+    'serve-production-preview.mjs',
+    'game-cli.mjs',
+  ])
+    assert(plan.frozenTools.some(({ path }) => path === `scripts/${name}`));
+  for (const ref of inputReferences(plan)) {
+    assert(/^(scripts|game|docs)\//.test(ref.path) && !ref.path.split('/').includes('..'));
+    assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+    // Only this exact retained synthetic profile exceeds the existing per-file
+    // limit. The original row/aggregate evidence caps remain unchanged.
+    const maximum =
+      largeProfile(plan) && ref.path === LARGE_PROFILE_PHASE.upload.path ? 4 * MiB : MiB;
+    assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < maximum);
+  }
+  return plan;
+}
+export function bindSupplementalJob(manifest, engine, repetition) {
+  assert.equal(manifest.format, 'SoloHostedSupplementalManifestV1');
+  assert.deepEqual(manifest.engines, engines);
+  const plan = structuredClone(manifest);
+  delete plan.engines;
+  plan.format = 'SoloHostedSupplementalPlanV1';
+  plan.engine = engine;
+  if (largeProfile(plan)) {
+    assert.deepEqual(plan.repetitions, [1, 2, 3]);
+    delete plan.repetitions;
+    plan.repetition = Number(repetition);
+  }
+  plan.rows = expectedRows(plan, engine);
+  return validateSupplementalPlan(plan);
+}
+export function supplementalMatrix(manifest) {
+  return {
+    include: engines.flatMap((engine) =>
+      (largeProfile(manifest) ? [1, 2, 3] : [undefined]).map((repetition) => {
+        const plan = bindSupplementalJob(manifest, engine, repetition);
+        return {
+          phase: plan.phase,
+          engine,
+          ...(largeProfile(plan) ? { repetition } : {}),
+          jobMinutes: 130,
+          stepMinutes: 78,
+          outerSeconds: 4620,
+        };
+      }),
+    ),
+  };
+}
+function inputReferences(plan) {
+  return [
+    ...Object.values(plan.phases).flatMap(({ recipe, upload }) => [
+      recipe,
+      ...(upload ? [upload] : []),
+    ]),
+    ...plan.adapterInputs,
+    ...plan.frozenTools,
+  ];
+}
+export async function readSupplementalJSON(path, maximum = 32 * MiB) {
+  const info = await lstat(path);
+  assert(info.isFile() && !info.isSymbolicLink() && info.size <= maximum);
+  assert.equal(await realpath(path), resolve(path));
+  const file = await open(path, 'r');
+  try {
+    const before = await file.stat();
+    assert(before.dev === info.dev && before.ino === info.ino && before.size === info.size);
+    const buffer = Buffer.alloc(maximum + 1);
+    let count = 0;
+    while (count < buffer.length) {
+      const part = await file.read(buffer, count, buffer.length - count, count);
+      if (!part.bytesRead) break;
+      count += part.bytesRead;
+    }
+    assert(count <= maximum && count === info.size);
+    const after = await file.stat();
+    assert(after.size === before.size && after.mtimeMs === before.mtimeMs);
+    return JSON.parse(buffer.subarray(0, count).toString('utf8'));
+  } finally {
+    await file.close();
+  }
+}
+async function verifyInputs(ctx) {
+  for (const ref of inputReferences(ctx.plan)) {
+    const path = resolve(ctx.repository, ref.path);
+    assert(path.startsWith(ctx.repository + '/'));
+    assert.equal(await realpath(path), path);
+    const info = await lstat(path);
+    assert(info.isFile() && !info.isSymbolicLink());
+    assert.deepEqual(await ctx.digest(path), { bytes: ref.bytes, sha256: ref.sha256 });
+  }
+}
+export async function prepareSupplementalMode(ctx) {
+  validateSupplementalPlan(ctx.plan);
+  await verifyInputs(ctx);
+  await ctx.ensureBaseline();
+  assert.equal(ctx.admitted.status, 'passed');
+  if (largeProfile(ctx.plan))
+    for (const role of ['baseline', 'candidate']) {
+      const identity = ctx.admitted.artifacts[role];
+      assert.equal(identity.sourceRevision, sources(ctx.plan)[role]);
+      assert.equal(identity.sourceTree, ctx.plan[role].tree);
+      const archive =
+        role === 'candidate' ? ctx.plan.candidate : ctx.plan.baseline.reusableArtifact;
+      assert.equal(identity.manifestSHA256, archive.manifestSHA256);
+      assert.deepEqual(identity.archiveIdentity, archive.inner);
+    }
+  const input = join(ctx.work, 'supplemental-inputs');
+  await mkdir(input);
+  const phase = ctx.plan.phases[ctx.plan.phase];
+  for (const [ref, name] of [
+    [phase.recipe, 'scenario.qualification.json'],
+    ...(phase.upload ? [[phase.upload, phase.upload.stagedName]] : []),
+  ]) {
+    const target = join(input, name);
+    await copyFile(resolve(ctx.repository, ref.path), target);
+    assert.deepEqual(await ctx.digest(target), { bytes: ref.bytes, sha256: ref.sha256 });
+    await copyFile(target, join(ctx.evidence, name));
+  }
+  const scenario = await readSupplementalJSON(join(input, 'scenario.qualification.json'), MiB);
+  validateSupplementalScenario(ctx.plan, scenario);
+  ctx.report.performanceExclusion = true;
+  ctx.report.firstEightAllCorrectnessPassed = false;
+  ctx.report.releaseScope = ctx.plan.release.scope;
+  return { recipePath: join(input, 'scenario.qualification.json'), browserVersion: null };
+}
+export function validateSupplementalScenario(plan, scenario) {
+  assert.equal(scenario.timeoutMs, plan.phases[plan.phase].scenarioTimeoutMs);
+  assert.equal(
+    scenario.kind,
+    firstReturn(plan) || largeProfile(plan) ? 'lifecycle' : 'performance',
+  );
+  assert(scenario.expectedReplayDefinition);
+  if (firstReturn(plan)) {
+    assert.equal(scenario.evidenceStorage, undefined, 'Short preflights retain inline evidence');
+    assert.equal(scenario.resourceRules, undefined);
+    assert.deepEqual(
+      scenario.replayRequirements,
+      plan.phase === 'first-return-retry'
+        ? { closures: 1, maximumTrailCells: 30, maximumClaimedCells: 800 }
+        : undefined,
+    );
+  } else if (largeProfile(plan)) {
+    assert.equal(scenario.id, 'large-profile-public-import-and-reload');
+    assert.equal(scenario.evidenceStorage, undefined);
+    assert.equal(scenario.resourceRules, undefined);
+    assert.equal(scenario.actions.filter((action) => action.type === 'upload').length, 1);
+    assert.equal(
+      scenario.actions.find((action) => action.type === 'upload').file,
+      LARGE_PROFILE_PHASE.upload.stagedName,
+    );
+  } else assert(scenario.replayRequirements);
+  return scenario;
+}
+export function supplementalArguments(ctx, row, url, dir) {
+  return [
+    join(ctx.here, 'qualify-solo-runtime.mjs'),
+    url,
+    ctx.modeState.recipePath,
+    join(dir, 'report.json'),
+    '--server-fixture-access',
+    '--work-probe',
+    '--cadence=settled120',
+    '--cpu=1',
+    `--browser=${row.engine}`,
+    `--source-revision=${sources(ctx.plan)[row.source]}`,
+    ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
+    ...(row.engine === 'webkit'
+      ? ['--context=persistent', '--viewport=400x850', '--dpr=3', '--mobile-context']
+      : []),
+  ];
+}
+export function supplementalAssessment(plan, row, raw, command, browserVersion) {
+  const replay = raw?.replay?.nativeVerification;
+  const display = raw?.environment?.requestedDisplay;
+  const mobile = row.engine === 'webkit';
+  const clean =
+    command?.status === 'closed' &&
+    !command.forcedCleanup &&
+    !command.cleanupUnconfirmed &&
+    !command.violation &&
+    command.survivors?.length === 0 &&
+    command.ambiguous?.length === 0;
+  const numerical = raw?.performanceGateStatus;
+  // Exit2 means a retained numerical failure only. Scenario/replay failures exit1.
+  const expectedExit = numerical === 'fail' ? 2 : 0;
+  const numericalRecorded = [
+    'pass-observed-window',
+    'partial-baseline-internal-unknown',
+    'inconclusive',
+    'review-required',
+    'fail',
+  ].includes(numerical);
+  const steering = plan.phase.startsWith('latency-') || plan.phase === 'jammer-steering';
+  const count =
+    raw?.snapshots?.at(-1)?.application?.inputLatency?.byKind?.keyboard?.toRender?.count;
+  const inputCount = Number.isSafeInteger(count) && count >= 0 ? count : null;
+  const sampleReadiness = !steering
+    ? 'not-requested'
+    : row.source === 'baseline'
+      ? inputCount === null
+        ? 'baseline-internal-unobserved'
+        : 'observed-baseline-excluded'
+      : inputCount >= 20
+        ? 'observed-at-least20'
+        : 'insufficient';
+  const correct =
+    clean &&
+    numericalRecorded &&
+    command.exitCode === expectedExit &&
+    raw?.format === 'SoloQualificationReportV1' &&
+    raw.kind === (firstReturn(plan) || largeProfile(plan) ? 'lifecycle' : 'performance') &&
+    raw.scenarioStatus === 'pass' &&
+    raw.workProbe === true &&
+    raw.cadenceProtocol === 'settled120' &&
+    raw.baselineRuntime === (row.source === 'baseline') &&
+    raw.scenarioSHA256 === phases(plan)[plan.phase] &&
+    raw.sourceRevision === sources(plan)[row.source] &&
+    raw.buildIdentity?.sourceRevision === sources(plan)[row.source] &&
+    raw.environment?.engine === row.engine &&
+    raw.environment.cpuThrottle === 1 &&
+    raw.environment.contextMode === (mobile ? 'persistent' : 'ephemeral') &&
+    typeof raw.environment.browserVersion === 'string' &&
+    raw.environment.browserVersion.length > 0 &&
+    (!browserVersion || raw.environment.browserVersion === browserVersion) &&
+    display?.viewport?.width === (mobile ? 400 : 1280) &&
+    display.viewport.height === (mobile ? 850 : 800) &&
+    display.deviceScaleFactor === (mobile ? 3 : 1) &&
+    display.isMobile === mobile &&
+    display.hasTouch === mobile &&
+    raw.replay?.scope === 'completed-scenario' &&
+    replay?.status === 'pass' &&
+    replay.engine === row.engine &&
+    replay.browserVersion === raw.environment.browserVersion &&
+    raw.pageErrors?.length === 0 &&
+    !raw.failure &&
+    !raw.finalReadFailure &&
+    !raw.failureCleanupFailure &&
+    !raw.audioIdentityFailure &&
+    !raw.contextCleanupFailure &&
+    !raw.replayFailure;
+  return {
+    status: correct && sampleReadiness !== 'insufficient' ? 'passed' : 'failed',
+    nativeRecipeCorrectness: correct ? 'pass' : 'fail',
+    applicationKeyboardSamples: inputCount,
+    steeringSampleReadiness: sampleReadiness,
+    rawNumericalStatus: numerical ?? 'unobserved',
+    performanceQualification: 'excluded',
+    firstEightAllCorrectnessPassed: false,
+    scope: largeProfile(plan)
+      ? 'Public import, reload and gameplay with retained synthetic metadata only; exact per-run raw numeric outcomes remain excluded from timing qualification. No large-media library, complete hitch-journal or physical-device claim.'
+      : firstReturn(plan)
+        ? 'Single public Retry/Next lifecycle preflight only; no long-run, latency or timing qualification. All raw numerical failures retained.'
+        : 'Single recipe preflight only; all raw gates retained, no timing or prerequisite promotion.',
+  };
+}
+export async function runSupplementalRow(ctx, row, dir, tmp) {
+  await verifyInputs(ctx);
+  const { startProductionPreview } = await import('./serve-production-preview.mjs');
+  const { PUBLIC_SECURITY_HEADERS } = await import('./game-cli.mjs');
+  let server;
+  try {
+    server = await startProductionPreview({
+      root: ctx.payloads[row.source],
+      port: 0,
+      fixtureAccess: true,
+      cache: 'policy',
+    });
+    const response = await fetch(new URL('game/build-info.json', server.url), {
+      signal: AbortSignal.timeout(10000),
+    });
+    assert.equal(response.status, 200);
+    const bytes = Buffer.from(await response.arrayBuffer()),
+      build = JSON.parse(bytes);
+    assert.equal(build.sourceRevision, sources(ctx.plan)[row.source]);
+    for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS))
+      assert.equal(response.headers.get(name), value);
+    const url = new URL('game/?journey=opening', server.url).href;
+    row.served = {
+      url,
+      build,
+      buildInfoSHA256: createHash('sha256').update(bytes).digest('hex'),
+      headers: server.headers,
+      mode: server.mode,
+      fixtureAccess: server.fixtureAccess,
+    };
+    row.artifactAdmission = ctx.admitted.artifacts[row.source];
+    row.command = await ctx.run(
+      row.id,
+      [process.execPath, ...supplementalArguments(ctx, row, url, dir)],
+      row.timeoutMs,
+      {
+        env: { ...ctx.cleanEnv, TMPDIR: tmp },
+        log: join(dir, 'command.log'),
+        receipt: join(dir, 'command.json'),
+        inspect: async () => {
+          await ctx.inspect();
+          assert((await ctx.evidenceSize(dir)) <= ctx.plan.rowEvidenceBytes);
+        },
+      },
+    );
+    const raw = await readSupplementalJSON(join(dir, 'report.json'));
+    Object.assign(
+      row,
+      supplementalAssessment(ctx.plan, row, raw, row.command, ctx.modeState.browserVersion),
+    );
+    row.browserVersion = raw.environment?.browserVersion;
+    assert.equal(typeof row.browserVersion, 'string');
+    if (ctx.modeState.browserVersion)
+      assert.equal(row.browserVersion, ctx.modeState.browserVersion);
+    else ctx.modeState.browserVersion = row.browserVersion;
+    await verifyInputs(ctx);
+  } finally {
+    if (server)
+      await Promise.race([
+        new Promise((yes, no) => {
+          server.server.close((error) => (error ? no(error) : yes()));
+          server.server.closeAllConnections();
+        }),
+        delay(10000).then(() => {
+          throw Error('Supplemental owned preview close deadline');
+        }),
+      ]).catch((error) => {
+        row.serverCleanupFailure = String(error);
+        row.status = 'failed';
+        throw error;
+      });
+  }
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  const [mode, input, output, engine, repetition] = process.argv.slice(2);
+  const bytes = await readFile(input);
+  if (mode === 'matrix-plan')
+    process.stdout.write(`matrix=${JSON.stringify(supplementalMatrix(JSON.parse(bytes)))}\n`);
+  else {
+    assert.equal(mode, 'bind-plan');
+    const plan = bindSupplementalJob(JSON.parse(bytes), engine, repetition);
+    plan.manifestInput = {
+      path: resolve(input),
+      bytes: bytes.length,
+      sha256: createHash('sha256').update(bytes).digest('hex'),
+    };
+    await writeFile(output, JSON.stringify(plan, null, 2) + '\n', { flag: 'wx' });
+  }
+}

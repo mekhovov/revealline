@@ -1,0 +1,11 @@
+# Dispatched final-package tools and later qualification work
+
+The first final-package wave was dispatched from `a7e0219818842f02399317ca6d2a14bdd506da3d`, tree `3af3539969845d19c67dd86675aad1c16fa2dfb9`. Its thirteen workflow declarations and frozen tool references remain unchanged when later touch, lifecycle and long-recording adapters are added.
+
+[The execution-source witness](fixtures/solo-final-wave/a7e-execution-source.json) records 463 exact Git blobs, including the dispatched workflows, their sparse setup inputs and referenced declarations/tools/recipes. Each entry was read from that commit, hashed for SHA-256 and checked against its Git blob identity. The 182,014-byte witness has SHA-256 `19f40a8a688924bbc081a48881608b514efee95ad828425de4eabd294bf9c330`. A second reader independently compared all 56 entries from the five timing/soak declarations with its separately generated witness; all matched. Local cache evidence references inside declarations are not represented as Git source.
+
+Concrete historical release tests now check exact declaration/workflow bytes and reference membership against this immutable witness. They do not require current helper bytes to equal a previously dispatched revision. Runtime admission still reads and hashes the actual checked-out files against its own manifest before any native observation; this change does not relax that admission or permit stale declarations to execute from another revision.
+
+The complete common-owner and historical correctness/raster/witness group passes 24 tests, with four Linux-only skips on this macOS host. The complete timing release contract passes three tests. Altered witness bytes, unknown release membership and substituted file sizes/digests are rejected. Scoped lint and formatting pass. These are tooling tests, not browser results.
+
+The new shared-runner registration adds the `touch` and `lifecycle` adapter boundaries only: validation, preparation, observation, setup deadline membership, report identity and explicit scope. Lifecycle inventories Chromium; touch retains the existing two-engine inventory. Source admission, existing owner cleanup, resource limits and final evidence integrity are unchanged. Adapter observations remain required.

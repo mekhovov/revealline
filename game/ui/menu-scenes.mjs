@@ -75,6 +75,8 @@ export function attachMenuScene({
     manuallyPaused = false,
     pageSuspended = false,
     enabled = getMenuAnimation(win),
+    qualityTier = 'full',
+    qualityOwner = null,
     currentKey = '',
     artworkMotion = null,
     signalLoss = null;
@@ -170,6 +172,7 @@ export function attachMenuScene({
     const key = `${profile.id}:${profile.composition ?? 'solo'}:${selectedMode}:${vertical}`;
     if (key !== currentKey) {
       currentKey = key;
+      qualityOwner = {};
       root.dataset.menuScene = profile.id;
       root.dataset.menuMode = selectedMode;
       scene.dataset.atmosphere = profile.atmosphere;
@@ -218,6 +221,7 @@ export function attachMenuScene({
       fitArtwork();
     }
     const reduced =
+      qualityTier !== 'full' ||
       motion?.matches ||
       context.reduced === true ||
       doc.body?.dataset.effects === 'reduced' ||
@@ -353,6 +357,24 @@ export function attachMenuScene({
   update();
   return {
     update,
+    get qualityObservationOwner() {
+      // Retain this owner after adaptive reduction so cheap title callbacks can
+      // observe headroom. Explicit disabled animation has no decoration owner.
+      return !disposed &&
+        enabled &&
+        !manuallyPaused &&
+        scene.dataset.loaded === 'true' &&
+        scene.dataset.running === 'true' &&
+        scene.dataset.backdrop === 'authored'
+        ? qualityOwner
+        : null;
+    },
+    setQuality(tier) {
+      const next = tier === 'reduced' || tier === 'minimal' ? tier : 'full';
+      if (qualityTier === next) return;
+      qualityTier = next;
+      update();
+    },
     pause() {
       manuallyPaused = true;
       update();

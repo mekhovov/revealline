@@ -1,7 +1,8 @@
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { createImmutablePresentationFixture } from './helpers/immutable-presentation-fixture.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import {
   loadLibrary,
@@ -14,6 +15,15 @@ import { createRun, stepRun, getSummary, FIXED_DT } from '../core/index.mjs';
 import { createDifficultyContext } from '../campaign-difficulty.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+
+// Repeated pages reuse only bounded, hash-verified Node transport bytes. Each
+// page still verifies its manifests/images and satisfies the original deadlines.
+const presentationFixture = createImmutablePresentationFixture();
+after(() => {
+  console.log(
+    'Immutable presentation fixture provenance: ' + JSON.stringify(presentationFixture.snapshot()),
+  );
+});
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url)));
 const source = await read('../content/campaign.json');
@@ -129,15 +139,32 @@ async function setup(t, options = {}) {
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
   const context = SoloElement.prototype.getContext;
   t.mock.method(SoloElement.prototype, 'getContext', function (...args) {
-    return { ...context.apply(this, args), drawImage() {} };
+    const canvas = context.apply(this, args);
+    canvas.drawImage = () => {};
+    return canvas;
   });
-  return soloPage(t, { campaign, storage: fixture(), ...options });
+  return soloPage(t, { campaign, storage: fixture(), ...options, presentationFixture });
 }
 async function flight(h) {
-  h.change('level-select', campaign.levels[0].id);
-  await settle(() => h.doc.body.dataset.pictureState === 'ready');
+  const selected = h.$('level-select');
+  assert.equal(selected.disabled, false);
+  selected.focus();
+  selected.value = campaign.levels[0].id;
+  // The public replacement handler is asynchronous. Its previous ready picture
+  // must not authorize Start while the newly selected mission is still pending.
+  await action(selected, 'change');
+  await settle(
+    () =>
+      h.rendered.run.level.id === campaign.levels[0].id &&
+      h.doc.body.dataset.pictureState === 'ready',
+  );
   h.$('start-button').click();
-  await settle(() => h.doc.body.dataset.flightState === 'running');
+  try {
+    await settle(() => h.doc.body.dataset.flightState === 'running');
+  } catch (error) {
+    error.message += `\n${JSON.stringify({ flightState: h.doc.body.dataset.flightState, pictureState: h.doc.body.dataset.pictureState, preparing: h.doc.body.dataset.flightPreparing, run: h.rendered.run.level.id, tick: h.rendered.run.tick, message: h.$('run-message').textContent, overlay: h.$('overlay-copy').textContent, status: [...h.doc.querySelectorAll('[role=\"status\"]')].filter((x) => !x.hidden).map((x) => ({ id: x.id, text: x.textContent })), dialogs: [...h.doc.querySelectorAll('dialog[open]')].map((x) => x.id), errors: h.errors.map((x) => String(x?.stack ?? x)) })}`;
+    throw error;
+  }
   const accepted = h.rendered.run,
     reference = createRun(accepted.level, {
       seed: accepted.seed,
@@ -165,14 +192,21 @@ async function flight(h) {
   h.frame(0);
 }
 async function install(h) {
-  h.change('pack-select', 'night-shift');
+  const selected = h.$('pack-select');
+  assert.equal(selected.disabled, false);
+  selected.focus();
+  selected.value = 'night-shift';
+  await action(selected, 'change');
   await settle(
     () =>
       h.$('pack-select').value === 'night-shift' &&
       h.doc.body.dataset.pictureState === 'ready' &&
       !h.$('pack-select').disabled,
   );
-  h.change('pack-select', '');
+  assert.equal(selected.disabled, false);
+  selected.focus();
+  selected.value = '';
+  await action(selected, 'change');
   await settle(
     () =>
       h.$('pack-select').value === '' &&
@@ -180,23 +214,30 @@ async function install(h) {
       !h.$('pack-select').disabled,
   );
 }
-function workshop(h, panel) {
+async function workshop(h, panel) {
   h.$('overlay-menu').click();
   h.$('shell-workshop').click();
   h.$('shell-library').click();
   assert.equal(h.$('shell-workshop-dialog').open, true);
   h.doc.querySelector(`[data-library-panel="${panel}"]`).click();
   assert.equal(h.$('library-dialog').open, true);
+  await settle(() => !h.$(`library-${panel}`).hidden);
 }
-function settingsLibrary(h, panel) {
+async function settingsLibrary(h, panel) {
   h.$('settings-button').click();
-  h.$('settings-tab-data').click();
+  h.$(panel === 'saves' ? 'settings-tab-data' : 'settings-tab-content').click();
   const trigger = h.$(panel === 'saves' ? 'settings-saves' : 'settings-packs');
+  assert.equal(
+    trigger.closest('[hidden],[inert]') === null,
+    true,
+    'Public Settings opener must be visible',
+  );
   trigger.focus();
   trigger.click();
   h.doc.querySelector(`[data-library-panel="${panel}"]`).click();
   assert.equal(h.$('settings-dialog').open, true);
   assert.equal(h.$('library-dialog').open, true);
+  await settle(() => !h.$(`library-${panel}`).hidden);
 }
 async function opener(h, kind, parent = 'workshop') {
   if (kind === 'picture') {
@@ -214,7 +255,7 @@ async function opener(h, kind, parent = 'workshop') {
     h.$('gallery-replay').focus();
     return h.$('gallery-replay');
   }
-  (parent === 'settings' ? settingsLibrary : workshop)(
+  await (parent === 'settings' ? settingsLibrary : workshop)(
     h,
     kind === 'installed' ? 'packs' : 'challenges',
   );
@@ -260,7 +301,7 @@ test('passive Library Back returns to Settings and preserves the paused cut', as
   await flight(h);
   const run = h.rendered.run,
     before = checkpoint(h);
-  settingsLibrary(h, 'packs');
+  await settingsLibrary(h, 'packs');
   // Opening Settings may refresh the paused save; passive Back must not rewrite it.
   const saved = h.storage.getItem(slot);
   press(h, 'Escape');
@@ -529,6 +570,7 @@ test('practice challenge departure is session-only and never writes profile or s
   // The practice host exposes its Library shortcut, not the ordinary Workshop.
   h.$('library-button').click();
   h.doc.querySelector('[data-library-panel="challenges"]').click();
+  await settle(() => !h.$('library-challenges').hidden);
   h.$('challenge-date').value = '2026-09-15';
   h.$('challenge-kind').value = 'calm';
   const trigger = h.$('launch-challenge');
@@ -586,7 +628,7 @@ for (const [restore, parent] of [
     const saved = h.storage.getItem(slot);
     await action(h.$('mission-replace-confirm'));
     await settle(() => h.doc.body.dataset.pictureState === 'ready');
-    (parent === 'settings' ? settingsLibrary : workshop)(h, 'saves');
+    await (parent === 'settings' ? settingsLibrary : workshop)(h, 'saves');
     const prior = loadLibrary(h.storage, profile).library;
     await action(h.$('export-library'));
     const exported = JSON.parse(h.$('save-json').value);

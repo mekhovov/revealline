@@ -1,0 +1,26 @@
+{
+  "format": "SoloParkedCpuSchemaSourceV1",
+  "head": "9e0111e066b5dac7749a33fd0e98e92702851dc6",
+  "tree": "780fdfcb84a1d5cc6009b697879a98fbe39d0487",
+  "scope": "Later parked declaration at9e, not original dispatch; original older witness remains unchanged. Only the later changed schema ref is provided here.",
+  "records": [
+    {
+      "path": "docs/performance/solo-remote-cpu-profile-plan.json",
+      "bytes": 9913,
+      "sha256": "23139ecdc03518fe3989a9f2344c13c6f66ea13b3d05bc9d9035333470f6cf9a",
+      "blob": "3f3a55dba6a9961cf56b0eb292eb8b6a4f46be7c"
+    },
+    {
+      "path": ".github/workflows/solo-remote-cpu-profile-temporary.yml",
+      "bytes": 8180,
+      "sha256": "dd2d6ad15c025e8489257700103c009efa56f99410c3c7938942502c05f74b13",
+      "blob": "3c1a3edbf220526ad1bd75c49d36ef9f3f234780"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 26233,
+      "sha256": "88363cc018c21e04ee50addae9e6086b76849c429249cdf4e9a9e9c6c6d24637",
+      "blob": "901c2e41d8e88ed3938ee761e688323807f19525"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "format": "SoloDarwinXpcproxyExecutionV1",
+  "revision": "34d95cb9fe471ca56c243f05c4330826ba822fb9",
+  "tree": "de4ea7b4c23988eeee54f5d082dd3d9fa65eddbb",
+  "run": 39057302520,
+  "job": 117467788107,
+  "conclusion": "failure",
+  "cases": {
+    "leader": "failed",
+    "tree": "withheld",
+    "deadline": "withheld"
+  },
+  "cocoa": "skipped",
+  "report": {
+    "member": "solo-owner-v2-preflight/report.json",
+    "bytes": 7713,
+    "sha256": "efe0b504e7acad8fa7415e96d8f88ad7daff372b11839ceec014e9dd3f16dba6"
+  },
+  "firstAmbiguousRow": {
+    "pid": 3615,
+    "ppid": 1,
+    "pgid": 1,
+    "birth": "00000000000000003615",
+    "state": "R",
+    "rss": 0,
+    "argv": "/usr/libexec/xpcproxy",
+    "argvCodeUnits": 21,
+    "argvTruncated": false,
+    "ownerTagged": false,
+    "inspectionIncomplete": true,
+    "identityKind": "private-unique-id-uint64",
+    "euid": 0,
+    "ruid": 0,
+    "parentUniqueId": "1",
+    "version": 7532,
+    "pathInspection": "complete",
+    "rssInspection": "unavailable",
+    "ownerTagInspection": "unavailable"
+  },
+  "records": [
+    {
+      "path": ".github/workflows/solo-darwin-owner-preflight-thermald-temporary.yml",
+      "blob": "bf5bcf19482cc22cd614eab31089156f73d00c42",
+      "bytes": 26048,
+      "sha256": "7c477f2367cf0706ec8d5e8434f78f5b3c41ad4c873fa7948402603ba55c51f7"
+    },
+    {
+      "path": "scripts/solo-darwin-owner-preflight.mjs",
+      "blob": "aea2f6bd59ebd71efeb1db4681d37449c7c89042",
+      "bytes": 12739,
+      "sha256": "041f764b4a944fe2cac0793aa10c64f16847d88c73a74041887a417a7ce70d77"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.mjs",
+      "blob": "70ec20f65f9c4671eedcc13b59d2cee9624b9997",
+      "bytes": 13716,
+      "sha256": "bc3c1976364478f8cfb06776c54edb06701b8a43b0526db2c974e38229209783"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.c",
+      "blob": "48cff29f1e62f91019b4576ec0f288ecbfe4a26d",
+      "bytes": 7955,
+      "sha256": "72ff466c653ddb987a4e5df5df024aabd952cf45d659e7872809412aa996db9f"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "blob": "ec606e7b5604959d78b61a7c25b7ae0bb5e8c2dd",
+      "bytes": 66435,
+      "sha256": "513f2fc3a23897192c7a8fc371f1ec55f085fa79925e836d524f2dfec41da1c8"
+    }
+  ]
+}

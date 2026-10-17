@@ -1,0 +1,294 @@
+{
+  "format": "SoloVisibleViewRegressionEvidenceV1",
+  "createdAt": "2026-10-16T21:34:24.745713+00:00",
+  "sourceRevision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
+  "scope": "Local Node correctness on unchanged2ec runtime with four fixture corrections plus optional workflow/source-policy test; not full CI, native or performance qualification.",
+  "status": "scoped-local-validation-passed",
+  "originalCI": {
+    "run": 38963866024,
+    "job": 117185378265,
+    "tests": 1363,
+    "pass": 1358,
+    "fail": 5,
+    "classification": "Five fixture assumptions conflicted with intentional dormant-view behavior; not baseline-waived."
+  },
+  "firstLocalAttempt": {
+    "tests": 58,
+    "pass": 54,
+    "fail": 4,
+    "status": "failed-retained",
+    "cause": "Finite host lacks MutationObserver; zero-time settle cannot trigger existing100ms paused interface refresh after public Collection opens."
+  },
+  "finalLocalAttempt": {
+    "tests": 58,
+    "pass": 58,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "completedAt": "2026-10-16T21:32:37.152191+00:00",
+    "sourceStable": true,
+    "rows": [
+      {
+        "path": "game/test/company-selector-identity-host.test.mjs",
+        "footer": {
+          "tests": 1,
+          "suites": 0,
+          "pass": 1,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "elapsedSeconds": 9.655062083998928,
+        "tap": {
+          "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/green-02/company-selector-identity-host.test.tap",
+          "bytes": 396,
+          "sha256": "449ec1cf296ada8e4838b6a53d2b4219b8b96d61a2b40b520c6492da94d4f6af"
+        }
+      },
+      {
+        "path": "game/test/edition-solo-host.test.mjs",
+        "footer": {
+          "tests": 51,
+          "suites": 0,
+          "pass": 51,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "elapsedSeconds": 68.65222299999732,
+        "tap": {
+          "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/green-02/edition-solo-host.test.tap",
+          "bytes": 10059,
+          "sha256": "0755ce7d8e12dee6a9d86b5353fd8d48c06c617dbfb890ded2748633d3aca94b"
+        }
+      },
+      {
+        "path": "game/test/showcase-studio-playthrough.test.mjs",
+        "footer": {
+          "tests": 2,
+          "suites": 0,
+          "pass": 2,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "elapsedSeconds": 27.51951291698788,
+        "tap": {
+          "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/green-02/showcase-studio-playthrough.test.tap",
+          "bytes": 760,
+          "sha256": "d2b9e056dc2ed289aef5ecd96deca9c5b518b00dc39a455534576ba1b90081a4"
+        }
+      },
+      {
+        "path": "game/test/studio-preview-session.test.mjs",
+        "footer": {
+          "tests": 4,
+          "suites": 0,
+          "pass": 4,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "elapsedSeconds": 13.936653458993533,
+        "tap": {
+          "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/green-02/studio-preview-session.test.tap",
+          "bytes": 1110,
+          "sha256": "302745aee469f3efadd079203141aa3d1059efaac11e34048b789fbc2eb262e6"
+        }
+      }
+    ]
+  },
+  "policyValidation": {
+    "tests": 32,
+    "pass": 32,
+    "completedAt": "2026-10-16T21:32:51.223341+00:00",
+    "sourceStable": true,
+    "rows": [
+      {
+        "path": "publishing/source-workflow.test.mjs",
+        "footer": {
+          "tests": 7,
+          "suites": 0,
+          "pass": 7,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "tap": {
+          "path": ".cache/solo-followup/optional-practice-source-coherence-proposal-01/green-01/source-workflow.test.tap",
+          "bytes": 1537,
+          "sha256": "24d0ece5c1d10d3aca2be7bb537cdd8cbfaed305c7258a6602021fd7d7e2dcbe"
+        }
+      },
+      {
+        "path": "publishing/fastline-merge-controller.test.mjs",
+        "footer": {
+          "tests": 18,
+          "suites": 0,
+          "pass": 18,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "tap": {
+          "path": ".cache/solo-followup/optional-practice-source-coherence-proposal-01/green-01/fastline-merge-controller.test.tap",
+          "bytes": 3800,
+          "sha256": "c2b9a37ec4308769af9e340ced8d66a6b8f54bf18d9340e9fe16f7776768010c"
+        }
+      },
+      {
+        "path": "scripts/test-bundle-editions.mjs",
+        "footer": {
+          "tests": 7,
+          "suites": 0,
+          "pass": 7,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "tap": {
+          "path": ".cache/solo-followup/optional-practice-source-coherence-proposal-01/green-01/test-bundle-editions.tap",
+          "bytes": 1909,
+          "sha256": "60f65fa0e0558186604922930707891e9794c3fe253ded2b63493f65d8e68b72"
+        }
+      }
+    ]
+  },
+  "node": "v22.22.2",
+  "bounds": {
+    "secondsPerFile": 600,
+    "groupRSSBytes": 4294967296,
+    "TAPBytes": 16777216
+  },
+  "changedFiles": [
+    {
+      "path": "game/test/company-selector-identity-host.test.mjs",
+      "bytes": 5744,
+      "sha256": "b78dcacc1482290071de3824b67378d7926b152d6990593719c671fa3198710e"
+    },
+    {
+      "path": "game/test/edition-solo-host.test.mjs",
+      "bytes": 50904,
+      "sha256": "67911a7010b5273bfcc6c9327037a20424f6abf6aa783e439f55c93167c62fbf"
+    },
+    {
+      "path": "game/test/showcase-studio-playthrough.test.mjs",
+      "bytes": 34960,
+      "sha256": "da479423a3778e54184cb448f0bafa0402a7222e5993d1fac1fc5b6a02114a21"
+    },
+    {
+      "path": "game/test/studio-preview-session.test.mjs",
+      "bytes": 8901,
+      "sha256": "dd84c117ed875ea3a19ce0afa29dd0b9ddb40f73e949bd91ab5e368019a1ca83"
+    },
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "bytes": 8739,
+      "sha256": "a623ae780568a632f0cff1dfe2925bedd3becd7a85c536551513222f3cde23ac"
+    },
+    {
+      "path": "publishing/source-workflow.test.mjs",
+      "bytes": 5750,
+      "sha256": "5be420644f8233eefd169597b44325b1c53b5e05202f42fd27f56a1c6835b1bc"
+    }
+  ],
+  "runtimeFilesUnchanged": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 586196,
+      "sha256": "1ae6d9c0555bdec7fb26d8c65f919c88f7ebc5cedcb5a87cc7de4672cfc27dd5"
+    },
+    {
+      "path": "game/ui/edition-rewards.mjs",
+      "bytes": 37993,
+      "sha256": "956fc631621fe36dce73285fabdbbdc2681a35661930a110149eeefec10d4cc3"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 32704,
+      "sha256": "b23eb671078b6d4f5f3a4066da79a042182f5495a6c309a76b688f1acb98aba4"
+    },
+    {
+      "path": "game/ui/mission-picker.mjs",
+      "bytes": 11657,
+      "sha256": "8a0d3bc8cad9214c04b187a5ea01ee413d90d6f6392c768140af140455def4d7"
+    }
+  ],
+  "evidence": {
+    "originalCI": {
+      "path": ".cache/solo-followup/final-head-ci-triage-2ec605eb-01/triage.json",
+      "bytes": 22267,
+      "sha256": "ea3ff0ba009534c9a366b76e0a7718e496cfccd4afff5e5ee804843f136dcacb"
+    },
+    "originalCILog": {
+      "path": ".cache/solo-followup/final-head-ci-triage-2ec605eb-01/job-117185378265.log",
+      "bytes": 546275,
+      "sha256": "087fff8079bb6d9eb8e310e8d8b6d37eda26fd9271c6985d591f0844572b7d57"
+    },
+    "fixtureProposal": {
+      "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/proposal.json",
+      "bytes": 5669,
+      "sha256": "5406ad8b5402c4220e00d00a0f4e6252a84337b46bde91b10266b0e7e0fdec80"
+    },
+    "fixturePeerReview": {
+      "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/loading-peer-review.json",
+      "bytes": 3459,
+      "sha256": "2d4acc6f405e1df8cec82ac915d6a65098662e928dd61ebe5adead55cbbe581f"
+    },
+    "firstLocalAttempt": {
+      "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/green-01/receipt.json",
+      "bytes": 11606,
+      "sha256": "2fb88ce2a7796be9801622e83cf7202327cd83a5b20c3211cf0b2d2decd1cd84"
+    },
+    "frameCorrection": {
+      "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/paused-frame-correction-02/receipt.json",
+      "bytes": 1511,
+      "sha256": "9a5d1f6729b0ded1e957f138cf3b926cd46f276fb61ecdab39e47294a4bf220f"
+    },
+    "caseInventoryCorrection": {
+      "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/case-inventory-correction-02.json",
+      "bytes": 1089,
+      "sha256": "1d1c3e6dc5a2b70679fa5e68b2151f43fcf2fdd486a4ed164cb88c69cd3e6e8d"
+    },
+    "finalLocalAttempt": {
+      "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/green-02/receipt.json",
+      "bytes": 11605,
+      "sha256": "2d370ccf24f182c31b34d0970b2b2bb126c76390ca2f5bde50c7c9c7c9697bd3"
+    },
+    "workflowProposal": {
+      "path": ".cache/solo-followup/optional-practice-source-coherence-proposal-01/proposal.json",
+      "bytes": 4372,
+      "sha256": "088825aee0ae5fb3ba8b8f9779a51ee32f3b3cf63aeba0477b0eb02d5abc7ed1"
+    },
+    "workflowPeerReview": {
+      "path": ".cache/solo-followup/optional-practice-source-coherence-proposal-01/loading-peer-review.json",
+      "bytes": 1784,
+      "sha256": "38a8af210f9f91c7e97aa0b851bb9afe4e86c129f7fcf13df61efe1ddb2955d1"
+    },
+    "policyValidation": {
+      "path": ".cache/solo-followup/optional-practice-source-coherence-proposal-01/green-01/receipt.json",
+      "bytes": 9352,
+      "sha256": "6ef9f1ad741f85f43c5f73b0e2983c3c16ca9920db9afa13253ddd594c94bce5"
+    },
+    "scopedChecks": {
+      "path": ".cache/solo-followup/company-visible-view-fixtures-proposal-01/scoped-checks-01/receipt.json",
+      "bytes": 2781,
+      "sha256": "48f0246e84791a0c16ccc161a0cda52c3d694541b261f494cab9c4abd2efbedb"
+    }
+  },
+  "limits": [
+    "Original hosted Company failure and optional workflow failure remain retained; hosted rerun is not observed here.",
+    "Selector uses actual retained Legacy component admission after public Pause; this is not unified Missions coverage.",
+    "Collection preserves immediate authoritative accepted reward/result evidence, existing durability/replay/progress checks and original expected outcomes.",
+    "One100ms paused callback per public Collection opening models the existing no-MutationObserver fallback; no deadline, simulation expectation or runtime change.",
+    "Optional job now tests the event source/merge integration revision and labels it separately; Company candidate/release-ready exact-head authority unchanged.",
+    "No aggregate plan, offline, performance, thermal, physical-device or whole-PR pass."
+  ]
+}

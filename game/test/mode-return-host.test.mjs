@@ -2,6 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import {
+  snapshotCaptureSession,
+  nativeCaptureSession,
+  captureSessionAppearance,
+} from '../capture-presentation-session.mjs';
 import { teamReturnHref } from '../mode-return.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
@@ -44,7 +49,7 @@ async function host(t, options) {
 
 for (const [kind, version, label] of [
   ['team', 'v1', 'Team'],
-  ['versus', 'v2', 'Versus'],
+  ['versus', 'v2', 'Duel'],
 ]) {
   const slot = 'revealline.suspended.dev.v1';
   const recordKey = `revealline.mode-return.${version}:/game/`;
@@ -100,14 +105,22 @@ for (const [kind, version, label] of [
           theme: h.$('theme-select').value,
         };
         const checkpoint = authoritativeCheckpoint(h.rendered.run);
-        const originalSave = flight ? JSON.parse(storage.getItem(slot)) : null;
+        const originalSave = flight ? snapshotCaptureSession(storage.getItem(slot)) : null;
         await request(h);
         if (flight) {
-          assert.equal(originalSave.format, 'xonix-session.v5');
-          const retainedSave = JSON.parse(storage.getItem(slot));
-          assert.equal(retainedSave.format, 'xonix-session.v5');
-          assert.deepEqual(retainedSave.visualThemePin, originalSave.visualThemePin);
-          assert.deepEqual(retainedSave.presentationPins, originalSave.presentationPins);
+          const retainedSave = snapshotCaptureSession(storage.getItem(slot));
+          assert.equal(retainedSave.format, originalSave.format);
+          assert.deepEqual(
+            captureSessionAppearance(retainedSave),
+            captureSessionAppearance(originalSave),
+          );
+          const before = nativeCaptureSession(originalSave),
+            after = nativeCaptureSession(retainedSave);
+          assert.equal(after.format, before.format);
+          assert.deepEqual(after.visualThemePin, before.visualThemePin);
+          assert.deepEqual(after.presentationPins, before.presentationPins);
+          assert.deepEqual(after.actorAppearancePin, before.actorAppearancePin);
+          assert.deepEqual(after.replay.checkpoint, before.replay.checkpoint);
           assert.match(h.$('mode-leave-status').textContent, /saved and verified/);
           assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
           h.$('mode-leave-confirm').click();
@@ -260,14 +273,22 @@ for (const [kind, version, label] of [
         const h = await host(t, { storage, previewStorage, titleScreen: !flight });
         await missions(h, flight);
         const checkpoint = authoritativeCheckpoint(h.rendered.run);
-        const originalSave = flight ? JSON.parse(storage.getItem(slot)) : null;
+        const originalSave = flight ? snapshotCaptureSession(storage.getItem(slot)) : null;
         await request(h);
         if (flight) {
-          assert.equal(originalSave.format, 'xonix-session.v5');
-          const retainedSave = JSON.parse(storage.getItem(slot));
-          assert.equal(retainedSave.format, 'xonix-session.v5');
-          assert.deepEqual(retainedSave.visualThemePin, originalSave.visualThemePin);
-          assert.deepEqual(retainedSave.presentationPins, originalSave.presentationPins);
+          const retainedSave = snapshotCaptureSession(storage.getItem(slot));
+          assert.equal(retainedSave.format, originalSave.format);
+          assert.deepEqual(
+            captureSessionAppearance(retainedSave),
+            captureSessionAppearance(originalSave),
+          );
+          const before = nativeCaptureSession(originalSave),
+            after = nativeCaptureSession(retainedSave);
+          assert.equal(after.format, before.format);
+          assert.deepEqual(after.visualThemePin, before.visualThemePin);
+          assert.deepEqual(after.presentationPins, before.presentationPins);
+          assert.deepEqual(after.actorAppearancePin, before.actorAppearancePin);
+          assert.deepEqual(after.replay.checkpoint, before.replay.checkpoint);
           assert.match(h.$('mode-leave-status').textContent, /saved and verified/);
           h.$('mode-leave-confirm').click();
         }

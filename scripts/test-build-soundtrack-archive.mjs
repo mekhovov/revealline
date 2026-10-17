@@ -79,7 +79,12 @@ async function fixture(t, { approved = true } = {}) {
     'game/soundtrack.mjs',
     'game/soundtrack-rights.mjs',
     'game/mp3.mjs',
+    'game/mp3-inspection.mjs',
     'game/data-json.mjs',
+    'game/i18n/index.mjs',
+    'game/i18n/catalogs.mjs',
+    'game/i18n/bootstrap.mjs',
+    'game/vendor/i18next-26.4.2.min.js',
     'game/ui/music.mjs',
   ])
     await put(name, await fs.readFile(path.join(projectRoot, name)));

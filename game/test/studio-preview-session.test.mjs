@@ -12,10 +12,18 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 function openEarnedResult(page) {
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.$('skip-celebration').onclick();
-  assert.equal(page.$('game-overlay').hidden, true, 'The preview keeps the earned picture in full view.');
+  assert.equal(
+    page.$('game-overlay').hidden,
+    true,
+    'The preview keeps the earned picture in full view.',
+  );
   assert.equal(page.$('show-result').hidden, false, 'The earned picture can return to its result.');
   page.$('show-result').click();
-  assert.equal(page.$('game-overlay').hidden, false, 'The result opens after the picture presentation.');
+  assert.equal(
+    page.$('game-overlay').hidden,
+    false,
+    'The result opens after the picture presentation.',
+  );
   assert.equal(page.$('game-overlay').dataset.kind, 'won');
   assert.equal(page.$('show-result').hidden, true);
   assert.equal(page.$('retry-button').hidden, false);
@@ -127,11 +135,29 @@ test('actual Studio game launch, accepted win, reward reveal and Retry never ope
     'won',
     'The shared engine accepts the legal preview capture.',
   );
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  openEarnedResult(page);
+  const result = page.$('completion-reward-result');
+  assert.equal(result.hidden, false);
+  assert.equal(result.dataset.placement, 'summary');
+  assert.ok(
+    result.querySelector(`[data-reward-id="${reward.id}"][data-reward-surface="result"]`),
+    'The preview exposes the accepted reward before opening Collection or awaiting durability.',
+  );
+  page.$('shell-collection').click();
+  assert.equal(page.$('collection-dialog').open, true);
+  // This finite host has no MutationObserver; advance its paused UI polling clock.
+  page.frame(100);
   await settle(() => {
     page.frame(0);
-    return page.$('completion-reward-shelf').querySelector('article')?.dataset.earned === 'true';
+    return (
+      page.$('collection-dialog').open &&
+      page.$('completion-reward-shelf').querySelector('article')?.dataset.earned === 'true'
+    );
   });
-  openEarnedResult(page);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  page.$('collection-back').click();
+  assert.equal(page.$('collection-dialog').open, false);
   assert.match(page.$('overlay-copy').textContent, /Preview mission complete/);
   assert.match(page.$('overlay-copy').textContent, /Player progress is unchanged/);
   assert.equal(page.$('completion-reward-save-status').dataset.durable, 'false');

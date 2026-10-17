@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { Events, Document } from './helpers/couch-dom.mjs';
-import { SoloElement, soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { SoloElement, soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { attachEnemyGuide } from '../ui/enemy-guide.mjs';
 import { createEnemyPresentations } from '../enemy-presentations.mjs';
 import { createEnemyBodyAssets, createEnemyImagePool } from '../ui/enemy-body-assets.mjs';
@@ -79,7 +79,7 @@ function artworkFixture({ load, catalog } = {}) {
     },
   };
 }
-function setup(t, options = {}) {
+function setup(t, options = {}, { open = true } = {}) {
   const doc = new Document(),
     host = new Events();
   host.location = { href: 'http://localhost/releases/v0.28.0/site/game/' };
@@ -121,7 +121,7 @@ function setup(t, options = {}) {
     nav.destroy();
     guide.dispose();
   });
-  guide.open();
+  if (open) guide.open();
   nav.sync();
   return {
     doc,
@@ -606,6 +606,11 @@ test('actual child practice can lose, Retry the same impact lesson and return to
   h.guide.frame.contentWindow = page.win;
   assert.equal(page.$('enemy-workshop-return').textContent, 'Return to field guide');
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'The child lesson must accept public Start before movement.',
+  );
+  page.frame(0);
   page.key('ArrowDown');
   for (let i = 0; i < 400 && page.rendered.run.status === 'running'; i++) page.frame();
   page.key('ArrowDown', false);
@@ -614,6 +619,10 @@ test('actual child practice can lose, Retry the same impact lesson and return to
   assert.equal(lost.status, 'lost');
   for (let i = 0; i < 10; i++) page.frame(100);
   page.$('retry-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running' && page.rendered.run !== lost,
+    'Retry must accept a new child lesson before its unchanged-state checks.',
+  );
   page.frame(0);
   assert.equal(page.rendered.run.levelId, 'line-impact-demo');
   assert.equal(page.rendered.run.lives, 1);
@@ -1020,3 +1029,151 @@ test('encounter lesson copy follows EN/UK locale without changing topic or lesso
   assert.deepEqual(level, before);
   assert.deepEqual(h.host.sessionStorage.writes, []);
 });
+
+test(
+  'closed guide callbacks retain a released preview until real reopening',
+  { timeout: 10000 },
+  async (t) => {
+    const locale = getLocale();
+    t.after(() => setLocale(locale, { persist: false }));
+    setLocale('en', { persist: false });
+    const art = artworkFixture();
+    let clears = 0;
+    const h = setup(
+      t,
+      {
+        ...art,
+        getThemeId: () => 'fpv',
+        createBodyAssets(options) {
+          const assets = art.createBodyAssets(options);
+          return {
+            ...assets,
+            clear() {
+              clears++;
+              assets.clear();
+            },
+          };
+        },
+      },
+      { open: false },
+    );
+    const neverOpened = clears;
+    for (let i = 0; i < 120; i++) h.guide.update(1 / 60, { reduced: i >= 60 });
+    assert.equal(
+      clears,
+      neverOpened,
+      'never-opened callbacks do not repeatedly retire the body owner',
+    );
+    assert.deepEqual(art.loads, []);
+    assert.equal(art.pool.size(), 0);
+    assert.equal(h.guide.open(), true);
+    await settleArtwork();
+    assert.equal(art.pool.size(), 1);
+    assert.deepEqual(art.loads, ['bouncer']);
+    const beforeClose = clears;
+    const heading = h.$('heading').textContent;
+    assert.equal(h.guide.close(), true);
+    assert.equal(clears, beforeClose + 1);
+    assert.equal(art.pool.size(), 0);
+    assert.deepEqual(art.released, ['bouncer']);
+    const released = clears;
+    const status = h.$('artwork-status');
+    let hidden = status.hidden,
+      hiddenWrites = 0;
+    Object.defineProperty(status, 'hidden', {
+      configurable: true,
+      get: () => hidden,
+      set(value) {
+        hiddenWrites++;
+        hidden = value;
+      },
+    });
+    art.calls.length = 0;
+    for (let i = 0; i < 120; i++) h.guide.update(1 / 60, { reduced: i >= 60 });
+    assert.equal(clears, released, 'closed callbacks do not repeatedly retire the real body owner');
+    assert.equal(hiddenWrites, 0, 'closed callbacks do not rewrite preview visibility');
+    assert.deepEqual(art.calls, []);
+    assert.deepEqual(art.loads, ['bouncer']);
+    setLocale('uk', { persist: false });
+    assert.equal(h.guide.open(), true);
+    await settleArtwork();
+    assert.notEqual(h.$('heading').textContent, heading);
+    assert.equal(h.$('topic').value, 'bouncer');
+    assert.equal(art.pool.size(), 1);
+    assert.deepEqual(art.loads, ['bouncer', 'bouncer']);
+    assert.ok(art.calls.some(([method]) => method === 'drawImage'));
+    const beforeDispose = clears;
+    h.guide.dispose();
+    assert.equal(clears, beforeDispose + 1);
+    assert.equal(art.pool.size(), 0);
+    assert.deepEqual(art.released, ['bouncer', 'bouncer']);
+    const disposed = clears;
+    for (let i = 0; i < 30; i++) h.guide.update(1 / 60);
+    assert.equal(clears, disposed);
+  },
+);
+
+test(
+  'a single closed-guide retirement cancels pending artwork and rejects late painting',
+  { timeout: 10000 },
+  async (t) => {
+    const pending = deferredArtwork();
+    let signal,
+      lateReleases = 0,
+      clears = 0;
+    const art = artworkFixture({
+      load: (_record, options) => {
+        signal = options.signal;
+        return pending.promise;
+      },
+    });
+    const h = setup(t, {
+      ...art,
+      getThemeId: () => 'fpv',
+      createBodyAssets(options) {
+        const assets = art.createBodyAssets(options);
+        return {
+          ...assets,
+          clear() {
+            clears++;
+            assets.clear();
+          },
+        };
+      },
+    });
+    t.after(() =>
+      pending.resolve({
+        image: { late: true },
+        release() {
+          lateReleases++;
+        },
+      }),
+    );
+    await settleArtwork();
+    assert.equal(art.loads.length, 1);
+    assert.equal(signal.aborted, false);
+    const beforeClose = clears;
+    h.guide.close();
+    assert.equal(clears, beforeClose + 1);
+    assert.equal(signal.aborted, true);
+    assert.equal(art.pool.size(), 0);
+    const released = clears;
+    art.calls.length = 0;
+    pending.resolve({
+      image: { late: true },
+      release() {
+        lateReleases++;
+      },
+    });
+    await settleArtwork();
+    assert.equal(lateReleases, 1);
+    art.notify();
+    for (let i = 0; i < 120; i++) h.guide.update(1 / 60, { reduced: i >= 60 });
+    assert.equal(clears, released, 'late callbacks do not repeatedly clear a retired owner');
+    assert.deepEqual(art.calls, []);
+    assert.equal(art.loads.length, 1);
+    h.guide.dispose();
+    assert.equal(clears, released);
+    assert.equal(lateReleases, 1);
+  },
+);

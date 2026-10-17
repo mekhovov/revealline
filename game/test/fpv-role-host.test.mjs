@@ -112,6 +112,10 @@ test('explicit new saved appearance and suspended checkpoint survive normal host
     assert.equal(p.$('body-select').value, mapping.impact);
     p.$('start-button').click();
     await settle(() => p.doc.body.dataset.flightState === 'running');
+    // Establish the fresh active clock without consuming a simulation step.
+    // The following twelve inputs must still record exactly twelve ticks.
+    p.frame(0);
+    assert.equal(p.rendered.run.tick, 0);
     p.key('ArrowDown');
     for (let n = 0; n < 12; n++) p.frame();
     p.$('pause-button').click();

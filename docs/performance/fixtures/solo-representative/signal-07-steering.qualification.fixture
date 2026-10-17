@@ -1,0 +1,350 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "signal-07-thirty-second-border-steering-v1",
+  "kind": "performance",
+  "timeoutMs": 240000,
+  "entryPath": "playground/",
+  "readySelector": "#import-file",
+  "coverage": [
+    "lane-warning",
+    "active-lane",
+    "jammer-picture",
+    "Thirty public one-second alternating border steering commands while the unchanged lane encounter cycles; distinct from the retained neutral route"
+  ],
+  "replayRequirements": {
+    "jammerTicks": 1,
+    "movingTicks": 3300,
+    "directionChangesWithMovement": 20
+  },
+  "actions": [
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "upload",
+      "selector": "#import-file",
+      "file": "signal-07.xonix.json",
+      "acceptedLevelSelector": "#level-json"
+    },
+    {
+      "type": "click",
+      "selector": "#preview-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "follow",
+      "selector": "#open-preview",
+      "preparationStatusSelector": "[data-presentation-status=\"auxiliary\"]",
+      "timeoutMs": 120000
+    },
+    {
+      "type": "snapshot",
+      "group": "prepared"
+    },
+    {
+      "type": "click",
+      "selector": "#start-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-1"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-2"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-3"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-4"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-5"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-6"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-7"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-8"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-9"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-10"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-11"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-12"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-13"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-14"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-15"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-16"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-17"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-18"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-19"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-20"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-21"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-22"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-23"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-24"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-25"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-26"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-27"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-28"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "jammer-border-steering-29"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "jammer-border-steering-30"
+    },
+    {
+      "type": "wait",
+      "phase": "running"
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused"
+    },
+    {
+      "type": "snapshot",
+      "group": "after-workload"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "readyHiddenSelector": "#boot-status",
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v1",
+      "id": "signal-07",
+      "revision": "1",
+      "name": "The Crossing",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "field",
+          "type": "bouncer",
+          "x": 38.5,
+          "y": 25.5,
+          "vx": -3.2,
+          "vy": 2.1,
+          "radius": 0.3
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 35.5,
+          "y": 17.5,
+          "axis": "horizontal",
+          "period": 8,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2
+        }
+      ],
+      "objectives": [
+        {
+          "id": "relay",
+          "x": 8.5,
+          "y": 27.5,
+          "required": true,
+          "hidden": false
+        }
+      ],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.7
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          70,
+          121
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  }
+}

@@ -51,7 +51,13 @@ function mount(node, parent, document) {
 async function fixture(
   t,
   page = pages[0],
-  { stored, writable = () => true, separateSoundContainer = false, borrowDestruction = false } = {},
+  {
+    stored,
+    writable = () => true,
+    separateSoundContainer = false,
+    borrowDestruction = false,
+    onChange,
+  } = {},
 ) {
   const tree = parse(await readFile(new URL(page.path, import.meta.url), 'utf8'));
   const nodes = [...walk(tree)];
@@ -95,6 +101,7 @@ async function fixture(
     prefix: page.prefix,
     soundContainer,
     destructionPreferences,
+    onChange,
   });
   t.after(() => {
     controls.dispose();
@@ -318,4 +325,28 @@ test('disposal removes control and storage owners; later gestures, restores and 
   assert.deepEqual(h.controls.snapshot(), before);
   assert.equal(h.status.textContent, warning);
   assert.deepEqual(h.writes, []);
+});
+
+test('host invalidation follows local, external and borrowed display choices and stops at disposal', async (t) => {
+  let changes = 0;
+  const h = await fixture(t, pages[0], { borrowDestruction: true, onChange: () => changes++ });
+  let before = changes;
+  h.checkbox.checked = false;
+  h.checkbox.emit('change');
+  assert.ok(changes > before);
+  assert.equal(h.controls.snapshot().showRemains, false);
+  before = changes;
+  h.external(true);
+  assert.ok(changes > before);
+  assert.equal(h.controls.snapshot().showRemains, true);
+  before = changes;
+  h.destructionPreferences.set({ brutal: true, blood: false });
+  assert.ok(changes > before);
+  assert.equal(h.controls.snapshot().brutal, true);
+  assert.equal(h.controls.snapshot().blood, false);
+  h.controls.dispose();
+  before = changes;
+  h.external(false);
+  h.destructionPreferences.set({ brutal: false });
+  assert.equal(changes, before);
 });

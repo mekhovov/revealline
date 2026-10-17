@@ -15,6 +15,13 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { onLocaleChange, t } from '../i18n/index.mjs';
 
 const hosts = new WeakMap();
+export class ThemePreparationTimeoutError extends Error {
+  constructor() {
+    super('Selected theme preparation exceeded its deadline.');
+    this.name = 'ThemePreparationTimeoutError';
+    this.code = 'THEME_PREPARATION_TIMEOUT';
+  }
+}
 const styleURL = new URL('./industrial-workshop.css', import.meta.url).href;
 // Shared contracts retain stable, nonlocalized diagnostics. Translate the
 // actionable notices only at the DOM boundary, where the active locale lives.
@@ -102,11 +109,55 @@ export function installThemeHost({
     removePresentation = null;
   let snapshot = null,
     pending = Promise.resolve(null),
+    preparing = false,
     warning = '',
     refs = 0;
   const listeners = new Set(),
     statusListeners = new Set(),
+    readinessListeners = new Set(),
     stops = [];
+  const notifyReadiness = () => {
+    for (const listener of [...readinessListeners]) listener();
+  };
+  // This observes the current selection without cancelling shared font work.
+  // A newer selection wakes the same waiter; it never renews the deadline.
+  const whenReady = ({ signal, timeoutMs = 10000 } = {}) => {
+    if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > 10000)
+      return Promise.reject(new TypeError('Theme preparation deadline must be within 10 seconds.'));
+    if (signal?.aborted)
+      return Promise.reject(
+        signal.reason ?? new DOMException('Theme preparation cancelled.', 'AbortError'),
+      );
+    if (disposed) return Promise.reject(new DOMException('Theme host disposed.', 'AbortError'));
+    if (!preparing) return Promise.resolve(snapshot);
+    const now = () => globalThis.performance?.now?.() ?? Date.now();
+    const deadline = now() + timeoutMs;
+    return new Promise((resolve, reject) => {
+      let timer,
+        settled = false;
+      const finish = (error) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        readinessListeners.delete(check);
+        signal?.removeEventListener('abort', abort);
+        if (error) reject(error);
+        else resolve(snapshot);
+      };
+      const abort = () =>
+        finish(signal.reason ?? new DOMException('Theme preparation cancelled.', 'AbortError'));
+      const check = () => {
+        if (disposed) finish(new DOMException('Theme host disposed.', 'AbortError'));
+        else if (signal?.aborted) abort();
+        else if (now() >= deadline) finish(new ThemePreparationTimeoutError());
+        else if (!preparing) finish();
+      };
+      timer = setTimeout(() => finish(new ThemePreparationTimeoutError()), timeoutMs);
+      readinessListeners.add(check);
+      signal?.addEventListener('abort', abort, { once: true });
+      check();
+    });
+  };
   const reportWarning = (message) => onWarning(presentationNotice(message));
   const preferences = createThemePreferences({
     window: win,
@@ -249,6 +300,7 @@ export function installThemeHost({
     if (disposed) return Promise.resolve(null);
     const value = resolveContext(),
       ticket = ++sequence;
+    preparing = true;
     pending = prepareResources(value.resolved)
       .then(() => {
         if (disposed || ticket !== sequence) return snapshot;
@@ -265,13 +317,21 @@ export function installThemeHost({
           }
         }
         return snapshot;
+      })
+      .finally(() => {
+        if (ticket !== sequence) return;
+        preparing = false;
+        notifyReadiness();
       });
+    notifyReadiness();
     return pending;
   };
   const close = () => {
     if (disposed) return;
     disposed = true;
     ++sequence;
+    preparing = false;
+    notifyReadiness();
     for (const stop of stops) stop();
     preferences.dispose();
     if (!displayPreferences) display.dispose();
@@ -325,7 +385,11 @@ export function installThemeHost({
         contextDefault = next;
         const ticket = ++sequence;
         accept(value, ticket);
-        pending = Promise.resolve(snapshot);
+        if (ticket === sequence) {
+          pending = Promise.resolve(snapshot);
+          preparing = false;
+          notifyReadiness();
+        }
         return true;
       },
     });
@@ -344,6 +408,10 @@ export function installThemeHost({
         get ready() {
           return pending;
         },
+        get preparing() {
+          return !disposed && preparing;
+        },
+        whenReady,
         snapshot: () => snapshot,
         effectivePreferences: () => {
           const effective = acceptedFamily ?? resolveSelection(contextDefault).family;

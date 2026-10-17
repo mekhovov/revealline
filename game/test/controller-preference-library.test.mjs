@@ -119,6 +119,9 @@ function sourceBackup() {
   const pack = JSON.parse(
     readFileSync(new URL('../content/packs/night-shift.json', import.meta.url)),
   );
+  // This portable-controller fixture owns one 1×1 original and decoder;
+  // authored per-map artwork has independent dimensions and is tested elsewhere.
+  pack.levelVisuals = [];
   pack.visualOverrides.background = { dataUrl: png, name: 'original.png' };
   return {
     run,

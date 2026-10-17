@@ -1,10 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { createRun, stepRun, FIXED_DT, CLASSES } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, verifyReplay } from '../replay.mjs';
 import { loadInputs, digest } from '../../scripts/verify-campaign.mjs';
-import { expansionSources } from '../../scripts/verify-packs.mjs';
+import { readPackIndexes, readPackJSON } from '../../scripts/pack-indexes.mjs';
+import { PACK_LIMITS } from '../packs.mjs';
 
 const { campaign, classes } = await loadInputs();
 const campaignProof = JSON.parse(
@@ -13,19 +15,34 @@ const campaignProof = JSON.parse(
 const packProof = JSON.parse(
   await readFile(new URL('../replays/expansion-routes.json', import.meta.url), 'utf8'),
 );
+const sourceRoot = fileURLToPath(new URL('../../', import.meta.url));
+const packIndex = await readPackIndexes(sourceRoot);
+// This proof covers the original eighteen maps. Resolve its two indexed packs
+// before reading bodies, so unrelated later editions do not consume its budget.
+const proofPacks = await Promise.all(
+  ['night-shift', 'living-threads'].map(async (id) => {
+    const entry = packIndex.all.find((entry) => entry.id === id);
+    assert.ok(entry, `The original ${id} proof pack must remain indexed.`);
+    const { value } = await readPackJSON(
+      sourceRoot,
+      `game/content/packs/${entry.path}`,
+      PACK_LIMITS.maxBytes,
+    );
+    assert.equal(value.id, id);
+    return value;
+  }),
+);
 const sources = [
   ...campaign.levels.map((level) => ({ level, classes, routes: campaignProof.routes })),
-  ...(await expansionSources())
-    .filter((pack) => ['night-shift', 'living-threads'].includes(pack.id))
-    .flatMap((pack) =>
-      pack.campaigns.flatMap((campaign) =>
-        campaign.levels.map((level) => ({
-          level,
-          classes: pack.classRecipes,
-          routes: packProof.routes.filter((route) => route.packId === pack.id),
-        })),
-      ),
+  ...proofPacks.flatMap((pack) =>
+    pack.campaigns.flatMap((campaign) =>
+      campaign.levels.map((level) => ({
+        level,
+        classes: pack.classRecipes,
+        routes: packProof.routes.filter((route) => route.packId === pack.id),
+      })),
     ),
+  ),
 ];
 
 for (const turnPolicy of ['immediate', 'grid-center']) {

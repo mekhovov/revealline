@@ -1,0 +1,120 @@
+{
+  "browser": "155.0.8059.80",
+  "scope": "Deterministic native software Canvas2D static full quality, with decorative signal and jammer effects disabled. Zero changed pixels is the gate. This is raster correctness evidence, not device performance evidence.",
+  "cases": [
+    {
+      "name": "initial",
+      "width": 1152,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "1b3ee3b63ad3069e824e80af8d9db26c98eaf3889f5b1dccc906aa2a2c87ac80",
+      "candidateSHA256": "1b3ee3b63ad3069e824e80af8d9db26c98eaf3889f5b1dccc906aa2a2c87ac80"
+    },
+    {
+      "name": "cached-repeat",
+      "width": 1152,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "1b3ee3b63ad3069e824e80af8d9db26c98eaf3889f5b1dccc906aa2a2c87ac80",
+      "candidateSHA256": "1b3ee3b63ad3069e824e80af8d9db26c98eaf3889f5b1dccc906aa2a2c87ac80"
+    },
+    {
+      "name": "capture",
+      "width": 1152,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "dc805c4455fe0188d68256c82fe73db8a4d525a0e630acd49c80df03a827d9eb",
+      "candidateSHA256": "dc805c4455fe0188d68256c82fe73db8a4d525a0e630acd49c80df03a827d9eb"
+    },
+    {
+      "name": "same-coverage-swap",
+      "width": 1152,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "9e3da96ba0bbc59d4712e999086ea897cbe83414f3b3801d706e8db975a277d3",
+      "candidateSHA256": "9e3da96ba0bbc59d4712e999086ea897cbe83414f3b3801d706e8db975a277d3"
+    },
+    {
+      "name": "erosion",
+      "width": 1152,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "d524f02f528549899057b00edb240cdcde25000a5afde6510de8f1a2b068ba3d",
+      "candidateSHA256": "d524f02f528549899057b00edb240cdcde25000a5afde6510de8f1a2b068ba3d"
+    },
+    {
+      "name": "wall-contact",
+      "width": 1152,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "76aa2ca1955725a17bf3c79b62003b058b46f0e36ae7812ca921dee86fab877f",
+      "candidateSHA256": "76aa2ca1955725a17bf3c79b62003b058b46f0e36ae7812ca921dee86fab877f"
+    },
+    {
+      "name": "theme",
+      "width": 1152,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "ca1db6742ef5cee0bc1534d279b22b998cb9d91621d421ee78832b78aa6128b5",
+      "candidateSHA256": "ca1db6742ef5cee0bc1534d279b22b998cb9d91621d421ee78832b78aa6128b5"
+    },
+    {
+      "name": "picture",
+      "width": 1152,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "80e02aacfa53dd3b1977371a18ed0aa646454ed11d2483e209dc79a9805b8e94",
+      "candidateSHA256": "80e02aacfa53dd3b1977371a18ed0aa646454ed11d2483e209dc79a9805b8e94"
+    },
+    {
+      "name": "contain",
+      "width": 1152,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "80cbd1c3d9da13652e83effac630aa53644401c20fe83233e49b70e73d9a7824",
+      "candidateSHA256": "80cbd1c3d9da13652e83effac630aa53644401c20fe83233e49b70e73d9a7824"
+    },
+    {
+      "name": "resize",
+      "width": 768,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "8d2f01f6a6d1309aef6d870b8ecbb690659de2a57f8ea26bf343024a8f93b013",
+      "candidateSHA256": "8d2f01f6a6d1309aef6d870b8ecbb690659de2a57f8ea26bf343024a8f93b013"
+    },
+    {
+      "name": "restored-rebuild",
+      "width": 768,
+      "height": 576,
+      "changedPixels": 0,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "baselineSHA256": "8d2f01f6a6d1309aef6d870b8ecbb690659de2a57f8ea26bf343024a8f93b013",
+      "candidateSHA256": "8d2f01f6a6d1309aef6d870b8ecbb690659de2a57f8ea26bf343024a8f93b013"
+    }
+  ],
+  "fixture": "scripts/verify-solo-render-raster.mjs",
+  "baselineCommit": "b1174522",
+  "browserArguments": ["--disable-accelerated-2d-canvas"],
+  "authority": "Each sample verifies authoritativeCheckpoint is unchanged by painting."
+}

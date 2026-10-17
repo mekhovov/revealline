@@ -17,6 +17,7 @@ export function attachDestructionControls({
   prefix = '',
   getStorage,
   writable,
+  onChange = () => {},
   reduced = () =>
     doc.body?.dataset.effects === 'reduced' ||
     win?.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true,
@@ -92,6 +93,7 @@ export function attachDestructionControls({
     status.hidden = retry.hidden = choice.durable;
     localizedText(status, () => (choice.durable ? '' : huntText('saving')));
     stopPreview();
+    onChange();
   };
   const visibility = () => {
     if (doc.hidden) stopPreview();

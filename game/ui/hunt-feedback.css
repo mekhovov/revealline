@@ -89,48 +89,61 @@ body.game-shell[data-edition-layout='active'] #hunt-feedback {
 }
 /* The optional row is measured at viewport width, avoiding a width/height loop. */
 @media (max-width: 680px) and (orientation: portrait) {
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session):not(
-      [data-edition-layout='active']
-    )
+  body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']):not(
+      .first-flight-session
+    ):not([data-edition-layout='active'])
     .arena-panel:has(> #hunt-feedback) {
     grid-template-rows: minmax(0, 1fr) auto auto;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session):not(
-      [data-edition-layout='active']
-    )
+  body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']):not(
+      .first-flight-session
+    ):not([data-edition-layout='active'])
     .arena-panel
     > #hunt-feedback {
     grid-area: auto;
     grid-row: 2;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session):not(
-      [data-edition-layout='active']
-    )
+  body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']):not(
+      .first-flight-session
+    ):not([data-edition-layout='active'])
     #run-message {
     grid-row: 3;
   }
-  body.field-kit.game-shell.first-flight-session[data-flight-state='running']
+  body.field-kit.game-shell.first-flight-session:is(
+      [data-flight-state='running'],
+      [data-flight-layout='preparing']
+    )
     .arena-panel:has(> #hunt-feedback) {
     grid-template-areas: 'task' 'arena' 'hunt' 'message';
     grid-template-rows: auto minmax(0, 1fr) auto auto;
   }
-  body.field-kit.game-shell.first-flight-session[data-flight-state='running'] #hunt-feedback {
+  body.field-kit.game-shell.first-flight-session:is(
+      [data-flight-state='running'],
+      [data-flight-layout='preparing']
+    )
+    #hunt-feedback {
     grid-area: hunt;
   }
-  body.field-kit.game-shell.first-flight-session[data-flight-state='running'] #run-message {
+  body.field-kit.game-shell.first-flight-session:is(
+      [data-flight-state='running'],
+      [data-flight-layout='preparing']
+    )
+    #run-message {
     grid-area: message;
   }
-  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
-      .first-flight-session
-    ):not([data-edition-layout='active']):has(#hunt-feedback) {
+  body.field-kit.game-shell[data-arena-chrome='full']:is(
+      [data-flight-state='running'],
+      [data-flight-layout='preparing']
+    ):not(.first-flight-session):not([data-edition-layout='active']):has(#hunt-feedback) {
     --solo-field-space: calc(
       100dvh - 56px - var(--handheld-music-space, 0px) - var(--solo-warning-space) -
         var(--hunt-feedback-height, 0px) - var(--safe-top) - var(--safe-bottom)
     );
   }
-  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
-      .first-flight-session
-    ):not([data-edition-layout='active'])
+  body.field-kit.game-shell[data-arena-chrome='full']:is(
+      [data-flight-state='running'],
+      [data-flight-layout='preparing']
+    ):not(.first-flight-session):not([data-edition-layout='active'])
     #hunt-feedback {
     position: fixed;
     top: calc(var(--safe-top) + 56px + var(--handheld-music-space, 0px));
@@ -138,9 +151,10 @@ body.game-shell[data-edition-layout='active'] #hunt-feedback {
     right: max(8px, var(--safe-right));
     z-index: 5;
   }
-  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
-      .first-flight-session
-    ):not([data-edition-layout='active']):has(#hunt-feedback)
+  body.field-kit.game-shell[data-arena-chrome='full']:is(
+      [data-flight-state='running'],
+      [data-flight-layout='preparing']
+    ):not(.first-flight-session):not([data-edition-layout='active']):has(#hunt-feedback)
     .arena-shell {
     top: calc(
       var(--safe-top) + 56px + var(--handheld-music-space, 0px) + var(--hunt-feedback-height, 0px) +
@@ -149,16 +163,21 @@ body.game-shell[data-edition-layout='active'] #hunt-feedback {
   }
 }
 @media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
-  body.field-kit.game-shell[data-flight-state='running']:not([data-edition-layout='active']):has(
-      #hunt-feedback
-    ) {
+  body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']):not(
+      [data-edition-layout='active']
+    ):has(#hunt-feedback) {
     --hunt-feedback-top: 56px;
     --fk-flight-header: calc(var(--hunt-feedback-top) + var(--hunt-feedback-height, 0px));
   }
-  body.field-kit.game-shell.first-flight-session[data-flight-state='running']:has(#hunt-feedback) {
+  body.field-kit.game-shell.first-flight-session:is(
+      [data-flight-state='running'],
+      [data-flight-layout='preparing']
+    ):has(#hunt-feedback) {
     --hunt-feedback-top: 104px;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not([data-edition-layout='active'])
+  body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']):not(
+      [data-edition-layout='active']
+    )
     #hunt-feedback {
     position: fixed;
     top: calc(var(--safe-top) + var(--hunt-feedback-top));
@@ -169,15 +188,17 @@ body.game-shell[data-edition-layout='active'] #hunt-feedback {
 }
 @media (min-width: 681px) and (min-height: 601px) and (not (any-pointer: coarse)) {
   :root:not([data-game-fullscreen='true'])
-    body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
-      .first-flight-session
-    ):not([data-edition-layout='active']):has(#hunt-feedback) {
+    body.field-kit.game-shell[data-arena-chrome='full']:is(
+      [data-flight-state='running'],
+      [data-flight-layout='preparing']
+    ):not(.first-flight-session):not([data-edition-layout='active']):has(#hunt-feedback) {
     --flight-top-space: calc(184px + var(--hunt-feedback-height, 0px));
   }
   :root:not([data-game-fullscreen='true'])
-    body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
-      .first-flight-session
-    ):not([data-edition-layout='active'])
+    body.field-kit.game-shell[data-arena-chrome='full']:is(
+      [data-flight-state='running'],
+      [data-flight-layout='preparing']
+    ):not(.first-flight-session):not([data-edition-layout='active'])
     #hunt-feedback {
     position: fixed;
     top: calc(var(--safe-top) + 184px);

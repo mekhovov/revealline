@@ -6,6 +6,7 @@ import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { FIXED_DT, stepRun } from '../core/index.mjs';
 import { classicView } from '../ui/classic-view.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { snapshotCaptureSession, nativeCaptureSession } from '../capture-presentation-session.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url)));
 const pack = read('../content/packs/classic-lab.json');
@@ -157,7 +158,7 @@ test(
         page.frame(100);
         assert.deepEqual(authoritativeCheckpoint(run), savedCheckpoint);
         savedBytes = storage.getItem(saveSlot);
-        const saved = JSON.parse(savedBytes),
+        const saved = nativeCaptureSession(snapshotCaptureSession(savedBytes)),
           verified = verifyReplay(saved.replay);
         assert.equal(verified.match, true);
         assert.deepEqual(verified.actual.checkpoint, savedCheckpoint);
@@ -166,10 +167,17 @@ test(
       },
     );
     assert(savedBytes, 'The first actual page must persist an unfinished flight.');
-    const { savedAt: pausedAt, ...pausedSave } = JSON.parse(savedBytes),
-      { savedAt: departedAt, ...departedSave } = JSON.parse(storage.getItem(saveSlot));
+    const pausedSave = snapshotCaptureSession(savedBytes),
+      departedSave = snapshotCaptureSession(storage.getItem(saveSlot)),
+      pausedSession = nativeCaptureSession(pausedSave),
+      departedSession = nativeCaptureSession(departedSave),
+      pausedAt = pausedSession.savedAt,
+      departedAt = departedSession.savedAt;
     assert(pausedAt && departedAt);
-    // The actual pagehide handler saves once more with a new timestamp only.
+    // The actual pagehide handler saves once more with a new native timestamp
+    // only. Compare the complete validated envelopes, including artwork pins.
+    delete pausedSession.savedAt;
+    delete departedSession.savedAt;
     assert.deepEqual(departedSave, pausedSave);
     savedBytes = storage.getItem(saveSlot);
 
@@ -178,7 +186,7 @@ test(
       async (t) => {
         const surface = rendering(),
           page = await pageWithArt(t, storage, surface, assetIndexedDB),
-          saved = JSON.parse(savedBytes),
+          saved = nativeCaptureSession(snapshotCaptureSession(savedBytes)),
           reference = verifyReplay(saved.replay).state;
         assert.equal(page.$('shell-continue').hidden, false);
         assert.equal(page.$('shell-continue').disabled, false);

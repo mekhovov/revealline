@@ -181,6 +181,7 @@ test('actual solo host exports a paused unfinished flight without changing its c
     (node) => node.dataset.libraryPanel === 'saves',
   );
   saves.click();
+  await settle(() => !!h.$('prepare-backup-set') && !h.$('library-saves').hidden);
   h.frame(0);
   const before = authoritativeCheckpoint(h.rendered.run),
     stored = new Map(h.storage.map),
@@ -225,6 +226,7 @@ for (const exit of ['escape', 'controller'])
     for (let i = 0; i < 30; i++) h.frame();
     h.key('ArrowDown', false);
     h.$('library-button').click();
+    await settle(() => !!h.$('prepare-backup-set'));
     [...h.$('library-dialog').querySelectorAll('button')]
       .find((node) => node.dataset.libraryPanel === 'saves')
       .click();
@@ -308,6 +310,7 @@ test('Title Settings Library cancel consumes filename detail before native dialo
   [...h.$('library-dialog').querySelectorAll('button')]
     .find((node) => node.dataset.libraryPanel === 'saves')
     .click();
+  await settle(() => !!h.$('prepare-backup-set') && !h.$('library-saves').hidden);
   assert.equal(await h.$('prepare-backup-set').onclick(), true);
   const dialog = h.$('library-dialog'),
     summary = h.$('backup-set-filename-summary'),

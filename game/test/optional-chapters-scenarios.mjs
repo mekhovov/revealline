@@ -5,6 +5,31 @@ import { nativeCaptureSession as nativeSession } from '../capture-presentation-s
 const scenarios = [];
 const test = (name, run) => scenarios.push(Object.freeze({ name, run }));
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  const same = Object.is(actual, expected);
+  if (same) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((x) => typeof x === 'string')
+        .map((x) => x.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
 import { soloPage } from './helpers/solo-dom.mjs';
@@ -364,8 +389,8 @@ test('retained More chapters supports keyboard and standard controller with Mode
   assert.equal(page.$('shell-missions').open, true);
   const modeChoice = page.$('shell-mode-choice');
   assert.equal(modeChoice.open, false);
-  assert.equal(page.$('shell-worlds').closest('#shell-mode-choice'), null);
-  assert.equal(
+  boundedIdentity(page.$('shell-worlds').closest('#shell-mode-choice'), null);
+  boundedIdentity(
     page.$('shell-worlds').closest('.shell-dialog-heading'),
     page.$('shell-missions').querySelector('.shell-dialog-heading'),
   );

@@ -1,0 +1,37 @@
+# Final-source audio observations — 17 October 2026
+
+Run [39015298553](https://github.com/mekhovov/revealline/actions/runs/39015298553), tooling `c41a02216c0811952232a387fd1743e09452c269`, completed **failure**. All eight declared arms were observed and retained: five passed, three failed. Candidate source remains `a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4`, runtime `32abd322afd8243e4537ce4784e2f78ee45ecbec`; baseline is exact normal main `8b01991942dc764b8aa4726851699ce1985e53ae`. No result is promoted to current-main, physical-device, listening or performance qualification.
+
+| Browser / recipe                | Baseline                                                   | Candidate    |
+| ------------------------------- | ---------------------------------------------------------- | ------------ |
+| Chromium 151.0.7922.34 / speech | Pass                                                       | Pass         |
+| Chromium 151.0.7922.34 / music  | Pass                                                       | Pass         |
+| WebKit 26.5 Linux / speech      | Fail:1 of 2 required captures; cue unobserved              | Pass         |
+| WebKit 26.5 Linux / music       | Fail: first imported MP3 rejected by native-duration probe | Same failure |
+
+Both Chromium music arms prove exact encoded identities for both recordings, chronological playback advancement, ordered playback and the required natural-ended transition. All five passing arms also pass strict same-engine replay/mechanic checks. Every arm's process owner closed normally with no forced cleanup, violation, ambiguity or survivors. Both full candidate/baseline archive, source and CSP admissions passed in every job. All pending, failed, capped, dropped-start and dropped-media identity counters are zero; insufficient evidence is not attributed to an observer capacity limit.
+
+The WebKit baseline speech recording has `match:true` and no state-mismatch diagnostics. Its strict verifier fails the unchanged mechanic requirement: one closure versus the minimum two. The baseline lost a life to an enemy/trail encounter and did not emit the required speech start. The exact recording had decoded during preparation. The candidate completed both closures and emitted the expected cue once. This is neither proof of an audio decoding defect nor a same-engine determinism mismatch. Cross-engine Node reconstruction mismatches are retained separately and are not native correctness authority.
+
+Both WebKit music arms fail the original 30-second public selection action because the imported playlist does not exist. The public witness immediately after import records `Decoded MP3 duration must be finite and at most 12 minutes.` The later preference action replaces this status with a generic saved-selection message, so the earlier witness is necessary to identify the import failure. The native observer records only the first asset, Bossa Nova (`0ee835fd…`,1,196,325 bytes), as an exact resolved Blob URL. There are no playback/transition observations or completed replay. The failure remains unresolved; the scenario and application guard are unchanged.
+
+## Exact retention
+
+| Lane            | Artifact    | ZIP bytes | ZIP SHA-256                                                        |
+| --------------- | ----------- | --------- | ------------------------------------------------------------------ |
+| speech-chromium | 12094910695 | 766,649   | `13f0cbdd3d6d2be61fb7814fc831c16dc69b8b0eb6e1661fbc783e90fe309e91` |
+| music-chromium  | 12094408065 | 817,100   | `0b8a18729de6741ae1d3803c85c22d2231837d44dd57077e6df4674816753b8f` |
+| speech-webkit   | 12094039466 | 745,279   | `648dd72fbefb9b4d3842703ecdbf4e1e9dd68e498f74ae8fb89567f7db5cc098` |
+| music-webkit    | 12095880093 | 695,428   | `1e3a0762047b5392de550169d5ee74c13eabfdf3d66ff6b206bb623709f9bd9f` |
+
+Each small ZIP passed actual run/head/job identity, API digest, exact archive readback, every ZIP CRC and every extracted member SHA/readback. No production package or browser profile was downloaded. Receipts and all raw reports are under `.cache/solo-followup/remote-final-c41-offline-audio-cocoa-lifecycle/{lane}-retained/`. `all-audio-reassessment.json` independently re-invokes the actual auxiliary assessment for all eight rows and rehashes every available native replay export. `webkit-speech-failure-cause.json` preserves the checkpoint/mechanic distinction. Earlier artifacts, declarations and failed observations remain unchanged.
+
+## Read-only audit of the duration boundary
+
+The audited source files are byte-identical to exact a6. Public import calls `soundtrack-panel.mjs:1573` → `importSoundtrackBundle` → `prepareSoundtrackLibrary` → `verifyAssets` (`soundtrack-bundle.mjs:94`). For each distinct asset, `inspectMP3` scans every frame and computes SHA-256; all facts must exactly match the declared asset before that asset's native probe. The bundle sorts assets by hash, so the first item is Bossa Nova. Both original files were independently structurally verified in `audio-fixture-provenance.json`: Bossa has 2,282 MPEG1 / 44.1 kHz / stereo frames and 59.61142857 seconds; Party Sector has 3,677 frames and 96.05224490 seconds. The browser's current import stops on the first native failure, so this run does not prove the second asset reached its native probe.
+
+`mp3-inspection.mjs:31–113` bounds metadata, frame layout, rate/channel consistency, complete file coverage, frame count, 720-second duration and 32 MiB bytes. It does not decode MPEG payloads. `probeMP3Media` (`mp3.mjs:62`) separately waits for readyState ≥ 2, rejects media errors and requires finite positive native duration ≤ 720 seconds. `verifyMP3Media` (`mp3.mjs:102`) also requires agreement with frame duration within max(0.5 seconds, 1%). The probe does not play or decode an entire album into PCM. This is an explicit browser-readiness/cross-check policy, not merely UI formatting, but it is also not a guarantee that every future payload sample decodes.
+
+The [HTML media standard](https://html.spec.whatwg.org/multipage/media.html#ready-states) distinguishes availability of current-position data from future playback readiness. Its [duration semantics](https://html.spec.whatwg.org/multipage/media.html#dom-media-duration-dev) describe reported media length; an initial decoded frame and a duration cross-check do not establish an entire uninterrupted playback. In this application, local MP3 position, seek bounds and overlap timing already use validated `track.asset.durationSeconds` (`soundtrack-player.mjs:308`); the native `ended` event owns the hard transition boundary (`:582`). Consequently, native duration is not required solely to display or schedule that local track.
+
+A compatibility path could be designed to distinguish verified structural duration from native readiness instead of treating a bad duration field as a complete decoder failure. It cannot be introduced here by substituting structural duration for the independent check and marking the old scenario passed. Prior Linux backend samples show progression, but do not prove exact seeking, natural-ended transitions or whole-track behavior, and Linux GStreamer is not the Cocoa/iPhone media backend. Retain the current guard and failed result. A future replacement would need an explicit admission policy, unchanged structural/hash/error/cancellation bounds, rejection of positive-but-mismatched native durations, and native playback/seek/end tests for the actual supported browser. No such source change or waiver is made by this audit.

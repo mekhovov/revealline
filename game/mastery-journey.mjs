@@ -70,7 +70,7 @@ export function resolveJourneyMasteryClear(input, requirement, bindings) {
  * or per-frame observer is needed for this versioned predicate. */
 export async function verifyJourneyMasteryRun(
   { requirement: input, clear: accepted, replay, bindings },
-  { signal, onProgress, chunkTicks = 600 } = {},
+  { signal, onProgress, chunkTicks = 600, scheduleChunk } = {},
 ) {
   signal?.throwIfAborted();
   const requirement = resolveJourneyMasteryRequirement(input);
@@ -88,7 +88,12 @@ export async function verifyJourneyMasteryRun(
         clear.gameplayId,
     'Journey mastery replay differs from its accepted gameplay.',
   );
-  const checked = await verifyReplayAsync(recording, { signal, onProgress, chunkTicks });
+  const checked = await verifyReplayAsync(recording, {
+    signal,
+    onProgress,
+    chunkTicks,
+    scheduleChunk,
+  });
   signal?.throwIfAborted();
   required(checked.match, 'Journey mastery replay verification failed.');
   required(checked.state.status === 'won', 'Journey mastery requires a completed accepted win.');

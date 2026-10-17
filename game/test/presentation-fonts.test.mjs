@@ -6,7 +6,7 @@ import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { compilePresentation } from '../../scripts/compile-presentation.mjs';
 
-test('compiled Handjet, variable Exo 2 and Plex faces register their real role weights before use', async () => {
+test('compiled Handjet, variable Exo 2 and Plex faces register their real role weights before use', async (t) => {
   const compiled = await compilePresentation(createDefaultThemeBundle(), new Map());
   const manifest = JSON.parse(new TextDecoder().decode(compiled.files.get('runtime.json')));
   const files = new Map(),
@@ -56,6 +56,9 @@ test('compiled Handjet, variable Exo 2 and Plex faces register their real role w
       };
       return face;
     },
+  });
+  t.mock.method(Blob.prototype, 'arrayBuffer', async () => {
+    throw new Error('Font preparation must use the verified response bytes.');
   });
   await host.load();
   assert.equal(decoded.length, 3);

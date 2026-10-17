@@ -1,0 +1,45 @@
+{
+  "format": "SoloLifecycleExecutedSourceWitnessV1",
+  "sourceRevision": "69639b30d985ffa723a4d0c11756b632fc2da5c1",
+  "sourceTree": "d022c57efa75dbe7b7aeeca00a1950f61426595b",
+  "earlierHelperRevision": "c41a02216c0811952232a387fd1743e09452c269",
+  "earlierHelperBytesIdentical": true,
+  "files": [
+    {
+      "path": "scripts/solo-remote-lifecycle.mjs",
+      "bytes": 23154,
+      "sha256": "2ffb82d2b032f69b8380d4c20085c92714eb9f30f2c836dc7cc06bc84bc77b5c",
+      "gitBlob": "c51234e65b765d11c2b58198f79c39e38f5dbaf6"
+    },
+    {
+      "path": "scripts/observe-solo-native-lifecycle.mjs",
+      "bytes": 26419,
+      "sha256": "d1cd48307d7628e6602d820c3dc88a71aed3595a056dca852789647ff7a66e9a",
+      "gitBlob": "89a623e04edf37fabb443176e777d5921ce80c52"
+    },
+    {
+      "path": "docs/performance/solo-native-lifecycle-plan.json",
+      "bytes": 10335,
+      "sha256": "c327b02b08aa42efbba2ddfe009b772783cd7c30ea902abeee4d8174ae820c41",
+      "gitBlob": "bfba9e7301a65d9a5365961c466be72d2b44bdfd"
+    },
+    {
+      "path": "docs/performance/solo-native-lifecycle-v2-plan.json",
+      "bytes": 11013,
+      "sha256": "90bf25b9a5abedfdac32e176465a10dad083fd7b6ea98ad9e5a2db39854b8fed",
+      "gitBlob": "8362bfdbe4ebe7f0ca6a66e06b9d2ca4e4921757"
+    },
+    {
+      "path": ".github/workflows/solo-remote-native-lifecycle-temporary.yml",
+      "bytes": 14323,
+      "sha256": "578c6e1cb16332d3d296310cee9de3faad54b15aec9c915192f737ea31164fb2",
+      "gitBlob": "77c36424ead2d9973c38b9b1f58199300583177f"
+    },
+    {
+      "path": ".github/workflows/solo-remote-native-lifecycle-v2-temporary.yml",
+      "bytes": 15675,
+      "sha256": "22d43548f27d5be3a8ade702bc0f14bf42db23f1bc0bd8ba2e0bd5254a02a3bf",
+      "gitBlob": "9df09a2a7cfcb2b3ef1f150bab19ddda40c0cd03"
+    }
+  ]
+}

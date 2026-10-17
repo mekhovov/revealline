@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { earnedPictureFixture } from './helpers/earned-picture-fixture.mjs';
 import { createRun, stepRun, getSummary, FIXED_DT, CLASSES } from '../core/index.mjs';
@@ -540,6 +540,9 @@ for (const kind of ['score', 'gallery'])
       h.$('shell-workshop').click();
       h.$('shell-library').click();
     } else h.$('shell-gallery').click();
+    await settle(
+      () => h.$(kind === 'score' ? 'score-pages' : 'gallery-pages').children.length >= 3,
+    );
     const nav = h.$(kind === 'score' ? 'score-pages' : 'gallery-pages'),
       previous = nav.children[0],
       next = nav.children[2];

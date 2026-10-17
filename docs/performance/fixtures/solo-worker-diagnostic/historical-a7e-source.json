@@ -1,0 +1,75 @@
+{
+  "format": "SoloHistoricalWorkerSourceV1",
+  "revision": "a7e0219818842f02399317ca6d2a14bdd506da3d",
+  "tree": "3af3539969845d19c67dd86675aad1c16fa2dfb9",
+  "scope": "Exact a7e historical declaration and tool bytes; this is source provenance, not a replacement execution or observation.",
+  "releases": [
+    {
+      "manifest": "docs/performance/solo-remote-worker-diagnostic-plan.json",
+      "references": [
+        "scripts/solo-remote-worker-diagnostic.mjs",
+        "scripts/verify-solo-mp3-worker.mjs",
+        "scripts/solo-worker-diagnostics.mjs"
+      ]
+    },
+    {
+      "manifest": "docs/performance/solo-remote-worker-confirmation-plan.json",
+      "references": [
+        "scripts/solo-remote-worker-diagnostic.mjs",
+        "scripts/verify-solo-mp3-worker.mjs",
+        "scripts/solo-worker-diagnostics.mjs",
+        "scripts/verify-solo-paused-render.mjs"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/solo-remote-worker-confirmation-temporary.yml",
+      "bytes": 6476,
+      "sha256": "cf291df57bd8f300eee472cb2621d7af11e38e6c621c240eb531941c48675139",
+      "gitBlob": "7de51d6f6fbb1fc2ef4a483b961532d338fa7617"
+    },
+    {
+      "path": ".github/workflows/solo-remote-worker-diagnostic-temporary.yml",
+      "bytes": 6397,
+      "sha256": "49e0e2b4dfaed20c92b05d543572639367f6da18636bfea88e441536fcc27f73",
+      "gitBlob": "6e5145136a2748a1670bb567b40a7fac10b5fbc7"
+    },
+    {
+      "path": "docs/performance/solo-remote-worker-confirmation-plan.json",
+      "bytes": 6008,
+      "sha256": "8ac30ae7a7dc76ba1b452390516c9f958584d65a2a519eedd1e706ce263cc4b9",
+      "gitBlob": "f27bbd73ae8b615be4f6e6e61ff3d8106b19e230"
+    },
+    {
+      "path": "docs/performance/solo-remote-worker-diagnostic-plan.json",
+      "bytes": 7197,
+      "sha256": "cbd04c55a215f846cd98c9fef72d465a0942669528b694d4a817ce7c868aeaee",
+      "gitBlob": "8f36b0f6b54aed2d3e1d53e87e15cf1ae93e414a"
+    },
+    {
+      "path": "scripts/solo-remote-worker-diagnostic.mjs",
+      "bytes": 11151,
+      "sha256": "e04fa983d0dfaa9f9284bcdbce2fc8be280e753ca1a5f05dac28c3b36252a116",
+      "gitBlob": "27ec4414e12ca5c206bc999374c14a584fe8d271"
+    },
+    {
+      "path": "scripts/solo-worker-diagnostics.mjs",
+      "bytes": 2694,
+      "sha256": "b15cba8d17c3dc4b31802ff87ff1cb97c71109991f8d729382e5b5374c9226fe",
+      "gitBlob": "750bfc58456e59c448db2a83e42a498670785be7"
+    },
+    {
+      "path": "scripts/verify-solo-mp3-worker.mjs",
+      "bytes": 13091,
+      "sha256": "ea9f18d14778fb5e979a1b32282a01dc1580e593a5c27f74f1b5d4a17da55bad",
+      "gitBlob": "9162ea86f8591f16a66cfe1a64e3b223d0438dfe"
+    },
+    {
+      "path": "scripts/verify-solo-paused-render.mjs",
+      "bytes": 9270,
+      "sha256": "4d07139b1e20fef9615e1325d9c8ff95631205e18a7f2dc311106eb0c5c7940d",
+      "gitBlob": "f04e44214baf3037298cc74f5b71b72ea431498c"
+    }
+  ]
+}

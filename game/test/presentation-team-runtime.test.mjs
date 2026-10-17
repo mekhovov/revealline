@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPresentationHost } from '../presentation/host.mjs';
+import { ACTOR_PRESENTATION_SLOTS, createPresentationHost } from '../presentation/host.mjs';
 import {
   TEAM_RUNTIME_IMAGE_SLOTS,
   isTeamRuntimeImageSlot,
@@ -47,7 +47,7 @@ function fixture() {
     return { ...compiled, assets, blobs };
   })());
 }
-function environment(f) {
+function environment(t, f) {
   const decoded = [],
     requests = [],
     revoked = [];
@@ -83,6 +83,7 @@ function environment(f) {
     createObjectURL: () => `blob:test-${decoded.length}`,
     revokeObjectURL: (url) => revoked.push(url),
   });
+  t.after(() => host.close());
   return {
     host,
     decoded,
@@ -124,9 +125,9 @@ test('only explicitly registered Team roles join the release host image set', ()
   ])
     assert(!isTeamRuntimeImageSlot(id));
 });
-test('actual compiler output fetches, verifies and prepares every Team role for the real painter', async () => {
+test('actual compiler output fetches, verifies and prepares every Team role for the real painter', async (t) => {
   const f = await fixture(),
-    e = environment(f),
+    e = environment(t, f),
     snapshot = await e.host.load();
   assert.equal(e.decoded.length, 42);
   assert.equal(e.requests.length, 43);
@@ -204,22 +205,47 @@ test('actual compiler output fetches, verifies and prepares every Team role for 
   assert(e.decoded.every((image) => image.closed === 1));
 });
 for (const type of ['missing', 'hash'])
-  test(`a ${type} Team image cannot replace or dispose the accepted snapshot`, async () => {
+  test(`a ${type} Team image cannot replace or dispose the accepted snapshot`, async (t) => {
     const f = await fixture(),
-      e = environment(f),
+      e = environment(t, f),
       before = await e.host.load(),
       old = [...e.decoded],
       asset = f.assets.find((a) => a.id.endsWith('team.player.recovery'));
+    assert.equal(old.length, TEAM_RUNTIME_IMAGE_SLOTS.length);
     e.fail({ type, name: `assets/${asset.file.sha256}.png` });
     await assert.rejects(e.host.load());
     assert.equal(e.host.current(), before);
     assert(old.every((image) => image.closed === 0));
     assert(e.decoded.slice(old.length).every((image) => image.closed === 1));
     e.fail(null);
-    const recovered = await e.host.load();
+    const decodedBeforeRecovery = e.decoded.length,
+      pooledSlots = TEAM_RUNTIME_IMAGE_SLOTS.filter((id) => ACTOR_PRESENTATION_SLOTS.includes(id)),
+      snapshotSlots = TEAM_RUNTIME_IMAGE_SLOTS.filter(
+        (id) => !ACTOR_PRESENTATION_SLOTS.includes(id),
+      ),
+      recovered = await e.host.load();
     assert.notEqual(recovered, before);
-    assert(old.every((image) => image.closed === 1));
+    assert(pooledSlots.length > 0 && snapshotSlots.length > 0);
+    assert.equal(
+      e.decoded.length - decodedBeforeRecovery,
+      snapshotSlots.length,
+      'Only snapshot-owned roles require a replacement decode.',
+    );
+    for (const id of pooledSlots) {
+      assert.equal(recovered.image(id).image, before.image(id).image);
+      assert.equal(before.image(id).image.closed, 0, 'The replacement retains the actor lease.');
+    }
+    for (const id of snapshotSlots) {
+      assert.notEqual(recovered.image(id).image, before.image(id).image);
+      assert.equal(before.image(id).image.closed, 1, 'The replaced snapshot releases its image.');
+      assert.equal(recovered.image(id).image.closed, 0, 'The replacement owns its new image.');
+    }
     assert(recovered.image('team.player.recovery'));
     e.host.close();
     assert(e.decoded.every((image) => image.closed === 1));
+    e.host.close();
+    assert(
+      e.decoded.every((image) => image.closed === 1),
+      'The last lease closes each image once.',
+    );
   });

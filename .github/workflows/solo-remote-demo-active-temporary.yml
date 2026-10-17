@@ -1,0 +1,131 @@
+name: Temporary Solo Linux scoped active Demo work
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/solo-remote-demo-active-temporary.yml'
+      - 'scripts/solo-remote-demo-active.mjs'
+      - 'scripts/solo-remote-demo.mjs'
+      - 'scripts/test-solo-remote-demo-active.mjs'
+      - 'scripts/observe-solo-demo-active.mjs'
+      - 'scripts/solo-demo-active-observer.mjs'
+      - 'scripts/run-solo-remote-correctness.mjs'
+      - 'docs/performance/solo-remote-demo-active-plan.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: solo-linux-demo-active-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  demo:
+    # Prospective only: remove false solely with the exact reviewed plan/artifact binding.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 125
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
+      SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline
+      SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate
+      PYTHONDONTWRITEBYTECODE: 1
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: tools
+          persist-credentials: false
+          fetch-depth: 0
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: b11745223861c3973ad4bf440cc536198b8e0371
+          path: baseline
+          persist-credentials: false
+          fetch-depth: 1
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: 3adcd53792043ef02459e86168c6b33a66d6ef00
+          path: candidate
+          persist-credentials: false
+          fetch-depth: 1
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Record setup and install exact source dependencies
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
+            "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
+            "OUTPUT=$RUNNER_TEMP/solo-linux-demo-active" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/solo-linux-setup"
+          test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
+          npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
+      - name: Install the separately pinned browser cohort
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/solo-browser-tools"
+          npm install --prefix "$RUNNER_TEMP/solo-browser-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-install.log"
+          "$RUNNER_TEMP/solo-browser-tools/node_modules/.bin/playwright" install --with-deps chromium 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-dependencies.log"
+          cp "$RUNNER_TEMP/solo-browser-tools/package-lock.json" "$RUNNER_TEMP/solo-linux-setup/browser-package-lock.json"
+      - name: Exercise archive rejection and owned timeout cleanup
+        timeout-minutes: 3
+        working-directory: tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-demo-active.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --input-type=module -e 'import {readFile} from "node:fs/promises"; import {validateDemoActivePlan} from "./scripts/solo-remote-demo-active.mjs"; validateDemoActivePlan(JSON.parse(await readFile("docs/performance/solo-remote-demo-active-plan.json", "utf8")));'
+      - name: Run the three scoped candidate Demo observations
+        timeout-minutes: 79
+        working-directory: tools
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: timeout --signal=TERM --kill-after=30s 4620s node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-demo-active-plan.json "$OUTPUT"
+      - name: Describe bounded setup evidence without claiming truncated output complete
+        if: ${{ always() }}
+        timeout-minutes: 2
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import hashlib,json,os,pathlib
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'solo-linux-setup'
+          root.mkdir(exist_ok=True)
+          rows=[]
+          failed=False
+          for name in ['tools-npm.log','baseline-npm.log','browser-install.log','browser-dependencies.log','wrapper-tests.tap','browser-package-lock.json']:
+              path=root/name
+              if not path.exists():
+                  rows.append({'path':name,'status':'not-retained-setup-incomplete'})
+                  continue
+              size=path.stat().st_size
+              assert size <= 4*1024*1024, 'Setup file exceeded fixed bound'
+              capped=size == 4*1024*1024
+              failed |= capped
+              rows.append({'path':name,'bytes':size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'status':'cap-reached-completeness-unconfirmed' if capped else 'retained'})
+          (root/'retention.json').write_text(json.dumps({'status':'failed-output-cap' if failed else 'retained','files':rows,'maximumTotalBytes':24*1024*1024},indent=2)+'\n')
+          if failed: raise SystemExit(1)
+          PYCODE
+      - name: Retain all complete, failed and partial evidence
+        if: ${{ always() }}
+        timeout-minutes: 10
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-linux-demo-active-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-linux-demo-active/evidence/
+            ${{ runner.temp }}/solo-linux-setup/
+          if-no-files-found: warn
+          compression-level: 6
+          retention-days: 14

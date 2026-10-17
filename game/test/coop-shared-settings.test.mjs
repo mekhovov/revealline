@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
@@ -87,8 +111,8 @@ test('Team Settings has all eight categories, original controls, and exact lobby
   ].map(f.$);
   const before = state(f);
   open(f);
-  assert.equal(f.doc.activeElement, tab(f, 'display'));
-  assert.equal(f.$('coop-options').closest('#coop-tools'), null);
+  boundedIdentity(f.doc.activeElement, tab(f, 'display'));
+  boundedIdentity(f.$('coop-options').closest('#coop-tools'), null);
   for (const id of ids) {
     tab(f, id).focus();
     f.tap('Enter');
@@ -97,15 +121,18 @@ test('Team Settings has all eight categories, original controls, and exact lobby
     assert.equal(f.$(`coop-settings-panel-${id}`).inert, false);
     assert.equal(ids.filter((key) => !f.$(`coop-settings-panel-${key}`).hidden).length, 1);
   }
-  for (const node of controls) assert.equal(f.$(node.id), node);
+  for (const node of controls) boundedIdentity(f.$(node.id), node);
   for (const id of ['coop-text-face', 'coop-text-size']) {
-    assert.equal(f.$(id).parentNode, f.$('coop-settings-panel-accessibility'));
-    assert.equal(
+    boundedIdentity(f.$(id).parentNode, f.$('coop-settings-panel-accessibility'));
+    boundedIdentity(
       f.doc.querySelector(`label[for="${id}"]`).parentNode,
       f.$('coop-settings-panel-accessibility'),
     );
   }
-  assert.equal(f.$('coop-system-reduction').parentNode, f.$('coop-settings-panel-accessibility'));
+  boundedIdentity(
+    f.$('coop-system-reduction').parentNode,
+    f.$('coop-settings-panel-accessibility'),
+  );
   assert.match(f.$('coop-settings-panel-data').textContent, /does not write Solo saves/);
   f.$('coop-settings-close').click();
   assert.equal(f.doc.activeElement.id, 'coop-settings-open');

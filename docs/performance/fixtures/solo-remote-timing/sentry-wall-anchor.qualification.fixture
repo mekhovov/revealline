@@ -1,0 +1,237 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "sentry-wall-anchor-capture-projectile-v3",
+  "kind": "performance",
+  "timeoutMs": 240000,
+  "entryPath": "playground/",
+  "readySelector": "#import-file",
+  "coverage": [
+    "captures",
+    "combat-warning",
+    "combat-projectiles"
+  ],
+  "replayRequirements": {
+    "closures": 1,
+    "shots": 1,
+    "projectileTicks": 1
+  },
+  "actions": [
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "upload",
+      "selector": "#import-file",
+      "file": "sentry-detour.xonix.json",
+      "acceptedLevelSelector": "#level-json"
+    },
+    {
+      "type": "click",
+      "selector": "#preview-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "follow",
+      "selector": "#open-preview",
+      "preparationStatusSelector": "[data-presentation-status=\"auxiliary\"]",
+      "timeoutMs": 120000
+    },
+    {
+      "type": "snapshot",
+      "group": "prepared"
+    },
+    {
+      "type": "click",
+      "selector": "#start-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1700
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 4500
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 5000
+    },
+    {
+      "type": "wait",
+      "phase": "running"
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused"
+    },
+    {
+      "type": "snapshot",
+      "group": "after-workload"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "readyHiddenSelector": "#boot-status",
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "sentry-detour",
+      "revision": "combat-greybox-1",
+      "name": "Sentry detour",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 13.5,
+        "y": 16.5
+      },
+      "walls": [
+        {
+          "x": 26,
+          "y": 4,
+          "w": 2,
+          "h": 18
+        },
+        {
+          "x": 45,
+          "y": 16,
+          "w": 2,
+          "h": 14
+        }
+      ],
+      "foundations": [
+        {
+          "x": 11,
+          "y": 15,
+          "w": 5,
+          "h": 3
+        },
+        {
+          "x": 32,
+          "y": 25,
+          "w": 8,
+          "h": 3
+        },
+        {
+          "x": 56,
+          "y": 8,
+          "w": 5,
+          "h": 3
+        }
+      ],
+      "goal": {
+        "coverage": 0.72
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "combatPatrols": {
+          "version": "combat-patrols.v1",
+          "enabled": true,
+          "actors": [
+            {
+              "id": "watch-sentry",
+              "role": "sentry",
+              "x": 35.5,
+              "y": 10.5,
+              "headingX": 1,
+              "headingY": 0,
+              "speed": 2.52,
+              "turnTicks": 120,
+              "senseRadius": 16,
+              "scanTicks": 30,
+              "openingTicks": 480,
+              "warningTicks": 180,
+              "recoveryTicks": 180,
+              "restTicks": 1020,
+              "shotSpeed": 8,
+              "shotLifeTicks": 360
+            }
+          ]
+        },
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "west-keeper",
+          "type": "bouncer",
+          "x": 8.5,
+          "y": 29.5,
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993
+        },
+        {
+          "id": "east-keeper",
+          "type": "bouncer",
+          "x": 63.5,
+          "y": 18.5,
+          "vx": -2.3758787847867993,
+          "vy": 2.3758787847867993
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 13.5,
+          "y": 16.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "grid-center"
+    }
+  }
+}

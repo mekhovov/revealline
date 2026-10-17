@@ -1,0 +1,304 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "original-art-opening-first30-border-v3",
+  "kind": "performance",
+  "timeoutMs": 240000,
+  "query": {
+    "journey": "opening"
+  },
+  "coverage": [
+    "first30seconds after publicStart on original FirstReturn",
+    "30 meaningful alternating safe-top-border steering commands",
+    "native input event-to-tick-to-submitted-render",
+    "same-context warm HTTP reload remains separately labeled when selected"
+  ],
+  "replayRequirements": {
+    "movingTicks": 3300,
+    "directionChangesWithMovement": 20
+  },
+  "actions": [
+    {
+      "type": "snapshot",
+      "group": "original-art-ready"
+    },
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-1"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-2"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-3"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-4"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-5"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-6"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-7"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-8"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-9"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-10"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-11"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-12"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-13"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-14"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-15"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-16"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-17"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-18"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-19"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-20"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-21"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-22"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-23"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-24"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-25"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-26"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-27"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-28"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000,
+      "label": "safe-border-direction-29"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "safe-border-direction-30"
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused",
+      "timeoutMs": 10000
+    },
+    {
+      "type": "snapshot",
+      "group": "first30-border-paused"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-return",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+      "name": "First return",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.3
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 58.5,
+          "y": 23.5,
+          "vx": 7.81352993211135,
+          "vy": -7.81352993211135,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  }
+}

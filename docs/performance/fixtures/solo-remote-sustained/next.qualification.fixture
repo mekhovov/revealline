@@ -1,0 +1,702 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "ten-next-authored-standard-v4",
+  "kind": "lifecycle",
+  "timeoutMs": 1200000,
+  "query": {
+    "journey": "authored"
+  },
+  "coverage": [
+    "ten public Next transitions",
+    "first eleven authored core missions in source pack/campaign order",
+    "supported authored entry includes Opening and Border Bloom; opening-only ends after nine",
+    "Courtyard, Long Way Home, Behind the Patrol and Second Landing held-input routes v3; other mission inputs unchanged",
+    "actual wins required; no progress seeding"
+  ],
+  "actions": [
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1358
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3908
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 108
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3908
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "ms": 500
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1583
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3967
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 2717
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 5600
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 4408
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3958
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1917
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 3908
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 2100
+    },
+    {
+      "type": "wait",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 58
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 117
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 1925
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 5992
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3908
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "ms": 500
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 3283
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3967
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 3958
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 2267
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3908
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 108
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 4075
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 675
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 1758
+    },
+    {
+      "type": "wait",
+      "ms": 2000
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 7308
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 5667
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 8333
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 2000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 8333
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 6667
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 2500
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 833
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 3333
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 3750
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 4750
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 833
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 2000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 10000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 10000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 9583
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 3333
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1250
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 5000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "ms": 6667
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 3842
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 4333
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "ms": 4417
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 6833
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 2083
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 9167
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 833
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 2917
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 5000
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 5000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "second-landing",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-61e4f1de00fbd453",
+      "name": "Second landing",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 15.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [
+        {
+          "x": 10,
+          "y": 12,
+          "w": 25,
+          "h": 3
+        },
+        {
+          "x": 50,
+          "y": 24,
+          "w": 8,
+          "h": 3
+        }
+      ],
+      "goal": {
+        "coverage": 0.65
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [
+          {
+            "id": "extra-life",
+            "kind": "extra-life",
+            "x": 22.5,
+            "y": 12.5
+          }
+        ],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 8.5,
+          "y": 25.5,
+          "vx": 7.81352993211135,
+          "vy": 7.81352993211135,
+          "course": "field-course.v2"
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 60.5,
+          "y": 8.5,
+          "vx": -7.81352993211135,
+          "vy": 7.81352993211135,
+          "course": "field-course.v2"
+        },
+        {
+          "id": "outer",
+          "type": "border-patrol",
+          "speed": 8.16,
+          "clockwise": true,
+          "x": 71.5,
+          "y": 13.5
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 15.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  }
+}

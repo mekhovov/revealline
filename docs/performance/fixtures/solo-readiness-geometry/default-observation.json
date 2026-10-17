@@ -1,0 +1,253 @@
+{
+  "format": "SoloReadinessDefaultModelV1",
+  "sourceCommit": "0c4129cfed34eb38b941f007a8f472b995e32257",
+  "sourcePath": "scripts/solo-qualification-readiness.mjs",
+  "sourceBytes": 46314,
+  "sourceSHA256": "afb5e762ae979f85ec4a5f63e93230360ad378d87bc3f35ed8c1ce943e5a82be",
+  "scope": "Exact direct default collector output with throwing layout getters. Modeled data only, not browser evidence.",
+  "outputs": {
+    "first-running-v1": {
+      "format": "SoloFirstRunningReadinessV1",
+      "protocol": "first-running-v1",
+      "capacity": 8,
+      "maximumBytes": 16384,
+      "dropped": 0,
+      "errors": 0,
+      "disposed": false,
+      "records": [
+        {
+          "kind": "start-click",
+          "atMs": 1,
+          "phase": "briefing",
+          "visible": true,
+          "focused": true,
+          "trusted": true,
+          "run": 1,
+          "tick": 0,
+          "prepared": true,
+          "displayedBoardValid": true,
+          "preparedRunMatches": true,
+          "submittedRunMatches": true,
+          "levelId": "first-return",
+          "cadence": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 11.11111111111111,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          }
+        },
+        {
+          "kind": "first-running",
+          "atMs": 2,
+          "phase": "running",
+          "visible": true,
+          "focused": true,
+          "trusted": null,
+          "run": 1,
+          "tick": 0,
+          "prepared": true,
+          "displayedBoardValid": true,
+          "preparedRunMatches": true,
+          "submittedRunMatches": true,
+          "levelId": "first-return",
+          "cadence": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 11.11111111111111,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          }
+        },
+        {
+          "kind": "after-running",
+          "atMs": 3,
+          "phase": "paused",
+          "visible": true,
+          "focused": true,
+          "trusted": null,
+          "run": 1,
+          "tick": 0,
+          "prepared": true,
+          "displayedBoardValid": true,
+          "preparedRunMatches": true,
+          "submittedRunMatches": true,
+          "levelId": "first-return",
+          "cadence": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 11.11111111111111,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          }
+        }
+      ],
+      "scope": "Passive public-click/phase boundary snapshots; not proof of physical display completion."
+    },
+    "warm-resume-v1": {
+      "format": "SoloFirstRunningReadinessV1",
+      "protocol": "warm-resume-v1",
+      "capacity": 8,
+      "maximumBytes": 16384,
+      "dropped": 0,
+      "errors": 0,
+      "disposed": false,
+      "records": [
+        {
+          "kind": "start-click",
+          "atMs": 1,
+          "phase": "briefing",
+          "visible": true,
+          "focused": true,
+          "trusted": true,
+          "run": 1,
+          "tick": 0,
+          "prepared": true,
+          "displayedBoardValid": true,
+          "preparedRunMatches": true,
+          "submittedRunMatches": true,
+          "levelId": "first-return",
+          "cadence": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 11.11111111111111,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          }
+        },
+        {
+          "kind": "first-running",
+          "atMs": 2,
+          "phase": "running",
+          "visible": true,
+          "focused": true,
+          "trusted": null,
+          "run": 1,
+          "tick": 0,
+          "prepared": true,
+          "displayedBoardValid": true,
+          "preparedRunMatches": true,
+          "submittedRunMatches": true,
+          "levelId": "first-return",
+          "cadence": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 11.11111111111111,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          }
+        },
+        {
+          "kind": "after-running",
+          "atMs": 3,
+          "phase": "paused",
+          "visible": true,
+          "focused": true,
+          "trusted": null,
+          "run": 1,
+          "tick": 0,
+          "prepared": true,
+          "displayedBoardValid": true,
+          "preparedRunMatches": true,
+          "submittedRunMatches": true,
+          "levelId": "first-return",
+          "cadence": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 11.11111111111111,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          }
+        }
+      ],
+      "scope": "Passive public-click/phase boundary snapshots; not proof of physical display completion."
+    },
+    "saved-resume-v1": {
+      "format": "SoloFirstRunningReadinessV1",
+      "protocol": "saved-resume-v1",
+      "capacity": 8,
+      "maximumBytes": 16384,
+      "dropped": 0,
+      "errors": 0,
+      "disposed": false,
+      "records": [
+        {
+          "kind": "start-click",
+          "atMs": 1,
+          "phase": "briefing",
+          "visible": true,
+          "focused": true,
+          "trusted": true,
+          "run": 1,
+          "tick": 0,
+          "prepared": true,
+          "displayedBoardValid": true,
+          "preparedRunMatches": true,
+          "submittedRunMatches": true,
+          "levelId": "first-return",
+          "cadence": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 11.11111111111111,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          }
+        },
+        {
+          "kind": "first-running",
+          "atMs": 2,
+          "phase": "running",
+          "visible": true,
+          "focused": true,
+          "trusted": null,
+          "run": 1,
+          "tick": 0,
+          "prepared": true,
+          "displayedBoardValid": true,
+          "preparedRunMatches": true,
+          "submittedRunMatches": true,
+          "levelId": "first-return",
+          "cadence": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 11.11111111111111,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          }
+        },
+        {
+          "kind": "after-running",
+          "atMs": 3,
+          "phase": "paused",
+          "visible": true,
+          "focused": true,
+          "trusted": null,
+          "run": 1,
+          "tick": 0,
+          "prepared": true,
+          "displayedBoardValid": true,
+          "preparedRunMatches": true,
+          "submittedRunMatches": true,
+          "levelId": "first-return",
+          "cadence": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 11.11111111111111,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          }
+        }
+      ],
+      "scope": "Passive public-click/phase boundary snapshots; not proof of physical display completion."
+    }
+  }
+}

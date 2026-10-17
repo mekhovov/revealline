@@ -14,6 +14,22 @@ import {
   TEAM_SPATIAL_PROFILE_KEY,
 } from '../content-design/team-spatial-originals.mjs';
 
+// Preserve strict object identity without formatting the cyclic fake DOM on failure.
+function assertSameReference(actual, expected, message = 'Expected the same owned object.') {
+  if (Object.is(actual, expected)) return;
+  const describe = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    return (
+      [value.tagName, value.id, value.sha256]
+        .filter((part) => typeof part === 'string' && part.length > 0)
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.fail(`${message} Actual: ${describe(actual)}; expected: ${describe(expected)}.`);
+}
+
 const base = 'http://localhost/game/couch/relay-rescue.html';
 const source = createTeamImpactOriginalCandidates();
 const originals = new Map(
@@ -109,7 +125,7 @@ test('a current Team win retains only its exact accepted Team original', async (
   assert.match(f.$('team-journey-pictures').textContent, new RegExp(mission.name, 'i'));
   assert.doesNotMatch(f.$('team-journey-pictures').textContent, /earned Solo|earned Versus/);
   f.$('team-journey-pictures').querySelector('header').querySelector('button').click();
-  assert.equal(f.doc.activeElement, f.$('coop-journey-pictures'));
+  assertSameReference(f.doc.activeElement, f.$('coop-journey-pictures'));
 });
 
 test('queryless Team offers all twelve original missions across five campaigns and starts directly', async (t) => {
@@ -221,7 +237,7 @@ test('catalogue switching keeps origin but clears legacy return tokens and requi
   assert.deepEqual(f.visits, []);
   enter(f, 'coop-discard-stay');
   assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
-  assert.equal(f.doc.activeElement, f.$('coop-catalogue'));
+  assertSameReference(f.doc.activeElement, f.$('coop-catalogue'));
   enter(f, 'coop-catalogue');
   enter(f, 'coop-discard-confirm');
   assert.deepEqual(f.visits, [base + '?journey=legacy&return=solo']);

@@ -69,9 +69,17 @@ test('cancelled late decoder cannot attach to the next look and is disposed', as
   const first = pool.acquire(model.entries[0]);
   await tick();
   first.release();
+  for (let i = 0; i < 20; i++) {
+    const retired = pool.acquire(model.entries[0]);
+    retired.release();
+    await retired.ready();
+  }
+  assert.equal(pool.snapshot().queued, 0, 'canceled queued work must not accumulate');
   const second = pool.acquire(model.entries[0]);
   await tick();
-  assert.equal(second.current().image.id, 'new');
+  assert.equal(pool.snapshot().reservedBytes, model.entries[0].width * model.entries[0].height * 4);
+  assert.equal(second.current(), null, 'A cancelled decoder retains its serial reservation.');
+  assert.equal(calls, 1);
   old.resolve({
     image: { id: 'old' },
     release() {
@@ -280,4 +288,53 @@ test('all seven actual runtime PNGs use their own verified transport before deco
     /hash differs/,
   );
   assert.equal(decodes, 7, 'A false runtime identity must refuse before decode');
+});
+
+test('optional readiness deadline settles while a timed-out native decode retains its reservation', async (t) => {
+  const originalSet = globalThis.setTimeout,
+    originalClear = globalThis.clearTimeout;
+  const timers = new Set();
+  globalThis.setTimeout = (callback, delay, ...args) => {
+    if (delay !== 15000) return originalSet(callback, delay, ...args);
+    const timer = { callback };
+    timers.add(timer);
+    return timer;
+  };
+  globalThis.clearTimeout = (timer) => timers.delete(timer) || originalClear(timer);
+  t.after(() => {
+    globalThis.setTimeout = originalSet;
+    globalThis.clearTimeout = originalClear;
+  });
+  const decoding = deferred();
+  let calls = 0,
+    released = 0;
+  const pool = createEnemyImagePool({
+    load: () => {
+      calls++;
+      return calls === 1 ? decoding.promise : Promise.resolve({ image: {}, release() {} });
+    },
+  });
+  const first = pool.acquire(model.entries[0]);
+  await tick();
+  [...timers][0].callback();
+  await first.ready();
+  assert.ok(first.error(), 'the caller receives a bounded fallback result');
+  assert.equal(pool.snapshot().active, 1, 'timeout is not native decoder completion');
+  assert.ok(pool.snapshot().reservedBytes > 0);
+  first.release();
+  const second = pool.acquire(model.entries[0]);
+  await tick();
+  assert.equal(calls, 1);
+  decoding.resolve({
+    image: {},
+    release() {
+      released++;
+    },
+  });
+  await second.ready();
+  await tick();
+  assert.equal(calls, 2);
+  assert.equal(released, 1, 'late retired image is disposed');
+  assert.equal(pool.snapshot().reservedBytes, 0);
+  second.release();
 });

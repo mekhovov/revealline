@@ -788,6 +788,8 @@ export async function fetchOnlineSoundtrackCatalogue({
   signal,
   sourceAuthority = MAIN_AUTHORITY,
   url = SOURCE_AUTHORITIES.get(sourceAuthority)?.url,
+  preparation = null,
+  onResolved = () => {},
 } = {}) {
   const state = sourceState(sourceAuthority);
   catalogueRequired(
@@ -796,82 +798,99 @@ export async function fetchOnlineSoundtrackCatalogue({
     'Online soundtracks require the project catalogue URL.',
   );
   throwIfSoundtrackAborted(signal);
-  const response = await request(url, {
-    signal,
-    redirect: 'error',
-    credentials: 'omit',
-    mode: 'cors',
-    cache: 'no-store',
-  });
-  catalogueRequired(
-    response?.status === 200 && !response.redirected && response.url === url,
-    'directResponseRequired',
-    'Online soundtrack catalogue needs a direct HTTP 200 response.',
-  );
-  const length = response.headers.get('content-length');
-  catalogueRequired(
-    length === null || (/^[0-9]+$/.test(length) && Number(length) <= MAX_BYTES),
-    'byteLimit',
-    'Online soundtrack catalogue exceeds its byte limit.',
-  );
-  const reader = response.body?.getReader?.();
-  catalogueRequired(
-    reader,
-    'responseUnreadable',
-    'Online soundtrack catalogue response cannot be read safely.',
-  );
-  const chunks = [];
-  let size = 0;
-  try {
-    while (true) {
-      throwIfSoundtrackAborted(signal);
-      const { done, value } = await reader.read();
-      if (done) break;
-      catalogueRequired(
-        value instanceof Uint8Array,
+  const read = async () => {
+    throwIfSoundtrackAborted(signal);
+    const response = await request(url, {
+      signal,
+      redirect: 'error',
+      credentials: 'omit',
+      mode: 'cors',
+      cache: 'no-store',
+    });
+    catalogueRequired(
+      response?.status === 200 && !response.redirected && response.url === url,
+      'directResponseRequired',
+      'Online soundtrack catalogue needs a direct HTTP 200 response.',
+    );
+    const length = response.headers.get('content-length');
+    catalogueRequired(
+      length === null || (/^[0-9]+$/.test(length) && Number(length) <= MAX_BYTES),
+      'byteLimit',
+      'Online soundtrack catalogue exceeds its byte limit.',
+    );
+    const reader = response.body?.getReader?.();
+    catalogueRequired(
+      reader,
+      'responseUnreadable',
+      'Online soundtrack catalogue response cannot be read safely.',
+    );
+    const chunks = [];
+    let size = 0;
+    try {
+      while (true) {
+        throwIfSoundtrackAborted(signal);
+        const { done, value } = await reader.read();
+        if (done) break;
+        catalogueRequired(
+          value instanceof Uint8Array,
+          'responseInvalid',
+          'Online soundtrack catalogue response is invalid.',
+        );
+        size += value.byteLength;
+        if (size > MAX_BYTES) {
+          try {
+            await reader.cancel('Online soundtrack catalogue exceeds its byte limit.');
+          } catch {
+            // The byte limit remains authoritative even if cancellation is unavailable.
+          }
+          throw catalogueFailure(
+            'byteLimit',
+            'Online soundtrack catalogue exceeds its byte limit.',
+          );
+        }
+        chunks.push(value);
+      }
+    } finally {
+      reader.releaseLock?.();
+    }
+    throwIfSoundtrackAborted(signal);
+    return { chunks, size };
+  };
+  // Release the network slot before waiting for a safe main-thread phase.
+  const { chunks, size } = preparation
+    ? await preparation.run('fetch', read, { signal })
+    : await read();
+  const accept = () => {
+    throwIfSoundtrackAborted(signal);
+    sourceState(sourceAuthority);
+    const bytes = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    let source;
+    try {
+      source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    } catch (error) {
+      throw catalogueFailure(
         'responseInvalid',
         'Online soundtrack catalogue response is invalid.',
+        undefined,
+        error,
       );
-      size += value.byteLength;
-      if (size > MAX_BYTES) {
-        try {
-          await reader.cancel('Online soundtrack catalogue exceeds its byte limit.');
-        } catch {
-          // The byte limit remains authoritative even if the network cannot be cancelled cleanly.
-        }
-        throw catalogueFailure('byteLimit', 'Online soundtrack catalogue exceeds its byte limit.');
-      }
-      chunks.push(value);
     }
-  } finally {
-    reader.releaseLock?.();
-  }
-  throwIfSoundtrackAborted(signal);
-  const bytes = new Uint8Array(size);
-  let offset = 0;
-  for (const chunk of chunks) {
-    bytes.set(chunk, offset);
-    offset += chunk.byteLength;
-  }
-  let source;
-  try {
-    source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
-  } catch (error) {
-    throw catalogueFailure(
-      'responseInvalid',
-      'Online soundtrack catalogue response is invalid.',
-      undefined,
-      error,
+    const catalogue = resolveOnlineSoundtrackCatalogue(source, { sourceAuthority });
+    state.members = new Map(
+      catalogue.tracks.map((entry) => [entry.sha256, TRACK_AUTHORITIES.get(entry).identity]),
     );
-  }
-  throwIfSoundtrackAborted(signal);
-  sourceState(sourceAuthority);
-  const catalogue = resolveOnlineSoundtrackCatalogue(source, { sourceAuthority });
-  state.members = new Map(
-    catalogue.tracks.map((entry) => [entry.sha256, TRACK_AUTHORITIES.get(entry).identity]),
-  );
-  for (const entry of catalogue.tracks) TRACK_AUTHORITIES.get(entry).fetched = true;
-  return catalogue;
+    for (const entry of catalogue.tracks) TRACK_AUTHORITIES.get(entry).fetched = true;
+    // Authority adoption and synchronous subscribers share this admitted turn.
+    // Deferring publication separately could invalidate an active older playlist.
+    onResolved(catalogue);
+    return catalogue;
+  };
+  return preparation ? preparation.run('main', accept, { signal }) : accept();
 }
 
 export async function fetchVerifiedOnlineSoundtrack(

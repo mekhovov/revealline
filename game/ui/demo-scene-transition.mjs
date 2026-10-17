@@ -48,6 +48,7 @@ export function createDemoSceneTransition(canvas, doc) {
       arriving = 0;
     },
     paint(seconds, reduced = false) {
+      if (departing === 1 && (loading || arriving === 1)) return;
       const dt = Math.max(0, Math.min(seconds, 0.1));
       departing = Math.min(1, departing + dt / (reduced ? 0.12 : 0.45));
       veil.style.opacity = String(1 - ease(departing));

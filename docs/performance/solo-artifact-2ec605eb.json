@@ -1,0 +1,127 @@
+{
+  "format": "SoloArtifact2ec605ebEvidenceV1",
+  "scope": "Verified development package; local-only preservation; native qualification pending",
+  "sourceRevision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
+  "sourceTree": "c4d176a8d5af6dfc0becc70e2a5a42a40ce5a367",
+  "workflowRun": 38963874667,
+  "artifactId": 12074887637,
+  "producerNode": "v22.13.1",
+  "producerPlatform": "Linux",
+  "focused": {
+    "completeFiles": 65,
+    "tests": 819,
+    "pass": 819,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "tap": {
+      "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/local-ci-acquisitions/ci-artifact-2ec605eb-38963874667/supporting/focused-tests.tap",
+      "bytes": 194774,
+      "sha256": "24e1a4b3a6cc8c2ec93c2afc50c76d2866c7be4a2c761e20b9dcbd2309bc9eeb"
+    }
+  },
+  "acquisition": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/local-ci-acquisitions/ci-artifact-2ec605eb-38963874667/acquisition.json",
+    "bytes": 15629,
+    "sha256": "1c995057a86af01b8ab604dff151c62b2f92edaf7c86284824e7b0170962b6d2"
+  },
+  "verification": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/local-successor-verifications/source-2ec605eb-run-38963874667-v4-attempt01/receipt.json",
+    "bytes": 20291,
+    "sha256": "8a3e3888a3e94be16b2062d229ae3b1fc7c5f82d7d873db9c1ff1124a8bbe097"
+  },
+  "finalization": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/local-successor-verifications/source-2ec605eb-run-38963874667-v4-attempt01/finalization.json",
+    "bytes": 1823,
+    "sha256": "9ba84c0d0e3fc6de6db71b641d4eed044addf769268b798675d0066ada226136"
+  },
+  "proofs": [
+    {
+      "path": "/Volumes/SoloPerf-RAM-successor-2ec605eb-local-v3/evidence/zip-members.json",
+      "bytes": 1052,
+      "sha256": "81742dd8c6f4ce8c78c0d1676877f9f5ae4e7ef45c31493d3e14668899c3f3c8"
+    },
+    {
+      "path": "/Volumes/SoloPerf-RAM-successor-2ec605eb-local-v3/evidence/source-verification.json",
+      "bytes": 31351,
+      "sha256": "45b2b50032900abd7a61e8497d54a604998d04161cf8a0c7c760e75d3cee50d6"
+    },
+    {
+      "path": "/Volumes/SoloPerf-RAM-successor-2ec605eb-local-v3/evidence/csp.json",
+      "bytes": 1175,
+      "sha256": "3961125bbe682e370d12f99b1d7dd873130a150bc81c873816736ce91bdf863e"
+    },
+    {
+      "path": "/Volumes/SoloPerf-RAM-successor-2ec605eb-local-v3/evidence/payload-readback.json",
+      "bytes": 640143,
+      "sha256": "524c5370a9ae048a597637cff29ceaee644eb1ddf4dc2f9ae770fe1ca542797c"
+    }
+  ],
+  "localPreservation": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/local-successor-verifications/source-2ec605eb-run-38963874667-v4-attempt01/preservation.json",
+    "bytes": 8261,
+    "sha256": "50cfbb0ceadf606b3a32c1f90a8f6108fb10fe592a55f6cc03c29848c46115c4"
+  },
+  "retirement": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/selected-inner-retirements/source-2ec605eb-v3-attempt01/receipt.json",
+    "bytes": 4327,
+    "sha256": "511fcc413e4b05320e9babc5fb38e372c143de5ac940fc79fec4149bce03f0bf"
+  },
+  "localChecks": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/final-source-checks-20261016T203956Z-2ec605eb/receipt.json",
+    "bytes": 5536,
+    "sha256": "4788132c3e0a545952b58557a5e65543e79441957bb67f05f332c0da73c3adb8"
+  },
+  "outer": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/local-ci-acquisitions/ci-artifact-2ec605eb-38963874667/artifact.zip",
+    "bytes": 1090917792,
+    "sha256": "22a0d121c0afe086392aaaec392af3d15c544b920c36d96422c84043259aa33f"
+  },
+  "recoverableInnerMember": {
+    "name": "distribution.zip",
+    "bytes": 1073304249,
+    "sha256": "7049aedea080d135bb83101861cf30e7ca350333a2e0bd8cf75b02003fb012e9",
+    "fullReadback": "passed"
+  },
+  "standaloneInnerArchivePresent": false,
+  "manifest": {
+    "files": 3501,
+    "payloadBytes": 1072187938,
+    "bytes": 520901,
+    "sha256": "64d8a4bc84d2869c87856935a6d65ca2897c693c8bc46908c1a90110e5e9422c"
+  },
+  "newRAMOwner": {
+    "identity": {
+      "DeviceNode": "/dev/disk5",
+      "DeviceIdentifier": "disk5",
+      "WholeDisk": true,
+      "TotalSize": 1879048192,
+      "VirtualOrPhysical": "Virtual",
+      "BusProtocol": "Disk Image",
+      "Internal": false,
+      "MountPoint": "/Volumes/SoloPerf-RAM-successor-2ec605eb-local-v3",
+      "VolumeName": "SoloPerf-RAM-successor-2ec605eb-local-v3",
+      "VolumeUUID": "1C3D3489-E386-374A-A874-18BA654116BD",
+      "FilesystemType": "hfs"
+    },
+    "statDevice": 16777238,
+    "layout": "1792MiB RAM payload/proofs only; selected ZIP stays on SSD",
+    "requiredBytes": 1626357020,
+    "freeAtAdmission": 1866395648,
+    "freeAfterVerification": 785162240
+  },
+  "retainedFailedAdmission": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/local-successor-verification-proposal-01/admission-2ec605eb-v3-attempt01.json",
+    "bytes": 2069,
+    "sha256": "8dc77d0f61e05b59a2e1ea8bc606bc34c95984592c8485952c45dcb4464abcda"
+  },
+  "currentExternalRevalidation": "unavailable-not-attempted",
+  "nativeQualification": "pending; local execution held by earlier unreaped browser/drive operations",
+  "limits": [
+    "No aggregate full-suite/release pass",
+    "No browser offline restart proof from static offline closure",
+    "No physical Safari/PWA/iPhone/Steam Deck/thermal proof",
+    "Earlier raster/offline failures retained",
+    "Eight exact baseline-identical formatting failures retained"
+  ]
+}

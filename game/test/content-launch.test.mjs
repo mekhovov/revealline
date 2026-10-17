@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { parseFragment } from 'parse5';
 import {
   PACK_CATALOG_VERSION,
   canAutoStartPackLaunch,
@@ -16,6 +17,8 @@ import { getLocale, setLocale } from '../i18n/index.mjs';
 const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const source = await json('../content/packs/catalog.json');
 const catalog = preparePackCatalog(source);
+const textContent = (node) =>
+  node.nodeName === '#text' ? node.value : (node.childNodes ?? []).map(textContent).join('');
 
 test('shipped pack catalog is a lightweight exact projection of every bundled pack', async () => {
   assert.equal(catalog.format, PACK_CATALOG_VERSION);
@@ -152,7 +155,9 @@ test('separate extras and game expose wired pack and level selectors with exact 
     const matching = cards.filter((card) => card.includes(`href="../game/?${encoded}"`));
     assert.equal(matching.length, 1, `${pack.name} must have one real first-mission launch card`);
     assert.equal(
-      matching[0].match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/)?.[1].trim(),
+      textContent(
+        parseFragment(matching[0].match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/)?.[1] ?? ''),
+      ).trim(),
       pack.name,
       'The original title is retained beside its translation marker.',
     );

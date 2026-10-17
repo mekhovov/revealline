@@ -1,0 +1,300 @@
+{
+  "format": "SoloPauseAttributionAndQualificationHoldV1",
+  "asOf": "2026-10-16T20:36:33.232348Z",
+  "artifactSourceRevision": "8c1af9d191224893bad9012f7638940a869d6096",
+  "status": "blocked-unqualified",
+  "performanceExcluded": true,
+  "observed": {
+    "scenarioStatus": "pass",
+    "observationCompletedAt": "2026-10-16T20:20:09.688Z",
+    "publicReplayExportBytes": 9024,
+    "cpuProfileComplete": true
+  },
+  "notQualified": [
+    "final strict native replay",
+    "browser cleanup",
+    "performance gates",
+    "WebKit pause attribution",
+    "physical device, GPU or power"
+  ],
+  "outer": {
+    "status": "orchestration-failed",
+    "failure": "AssertionError('Owned browser descendants survived bounded cleanup')",
+    "completedAt": "2026-10-16T20:27:38.920796Z",
+    "exitCode": 1,
+    "survivingOwnedPid": 91198,
+    "ambiguousFreshCrashpadPid": 91200
+  },
+  "profile": {
+    "startTimeUs": 63484910043,
+    "endTimeUs": 63522880018,
+    "wallSpanMs": 37969.975,
+    "sumTimeDeltasMs": 37969.86,
+    "samples": 30429,
+    "nodes": 4672,
+    "samplingIntervalUs": 1000,
+    "cpuThrottle": 3.48,
+    "actualBrowserVersion": "155.0.8059.85"
+  },
+  "method": "Each CDP timeDelta is assigned to its sampled node, cumulative delta timestamps are relative to profile.startTime; inclusive function weight sums only samples whose ancestry includes that exact call-tree node. Nested/recursive weights overlap and must not be added. These are sampling weights, not exclusive CPU or measured function durations.",
+  "pauseCallTreeNodes": [
+    {
+      "nodeId": 1904,
+      "samples": 1,
+      "inclusiveWeightedMs": 1.692,
+      "firstRelativeSeconds": 3.813234,
+      "lastRelativeSeconds": 3.813234,
+      "ancestorFunctions": ["openHome", "attachGameShell", "", "(root)"]
+    },
+    {
+      "nodeId": 4095,
+      "samples": 48,
+      "inclusiveWeightedMs": 51.257,
+      "firstRelativeSeconds": 36.907899,
+      "lastRelativeSeconds": 36.959184,
+      "ancestorFunctions": ["$.onclick", "(root)"]
+    },
+    {
+      "nodeId": 4227,
+      "samples": 22,
+      "inclusiveWeightedMs": 26.413,
+      "firstRelativeSeconds": 37.106605,
+      "lastRelativeSeconds": 37.131632,
+      "ancestorFunctions": ["openHome", "(root)"]
+    },
+    {
+      "nodeId": 4328,
+      "samples": 23,
+      "inclusiveWeightedMs": 31.579,
+      "firstRelativeSeconds": 37.275431,
+      "lastRelativeSeconds": 37.305329,
+      "ancestorFunctions": ["$.onclick", "click", "$.onclick", "(root)"]
+    },
+    {
+      "nodeId": 4423,
+      "samples": 22,
+      "inclusiveWeightedMs": 27.401,
+      "firstRelativeSeconds": 37.668591,
+      "lastRelativeSeconds": 37.695732,
+      "ancestorFunctions": ["openWorkshop", "$.onclick", "(root)"]
+    },
+    {
+      "nodeId": 4555,
+      "samples": 25,
+      "inclusiveWeightedMs": 32.604,
+      "firstRelativeSeconds": 37.853603,
+      "lastRelativeSeconds": 37.884864,
+      "ancestorFunctions": ["$.onclick", "(root)"]
+    }
+  ],
+  "firstLatePauseNested": [
+    {
+      "function": "persistAttempt",
+      "samples": 33,
+      "inclusiveWeightedMs": 30.774
+    },
+    {
+      "function": "snapshotAttempt",
+      "samples": 31,
+      "inclusiveWeightedMs": 27.699
+    },
+    {
+      "function": "exportReplay",
+      "samples": 11,
+      "inclusiveWeightedMs": 7.744
+    }
+  ],
+  "limits": [
+    "Chromium sampled main thread only; no WebKit, GPU, worker, power or physical-device attribution.",
+    "No exact shared ISO/CDP/performance.now clock anchor installed. Public action bounds and profile-relative samples cannot prove exact pause-boundary gap attribution.",
+    "Profile complete at20:20:09; observation report saved before browser.close and native replay. Outer timed out with surviving native owner. No final replay or cleanup pass.",
+    "Known pending metadata I/O and profiling overhead make this wholly performance-excluded. No numerical gate is qualified."
+  ],
+  "evidence": {
+    "analysis": {
+      "path": ".cache/solo-followup/pause-attribution-8c1-local-prospective-01/pause-attribution-analysis-01.json",
+      "bytes": 25906,
+      "sha256": "d73d5504902c02eeed93e327895229577a136fdc38f485ae1d1504863e4a1fd2"
+    },
+    "report": {
+      "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/pause-attribution-8c1-first30-attempt01/report.json",
+      "bytes": 580173,
+      "sha256": "e69edd3c99f27a19af431bff71a6be70a2f552a16f4245cad8244406230010b9"
+    },
+    "profile": {
+      "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/pause-attribution-8c1-first30-attempt01/report.json.cpuprofile",
+      "bytes": 1212408,
+      "sha256": "e5763fbdb080e163cb0ecd1ab799eaab19bf181991e4612dccc331c576c4421f"
+    },
+    "outer": {
+      "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/pause-attribution-8c1-first30-attempt01/orchestration/receipt.json",
+      "bytes": 27397,
+      "sha256": "568adf9bde44146a5493fca8f2f7b7e6dce227396277cb7a2a86bfdc28441f27"
+    },
+    "failedRunPreservation": {
+      "path": ".cache/solo-followup/local-ssd-diagnostic-evidence-8c1-01/pause-attempt01-failed-closure/receipt.json",
+      "bytes": 43727,
+      "sha256": "f28e81232b50e794d2060b1404796b8b216b23b5f34282f70a50a37ed79c7474"
+    },
+    "processSnapshot": {
+      "path": ".cache/solo-followup/pause-attribution-8c1-local-prospective-01/process-snapshot-02.json",
+      "bytes": 1422,
+      "sha256": "a94366efb348e64dcfb7a6b332ee31c782a996919f7f79eb7b9b9961410c5dbc"
+    },
+    "matrix": {
+      "path": ".cache/solo-followup/qualification-matrix-v16-bound/matrix.json",
+      "bytes": 481771,
+      "sha256": "ca01260b6ea7c77cf40dd5c9db0d65fa2d29e8fec08e8178700f6c69e68be2d9"
+    }
+  },
+  "preservation": {
+    "status": "stable-files-copied-readback-verified-not-clean-closure",
+    "files": 57,
+    "bytes": 3147443,
+    "completedAt": "2026-10-16T20:29:24.343629Z",
+    "destination": ".cache/solo-followup/local-ssd-diagnostic-evidence-8c1-01/pause-attempt01-failed-closure",
+    "scratchDeleted": false,
+    "externalDurabilityClaim": false
+  },
+  "matrixInventory": {
+    "originalCommands": 57,
+    "originalNativeObservations": 76,
+    "closedOriginalCommands": 39,
+    "closedStages": ["01-first30", "02-sentry", "03-long-rail-ready", "04-demo-active"],
+    "completedFirst30ContaminationReplacement": 1,
+    "remainingOriginalCommands": 18,
+    "remainingOriginalRequired": 16,
+    "remainingOriginalOptional": 2,
+    "remainingOriginalNativeObservations": 37,
+    "approvedUnexecutedDemoContaminationReplacements": 2,
+    "remainingOnlineCommandsIncludingReplacements": 20,
+    "remainingOnlineObservationsIncludingReplacements": 39,
+    "remainingJobs": [
+      {
+        "id": "v16-sustained-final-chrome-thirty-minute-soak-p1-candidate",
+        "stage": "05-sustained",
+        "performanceExclusion": false,
+        "deadlineSeconds": 2640.0
+      },
+      {
+        "id": "v16-core-chrome-chrome-ten-next-p1-candidate",
+        "stage": "06-ten-next",
+        "performanceExclusion": false,
+        "deadlineSeconds": 1440.0
+      },
+      {
+        "id": "v16-core-chrome-chrome-ten-next-p1-baseline",
+        "stage": "06-ten-next",
+        "performanceExclusion": false,
+        "deadlineSeconds": 1440.0
+      },
+      {
+        "id": "v16-core-chrome-chrome-ten-next-p2-baseline",
+        "stage": "06-ten-next",
+        "performanceExclusion": false,
+        "deadlineSeconds": 1440.0
+      },
+      {
+        "id": "v16-core-chrome-chrome-ten-next-p2-candidate",
+        "stage": "06-ten-next",
+        "performanceExclusion": false,
+        "deadlineSeconds": 1440.0
+      },
+      {
+        "id": "v16-core-chrome-chrome-ten-next-p3-candidate",
+        "stage": "06-ten-next",
+        "performanceExclusion": false,
+        "deadlineSeconds": 1440.0
+      },
+      {
+        "id": "v16-core-chrome-chrome-ten-next-p3-baseline",
+        "stage": "06-ten-next",
+        "performanceExclusion": false,
+        "deadlineSeconds": 1440.0
+      },
+      {
+        "id": "v16-audio-identity-chrome-recorded-speech-p1-baseline",
+        "stage": "07-audio-memory-recovery",
+        "performanceExclusion": true,
+        "deadlineSeconds": 540.0
+      },
+      {
+        "id": "v16-audio-identity-chrome-recorded-music-p1-baseline",
+        "stage": "07-audio-memory-recovery",
+        "performanceExclusion": true,
+        "deadlineSeconds": 600.0
+      },
+      {
+        "id": "v16-memory-plateau-chrome-twenty-retries-p1-baseline",
+        "stage": "07-audio-memory-recovery",
+        "performanceExclusion": true,
+        "deadlineSeconds": 1140.0
+      },
+      {
+        "id": "v16-audio-identity-chrome-recorded-speech-p1-candidate",
+        "stage": "07-audio-memory-recovery",
+        "performanceExclusion": true,
+        "deadlineSeconds": 540.0
+      },
+      {
+        "id": "v16-audio-identity-chrome-recorded-music-p1-candidate",
+        "stage": "07-audio-memory-recovery",
+        "performanceExclusion": true,
+        "deadlineSeconds": 600.0
+      },
+      {
+        "id": "v16-memory-plateau-chrome-twenty-retries-p1-candidate",
+        "stage": "07-audio-memory-recovery",
+        "performanceExclusion": true,
+        "deadlineSeconds": 1140.0
+      },
+      {
+        "id": "v16-recovery-final-chrome-recovery-p1-candidate",
+        "stage": "07-audio-memory-recovery",
+        "performanceExclusion": true,
+        "deadlineSeconds": 420.0
+      },
+      {
+        "id": "v16-recovery-final-webkit-desktop-recovery-p1-candidate",
+        "stage": "07-audio-memory-recovery",
+        "performanceExclusion": true,
+        "deadlineSeconds": 420.0
+      },
+      {
+        "id": "v16-diagnostics-chrome-ten-pairs-candidate",
+        "stage": "08-diagnostics",
+        "performanceExclusion": false,
+        "deadlineSeconds": 1800
+      },
+      {
+        "id": "v16-extension-webkit-audio-webkit-portrait-recorded-speech-p1-candidate",
+        "stage": "09-optional-webkit-audio",
+        "performanceExclusion": true,
+        "deadlineSeconds": 540.0
+      },
+      {
+        "id": "v16-extension-webkit-audio-webkit-portrait-recorded-music-p1-candidate",
+        "stage": "09-optional-webkit-audio",
+        "performanceExclusion": true,
+        "deadlineSeconds": 600.0
+      }
+    ],
+    "demoReplacementPlan": {
+      "path": ".cache/solo-followup/qualification-v16-stage04-analysis-01/replacement-plan-v1.json",
+      "bytes": 19323,
+      "sha256": "b1ab3e011611c80be156e600c145ae5ffc8ece16736a3c0a8639d0e5840deaa3"
+    },
+    "localExcludedStage07Plan": {
+      "path": ".cache/solo-followup/excluded-stage07-local-authority-plan01/plan.json",
+      "bytes": 97178,
+      "sha256": "2f1ad22199dcb645c058ceeb7d81794079299e3cabad3f6b0796d768ac5b670c"
+    },
+    "localExcludedStage07Status": "8 separately identified jobs unexecuted; no original row credit"
+  },
+  "blockers": [
+    "Owned Chrome process 91198 survived bounded cleanup; native lane held.",
+    "Earlier owned metadata helpers 79719 and 80510 remain in OS I/O wait; external share is not accessed.",
+    "Original online guard requires live external authority; diagnostic local guard does not confer timing eligibility."
+  ],
+  "noFullPlanPass": true
+}

@@ -11,6 +11,7 @@ import {
 import { unlockedBodies } from '../progress.mjs';
 import { preparePack, scenarioFromPack } from '../packs.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 const themes = JSON.parse(
   readFileSync(new URL('../content/themes.json', import.meta.url), 'utf8'),
 ).themes;
@@ -156,6 +157,12 @@ test('class appearance references accept future IDs and old themes, but reject u
   );
 });
 test('class appearance maps survive pack preparation and scenario resolution as presentation only', async () => {
+  const decodeImage = async (dataUrl) => {
+    const image = new RasterImage();
+    image.src = dataUrl;
+    await image.decode();
+    return image;
+  };
   const pack = JSON.parse(
     readFileSync(new URL('../content/packs/night-shift.json', import.meta.url), 'utf8'),
   );
@@ -163,7 +170,7 @@ test('class appearance maps survive pack preparation and scenario resolution as 
     classId = pack.classRecipes[0].id;
   theme.classBodies = { [classId]: 'scout-quad' };
   const before = structuredClone(pack),
-    prepared = await preparePack(pack);
+    prepared = await preparePack(pack, { decodeImage });
   const scenario = scenarioFromPack(
     prepared.pack,
     pack.campaigns[0].id,

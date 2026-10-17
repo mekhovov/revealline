@@ -1,0 +1,35 @@
+# Selected-font V4: observe the original requested faces
+
+This source-reviewed diagnostic addresses missing evidence in the failed WebKit selected-font row. The observer is applied locally; the separate one-row release is proposed and has not run. It changes no game runtime, public actions, replay requirement, deadline or numerical gate. It does not establish an application font defect or a native fix.
+
+## Retained failure and exact engine source
+
+[Run 39049194995](https://github.com/mekhovov/revealline/actions/runs/39049194995), WebKit artifact 12107311023, used runtime `e1cc5dd7656bab349715cd1c3ce6e9f783508c17` and tools `239c574ecddd5bb6d5896e621d9edc53e7f6a313`. Its post-command Escape was trusted and default-prevented, with the run still at tick zero in briefing. The prior assertion rejected two matching faces whose public statuses were `unloaded` and `error`. It did not observe their original promises or identify the faces returned by the application's request. The font hold had not exhausted its original 60-second budget; abort/disposal followed the failure. Browser and transport timestamps use different clocks.
+
+The unchanged raw report is 185,532 bytes, SHA-256 `5d3e97ee6feb250a88e6aebaad0e49a6ae5a5c042fa359365a1054908a8300b3`. It remains in the retained ZIP under `.cache/solo-followup/final-native-239c/readiness/12107311023/`; the adjacent `webkit-font-source-timeline.json` records the bounded analysis. The old row remains failed.
+
+The retained Playwright 1.62.1/WebKit 2336 registry pins upstream `343e13bf22dca9d0ec227801419aab0f9001a32f`. At that exact revision, internal `TimedOut` becomes public `error` without rejecting `FontFace.loaded`; `font-display: swap` has a zero block period and unlimited swap period. Font matching also need not request every equivalent face. Therefore “every matching face is loading” is not a valid cross-browser witness that the application's requested font is pending. These are engine-source findings, not proof that this particular native request succeeded. See [FontFace.cpp](https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/css/FontFace.cpp#L311), [CSSFontFace.cpp](https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/css/CSSFontFace.cpp#L541) and [CSSFontFaceSet.cpp](https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/css/CSSFontFaceSet.cpp#L461).
+
+Exact downloaded sources, registry/configuration and patch inspection are retained in `.cache/solo-followup/webkit-font-status-audit/primary-source-receipt.json`. Candidate e1cc loads the font sheet directly and through the selected theme. That supports a duplicate-declaration hypothesis; neither the old row nor V4 claims a public FontFace object can be assigned to a particular CSS rule.
+
+## Narrow observation and release
+
+The explicit `selected-font-request-settlement-v4` protocol installs before selection, assigns stable object IDs, and subscribes to the original matching faces' `loaded` promises. It observes the application's exact existing display-font `FontFaceSet.load` call once, with the same receiver and arguments, and returns the identical Promise. It adds no font request, `load()` call, global `fonts.ready`, browser context, frame callback or runtime workaround.
+
+Three paused boundaries retain status and settlement independently: before selection, after the existing awaited native Cancel, and after the original held response release. The requested call must remain unsettled through Cancel and then fulfill, with its returned faces enrolled before Cancel and fulfilled afterward. Unmatched unloaded faces are retained separately; rejection, unresolved work, missing exact demand, late enrollment or invalid ownership fails the diagnostic. Source attribution binds the exact e1cc stylesheet and theme-host hashes plus the original font bytes; CSS rule evidence remains separate from face identity.
+
+Native setup/readback operations have two-second limits within one fixed 60-second observation deadline and two-second cleanup reserve. Invalid/backward clocks, late delivery and unsettled native work cannot authorize Start. Disposal restores only the observer's own wrapper before the later explicit Start. The existing browser owner retains final cleanup responsibility.
+
+The proposed [declaration](solo-selected-font-settlement-e1cc-plan.json) admits one WebKit row on the verified e1cc package: producer 39037874955, artifact 12104590541. Source-only baseline 8b has no payload or observation row. Full payload/source/CSP verification remains mandatory remotely. The four-term PR1544/same-repository/synchronize/before-`bab3b2790944c6257f9c1f9b346839996bbefebb` guard permits one reviewed push edge. There is no manual trigger or automatic retry. Both browser engines are installed for the unchanged common-runner inventory; only WebKit executes this row.
+
+The original V3 public actions, 240,000 ms scenario timeout, 120-moving-tick minimum, full replay definition and native replay gates are unchanged. The 130-minute job, 78-minute bounded runner step, evidence caps and owner limits are unchanged. Numerical failures or inconclusive observations remain failed/inconclusive independently of correctness; ordinary timing and physical qualification remain excluded/unobserved. This diagnostic does not rerun the now-observed optional-audio404 case.
+
+## Source-bound controls and history
+
+The existing 341-input isolated checkout passed ten complete files: **129 passed, four intentional platform skips, zero failures**, in 5.37 seconds. It includes the actual serialized collector/owner, standalone adapter CLI, actual qualifier report-field construction, independent assessment, binary hitch-journal readback, source verifier and owner controls. All 48 runtime references and all source bytes remained stable. Formatting and scoped lint passed.
+
+The two review corrections strengthen only tests: the historical workflow-mutation negative now supplies the unchanged exact declaration bytes, and fixture comparison checks present `replayRequirements`, `expectedReplayDefinition` and `timeoutMs` instead of two absent properties. No fixture behavior changed.
+
+The executed optional-audio V4 declaration/workflow remain byte-identical. Its four evolving helper references resolve only through the six-record [bab3 Git witness](fixtures/solo-optional-start-audio/bab3-execution-source.json), independently checked against exact Git blob IDs, lengths, SHA-256 and tree. Other historical references remain strict. No historical failure or outcome is replaced.
+
+Final confined evidence is `.cache/solo-followup/webkit-font-status-audit/release/confined-v1.json` and `confined-v1.tap`; the 39,519-byte TAP has SHA-256 `1f9d0e4411ef35d0e64c9a99c48ed99894ac4da2e9589de6c4ab099feed0a35e`. Earlier red outputs and the prior 52/52 observer receipt remain retained. The release packet and exact preapplied/proposed file inventories are in that cache directory. No native execution was performed for this packet.

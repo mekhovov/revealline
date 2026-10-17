@@ -1,5 +1,6 @@
 import test from 'node:test';
 import { Element as DOMElement } from './helpers/couch-dom.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 import assert from 'node:assert/strict';
 import { requestControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
 import { readFile } from 'node:fs/promises';
@@ -141,6 +142,7 @@ test('practice page keeps virtual holds, releases and import failures isolated f
   const globals = {
     window: host,
     document: doc,
+    Image: RasterImage,
     sessionStorage: {
       setItem(key, value) {
         if (storageFailure) throw new Error('Storage unavailable');

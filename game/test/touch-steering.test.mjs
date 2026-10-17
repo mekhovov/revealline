@@ -6,7 +6,9 @@ import { emptyLibrary, exportLibrary, importLibrary, updatePreferences } from '.
 
 class Surface extends EventTarget {
   captures = new Set();
+  layoutReads = 0;
   getBoundingClientRect() {
+    this.layoutReads++;
     return { left: 0, top: 0, width: 156, height: 156 };
   }
   setPointerCapture(id) {
@@ -85,6 +87,7 @@ for (const mode of ['stick', 'swipe', 'dpad']) {
     f.win.pointer('pointercancel', 200, 78, 11);
     if (mode !== 'dpad') target.pointer('pointermove', 78, 115, 22);
     assert.deepEqual(f.commands, ['right', 'down']);
+    assert.equal(target.layoutReads, mode === 'dpad' ? 2 : 0);
     assert.deepEqual(f.releases, [11], 'An old pointer cannot retire the new owner.');
   });
 

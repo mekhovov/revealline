@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { createCouchInstalledChapters } from '../couch/couch-installed-chapters.mjs';
@@ -829,7 +853,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   page.$('race-setup-back').click();
   page.frame();
   const binding = page.drawOptions[0].backdrop;
-  assert.equal(binding, page.drawOptions[1].backdrop);
+  boundedIdentity(binding, page.drawOptions[1].backdrop);
   assert.equal(sha(binding.image.bytes), binding.pin.sha256);
   assert.equal(page.$('race-canvas-0').width, 1152);
   assert.equal(page.$('race-canvas-0').height, 576);
@@ -850,10 +874,10 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   page.frames(3);
   page.$('race-options-back').click();
   assert.deepEqual(page.checkpoint(), held);
-  assert.equal(page.drawOptions[0].backdrop, binding);
+  boundedIdentity(page.drawOptions[0].backdrop, binding);
   await action(page.$('race-start'));
   page.frame();
-  assert.equal(page.drawOptions[1].backdrop, binding);
+  boundedIdentity(page.drawOptions[1].backdrop, binding);
   page.$('race-pause').click();
   page.$('race-focus').click();
   page.$('race-confirm-reset').click();
@@ -865,7 +889,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   blurWhenDisabled(refresh);
   refresh.focus();
   await action(refresh);
-  assert.equal(page.doc.activeElement, refresh);
+  boundedIdentity(page.doc.activeElement, refresh);
   assert.equal(page.$('race-start').disabled, false);
   // A real replacement decode is left pending. Back must cancel it while the
   // previously accepted boards remain playable; Retry may still re-check that
@@ -882,8 +906,8 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   await settle(() => finish, 'pending map original was not read');
   assert.equal(page.$('race-preparation').dataset.state, 'busy');
   assert.equal(page.$('race-preparation').dataset.stage, 'decoding');
-  assert.equal(page.$('race-preparation').closest('[hidden]'), null);
-  assert.equal(page.$('race-preparation').closest('[inert]'), null);
+  boundedIdentity(page.$('race-preparation').closest('[hidden]'), null);
+  boundedIdentity(page.$('race-preparation').closest('[inert]'), null);
   assert.equal(page.$('race-setup-back').disabled, false);
   page.$('race-setup-back').click();
   assert.equal(page.$('race-start').disabled, false);
@@ -897,7 +921,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   retry.focus();
   await action(retry);
   assert.equal(page.$('race-start').disabled, false);
-  assert.equal(page.doc.activeElement, page.$('race-start'));
+  boundedIdentity(page.doc.activeElement, page.$('race-start'));
   page.frame();
   assert.equal(page.renders[0].tick, 0);
   page.$('race-focus').click();
@@ -915,7 +939,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   finish();
   f.model.onDecode = null;
   await movedRefresh;
-  assert.equal(
+  boundedIdentity(
     page.doc.activeElement,
     page.$('race-time'),
     'async refresh respects navigation to another visible control',
@@ -935,7 +959,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   await cancelledRefresh;
   finish();
   f.model.onDecode = null;
-  assert.equal(page.doc.activeElement, backFocus, 'late refresh cannot steal Back focus');
+  boundedIdentity(page.doc.activeElement, backFocus, 'late refresh cannot steal Back focus');
   assert.equal(page.$('race-start').disabled, true);
   assert.doesNotMatch(page.$('race-installed-status').textContent, /Checking installed/);
   await action(retry);

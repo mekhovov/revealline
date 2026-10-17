@@ -1,0 +1,8 @@
+{
+  "format": "SoloHistoricalOfflineOwnerSourceV1",
+  "run": 38995660465,
+  "sourceRevision": "1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f",
+  "path": "scripts/run-solo-remote-correctness.mjs",
+  "bytes": 52211,
+  "sha256": "42750c0bb862b5ca28dfb8394b6381694418b0ed9240a70f006652fcfde28235"
+}

@@ -181,3 +181,89 @@ test('an existing mission tile refreshes its exact image without replacing the f
   assert.equal(doc.activeElement, mission);
   gallery.destroy();
 });
+
+test('inactive mission lists do not start optional media reads, acquisitions or rendering', async (t) => {
+  const f = await earnedPictureFixture();
+  t.after(() => f.manager.close());
+  const target = button();
+  const thumbnails = createMissionPictureThumbnails({
+    isActive: () => false,
+    readMedia: () => assert.fail('A closed list cannot read optional media.'),
+    acquire: () => assert.fail('A closed list cannot acquire an earned image.'),
+    render: () => assert.fail('A closed list cannot render an earned image.'),
+    onUpdate: () => assert.fail('A closed list cannot synchronize its gallery.'),
+  });
+  await thumbnails.refresh(argumentsFor(f, target));
+  assert.equal(target.dataset.missionArtwork, undefined);
+  thumbnails.close();
+});
+
+test('closing during an owned read prevents acquisition and reopening admits fresh earned art', async (t) => {
+  const f = await earnedPictureFixture();
+  t.after(() => f.manager.close());
+  let active = true;
+  let acquisitions = 0;
+  let renders = 0;
+  let releases = 0;
+  const gate = deferred();
+  const target = button();
+  const thumbnails = createMissionPictureThumbnails({
+    isActive: () => active,
+    readMedia: () => gate.promise,
+    acquire: async () => {
+      acquisitions++;
+      return { picture: {}, release: () => releases++ };
+    },
+    render: () => {
+      renders++;
+      return image;
+    },
+  });
+  const pending = thumbnails.refresh(argumentsFor(f, target));
+  active = false;
+  gate.resolve({ metadata: f.metadata, store: f.store });
+  await pending;
+  assert.equal(acquisitions, 0);
+  assert.equal(renders, 0);
+  assert.equal(target.dataset.pictureState, 'unavailable');
+  active = true;
+  await thumbnails.refresh(argumentsFor(f, target));
+  assert.equal(acquisitions, 1);
+  assert.equal(renders, 1);
+  assert.equal(releases, 1);
+  assert.equal(target.dataset.pictureState, 'earned');
+  thumbnails.close();
+});
+
+test('Resume during acquisition releases the late lease once without rendering or hidden updates', async (t) => {
+  const f = await earnedPictureFixture();
+  t.after(() => f.manager.close());
+  let active = true;
+  let releases = 0;
+  let updates = 0;
+  const gate = deferred();
+  const entered = deferred();
+  const target = button();
+  const thumbnails = createMissionPictureThumbnails({
+    isActive: () => active,
+    readMedia: async () => ({ metadata: f.metadata, store: f.store }),
+    acquire: async () => {
+      entered.resolve();
+      await gate.promise;
+      return { picture: {}, release: () => releases++ };
+    },
+    render: () => assert.fail('Late optional work cannot render during gameplay.'),
+    onUpdate: () => updates++,
+  });
+  const pending = thumbnails.refresh(argumentsFor(f, target));
+  await entered.promise;
+  active = false;
+  const priorUpdates = updates;
+  gate.resolve();
+  await pending;
+  assert.equal(releases, 1);
+  assert.equal(updates, priorUpdates);
+  assert.equal(target.dataset.missionArtwork, undefined);
+  assert.equal(target.dataset.pictureState, 'unavailable');
+  thumbnails.close();
+});

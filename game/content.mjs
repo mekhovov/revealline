@@ -470,8 +470,7 @@ function webpSize(bytes) {
  * Original bytes are never converted or rewritten. No SVG, URL, script or animation.
  */
 export function inspectImageDataUrl(dataUrl) {
-  const errors = [];
-  let mime, width, height, byteLength;
+  let mime, byteLength;
   if (typeof dataUrl !== 'string' || dataUrl.length > CONTENT_LIMITS.maxEncodedImageChars)
     return result([contentError('image.encodedBudgetOrType')]);
   const match = /^data:image\/(png|jpeg|webp);base64,/.exec(dataUrl);
@@ -485,14 +484,34 @@ export function inspectImageDataUrl(dataUrl) {
   if (byteLength > CONTENT_LIMITS.maxImageBytes)
     return result([contentError('image.originalByteBudget')]);
   try {
-    const binary = atob(encoded),
-      bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0)),
-      size =
-        match[1] === 'png'
-          ? pngSize(bytes)
-          : match[1] === 'jpeg'
-            ? jpegSize(bytes)
-            : webpSize(bytes);
+    const binary = atob(encoded);
+    return inspectImageBytes(
+      Uint8Array.from(binary, (c) => c.charCodeAt(0)),
+      mime,
+    );
+  } catch (error) {
+    return result([error.message || contentError('image.headerUnreadable')], { mime, byteLength });
+  }
+}
+/** Inspect owned binary originals without a base64 encode/decode roundtrip.
+ * Byte, pixel, static-container and MIME checks match embedded-image admission.
+ */
+export function inspectImageBytes(bytes, mime) {
+  if (!(bytes instanceof Uint8Array)) return result([contentError('image.headerUnreadable')]);
+  if (!['image/png', 'image/jpeg', 'image/webp'].includes(mime))
+    return result([contentError('image.embeddedDataUrlRequired')]);
+  const byteLength = bytes.byteLength;
+  if (byteLength > CONTENT_LIMITS.maxImageBytes)
+    return result([contentError('image.originalByteBudget')]);
+  const errors = [];
+  let width, height;
+  try {
+    const size =
+      mime === 'image/png'
+        ? pngSize(bytes)
+        : mime === 'image/jpeg'
+          ? jpegSize(bytes)
+          : webpSize(bytes);
     ({ width, height } = size);
     if (
       !width ||

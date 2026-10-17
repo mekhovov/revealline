@@ -63,6 +63,9 @@ export function attachDemoHost({
   clearRecordings = async () => {},
   audio = null,
   audioMaster = null,
+  onPreparationPhase = () => {},
+  onQualityFrame = null,
+  onQualityTransition = () => {},
   prepareActors = async () => null,
   preparePresentation = async () => null,
 }) {
@@ -106,7 +109,21 @@ export function attachDemoHost({
     adoptedPlayer = null,
     handoffGeneration = 0,
     handoffPending = false,
-    transitionAge = 0;
+    transitionAge = 0,
+    lastPaint = null,
+    displayRevision = 0,
+    displayCSSWidth = null,
+    displayLost = false,
+    paintOwner = null,
+    recoveryPaintTicket = 0,
+    controlsRun = null,
+    controlsSecond = null,
+    controlsCoverage = null,
+    controlsLives = null,
+    controlsStatus = null,
+    controlsCaption = null,
+    controlsController = null,
+    controlsAudio = null;
   const owners = new WeakMap(),
     listeners = [];
   const listen = (element, type, fn, options) => {
@@ -132,19 +149,71 @@ export function attachDemoHost({
         : (picture?.pictureVisibility ?? 'blurred');
   const foreground = () => !doc.hidden && doc.hasFocus();
   const ownsUI = () => !!doc.activeElement?.closest?.('[data-demo-ui]');
-  const watching = () => active && !practice && !interrupted && !busy;
+  const renderingLost = () => displayLost || (paintOwner?.losses.size ?? 0) > 0;
+  const watching = () => active && !practice && !interrupted && !busy && !renderingLost();
+  const currentOwner = (owner) =>
+    active && !owner.released && owner.epoch === epoch && paintOwner === owner;
+  function repaintRecovered() {
+    const owner = paintOwner,
+      ticket = ++recoveryPaintTicket,
+      session = epoch;
+    // Painter invalidation/retirement can report restoration synchronously.
+    // Repaint only after that owner operation has finished, without clock debt.
+    queueMicrotask(() => {
+      if (
+        ticket !== recoveryPaintTicket ||
+        session !== epoch ||
+        !owner ||
+        !currentOwner(owner) ||
+        renderingLost()
+      )
+        return;
+      context = null;
+      displayRevision++;
+      displayCSSWidth = null;
+      paint(0);
+    });
+  }
+  let publishedPreparationPhase = null;
+  function preparationPhase() {
+    if (!active) return null;
+    if (lifecycleSuspended) return 'suspended';
+    // Spectator transport remains available in the background. Keep required
+    // fetch/decode/worker work admitted, but park bulk main-thread work.
+    if (!foreground()) return practice || handoffPending ? 'suspended' : 'playing';
+    if (busy || director?.phase === 'loading') return 'preparing';
+    if (practice) return practice.phase === 'playing' ? 'playing' : 'paused';
+    return interrupted || director?.phase === 'paused' ? 'paused' : 'playing';
+  }
+  function publishPreparationPhase() {
+    const phase = preparationPhase();
+    if (phase === null || phase === publishedPreparationPhase) return;
+    publishedPreparationPhase = phase;
+    onPreparationPhase(phase);
+  }
   const takeoverAvailable = () =>
-    active && !practice && !busy && !lifecycleSuspended && foreground();
+    active && !practice && !busy && !lifecycleSuspended && !renderingLost() && foreground();
   function renderControls() {
     if (!active) return;
+    publishPreparationPhase();
+    if (doc.hidden) return;
     fullscreen.refresh();
     dialog.classList.toggle('is-practice', !!practice);
     const state = currentRun(),
-      terminal = ['won', 'lost'].includes(state?.status);
+      terminal = ['won', 'lost'].includes(state?.status),
+      current = getContext();
+    controlsRun = state;
+    controlsSecond = Math.floor(state?.time ?? 0);
+    controlsCoverage = Math.round((state?.coverage ?? 0) * 100);
+    controlsLives = state?.lives;
+    controlsStatus = state?.status;
+    controlsCaption = caption;
+    controlsController = current.controller?.id ?? null;
     const loading = busy || !director?.player;
     dialog.dataset.scene = loading ? 'loading' : 'playing';
     const audioState = audio?.snapshot?.(),
       track = audioState?.track;
+    controlsAudio = audioControlFields(audioState);
     text(
       'demo-now-playing',
       track
@@ -161,7 +230,8 @@ export function attachDemoHost({
     $('demo-guide-label').hidden = !guideVisible;
     const portrait =
       REACTION_PORTRAITS.guide[
-        !getContext().reduced &&
+        !current.reduced &&
+        (current.quality ?? 'full') === 'full' &&
         !interrupted &&
         !loading &&
         ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption)
@@ -231,7 +301,8 @@ export function attachDemoHost({
     text('demo-panel-caption', $('demo-caption').textContent);
     text('demo-panel-status', $('demo-status').textContent);
     $('demo-panel').hidden = !detailsOpen && !interrupted && !practice;
-    dialog.dataset.details = $('demo-panel').hidden ? 'closed' : 'open';
+    const details = $('demo-panel').hidden ? 'closed' : 'open';
+    if (dialog.dataset.details !== details) dialog.dataset.details = details;
     $('demo-details-close').hidden = interrupted || !!practice;
     $('demo-details-toggle').setAttribute('aria-expanded', String(!$('demo-panel').hidden));
     text('demo-details-toggle', t('demo:details'));
@@ -241,16 +312,16 @@ export function attachDemoHost({
     text('demo-back', t('demo:back'));
     $('demo-actions').hidden = !interrupted && !practice;
     $('demo-takeover').hidden = !!practice;
-    $('demo-takeover').disabled = loading || terminal;
+    $('demo-takeover').disabled = loading || terminal || renderingLost();
     $('demo-fresh').disabled = loading;
-    $('demo-resume').disabled = busy || (!!practice && terminal);
+    $('demo-resume').disabled = busy || (!!practice && terminal) || renderingLost();
     text('demo-resume', t(practice ? 'demo:continuePractice' : 'demo:keepWatching'));
     $('demo-next').hidden = !!practice;
-    $('demo-next').disabled = busy;
+    $('demo-next').disabled = busy || renderingLost();
     $('demo-practice-controls').hidden = !practice;
     $('demo-interrupt').hidden = !!practice;
     $('demo-watch-pause').hidden = !!practice;
-    $('demo-watch-pause').disabled = handoffPending;
+    $('demo-watch-pause').disabled = handoffPending || renderingLost();
     text('demo-watch-pause', t(interrupted ? 'demo:resumeShort' : 'demo:pauseShort'));
     $('demo-watch-pause').setAttribute(
       'aria-label',
@@ -259,13 +330,14 @@ export function attachDemoHost({
     $('demo-watch-pause').setAttribute('aria-pressed', String(interrupted));
 
     $('demo-return').hidden = !practice;
+    $('demo-return').disabled = renderingLost();
     $('demo-pause').hidden = !practice || !armed;
     const capabilities = arcadeActionCapabilities(state?.level);
     $('demo-ability').hidden = !capabilities.manualAbility;
     $('demo-pickup').hidden = !capabilities.manualPickup;
     $('demo-boost').hidden = !capabilities.manualBoost;
     $('demo-craft').hidden = !practice || !state?.hangars?.length;
-    const keys = bindingLabels(getContext().preferences.keyboardBindings);
+    const keys = bindingLabels(current.preferences.keyboardBindings);
     text(
       'demo-bound-controls',
       t('demo:boundControls', {
@@ -277,7 +349,6 @@ export function attachDemoHost({
             .join(' / ') || t('common:actions.pause'),
       }),
     );
-    const current = getContext();
     $('demo-pad-controls').hidden = !current.controller;
     if (current.controller) {
       const pad = controllerBindingLabels(
@@ -295,6 +366,78 @@ export function attachDemoHost({
     for (const action of ['boost', 'ability', 'pickup'])
       text(`demo-${action}`, `${t(`demo:${action}`)} · ${keys[action]}`);
   }
+  const audioControlFields = (state) => [
+    state?.track ? String(state.track.title) : null,
+    state?.track?.artist || t('interface:artistNotRecorded'),
+    !!state?.muted,
+    state?.status ?? 'idle',
+  ];
+  function audioChanged() {
+    if (!active) return;
+    publishPreparationPhase();
+    if (doc.hidden) return;
+    const fields = audioControlFields(audio?.snapshot?.());
+    if (controlsAudio && fields.every((value, index) => value === controlsAudio[index])) return;
+    renderControls();
+  }
+  function refreshReadout() {
+    const state = currentRun();
+    if (
+      state !== controlsRun ||
+      Math.floor(state?.time ?? 0) !== controlsSecond ||
+      Math.round((state?.coverage ?? 0) * 100) !== controlsCoverage ||
+      state?.lives !== controlsLives ||
+      state?.status !== controlsStatus ||
+      caption !== controlsCaption
+    )
+      renderControls();
+  }
+  const invalidateDisplay = () => {
+    if (!active) return;
+    displayRevision++;
+    displayCSSWidth = null;
+    if (lifecycleSuspended && !renderingLost()) repaintRecovered();
+  };
+  listen(doc.defaultView, 'resize', invalidateDisplay);
+  listen(doc, 'fullscreenchange', invalidateDisplay);
+  listen(doc, 'visibilitychange', () => {
+    renderControls();
+    if (!doc.hidden && lifecycleSuspended && !renderingLost()) repaintRecovered();
+  });
+  const preferencesChanged = () => {
+    if (!active) return;
+    invalidateDisplay();
+    renderControls();
+  };
+  listen(doc, 'change', (event) => {
+    // Demo's own controls already publish their precise change synchronously.
+    if (event.target?.id?.startsWith('demo-') || event.target?.closest?.('[data-demo-ui]')) return;
+    preferencesChanged();
+  });
+  listen(doc.defaultView, 'storage', preferencesChanged);
+  listen(canvas, 'contextlost', () => {
+    if (displayLost) return;
+    // This canvas survives close/reopen; only its own restoration clears loss.
+    displayLost = true;
+    context = null;
+    suspend();
+  });
+  listen(canvas, 'contextrestored', () => {
+    displayLost = false;
+    context = null;
+    // A reopened display can lose context before a player exists. Let its
+    // required preparation finish in a paused state instead of deadlocking
+    // behind the shared suspended admission queue and a disabled Resume.
+    if (active && !paintOwner && (busy || director?.phase === 'loading'))
+      lifecycleSuspended = false;
+    invalidateDisplay();
+    renderControls();
+    repaintRecovered();
+  });
+  const displayObserver = doc.defaultView?.ResizeObserver
+    ? new doc.defaultView.ResizeObserver(invalidateDisplay)
+    : null;
+  displayObserver?.observe(canvas);
   function clear() {
     clearInput();
     input.clear();
@@ -302,6 +445,7 @@ export function attachDemoHost({
   function interrupt({ focus = true } = {}) {
     if (!active) return;
     interrupted = true;
+    onQualityTransition();
     reward.pause();
     clock.reset();
     armed = false;
@@ -316,6 +460,7 @@ export function attachDemoHost({
     idle.activity();
     clear();
     if (practice || handoffPending) suspend();
+    else publishPreparationPhase();
   }
   function suspend() {
     idle.activity();
@@ -323,6 +468,7 @@ export function attachDemoHost({
     handoffGeneration++;
     handoffPending = false;
     clock.stop();
+    onQualityTransition();
     busy = false;
     interrupted = true;
     lifecycleSuspended = true;
@@ -335,6 +481,9 @@ export function attachDemoHost({
   function close({ handoff = false } = {}) {
     if (!active) return;
     active = false;
+    onQualityTransition();
+    displayCSSWidth = null;
+    publishedPreparationPhase = null;
     detailsOpen = false;
     sceneTransition.clear();
     reward.reset();
@@ -347,9 +496,10 @@ export function attachDemoHost({
     epoch++;
     handoffGeneration++;
     adoptedPlayer = null;
+    paintOwner = null;
     director?.dispose();
     director = null;
-    painter = picture = source = practice = context = null;
+    painter = picture = source = practice = context = lastPaint = null;
     armed = false;
     busy = false;
     clear();
@@ -360,6 +510,7 @@ export function attachDemoHost({
   }
   async function prepare(source, { signal }) {
     const player = await source.create({ signal });
+    const owner = { epoch, released: false, losses: new Set(), retiredSurfaces: new WeakSet() };
     let nextPicture = null,
       nextPainter = null,
       nextActors = null,
@@ -368,6 +519,8 @@ export function attachDemoHost({
     const release = () => {
       if (released) return;
       released = true;
+      owner.released = true;
+      owner.losses.clear();
       player.dispose?.();
       nextPicture?.dispose();
       nextPainter?.dispose?.();
@@ -388,7 +541,28 @@ export function attachDemoHost({
       nextActors = await prepareActors(entry, source.level, theme.id, { signal });
       if (released) nextActors?.release();
       check();
-      nextPainter = new BoardPainter(presets);
+      nextPainter = new BoardPainter(presets, {
+        onContextLoss: ({ owner: surface }) => {
+          if (
+            owner.released ||
+            owner.epoch !== epoch ||
+            owner.retiredSurfaces.has(surface) ||
+            owner.losses.has(surface)
+          )
+            return;
+          owner.losses.add(surface);
+          if (currentOwner(owner)) suspend();
+        },
+        onContextRestored: ({ owner: surface, retired }) => {
+          if (owner.released || owner.epoch !== epoch) return;
+          if (retired) owner.retiredSurfaces.add(surface);
+          if (!owner.losses.delete(surface)) return;
+          if (currentOwner(owner)) {
+            renderControls();
+            repaintRecovered();
+          }
+        },
+      });
       nextPresentation = await preparePresentation(nextPainter, entry, source.level, theme.id, {
         signal,
       });
@@ -449,7 +623,7 @@ export function attachDemoHost({
         forkForPractice: (options) => player.forkForPractice(options),
         dispose: release,
       };
-      owners.set(wrapper, {
+      Object.assign(owner, {
         painter: nextPainter,
         actors: nextActors,
         picture: nextPicture,
@@ -457,6 +631,7 @@ export function attachDemoHost({
         overrides,
         classId: player.state.activeClassId,
       });
+      owners.set(wrapper, owner);
       return wrapper;
     } catch (failure) {
       release();
@@ -472,7 +647,7 @@ export function attachDemoHost({
       reward.reset();
       delete dialog.dataset.reward;
       clock.reset();
-      source = painter = picture = context = adoptedPlayer = null;
+      source = painter = picture = context = adoptedPlayer = paintOwner = null;
       caption = 'demo:tipStart';
     }
     if (snapshot.source && snapshot.player !== adoptedPlayer) {
@@ -482,11 +657,14 @@ export function attachDemoHost({
       context = null;
       source = snapshot.source;
       const look = owners.get(snapshot.player);
+      paintOwner = look;
       ({ painter, picture } = look);
       audio?.setScene?.({ source, theme: look.theme });
       const size = boardPaintSizeForRun(snapshot.player.state);
       canvas.width = size.width;
       canvas.height = size.height;
+      displayCSSWidth = null;
+      onQualityTransition();
       sceneTransition.ready();
       captions.reset();
       caption = 'demo:tipStart';
@@ -494,6 +672,8 @@ export function attachDemoHost({
       rewardTail = 0;
       rewardAge = 0;
       error = '';
+      if (renderingLost()) suspend();
+      else if (interrupted || lifecycleSuspended) repaintRecovered();
     }
     if (snapshot.phase === 'unavailable') {
       close();
@@ -507,10 +687,12 @@ export function attachDemoHost({
     if (disposed || active || !canOpen()) return false;
     origin = doc.activeElement;
     onEnter();
+    onQualityTransition();
+    displayCSSWidth = null;
     clear();
     active = true;
-    interrupted = false;
-    lifecycleSuspended = false;
+    interrupted = displayLost;
+    lifecycleSuspended = displayLost;
     practice = null;
     armed = false;
     error = '';
@@ -520,13 +702,13 @@ export function attachDemoHost({
     picture = null;
     painter = null;
     caption = 'demo:tipStart';
-    canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
+    if (!displayLost) canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
     controller?.abort();
     controller = new AbortController();
     const signal = controller.signal,
       ticket = ++epoch;
     dialog.showModal();
-    clock.start();
+    if (!displayLost) clock.start();
     audioControls.render();
     canvas.focus({ preventScroll: true });
     renderControls();
@@ -559,6 +741,8 @@ export function attachDemoHost({
     switchClass = null;
     clock.stop();
     practice = createDemoPractice(run);
+    displayCSSWidth = null;
+    onQualityTransition();
     director.pause();
     interrupted = true;
     armed = true;
@@ -582,7 +766,14 @@ export function attachDemoHost({
     else canvas.focus({ preventScroll: true });
   }
   async function takeover(intent = null) {
-    if (busy || !director?.player || practice || (intent && !takeoverAvailable())) return;
+    if (
+      busy ||
+      !director?.player ||
+      practice ||
+      renderingLost() ||
+      (intent && !takeoverAvailable())
+    )
+      return;
     interrupt({ focus: false });
     busy = true;
     handoffPending = true;
@@ -603,6 +794,7 @@ export function attachDemoHost({
         ticket !== epoch ||
         handoff !== handoffGeneration ||
         director.player !== player ||
+        renderingLost() ||
         doc.hidden ||
         !doc.hasFocus()
       )
@@ -638,6 +830,9 @@ export function attachDemoHost({
         close({ handoff: true });
         return;
       }
+      // A main-game handoff owns an independent renderer. A fallback practice
+      // still uses this Demo painter and must wait for its recovery.
+      if (renderingLost()) return;
       const recording = director.player.exportRecording();
       startPractice(createRun(recording.level, recording.options));
     } catch {
@@ -698,18 +893,20 @@ export function attachDemoHost({
   listen($('demo-fresh'), 'click', () => void fresh());
   listen($('demo-details-toggle'), 'click', () => {
     detailsOpen = !detailsOpen;
+    displayCSSWidth = null;
     renderControls();
     if (detailsOpen && !interrupted && !practice)
       $('demo-details-close').focus({ preventScroll: true });
   });
   listen($('demo-details-close'), 'click', () => {
     detailsOpen = false;
+    displayCSSWidth = null;
     if (interrupted || practice) return;
     renderControls();
     $('demo-details-toggle').focus();
   });
   listen($('demo-next'), 'click', () => {
-    if (!busy && !practice) {
+    if (!busy && !practice && !renderingLost()) {
       interrupted = false;
       lifecycleSuspended = false;
       error = '';
@@ -724,6 +921,8 @@ export function attachDemoHost({
     switchClass = $('demo-craft').value;
   });
   function resumeWatching() {
+    if (renderingLost()) return;
+    onQualityTransition();
     clear();
     error = '';
     lifecycleSuspended = false;
@@ -738,6 +937,8 @@ export function attachDemoHost({
   }
   listen($('demo-resume'), 'click', resumeWatching);
   listen($('demo-return'), 'click', () => {
+    if (renderingLost()) return;
+    onQualityTransition();
     practice = null;
     armed = false;
     interrupted = false;
@@ -768,6 +969,7 @@ export function attachDemoHost({
     };
     setCollect(settings.collect);
     if (settings.hidePictures) reward.reset();
+    renderControls();
     paint(0);
     idle.activity();
     try {
@@ -775,7 +977,6 @@ export function attachDemoHost({
     } catch {
       text('demo-settings-status', t('demo:settingsSessionOnly'));
     }
-    paint(0);
   };
   $('demo-auto').checked = settings.auto;
   $('demo-collect').checked = settings.collect;
@@ -804,6 +1005,7 @@ export function attachDemoHost({
     }
   });
   function advance(seconds, { fresh = true } = {}) {
+    if (renderingLost()) return;
     const result = practice
       ? practice.advance(seconds, () => {
           const controls = { ...input.controls(), switchClass };
@@ -838,17 +1040,18 @@ export function attachDemoHost({
         });
     }
     if (!practice && !interrupted) caption = captions.advance(seconds, result?.events);
-    if (!doc.hidden) renderControls();
+    if (!doc.hidden) refreshReadout();
     if (!practice && !interrupted && director.phase === 'complete') {
       dwell += Math.min(seconds, 0.25);
+      const presentation = getContext();
       const holding = reward.update({
         won: state.status === 'won',
         age: rewardAge,
         allowed: pictureVisibility() === 'clear',
         pin: picture?.storyPin,
         paused: interrupted || !foreground(),
-        reduced: getContext().reduced,
-        volume: getContext().library.cinematicVolume ?? 0.7,
+        reduced: presentation.reduced || (presentation.quality ?? 'full') !== 'full',
+        volume: presentation.library.cinematicVolume ?? 0.7,
         muted: !settings.gameSounds,
       });
       if (!holding && (foreground() ? rewardAge : dwell) >= REWARD_STORY_SECONDS)
@@ -862,37 +1065,84 @@ export function attachDemoHost({
   }
 
   function paint(seconds) {
+    if (!active || doc.hidden || renderingLost()) return;
     const state = currentRun();
-    if (active && !doc.hidden) sceneTransition.paint(seconds, getContext().reduced);
-    if (!active || !painter || !state || doc.hidden) return;
-    renderControls();
+    const current = getContext();
+    if (
+      lastPaint &&
+      (lastPaint.reduced !== current.reduced || lastPaint.quality !== (current.quality ?? 'full'))
+    )
+      renderControls();
+    const quality = current.quality ?? 'full',
+      reduced = current.reduced || quality !== 'full';
+    sceneTransition.paint(seconds, reduced);
+    if (!painter || !state) return;
+    const options = current.renderOptions ?? {},
+      paused = practice ? practice.phase !== 'playing' : director.phase !== 'playing',
+      animated =
+        !interrupted &&
+        (practice
+          ? practice.phase === 'playing'
+          : ['playing', 'complete'].includes(director.phase)),
+      visibility = pictureVisibility();
+    // Paused presentation retains its accepted pixels. Explicit UI, sizing,
+    // preference and asynchronous painter changes still invalidate this record.
+    if (
+      !animated &&
+      lastPaint?.state === state &&
+      lastPaint.tick === state.tick &&
+      lastPaint.painter === painter &&
+      lastPaint.generation === painter.preparationGeneration &&
+      lastPaint.paintRevision === painter.paintRevision &&
+      lastPaint.displayRevision === displayRevision &&
+      lastPaint.paused === paused &&
+      lastPaint.interrupted === interrupted &&
+      lastPaint.detailsOpen === detailsOpen &&
+      lastPaint.reduced === current.reduced &&
+      lastPaint.quality === quality &&
+      lastPaint.visibility === visibility &&
+      lastPaint.textFace === options.textFace &&
+      lastPaint.showGrid === options.showGrid &&
+      lastPaint.showCombatScrap === options.showCombatScrap &&
+      lastPaint.brutal === options.brutal &&
+      lastPaint.blood === options.blood
+    )
+      return;
     if (state.status === 'won')
       rewardAge = advanceRewardAge(rewardAge, seconds, interrupted || !foreground());
     const expanded = state.status === 'won' && rewardAge >= REWARD_BOARD_SECONDS && !practice;
     if (expanded && dialog.dataset.reward !== 'expanded') {
       const from = canvas.getBoundingClientRect();
       dialog.dataset.reward = 'expanded';
-      animateRewardArrival(canvas, from, getContext().reduced);
-    } else if (!expanded) delete dialog.dataset.reward;
+      animateRewardArrival(canvas, from, reduced);
+      displayCSSWidth = null;
+    } else if (!expanded && dialog.dataset.reward) {
+      delete dialog.dataset.reward;
+      displayCSSWidth = null;
+    }
     context ??= canvas.getContext('2d');
-    if (context)
+    if (context) {
+      if (displayCSSWidth === null) {
+        const height = canvas.clientHeight,
+          width = canvas.clientWidth;
+        displayCSSWidth =
+          height > 0 ? Math.min(width, (height * canvas.width) / canvas.height) : width;
+      }
       painter.draw(context, state, Math.min(seconds, 0.1), {
-        ...getContext().renderOptions,
+        ...options,
         actorAppearance: owners.get(director.player)?.actors
           ? {
               style: owners.get(director.player).actors.pin().style,
               snapshot: owners.get(director.player).actors.snapshot,
             }
           : null,
-        displayCSSWidth:
-          canvas.clientHeight > 0
-            ? Math.min(canvas.clientWidth, (canvas.clientHeight * canvas.width) / canvas.height)
-            : canvas.clientWidth,
-        paused: practice ? practice.phase !== 'playing' : director.phase !== 'playing',
-        reduced: getContext().reduced,
+        displayCSSWidth,
+        quality,
+        paused,
+        reduced: current.reduced,
         fullReveal: state.status === 'won',
         backdrop: picture?.backdrop,
-        pictureVisibility: pictureVisibility(),
+        pictureVisibility: visibility,
         pictureInterference: true,
         celebrationPaused: interrupted,
         defeatEffectsRunning: !interrupted,
@@ -902,10 +1152,30 @@ export function attachDemoHost({
           !interrupted &&
           (state.status === 'lost' ||
             (practice ? practice.phase === 'playing' : director.phase === 'playing')),
-        demoTransition: getContext().reduced ? 0 : Math.max(0, 1 - transitionAge / 0.55),
+        demoTransition: reduced ? 0 : Math.max(0, 1 - transitionAge / 0.55),
       });
+      lastPaint ??= {};
+      lastPaint.state = state;
+      lastPaint.tick = state.tick;
+      lastPaint.painter = painter;
+      lastPaint.generation = painter.preparationGeneration;
+      lastPaint.paintRevision = painter.paintRevision;
+      lastPaint.displayRevision = displayRevision;
+      lastPaint.paused = paused;
+      lastPaint.interrupted = interrupted;
+      lastPaint.detailsOpen = detailsOpen;
+      lastPaint.reduced = current.reduced;
+      lastPaint.quality = quality;
+      lastPaint.visibility = visibility;
+      lastPaint.textFace = options.textFace;
+      lastPaint.showGrid = options.showGrid;
+      lastPaint.showCombatScrap = options.showCombatScrap;
+      lastPaint.brutal = options.brutal;
+      lastPaint.blood = options.blood;
+    }
   }
   function updateAudio() {
+    publishPreparationPhase();
     const state = currentRun();
     const look = director?.player && owners.get(director.player);
     audio?.update?.({
@@ -918,6 +1188,9 @@ export function attachDemoHost({
   }
   const clock = attachDemoClock({
     document: doc,
+    observeFrame: onQualityFrame,
+    getFrameOwner: () => (watching() && foreground() ? (director?.player ?? null) : null),
+    frameBoundary: onQualityTransition,
     getPlaybackState: () => ({
       phase:
         !active || practice
@@ -945,12 +1218,28 @@ export function attachDemoHost({
       saveSettings();
     },
   });
-  const unsubscribe = onLocaleChange(renderControls);
-  const unsubscribeAudio = audio?.subscribe?.(renderControls);
+  const unsubscribe = onLocaleChange(preferencesChanged);
+  const unsubscribeAudio = audio?.subscribe?.(audioChanged);
   const unsubscribeGuide = guidePreferences.subscribe(renderControls);
   return {
     get active() {
       return active;
+    },
+    // Identity only: the parent observes practice at its existing POST_RENDER
+    // boundary, including controller and submission work, without a second clock.
+    get qualityPracticeOwner() {
+      return active &&
+        foreground() &&
+        !busy &&
+        !lifecycleSuspended &&
+        !renderingLost() &&
+        armed &&
+        practice?.phase === 'playing'
+        ? practice.state
+        : null;
+    },
+    get preparationPhase() {
+      return preparationPhase();
     },
     get backgroundAudio() {
       return active && !practice && !handoffPending && !lifecycleSuspended;
@@ -980,6 +1269,7 @@ export function attachDemoHost({
     activity: () => idle.activity(),
     controller(frame) {
       input.controller(frame);
+      if ((frame.assigned?.id ?? null) !== controlsController) renderControls();
     },
     update(seconds) {
       if (!active) {
@@ -1005,6 +1295,7 @@ export function attachDemoHost({
       input.destroy();
       fullscreen.dispose();
       layout.dispose();
+      displayObserver?.disconnect();
       unsubscribe?.();
       unsubscribeAudio?.();
       unsubscribeGuide?.();

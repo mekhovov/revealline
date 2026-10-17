@@ -1,0 +1,486 @@
+{
+  "repository": "mekhovov/revealline",
+  "candidate": {
+    "revision": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+    "tree": "fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508",
+    "run": 39004951633,
+    "artifact": 12090923917,
+    "outer": {
+      "bytes": 1091842485,
+      "sha256": "f4d227caf2152d4de62a3e638e1ffda9e8373bac4d8fbf1b1300d15fb236e010"
+    },
+    "inner": {
+      "bytes": 1073748678,
+      "sha256": "66eff1484b7e7e6e39f67aa70533e13be7b345fb68d270b857a5cacfb5ac642f"
+    },
+    "manifestSHA256": "9152f392cadc6caebea9237e041fd3041943bec73b21be2b26fb4d781cacc38a",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "producer": "Exact previously verified normal main8b V2 package; complete archive, readiness, source and CSP verification remains mandatory. No rebuild, fallback or republishing.",
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV2",
+      "sourceRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "sourceTree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+      "run": 38998342742,
+      "artifact": 12088541389,
+      "name": "solo-normal-baseline-8b019919-38998342742-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-baseline-temporary.yml",
+        "run": 38998342742,
+        "attempt": 1,
+        "toolingRevision": "c9e637ad81fadf49caec884155d1bd0c2496c59c",
+        "toolingTree": "4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c"
+      },
+      "outer": {
+        "bytes": 1073805912,
+        "sha256": "63545549d9d087e96dcade7e549369a3e2cc00eaa8ae292c314686d0b0563230"
+      },
+      "inner": {
+        "bytes": 1073243091,
+        "sha256": "8f8808fe79390429308cb4637c66ea34aeb5043947616a14b9cffcacf044dc1e"
+      },
+      "manifestSHA256": "3b448d181f75bf54aa1f2929e30f8b6a3fbc39a8b4eeb58914f5b29a704a85e8",
+      "ready": {
+        "bytes": 1599,
+        "sha256": "22b6a3cfdba87f242daa41309611ba2671dac18bcf6455cd7ebb68cb6b741d88"
+      }
+    }
+  },
+  "runtimeRevision": "488eae03aee7f58dd5837451363015888faa429f",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "format": "SoloHostedSupplementalManifestV1",
+  "status": "reviewed-diagnostic-only",
+  "cohort": "linux-first-return-retry-adb-main8b-intermediate-preflight-v1",
+  "phase": "first-return-retry",
+  "engines": ["chromium", "webkit"],
+  "performanceExclusion": true,
+  "cpu": 1,
+  "maxParallel": 2,
+  "automaticRetries": 0,
+  "automaticPhaseContinuation": false,
+  "setupTimeoutMs": 2400000,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 33554432,
+  "phases": {
+    "first-return-retry": {
+      "recipe": {
+        "path": "docs/performance/fixtures/solo-remote-sustained/retry-first-return-anchored-preflight.qualification.fixture",
+        "bytes": 4349,
+        "sha256": "cb575fd56d6ab8ab796ce5924b0154dc8e18aca4b62502b2028e2fd932f63bee",
+        "stagedName": "scenario.qualification.json"
+      },
+      "upload": {
+        "path": "docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture",
+        "bytes": 2897,
+        "sha256": "d36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e",
+        "stagedName": "first-return.xonix.json"
+      },
+      "scenarioTimeoutMs": 240000
+    },
+    "first-return-next": {
+      "recipe": {
+        "path": "docs/performance/fixtures/solo-remote-sustained/next-first-return-anchored-preflight.qualification.fixture",
+        "bytes": 3336,
+        "sha256": "eb859ade98235a43c22858bcf5748daa8d951bd9aa1790f26fc13787c77b8fb5",
+        "stagedName": "scenario.qualification.json"
+      },
+      "upload": null,
+      "scenarioTimeoutMs": 240000
+    }
+  },
+  "release": {
+    "scope": "first-return-native-preflight",
+    "candidateRevision": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+    "baselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "predecessorRun": 38985941469,
+    "previousPhase": "latency-long-rail-anchored",
+    "firstEightAllCorrectnessPassed": false,
+    "performanceQualification": "excluded",
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "allPriorPlannedJobsClosed": true,
+    "evidence": [
+      {
+        "runId": 38985941469,
+        "artifactId": 12083397932,
+        "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+        "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929"
+      },
+      {
+        "runId": 38995660502,
+        "artifactId": 12086798338,
+        "artifactSHA256": "fe95b56d5dc19374341c73895e2f795b8ae6a1a78cec4489f4b77c67fc535226",
+        "summarySHA256": "38bd192eb0f169bd256f99857b7c9bcefe071f0387fe9842cd329af9e0fcf0c8"
+      },
+      {
+        "runId": 38995660502,
+        "artifactId": 12087695323,
+        "artifactSHA256": "0eee46546743a9b93812de15409692b2a7c672b5a692b13dd5058ba4a5cc6eeb",
+        "summarySHA256": "48176474e445f656fee158a9d0d12f92cfd5250074c6eeadbc9f127df33b7e77"
+      }
+    ],
+    "diagnosticPredecessor": {
+      "run": 38995660502,
+      "phase": "latency-long-rail-anchored",
+      "conclusion": "failure",
+      "passedRows": 3,
+      "failedRows": 1,
+      "allOwnersClosed": true,
+      "allFailuresRetained": true
+    },
+    "closureScope": "Prior planned qualification producers and control cohorts only; concurrent members of this newly declared wave are not earlier jobs."
+  },
+  "scope": "Reviewed exact adb/main8b short first-return-retry public lifecycle preflight, intermediate source only. One baseline/candidate pair per engine; both separately named phases form eight observations. All raw numeric outcomes retained/excluded; no retry, automatic continuation or Resume.",
+  "acceptance": {
+    "publicActions": "Complete exact declared controls, expected running/paused outcomes and no page errors or unclosed contexts. Retain every failed/partial attempt.",
+    "replay": "Exact same-engine/version verification using the served admitted artifact modules; full expected mission/options and every required actual mechanic must pass. Node model is not a substitute.",
+    "latency": "Lifecycle preflight only; ordinary raw application work/cadence and latency observations remain retained. These two public recipes do not claim the historical steering probes' twenty accepted latency samples.",
+    "successor": "A new native30-minute soak remains held until the short Retry and Next results, exact accepted missions/full native replays, owners and package proofs are retained and reviewed. No automatic continuation or interpretation of model schedules as native evidence."
+  },
+  "resources": {
+    "setup": "Full pinned candidate and baseline package/member/source/CSP/worker admission under existing40min setup bound; no fallback rebuild.75min helper plus2min outer and1min step shutdown margins.",
+    "row": "Original240s scenario;480s command;32MiB evidence. Common owner/birth identity and bounded TERM/KILL cleanup; unknown/surviving owner blocks next row.",
+    "workflowBudgetMinutes": {
+      "checkouts": 6,
+      "node": 1,
+      "dependencies": 20,
+      "ownerTests": 3,
+      "helper": 78,
+      "retention": 2,
+      "upload": 10,
+      "sum": 120,
+      "job": 130
+    },
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "finalizationReserveBytes": 4194304
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-supplemental.mjs",
+      "bytes": 21974,
+      "sha256": "9dfd30a8ea6df6b404e17ca8dd745a7b89861a74ef740e7ec1b557a2a151aa56"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 15700,
+      "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/access-pages.mjs",
+      "bytes": 5658,
+      "sha256": "00653eb54444d49b15c08796e3e6a7633205e75d69876123f8fafa0a78219a81"
+    },
+    {
+      "path": "scripts/authored-runtime-snapshots.mjs",
+      "bytes": 6663,
+      "sha256": "8a6a77906fd385e0b79ceafe9ea296d4f70869aaadc01477d5f0a0f93b3cf1c0"
+    },
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1815,
+      "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+    },
+    {
+      "path": "scripts/build-optional-practice.mjs",
+      "bytes": 18368,
+      "sha256": "35b8fb89ec73c6359860d8a49ea4c629e8aab7832632e8a7b1315607adfee6c2"
+    },
+    {
+      "path": "scripts/company-offline-packages.mjs",
+      "bytes": 3828,
+      "sha256": "2f04993a92378c1de2b1f956e73ea0503249054412676b9375bb8da76c3413aa"
+    },
+    {
+      "path": "scripts/core-soundtrack-publication.mjs",
+      "bytes": 5789,
+      "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+    },
+    {
+      "path": "scripts/external-distribution.mjs",
+      "bytes": 6651,
+      "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10450,
+      "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+    },
+    {
+      "path": "scripts/mission-library-index.mjs",
+      "bytes": 12253,
+      "sha256": "4a64a6d24622cccfc09051bebcf0a41f7dc2038beabbd8829fc2df3969f6b535"
+    },
+    {
+      "path": "scripts/offline-content.mjs",
+      "bytes": 27538,
+      "sha256": "f4f28d1b45a8c03479a9e3a0dfcde5eedf56794efe9090bb6d0e07480ff1641d"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+    },
+    {
+      "path": "scripts/offline-destinations.mjs",
+      "bytes": 5129,
+      "sha256": "4708aef5582f983bb178b6f73012c2d91225c61f62592bd4ff05472e5cc5a0b6"
+    },
+    {
+      "path": "scripts/offline-experiences.mjs",
+      "bytes": 4462,
+      "sha256": "3bcedaabb4be3cd0b83a1e6c12d6a403b9af140b041c8ad3bce4846b204c46e0"
+    },
+    {
+      "path": "scripts/offline-finalize.mjs",
+      "bytes": 1400,
+      "sha256": "7983017f5291c0a0b37adcade90730a75c6ad9988360b7c5b5ea8c59725c623d"
+    },
+    {
+      "path": "scripts/offline-launcher.mjs",
+      "bytes": 21680,
+      "sha256": "44ffb18488d1091207d5876ebd35425a26651420dcbf8d8ae28a28229b9566fa"
+    },
+    {
+      "path": "scripts/optional-artwork.mjs",
+      "bytes": 4613,
+      "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+    },
+    {
+      "path": "scripts/optional-distribution.mjs",
+      "bytes": 2584,
+      "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+    },
+    {
+      "path": "scripts/optional-launcher.mjs",
+      "bytes": 4925,
+      "sha256": "5c01a3cb3eaef26701f9f27052b32b21a88d1a45003d513b5dc340c6b86a3b14"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "scripts/published-navigation.mjs",
+      "bytes": 3518,
+      "sha256": "0abe392f5951ff5afa9bc2e5639f575eca74ccd950d71f8ccd241c45e757aff3"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 66337,
+      "sha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f"
+    },
+    {
+      "path": "scripts/reviewed-soundtrack-batches.mjs",
+      "bytes": 16280,
+      "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 54513,
+      "sha256": "d5d4e03934a3f016d0e1125516959b2cc5568d244f3bf50c770ebeb0c8e3b58f"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/solo-qualification-cadence.mjs",
+      "bytes": 7999,
+      "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+    },
+    {
+      "path": "scripts/solo-qualification-cpu-profile.mjs",
+      "bytes": 3270,
+      "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-observation.mjs",
+      "bytes": 14584,
+      "sha256": "0195f26910e35c68f6dc29e472b84b151b9910f2afd8ce9183ed5ef577d21a7b"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-core.mjs",
+      "bytes": 5930,
+      "sha256": "1e96e592ee289685607515bbe14c8845f2c03dc81191a0772071fd9995ceb3ea"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-identity.mjs",
+      "bytes": 1866,
+      "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+    },
+    {
+      "path": "scripts/solo-qualification-replay.mjs",
+      "bytes": 1260,
+      "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 26233,
+      "sha256": "88363cc018c21e04ee50addae9e6086b76849c429249cdf4e9a9e9c6c6d24637"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/soundtrack-archive-admissions.mjs",
+      "bytes": 5614,
+      "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 15378,
+      "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    }
+  ],
+  "routeReview": {
+    "document": "docs/performance/solo-successor-readiness-20261017.md",
+    "anchoredRoute": "Public Up1000ms then Down8000ms, unchanged First Return and controls",
+    "snapshotStorage": "inline",
+    "requiredReplay": "Full same-engine/version replay; Retry requires actual capture; Next verifies newly accepted Choose your share without attributing the previous capture to its fresh replay",
+    "scope": "Short lifecycle correctness, not20retries,10Nexttransitions or30minutes. Existing long recipes and failed historical evidence remain unchanged."
+  },
+  "currentSourceCorrectness": {
+    "sourcePair": "main8b-candidateadb",
+    "status": "pending-not-run",
+    "receipt": null,
+    "interpretation": "The new default eight-row correctness result is separate from the immutable historical false gate. Diagnostic firstEightAllCorrectnessPassed=false refers to that historical predecessor; no diagnostic may promote timing or claim the new current-source receipt."
+  },
+  "historicalFirstEight": {
+    "run": 38985941469,
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "passedRows": 7,
+    "totalRows": 8,
+    "firstEightAllCorrectnessPassed": false
+  },
+  "preparation": {
+    "status": "positive-exact-source-metadata-bound",
+    "executable": true,
+    "scope": "Actual candidate metadata and complete 8b V2 reuse identity bound. Consumer full source/archive/CSP and owner checks remain mandatory.",
+    "frozenInputs": "Exact current tooling bytes frozen after prospective source admission; no source, recipe, deadline, replay or numerical gate changed."
+  },
+  "sourceCohort": "first-return-main8b-candidateadb",
+  "releaseTrigger": {
+    "status": "reviewed-once-only-synchronize",
+    "pullRequest": 1544,
+    "sameRepositoryRequired": true,
+    "action": "synchronize",
+    "onceOnlyBefore": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+    "toolingRevision": "Exact event pull-request head SHA; independently recorded and checked by the runner.",
+    "independentReview": "Root and independent candidate metadata readback; source/recipe/limits and final tooling closure reviewed before the coordinated push."
+  },
+  "sourceScope": "Intermediate exact adb runtime observation. Later runtime extraction and resource-accounting changes require a separate final-source package and confirmation. No timing or physical-device qualification.",
+  "packageBinding": {
+    "format": "SoloCurrentPackageMetadataBinding.v1",
+    "producerRun": 39004951633,
+    "producerConclusion": "success",
+    "metadataArtifact": 12091855599,
+    "metadataOuter": {
+      "bytes": 15286,
+      "sha256": "bf09cf5e0af1566b15a294e1c0cf0d121f9d9b3d5c21ea133b589cbc2a21f431"
+    },
+    "packageBinding": {
+      "bytes": 6903,
+      "sha256": "cb728cae7523266de31649bfcddb6a36ad5cd934e3da616728d230fcb19696ad"
+    },
+    "scope": "Successful exact-source producer metadata only. Each remote consumer must verify full outer/inner bytes, source, static workers, offline closure and CSP before rows."
+  },
+  "priorQualificationReview": {
+    "scope": "Prior planned qualification producers and control cohorts only; concurrent members of this newly declared wave are not earlier jobs.",
+    "branchSnapshot": "Parent inspected in-progress and queued branch-wide API at 2026-10-17 05:56 UTC; no prior qualification producer/control jobs open and no queued jobs.",
+    "unrelatedCI": {
+      "run": 39004951600,
+      "name": "Validate source for continuous main",
+      "status": "in_progress",
+      "head": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+      "relationship": "Independent ordinary CI, outside this qualification closure claim; neither waited on nor manually cancelled."
+    },
+    "sameWave": "The eight-row correctness job and separate Retry/Next engine jobs may run concurrently in isolated hosted VMs; raw timing remains excluded and no sibling is claimed completed."
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "format": "SoloHostedRasterManifestV1",
+  "status": "reviewed-diagnostic-only",
+  "repository": "mekhovov/revealline",
+  "cohort": "linux-raster-3adcd537-source-witness-correction-v2",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "jobs": ["raster-chromium", "raster-webkit"],
+  "maxParallel": 2,
+  "performanceExclusion": true,
+  "helperTimeoutMs": 4500000,
+  "setupTimeoutMs": 2400000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 134217728,
+  "candidate": {
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "role": "Source identity only; no build or browser baseline in candidate visual regression."
+  },
+  "release": {
+    "status": "reviewed",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "scope": "independent-native-raster",
+    "predecessorRun": 38985941469,
+    "automaticRetries": 0,
+    "performanceQualification": "excluded",
+    "firstEightAllCorrectnessPassed": false,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "evidence": [
+      {
+        "runId": 38985941469,
+        "artifactId": 12083397932,
+        "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+        "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929"
+      }
+    ],
+    "sourceWitnessCorrection": {
+      "predecessorRun": 38991754555,
+      "disposition": "Both engines stopped with source overflow before retaining any cases or captures. No pixel pass/failure conclusion; original failed evidence remains unchanged.",
+      "originalPerSourceBytes": 1048576,
+      "correctedPerSourceBytes": 2097152,
+      "aggregateBytesUnchanged": 8388608,
+      "sourceRecordsUnchanged": 256,
+      "artifacts": [
+        {
+          "engine": "chromium",
+          "id": 12085497880,
+          "bytes": 422825,
+          "sha256": "4a0e1ba7b8f70ae988467d5c8cbf628ad6e1f4e16a53ba231d377be0619d24e1"
+        },
+        {
+          "engine": "webkit",
+          "id": 12085033070,
+          "bytes": 419435,
+          "sha256": "96ab0343220d6cff4cb362f04224e2b3b4e1569f9b1dbda9f3159556305d8181"
+        }
+      ]
+    }
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-raster.mjs",
+      "bytes": 15221,
+      "sha256": "011aceb355e684e1efeada084877b7a102329336bd37fb6eace23afa093e057f"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/observe-solo-native-raster.mjs",
+      "bytes": 19689,
+      "sha256": "d625a8d0471d66e80fd24ccb156370609bd201cf435df2fa0bccda28e66fbade"
+    },
+    {
+      "path": "scripts/solo-raster-protocols.mjs",
+      "bytes": 41879,
+      "sha256": "d579882dd06cbc50881715116dd3a163a8654c19ead3356de031ad29d43e69d9"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 52211,
+      "sha256": "42750c0bb862b5ca28dfb8394b6381694418b0ed9240a70f006652fcfde28235"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    }
+  ],
+  "raster": {
+    "cases": [
+      {
+        "quality": "full",
+        "mode": "settled"
+      },
+      {
+        "quality": "full",
+        "mode": "acquire"
+      },
+      {
+        "quality": "full",
+        "mode": "warning"
+      },
+      {
+        "quality": "full",
+        "mode": "active"
+      },
+      {
+        "quality": "reduced",
+        "mode": "settled"
+      },
+      {
+        "quality": "reduced",
+        "mode": "acquire"
+      },
+      {
+        "quality": "reduced",
+        "mode": "warning"
+      },
+      {
+        "quality": "reduced",
+        "mode": "active"
+      },
+      {
+        "quality": "minimal",
+        "mode": "settled"
+      },
+      {
+        "quality": "minimal",
+        "mode": "acquire"
+      },
+      {
+        "quality": "minimal",
+        "mode": "warning"
+      },
+      {
+        "quality": "minimal",
+        "mode": "active"
+      }
+    ],
+    "observationTimeoutMs": 120000,
+    "retryCount": 0,
+    "pixelTolerance": 0,
+    "conditionalLocalization": true,
+    "fixture": {
+      "path": "docs/performance/fixtures/solo-remote-raster/signal-07.qualification.fixture",
+      "bytes": 3214,
+      "sha256": "3cee13dba69ac219a54924a0a9663e03fa18115e02e9d79eb9503b8c62ae2a6b"
+    },
+    "primitiveInputs": {
+      "postTintPNGs": [
+        {
+          "owner": "A-with-replacements",
+          "stage": "after-tint",
+          "width": 768,
+          "height": 576,
+          "sha256": "c134d929ac46168e4a628c76f85808fd98ec798a75fb37d15ac18de5b4563694",
+          "bytes": 9856,
+          "path": "docs/performance/fixtures/solo-remote-raster/stage-A-with-replacements-after-tint.png"
+        },
+        {
+          "owner": "A-repeat",
+          "stage": "after-tint",
+          "width": 768,
+          "height": 576,
+          "sha256": "c134d929ac46168e4a628c76f85808fd98ec798a75fb37d15ac18de5b4563694",
+          "bytes": 9856,
+          "path": "docs/performance/fixtures/solo-remote-raster/stage-A-repeat-after-tint.png"
+        }
+      ],
+      "atlasUploads": [
+        {
+          "owner": 5,
+          "index": 0,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [0, 0],
+          "bytes": 16384,
+          "sha256": "ec7a0880116f1ca16eaa116db49c263b1e711e60cd3d91f69d89d466524e4c5f",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-5-frame-0.rgba"
+        },
+        {
+          "owner": 5,
+          "index": 1,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [64, 0],
+          "bytes": 16384,
+          "sha256": "5dd2f5c68f8f2f5e9104e329f7b6e93d0178bb7d3563d72f239db6544a0fd7f8",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-5-frame-1.rgba"
+        },
+        {
+          "owner": 5,
+          "index": 2,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [128, 0],
+          "bytes": 16384,
+          "sha256": "2023736efeb5f3c476e00af4117c238c4586a2b05c67f5c124bb8940b39d9ce9",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-5-frame-2.rgba"
+        },
+        {
+          "owner": 5,
+          "index": 3,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [192, 0],
+          "bytes": 16384,
+          "sha256": "1d79a406062e90c2dbda88e3f9283113b6241ba97f42a597170ba2f7d254136f",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-5-frame-3.rgba"
+        },
+        {
+          "owner": 7,
+          "index": 0,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [0, 0],
+          "bytes": 16384,
+          "sha256": "ec7a0880116f1ca16eaa116db49c263b1e711e60cd3d91f69d89d466524e4c5f",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-7-frame-0.rgba"
+        },
+        {
+          "owner": 7,
+          "index": 1,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [64, 0],
+          "bytes": 16384,
+          "sha256": "5dd2f5c68f8f2f5e9104e329f7b6e93d0178bb7d3563d72f239db6544a0fd7f8",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-7-frame-1.rgba"
+        },
+        {
+          "owner": 7,
+          "index": 2,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [128, 0],
+          "bytes": 16384,
+          "sha256": "2023736efeb5f3c476e00af4117c238c4586a2b05c67f5c124bb8940b39d9ce9",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-7-frame-2.rgba"
+        },
+        {
+          "owner": 7,
+          "index": 3,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [192, 0],
+          "bytes": 16384,
+          "sha256": "1d79a406062e90c2dbda88e3f9283113b6241ba97f42a597170ba2f7d254136f",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-7-frame-3.rgba"
+        }
+      ],
+      "originalAfterNoiseComparators": [
+        {
+          "owner": "A-with-replacements",
+          "stage": "after-noise",
+          "width": 768,
+          "height": 576,
+          "sha256": "324c96b64e23de8128ae28132f915c9861e169184a7c23b06b57102fa1655c70",
+          "bytes": 24003,
+          "path": "docs/performance/fixtures/solo-remote-raster/stage-A-with-replacements-after-noise.png"
+        },
+        {
+          "owner": "A-repeat",
+          "stage": "after-noise",
+          "width": 768,
+          "height": 576,
+          "sha256": "d6edf3f09339e8e4fd26947f1801fb3c231a7345ae6000af907f26daf1cbf5f8",
+          "bytes": 24321,
+          "path": "docs/performance/fixtures/solo-remote-raster/stage-A-repeat-after-noise.png"
+        }
+      ]
+    },
+    "attributeWitness": "Only conditional fresh prefix uses a declared forwarding getContext wrapper, collecting <=512 unique actual contexts and reading attributes once after all fixed draws. Full12 primary is exact-original/unwrapped. Conditional prefix PNGs must match all corresponding primary captures exactly before deeper localization.",
+    "sourceObservation": {
+      "perSourceBytes": 2097152,
+      "aggregateBytes": 8388608,
+      "records": 256
+    }
+  },
+  "scope": "All12 unchanged synthetic presentation cases per Linux engine using default native Canvas APIs. New Linux browser/backend stratum, no software-force or GPU/physical-device claim. Original Mac strict failure retained. Public production payload/CSP; no live gameplay or authentication claim. Default backend unknown; actual context attributes recorded only where the conditional diagnostic is admitted. Independent diagnostic only: the original seven-of-eight correctness failure remains unresolved; this observation cannot release timing or resolve the historical strict raster failure. This once-only successor corrects only the per-module source witness limit to admit the pinned1,265,063-byte localization catalogue required by the observed i18n/index.mjs import; aggregate8MiB and256source limits, all original browser protocols/captures/pixels/deadlines remain fixed.",
+  "acceptance": {
+    "primary": "All12 strict original invariants including identical-input, concealment, exposed positive controls, actor/lane visibility, animation, zero-dt stability and same-owner source replacement/restoration. Visual review remains pending separately.",
+    "conditional": "Only a clean full12 exact known control-failure class admits a fresh two-case prefix. All retained prefix PNGs must equal the same new cohort primary prefix; then14 compositor captures and6 fixed historical-input primitive draws. No automatic retry or relaxed threshold.",
+    "nonReproduction": "Latest Linux pass/non-reproduction cannot resolve prior Mac WebKit failure. Primitive historical comparisons remain descriptive, with no claimed latest live intermediate-input identity.",
+    "failure": "Any partial observation, deadline, cap, source/CSP mismatch, late request/page failure, unsettled source drain or unknown process closure fails and stops dependent localization."
+  },
+  "resources": {
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "finalizationReserveBytes": 4194304,
+    "helperDisjointMinutes": {
+      "candidatePreparation": 40,
+      "oneRowMaximum": 20,
+      "remainingFinalization": 15,
+      "total": 75
+    },
+    "jobDisjointMinutes": {
+      "checkoutAndNode": 7,
+      "dependenciesBrowsers": 20,
+      "testsAndBinding": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "upload": 10,
+      "total": 121,
+      "jobCap": 125
+    },
+    "stageProtocol": "Each stage120s observation, fresh browser/context, existing bounded cleanup and common outer1200s row. Four stages maximum; no extra warmup."
+  },
+  "bindingScope": {
+    "status": "independent-diagnostic-full-proof-reverified-before-every-row",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "candidateArtifact": 12082915872,
+    "firstEight": "Exact3ad run38985941469 retained seven passes and one WebKit worker auto-pause failure. This independent visual diagnostic retains firstEightAllCorrectnessPassed=false.",
+    "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
+    "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
+  }
+}

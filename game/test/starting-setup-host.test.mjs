@@ -217,6 +217,7 @@ for (const method of ['button', 'Escape', 'controller', 'pagehide'])
       const expected = verifyReplay(nativeSession(JSON.parse(raw)).replay).state;
       const tick = run.tick;
       h.$('start-button').click();
+      h.frame(0);
       h.frame();
       h.frame();
       assert.equal(h.rendered.paused, false);

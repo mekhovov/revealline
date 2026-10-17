@@ -79,16 +79,19 @@ export function validateOnlineSoundtrackSourceSettings(source) {
 export function createOnlineSoundtrackSourceManager({
   sources = DEFAULT_ONLINE_SOUNDTRACK_SOURCES,
   fetch = globalThis.fetch,
+  preparation = null,
 } = {}) {
   let entries = new Map(),
     generation = 0,
-    disposed = false;
-  const listeners = new Set();
+    disposed = false,
+    publishedSnapshot = null;
+  const listeners = new Set(),
+    lifetime = new AbortController();
   const authority = (url) =>
     createOnlineSoundtrackSourceAuthority(url, {
       allowUnknown: url !== ONLINE_SOUNDTRACK_CATALOGUE_URL,
     });
-  function snapshot() {
+  function buildSnapshot() {
     const grouped = new Map();
     for (const entry of entries.values()) {
       if (!entry.enabled) continue;
@@ -131,9 +134,10 @@ export function createOnlineSoundtrackSourceManager({
       limited: tracks.length > 512,
     });
   }
+  const snapshot = () => publishedSnapshot;
   function emit() {
     generation++;
-    const value = snapshot();
+    const value = (publishedSnapshot = buildSnapshot());
     for (const listener of listeners) {
       try {
         listener(value);
@@ -176,71 +180,95 @@ export function createOnlineSoundtrackSourceManager({
     entries = retained;
     return emit();
   }
-  async function refresh({ signal } = {}) {
+  async function refresh({ signal, preferCached = false } = {}) {
     required(!disposed, 'Soundtrack sources are closed.');
     if (signal?.aborted) return snapshot();
+    const cached = snapshot();
+    if (
+      preferCached &&
+      preparation?.snapshot().phase === 'playing' &&
+      (cached.tracks.length ||
+        cached.sources.every((source) => !source.enabled || source.status === 'ready'))
+    )
+      return cached;
     await Promise.all(
       [...entries.values()]
         .filter((entry) => entry.enabled)
         .map(async (entry) => {
           entry.controller?.abort();
           const controller = new AbortController(),
-            cancel = () => controller.abort();
+            cancel = () => controller.abort(),
+            owns = () =>
+              !disposed &&
+              entry.controller === controller &&
+              entries.get(entry.url) === entry &&
+              entry.enabled;
           entry.controller = controller;
           entry.authority ??= authority(entry.url);
           const token = entry.authority;
           signal?.addEventListener('abort', cancel, { once: true });
-          entry.status = 'loading';
-          entry.error = null;
-          emit();
+          const publish = (work, publicationSignal = controller.signal) =>
+            preparation
+              ? preparation.run('main', work, { signal: publicationSignal, eligible: owns })
+              : Promise.resolve(work());
+          const cancelled = () => {
+            if (!owns()) return;
+            // Cancellation settles its caller promptly. Only the bounded status
+            // notification waits; the accepted recording authority stays intact.
+            void publish(() => {
+              entry.controller = null;
+              entry.status = entry.tracks.length ? 'ready' : 'idle';
+              emit();
+            }, lifetime.signal).catch(() => {});
+          };
           try {
-            const catalogue = await fetchOnlineSoundtrackCatalogue({
+            const loading = () => {
+              entry.status = 'loading';
+              entry.error = null;
+              emit();
+            };
+            if (preparation) await publish(loading);
+            else loading();
+            await fetchOnlineSoundtrackCatalogue({
               fetch,
+              preparation,
               signal: controller.signal,
               sourceAuthority: token,
+              onResolved(catalogue) {
+                if (!owns() || controller.signal.aborted) return;
+                entry.tracks = catalogue.tracks;
+                entry.status = 'ready';
+                entry.controller = null;
+                emit();
+              },
             });
-            if (
-              disposed ||
-              controller.signal.aborted ||
-              entry.controller !== controller ||
-              entries.get(entry.url) !== entry ||
-              !entry.enabled
-            )
-              return;
-            entry.tracks = catalogue.tracks;
-            entry.status = 'ready';
           } catch (error) {
-            if (
-              disposed ||
-              entry.controller !== controller ||
-              entries.get(entry.url) !== entry ||
-              !entry.enabled
-            )
+            if (!owns()) return;
+            if (controller.signal.aborted || error?.name === 'AbortError') {
+              cancelled();
               return;
-            if (controller.signal.aborted) entry.status = entry.tracks.length ? 'ready' : 'idle';
-            else {
-              revokeOnlineSoundtrackSource(token);
-              entry.authority = null;
-              entry.tracks = [];
-              entry.status = 'error';
-              entry.error = String(error?.message ?? error).slice(0, 512);
+            }
+            try {
+              await publish(() => {
+                revokeOnlineSoundtrackSource(token);
+                entry.authority = null;
+                entry.tracks = [];
+                entry.status = 'error';
+                entry.error = String(error?.message ?? error).slice(0, 512);
+                entry.controller = null;
+                emit();
+              });
+            } catch {
+              cancelled();
             }
           } finally {
             signal?.removeEventListener('abort', cancel);
-            if (
-              !disposed &&
-              entry.controller === controller &&
-              entries.get(entry.url) === entry &&
-              entry.enabled
-            ) {
-              entry.controller = null;
-              emit();
-            }
           }
         }),
     );
     return snapshot();
   }
+
   setSources(sources);
   return Object.freeze({
     snapshot,
@@ -254,6 +282,7 @@ export function createOnlineSoundtrackSourceManager({
     dispose() {
       if (disposed) return;
       disposed = true;
+      lifetime.abort();
       for (const entry of entries.values()) {
         revoke(entry);
         entry.enabled = false;

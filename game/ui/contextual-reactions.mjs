@@ -415,6 +415,9 @@ export function attachContextualReactions({
       !preferences.snapshot().enabled ||
       !options.snapshot().speech ||
       !sound.context ||
+      sound.audioMaster?.muted ||
+      sound.audioMaster?.volume === 0 ||
+      ['playing', 'suspended'].includes(sound.mediaPreparation?.snapshot().phase) ||
       doc.hidden
     )
       return;
@@ -457,9 +460,10 @@ export function attachContextualReactions({
             warmup === warmupRevision &&
             getLocale() === locale &&
             !doc.hidden &&
+            !['playing', 'suspended'].includes(sound.mediaPreparation?.snapshot().phase) &&
             sound.context === context
           )
-            await cache.load(ids[index++], locale);
+            await cache.load(ids[index++], locale, { priority: 'background' });
         };
         await Promise.all([warm(), warm()]);
       })

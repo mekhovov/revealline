@@ -1,0 +1,461 @@
+{
+  "format": "SoloHostedSustainedManifestV1",
+  "cohort": "e1cc-candidate-only-geometric-next-v1",
+  "phase": "next",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "candidate": {
+    "revision": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
+    "tree": "58f19392e25384620d896098fce8616b538e318d",
+    "run": 39037874955,
+    "artifact": 12104590541,
+    "outer": {
+      "bytes": 1091965213,
+      "sha256": "fb85094a61cdc329ccf8a1488b6e3ca1043ef5f249a6b33729bb04141336af1e"
+    },
+    "inner": {
+      "bytes": 1073790972,
+      "sha256": "6c8bbb6aafe3f9d55e2fb445d5846a5e9d02ebd648c4e630889743bf76ec421e"
+    },
+    "manifestSHA256": "23f555db20036838cc1601f2cebf8f1a75eb62fb0c6cf36f1e1988035b3e1b64",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "scope": "source-only-no-observation"
+  },
+  "evidenceBytes": 536870912,
+  "rowEvidenceBytes": 134217728,
+  "setupTimeoutMs": 2400000,
+  "calibrationTimeoutMs": 300000,
+  "calibrationPreset": "mid",
+  "recipes": {
+    "next": {
+      "path": "docs/performance/fixtures/solo-remote-sustained/next-geometric.qualification.fixture",
+      "bytes": 9086,
+      "sha256": "0fd24c7db64be144da0d05b57ae26289b2a676a4f90df547d918c6cc13cef1a8"
+    },
+    "opening": {
+      "path": "docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture",
+      "bytes": 2897,
+      "sha256": "d36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e"
+    }
+  },
+  "frozenTools": [
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1815,
+      "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+    },
+    {
+      "path": "scripts/calibrate-solo-performance.mjs",
+      "bytes": 4773,
+      "sha256": "e8a6d45e8cc2a04d65537f2bc0a6d0d8df18caec2766de4cefb9a153ec6bc816"
+    },
+    {
+      "path": "scripts/core-soundtrack-publication.mjs",
+      "bytes": 5789,
+      "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+    },
+    {
+      "path": "scripts/external-distribution.mjs",
+      "bytes": 6651,
+      "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10450,
+      "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+    },
+    {
+      "path": "scripts/optional-artwork.mjs",
+      "bytes": 4613,
+      "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+    },
+    {
+      "path": "scripts/optional-distribution.mjs",
+      "bytes": 2584,
+      "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 85248,
+      "sha256": "8adf22811e2c88baa994931440a3acb84ace357b5c576f22f33831e9c8402022"
+    },
+    {
+      "path": "scripts/reviewed-soundtrack-batches.mjs",
+      "bytes": 16280,
+      "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 62481,
+      "sha256": "70fbe28bd86b03bf1a2832a00bbfb1c9104f64207e61cca04518e03c888cbd24"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/solo-owned-resource-assessment.mjs",
+      "bytes": 18699,
+      "sha256": "a916dbf4a843a360f573e0723bf20cfcf53b0250867a0553162af54460d01af5"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/solo-qualification-cadence.mjs",
+      "bytes": 7999,
+      "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+    },
+    {
+      "path": "scripts/solo-qualification-cpu-profile.mjs",
+      "bytes": 3270,
+      "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-hitch-journal.mjs",
+      "bytes": 33228,
+      "sha256": "393afd9eb51c9262168c7382c022de56234d3838357427e947f8d4812954161d"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-next-route.mjs",
+      "bytes": 30632,
+      "sha256": "0f44d3a873742ac30aa225b64cde1f3a892d3d7f9370c95e677dbf75009ada9d"
+    },
+    {
+      "path": "scripts/solo-qualification-observation.mjs",
+      "bytes": 24474,
+      "sha256": "fc8d6b03d49d44e2010acebb4f89188334503ef2a01316e0a9bdd4406e3b3d94"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-core.mjs",
+      "bytes": 5930,
+      "sha256": "1e96e592ee289685607515bbe14c8845f2c03dc81191a0772071fd9995ceb3ea"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-identity.mjs",
+      "bytes": 1866,
+      "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+    },
+    {
+      "path": "scripts/solo-qualification-replay.mjs",
+      "bytes": 1260,
+      "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+    },
+    {
+      "path": "scripts/solo-qualification-snapshot-store.mjs",
+      "bytes": 11359,
+      "sha256": "19f1989ca20ded51eebefd0a5fd6f8b01532dcc32150db25d26c80e025c5e51a"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 27145,
+      "sha256": "2dd2f085608c815ff7946f22272c321ae3d4ed8b7e91483a48730c1304ee1b30"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/soundtrack-archive-admissions.mjs",
+      "bytes": 5614,
+      "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 15378,
+      "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+    },
+    {
+      "path": "scripts/vendor/devtools-benchmark.mjs",
+      "bytes": 2739,
+      "sha256": "dc39973cdbf82704a3d623dd57d037ea501eb5761596c66e27f301c9e860af6b"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    }
+  ],
+  "release": {
+    "format": "SoloHostedPhaseReleaseV1",
+    "status": "reviewed-diagnostic-only",
+    "phase": "next",
+    "previousPhase": "soak",
+    "candidateRevision": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
+    "baselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "noUnclosedOwners": true,
+    "allPriorPlannedJobsClosed": true,
+    "priorProofInspected": true,
+    "firstEightAllCorrectnessPassed": false,
+    "evidence": [
+      {
+        "runId": 38985941469,
+        "artifactId": 12083397932,
+        "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+        "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39032516813,
+        "artifactId": 12100938294,
+        "artifactSHA256": "fb005ddd3ee3330573b4025a545db54354d153ff78606ead4c6f78bacbb5e152",
+        "summarySHA256": "7406774c73870ca7f5ae54f0b6952548a61233658e2e7bf84249d57409317767",
+        "disposition": "passed"
+      },
+      {
+        "runId": 39032516742,
+        "artifactId": 12101200867,
+        "artifactSHA256": "55392f31cbf876d2e640e65ed5070a45521a263b011e38bd8140ba87cdaf3e4c",
+        "summarySHA256": "16f14cf6dabadc3275f65810d00654a5587e178b13106bdf6cd5a56c272b6ce4",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39032516742,
+        "artifactId": 12100704184,
+        "artifactSHA256": "e985dfb1b0ed73d940e670286b87c75b93b4692c690f256ab6f9a7f8c543b55a",
+        "summarySHA256": "98368eb43a31a163e9d71ebbd05cff61c3c85994c74763509da7bee927246045",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39037875135,
+        "artifactId": 12102608081,
+        "artifactSHA256": "9f3fca4a27dac5990b0df2f14b1445616371e4bc2780795679dc903989e3d09b",
+        "summarySHA256": "c56ceadaf795a35ee04c9bee5788236b35de4d15e2e768c3bbb4fd9aac17cd93",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39037875135,
+        "artifactId": 12102818956,
+        "artifactSHA256": "b24e696cb39d5d44819e7614fc5a60019a18dd4116ee9965bca3b01c1fedf382",
+        "summarySHA256": "ff0046ced5205277f03dec009d7d1b8f04fb384b4f600ff04218079925f5ef5e",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39037875135,
+        "artifactId": 12102868074,
+        "artifactSHA256": "4a36ae3735bf7895a6972a761dc77e3dcbd01a05a38e22dab5a57a023cd23d5b",
+        "summarySHA256": "bb09e870a1209784ad17a3f9a37f68cd11c8fc1849a331367c7c8656f0791576",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39037875135,
+        "artifactId": 12103061473,
+        "artifactSHA256": "b8dc2ffa0a6049c5dcfee379bf3721931cdb2e1ce9c7f61f19c92085580e6c15",
+        "summarySHA256": "bcd50e8938bd7fa8b2ec2af621c0f0b9793c398f7b8d7bb184bcbd43c91b224a",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39037875135,
+        "artifactId": 12103256242,
+        "artifactSHA256": "a845bf1d580d9725bf57efa7bed8d4c96c7156e75d476334fc2d6d8fd5beeaef",
+        "summarySHA256": "3dea6e3a039212c49db7085a96a96da64f075ea057091145e25055b96222b002",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39037875135,
+        "artifactId": 12103500501,
+        "artifactSHA256": "3c04a7fe3593a5a1d497bb6c98acef8a07235eec5a8fd0dc80a5952a0fe070da",
+        "summarySHA256": "241f2e5523551cd7c5106909832c662dab422a717c24d3f1254692924f4da052",
+        "disposition": "failed-reviewed"
+      }
+    ],
+    "scope": "independent-candidate-transition-diagnostics",
+    "predecessorRun": 38985941469,
+    "automaticRetries": 0,
+    "automaticPhaseContinuation": false,
+    "performanceQualification": "not-qualified-diagnostic-only",
+    "sourceCohort": "next-candidatee1cc-geometric-v1",
+    "onceOnlyBefore": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
+    "ownerScope": "Only the two terminal prior e1cc Linux qualification cohorts: six Next setup jobs and six readiness rows,36 clean closed commands. Earlier scoped closure remains retained; no Darwin/unrelated CI/future-wave assertion. Same-wave siblings use separate hosted owners."
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 134217728,
+    "aggregateEvidenceBytes": 536870912,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "Final-only 152-minute job contains the unchanged 105-minute helper and47-minute setup/shutdown/upload envelope; full source checkouts3minutes each, sparse tools2minutes. No automatic retry, observation extension or overload resume.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824
+  },
+  "scope": "Candidate-only e1cc authored transition/resource diagnostic; six fresh observations, no baseline payload or timing/native-memory qualification.",
+  "jobs": [
+    { "engine": "chromium", "repetition": 1 },
+    { "engine": "chromium", "repetition": 2 },
+    { "engine": "chromium", "repetition": 3 },
+    { "engine": "webkit", "repetition": 1 },
+    { "engine": "webkit", "repetition": 2 },
+    { "engine": "webkit", "repetition": 3 }
+  ],
+  "deadlines": {
+    "outsideHelper": {
+      "checkoutsAndNodeMinutes": 9,
+      "dependencySetupMinutes": 20,
+      "wrapperTestsAndBindingMinutes": 3,
+      "outerAndStepShutdownMarginMinutes": 3,
+      "setupEvidenceRetentionMinutes": 2,
+      "artifactUploadMinutes": 10
+    },
+    "insideHelper": {
+      "artifactPreparationMinutes": 40,
+      "calibrationMinutes": 5,
+      "phases": {
+        "next": {
+          "perArmMinutes": 24,
+          "armCount": 1,
+          "rowBoundaryAndFinalizationReserveMinutes": 12,
+          "helperMinutes": 105,
+          "wholeJobMinutes": 152,
+          "unusedFormerComparisonMinutes": 24
+        }
+      },
+      "baselineBuildScope": "8b is a source-only identity. No baseline archive, build, server or observation is admitted."
+    },
+    "controlJobMinutes": 5,
+    "enforcement": "Original105-minute helper and152-minute job ceilings retained without renewal. One24-minute candidate arm; unused comparison time is not another observation or retry. The5-minute declaration job is separate.",
+    "unreleasedPhaseScope": "No other phase is released by this declaration."
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-sustained.mjs",
+      "bytes": 84614,
+      "sha256": "92df05f3053a287ad03d6fd67a5a3080bdeeceb4a660ab4b70009baa276d1c94"
+    }
+  ],
+  "performanceExclusion": true,
+  "sourceCohort": "next-candidatee1cc-geometric-v1",
+  "latestSourceRevision": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
+  "latestRuntimeRevision": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
+  "hitchJournal": "bounded-v1",
+  "executionAdmission": "Reviewed exact118 package, scoped prior Linux owners and current tooling; one-shot before-e1cc only. Full archive/source/CSP verification remains remote. Original failures and all numerical gates remain unchanged.",
+  "packageMetadataProof": {
+    "path": ".cache/solo-followup/e1cc-package-next/candidate-pins.json",
+    "bytes": 1110,
+    "sha256": "fd82e61aee70d927d9860e62063dd373733d6d3108d61e8b4bd0e5a22849b54a"
+  },
+  "historicalPrerequisite": {
+    "run": 38985941469,
+    "firstEightAllCorrectnessPassed": false,
+    "scope": "Historical failed cohort retained; this is independent excluded diagnostic admission, not promotion."
+  },
+  "candidateOnly": true,
+  "nativeRouteProtocol": "authored-next-geometric-v1",
+  "performanceScope": "Eleven authored wins and ten manual Next transitions at exact e1cc. Bounded rendered-state reads and snapshots are excluded from timing comparisons. All raw numerical failures retained; this protocol does not qualify retention stability or general handheld layout.",
+  "ordering": {
+    "scope": "Three independent candidate-only repetitions per engine; no baseline observation or pooled timing.",
+    "roles": ["candidate"]
+  },
+  "releaseTrigger": {
+    "status": "reviewed-one-shot",
+    "onceOnlyBefore": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
+    "automaticRetries": 0
+  },
+  "priorLinuxOwners": {
+    "path": ".cache/solo-followup/e1cc-package-next/prior-linux-owner-readback.json",
+    "bytes": 17356,
+    "sha256": "a9c8afc47cc982ed74a87af50a7c4bab60dd5fd8dbc6c494ce39d48dc01383a1"
+  },
+  "currentSourceCorrectness": {
+    "status": "unobserved",
+    "sourceRevision": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
+    "scope": "No e1cc native first-eight/layout result is inferred from the producer or older c696 observations."
+  },
+  "predecessorSetupFailure": {
+    "run": 39037875135,
+    "toolingRevision": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
+    "candidateRevision": "c696af41857840359ae473558b90682f3d71f2db",
+    "nativeObservations": 0,
+    "failedJobs": 6,
+    "closedCommands": 24,
+    "analysis": {
+      "path": ".cache/solo-followup/e1cc-package-next/next-terminal-analysis.json",
+      "bytes": 23009,
+      "sha256": "e9432643fd0906cc4fe85e399c14613083a0e888eb61e366f0445522f1ac3d6c"
+    },
+    "correction": "Eager baseline preparation requires an actually admitted baseline row; no native protocol or gate change."
+  }
+}

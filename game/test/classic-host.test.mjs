@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { readFileSync } from 'node:fs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
@@ -37,8 +38,8 @@ async function setup(t, index, { stopOnCapture, journey = false, level } = {}) {
   candidate.campaigns[0].levels = [level ?? candidate.campaigns[0].levels[index]];
   if (stopOnCapture !== undefined)
     candidate.campaigns[0].levels[0].rules.stopOnCapture = stopOnCapture;
-  page.$('library-button').click();
-  page.doc.querySelector('[data-library-panel="packs"]').click();
+  await activateHostAction(page.$('library-button'));
+  await activateHostAction(page.doc.querySelector('[data-library-panel="packs"]'));
   assert.equal(page.$('library-packs').hidden, false);
   page.$('pack-json').value = JSON.stringify(candidate);
   page.$('install-pack').click();

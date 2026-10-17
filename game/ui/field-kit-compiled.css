@@ -605,15 +605,18 @@
   /* Keep the starting border and actors clear of the HUD in short landscape. */
   @media (orientation: landscape) and (max-height: 600px),
     (orientation: landscape) and (any-pointer: coarse) {
-    .field-kit.game-shell[data-flight-state='running'] {
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) {
       --fk-flight-header: 112px;
       --fk-flight-bottom: 4px;
       --fk-flight-music: 0px;
     }
-    .field-kit.game-shell[data-flight-state='running']:has(#game-now-playing:not([hidden])) {
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']):has(
+        #game-now-playing:not([hidden])
+      ) {
       --fk-flight-music: 44px;
     }
-    .field-kit.game-shell[data-flight-state='running'] #game-now-playing {
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      #game-now-playing {
       position: fixed;
       z-index: 6;
       top: calc(var(--safe-top) + var(--fk-flight-header));
@@ -626,29 +629,38 @@
       background: var(--fk-bg);
       font-size: var(--fk-text-secondary);
     }
-    .field-kit.game-shell[data-flight-state='running'] #game-now-playing-title {
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      #game-now-playing-title {
       min-width: 0;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .field-kit.game-shell[data-flight-state='running'] #game-now-playing-source {
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      #game-now-playing-source {
       flex-shrink: 0;
     }
-    .field-kit.game-shell[data-flight-state='running'][data-text-size='large'] {
+    .field-kit.game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      )[data-text-size='large'] {
       --fk-flight-header: 128px;
     }
-    .field-kit.game-shell[data-flight-state='running'] .telemetry {
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .telemetry {
       width: min(calc(100vw - 192px), 680px);
       left: calc(50% - 26px);
       grid-template-columns: 1.4fr 1fr 1fr 1fr;
       border-radius: 0;
       background: var(--fk-bg);
     }
-    .field-kit.game-shell[data-flight-state='running'] .telemetry #target {
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .telemetry
+      #target {
       white-space: nowrap;
     }
-    .field-kit.game-shell[data-flight-state='running'] #run-message {
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      #run-message {
       position: fixed;
       top: calc(var(--safe-top) + var(--fk-flight-header) - 28px);
       left: max(12px, var(--safe-left));
@@ -664,13 +676,16 @@
       background: var(--fk-bg);
       z-index: 6;
     }
-    .field-kit.game-shell[data-flight-state='running'] #shell-menu[data-presentation-icon] {
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      #shell-menu[data-presentation-icon] {
       font-size: 0;
       display: grid;
       place-items: center;
     }
-    .field-kit.game-shell[data-flight-state='running'] .arena-panel > .arena-shell,
-    .field-kit.game-shell[data-flight-state='running']
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .arena-panel
+      > .arena-shell,
+    .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       .arena-panel:has(> .encounter-status:not([hidden]))
       > .arena-shell {
       top: calc(

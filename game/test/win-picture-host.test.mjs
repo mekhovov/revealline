@@ -62,8 +62,23 @@ function rendering() {
 }
 
 async function win(t, { reduced = false, readPads, beforeFrame } = {}) {
+  // Model one monotonic browser clock for both scene cadence and measured work.
+  // The recording canvas executes slowly in Node; that fixture cost must not
+  // turn a full-effects presentation check into an adaptive-quality test.
+  let now = performance.now();
+  const previous = Object.getOwnPropertyDescriptor(performance, 'now');
+  Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
+  t.after(() =>
+    previous ? Object.defineProperty(performance, 'now', previous) : delete performance.now,
+  );
   const surface = rendering();
   const page = await soloPage(t, { campaign, rendering: surface, readPads });
+  const originalFrame = page.frame;
+  page.frame = (ms = 1000 / 120, options) => {
+    beforeFrame?.(page.rendered.run);
+    now += ms;
+    originalFrame(ms, options);
+  };
   await settle(() => surface.frame.painter.image !== null);
   if (reduced) {
     page.$('reduced-effects').checked = true;
@@ -74,12 +89,10 @@ async function win(t, { reduced = false, readPads, beforeFrame } = {}) {
   assert.equal(page.doc.body.dataset.flightState, 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
-  for (let tick = 0; tick < 900 && page.rendered.run.status === 'running'; tick++) {
-    beforeFrame?.(page.rendered.run);
-    page.frame();
-  }
+  for (let tick = 0; tick < 900 && page.rendered.run.status === 'running'; tick++) page.frame();
   assert.equal(page.rendered.run.status, 'won', 'Real controls earn the picture.');
   assert.equal(page.rendered.fullReveal, true);
+  assert.equal(page.rendered.quality, reduced ? 'reduced' : 'full');
   assert.equal(page.rendered.paused, true);
   assert.equal(page.$('game-overlay').hidden, true);
   assert.equal(page.$('skip-celebration').hidden, true);
@@ -120,7 +133,8 @@ for (const reduced of [false, true])
     } else
       for (
         let i = 0;
-        i < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && !surface.frame.painter.celebrationStatus.finished;
+        i < Math.ceil(CELEBRATION_SECONDS * 10) + 2 &&
+        !surface.frame.painter.celebrationStatus.finished;
         i++
       )
         page.frame(100);
@@ -128,12 +142,20 @@ for (const reduced of [false, true])
     // The painter reaches its terminal frame before the host consumes that
     // status on the following update.
     page.frame(0);
-    assert.equal(page.$('game-overlay').hidden, true, 'The earned picture fills the game after the celebration.');
+    assert.equal(
+      page.$('game-overlay').hidden,
+      true,
+      'The earned picture fills the game after the celebration.',
+    );
     assert.equal(page.$('show-result').hidden, false);
     assert.equal(page.doc.body.dataset.winPicture, 'settled');
     assert.equal(page.$('next-button').hidden, true, 'Next appears after the short picture hold.');
     for (let i = 0; i < Math.ceil(REWARD_SETTLED_SECONDS * 10) + 2; i++) page.frame(100);
-    assert.equal(page.$('game-overlay').hidden, false, 'The result follows without requiring a click.');
+    assert.equal(
+      page.$('game-overlay').hidden,
+      false,
+      'The result follows without requiring a click.',
+    );
     assert.equal(page.$('game-overlay').dataset.kind, 'won');
     assert.equal(page.$('show-result').hidden, true);
     assert.equal(page.$('next-button').hidden, false);
@@ -187,12 +209,6 @@ test('the automatic victory presentation does not expose a redundant animation-s
 });
 
 test('held controller Confirm cannot interrupt the automatic victory presentation', async (t) => {
-  let now = 1000;
-  const previous = Object.getOwnPropertyDescriptor(performance, 'now');
-  Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
-  t.after(() =>
-    previous ? Object.defineProperty(performance, 'now', previous) : delete performance.now,
-  );
   const pad = {
     index: 0,
     id: 'Win picture controller',
@@ -205,16 +221,12 @@ test('held controller Confirm cannot interrupt the automatic victory presentatio
   const { page } = await win(t, {
     readPads: () => [pad],
     beforeFrame(run) {
-      now += 1000 / 120;
       if (run.player.y > 34) confirm(true);
     },
   });
   assert.equal(pad.buttons[0].pressed, true, 'Confirm was already held at the legal winning cut.');
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
-  const frame = () => {
-    now += 16;
-    page.frame(16);
-  };
+  const frame = () => page.frame(16);
   for (let i = 0; i < 24; i++) frame();
   assert.equal(page.$('skip-celebration').hidden, true);
   assert.equal(page.$('game-overlay').hidden, true);

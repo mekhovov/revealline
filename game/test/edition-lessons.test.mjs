@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createMediaPreparation } from '../ui/media-preparation.mjs';
 import { mountEditionLessons } from '../ui/edition-lessons.mjs';
 import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
 import { createCompanyProject } from '../company-campaigns/content.mjs';
@@ -502,7 +503,7 @@ test('optional bonus waits for won picture, cannot change progression, and reope
   assert.equal(doc.getElementById('edition-lesson-dialog'), null);
 });
 
-test('independent completed bonuses both persist when replay proofs finish out of order', async (t) => {
+test('independent completed bonuses defer verification during play and persist out of order on Pause', async (t) => {
   const lessons = COMPANY_LESSONS.filter(
       (entry) => entry.campaignId === 'coupa-source-to-pay',
     ).slice(0, 2),
@@ -553,8 +554,21 @@ test('independent completed bonuses both persist when replay proofs finish out o
     node.id = id;
     doc.body.append(node);
   }
+  const media = createMediaPreparation();
+  t.after(() => media.close());
+  let chunks = 0;
   let current = runs[0];
   const view = await mountEditionLessons({
+    scheduleReplayChunk: (work, { signal }) =>
+      media.run(
+        'main',
+        () => {
+          chunks++;
+          work();
+          if (chunks === 1) media.setPhase('playing');
+        },
+        { signal },
+      ),
     provider: { editionId: 'coupa-foundations', route: { source }, lessons },
     document: doc,
     window: { localStorage: storage, setTimeout },
@@ -605,6 +619,15 @@ test('independent completed bonuses both persist when replay proofs finish out o
   complete(lessons[0], runs[0]);
   assert.equal(typeof releaseFirst, 'function');
   complete(lessons[1], runs[1]);
+  for (let tries = 0; tries < 1000 && media.snapshot().queued !== 1; tries++)
+    await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.equal(media.snapshot().queued, 1);
+  assert.equal(chunks, 1);
+  assert.equal(saved().length, 0, 'Closing the bonus does not admit work during play.');
+  await new Promise((resolve) => setTimeout(resolve, 20));
+  assert.equal(chunks, 1);
+  assert.equal(saved().length, 0);
+  media.setPhase('paused');
   await waitFor(1);
   assert.equal(saved()[0].attempt.missionId, lessons[1].missionId);
   const revisit = view.pictureReady(

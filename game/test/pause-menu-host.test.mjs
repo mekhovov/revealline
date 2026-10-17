@@ -188,6 +188,8 @@ test('Solo shell tools opened during flight return focus inside the Pause menu',
     page.$(shellAction).focus();
     page.$(shellAction).click();
     assert.equal(page.$(dialog).open, true);
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    page.frame(0);
     assert.equal(page.rendered.paused, true);
     assert.equal(page.$('game-overlay').dataset.kind, 'pause');
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);

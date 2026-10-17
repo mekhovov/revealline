@@ -6,6 +6,7 @@ import os from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash, webcrypto } from 'node:crypto';
 import vm from 'node:vm';
+import { parse } from '../../publishing/vendor/acorn-8.18.0.mjs';
 import { readBuildConfig, collectBuildFiles, buildProject } from '../../scripts/game-cli.mjs';
 import { planCurrentEntries } from '../../scripts/pages-current-entry.mjs';
 import { projectEditionModuleIndentation } from '../../scripts/edition-code-indentation.mjs';
@@ -499,16 +500,40 @@ async function fixture(t) {
     await put(name, bytes);
     // Launcher template imports resolve after relocation into app/, not offline/.
     if (!/\.m?js$/.test(name) || name === 'game/offline/app.mjs') return;
-    for (const match of bytes
-      .toString()
-      .matchAll(
-        /(?:^|[;\r\n])\s*(?:import\b\s*(?:[^;"']*?\bfrom\s*)?|export\b[^;"']*?\bfrom\s*)["']([^"']+)["']/g,
-      )) {
+    const references = new Set();
+    const visit = (node) => {
+      if (!node || typeof node !== 'object') return;
+      if (
+        [
+          'ImportDeclaration',
+          'ExportNamedDeclaration',
+          'ExportAllDeclaration',
+          'ImportExpression',
+        ].includes(node.type)
+      ) {
+        const source = node.source;
+        const reference =
+          source?.type === 'Literal' && typeof source.value === 'string'
+            ? source.value
+            : source?.type === 'TemplateLiteral' && source.expressions.length === 0
+              ? source.quasis[0].value.cooked
+              : null;
+        if (reference !== null) references.add(reference);
+      }
+      for (const child of Object.values(node)) {
+        if (Array.isArray(child)) child.forEach(visit);
+        else if (child && typeof child === 'object') visit(child);
+      }
+    };
+    visit(
+      parse(bytes.toString(), { sourceType: 'module', ecmaVersion: 'latest', allowHashBang: true }),
+    );
+    for (const reference of references) {
       assert.ok(
-        match[1].startsWith('.'),
-        `Workshop graph has an unexpected external import: ${match[1]}`,
+        reference.startsWith('.'),
+        `Workshop graph has an unexpected external import: ${reference}`,
       );
-      await copy(path.posix.normalize(path.posix.join(path.posix.dirname(name), match[1])));
+      await copy(path.posix.normalize(path.posix.join(path.posix.dirname(name), reference)));
     }
   };
   // Exact workshop modules and their transitive literal import graph. Include the

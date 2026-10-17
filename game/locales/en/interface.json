@@ -5891,5 +5891,7 @@
   "expeditions.allRelays": "Open all {{count}} relays",
   "expeditions.allStages": "Capture {{count}} numbered targets in order",
   "expeditions.relayProgress": "Relays {{done}}/{{total}}",
-  "expeditions.stageProgress": "Targets {{done}}/{{total}}"
+  "expeditions.stageProgress": "Targets {{done}}/{{total}}",
+  "gettingReadyGameplayIsPaused": "Getting ready. Gameplay is paused.",
+  "gameNotReadyTryStartOrResumeAgain": "The game is not ready yet. Try Start or Resume again."
 }

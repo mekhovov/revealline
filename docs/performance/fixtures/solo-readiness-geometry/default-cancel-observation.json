@@ -1,0 +1,60 @@
+{
+  "format": "SoloFirstRunningReadinessV1",
+  "protocol": "selected-font-cancel-joined-v2",
+  "capacity": 8,
+  "maximumBytes": 16384,
+  "dropped": 0,
+  "errors": 0,
+  "disposed": false,
+  "records": [
+    {
+      "kind": "cancel-back",
+      "atMs": 100,
+      "phase": "briefing",
+      "visible": true,
+      "focused": true,
+      "trusted": true,
+      "run": 1,
+      "tick": 0,
+      "prepared": null,
+      "displayedBoardValid": null,
+      "preparedRunMatches": false,
+      "submittedRunMatches": false,
+      "levelId": "first-return",
+      "cadence": null,
+      "font": {
+        "openDialogs": 0,
+        "preparation": "busy",
+        "acceptedTheme": "industrial",
+        "selectedTheme": false,
+        "loaded": true,
+        "defaultPrevented": false
+      }
+    },
+    {
+      "kind": "cancel-complete",
+      "atMs": 100,
+      "phase": "briefing",
+      "visible": true,
+      "focused": true,
+      "trusted": true,
+      "run": 1,
+      "tick": 0,
+      "prepared": null,
+      "displayedBoardValid": null,
+      "preparedRunMatches": false,
+      "submittedRunMatches": false,
+      "levelId": "first-return",
+      "cadence": null,
+      "font": {
+        "openDialogs": 0,
+        "preparation": "cancelled",
+        "acceptedTheme": "industrial",
+        "selectedTheme": false,
+        "loaded": true,
+        "defaultPrevented": true
+      }
+    }
+  ],
+  "scope": "Passive public-click/phase boundary snapshots; not proof of physical display completion."
+}

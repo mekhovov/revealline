@@ -1,0 +1,183 @@
+{
+  "format": "SoloQualificationV1",
+  "kind": "lifecycle",
+  "timeoutMs": 240000,
+  "query": {
+    "journey": "opening"
+  },
+  "replayRequirements": {
+    "movingTicks": 120
+  },
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-return",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+      "name": "First return",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.3
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 58.5,
+          "y": 23.5,
+          "vx": 7.81352993211135,
+          "vy": -7.81352993211135,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  },
+  "id": "optional-audio-start-missing-settings-first-return-v2",
+  "coverage": [
+    "Correctness only: public Settings Gameplay selects Campaign artwork, public Close returns through compact categories when necessary, then public Home sound toggle and Featured Start demand the unchanged exact code-owned start.wav before one declared empty404.",
+    "Missing launch sample may be intentionally silent if other cues are ready; fallback means prepared gameplay proceeds. Existing native audio-operation counters show activation only, not audible output or a specific procedural replacement.",
+    "All required image/font originals and simulation remain unchanged. Meaningful movement, Pause, existing strict same-engine replay and idle bounded audio/media owners are required. No timing or decoder-stall claim.",
+    "Final paused snapshot polls existing compact owner counts at100ms for at most10s inside the unchanged240s scenario; retain pre-settlement counts and fail if owners stay busy. No active-frame polling or delay before Start."
+  ],
+  "actions": [
+    {
+      "type": "click",
+      "selector": "#shell-options"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-tab-gameplay"
+    },
+    {
+      "type": "select",
+      "selector": "#menu-actor-style",
+      "value": "campaign",
+      "label": "optional-audio-campaign-actors"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-dialog .dialog-close"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-dialog[open] .dialog-close",
+      "optional": true
+    },
+    {
+      "type": "expect",
+      "selector": "body:not(:has(#settings-dialog[open]))",
+      "timeoutMs": 10000
+    },
+    {
+      "type": "expect",
+      "selector": "#shell-sound[aria-pressed=\"false\"]",
+      "timeoutMs": 15000
+    },
+    {
+      "type": "click",
+      "selector": "#shell-sound",
+      "label": "optional-audio-public-unmute"
+    },
+    {
+      "type": "expect",
+      "selector": "#shell-sound[aria-pressed=\"true\"]",
+      "timeoutMs": 15000
+    },
+    {
+      "type": "snapshot",
+      "group": "optional-audio-before-start"
+    },
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 15000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1200,
+      "label": "meaningful-safe-border"
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused",
+      "timeoutMs": 10000
+    },
+    {
+      "type": "snapshot",
+      "group": "after-media-fault",
+      "timeoutMs": 10000
+    },
+    {
+      "type": "exportReplay",
+      "label": "after-media-fault"
+    }
+  ],
+  "mediaReadinessFault": {
+    "protocol": "optional-audio-start-missing-v1",
+    "sourceRevision": "e1cc5dd7656bab349715cd1c3ce6e9f783508c17",
+    "route": "settings-gameplay-v2"
+  },
+  "expectAudio": {
+    "unmuted": true,
+    "nativeStartsAtLeast": 1
+  }
+}

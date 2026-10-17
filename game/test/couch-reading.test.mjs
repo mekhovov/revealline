@@ -3,6 +3,22 @@ import assert from 'node:assert/strict';
 import { couchPage } from './helpers/couch-host.mjs';
 import { page as teamPage } from './helpers/coop-host.mjs';
 
+// Preserve strict object identity without formatting the cyclic fake DOM on failure.
+function assertSameReference(actual, expected, message = 'Expected the same owned object.') {
+  if (Object.is(actual, expected)) return;
+  const describe = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    return (
+      [value.tagName, value.id, value.sha256]
+        .filter((part) => typeof part === 'string' && part.length > 0)
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.fail(`${message} Actual: ${describe(actual)}; expected: ${describe(expected)}.`);
+}
+
 const pad = () => ({
   index: 0,
   id: 'Reading controller',
@@ -119,7 +135,7 @@ for (const mode of ['Versus', 'Team']) {
       f.press('Enter');
       f.release('Enter');
       const region = f.control('help-reading');
-      assert.equal(f.doc.activeElement, region);
+      assertSameReference(f.doc.activeElement, region);
       assert.equal(f.control('help-reading-done').disabled, false);
       assert.equal(region.getAttribute('aria-describedby'), f.control('help-reading-hint').id);
       assert.match(f.control('help-reading-hint').textContent, /Enter, Space or Escape returns/);
@@ -131,7 +147,7 @@ for (const mode of ['Versus', 'Team']) {
       );
       assert.equal(f.press(key).defaultPrevented, true);
       f.release(key);
-      assert.equal(f.doc.activeElement, f.control('help-read'));
+      assertSameReference(f.doc.activeElement, f.control('help-read'));
       assert.equal(f.control('help-reading-done').disabled, true);
       assert.equal(region.hasAttribute('data-controller-reading'), false);
       assert.doesNotMatch(
@@ -167,7 +183,7 @@ for (const mode of ['Versus', 'Team']) {
       const down = done.emit('pointerdown', { pointerType, pointerId: 2, button: 0 });
       assert.equal(down.defaultPrevented, true);
       done.emit('pointercancel', { pointerType, pointerId: 2 });
-      assert.equal(f.doc.activeElement, region);
+      assertSameReference(f.doc.activeElement, region);
       assert.equal(done.disabled, true);
       assert.deepEqual(f.state(), before);
       entry.emit('pointerdown', { pointerType, pointerId: 3, button: 0 });
@@ -176,7 +192,7 @@ for (const mode of ['Versus', 'Team']) {
       done.emit('pointerdown', { pointerType, pointerId: 3, button: 0 });
       done.emit('pointerup', { pointerType, pointerId: 3, button: 0 });
       done.click();
-      assert.equal(f.doc.activeElement, entry);
+      assertSameReference(f.doc.activeElement, entry);
       assert.equal(done.disabled, true);
       done.click();
       f.tick(30);
@@ -207,13 +223,13 @@ for (const mode of ['Versus', 'Team']) {
     region.scrollTop = 80;
     region.emit('pointercancel', { pointerType: 'touch', pointerId: 5, isPrimary: true });
     f.tick(4);
-    assert.equal(f.doc.activeElement, region);
+    assertSameReference(f.doc.activeElement, region);
     assert.equal(done.disabled, false);
     assert.equal(region.hasAttribute('data-controller-reading'), true);
     assert.match(f.control('help-reading-hint').textContent, /Done reading returns/);
     done.emit('pointerdown', { pointerType: 'touch', pointerId: 6, button: 0 });
     done.click();
-    assert.equal(f.doc.activeElement, entry);
+    assertSameReference(f.doc.activeElement, entry);
     assert.equal(done.disabled, true);
     f.tick(30);
     assert.deepEqual(f.state(), before);
@@ -234,7 +250,7 @@ for (const mode of ['Versus', 'Team']) {
     const prior = unit.scrolled;
     f.win.emit('resize');
     assert.equal(unit.scrolled, prior + 1);
-    assert.equal(f.doc.activeElement, region);
+    assertSameReference(f.doc.activeElement, region);
     assert.equal(f.control('help-reading-done').disabled, false);
     f.tick(30);
     assert.deepEqual(f.state(), before);
@@ -242,7 +258,7 @@ for (const mode of ['Versus', 'Team']) {
     f.release('Escape');
     f.win.emit('resize');
     assert.equal(unit.scrolled, prior + 1, 'Inactive reading cannot reclaim scroll or focus.');
-    assert.equal(f.doc.activeElement, f.control('help-read'));
+    assertSameReference(f.doc.activeElement, f.control('help-read'));
   });
 
   test(`${mode} fresh input changes reading copy while an idle pad preserves keyboard ownership`, async (t) => {
@@ -259,7 +275,7 @@ for (const mode of ['Versus', 'Team']) {
     f.openHelp();
     f.control('help-reading').scrollHeight = 500;
     f.pulse(0);
-    assert.equal(f.doc.activeElement, f.control('help-reading'));
+    assertSameReference(f.doc.activeElement, f.control('help-reading'));
     assert.match(f.control('help-reading-hint').textContent, /South or East returns/);
     const before = f.state();
     assert.equal(f.press('ArrowDown').defaultPrevented, true);
@@ -274,7 +290,7 @@ for (const mode of ['Versus', 'Team']) {
     f.pulse(13);
     assert.match(f.control('help-reading-hint').textContent, /South or East returns/);
     f.pulse(1);
-    assert.equal(f.doc.activeElement, f.control('help-read'));
+    assertSameReference(f.doc.activeElement, f.control('help-read'));
     assert.equal(f.control('help-reading-done').disabled, true);
     assert.deepEqual(f.state(), before);
   });
@@ -290,7 +306,7 @@ for (const mode of ['Versus', 'Team']) {
     assert.equal(f.control('help-reading-done').disabled, true);
     assert.equal(f.control('help-reading').hasAttribute('data-controller-reading'), false);
     f.control('help-reading-done').click();
-    assert.equal(f.doc.activeElement, returnFocus);
+    assertSameReference(f.doc.activeElement, returnFocus);
     assert.deepEqual(f.state(), before);
     f.openHelp();
     f.press('Enter');
@@ -302,6 +318,6 @@ for (const mode of ['Versus', 'Team']) {
     f.doc.body.focus();
     f.control('help-read').click();
     f.control('help-reading-done').click();
-    assert.equal(f.doc.activeElement, f.doc.body);
+    assertSameReference(f.doc.activeElement, f.doc.body);
   });
 }

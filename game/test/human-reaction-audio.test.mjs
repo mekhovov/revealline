@@ -1,3 +1,4 @@
+import { pcmWaveBlob } from './helpers/pcm-wave.mjs';
 import { createWorldAudio } from '../../optional-practice/civilian-fpv/world-audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import test from 'node:test';
@@ -213,7 +214,7 @@ test('published vocal replacements use the same slot, attenuation and owned life
     numberOfChannels: 1,
     getChannelData: () => new Float32Array(3200).fill(0.5),
   });
-  h.soundscape.setPublishedAudio(async () => ({ blob: new Blob([new Uint8Array(8)]) }));
+  h.soundscape.setPublishedAudio(async () => ({ blob: pcmWaveBlob({ seconds: 0.4 }) }));
   await h.soundscape.enable();
   await h.soundscape.publishedAudio.prepare(HUMAN_REACTION_CUES);
   assert(h.soundscape.humanReaction(human));

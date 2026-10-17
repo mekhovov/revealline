@@ -1,0 +1,64 @@
+# Irregular delivery and audio-view follow-up
+
+This follow-up addresses presentation work found during qualification. It does not change authoritative simulation, input sampling, saves, transport ownership or replay formats. Native timing and thermal results remain separate from these modeled correctness checks.
+
+## Decorative adaptation
+
+Commit `5076a0a83903661dc185478555be3ccb7cede085` adds a 512-byte interval histogram to the existing quality policy. A substantial population in two separated cadence buckets can identify irregular missed delivery even when synchronous JavaScript is inexpensive. The policy does not infer whether the cause is browser, GPU, compositor or device behavior. Steady slow delivery, bounded jitter and isolated hitches retain their existing treatment. The preparation cadence stays fixed; two overloaded windows, the ten-second dwell and restoration only at safe transitions remain unchanged.
+
+The complete old-policy test files reproduce six new policy failures and one real-host tier failure; all original cases pass. The changed policy passes **17 policy, eight submission-host and six renderer tests (31/31)**. The host verifies unchanged fixed ticks and independently stepped authoritative checkpoints, stable 30 Hz at full quality, reduced decoration under irregular delivery, and restoration only through public Resume. No test threshold was tuned after observing results. Red receipt: `cecc01aff2d938e9e32932736ab8fa7e38eba3a9919127bb28cf3dbbcec1101c`; green receipt: `853ab04314e677c7ccaa4c5e930485c6b56ff4a76d6f25fd9db4717b08c59f65`.
+
+## Audio presentation
+
+Commit `aef69ebe258e9097e9758d2846df7212e21c8f27` fixes ordinary music progress notifications that reached inactive Demo widgets and refreshed unchanged active Demo controls. The soundtrack dialog also updated its transport and audition presentation while closed or hidden. The fixes defer inactive/hidden view work, compare only fields actually displayed in Demo, and force a current refresh on explicit actions, open, language change and visibility return. Demo still publishes media-preparation ownership before skipping hidden presentation. Clearing a closed dialog's status affects only its owned UI; actual playback, cancellation and errors retain their owners. A duplicate quick-control refresh in the shared callback is removed.
+
+In the modeled actual host, 20 shared-player media progress events produced **1,400 observed writes to unchanged visible Demo controls** and **760 writes to closed Demo controls** before the fix. Both tested paths produce **zero** afterward. These are instrumented DOM-boundary counts, not browser frame-cost or power measurements.
+
+Five complete files pass **210/210**: Demo widget 15, Demo host four, soundtrack panel 154, shared Demo media admission seven, and soundtrack host 30. They cover track advance, background ownership, language changes, explicit controls, errors, closed preparation status, visible return and the ordinary authoritative checkpoint. Scoped lint, formatting and diff checks pass. Eight intended failures reproduce on unchanged runtime after correcting one new test observer's text-node handling; the original observer failure remains retained and is not runtime evidence. Summary receipt: `25b86c1b47a3bba22987705d839b8c14825a79298d1a68c5a6d3da23a3c0e97c`; green receipt: `6abbe0946febfa106ddc078c96f1f33e9a967b8e86842020ade221002a0ed483`.
+
+The complete cadence/input host file also passes **4/4** on the combined policy and audio source, including keyboard/gamepad schedules and interruption behavior. Its receipt is `778268698783737a157c2b41a80f33a70945051bfcad4f194a487abda9318140`. The combined affected group passes **245/245 across nine complete files**. [Machine-readable evidence](solo-presentation-followup.json).
+
+The existing production preview workflow now includes all six affected complete test files in its focused gate. A separately verified successor package and affected native observations are required. Existing `8c1af9d1` measurements retain their original source identity; none is relabeled as evidence for these follow-up changes.
+
+## Closed enemy guide
+
+Commit `d49c2b4658e983c1e4c7f267ee6eb55e9094cda3` makes an already-completed guide preview release idempotent. Every foreground callback previously cleared the closed preview again, including during Demo. A visible actor sample re-arms ownership before asset admission; the first release, close/hidden cancellation, reopening, late drawable release and disposal remain intact. Visible preview cadence and the shared asset implementation are unchanged.
+
+The pre-change `d1fa4cb62` control retains its **27/28** result: an existing child-practice fixture starts movement before asynchronous Start finishes. Adding the two guide regressions on unchanged runtime gives **27/30**, including repeated clears of 121 instead of 1 and 4 instead of 3. The first changed-guide run is **37/38**: both new regressions pass, while the same child fixture still fails. The fixture now awaits the existing bounded public-running state after its one Start and Retry click, then submits a zero-time frame. All original loss, Retry, tick-zero, return, save, focus and authoritative checkpoint assertions remain. This is not an untouched-baseline execution comparison.
+
+The final complete group passes **38/38** (30 guide-panel and eight body-asset tests), with no failures, skips, cancellations, guard stops or surviving processes. Scoped lint, formatting, syntax and diff checks pass; formatting leaves the tested bytes unchanged. Final green receipt: `93533756f32d50a990e90362e7f9086b2ccb1584704b6c74ca3d8d144f203f85`. The machine-readable evidence retains all four attempts and their TAP hashes. The production preview gate adds both complete files and their source/test triggers, increasing its declared cohort from 61 to 63 files.
+
+The preceding **245/245 across nine files** remains evidence for the earlier policy/audio source only. Guide correctness is separate; successor packaging and affected native observations remain pending. No frame-cost, power or heat reduction is established.
+
+## Demo quality and display geometry
+
+The Demo spectator clock previously bypassed the main quality observer, and
+Demo did not pass the quality tier to its painter. Both spectator and practice
+now share the existing policy. Only ordinary focused spectator callbacks feed
+cost and cadence; timer recovery, hidden transport and catch-up retain their
+existing behavior. Practice is observed once at the existing full parent render
+boundary, with the same live run required before and after the update. Demo
+callbacks cannot calibrate the main lightweight preparation cadence. Pause,
+Resume, takeover, owner changes and renderer recovery reset observation windows.
+
+The painter receives the tier while the explicit Reduced Effects preference
+remains authoritative. Decorative transitions and reactions use the same tier.
+Display dimensions are read once until a resize, fullscreen, preference, owner,
+reward layout or recovery change invalidates them. Actor geometry, controls,
+playback timing and authoritative checkpoints remain unchanged.
+
+The final eight complete files pass **91/91**, with no skips or cancellations.
+Tests verify exact recorded input prefixes, the paused parent checkpoint,
+practice overload-window separation, cheap steady 30 Hz behavior, immediate
+Reduced Effects preference and dimension-cache invalidation. Scoped lint,
+formatting and diff checks pass. The production gate includes all three changed
+complete test files, increasing its cohort from 65 to 68 files.
+
+The corrected red fixture retains six expected product failures. An interim
+90/91 run exposed a modeled geometry change without its resize event; two
+explicit resize notifications preserve both original width assertions. Final
+receipt SHA-256 is `c5d9e2d53b3b412cc19375685a30b2d7ea45a6a7dfe7ff8918499ddc3cc8b01c`;
+handoff SHA-256 is `3f3b56f02460a948fd64e951b61521c968bec350b74e416a491160f9d450b2ca`.
+Every attempt remains under `.cache/solo-followup/demo-adaptive-quality-01/`.
+This is modeled correctness evidence; a new exact production package and native
+observations are required, and no physical heat reduction is claimed.

@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { createRun, stepRun, releaseInputs, FIXED_DT } from '../core/index.mjs';
 import { classicView } from '../ui/classic-view.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
+import { t, getLocale, setLocale } from '../i18n/index.mjs';
 import {
   flightInformationSnapshot,
   flightInformationBatch,
@@ -57,6 +58,39 @@ const caption = (eventIndex, fullText, cue = null) => ({
 });
 const batch = (events, messages = []) =>
   flightInformationBatch({ owner, sequence: 4, events, messages });
+
+test('validation failures retain their localized text at the time of failure', () => {
+  const previous = getLocale(),
+    run = createRun(fixture());
+  try {
+    for (const locale of ['uk', 'en']) {
+      setLocale(locale);
+      const fail = (work, key) => assert.throws(work, { name: 'TypeError', message: t(key) });
+      fail(() => flightInformationSnapshot(null, host), 'interface:anAcceptedRunIsRequired');
+      fail(() => flightInformationSnapshot(run, {}), 'interface:hostStateIsRequired');
+      fail(
+        () => flightInformationBatch({ owner: null, sequence: 1, events: [], messages: [] }),
+        'interface:anAcceptedAttemptAndPresentationGenerationAreRequired',
+      );
+      fail(
+        () => flightInformationBatch({ owner, sequence: -1, events: [], messages: [] }),
+        'interface:aHostFeedbackSequenceIsRequired',
+      );
+      fail(() => batch(null), 'interface:aCompleteEventBatchIsRequired');
+      fail(() => batch([{}]), 'interface:typedEngineEventIdentityAndClockAreRequired');
+      fail(
+        () => batch([event('boss.warning')], [caption(1, 'outside')]),
+        'interface:warningObservationsMustFollowTheirSourceEventOrder',
+      );
+      fail(
+        () => batch([event('boss.warning')], [{ eventIndex: 0 }]),
+        'interface:retainTheCompleteWarningTextCueAndSimulationExpiry',
+      );
+    }
+  } finally {
+    setLocale(previous);
+  }
+});
 
 test('real Classic run preserves existing projections and required-objective contract without mutation', () => {
   const run = createRun(fixture());

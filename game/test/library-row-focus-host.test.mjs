@@ -129,6 +129,7 @@ async function fullHost(t, ids) {
   h.$('shell-workshop').click();
   h.$('shell-library').click();
   packTab(h).click();
+  await settle(() => !h.$('library-packs').hidden && rows(h).length === (ids?.length ?? 3));
   assert.equal(h.$('library-dialog').open, true);
   assert.deepEqual(
     rows(h).map((item) => item.dataset.packId),

@@ -25,6 +25,7 @@ export async function mountEditionMastery({
   getRecorder,
   getJourneyProfile,
   getJourneyDurable,
+  scheduleReplayChunk,
   getJourneyRevision,
   previewSession = null,
   report = () => {},
@@ -139,6 +140,7 @@ export async function mountEditionMastery({
     onError: (error) => reportStatus('session', error),
   });
   const proofs = createJourneyMasteryProofStore({
+    scheduleChunk: scheduleReplayChunk,
     editionId: provider.editionId,
     requirements,
     bindings,

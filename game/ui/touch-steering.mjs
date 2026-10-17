@@ -115,7 +115,9 @@ export function attachTouchSteering({
         return;
       if (element === pad && mode !== 'dpad') return;
       event.preventDefault();
-      const rect = element.getBoundingClientRect();
+      // Floating gestures use the contact point, so only the fixed D-pad
+      // needs layout geometry. Avoid a forced layout before stick/swipe input.
+      const rect = mode === 'dpad' ? element.getBoundingClientRect() : null;
       gesture = {
         id: event.pointerId,
         element,

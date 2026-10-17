@@ -65,6 +65,10 @@ function sourceBackup() {
   const pack = JSON.parse(
     readFileSync(new URL('../content/packs/night-shift.json', import.meta.url), 'utf8'),
   );
+  // This fixture owns one global 1×1 original and one held decode. Authored
+  // per-map artwork has separate dimensions and refers to the source levels,
+  // which some portability cases replace with their own controlled campaign.
+  pack.levelVisuals = [];
   pack.visualOverrides.background = { dataUrl: png, name: 'original.png' };
   return {
     format: BACKUP_FORMAT,

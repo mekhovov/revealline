@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { attachDemoAudio } from '../ui/demo-audio.mjs';
 import { SOUNDTRACK_MODES } from '../soundtrack.mjs';
-import { t } from '../i18n/index.mjs';
+import { t, getLocale, setLocale } from '../i18n/index.mjs';
+import { observeAudioViewWrites } from './helpers/audio-view-writes.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
 const flush = async () => {
@@ -299,4 +300,138 @@ test('demo credits select creator resources rather than licence or provenance an
   f.emit({ track: { title: 'Licence only', websites: [track.websites[0], track.websites[1]] } });
   assert.equal(f.$('source').hidden, true);
   assert.equal(f.$('source').querySelector('a'), null);
+});
+
+test('closed Demo ignores the real subscribed audio updates and refreshes current state on public-owner render', (context) => {
+  const f = setup(),
+    watched = observeAudioViewWrites(f.root);
+  context.after(() => {
+    watched.stop();
+    f.view.dispose();
+  });
+  const snapshot = f.audio.snapshot;
+  let reads = 0;
+  f.audio.snapshot = () => {
+    reads++;
+    return snapshot();
+  };
+  f.setActive(false);
+  for (let index = 0; index < 20; index++) f.emit({ positionSeconds: index, durationSeconds: 90 });
+  f.emit({
+    track: { id: 'new', title: 'Latest closed track', artist: 'Latest artist' },
+    volume: 0.3,
+  });
+  f.view.render();
+  assert.equal(reads, 0, 'Inactive admission occurs before requesting a transport snapshot.');
+  assert.equal(watched.count(), 0, 'Closed transport notifications write no Demo fields.');
+  assert.equal(f.$('title').textContent, 'First song');
+  f.setActive(true);
+  f.view.render();
+  assert.equal(f.$('title').textContent, 'Latest closed track');
+  assert.equal(f.$('volume').value, '0.3');
+  assert.deepEqual(f.calls, [], 'Presentation never changes shared playback intent.');
+});
+
+test('Demo progress-only notifications do not rewrite unchanged controls or credits', (context) => {
+  const f = setup();
+  f.emit({
+    track: {
+      id: 'one',
+      title: 'First song',
+      artist: 'Composer',
+      rights: { source: 'https://composer.example/song' },
+    },
+  });
+  const link = f.$('source').querySelector('a'),
+    watched = observeAudioViewWrites(f.root);
+  context.after(() => {
+    watched.stop();
+    f.view.dispose();
+  });
+  link.focus();
+  for (let index = 1; index <= 20; index++)
+    f.emit({
+      positionSeconds: index,
+      durationSeconds: 90,
+      track: structuredClone(f.state().track),
+      queue: [...f.state().queue],
+    });
+  assert.equal(watched.count(), 0);
+  assert.ok(
+    f.$('source').querySelector('a') === link,
+    'The original creator anchor remains owned.',
+  );
+  assert.ok(f.doc.activeElement === link);
+  f.emit({ status: 'paused', desired: false });
+  assert.equal(f.$('toggle').textContent, t('demo:audio.play'));
+  assert.ok(watched.count() > 0, 'A changed displayed state is immediate.');
+  assert.deepEqual(f.calls, []);
+});
+
+test('hidden active Demo retains pending command failure and current locale until visible return', async (context) => {
+  let reject;
+  const locale = getLocale(),
+    f = setup({
+      next: () =>
+        new Promise((_resolve, no) => {
+          reject = no;
+        }),
+    });
+  const watched = observeAudioViewWrites(f.root);
+  context.after(() => {
+    watched.stop();
+    f.view.dispose();
+    setLocale(locale, { persist: false });
+  });
+  f.$('next').click();
+  f.doc.hidden = true;
+  f.doc.emit('visibilitychange');
+  watched.reset();
+  reject(new Error('Current next failed while hidden'));
+  await flush();
+  f.emit({
+    track: { id: 'hidden', title: 'Latest hidden track', artist: 'Composer' },
+    positionSeconds: 25,
+  });
+  setLocale(locale === 'en' ? 'uk' : 'en', { persist: false });
+  assert.equal(
+    watched.count(),
+    0,
+    'This no-link fixture has no independent global locale bindings.',
+  );
+  assert.equal(f.errors.length, 1, 'The still-current action failure is not discarded.');
+  assert.equal(f.$('title').textContent, 'First song');
+  f.doc.hidden = false;
+  f.doc.emit('visibilitychange');
+  assert.equal(f.$('title').textContent, 'Latest hidden track');
+  assert.equal(f.$('status').textContent, t('demo:audio.failed'));
+  assert.equal(f.$('options').textContent, t('demo:audio.options'));
+  assert.deepEqual(f.calls, ['wake']);
+});
+
+test('explicit action and manual rendering repair native control drafts even when the model did not change', async (context) => {
+  const f = setup({ setVolume: () => Promise.reject(new Error('Save refused')) });
+  context.after(() => f.view.dispose());
+  f.$('volume').value = '0.2';
+  f.$('volume').emit('input');
+  assert.equal(
+    f.$('volume').value,
+    '0.65',
+    'The action render restores the unchanged authoritative volume.',
+  );
+  await flush();
+  assert.equal(f.$('status').textContent, t('demo:audio.failed'));
+  f.$('volume').value = '0.1';
+  f.view.render();
+  assert.equal(f.$('volume').value, '0.65', 'Explicit owner refresh remains authoritative.');
+  f.$('style').value = 'ambient';
+  f.$('style').emit('change');
+  f.emit({ positionSeconds: 15 });
+  assert.equal(f.$('style').value, 'ambient');
+  f.view.reset();
+  f.view.render();
+  assert.equal(f.$('style').value, 'auto');
+  f.view.dispose();
+  assert.equal(f.doc.listeners.get('visibilitychange')?.size ?? 0, 0);
+  f.doc.emit('visibilitychange');
 });

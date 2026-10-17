@@ -387,12 +387,20 @@ for (const launch of ['start', 'retry', 'restart'])
           for (let i = 0; i < 225 && p.rendered.run.status !== 'won'; i++) p.frame(1000 / 30);
           p.key('ArrowDown', false);
           assert.equal(p.rendered.run.status, 'won');
-          await settle(
-            () =>
+          const won = authoritativeCheckpoint(p.rendered.run),
+            resultAvailable = () =>
               !p.$('skip-celebration').hidden ||
               !p.$('show-result').hidden ||
-              !p.$('retry-button').hidden,
+              !p.$('retry-button').hidden;
+          // The real celebration advances on submitted scene time; waiting
+          // for asynchronous work only submits zero-time preparation frames.
+          for (let frame = 0; frame < 300 && !resultAvailable(); frame++) p.frame(1000 / 60);
+          assert.equal(
+            resultAvailable(),
+            true,
+            'The bounded celebration must expose its real result controls.',
           );
+          assert.deepEqual(authoritativeCheckpoint(p.rendered.run), won);
           if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
           if (!p.$('show-result').hidden) p.$('show-result').click();
           assert.equal(p.$('retry-button').hidden, false, 'Retry belongs to the settled results.');

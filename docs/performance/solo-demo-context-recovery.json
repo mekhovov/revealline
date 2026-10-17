@@ -1,0 +1,304 @@
+{
+  "format": "SoloDemoContextRecoveryEvidenceV1",
+  "status": "focused-correctness-passed-native-qualification-pending",
+  "recordedAt": "2026-10-16T20:36:27.978502+00:00",
+  "baseRevision": "de7a9fd3c886f5340cf13e8ec2758833a361a083",
+  "source": {
+    "path": "game/ui/demo-host.mjs",
+    "sha256": "387fa2259d8dfcecabedaa637821ab1afd2113cfa00d1f14b4394b86b1ef3f4e",
+    "bytes": 42807
+  },
+  "newCanonicalTest": {
+    "path": "game/test/demo-context-recovery-host.test.mjs",
+    "sha256": "6197c378654a43c2951e4a5f12cae5ee877be4e776f0bb371d6bfbcff0b9080c",
+    "bytes": 14159
+  },
+  "finalSelectedCases": {
+    "files": 5,
+    "tests": 66,
+    "pass": 66,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "bounds": {
+    "node": "22.22.2",
+    "CI": "1",
+    "testConcurrency": 1,
+    "secondsPerFile": 600,
+    "groupRSSBytes": 4294967296,
+    "TAPBytes": 16777216
+  },
+  "receipts": {
+    "red-recovery-01": {
+      "path": ".cache/solo-followup/demo-context-recovery-01/red-recovery-01/receipt.json",
+      "sha256": "81e743b5739e2ab27f3993ae512c2f7a16ad26e272317bf85251f0c066bc2b6b",
+      "bytes": 5305
+    },
+    "red-recovery-02": {
+      "path": ".cache/solo-followup/demo-context-recovery-01/red-recovery-02/receipt.json",
+      "sha256": "cbc6c4cf3d069a32e5fd5f0a786b052e81c01e64df363f53767f441161ad553e",
+      "bytes": 5304
+    },
+    "green-recovery-01": {
+      "path": ".cache/solo-followup/demo-context-recovery-01/green-recovery-01/receipt.json",
+      "sha256": "47db3310878942266b11523cb791b6ea4c46a7823957330fdbee8d5992d418d6",
+      "bytes": 11636
+    },
+    "green-recovery-02": {
+      "path": ".cache/solo-followup/demo-context-recovery-01/green-recovery-02/receipt.json",
+      "sha256": "92d394ab2f4391c0c11741bb432d3a3200a41778cabab200fe27f26c7c39b184",
+      "bytes": 5305
+    },
+    "scoped-checks-01": {
+      "path": ".cache/solo-followup/demo-context-recovery-01/scoped-checks-01/receipt.json",
+      "sha256": "7d6c1d7a588d9fe52a3e0307a2e3d07af262aee44e4c58701657d6150fc1115a",
+      "bytes": 3002
+    }
+  },
+  "runs": {
+    "red-recovery-01": {
+      "status": "failed",
+      "sourceStable": true,
+      "completedAt": "2026-10-16T20:29:40.629272+00:00",
+      "rows": [
+        {
+          "path": "game/test/demo-context-recovery-host.test.mjs",
+          "complete": true,
+          "footer": {
+            "tests": 7,
+            "suites": 0,
+            "pass": 1,
+            "fail": 6,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "elapsedSeconds": 23.243075625003257,
+          "tap": {
+            "path": ".cache/solo-followup/demo-context-recovery-01/red-recovery-01/demo-context-recovery-host.test.tap",
+            "bytes": 10510,
+            "sha256": "d8152be793dd711c51cc02a20a4cd926c77894e00223681d03d33f37a4ff74db"
+          }
+        }
+      ]
+    },
+    "red-recovery-02": {
+      "status": "failed",
+      "sourceStable": true,
+      "completedAt": "2026-10-16T20:32:27.413691+00:00",
+      "rows": [
+        {
+          "path": "game/test/demo-context-recovery-host.test.mjs",
+          "complete": true,
+          "footer": {
+            "tests": 9,
+            "suites": 0,
+            "pass": 1,
+            "fail": 8,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "elapsedSeconds": 31.67238491700118,
+          "tap": {
+            "path": ".cache/solo-followup/demo-context-recovery-01/red-recovery-02/demo-context-recovery-host.test.tap",
+            "bytes": 12582,
+            "sha256": "f8ac8388df0f7f060cfdeecf3df4a0bb304094f0063da25009966f1cebb53a84"
+          }
+        }
+      ]
+    },
+    "green-recovery-01": {
+      "status": "failed",
+      "sourceStable": true,
+      "completedAt": "2026-10-16T20:34:17.273019+00:00",
+      "rows": [
+        {
+          "path": "game/test/demo-context-recovery-host.test.mjs",
+          "complete": true,
+          "footer": {
+            "tests": 9,
+            "suites": 0,
+            "pass": 8,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "elapsedSeconds": 32.91364020900073,
+          "tap": {
+            "path": ".cache/solo-followup/demo-context-recovery-01/green-recovery-01/demo-context-recovery-host.test.tap",
+            "bytes": 3072,
+            "sha256": "d7285b3a5b9c2454a5ecf054ba369fe536de24a0fe94e79aba623cbd8b53b748"
+          }
+        },
+        {
+          "path": "game/test/demo-retained-presentation-host.test.mjs",
+          "complete": true,
+          "footer": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 2,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "elapsedSeconds": 11.757394291998935,
+          "tap": {
+            "path": ".cache/solo-followup/demo-context-recovery-01/green-recovery-01/demo-retained-presentation-host.test.tap",
+            "bytes": 624,
+            "sha256": "1584db8d057678639a6a1e82364e25aaf1627946729fbf59144a07b72a55e3ee"
+          }
+        },
+        {
+          "path": "game/test/demo-clock.test.mjs",
+          "complete": true,
+          "footer": {
+            "tests": 20,
+            "suites": 0,
+            "pass": 20,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "elapsedSeconds": 1.1873872500000289,
+          "tap": {
+            "path": ".cache/solo-followup/demo-context-recovery-01/green-recovery-01/demo-clock.test.tap",
+            "bytes": 4459,
+            "sha256": "ca21b71e9562f6f2f0dbac037b5cd0edbc488889cdb9ba01bf5901e67a8d0953"
+          }
+        },
+        {
+          "path": "game/test/demo-picture.test.mjs",
+          "complete": true,
+          "footer": {
+            "tests": 28,
+            "suites": 0,
+            "pass": 28,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "elapsedSeconds": 2.2374037919944385,
+          "tap": {
+            "path": ".cache/solo-followup/demo-context-recovery-01/green-recovery-01/demo-picture.test.tap",
+            "bytes": 6992,
+            "sha256": "b8c8885ab900e2e136bf8c6078cdea39ce6664ae9534a81c46175b319c327270"
+          }
+        },
+        {
+          "path": "game/test/solo-demo-media-admission-host.test.mjs",
+          "complete": true,
+          "footer": {
+            "tests": 7,
+            "suites": 0,
+            "pass": 7,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "elapsedSeconds": 22.414270541004953,
+          "tap": {
+            "path": ".cache/solo-followup/demo-context-recovery-01/green-recovery-01/solo-demo-media-admission-host.test.tap",
+            "bytes": 1818,
+            "sha256": "9865ec6ff388f08ea2e59f5e434d63a1bbbcfe40e7942f97a6af17756e73852c"
+          }
+        }
+      ]
+    },
+    "green-recovery-02": {
+      "status": "passed",
+      "sourceStable": true,
+      "completedAt": "2026-10-16T20:35:18.549863+00:00",
+      "rows": [
+        {
+          "path": "game/test/demo-context-recovery-host.test.mjs",
+          "complete": true,
+          "footer": {
+            "tests": 9,
+            "suites": 0,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "elapsedSeconds": 33.914262709004106,
+          "tap": {
+            "path": ".cache/solo-followup/demo-context-recovery-01/green-recovery-02/demo-context-recovery-host.test.tap",
+            "bytes": 2444,
+            "sha256": "7d5fbae4e2683261b35200578cef743127050f1c30a4a6bcd4b41e8b80b70fb6"
+          }
+        }
+      ]
+    },
+    "scoped-checks-01": {
+      "status": "passed",
+      "sourceStable": true,
+      "completedAt": "2026-10-16T20:35:37.655393+00:00",
+      "rows": [
+        {
+          "path": null,
+          "complete": null,
+          "footer": null,
+          "elapsedSeconds": null,
+          "tap": null
+        },
+        {
+          "path": null,
+          "complete": null,
+          "footer": null,
+          "elapsedSeconds": null,
+          "tap": null
+        },
+        {
+          "path": null,
+          "complete": null,
+          "footer": null,
+          "elapsedSeconds": null,
+          "tap": null
+        },
+        {
+          "path": null,
+          "complete": null,
+          "footer": null,
+          "elapsedSeconds": null,
+          "tap": null
+        },
+        {
+          "path": null,
+          "complete": null,
+          "footer": null,
+          "elapsedSeconds": null,
+          "tap": null
+        }
+      ]
+    }
+  },
+  "preservedCorrections": [
+    {
+      "path": ".cache/solo-followup/demo-context-recovery-01/reopen-readiness-fixture.json",
+      "sha256": "f83c9baa2a73303d9c611bdb17fe7ce06eb4204280681bc93344b8f53396abc4",
+      "reason": "Final reopening assertion now awaits existing public Demo readiness; original assertion/deadline preserved."
+    },
+    {
+      "reason": "Initial seven-case red retained; after it closed, tests captured run.tick separately because authoritativeCheckpoint exposes hashes rather than a tick property."
+    }
+  ],
+  "scope": [
+    "Actual application, independent Demo clock/director/practice, BoardPainter callbacks and real shared media queue; modeled canvas/browser input boundary.",
+    "Display loss persists across close/reopen; current prepared owners and retired surfaces are fenced; multiple losses require all current resources to recover.",
+    "Loss synchronously pauses and clears input; restoration repaints a paused frame through deferred owner-fenced work, including hidden return and resize/fullscreen, without auto-play.",
+    "Reopened required preparation can finish after display restoration while playback stays paused. Fresh main-game handoff retains its independent renderer."
+  ],
+  "limitations": [
+    "No native GPU/context-loss, device performance, thermal or offline qualification is established by these Node tests.",
+    "Original 1948-file regression inventory remains historical. This new canonical test adds one file to the separately tracked later additions.",
+    "The first green remains a failed65/66 result; final66/66 selects the corrected complete recovery file and four unchanged passing files at the same runtime hash."
+  ]
+}

@@ -1,10 +1,22 @@
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { journeyMissionId } from '../journey/catalog.mjs';
+import { CELEBRATION_SECONDS } from '../ui/celebration.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+import { createImmutablePresentationFixture } from './helpers/immutable-presentation-fixture.mjs';
+
+// Repeated modeled pages reuse only bounded, hash-verified Node transport bytes.
+// Every page still verifies its original manifests/images within the same deadline.
+const presentationFixture = createImmutablePresentationFixture();
+after(() => {
+  console.log(
+    'Immutable presentation fixture provenance: ' + JSON.stringify(presentationFixture.snapshot()),
+  );
+});
 class CandidateImage {
   width = 1774;
   height = 887;
@@ -33,6 +45,7 @@ async function setup(t, { route = 'opening', events = [], denied = false, readPa
   const p = await soloPage(t, {
     search: `?journey=${route}`,
     titleScreen: true,
+    presentationFixture,
     ...(readPads ? { readPads } : {}),
     storage: memoryStorage(),
     journeyIndexedDB: denied
@@ -146,6 +159,8 @@ for (const route of ['opening', 'authored'])
       pad.buttons[index].pressed = true;
       pad.buttons[index].value = 1;
       p.frame();
+      // Solo Confirm commits the same physical gesture on release.
+      if (index === 0) release();
     };
     connected = true;
     pad.buttons[0].pressed = true;
@@ -185,14 +200,18 @@ test('reveal progress retains explicit percent units and updates after a real ca
   assert.equal(meter.getAttribute('aria-valuemin'), '0');
   assert.equal(meter.getAttribute('aria-valuemax'), '100');
   assert.equal(Number(meter.getAttribute('aria-valuenow')), 0);
-  assert.match(meter.getAttribute('aria-valuetext'), /0\.0 percent revealed; target \d+ percent/);
+  assert.match(meter.getAttribute('aria-valuetext'), /0 percent revealed; target \d+ percent/);
   p.key('ArrowDown');
   p.key('ArrowDown', false);
   for (let frame = 0; frame < 600 && p.rendered.run.coverage === 0; frame++) p.frame();
   assert.ok(p.rendered.run.coverage > 0, 'The real command closes a cut');
   const revealed = (p.rendered.run.coverage * 100).toFixed(1);
   assert.equal(meter.getAttribute('aria-valuenow'), revealed);
-  assert.ok(meter.getAttribute('aria-valuetext').startsWith(`${revealed} percent revealed;`));
+  const spoken = meter
+    .getAttribute('aria-valuetext')
+    .match(/^(\d+(?:\.\d+)?) percent revealed; target \d+ percent$/);
+  assert.ok(spoken, 'The accessible label retains explicit percent units and target.');
+  assert.equal(Number(spoken[1]), Number(revealed));
   assert.equal(meter.textContent, `${revealed}%`);
   assert.deepEqual(p.errors, []);
 });
@@ -222,6 +241,7 @@ test('controller-only authored win, Retry, second win and Next retain one delibe
     pad.buttons[i].pressed = true;
     pad.buttons[i].value = 1;
     p.frame();
+    if (i === 0) release();
   };
   const advance = async () => {
     await settle(() => {
@@ -238,15 +258,26 @@ test('controller-only authored win, Retry, second win and Next retain one delibe
       'won',
       'A single direction command completes the real opening capture',
     );
+    const completed = authoritativeCheckpoint(p.rendered.run);
+    assert.equal(p.$('skip-celebration').hidden, true);
+    // Real reward presentation exposes Show result only after its bounded reveal.
+    // Zero-time polling cannot advance that presentation clock.
     for (
-      let i = 0;
-      i < 3 && (p.$('game-overlay').hidden || p.$('game-overlay').dataset.kind !== 'won');
-      i++
-    ) {
-      press(0);
-      release();
-      await new Promise((resolve) => setImmediate(resolve));
-    }
+      let frame = 0;
+      frame < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && p.$('show-result').hidden;
+      frame++
+    )
+      p.frame(100);
+    assert.equal(p.$('show-result').hidden, false);
+    release();
+    // A still-visible shell control retains focus; navigate to the earned action.
+    for (let i = 0; i < 10 && p.doc.activeElement !== p.$('show-result'); i++) press(13);
+    assert.ok(
+      p.doc.activeElement === p.$('show-result'),
+      `Show result owns controller focus, received ${p.doc.activeElement?.id}.`,
+    );
+    press(0);
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), completed);
     await settle(() => {
       p.frame(0);
       return !p.$('game-overlay').hidden && p.$('game-overlay').dataset.kind === 'won';
@@ -259,7 +290,10 @@ test('controller-only authored win, Retry, second win and Next retain one delibe
   assert.equal(p.rendered.run.levelId, 'first-return');
   await win();
   for (let i = 0; i < 10 && p.doc.activeElement !== p.$('retry-button'); i++) press(13);
-  assert.equal(p.doc.activeElement, p.$('retry-button'), 'D-pad reaches Retry');
+  assert.ok(
+    p.doc.activeElement === p.$('retry-button'),
+    `D-pad reaches Retry, received ${p.doc.activeElement?.id}.`,
+  );
   press(0);
   await advance();
   assert.equal(p.rendered.run.levelId, 'first-return');
@@ -268,7 +302,10 @@ test('controller-only authored win, Retry, second win and Next retain one delibe
   release();
   await win();
   for (let i = 0; i < 10 && p.doc.activeElement !== p.$('next-button'); i++) press(12);
-  assert.equal(p.doc.activeElement, p.$('next-button'), 'D-pad reaches Next');
+  assert.ok(
+    p.doc.activeElement === p.$('next-button'),
+    `D-pad reaches Next, received ${p.doc.activeElement?.id}.`,
+  );
   press(0);
   await advance();
   assert.equal(p.rendered.run.levelId, 'choose-your-share');

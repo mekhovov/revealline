@@ -59,6 +59,7 @@ for (const newerNotice of [false, true])
     const beforeResume = page.$('run-message').textContent;
     if (newerNotice) assert.match(beforeResume, /^Flight saved\./);
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
     assert.equal(page.rendered.paused, false);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);

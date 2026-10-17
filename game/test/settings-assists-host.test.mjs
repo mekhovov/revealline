@@ -14,15 +14,16 @@ const sessionKey = 'revealline.suspended.dev.v1';
 // boundary. No CSS layout, OS media preference or physical-device claim.
 test('Settings and arena assists synchronize, persist across app reload, and retain continuous direction', async (t) => {
   const storage = memoryStorage();
-  let dispose = null;
+  const disposals = [];
   const lifetime = {
     after(callback) {
-      dispose = callback;
+      disposals.push(callback);
     },
   };
-  t.after(async () => {
-    await dispose?.();
-  });
+  const dispose = async () => {
+    while (disposals.length) await disposals.shift()();
+  };
+  t.after(dispose);
   const page = await soloPage(lifetime, { campaign, storage });
   const checks = (host, reduced, tap) => {
     for (const id of ['reduced-effects', 'settings-reduced-effects'])
@@ -107,9 +108,7 @@ test('Settings and arena assists synchronize, persist across app reload, and ret
 
   // A fresh actual app import observes the same stored preference bytes after
   // the old page releases its writer lease and database connection.
-  const closeFirst = dispose;
-  dispose = null;
-  await closeFirst();
+  await dispose();
   // Existing pagehide may refresh savedAt; the replay and attempt identity stay
   // exact. This lifecycle save is separate from setting-only edits above.
   const afterPageHide = storage.getItem(sessionKey);

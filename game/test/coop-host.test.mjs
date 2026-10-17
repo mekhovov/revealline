@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { readFile } from 'node:fs/promises';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { createCoop, startCoop, pauseCoop, resumeCoop, stepCoop, FIXED_DT } from '../coop/core.mjs';
@@ -1591,7 +1615,7 @@ for (const interruption of ['blur', 'hidden', 'persisted pagehide'])
     f.tick();
     pad.buttons[13] = { pressed: false, value: 0 };
     f.tick(2);
-    assert.equal(
+    boundedIdentity(
       f.doc.activeElement,
       f.$('coop-help-read'),
       'The joined controller reaches Read controls.',
@@ -1600,7 +1624,7 @@ for (const interruption of ['blur', 'hidden', 'persisted pagehide'])
     f.tick();
     pad.buttons[0] = { pressed: false, value: 0 };
     f.tick(2);
-    assert.equal(f.doc.activeElement, region);
+    boundedIdentity(f.doc.activeElement, region);
     pad.buttons[13] = { pressed: true, value: 1 };
     f.tick();
     assert.ok(

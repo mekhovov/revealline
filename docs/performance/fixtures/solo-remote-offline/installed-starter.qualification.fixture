@@ -1,0 +1,244 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "installed-starter-capture",
+  "kind": "performance",
+  "timeoutMs": 240000,
+  "query": {
+    "journey": "whole-spatial-v25"
+  },
+  "coverage": [
+    "installed current Solo Starter",
+    "registered original art",
+    "large capture",
+    "long cut"
+  ],
+  "replayRequirements": {
+    "closures": 1,
+    "maximumTrailCells": 20,
+    "maximumClaimedCells": 500
+  },
+  "actions": [
+    {
+      "type": "snapshot",
+      "group": "installed-starter-ready"
+    },
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1358
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3908
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "installed-starter-captured"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-return",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-750a7bfdb8ece53a",
+      "name": "First return",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.3
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        },
+        "lineImpact": {
+          "version": "line-impact.v1",
+          "speed": 38.400000000000006
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 58.5,
+          "y": 23.5,
+          "vx": 7.813529932111351,
+          "vy": -7.813529932111351,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  },
+  "expectedNextReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "choose-your-share",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-62d030f45ffb1c47",
+      "name": "Choose your share",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 47.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.65
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        },
+        "lineImpact": {
+          "version": "line-impact.v1",
+          "speed": 38.400000000000006
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 17.5,
+          "y": 26.5,
+          "vx": -7.813529932111351,
+          "vy": -7.813529932111351,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 47.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  },
+  "offlinePreparation": {
+    "format": "SoloInstalledStarterRecipeV1",
+    "routeId": "whole-spatial-v25",
+    "packId": "journey-opening",
+    "campaignId": "prologue",
+    "groupId": "solo:horizon-starter",
+    "missionIds": [
+      "first-return",
+      "choose-your-share"
+    ],
+    "catalogueMissionIds": [
+      "journey:whole-spatial-v25/first-return/pressure-v2-36e60a42b78b4f1b/solo",
+      "journey:whole-spatial-v25/choose-your-share/pressure-v2-22994d37ea0a7a23/solo"
+    ],
+    "requiredFiles": [
+      {
+        "path": "game/content-design/runtime/chapter-journey-opening.json",
+        "bytes": 20912,
+        "sha256": "553239c39f2562b90a71670cd383f65c53dce6e84a6f386af51465c1caadce65"
+      },
+      {
+        "path": "game/content-design/runtime/navigation-whole-spatial-v25.json",
+        "bytes": 1363574,
+        "sha256": "c5fcd45e0335297b0788b87299f63952c2e58dbdd9cb5f6338908a1d9ad7caf8"
+      }
+    ],
+    "sourceFixture": {
+      "path": "docs/performance/fixtures/solo-remote-offline/installed-starter.source.fixture",
+      "bytes": 20912,
+      "sha256": "553239c39f2562b90a71670cd383f65c53dce6e84a6f386af51465c1caadce65"
+    }
+  }
+}

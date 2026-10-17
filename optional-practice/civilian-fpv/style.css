@@ -5812,7 +5812,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     display: none;
   }
   /* Compact flight hides branding spans; this status is not branding. */
-  body.field-kit.game-shell[data-flight-state='running']
+  body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
     #shell-menu
     .journey-save-badge:not([hidden]) {
     display: grid;

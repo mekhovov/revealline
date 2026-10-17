@@ -1,0 +1,273 @@
+{
+  "format": "SoloReadinessPriorToolsWitnessV1",
+  "scope": "Test-side exact Git source provenance; no new observation, current execution admission or historical metadata rewrite. The 9e source was parked, not dispatched.",
+  "sources": [
+    {
+      "revision": "c41a02216c0811952232a387fd1743e09452c269",
+      "tree": "7fff7e134c67aa268e63cab5b08a7f3473bb5703",
+      "label": "Actual c41 execution",
+      "releases": [
+        {
+          "phase": "cold-first30",
+          "manifest": "docs/performance/solo-final-timing-cold-first30-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml"
+        },
+        {
+          "phase": "warm-first30",
+          "manifest": "docs/performance/solo-final-timing-warm-first30-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml"
+        },
+        {
+          "phase": "sentry",
+          "manifest": "docs/performance/solo-final-timing-sentry-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml"
+        },
+        {
+          "phase": "long-rail",
+          "manifest": "docs/performance/solo-final-timing-long-rail-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml"
+        },
+        {
+          "phase": "soak",
+          "manifest": "docs/performance/solo-final-soak-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-soak-v2-temporary.yml"
+        },
+        {
+          "phase": "next",
+          "manifest": "docs/performance/solo-final-next-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml"
+        },
+        {
+          "phase": "retry",
+          "manifest": "docs/performance/solo-final-retry-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml"
+        },
+        {
+          "phase": "long29",
+          "manifest": "docs/performance/solo-final-long29-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml"
+        },
+        {
+          "phase": "audio",
+          "manifest": "docs/performance/solo-final-audio-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-audio-v2-temporary.yml"
+        },
+        {
+          "phase": "offline",
+          "manifest": "docs/performance/solo-remote-offline-candidate-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-offline-candidate-v2-temporary.yml"
+        }
+      ],
+      "refs": [
+        {
+          "path": ".github/workflows/solo-remote-final-audio-v2-temporary.yml",
+          "bytes": 18624,
+          "sha256": "2466aad51a6c6d1e9318d2a5f140264fe8e96078200224309f8d74d944d63cfc",
+          "blob": "a0e9f5c6db0f62fe9f9976e01d8624a93256f362"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+          "bytes": 21960,
+          "sha256": "cf0b8d00b6435b7d9a4ec4fd5b228ef56184298ea19c718b57449e7910673295",
+          "blob": "d04f40b53c016423297693708f18a0c4aef5234c"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+          "bytes": 21940,
+          "sha256": "d4a9babb6adf2e4647fc2b04fc47694b66e7d0465af57b98292def78b8284faa",
+          "blob": "e688235da830c34a3ff6b8231db0ed19fd8c73aa"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+          "bytes": 21950,
+          "sha256": "d303da3dc4489837a6de56ad453e1eee43a903eb844651087fe8e6bdbda57302",
+          "blob": "70cd69fc56ac08d74fc38dc314b34fba4511f57d"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+          "bytes": 21910,
+          "sha256": "d7f6babb03f79c62266883f1a1978c9eed8027a9b199c8e061ed981ea09e986f",
+          "blob": "3c99ac990a78f3a5d41108e9ed3c09f58c6c09b0"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+          "bytes": 22068,
+          "sha256": "a76e4901080d86ee7c9374eee258a4f226188f98ff1f80be00ca2c04841049cc",
+          "blob": "2d8ab144ada9fda79c827f1d8b64d01d2940aac4"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+          "bytes": 22038,
+          "sha256": "1c2d1c46e0c0552769863f0ab3dd103d41520c79f279aec5cc2f6a62cff35b5f",
+          "blob": "69e61852143cabb78236a691c6f70b2fc1dd78a2"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+          "bytes": 22008,
+          "sha256": "7eafb28768c05c81aba2dc7529ce778df171f14adcd847d7c77dcd8349e63b8f",
+          "blob": "d4a6df7d930810703e6d055c2b9d970d2b6d8b5b"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+          "bytes": 22068,
+          "sha256": "5698bf79a9b096ed232b9ae28cebfb9abc15b67865bdfcbb33a399d7a8893566",
+          "blob": "2f59560f7ff85c3d50fdd03ce651faec42a37593"
+        },
+        {
+          "path": ".github/workflows/solo-remote-offline-candidate-v2-temporary.yml",
+          "bytes": 18262,
+          "sha256": "24e0662e0bcd38f914b3efdaf786bbe27e55096dd309bfa3ff75cb393fe67183",
+          "blob": "f26bb03509803d71143db890360e1354febbcf81"
+        },
+        {
+          "path": "docs/performance/solo-final-audio-v2-plan.json",
+          "bytes": 18166,
+          "sha256": "41aa84c7518a90e68e89cdb57c90538daf2719447f6bee7767ef3b18c8ed11b5",
+          "blob": "c2adefd03b299408ee117b69304b459f47a023f7"
+        },
+        {
+          "path": "docs/performance/solo-final-long29-plan.json",
+          "bytes": 17250,
+          "sha256": "90ac6b66cc59d0741e177c35ed413221c79e60f8e0fadbb0f700c3dbf8a35e93",
+          "blob": "4609ac23ef95b53f9f5a073b8127b483e6a0bd6b"
+        },
+        {
+          "path": "docs/performance/solo-final-next-plan.json",
+          "bytes": 17200,
+          "sha256": "dd57ec5f4e7b7862f3845e8ee61c7b32540c3119418b24313e641166078ef0b2",
+          "blob": "a84f7c5fb23c4cb6c91539d962667b8c0b8a35a1"
+        },
+        {
+          "path": "docs/performance/solo-final-retry-plan.json",
+          "bytes": 17242,
+          "sha256": "cdadbb5b0e3401c0e595de0f6219ecf7da471d2606ff8c694f2b84a13b1f39b9",
+          "blob": "1ed5d861877a61a59cec6df4205e9526e5d9bb32"
+        },
+        {
+          "path": "docs/performance/solo-final-soak-v2-plan.json",
+          "bytes": 19196,
+          "sha256": "5df93bf3e06cc230901e45c0caf153cc0cd5d669a7113898d4094ec1b687dd07",
+          "blob": "9fa955b5b5a9f411372092fb0f58ffec6e60b1ed"
+        },
+        {
+          "path": "docs/performance/solo-final-timing-cold-first30-v2-plan.json",
+          "bytes": 17724,
+          "sha256": "a2978f1032e2b7590c11046822ccbe1972589ecb9a41ef5455ab0e716b76c4c3",
+          "blob": "5491d2ddaf4bd4b58c02f865bc1af9f1e6b7ef0c"
+        },
+        {
+          "path": "docs/performance/solo-final-timing-long-rail-v2-plan.json",
+          "bytes": 17706,
+          "sha256": "5e0e67db9fadbef77eabb88bc393ff391b5ac4ee1d93b545f874c7b212bcf9af",
+          "blob": "b4b3f3910ec4db2f437118f719d339942aa7d1b8"
+        },
+        {
+          "path": "docs/performance/solo-final-timing-sentry-v2-plan.json",
+          "bytes": 17697,
+          "sha256": "dda7bf1a91fc981eb44b4eabf228059316069781f49b800c5001bb3d40d80e8a",
+          "blob": "8c55d85cdc9a8d0a4afb08654820694b025cdeea"
+        },
+        {
+          "path": "docs/performance/solo-final-timing-warm-first30-v2-plan.json",
+          "bytes": 17727,
+          "sha256": "b222ed349ab99792d28c1b9a72bee9a8db5499aa740454cff8e722ce70f3b517",
+          "blob": "723c3b1cf5568ea1ce7cdcf2dc5fbf3fe383bcff"
+        },
+        {
+          "path": "docs/performance/solo-remote-offline-candidate-v2-plan.json",
+          "bytes": 17555,
+          "sha256": "e9aaaaa9c5643e72874be701d986b7b0c647ee3f2889dab4e80959ba0767a807",
+          "blob": "55d80aae887079588df2896063e272873ecd939a"
+        },
+        {
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 57545,
+          "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7",
+          "blob": "b3a8d041cdb70697183f1b3562a5f852f70c26fd"
+        },
+        {
+          "path": "scripts/solo-remote-sustained.mjs",
+          "bytes": 67617,
+          "sha256": "af80d4a2f900093c42033712fab2685aeb982b57dbb7d91bc485e244d6e54192",
+          "blob": "6c19f296a2b04013b4bbc8283fee6864fd23f667"
+        }
+      ]
+    },
+    {
+      "revision": "69639b30d985ffa723a4d0c11756b632fc2da5c1",
+      "tree": "d022c57efa75dbe7b7aeeca00a1950f61426595b",
+      "label": "Actual 696 Long Rail profile execution",
+      "releases": [
+        {
+          "phase": "long-rail-cpu-profile",
+          "manifest": "docs/performance/solo-final-long-rail-cpu-profile-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml"
+        }
+      ],
+      "refs": [
+        {
+          "path": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+          "bytes": 17167,
+          "sha256": "6f9d747656b958232743af7b26ebdeeb7d1dd941744edb0d47b93fd2124349a4",
+          "blob": "30ddc92c7fc317d36fe1a2e0622605bdf511912e"
+        },
+        {
+          "path": "docs/performance/solo-final-long-rail-cpu-profile-plan.json",
+          "bytes": 11592,
+          "sha256": "7efc4fb5be2e9d99cb8c181bc175e59a76208151f569eac9433f4ccf65342a78",
+          "blob": "720ce91926a2c4058e14f6d8132f331939ea355f"
+        },
+        {
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 57545,
+          "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7",
+          "blob": "b3a8d041cdb70697183f1b3562a5f852f70c26fd"
+        },
+        {
+          "path": "scripts/solo-remote-sustained.mjs",
+          "bytes": 67617,
+          "sha256": "af80d4a2f900093c42033712fab2685aeb982b57dbb7d91bc485e244d6e54192",
+          "blob": "6c19f296a2b04013b4bbc8283fee6864fd23f667"
+        }
+      ]
+    },
+    {
+      "revision": "9e0111e066b5dac7749a33fd0e98e92702851dc6",
+      "tree": "780fdfcb84a1d5cc6009b697879a98fbe39d0487",
+      "label": "Later parked historical CPU declaration; not original dispatch",
+      "releases": [
+        {
+          "phase": "parked-cpu-profile",
+          "manifest": "docs/performance/solo-remote-cpu-profile-plan.json",
+          "workflow": ".github/workflows/solo-remote-cpu-profile-temporary.yml"
+        }
+      ],
+      "refs": [
+        {
+          "path": ".github/workflows/solo-remote-cpu-profile-temporary.yml",
+          "bytes": 8180,
+          "sha256": "dd2d6ad15c025e8489257700103c009efa56f99410c3c7938942502c05f74b13",
+          "blob": "3c1a3edbf220526ad1bd75c49d36ef9f3f234780"
+        },
+        {
+          "path": "docs/performance/solo-remote-cpu-profile-plan.json",
+          "bytes": 9913,
+          "sha256": "23139ecdc03518fe3989a9f2344c13c6f66ea13b3d05bc9d9035333470f6cf9a",
+          "blob": "3f3a55dba6a9961cf56b0eb292eb8b6a4f46be7c"
+        },
+        {
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 52211,
+          "sha256": "42750c0bb862b5ca28dfb8394b6381694418b0ed9240a70f006652fcfde28235",
+          "blob": "17a031404b5b10bf4c5823a5304cc7c8bdea3d95"
+        },
+        {
+          "path": "scripts/solo-remote-sustained.mjs",
+          "bytes": 40626,
+          "sha256": "f6aca4db46618e538533c64a742a3e2beb5c5b097a285be79883086108acced6",
+          "blob": "a131b83a9b1d0626af4d9799feabefc7bf9c9186"
+        }
+      ]
+    }
+  ]
+}

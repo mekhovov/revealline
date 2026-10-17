@@ -330,3 +330,166 @@ test('verified Keep/list/clear uses the production cache, retains exact owners a
     library.dispose();
   }
 });
+
+// Pause at the real adapter's asynchronous read callback, not a synthetic
+// storage.update transform. The existing model still owns queue/rollback/commit.
+function beforeReadCallback(env, callback) {
+  const open = env.indexedDB.open;
+  env.indexedDB.open = (...args) => {
+    const request = open(...args);
+    let success;
+    Object.defineProperty(request, 'onsuccess', {
+      set(fn) {
+        success = fn;
+      },
+      get() {
+        return () => {
+          const db = request.result,
+            transaction = db.transaction.bind(db);
+          db.transaction = (...txArgs) => {
+            const tx = transaction(...txArgs),
+              objectStore = tx.objectStore.bind(tx);
+            tx.objectStore = (...storeArgs) => {
+              const store = objectStore(...storeArgs),
+                get = store.get;
+              store.get = (...getArgs) => {
+                const read = get(...getArgs);
+                let loaded;
+                Object.defineProperty(read, 'onsuccess', {
+                  set(fn) {
+                    loaded = fn;
+                  },
+                  get() {
+                    return () => {
+                      callback(txArgs[1]);
+                      loaded?.();
+                    };
+                  },
+                });
+                return read;
+              };
+              return store;
+            };
+            return tx;
+          };
+          success?.();
+        };
+      },
+    });
+    return request;
+  };
+}
+
+test('optional Demo write aborts before library inspection when Start wins the real IDB read callback', async (t) => {
+  const env = environment();
+  let armed = false,
+    phase = 'paused',
+    blockedCallbacks = 0,
+    activeCopies = 0;
+  beforeReadCallback(env, (mode) => {
+    if (armed && mode === 'readwrite') {
+      phase = 'playing';
+      blockedCallbacks++;
+    }
+  });
+  const storage = createDemoIndexedDBStorage({ indexedDB: env.indexedDB });
+  const original = await storage.update(append('existing'));
+  const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
+  const [recording, campaign, classRecipes] = await Promise.all([
+    json('../demo-data/first-signal-left.replay.json'),
+    json('../content/campaign.json'),
+    json('../content/classes.json'),
+  ]);
+  const stringify = JSON.stringify;
+  t.mock.method(JSON, 'stringify', (...args) => {
+    if (phase === 'playing' && args[0]?.format === 'revealline-local-demos.v1') activeCopies++;
+    return stringify(...args);
+  });
+  const library = createDemoLibrary({
+    storage,
+    enabled: true,
+    canRunOptionalWork: () => phase === 'paused',
+    scheduleChunk: (work) => work(),
+  });
+  t.after(() => library.dispose());
+  const writes = env.model().allPuts.length;
+  armed = true;
+  await assert.rejects(
+    library.keep(recording, {
+      entry: { campaign: { ...campaign, classRecipes }, classRecipes },
+      practice: false,
+    }),
+    { name: 'AbortError' },
+  );
+  assert.equal(blockedCallbacks, 1, 'the real request callback arrived after Start');
+  assert.equal(
+    activeCopies,
+    0,
+    'neither transform snapshot/byte counting nor adapter snapshot starts during play',
+  );
+  assert.equal(env.model().allPuts.length, writes);
+  armed = false;
+  phase = 'paused';
+  assert.deepEqual(
+    await storage.read(),
+    original,
+    'failed optional admission preserves the exact prior cache',
+  );
+  await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.equal(blockedCallbacks, 1, 'no automatic transaction retry');
+  assert.equal(
+    (
+      await library.keep(recording, {
+        entry: { campaign: { ...campaign, classRecipes }, classRecipes },
+        practice: false,
+      })
+    ).saved,
+    true,
+  );
+});
+
+test('storage callback guard preserves default transaction and committed-result semantics', async () => {
+  const env = environment(),
+    storage = createDemoIndexedDBStorage({ indexedDB: env.indexedDB });
+  try {
+    let transforms = 0;
+    await assert.rejects(
+      storage.update(
+        () => {
+          transforms++;
+          return empty();
+        },
+        {
+          beforeWork: () => {
+            throw new DOMException('ineligible', 'AbortError');
+          },
+        },
+      ),
+      { name: 'AbortError' },
+    );
+    assert.equal(transforms, 0);
+    assert.equal(env.requests.length, 0);
+    let eligible = true;
+    env.model().afterAnyCommit = () => {
+      eligible = false;
+    };
+    const saved = await storage.update(append('accepted'), {
+      beforeWork: () => {
+        assert(eligible);
+      },
+    });
+    assert.equal(eligible, false);
+    assert.deepEqual(
+      saved,
+      append('accepted')(empty()),
+      'a completed commit must not be reported as rolled back',
+    );
+    assert.deepEqual(
+      await storage.read(),
+      saved,
+      'default reads remain independent of optional admission',
+    );
+  } finally {
+    storage.close();
+  }
+});

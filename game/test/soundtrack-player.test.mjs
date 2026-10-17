@@ -645,6 +645,66 @@ test('volume owns the music fader only, combines with master for MP3, and preser
   assert.throws(() => h.player.setVolume(2));
   h.player.dispose();
 });
+test('steady callbacks leave gains and media volume untouched but reconcile changed controls and leases', async (t) => {
+  const h = setup({ library: list([synthIds[0]]) });
+  t.after(() => h.player.dispose());
+  await h.player.play();
+  h.player.update(true, { family: 'neon' });
+  let gainCalls = 0,
+    configurations = 0,
+    mediaWrites = 0,
+    mediaVolume = h.media.volume;
+  for (const key of [
+    'master',
+    'musicBus',
+    'sfxBus',
+    'menuBus',
+    'movementBus',
+    'radioBus',
+    'dialogueBus',
+  ])
+    for (const method of ['cancelScheduledValues', 'setTargetAtTime', 'setValueAtTime']) {
+      const param = h.soundscape[key].gain,
+        original = param[method];
+      param[method] = function (...args) {
+        gainCalls++;
+        return original.apply(this, args);
+      };
+    }
+  const configure = h.soundscape.configure.bind(h.soundscape);
+  h.soundscape.configure = (options) => {
+    configurations++;
+    return configure(options);
+  };
+  Object.defineProperty(h.media, 'volume', {
+    get: () => mediaVolume,
+    set: (value) => {
+      mediaWrites++;
+      mediaVolume = value;
+    },
+  });
+  for (let i = 0; i < 240; i++) {
+    h.context.currentTime += 1 / 120;
+    h.player.update(true, { family: 'neon' });
+  }
+  assert.deepEqual(
+    { gainCalls, configurations, mediaWrites },
+    { gainCalls: 0, configurations: 0, mediaWrites: 0 },
+  );
+  h.player.setVolume(0.4);
+  assert.equal(h.soundscape.getSettings().music, 0.4);
+  assert(gainCalls > 0);
+  configure({ music: 0.1, master: 0.5 });
+  h.player.update(true, { family: 'neon' });
+  assert.equal(h.soundscape.getSettings().music, 0.4);
+  assert.equal(h.media.volume, 0.2);
+  const lease = h.player.acquireGain({ factor: 0.5 });
+  assert.equal(h.soundscape.getSettings().music, 0.2);
+  assert.equal(h.media.volume, 0.1);
+  lease.release();
+  assert.equal(h.soundscape.getSettings().music, 0.4);
+  assert.equal(h.media.volume, 0.2);
+});
 test('seeking a paused synth before creating audio is retained for its first permitted playback', async () => {
   const h = setup({ library: list([synthIds[0]]) });
   await h.player.selectPlaylist('test.queue');
@@ -949,6 +1009,119 @@ function pairSetup({ fadeMs = 80, readAsset, library, ...options } = {}) {
   return { ...h, second, entries, pairLibrary };
 }
 
+function assertOwnedDecks(h, expectedBytes) {
+  const live = h.created.filter(({ url }) => !h.revoked.includes(url));
+  const expectedDecks = [h.media, h.second].filter(Boolean).map((media, index) => {
+    const resource = live.find(({ url }) => url === media.src);
+    return {
+      index,
+      ownedBlobURLCount: resource ? 1 : 0,
+      ownedBlobBytes: resource?.blob.size ?? 0,
+    };
+  });
+  assert.deepEqual(h.player.preparationDiagnostics().playback, {
+    ownedBlobURLCount: live.length,
+    ownedBlobBytes: live.reduce((bytes, { blob }) => bytes + blob.size, 0),
+    failedRevocationCount: 0,
+    failedRevocationBytes: 0,
+    decks: expectedDecks,
+  });
+  assert.deepEqual(
+    expectedDecks.map((deck) => deck.ownedBlobBytes),
+    expectedBytes,
+  );
+}
+
+test('manual preparation diagnostics follow both owned originals through pause, transfer and replacement', async (t) => {
+  const other = await fixture('owned-next-original');
+  const entries = [original, other].map(({ track }, index) => ({
+    ...track,
+    id: `qa.owned-${index}`,
+  }));
+  const h = pairSetup({
+    fadeMs: 20,
+    library: {
+      ...list(
+        entries.map(({ id }) => id),
+        'off',
+      ),
+      tracks: entries,
+    },
+    readAsset: async (hash) => (hash === original.track.asset.sha256 ? original.blob : other.blob),
+  });
+  t.after(() => h.player.dispose());
+  assertOwnedDecks(h, [0, 0]);
+  await h.player.play();
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === entries[1].id);
+  assertOwnedDecks(h, [original.blob.size, other.blob.size]);
+  const preparedURL = h.second.src;
+  h.second.rejectPlay = new DOMException('A fresh gesture is required.', 'NotAllowedError');
+  h.player.pause();
+  assertOwnedDecks(h, [original.blob.size, 0]);
+  await h.player.play();
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === entries[1].id);
+  const retainedURL = h.second.src;
+  assert.notEqual(retainedURL, preparedURL);
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.media.src, retainedURL, 'the denied deck transfers the same owned URL');
+  assertOwnedDecks(h, [other.blob.size, 0]);
+  assert.equal(h.player.snapshot().status, 'playing');
+  const [remote] = resolvedRemoteTracks([{ sha256: '4'.repeat(64), title: 'Unowned stream' }]);
+  assert.equal(await h.player.playRemotePlaylist([remote]), true);
+  assertOwnedDecks(h, [0, 0]);
+  h.player.dispose();
+  assertOwnedDecks(h, [0, 0]);
+  assert.equal(h.revoked.includes(remote.url), false);
+});
+
+test('manual preparation diagnostics retain blocked originals and report failed revocation uncertainty', async (t) => {
+  const h = setup({
+    library: {
+      ...list([original.track.id], 'off'),
+      tracks: [original.track],
+    },
+  });
+  t.after(() => h.player.dispose());
+  h.media.rejectPlay = new DOMException('A fresh gesture is required.', 'NotAllowedError');
+  assert.equal(await h.player.play(), false);
+  assertOwnedDecks(h, [original.blob.size]);
+  let attempts = 0;
+  h.URLImpl.revokeObjectURL = () => {
+    attempts++;
+    throw new Error('Revocation failed.');
+  };
+  h.player.dispose();
+  assert.deepEqual(h.player.preparationDiagnostics().playback, {
+    ownedBlobURLCount: 0,
+    ownedBlobBytes: 0,
+    failedRevocationCount: 1,
+    failedRevocationBytes: original.blob.size,
+    decks: [{ index: 0, ownedBlobURLCount: 0, ownedBlobBytes: 0 }],
+  });
+  h.player.dispose();
+  assert.equal(attempts, 1);
+  assert.equal(h.player.preparationDiagnostics().playback.failedRevocationCount, 1);
+});
+
+test('a failed media source installation clears the actual original and its diagnostic ownership', async (t) => {
+  const h = setup({
+    library: {
+      ...list([original.track.id], 'off'),
+      tracks: [original.track],
+    },
+  });
+  t.after(() => h.player.dispose());
+  const load = h.media.load;
+  h.media.load = function () {
+    if (this.src) throw new Error('Media source installation failed.');
+    return load.call(this);
+  };
+  await h.player.play();
+  assert.equal(h.created.length, 1);
+  assert.equal(h.revoked.length, 1);
+  assertOwnedDecks(h, [0]);
+});
+
 function remotePairSetup({ fadeMs = 80 } = {}) {
   const second = audioHarness().media,
     entries = resolvedRemoteTracks([
@@ -1187,6 +1360,7 @@ for (const action of ['seek', 'library', 'context', 'suspend', 'dispose']) {
     assert.equal(h.created.length, 1);
     assert.equal(h.second.plays, 0);
     assert.equal(h.player.snapshot().preloadedTrackId, null);
+    assertOwnedDecks(h, [action === 'dispose' ? 0 : original.blob.size, 0]);
   });
 }
 
@@ -1211,6 +1385,7 @@ test('a browser denying the second element reuses the permitted first deck for t
     'transferred ownership retains the original URL',
   );
   await settleUntil(() => h.player.snapshot().preloadedTrackId === 'qa.third');
+  assertOwnedDecks(h, [original.blob.size, original.blob.size]);
   h.media.emit('ended');
   await settleUntil(
     () => h.player.snapshot().track.id === 'qa.third' && h.player.snapshot().playing,
@@ -1573,6 +1748,73 @@ test('selection reuse follows owned library, context and override changes and re
   assert.deepEqual(h.player.snapshot().queue, [first.id]);
   assert.equal(h.player.snapshot().desired, false);
 });
+
+for (const localPlayback of [false, true])
+  test(`scene transitions reuse validated library metadata with local playback ${localPlayback}`, async (t) => {
+    const tracks = Array.from({ length: 256 }, (_, index) => ({
+      ...original.track,
+      id: `builtin.catalog.context-${index}`,
+      edition: 'test-context',
+      path: `objects/context-${index}.mp3`,
+      tags: { genres: ['ukrainian'], role: 'any', energy: 3, themes: [] },
+    }));
+    const base = setCatalogueTracks(emptySoundtrackLibrary(), tracks);
+    const library = {
+      ...base,
+      playlists: [
+        {
+          id: 'test.context',
+          title: 'Context playlist',
+          trackIds: [tracks[0].id],
+          order: 'ordered',
+          repeat: 'all',
+        },
+      ],
+    };
+    const h = setup({ library, localPlayback, localRecordingIds: tracks.map((track) => track.id) });
+    t.after(() => h.player.dispose());
+    const assertNoLibraryTraversal = (action) => {
+      let copies = 0;
+      const descriptors = Object.getOwnPropertyDescriptors;
+      const observer = t.mock.method(Object, 'getOwnPropertyDescriptors', (value) => {
+        if (Object.hasOwn(value, 'catalogTracks')) copies++;
+        return descriptors(value);
+      });
+      try {
+        action();
+        assert.equal(copies, 0, 'Changing scene must not traverse the full 256-track library.');
+      } finally {
+        observer.mock.restore();
+      }
+    };
+    assertNoLibraryTraversal(() => {
+      h.player.setContext({ scene: 'menu' });
+      h.player.setContext({ scene: 'gameplay', themeId: 'theme-0' });
+    });
+    await h.player.selectPlaylist('test.context');
+    assert.deepEqual(h.player.snapshot().queue, [tracks[0].id]);
+    assertNoLibraryTraversal(() => {
+      h.player.setContext({ scene: 'menu' });
+      h.player.setContext({ scene: 'gameplay', themeId: 'theme-1' });
+      const before = h.player.snapshot();
+      assert.throws(() => h.player.setContext({ scene: 'invalid' }), /scene/);
+      assert.deepEqual(h.player.snapshot(), before);
+    });
+
+    // Replacing the saved library must also invalidate a cached override.
+    h.player.setLibrary({
+      ...library,
+      playlists: [{ ...library.playlists[0], trackIds: [tracks[1].id] }],
+    });
+    await h.player.next();
+    assert.deepEqual(h.player.snapshot().queue, [tracks[1].id]);
+    assertNoLibraryTraversal(() => h.player.setContext({ scene: 'gameplay', themeId: 'theme-2' }));
+    assert.equal(
+      library.listening.installedOnly,
+      false,
+      'Local-only policy never edits saved preferences.',
+    );
+  });
 
 test('selection reuse invalidates installed IDs and listening permissions while snapshots retain live position', async (t) => {
   const other = await fixture('selection-installed');

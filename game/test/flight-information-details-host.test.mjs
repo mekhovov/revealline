@@ -173,7 +173,7 @@ test('actual notices survive later empty fixed-step batches and same-ID restore 
   await Promise.resolve();
   const owner = info(p).owner;
   const saved = p.storage.getItem('revealline.suspended.dev.v1');
-  p.$('library-button').click();
+  await activateHostAction(p.$('library-button'));
   p.$('save-json').value = saved;
   await activateHostAction(p.$('import-save'));
   assert.equal(p.$('library-dialog').open, false);

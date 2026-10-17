@@ -1,0 +1,162 @@
+{
+  "format": "xonix-playground.v6",
+  "masteryDefinition": null,
+  "level": {
+    "version": "xonix-level.v5",
+    "id": "long-rail",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3d7899811222442a",
+    "name": "Long rail",
+    "width": 72,
+    "height": 36,
+    "spawn": {
+      "x": 35.5,
+      "y": 0.5
+    },
+    "walls": [],
+    "foundations": [
+      {
+        "x": 33,
+        "y": 10,
+        "w": 5,
+        "h": 16
+      },
+      {
+        "x": 15,
+        "y": 18,
+        "w": 12,
+        "h": 3
+      }
+    ],
+    "goal": {
+      "coverage": 0.68
+    },
+    "encounter": null,
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [],
+      "powerups": [
+        {
+          "id": "player-speed",
+          "kind": "player-speed",
+          "x": 50.5,
+          "y": 0.5
+        }
+      ],
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "west",
+        "type": "bouncer",
+        "x": 8.5,
+        "y": 8.5,
+        "vx": 7.81352993211135,
+        "vy": 7.81352993211135,
+        "course": "field-course.v2"
+      },
+      {
+        "id": "east",
+        "type": "bouncer",
+        "x": 60.5,
+        "y": 23.5,
+        "vx": -7.81352993211135,
+        "vy": -7.81352993211135,
+        "course": "field-course.v2"
+      },
+      {
+        "id": "outer",
+        "type": "border-patrol",
+        "speed": 8.16,
+        "clockwise": true,
+        "x": 71.5,
+        "y": 25.5
+      }
+    ],
+    "objectives": [],
+    "supplies": [],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 8.84,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.65,
+      "graceSeconds": 1,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [
+        90,
+        150
+      ],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 0,
+      "cutTimeLimitSeconds": 0,
+      "maxTrailCells": 0,
+      "stopOnCapture": true
+    },
+    "signalZones": [],
+    "hangars": [
+      {
+        "id": "home-hangar",
+        "x": 35.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ]
+  },
+  "theme": {
+    "id": "border-bloom",
+    "name": "Border Bloom",
+    "subtitle": "Watch the edge. Find another way.",
+    "family": "retro",
+    "player": "retro-craft",
+    "enemyShape": "orb",
+    "patrolShape": "spark",
+    "bossShape": "core",
+    "scene": "dawn",
+    "labels": {
+      "objective": "Relay",
+      "supply": "Supply",
+      "enemy": "Field keeper",
+      "boss": "Sentinel",
+      "currency": "Score",
+      "ability": "Ability"
+    },
+    "palette": {
+      "ink": "#172c29",
+      "paper": "#f4eedc",
+      "muted": "#abc0b0",
+      "accent": "#ffd27b",
+      "safe": "#65dcc5",
+      "danger": "#ff7795",
+      "field": "#112d28",
+      "grid": "#304c43",
+      "sky": "#d7dcc1",
+      "land": "#688b70"
+    },
+    "classBodies": {
+      "scout": "retro-craft",
+      "bomber": "retro-craft",
+      "carrier": "retro-craft",
+      "interceptor": "retro-craft",
+      "fiber": "retro-craft",
+      "impact": "retro-craft",
+      "trapper": "retro-craft"
+    }
+  },
+  "visualOverrides": {},
+  "settings": {
+    "seed": 1,
+    "classId": "scout",
+    "turnPolicy": "immediate"
+  },
+  "presentation": {
+    "style": "microtile",
+    "showGrid": true
+  },
+  "metadata": {
+    "title": "Qualification: long-rail",
+    "description": "Unchanged gameplay definition; public Playground import for bounded qualification. Decorative authored backdrop is absent from this explicit greybox fixture."
+  }
+}

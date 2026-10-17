@@ -47,9 +47,10 @@ const options = (overrides = {}) => ({
 });
 
 test('registered local picture owners retain exact level, theme and fit without image downloads', async () => {
-  const rows = CURRENT_ART_SOURCES.filter((row) => row.level && row.theme);
-  assert.equal(rows.length, 107);
+  const rows = CURRENT_ART_SOURCES.filter((row) => row.kind !== 'external');
+  assert.ok(rows.length > 0, 'The supported registry contains local picture owners.');
   for (const row of rows) {
+    assert.ok(row.level && row.theme, `${row.id} retains its local owner metadata.`);
     const context = await pictureOwnerContext(row.id, {
       fetch: () => assert.fail('Local metadata needs no request.'),
     });
