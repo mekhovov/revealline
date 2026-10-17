@@ -17,7 +17,7 @@ import { FeedbackDirector } from './feedback-director.mjs';
 import { readRadioAudio } from './radio-audio.mjs';
 import { readMenuAudio } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
-import { createPublishedCues } from './published-audio.mjs';
+import { createPublishedCues, CUE_CACHE_BYTES } from './published-audio.mjs';
 import {
   MUSIC_STYLES,
   DEFAULT_TRACKS,
@@ -74,6 +74,7 @@ export class Soundscape {
     this.songEndHandler = null;
     this.songEnded = null;
     this.publishedAudio = null;
+    this.publishedOwnerState = 'never-created';
     this.audioMaster = { muted: false, volume: 1 };
     this.releaseAudioMaster = audioMaster?.subscribe((state) => {
       this.audioMaster = state;
@@ -91,9 +92,20 @@ export class Soundscape {
   }
   resourceSnapshot() {
     // Export-time reads only: never initialize a context or touch PCM sample data.
+    const state = this.disposed
+      ? 'disposed'
+      : (this.publishedOwnerState === 'active' && !this.publishedAudio) ||
+          (this.publishedOwnerState === 'never-created' && this.publishedAudio)
+        ? 'unavailable'
+        : this.publishedOwnerState;
     return {
       effects: this.feedbackDirector.resourceSnapshot(),
-      published: this.publishedAudio?.resourceSnapshot() ?? null,
+      publishedOwner: { format: 'SoloOptionalOwnerStateV1', state },
+      published:
+        this.publishedAudio?.resourceSnapshot() ??
+        (state === 'never-created'
+          ? { decodedBytes: 0, decodedBytesLimit: CUE_CACHE_BYTES, cacheEntries: 0, loading: 0 }
+          : null),
       proceduralNoise: {
         buffers: Number(!!this.noise),
         decodedBytes: (this.noise?.length ?? 0) * (this.noise?.numberOfChannels ?? 0) * 4,
@@ -107,8 +119,20 @@ export class Soundscape {
     return this.feedbackDirector.prepare(names);
   }
   setPublishedAudio(readAudio) {
-    this.publishedAudio?.close();
-    this.publishedAudio = readAudio ? createPublishedCues({ sound: this, readAudio }) : null;
+    if (this.publishedAudio) this.publishedOwnerState = 'retired';
+    try {
+      this.publishedAudio?.close();
+      if (readAudio) {
+        // Enter before construction: a thrown constructor must never imply zero ownership.
+        this.publishedOwnerState = 'creating';
+        this.publishedAudio = createPublishedCues({ sound: this, readAudio });
+        this.publishedOwnerState = 'active';
+      } else this.publishedAudio = null;
+      if (this.disposed) this.publishedOwnerState = 'disposed';
+    } catch (error) {
+      this.publishedOwnerState = 'failed';
+      throw error;
+    }
   }
   publishedCue(name) {
     if (!this.menuSettings.enabled || this.menuSettings.volume === 0) return false;

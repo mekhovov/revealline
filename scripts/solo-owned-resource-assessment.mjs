@@ -61,6 +61,45 @@ export function assessSoloOwnedResources(report, { group = 'completed', last = 1
       values: {},
     };
     const issue = (kind, path, code) => row[kind].push({ path, code });
+    const ownership = (path, bootstrap = false) => {
+      const value = read(resources, path);
+      if (value === undefined) return null; // Historical missing counters stay unknown.
+      const expected = ['format', 'state', ...(bootstrap ? ['bootstrapMediaElementCreated'] : [])];
+      const states = [
+        'never-created',
+        'creating',
+        'active',
+        'retired',
+        'failed',
+        'disposed',
+        'unavailable',
+      ];
+      if (
+        !value ||
+        typeof value !== 'object' ||
+        Array.isArray(value) ||
+        Object.keys(value).length !== expected.length ||
+        !expected.every((key) => Object.hasOwn(value, key)) ||
+        value.format !== 'SoloOptionalOwnerStateV1' ||
+        !states.includes(value.state) ||
+        (bootstrap && typeof value.bootstrapMediaElementCreated !== 'boolean')
+      ) {
+        issue('failures', path, 'invalid-owner-lifecycle');
+        return 'invalid';
+      }
+      (row.ownership ??= {})[path] = { ...value };
+      if (
+        bootstrap &&
+        ['creating', 'active'].includes(value.state) &&
+        !value.bootstrapMediaElementCreated
+      )
+        issue('failures', path, 'player-without-bootstrap');
+      if (!['never-created', 'active'].includes(value.state))
+        issue('unknown', path, 'owner-not-active');
+      return value.state;
+    };
+    const publishedOwner = ownership('pcm.publishedOwner');
+    const soundtrackOwner = ownership('soundtrackOwner', true);
     if (!validGroup) issue('failures', 'group', 'invalid-boundary-group');
     const number = (
       path,
@@ -205,6 +244,10 @@ export function assessSoloOwnedResources(report, { group = 'completed', last = 1
         ...(owner === 'reactions' ? { maximum: OWNED_RESOURCE_LIMITS.reactionLoads } : {}),
       });
     }
+    if (publishedOwner === 'never-created')
+      for (const name of ['decodedBytes', 'cacheEntries', 'loading'])
+        if (read(resources, `pcm.published.${name}`) !== 0)
+          issue('failures', `pcm.published.${name}`, 'never-created-owner-disagrees');
     number('pcm.reactions.buffersLimit', { expected: OWNED_RESOURCE_LIMITS.reactionBuffers });
     number('pcm.reactions.perDecodeBytesLimit', {
       expected: OWNED_RESOURCE_LIMITS.reactionDecodeBytes,
@@ -235,6 +278,27 @@ export function assessSoloOwnedResources(report, { group = 'completed', last = 1
         pending: true,
       });
     }
+    if (soundtrackOwner !== null && soundtrackOwner !== 'invalid')
+      for (const name of [
+        'phase',
+        'queued',
+        'reservedDecodeBytes',
+        'active.fetch',
+        'active.decode',
+        'active.inspect',
+        'active.main',
+      ]) {
+        const shared = read(resources, `media.${name}`);
+        const player = read(resources, `soundtrack.admission.${name}`);
+        if (
+          shared !== undefined &&
+          shared !== null &&
+          player !== undefined &&
+          player !== null &&
+          shared !== player
+        )
+          issue('failures', `soundtrack.admission.${name}`, 'shared-admission-disagrees');
+      }
     const owned = boolean('soundtrack.inspection.workerOwned');
     const active = boolean('soundtrack.inspection.workerActive');
     const requests = number('soundtrack.inspection.pendingRequests', { pending: true });
@@ -256,7 +320,11 @@ export function assessSoloOwnedResources(report, { group = 'completed', last = 1
     const decks = read(resources, 'soundtrack.playback.decks');
     if (decks === undefined || decks === null)
       issue('unknown', 'soundtrack.playback.decks', 'missing-decks');
-    else if (!Array.isArray(decks) || decks.length > 2 || decks.length < 1)
+    else if (
+      !Array.isArray(decks) ||
+      decks.length > 2 ||
+      (decks.length < 1 && soundtrackOwner !== 'never-created')
+    )
       issue('failures', 'soundtrack.playback.decks', 'invalid-deck-count');
     else {
       const counts = [],
@@ -282,6 +350,22 @@ export function assessSoloOwnedResources(report, { group = 'completed', last = 1
       issue('failures', 'soundtrack.playback', 'revocation-counters-disagree');
     if (revokeCount > 0 || revokeBytes > 0)
       issue('unknown', 'soundtrack.playback', 'browser-release-uncertain');
+    if (soundtrackOwner === 'never-created') {
+      for (const [path, expected] of [
+        ['inspection.workerOwned', false],
+        ['inspection.workerActive', false],
+        ['inspection.workerOwnedBytes', 0],
+        ['inspection.pendingRequests', 0],
+        ['playback.ownedBlobURLCount', 0],
+        ['playback.ownedBlobBytes', 0],
+        ['playback.failedRevocationCount', 0],
+        ['playback.failedRevocationBytes', 0],
+      ])
+        if (read(resources, `soundtrack.${path}`) !== expected)
+          issue('failures', `soundtrack.${path}`, 'never-created-owner-disagrees');
+      if (!Array.isArray(decks) || decks.length !== 0)
+        issue('failures', 'soundtrack.playback.decks', 'never-created-owner-disagrees');
+    }
     rows.push(row);
   }
   const selected = rows.filter((row) => row.group === group).slice(-last);

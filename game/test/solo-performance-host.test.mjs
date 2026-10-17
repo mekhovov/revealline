@@ -545,3 +545,171 @@ test(
     assert.deepEqual(page.errors, []);
   },
 );
+
+test('uncreated soundtrack accounting retains bootstrap media and actual shared reservations', async (t) => {
+  const { Soundscape } = await import('../ui/audio.mjs');
+  const audio = audioHarness();
+  t.after(() => audio.soundscape.dispose());
+  let releaseBootstrap,
+    capture,
+    contexts = 0;
+  const bootstrap = new Promise((resolve) => {
+    releaseBootstrap = resolve;
+  });
+  t.after(() => releaseBootstrap());
+  const original = Soundscape.prototype.resourceSnapshot;
+  t.mock.method(Soundscape.prototype, 'resourceSnapshot', function () {
+    capture = this;
+    return original.call(this);
+  });
+  const page = await soloPage(t, {
+    pictures,
+    fetchResponse,
+    audio,
+    search: '?journey=opening&performance=1',
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    browserSetup: ({ globals }) => {
+      globals.innerWidth = 1280;
+      globals.innerHeight = 720;
+      globals.AudioContext = function () {
+        contexts++;
+        return audio.context;
+      };
+      globals.caches = {
+        async open() {
+          await bootstrap;
+          return {
+            match: async () => undefined,
+            keys: async () => [],
+            put: async () => {},
+            delete: async () => false,
+          };
+        },
+      };
+    },
+  });
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  const fresh = page.win.RevealLineSoloPerformance.export().resources;
+  assert.deepEqual(fresh.soundtrackOwner, {
+    format: 'SoloOptionalOwnerStateV1',
+    state: 'never-created',
+    bootstrapMediaElementCreated: true,
+  });
+  assert(
+    page.audioElements.length > 0,
+    'An HTMLAudioElement really exists before the player constructor',
+  );
+  assert.deepEqual(fresh.soundtrack.inspection, {
+    workerOwned: false,
+    workerActive: false,
+    workerOwnedBytes: 0,
+    pendingRequests: 0,
+  });
+  assert.deepEqual(fresh.soundtrack.playback, {
+    ownedBlobURLCount: 0,
+    ownedBlobBytes: 0,
+    failedRevocationCount: 0,
+    failedRevocationBytes: 0,
+    decks: [],
+  });
+  let finishDecode;
+  const pending = capture.mediaPreparation.run(
+    'decode',
+    () =>
+      new Promise((resolve) => {
+        finishDecode = resolve;
+      }),
+    { bytes: 4096 },
+  );
+  await settle(() => !!finishDecode, 'Shared native decode has started');
+  const held = page.win.RevealLineSoloPerformance.export().resources;
+  assert.equal(held.soundtrackOwner.state, 'never-created');
+  assert.equal(held.media.active.decode, 1);
+  assert.equal(held.media.reservedDecodeBytes, 4096);
+  const { reservationAccounting, ...shared } = held.media;
+  assert.match(reservationAccounting, /not measured native allocation/);
+  assert.deepEqual(held.soundtrack.admission, shared);
+  assert.equal(held.soundtrack.playback.ownedBlobURLCount, 0);
+  finishDecode();
+  await pending;
+  releaseBootstrap();
+  await settle(() => !page.$('soundtrack-open').disabled, 'Actual player construction completes');
+  const created = page.win.RevealLineSoloPerformance.export().resources;
+  assert.equal(created.soundtrackOwner.state, 'active');
+  assert.equal(created.soundtrackOwner.bootstrapMediaElementCreated, true);
+  assert.equal(created.soundtrack.playback.decks.length, 2);
+  assert.equal(contexts, 0);
+  assert.equal(audio.sources.length, 0);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
+
+test('failed soundtrack bootstrap and disposed parent retain unknown owner counters', async (t) => {
+  const page = await soloPage(t, {
+    pictures,
+    fetchResponse,
+    search: '?journey=opening&performance=1',
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    browserSetup: ({ globals }) => {
+      globals.innerWidth = 1280;
+      globals.innerHeight = 720;
+    },
+  });
+  const failed = page.win.RevealLineSoloPerformance.export().resources;
+  assert.equal(failed.soundtrackOwner.state, 'failed');
+  assert.equal(failed.soundtrackOwner.bootstrapMediaElementCreated, true);
+  assert.equal(failed.soundtrack.inspection, null);
+  assert.equal(failed.soundtrack.playback, null);
+  const { reservationAccounting, ...shared } = failed.media;
+  assert.deepEqual(failed.soundtrack.admission, shared);
+  page.win.emit('pagehide', { persisted: false });
+  const disposed = page.win.RevealLineSoloPerformance.export().resources;
+  assert.equal(disposed.soundtrackOwner.state, 'disposed');
+  assert.equal(disposed.soundtrack.inspection, null);
+  assert.equal(disposed.soundtrack.playback, null);
+  assert.deepEqual(page.errors, []);
+});
+
+test('the actual public diagnostic export rejects active play before inspecting owners', async () => {
+  const source = await readFile(new URL('../app.mjs', import.meta.url), 'utf8');
+  const start = source.indexOf('    window.RevealLineSoloPerformance = Object.freeze({');
+  const end = source.indexOf("\n    window.addEventListener('pagehide'", start);
+  assert(start >= 0 && end > start);
+  const window = {};
+  let ownerReads = 0;
+  const error = new Error('Pause gameplay before exporting diagnostics');
+  // Exercise the actual complete export method with its original lexical inputs.
+  // The denied branch must not touch any owner, DOM or other later dependency.
+  const install = new Function(
+    'window',
+    'performanceSession',
+    'soundtrackPlayer',
+    'paused',
+    'started',
+    'run',
+    source.slice(start, end),
+  );
+  install(
+    window,
+    {
+      export(options) {
+        assert.deepEqual(options, { paused: false });
+        throw error;
+      },
+    },
+    {
+      preparationDiagnostics() {
+        ownerReads++;
+        return { admission: {} };
+      },
+    },
+    false,
+    true,
+    { status: 'running' },
+  );
+  assert.throws(
+    () => window.RevealLineSoloPerformance.export(),
+    (value) => value === error,
+  );
+  assert.equal(ownerReads, 0);
+});
