@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { runInNewContext } from 'node:vm';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
@@ -392,4 +393,217 @@ test('real submission observes cheap irregular delivery without changing fixed t
   assert.deepEqual(authoritativeCheckpoint(run), paused);
   assert.equal(page.rendered.quality, 'full', 'Public Resume is the safe restoration boundary.');
   assert.deepEqual(page.errors, []);
+});
+
+// Exercise the pinned browser scheduler's callback-before-reschedule ordering.
+// A manual frame pump would incorrectly revive a loop killed by a thrown error.
+async function submissionFaultPage(t) {
+  let scene;
+  const page = await soloPage(t, {
+    ...options(),
+    automaticPreparationFrames: false,
+    browserSetup({ globals }) {
+      const Scene = globals.Phaser.Scene;
+      globals.Phaser.Scene = class extends Scene {
+        constructor(...args) {
+          super(...args);
+          scene = this;
+        }
+      };
+    },
+  });
+  const draw = BoardPainter.prototype.draw;
+  let drawFault = null;
+  // soloPage owns prototype restoration; this hook retires only our closure.
+  t.after(() => {
+    drawFault = null;
+  });
+  BoardPainter.prototype.draw = function (...args) {
+    drawFault?.call(this);
+    return draw.apply(this, args);
+  };
+  const rejected = [];
+  const prepareBoard = scene.prepareBoard;
+  scene.prepareBoard = async function (...args) {
+    try {
+      return await prepareBoard.apply(this, args);
+    } catch (error) {
+      rejected.push(error);
+      throw error;
+    }
+  };
+  const source = await readFile(new URL('../vendor/phaser-4.2.1.min.js', import.meta.url), 'utf8');
+  const steps = source.match(
+    /function e\(i\)\{t\.callback\(i\),t\.isRunning&&\(t\.timeOutID=window\.requestAnimationFrame\(e\)\)\}/g,
+  );
+  assert.equal(steps?.length, 1, 'Use the actual pinned Phaser RAF callback boundary.');
+  const queued = [];
+  let id = 0;
+  const loop = { isRunning: true, callback: () => page.frame(1000 / 60) };
+  const step = runInNewContext(`(${steps[0]})`, {
+    t: loop,
+    window: {
+      requestAnimationFrame(callback) {
+        queued.push(callback);
+        return ++id;
+      },
+    },
+  });
+  queued.push(step);
+  const deliver = () => {
+    assert.equal(queued.length, 1, 'The prior callback must schedule exactly one successor.');
+    queued.shift()(id * (1000 / 60));
+  };
+  const until = (predicate, message) =>
+    waitFor(
+      () => {
+        if (predicate()) return true;
+        deliver();
+        return false;
+      },
+      { timeoutMs: 20000, message },
+    );
+  return {
+    page,
+    scene,
+    rejected,
+    deliver,
+    queued,
+    until,
+    fault(callback) {
+      drawFault = callback;
+    },
+    pending: () => until(() => !!scene.preparedFrame, 'The required board awaits submission.'),
+    running: () => until(() => page.doc.body.dataset.flightState === 'running', 'Explicit Retry.'),
+  };
+}
+
+test('owned required submission failure preserves the RAF loop through persistent fault and explicit Retry', async (t) => {
+  const f = await submissionFaultPage(t),
+    { page, scene } = f,
+    run = page.rendered.run,
+    before = authoritativeCheckpoint(run),
+    fault = new Error('Persistent required submission fault');
+  const starting = page.$('start-button').onclick();
+  await f.pending();
+  let attempts = 0;
+  f.fault(() => {
+    attempts++;
+    throw fault;
+  });
+  assert.doesNotThrow(f.deliver, 'The owned failure must reject preparation without killing RAF.');
+  await starting;
+  assert.strictEqual(f.rejected[0], fault, 'Reject with the original error object.');
+  assert.equal(scene.preparedFrame, null);
+  assert.equal(scene.preparedCancel, null);
+  assert.equal(scene.prepared(), false);
+  assert.equal(page.$('flight-preparation-status').dataset.state, 'error');
+  assert.notEqual(page.doc.body.dataset.flightState, 'running');
+  assert.equal(page.doc.body.dataset.flightLayout, undefined);
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+  const display = page.displayRender,
+    reads = page.padReads;
+  for (let i = 0; i < 4; i++) f.deliver();
+  assert.equal(attempts, 1, 'Recovery never retries the failed board automatically.');
+  assert.ok(page.padReads >= reads + 4, 'Input polling stays live for public Retry/Cancel.');
+  assert.equal(page.displayRender.draws, display.draws);
+  assert.equal(page.displayRender.clears, display.clears);
+  page.key('Escape');
+  page.key('Escape', false);
+  f.deliver();
+  assert.equal(attempts, 1, 'Cancel must not restart the persistent draw fault.');
+  let failedRetrySettled = false;
+  const failedRetry = page.$('start-button').onclick();
+  failedRetry.finally(() => {
+    failedRetrySettled = true;
+  });
+  await f.until(() => failedRetrySettled, 'A failed detached reprepare still settles.');
+  await failedRetry;
+  assert.strictEqual(f.rejected[1], fault);
+  assert.equal(attempts, 2, 'Only the explicit Retry reattempts detached preparation.');
+  const canvas = page.$('game-canvas').querySelector('canvas');
+  canvas.emit('contextlost');
+  canvas.emit('contextrestored');
+  for (let i = 0; i < 3; i++) f.deliver();
+  assert.equal(attempts, 2, 'Context restoration cannot restart the failed draw automatically.');
+  f.fault(null);
+  const retry = page.$('start-button').onclick();
+  await f.running();
+  await retry;
+  assert.equal(scene.failedPreparationRun, null);
+  assert.strictEqual(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+  assert.equal(f.queued.length, 1, 'Retry used the surviving loop, without reseeding it.');
+  f.fault(() => {
+    throw fault;
+  });
+  assert.throws(
+    f.deliver,
+    (error) => error === fault,
+    'Active errors retain ordinary propagation.',
+  );
+  assert.equal(f.queued.length, 0, 'The pinned scheduler does not reschedule a thrown callback.');
+});
+
+test('cancelled submission callbacks cannot reject a replacement or turn AbortSignal events into errors', async (t) => {
+  const f = await submissionFaultPage(t),
+    { page, scene } = f,
+    before = authoritativeCheckpoint(page.rendered.run);
+  const starting = page.$('start-button').onclick();
+  await f.pending();
+  const retiredFailure = scene.preparedFailure;
+  page.key('Escape');
+  page.key('Escape', false);
+  await starting;
+  assert.equal(f.rejected[0]?.name, 'AbortError');
+  assert.notEqual(f.rejected[0]?.type, 'abort', 'An event is not an error reason.');
+  const retry = page.$('start-button').onclick();
+  await f.pending();
+  const replacement = scene.preparedFrame;
+  assert.equal(retiredFailure(new Error('retired owner')), false);
+  assert.strictEqual(scene.preparedFrame, replacement);
+  await f.running();
+  await retry;
+  assert.equal(f.rejected.length, 1);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+});
+
+test('a submission error after reentrant cancellation keeps the ordinary throw path', async (t) => {
+  const f = await submissionFaultPage(t),
+    { page, scene } = f,
+    fault = new Error('Renderer failure after its preparation was cancelled');
+  const starting = page.$('start-button').onclick();
+  await f.pending();
+  f.fault(() => {
+    page.key('Escape');
+    page.key('Escape', false);
+    throw fault;
+  });
+  assert.throws(f.deliver, (error) => error === fault);
+  await starting;
+  assert.equal(f.rejected[0]?.name, 'AbortError');
+  assert.equal(scene.failedPreparationRun, null);
+  assert.equal(scene.preparedFrame, null);
+  assert.equal(f.queued.length, 0);
+});
+
+test('retired painter generation cannot claim owned submission recovery', async (t) => {
+  const f = await submissionFaultPage(t),
+    { page, scene } = f,
+    fault = new Error('Renderer generation retired during submission');
+  const starting = page.$('start-button').onclick();
+  await f.pending();
+  f.fault(function () {
+    this.dispose();
+    throw fault;
+  });
+  assert.throws(f.deliver, (error) => error === fault);
+  assert.equal(scene.failedPreparationRun, null);
+  assert.equal(f.rejected.length, 0, 'A retired generation cannot reject as the current owner.');
+  page.key('Escape');
+  page.key('Escape', false);
+  await starting;
+  assert.equal(f.rejected[0]?.name, 'AbortError');
+  assert.equal(scene.preparedFrame, null);
+  assert.equal(f.queued.length, 0);
 });
