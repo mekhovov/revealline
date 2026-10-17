@@ -1,0 +1,14 @@
+{
+  "format": "FPVPortableReceiptCollectorTransportNegative.v1",
+  "runId": 38861525073,
+  "actualWorkflowConclusion": "success",
+  "failedStep": "Local client retrieval of authenticated raw job log",
+  "originalError": "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway",
+  "originalLogSHA256": "3171a1dcfbca4a965f03ff4af22a3c75e2f3abcad5415973e6a48dc32bb1a526",
+  "originalLogBytes": 1296,
+  "originalLogRetainedInternally": true,
+  "retry": "Explicit raw transport flag only; original artifact/index/runtime equality and all count/hash/metadata/link/capacity checks retained",
+  "verificationLogicOrPublicHelperChanged": false,
+  "recoveryAccepted": true,
+  "recoveryCollectionSHA256": "bd459b45905151414e5ff6ba33e8eed3026799f90053d90dc0d7f2529b09ff34"
+}

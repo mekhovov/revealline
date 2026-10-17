@@ -1,0 +1,21 @@
+{
+  "format": "RootPublicSinglePartIncrementalWorkflowReview.v1",
+  "createdUTC": "2026-10-16T08:37:54.660144+00:00",
+  "workflowSHA256": "d1853841d8b0d7ef7850d1b647b11fb7d138b4d755fb838cd11e8f096776ee03",
+  "fixedRepository": "mekhovov/revealline",
+  "fixedPR": 1552,
+  "fixedSameRepositoryHeadBranch": "codex/fpv-development-preservation-tools-20261016",
+  "sourceReadersUnchangedAccepted66f": true,
+  "tokenOnlyFixedDraftReleaseGetStep": true,
+  "exactSingleSealedPartSHA256": "b536ee45f56151c013bf773070a32479ad8db9b6dcdef99b5c0df107033cb842",
+  "compressedBytes": 614442443,
+  "objects": 14504,
+  "rawBytes": 889683927,
+  "freshMeasuredSpaceGateWithReserve": true,
+  "noAppExecutionOrBuild": true,
+  "standardHostedJobMinutesCap": 10,
+  "publishOnNormal1552ChildApproved": true,
+  "oldTwelvePartPlanRerunsRequired": false,
+  "actualSourceUploadAndCloudReadbackStillSeparateGates": true,
+  "allVolumeComplete": false
+}

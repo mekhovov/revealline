@@ -1,0 +1,20 @@
+{
+  "format": "FPVDuplicateReadbackDisposition.v1",
+  "cloudRun": 38852302926,
+  "verifiedSourceHead": "38778e3cd5a942d5f56c8edf33d66fb6b1acf9eb",
+  "durableReceiptCommit": "dcee0fdb6b73169fa944ab1ef4d4554af88e23ea",
+  "reason": "Actual cloud full readback and member receipts became durable; stop only own redundant local readbacks and retain all partial files and logs.",
+  "stoppedSessions": [
+    29022,
+    99523,
+    90108
+  ],
+  "retainedLogs": [
+    "verify-batch001-part001.log",
+    "verify-batch003-part001.log",
+    "verify-batch001-part002.log"
+  ],
+  "originalFailuresPreserved": true,
+  "overallCoverageClaimed": false,
+  "createdAtUnix": 1792126671.4054139
+}

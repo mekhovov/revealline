@@ -1,0 +1,10 @@
+{
+  "format": "RootFocusedReadbackHistoricalHeadGuardReview.v1",
+  "approved": true,
+  "sourceHead": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+  "workflowSHA256": "80c0e8df35825fc4a7a114e3be2ce9adaadcf2d948b66c179e736a123f6b657d",
+  "onlyAddition": "Exact accepted historical head condition on existing owned backup verify job",
+  "actualReadbackAcceptanceSHA256": "1d524fce6d6bd8a0b4198ad38b0a7a61d2eede31276f0878921d933b6913c797",
+  "requiredApplicationCIOrProtectionsChanged": false,
+  "newBackupWorkExecutionApproved": false
+}

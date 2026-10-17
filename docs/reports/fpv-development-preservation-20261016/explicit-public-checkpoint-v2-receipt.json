@@ -1,0 +1,113 @@
+{
+  "format": "RootExplicitPublicCheckpointFullReadback.v2",
+  "releaseId": 414505790,
+  "assetId": 646797088,
+  "assetName": "fpv-explicit-public-recovery-checkpoint-v2-53c7db37eb7b04b9b3e87cfc6526cbe6804d3e1c2c6c428e12cf6419fcf1875a.zip",
+  "bytes": 119025,
+  "sha256": "53c7db37eb7b04b9b3e87cfc6526cbe6804d3e1c2c6c428e12cf6419fcf1875a",
+  "actualServerAndFullAuthenticatedReadbackPass": true,
+  "all13ExactWhitelistMembersPass": true,
+  "manifest": {
+    "format": "FPVExplicitPublicRecoveryCheckpoint.v2",
+    "createdUTC": "2026-10-16T09:16:22.805427+00:00",
+    "scope": "Explicit thirteen-file public whitelist only; no recursive recovery or mixed/private inventory collection",
+    "safeToDisconnect": false,
+    "allVolumeComplete": false,
+    "files": [
+      {
+        "path": "PUBLIC-RECOVERY-ENTRY.md",
+        "bytes": 3102,
+        "sha256": "e072427ce3b45d7accd6a1bc6f7bccd83e35fda3242a270634ee38b3277cdf61",
+        "mode": 420,
+        "mtime_ns": 1792142155919544017
+      },
+      {
+        "path": "independent-original-stage-full-restore-review/github-full-portable-restore.json",
+        "bytes": 1406,
+        "sha256": "14ad3bcdf1252a60ecfae9426227251d8863e35e46e4f3705a051940aa8d26f7",
+        "mode": 420,
+        "mtime_ns": 1792133147108569436
+      },
+      {
+        "path": "independent-original-stage-full-restore-review/root-independent-acceptance.json",
+        "bytes": 727,
+        "sha256": "849359ad75e6002a20497320fe6433f6a29c0c9ea17a7a1ce768ff72f94dfb65",
+        "mode": 420,
+        "mtime_ns": 1792133147108946979
+      },
+      {
+        "path": "bulk-pack-lane/independent-incremental-003-root/root-acceptance.json",
+        "bytes": 1174,
+        "sha256": "1d524fce6d6bd8a0b4198ad38b0a7a61d2eede31276f0878921d933b6913c797",
+        "mode": 420,
+        "mtime_ns": 1792141177552457433
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/ISSUES.md",
+        "bytes": 17519,
+        "sha256": "72981a105335964111253e7e5db4e956b8ab3a17fd74c2d02180bffc7f533c20",
+        "mode": 420,
+        "mtime_ns": 1792035797097496700
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/LICENSE",
+        "bytes": 11560,
+        "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+        "mode": 420,
+        "mtime_ns": 1792035796014497400
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/NOTICES",
+        "bytes": 22286,
+        "sha256": "933f161ca1e7b3ead5a6cf93ebb3bf6cb67f0e79b38e08d2046f8cdc41cb78a3",
+        "mode": 420,
+        "mtime_ns": 1792035796189967800
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/README.md",
+        "bytes": 6814,
+        "sha256": "f5f26dc624a62817b356cec631b33af7358d046a4b2c0499a5f55189d986afa5",
+        "mode": 420,
+        "mtime_ns": 1792035797328767300
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/gltf_validator.dart.js",
+        "bytes": 307792,
+        "sha256": "b73a7b2d455ac217567725138b46d826a13d7d1bb0c88c15f7c571bfb349298c",
+        "mode": 420,
+        "mtime_ns": 1792035796531029700
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/index.js",
+        "bytes": 2829,
+        "sha256": "78deff9ea85743e86461c2d14fae76e7fc3ca0432e652f62948066b55fa16f0d",
+        "mode": 420,
+        "mtime_ns": 1792035796663361900
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/module.mjs",
+        "bytes": 2822,
+        "sha256": "d2a88775a8b22f61be8e00644760f0f04b615fad0fc5175fefd40e0da4df2c8f",
+        "mode": 420,
+        "mtime_ns": 1792035797635830900
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/package.json",
+        "bytes": 618,
+        "sha256": "3578d16153fa237c72784588da2e8fcccc9cd3c1c58ef34c7912f0732d2f5fa6",
+        "mode": 420,
+        "mtime_ns": 1792035796718971700
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/validation.schema.json",
+        "bytes": 11107,
+        "sha256": "e33db4da1e907481a5fc056d2daab40be1a603620d8f4a1c81919120f3340365",
+        "mode": 420,
+        "mtime_ns": 1792035796897120100
+      }
+    ],
+    "noPrivateCompanionMetadataOrBody": true,
+    "noRawConfigSecretsBrowserOrPlayerData": true
+  },
+  "safeToDisconnect": false
+}

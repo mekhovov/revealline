@@ -1,0 +1,8 @@
+test_rejects_nonzero_payload_after_tar_terminator (test_preservation.PreservationTests.test_rejects_nonzero_payload_after_tar_terminator) ... ok
+test_real_part_roundtrip_and_tampered_header_refusal (test_preservation.PreservationTests.test_real_part_roundtrip_and_tampered_header_refusal) ... {"event": "packed", "part": 1, "objects": 1, "rawObjectBytes": 29000, "compressedBytes": 266, "sha256": "1b5b75f18dc29b4a99ab3f7fbf22cdba1f2a69554aa09e634245b272560e6cf3"}
+ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 3.746s
+
+OK

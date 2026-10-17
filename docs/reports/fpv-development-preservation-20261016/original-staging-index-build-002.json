@@ -1,0 +1,41 @@
+{
+  "format": "FPVRootAuthorizedOriginalStagingIndexBuild.v2",
+  "indexFile": "preservation-index.json",
+  "indexBytes": 41343790,
+  "indexSHA256": "630438ac879a40577638e5b21706fea93b637b8a34dbc70ad3266248b2d9509e",
+  "counts": {
+    "inventoryFilePaths": 122706,
+    "coveredFilePaths": 122706,
+    "heldFilePaths": 0,
+    "uncoveredFilePaths": 0,
+    "logicalCoveredBytes": 20682624334,
+    "verifiedParts": 18,
+    "directAssets": 28,
+    "symlinks": 282,
+    "heldSymlinks": 0
+  },
+  "logicalFilePaths": 122706,
+  "actualRelativeLinksToVerify": 282,
+  "githubDependencyFiles": 39,
+  "linkDispositionsSHA256": "93e396d6b0f56998e301175a5e5a2470d2cd965bdb898e107861c592dd8441e3",
+  "coverageCompleteWithinOriginalStagingScope": true,
+  "finalInputSetForOriginalStagingOnly": true,
+  "allVolumeInputSetFinal": false,
+  "sourceRecoveryProof": {
+    "scope": "Original16-store source only; expanded/private origins remain open",
+    "repository": "mekhovov/revealline",
+    "receiptCommit": "9ea22e3dc5ab93e6c140a96e392bc503336d062a",
+    "receiptPath": "docs/verification/fpv-library-preservation-20261016/source-closure-independent-review/github-hosted-original-source-cold-independent-acceptance.json",
+    "receiptGitBlobSHA1": "f2a7a7953348f1effbc012e2b0f02444e3c2adcd",
+    "receiptSHA256": "b4eaf35c23147ec4fc87eee8f8a5f05e09dee39929914358137b6156591b07e2",
+    "independentFullAssetReadbackGitBlobSHA1": "210b091cbb19a4692ab1720db99ffbbf3048287b",
+    "independentFullAssetReadbackSHA256": "459c8b253146bfc153b0266bfdac70c79258787e170d7fa643f7f3ae277b474c",
+    "hostedColdRestoreRunId": 38860055058,
+    "hostedColdRestoreHead": "dc3aa3a536b077db0b20747dc81f2a8d0fbaea1e",
+    "bundleAssetId": 646261949,
+    "bundleBytes": 389261798,
+    "bundleSHA256": "d21fd37f7ca6231ce0b6622e5591b3db4dac282f9f62520f024620d797292636"
+  },
+  "portableRestoreComplete": false,
+  "overallDisconnectSafetyClaimed": false
+}

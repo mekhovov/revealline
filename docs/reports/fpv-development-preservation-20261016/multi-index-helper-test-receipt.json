@@ -1,0 +1,38 @@
+{
+  "format": "FPVMultiIndexHelperReviewReceipt.v1",
+  "newRegressions": 4,
+  "newRegressionsSeconds": 235.499,
+  "legacyFullRestoreRegressionPassed": true,
+  "scope": "Small external fixture tooling only; no app or full inventory restore claim",
+  "checks": [
+    "actual separate namespace files and relative links restored",
+    "same immutable asset downloaded once and fully rehashed on reuse",
+    "tampered shared cache refused without overwrite or global success receipt",
+    "wrong namespace/path/hash/final-input/public approval refused before download",
+    "combined low space refused before download or work creation",
+    "contradictory shared asset identity refused"
+  ],
+  "retainedInvocationNegative": {
+    "log": "helper-tests-multi-legacy-invocation-negative.txt",
+    "reason": "Initial test command named BoundedTests instead of BoundedRestoreTests; runner refused missing class. Corrected command passed; no source guard changed."
+  },
+  "logs": [
+    {
+      "name": "tool-tests-multi-001.log",
+      "sha256": "9349ee881c16d9035331ac238ccb0b8e9ab8d025b79cbf447c07a696cdc41c5a",
+      "bytes": 3402
+    },
+    {
+      "name": "tool-tests-multi-legacy-001.log",
+      "sha256": "07e5c30f3d07b987107fa58aa7c5cfb7d2704868f357ff5f6d964a45513e5e4f",
+      "bytes": 462
+    },
+    {
+      "name": "tool-tests-multi-legacy-002.log",
+      "sha256": "b030442002b2b3248cec6daec2ad40d6b350b4eb5a6d199bd85bc961b9b55a91",
+      "bytes": 1164
+    }
+  ],
+  "fullInventoryRestorationPerformed": false,
+  "overallDisconnectSafetyClaimed": false
+}

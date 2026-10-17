@@ -1,0 +1,25 @@
+{
+  "format": "RootOwnedAdHocWorkflowHeadGuardReview.v1",
+  "reviewedUTC": "2026-10-16T08:56:50.271957+00:00",
+  "sourceHead": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+  "files": [
+    {
+      "path": ".github/workflows/fpv-preservation-readback.yml",
+      "local": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/ad-hoc-workflow-head-guards-001/fpv-preservation-readback.yml",
+      "originalGitBlobSHA1": "f4c24cf114edc451f810cd794cdc83eabdf3ab07",
+      "sha256": "03938cf8803cd4545c9fe360488e1f13394000ab4868342a8e4aef145d5d8060",
+      "acceptedOriginalHead": "d55aeb5db53b5d69a675b3b2c2e7a0f8ffd58632"
+    },
+    {
+      "path": ".github/workflows/fpv-preservation-portable-restore.yml",
+      "local": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/ad-hoc-workflow-head-guards-001/fpv-preservation-portable-restore.yml",
+      "originalGitBlobSHA1": "87607f845e0256a0daf5fe651be9ac31d08be8ca",
+      "sha256": "895f386a58f4e8da9d33d91caacfe115868e8faf142defe209732eb8030c1d0a",
+      "acceptedOriginalHead": "0942916a74c5ed6821e31b7d4ee34a66e97b9456"
+    }
+  ],
+  "approved": true,
+  "scope": "Only two existing owned historical backup workflows; exact accepted head job guards prevent cumulative PR diff reruns. No application required CI or repository protection changes. Future scope needs explicit reviewed opt-in.",
+  "originalAcceptedRunsPreserved": true,
+  "newBackupOrApplicationExecutionAuthorized": false
+}

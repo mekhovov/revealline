@@ -1,0 +1,20 @@
+{
+  "format": "RootSharedCacheRestoreSourceReview.v1",
+  "createdUTC": "2026-10-16T06:39:41.855683+00:00",
+  "multiSourceHead": "cd41090b1e83c1cdecb741c5fe9e4421ea4b6771",
+  "capacitySourceHead": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+  "sourceReview": "PASS",
+  "scope": [
+    "Exact fixed sourceRoot/index namespace bindings and root confirmation required",
+    "No private companion input by inference",
+    "Combined fresh-disk gate before download",
+    "Single-index standalone behavior unchanged",
+    "Shared-cache credit checks only existing regular exact-size files; full hashes/member checks still required",
+    "Same-size corruption refusal remains tested",
+    "No workflow permission change in capacity child",
+    "Source code/payloads are not executed during restore"
+  ],
+  "agentRegressionEvidence": "5focused +1actualsharedTAR/member +3legacy passing as reported; root did not rerun these tests",
+  "rootExecutedChecks": "Pinned source Gitblob/body fetches, full source/workflow/diff static review only",
+  "allVolumePreservationComplete": false
+}

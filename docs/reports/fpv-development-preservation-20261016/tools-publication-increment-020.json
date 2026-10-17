@@ -1,0 +1,52 @@
+{
+  "previousHead": "f3e846a92ef2605fa29210cdfd685e02d99bb481",
+  "head": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+  "authenticatedChangedBlobReadbackMatches": true,
+  "sourceHelpersUnchangedFrom": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+  "newPublicPartActualCloudVerificationPending": true,
+  "allVolumeInputSetFinal": false,
+  "files": [
+    {
+      "path": ".github/workflows/fpv-preservation-incremental-readback.yml",
+      "gitBlobSHA1": "eda262b5d5ddb706f4e2746f8249b6ffb52e12c2",
+      "sha256": "d1853841d8b0d7ef7850d1b647b11fb7d138b4d755fb838cd11e8f096776ee03",
+      "bytes": 3762
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/incremental-readback-plans/extra-public-003.json",
+      "gitBlobSHA1": "fa923951a877ca202493e87dca6a7ae60ecec5e4",
+      "sha256": "3cd4f997deb2394a0fc91b2906c87c015fd534e1c376a20e5a207503acb1d050",
+      "bytes": 7869288
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/root-public-incremental-workflow-review-d1853841.json",
+      "gitBlobSHA1": "071692c641dec735f6b97da63d51b2f0f704194d",
+      "sha256": "10803f8bf8173d5b9865b7b521b62a33e4de79aa348f0f876df317862ec062e7",
+      "bytes": 923
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-small-main-parts/part-a10ec601bafe5a4ee4a45e8a57d0dca55b28f20a466710b56ee07c18b06c9f5b-verified.json",
+      "gitBlobSHA1": "9f3833f4935669a0771f48bf74030616af864470",
+      "sha256": "8dc54e2b16ec72897a4ddc9d8b4622aff3349a47fcf415ff4b49b15ec6a36a81",
+      "bytes": 682830
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-small-main-packing-provenance-001.json",
+      "gitBlobSHA1": "4bb67e05f795c34b2a6f2ad3ddc9f78b3050b30d",
+      "sha256": "c786e8f33b2fff84af52b796919bacea250c8be03ad1f3abbf35bfa158fbd2ac",
+      "bytes": 976
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/exact-small-archive-originals-verified-CAS-reuse-001.json",
+      "gitBlobSHA1": "3247bb6ddc5b1c77a56b0315f02880336d3b4dad",
+      "sha256": "aa030c4eede8463b37d19f6f2a88202c9a85441b171a0de5086b6cff6d679082",
+      "bytes": 2090
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/tools-publication-increment-019.json",
+      "gitBlobSHA1": "9e1a09e6fd8e78af4e20c05b60da0e7c4d00bd45",
+      "sha256": "2ed6412e395995480a66e340e212e0ccce30d5968f11f89ddb9a98ca08f0397e",
+      "bytes": 4321
+    }
+  ]
+}

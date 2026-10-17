@@ -1,0 +1,15 @@
+{
+  "format": "FPVCloudReadbackFailure.v1",
+  "runId": 38851518973,
+  "head": "37aeebc0d5f6e86c1ed72dca8f098533892f4acb",
+  "failure": "All three verification jobs refused HTTP403 Resource not accessible by integration when listing draft-release assets; no payload verification ran.",
+  "originalLogSHA256": "b57b611f2c9ee8a268e08ae484a993c11792da010bef8d40ccdfd9afa3131afc",
+  "classification": "Draft API access path, not a source or hash failure",
+  "normalFix": "Read exact sealed assetID metadata directly, retaining immutable ID/name/size/digest checks and original source plan.",
+  "permissionsUnchanged": "contents:read",
+  "docs": [
+    "https://docs.github.com/en/rest/releases/releases#list-releases",
+    "https://docs.github.com/en/rest/releases/assets#get-a-release-asset"
+  ],
+  "originalFailureRetained": true
+}

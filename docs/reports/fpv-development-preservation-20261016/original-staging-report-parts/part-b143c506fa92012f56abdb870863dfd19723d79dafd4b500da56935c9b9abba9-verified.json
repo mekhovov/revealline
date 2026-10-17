@@ -1,0 +1,91 @@
+{
+  "format": "FPVCASPartVerified.v1",
+  "repo": "mekhovov/revealline",
+  "releaseId": 414505790,
+  "tag": "fpv-development-preservation-20261016",
+  "assetId": 646379054,
+  "assetName": "fpv-cas-b143c506fa92012f56abdb870863dfd19723d79dafd4b500da56935c9b9abba9.tar.zst",
+  "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/fpv-cas-b143c506fa92012f56abdb870863dfd19723d79dafd4b500da56935c9b9abba9.tar.zst",
+  "bytes": 3392,
+  "sha256": "b143c506fa92012f56abdb870863dfd19723d79dafd4b500da56935c9b9abba9",
+  "serverDigestMatch": true,
+  "authenticatedFullReadbackSHA256Match": true,
+  "restoredMembers": {
+    "members": 5,
+    "bytes": 7746,
+    "allRestoredMemberSHA256Match": true,
+    "destination": "/Volumes/alex/CodexMigrationStaging/fpv-preservation-pack-stage-20261016-listing/verify-original16-cold-001/restored"
+  },
+  "partManifest": {
+    "format": "FPVCASPart.v1",
+    "number": 1,
+    "objects": [
+      {
+        "sha256": "127eb010d32c8b978a85b93df4e070b8838e55cd2551c12fdddf607641504dd0",
+        "bytes": 1403,
+        "member": "objects/127eb010d32c8b978a85b93df4e070b8838e55cd2551c12fdddf607641504dd0"
+      },
+      {
+        "sha256": "15c0eff0474711c98584f3ac96767b2d1aa22d33c831a99a348e1abcd9092e68",
+        "bytes": 1956,
+        "member": "objects/15c0eff0474711c98584f3ac96767b2d1aa22d33c831a99a348e1abcd9092e68"
+      },
+      {
+        "sha256": "1eaeb95df625193e2b9a9effb9f7406a991d9208b21ea4460b444925634c0b7b",
+        "bytes": 2234,
+        "member": "objects/1eaeb95df625193e2b9a9effb9f7406a991d9208b21ea4460b444925634c0b7b"
+      },
+      {
+        "sha256": "d7df998ac55e1e22fe9821c27ae120c818a92e733da32ed1f3bd6a824268b392",
+        "bytes": 1481,
+        "member": "objects/d7df998ac55e1e22fe9821c27ae120c818a92e733da32ed1f3bd6a824268b392"
+      },
+      {
+        "sha256": "f1b12d69474a66c21ea7e8a8a552f7016ec1d300808bf832adc912c6992702ef",
+        "bytes": 672,
+        "member": "objects/f1b12d69474a66c21ea7e8a8a552f7016ec1d300808bf832adc912c6992702ef"
+      }
+    ]
+  },
+  "sourceBeforeAfterChecks": 5,
+  "sourceChecks": [
+    {
+      "path": "fpv-temp/source-preservation-closure-20261016/original16-frozen-cold-restore-supplement-20261016/github-hosted-original-source-cold-run-metadata.json",
+      "sha256": "127eb010d32c8b978a85b93df4e070b8838e55cd2551c12fdddf607641504dd0",
+      "bytes": 1403,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792131531619000800
+    },
+    {
+      "path": "fpv-temp/source-preservation-closure-20261016/original16-frozen-cold-restore-supplement-20261016/FROZEN_SAFE_ALLOWLIST_AND_PUBLICATION.json",
+      "sha256": "15c0eff0474711c98584f3ac96767b2d1aa22d33c831a99a348e1abcd9092e68",
+      "bytes": 1956,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792131537985811500
+    },
+    {
+      "path": "fpv-temp/source-preservation-closure-20261016/original16-frozen-cold-restore-supplement-20261016/COLD_RESTORE_ACCEPTANCE.md",
+      "sha256": "1eaeb95df625193e2b9a9effb9f7406a991d9208b21ea4460b444925634c0b7b",
+      "bytes": 2234,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792131532068028400
+    },
+    {
+      "path": "fpv-temp/source-preservation-closure-20261016/original16-frozen-cold-restore-supplement-20261016/github-hosted-original-source-cold-restore-receipt.json",
+      "sha256": "d7df998ac55e1e22fe9821c27ae120c818a92e733da32ed1f3bd6a824268b392",
+      "bytes": 1481,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792131531370230500
+    },
+    {
+      "path": "fpv-temp/source-preservation-closure-20261016/original16-frozen-cold-restore-supplement-20261016/cloud-restore-permission-child-publication.json",
+      "sha256": "f1b12d69474a66c21ea7e8a8a552f7016ec1d300808bf832adc912c6992702ef",
+      "bytes": 672,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792131531805503500
+    }
+  ],
+  "localSourceReceiptSHA256": "3df030cb044a06e6c96dbac883d7599b6986ef38993a51e39ded98578bf5b38a",
+  "localSourceReceipt": "part-0001-local.json",
+  "verifiedAtUnix": 1792131924.165791
+}

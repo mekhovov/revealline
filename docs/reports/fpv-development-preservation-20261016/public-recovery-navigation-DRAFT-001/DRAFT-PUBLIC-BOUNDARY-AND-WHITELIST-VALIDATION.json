@@ -1,0 +1,24 @@
+{
+  "format": "DraftPublicRecoveryWhitelistValidation.v1",
+  "repository": "mekhovov/revealline",
+  "status": "DRAFT INCOMPLETE \u2014 root review candidate, no publication",
+  "createdUTC": "2026-10-16T15:29:40.567540+00:00",
+  "derivedFileHashes": {
+    "DRAFT-PUBLIC-RECOVERY-NAVIGATION.md": "8a9424a9b19ac5c512456df690e5e573de474bbd6bf393f692eb525f2e428abc",
+    "DRAFT-PUBLIC-RECOVERY-NAVIGATION.json": "8c2c12dabe8419231c1932f887cf5556acdc97d8ad4708cf033a65b6cd74d481",
+    "DRAFT-PUBLIC-NAMED-INPUT-REFERENCES.json": "f7a572a05d3155678ef3ccd0eb7c61a3952df90bf9a27c1efb9b6b65c08d6149"
+  },
+  "onlyNamedAcceptedPublicMetadataInputs": true,
+  "onlyFiveSpecifiedPreservationPRLinks": true,
+  "onlyExactPublicRepositoryURLs": true,
+  "eightPinnedImmutablePublicReferencesStructurallyChecked": true,
+  "noHomeSharePathsRecoveryRepositorySourceFamilyInventoriesRawStateOrAutomationCopied": true,
+  "explicit13MemberCheckpointWhitelistRetainedWithoutReassembly": true,
+  "sourceOriginalStageCASExtrasArchiveAndCheckpointScopesDistinct": true,
+  "noFreshMergedCurrentHeadOrFinalCutoffClaim": true,
+  "finalFull198AndPublicCutoffIncomplete": true,
+  "finalPublicCutoffReference": null,
+  "preservationComplete": false,
+  "safeToDisconnect": false,
+  "assetGETCanonicalAPIOriginalSourceWalkRestoreAppExecutionOrGitWritePerformed": false
+}

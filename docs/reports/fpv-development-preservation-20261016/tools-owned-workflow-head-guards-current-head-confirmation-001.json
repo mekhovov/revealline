@@ -1,0 +1,32 @@
+{
+  "format": "OwnedAdHocWorkflowHeadGuardAPIConfirmation.v1",
+  "observedUTC": "2026-10-16T09:23:45.152362+00:00",
+  "repository": "mekhovov/revealline",
+  "headSHA": "4c3727ef3dc36719c511cccc4fe9785a7fd7f47b",
+  "source": "Authenticated GitHub Actions runs API filtered by exact headSHA, one query",
+  "runs": [
+    {
+      "id": 38878429666,
+      "name": "FPV preservation incremental readback",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 38878429810,
+      "name": "FPV preservation portable restore",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 38878429600,
+      "name": "FPV preservation readback",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "guardBehaviorConfirmed": true,
+  "newReadbackOrRestorePassClaimed": false,
+  "requiredApplicationCIChanged": false,
+  "originalAcceptedRunReceiptsRetained": true,
+  "allVolumeComplete": false
+}

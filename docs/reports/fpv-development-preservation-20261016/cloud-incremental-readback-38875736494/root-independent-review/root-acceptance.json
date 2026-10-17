@@ -1,0 +1,26 @@
+{
+  "format": "RootIndependentFocusedCASReadbackAcceptance.v1",
+  "reviewedUTC": "2026-10-16T08:59:37.543049+00:00",
+  "actualGitHubRun": 38875736494,
+  "head": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+  "job": 116890230988,
+  "artifact": 12034259774,
+  "actualNonSkippedSteps": [
+    "Require measured space for this single sealed part",
+    "GET the original bytes and restore every sealed object"
+  ],
+  "freshArtifactDownloadSHA256": "1947538c00032e9ca1a21fcb159ea15be9888539505ef3bc4c61e3809c9cf62e",
+  "receiptSHA256": "b8bc6a35af9bcfb0f0ad0a5625f1a231945842d3c607a2d788627dccc424e9b0",
+  "exactSealedPlanSHA256": "3cd4f997deb2394a0fc91b2906c87c015fd534e1c376a20e5a207503acb1d050",
+  "actualRuntimeLogSHA256": "ac7539b3be72ffc3f664369572da4c9f76beba4e0ee4a0aea86f11e55e2bd3b9",
+  "asset": 646686183,
+  "compressedBytes": 614442443,
+  "compressedSHA256": "b536ee45f56151c013bf773070a32479ad8db9b6dcdef99b5c0df107033cb842",
+  "actualRestoredObjects": 14504,
+  "actualRestoredRawBytes": 889683927,
+  "allSourceGuards": true,
+  "accepted": true,
+  "rootDidNotRepeat614MBPartDownload": true,
+  "allVolumeComplete": false,
+  "whole40505PathModeTimeRestoreClaim": false
+}

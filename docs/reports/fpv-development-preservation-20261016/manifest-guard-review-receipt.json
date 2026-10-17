@@ -1,0 +1,28 @@
+{
+  "format": "FPVManifestGuardReviewReceipt.v1",
+  "finding": "Root independent review found JSONDecodeError previously silently truncated any inventory prefix, including a corrupt interior row.",
+  "fix": "Every malformed or unsupported row now refuses; final input rows require newline terminators and unchanged file size, mtime and identity through read/hash.",
+  "regressions": [
+    "corrupt interior row refused",
+    "partial final JSON row refused",
+    "valid final JSON missing newline refused",
+    "valid closed final inventory accepted"
+  ],
+  "finalSuite": {
+    "cases": 12,
+    "pass": 12,
+    "elapsedSeconds": 26.768,
+    "receipt": "helper-tests-final-twelve.txt"
+  },
+  "retainedFollowupFailure": {
+    "reason": "Fresh external-share roundtrip fixture hit strict unchanged-source gate in mixed follow-up; no source guard was relaxed.",
+    "originalLogSHA256": "33d6aa50dfa685e483692f95fafd9f064719718475ba395186cc0c599becc5ae",
+    "fixtureChange": "Assign fixed historical timestamp before inventory, to make immutable fixture metadata explicit.",
+    "focusedRerunPassSeconds": 30.1
+  },
+  "copyBuffer": {
+    "bytes": 4194304,
+    "realRoundtripPassSeconds": 2.576,
+    "sameFixtureArchiveSHA256": "1b5b75f18dc29b4a99ab3f7fbf22cdba1f2a69554aa09e634245b272560e6cf3"
+  }
+}

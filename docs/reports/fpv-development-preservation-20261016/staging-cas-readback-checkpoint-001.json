@@ -1,0 +1,21 @@
+{
+  "format": "FPVCurrentStagingCASReadbackCheckpoint.v1",
+  "cloudRunId": 38857718878,
+  "cloudRunHead": "d475007afef66244f366c1bb07c1e31448dd94f1",
+  "cloudVerifiedParts": 14,
+  "cloudVerifiedObjects": 23221,
+  "cloudVerifiedRawBytes": 11280258277,
+  "cloudVerifiedCompressedBytes": 7532154648,
+  "additionalLocalVerifiedParts": 2,
+  "allCurrentStagingCASPartsVerified": 16,
+  "allCurrentStagingCASObjectsVerified": 23240,
+  "allCurrentStagingCASRawBytesVerified": 11287694312,
+  "allCurrentStagingCASCompressedBytesVerified": 7539537447,
+  "currentNonmutableLogicalFilePaths": 122680,
+  "currentNonmutableLogicalBytes": 20679544552,
+  "currentNonmutableViewCoveredBySealedCASOrOriginalReleaseAssets": true,
+  "finalInputSet": false,
+  "fullPathPortableRestorePerformed": false,
+  "sourceClosureAndExtraVolumePublicPrivateSplitRemainSeparateOpenGates": true,
+  "overallDisconnectSafetyClaimed": false
+}

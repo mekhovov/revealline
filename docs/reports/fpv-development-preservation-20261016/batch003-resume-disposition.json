@@ -1,0 +1,21 @@
+{
+  "format": "FPVInterruptedPackResumeDisposition.v1",
+  "stoppedOwnSession": 20120,
+  "sealedCompletedPartsRetained": [
+    "batch-003/part-0001-local.json",
+    "batch-003/part-0002-local.json",
+    "batch-003/part-0003-local.json",
+    "batch-003/part-0004-local.json"
+  ],
+  "incompleteArchiveRetained": "/Volumes/alex/CodexMigrationStaging/fpv-preservation-pack-stage-20261016-listing/batch-003/part-0005.tar.zst",
+  "incompleteBytes": 191959040,
+  "partialArchiveUploaded": false,
+  "partialArchiveCountsAsCoverage": false,
+  "oldLog": "batch-003.log",
+  "oldLogSHA256": "bcafe3fcfdbdc500323e6156ea04839f20090e00b2adad6d36350fe1540701c7",
+  "resumeBatch": "batch-007",
+  "sourceManifest": "combined-packing-view-006.jsonl",
+  "sourceManifestSHA256": "85a2e07fd5f47e29059fc1cb23d07edd71ff7b220ae886cf0982a4c508e48fa1",
+  "reason": "Resume remaining unsealed objects with already-tested4MiB TAR copy buffer instead of older process16KiB SMB reads. Existing completed object receipts deduplicate; source guards unchanged.",
+  "createdAtUnix": 1792127695.317316
+}

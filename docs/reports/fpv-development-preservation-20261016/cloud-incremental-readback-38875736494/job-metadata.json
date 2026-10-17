@@ -1,0 +1,92 @@
+{
+  "id": 116890230988,
+  "run_id": 38875736494,
+  "workflow_name": "FPV preservation incremental readback",
+  "head_branch": "codex/fpv-development-preservation-tools-20261016",
+  "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/38875736494",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOUYDvKM8AAAAbNzNgzA",
+  "head_sha": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+  "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/116890230988",
+  "html_url": "https://github.com/mekhovov/revealline/actions/runs/38875736494/job/116890230988",
+  "status": "completed",
+  "conclusion": "success",
+  "created_at": "2026-10-16T08:44:47Z",
+  "started_at": "2026-10-16T08:44:49Z",
+  "completed_at": "2026-10-16T08:45:24Z",
+  "name": "verify",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-10-16T08:44:50Z",
+      "completed_at": "2026-10-16T08:44:50Z"
+    },
+    {
+      "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-10-16T08:44:50Z",
+      "completed_at": "2026-10-16T08:44:53Z"
+    },
+    {
+      "name": "Verify exact head and readers",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-10-16T08:44:53Z",
+      "completed_at": "2026-10-16T08:44:53Z"
+    },
+    {
+      "name": "Require measured space for this single sealed part",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-10-16T08:44:53Z",
+      "completed_at": "2026-10-16T08:44:53Z"
+    },
+    {
+      "name": "GET the original bytes and restore every sealed object",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-10-16T08:44:53Z",
+      "completed_at": "2026-10-16T08:45:20Z"
+    },
+    {
+      "name": "Retain the small actual readback receipt",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-10-16T08:45:20Z",
+      "completed_at": "2026-10-16T08:45:21Z"
+    },
+    {
+      "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12,
+      "started_at": "2026-10-16T08:45:21Z",
+      "completed_at": "2026-10-16T08:45:22Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-10-16T08:45:22Z",
+      "completed_at": "2026-10-16T08:45:22Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/116890230988",
+  "labels": [
+    "ubuntu-24.04"
+  ],
+  "runner_id": 1000036935,
+  "runner_name": "GitHub Actions 1000036935",
+  "runner_group_id": 0,
+  "runner_group_name": "GitHub Actions"
+}

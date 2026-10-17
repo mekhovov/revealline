@@ -1,0 +1,6 @@
+test_cloud_plan_requires_every_source_check_exactly_once (test_preservation.PreservationTests.test_cloud_plan_requires_every_source_check_exactly_once) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.352s
+
+OK

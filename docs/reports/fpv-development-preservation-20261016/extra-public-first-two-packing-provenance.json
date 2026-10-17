@@ -1,0 +1,20 @@
+{
+  "format": "FPVExactPublicExtraPackingProvenance.v1",
+  "sourceReviewCommit": "2fb1c6a5b2fd3ab3cae60e4efd85f3c63f4d613c",
+  "sourceReviewRepository": "mekhovov/revealline",
+  "sourceReviewPrefix": "docs/verification/fpv-library-preservation-20261016/extra-public-payload-first-two/",
+  "frozenManifestSHA256": "3c8bf60d4ab96f8ddb8220acdd1c419afb28d9121a3bb805317255902bae71cb",
+  "sourceClearanceSHA256": "d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11",
+  "allowedTopLevelPrefixes": [
+    "fpv-catalogue-play-20261014",
+    "rl-1192.H9P01v"
+  ],
+  "files": 3169,
+  "logicalBytes": 528292018,
+  "allReusedCASDigestByteSizesMatch": true,
+  "hostPreflightSHA256": "b7d25c59d9a7aa183c8212e0782e86a403510378041b369d47da8e01ca2a896a",
+  "exactHoldClearanceSHA256": "77a00fff4b3fb5fa9430b8496ab3186728115ddc4762ea77dc11fc8ca69a71ab",
+  "privateOrUnlistedRootSelectionAllowed": false,
+  "extraVolumeInputSetFinal": false,
+  "overallDisconnectSafetyClaimed": false
+}

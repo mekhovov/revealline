@@ -1,0 +1,836 @@
+{
+  "format": "FPVCASPartPublished.v1",
+  "repo": "mekhovov/revealline",
+  "releaseId": 414505790,
+  "assetId": 646207087,
+  "assetName": "fpv-cas-35b7972b6e9472961534b2f5c1a01e875acda8eac094b5e4e2652642f91163b7.tar.zst",
+  "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/fpv-cas-35b7972b6e9472961534b2f5c1a01e875acda8eac094b5e4e2652642f91163b7.tar.zst",
+  "bytes": 44509758,
+  "sha256": "35b7972b6e9472961534b2f5c1a01e875acda8eac094b5e4e2652642f91163b7",
+  "partManifest": {
+    "format": "FPVCASPart.v1",
+    "number": 1,
+    "objects": [
+      {
+        "sha256": "00fbbabb97fca2569cc6a0fa4ae176d3a7b69591b516bba7b9151103d7cefba5",
+        "bytes": 1144,
+        "member": "objects/00fbbabb97fca2569cc6a0fa4ae176d3a7b69591b516bba7b9151103d7cefba5"
+      },
+      {
+        "sha256": "072fa308213cb1d9885c6f480bb9afda3cf156d04bd47aa1bf091aae4d9c9826",
+        "bytes": 2636,
+        "member": "objects/072fa308213cb1d9885c6f480bb9afda3cf156d04bd47aa1bf091aae4d9c9826"
+      },
+      {
+        "sha256": "0995f8aff694c374eadfe2880156c1f7873650431ac436a54a254e824edc87b0",
+        "bytes": 13772,
+        "member": "objects/0995f8aff694c374eadfe2880156c1f7873650431ac436a54a254e824edc87b0"
+      },
+      {
+        "sha256": "0a815412bf28ba05f7bf61f2e0b4e49aad07d7b833efe4d6e48665415b6ed891",
+        "bytes": 50238,
+        "member": "objects/0a815412bf28ba05f7bf61f2e0b4e49aad07d7b833efe4d6e48665415b6ed891"
+      },
+      {
+        "sha256": "0ee0079828321ec31cfc6f0683f76ec5a8e90d7065008626793e33195f6a1187",
+        "bytes": 50235,
+        "member": "objects/0ee0079828321ec31cfc6f0683f76ec5a8e90d7065008626793e33195f6a1187"
+      },
+      {
+        "sha256": "12dbf430730aff337133b19e1140efc2c107cc18351b07048eef59c19593bcba",
+        "bytes": 44733,
+        "member": "objects/12dbf430730aff337133b19e1140efc2c107cc18351b07048eef59c19593bcba"
+      },
+      {
+        "sha256": "15e0ae74696921181c8587d3dec361bf3564f4c97859982bd8f80970dbc72f9a",
+        "bytes": 17593074,
+        "member": "objects/15e0ae74696921181c8587d3dec361bf3564f4c97859982bd8f80970dbc72f9a"
+      },
+      {
+        "sha256": "16ec6d8cb6123e25ee09184f69274d2a7e5b7936b28426323a3d9ccc455a2a56",
+        "bytes": 18095,
+        "member": "objects/16ec6d8cb6123e25ee09184f69274d2a7e5b7936b28426323a3d9ccc455a2a56"
+      },
+      {
+        "sha256": "1baebc02667516bf1c8aaf7cc4f0a394254e599e671f6d2f0526b341d6640ae0",
+        "bytes": 26234,
+        "member": "objects/1baebc02667516bf1c8aaf7cc4f0a394254e599e671f6d2f0526b341d6640ae0"
+      },
+      {
+        "sha256": "1e7cbceb30377bd9ffd1a8a23e07dc5954d9ccc3c2e9a151c2fb001b9029f77e",
+        "bytes": 11221,
+        "member": "objects/1e7cbceb30377bd9ffd1a8a23e07dc5954d9ccc3c2e9a151c2fb001b9029f77e"
+      },
+      {
+        "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+        "bytes": 49,
+        "member": "objects/1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50"
+      },
+      {
+        "sha256": "1ff8b3ce19d4a8238e87b6c4276315a8c168699e5434a5baf8bbf03319336a7d",
+        "bytes": 3765232,
+        "member": "objects/1ff8b3ce19d4a8238e87b6c4276315a8c168699e5434a5baf8bbf03319336a7d"
+      },
+      {
+        "sha256": "206065ca5f901aa743fd9ebfa36b0f704c787882acc9e9be3225508e6d092f3a",
+        "bytes": 2838,
+        "member": "objects/206065ca5f901aa743fd9ebfa36b0f704c787882acc9e9be3225508e6d092f3a"
+      },
+      {
+        "sha256": "2790fbaea18799fd8df5ff1debc56c172ca9db3174237bc8a571229989219cb2",
+        "bytes": 27442,
+        "member": "objects/2790fbaea18799fd8df5ff1debc56c172ca9db3174237bc8a571229989219cb2"
+      },
+      {
+        "sha256": "385ef30f002cd5f2fc11e2e080d877538cd83f6862ec6c440ed23fb75eab537e",
+        "bytes": 25031,
+        "member": "objects/385ef30f002cd5f2fc11e2e080d877538cd83f6862ec6c440ed23fb75eab537e"
+      },
+      {
+        "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+        "bytes": 2227,
+        "member": "objects/410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0"
+      },
+      {
+        "sha256": "469be4a346311766447560986902654b5e13225ec4e1e1d536cf20af78582e7f",
+        "bytes": 2139,
+        "member": "objects/469be4a346311766447560986902654b5e13225ec4e1e1d536cf20af78582e7f"
+      },
+      {
+        "sha256": "4b283d710bae8a54365eec11b96e811f55b45fa823dbd16c1ea3a68a7b06ceb6",
+        "bytes": 17593098,
+        "member": "objects/4b283d710bae8a54365eec11b96e811f55b45fa823dbd16c1ea3a68a7b06ceb6"
+      },
+      {
+        "sha256": "4d1bc3e0d100dd496df0e5017a63dd58aa9ab4068f55c50bb56e5fb61433e919",
+        "bytes": 29757,
+        "member": "objects/4d1bc3e0d100dd496df0e5017a63dd58aa9ab4068f55c50bb56e5fb61433e919"
+      },
+      {
+        "sha256": "4d79d4b009d3496712fe6919bb02730dc6fbe4c3d7191908bf75db75a989865b",
+        "bytes": 165206,
+        "member": "objects/4d79d4b009d3496712fe6919bb02730dc6fbe4c3d7191908bf75db75a989865b"
+      },
+      {
+        "sha256": "5041d09618f4bd9cc7c424dce2b3d840973dbb7dc2358f36a545075bf1d1dadb",
+        "bytes": 14323,
+        "member": "objects/5041d09618f4bd9cc7c424dce2b3d840973dbb7dc2358f36a545075bf1d1dadb"
+      },
+      {
+        "sha256": "55515e309d9fc90412e2ca4b2576e1e65be7d4c3e57963a74f1f1e984ff7dda6",
+        "bytes": 92770,
+        "member": "objects/55515e309d9fc90412e2ca4b2576e1e65be7d4c3e57963a74f1f1e984ff7dda6"
+      },
+      {
+        "sha256": "571a8f1c11344300de9e715b6490daf17a1087c9742efdf87ce38566e82f308a",
+        "bytes": 19730,
+        "member": "objects/571a8f1c11344300de9e715b6490daf17a1087c9742efdf87ce38566e82f308a"
+      },
+      {
+        "sha256": "57fab7f427a0970a558ef5393943c70f0fc35510e2e7963d7550147b6575a9ee",
+        "bytes": 6820701,
+        "member": "objects/57fab7f427a0970a558ef5393943c70f0fc35510e2e7963d7550147b6575a9ee"
+      },
+      {
+        "sha256": "584fdb801dcc747de97d01b0cd6992e20d87ae67e610218ee137403d16c36a36",
+        "bytes": 24215,
+        "member": "objects/584fdb801dcc747de97d01b0cd6992e20d87ae67e610218ee137403d16c36a36"
+      },
+      {
+        "sha256": "5c9e81b6e7cb8946a7e471bb3a1ccd9a1ac6ebe61af24f77fb6fe1b0696c6cfd",
+        "bytes": 15610,
+        "member": "objects/5c9e81b6e7cb8946a7e471bb3a1ccd9a1ac6ebe61af24f77fb6fe1b0696c6cfd"
+      },
+      {
+        "sha256": "5f959b97891258c960408453d27cf47bf59e7ba434e9f33b8ca1740737d3e93f",
+        "bytes": 1144,
+        "member": "objects/5f959b97891258c960408453d27cf47bf59e7ba434e9f33b8ca1740737d3e93f"
+      },
+      {
+        "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+        "bytes": 1011,
+        "member": "objects/64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf"
+      },
+      {
+        "sha256": "680c7f4fdb23619aed0627ea47444c7040a7f208104e4c2abc1a3d486adbe636",
+        "bytes": 148510,
+        "member": "objects/680c7f4fdb23619aed0627ea47444c7040a7f208104e4c2abc1a3d486adbe636"
+      },
+      {
+        "sha256": "716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20",
+        "bytes": 47693,
+        "member": "objects/716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20"
+      },
+      {
+        "sha256": "75eda383ad47b61e372d258baa1d7267b29ea134c981354697d447f95c9ed1f4",
+        "bytes": 1665,
+        "member": "objects/75eda383ad47b61e372d258baa1d7267b29ea134c981354697d447f95c9ed1f4"
+      },
+      {
+        "sha256": "82e91fae0b85c8aae6584c89c51d8c40a06d7ebb932375a003611d5426ee6707",
+        "bytes": 14462,
+        "member": "objects/82e91fae0b85c8aae6584c89c51d8c40a06d7ebb932375a003611d5426ee6707"
+      },
+      {
+        "sha256": "8bdc0f2a0687c0a6f3334e2091fa267dcdc570366eacadc44ddb8d09e50d4363",
+        "bytes": 13878,
+        "member": "objects/8bdc0f2a0687c0a6f3334e2091fa267dcdc570366eacadc44ddb8d09e50d4363"
+      },
+      {
+        "sha256": "8bfc77fe8f32279d061197eed33bfd62663f86cd7fabf61d00b150ca4c506480",
+        "bytes": 16221,
+        "member": "objects/8bfc77fe8f32279d061197eed33bfd62663f86cd7fabf61d00b150ca4c506480"
+      },
+      {
+        "sha256": "904f5bb9254c5835b91322cf8c6d67a5855eea0aa87dab4cf547e2cd9c28cff5",
+        "bytes": 3765184,
+        "member": "objects/904f5bb9254c5835b91322cf8c6d67a5855eea0aa87dab4cf547e2cd9c28cff5"
+      },
+      {
+        "sha256": "95d5325c1512abf0c3cd8a4863d7e243dddd4a646ae04cd969f6c4eb438bbfb4",
+        "bytes": 29757,
+        "member": "objects/95d5325c1512abf0c3cd8a4863d7e243dddd4a646ae04cd969f6c4eb438bbfb4"
+      },
+      {
+        "sha256": "98b42dec1ba5a9242f06ce397a473087075b0b4fb0f696f7ef71c7bc4779ff05",
+        "bytes": 30036,
+        "member": "objects/98b42dec1ba5a9242f06ce397a473087075b0b4fb0f696f7ef71c7bc4779ff05"
+      },
+      {
+        "sha256": "98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90",
+        "bytes": 46542,
+        "member": "objects/98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90"
+      },
+      {
+        "sha256": "9a78ac8a2adfbcc68d03c66eb10be2270cf72bf0c0dd052729e49e49cf516030",
+        "bytes": 17638123,
+        "member": "objects/9a78ac8a2adfbcc68d03c66eb10be2270cf72bf0c0dd052729e49e49cf516030"
+      },
+      {
+        "sha256": "9bd451ae39ca96cba71c842034c5314606267851140f3e0ac72990634f2dbb29",
+        "bytes": 16741,
+        "member": "objects/9bd451ae39ca96cba71c842034c5314606267851140f3e0ac72990634f2dbb29"
+      },
+      {
+        "sha256": "9d7ff83af12c90547253b6db189a9390face0334dd04bc457624cea91abcea70",
+        "bytes": 18095,
+        "member": "objects/9d7ff83af12c90547253b6db189a9390face0334dd04bc457624cea91abcea70"
+      },
+      {
+        "sha256": "9e9a4878fcd5e328cd507531d00ae58accbe46a7369681a3bb6215da15b67f2a",
+        "bytes": 6784236,
+        "member": "objects/9e9a4878fcd5e328cd507531d00ae58accbe46a7369681a3bb6215da15b67f2a"
+      },
+      {
+        "sha256": "a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706",
+        "bytes": 146284,
+        "member": "objects/a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706"
+      },
+      {
+        "sha256": "a683283c8b62e0fd6bac519f7d2eaef4de8bfbcf14996788643cf56b41a9e8cf",
+        "bytes": 6820737,
+        "member": "objects/a683283c8b62e0fd6bac519f7d2eaef4de8bfbcf14996788643cf56b41a9e8cf"
+      },
+      {
+        "sha256": "a7791452c40e8a50a6c339c7a343d49b0dfde36350f25007bd5f7847694a2904",
+        "bytes": 2139,
+        "member": "objects/a7791452c40e8a50a6c339c7a343d49b0dfde36350f25007bd5f7847694a2904"
+      },
+      {
+        "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+        "bytes": 10021,
+        "member": "objects/ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb"
+      },
+      {
+        "sha256": "abc0f3aa7296046b2bfccbe39a7ed6e2e013be38b52a66130b946d25d40841c1",
+        "bytes": 2838,
+        "member": "objects/abc0f3aa7296046b2bfccbe39a7ed6e2e013be38b52a66130b946d25d40841c1"
+      },
+      {
+        "sha256": "b00276030dd4642756c75e15120f2d415e07e85dc90b0eacf99cf0ee71574c3d",
+        "bytes": 48443,
+        "member": "objects/b00276030dd4642756c75e15120f2d415e07e85dc90b0eacf99cf0ee71574c3d"
+      },
+      {
+        "sha256": "b7518328e989823c59da74709831e86e8dca55edcc139abb4a5d14eeab475f86",
+        "bytes": 14655,
+        "member": "objects/b7518328e989823c59da74709831e86e8dca55edcc139abb4a5d14eeab475f86"
+      },
+      {
+        "sha256": "ba0580ea47953c86d03c5bd38280ff180d2a21a2b783dbe26d8ba11deff496f5",
+        "bytes": 16741,
+        "member": "objects/ba0580ea47953c86d03c5bd38280ff180d2a21a2b783dbe26d8ba11deff496f5"
+      },
+      {
+        "sha256": "c31d0285ff6b24dd3a2bce30c4b0877b457a4ae3870ee6fb8f7996c8454668d8",
+        "bytes": 24577,
+        "member": "objects/c31d0285ff6b24dd3a2bce30c4b0877b457a4ae3870ee6fb8f7996c8454668d8"
+      },
+      {
+        "sha256": "cb85acdb99639a27117a49c80337f10c0f5ae4f1dfa093a2c024c86927a6ad7e",
+        "bytes": 34903,
+        "member": "objects/cb85acdb99639a27117a49c80337f10c0f5ae4f1dfa093a2c024c86927a6ad7e"
+      },
+      {
+        "sha256": "cd37c2c0ccb1d80d97ce4893eea5a34e577e388101355df987a4067eb488e500",
+        "bytes": 3800320,
+        "member": "objects/cd37c2c0ccb1d80d97ce4893eea5a34e577e388101355df987a4067eb488e500"
+      },
+      {
+        "sha256": "cff8281d0ac54a8e21d09f785d27540b01e354549d7aa74d99225ba9a0721923",
+        "bytes": 50238,
+        "member": "objects/cff8281d0ac54a8e21d09f785d27540b01e354549d7aa74d99225ba9a0721923"
+      },
+      {
+        "sha256": "d4bc46ff2c873a07325b9efec577e1df854b85479f3ba10a89ceb2a0db019d9a",
+        "bytes": 50786,
+        "member": "objects/d4bc46ff2c873a07325b9efec577e1df854b85479f3ba10a89ceb2a0db019d9a"
+      },
+      {
+        "sha256": "d9a7a65c5643a2915aa714c9640c30f14b0645ef5f65ae3d2b54b7a5ac8f1106",
+        "bytes": 13261,
+        "member": "objects/d9a7a65c5643a2915aa714c9640c30f14b0645ef5f65ae3d2b54b7a5ac8f1106"
+      },
+      {
+        "sha256": "dbfe4d9d1b5c6a3ea007331ad3513189a9a71332fc06dca19f980c5751a84305",
+        "bytes": 30036,
+        "member": "objects/dbfe4d9d1b5c6a3ea007331ad3513189a9a71332fc06dca19f980c5751a84305"
+      },
+      {
+        "sha256": "de8370665d5c99e953326e1861f0817afb3dfc511f0629cdec6f50c6d4b5c709",
+        "bytes": 191970,
+        "member": "objects/de8370665d5c99e953326e1861f0817afb3dfc511f0629cdec6f50c6d4b5c709"
+      },
+      {
+        "sha256": "e251352b441ac1352802030be0bd6e9e2aed6a48e38dff8eee572c1d26221902",
+        "bytes": 33391,
+        "member": "objects/e251352b441ac1352802030be0bd6e9e2aed6a48e38dff8eee572c1d26221902"
+      },
+      {
+        "sha256": "e39727530c75a0039ba49f46e2101d3022e0462ffada225dfe5f77ecacecfe47",
+        "bytes": 17638087,
+        "member": "objects/e39727530c75a0039ba49f46e2101d3022e0462ffada225dfe5f77ecacecfe47"
+      },
+      {
+        "sha256": "e6694057707e69a8a134836d91bc1879f3555b39f6fc58622a15073454bf7432",
+        "bytes": 47276,
+        "member": "objects/e6694057707e69a8a134836d91bc1879f3555b39f6fc58622a15073454bf7432"
+      },
+      {
+        "sha256": "ece349d90fc40cb011d72d5b575613a6d5db1db698fc3b5fc081c5933a5c43e1",
+        "bytes": 3800248,
+        "member": "objects/ece349d90fc40cb011d72d5b575613a6d5db1db698fc3b5fc081c5933a5c43e1"
+      },
+      {
+        "sha256": "ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06",
+        "bytes": 50046,
+        "member": "objects/ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06"
+      },
+      {
+        "sha256": "ef9a0bf6562fa74ab643d9b214bf1deb1338a1694337cdd822d9cb3cd3c26937",
+        "bytes": 29600,
+        "member": "objects/ef9a0bf6562fa74ab643d9b214bf1deb1338a1694337cdd822d9cb3cd3c26937"
+      },
+      {
+        "sha256": "f4340a699a1ffb675c6c95ba8410d494e7df7dbcbb352f305b2ccc6553db2e60",
+        "bytes": 27442,
+        "member": "objects/f4340a699a1ffb675c6c95ba8410d494e7df7dbcbb352f305b2ccc6553db2e60"
+      },
+      {
+        "sha256": "f81e54560992325853f030b3a926a96c6bf19d62d0d32bcc05a1394a765d0b29",
+        "bytes": 4938,
+        "member": "objects/f81e54560992325853f030b3a926a96c6bf19d62d0d32bcc05a1394a765d0b29"
+      },
+      {
+        "sha256": "f9f7e9eb14eea6fb9ff64744c6c6d9a718012f87fe628460f15bc9377a039fe0",
+        "bytes": 6784260,
+        "member": "objects/f9f7e9eb14eea6fb9ff64744c6c6d9a718012f87fe628460f15bc9377a039fe0"
+      },
+      {
+        "sha256": "fb408819d3b77acc52cce6e166a9973784dad88e5b005718345301ffd7d9b993",
+        "bytes": 2636,
+        "member": "objects/fb408819d3b77acc52cce6e166a9973784dad88e5b005718345301ffd7d9b993"
+      }
+    ]
+  },
+  "sourceChecks": [
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/optional-candidate-verification.json",
+      "sha256": "00fbbabb97fca2569cc6a0fa4ae176d3a7b69591b516bba7b9151103d7cefba5",
+      "bytes": 1144,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123114866788100
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/optional-packages.json",
+      "sha256": "072fa308213cb1d9885c6f480bb9afda3cf156d04bd47aa1bf091aae4d9c9826",
+      "bytes": 2636,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124086666576600
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-culture/campaign.json",
+      "sha256": "0995f8aff694c374eadfe2880156c1f7873650431ac436a54a254e824edc87b0",
+      "bytes": 13772,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110150429390600
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/source-inventory-optional-fpv-worlds.json",
+      "sha256": "0a815412bf28ba05f7bf61f2e0b4e49aad07d7b833efe4d6e48665415b6ed891",
+      "bytes": 50238,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123112976550700
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-foundations-before-learning-bonus.json",
+      "sha256": "0ee0079828321ec31cfc6f0683f76ec5a8e90d7065008626793e33195f6a1187",
+      "bytes": 50235,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110276224309900
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-culture-fb207466c.json",
+      "sha256": "12dbf430730aff337133b19e1140efc2c107cc18351b07048eef59c19593bcba",
+      "bytes": 44733,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110276098768900
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/distribution-optional-fpv-worlds.zip",
+      "sha256": "15e0ae74696921181c8587d3dec361bf3564f4c97859982bd8f80970dbc72f9a",
+      "bytes": 17593074,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123112622601100
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/manifest-optional-civilian-fpv.json",
+      "sha256": "16ec6d8cb6123e25ee09184f69274d2a7e5b7936b28426323a3d9ccc455a2a56",
+      "bytes": 18095,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124082971522400
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-developer-integration.json",
+      "sha256": "1baebc02667516bf1c8aaf7cc4f0a394254e599e671f6d2f0526b341d6640ae0",
+      "bytes": 26234,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110163818423100
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-all/campaign.json",
+      "sha256": "1e7cbceb30377bd9ffd1a8a23e07dc5954d9ccc3c2e9a151c2fb001b9029f77e",
+      "bytes": 11221,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110150153183900
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/fpv-learning/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "bytes": 49,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110160780514000
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/distribution-optional-civilian-flight.zip",
+      "sha256": "1ff8b3ce19d4a8238e87b6c4276315a8c168699e5434a5baf8bbf03319336a7d",
+      "bytes": 3765232,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124082238179900
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/optional-package-review.json",
+      "sha256": "206065ca5f901aa743fd9ebfa36b0f704c787882acc9e9be3225508e6d092f3a",
+      "bytes": 2838,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123114651758000
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/source-inventory-optional-civilian-flight.json",
+      "sha256": "2790fbaea18799fd8df5ff1debc56c172ca9db3174237bc8a571229989219cb2",
+      "bytes": 27442,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123108837226800
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-source-to-pay.json",
+      "sha256": "385ef30f002cd5f2fc11e2e080d877538cd83f6862ec6c440ed23fb75eab537e",
+      "bytes": 25031,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110165207617000
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/fpv-learning/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "bytes": 2227,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110161217150600
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/optional-checksums.json",
+      "sha256": "469be4a346311766447560986902654b5e13225ec4e1e1d536cf20af78582e7f",
+      "bytes": 2139,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123115077635700
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/distribution-optional-fpv-worlds.zip",
+      "sha256": "4b283d710bae8a54365eec11b96e811f55b45fa823dbd16c1ea3a68a7b06ceb6",
+      "bytes": 17593098,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124085328123100
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/manifest-optional-fpv-worlds.json",
+      "sha256": "4d1bc3e0d100dd496df0e5017a63dd58aa9ab4068f55c50bb56e5fb61433e919",
+      "bytes": 29757,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123111428141200
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-all-before-discovery-rewards.json",
+      "sha256": "4d79d4b009d3496712fe6919bb02730dc6fbe4c3d7191908bf75db75a989865b",
+      "bytes": 165206,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110275554455500
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-product-operations.lessons.json",
+      "sha256": "5041d09618f4bd9cc7c424dce2b3d840973dbb7dc2358f36a545075bf1d1dadb",
+      "bytes": 14323,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110164858424000
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/art-prompts-coupa-bulk-02.json",
+      "sha256": "55515e309d9fc90412e2ca4b2576e1e65be7d4c3e57963a74f1f1e984ff7dda6",
+      "bytes": 92770,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110217510118500
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-spend-in-motion.json",
+      "sha256": "571a8f1c11344300de9e715b6490daf17a1087c9742efdf87ce38566e82f308a",
+      "bytes": 19730,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110165719293200
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/source-optional-civilian-fpv.zip",
+      "sha256": "57fab7f427a0970a558ef5393943c70f0fc35510e2e7963d7550147b6575a9ee",
+      "bytes": 6820701,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123111075920600
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-inside-village.json",
+      "sha256": "584fdb801dcc747de97d01b0cd6992e20d87ae67e610218ee137403d16c36a36",
+      "bytes": 24215,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110164627396200
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-developers/campaign.json",
+      "sha256": "5c9e81b6e7cb8946a7e471bb3a1ccd9a1ac6ebe61af24f77fb6fe1b0696c6cfd",
+      "bytes": 15610,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110151366467200
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/optional-candidate-verification.json",
+      "sha256": "5f959b97891258c960408453d27cf47bf59e7ba434e9f33b8ca1740737d3e93f",
+      "bytes": 1144,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124087052681200
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-foundations/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "bytes": 1011,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110152881723800
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-all-fb207466c.json",
+      "sha256": "680c7f4fdb23619aed0627ea47444c7040a7f208104e4c2abc1a3d486adbe636",
+      "bytes": 148510,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110275637574900
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-operations.json",
+      "sha256": "716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20",
+      "bytes": 47693,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110276866878900
+    },
+    {
+      "path": "fpv-ux-20261014/actions/game/communities/coupa/index.html",
+      "sha256": "75eda383ad47b61e372d258baa1d7267b29ea134c981354697d447f95c9ed1f4",
+      "bytes": 1665,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1791940550559915300
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-source-to-pay.lessons.json",
+      "sha256": "82e91fae0b85c8aae6584c89c51d8c40a06d7ebb932375a003611d5426ee6707",
+      "bytes": 14462,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110164729569800
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-foundations/campaign.json",
+      "sha256": "8bdc0f2a0687c0a6f3334e2091fa267dcdc570366eacadc44ddb8d09e50d4363",
+      "bytes": 13878,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110152794332800
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-operations/campaign.json",
+      "sha256": "8bfc77fe8f32279d061197eed33bfd62663f86cd7fabf61d00b150ca4c506480",
+      "bytes": 16221,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110153025500400
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/distribution-optional-civilian-flight.zip",
+      "sha256": "904f5bb9254c5835b91322cf8c6d67a5855eea0aa87dab4cf547e2cd9c28cff5",
+      "bytes": 3765184,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123108575592400
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/manifest-optional-fpv-worlds.json",
+      "sha256": "95d5325c1512abf0c3cd8a4863d7e243dddd4a646ae04cd969f6c4eb438bbfb4",
+      "bytes": 29757,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124084448113800
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/source-inventory-optional-civilian-fpv.json",
+      "sha256": "98b42dec1ba5a9242f06ce397a473087075b0b4fb0f696f7ef71c7bc4779ff05",
+      "bytes": 30036,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124083840218500
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-foundations.json",
+      "sha256": "98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90",
+      "bytes": 46542,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110276679790100
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/source-optional-fpv-worlds.zip",
+      "sha256": "9a78ac8a2adfbcc68d03c66eb10be2270cf72bf0c0dd052729e49e49cf516030",
+      "bytes": 17638123,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124086433761400
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/manifest-optional-civilian-flight.json",
+      "sha256": "9bd451ae39ca96cba71c842034c5314606267851140f3e0ac72990634f2dbb29",
+      "bytes": 16741,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124081861840500
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/manifest-optional-civilian-fpv.json",
+      "sha256": "9d7ff83af12c90547253b6db189a9390face0334dd04bc457624cea91abcea70",
+      "bytes": 18095,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123109454091400
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/distribution-optional-civilian-fpv.zip",
+      "sha256": "9e9a4878fcd5e328cd507531d00ae58accbe46a7369681a3bb6215da15b67f2a",
+      "bytes": 6784236,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123110387487700
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-all.json",
+      "sha256": "a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706",
+      "bytes": 146284,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110275733764700
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/source-optional-civilian-fpv.zip",
+      "sha256": "a683283c8b62e0fd6bac519f7d2eaef4de8bfbcf14996788643cf56b41a9e8cf",
+      "bytes": 6820737,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124084303304800
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/optional-checksums.json",
+      "sha256": "a7791452c40e8a50a6c339c7a343d49b0dfde36350f25007bd5f7847694a2904",
+      "bytes": 2139,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124087172095100
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-developers/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "bytes": 10021,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110152512533000
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/optional-package-review.json",
+      "sha256": "abc0f3aa7296046b2bfccbe39a7ed6e2e013be38b52a66130b946d25d40841c1",
+      "bytes": 2838,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124086883973900
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-operations-fb207466c.json",
+      "sha256": "b00276030dd4642756c75e15120f2d415e07e85dc90b0eacf99cf0ee71574c3d",
+      "bytes": 48443,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110276758052000
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-developer-integration.lessons.json",
+      "sha256": "b7518328e989823c59da74709831e86e8dca55edcc139abb4a5d14eeab475f86",
+      "bytes": 14655,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110164377119000
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/manifest-optional-civilian-flight.json",
+      "sha256": "ba0580ea47953c86d03c5bd38280ff180d2a21a2b783dbe26d8ba11deff496f5",
+      "bytes": 16741,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123108087435500
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-product-operations.json",
+      "sha256": "c31d0285ff6b24dd3a2bce30c4b0877b457a4ae3870ee6fb8f7996c8454668d8",
+      "bytes": 24577,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110164582137400
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-spend-in-motion.rewards.json",
+      "sha256": "cb85acdb99639a27117a49c80337f10c0f5ae4f1dfa093a2c024c86927a6ad7e",
+      "bytes": 34903,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110165669668200
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/source-optional-civilian-flight.zip",
+      "sha256": "cd37c2c0ccb1d80d97ce4893eea5a34e577e388101355df987a4067eb488e500",
+      "bytes": 3800320,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124082758069200
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/source-inventory-optional-fpv-worlds.json",
+      "sha256": "cff8281d0ac54a8e21d09f785d27540b01e354549d7aa74d99225ba9a0721923",
+      "bytes": 50238,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124085535495900
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-developers-fb207466c.json",
+      "sha256": "d4bc46ff2c873a07325b9efec577e1df854b85479f3ba10a89ceb2a0db019d9a",
+      "bytes": 50786,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110276136682700
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-inside-village.lessons.json",
+      "sha256": "d9a7a65c5643a2915aa714c9640c30f14b0645ef5f65ae3d2b54b7a5ac8f1106",
+      "bytes": 13261,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110164514941200
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/source-inventory-optional-civilian-fpv.json",
+      "sha256": "dbfe4d9d1b5c6a3ea007331ad3513189a9a71332fc06dca19f980c5751a84305",
+      "bytes": 30036,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123110519019700
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-all-before-learning-bonus.json",
+      "sha256": "de8370665d5c99e953326e1861f0817afb3dfc511f0629cdec6f50c6d4b5c709",
+      "bytes": 191970,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110275637595300
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-adventure-before-discovery-rewards.json",
+      "sha256": "e251352b441ac1352802030be0bd6e9e2aed6a48e38dff8eee572c1d26221902",
+      "bytes": 33391,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110275121351300
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/source-optional-fpv-worlds.zip",
+      "sha256": "e39727530c75a0039ba49f46e2101d3022e0462ffada225dfe5f77ecacecfe47",
+      "bytes": 17638087,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123114130621200
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-foundations-fb207466c.json",
+      "sha256": "e6694057707e69a8a134836d91bc1879f3555b39f6fc58622a15073454bf7432",
+      "bytes": 47276,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110276391073600
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/source-optional-civilian-flight.zip",
+      "sha256": "ece349d90fc40cb011d72d5b575613a6d5db1db698fc3b5fc081c5933a5c43e1",
+      "bytes": 3800248,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123109306639000
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-developers.json",
+      "sha256": "ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06",
+      "bytes": 50046,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110276180413400
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-adventure-fb207466c.json",
+      "sha256": "ef9a0bf6562fa74ab643d9b214bf1deb1338a1694337cdd822d9cb3cd3c26937",
+      "bytes": 29600,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110275275170200
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/source-inventory-optional-civilian-flight.json",
+      "sha256": "f4340a699a1ffb675c6c95ba8410d494e7df7dbcbb352f305b2ccc6553db2e60",
+      "bytes": 27442,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124082361482900
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-source-to-pay.rewards.json",
+      "sha256": "f81e54560992325853f030b3a926a96c6bf19d62d0d32bcc05a1394a765d0b29",
+      "bytes": 4938,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792110165034033800
+    },
+    {
+      "path": "flight-practice-download-recovery-20261016-candidate/distribution-optional-civilian-fpv.zip",
+      "sha256": "f9f7e9eb14eea6fb9ff64744c6c6d9a718012f87fe628460f15bc9377a039fe0",
+      "bytes": 6784260,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792124083612145000
+    },
+    {
+      "path": "flight-practice-main-integrated-20261016-candidate/optional-packages.json",
+      "sha256": "fb408819d3b77acc52cce6e166a9973784dad88e5b005718345301ffd7d9b993",
+      "bytes": 2636,
+      "sourceBeforeAndAfterSHA256Match": true,
+      "mtimeNs": 1792123114528272400
+    }
+  ],
+  "localSourceReceiptSHA256": "aefee96bae12287041375ca770df473678c040136bdc09138bcc75bc430859ea",
+  "verificationPending": true
+}

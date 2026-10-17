@@ -1,0 +1,1441 @@
+{
+  "format": "FPVInterimVerifiedStagingCoverage.v1",
+  "inputManifestSHA256": "85a2e07fd5f47e29059fc1cb23d07edd71ff7b220ae886cf0982a4c508e48fa1",
+  "counts": {
+    "inventoryFilePaths": 122680,
+    "coveredFilePaths": 122680,
+    "heldFilePaths": 0,
+    "uncoveredFilePaths": 0,
+    "logicalCoveredBytes": 20679544552,
+    "verifiedParts": 16,
+    "directAssets": 28,
+    "symlinks": 282,
+    "heldSymlinks": 0
+  },
+  "allCurrentViewObjectsPresentInVerifiedCASOrExactReleaseIdentities": true,
+  "pathGraph": {
+    "logicalFilePaths": 122680,
+    "logicalBytes": 20679544552,
+    "symlinks": 282,
+    "dependencyFiles": 39,
+    "linkDispositionsSHA256": "93e396d6b0f56998e301175a5e5a2470d2cd965bdb898e107861c592dd8441e3",
+    "linkDispositions": [
+      {
+        "path": "fpv-canal-city-authoring-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "targetWithinRoot": "fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "terminalPath": "fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town"
+      },
+      {
+        "path": "fpv-canal-city-authoring-20261015/game",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game"
+      },
+      {
+        "path": "fpv-canal-city-authoring-20261015/optional-practice",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice"
+      },
+      {
+        "path": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "targetWithinRoot": "fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "terminalPath": "fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town"
+      },
+      {
+        "path": "fpv-canal-city-refinement-20261015/game",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game"
+      },
+      {
+        "path": "fpv-canal-city-refinement-20261015/optional-practice",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice"
+      },
+      {
+        "path": "fpv-canal-library-integrated-20261015/optional-practice/civilian-fpv/regional",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional"
+      },
+      {
+        "path": "fpv-canal-library-integrated-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs"
+      },
+      {
+        "path": "fpv-canal-library-source-20261015/optional-practice/civilian-fpv/regional",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional"
+      },
+      {
+        "path": "fpv-canal-library-source-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs"
+      },
+      {
+        "path": "fpv-coastal-harbour-native-20261015/connected",
+        "targetWithinRoot": "fpv-tropical-harbour-r3b-20261015",
+        "terminalPath": "fpv-tropical-harbour-r3b-20261015"
+      },
+      {
+        "path": "fpv-coastal-harbour-native-20261015/original",
+        "targetWithinRoot": "fpv-tropical-settlement-r2c-20261015",
+        "terminalPath": "fpv-tropical-settlement-r2c-20261015"
+      },
+      {
+        "path": "fpv-coastal-harbour-native-20261015/runtime",
+        "targetWithinRoot": "fpv-coastal-water-native-20261015/runtime",
+        "terminalPath": "fpv-coastal-water-native-20261015/runtime"
+      },
+      {
+        "path": "fpv-coastal-water-native-20261015/region",
+        "targetWithinRoot": "fpv-tropical-ground-native-20261015/region",
+        "terminalPath": "fpv-tropical-settlement-r2c-20261015"
+      },
+      {
+        "path": "fpv-hillside-contact-native-20261015/web/region-r3",
+        "targetWithinRoot": "fpv-hillside-courtyard-r3b-20261015",
+        "terminalPath": "fpv-hillside-courtyard-r3b-20261015"
+      },
+      {
+        "path": "fpv-hillside-contact-native-20261015/web/region-r4",
+        "targetWithinRoot": "fpv-hillside-courtyard-r4b-20261015",
+        "terminalPath": "fpv-hillside-courtyard-r4b-20261015"
+      },
+      {
+        "path": "fpv-hillside-courtyard-native-r3-20261015/web/region-r2",
+        "targetWithinRoot": "fpv-hillside-town-r2-20261015",
+        "terminalPath": "fpv-hillside-town-r2-20261015"
+      },
+      {
+        "path": "fpv-hillside-courtyard-native-r3-20261015/web/region-r3",
+        "targetWithinRoot": "fpv-hillside-courtyard-r3b-20261015",
+        "terminalPath": "fpv-hillside-courtyard-r3b-20261015"
+      },
+      {
+        "path": "fpv-hillside-courtyard-native-r4-20261015/web/region-r3",
+        "targetWithinRoot": "fpv-hillside-courtyard-r3b-20261015",
+        "terminalPath": "fpv-hillside-courtyard-r3b-20261015"
+      },
+      {
+        "path": "fpv-hillside-courtyard-native-r4-20261015/web/region-r4",
+        "targetWithinRoot": "fpv-hillside-courtyard-r4b-20261015",
+        "terminalPath": "fpv-hillside-courtyard-r4b-20261015"
+      },
+      {
+        "path": "fpv-hillside-ground-native-20261015/web/region",
+        "targetWithinRoot": "fpv-hillside-town-r2-20261015",
+        "terminalPath": "fpv-hillside-town-r2-20261015"
+      },
+      {
+        "path": "fpv-hillside-material-native-r5-20261015/web/region-r4",
+        "targetWithinRoot": "fpv-hillside-courtyard-r4b-20261015",
+        "terminalPath": "fpv-hillside-courtyard-r4b-20261015"
+      },
+      {
+        "path": "fpv-hillside-material-native-r5-20261015/web/region-r5",
+        "targetWithinRoot": "fpv-hillside-courtyard-r5b-20261015",
+        "terminalPath": "fpv-hillside-courtyard-r5b-20261015"
+      },
+      {
+        "path": "fpv-hillside-town-native-r1-20261015/region",
+        "targetWithinRoot": "fpv-hillside-town-r1g-20261015",
+        "terminalPath": "fpv-hillside-town-r1g-20261015"
+      },
+      {
+        "path": "fpv-hillside-town-native-r2-20261015/region",
+        "targetWithinRoot": "fpv-hillside-town-r2-20261015",
+        "terminalPath": "fpv-hillside-town-r2-20261015"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/canal-city",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/desert-expedition",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "terminalPath": "fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional/scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/game",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/game",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game"
+      },
+      {
+        "path": "fpv-lunar-basin-authoring-20261015/optional-practice",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/canal-city",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/desert-expedition",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "terminalPath": "fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional/scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/game",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/game",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game"
+      },
+      {
+        "path": "fpv-lunar-connections-20261015/optional-practice",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/canal-city",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/desert-expedition",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "terminalPath": "fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional/scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/game",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/game",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/README.md",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/README.md",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/README.md"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/attempts.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/attempts.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/attempts.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/battlefield-ground.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/battlefield-ground.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/battlefield-ground.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/beginner-coach.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/beginner-coach.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/beginner-coach.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/catalogue.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/catalogue.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/catalogue.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/content-definitions.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/content-definitions.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/content-definitions.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/demonstrations.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/demonstrations.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/demonstrations.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/expressive-hunt-courses.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/flight-contact.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/flight-contact.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/flight-contact.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/flight-fullscreen.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/flight-sectors.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/flight-sectors.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/flight-sectors.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/flight-support.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/flight-support.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/flight-support.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/industrial-environment.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/industrial-environment.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/industrial-environment.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/industrial-soldiers.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/industrial-vehicles.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/input.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/input.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/input.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/math.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/math.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/math.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/model.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/model.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/model.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/native-pursuit-courses.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/notebook.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/notebook.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/notebook.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/offline.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/offline.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/offline.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/playlists.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/playlists.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/playlists.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-controls.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-controls.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/radio-controls.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-guide.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-guide.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/radio-guide.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-profile.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-profile.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/radio-profile.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-runtime.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-runtime.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/radio-runtime.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-session.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-session.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/radio-session.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-setup.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-setup.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/radio-setup.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/regional-library.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/regional-library.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-library.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/regional-locations.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/regional-locations.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-locations.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/regional-session.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/regional-session.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-session.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/renderer.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/renderer.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/renderer.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/rotation-table.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/rotation-table.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/rotation-table.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/sim-presentation.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/sim-presentation.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/sim-presentation.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt-presentation.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/snake-hunt.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/snake-hunt.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/style.css",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/style.css",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/style.css"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/vendor",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/vendor",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/vendor"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-app.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-app.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-app.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-assets.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-assets.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-assets.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-catalogue.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-catalogue.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-catalogue.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-collision.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-collision.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-collision.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-content.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-content.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-content.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-demonstrations.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-demonstrations.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-demonstrations.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-editor.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-editor.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-editor.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-model.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-model.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-model.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-pursuit.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-pursuit.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-pursuit.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-records.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-records.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-records.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-store.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-store.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-store.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-style.css",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-style.css",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-style.css"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-themes.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-themes.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-themes.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-visuals.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-visuals.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-visuals.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-zip.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-zip.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-zip.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/fpv-worlds",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/fpv-worlds",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/fpv-worlds"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/guide.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/guide.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/guide.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/install-context.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/install-context.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/install-context.mjs"
+      },
+      {
+        "path": "fpv-lunar-regolith-20261015/optional-practice/navigation.mjs",
+        "targetWithinRoot": "fpv-lunar-basin-authoring-20261015/optional-practice/navigation.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/navigation.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-delivery-r3-20261015/optional-practice",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice"
+      },
+      {
+        "path": "fpv-lunar-shelter-detail-20261015/optional-practice",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-66b318e7/functional-check/runtime/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-66b318e7/functional-check/runtime/optional-practice"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/README.md",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/README.md",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/README.md"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/attempts.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/attempts.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/attempts.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/battlefield-ground.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/battlefield-ground.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/battlefield-ground.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/beginner-coach.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/beginner-coach.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/beginner-coach.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/catalogue.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/catalogue.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/catalogue.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/content-definitions.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/content-definitions.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/content-definitions.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/demonstrations.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/demonstrations.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/demonstrations.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/expressive-hunt-courses.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/flight-contact.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-contact.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-contact.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-fullscreen.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/flight-sectors.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-sectors.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-sectors.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/flight-support.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-support.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-support.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/industrial-environment.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/industrial-environment.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/industrial-environment.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/industrial-soldiers.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/industrial-vehicles.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/input.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/input.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/input.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/math.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/math.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/math.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/model.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/model.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/model.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/native-pursuit-courses.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/notebook.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/notebook.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/notebook.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/offline.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/offline.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/offline.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/playlists.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/playlists.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/playlists.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-controls.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-controls.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-controls.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-guide.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-guide.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-guide.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-profile.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-profile.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-profile.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-runtime.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-runtime.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-runtime.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-session.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-session.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-session.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-setup.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-setup.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-setup.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/regional",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/regional-locations.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional-locations.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional-locations.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/regional-session.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional-session.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional-session.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/renderer.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/renderer.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/renderer.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/rotation-table.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/rotation-table.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/rotation-table.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/sim-presentation.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/sim-presentation.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/sim-presentation.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt-presentation.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/snake-hunt.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/style.css",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/style.css",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/style.css"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/vendor",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/vendor",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/vendor"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-app.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-app.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-app.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-assets.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-assets.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-assets.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-catalogue.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-catalogue.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-catalogue.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-collision.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-collision.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-collision.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-content.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-content.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-content.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-demonstrations.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-demonstrations.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-demonstrations.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-editor.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-editor.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-editor.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-model.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-model.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-model.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-pursuit.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-pursuit.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-pursuit.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-records.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-records.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-records.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-store.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-store.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-store.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-style.css",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-style.css",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-style.css"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-themes.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-themes.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-themes.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-visuals.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-visuals.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-visuals.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-zip.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-zip.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-zip.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/fpv-worlds",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/fpv-worlds",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/fpv-worlds"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/guide.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/guide.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/guide.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/install-context.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/install-context.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/install-context.mjs"
+      },
+      {
+        "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/navigation.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/navigation.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/navigation.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/canal-city",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/desert-expedition",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+        "terminalPath": "fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/scenery-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional/scenery-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+        "targetWithinRoot": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+        "terminalPath": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/game",
+        "targetWithinRoot": "fpv-lunar-regolith-20261015/game",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game"
+      },
+      {
+        "path": "fpv-lunar-survey-detail-20261015/optional-practice",
+        "targetWithinRoot": "fpv-lunar-regolith-20261015/optional-practice",
+        "terminalPath": "fpv-lunar-regolith-20261015/optional-practice"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/batched-storage-103be7a7/independent-storage-checks/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+        "targetWithinRoot": "_github-review-dependencies/urban-bando-delivery-review-r1",
+        "terminalPath": "_github-review-dependencies/urban-bando-delivery-review-r1"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/catalogue-render-review/web/catalogue",
+        "targetWithinRoot": "fpv-catalogue-reliability-20261014",
+        "terminalPath": "fpv-catalogue-reliability-20261014"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/catalogue-render-review/web/site",
+        "targetWithinRoot": "fpv-package-qualification-20261014/artwork-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site",
+        "terminalPath": "fpv-package-qualification-20261014/artwork-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/integrity-rejection-journey/web/revealline/practice/fpv-worlds/releases/v0.142.4",
+        "targetWithinRoot": "fpv-package-qualification-20261014/corrected-update-journey/web/revealline/practice/fpv-worlds/releases/v0.142.4",
+        "terminalPath": "fpv-package-qualification-20261014/corrected-update-journey/web/revealline/practice/fpv-worlds/releases/v0.142.4"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/integrity-rejection-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1",
+        "targetWithinRoot": "fpv-package-qualification-20261014/artwork-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1",
+        "terminalPath": "fpv-package-qualification-20261014/artwork-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/native-store-recovery/web/site",
+        "targetWithinRoot": "fpv-package-qualification-20261014/regional-continuous-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site",
+        "terminalPath": "fpv-package-qualification-20261014/regional-continuous-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/regional-continuous-journey/web/region",
+        "targetWithinRoot": "fpv-large-worlds-20261014/urban-mixed-r2",
+        "terminalPath": "fpv-large-worlds-20261014/urban-mixed-r2"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/regional-delivery-native/web/region",
+        "targetWithinRoot": "fpv-large-worlds-20261014/urban-delivery-review-r1",
+        "terminalPath": "fpv-large-worlds-20261014/urban-delivery-review-r1"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/regional-delivery-native/web/source",
+        "targetWithinRoot": "fpv-continuous-package-review-20261014/optional-practice/civilian-fpv",
+        "terminalPath": "fpv-continuous-package-review-20261014/optional-practice/civilian-fpv"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/regional-host-journey/web/region",
+        "targetWithinRoot": "fpv-large-worlds-20261014/urban-mixed-r2",
+        "terminalPath": "fpv-large-worlds-20261014/urban-mixed-r2"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/runtime-lifecycle-pr1269/web/catalogue",
+        "targetWithinRoot": "fpv-package-qualification-20261014/catalogue-render-review/web/catalogue",
+        "terminalPath": "fpv-catalogue-reliability-20261014"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/runtime-lifecycle-pr1269/web/site",
+        "targetWithinRoot": "fpv-package-qualification-20261014/regional-host-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site",
+        "terminalPath": "fpv-package-qualification-20261014/regional-host-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/runtime-lifecycle-pr1273/web/catalogue",
+        "targetWithinRoot": "fpv-package-qualification-20261014/catalogue-render-review/web/catalogue",
+        "terminalPath": "fpv-catalogue-reliability-20261014"
+      },
+      {
+        "path": "fpv-package-qualification-20261014/runtime-lifecycle-pr1273/web/site",
+        "targetWithinRoot": "fpv-package-qualification-20261014/regional-continuous-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site",
+        "terminalPath": "fpv-package-qualification-20261014/regional-continuous-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site"
+      },
+      {
+        "path": "fpv-regional-load-cancellation-20261015/optional-practice/civilian-fpv/regional",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional"
+      },
+      {
+        "path": "fpv-regional-load-cancellation-20261015/optional-practice/civilian-fpv/world-store.mjs",
+        "targetWithinRoot": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-store.mjs",
+        "terminalPath": "fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-store.mjs"
+      },
+      {
+        "path": "fpv-rgba-native-review-20261015/derived",
+        "targetWithinRoot": "fpv-tropical-rgba-review-r3-20261015",
+        "terminalPath": "fpv-tropical-rgba-review-r3-20261015"
+      },
+      {
+        "path": "fpv-rgba-native-review-20261015/original",
+        "targetWithinRoot": "fpv-tropical-authoring-tools-20261015/converted",
+        "terminalPath": "fpv-tropical-authoring-tools-20261015/converted"
+      },
+      {
+        "path": "fpv-rgba-native-review-20261015/runtime",
+        "targetWithinRoot": "fpv-continuous-package-review-20261014/optional-practice/civilian-fpv",
+        "terminalPath": "fpv-continuous-package-review-20261014/optional-practice/civilian-fpv"
+      },
+      {
+        "path": "fpv-temp/authored-urban-bounded-report-review-9175/game",
+        "targetWithinRoot": "fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/game",
+        "terminalPath": "fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/game"
+      },
+      {
+        "path": "fpv-temp/authored-urban-bounded-report-review-9175/optional-practice",
+        "targetWithinRoot": "fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/optional-practice"
+      },
+      {
+        "path": "fpv-temp/authored-urban-elapsed-review-9123/game",
+        "targetWithinRoot": "fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/game",
+        "terminalPath": "fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/game"
+      },
+      {
+        "path": "fpv-temp/authored-urban-elapsed-review-9123/optional-practice",
+        "targetWithinRoot": "fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice"
+      },
+      {
+        "path": "fpv-temp/authored-urban-lifecycle-review-9169/game",
+        "targetWithinRoot": "fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/game",
+        "terminalPath": "fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/game"
+      },
+      {
+        "path": "fpv-temp/authored-urban-lifecycle-review-9169/optional-practice",
+        "targetWithinRoot": "fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/optional-practice"
+      },
+      {
+        "path": "fpv-temp/authored-urban-visible-review-9162/game",
+        "targetWithinRoot": "fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/game",
+        "terminalPath": "fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/game"
+      },
+      {
+        "path": "fpv-temp/authored-urban-visible-review-9162/optional-practice",
+        "targetWithinRoot": "fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice"
+      },
+      {
+        "path": "fpv-temp/canyon-library-host-20261015/canyon-rounded-delivery",
+        "targetWithinRoot": "fpv-large-worlds-20261014/canyon-delivery-rounded-r1",
+        "terminalPath": "fpv-large-worlds-20261014/canyon-delivery-rounded-r1"
+      },
+      {
+        "path": "fpv-temp/canyon-library-host-20261015/railway-structure-readable",
+        "targetWithinRoot": "fpv-large-worlds-20261014/railway-structure-r4",
+        "terminalPath": "fpv-large-worlds-20261014/railway-structure-r4"
+      },
+      {
+        "path": "fpv-temp/fpv-listing-prepare-link-DakYii/source-alias",
+        "targetWithinRoot": "fpv-worktrees/fpv-listing-native-evidence-20261016",
+        "terminalPath": "fpv-worktrees/fpv-listing-native-evidence-20261016"
+      },
+      {
+        "path": "fpv-temp/listing-independent-review-20261016-0352/tmp/fpv-listing-prepare-link-FIHaPP/source-alias",
+        "targetWithinRoot": "fpv-worktrees/fpv-listing-native-evidence-20261016",
+        "terminalPath": "fpv-worktrees/fpv-listing-native-evidence-20261016"
+      },
+      {
+        "path": "fpv-temp/listing-independent-review-20261016-0352/tmp/fpv-listing-prepare-link-GjtIf1/source-alias",
+        "targetWithinRoot": "fpv-worktrees/fpv-listing-native-evidence-20261016",
+        "terminalPath": "fpv-worktrees/fpv-listing-native-evidence-20261016"
+      },
+      {
+        "path": "fpv-temp/listing-independent-review-20261016-0352/tmp/fpv-listing-prepare-link-gypTJC/source-alias",
+        "targetWithinRoot": "fpv-worktrees/fpv-listing-native-evidence-20261016",
+        "terminalPath": "fpv-worktrees/fpv-listing-native-evidence-20261016"
+      },
+      {
+        "path": "fpv-temp/listing-independent-review-20261016-0352/tmp/fpv-listing-prepare-link-hGZRNZ/source-alias",
+        "targetWithinRoot": "fpv-worktrees/fpv-listing-native-evidence-20261016",
+        "terminalPath": "fpv-worktrees/fpv-listing-native-evidence-20261016"
+      },
+      {
+        "path": "fpv-temp/railway-live-host-1e85a8c48-raw/railway-structure-readable",
+        "targetWithinRoot": "fpv-large-worlds-20261014/railway-structure-r4",
+        "terminalPath": "fpv-large-worlds-20261014/railway-structure-r4"
+      },
+      {
+        "path": "fpv-temp/railway-live-host-corrected/canyon-rounded-delivery",
+        "targetWithinRoot": "fpv-large-worlds-20261014/canyon-delivery-rounded-r1",
+        "terminalPath": "fpv-large-worlds-20261014/canyon-delivery-rounded-r1"
+      },
+      {
+        "path": "fpv-temp/railway-live-host-corrected/railway-structure-readable",
+        "targetWithinRoot": "fpv-large-worlds-20261014/railway-structure-r4",
+        "terminalPath": "fpv-large-worlds-20261014/railway-structure-r4"
+      },
+      {
+        "path": "fpv-temp/railway-live-quality-check/authoring",
+        "targetWithinRoot": "fpv-urban-mixed-preparation-20261014/authoring",
+        "terminalPath": "fpv-urban-mixed-preparation-20261014/authoring"
+      },
+      {
+        "path": "fpv-temp/railway-live-quality-check/game",
+        "targetWithinRoot": "fpv-temp/railway-live-host-1e85a8c48-raw/game",
+        "terminalPath": "fpv-temp/railway-live-host-1e85a8c48-raw/game"
+      },
+      {
+        "path": "fpv-temp/railway-live-quality-check/optional-practice",
+        "targetWithinRoot": "fpv-urban-mixed-preparation-20261014/optional-practice",
+        "terminalPath": "fpv-urban-mixed-preparation-20261014/optional-practice"
+      },
+      {
+        "path": "fpv-temp/regional-elapsed-review-9072/game",
+        "targetWithinRoot": "fpv-package-qualification-20261014/saved-places-2cfe7a25-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/game",
+        "terminalPath": "fpv-package-qualification-20261014/saved-places-2cfe7a25-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/game"
+      },
+      {
+        "path": "fpv-temp/regional-elapsed-review-9072/optional-practice",
+        "targetWithinRoot": "fpv-package-qualification-20261014/saved-places-2cfe7a25-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice",
+        "terminalPath": "fpv-package-qualification-20261014/saved-places-2cfe7a25-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice"
+      },
+      {
+        "path": "fpv-temp/regional-family-component-review-9213/web/runtime",
+        "targetWithinRoot": "fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check",
+        "terminalPath": "fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check"
+      },
+      {
+        "path": "fpv-temp/regional-family-component-review-9214/web/runtime",
+        "targetWithinRoot": "fpv-package-qualification-20261014/regional-family-library-8ab04b8d/functional-check",
+        "terminalPath": "fpv-package-qualification-20261014/regional-family-library-8ab04b8d/functional-check"
+      },
+      {
+        "path": "fpv-tropical-authoring-tools-20261015/vendor",
+        "targetWithinRoot": "fpv-continuous-package-review-20261014/optional-practice/civilian-fpv/vendor",
+        "terminalPath": "fpv-continuous-package-review-20261014/optional-practice/civilian-fpv/vendor"
+      },
+      {
+        "path": "fpv-tropical-coastal-native-20261015/region",
+        "targetWithinRoot": "fpv-tropical-coast-r1-20261015",
+        "terminalPath": "fpv-tropical-coast-r1-20261015"
+      },
+      {
+        "path": "fpv-tropical-coastal-native-20261015/runtime",
+        "targetWithinRoot": "fpv-tropical-coastal-native-20261015/runtime-345a185",
+        "terminalPath": "fpv-tropical-coastal-native-20261015/runtime-345a185"
+      },
+      {
+        "path": "fpv-tropical-districts-native-20261015/region",
+        "targetWithinRoot": "fpv-tropical-districts-r1-reviewed-20261015",
+        "terminalPath": "fpv-tropical-districts-r1-reviewed-20261015"
+      },
+      {
+        "path": "fpv-tropical-districts-native-20261015/runtime",
+        "targetWithinRoot": "fpv-tropical-districts-native-20261015/runtime-83fd6525",
+        "terminalPath": "fpv-tropical-districts-native-20261015/runtime-83fd6525"
+      },
+      {
+        "path": "fpv-tropical-ground-native-20261015/region",
+        "targetWithinRoot": "fpv-tropical-settlement-r2c-20261015",
+        "terminalPath": "fpv-tropical-settlement-r2c-20261015"
+      },
+      {
+        "path": "fpv-tropical-settlement-native-20261015/region",
+        "targetWithinRoot": "fpv-tropical-settlement-r2c-20261015",
+        "terminalPath": "fpv-tropical-settlement-r2c-20261015"
+      },
+      {
+        "path": "fpv-tropical-settlement-native-20261015/runtime",
+        "targetWithinRoot": "fpv-tropical-districts-native-20261015/runtime-83fd6525",
+        "terminalPath": "fpv-tropical-districts-native-20261015/runtime-83fd6525"
+      },
+      {
+        "path": "fpv-urban-independent-20261014/canyon-regional-study",
+        "targetWithinRoot": "fpv-large-worlds-20261014/canyon-study-recovered-r1",
+        "terminalPath": "fpv-large-worlds-20261014/canyon-study-recovered-r1"
+      },
+      {
+        "path": "fpv-urban-independent-20261014/urban-regional-study",
+        "targetWithinRoot": "fpv-large-worlds-20261014/urban-regional-r1",
+        "terminalPath": "fpv-large-worlds-20261014/urban-regional-r1"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/canyon-landmarks-final",
+        "targetWithinRoot": "fpv-large-worlds-20261014/canyon-landmarks-r5",
+        "terminalPath": "fpv-large-worlds-20261014/canyon-landmarks-r5"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/canyon-landmarks-reviewed",
+        "targetWithinRoot": "fpv-large-worlds-20261014/canyon-landmarks-r7",
+        "terminalPath": "fpv-large-worlds-20261014/canyon-landmarks-r7"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/canyon-landmarks-study",
+        "targetWithinRoot": "fpv-large-worlds-20261014/canyon-landmarks-r1",
+        "terminalPath": "fpv-large-worlds-20261014/canyon-landmarks-r1"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/canyon-relief-reviewed",
+        "targetWithinRoot": "fpv-large-worlds-20261014/canyon-relief-r2",
+        "terminalPath": "fpv-large-worlds-20261014/canyon-relief-r2"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/canyon-relief-rounded",
+        "targetWithinRoot": "fpv-large-worlds-20261014/canyon-relief-r6",
+        "terminalPath": "fpv-large-worlds-20261014/canyon-relief-r6"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/canyon-relief-study",
+        "targetWithinRoot": "fpv-large-worlds-20261014/canyon-relief-r1",
+        "terminalPath": "fpv-large-worlds-20261014/canyon-relief-r1"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/railway-comparison",
+        "targetWithinRoot": "fpv-temp/railway-comparison",
+        "terminalPath": "fpv-temp/railway-comparison"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/railway-indexed-review",
+        "targetWithinRoot": "fpv-temp/railway-indexed-review",
+        "terminalPath": "fpv-temp/railway-indexed-review"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/railway-pilot-final",
+        "targetWithinRoot": "fpv-large-worlds-20261014/railway-pilot-r3",
+        "terminalPath": "fpv-large-worlds-20261014/railway-pilot-r3"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/railway-pilot-study",
+        "targetWithinRoot": "fpv-large-worlds-20261014/railway-pilot-r2",
+        "terminalPath": "fpv-large-worlds-20261014/railway-pilot-r2"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/railway-structure-final",
+        "targetWithinRoot": "fpv-large-worlds-20261014/railway-structure-r2",
+        "terminalPath": "fpv-large-worlds-20261014/railway-structure-r2"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/railway-structure-readable",
+        "targetWithinRoot": "fpv-large-worlds-20261014/railway-structure-r4",
+        "terminalPath": "fpv-large-worlds-20261014/railway-structure-r4"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/railway-texture-window",
+        "targetWithinRoot": "fpv-temp/railway-texture-window",
+        "terminalPath": "fpv-temp/railway-texture-window"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/urban-hall-final",
+        "targetWithinRoot": "fpv-large-worlds-20261014/urban-hall-r3",
+        "terminalPath": "fpv-large-worlds-20261014/urban-hall-r3"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/urban-hall-study",
+        "targetWithinRoot": "fpv-large-worlds-20261014/urban-hall-r1",
+        "terminalPath": "fpv-large-worlds-20261014/urban-hall-r1"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/urban-loading-study",
+        "targetWithinRoot": "fpv-large-worlds-20261014/urban-loading-r1",
+        "terminalPath": "fpv-large-worlds-20261014/urban-loading-r1"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/urban-parking-study",
+        "targetWithinRoot": "fpv-large-worlds-20261014/urban-parking-r1",
+        "terminalPath": "fpv-large-worlds-20261014/urban-parking-r1"
+      },
+      {
+        "path": "fpv-urban-mixed-preparation-20261014/urban-regional-study",
+        "targetWithinRoot": "fpv-large-worlds-20261014/urban-regional-r2",
+        "terminalPath": "fpv-large-worlds-20261014/urban-regional-r2"
+      }
+    ]
+  },
+  "inventorySetFinal": false,
+  "coverageComplete": false,
+  "portableRestoreComplete": false,
+  "originalReleaseCatalogueMatchesStillAuthenticateDuringActualRestore": true,
+  "sourceClosureAndAllVolumeScopeOpen": true,
+  "overallDisconnectSafetyClaimed": false
+}

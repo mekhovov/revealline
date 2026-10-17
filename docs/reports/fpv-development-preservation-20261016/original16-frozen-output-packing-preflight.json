@@ -1,0 +1,14 @@
+{
+  "format": "FPVOriginal16FrozenReportPackingPreflight.v1",
+  "rootReviewDispositionSHA256": "d630930f747c76aeb6efe9dab8008168c012f3cc1c6b7d2ff8ab5bec55edb662",
+  "rootReviewReceiptSHA256": "22c1abc1274b131d5cf012620a98928765a0f90ad7477da3e73910536e9a0fc5",
+  "manifestSHA256": "22905dc2f82220882b38c3ece6415904c47d075773d19b1df183e175617c675f",
+  "files": 21,
+  "bytes": 3072036,
+  "selectedExactReviewedSubtreeOnly": true,
+  "expectedSHAFromRootFullReadReview": true,
+  "sourceHashChecksStillRequiredDuringPacking": true,
+  "wholeSourceAuditOrClosureCacheApproved": false,
+  "originalStageFinalInputPendingColdReceipt": true,
+  "overallDisconnectSafetyClaimed": false
+}

@@ -1,0 +1,7 @@
+test_full_restore_requires_final_inventory_and_checks_actual_all_path_layout (test_bounded_restore.BoundedRestoreTests.test_full_restore_requires_final_inventory_and_checks_actual_all_path_layout) ... {"format": "FPVPortableRestoreReceipt.v1", "files": 5, "logicalBytes": 105, "allFileHashesMatch": true, "allFileModesAndTimesMatch": true, "unresolvedInternalLinks": [], "githubDependencyFileCount": 0, "githubDependencyBytes": 0, "allGitHubDependencyFileHashesMatch": true, "diskPreflight": {"cacheEstimatedBytes": 21, "logicalCopyEstimatedBytes": 105, "metadataAllowanceBytes": 268476416, "estimatedPeakBytes": 268476542, "freeDiskReserveBytes": 2147483648, "cacheFreeBytesBeforeRestore": 162611200000, "targetFreeBytesBeforeRestore": 162611200000, "cacheAndTargetOnSameFilesystem": true}, "complete": true, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": true, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792130616.577216}
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 8.496s
+
+OK

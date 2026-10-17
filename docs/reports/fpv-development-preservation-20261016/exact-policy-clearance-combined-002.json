@@ -1,0 +1,2433 @@
+{
+  "rows": [
+    {
+      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/source-index.json",
+      "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
+      "decision": "allow-app-archive",
+      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+    },
+    {
+      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/index.json",
+      "sha256": "97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f",
+      "decision": "allow-app-archive",
+      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+    },
+    {
+      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "decision": "allow-app-archive",
+      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+    },
+    {
+      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/route-worlds/descriptors/coupa.json",
+      "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503",
+      "decision": "allow-app-archive",
+      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+    },
+    {
+      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "decision": "allow-app-archive",
+      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+    },
+    {
+      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "decision": "allow-app-archive",
+      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+    },
+    {
+      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
+      "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37",
+      "decision": "allow-app-archive",
+      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+    },
+    {
+      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/game/communities/coupa/index.html",
+      "sha256": "2dea1f079f7f81bce604d73c7ae086dd9e77e62469ee2ed4c2d3ad41aac82429",
+      "decision": "allow-app-archive",
+      "reason": "Generated FPV / LINE public Coupa community entry. Entire HTML read; includes only application access-gate verifier, scripts, styles, manifest/offline metadata and community links; no private company content or user data."
+    },
+    {
+      "path": "fpv-package-qualification-20261014/pr1269/company-capacity/manifest-coupa-adventure.json",
+      "sha256": "de42565a02b18bf95e8b5845b4c1cadbed68d7530664a8ba207364847f7492db",
+      "decision": "allow-app-archive",
+      "reason": "Strictly schema-validated generated application offline-manifest: game edition/build identifiers and relative app file names, byte sizes and hashes only. No user/company account content."
+    },
+    {
+      "path": "fpv-package-qualification-20261014/pr1269/company-capacity/manifest-coupa-all.json",
+      "sha256": "7fe9aa907f8a8df808228b2160af0076a377a663ba4239368bc6ff45cf452785",
+      "decision": "allow-app-archive",
+      "reason": "Strictly schema-validated generated application offline-manifest: game edition/build identifiers and relative app file names, byte sizes and hashes only. No user/company account content."
+    },
+    {
+      "path": "fpv-package-qualification-20261014/pr1269/company-capacity/manifest-coupa-operations.json",
+      "sha256": "9e1f1152fdf64a4376790194635055d7ce2a1ce7c6ddcd561f689cd28c73c76a",
+      "decision": "allow-app-archive",
+      "reason": "Strictly schema-validated generated application offline-manifest: game edition/build identifiers and relative app file names, byte sizes and hashes only. No user/company account content."
+    },
+    {
+      "path": "fpv-package-qualification-20261014/pr1269/company-capacity/manifest-coupa-culture.json",
+      "sha256": "9b63767bfe33bbb54d462fca16dcfe0757776da2d312cc645c8ab00d7d6d94ce",
+      "decision": "allow-app-archive",
+      "reason": "Strictly schema-validated generated application offline-manifest: game edition/build identifiers and relative app file names, byte sizes and hashes only. No user/company account content."
+    },
+    {
+      "path": "fpv-package-qualification-20261014/pr1269/company-capacity/manifest-coupa-developers.json",
+      "sha256": "3a772a945dbf0adeee50d7f99bda6ff36b09d5c57f1280ba8931aa7e5521cb6c",
+      "decision": "allow-app-archive",
+      "reason": "Strictly schema-validated generated application offline-manifest: game edition/build identifiers and relative app file names, byte sizes and hashes only. No user/company account content."
+    },
+    {
+      "path": "fpv-package-qualification-20261014/pr1269/company-capacity/manifest-coupa-foundations.json",
+      "sha256": "48b95591c72c3ec14960ebdd1002df9316e3fbddaa2ab5a5bcb776b49d9e808a",
+      "decision": "allow-app-archive",
+      "reason": "Strictly schema-validated generated application offline-manifest: game edition/build identifiers and relative app file names, byte sizes and hashes only. No user/company account content."
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-20261016-c4a1799dec/revealline-neon-upgrade-v3-2d863dd88e8e/authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/authoring/library/neon-mosaic/coupa/scenario.json",
+      "sha256": "e182d14f626e4a27466595e78d868e31fa9acd471b0de7113e674baecf8e50f4",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/authoring/library/neon-mosaic/coupa/scenario.json",
+      "sha256": "e182d14f626e4a27466595e78d868e31fa9acd471b0de7113e674baecf8e50f4",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-20261016-c4a1799dec/revealline-neon-upgrade-v3-2d863dd88e8e/authoring/library/neon-mosaic/coupa/scenario.json",
+      "sha256": "e182d14f626e4a27466595e78d868e31fa9acd471b0de7113e674baecf8e50f4",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/library/neon-mosaic/coupa/scenario.json",
+      "sha256": "e182d14f626e4a27466595e78d868e31fa9acd471b0de7113e674baecf8e50f4",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/library/neon-mosaic/coupa/scenario.json",
+      "sha256": "e182d14f626e4a27466595e78d868e31fa9acd471b0de7113e674baecf8e50f4",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-20261016-c4a1799dec/revealline-neon-upgrade-v3-2d863dd88e8e/authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-20261016-c4a1799dec/revealline-neon-upgrade-v3-2d863dd88e8e/authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/optional/external-chapters/route-worlds-coupa/media.rlmedia",
+      "sha256": "f26c91482325aaa0ea7d7484d9aa2de5f2209b1a8fcfc2ba518eb145f8ddd77f",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/route-worlds/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/optional/external-chapters/route-worlds-coupa/media.rlmedia",
+      "sha256": "f26c91482325aaa0ea7d7484d9aa2de5f2209b1a8fcfc2ba518eb145f8ddd77f",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/route-worlds/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/optional/external-chapters/route-worlds-coupa/media.rlmedia",
+      "sha256": "f26c91482325aaa0ea7d7484d9aa2de5f2209b1a8fcfc2ba518eb145f8ddd77f",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/route-worlds/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/optional/external-chapters/route-worlds-coupa/media.rlmedia",
+      "sha256": "f26c91482325aaa0ea7d7484d9aa2de5f2209b1a8fcfc2ba518eb145f8ddd77f",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/route-worlds/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+      "sha256": "185e104975706717deb11ad6e4dc91b1cedc6680755fa9174583ceec0660da16",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/sentinel-theme-chapters/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+      "sha256": "185e104975706717deb11ad6e4dc91b1cedc6680755fa9174583ceec0660da16",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/sentinel-theme-chapters/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+      "sha256": "185e104975706717deb11ad6e4dc91b1cedc6680755fa9174583ceec0660da16",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/sentinel-theme-chapters/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+      "sha256": "185e104975706717deb11ad6e4dc91b1cedc6680755fa9174583ceec0660da16",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/sentinel-theme-chapters/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/repair-the-draft-v1.png",
+      "sha256": "a1edf3bae43ddeb0c1694dea868a0327ccfed038f64162d08839e84585e1e5e0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/repair-the-draft-v1.png",
+      "sha256": "a1edf3bae43ddeb0c1694dea868a0327ccfed038f64162d08839e84585e1e5e0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/repair-the-draft-v1.png",
+      "sha256": "a1edf3bae43ddeb0c1694dea868a0327ccfed038f64162d08839e84585e1e5e0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/repair-the-draft-v1.png",
+      "sha256": "a1edf3bae43ddeb0c1694dea868a0327ccfed038f64162d08839e84585e1e5e0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/coupa-developer-integration-key.png",
+      "sha256": "66c68f803aeb5d8590dcb29e05863d9147c12dbe7a5afebe6522a97b82b508ce",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/coupa-developer-integration-key.png",
+      "sha256": "66c68f803aeb5d8590dcb29e05863d9147c12dbe7a5afebe6522a97b82b508ce",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/coupa-developer-integration-key.png",
+      "sha256": "66c68f803aeb5d8590dcb29e05863d9147c12dbe7a5afebe6522a97b82b508ce",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/coupa-developer-integration-key.png",
+      "sha256": "66c68f803aeb5d8590dcb29e05863d9147c12dbe7a5afebe6522a97b82b508ce",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/wallpaper-center-2024.png",
+      "sha256": "f4e686a06ac0b4d36b6974797bab06fc5a80b3e69fbcc4ab99f98e3c37af4177",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/wallpaper-center-2024.png",
+      "sha256": "f4e686a06ac0b4d36b6974797bab06fc5a80b3e69fbcc4ab99f98e3c37af4177",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/wallpaper-center-2024.png",
+      "sha256": "f4e686a06ac0b4d36b6974797bab06fc5a80b3e69fbcc4ab99f98e3c37af4177",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/wallpaper-center-2024.png",
+      "sha256": "f4e686a06ac0b4d36b6974797bab06fc5a80b3e69fbcc4ab99f98e3c37af4177",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/choose-together-v1.png",
+      "sha256": "9fc3d2f24f59dc49d7ea72f5ae7e201b511da5a0ab9607f094f782919ebbe7b6",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/choose-together-v1.png",
+      "sha256": "9fc3d2f24f59dc49d7ea72f5ae7e201b511da5a0ab9607f094f782919ebbe7b6",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/choose-together-v1.png",
+      "sha256": "9fc3d2f24f59dc49d7ea72f5ae7e201b511da5a0ab9607f094f782919ebbe7b6",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/choose-together-v1.png",
+      "sha256": "9fc3d2f24f59dc49d7ea72f5ae7e201b511da5a0ab9607f094f782919ebbe7b6",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/wallpaper-network-2024.png",
+      "sha256": "dc3564fbd91d1bd745f3e3cdbc8a09de56868e846ecae9fbd6598ddebd3f6e3a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/wallpaper-network-2024.png",
+      "sha256": "dc3564fbd91d1bd745f3e3cdbc8a09de56868e846ecae9fbd6598ddebd3f6e3a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/wallpaper-network-2024.png",
+      "sha256": "dc3564fbd91d1bd745f3e3cdbc8a09de56868e846ecae9fbd6598ddebd3f6e3a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/wallpaper-network-2024.png",
+      "sha256": "dc3564fbd91d1bd745f3e3cdbc8a09de56868e846ecae9fbd6598ddebd3f6e3a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/close-the-loop-v1.png",
+      "sha256": "176b93f6ec0c0ba5bd34e85cc733e8c918e8eb3087604f600f7bd542b6ba8f51",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/close-the-loop-v1.png",
+      "sha256": "176b93f6ec0c0ba5bd34e85cc733e8c918e8eb3087604f600f7bd542b6ba8f51",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/close-the-loop-v1.png",
+      "sha256": "176b93f6ec0c0ba5bd34e85cc733e8c918e8eb3087604f600f7bd542b6ba8f51",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/close-the-loop-v1.png",
+      "sha256": "176b93f6ec0c0ba5bd34e85cc733e8c918e8eb3087604f600f7bd542b6ba8f51",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/network-atlas-v2.png",
+      "sha256": "aa6a581b04384b06e730e36399c0c75a03145b501c96dcb1247ec29f24b3d518",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/network-atlas-v2.png",
+      "sha256": "aa6a581b04384b06e730e36399c0c75a03145b501c96dcb1247ec29f24b3d518",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/network-atlas-v2.png",
+      "sha256": "aa6a581b04384b06e730e36399c0c75a03145b501c96dcb1247ec29f24b3d518",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/network-atlas-v2.png",
+      "sha256": "aa6a581b04384b06e730e36399c0c75a03145b501c96dcb1247ec29f24b3d518",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/spend-city-v2.png",
+      "sha256": "fb468b9b308377d0e83517c64c34c6df4492d7909add3f3e700e03cfaf039d18",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/spend-city-v2.png",
+      "sha256": "fb468b9b308377d0e83517c64c34c6df4492d7909add3f3e700e03cfaf039d18",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/spend-city-v2.png",
+      "sha256": "fb468b9b308377d0e83517c64c34c6df4492d7909add3f3e700e03cfaf039d18",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/spend-city-v2.png",
+      "sha256": "fb468b9b308377d0e83517c64c34c6df4492d7909add3f3e700e03cfaf039d18",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/home.png",
+      "sha256": "23fde0cc8d4af4cacb906bdd5c3a7146d24e436a129c221d7535171bee72fbb9",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/home.png",
+      "sha256": "23fde0cc8d4af4cacb906bdd5c3a7146d24e436a129c221d7535171bee72fbb9",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/home.png",
+      "sha256": "23fde0cc8d4af4cacb906bdd5c3a7146d24e436a129c221d7535171bee72fbb9",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/home.png",
+      "sha256": "23fde0cc8d4af4cacb906bdd5c3a7146d24e436a129c221d7535171bee72fbb9",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/scoped-access-v1.png",
+      "sha256": "05865bd2f0a028ab582889736574e776876d0735a91c377dff3c89f04ff9b2a0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/scoped-access-v1.png",
+      "sha256": "05865bd2f0a028ab582889736574e776876d0735a91c377dff3c89f04ff9b2a0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/scoped-access-v1.png",
+      "sha256": "05865bd2f0a028ab582889736574e776876d0735a91c377dff3c89f04ff9b2a0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/scoped-access-v1.png",
+      "sha256": "05865bd2f0a028ab582889736574e776876d0735a91c377dff3c89f04ff9b2a0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/coupa-inside-village-key.png",
+      "sha256": "50cf52f3ff6faeef17171a44acb83bf8b80e7090dcfa5fad512496676c18eb0f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/coupa-inside-village-key.png",
+      "sha256": "50cf52f3ff6faeef17171a44acb83bf8b80e7090dcfa5fad512496676c18eb0f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/coupa-inside-village-key.png",
+      "sha256": "50cf52f3ff6faeef17171a44acb83bf8b80e7090dcfa5fad512496676c18eb0f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/coupa-inside-village-key.png",
+      "sha256": "50cf52f3ff6faeef17171a44acb83bf8b80e7090dcfa5fad512496676c18eb0f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/run-ledger-v1.png",
+      "sha256": "7a9f66fb74c22ce6cdcc435e2f03dd85bfa4592e79ed53c33b03283edd780752",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/run-ledger-v1.png",
+      "sha256": "7a9f66fb74c22ce6cdcc435e2f03dd85bfa4592e79ed53c33b03283edd780752",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/run-ledger-v1.png",
+      "sha256": "7a9f66fb74c22ce6cdcc435e2f03dd85bfa4592e79ed53c33b03283edd780752",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/run-ledger-v1.png",
+      "sha256": "7a9f66fb74c22ce6cdcc435e2f03dd85bfa4592e79ed53c33b03283edd780752",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/coupa-source-to-pay-key.png",
+      "sha256": "bbfb32e28c42863a2c444de4c42d5843f107ae8573d8f773817abe9488801f3b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/coupa-source-to-pay-key.png",
+      "sha256": "bbfb32e28c42863a2c444de4c42d5843f107ae8573d8f773817abe9488801f3b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/coupa-source-to-pay-key.png",
+      "sha256": "bbfb32e28c42863a2c444de4c42d5843f107ae8573d8f773817abe9488801f3b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/coupa-source-to-pay-key.png",
+      "sha256": "bbfb32e28c42863a2c444de4c42d5843f107ae8573d8f773817abe9488801f3b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/received-in-part-v1.png",
+      "sha256": "f60c7a5f9ab780e052cf5c43fe73ca05f4b6e48383c84a3dbf446ca672ddcda3",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/received-in-part-v1.png",
+      "sha256": "f60c7a5f9ab780e052cf5c43fe73ca05f4b6e48383c84a3dbf446ca672ddcda3",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/received-in-part-v1.png",
+      "sha256": "f60c7a5f9ab780e052cf5c43fe73ca05f4b6e48383c84a3dbf446ca672ddcda3",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/received-in-part-v1.png",
+      "sha256": "f60c7a5f9ab780e052cf5c43fe73ca05f4b6e48383c84a3dbf446ca672ddcda3",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/record-the-delivery-v1.png",
+      "sha256": "b5d544d7eb6c299976bd102b4c7e63e41337cf23b317dd12a09cccc74e2f23f3",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/record-the-delivery-v1.png",
+      "sha256": "b5d544d7eb6c299976bd102b4c7e63e41337cf23b317dd12a09cccc74e2f23f3",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/record-the-delivery-v1.png",
+      "sha256": "b5d544d7eb6c299976bd102b4c7e63e41337cf23b317dd12a09cccc74e2f23f3",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/record-the-delivery-v1.png",
+      "sha256": "b5d544d7eb6c299976bd102b4c7e63e41337cf23b317dd12a09cccc74e2f23f3",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/all-of-us-v1.png",
+      "sha256": "556af50d368e0912547dc03f9b6854b43b13cea825fe5d3d0ad0979ab8e00f3b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/all-of-us-v1.png",
+      "sha256": "556af50d368e0912547dc03f9b6854b43b13cea825fe5d3d0ad0979ab8e00f3b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/all-of-us-v1.png",
+      "sha256": "556af50d368e0912547dc03f9b6854b43b13cea825fe5d3d0ad0979ab8e00f3b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/all-of-us-v1.png",
+      "sha256": "556af50d368e0912547dc03f9b6854b43b13cea825fe5d3d0ad0979ab8e00f3b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/coupa-product-operations-key.png",
+      "sha256": "371ab48050bb585c118346bcbbf97e8cdec3234415c3f41b16859874bda83604",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/coupa-product-operations-key.png",
+      "sha256": "371ab48050bb585c118346bcbbf97e8cdec3234415c3f41b16859874bda83604",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/coupa-product-operations-key.png",
+      "sha256": "371ab48050bb585c118346bcbbf97e8cdec3234415c3f41b16859874bda83604",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/coupa-product-operations-key.png",
+      "sha256": "371ab48050bb585c118346bcbbf97e8cdec3234415c3f41b16859874bda83604",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/draft-validate-explain-v1.png",
+      "sha256": "3b3671602b4bab7cc611d84fd208c7c2b72b62bb97288274599e09d8eda6e2bd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/draft-validate-explain-v1.png",
+      "sha256": "3b3671602b4bab7cc611d84fd208c7c2b72b62bb97288274599e09d8eda6e2bd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/draft-validate-explain-v1.png",
+      "sha256": "3b3671602b4bab7cc611d84fd208c7c2b72b62bb97288274599e09d8eda6e2bd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/draft-validate-explain-v1.png",
+      "sha256": "3b3671602b4bab7cc611d84fd208c7c2b72b62bb97288274599e09d8eda6e2bd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/handle-the-change-v1.png",
+      "sha256": "1dd7123f8cb633625226f096f5c5da7a848fd3532f04e4796ce70aeb7687d2a2",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/handle-the-change-v1.png",
+      "sha256": "1dd7123f8cb633625226f096f5c5da7a848fd3532f04e4796ce70aeb7687d2a2",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/handle-the-change-v1.png",
+      "sha256": "1dd7123f8cb633625226f096f5c5da7a848fd3532f04e4796ce70aeb7687d2a2",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/handle-the-change-v1.png",
+      "sha256": "1dd7123f8cb633625226f096f5c5da7a848fd3532f04e4796ce70aeb7687d2a2",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/paper-jam-v1.png",
+      "sha256": "27ce16100d34d2c9675dda83ba044413e949324e5fa2aaf5ab895142419f11b8",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/paper-jam-v1.png",
+      "sha256": "27ce16100d34d2c9675dda83ba044413e949324e5fa2aaf5ab895142419f11b8",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/paper-jam-v1.png",
+      "sha256": "27ce16100d34d2c9675dda83ba044413e949324e5fa2aaf5ab895142419f11b8",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/paper-jam-v1.png",
+      "sha256": "27ce16100d34d2c9675dda83ba044413e949324e5fa2aaf5ab895142419f11b8",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/supplier-square-v1.png",
+      "sha256": "0d539a4f1fc673b5c28622eb29aab7c124f29dc947646829cd00e839f246bd81",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/supplier-square-v1.png",
+      "sha256": "0d539a4f1fc673b5c28622eb29aab7c124f29dc947646829cd00e839f246bd81",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/supplier-square-v1.png",
+      "sha256": "0d539a4f1fc673b5c28622eb29aab7c124f29dc947646829cd00e839f246bd81",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/supplier-square-v1.png",
+      "sha256": "0d539a4f1fc673b5c28622eb29aab7c124f29dc947646829cd00e839f246bd81",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/shared-routes-v1.png",
+      "sha256": "17ac9b2b0ddbe1810eba1940080b346b7840bd97ac01c18cdf9783039e7b3a64",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/shared-routes-v1.png",
+      "sha256": "17ac9b2b0ddbe1810eba1940080b346b7840bd97ac01c18cdf9783039e7b3a64",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/shared-routes-v1.png",
+      "sha256": "17ac9b2b0ddbe1810eba1940080b346b7840bd97ac01c18cdf9783039e7b3a64",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/shared-routes-v1.png",
+      "sha256": "17ac9b2b0ddbe1810eba1940080b346b7840bd97ac01c18cdf9783039e7b3a64",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/build-tomorrow-v1.png",
+      "sha256": "f44ca426cec434334b31cadddab96a036c365f2a0492a39d935c73fe2475c14f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/build-tomorrow-v1.png",
+      "sha256": "f44ca426cec434334b31cadddab96a036c365f2a0492a39d935c73fe2475c14f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/build-tomorrow-v1.png",
+      "sha256": "f44ca426cec434334b31cadddab96a036c365f2a0492a39d935c73fe2475c14f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/build-tomorrow-v1.png",
+      "sha256": "f44ca426cec434334b31cadddab96a036c365f2a0492a39d935c73fe2475c14f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/beyond-page-one-v1.png",
+      "sha256": "783a1086fa752ca083f2239fb424ba8c014436c6a8838a647ec129fe71464f55",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/beyond-page-one-v1.png",
+      "sha256": "783a1086fa752ca083f2239fb424ba8c014436c6a8838a647ec129fe71464f55",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/beyond-page-one-v1.png",
+      "sha256": "783a1086fa752ca083f2239fb424ba8c014436c6a8838a647ec129fe71464f55",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/beyond-page-one-v1.png",
+      "sha256": "783a1086fa752ca083f2239fb424ba8c014436c6a8838a647ec129fe71464f55",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/known-references-v1.png",
+      "sha256": "dc64a854959590085d322a7d9e9f6dab1a477f6c651ad1d6271e39e058c2b0dc",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/known-references-v1.png",
+      "sha256": "dc64a854959590085d322a7d9e9f6dab1a477f6c651ad1d6271e39e058c2b0dc",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/known-references-v1.png",
+      "sha256": "dc64a854959590085d322a7d9e9f6dab1a477f6c651ad1d6271e39e058c2b0dc",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/known-references-v1.png",
+      "sha256": "dc64a854959590085d322a7d9e9f6dab1a477f6c651ad1d6271e39e058c2b0dc",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/clear-the-exception-v1.png",
+      "sha256": "54555dc7657f068e77b902f2f474baff16f344bc3b7e933bc40a07a9c2fa38a2",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/clear-the-exception-v1.png",
+      "sha256": "54555dc7657f068e77b902f2f474baff16f344bc3b7e933bc40a07a9c2fa38a2",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/clear-the-exception-v1.png",
+      "sha256": "54555dc7657f068e77b902f2f474baff16f344bc3b7e933bc40a07a9c2fa38a2",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/clear-the-exception-v1.png",
+      "sha256": "54555dc7657f068e77b902f2f474baff16f344bc3b7e933bc40a07a9c2fa38a2",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/room-for-everyone-v1.png",
+      "sha256": "6939aa6f3ed8253504639cbd8db3d3449f160029211be4d30fc3dac6ce97b3b7",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/room-for-everyone-v1.png",
+      "sha256": "6939aa6f3ed8253504639cbd8db3d3449f160029211be4d30fc3dac6ce97b3b7",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/room-for-everyone-v1.png",
+      "sha256": "6939aa6f3ed8253504639cbd8db3d3449f160029211be4d30fc3dac6ce97b3b7",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/room-for-everyone-v1.png",
+      "sha256": "6939aa6f3ed8253504639cbd8db3d3449f160029211be4d30fc3dac6ce97b3b7",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/listen-then-link-v1.png",
+      "sha256": "66d93ec13abcc1e3095c435278e7a4599ace4618724c93acdfd4ce0277f8b4d5",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/listen-then-link-v1.png",
+      "sha256": "66d93ec13abcc1e3095c435278e7a4599ace4618724c93acdfd4ce0277f8b4d5",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/listen-then-link-v1.png",
+      "sha256": "66d93ec13abcc1e3095c435278e7a4599ace4618724c93acdfd4ce0277f8b4d5",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/listen-then-link-v1.png",
+      "sha256": "66d93ec13abcc1e3095c435278e7a4599ace4618724c93acdfd4ce0277f8b4d5",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/make-room-for-tomorrow-v1.png",
+      "sha256": "83d2875d09e4c0685980c5be1e1a147f1325ab8eff44b7097f054c2e17e64296",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/make-room-for-tomorrow-v1.png",
+      "sha256": "83d2875d09e4c0685980c5be1e1a147f1325ab8eff44b7097f054c2e17e64296",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/make-room-for-tomorrow-v1.png",
+      "sha256": "83d2875d09e4c0685980c5be1e1a147f1325ab8eff44b7097f054c2e17e64296",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/make-room-for-tomorrow-v1.png",
+      "sha256": "83d2875d09e4c0685980c5be1e1a147f1325ab8eff44b7097f054c2e17e64296",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/review-the-request-v1.png",
+      "sha256": "6815b2caaf6b65230d7efc90e57fd357e72f20eb6c3978164ba03668d943d431",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/review-the-request-v1.png",
+      "sha256": "6815b2caaf6b65230d7efc90e57fd357e72f20eb6c3978164ba03668d943d431",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/review-the-request-v1.png",
+      "sha256": "6815b2caaf6b65230d7efc90e57fd357e72f20eb6c3978164ba03668d943d431",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/review-the-request-v1.png",
+      "sha256": "6815b2caaf6b65230d7efc90e57fd357e72f20eb6c3978164ba03668d943d431",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/request-to-order-v1.png",
+      "sha256": "24e38468dc0836f5cd6f189a074f3e4857628b8a613e4b2009e5ab55d05c38d9",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/request-to-order-v1.png",
+      "sha256": "24e38468dc0836f5cd6f189a074f3e4857628b8a613e4b2009e5ab55d05c38d9",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/request-to-order-v1.png",
+      "sha256": "24e38468dc0836f5cd6f189a074f3e4857628b8a613e4b2009e5ab55d05c38d9",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/request-to-order-v1.png",
+      "sha256": "24e38468dc0836f5cd6f189a074f3e4857628b8a613e4b2009e5ab55d05c38d9",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/quarter-end-weather-v1.png",
+      "sha256": "1cf77eb26a6b2347e95fc5e65e59ecd8391cefd7af1f703dcf7122e84f393f3d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/quarter-end-weather-v1.png",
+      "sha256": "1cf77eb26a6b2347e95fc5e65e59ecd8391cefd7af1f703dcf7122e84f393f3d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/quarter-end-weather-v1.png",
+      "sha256": "1cf77eb26a6b2347e95fc5e65e59ecd8391cefd7af1f703dcf7122e84f393f3d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/quarter-end-weather-v1.png",
+      "sha256": "1cf77eb26a6b2347e95fc5e65e59ecd8391cefd7af1f703dcf7122e84f393f3d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/own-the-handoff-v1.png",
+      "sha256": "d8d385fabf56624d69362f0287deb5236f081994b24dbcabe8af7e96e3bc11cd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/own-the-handoff-v1.png",
+      "sha256": "d8d385fabf56624d69362f0287deb5236f081994b24dbcabe8af7e96e3bc11cd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/own-the-handoff-v1.png",
+      "sha256": "d8d385fabf56624d69362f0287deb5236f081994b24dbcabe8af7e96e3bc11cd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/own-the-handoff-v1.png",
+      "sha256": "d8d385fabf56624d69362f0287deb5236f081994b24dbcabe8af7e96e3bc11cd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/editions/assets/coupa/bulk-02/terms-bridge-v1.png",
+      "sha256": "774f33dfce5bb1c62c3cb5ff46ff64cf8c6624b1d5d0e92feba7faaac3cca998",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/editions/assets/coupa/bulk-02/terms-bridge-v1.png",
+      "sha256": "774f33dfce5bb1c62c3cb5ff46ff64cf8c6624b1d5d0e92feba7faaac3cca998",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/editions/assets/coupa/bulk-02/terms-bridge-v1.png",
+      "sha256": "774f33dfce5bb1c62c3cb5ff46ff64cf8c6624b1d5d0e92feba7faaac3cca998",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/bulk-02/terms-bridge-v1.png",
+      "sha256": "774f33dfce5bb1c62c3cb5ff46ff64cf8c6624b1d5d0e92feba7faaac3cca998",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp",
+      "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp",
+      "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp",
+      "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp",
+      "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-village.webp",
+      "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-village.webp",
+      "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-village.webp",
+      "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-village.webp",
+      "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-developer-integration-theme.webp",
+      "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-developer-integration-theme.webp",
+      "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-developer-integration-theme.webp",
+      "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-developer-integration-theme.webp",
+      "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+      "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+      "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+      "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+      "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-team.webp",
+      "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-team.webp",
+      "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-team.webp",
+      "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-team.webp",
+      "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa.webp",
+      "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa.webp",
+      "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa.webp",
+      "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa.webp",
+      "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-inside-village-theme.webp",
+      "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-inside-village-theme.webp",
+      "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-inside-village-theme.webp",
+      "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-inside-village-theme.webp",
+      "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-versus.webp",
+      "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-versus.webp",
+      "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-versus.webp",
+      "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-versus.webp",
+      "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-team-portrait.webp",
+      "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-team-portrait.webp",
+      "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-team-portrait.webp",
+      "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-team-portrait.webp",
+      "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-product-operations-theme.webp",
+      "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-product-operations-theme.webp",
+      "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-product-operations-theme.webp",
+      "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-product-operations-theme.webp",
+      "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp",
+      "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp",
+      "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp",
+      "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp",
+      "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/production/history/source-index.json",
+      "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/production/history/source-index.json",
+      "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/production/history/index.json",
+      "sha256": "97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/production/history/index.json",
+      "sha256": "97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
+      "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
+      "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/library/route-worlds/descriptors/coupa.json",
+      "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/library/route-worlds/descriptors/coupa.json",
+      "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/library/neon-artwork/backgrounds/coupa.jpg",
+      "sha256": "e1d6aea7e2c9d2ffeb1f48e79ab82a901a981963851ed6ae381757d3fd7bf98d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/library/neon-artwork/backgrounds/coupa.jpg",
+      "sha256": "e1d6aea7e2c9d2ffeb1f48e79ab82a901a981963851ed6ae381757d3fd7bf98d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/authoring/library/neon-mosaic/coupa/preview.svg",
+      "sha256": "6a0228ff94bd2e6c9d898faeec6c27d272bc82b99dc4e9a8fa4b52fd7b7c7b8b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/authoring/library/neon-mosaic/coupa/preview.svg",
+      "sha256": "6a0228ff94bd2e6c9d898faeec6c27d272bc82b99dc4e9a8fa4b52fd7b7c7b8b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/optional/external-chapters/route-worlds-coupa/pack.json",
+      "sha256": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/route-worlds/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/optional/external-chapters/sentinel-circuit-coupa/pack.json",
+      "sha256": "0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by a publicly tracked main descriptor: authoring/library/sentinel-theme-chapters/descriptors/coupa.json"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-developer-integration.json",
+      "sha256": "1baebc02667516bf1c8aaf7cc4f0a394254e599e671f6d2f0526b341d6640ae0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-developer-integration.lessons.json",
+      "sha256": "b7518328e989823c59da74709831e86e8dca55edcc139abb4a5d14eeab475f86",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-spend-in-motion.rewards.json",
+      "sha256": "cb85acdb99639a27117a49c80337f10c0f5ae4f1dfa093a2c024c86927a6ad7e",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-inside-village.json",
+      "sha256": "584fdb801dcc747de97d01b0cd6992e20d87ae67e610218ee137403d16c36a36",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-product-operations.lessons.json",
+      "sha256": "5041d09618f4bd9cc7c424dce2b3d840973dbb7dc2358f36a545075bf1d1dadb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-source-to-pay.json",
+      "sha256": "385ef30f002cd5f2fc11e2e080d877538cd83f6862ec6c440ed23fb75eab537e",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-inside-village.lessons.json",
+      "sha256": "d9a7a65c5643a2915aa714c9640c30f14b0645ef5f65ae3d2b54b7a5ac8f1106",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-spend-in-motion.json",
+      "sha256": "571a8f1c11344300de9e715b6490daf17a1087c9742efdf87ce38566e82f308a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-product-operations.json",
+      "sha256": "c31d0285ff6b24dd3a2bce30c4b0877b457a4ae3870ee6fb8f7996c8454668d8",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-source-to-pay.rewards.json",
+      "sha256": "f81e54560992325853f030b3a926a96c6bf19d62d0d32bcc05a1394a765d0b29",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-campaigns/coupa-source-to-pay.lessons.json",
+      "sha256": "82e91fae0b85c8aae6584c89c51d8c40a06d7ebb932375a003611d5426ee6707",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-foundations/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-developers/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-culture/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-developers/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-foundations/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-culture/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-all/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-all/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-operations/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-operations/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-adventure/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-adventure/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-foundations/campaign.json",
+      "sha256": "8bdc0f2a0687c0a6f3334e2091fa267dcdc570366eacadc44ddb8d09e50d4363",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-foundations/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-developers/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-culture/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-all/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-operations/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-adventure/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-developers/campaign.json",
+      "sha256": "5c9e81b6e7cb8946a7e471bb3a1ccd9a1ac6ebe61af24f77fb6fe1b0696c6cfd",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-foundations/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-developers/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-culture/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-all/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-operations/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-adventure/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-developers/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-foundations/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-culture/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-all/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-operations/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-adventure/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-culture/campaign.json",
+      "sha256": "0995f8aff694c374eadfe2880156c1f7873650431ac436a54a254e824edc87b0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-all/campaign.json",
+      "sha256": "1e7cbceb30377bd9ffd1a8a23e07dc5954d9ccc3c2e9a151c2fb001b9029f77e",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-adventure/campaign.json",
+      "sha256": "1e7cbceb30377bd9ffd1a8a23e07dc5954d9ccc3c2e9a151c2fb001b9029f77e",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/content/company-boot/coupa-operations/campaign.json",
+      "sha256": "8bfc77fe8f32279d061197eed33bfd62663f86cd7fabf61d00b150ca4c506480",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/communities/coupa/index.html",
+      "sha256": "d580b8c4ba78c919b2140774b4d2235f653f77f11a1b95c6088a7153ca4e56bb",
+      "decision": "allow-app-archive",
+      "reason": "Entire generated public game community entry HTML reviewed; same app scripts/access verifier/community and offline links, generated build identifier differs. No private account or company data."
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/art-prompts-coupa-bulk-02.json",
+      "sha256": "55515e309d9fc90412e2ca4b2576e1e65be7d4c3e57963a74f1f1e984ff7dda6",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-all-before-discovery-rewards.json",
+      "sha256": "4d79d4b009d3496712fe6919bb02730dc6fbe4c3d7191908bf75db75a989865b",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-operations-fb207466c.json",
+      "sha256": "b00276030dd4642756c75e15120f2d415e07e85dc90b0eacf99cf0ee71574c3d",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-foundations-fb207466c.json",
+      "sha256": "e6694057707e69a8a134836d91bc1879f3555b39f6fc58622a15073454bf7432",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-all.json",
+      "sha256": "a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-foundations.json",
+      "sha256": "98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-culture-fb207466c.json",
+      "sha256": "12dbf430730aff337133b19e1140efc2c107cc18351b07048eef59c19593bcba",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-all-before-learning-bonus.json",
+      "sha256": "de8370665d5c99e953326e1861f0817afb3dfc511f0629cdec6f50c6d4b5c709",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-developers-fb207466c.json",
+      "sha256": "d4bc46ff2c873a07325b9efec577e1df854b85479f3ba10a89ceb2a0db019d9a",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-adventure-before-discovery-rewards.json",
+      "sha256": "e251352b441ac1352802030be0bd6e9e2aed6a48e38dff8eee572c1d26221902",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-foundations-before-learning-bonus.json",
+      "sha256": "0ee0079828321ec31cfc6f0683f76ec5a8e90d7065008626793e33195f6a1187",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-developers.json",
+      "sha256": "ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-all-fb207466c.json",
+      "sha256": "680c7f4fdb23619aed0627ea47444c7040a7f208104e4c2abc1a3d486adbe636",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-operations.json",
+      "sha256": "716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/retained/coupa-adventure-fb207466c.json",
+      "sha256": "ef9a0bf6562fa74ab643d9b214bf1deb1338a1694337cdd822d9cb3cd3c26937",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/flower-blue.png",
+      "sha256": "17fd8f43ad6d9c471badf9c3363d27fa646b1ec369d104fc8de4d8e006ac0a43",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/icon-192.png",
+      "sha256": "68af331acfc75aa497e7c7576fd6c1ccc7daadc4e29a871e18aa3ccfe028332f",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/game/editions/assets/coupa/icon-512.png",
+      "sha256": "360d780522b6a81f0e83be086c52e962e0dfce7f0e1d4ee4e3559eb9391cd7b0",
+      "decision": "allow-app-archive",
+      "reason": "Exact public application main blob or exact earlier reviewed app bytes"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/.xonix-build-LUSAOn/game/communities/coupa/index.html",
+      "sha256": "fa579a2262c7e8bff4995ad3bf814e70bc8031ffc4c0eacf9608262db73267d3",
+      "decision": "allow-app-archive",
+      "reason": "Entire generated public game community entry HTML reviewed; same app scripts/access verifier/community and offline links, generated build identifier differs. No private account or company data."
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/optional/external-chapters/fracture-lines-coupa/media.rlmedia",
+      "sha256": "974993c218a9b87dae250348905ea712a28b719db4b28336e665179fc4528b1f",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/fracture-theme-chapters/descriptors/coupa.json#media"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/optional/external-chapters/fracture-lines-coupa/media.rlmedia",
+      "sha256": "974993c218a9b87dae250348905ea712a28b719db4b28336e665179fc4528b1f",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/fracture-theme-chapters/descriptors/coupa.json#media"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/optional/external-chapters/fracture-lines-coupa/media.rlmedia",
+      "sha256": "974993c218a9b87dae250348905ea712a28b719db4b28336e665179fc4528b1f",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/fracture-theme-chapters/descriptors/coupa.json#media"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/optional/external-chapters/fracture-lines-coupa/media.rlmedia",
+      "sha256": "974993c218a9b87dae250348905ea712a28b719db4b28336e665179fc4528b1f",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/fracture-theme-chapters/descriptors/coupa.json#media"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/verified-expanded-assets/optional/external-chapters/countercurrent-coupa/media.rlmedia",
+      "sha256": "1edc1f00c0c27f0bab6c90a0dce4edee2cda3106a832b519db09bb63d2d940f4",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/countercurrent-chapters/descriptors/coupa.json#media"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v3-2d863dd88e8e/optional/external-chapters/countercurrent-coupa/media.rlmedia",
+      "sha256": "1edc1f00c0c27f0bab6c90a0dce4edee2cda3106a832b519db09bb63d2d940f4",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/countercurrent-chapters/descriptors/coupa.json#media"
+    },
+    {
+      "path": "fpv-temp/safe-build-archive-relocation-20261015/neon-v2-v3-expanded-treecheck-20261016-1f6007cbdb/revealline-neon-upgrade-v2-d95c31328fd5/optional/external-chapters/countercurrent-coupa/media.rlmedia",
+      "sha256": "1edc1f00c0c27f0bab6c90a0dce4edee2cda3106a832b519db09bb63d2d940f4",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/countercurrent-chapters/descriptors/coupa.json#media"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/optional/external-chapters/countercurrent-coupa/media.rlmedia",
+      "sha256": "1edc1f00c0c27f0bab6c90a0dce4edee2cda3106a832b519db09bb63d2d940f4",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/countercurrent-chapters/descriptors/coupa.json#media"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/optional/external-chapters/fracture-lines-coupa/pack.json",
+      "sha256": "d9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/fracture-theme-chapters/descriptors/coupa.json#pack"
+    },
+    {
+      "path": "fpv-temp/fpv-rates-pages-20261016.w7p0UM/site-concurrent/optional/external-chapters/countercurrent-coupa/pack.json",
+      "sha256": "625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5",
+      "decision": "allow-app-archive",
+      "reason": "Exact SHA256 referenced by main2169552a public app descriptor authoring/library/countercurrent-chapters/descriptors/coupa.json#pack"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp",
+      "bytes": 375148,
+      "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066",
+      "mtime_ns": 1791994144832389100,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "e6e23b86ac02a2f048eb37bdab5bac23406b096d",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa.webp",
+      "bytes": 389078,
+      "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1",
+      "mtime_ns": 1791994146821894700,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "d3af70fbe8ff4ee7c5f2ed4c003e7cbedd77389e",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-team-portrait.webp",
+      "bytes": 1744888,
+      "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
+      "mtime_ns": 1791994145295350300,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "69b1fbf5f943bb64733601b2482aa9c4742845b4",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-team-portrait.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp",
+      "bytes": 700570,
+      "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8",
+      "mtime_ns": 1791994145049728400,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "6184ccc12ea5fa1e81a71f5f61d0f5734f782a5c",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+      "bytes": 1669344,
+      "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
+      "mtime_ns": 1791994145932296000,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "255f01454669d6e2c22106e9d07324a13f1d1a9b",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-team.webp",
+      "bytes": 1580074,
+      "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
+      "mtime_ns": 1791994145688903800,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "2915d166bed5de1a054c8ae5bd36174e2bc0a249",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-team.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-inside-village-theme.webp",
+      "bytes": 356686,
+      "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a",
+      "mtime_ns": 1791994144523395300,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "17fe92cb4c67a4c8879de49e1188f77ad6d0eea8",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-inside-village-theme.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-versus.webp",
+      "bytes": 1620118,
+      "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
+      "mtime_ns": 1791994146293256400,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "08ffdb4699137b4f3fd487e6e7e443177a47884c",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-versus.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-village.webp",
+      "bytes": 540732,
+      "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192",
+      "mtime_ns": 1791994146463847300,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "e89226a921e703806a508a171f4e497b21facb08",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-village.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-developer-integration-theme.webp",
+      "bytes": 612326,
+      "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb",
+      "mtime_ns": 1791994144348265400,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "2ad496bf03d6788b803782bdcac61c3f96c012e9",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-developer-integration-theme.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "kind": "file",
+      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-product-operations-theme.webp",
+      "bytes": 405702,
+      "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401",
+      "mtime_ns": 1791994144716740400,
+      "mode": 420,
+      "review": [],
+      "gitBlob": "a2d5fddbf8bd50b74ebe59a60353f4e32356e636",
+      "publicMainExact": "game/ui/art/menu-scenes/coupa-product-operations-theme.webp",
+      "decision": "allow-app-archive",
+      "reason": "Exact publicly tracked application menu artwork Git blob at main2169552a"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-developer-integration.json",
+      "sha256": "1baebc02667516bf1c8aaf7cc4f0a394254e599e671f6d2f0526b341d6640ae0",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-developer-integration.lessons.json",
+      "sha256": "b7518328e989823c59da74709831e86e8dca55edcc139abb4a5d14eeab475f86",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-spend-in-motion.rewards.json",
+      "sha256": "cb85acdb99639a27117a49c80337f10c0f5ae4f1dfa093a2c024c86927a6ad7e",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-inside-village.json",
+      "sha256": "584fdb801dcc747de97d01b0cd6992e20d87ae67e610218ee137403d16c36a36",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-product-operations.lessons.json",
+      "sha256": "5041d09618f4bd9cc7c424dce2b3d840973dbb7dc2358f36a545075bf1d1dadb",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-source-to-pay.json",
+      "sha256": "385ef30f002cd5f2fc11e2e080d877538cd83f6862ec6c440ed23fb75eab537e",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-inside-village.lessons.json",
+      "sha256": "d9a7a65c5643a2915aa714c9640c30f14b0645ef5f65ae3d2b54b7a5ac8f1106",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-spend-in-motion.json",
+      "sha256": "571a8f1c11344300de9e715b6490daf17a1087c9742efdf87ce38566e82f308a",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-source-to-pay.rewards.json",
+      "sha256": "f81e54560992325853f030b3a926a96c6bf19d62d0d32bcc05a1394a765d0b29",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-product-operations.json",
+      "sha256": "c31d0285ff6b24dd3a2bce30c4b0877b457a4ae3870ee6fb8f7996c8454668d8",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-campaigns/coupa-source-to-pay.lessons.json",
+      "sha256": "82e91fae0b85c8aae6584c89c51d8c40a06d7ebb932375a003611d5426ee6707",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-foundations/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-foundations/campaign.json",
+      "sha256": "8bdc0f2a0687c0a6f3334e2091fa267dcdc570366eacadc44ddb8d09e50d4363",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-foundations/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-foundations/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-foundations/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-foundations/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-developers/campaign.json",
+      "sha256": "5c9e81b6e7cb8946a7e471bb3a1ccd9a1ac6ebe61af24f77fb6fe1b0696c6cfd",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-developers/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-developers/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-developers/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-developers/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-developers/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-culture/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-culture/campaign.json",
+      "sha256": "0995f8aff694c374eadfe2880156c1f7873650431ac436a54a254e824edc87b0",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-culture/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-culture/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-culture/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-culture/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-all/campaign.json",
+      "sha256": "1e7cbceb30377bd9ffd1a8a23e07dc5954d9ccc3c2e9a151c2fb001b9029f77e",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-all/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-all/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-all/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-all/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-all/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-operations/campaign.json",
+      "sha256": "8bfc77fe8f32279d061197eed33bfd62663f86cd7fabf61d00b150ca4c506480",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-operations/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-operations/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-operations/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-operations/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-operations/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-adventure/campaign.json",
+      "sha256": "1e7cbceb30377bd9ffd1a8a23e07dc5954d9ccc3c2e9a151c2fb001b9029f77e",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-adventure/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-adventure/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-adventure/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-adventure/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/content/company-boot/coupa-adventure/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/art-prompts-coupa-bulk-02.json",
+      "sha256": "55515e309d9fc90412e2ca4b2576e1e65be7d4c3e57963a74f1f1e984ff7dda6",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-all-before-discovery-rewards.json",
+      "sha256": "4d79d4b009d3496712fe6919bb02730dc6fbe4c3d7191908bf75db75a989865b",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-operations-fb207466c.json",
+      "sha256": "b00276030dd4642756c75e15120f2d415e07e85dc90b0eacf99cf0ee71574c3d",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-foundations-fb207466c.json",
+      "sha256": "e6694057707e69a8a134836d91bc1879f3555b39f6fc58622a15073454bf7432",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-all.json",
+      "sha256": "a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-foundations.json",
+      "sha256": "98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-developers-fb207466c.json",
+      "sha256": "d4bc46ff2c873a07325b9efec577e1df854b85479f3ba10a89ceb2a0db019d9a",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-all-before-learning-bonus.json",
+      "sha256": "de8370665d5c99e953326e1861f0817afb3dfc511f0629cdec6f50c6d4b5c709",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-foundations-before-learning-bonus.json",
+      "sha256": "0ee0079828321ec31cfc6f0683f76ec5a8e90d7065008626793e33195f6a1187",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-culture-fb207466c.json",
+      "sha256": "12dbf430730aff337133b19e1140efc2c107cc18351b07048eef59c19593bcba",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-adventure-before-discovery-rewards.json",
+      "sha256": "e251352b441ac1352802030be0bd6e9e2aed6a48e38dff8eee572c1d26221902",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-developers.json",
+      "sha256": "ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-operations.json",
+      "sha256": "716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-all-fb207466c.json",
+      "sha256": "680c7f4fdb23619aed0627ea47444c7040a7f208104e4c2abc1a3d486adbe636",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-large-worlds-20261014/intake/game/editions/retained/coupa-adventure-fb207466c.json",
+      "sha256": "ef9a0bf6562fa74ab643d9b214bf1deb1338a1694337cdd822d9cb3cd3c26937",
+      "decision": "allow-app-archive",
+      "reason": "Exact byte identity of previously reviewed public app content in exact-policy-clearance-primary-0407.json"
+    },
+    {
+      "path": "fpv-ux-20261014/actions/game/communities/coupa/index.html",
+      "sha256": "75eda383ad47b61e372d258baa1d7267b29ea134c981354697d447f95c9ed1f4",
+      "decision": "allow-app-archive",
+      "reason": "Entire 1665-byte historical game community HTML read: app styles/scripts, bilingual community status and game link only; no private company/user data."
+    },
+    {
+      "path": "fpv-ux-20261014/actions-repo/game/communities/coupa/index.html",
+      "sha256": "75eda383ad47b61e372d258baa1d7267b29ea134c981354697d447f95c9ed1f4",
+      "decision": "allow-app-archive",
+      "reason": "Entire 1665-byte historical game community HTML read: app styles/scripts, bilingual community status and game link only; no private company/user data."
+    },
+    {
+      "path": "fpv-ux-20261014/entry-repo/game/communities/coupa/index.html",
+      "sha256": "75eda383ad47b61e372d258baa1d7267b29ea134c981354697d447f95c9ed1f4",
+      "decision": "allow-app-archive",
+      "reason": "Entire 1665-byte historical game community HTML read: app styles/scripts, bilingual community status and game link only; no private company/user data."
+    },
+    {
+      "path": "fpv-ux-20261014/hud-repo/game/communities/coupa/index.html",
+      "sha256": "75eda383ad47b61e372d258baa1d7267b29ea134c981354697d447f95c9ed1f4",
+      "decision": "allow-app-archive",
+      "reason": "Entire 1665-byte historical game community HTML read: app styles/scripts, bilingual community status and game link only; no private company/user data."
+    },
+    {
+      "path": "fpv-ux-20261014/practice-repo/game/communities/coupa/index.html",
+      "sha256": "75eda383ad47b61e372d258baa1d7267b29ea134c981354697d447f95c9ed1f4",
+      "decision": "allow-app-archive",
+      "reason": "Entire 1665-byte historical game community HTML read: app styles/scripts, bilingual community status and game link only; no private company/user data."
+    }
+  ],
+  "inputs": [
+    "exact-policy-clearance-batch001.json",
+    "exact-policy-clearance-primary-0407.json",
+    "exact-policy-clearance-secondary-0424.json",
+    "exact-policy-clearance-delta-0506.json"
+  ]
+}

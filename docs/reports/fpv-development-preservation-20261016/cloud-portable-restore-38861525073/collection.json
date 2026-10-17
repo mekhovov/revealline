@@ -1,0 +1,17 @@
+{
+  "format": "FPVCloudFullPortableRestoreReceiptCollection.v1",
+  "runId": 38861525073,
+  "head": "0942916a74c5ed6821e31b7d4ee34a66e97b9456",
+  "indexSHA256": "630438ac879a40577638e5b21706fea93b637b8a34dbc70ad3266248b2d9509e",
+  "artifactId": 12029467703,
+  "artifactArchiveSHA256": "e1dd80c687b5f0c2fc92dfe9027f8eb5ff64aae201e459eb911e9b0e832181b0",
+  "receiptSHA256": "14ad3bcdf1252a60ecfae9426227251d8863e35e46e4f3705a051940aa8d26f7",
+  "jobId": 116844701879,
+  "fullJobLogBytes": 37342,
+  "fullJobLogSHA256": "d388c8989d1845eb6409d928bbd205ab4e2c3a8ca9964da4fd45712a7aab69fc",
+  "artifactEqualsAuthenticatedRuntimeLogJSON": true,
+  "actualOneShotOriginalStagingPayloadRestoreVerified": true,
+  "allVolumeInputSetFinal": false,
+  "overallDisconnectSafetyClaimed": false,
+  "scope": "Original staging122680files+26frozen reports,282links,39reviewedGit dependency files only"
+}

@@ -1,0 +1,88 @@
+{
+  "previousHead": "0942916a74c5ed6821e31b7d4ee34a66e97b9456",
+  "head": "f3e846a92ef2605fa29210cdfd685e02d99bb481",
+  "authenticatedChangedBlobReadbackMatches": true,
+  "sourceHelpersUnchangedFrom": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+  "finalIndexUnchangedSHA256": "630438ac879a40577638e5b21706fea93b637b8a34dbc70ad3266248b2d9509e",
+  "allVolumeInputSetFinal": false,
+  "files": [
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/tools-publication-increment-018.json",
+      "gitBlobSHA1": "a29776a419e085b449d94ba67c5fc9ca0d33dddd",
+      "sha256": "e499715255b02907e437614ceb94988c62f1127fae75067d3fa1bc51d42c347e",
+      "bytes": 8289
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/portable-receipt-collector-transport-negative.json",
+      "gitBlobSHA1": "bfb8ed03909b3f2a86bc169cd710a0f7a373c5e3",
+      "sha256": "4e0428bcfa4ce6924cf8c1bd7db1144ccb226a3d38baedeef143e663606168f6",
+      "bytes": 807
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-next-two-packing-preflight.json",
+      "gitBlobSHA1": "7a70cb5f38c4f5dda05c1cb9333f78276725e4c9",
+      "sha256": "17cd9c7dc19975d06343df420c35c72c199dbb173c3a747a94d434883ead0c90",
+      "bytes": 584
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-next-two-exact-clearances.json",
+      "gitBlobSHA1": "9c2b686cf411cd37b44077c291a01dcd812d87e2",
+      "sha256": "4277a5edc94db50a1caa2a629b39054c1f7656b280aae0b17767da5709bf600e",
+      "bytes": 127435
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-next-two-packing-provenance.json",
+      "gitBlobSHA1": "cf12b43a1f5c9a93071fd639ce4fa3e47d208299",
+      "sha256": "8da70b54b155e587e765c0b6f3244cc7fbde03389deb8589c90162875901c202",
+      "bytes": 1036
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-next-two-legacy-asset-readbacks.json",
+      "gitBlobSHA1": "bc33508adeffcba2367ee32968c9b53922473f13",
+      "sha256": "754475299bf006cfb1e7497fccfe359fedaa685c84855da9a069bc87655d6f00",
+      "bytes": 1134
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-four-positive-subsets-coverage-001.json",
+      "gitBlobSHA1": "dc776fb066f2bda08c70ff534cc934126e1a5584",
+      "sha256": "6d8d41ec1eb0decd0f5d663d3d2f4bd3f49e4f1689d9d2fd3f7f1fada93e89e8",
+      "bytes": 938
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/verified-cas-release-checkpoint-003.json",
+      "gitBlobSHA1": "b43d1b8b42a33f87361e2633277997f65ea77132",
+      "sha256": "5914e8fb654fb80b9c2ebe9568f29c97ab3f8a5cf917861bbcec6405523ad1d2",
+      "bytes": 5392
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-portable-restore-38861525073/collection.json",
+      "gitBlobSHA1": "a5015840cd1fe02f253833d000c7942a7637d6a0",
+      "sha256": "bd459b45905151414e5ff6ba33e8eed3026799f90053d90dc0d7f2529b09ff34",
+      "bytes": 880
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-portable-restore-38861525073/full-job.log",
+      "gitBlobSHA1": "7c1cd8b3eb2d8d92fe0a770a0849691f6eedfe2a",
+      "sha256": "d388c8989d1845eb6409d928bbd205ab4e2c3a8ca9964da4fd45712a7aab69fc",
+      "bytes": 37342
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-portable-restore-38861525073/full-portable-restore.json",
+      "gitBlobSHA1": "5286c589ded00c723c038b0e42a09dec862a0c55",
+      "sha256": "14ad3bcdf1252a60ecfae9426227251d8863e35e46e4f3705a051940aa8d26f7",
+      "bytes": 1406
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/root-review-capacity-66f2a6e.json",
+      "gitBlobSHA1": "4bfbb5bc56488576fb7ec6fb7dc317a1df737ebf",
+      "sha256": "f9026b48ee0829048c90fcbdd7a486ed7100b17c958ccc1360b0eeb516e35d05",
+      "bytes": 1073
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-next-two-parts/part-9a62daf603914c9373db31bd4231ee4cdb86e32854da16b58c4293b6182beaf8-verified.json",
+      "gitBlobSHA1": "bde9a03fd9e952e2e40a869b16295812812a1c4b",
+      "sha256": "4f2f20dd96852272d4eb3daf4589c76f6dd6123353014ca976c32515e1fe364a",
+      "bytes": 16547
+    }
+  ]
+}

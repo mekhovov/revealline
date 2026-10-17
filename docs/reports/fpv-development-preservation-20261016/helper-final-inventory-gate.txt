@@ -1,0 +1,6 @@
+test_index_reuses_verified_objects_but_holds_unreviewed_duplicate_content (test_preservation.PreservationTests.test_index_reuses_verified_objects_but_holds_unreviewed_duplicate_content) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 3.505s
+
+OK

@@ -1,0 +1,14 @@
+{
+  "format": "FPVHistoricalLinkDigestInterpretation.v1",
+  "historicalReceipt": "baseline-pathgraph-001.json",
+  "historicalReceiptSHA256": "aba3f80c457ea71ccfcd5ac72f035e9db1a07ee68d7133eec1f7ad8d63b22ea0",
+  "historicalFieldName": "pathAndLinkGraphSHA256",
+  "newFieldName": "linkDispositionsSHA256",
+  "linkDispositionsSHA256": "93e396d6b0f56998e301175a5e5a2470d2cd965bdb898e107861c592dd8441e3",
+  "hashedRecords": "Only checked link disposition records, not the complete file-node list.",
+  "allFileRecordsBinding": "Historical input-manifest SHA256 values bind their complete file records; final full index is bound separately by indexSHA256.",
+  "historicalReceiptRetainedByteIdentical": true,
+  "sourceReviewHead": "39856085fd13c77ce70bb076fe09e5a6d744143e",
+  "reportingOnlyCorrection": true,
+  "overallDisconnectSafetyClaimed": false
+}

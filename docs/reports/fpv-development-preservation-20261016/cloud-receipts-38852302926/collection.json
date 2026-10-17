@@ -1,0 +1,55 @@
+{
+  "format": "FPVCloudPartReceiptCollection.v1",
+  "runId": 38852302926,
+  "head": "38778e3cd5a942d5f56c8edf33d66fb6b1acf9eb",
+  "parts": [
+    {
+      "artifactId": 12026086513,
+      "artifactArchiveSHA256": "530fab94e2d210df65191a4248c0317c4e5204ab30b31e09a9ec45792331ad84",
+      "receipt": "part-9d76fd0a4ed90188fffac80f9790e679cc5c209bd6f12cca1e1c187d13dc6c40-verified.json",
+      "receiptSHA256": "25c0bf887f1aa5f3380e290822e0185680b75ec16d2c3bee0b2c105f0fb48696",
+      "assetId": 646140654,
+      "partSHA256": "9d76fd0a4ed90188fffac80f9790e679cc5c209bd6f12cca1e1c187d13dc6c40",
+      "objects": 3548,
+      "rawBytes": 1342711602,
+      "compressedBytes": 765913992
+    },
+    {
+      "artifactId": 12026031949,
+      "artifactArchiveSHA256": "3b220f67ccec15a32e0ab7766fade7ef320c3c632bc38037cf90082590fbc4d7",
+      "receipt": "part-9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520-verified.json",
+      "receiptSHA256": "36431382a2b12cd8f30b69f82dbd3d74b81b34d0a7a0add9986aa6b8b052325e",
+      "assetId": 646122696,
+      "partSHA256": "9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520",
+      "objects": 1493,
+      "rawBytes": 608205082,
+      "compressedBytes": 343503618
+    },
+    {
+      "artifactId": 12025762864,
+      "artifactArchiveSHA256": "167741dba83bb70301ea7792969fd784db98cebedb5e94d54742b2a6b3950aba",
+      "receipt": "part-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d-verified.json",
+      "receiptSHA256": "b2b40bb133da616b3504ff3b43f924b694811af534a908f742efa9b07d917303",
+      "assetId": 646133063,
+      "partSHA256": "ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d",
+      "objects": 11,
+      "rawBytes": 9994666,
+      "compressedBytes": 9998275
+    },
+    {
+      "artifactId": 12025129695,
+      "artifactArchiveSHA256": "288f9a5b6c81d7f2f7df804b200c77ce883542c455f968e8e851a722c2ec0b60",
+      "receipt": "part-46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93-verified.json",
+      "receiptSHA256": "e0ddf9f5c0a5691944e03b8df92bcba8fdf58aa2cda9187cb3527b685df085a7",
+      "assetId": 646093315,
+      "partSHA256": "46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93",
+      "objects": 2679,
+      "rawBytes": 1344857498,
+      "compressedBytes": 825699727
+    }
+  ],
+  "verifiedObjects": 7731,
+  "verifiedRawBytes": 3305768848,
+  "verifiedCompressedBytes": 1945115612,
+  "overallCoverageClaimed": false
+}
