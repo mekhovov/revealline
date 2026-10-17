@@ -6,11 +6,11 @@ The Chromium application comparison retains nine admissible pairs, one quality m
 
 For ten hypothetical identical matched pairs, zero sample variance and equal on/off p95 `p`, the current conservative sensitivity calculation alone gives an upper relative bound of `((p + e) / (p - e)) ** (1 + 2.263 / 3) - 1`. Application diagnostics use the observed clock step for `e`; journal envelopes account for every measured endpoint. This algebra assumes the analyzers' declared duration-error model and is not a stronger guarantee about browser privacy jitter.
 
-| Hypothetical equal-arm example | Error allowance `e` | Upper sensitivity bound, before any sample variance |
-| --- | --- | --- |
-| Application p95 6.3 ms | 0.1 ms | +5.73% |
-| Application p95 3 ms | 0.1 ms | +12.41% |
-| Journal envelope p95 3 ms, twelve endpoints | 1.2 ms | +342.13% |
+| Hypothetical equal-arm example              | Error allowance `e` | Upper sensitivity bound, before any sample variance |
+| ------------------------------------------- | ------------------- | --------------------------------------------------- |
+| Application p95 6.3 ms                      | 0.1 ms              | +5.73%                                              |
+| Application p95 3 ms                        | 0.1 ms              | +12.41%                                             |
+| Journal envelope p95 3 ms, twelve endpoints | 1.2 ms              | +342.13%                                            |
 
 These are calculations, not new browser observations. At ten pairs the equal-arm p95 must exceed approximately `71.918 × e` for this sensitivity term alone to fall below 5%. Unequal observed arms can yield different bounds; this is not a general impossibility proof. More frames do not remove this systematic allowance, and frames are not independent experimental repetitions.
 
