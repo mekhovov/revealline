@@ -514,7 +514,7 @@ test('edition runs the complete Solo host with canonical rules, settings and mis
   page.$('replay-dialog').close();
   assert.ok(page.$('settings-panel-data').textContent.includes('Earlier preview save retained'));
   page.$('shell-worlds').click();
-  await settle(() => page.$('journey-chooser').open);
+  await settle(() => page.$('journey-chooser')?.open);
   assert.deepEqual(
     [...page.$('journey-mode').options].map((option) => option.value),
     ['solo'],
@@ -1142,7 +1142,7 @@ test('same-origin installed creator campaign cannot inject missions into a selec
       fetchResponse: f.fetcher,
     });
   page.$('shell-worlds').click();
-  await settle(() => page.$('journey-chooser').open);
+  await settle(() => page.$('journey-chooser')?.open);
   assert.deepEqual(
     [...page.$('journey-collection').options].map((option) => option.value),
     ['', 'Journey'],
