@@ -482,9 +482,11 @@ async function main() {
                         'SoloHostedWorkerConfirmationPlanV1',
                       ].includes(plan.format)
                     ? 'worker-diagnostic'
-                    : plan.format === 'SoloHostedCpuProfilePlanV1'
-                      ? 'cpu-profile'
-                      : null;
+                    : plan.format === 'SoloHostedDiagnosticsPlanV1'
+                      ? 'diagnostics'
+                      : plan.format === 'SoloHostedCpuProfilePlanV1'
+                        ? 'cpu-profile'
+                        : null;
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
@@ -498,6 +500,7 @@ async function main() {
         'worker-diagnostic',
         'supplemental',
         'cpu-profile',
+        'diagnostics',
       ].includes(extension) ||
       (extension === 'offline' && Boolean(plan.offline.gameplay));
   if (extension) {
@@ -513,6 +516,7 @@ async function main() {
         'worker-diagnostic': 'validateWorkerDiagnosticPlan',
         supplemental: 'validateSupplementalPlan',
         'cpu-profile': 'validateCpuProfilePlan',
+        diagnostics: 'validateDiagnosticsPlan',
       }[extension]
     ](plan);
   }
@@ -540,9 +544,11 @@ async function main() {
                       : 'SoloHostedWorkerDiagnosticCohortV1'
                     : extension === 'supplemental'
                       ? 'SoloHostedSupplementalPreflightV1'
-                      : extension === 'cpu-profile'
-                        ? 'SoloHostedCpuProfileCohortV1'
-                        : 'SoloHostedCorrectness.v1',
+                      : extension === 'diagnostics'
+                        ? 'SoloHostedDiagnosticsCohortV1'
+                        : extension === 'cpu-profile'
+                          ? 'SoloHostedCpuProfileCohortV1'
+                          : 'SoloHostedCorrectness.v1',
     status: 'failed',
     performanceExclusion: ['sustained', 'demo-active'].includes(extension)
       ? plan.performanceExclusion
@@ -552,7 +558,9 @@ async function main() {
         ? 'scoped-raf-only-full-cost-unobserved'
         : extension === 'sustained'
           ? 'source-and-host-scoped-raw-gates-required'
-          : 'not-attempted',
+          : extension === 'diagnostics'
+            ? 'app-diagnostics-overhead-only'
+            : 'not-attempted',
     startedAt: new Date().toISOString(),
     rows: plan.rows.map((row) => ({ ...row, status: 'not-run' })),
   };
@@ -727,9 +735,11 @@ async function main() {
       moduleIdentity: await digest(browserModule),
       engines: {},
     };
-    for (const engine of ['offline', 'demo', 'demo-active', 'cpu-profile'].includes(extension)
-      ? ['chromium']
-      : ['chromium', 'webkit'])
+    for (const engine of extension === 'diagnostics'
+      ? [plan.engine]
+      : ['offline', 'demo', 'demo-active', 'cpu-profile'].includes(extension)
+        ? ['chromium']
+        : ['chromium', 'webkit'])
       report.playwright.engines[engine] = {
         executable: pw[engine].executablePath(),
         identity: await digest(pw[engine].executablePath()),
@@ -1037,6 +1047,7 @@ async function main() {
           'worker-diagnostic',
           'supplemental',
           'cpu-profile',
+          'diagnostics',
         ].includes(extension) ||
         (extension === 'offline' && Boolean(plan.offline.gameplay))
       )
@@ -1056,6 +1067,7 @@ async function main() {
             'worker-diagnostic': 'prepareWorkerDiagnosticMode',
             supplemental: 'prepareSupplementalMode',
             'cpu-profile': 'prepareCpuProfileMode',
+            diagnostics: 'prepareDiagnosticsMode',
           }[extension]
         ](context);
       context.modeState = modeState;
@@ -1124,6 +1136,7 @@ async function main() {
               'worker-diagnostic': 'runWorkerDiagnosticRow',
               supplemental: 'runSupplementalRow',
               'cpu-profile': 'runCpuProfileRow',
+              diagnostics: 'runDiagnosticsRow',
             }[extension]
           ](context, row, dir, tmp);
         } else {
@@ -1287,7 +1300,9 @@ async function main() {
         ? 'Candidate exact retained CI package; candidate-only Linux rAF work/cadence scope. Timer/MessageChannel/full application cost, observer overhead, physical devices and heat remain unqualified. Common process/resource supervisor is part of this hosted environment.'
         : extension === 'sustained'
           ? `Candidate exact retained CI package; ${baselineScope}. Hosted source/context-scoped raw timing gates only; common process/resource supervisor is part of this environment. No authentication, physical-device, GPU or thermal qualification.`
-          : `Candidate exact retained CI package; ${baselineScope}. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification.`;
+          : extension === 'diagnostics'
+            ? 'Candidate exact retained CI package; fixed matched app-diagnostics overhead only. No baseline gameplay, hitch-journal overhead, gameplay performance, physical-device, GPU or thermal qualification. Common ownership/resource supervision is included in this hosted stratum.'
+            : `Candidate exact retained CI package; ${baselineScope}. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification.`;
     const finalSpace = await statfs(output);
     assert(finalSpace.bavail * finalSpace.bsize >= GiB + 4 * MiB, 'Final evidence disk reserve');
     assert(
