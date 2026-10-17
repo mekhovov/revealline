@@ -2,7 +2,12 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { parse } from '../publishing/vendor/acorn-8.18.0.mjs';
-import { assessDarwinOwnerCase, DARWIN_OWNER_PREFLIGHT } from './solo-darwin-owner-preflight.mjs';
+import {
+  assessDarwinOwnerCase,
+  DARWIN_OWNER_PREFLIGHT,
+  observeDarwinExecSuccessor,
+  DARWIN_EXEC_OBSERVATION,
+} from './solo-darwin-owner-preflight.mjs';
 const source = 'a'.repeat(40);
 function fixture(id) {
   const spec = DARWIN_OWNER_PREFLIGHT.cases.find((row) => row.id === id);
@@ -453,4 +458,355 @@ test('prospective Cocoa condition rejects every nonpositive or mismatched prereq
     Function('needs', 'github', 'return false && (' + expression + ')')(needs(), github),
     false,
   );
+});
+
+// Actual failed34d95 row: report SHA efe0b504e7acad8fa7415e96d8f88ad7daff372b11839ceec014e9dd3f16dba6.
+function ambiguousLauncher() {
+  const { command } = fixture('leader');
+  const row = {
+    pid: 3615,
+    ppid: 1,
+    pgid: 1,
+    birth: '00000000000000003615',
+    state: 'R',
+    rss: 0,
+    argv: '/usr/libexec/xpcproxy',
+    argvCodeUnits: 21,
+    argvTruncated: false,
+    ownerTagged: false,
+    inspectionIncomplete: true,
+    identityKind: 'private-unique-id-uint64',
+    euid: 0,
+    ruid: 0,
+    parentUniqueId: '1',
+    version: 7532,
+    pathInspection: 'complete',
+    rssInspection: 'unavailable',
+    ownerTagInspection: 'unavailable',
+  };
+  return {
+    ...command,
+    status: 'failed',
+    firstAmbiguousInventory: {
+      format: 'SoloFirstAmbiguousInventoryV1',
+      ambiguousCount: 1,
+      retainedCount: 1,
+      additionalRowsOmitted: 0,
+      row,
+    },
+    ambiguous: [row],
+  };
+}
+async function execObservation(rows, change = () => {}) {
+  const command = ambiguousLauncher(),
+    original = structuredClone(command);
+  let calls = 0,
+    clock = 100;
+  const waited = [];
+  const options = {
+    inventory: () => {
+      calls++;
+      const next = rows[Math.min(calls - 1, rows.length - 1)];
+      return new Map(next ? [[next.pid, next]] : []);
+    },
+    preflightDeadline: 240000,
+    now: () => clock,
+    wait: async (ms) => {
+      waited.push(ms);
+      clock += ms;
+    },
+  };
+  change({
+    command,
+    options,
+    advance: (ms) => {
+      clock += ms;
+    },
+  });
+  const expected = structuredClone(command);
+  const result = await observeDarwinExecSuccessor(command, options);
+  assert.deepEqual(command, expected, 'The owner record is never rewritten');
+  assert.equal(result.ownershipQualification, false);
+  assert.equal(result.originalVerdictChanged, false);
+  assert(result.records.length <= 4 && Buffer.byteLength(JSON.stringify(result)) <= 16384);
+  return { result, calls, waited, original };
+}
+const successor = (fields = {}) => ({
+  ...ambiguousLauncher().firstAmbiguousInventory.row,
+  ownerTagInspection: 'unobserved',
+  ownerTagged: false,
+  ...fields,
+});
+test('exec successor evidence joins only the actual same lifetime and never repairs the failed owner', async () => {
+  const a = successor({
+    version: 7533,
+    argv: '/usr/libexec/other-service',
+    rssInspection: 'complete',
+    rss: 4096,
+    inspectionIncomplete: false,
+    euid: 501,
+    ruid: 501,
+    ppid: 10,
+    parentUniqueId: '10',
+    pgid: 3615,
+  });
+  const { result, calls } = await execObservation([a]);
+  assert.equal(result.status, 'exec-successor-observed');
+  assert.equal(calls, 1);
+  assert.equal(result.records[0].row.rss, null);
+  assert.equal(result.records[0].row.ownerTagged, null);
+  assert.equal(result.records[1].row.rss, 4096);
+  assert.equal(result.records[1].row.ownerTagged, null);
+  assert.equal(result.records[1].row.euid, 501);
+  const f = fixture('leader'),
+    failed = ambiguousLauncher();
+  const before = assessDarwinOwnerCase('leader', failed, f.observations, source);
+  failed.execSuccessorObservation = result;
+  assert.deepEqual(assessDarwinOwnerCase('leader', failed, f.observations, source), before);
+  assert.equal(before.status, 'failed');
+  const webkit = await execObservation([
+    successor({
+      version: 7533,
+      argv: '/System/Library/Frameworks/WebKit.framework/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent',
+    }),
+  ]);
+  assert.equal(webkit.result.status, 'exec-successor-observed');
+  assert.equal(webkit.result.ownershipQualification, false);
+});
+test('unchanged launcher and same-path exec exhaust only the declared three-read budget', async () => {
+  for (const [row, reason] of [
+    [successor(), 'unchanged-launcher'],
+    [successor({ version: 7533 }), 'same-path-exec-observed'],
+  ]) {
+    const { result, calls, waited } = await execObservation([row]);
+    assert.equal(result.status, 'unresolved');
+    assert.equal(result.reason, reason);
+    assert.equal(calls, 3);
+    assert.deepEqual(waited, [250, 250]);
+    assert.equal(result.records.length, 4);
+    assert.equal(result.elapsedMs, 500);
+  }
+});
+test('disappearance, PID reuse, zombie and inconsistent exec identity never count as a successor', async () => {
+  for (const [row, reason] of [
+    [null, 'disappeared-before-identification'],
+    [successor({ birth: '00000000000000009999', version: 7533, argv: '/different' }), 'pid-reused'],
+    [
+      successor({
+        state: 'Z',
+        pathInspection: 'unobserved',
+        rssInspection: 'unobserved',
+        argv: '',
+        rss: 0,
+      }),
+      'exited-before-identification',
+    ],
+    [successor({ version: 7531 }), 'inconsistent-exec-identity'],
+    [successor({ argv: '/changed-without-exec' }), 'inconsistent-exec-identity'],
+  ]) {
+    const { result, calls } = await execObservation([row]);
+    assert.equal(result.status, 'unresolved');
+    assert.equal(result.reason, reason);
+    assert.equal(calls, 1);
+  }
+});
+test('unavailable detail remains explicit and a later bounded complete exec may be observed', async () => {
+  const unavailable = successor({ version: 7533, argv: 'fallback', pathInspection: 'unavailable' });
+  const a = await execObservation([unavailable]);
+  assert.equal(a.result.status, 'unresolved');
+  assert.equal(a.result.reason, 'path-unavailable');
+  const b = await execObservation([
+    unavailable,
+    successor({ version: 7533, argv: '/new-executable' }),
+  ]);
+  assert.equal(b.result.status, 'exec-successor-observed');
+  assert.equal(b.calls, 2);
+});
+test('missing cleanup or a nonexact initial launcher withholds all additional reads', async () => {
+  for (const mutate of [
+    (c) => (c.status = 'closed'),
+    (c) => (c.cleanupUnconfirmed = true),
+    (c) => c.survivors.push({ pid: 1 }),
+    (c) => delete c.firstAmbiguousInventory,
+    (c) => (c.processInventory.format = 'SoloDarwinProcessInventoryV1'),
+    (c) => (c.processInventory.platform = 'linux'),
+    (c) => (c.firstAmbiguousInventory.ambiguousCount = 0),
+    (c) => c.firstAmbiguousInventory.additionalRowsOmitted++,
+    (c) => (c.firstAmbiguousInventory.row.argv = '/tmp/xpcproxy'),
+    (c) => (c.firstAmbiguousInventory.row.argvTruncated = true),
+    (c) => c.firstAmbiguousInventory.row.argvCodeUnits++,
+    (c) => (c.firstAmbiguousInventory.row.pathInspection = 'unavailable'),
+    (c) => (c.firstAmbiguousInventory.row.euid = 501),
+    (c) => (c.firstAmbiguousInventory.row.parentUniqueId = '2'),
+    (c) => (c.firstAmbiguousInventory.row.birth = '00000000000000000000'),
+  ]) {
+    const { result, calls } = await execObservation([], ({ command }) => mutate(command));
+    assert.equal(result.status, 'withheld');
+    assert.equal(calls, 0);
+  }
+});
+test('private owner tokens, malformed rows and oversized inventory cannot become a successor', async () => {
+  for (const row of [
+    successor({ ownerTagInspection: 'absent' }),
+    successor({ ownerTagged: true }),
+    successor({ birth: '0' }),
+    successor({ version: NaN }),
+    successor({ rss: Infinity }),
+    successor({ argv: '/' + 'x'.repeat(1024), version: 7533 }),
+    successor({ parentUniqueId: '18446744073709551616' }),
+  ]) {
+    const { result, calls } = await execObservation([row]);
+    assert.equal(result.status, 'unresolved');
+    assert.equal(result.reason, 'observation-error');
+    assert.equal(calls, 1);
+  }
+  for (const inventory of [
+    () => ({}),
+    () => Promise.reject(new Error('unexpected async provider')),
+    () => new Map(Array.from({ length: 16384 }, (_, i) => [i, {}])),
+  ]) {
+    const { result } = await execObservation([], ({ options }) => (options.inventory = inventory));
+    assert.equal(result.reason, 'observation-error');
+  }
+});
+test('one nonrenewing deadline rejects before native work and after a late return', async () => {
+  const initial = await execObservation([], ({ options }) => (options.preflightDeadline = 10099));
+  assert.equal(initial.calls, 0);
+  assert.equal(initial.result.reason, 'insufficient-preflight-budget');
+  const expired = await execObservation([], ({ options }) => {
+    let n = 0;
+    options.now = () => (n++ ? 10000 : 0);
+  });
+  assert.equal(expired.calls, 0);
+  assert.equal(expired.result.reason, 'observation-error');
+  const late = await execObservation(
+    [successor({ version: 7533, argv: '/late' })],
+    ({ options, advance }) => {
+      const original = options.inventory;
+      options.inventory = () => {
+        const r = original();
+        advance(10000);
+        return r;
+      };
+    },
+  );
+  assert.equal(late.calls, 1);
+  assert.equal(late.result.status, 'unresolved');
+  assert.equal(late.result.reason, 'observation-error');
+  assert.equal(late.result.records.length, 1);
+  const lateWait = await execObservation([successor()], ({ options, advance }) => {
+    options.wait = async () => advance(10000);
+  });
+  assert.equal(lateWait.calls, 1);
+  assert.equal(lateWait.result.reason, 'observation-error');
+  const slow = await execObservation([successor()], ({ options, advance }) => {
+    const original = options.inventory;
+    options.inventory = () => {
+      const r = original();
+      advance(3000);
+      return r;
+    };
+  });
+  assert.equal(slow.calls, 3);
+  assert.equal(slow.result.elapsedMs, 9500);
+  assert.equal(slow.result.status, 'unresolved');
+});
+test('read errors and invalid clocks remain bounded truthful observation failures', async () => {
+  for (const fault of [
+    ({ options }) =>
+      (options.inventory = () => {
+        throw new Error('denied');
+      }),
+    ({ options }) => (options.now = () => NaN),
+    ({ options }) => (options.now = () => Infinity),
+    ({ options }) => {
+      let n = 0;
+      options.now = () => (n++ ? 99 : 100);
+    },
+    ({ options }) => (options.preflightDeadline = Infinity),
+    ({ options }) =>
+      (options.wait = async () => {
+        throw new Error('wait failed');
+      }),
+  ]) {
+    const { result } = await execObservation([successor()], fault);
+    assert.equal(result.status, 'unresolved');
+    assert.equal(result.reason, 'observation-error');
+  }
+});
+test('actual preflight invokes the diagnostic only after the owned case and preserves normal mode', async () => {
+  const text = await readFile(
+    new URL('./solo-darwin-owner-preflight.mjs', import.meta.url),
+    'utf8',
+  );
+  const ast = parse(text, { sourceType: 'module', ecmaVersion: 'latest' });
+  const run = ast.body.find(
+    (n) =>
+      n.type === 'ExportNamedDeclaration' && n.declaration?.id?.name === 'runDarwinOwnerPreflight',
+  ).declaration;
+  const walk = (node, result = []) => {
+    if (!node || typeof node !== 'object') return result;
+    if (node.type) result.push(node);
+    for (const [key, value] of Object.entries(node))
+      if (!['start', 'end'].includes(key))
+        if (Array.isArray(value)) value.forEach((v) => walk(v, result));
+        else if (value && typeof value === 'object') walk(value, result);
+    return result;
+  };
+  const nodes = walk(run),
+    hook = nodes.find(
+      (n) =>
+        n.type === 'IfStatement' &&
+        text
+          .slice(n.start, n.end)
+          .startsWith("if (observeExecSuccessor && row.status === 'failed')"),
+    );
+  assert(hook);
+  const code = text.slice(hook.start, hook.end);
+  const execute = new Function(
+    'observeExecSuccessor',
+    'row',
+    'diagnosticInventory',
+    'start',
+    'DARWIN_OWNER_PREFLIGHT',
+    'observeDarwinExecSuccessor',
+    `return (async()=>{${code}})()`,
+  );
+  let called = 0;
+  const probe = async (command, options) => {
+    called++;
+    assert.equal(command, failed.command);
+    assert.equal(options.preflightDeadline, 240100);
+    assert.deepEqual(options.inventory(), new Map());
+    return { status: 'exec-successor-observed' };
+  };
+  const failed = { status: 'failed', command: { actual: true }, assessment: { status: 'failed' } };
+  await execute(false, failed, {}, 100, DARWIN_OWNER_PREFLIGHT, probe);
+  assert.equal(called, 0);
+  assert(!failed.execSuccessorObservation);
+  await execute(true, { status: 'passed' }, {}, 100, DARWIN_OWNER_PREFLIGHT, probe);
+  assert.equal(called, 0);
+  await execute(
+    true,
+    failed,
+    {
+      all: (...args) => {
+        assert.deepEqual(args, []);
+        return new Map();
+      },
+    },
+    100,
+    DARWIN_OWNER_PREFLIGHT,
+    probe,
+  );
+  assert.equal(called, 1);
+  assert.equal(failed.status, 'failed');
+  assert.deepEqual(failed.assessment, { status: 'failed' });
+  const owned = nodes.find(
+    (n) => n.type === 'AwaitExpression' && n.argument?.callee?.name === 'ownedCommand',
+  );
+  assert(owned.end < hook.start);
+  assert(text.includes("if (mode === 'run' || mode === 'run-exec-observation')"));
+  assert(text.includes("observeExecSuccessor: mode === 'run-exec-observation'"));
+  assert.equal(DARWIN_EXEC_OBSERVATION.maximumElapsedMs, 10000);
 });

@@ -8,6 +8,8 @@ import { fileURLToPath } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 import {
   admitDarwinBuildReceipt,
+  createDarwinProcessInventory,
+  DARWIN_INVENTORY_LIMITS,
   DARWIN_INVENTORY_FORMAT,
   DARWIN_IDENTITY_KIND,
 } from './solo-darwin-process-inventory.mjs';
@@ -31,6 +33,218 @@ const here = dirname(fileURLToPath(import.meta.url)),
   root = resolve(here, '..');
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const encode = (value) => JSON.stringify(value, null, 2) + '\n';
+export const DARWIN_EXEC_OBSERVATION = Object.freeze({
+  format: 'SoloDarwinExecSuccessorObservationV1',
+  maximumSnapshots: 3,
+  maximumElapsedMs: 10000,
+  maximumRecords: 4,
+  maximumBytes: 16 * 1024,
+  intervalMs: 250,
+});
+// Evidence after owned cleanup only. This never feeds owner classification,
+// signalling, case assessment or admission of the remaining native cases.
+export async function observeDarwinExecSuccessor(
+  command,
+  { inventory, preflightDeadline, now = () => performance.now(), wait = delay },
+) {
+  const limit = DARWIN_EXEC_OBSERVATION;
+  const result = {
+    format: limit.format,
+    status: 'withheld',
+    reason: 'ineligible-first-ambiguity',
+    snapshots: 0,
+    records: [],
+    ownershipQualification: false,
+    originalVerdictChanged: false,
+  };
+  const first = command?.firstAmbiguousInventory,
+    initial = first?.row;
+  if (
+    command?.status !== 'failed' ||
+    command.cleanupUnconfirmed ||
+    !Array.isArray(command.survivors) ||
+    command.survivors.length ||
+    command.processInventory?.platform !== 'darwin' ||
+    command.processInventory?.format !== DARWIN_INVENTORY_FORMAT ||
+    command.processInventory?.identityKind !== DARWIN_IDENTITY_KIND ||
+    first?.format !== 'SoloFirstAmbiguousInventoryV1' ||
+    !Number.isSafeInteger(first.ambiguousCount) ||
+    first.ambiguousCount < 1 ||
+    first.retainedCount !== 1 ||
+    first.additionalRowsOmitted !== first.ambiguousCount - 1 ||
+    !initial ||
+    initial.identityKind !== DARWIN_IDENTITY_KIND ||
+    !Number.isSafeInteger(initial.pid) ||
+    initial.pid <= 0 ||
+    initial.pid > 0x7fffffff ||
+    !/^\d{20}$/.test(initial.birth ?? '') ||
+    BigInt(initial.birth) === 0n ||
+    BigInt(initial.birth) > (1n << 64n) - 1n ||
+    !Number.isSafeInteger(initial.version) ||
+    initial.version < 0 ||
+    initial.version > 0x7fffffff ||
+    initial.state !== 'R' ||
+    initial.euid !== 0 ||
+    initial.ruid !== 0 ||
+    initial.ppid !== 1 ||
+    initial.pgid !== 1 ||
+    initial.parentUniqueId !== '1' ||
+    initial.pathInspection !== 'complete' ||
+    initial.argv !== '/usr/libexec/xpcproxy' ||
+    initial.argvTruncated !== false ||
+    initial.argvCodeUnits !== initial.argv.length
+  )
+    return result;
+  let start, previous, deadline;
+  const clock = () => {
+    const value = now();
+    assert(
+      Number.isFinite(value) && value >= 0 && (previous === undefined || value >= previous),
+      'Invalid exec-observation clock',
+    );
+    previous = value;
+    return value;
+  };
+  const boundedRow = (row) => {
+    assert(row && Number.isSafeInteger(row.pid) && row.pid === initial.pid);
+    assert(row.identityKind === DARWIN_IDENTITY_KIND && /^\d{20}$/.test(row.birth ?? ''));
+    assert(BigInt(row.birth) > 0n && BigInt(row.birth) <= (1n << 64n) - 1n);
+    assert(Number.isSafeInteger(row.version) && row.version >= 0 && row.version <= 0x7fffffff);
+    assert(['R', 'Z'].includes(row.state));
+    assert(typeof row.argv === 'string' && row.argv.length <= 1024 && !row.argv.includes('\0'));
+    assert(['unobserved', 'complete', 'unavailable'].includes(row.pathInspection));
+    assert(['unobserved', 'complete', 'unavailable'].includes(row.rssInspection));
+    assert(['unobserved', 'absent', 'present', 'unavailable'].includes(row.ownerTagInspection));
+    assert(typeof row.ownerTagged === 'boolean' && typeof row.inspectionIncomplete === 'boolean');
+    for (const key of ['ppid', 'pgid', 'euid', 'ruid'])
+      assert(Number.isSafeInteger(row[key]) && row[key] >= 0 && row[key] <= 0xffffffff);
+    assert(
+      /^\d{1,20}$/.test(row.parentUniqueId ?? '') && BigInt(row.parentUniqueId) <= (1n << 64n) - 1n,
+    );
+    assert(Number.isSafeInteger(row.rss) && row.rss >= 0);
+    if (row.pathInspection === 'complete') assert(row.argv.startsWith('/'));
+    return {
+      pid: row.pid,
+      birth: row.birth,
+      version: row.version,
+      state: row.state,
+      executablePath: row.argv,
+      pathInspection: row.pathInspection,
+      ppid: row.ppid,
+      pgid: row.pgid,
+      parentUniqueId: row.parentUniqueId,
+      euid: row.euid,
+      ruid: row.ruid,
+      rss: row.rssInspection === 'complete' ? row.rss : null,
+      rssInspection: row.rssInspection,
+      ownerTagged:
+        row.ownerTagInspection === 'present'
+          ? true
+          : row.ownerTagInspection === 'absent'
+            ? false
+            : null,
+      ownerTagInspection: row.ownerTagInspection,
+      inspectionIncomplete: row.inspectionIncomplete,
+    };
+  };
+  const append = (record) => {
+    assert(result.records.length < limit.maximumRecords, 'Exec-observation record cap');
+    assert(
+      Buffer.byteLength(encode({ ...result, records: [...result.records, record] })) + 512 <=
+        limit.maximumBytes,
+      'Exec-observation byte cap',
+    );
+    result.records.push(record);
+  };
+  try {
+    start = clock();
+    assert(Number.isFinite(preflightDeadline) && preflightDeadline >= 0, 'Preflight deadline');
+    append({ kind: 'original-latch', elapsedMs: 0, row: boundedRow(initial) });
+    if (preflightDeadline - start < limit.maximumElapsedMs) {
+      result.reason = 'insufficient-preflight-budget';
+      return result;
+    }
+    deadline = start + limit.maximumElapsedMs;
+    result.status = 'unresolved';
+    result.reason = 'unchanged-launcher';
+    for (let i = 0; i < limit.maximumSnapshots; i++) {
+      if (i) {
+        assert(
+          clock() + limit.intervalMs + DARWIN_INVENTORY_LIMITS.timeoutMs <= deadline,
+          'Exec-observation deadline',
+        );
+        await wait(limit.intervalMs);
+      }
+      assert(clock() + DARWIN_INVENTORY_LIMITS.timeoutMs <= deadline, 'Exec-observation deadline');
+      result.snapshots++;
+      const all = inventory(); // Existing provider is synchronous, pinned and capped at 3 seconds.
+      if (typeof all?.then === 'function') {
+        // Do not leave an injected asynchronous rejection unhandled. The actual
+        // provider is synchronous; this cannot extend its deadline or gain credit.
+        Promise.resolve(all).catch(() => {});
+        assert.fail('Exec-observation inventory must be synchronous');
+      }
+      const at = clock();
+      assert(at < deadline, 'Exec-observation late inventory return');
+      assert(
+        all instanceof Map && all.size < DARWIN_INVENTORY_LIMITS.maximumProcesses,
+        'Invalid exec-observation inventory',
+      );
+      const row = all.get(initial.pid);
+      if (!row) {
+        append({ kind: 'absent', elapsedMs: at - start });
+        result.reason = 'disappeared-before-identification';
+        break;
+      }
+      assert(
+        row.ownerTagInspection === 'unobserved' && row.ownerTagged === false,
+        'Diagnostic inventory must not claim a private owner token',
+      );
+      const retained = boundedRow(row);
+      append({ kind: 'snapshot', elapsedMs: at - start, row: retained });
+      if (row.birth !== initial.birth) {
+        result.reason = 'pid-reused';
+        break;
+      }
+      if (row.state === 'Z') {
+        result.reason = 'exited-before-identification';
+        break;
+      }
+      if (
+        row.version < initial.version ||
+        (row.version === initial.version &&
+          row.pathInspection === 'complete' &&
+          row.argv !== initial.argv)
+      ) {
+        result.reason = 'inconsistent-exec-identity';
+        break;
+      }
+      if (
+        row.pathInspection === 'complete' &&
+        row.version > initial.version &&
+        row.argv !== initial.argv
+      ) {
+        result.status = 'exec-successor-observed';
+        result.reason = 'same-lifetime-new-kernel-executable';
+        break;
+      }
+      result.reason =
+        row.pathInspection !== 'complete'
+          ? 'path-unavailable'
+          : row.version > initial.version
+            ? 'same-path-exec-observed'
+            : 'unchanged-launcher';
+    }
+  } catch (error) {
+    result.status = 'unresolved';
+    result.reason = 'observation-error';
+    result.failure = String(error?.message ?? error).slice(0, 256);
+  } finally {
+    result.elapsedMs =
+      Number.isFinite(start) && Number.isFinite(previous) ? previous - start : null;
+  }
+  return result;
+}
 async function save(path, value) {
   const text = encode(value);
   assert(Buffer.byteLength(text) <= DARWIN_OWNER_PREFLIGHT.maximumReportBytes);
@@ -216,7 +430,8 @@ async function child(role, out, source) {
   } else await delay(role === 'leader' ? 1000 : 3000);
   await save(join(out, role + '.json'), { ...record, completed: true, exitCode: 0 });
 }
-export async function runDarwinOwnerPreflight(out) {
+export async function runDarwinOwnerPreflight(out, { observeExecSuccessor = false } = {}) {
+  assert.equal(typeof observeExecSuccessor, 'boolean');
   hosted();
   assert.equal(resolve(out), out);
   await mkdir(out);
@@ -248,6 +463,10 @@ export async function runDarwinOwnerPreflight(out) {
   const start = performance.now();
   try {
     const build = admitDarwinBuildReceipt(process.env, source);
+    const diagnosticInventory = observeExecSuccessor
+      ? createDarwinProcessInventory(process.env)
+      : null;
+    if (observeExecSuccessor) report.execSuccessorProtocol = DARWIN_EXEC_OBSERVATION.format;
     await writeFile(join(out, 'inventory-build.json'), build.bytes, { flag: 'wx' });
     report.sources = [];
     for (const name of [
@@ -328,6 +547,11 @@ export async function runDarwinOwnerPreflight(out) {
       } catch (error) {
         row.failure = String(error?.stack ?? error).slice(0, 4096);
       }
+      if (observeExecSuccessor && row.status === 'failed')
+        row.execSuccessorObservation = await observeDarwinExecSuccessor(row.command, {
+          inventory: () => diagnosticInventory.all(),
+          preflightDeadline: start + DARWIN_OWNER_PREFLIGHT.maximumElapsedMs,
+        });
     }
     await inspect();
     report.status =
@@ -349,9 +573,11 @@ export async function runDarwinOwnerPreflight(out) {
 }
 if (process.argv[1] && resolve(process.argv[1]) === script) {
   const [mode, ...args] = process.argv.slice(2);
-  if (mode === 'run') {
+  if (mode === 'run' || mode === 'run-exec-observation') {
     assert.equal(args.length, 1);
-    const r = await runDarwinOwnerPreflight(resolve(args[0]));
+    const r = await runDarwinOwnerPreflight(resolve(args[0]), {
+      observeExecSuccessor: mode === 'run-exec-observation',
+    });
     if (r.status !== 'passed') process.exitCode = 1;
   } else {
     assert.equal(mode, 'child');
