@@ -7,6 +7,7 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
+import { canvasPresentation } from '../presentation/runtime.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 const microtasks = () => new Promise((resolve) => setImmediate(resolve));
@@ -119,8 +120,65 @@ async function fixture(t) {
     assert.equal(page.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   }
-  return { page, run, checkpoint, prepares, prepared, invalidatePreparedStart, running };
+  async function invalidatePreparedPresentation() {
+    page.$('start-button').click();
+    await prepared(1);
+    const first = prepares[0];
+    const compiled = JSON.parse(
+      await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url)),
+    );
+    // Apply the production compiled canvas presentation at the controlled late
+    // boundary. The inert host keeps image drawing at its established fallback.
+    painter.setPresentation({ canvas: canvasPresentation(compiled.resolved), image: () => null });
+    assert(painter.paintRevision > first.paintRevision);
+    page.frame(0, { dispatchRender: false });
+    page.submitRender();
+    await prepared(2);
+    assert.equal(prepares[1].run, first.run);
+    assert.equal(prepares[1].appearance, first.appearance);
+    assert.equal(prepares[1].generation, first.generation);
+    assert(prepares[1].paintRevision > first.paintRevision);
+  }
+  return {
+    page,
+    run,
+    checkpoint,
+    prepares,
+    prepared,
+    invalidatePreparedStart,
+    invalidatePreparedPresentation,
+    running,
+  };
 }
+
+test('a late presentation acceptance during Start is prepared again before fresh visible submission', async (t) => {
+  const host = await fixture(t);
+  await host.invalidatePreparedPresentation();
+  await host.running();
+  assert.deepEqual(host.page.errors, []);
+});
+
+test('blur during late-presentation preparation still requires explicit fresh Start', async (t) => {
+  const host = await fixture(t);
+  const { page, run, checkpoint } = host;
+  await host.invalidatePreparedPresentation();
+  page.doc.focused = false;
+  page.win.emit('blur');
+  await microtasks();
+  page.submitRender();
+  page.doc.focused = true;
+  page.win.emit('focus');
+  page.frame(1000);
+  await microtasks();
+  assert.notEqual(page.doc.body.dataset.flightState, 'running');
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.equal(page.win.RevealLineSoloPerformance.export().failures.count, 0);
+  const next = host.prepares.length + 1;
+  page.$('start-button').click();
+  await host.prepared(next);
+  await host.running();
+  assert.deepEqual(page.errors, []);
+});
 
 test('a theme refresh during Start is prepared again and needs a fresh visible submission', async (t) => {
   const host = await fixture(t);
