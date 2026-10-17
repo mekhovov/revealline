@@ -15,6 +15,7 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { ACTOR_STYLE_PREFERENCES_KEY } from '../actor-style-preferences.mjs';
 import { preparePack, emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 // Retain the existing PNG boundary and fully decode actual JPEG pack originals.
 // Neither adapter grants appearance authority or substitutes source artwork.
@@ -386,7 +387,7 @@ test('Journey v6 Continue validates its exact source and retains FPV after the m
       page.$('overlay-brief').click();
       page.$('shell-gallery').click();
       page.$('collection-records').click();
-      page.doc.querySelector('button[data-library-panel="saves"]').click();
+      await activateHostAction(page.doc.querySelector('button[data-library-panel="saves"]'));
       page.$('save-file').files = [
         new Blob([JSON.stringify(original)], { type: 'application/json' }),
       ];
@@ -397,7 +398,7 @@ test('Journey v6 Continue validates its exact source and retains FPV after the m
       page.$('overlay-brief').click();
       page.$('shell-gallery').click();
       page.$('collection-records').click();
-      page.doc.querySelector('button[data-library-panel="saves"]').click();
+      await activateHostAction(page.doc.querySelector('button[data-library-panel="saves"]'));
       const raw = page.storage.getItem(journeyKey),
         forged = structuredClone(original);
       nativeCaptureSession(forged).actorAppearancePin.presentation.sha256 = 'e'.repeat(64);
@@ -522,8 +523,16 @@ for (const entryPoint of ['selector', 'cold Classic setup'])
     const indexRequests = page.requests.filter((url) =>
       url.includes('mission-library-index.json'),
     ).length;
-    card.click();
+    await activateHostAction(card);
+    page.frame(0);
+    assert.equal(page.$('journey-chooser').open, false);
+    assert.equal(page.rendered.run.levelId, levelId);
+    assert.equal(page.rendered.run.tick, 0);
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.doc.body.dataset.flightState, 'briefing');
+    // Mission selection prepares the named briefing; the visible Deploy action starts it.
     try {
+      await activateHostAction(page.$('start-button'));
       await settle(() => {
         page.frame(0);
         return (
