@@ -14,15 +14,50 @@ export const HITCH_LIMITS = Object.freeze({
 
 export function qualificationHitchJournalOptions(flags, scenario, scenarioBytes) {
   const preparation = flags.filter((flag) => flag.startsWith('--hitch-journal-preparation'));
+  const activeDocument = flags.filter((flag) => flag.startsWith('--hitch-journal-active-document'));
   const selected = flags.filter(
-    (flag) => flag.startsWith('--hitch-journal') && !flag.startsWith('--hitch-journal-preparation'),
+    (flag) =>
+      flag.startsWith('--hitch-journal') &&
+      !flag.startsWith('--hitch-journal-preparation') &&
+      !flag.startsWith('--hitch-journal-active-document'),
+  );
+  assert(!activeDocument.length || selected.length, 'Active document policy requires the journal');
+  assert(
+    !activeDocument.length || !preparation.length,
+    'Active and preparation policies are exclusive',
   );
   assert(!preparation.length || selected.length, 'Preparation policy requires the journal');
   if (!selected.length) return null;
   assert.deepEqual(selected, ['--hitch-journal'], 'One exact --hitch-journal flag required');
   assert(flags.includes('--work-probe'), 'Hitch journal requires the work probe');
   assert(scenario.timeoutMs <= HITCH_LIMITS.durationMs, 'Hitch journal forty-minute bound');
+  if (activeDocument.length) {
+    assert.deepEqual(activeDocument, ['--hitch-journal-active-document=first-before-reload-v1']);
+    assert.equal(
+      createHash('sha256').update(scenarioBytes).digest('hex'),
+      '5ffad85e4dc752ea3e8bcf236f88e65c09875d58ac339c096890c0b6f2133150',
+    );
+    assert.deepEqual(scenario, JSON.parse(scenarioBytes), 'Active document recipe bytes changed');
+    assert.equal(scenario.id, 'continuous-twenty-nine-minute-public-saved-reload');
+    assert.equal(scenario.replayIdentity, 'exact-public-bytes-pair');
+    assert.equal(scenario.actions[8].type, 'reload');
+    return { ...HITCH_LIMITS, activeDocumentPolicy: 'first-before-reload-v1' };
+  }
   if (preparation.length) {
+    if (preparation[0] === '--hitch-journal-preparation=first-return-retry-anchored-v1') {
+      assert.deepEqual(preparation, ['--hitch-journal-preparation=first-return-retry-anchored-v1']);
+      assert.equal(
+        createHash('sha256').update(scenarioBytes).digest('hex'),
+        '77458b3992e1f40b565bd57912bdc2b4e79ddadb8ce07b617456e220853fe9d1',
+      );
+      assert.deepEqual(scenario, JSON.parse(scenarioBytes), 'Preparation recipe bytes changed');
+      assert.equal(scenario.id, 'twenty-retries-first-return-anchored-v1');
+      assert.equal(scenario.entryPath, 'playground/');
+      assert.equal(scenario.readySelector, '#import-file');
+      assert.equal(scenario.actions[4].type, 'follow');
+      assert.equal(scenario.actions[4].selector, '#open-preview');
+      return { ...HITCH_LIMITS, preparationPolicy: 'first-return-retry-anchored-v1' };
+    }
     if (preparation[0] === '--hitch-journal-preparation=timing-heavy-v1') {
       assert.deepEqual(preparation, ['--hitch-journal-preparation=timing-heavy-v1']);
       const hash = createHash('sha256').update(scenarioBytes).digest('hex');
@@ -464,9 +499,20 @@ export async function verifyHitchJournalFile(path, expectedBytes, expectedSha256
 export function createHitchJournalStore(output, now = () => performance.now(), options = {}) {
   assert(
     options.preparationPolicy === undefined ||
-      ['first-return-anchored-v1', 'timing-heavy-v1'].includes(options.preparationPolicy),
+      ['first-return-anchored-v1', 'first-return-retry-anchored-v1', 'timing-heavy-v1'].includes(
+        options.preparationPolicy,
+      ),
   );
+  assert(
+    options.activeDocumentPolicy === undefined ||
+      options.activeDocumentPolicy === 'first-before-reload-v1',
+  );
+  assert(!options.activeDocumentPolicy || !options.preparationPolicy);
   const soloURL = options.soloURL ? new URL(options.soloURL) : null;
+  assert(
+    !options.activeDocumentPolicy || soloURL,
+    'Active document policy requires the admitted Solo URL',
+  );
   assert(!options.preparationPolicy || soloURL, 'Preparation requires the admitted Solo URL');
   const report = {
     format: 'SoloHitchJournalV1',
@@ -478,6 +524,7 @@ export function createHitchJournalStore(output, now = () => performance.now(), o
     failures: [],
     activePlayCoverage: 'unobserved',
     preparationPolicy: options.preparationPolicy ?? null,
+    ...(options.activeDocumentPolicy ? { activeDocumentPolicy: options.activeDocumentPolicy } : {}),
     scope:
       'Individual observed rAF>33ms and work>=50ms windows; native tasks feature-detected. Pending native entries drain at seal; later/unreported delivery is unobserved and absent drop-count capability is not zero. No physical display or overhead-free claim.',
   };
@@ -497,6 +544,10 @@ export function createHitchJournalStore(output, now = () => performance.now(), o
     const target = new URL(navigation?.url);
     assert.equal(target.origin, soloURL.origin, 'Hitch document origin');
     let role = 'solo';
+    if (options.activeDocumentPolicy) {
+      assert(index <= 2, 'Only the recorded and restored Solo documents are admitted');
+      assert.equal(navigation.action, index === 1 ? 'initial' : 'reload-8');
+    }
     if (options.preparationPolicy) {
       assert(index <= 2, 'Only the declared preparation and Solo documents are admitted');
       assert.equal(
@@ -715,7 +766,7 @@ export function createHitchJournalStore(output, now = () => performance.now(), o
         fail('Final document unavailable');
       }
       if (!report.documents.length) fail('No observed document');
-      const final = report.documents.at(-1);
+      const final = options.activeDocumentPolicy ? report.documents[0] : report.documents.at(-1);
       const active =
         final?.status === 'complete' &&
         final.identity.role === 'solo' &&
@@ -725,8 +776,34 @@ export function createHitchJournalStore(output, now = () => performance.now(), o
         final.header.activeWorkWindows > 0 &&
         final.header.activeElapsedMs > 0 &&
         final.header.lastActiveAt > final.header.firstActiveAt;
-      report.activePlayCoverage = active ? 'observed-final-solo' : 'incomplete';
-      if (!active) fail('No positive final Solo frame/work coverage');
+      let coverage = active;
+      if (options.activeDocumentPolicy) {
+        const restored = report.documents[1];
+        coverage =
+          active &&
+          report.documents.length === 2 &&
+          final.boundary === 'before-reload-8' &&
+          final.header.publicPhase === 'paused' &&
+          restored?.status === 'complete' &&
+          restored.boundary === 'final-existing-public-boundary' &&
+          restored.header.publicPhase === 'paused' &&
+          restored.header.workScope === 'subscribed-solo' &&
+          !restored.header.runningSeen &&
+          restored.header.activeFrames === 0 &&
+          restored.header.activeWorkWindows === 0 &&
+          restored.header.activeElapsedMs === 0;
+      }
+      report.activePlayCoverage = coverage
+        ? options.activeDocumentPolicy
+          ? 'observed-first-solo-before-reload'
+          : 'observed-final-solo'
+        : 'incomplete';
+      if (!coverage)
+        fail(
+          options.activeDocumentPolicy
+            ? 'Missing active recording or paused zero-active restoration coverage'
+            : 'No positive final Solo frame/work coverage',
+        );
       if (startedAt !== null && now() - startedAt > HITCH_LIMITS.durationMs)
         fail('Row observation exceeded forty minutes');
       if (!report.failures.length) report.status = 'complete';
