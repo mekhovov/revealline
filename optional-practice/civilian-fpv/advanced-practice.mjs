@@ -22,6 +22,9 @@ import {
 } from './aircraft-presets.mjs';
 import { AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
 import { exportJSONFile, onNativeInactive } from '../../game/platform.mjs';
+import { mountAircraftArchiveControls } from './aircraft-archive-controls.mjs';
+import { sampleGhostPath } from './advanced-ghost-path.mjs';
+import { mountPropulsionEvidencePanel } from './propulsion-evidence-ui.mjs';
 
 const COPY = {
   en: {
@@ -101,6 +104,7 @@ const COPY = {
     comparisonMismatch:
       'This aircraft setup uses a different comparison class. Restore the setup or choose another reference.',
     positionGap: 'Position gap at the same flight time',
+    sampledGhost: 'Approximate ghost display; sample interval',
     maneuver: 'Repeatable practice',
     maneuverHelp:
       'Choose a short exercise, then restart from the same launch point. Follow the cues manually; no controls or scores are automated. Keep a reference or export it before returning to edit rates.',
@@ -203,6 +207,7 @@ const COPY = {
     comparisonMismatch:
       'Ці налаштування дрона належать до іншого класу порівняння. Відновіть налаштування або виберіть інший орієнтир.',
     positionGap: 'Відстань між позиціями в той самий час польоту',
+    sampledGhost: 'Приблизне відображення примари; інтервал вибірки',
     maneuver: 'Повторювана практика',
     maneuverHelp:
       'Виберіть коротку вправу й перезапустіть із тієї самої точки. Виконуйте підказки самостійно; автоматичного керування чи оцінки немає. Залиште орієнтир або експортуйте його перед поверненням до зміни рейтів.',
@@ -250,6 +255,7 @@ export function mountAdvancedPractice({
   workerURL,
   rendererFactory = (options) => new THREE.WebGLRenderer(options),
   platformOptions = {},
+  archiveStore,
 }) {
   const copy = COPY[locale] ?? COPY.en,
     doc = container.ownerDocument;
@@ -284,6 +290,7 @@ export function mountAdvancedPractice({
     verificationGeneration = 0;
   let disposed = false,
     client,
+    archiveSession = null,
     renderer,
     frame,
     timer,
@@ -454,12 +461,14 @@ export function mountAdvancedPractice({
   tuneFields.style.cssText =
     'display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px';
   const fieldInputs = [];
+  let evidencePanel = null;
   const batteryLabel = el('label', copy.batteryDepletion, settings),
     batteryDepletion = el('input', '', batteryLabel);
   batteryDepletion.type = 'checkbox';
   batteryDepletion.setAttribute('aria-label', copy.batteryDepletion);
   listen(batteryDepletion, 'change', () => {
     tunePreview.textContent = copy.draftConfiguration;
+    evidencePanel?.refresh();
   });
   const numericFields = [
     ['aircraft.mass', 'Mass (kg)', 'Маса (кг)', 0.01, 10],
@@ -657,6 +666,7 @@ export function mountAdvancedPractice({
     fieldInputs.push({ path: path.split('.'), field, label, min, max });
     listen(field, 'input', () => {
       tunePreview.textContent = copy.draftConfiguration;
+      evidencePanel?.refresh();
     });
   }
   function fillTuning() {
@@ -684,6 +694,7 @@ export function mountAdvancedPractice({
     batteryDepletion.type = physical ? 'checkbox' : 'hidden';
     batteryDepletion.checked = physical && draftConfiguration.aircraft.battery.depletion;
     comparisonExplanation.textContent = physical ? copy.clipComparisonHelp : copy.comparisonHelp;
+    evidencePanel?.refresh();
     const performance = physical ? aircraftPerformance(draftConfiguration.aircraft) : null;
     const hover =
       performance?.hoverThrottle == null
@@ -813,6 +824,12 @@ export function mountAdvancedPractice({
     }
   });
   fillTuning();
+  evidencePanel = mountPropulsionEvidencePanel({
+    parent: tuning,
+    locale: () => locale,
+    // Read the validated editable fields, not the saved or running configuration.
+    getAircraft: () => readTuning().aircraft,
+  });
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x93bed2);
   scene.fog = new THREE.Fog(0x93bed2, 35, 130);
@@ -997,7 +1014,7 @@ export function mountAdvancedPractice({
     const tick = telemetry?.missionTick ?? 0,
       startTick = comparison.startMissionTick ?? 0;
     ghost.visible = ghost.visible && tick >= startTick;
-    const point = comparison.path[Math.max(0, Math.min(tick, comparison.missionTicks) - startTick)];
+    const point = sampleGhostPath(comparison.path, tick);
     if (!point) {
       ghost.visible = false;
       return;
@@ -1008,6 +1025,8 @@ export function mountAdvancedPractice({
       (telemetry?.missionTick ?? 0) > comparison.missionTicks
         ? copy.comparisonEnded
         : `${copy.positionGap}: ${Math.hypot((telemetry?.position.x ?? point[1]) - point[1], (telemetry?.position.y ?? point[2]) - point[2], (telemetry?.position.z ?? point[3]) - point[3]).toFixed(2)} m · ${((telemetry?.missionTick ?? 0) / 50).toFixed(2)} s`;
+    if (comparison.pathStride > 1)
+      comparisonInfo.textContent += ` · ${copy.sampledGhost}: ${(comparison.pathStride / 50).toFixed(2)} s`;
   }
   function cancelVerification() {
     verificationGeneration++;
@@ -1182,6 +1201,7 @@ export function mountAdvancedPractice({
       const result = await client.step(sample);
       if (disposed || owner !== generation) return;
       telemetry = result.telemetry;
+      publishArchive();
       keepComparison.disabled = verifying || !telemetry.missionTick;
       if (telemetry.consumedSequence === sample.sequence) lastConsumedPollAt = started;
       const elapsed = win.performance.now() - started;
@@ -1216,6 +1236,8 @@ export function mountAdvancedPractice({
     keepComparison.disabled = true;
     comparisonFile.disabled = true;
     generation++;
+    archiveSession = null;
+    publishArchive();
     const owner = generation;
     client?.dispose();
     sequence = 0;
@@ -1241,6 +1263,29 @@ export function mountAdvancedPractice({
       if (disposed || owner !== generation) return;
       telemetry = result.telemetry;
       activeOptions = structuredClone(options);
+      if (options.aircraft.format === 'AdvancedAircraft.v2') {
+        const ownedClient = client;
+        const liveArchive = () => {
+          if (disposed || owner !== generation || ownedClient !== client)
+            throw new Error('This aircraft archive belongs to an earlier practice flight');
+        };
+        const envelope = (value) => ({ ...value, generation: `${owner}:${value.generation}` });
+        archiveSession = {
+          async readSealedSegment(afterIndex) {
+            liveArchive();
+            const value = await ownedClient.readSealedSegment(afterIndex);
+            liveArchive();
+            return envelope(value);
+          },
+          async finalizeArchive(afterIndex) {
+            liveArchive();
+            if (running) throw new Error('Pause before ending the session archive');
+            const value = await ownedClient.finalizeArchive(afterIndex);
+            liveArchive();
+            return envelope(value);
+          },
+        };
+      }
       rebuildGhost(draftConfiguration.aircraft);
       view.fov = Math.max(30, Math.min(150, Number(draftCamera.fov) || 82));
       view.updateProjectionMatrix();
@@ -1250,6 +1295,7 @@ export function mountAdvancedPractice({
       );
       activeComparison = result.comparison;
       initialized = true;
+      publishArchive();
       flightStopCode = null;
       status.textContent = copy.ready;
       start.disabled = graphicsLost;
@@ -1391,6 +1437,8 @@ export function mountAdvancedPractice({
     win.clearTimeout(timer);
     win.cancelAnimationFrame(frame);
     client?.dispose();
+    archiveControls.dispose();
+    evidencePanel.dispose();
     verificationClient?.dispose();
     verificationClient = null;
     verificationGeneration++;
@@ -1403,6 +1451,33 @@ export function mountAdvancedPractice({
     else grid.material.dispose();
     renderer?.dispose();
     root.remove();
+  }
+  const archiveControls = mountAircraftArchiveControls({
+    parent: root,
+    window: win,
+    locale: () => locale,
+    getSession: () => archiveSession,
+    onPause: () => pause(),
+    key: 'arena',
+    workerURL,
+    platformOptions,
+    store: archiveStore,
+  });
+  function publishArchive() {
+    archiveControls.update({
+      ticks: telemetry?.missionTick ?? 0,
+      advancedTelemetry: telemetry && {
+        ...telemetry,
+        ...(telemetry.archiveStatus
+          ? {
+              archiveStatus: {
+                ...telemetry.archiveStatus,
+                generation: `${generation}:${telemetry.archiveStatus.generation}`,
+              },
+            }
+          : {}),
+      },
+    });
   }
   try {
     renderer = rendererFactory({ canvas, antialias: true });

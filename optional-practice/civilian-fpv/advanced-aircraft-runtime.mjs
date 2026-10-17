@@ -270,6 +270,7 @@ export function createAircraftSimulation(options = {}) {
     actors = [],
     staticHandles = [],
     recorder,
+    archiveGeneration = 0,
     disposed = false,
     transaction = null,
     serial = 0;
@@ -445,8 +446,10 @@ export function createAircraftSimulation(options = {}) {
       config,
       checkpoint: capture(true),
       hash: stateHash(),
+      origin: 'fresh',
       ...(options.recording === false ? { enabled: false } : (options.recordingOptions ?? {})),
     });
+    archiveGeneration++;
   }
   function restoreInternal(saved) {
     const candidate = RAPIER.World.restoreSnapshot(
@@ -596,6 +599,7 @@ export function createAircraftSimulation(options = {}) {
         return { id: actor.id, position: { ...moving.translation() }, enabled: moving.isEnabled() };
       }),
       recordingStatus: recorder.status(),
+      archiveStatus: { generation: archiveGeneration, ...recorder.sealedStatus() },
       ...(regional
         ? { terrain: { frameIdentity: terrain?.identity ?? null, ...clone(state.contact) } }
         : {}),
@@ -1104,6 +1108,25 @@ export function createAircraftSimulation(options = {}) {
       aircraftFlightIdentities(config, { terrainIdentity: terrain?.identity ?? null }),
     recordingStatus: () => recorder.status(),
     reportPersistence: (value) => recorder.reportPersistence(value),
+    readSealedSegment(afterIndex = -1) {
+      unlocked();
+      return {
+        format: 'AircraftSealedRead.v1',
+        generation: archiveGeneration,
+        identity,
+        config: clone(config),
+        ...recorder.readSealedSegment(afterIndex),
+      };
+    },
+    finalizeArchive(afterIndex = -1) {
+      unlocked();
+      recorder.readSealedSegment(afterIndex);
+      const finalizedThroughIndex = recorder.sealCurrent({
+        checkpoint: () => capture(true),
+        stateHash: stateHash(),
+      });
+      return { ...this.readSealedSegment(afterIndex), finalizedThroughIndex };
+    },
     stageTerrainFrame,
     commitTerrainFrame: (decision) => commit('terrain', decision),
     proposeMission({ motions } = {}) {
@@ -1141,6 +1164,7 @@ export function createAircraftSimulation(options = {}) {
         hash: stateHash(),
         ...(options.recording === false ? { enabled: false } : (options.recordingOptions ?? {})),
       });
+      archiveGeneration++;
       return telemetry();
     },
     snapshot() {
@@ -1197,6 +1221,7 @@ export function createAircraftSimulation(options = {}) {
         });
         if (saved.recording && saved.recording.missionTicks === state.missionTick)
           recorder.restore(saved.recording);
+        archiveGeneration++;
         return telemetry();
       } catch (error) {
         restoreInternal(before);
@@ -1218,6 +1243,75 @@ export function createAircraftSimulation(options = {}) {
       }
     },
   };
+}
+
+/** Replay one validated, contiguous segment on an already positioned simulator.
+ * Keeping this loop shared prevents archive verification from drifting from clips. */
+export async function replayAircraftSegment(
+  sim,
+  segment,
+  { frequency, onMissionTelemetry, signal, yieldEvery = 250 } = {},
+) {
+  if (signal?.aborted) throw new Error('Aircraft replay verification cancelled');
+  let cursor = 0,
+    hashCursor = 0;
+  const applyTerrain = (tick) => {
+    while (segment.events[cursor]?.[0] === 'terrain' && segment.events[cursor][1] === tick) {
+      const event = segment.events[cursor++];
+      required(event.length === 3, 'Invalid terrain event');
+      const staged = sim.stageTerrainFrame(event[2]);
+      sim.commitTerrainFrame({ transaction: staged.transaction, accepted: true });
+    }
+  };
+  for (let tick = segment.startTick; tick < segment.endTick; tick++) {
+    applyTerrain(tick);
+    let motions;
+    if (segment.events[cursor]?.[0] === 'motion' && segment.events[cursor][1] === tick) {
+      const event = segment.events[cursor++];
+      required(event.length === 3, 'Invalid actor event');
+      motions = event[2];
+    }
+    let lastStep = -1;
+    while (
+      segment.events[cursor]?.[0] === 'input' &&
+      segment.events[cursor][1] < ((tick + 1) * frequency) / 50
+    ) {
+      const item = segment.events[cursor++];
+      required(
+        item.length === 8 &&
+          Number.isSafeInteger(item[1]) &&
+          item[1] > lastStep &&
+          item[1] === Math.max((tick * frequency) / 50, Math.ceil(item[3] / (1e6 / frequency))),
+        'Aircraft input consumption schedule changed',
+      );
+      sim.enqueueInput({
+        sequence: item[2],
+        timestampUs: item[3],
+        controls: { roll: item[4], pitch: item[5], yaw: item[6], throttle: item[7] },
+      });
+      lastStep = item[1];
+    }
+    sim.stepMission({ motions });
+    if (segment.hashes[hashCursor]?.[0] === tick + 1) {
+      required(
+        sim.stateHash() === segment.hashes[hashCursor++][1],
+        'Aircraft replay hash mismatch',
+      );
+    }
+    onMissionTelemetry?.(sim.telemetry());
+    if (tick % yieldEvery === 0) {
+      if (signal?.aborted) throw new Error('Aircraft replay verification cancelled');
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    }
+  }
+  applyTerrain(segment.endTick);
+  if (signal?.aborted) throw new Error('Aircraft replay verification cancelled');
+  required(
+    cursor === segment.events.length &&
+      hashCursor === segment.hashes.length &&
+      sim.stateHash() === segment.finalHash,
+    'Aircraft clip contains unconsumed events or a changed final state',
+  );
 }
 
 export async function replayAircraftRecording(
@@ -1260,69 +1354,12 @@ export async function replayAircraftRecording(
           'Aircraft segment checkpoint changed',
         );
       required(sim.stateHash() === segment.initialHash, 'Aircraft clip starting hash changed');
-      let cursor = 0,
-        hashCursor = 0;
-      const applyTerrain = (tick) => {
-        while (segment.events[cursor]?.[0] === 'terrain' && segment.events[cursor][1] === tick) {
-          const event = segment.events[cursor++];
-          required(event.length === 3, 'Invalid terrain event');
-          const staged = sim.stageTerrainFrame(event[2]);
-          sim.commitTerrainFrame({ transaction: staged.transaction, accepted: true });
-        }
-      };
       if (index === 0) report();
-      for (let tick = segment.startTick; tick < segment.endTick; tick++) {
-        applyTerrain(tick);
-        let motions;
-        if (segment.events[cursor]?.[0] === 'motion' && segment.events[cursor][1] === tick) {
-          const event = segment.events[cursor++];
-          required(event.length === 3, 'Invalid actor event');
-          motions = event[2];
-        }
-        let lastStep = -1;
-        while (
-          segment.events[cursor]?.[0] === 'input' &&
-          segment.events[cursor][1] < ((tick + 1) * record.config.frequency) / 50
-        ) {
-          const item = segment.events[cursor++];
-          required(
-            item.length === 8 &&
-              Number.isSafeInteger(item[1]) &&
-              item[1] > lastStep &&
-              item[1] ===
-                Math.max(
-                  (tick * record.config.frequency) / 50,
-                  Math.ceil(item[3] / (1e6 / record.config.frequency)),
-                ),
-            'Aircraft input consumption schedule changed',
-          );
-          sim.enqueueInput({
-            sequence: item[2],
-            timestampUs: item[3],
-            controls: { roll: item[4], pitch: item[5], yaw: item[6], throttle: item[7] },
-          });
-          lastStep = item[1];
-        }
-        sim.stepMission({ motions });
-        if (segment.hashes[hashCursor]?.[0] === tick + 1) {
-          required(
-            sim.stateHash() === segment.hashes[hashCursor++][1],
-            'Aircraft replay hash mismatch',
-          );
-        }
-        report();
-        if (tick % 250 === 0) {
-          if (signal?.aborted) throw new Error('Aircraft replay verification cancelled');
-          await new Promise((resolve) => setTimeout(resolve, 0));
-        }
-      }
-      applyTerrain(segment.endTick);
-      required(
-        cursor === segment.events.length &&
-          hashCursor === segment.hashes.length &&
-          sim.stateHash() === segment.finalHash,
-        'Aircraft clip contains unconsumed events or a changed final state',
-      );
+      await replayAircraftSegment(sim, segment, {
+        frequency: record.config.frequency,
+        onMissionTelemetry: report,
+        signal,
+      });
       if (segment.endTick === until)
         recovered = { telemetry: sim.telemetry(), snapshot: sim.snapshot() };
     }

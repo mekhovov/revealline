@@ -17,6 +17,28 @@ const checkpoint = (tick, identity = 'flight-a') => ({
   mission: { state: { ticks: tick } },
 });
 
+test('challenge recovery storage keeps the paired accepted clock without changing older envelopes', async () => {
+  const memory = managedIndexedDB(),
+    store = createAircraftRecoveryStore({ indexedDB: memory.indexedDB });
+  const source = {
+    format: 'AircraftChallengeRecovery.v1',
+    progress: { missionTick: 250 },
+    session: checkpoint(250),
+  };
+  try {
+    await store.save(source);
+    assert.deepEqual((await store.load()).data, source);
+    const mismatch = structuredClone(source);
+    mismatch.progress.missionTick = 249;
+    await assert.rejects(store.save(mismatch), /clocks do not match/);
+    await assert.rejects(store.save({ ...source, session: source }), /Nested challenge/);
+    assert.deepEqual((await store.load()).data, source);
+    assert.equal(aircraftRecoveryTick(checkpoint(10)), 10);
+  } finally {
+    store.close();
+  }
+});
+
 test('recovery storage commits one bounded slot per host and interrupted replacement preserves the last durable checkpoint', async () => {
   const memory = managedIndexedDB(),
     academy = createAircraftRecoveryStore({ indexedDB: memory.indexedDB, key: 'academy' }),

@@ -4,6 +4,7 @@ import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
 import { createAircraftTerrainFrame } from './aircraft-terrain.mjs';
 import { attitude, Q } from './math.mjs';
 import { relativeFlightTilt } from './flight-support.mjs';
+import { validateAircraftChallengeRules } from './aircraft-challenge.mjs';
 
 const axes = ['x', 'y', 'z'];
 const copy = (value) => structuredClone(value);
@@ -114,6 +115,14 @@ export function createAircraftCourseSession(
   { createClient = createAdvancedWorkerClient, createMission = createFlight } = {},
 ) {
   const aircraft = copy(configuration.advanced.aircraft);
+  const challenge =
+    configuration.challenge === undefined
+      ? null
+      : validateAircraftChallengeRules(configuration.challenge);
+  required(
+    challenge?.kind !== 'battery-endurance' || aircraft.battery.depletion,
+    'Battery endurance requires battery depletion',
+  );
   const missionOptions = {
     course: copy(course),
     mode,
@@ -143,6 +152,7 @@ export function createAircraftCourseSession(
     configuration: {
       response: copy(configuration.response),
       environment: { course: dataIdentity(source), host: legacy ? 'academy' : 'world' },
+      ...(challenge ? { challenge } : {}),
     },
     assist: { format: 'AircraftAssist.v1', mode, maxTilt: configuration.response.maxTilt ?? 30 },
     spawn: point({ ...source.spawn, y: source.spawn.y + supportHeight * 1000 }, 0.001),
@@ -178,7 +188,12 @@ export function createAircraftCourseSession(
     checkpointKind = null,
     telemetry = null,
     error = null,
+    archiveGeneration = 0,
     sequence = -1;
+  const archiveEnvelope = (value) => ({
+    ...value,
+    generation: `${archiveGeneration}:${value.generation}`,
+  });
   const identity = Object.freeze({
     model: 'aircraft-course-practice.v1',
     course: source.id,
@@ -188,6 +203,7 @@ export function createAircraftCourseSession(
       aircraft,
       controller: configuration.advanced.controller,
       response: configuration.response,
+      ...(challenge ? { challenge } : {}),
     }),
   });
   function snapshot() {
@@ -197,7 +213,12 @@ export function createAircraftCourseSession(
       unscored: true,
       aircraftRadiusMm: aircraft.radius * 1000,
       aircraftSupportHeightMm: (telemetry?.supportHeight ?? supportHeight) * 1000,
-      advancedTelemetry: telemetry && copy(telemetry),
+      advancedTelemetry: telemetry && {
+        ...copy(telemetry),
+        ...(telemetry.archiveStatus
+          ? { archiveStatus: archiveEnvelope(telemetry.archiveStatus) }
+          : {}),
+      },
       recordingStatus: telemetry?.recordingStatus ?? null,
       reason: error ? 'worker-error' : ready ? 'prepared' : 'preparing-aircraft',
       failure: error,
@@ -290,9 +311,7 @@ export function createAircraftCourseSession(
   }
   function exportRecovery() {
     if (checkpointing)
-      return checkpointKind === 'restore'
-        ? checkpointing.then(() => exportRecovery())
-        : checkpointing;
+      return checkpointKind !== 'save' ? checkpointing.then(() => exportRecovery()) : checkpointing;
     checkpointKind = 'save';
     checkpointing = (async () => {
       await stepping;
@@ -311,6 +330,40 @@ export function createAircraftCourseSession(
         sequence,
       };
       return { ...packet, checksum: dataIdentity(packet) };
+    })().finally(() => {
+      checkpointing = null;
+      checkpointKind = null;
+    });
+    return checkpointing;
+  }
+  function readArchive(afterIndex = -1, finalize = false) {
+    required(
+      !finalize || mission.snapshot().status !== 'active',
+      'Pause before ending the session archive',
+    );
+    if (preparing && !ready) return preparing.then(() => readArchive(afterIndex, finalize));
+    if (checkpointing) return checkpointing.then(() => readArchive(afterIndex, finalize));
+    const pendingStep = stepping;
+    checkpointKind = finalize ? 'archive-finalize' : 'archive';
+    checkpointing = (async () => {
+      await pendingStep;
+      required(ready && !disposed, 'Aircraft practice is not ready');
+      required(
+        !finalize || mission.snapshot().status !== 'active',
+        'Pause before ending the session archive',
+      );
+      const result = await (finalize
+        ? client.finalizeArchive(afterIndex)
+        : client.readSealedSegment(afterIndex));
+      if (telemetry)
+        telemetry.archiveStatus = {
+          generation: result.generation,
+          origin: result.origin,
+          earliestIndex: result.earliestIndex,
+          lastSealedIndex: result.lastSealedIndex,
+          latestTick: result.latestTick,
+        };
+      return archiveEnvelope(result);
     })().finally(() => {
       checkpointing = null;
       checkpointKind = null;
@@ -406,6 +459,7 @@ export function createAircraftCourseSession(
         mission = candidateMission;
         candidateMission = null;
         client = candidate;
+        archiveGeneration++;
         adopted = true;
         telemetry = restored;
         sequence = saved.sequence;
@@ -437,7 +491,10 @@ export function createAircraftCourseSession(
     response: () => mission.response(),
     objectiveFeedback: () => mission.objectiveFeedback?.(),
     arm() {
-      if (ready && !error && !disposed && !checkpointing) mission.arm();
+      // Background checkpoint reads must not consume the player's Arm click.
+      // The step lock still holds motion until the accepted boundary is copied.
+      if (ready && !error && !disposed && !['restore', 'archive-finalize'].includes(checkpointKind))
+        mission.arm();
     },
     pause() {
       mission.pause();
@@ -447,6 +504,8 @@ export function createAircraftCourseSession(
       return client.recording();
     },
     exportRecovery,
+    readSealedSegment: (afterIndex) => readArchive(afterIndex),
+    finalizeArchive: (afterIndex) => readArchive(afterIndex, true),
     restoreRecovery,
     async reportPersistence(status) {
       const result = await client.reportPersistence(status);

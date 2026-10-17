@@ -20,7 +20,15 @@ const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
 async function sessionFixture(
   t,
   id,
-  { mode = 'acro', response, mixed = false, transformProposal, beforeProposal, coverage } = {},
+  {
+    mode = 'acro',
+    response,
+    mixed = false,
+    transformProposal,
+    beforeProposal,
+    coverage,
+    challenge,
+  } = {},
 ) {
   let simulation, options;
   const preset = createPresetConfiguration(id);
@@ -32,6 +40,7 @@ async function sessionFixture(
       advanced: { aircraft: preset.aircraft, controller: preset.controller },
       response: response ?? preset.response,
       mode,
+      ...(challenge ? { challenge } : {}),
     },
     {
       createClient() {
@@ -69,6 +78,12 @@ async function sessionFixture(
           async recording() {
             return owner.recording();
           },
+          async readSealedSegment(afterIndex) {
+            return owner.readSealedSegment(afterIndex);
+          },
+          async finalizeArchive(afterIndex) {
+            return owner.finalizeArchive(afterIndex);
+          },
           dispose() {
             owner?.dispose();
           },
@@ -92,6 +107,40 @@ async function sessionFixture(
   return { session, simulation: () => simulation, options: () => options };
 }
 
+test('Regional optional challenge rules remain frozen in worker identity and reject cross-rule recovery', async (t) => {
+  const challenge = {
+    format: 'AircraftChallengeRules.v1',
+    kind: 'timed-practice',
+    durationTicks: 1500,
+  };
+  const ordinary = await sessionFixture(t, 'meteor75-analog-2022');
+  const timed = await sessionFixture(t, 'meteor75-analog-2022', { challenge });
+  assert.equal(Object.hasOwn(ordinary.options().configuration, 'challenge'), false);
+  assert.deepEqual(timed.options().configuration.challenge, challenge);
+  assert.notEqual(ordinary.simulation().identity, timed.simulation().identity);
+  assert.notDeepEqual(ordinary.simulation().comparison(), timed.simulation().comparison());
+  const saved = await timed.session.captureRecovery();
+  await assert.rejects(ordinary.session.restoreRecovery(saved), /configuration/);
+  assert.equal(ordinary.session.snapshot().ticks, 0);
+  await assert.rejects(
+    sessionFixture(t, 'meteor75-analog-2022', {
+      challenge: { ...challenge, durationTicks: 1 },
+    }),
+    /duration/,
+  );
+  await assert.rejects(
+    sessionFixture(t, 'meteor75-analog-2022', {
+      challenge: {
+        format: 'AircraftChallengeRules.v1',
+        kind: 'battery-endurance',
+        takeoffHoldTicks: 25,
+        landingHoldTicks: 50,
+      },
+    }),
+    /requires battery depletion/,
+  );
+});
+
 test('every aircraft enters Regional practice in Acro and self-level with frozen rates and real dimensions', async (t) => {
   for (const preset of listAircraftPresets())
     for (const mode of ['acro', 'self-level']) {
@@ -109,6 +158,35 @@ test('every aircraft enters Regional practice in Acro and self-level with frozen
       assert.ok(result.recordingStatus);
       await h.session.dispose();
     }
+});
+
+test('Regional archive bridge shares accepted boundaries with recovery and exposes each restored generation', async (t) => {
+  const h = await sessionFixture(t, 'meteor75-analog-2022');
+  const initial = await h.session.readSealedSegment();
+  assert.equal(initial.generation, h.session.snapshot().advancedTelemetry.archiveStatus.generation);
+  const backgroundRead = h.session.readSealedSegment();
+  assert.equal(h.session.arm(), true, 'a background archive read must retain Arm');
+  await backgroundRead;
+  await h.session.step(neutral);
+  assert.throws(() => h.session.finalizeArchive(), /Pause before/);
+  const [read, recovery] = await Promise.all([
+    h.session.readSealedSegment(),
+    h.session.exportRecovery(),
+  ]);
+  assert.equal(read.format, 'AircraftSealedRead.v1');
+  assert.equal(recovery.format, 'AdvancedRegionalRecovery.v2');
+  h.session.pause();
+  const ending = h.session.finalizeArchive();
+  assert.equal(h.session.arm(), false, 'final tail sealing retains its pause guard');
+  const final = await ending;
+  assert.equal(final.segment.endTick, 1);
+  assert.equal(final.finalizedThroughIndex, 0);
+  await h.session.restoreRecovery(recovery);
+  const first = await h.session.readSealedSegment();
+  assert.notEqual(first.generation, initial.generation);
+  assert.equal(first.origin.kind, 'checkpoint');
+  await h.session.restoreRecovery(recovery);
+  assert.notEqual((await h.session.readSealedSegment()).generation, first.generation);
 });
 
 test('Regional keeps Legacy input response on the selected aircraft without silent rate replacement', async (t) => {

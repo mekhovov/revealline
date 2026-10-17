@@ -18,6 +18,7 @@ export function createAircraftRecorder({
   config,
   checkpoint,
   hash,
+  origin = 'checkpoint',
   enabled = true,
   maxBytes = 24 * 1024 * 1024,
   segmentBytes = 1024 * 1024,
@@ -37,10 +38,12 @@ export function createAircraftRecorder({
   );
   let segments = [],
     serial = 0,
+    lastSealedIndex = -1,
     error = null,
     durableTick = null,
     active = enabled,
     currentBytes = 0,
+    streamBytes = 0,
     retainedBytes = 0,
     latestTick = checkpoint.state.missionTick;
   function begin(saved, stateHash) {
@@ -56,8 +59,12 @@ export function createAircraftRecorder({
       hashes: [],
       finalHash: stateHash,
     };
+    if (segments.length) lastSealedIndex = segments.at(-1).index;
     segments.push(segment);
     currentBytes = bytes(segment);
+    // Checkpoints include the admitted terrain and can exceed the event budget
+    // before any flying. They count toward retained memory, not stream rotation.
+    streamBytes = 0;
     retainedBytes += currentBytes;
     trim();
   }
@@ -70,11 +77,26 @@ export function createAircraftRecorder({
       // A checkpoint larger than the entire budget is not a valid recent clip.
       if (segments.length === 1 && segments[0].events.length === 0) {
         segments = [];
-        currentBytes = retainedBytes = 0;
+        currentBytes = streamBytes = retainedBytes = 0;
       }
     }
   }
   if (active) begin(checkpoint, hash);
+  function sealedStatus() {
+    const first = segments[0];
+    return {
+      origin: {
+        kind:
+          origin === 'fresh' && first?.index === 0 && first.startTick === 0
+            ? 'fresh'
+            : 'checkpoint',
+        startTick: first?.startTick ?? latestTick,
+      },
+      earliestIndex: first?.index ?? serial,
+      lastSealedIndex,
+      latestTick,
+    };
+  }
   function append({ events = [], tick, stateHash, checkpoint: capture }) {
     latestTick = tick;
     if (!active) return;
@@ -91,10 +113,11 @@ export function createAircraftRecorder({
         growth += bytes(entry) + 1;
       }
       currentBytes += growth;
+      streamBytes += growth;
       retainedBytes += growth;
       if (
         (tick > segment.startTick &&
-          (tick - segment.startTick >= AIRCRAFT_SEGMENT_TICKS || currentBytes >= segmentBytes)) ||
+          (tick - segment.startTick >= AIRCRAFT_SEGMENT_TICKS || streamBytes >= segmentBytes)) ||
         segment.events.length >= SEGMENT_EVENT_ROTATION
       )
         begin(capture(), stateHash);
@@ -106,6 +129,36 @@ export function createAircraftRecorder({
   }
   return {
     append,
+    sealedStatus,
+    readSealedSegment(afterIndex = -1) {
+      required(
+        Number.isSafeInteger(afterIndex) && afterIndex >= -1,
+        'Invalid archive segment cursor',
+      );
+      const status = sealedStatus();
+      const segment = segments.find(
+        (entry) => entry.index > afterIndex && entry.index <= status.lastSealedIndex,
+      );
+      return {
+        ...status,
+        gap: afterIndex < status.earliestIndex - 1 || afterIndex > status.lastSealedIndex,
+        segment: segment ? clone(segment) : null,
+      };
+    },
+    sealCurrent({ checkpoint: capture, stateHash }) {
+      if (active) {
+        const current = segments.at(-1);
+        if (current && (current.endTick > current.startTick || current.events.length)) {
+          try {
+            begin(capture(), stateHash);
+          } catch {
+            active = false;
+            error = 'recording-unavailable';
+          }
+        }
+      }
+      return sealedStatus().lastSealedIndex;
+    },
     status() {
       return {
         format: 'AircraftRecordingStatus.v1',
@@ -161,8 +214,14 @@ export function createAircraftRecorder({
       required(next.identity === identity, 'Recording belongs to another configuration');
       segments = clone(next.segments);
       serial = segments.at(-1).index + 1;
+      lastSealedIndex = segments.at(-1).index - 1;
       latestTick = segments.at(-1).endTick;
       currentBytes = bytes(segments.at(-1));
+      // Reconstruct the same append accounting without changing recorded data.
+      streamBytes = [...segments.at(-1).events, ...segments.at(-1).hashes].reduce(
+        (total, entry) => total + bytes(entry) + 1,
+        0,
+      );
       retainedBytes = segments.reduce((sum, segment) => sum + bytes(segment), 0);
       trim();
     },

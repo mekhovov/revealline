@@ -42,7 +42,10 @@ concurrency:
 jobs:
   optional-practice:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    # The aircraft/replay suite passed in 7m26s on run 39059412458, but
+    # dependency setup and artifact checks took the job beyond eight minutes.
+    # Keep every check and allow bounded headroom for hosted-runner variance.
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
