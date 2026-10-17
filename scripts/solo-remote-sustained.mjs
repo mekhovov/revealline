@@ -128,12 +128,21 @@ export const GEOMETRIC_NEXT_FINAL_SOURCE = Object.freeze({
   candidateTree: '58f19392e25384620d896098fce8616b538e318d',
   runtime: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
 });
+export const GEOMETRIC_NEXT_39774_SOURCE = Object.freeze({
+  ...GEOMETRIC_NEXT_SOURCE,
+  name: 'next-candidate39774-geometric-v1',
+  candidate: '39774cce8697d412d138ef4da11ac547a5f8e535',
+  candidateTree: 'cac2369a26cac5282e4260c638b934540d17ced6',
+  runtime: '39774cce8697d412d138ef4da11ac547a5f8e535',
+});
 const geometricNextSource = (plan) =>
   plan.sourceCohort === GEOMETRIC_NEXT_SOURCE.name
     ? GEOMETRIC_NEXT_SOURCE
     : plan.sourceCohort === GEOMETRIC_NEXT_FINAL_SOURCE.name
       ? GEOMETRIC_NEXT_FINAL_SOURCE
-      : null;
+      : plan.sourceCohort === GEOMETRIC_NEXT_39774_SOURCE.name
+        ? GEOMETRIC_NEXT_39774_SOURCE
+        : null;
 const geometricNextPlan = (plan) => geometricNextSource(plan) !== null;
 const finalSoakCohort = 'soak-main8b-candidatea6e';
 const anchoredSoakHash = '079d4dd76fbd914ddd4da7311f8e6cee4a0ff4fc3bc951842b2921c94c53b8ff';
@@ -295,9 +304,9 @@ function validateSourceCohort(plan, selected) {
     assert.equal(plan.release.scope, 'independent-candidate-transition-diagnostics');
     assert.equal(
       plan.release.onceOnlyBefore,
-      geometricNextSource(plan) === GEOMETRIC_NEXT_FINAL_SOURCE
-        ? GEOMETRIC_NEXT_FINAL_SOURCE.candidate
-        : '0febd334619731adc26dfa3df78aab02991563af',
+      geometricNextSource(plan) === GEOMETRIC_NEXT_SOURCE
+        ? '0febd334619731adc26dfa3df78aab02991563af'
+        : geometricNextSource(plan).candidate,
     );
     assert.equal(plan.nativeRouteProtocol, 'authored-next-geometric-v1');
     const identity = plan.candidate;
@@ -1849,9 +1858,11 @@ export async function geometricNextAssessment(plan, row, raw, command, browserVe
     status: !protocolFailure && complete ? inherited.status : 'failed',
     candidateOnly: true,
     scope:
-      geometricNextSource(plan) === GEOMETRIC_NEXT_FINAL_SOURCE
-        ? 'Exactly eleven authored missions and ten manual Next transitions on e1cc. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
-        : 'Exactly eleven authored missions and ten manual Next transitions on c696. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, later-layout or native-memory qualification.',
+      geometricNextSource(plan) === GEOMETRIC_NEXT_39774_SOURCE
+        ? 'Exactly eleven authored missions and ten manual Next transitions on 39774. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+        : geometricNextSource(plan) === GEOMETRIC_NEXT_FINAL_SOURCE
+          ? 'Exactly eleven authored missions and ten manual Next transitions on e1cc. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+          : 'Exactly eleven authored missions and ten manual Next transitions on c696. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, later-layout or native-memory qualification.',
   };
 }
 

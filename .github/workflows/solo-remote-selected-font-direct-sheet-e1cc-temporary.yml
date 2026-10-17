@@ -1,4 +1,4 @@
-name: HELD Solo e1cc selected font direct stylesheet successor
+name: Solo e1cc selected font direct stylesheet successor
 
 on:
   pull_request:
@@ -31,7 +31,7 @@ jobs:
       matrix:
         engine: [webkit]
     # Reviewed excluded diagnostics on one exact prospective push edge only.
-    # Held until reviewed release of the exact existing-link observation correction.
+    # Reviewed until reviewed release of the exact existing-link observation correction.
     if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '39774cce8697d412d138ef4da11ac547a5f8e535'
     runs-on: ubuntu-24.04
     timeout-minutes: 130
