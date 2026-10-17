@@ -84,7 +84,9 @@ async function setup(
     assert.equal(page.$('start-button').hidden, false);
     page.$('start-button').click();
   }
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  await page.waitUntilRunning(
+    `${owner}/${turnPolicy}/${pad ? 'controller' : 'other'} initial Start`,
+  );
   assert.equal(page.$('shell-home').open, false);
   assert.equal(page.$('journey-chooser')?.open ?? false, false);
   frames(page, 3);

@@ -715,6 +715,130 @@ export async function soloPage(
     }, 16);
     t.after(() => clearInterval(preparationFrames));
   }
+  async function waitUntilRunning(label = '') {
+    const wallStarted = hrtime.bigint(),
+      modelStarted = now;
+    try {
+      await settle(() => doc.body.dataset.flightState === 'running');
+    } catch (error) {
+      // Diagnose only the failed boundary. A stale scene/getter must never
+      // replace the original error, cause or stack with an observation failure.
+      try {
+        const read = (get, fallback = null) => {
+          try {
+            return get();
+          } catch {
+            return fallback;
+          }
+        };
+        const text = (value, limit = 48) =>
+          typeof value === 'string' ? value.slice(0, limit) : null;
+        const number = (value) => (Number.isFinite(value) ? value : null);
+        const flag = (get) =>
+          read(() => {
+            const value = get();
+            return typeof value === 'boolean' ? value : null;
+          });
+        const status = read(() => $('flight-preparation-status'));
+        const currentRun = read(() => rendered.run);
+        const dialogs = [];
+        let openDialogs = 0;
+        for (const dialog of read(() => doc.querySelectorAll('dialog'), []))
+          if (read(() => dialog.open, false)) {
+            openDialogs++;
+            if (dialogs.length < 4)
+              dialogs.push(
+                text(
+                  read(() => dialog.id),
+                  32,
+                ),
+              );
+          }
+        const existingErrors = [];
+        for (
+          let i = 0;
+          i <
+          Math.min(
+            read(() => errors.length, 0),
+            4,
+          );
+          i++
+        )
+          existingErrors.push(
+            text(
+              read(() => (typeof errors[i] === 'string' ? errors[i] : errors[i]?.message)),
+              80,
+            ),
+          );
+        const modelNow = now;
+        const diagnostic = {
+          format: 'SoloStartFailureV1',
+          label: text(label, 80),
+          timing: {
+            wallElapsedMs: number(Number(hrtime.bigint() - wallStarted) / 1e6),
+            modelStartedMs: number(modelStarted),
+            modelNowMs: number(modelNow),
+            modelElapsedMs: number(modelNow - modelStarted),
+          },
+          page: {
+            hidden: flag(() => doc.hidden),
+            focused: flag(() => doc.hasFocus()),
+            activeId: text(read(() => doc.activeElement?.id)),
+            flight: text(read(() => doc.body.dataset.flightState)),
+            picture: text(read(() => doc.body.dataset.pictureState)),
+            startHidden: flag(() => $('start-button').hidden),
+            startDisabled: flag(() => $('start-button').disabled),
+            overlayHidden: flag(() => $('game-overlay').hidden),
+            overlayKind: text(read(() => $('game-overlay').dataset.kind)),
+            openDialogs,
+            dialogs,
+            omittedDialogs: Math.max(0, openDialogs - dialogs.length),
+          },
+          preparation: {
+            state: text(read(() => status.dataset.state)),
+            stage: text(read(() => status.dataset.stage)),
+            message: text(
+              read(() => status.textContent),
+              128,
+            ),
+          },
+          run: {
+            level: text(read(() => currentRun.levelId)),
+            tick: number(read(() => currentRun.tick)),
+            status: text(read(() => currentRun.status)),
+            paused: flag(() => rendered.paused),
+          },
+          scene: {
+            prepared: flag(() => scene.prepared()),
+            preparedFrame: read(() => !!scene.preparedFrame),
+            preparedCancel: read(() => !!scene.preparedCancel),
+            framePending: flag(() => scene.framePending),
+            pendingSubmission: flag(() => scene.pendingSubmission),
+            displayedBoardValid: flag(() => scene.displayedBoardValid),
+            revision: number(read(() => scene.revision)),
+            preparedRevision: number(read(() => scene.preparedState?.revision)),
+            paintRevision: number(read(() => scene.preparedState?.paintRevision)),
+            preparedRunMatches: read(() => !!currentRun && scene.preparedState?.run === currentRun),
+            lastPaintRunMatches: read(() => !!currentRun && scene.lastPaint?.run === currentRun),
+            cadenceWaiting: flag(() => scene.cadence.waiting),
+            cadenceReady: flag(() => scene.cadence.ready),
+            cadenceSamples: number(read(() => scene.cadence.samples)),
+          },
+          errors: existingErrors,
+          omittedErrors: Math.max(0, read(() => errors.length, 0) - existingErrors.length),
+        };
+        // Values are fixed scalars and bounded strings/arrays before encoding.
+        // The cap is a final assertion of the diagnostic's own output envelope.
+        const encoded = JSON.stringify(diagnostic);
+        if (encoded.length <= 8192 && typeof error?.message === 'string') {
+          // Materialize V8's lazy stack before changing its message header.
+          void error.stack;
+          error.message += `\n${encoded}`;
+        }
+      } catch {}
+      throw error;
+    }
+  }
   function key(code, held = true) {
     $('game-canvas').emit(held ? 'keydown' : 'keyup', {
       code,
@@ -739,6 +863,7 @@ export async function soloPage(
     change,
     errors,
     audioElements,
+    waitUntilRunning,
     get rendered() {
       return rendered;
     },

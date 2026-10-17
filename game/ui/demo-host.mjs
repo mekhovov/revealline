@@ -617,13 +617,13 @@ export function attachDemoHost({
       if (released) return;
       released = true;
       owner.released = true;
+      resourceOwners.delete(owner);
       owner.losses.clear();
       player.dispose?.();
       nextPicture?.dispose();
       nextPainter?.dispose?.();
       nextActors?.release();
       nextPresentation?.release();
-      resourceOwners.delete(owner);
     };
     const check = () => {
       if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');

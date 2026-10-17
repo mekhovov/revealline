@@ -201,7 +201,7 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
       }
       for (const entry of ['button', 'key', 'controller']) {
         page.$('start-button').click();
-        await settle(() => page.doc.body.dataset.flightState === 'running');
+        await page.waitUntilRunning(`${mode}/${entry} Start`);
         page.frame();
         page.frame();
         const before = authoritativeCheckpoint(page.rendered.run);
