@@ -42,6 +42,8 @@ export function qualificationHitchJournalOptions(flags, scenario, scenarioBytes)
 // Self-contained when serialized into the observed document. Numeric writes only
 // on existing callbacks; metadata and encoding are explicitly pause-only.
 export function createBrowserHitchJournal(options = {}, environment = globalThis) {
+  const cost = options.costProbe ? environment.soloQualificationJournalCost : null;
+  if (options.costProbe && !cost) throw Error('Ordered journal cost dependency required');
   const capacity = options.records ?? 174000;
   if (!Number.isInteger(capacity) || capacity < 0 || capacity > 174000)
     throw Error('Hitch record capacity');
@@ -128,9 +130,14 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
   if (nativeSupported) {
     try {
       nativeObserver = new environment.PerformanceObserver((list, _observer, details) => {
-        nativeEntries(list.getEntries());
-        if (Number.isFinite(details?.droppedEntriesCount))
-          nativeDropped = Math.max(nativeDropped ?? 0, details.droppedEntriesCount);
+        if (cost) cost.begin(5);
+        try {
+          nativeEntries(list.getEntries());
+          if (Number.isFinite(details?.droppedEntriesCount))
+            nativeDropped = Math.max(nativeDropped ?? 0, details.droppedEntriesCount);
+        } finally {
+          if (cost) cost.end();
+        }
       });
       nativeObserver.observe({ type: 'longtask', buffered: true });
     } catch {
@@ -355,16 +362,20 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
     },
   };
   const visibility = () => {
+    if (cost) cost.begin(6);
     const before = flags();
     visible = !environment.document.hidden;
     const at = environment.performance.now();
     append(5, at, at, phase, phase, before, flags());
+    if (cost) cost.end();
   };
   const focus = (value) => {
+    if (cost) cost.begin(6);
     const before = flags();
     focused = value;
     const at = environment.performance.now();
     append(6, at, at, phase, phase, before, flags());
+    if (cost) cost.end();
   };
   environment.document.addEventListener('visibilitychange', visibility);
   environment.addEventListener('focus', () => focus(true));
@@ -372,8 +383,8 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
   return journal;
 }
 
-export function hitchJournalInitScript() {
-  return `if (window.top === window) window.soloQualificationHitchJournal = (${createBrowserHitchJournal.toString()})();`;
+export function hitchJournalInitScript({ costProbe = false } = {}) {
+  return `if (window.top === window) window.soloQualificationHitchJournal = (${createBrowserHitchJournal.toString()})(${JSON.stringify({ costProbe })});`;
 }
 
 export function* decodeHitchJournal(bytes) {

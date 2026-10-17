@@ -116,8 +116,8 @@
     },
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 63884,
-      "sha256": "f9d6d3b7c63f1ef26cca7cf5058cc881fab6bc0936a6df9a1e6a73257dc1e7d1"
+      "bytes": 66058,
+      "sha256": "f82dfa56b5c9a945e19d5bf83c91143d7f046fc07147da2fde66055cb9c5d0c5"
     },
     {
       "path": "scripts/solo-qualification.mjs",
@@ -156,13 +156,13 @@
     },
     {
       "path": "scripts/qualify-solo-diagnostics.mjs",
-      "bytes": 17343,
-      "sha256": "3a631883304de44fbb6c54f088d5a79108495e297c5231e4bee76faf38f363d6"
+      "bytes": 18407,
+      "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f"
     },
     {
       "path": "scripts/solo-diagnostics-analysis.mjs",
-      "bytes": 17343,
-      "sha256": "78e021e5751d90e65293d496b577104f2ed16cde685caaadc09d1becccb7fa9f"
+      "bytes": 17537,
+      "sha256": "6ad22a3c0a85208b4d36464d6ad7e12fb5feac46eb5aac8096f55c8896949225"
     },
     {
       "path": "scripts/observe-solo-performance.mjs",
@@ -186,8 +186,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 52384,
-      "sha256": "e418f0a99ed71c41b77c60500522b662a03c0b55642062c2ba5869de2910261d"
+      "bytes": 53286,
+      "sha256": "615e6d6b0684af0ba13514b73759e3c33b6f59f022dd72811f6f2ed8cd7552fc"
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",
