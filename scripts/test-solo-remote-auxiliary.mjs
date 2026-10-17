@@ -72,8 +72,8 @@ function raw(p, row) {
     },
   };
 }
-test('prospective manifest cannot launch before reviewed first-eight proof', () => {
-  assert.throws(() => bindAuxiliaryJob(manifest, 'speech-chromium'));
+test('ordinary qualification cannot launch without reviewed first-eight proof', () => {
+  assert.throws(() => bindAuxiliaryJob({ ...manifest, status: 'unreviewed' }, 'speech-chromium'));
   for (const change of [
     { firstEightAllCorrectnessPassed: false },
     { priorProofInspected: false },
@@ -99,7 +99,7 @@ test('six fixed jobs retain original six commands and append four WebKit audio a
   assert(jobs.every((p) => p.performanceExclusion && p.cpu === 1));
 });
 test('workflow matrix binds the six fixed jobs and preserves disjoint helper shutdown margins', () => {
-  assert.throws(() => auxiliaryMatrix(manifest));
+  assert.throws(() => auxiliaryMatrix({ ...manifest, status: 'unreviewed' }));
   const matrix = auxiliaryMatrix(admitted());
   assert.deepEqual(
     matrix.include.map((row) => row.job),
@@ -115,6 +115,30 @@ test('workflow matrix binds the six fixed jobs and preserves disjoint helper shu
   omitted.jobs.pop();
   assert.throws(() => auxiliaryMatrix(omitted));
 });
+test('independent diagnostics retain the failed prerequisite and cannot claim timing or retry', () => {
+  for (const job of Object.keys(AUXILIARY_JOBS)) {
+    const p = bindAuxiliaryJob(manifest, job);
+    assert.equal(p.status, 'reviewed-diagnostic-only');
+    assert.equal(p.release.firstEightAllCorrectnessPassed, false);
+    const result = auxiliaryAssessment(p, p.rows.at(-1), raw(p, p.rows.at(-1)), closed, '123.4');
+    assert.equal(result.firstEightAllCorrectnessPassed, false);
+    assert.equal(result.performanceQualification, 'excluded');
+  }
+  for (const change of [
+    { firstEightAllCorrectnessPassed: true },
+    { priorProofInspected: false },
+    { noUnclosedOwners: false },
+    { evidence: [] },
+    { automaticRetries: 1 },
+    { performanceQualification: 'passed' },
+    { predecessorRun: 1 },
+    { scope: 'performance-qualification' },
+  ]) {
+    const p = clone(manifest);
+    Object.assign(p.release, change);
+    assert.throws(() => bindAuxiliaryJob(p, 'speech-chromium'));
+  }
+});
 test('parallel auxiliary jobs retain separate job-named evidence artifacts', async () => {
   const workflow = await readFile(
     new URL('../.github/workflows/solo-remote-auxiliary-temporary.yml', import.meta.url),
@@ -127,6 +151,10 @@ test('parallel auxiliary jobs retain separate job-named evidence artifacts', asy
   );
   assert(!/matrix\.(phase|engine|repetition)/.test(workflow));
   assert.match(workflow, /cancel-in-progress: false/);
+  assert.match(
+    workflow,
+    /github\.event\.action == 'synchronize' && github\.event\.before == '74959676f2fc3de8039cebc30fb86905c562d661'/,
+  );
 });
 test('verified baseline reuse requires its separately pinned verifier without permitting arbitrary helpers', () => {
   const p = plan();

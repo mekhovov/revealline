@@ -1,4 +1,4 @@
-// Adapter draft only: common source/archive/process/finalization ownership is reused.
+// Common source/archive/process/finalization ownership is reused.
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { copyFile, lstat, mkdir, open, readFile, realpath, writeFile } from 'node:fs/promises';
@@ -66,12 +66,22 @@ const HASHES = {
   music: 'dd68efc71bb3b75ad8fa28817dd7d99630e312300286d142b24b6fab9990c493',
   recovery: '907929279c5231edb727cad3ff42e45ddf146129215fc27a9a6b809e0cd227d2',
 };
+function validateRelease(plan) {
+  const diagnostic = plan.status === 'reviewed-diagnostic-only';
+  assert(diagnostic || plan.status === 'reviewed-and-released');
+  assert.equal(plan.release.firstEightAllCorrectnessPassed, !diagnostic);
+  if (diagnostic) {
+    assert.equal(plan.release.scope, 'independent-audio-and-synthetic-recovery');
+    assert.equal(plan.release.predecessorRun, 38985941469);
+    assert.equal(plan.release.automaticRetries, 0);
+    assert.equal(plan.release.performanceQualification, 'excluded');
+  }
+}
 export function validateAuxiliaryPlan(plan) {
   assert.equal(plan.format, 'SoloHostedAuxiliaryPlanV1');
-  assert.equal(plan.status, 'reviewed-and-released');
+  validateRelease(plan);
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.maxParallel, 2);
-  assert.equal(plan.release.firstEightAllCorrectnessPassed, true);
   assert.equal(plan.release.priorProofInspected, true);
   assert.equal(plan.release.noUnclosedOwners, true);
   assert(
@@ -148,7 +158,7 @@ export function validateAuxiliaryPlan(plan) {
 }
 export function bindAuxiliaryJob(manifest, job) {
   assert.equal(manifest.format, 'SoloHostedAuxiliaryManifestV1');
-  assert.equal(manifest.status, 'reviewed-and-released');
+  validateRelease(manifest);
   assert.deepEqual(
     manifest.jobs.map(({ id }) => id),
     Object.keys(AUXILIARY_JOBS),
@@ -270,6 +280,8 @@ export async function prepareAuxiliaryMode(ctx) {
     };
   }
   ctx.report.performanceExclusion = true;
+  ctx.report.firstEightAllCorrectnessPassed = ctx.plan.release.firstEightAllCorrectnessPassed;
+  ctx.report.releaseScope = ctx.plan.release.scope ?? 'after-reviewed-first-eight';
   ctx.report.auxiliaryScope =
     'Linux correctness-only; intrusive audio identity or synthetic handler delivery. No timing, actual GPU loss, physical audio, or thermal qualification.';
   return { recipePath: scenario, browserVersion: null, audioFixture };
@@ -340,6 +352,7 @@ export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
     status: common && admitted ? 'passed' : 'failed',
     correctness: common ? 'pass' : 'fail',
     performanceQualification: 'excluded',
+    firstEightAllCorrectnessPassed: plan.release.firstEightAllCorrectnessPassed,
     audioIdentity: spec.recipe === 'recovery' ? 'not-requested' : (audio?.status ?? 'unobserved'),
     scope:
       spec.recipe === 'recovery'

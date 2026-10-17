@@ -21,8 +21,8 @@ concurrency:
 
 jobs:
   declare:
-    # Enable only after the current artifact and preceding correctness proof are bound.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && false
+    # Independent diagnostics only. One declared push edge; failed first-eight gate stays false.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '74959676f2fc3de8039cebc30fb86905c562d661'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
