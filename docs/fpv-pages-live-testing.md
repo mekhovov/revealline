@@ -17,6 +17,45 @@ No optional-package selector change or optional-package release/promotion is
 needed for direct-route live testing. The repository's existing main-branch
 review and product-release policies still apply.
 
+## Boundary correction publication — 17 October 2026
+
+[PR #1564](https://github.com/mekhovov/revealline/pull/1564) preserves restored
+profile history against stale imports, matches preset boolean review metadata,
+and keeps Regional recording/recovery export available at flight limits.
+All 12 non-skipped product checks passed for `dcad53bc6`; the general test/build
+jobs were explicitly skipped. The ordinary controller merged the correction as
+`fb3caf12bd43743670f47c42dc21f7a406223379`. Every source pin in the local correction
+receipt is unchanged at that merge.
+
+The normal [Pages publication](https://github.com/mekhovov/revealline/actions/runs/39038793037)
+passed build, deploy and verification. The
+[final public acceptance](fpv-boundary-public-final-acceptance.json) passes both
+fresh installations: ordinary password entry, saved 900°/s rates, visible offline
+preparation and a new browser process reopened offline. Academy's 11-tick record
+verifies hash `13902221`; World's 12-tick record verifies `1d473fbb`. Both workers
+are disposed. Public source bindings and the runner remained stable. Credentials
+are absent from reports.
+
+The first World attempt timed out waiting for startup after password submission.
+Its [failed report](fpv-boundary-public-acceptance.json) is preserved. Reopening
+the same profile without cache clearing or unlock changes succeeded; the full
+fresh rerun also passed. The cause is not established, and this observation is
+retained alongside the passing run.
+
+The [delivery receipt](fpv-boundary-delivery-verification.json) binds the deployed
+revision to hosted archive evidence, public sources, browser acceptance and the
+native fixture. The staged site contains 3,425 files and 960,384,263 bytes; its
+actual uncompressed archive is 963,368,960 bytes, leaving 16,631,040 bytes below
+the unchanged 980,000,000-byte cap. The separate optional catalogue is present and
+empty. Earlier reports below retain their original source and test scope.
+
+The [local boundary review](fpv-tuning-boundary-review.md) records 731 passing
+practice tests, six editor browser cases, actual 720-second Regional worker
+export/replay/recovery/restart and an actual Electron fixture with exact library
+retention. The latter checks short Regional export/recovery, not a native
+12-minute run. Physical devices, pilot feedback, aircraft measurements, iOS and
+wider-platform qualification remain deferred; Advanced is optional and unscored.
+
 ## Follow-up publication — 17 October 2026
 
 [PR #1562](https://github.com/mekhovov/revealline/pull/1562) delivers atomic drone

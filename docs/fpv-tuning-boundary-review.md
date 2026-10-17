@@ -69,11 +69,29 @@ profile's receipt. Its 26-tick Regional recording and recovery both verify hash
 All 209 source pins still match. This is one desktop fixture and a short flight,
 not production authentication, iOS or native maximum-duration qualification.
 
-[PR #1564](https://github.com/mekhovov/revealline/pull/1564) holds the committed
-corrections for ordinary release checks. Normal publication and live acceptance
-remain pending. The [local verification receipt](fpv-boundary-review-verification.json)
-and [implementation status](fpv-tuning-implementation-status.md) retain the exact
-scope and evidence.
+[PR #1564](https://github.com/mekhovov/revealline/pull/1564) passed all 12 non-skipped
+product checks. The normal controller merged the corrections as `fb3caf12b`, and
+ordinary Pages build, deployment and verification succeeded. The
+[final fresh public acceptance](fpv-boundary-public-final-acceptance.json) passes
+both Academy and World: normal password entry, saved 900°/s rates, visible offline
+installation, process restart offline, short unscored recording export, exact
+replay and worker disposal. All four corrected runtime modules match the public
+manifest and repository. The archive is 963,368,960 bytes, below the unchanged
+980,000,000-byte cap.
+
+The [first public attempt](fpv-boundary-public-acceptance.json) remains failed:
+World did not become ready within 60 seconds after password submission. Reopening
+the same profile succeeded without cache clearing or unlock changes; the complete
+fresh rerun also passed. No page errors were reported and the cause is not
+established. A [read-only bootstrap review](fpv-boundary-delivery/world-startup-review.json)
+found no missed-unlock race: script loading is ordered and World mounts directly.
+This is retained as a delivery observation, not relabelled a harness failure or
+evidence of universally reliable startup.
+
+The [delivery verification](fpv-boundary-delivery-verification.json),
+[local verification receipt](fpv-boundary-review-verification.json) and
+[implementation status](fpv-tuning-implementation-status.md) retain the exact
+scope and evidence. Available software corrections and publication are complete.
 Advanced remains optional, unscored and default-ineligible. Physical controls,
 pilots, aircraft identification, iOS execution and wider devices remain deferred;
 validated propwash/ground effect and scored/default promotion depend on those gates.

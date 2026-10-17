@@ -1,0 +1,169 @@
+{
+  "format": "FPVPublicFreshInstallEvidence.v1",
+  "generatedAt": "2026-10-17T14:14:14.340Z",
+  "expectedRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+  "publicRoot": "https://mekhovov.github.io/revealline/",
+  "runnerSha256": "0cb167dd6dec287f79bdbd8a8c2c82f92f3315d582fa0ec69c00a7dfc6b5dfce",
+  "passed": false,
+  "packages": [
+    {
+      "id": "civilian-fpv",
+      "base": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+      "profile": "/tmp/fpv-public-fresh-civilian-fpv-uJZmSu",
+      "passed": true,
+      "pageErrors": [],
+      "initiallyLocked": true,
+      "passwordFormAccepted": true,
+      "savedProfile": {
+        "id": "tuning-e02b1b14-ece0-4091-b932-5abcfbfdc2d7",
+        "name": "Fresh public offline acceptance",
+        "rollDegreesPerSecond": 900
+      },
+      "installation": {
+        "control": "Prepare offline package",
+        "completion": "This exact optional package is ready offline."
+      },
+      "installedWorker": {
+        "revision": "e9cf9cedfcee16ef7f219d74742b5f6719b2734f4524f5fefcb1fc41e63e10d7",
+        "ready": true,
+        "state": "activated",
+        "scope": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+        "controllerURL": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/worker.js"
+      },
+      "offlineWorker": {
+        "revision": "e9cf9cedfcee16ef7f219d74742b5f6719b2734f4524f5fefcb1fc41e63e10d7",
+        "ready": true,
+        "state": "activated",
+        "scope": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+        "controllerURL": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/worker.js"
+      },
+      "browserRestartedOffline": true,
+      "offlineNavigationFromServiceWorker": true,
+      "ratesPersisted": true,
+      "recording": {
+        "path": "docs/fpv-boundary-public-acceptance-civilian-fpv-recording.json",
+        "bytes": 3562,
+        "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94",
+        "missionTicks": 12,
+        "finalHash": "1d473fbb",
+        "scored": false
+      },
+      "replayVerified": true,
+      "workerCleanup": {
+        "created": 1,
+        "terminated": 1,
+        "tick": 12
+      },
+      "expectedWorkerURL": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/advanced-worker.mjs"
+    },
+    {
+      "id": "fpv-worlds",
+      "base": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/",
+      "profile": "/tmp/fpv-public-fresh-fpv-worlds-fiwH3Q",
+      "passed": false,
+      "pageErrors": [],
+      "initiallyLocked": true
+    }
+  ],
+  "phase": "fpv-worlds:fresh-password",
+  "authentication": "Ordinary public password form; no unlock injection; credential excluded from browser subprocess environment.",
+  "limits": [
+    "Fresh isolated persistent Chrome profiles on one desktop; not OS-installed PWAs, other browsers, storage eviction or physical-device qualification.",
+    "Visible production controls create/save rates and prepare offline content. Same browser profile is reopened offline in a new browser process.",
+    "Advanced reference practice is optional and unscored. Short neutral-input recordings test offline worker loading/export/replay/disposal, not flight fidelity, Regional streaming or throughput.",
+    "Replay verification calls the published production evaluator. This is not coverage of the recording import interface or all profile transfer workflows.",
+    "No existing user profiles, production mutations, forced service-worker activation or cache clearing. Test profiles and short recordings are retained for diagnosis."
+  ],
+  "publicBinding": {
+    "metadata": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+      "sourceCommittedAt": "2026-10-17T13:58:53Z",
+      "buildVersion": "main-fb3caf12bd43",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    },
+    "metadataSha256": "61fdbd8351fec8a151b9a7fe875415eae90e8f1bbb9ce70d5fdf4d08dfb02037",
+    "manifestSha256": "10f078eaa95537231faf71d73c62a42b418b724b85d6ed0459de42b79c06b7a9",
+    "pins": {
+      "game/access-gate.mjs": {
+        "path": "game/access-gate.mjs",
+        "bytes": 6833,
+        "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+      },
+      "optional-practice/civilian-fpv/app.mjs": {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "bytes": 97364,
+        "sha256": "cdbb034b2142651d819381045b69642d07b337518e597f332c2ede12c6e48933"
+      },
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "bytes": 403835,
+        "sha256": "3bfc52f4ab54e9505e21e3f95b684c259300502e9520cc705e6771aa4fb2e944"
+      },
+      "optional-practice/civilian-fpv/tuning-ui.mjs": {
+        "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+        "bytes": 62043,
+        "sha256": "32e3a57875aa5057b9e02044603fb7977f7e908994b630401dda68db8f9634f6"
+      },
+      "optional-practice/civilian-fpv/tuning-library.mjs": {
+        "path": "optional-practice/civilian-fpv/tuning-library.mjs",
+        "bytes": 14905,
+        "sha256": "30bb77df5b1b66d56a02f213b755ad727d332fe25390912b0e061f37d1a60122"
+      },
+      "optional-practice/civilian-fpv/rates.mjs": {
+        "path": "optional-practice/civilian-fpv/rates.mjs",
+        "bytes": 9599,
+        "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5"
+      },
+      "optional-practice/civilian-fpv/advanced-simulation.mjs": {
+        "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+        "bytes": 64132,
+        "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070"
+      },
+      "optional-practice/civilian-fpv/index.html": {
+        "path": "optional-practice/civilian-fpv/index.html",
+        "bytes": 15419,
+        "sha256": "afc6cc55dc832e54aeecb01864c2ecaa067a97154ccdc38b57c81ef60a3c2e84"
+      },
+      "optional-practice/civilian-fpv/worker.js": {
+        "path": "optional-practice/civilian-fpv/worker.js",
+        "bytes": 20856,
+        "sha256": "57cbbe4f2b809a759e9372b233a251d94a30fab6ea964c18969953fd250284df"
+      },
+      "optional-practice/civilian-fpv/advanced-worker.mjs": {
+        "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+        "bytes": 6436,
+        "sha256": "cd1a15105af58561e67dd05b38c99f42207452f92be4046737cb853f8009c9d8"
+      },
+      "optional-practice/fpv-worlds/index.html": {
+        "path": "optional-practice/fpv-worlds/index.html",
+        "bytes": 49494,
+        "sha256": "f36752ecf688965c81db7828c0702fe4e41a3d2115602b8e6fd70ec8d085fe10"
+      },
+      "optional-practice/fpv-worlds/worker.js": {
+        "path": "optional-practice/fpv-worlds/worker.js",
+        "bytes": 30104,
+        "sha256": "dc4ff9be3f5409ff3be08bbcfa103beb8096a8a012b1983ca52a3f40de8d7880"
+      },
+      "optional-practice/fpv-worlds/advanced-worker.mjs": {
+        "path": "optional-practice/fpv-worlds/advanced-worker.mjs",
+        "bytes": 170,
+        "sha256": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514"
+      }
+    },
+    "workers": {
+      "civilian-fpv": "e9cf9cedfcee16ef7f219d74742b5f6719b2734f4524f5fefcb1fc41e63e10d7",
+      "fpv-worlds": "5884fd18598058813742bc72430e05a669f4a22ee521bc5a3fe93f039e790e61"
+    }
+  },
+  "browser": {
+    "engine": "chrome",
+    "version": "155.0.8059.85"
+  },
+  "failure": "page.waitForFunction: Timeout 60000ms exceeded.\n    at ready (/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-public-fresh-install.mjs:94:8)\n    at smokeFPVPublicFreshInstall (/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-public-fresh-install.mjs:267:13)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-public-fresh-install.mjs:435:18",
+  "runnerFinalSha256": "0cb167dd6dec287f79bdbd8a8c2c82f92f3315d582fa0ec69c00a7dfc6b5dfce",
+  "runnerStable": true,
+  "completedAt": "2026-10-17T14:15:49.081Z"
+}

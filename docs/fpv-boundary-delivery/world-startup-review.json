@@ -1,0 +1,35 @@
+{
+  "format": "FpvWorldStartupReview.v1",
+  "createdAt": "2026-10-17T14:24:29.052318+00:00",
+  "scope": "Read-only source audit following the first public World startup timeout. No new runtime test or runtime change.",
+  "conclusion": "No concrete missed-unlock race found; initial timeout remains unexplained and not reproduced.",
+  "findings": [
+    "The access gate installs script load/error handlers before replacement and awaits each script; the World page orders the classic bootstrap before the module.",
+    "Unlock directly starts scripts. World entry mounts synchronously and does not depend on the earlier unlock event or DOMContentLoaded.",
+    "Shared shell readiness clears synchronously, independently of asynchronous IndexedDB initialization.",
+    "The fresh complete acceptance passed both routes using the same runner and public source pins."
+  ],
+  "limits": [
+    "The failed original run did not capture startup-stage or request timing.",
+    "Empty request/error arrays in the diagnostic describe the successful reopen, not the original timeout.",
+    "Neither a network stall nor a harness cause is established. No runtime fix is justified by this audit."
+  ],
+  "sources": [
+    {
+      "path": "game/access-gate.mjs",
+      "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/index.html",
+      "sha256": "d4bbc350de197693c91b093501b747bc2168e977604696293f36f79d553f9d08"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha256": "3bfc52f4ab54e9505e21e3f95b684c259300502e9520cc705e6771aa4fb2e944"
+    },
+    {
+      "path": ".cache/worktrees/radio-release-input/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "sha256": "8cc240620966e4f992f0838de4e249ba5334af9884b2d9d2c0d1d9e9672ba857"
+    }
+  ]
+}

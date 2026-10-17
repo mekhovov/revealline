@@ -1,13 +1,11 @@
 # FPV tuning implementation status
 
-Updated 2026-10-17. The post-publication review below corrects three additional
-failure boundaries. [PR #1561](https://github.com/mekhovov/revealline/pull/1561)
-merged implementation `eaecd6056` into `main` as `b2f251dac` through the normal
-repository controller. The ordinary Pages build, deployment and verification
-all succeeded. Historical reports retain their original source hashes and scope;
-the post-deployment evidence is recorded separately below. Those public receipts
-qualify the original deployed merge, not the later corrections.
-
+Updated 2026-10-17. The latest corrections are merged in
+[PR #1564](https://github.com/mekhovov/revealline/pull/1564) and published as
+`fb3caf12bd43743670f47c42dc21f7a406223379`. Available software work and delivery
+for this continuation are complete. Physical and wider-platform qualification
+remain deferred; Advanced remains optional, unscored and default-ineligible.
+Historical reports below retain their original source hashes and scope.
 
 ## Boundary completion review
 
@@ -22,8 +20,11 @@ remain unavailable and Advanced remains unscored.
 All **731 practice tests** and release validation pass. Six editor-browser cases
 pass, including delayed import completion after restoring same-rate history.
 All 20 pins in the existing numerical matrix still match; no physics, timing or
-quota change was made. Final browser/native receipts and ordinary delivery are
-recorded in the boundary review. Earlier reports below keep their original scope.
+quota change was made. Current browser/native receipts and ordinary delivery are
+bound by the [final delivery verification](fpv-boundary-delivery-verification.json).
+Both fresh public password/offline flows pass. An earlier World startup timeout
+remains recorded with an unknown cause; reopening its profile and a full fresh
+rerun succeeded. Earlier reports below keep their original scope.
 
 ## Post-publication corrections
 
