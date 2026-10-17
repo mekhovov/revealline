@@ -787,6 +787,9 @@ try {
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
         schedulePerformanceChunk: scheduleOptionalReplayChunk,
+        canRunPerformanceWork: () =>
+          !optionalVerificationPreparation ||
+          !['playing', 'suspended'].includes(optionalVerificationPreparation.snapshot().phase),
         ...(candidateHost
           ? {
               acceptPerformanceBinding: createSoloPerformanceBinding({
@@ -14218,7 +14221,9 @@ try {
       $('journey-save-retry').hidden = true;
       $('journey-save-export').hidden = true;
     }
-    window.addEventListener('online', () => void journeyProfile.flush());
+    window.addEventListener('online', () => {
+      if (!journeyRewardsDurable) void journeyProfile.flush();
+    });
   }
   $('journey-skip').onclick = () => {
     if (!normalSoloSkipAvailable()) return;

@@ -29,6 +29,7 @@ export function createJourneyPerformanceController({
   flushProfile,
   acceptBinding,
   scheduleChunk,
+  consumeOwnedState,
   canWrite,
   onChange = () => {},
 }) {
@@ -40,7 +41,8 @@ export function createJourneyPerformanceController({
     storedRows = [],
     sessionRows = [];
   let observedIdentity = null,
-    observedGeneration = -1;
+    observedGeneration = -1,
+    observation = null;
   const cache = new Map(),
     listeners = new Set(),
     jobs = new Set();
@@ -79,6 +81,7 @@ export function createJourneyPerformanceController({
     if (signal?.aborted || disposed) abort();
     return {
       signal: controller.signal,
+      abort: () => controller.abort(),
       done() {
         jobs.delete(controller);
         signal?.removeEventListener('abort', abort);
@@ -162,17 +165,32 @@ export function createJourneyPerformanceController({
     const value = await admittedInspection(() => inspectJourneyPerformance(source), signal);
     return inspectOwned(value, profile, signal);
   };
-  const adopt = (value, rows) => {
+  const inspectState = async (state, signal) => {
+    const owned = scheduleChunk && consumeOwnedState?.(state);
+    if (!owned) return inspect(state.performance, state.profile, signal);
+    // This capability consumes only a private receipt minted by the profile's
+    // exclusively owned backend. It grants no validation or replay authority.
+    const value = await admittedInspection(
+      () =>
+        state.performance === undefined
+          ? emptyJourneyPerformance()
+          : inspectJourneyPerformance(owned.performance),
+      signal,
+    );
+    const checked = await inspectOwned(value, state.profile, signal);
+    return { ...checked, owned };
+  };
+  const adopt = (value, rows, identity) => {
     if (disposed || value.generation < observedGeneration) return;
     stored = value;
     retainedEnvelope = value;
     storedRows = rows;
     observedGeneration = value.generation;
-    observedIdentity = canonicalJSON(value);
+    observedIdentity = identity ?? canonicalJSON(value);
     lastError = null;
     emit();
   };
-  const observe = (state) => {
+  const observeImmediately = (state) => {
     if (disposed) return;
     let identity, value;
     try {
@@ -214,8 +232,95 @@ export function createJourneyPerformanceController({
       })
       .finally(job.done);
   };
+  const observe = (state) => {
+    if (!scheduleChunk) return observeImmediately(state);
+    if (disposed) return;
+    // Only the latest pending observation owns queued optional work. Ordinary
+    // progress read/write completion never waits for this optional projection.
+    observation?.abort();
+    const job = lifetime();
+    observation = job;
+    let source, readOwned, hasPerformance, profile;
+    try {
+      const input = state.performance;
+      hasPerformance = input !== undefined;
+      profile = state.profile;
+      // IndexedDB results are objects, not immutable text. Own bounded plain
+      // bytes before yielding; full record inspection and hashing wait below.
+      const owned = consumeOwnedState?.(state);
+      if (owned?.unread) readOwned = owned.read;
+      source = !hasPerformance
+        ? emptyJourneyPerformance()
+        : owned
+          ? owned.performance
+          : snapshotJourneyPerformanceSource(input);
+    } catch (error) {
+      observedIdentity = null;
+      sessionRows = selectPerformanceRecords([...storedRows, ...sessionRows]);
+      storedRows = [];
+      lastError = error;
+      emit();
+      job.done();
+      if (observation === job) observation = null;
+      return;
+    }
+    const obtain = async () => {
+      if (readOwned) {
+        const latest = await readOwned({ signal: job.signal });
+        job.signal.throwIfAborted();
+        const receipt = consumeOwnedState?.(latest);
+        required(
+          receipt && !receipt.unread,
+          'Optional observation needs a completed private read.',
+        );
+        profile = latest.profile;
+        hasPerformance = receipt.performance !== undefined;
+        source = hasPerformance ? receipt.performance : emptyJourneyPerformance();
+      }
+    };
+    void obtain()
+      .then(() =>
+        admittedInspection(() => {
+          const value = inspectJourneyPerformance(source),
+            identity = canonicalJSON(value);
+          if (identity === observedIdentity) return null;
+          if (
+            hasPerformance &&
+            (!retainedEnvelope || value.generation >= retainedEnvelope.generation)
+          )
+            retainedEnvelope = value;
+          if (!allowed) {
+            observedIdentity = identity;
+            return null;
+          }
+          return { value, identity };
+        }, job.signal),
+      )
+      .then(async (pending) => {
+        if (!pending) return;
+        const checked = await inspectOwned(pending.value, profile, job.signal);
+        await admittedInspection(() => {
+          if (observation === job) adopt(checked.value, checked.rows, pending.identity);
+        }, job.signal);
+      })
+      .catch((error) => {
+        if (!job.signal.aborted && observation === job) {
+          observedIdentity = null;
+          sessionRows = selectPerformanceRecords([...storedRows, ...sessionRows]);
+          storedRows = [];
+          lastError = error;
+          emit();
+        }
+      })
+      .finally(() => {
+        job.done();
+        if (observation === job) observation = null;
+      });
+  };
+  const adoptOptional = (value, rows, signal) =>
+    scheduleChunk ? admittedInspection(() => adopt(value, rows), signal) : adopt(value, rows);
   const allRows = () => selectPerformanceRecords([...storedRows, ...sessionRows]);
-  const write = async (rows, state, signal) => {
+  const writeImmediately = async (rows, state, signal) => {
     required(canWrite(), 'The Journey saving lease is no longer held.');
     const before =
       state.performance === undefined ? undefined : inspectJourneyPerformance(state.performance);
@@ -243,6 +348,48 @@ export function createJourneyPerformanceController({
     );
     adopt(value, rows);
   };
+  const write = async (rows, state, signal, owned) => {
+    if (!scheduleChunk) return writeImmediately(rows, state, signal);
+    required(canWrite(), 'The Journey saving lease is no longer held.');
+    // Keep external backend values private before the optional admission wait.
+    const source = owned
+      ? owned.performance
+      : state.performance === undefined
+        ? undefined
+        : snapshotJourneyPerformanceSource(state.performance);
+    const prepare = () => {
+      required(canWrite(), 'The Journey saving lease is no longer held.');
+      const before = source === undefined ? undefined : inspectJourneyPerformance(source);
+      const value = inspectJourneyPerformance({
+        ...emptyJourneyPerformance(),
+        generation: (before?.generation ?? 0) + 1,
+        records: rows,
+      });
+      return { value, previous: canonicalJSON(source ?? null), identity: canonicalJSON(value) };
+    };
+    const prepared = scheduleChunk ? await admittedInspection(prepare, signal) : prepare();
+    signal?.throwIfAborted();
+    const saved = await backend.commitState(
+      [{ type: 'performance', previous: prepared.previous, performance: prepared.value }],
+      { signal },
+    );
+    signal?.throwIfAborted();
+    const savedOwned = consumeOwnedState?.(saved);
+    const accepted = savedOwned
+      ? savedOwned.performance
+      : snapshotJourneyPerformanceSource(saved.performance);
+    const publish = () => {
+      // Compare the exact admitted identity after I/O; a backend result is not
+      // trusted because a previous callback validated the proposed write.
+      required(
+        canonicalJSON(accepted) === prepared.identity,
+        'Journey performance changed while saving.',
+      );
+      adopt(accepted, rows, prepared.identity);
+    };
+    if (scheduleChunk) await admittedInspection(publish, signal);
+    else publish();
+  };
   const capture = async (input, { signal } = {}) => {
     required(allowed && !disposed, 'Solo Journey performance is unavailable.');
     required(sameClear(getProfile(), input), 'Performance capture needs its exact accepted clear.');
@@ -258,13 +405,16 @@ export function createJourneyPerformanceController({
       );
       // Hydrate durable bests before comparing, including a newer tab's record.
       let state,
+        checkedState,
         existing = [];
       try {
         await flushProfile();
-        state = await backend.readState();
-        const checked = await inspect(state.performance, state.profile, job.signal);
+        state = await backend.readState({ signal: job.signal });
+        const checked = await inspectState(state, job.signal);
+        checkedState = checked;
         existing = checked.rows;
-        adopt(checked.value, checked.rows);
+        if (scheduleChunk) await adoptOptional(checked.value, checked.rows, job.signal);
+        else adopt(checked.value, checked.rows);
       } catch (error) {
         job.signal.throwIfAborted();
         // A readable envelope can still contain a false replay. It is recovery
@@ -281,7 +431,7 @@ export function createJourneyPerformanceController({
       if (!state || !sameClear(state.profile, row) || !canWrite())
         return { comparison, durable: false };
       const retained = selectPerformanceRecords([...existing, row]);
-      await write(retained, state, job.signal);
+      await write(retained, state, job.signal, checkedState?.owned);
       sessionRows = sessionRows.filter(
         (item) => performanceRecordKey(item) !== performanceRecordKey(row),
       );
@@ -322,8 +472,8 @@ export function createJourneyPerformanceController({
         sessionRows = selectPerformanceRecords([...sessionRows, ...incoming.rows]);
         emit();
         if (!(await flushProfile()) || !canWrite()) return false;
-        const state = await backend.readState(),
-          current = await inspect(state.performance, state.profile, job.signal);
+        const state = await backend.readState({ signal: job.signal }),
+          current = await inspectState(state, job.signal);
         // Only explicitly imported verified rows may join durable history here;
         // unrelated session-only rows never leak into a later write.
         for (const row of incoming.rows)
@@ -332,7 +482,7 @@ export function createJourneyPerformanceController({
             'Imported performance needs its persisted Journey mission.',
           );
         const retained = selectPerformanceRecords([...current.rows, ...incoming.rows]);
-        await write(retained, state, job.signal);
+        await write(retained, state, job.signal, current.owned);
         const imported = new Set(incoming.rows.map(performanceRecordKey));
         sessionRows = sessionRows.filter((row) => !imported.has(performanceRecordKey(row)));
         emit();
