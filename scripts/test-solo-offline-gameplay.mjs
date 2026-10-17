@@ -8,11 +8,21 @@ import {
   offlineGameplayAssessment,
   offlineLaunchAllowsGameplay,
   playOfflineStarter,
+  NATIVE_OFFLINE_STATE_POLICY,
+  nativeOfflineStateApplied,
+  restoreNativeOfflineState,
   validateOfflineGameplayPlan,
 } from './solo-offline-gameplay.mjs';
 import { validateOfflinePlan } from './solo-remote-offline.mjs';
 
 const clone = (value) => structuredClone(value);
+const stateWitness = (url) => ({
+  status: 'applied',
+  session: 'existing-worker-observer',
+  commandCompleted: true,
+  before: { online: true, url },
+  after: { online: false, url },
+});
 function report() {
   const value = {
     gameplayRequested: true,
@@ -398,4 +408,316 @@ test('every failed offline restart field is retained before rejection without a 
     assert.equal(value.gameplay.status, 'failed');
     assert.equal(value.gameplay.exports.length, 0);
   }
+});
+
+test('the same retained native session restores both navigated documents without property injection', async () => {
+  const state = { online: false, url: 'about:blank' },
+    calls = [],
+    limits = [];
+  const navigator = {};
+  Object.defineProperty(navigator, 'onLine', { get: () => state.online });
+  const descriptor = Object.getOwnPropertyDescriptor(navigator, 'onLine');
+  const page = {
+    evaluate: (fn) =>
+      runInNewContext(`(${fn.toString()})()`, {
+        navigator,
+        location: { href: state.url },
+      }),
+  };
+  const cdp = {
+    send(method, parameters) {
+      calls.push({ method, parameters });
+      state.online = false;
+    },
+  };
+  for (const url of [
+    'https://test.invalid/game/',
+    'https://test.invalid/game/?journey=whole-spatial-v25',
+  ]) {
+    // The exact native V2 report observes this reset after each navigation.
+    state.online = true;
+    state.url = url;
+    const witness = {};
+    await restoreNativeOfflineState({
+      page,
+      cdp,
+      witness,
+      expectedURL: url,
+      ensureOwner() {},
+      isServerStopped: () => true,
+      bounded: async (_label, action, ms) => {
+        limits.push(ms);
+        return action();
+      },
+      remaining: () => 4000,
+    });
+    assert.equal(nativeOfflineStateApplied(witness, url), true);
+    assert.equal(witness.before.online, true);
+    assert.equal(witness.after.online, false);
+    assert.deepEqual(Object.getOwnPropertyDescriptor(navigator, 'onLine'), descriptor);
+  }
+  assert.deepEqual(limits, Array(6).fill(4000));
+  assert.deepEqual(
+    calls,
+    Array(2).fill({
+      method: 'Network.overrideNetworkState',
+      parameters: { offline: true, latency: 0, downloadThroughput: -1, uploadThroughput: -1 },
+    }),
+  );
+});
+
+test('native state correction retains failures and stops on ownership, transport or document changes', async () => {
+  for (const scenario of [
+    'stopped-before',
+    'stopped-after',
+    'server-running',
+    'wrong-before-url',
+    'wrong-after-url',
+    'still-online',
+    'command-rejected',
+    'command-timeout',
+  ]) {
+    const expectedURL = 'https://test.invalid/game/',
+      witness = {};
+    let active = scenario !== 'stopped-before',
+      reads = 0,
+      commands = 0;
+    await assert.rejects(
+      restoreNativeOfflineState({
+        page: {
+          evaluate() {
+            reads++;
+            if (scenario === 'stopped-after') active = false;
+            return {
+              online: reads === 1 || scenario === 'still-online',
+              url:
+                (reads === 1 && scenario === 'wrong-before-url') ||
+                (reads === 2 && scenario === 'wrong-after-url')
+                  ? 'https://unexpected.invalid/'
+                  : expectedURL,
+            };
+          },
+        },
+        cdp: {
+          send() {
+            commands++;
+            if (scenario === 'command-rejected') throw Error('Native command rejected');
+          },
+        },
+        witness,
+        expectedURL,
+        ensureOwner: () => assert(active, 'Owner stopped'),
+        isServerStopped: () => scenario !== 'server-running',
+        bounded: async (label, action, ms) => {
+          assert.equal(ms, 5000);
+          if (label === 'Restore owned native offline state' && scenario === 'command-timeout')
+            throw Error('Native command deadline');
+          return action();
+        },
+      }),
+    );
+    assert.equal(witness.status, 'failed', scenario);
+    assert.equal(typeof witness.failure, 'string');
+    assert.equal(nativeOfflineStateApplied(witness, expectedURL), false);
+    if (
+      [
+        'stopped-before',
+        'stopped-after',
+        'server-running',
+        'wrong-before-url',
+        'command-timeout',
+      ].includes(scenario)
+    )
+      assert.equal(commands, 0, scenario);
+    if (['wrong-after-url', 'still-online'].includes(scenario))
+      assert.equal(witness.commandCompleted, true);
+    if (scenario === 'still-online') assert.equal(witness.after.online, true);
+  }
+});
+
+test('corrected observer requires both native witnesses and every existing transport and replay gate', () => {
+  const value = report(),
+    launcherURL = 'https://test.invalid/game/',
+    address = launcherURL + '?journey=whole-spatial-v25';
+  value.nativeOfflineStatePolicy = NATIVE_OFFLINE_STATE_POLICY;
+  value.offlineNavigation.selectedGame = { url: launcherURL };
+  value.offlineNavigation.nativeState = stateWitness(launcherURL);
+  value.gameplay.address = address;
+  value.gameplay.nativeState = stateWitness(address);
+  assert.equal(offlineLaunchAllowsGameplay(value), true);
+  assert.equal(offlineGameplayAssessment(value), 'passed');
+  for (const mutate of [
+    (r) => {
+      r.nativeOfflineStatePolicy = 'unknown-policy';
+    },
+    (r) => {
+      delete r.offlineNavigation.nativeState;
+    },
+    (r) => {
+      r.offlineNavigation.nativeState.after.online = true;
+    },
+    (r) => {
+      r.offlineNavigation.nativeState.before.url = address;
+    },
+    (r) => {
+      r.offlineNavigation.nativeState.commandCompleted = false;
+    },
+    (r) => {
+      r.offlineNavigation.serverStopped = false;
+    },
+    (r) => {
+      r.offlineNavigation.offlineEmulation = false;
+    },
+    (r) => {
+      r.workerSnapshots[0].keysMatch = false;
+    },
+  ]) {
+    const changed = clone(value);
+    mutate(changed);
+    assert.equal(offlineLaunchAllowsGameplay(changed), false);
+    assert.equal(offlineGameplayAssessment(changed), 'failed');
+  }
+  for (const mutate of [
+    (r) => {
+      delete r.gameplay.nativeState;
+    },
+    (r) => {
+      r.gameplay.nativeState.after.online = true;
+    },
+    (r) => {
+      r.gameplay.nativeState.status = 'failed';
+    },
+    (r) => {
+      r.gameplay.nativeState.session = 'detached';
+    },
+    (r) => {
+      r.gameplay.nativeState.after.url = launcherURL;
+    },
+    (r) => {
+      r.replays[0].nativeReplay.observation.match = false;
+    },
+    (r) => {
+      r.gameplay.serverStoppedThroughout = false;
+    },
+  ]) {
+    const changed = clone(value);
+    mutate(changed);
+    assert.equal(offlineGameplayAssessment(changed), 'failed');
+  }
+  assert.equal(
+    offlineGameplayAssessment(report()),
+    'passed',
+    'Historical assessment remains unchanged',
+  );
+});
+
+test('corrected Starter navigation restores native state before readiness and still rejects an online access snapshot', async () => {
+  for (const restoreFails of [true, false]) {
+    const value = report(),
+      launcherURL = 'https://test.invalid/game/',
+      address = launcherURL + '?journey=whole-spatial-v25';
+    value.nativeOfflineStatePolicy = NATIVE_OFFLINE_STATE_POLICY;
+    value.offlineNavigation.selectedGame = { url: launcherURL };
+    value.offlineNavigation.nativeState = stateWitness(launcherURL);
+    const bytes = Buffer.from('exact selected HTML'),
+      pending = [],
+      events = [];
+    const page = {
+      async goto() {
+        events.push('navigation');
+        return {
+          status: () => 200,
+          fromServiceWorker: () => true,
+          body: async () => bytes,
+          headers: () => ({ 'content-security-policy': 'test-policy' }),
+        };
+      },
+      async waitForFunction() {
+        events.push('ready');
+      },
+      async evaluate() {
+        events.push('access');
+        return { unlocked: true, remembered: true, online: true, controller: 'service-worker.js' };
+      },
+      locator() {
+        assert.fail('A failed native correction or online access snapshot must never reach Start');
+      },
+    };
+    await assert.rejects(
+      playOfflineStarter({
+        page,
+        report: value,
+        address,
+        entryHTMLSha256: createHash('sha256').update(bytes).digest('hex'),
+        csp: 'test-policy',
+        accessKey: 'public-access',
+        ensureOwner() {},
+        isServerStopped: () => true,
+        step() {},
+        pending,
+        async restoreNativeState(witness, url, remaining) {
+          events.push('restore');
+          assert.equal(url, address);
+          assert(remaining(5000) <= 5000);
+          Object.assign(witness, stateWitness(url));
+          if (restoreFails) {
+            witness.status = 'failed';
+            throw Error('Native restore failed');
+          }
+        },
+      }),
+    );
+    await Promise.allSettled(pending);
+    assert.deepEqual(
+      events,
+      restoreFails ? ['navigation', 'restore'] : ['navigation', 'restore', 'ready', 'access'],
+    );
+    assert.equal(value.gameplay.status, 'failed');
+    assert.equal(value.gameplay.exports.length, 0);
+    if (!restoreFails) assert.equal(value.gameplay.offlineRestart.online, true);
+  }
+});
+
+test('late native command settlement cannot overwrite a failed witness or start another operation', async () => {
+  const expectedURL = 'https://test.invalid/game/',
+    witness = {};
+  let finish,
+    reads = 0,
+    pending;
+  const command = new Promise((resolve) => {
+    finish = resolve;
+  });
+  await assert.rejects(
+    restoreNativeOfflineState({
+      page: {
+        evaluate() {
+          reads++;
+          return { online: true, url: expectedURL };
+        },
+      },
+      cdp: {
+        send() {
+          return command;
+        },
+      },
+      witness,
+      expectedURL,
+      ensureOwner() {},
+      isServerStopped: () => true,
+      bounded: async (label, action) => {
+        if (label !== 'Restore owned native offline state') return action();
+        pending = action();
+        throw Error('Native command deadline');
+      },
+    }),
+    /Native command deadline/,
+  );
+  const failed = clone(witness);
+  finish();
+  await pending;
+  assert.deepEqual(witness, failed);
+  assert.equal(reads, 1);
+  assert.equal(nativeOfflineStateApplied(witness, expectedURL), false);
+  await assert.rejects(restoreNativeOfflineState({ witness }), /cannot be reused/);
+  assert.deepEqual(witness, failed);
 });
