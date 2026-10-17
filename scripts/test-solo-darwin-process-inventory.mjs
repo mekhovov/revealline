@@ -5,6 +5,7 @@ import { chmod, mkdtemp, readFile, realpath, rm, symlink, writeFile } from 'node
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
+import { parse } from 'acorn';
 import {
   createDarwinProcessInventory,
   admitDarwinBuildReceipt,
@@ -465,6 +466,218 @@ function foreignModel() {
 }
 const witnessFor = (m) =>
   darwinForeignSystemProcessWitness(m.row, m.before, m.all, m.owned, m.leader);
+
+function observedPsModel(change = {}) {
+  // Exact firstAmbiguousInventory row from 39049194885 / artifact12106841810.
+  // Parse the actual V3 field values; no fabricated parent/group snapshots.
+  const all = parseDarwinInventory(
+    v3bytes([
+      v3row({
+        pid: '3296',
+        ppid: '964',
+        pgid: '956',
+        birth: '00000000000000003296',
+        state: 'R',
+        rss: '0',
+        tagged: '0',
+        incomplete: '1',
+        path: Buffer.from('/bin/ps').toString('hex'),
+        euid: '0',
+        ruid: '0',
+        parentUniqueId: '964',
+        version: '6960',
+        pathStatus: '1',
+        rssStatus: '2',
+        tagStatus: '3',
+        ...change,
+      }),
+      v3row({
+        pid: '3266',
+        ppid: '3186',
+        pgid: '3266',
+        birth: '00000000000000003266',
+        parentUniqueId: '3186',
+        version: '6900',
+        tagged: '1',
+        tagStatus: '2',
+      }),
+    ]),
+  );
+  return {
+    row: all.get(3296),
+    all,
+    before: new Map(),
+    owned: new Map([[3266, all.get(3266)]]),
+    leader: 3266,
+    record: { foreignSystemProcesses: [] },
+  };
+}
+const collectModel = (m, darwin = true) =>
+  collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, m.record, darwin);
+
+test('exact retained root kernel ps row is non-browser while resource and tag values stay unknown', () => {
+  const m = observedPsModel();
+  assert.equal(witnessFor(m), null, 'retained row cannot prove the old foreign lineage');
+  assert.deepEqual(collectModel(m), []);
+  assert.equal(m.record.firstAmbiguousInventory, undefined);
+  assert.equal(m.record.foreignSystemProcesses.length, 1);
+  const w = m.record.foreignSystemProcesses[0];
+  assert.equal(w.format, 'SoloKnownNonBrowserProcessWitnessV1');
+  assert.equal(w.process.executable, '/bin/ps');
+  assert.equal(w.process.birth, '00000000000000003296');
+  assert.equal(w.process.version, 6960);
+  assert.equal(w.process.rss, null);
+  assert.equal(w.process.ownerTagged, null);
+  assert.equal(w.parent, undefined, 'no missing lineage is invented');
+  assert.equal(m.row.inspectionIncomplete, true);
+  assert.deepEqual([...m.owned.keys()], [3266]);
+  assert.deepEqual(collectModel(m), []);
+  assert.equal(m.record.foreignSystemProcesses.length, 1);
+  assert.deepEqual(collectModel(m, false), [m.row], 'Linux argv never receives kernel-path credit');
+});
+
+test('kernel ps classification rejects unknown paths, argv spoofing and incomplete or changed identity', () => {
+  for (const mutate of [
+    (m) => (m.row.pathInspection = 'unavailable'),
+    (m) => (m.row.pathInspection = 'unobserved'),
+    (m) => delete m.row.pathInspection,
+    (m) => (m.row.argv = 'ps'),
+    (m) => (m.row.argv = '/usr/bin/ps'),
+    (m) => (m.row.argv = '/bin/ps -- Chromium'),
+    (m) => (m.row.argv = '/owned/Chromium'),
+    (m) => (m.row.argv = '/owned/WebKitWebProcess'),
+    (m) => (m.row.identityKind = 'timestamp'),
+    (m) => (m.row.birth = '0'),
+    (m) => (m.row.parentUniqueId = undefined),
+    (m) => (m.row.parentUniqueId = '18446744073709551616'),
+    (m) => (m.row.version = undefined),
+    (m) => (m.row.version = -1),
+    (m) => (m.row.euid = 501),
+    (m) => (m.row.ruid = 501),
+    (m) => (m.row.ownerTagged = true),
+    (m) => (m.row.ownerTagInspection = 'present'),
+    (m) => (m.row.ownerTagInspection = 'unobserved'),
+    (m) => (m.row.rssInspection = 'unobserved'),
+    (m) => (m.row.rss = 123),
+    (m) => (m.row.ppid = 1),
+    (m) => (m.row.pgid = 1),
+    (m) => delete m.owned.get(m.leader).euid,
+    (m) => (m.owned.get(m.leader).ruid = 0),
+  ]) {
+    const m = observedPsModel();
+    mutate(m);
+    assert.deepEqual(collectModel(m), [m.row], String(mutate));
+    assert.equal(m.record.foreignSystemProcesses.length, 0);
+    assert.equal(m.record.firstAmbiguousInventory.ambiguousCount, 1);
+  }
+  for (const mutate of [(m) => (m.row.ppid = m.leader), (m) => (m.row.pgid = m.leader)]) {
+    const m = observedPsModel();
+    mutate(m);
+    assert.equal(isOwnedProcess(m.row, m.all, m.owned, m.leader, false), true);
+    assert.deepEqual(collectModel(m), [m.row]);
+  }
+});
+
+test('known ps never suppresses simultaneous browser or unknown executable and bounded witness overflow', () => {
+  const m = observedPsModel();
+  const browser = { ...m.row, pid: 4000, birth: '00000000000000004000', argv: '/app/WebKit' };
+  const unknown = {
+    ...m.row,
+    pid: 4001,
+    birth: '00000000000000004001',
+    argv: '/bin/ps',
+    pathInspection: 'unavailable',
+  };
+  m.all.set(browser.pid, browser);
+  m.all.set(unknown.pid, unknown);
+  assert.deepEqual(collectModel(m), [browser, unknown]);
+  assert.equal(m.record.firstAmbiguousInventory.row.pid, browser.pid);
+  assert.equal(m.record.foreignSystemProcesses.length, 1);
+  const cap = observedPsModel();
+  for (let i = 0; i < 64; i++)
+    cap.all.set(5000 + i, { ...cap.row, pid: 5000 + i, birth: String(5000 + i).padStart(20, '0') });
+  assert.equal(collectModel(cap).length, 1);
+  assert.equal(cap.record.foreignSystemProcesses.length, 64);
+  assert.equal(cap.record.foreignSystemProcessOverflow, true);
+  assert.deepEqual([...cap.owned.keys()], [3266]);
+});
+
+test('actual owner collection and cancellation keep incomplete owned rows failed and signal only fresh owned lifetimes', async () => {
+  const source = await readFile(
+    new URL('./run-solo-remote-correctness.mjs', import.meta.url),
+    'utf8',
+  );
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const owner = ast.body.find(
+    (n) => n.type === 'ExportNamedDeclaration' && n.declaration?.id?.name === 'ownedCommand',
+  ).declaration;
+  const declarations = owner.body.body.filter(
+    (n) =>
+      n.type === 'VariableDeclaration' &&
+      ['collect', 'signalOwned'].includes(n.declarations[0]?.id?.name),
+  );
+  assert.equal(declarations.length, 2);
+  const compiled = new Function(
+    'processes',
+    'isOwnedProcess',
+    'collectUnattributedProcesses',
+    'model',
+    'signal',
+    `
+    const {all,before,owned,leader,record}=model;
+    const child={pid:leader},darwin=true,ownerToken='modeled';let violation=null;
+    const same=(a,b)=>a&&b&&a.pid===b.pid&&a.birth===b.birth;
+    const live=row=>row&&!['Z','X'].includes(row.state);
+    const process={kill:signal};
+    ${declarations.map((n) => source.slice(n.start, n.end)).join('\n')}
+    return {collect,signalOwned,violation:()=>violation};
+  `,
+  );
+  for (const recycled of [false, true]) {
+    const m = observedPsModel();
+    const owned = {
+      ...m.row,
+      pid: 3300,
+      ppid: m.leader,
+      pgid: m.leader,
+      birth: '00000000000000003300',
+      parentUniqueId: String(m.leader),
+    };
+    m.all.set(owned.pid, owned);
+    const kills = [];
+    let calls = 0;
+    const api = compiled(
+      async () => {
+        calls++;
+        if (recycled && calls >= 3) {
+          const changed = new Map(m.all);
+          changed.set(owned.pid, { ...owned, birth: '00000000000000999999' });
+          return changed;
+        }
+        return m.all;
+      },
+      isOwnedProcess,
+      collectUnattributedProcesses,
+      m,
+      (pid, sig) => kills.push({ pid, sig }),
+    );
+    await api.collect();
+    assert.equal(api.violation(), 'owned-process-inspection-incomplete');
+    assert.equal(m.owned.has(owned.pid), true);
+    assert.equal(m.owned.has(3296), false);
+    await api.signalOwned('SIGTERM');
+    assert.equal(
+      kills.some((k) => k.pid === 3296),
+      false,
+      'known foreign ps is never signalled',
+    );
+    assert.equal(
+      kills.some((k) => k.pid === owned.pid),
+      !recycled,
+    );
+    assert(kills.every((k) => k.sig === 'SIGTERM' && m.owned.has(k.pid)));
+  }
+});
 test('actual collector retains exact foreign provenance without ownership or Linux exemption', () => {
   const m = foreignModel();
   assert.equal(isOwnedProcess(m.row, m.all, m.owned, m.leader, false), false);
