@@ -532,7 +532,11 @@ async function main() {
                       ? 'diagnostics'
                       : plan.format === 'SoloHostedCpuProfilePlanV1'
                         ? 'cpu-profile'
-                        : null;
+                        : plan.format === 'SoloHostedTouchPlanV1'
+                          ? 'touch'
+                          : plan.format === 'SoloHostedLifecyclePlanV1'
+                            ? 'lifecycle'
+                            : null;
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
@@ -547,6 +551,8 @@ async function main() {
         'supplemental',
         'cpu-profile',
         'diagnostics',
+        'touch',
+        'lifecycle',
       ].includes(extension) ||
       (extension === 'offline' && Boolean(plan.offline.gameplay));
   if (extension) {
@@ -563,6 +569,8 @@ async function main() {
         supplemental: 'validateSupplementalPlan',
         'cpu-profile': 'validateCpuProfilePlan',
         diagnostics: 'validateDiagnosticsPlan',
+        touch: 'validateTouchPlan',
+        lifecycle: 'validateLifecyclePlan',
       }[extension]
     ](plan);
   }
@@ -596,7 +604,11 @@ async function main() {
                         ? 'SoloHostedDiagnosticsCohortV1'
                         : extension === 'cpu-profile'
                           ? 'SoloHostedCpuProfileCohortV1'
-                          : 'SoloHostedCorrectness.v1',
+                          : extension === 'touch'
+                            ? 'SoloHostedTouchCohortV1'
+                            : extension === 'lifecycle'
+                              ? 'SoloHostedNativeLifecycleCohortV1'
+                              : 'SoloHostedCorrectness.v1',
     status: 'failed',
     performanceExclusion: ['sustained', 'demo-active'].includes(extension)
       ? plan.performanceExclusion
@@ -787,7 +799,7 @@ async function main() {
     };
     for (const engine of extension === 'diagnostics'
       ? [plan.engine]
-      : ['offline', 'demo', 'demo-active', 'cpu-profile'].includes(extension)
+      : ['offline', 'demo', 'demo-active', 'cpu-profile', 'lifecycle'].includes(extension)
         ? ['chromium']
         : ['chromium', 'webkit'])
       report.playwright.engines[engine] = {
@@ -1100,6 +1112,8 @@ async function main() {
           'supplemental',
           'cpu-profile',
           'diagnostics',
+          'touch',
+          'lifecycle',
         ].includes(extension) ||
         (extension === 'offline' && Boolean(plan.offline.gameplay))
       )
@@ -1120,6 +1134,8 @@ async function main() {
             supplemental: 'prepareSupplementalMode',
             'cpu-profile': 'prepareCpuProfileMode',
             diagnostics: 'prepareDiagnosticsMode',
+            touch: 'prepareTouchMode',
+            lifecycle: 'prepareLifecycleMode',
           }[extension]
         ](context);
       context.modeState = modeState;
@@ -1189,6 +1205,8 @@ async function main() {
               supplemental: 'runSupplementalRow',
               'cpu-profile': 'runCpuProfileRow',
               diagnostics: 'runDiagnosticsRow',
+              touch: 'runTouchRow',
+              lifecycle: 'runLifecycleRow',
             }[extension]
           ](context, row, dir, tmp);
         } else {
@@ -1356,7 +1374,11 @@ async function main() {
             ? plan.probe === 'journal-hook-cost-v1'
               ? 'Candidate exact retained CI package; matched synchronous journal-hook/application envelope only. Setup, observer registration/browser delivery, paused draining/export, outside-endpoint meter costs, GPU and total browser CPU are unobserved. No gameplay, physical-device or thermal qualification. Common ownership/resource supervision is included.'
               : 'Candidate exact retained CI package; fixed matched app-diagnostics overhead only. No baseline gameplay, hitch-journal overhead, gameplay performance, physical-device, GPU or thermal qualification. Common ownership/resource supervision is included in this hosted stratum.'
-            : `Candidate exact retained CI package; ${baselineScope}. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification.`;
+            : extension === 'touch'
+              ? 'Candidate exact retained CI package; trusted native touch events and application-latency evidence only. Viewport/touch emulation does not qualify physical iPhone or Steam Deck latency, GPU, scheduling or thermals.'
+              : extension === 'lifecycle'
+                ? 'Candidate exact retained CI package; observed native Chromium hidden/visible transitions and strict replay only. Missing visibility is unobserved; no synthetic event substitution, WebKit suspension, physical OS suspension or performance qualification.'
+                : `Candidate exact retained CI package; ${baselineScope}. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification.`;
     const finalSpace = await statfs(output);
     assert(finalSpace.bavail * finalSpace.bsize >= GiB + 4 * MiB, 'Final evidence disk reserve');
     assert(
