@@ -291,13 +291,24 @@ export function createJourneyBackend(options = {}) {
 
 // Only the store-created backend receives these private capabilities.
 function journeyBackend(
-  { indexedDB = globalThis.indexedDB, profileKey = 'journey', canWrite = () => true } = {},
+  {
+    indexedDB = globalThis.indexedDB,
+    profileKey = 'journey',
+    canWrite = () => true,
+    canRunProgressWork = () => true,
+  } = {},
   access = null,
 ) {
   // Content-review editions may isolate progress without changing the database
   // or historical default record. Never derive this key from a release version.
   validateProfileKey(profileKey);
   if (typeof canWrite !== 'function') throw new TypeError('A profile write guard is required.');
+  if (typeof canRunProgressWork !== 'function')
+    throw new TypeError('A progress phase predicate is required.');
+  const checkProgress = (policy) => {
+    if (!policy?.optional && !canRunProgressWork())
+      throw new Error('Journey progress remains pending until gameplay is paused.');
+  };
   const checkWrite = (events) => {
     if (events.length && !canWrite())
       throw new Error('The profile saving lease is no longer held.');
@@ -333,9 +344,11 @@ function journeyBackend(
   async function transaction(events, { signal } = {}, policy = null) {
     signal?.throwIfAborted();
     checkWrite(events);
+    checkProgress(policy);
     const db = await open();
     signal?.throwIfAborted();
     checkWrite(events);
+    checkProgress(policy);
     if (policy?.optional && !access.canRun()) throw access.deferred;
     return new Promise((resolve, reject) => {
       const tx = db.transaction('profiles', events.length ? 'readwrite' : 'readonly'),
@@ -363,6 +376,7 @@ function journeyBackend(
         try {
           signal?.throwIfAborted();
           checkWrite(events);
+          checkProgress(policy);
           if (policy?.optional && !access.canRun()) throw access.deferred;
           next = {
             profile:
@@ -456,7 +470,7 @@ function journeyBackend(
     profileKey,
     read: async () => (await transaction([])).profile,
     commit: async (events) => (await transaction(events)).profile,
-    readState: () => transaction([]),
+    readState: (options) => transaction([], options),
     commitState: (events, options) => transaction(events, options),
   };
 }
@@ -502,11 +516,18 @@ export function createJourneyProfileStore({
   acceptPerformanceBinding,
   schedulePerformanceChunk,
   canRunPerformanceWork = () => true,
+  canRunProgressWork = () => true,
 } = {}) {
   validateProfileKey(profileKey);
   if (typeof canWrite !== 'function') throw new TypeError('A profile write guard is required.');
   if (typeof canRunPerformanceWork !== 'function')
     throw new TypeError('An optional performance phase predicate is required.');
+  if (typeof canRunProgressWork !== 'function')
+    throw new TypeError('A progress phase predicate is required.');
+  const checkProgress = () => {
+    if (!canRunProgressWork())
+      throw new Error('Journey progress remains pending until gameplay is paused.');
+  };
   // These identities are private to the default backend. Neither injected
   // backends nor public observations can mint a validation/read receipt.
   const access =
@@ -531,7 +552,7 @@ export function createJourneyProfileStore({
       );
     return state;
   };
-  backend ??= journeyBackend({ profileKey, canWrite }, access);
+  backend ??= journeyBackend({ profileKey, canWrite, canRunProgressWork }, access);
   if (backend.profileKey !== undefined && backend.profileKey !== profileKey)
     throw new TypeError(t('errors:journey.backendEditionMismatch'));
   if (!Number.isFinite(operationTimeoutMs) || operationTimeoutMs <= 0)
@@ -547,6 +568,16 @@ export function createJourneyProfileStore({
         .then(resolve, reject)
         .finally(() => clearTimeout(timer));
     });
+  // A timed-out required read/write must not validate a late native result
+  // after the app has resumed. Abort is best effort: a committed transaction
+  // remains committed, and the next read reconciles an unconfirmed result.
+  const boundedProgress = (operation) => {
+    const controller = new AbortController();
+    return bounded(() => operation({ signal: controller.signal })).catch((error) => {
+      controller.abort(error);
+      throw error;
+    });
+  };
   let profile = emptyJourneyProfile(),
     pictures = emptyJourneyPictures(),
     stars = emptyJourneyStars(),
@@ -582,36 +613,47 @@ export function createJourneyProfileStore({
   };
   const acceptedState = (state) =>
     retainOwnedPerformanceState(access?.states.has(state) ? state : validateState(state));
-  const readState = async () =>
-    backend.readState
-      ? acceptedState(await (access ? access.readProgress() : backend.readState()))
+  const readState = async ({ signal } = {}) => {
+    signal?.throwIfAborted();
+    checkProgress();
+    const value = backend.readState
+      ? await (access ? access.readProgress({ signal }) : backend.readState({ signal }))
       : {
-          profile: validateJourneyProfile(await backend.read()),
+          profile: await backend.read(),
           pictures: emptyJourneyPictures(),
           stars: emptyJourneyStars(),
         };
-  const commitState = async (events, { signal } = {}) => {
+    signal?.throwIfAborted();
+    checkProgress();
+    return acceptedState(value);
+  };
+  const commitState = async (events, { signal, deferValidation = false } = {}) => {
     signal?.throwIfAborted();
     if (!canWrite()) throw new Error('The profile saving lease is no longer held.');
-    if (backend.commitState)
-      return acceptedState(
-        await (access
-          ? (events.some((event) => event.type === 'performance')
-              ? access.commitOptional
-              : access.commitProgress)(events, { signal })
-          : backend.commitState(events, { signal })),
-      );
-    if (events.some((event) => event.type === 'performance'))
-      throw new Error('This Journey backend cannot retain optional performance evidence.');
-    if (events.some((event) => event.picture !== undefined || event.pictures !== undefined))
-      throw new Error(t('errors:journey.pictureReceiptsUnsupported'));
-    if (events.some((event) => event.stars !== undefined || event.starResults !== undefined))
-      throw new Error(t('errors:journey.saveFailed'));
-    return {
-      profile: validateJourneyProfile(await backend.commit(events)),
-      pictures: emptyJourneyPictures(),
-      stars: emptyJourneyStars(),
-    };
+    const optional = events.some((event) => event.type === 'performance');
+    if (!optional) checkProgress();
+    let value;
+    if (backend.commitState) {
+      value = await (access
+        ? (optional ? access.commitOptional : access.commitProgress)(events, { signal })
+        : backend.commitState(events, { signal }));
+    } else {
+      if (optional)
+        throw new Error('This Journey backend cannot retain optional performance evidence.');
+      if (events.some((event) => event.picture !== undefined || event.pictures !== undefined))
+        throw new Error(t('errors:journey.pictureReceiptsUnsupported'));
+      if (events.some((event) => event.stars !== undefined || event.starResults !== undefined))
+        throw new Error(t('errors:journey.saveFailed'));
+      value = {
+        profile: await backend.commit(events),
+        pictures: emptyJourneyPictures(),
+        stars: emptyJourneyStars(),
+      };
+    }
+    // flush consumes only the exact confirmed prefix before its phase check.
+    // No validation or publication may run during play after this I/O boundary.
+    if (deferValidation) return value;
+    return acceptedState(value);
   };
   async function flush() {
     if (saving) return saving;
@@ -619,13 +661,27 @@ export function createJourneyProfileStore({
       try {
         // Loading and saving share one queue. An older read must never replace
         // a newly committed clear, including when play starts before load ends.
-        const latest = await bounded(readState);
+        const latest = await boundedProgress(readState);
+        checkProgress();
         adopt(pending.reduce(applyEvent, latest));
         while (pending.length) {
           const batch = [...pending];
-          const saved = await bounded(() => commitState(batch));
+          const saved = await boundedProgress(({ signal }) =>
+            commitState(batch, { signal, deferValidation: true }),
+          );
+          // Only the private native receipt confirms a validated commit before
+          // phase admission. Injected results keep defensive validation and may
+          // not discard retryable events on an invalid/unbounded response.
+          let accepted;
+          if (!access?.states.has(saved)) {
+            checkProgress();
+            accepted = acceptedState(saved);
+          }
+          if (!batch.every((event, index) => pending[index] === event))
+            throw new Error('Journey progress changed while saving.');
           pending = pending.slice(batch.length);
-          adopt(pending.reduce(applyEvent, saved));
+          checkProgress();
+          adopt(pending.reduce(applyEvent, accepted ?? acceptedState(saved)));
         }
         durable = true;
         error = null;
@@ -684,7 +740,8 @@ export function createJourneyProfileStore({
     if (index < 0) return { durable: true, picture: true, fallback: false, error: null };
     let latest;
     try {
-      latest = await bounded(readState);
+      latest = await boundedProgress(readState);
+      checkProgress();
     } catch {
       return {
         durable: false,
@@ -709,7 +766,9 @@ export function createJourneyProfileStore({
         const restoredPending = [...pending];
         restoredPending[receiptIndex] = primary;
         pending = restoredPending;
-        adopt(pending.reduce(applyEvent, latest));
+        // Restore the queued original even if play began after the failed
+        // receipt write; the already adopted in-memory clear remains valid.
+        if (canRunProgressWork()) adopt(pending.reduce(applyEvent, latest));
         status();
       }
     }
