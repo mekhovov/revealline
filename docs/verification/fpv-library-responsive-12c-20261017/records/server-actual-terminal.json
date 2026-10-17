@@ -1,0 +1,11 @@
+{
+  "UTC": "2026-10-17T22:21:08.501308+00:00",
+  "session": 81155,
+  "pid": 29104,
+  "actualToolExitCode": 1,
+  "stopRequested": "SIGINT after owned tab5 closed and viewport override reset",
+  "observedTerminal": "KeyboardInterrupt in selector.select while serve_forever; server_close/log close in finally",
+  "intentionalStop": true,
+  "doNotRelabelExit": true,
+  "activeOwnedServer": false
+}

@@ -1,0 +1,23 @@
+{
+  "UTC": "2026-10-17T22:23:25.406104+00:00",
+  "boundReceipt": {
+    "file": "ROOT-RESPONSIVE-OBSERVATION-RECEIPT.json",
+    "sha256": "6f7b4734e0bf02998ac10906ade5efc62d33344f09d6c6e127acc26fb697f220"
+  },
+  "lastAboveFloorSample": {
+    "UTC": "2026-10-17T22:18:04.717259+00:00",
+    "internalAvailableBytes": 3380666368
+  },
+  "postCloseSample": {
+    "UTC": "2026-10-17T22:21:08.501308+00:00",
+    "internalAvailableBytes": 3170197504
+  },
+  "floorBytes": 3221225472,
+  "shortfallBytes": 51027968,
+  "interpretation": "The post-close sample is below the 3 GiB floor. There is no sample between 22:18:04 and 22:21:08, so continuous headroom through the later observations is not established. Neither the crossing time nor its cause is inferred.",
+  "acceptedObservationScope": "Recorded visible UI and bounded control measurements remain observations, not a full compliant-window, full-player, public or physical acceptance.",
+  "gate": "HOLD_FURTHER_RENDERER_NATIVE_HEAVY_WORK_UNTIL_RENEWED_STABLE_3GIB",
+  "closedOwnedRendererAndServer": true,
+  "newCleanupPerformed": false,
+  "rawReceiptPreserved": true
+}

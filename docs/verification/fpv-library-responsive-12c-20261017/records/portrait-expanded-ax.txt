@@ -1,0 +1,81 @@
+Browser tab: 5, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 10, 36-37, 40-41, 1638
++				1640 text +
++					1641 text More worlds to fly
++				1642 text Choose Play to download a world once and prepare a disarmed flight. Installed worlds stay on this device. Prepare the simulator offline separately.
+~				39 button Refresh worlds
++				1643 text Choose a world and Play.
++				1644 container
++					1645 text Mountain Reservoir 8 challenges · Download 1.3 MiB
++					1646 button Play: Mountain Reservoir
++				1647 container
++					1648 text Festival Grounds 8 challenges · Download 1.2 MiB
++					1649 button Play: Festival Grounds
++				1650 container
++					1651 text Harbor Docks 8 challenges · Download 859 KiB
++					1652 button Play: Harbor Docks
++				1653 container
++					1654 text Castle Courtyard 1 challenge · Download 157 KiB
++					1655 button Play: Castle Courtyard
++				1656 container
++					1657 text City Plaza 1 challenge · Download 1.2 MiB
++					1658 button Play: City Plaza
++				1659 container
++					1660 text House Construction Site 1 challenge · Download 2.3 MiB
++					1661 button Play: House Construction Site
++				1662 container
++					1663 text Frontier Camp 1 challenge · Download 169 KiB
++					1664 button Play: Frontier Camp
++				1665 container
++					1666 text Industrial Service Yard 1 challenge · Download 1.0 MiB
++					1667 button Play: Industrial Service Yard
++				1668 container
++					1669 text Orbital Workshop 1 challenge · Download 153 KiB
++					1670 button Play: Orbital Workshop
++				1671 container
++					1672 text Pine Clearing 1 challenge · Download 129 KiB
++					1673 button Play: Pine Clearing
++				1674 container
++					1675 text Platform Garden 1 challenge · Download 156 KiB
++					1676 button Play: Platform Garden
++				1677 container
++					1678 text Race Paddock 1 challenge · Download 386 KiB
++					1679 button Play: Race Paddock
++				1680 container
++					1681 text Roadworks Practice Park 1 challenge · Download 63 KiB
++					1682 button Play: Roadworks Practice Park
++				1683 container
++					1684 text Rock Grotto 1 challenge · Download 1.4 MiB
++					1685 button Play: Rock Grotto
++				1686 container
++					1687 text Ruined Halls 1 challenge · Download 1.7 MiB
++					1688 button Play: Ruined Halls
++				1689 container
++					1690 text Dry-dock Shipyard 1 challenge · Download 594 KiB
++					1691 button Play: Dry-dock Shipyard
++				1692 container
++					1693 text Skate Plaza 1 challenge · Download 210 KiB
++					1694 button Play: Skate Plaza
++				1695 container
++					1696 text Village Green 1 challenge · Download 606 KiB
++					1697 button Play: Village Green
++				1698 container
++					1699 text Woodland Camp 1 challenge · Download 304 KiB
++					1700 button Play: Woodland Camp
++				1701 container
++					1702 text Coaster Practice Park 1 challenge · Download 1.1 MiB
++					1703 button Play: Coaster Practice Park
+~					59 button (expanded) Description: Versions for Lunar Basin (2), Help: Versions (2), Secondary Actions: Collapse
++					1704 container
++						1705 text Lunar Basin — flight study Shelter detail 768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity. Saved for offline flight · 2 MiB · composition-r3
++						1706 button Fly: Lunar Basin — flight study · Shelter detail · Version composition-r3
++						1707 button Remove this version: Lunar Basin — flight study · Shelter detail · Version composition-r3
++						1708 button Remove all versions
++					1709 container
++						1710 text Lunar Basin — flight study Version composition-r2 768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity. Saved for offline flight · 1.9 MiB · composition-r2
++						1711 button Fly: Lunar Basin — flight study · Version composition-r2
++						1712 button Remove this version: Lunar Basin — flight study · Version composition-r2
++						1713 button Remove all versions
++				1714 text ⚙
+The focused UI element is 59 button (expanded) Description: Versions for Lunar Basin (2), Help: Versions (2), Secondary Actions: Collapse

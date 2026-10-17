@@ -1,0 +1,8 @@
+Browser tab: 5, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 2-3, 12-32, 35, 43-44, 1640-1641, 1714
++				1714 text +
++				1715 button (disabled) Find goal, ID: journey-goal-find
++				1716 button (disabled) Clear goal, ID: journey-goal-clear
+~			1637 button (collapsed) SIM tools, Secondary Actions: Expand
+The focused UI element is 1711 button Fly: Lunar Basin — flight study · Version composition-r2

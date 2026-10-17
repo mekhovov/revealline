@@ -1,0 +1,182 @@
+[
+  {
+    "file": "ROOT-RESPONSIVE-OBSERVATION-RECEIPT.json",
+    "bytes": 8735,
+    "sha256": "6f7b4734e0bf02998ac10906ade5efc62d33344f09d6c6e127acc26fb697f220"
+  },
+  {
+    "file": "browser-closed.json",
+    "bytes": 115,
+    "sha256": "712bfe22b0dccf74c3448b39119e00da6ef85a2d558b26071c5cdf5d957ff8a2"
+  },
+  {
+    "file": "browser-warnings-errors.json",
+    "bytes": 2,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+    "file": "desktop-en-legacy-ax.txt",
+    "bytes": 5589,
+    "sha256": "cf42968f059acf6fc95e1914c985560dd6c41a93a53943170cd67832080cd9ad"
+  },
+  {
+    "file": "desktop-en-legacy-metrics.json",
+    "bytes": 14112,
+    "sha256": "b8a09cd42fc4d8cd838686a017abcb2bcdeb282bcec0aed739919d7a4ec00861"
+  },
+  {
+    "file": "desktop-en-legacy-older-focus.jpg",
+    "bytes": 86374,
+    "sha256": "70515be05886e9beaf32689c8dea3ba589cb9cab399e9f2be002aa653590dcdf"
+  },
+  {
+    "file": "desktop-uk-flight-deck-ax.txt",
+    "bytes": 335,
+    "sha256": "49c0924c636f893ea918182c962bf98c8199c164b956a5b0bd10c3efb0a910ba"
+  },
+  {
+    "file": "desktop-uk-flight-deck-metrics.json",
+    "bytes": 18369,
+    "sha256": "68528ecba3d52d4ffca0729e06d69c1402cba374ac0214b4ceea83368bb5dd2b"
+  },
+  {
+    "file": "desktop-uk-flight-deck-older-focus.jpg",
+    "bytes": 92360,
+    "sha256": "710584032b90a1f0d050d6a873e6d44244c528d0aea2a2f20284447d92674692"
+  },
+  {
+    "file": "display-before-ax.txt",
+    "bytes": 12394,
+    "sha256": "bc873dd4c15a6d83ff087dc441c3adf444f1770b44b70ab0816e9fa6ce1abb7c"
+  },
+  {
+    "file": "display-uk-flight-deck-ax.txt",
+    "bytes": 17289,
+    "sha256": "479ad5933a132440ddb2c3db69f1faf0a467ef11a7f41df64fe4a709b8b33759"
+  },
+  {
+    "file": "headroom-samples.jsonl",
+    "bytes": 324,
+    "sha256": "b124260c713968bf488ba4a403eaec47872b610dcea1c463b0cb648c7a0cdc51"
+  },
+  {
+    "file": "http.log",
+    "bytes": 18448,
+    "sha256": "4c3a3c1d8004c929ef78b92d286cc7d8bb497e19e8493b3e225c990bd14dc60c"
+  },
+  {
+    "file": "landscape-en-legacy-ax.txt",
+    "bytes": 669,
+    "sha256": "9106b6db1126045adab82afb8afeed19aafb1e7499ea71a9864b8e534f2f4f92"
+  },
+  {
+    "file": "landscape-en-legacy-metrics.json",
+    "bytes": 14091,
+    "sha256": "3235f5fbf7916543cc778dbd14627bfab4e6049d6eb6200d46a46588ac17fd50"
+  },
+  {
+    "file": "landscape-en-legacy-older-focus.jpg",
+    "bytes": 36574,
+    "sha256": "d3bf29c98be91a46d845f67d503abbb56cc452ce725e1572489f505c120f2cbd"
+  },
+  {
+    "file": "landscape-uk-flight-deck-ax.txt",
+    "bytes": 744,
+    "sha256": "43e04fb0dd08576177f38d31606769658f871cc7279f392aa37b81d2d5cf2dce"
+  },
+  {
+    "file": "landscape-uk-flight-deck-metrics.json",
+    "bytes": 18352,
+    "sha256": "c33567ab15aec010e89a060fb7c56a508e8a6fcec9c9bdc41f644b4f635941df"
+  },
+  {
+    "file": "landscape-uk-flight-deck-older-focus.jpg",
+    "bytes": 35876,
+    "sha256": "8a50136543086e6ed5d3645dd87c88135e55e4da68724d37e0e204c6bf385e5d"
+  },
+  {
+    "file": "portrait-en-legacy-metrics.json",
+    "bytes": 14119,
+    "sha256": "a99284bb905019d85884209f5bba5d21e88e962b2d70dd55f6fadd562c420a1e"
+  },
+  {
+    "file": "portrait-en-legacy-older-focus.jpg",
+    "bytes": 63418,
+    "sha256": "6ed65beb7513bc47b47e248711845fa288c0c3520e7d52c272b119f960f23466"
+  },
+  {
+    "file": "portrait-expanded-ax.txt",
+    "bytes": 4788,
+    "sha256": "e64abff25d8711ae19f46a3871a489538b9d8c0627bc702ef683bc9264bf0b5d"
+  },
+  {
+    "file": "portrait-metrics.json",
+    "bytes": 35767,
+    "sha256": "0a0c31b50288a8a2a26371d0aa8ded9099ebc68922ca8c43bc10efff83356453"
+  },
+  {
+    "file": "portrait-older-fly-focus-ax.txt",
+    "bytes": 281,
+    "sha256": "b50fd9d52dd61fa4085f1791b024ffa8f9abb76dbf8d69771111dbf569bfa5ee"
+  },
+  {
+    "file": "portrait-uk-flight-deck-ax.txt",
+    "bytes": 749,
+    "sha256": "c361bdc0ca935d282d0fb03bb1c4005250227a174f44f44c2cccb12dc449d3c8"
+  },
+  {
+    "file": "portrait-uk-flight-deck-metrics.json",
+    "bytes": 18382,
+    "sha256": "d12a32fd1d360a220a2a40053571531568090b82ec4a30811b84a3379b533ac4"
+  },
+  {
+    "file": "portrait-uk-flight-deck-older-focus.jpg",
+    "bytes": 59372,
+    "sha256": "40b9fc86b3a5e70b617e1ba36c692bb5b3b822fe55f64199ee256c74b05afcef"
+  },
+  {
+    "file": "portrait-versions.jpg",
+    "bytes": 73957,
+    "sha256": "fad788c02022681cd974257499d4dcd27783a68e3c1db1b2605672643bb02ddb"
+  },
+  {
+    "file": "saved-older-launch-initial-ax.txt",
+    "bytes": 1355,
+    "sha256": "c7be077f85f5231189ce64e0fdc4fc2cd7aaf0535494961ca759bb81d15eb883"
+  },
+  {
+    "file": "saved-older-menu-ax.txt",
+    "bytes": 4167,
+    "sha256": "ad3456329b83f28c79ac8e792b3e825d087e921a211c8b01f36fc07e1a1691b9"
+  },
+  {
+    "file": "saved-older-ready-after-reopen.jpg",
+    "bytes": 36764,
+    "sha256": "6cbc089f0c6ce3ebf858a442f4571879df16ba9558b45e3f960cce7900081983"
+  },
+  {
+    "file": "saved-older-ready-ax.txt",
+    "bytes": 1640,
+    "sha256": "b35ad00b41ca73c1c79edaac96ab3b0387347966891064aaebdcd5da24c43c71"
+  },
+  {
+    "file": "server-actual-terminal.json",
+    "bytes": 394,
+    "sha256": "4bd1474a6e1e36933821cd1ae6d2a2423deda7f96163d2de4bec30b2f69f8220"
+  },
+  {
+    "file": "server-intent.json",
+    "bytes": 563,
+    "sha256": "f394bf6136efc9f1a15cbbddd3db4a660d081ccc7a0b0a975c23fed465c0e8ed"
+  },
+  {
+    "file": "uk-library-reentry-ax.txt",
+    "bytes": 93429,
+    "sha256": "0ee0c9bad7963079206e20f1a56da0e36cb7574f4731d261f94f9f1148187882"
+  },
+  {
+    "file": "uk-library-settled-ax.txt",
+    "bytes": 14724,
+    "sha256": "84966b7c8b392022ffd25df8138928332ddfcc4dbeeba7ba630deab651af12fc"
+  }
+]

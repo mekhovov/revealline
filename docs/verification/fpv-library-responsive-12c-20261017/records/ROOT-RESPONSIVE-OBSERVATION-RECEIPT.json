@@ -1,0 +1,208 @@
+{
+  "UTC": "2026-10-17T22:21:08.501308+00:00",
+  "status": "PASS_SCOPED_RESPONSIVE_FLY_CONTROL_AND_SAVED_EDITION_REOPEN_LAUNCH",
+  "productHead": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "baseMainObserved": "fe1bb1cecbfcead7edaad24e802242d62b4e3b99",
+  "headObservedAt": "2026-10-17T22:13Z",
+  "origin": "http://127.0.0.1:57145",
+  "stageIdentitySHA256": "e0d6b6e898c5de6545191b484dab55956ed375002471d52a9de7a0cb32ed5017",
+  "packageRevision": "b6d25d6cc980a6b84b17d97dfd9740948edd860ea23bcc531f414962a0e34953",
+  "matrix": [
+    {
+      "capture": "portrait-en-legacy",
+      "UTC": "2026-10-17T22:17:27.000Z",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "language": "en",
+      "theme": "legacy",
+      "focusedAction": "Fly: Lunar Basin — flight study · Version composition-r2",
+      "focusedBounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 410.6484375
+      },
+      "centerHitVisible": true,
+      "keyboardFocusVisible": true,
+      "horizontalOverflow": "none in document/chooser/region measured scrollWidth versus clientWidth",
+      "metricsSHA256": "a99284bb905019d85884209f5bba5d21e88e962b2d70dd55f6fadd562c420a1e"
+    },
+    {
+      "capture": "landscape-en-legacy",
+      "UTC": "2026-10-17T22:17:39.764Z",
+      "viewport": {
+        "height": 390,
+        "width": 844
+      },
+      "language": "en",
+      "theme": "legacy",
+      "focusedAction": "Fly: Lunar Basin — flight study · Version composition-r2",
+      "focusedBounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": 104.546875
+      },
+      "centerHitVisible": true,
+      "keyboardFocusVisible": true,
+      "horizontalOverflow": "none in document/chooser/region measured scrollWidth versus clientWidth",
+      "metricsSHA256": "3235f5fbf7916543cc778dbd14627bfab4e6049d6eb6200d46a46588ac17fd50"
+    },
+    {
+      "capture": "desktop-en-legacy",
+      "UTC": "2026-10-17T22:17:50.886Z",
+      "viewport": {
+        "height": 800,
+        "width": 1280
+      },
+      "language": "en",
+      "theme": "legacy",
+      "focusedAction": "Fly: Lunar Basin — flight study · Version composition-r2",
+      "focusedBounds": {
+        "height": 44,
+        "width": 196.796875,
+        "x": 306.796875,
+        "y": 545.3828125
+      },
+      "centerHitVisible": true,
+      "keyboardFocusVisible": true,
+      "horizontalOverflow": "none in document/chooser/region measured scrollWidth versus clientWidth",
+      "metricsSHA256": "b8a09cd42fc4d8cd838686a017abcb2bcdeb282bcec0aed739919d7a4ec00861"
+    },
+    {
+      "capture": "desktop-uk-flight-deck",
+      "UTC": "2026-10-17T22:19:33.578Z",
+      "viewport": {
+        "height": 800,
+        "width": 1280
+      },
+      "language": "uk",
+      "theme": "industrial-workshop",
+      "focusedAction": "Летіти: Місячна улоговина — тренувальна зона · Версія composition-r2",
+      "focusedBounds": {
+        "height": 44,
+        "width": 196.796875,
+        "x": 306.796875,
+        "y": 570.1953125
+      },
+      "centerHitVisible": true,
+      "keyboardFocusVisible": true,
+      "horizontalOverflow": "none in document/chooser/region measured scrollWidth versus clientWidth",
+      "metricsSHA256": "68528ecba3d52d4ffca0729e06d69c1402cba374ac0214b4ceea83368bb5dd2b"
+    },
+    {
+      "capture": "portrait-uk-flight-deck",
+      "UTC": "2026-10-17T22:19:44.455Z",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "language": "uk",
+      "theme": "industrial-workshop",
+      "focusedAction": "Летіти: Місячна улоговина — тренувальна зона · Версія composition-r2",
+      "focusedBounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 197.1796875
+      },
+      "centerHitVisible": true,
+      "keyboardFocusVisible": true,
+      "horizontalOverflow": "none in document/chooser/region measured scrollWidth versus clientWidth",
+      "metricsSHA256": "d12a32fd1d360a220a2a40053571531568090b82ec4a30811b84a3379b533ac4"
+    },
+    {
+      "capture": "landscape-uk-flight-deck",
+      "UTC": "2026-10-17T22:19:59.286Z",
+      "viewport": {
+        "height": 390,
+        "width": 844
+      },
+      "language": "uk",
+      "theme": "industrial-workshop",
+      "focusedAction": "Летіти: Місячна улоговина — тренувальна зона · Версія composition-r2",
+      "focusedBounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": 104.390625
+      },
+      "centerHitVisible": true,
+      "keyboardFocusVisible": true,
+      "horizontalOverflow": "none in document/chooser/region measured scrollWidth versus clientWidth",
+      "metricsSHA256": "c33567ab15aec010e89a060fb7c56a508e8a6fcec9c9bdc41f644b4f635941df"
+    }
+  ],
+  "reopenLaunch": {
+    "chosenAction": "Fly: Lunar Basin — flight study · Version composition-r2",
+    "previouslySaved": true,
+    "normalFreshTabSameOrigin": true,
+    "loadingThenReadyToArmObserved": true,
+    "pausedZeroVerticalAndDriftObserved": true,
+    "menuTitle": "Lunar Basin — flight study",
+    "mode": "Acro",
+    "input": "Touch",
+    "camera": "Chase",
+    "armInvokedThisWindow": false,
+    "downloadActionInvokedThisWindow": false,
+    "identityLimit": "Visible edition/revision labels and exact Fly action are observed; no independent payload hash or hidden storage state inspected."
+  },
+  "http": {
+    "statusCounts": {
+      "200": 2,
+      "304": 160,
+      "404": 1
+    },
+    "errorRows": [
+      "2026-10-17T22:18:32.470512+00:00 code 404, message File not found",
+      "2026-10-17T22:18:32.470731+00:00 \"GET /revealline/game/ui/global-settings-tools.mjs HTTP/1.1\" 404 -"
+    ]
+  },
+  "browserWarningsErrors": [],
+  "measurementLimits": [
+    "Initial portrait-metrics.json includes descendants of closed details with geometrical boxes and only viewport intersection, so it is not a visibility/size acceptance for all entries. The six named matrix files filter closed details and require center element hit checks. Initial file is preserved.",
+    "Only the focused older-edition Fly button is the common fully visible primary control across all six samples; size/focus acceptance does not cover every other control or off-screen action.",
+    "Actual CSS sizes are DOM-observed, not inferred from screenshot pixels. One locale/theme pair per six combinations: English Signal Blue and Ukrainian Flight Deck, standard text size. Other theme/locale combinations and large text remain unqualified.",
+    "Normal scrolling and keyboard navigation are required in the short content pane; some labels and neighboring controls are clipped outside that pane in screenshots. No claim that an entire card fits at once.",
+    "Initial Ukrainian AX reentry had temporarily blank regional labels; settled AX and visible DOM text were captured before action."
+  ],
+  "negativeEvidence": [
+    "Preparation documentation lookup browser-capabilities was unavailable; supported viewport documentation was then read. No page mutation from lookup.",
+    "Initial unfiltered portrait geometry is retained with corrected visibility interpretation.",
+    "Intentional server SIGINT produced actual tool EXIT1 with KeyboardInterrupt; not relabeled EXIT0 or EXIT130."
+  ],
+  "remaining": [
+    "All physical-device/controller acceptance",
+    "All-library controls and full theme/language/text-size matrix",
+    "Unfamiliar legitimate retained IDs",
+    "Broader School/HUD/input/camera/starting-point and installed-core/full-player integration",
+    "Original public closing-IDB and zero-saved-map cause",
+    "Public flights, process restart/offline/eviction/quota/all24 coexistence",
+    "Permitted measured performance trace and actual unprofiled two-hour endurance"
+  ],
+  "rendererClosed": true,
+  "serverTerminal": {
+    "UTC": "2026-10-17T22:21:08.501308+00:00",
+    "session": 81155,
+    "pid": 29104,
+    "actualToolExitCode": 1,
+    "stopRequested": "SIGINT after owned tab5 closed and viewport override reset",
+    "observedTerminal": "KeyboardInterrupt in selector.select while serve_forever; server_close/log close in finally",
+    "intentionalStop": true,
+    "doNotRelabelExit": true,
+    "activeOwnedServer": false
+  },
+  "viewportOverrideReset": true,
+  "originalPublicStorageTouched": false,
+  "playerDataRemovedResetImported": false,
+  "featurePRDraft": true,
+  "fullPlayerAccepted": false,
+  "publicFlightAccepted": false,
+  "finalHeadroom": {
+    "UTC": "2026-10-17T22:21:08.501308+00:00",
+    "internalAvailableBytes": 3170197504,
+    "floorBytes": 3221225472
+  }
+}

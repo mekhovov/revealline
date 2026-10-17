@@ -1,0 +1,91 @@
+Browser tab: 5, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 8-9, 1633-1636, 1714-1716
++		1714 heading Find your next line, Value: 2, ID: journey-chooser-title
++			1715 text Find your next line
++		1716 text Every world and school lesson in one list. Choose a route; your flight settings and lesson coach stay with it.
++			1717 container
++				1718 text Collection
++				1719 pop up button (collapsed, settable) Collection, Value: All, ID: journey-collection, Secondary Actions: Expand
++					1720 menu
++						1721 (selected) All
++						1722 Classic
++			1723 container
++				1724 text Editions
++				1725 pop up button (collapsed, settable) Editions, Value: Current, ID: journey-lifecycle, Secondary Actions: Expand
++					1726 menu
++						1727 (selected) Current
++						1728 Archive
++						1729 All editions
++			1730 container
++				1731 text Campaign
++				1732 pop up button (collapsed, settable) Campaign, Value: All campaigns, ID: journey-campaign, Secondary Actions: Expand
++					1733 menu
++						1734 (selected) All campaigns
++						1735 Circuit stadium · FPV SIM · Worlds
++						1736 Pixel warehouse · FPV SIM · Worlds
++						1737 Parking garage · FPV SIM · Worlds
++						1738 Container yard · FPV SIM · Worlds
++						1739 Coastal airfield · FPV SIM · Worlds
++						1740 Amber quarry · FPV SIM · Worlds
++						1741 Skyline campus · FPV SIM · Worlds
++						1742 Harvest orchard · FPV SIM · Worlds
++						1743 Solar research park · FPV SIM · Worlds
++						1744 Railworks · FPV SIM · Worlds
++						1745 Training hangar · FPV SIM · Worlds
++						1746 Open meadow · FPV SIM · Worlds
++						1747 Woodland park · FPV SIM · Worlds
++						1748 Ukrainian courtyard · FPV SIM · Worlds
++						1749 Flight School · Optional self-level · FPV SIM · Worlds
++						1750 Flight School · Beginner · FPV SIM · Worlds
++						1751 Flight School · Experienced · FPV SIM · Worlds
++						1752 Flight School · Advanced · FPV SIM · Worlds
++						1753 Flight School · Pro · FPV SIM · Worlds
++						1754 Flight School · Master · FPV SIM · Worlds
++			1755 container
++				1756 checkbox (settable, integer) Description: Detailed mission cards, Value: 0, ID: journey-detailed-cards
++				1757 text Detailed mission cards
++			1758 container
++				1759 text Courses suited to aircraft class
++				1760 pop up button (collapsed, settable) Value: All courses, Secondary Actions: Expand, Courses suited to aircraft class Based on clearance estimates. All courses restores the full list. Aircraft dimensions stay unchanged.
++					1761 menu
++						1762 (selected) All courses
++						1763 Whoops · up to 2 inches
++						1764 Cinewhoops · 2.2 inches
++						1765 Freestyle · up to 5 inches
++						1766 Racing · 5 inches
++						1767 Long-range · up to 10 inches
++						1768 Training · 15 inches
++				1769 text Based on clearance estimates. All courses restores the full list. Aircraft dimensions stay unchanged.
++		1770 container Description: Campaign, ID: journey-campaign-rail
++			1771 checkbox Circuit stadium · 30 missions, Help: FPV SIM · Worlds, Value: 1
++			1772 checkbox Pixel warehouse · 27 missions, Help: FPV SIM · Worlds, Value: 0
++			1773 checkbox Parking garage · 17 missions, Help: FPV SIM · Worlds, Value: 0
++			1774 checkbox Container yard · 14 missions, Help: FPV SIM · Worlds, Value: 0
++			1775 checkbox Coastal airfield · 5 missions, Help: FPV SIM · Worlds, Value: 0
++			1776 checkbox Amber quarry · 5 missions, Help: FPV SIM · Worlds, Value: 0
++			1777 checkbox Skyline campus · 5 missions, Help: FPV SIM · Worlds, Value: 0
++			1778 checkbox Harvest orchard · 5 missions, Help: FPV SIM · Worlds, Value: 0
++			1779 checkbox Solar research park · 5 missions, Help: FPV SIM · Worlds, Value: 0
++			1780 checkbox Railworks · 5 missions, Help: FPV SIM · Worlds, Value: 0
++			1781 checkbox Training hangar · 4 missions, Help: FPV SIM · Worlds, Value: 0
++			1782 checkbox Open meadow · 8 missions, Help: FPV SIM · Worlds, Value: 0
++			1783 checkbox Woodland park · 8 missions, Help: FPV SIM · Worlds, Value: 0
++			1784 checkbox Ukrainian courtyard · 8 missions, Help: FPV SIM · Worlds, Value: 0
++			1785 checkbox Flight School · Optional self-level · 12 missions, Help: FPV SIM · Worlds, Value: 0
++			1786 checkbox Flight School · Beginner · 14 missions, Help: FPV SIM · Worlds, Value: 0
++			1787 checkbox Flight School · Experienced · 8 missions, Help: FPV SIM · Worlds, Value: 0
++			1788 checkbox Flight School · Advanced · 8 missions, Help: FPV SIM · Worlds, Value: 0
++			1789 checkbox Flight School · Pro · 8 missions, Help: FPV SIM · Worlds, Value: 0
++			1790 checkbox Flight School · Master · 8 missions, Help: FPV SIM · Worlds, Value: 0
++				1791 heading More worlds to fly, Value: 2, ID: world-catalogue-title
++					1792 text More worlds to fly
++				1793 heading Regional free flight, Value: 2, ID: regional-world-library-title
++					1794 text Regional free flight
++			1795 container journey-goal
++				1796 container journey-goal-status
++					1797 text No mission pinned.
++				1798 button Pin focused mission, ID: journey-goal-pin
++				1799 button (disabled) Find goal, ID: journey-goal-find
++				1800 button (disabled) Clear goal, ID: journey-goal-clear
+The focused UI element is 1711 button Fly: Lunar Basin — flight study · Version composition-r2

@@ -1,0 +1,368 @@
+{
+  "format": "fpv-responsive-public-projection.v1",
+  "rawRecords": 39,
+  "byteIdenticalRecords": 38,
+  "privatePathRedactedRecords": 1,
+  "unchangedJPEGImages": 8,
+  "rawOriginalsRetained": true,
+  "scope": "Direct responsive/reopen observations with continuous headroom compliance unestablished. Root receipt, headroom supplement and independent review must remain together.",
+  "files": [
+    {
+      "publicPath": "records/RAW-EVIDENCE-MANIFEST.json",
+      "rawFileName": "RAW-EVIDENCE-MANIFEST.json",
+      "rawBytes": 5544,
+      "rawSHA256": "a3dc64defa6b4a9665243e35663fa067078fa20ba266409e2c3152b11bf521c3",
+      "publicBytes": 5544,
+      "publicSHA256": "a3dc64defa6b4a9665243e35663fa067078fa20ba266409e2c3152b11bf521c3",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/RESPONSIVE-INDEPENDENT-REVIEW.json",
+      "rawFileName": "RESPONSIVE-INDEPENDENT-REVIEW.json",
+      "rawBytes": 5185,
+      "rawSHA256": "796984cdabee3d55446f051eb4a858b16b9850194818d5e50a04914ce85eaa56",
+      "publicBytes": 5185,
+      "publicSHA256": "796984cdabee3d55446f051eb4a858b16b9850194818d5e50a04914ce85eaa56",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ROOT-HEADROOM-LIMITATION-SUPPLEMENT.json",
+      "rawFileName": "ROOT-HEADROOM-LIMITATION-SUPPLEMENT.json",
+      "rawBytes": 1115,
+      "rawSHA256": "eee2bafe9db71f3290b4a68ed2d93b7045eed9e3cc849148b74aed4eb87caa21",
+      "publicBytes": 1115,
+      "publicSHA256": "eee2bafe9db71f3290b4a68ed2d93b7045eed9e3cc849148b74aed4eb87caa21",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ROOT-RESPONSIVE-OBSERVATION-RECEIPT.json",
+      "rawFileName": "ROOT-RESPONSIVE-OBSERVATION-RECEIPT.json",
+      "rawBytes": 8735,
+      "rawSHA256": "6f7b4734e0bf02998ac10906ade5efc62d33344f09d6c6e127acc26fb697f220",
+      "publicBytes": 8735,
+      "publicSHA256": "6f7b4734e0bf02998ac10906ade5efc62d33344f09d6c6e127acc26fb697f220",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/browser-closed.json",
+      "rawFileName": "browser-closed.json",
+      "rawBytes": 115,
+      "rawSHA256": "712bfe22b0dccf74c3448b39119e00da6ef85a2d558b26071c5cdf5d957ff8a2",
+      "publicBytes": 115,
+      "publicSHA256": "712bfe22b0dccf74c3448b39119e00da6ef85a2d558b26071c5cdf5d957ff8a2",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/browser-warnings-errors.json",
+      "rawFileName": "browser-warnings-errors.json",
+      "rawBytes": 2,
+      "rawSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "publicBytes": 2,
+      "publicSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/desktop-en-legacy-ax.txt",
+      "rawFileName": "desktop-en-legacy-ax.txt",
+      "rawBytes": 5589,
+      "rawSHA256": "cf42968f059acf6fc95e1914c985560dd6c41a93a53943170cd67832080cd9ad",
+      "publicBytes": 5589,
+      "publicSHA256": "cf42968f059acf6fc95e1914c985560dd6c41a93a53943170cd67832080cd9ad",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/desktop-en-legacy-metrics.json",
+      "rawFileName": "desktop-en-legacy-metrics.json",
+      "rawBytes": 14112,
+      "rawSHA256": "b8a09cd42fc4d8cd838686a017abcb2bcdeb282bcec0aed739919d7a4ec00861",
+      "publicBytes": 14112,
+      "publicSHA256": "b8a09cd42fc4d8cd838686a017abcb2bcdeb282bcec0aed739919d7a4ec00861",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/desktop-en-legacy-older-focus.jpg",
+      "rawFileName": "desktop-en-legacy-older-focus.jpg",
+      "rawBytes": 86374,
+      "rawSHA256": "70515be05886e9beaf32689c8dea3ba589cb9cab399e9f2be002aa653590dcdf",
+      "publicBytes": 86374,
+      "publicSHA256": "70515be05886e9beaf32689c8dea3ba589cb9cab399e9f2be002aa653590dcdf",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/desktop-uk-flight-deck-ax.txt",
+      "rawFileName": "desktop-uk-flight-deck-ax.txt",
+      "rawBytes": 335,
+      "rawSHA256": "49c0924c636f893ea918182c962bf98c8199c164b956a5b0bd10c3efb0a910ba",
+      "publicBytes": 335,
+      "publicSHA256": "49c0924c636f893ea918182c962bf98c8199c164b956a5b0bd10c3efb0a910ba",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/desktop-uk-flight-deck-metrics.json",
+      "rawFileName": "desktop-uk-flight-deck-metrics.json",
+      "rawBytes": 18369,
+      "rawSHA256": "68528ecba3d52d4ffca0729e06d69c1402cba374ac0214b4ceea83368bb5dd2b",
+      "publicBytes": 18369,
+      "publicSHA256": "68528ecba3d52d4ffca0729e06d69c1402cba374ac0214b4ceea83368bb5dd2b",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/desktop-uk-flight-deck-older-focus.jpg",
+      "rawFileName": "desktop-uk-flight-deck-older-focus.jpg",
+      "rawBytes": 92360,
+      "rawSHA256": "710584032b90a1f0d050d6a873e6d44244c528d0aea2a2f20284447d92674692",
+      "publicBytes": 92360,
+      "publicSHA256": "710584032b90a1f0d050d6a873e6d44244c528d0aea2a2f20284447d92674692",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/display-before-ax.txt",
+      "rawFileName": "display-before-ax.txt",
+      "rawBytes": 12394,
+      "rawSHA256": "bc873dd4c15a6d83ff087dc441c3adf444f1770b44b70ab0816e9fa6ce1abb7c",
+      "publicBytes": 12394,
+      "publicSHA256": "bc873dd4c15a6d83ff087dc441c3adf444f1770b44b70ab0816e9fa6ce1abb7c",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/display-uk-flight-deck-ax.txt",
+      "rawFileName": "display-uk-flight-deck-ax.txt",
+      "rawBytes": 17289,
+      "rawSHA256": "479ad5933a132440ddb2c3db69f1faf0a467ef11a7f41df64fe4a709b8b33759",
+      "publicBytes": 17289,
+      "publicSHA256": "479ad5933a132440ddb2c3db69f1faf0a467ef11a7f41df64fe4a709b8b33759",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/headroom-samples.jsonl",
+      "rawFileName": "headroom-samples.jsonl",
+      "rawBytes": 324,
+      "rawSHA256": "b124260c713968bf488ba4a403eaec47872b610dcea1c463b0cb648c7a0cdc51",
+      "publicBytes": 324,
+      "publicSHA256": "b124260c713968bf488ba4a403eaec47872b610dcea1c463b0cb648c7a0cdc51",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/http.log",
+      "rawFileName": "http.log",
+      "rawBytes": 18448,
+      "rawSHA256": "4c3a3c1d8004c929ef78b92d286cc7d8bb497e19e8493b3e225c990bd14dc60c",
+      "publicBytes": 18448,
+      "publicSHA256": "4c3a3c1d8004c929ef78b92d286cc7d8bb497e19e8493b3e225c990bd14dc60c",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/landscape-en-legacy-ax.txt",
+      "rawFileName": "landscape-en-legacy-ax.txt",
+      "rawBytes": 669,
+      "rawSHA256": "9106b6db1126045adab82afb8afeed19aafb1e7499ea71a9864b8e534f2f4f92",
+      "publicBytes": 669,
+      "publicSHA256": "9106b6db1126045adab82afb8afeed19aafb1e7499ea71a9864b8e534f2f4f92",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/landscape-en-legacy-metrics.json",
+      "rawFileName": "landscape-en-legacy-metrics.json",
+      "rawBytes": 14091,
+      "rawSHA256": "3235f5fbf7916543cc778dbd14627bfab4e6049d6eb6200d46a46588ac17fd50",
+      "publicBytes": 14091,
+      "publicSHA256": "3235f5fbf7916543cc778dbd14627bfab4e6049d6eb6200d46a46588ac17fd50",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/landscape-en-legacy-older-focus.jpg",
+      "rawFileName": "landscape-en-legacy-older-focus.jpg",
+      "rawBytes": 36574,
+      "rawSHA256": "d3bf29c98be91a46d845f67d503abbb56cc452ce725e1572489f505c120f2cbd",
+      "publicBytes": 36574,
+      "publicSHA256": "d3bf29c98be91a46d845f67d503abbb56cc452ce725e1572489f505c120f2cbd",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/landscape-uk-flight-deck-ax.txt",
+      "rawFileName": "landscape-uk-flight-deck-ax.txt",
+      "rawBytes": 744,
+      "rawSHA256": "43e04fb0dd08576177f38d31606769658f871cc7279f392aa37b81d2d5cf2dce",
+      "publicBytes": 744,
+      "publicSHA256": "43e04fb0dd08576177f38d31606769658f871cc7279f392aa37b81d2d5cf2dce",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/landscape-uk-flight-deck-metrics.json",
+      "rawFileName": "landscape-uk-flight-deck-metrics.json",
+      "rawBytes": 18352,
+      "rawSHA256": "c33567ab15aec010e89a060fb7c56a508e8a6fcec9c9bdc41f644b4f635941df",
+      "publicBytes": 18352,
+      "publicSHA256": "c33567ab15aec010e89a060fb7c56a508e8a6fcec9c9bdc41f644b4f635941df",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/landscape-uk-flight-deck-older-focus.jpg",
+      "rawFileName": "landscape-uk-flight-deck-older-focus.jpg",
+      "rawBytes": 35876,
+      "rawSHA256": "8a50136543086e6ed5d3645dd87c88135e55e4da68724d37e0e204c6bf385e5d",
+      "publicBytes": 35876,
+      "publicSHA256": "8a50136543086e6ed5d3645dd87c88135e55e4da68724d37e0e204c6bf385e5d",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/portrait-en-legacy-metrics.json",
+      "rawFileName": "portrait-en-legacy-metrics.json",
+      "rawBytes": 14119,
+      "rawSHA256": "a99284bb905019d85884209f5bba5d21e88e962b2d70dd55f6fadd562c420a1e",
+      "publicBytes": 14119,
+      "publicSHA256": "a99284bb905019d85884209f5bba5d21e88e962b2d70dd55f6fadd562c420a1e",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/portrait-en-legacy-older-focus.jpg",
+      "rawFileName": "portrait-en-legacy-older-focus.jpg",
+      "rawBytes": 63418,
+      "rawSHA256": "6ed65beb7513bc47b47e248711845fa288c0c3520e7d52c272b119f960f23466",
+      "publicBytes": 63418,
+      "publicSHA256": "6ed65beb7513bc47b47e248711845fa288c0c3520e7d52c272b119f960f23466",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/portrait-expanded-ax.txt",
+      "rawFileName": "portrait-expanded-ax.txt",
+      "rawBytes": 4788,
+      "rawSHA256": "e64abff25d8711ae19f46a3871a489538b9d8c0627bc702ef683bc9264bf0b5d",
+      "publicBytes": 4788,
+      "publicSHA256": "e64abff25d8711ae19f46a3871a489538b9d8c0627bc702ef683bc9264bf0b5d",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/portrait-metrics.json",
+      "rawFileName": "portrait-metrics.json",
+      "rawBytes": 35767,
+      "rawSHA256": "0a0c31b50288a8a2a26371d0aa8ded9099ebc68922ca8c43bc10efff83356453",
+      "publicBytes": 35767,
+      "publicSHA256": "0a0c31b50288a8a2a26371d0aa8ded9099ebc68922ca8c43bc10efff83356453",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/portrait-older-fly-focus-ax.txt",
+      "rawFileName": "portrait-older-fly-focus-ax.txt",
+      "rawBytes": 281,
+      "rawSHA256": "b50fd9d52dd61fa4085f1791b024ffa8f9abb76dbf8d69771111dbf569bfa5ee",
+      "publicBytes": 281,
+      "publicSHA256": "b50fd9d52dd61fa4085f1791b024ffa8f9abb76dbf8d69771111dbf569bfa5ee",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/portrait-uk-flight-deck-ax.txt",
+      "rawFileName": "portrait-uk-flight-deck-ax.txt",
+      "rawBytes": 749,
+      "rawSHA256": "c361bdc0ca935d282d0fb03bb1c4005250227a174f44f44c2cccb12dc449d3c8",
+      "publicBytes": 749,
+      "publicSHA256": "c361bdc0ca935d282d0fb03bb1c4005250227a174f44f44c2cccb12dc449d3c8",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/portrait-uk-flight-deck-metrics.json",
+      "rawFileName": "portrait-uk-flight-deck-metrics.json",
+      "rawBytes": 18382,
+      "rawSHA256": "d12a32fd1d360a220a2a40053571531568090b82ec4a30811b84a3379b533ac4",
+      "publicBytes": 18382,
+      "publicSHA256": "d12a32fd1d360a220a2a40053571531568090b82ec4a30811b84a3379b533ac4",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/portrait-uk-flight-deck-older-focus.jpg",
+      "rawFileName": "portrait-uk-flight-deck-older-focus.jpg",
+      "rawBytes": 59372,
+      "rawSHA256": "40b9fc86b3a5e70b617e1ba36c692bb5b3b822fe55f64199ee256c74b05afcef",
+      "publicBytes": 59372,
+      "publicSHA256": "40b9fc86b3a5e70b617e1ba36c692bb5b3b822fe55f64199ee256c74b05afcef",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/portrait-versions.jpg",
+      "rawFileName": "portrait-versions.jpg",
+      "rawBytes": 73957,
+      "rawSHA256": "fad788c02022681cd974257499d4dcd27783a68e3c1db1b2605672643bb02ddb",
+      "publicBytes": 73957,
+      "publicSHA256": "fad788c02022681cd974257499d4dcd27783a68e3c1db1b2605672643bb02ddb",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/saved-older-launch-initial-ax.txt",
+      "rawFileName": "saved-older-launch-initial-ax.txt",
+      "rawBytes": 1355,
+      "rawSHA256": "c7be077f85f5231189ce64e0fdc4fc2cd7aaf0535494961ca759bb81d15eb883",
+      "publicBytes": 1355,
+      "publicSHA256": "c7be077f85f5231189ce64e0fdc4fc2cd7aaf0535494961ca759bb81d15eb883",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/saved-older-menu-ax.txt",
+      "rawFileName": "saved-older-menu-ax.txt",
+      "rawBytes": 4167,
+      "rawSHA256": "ad3456329b83f28c79ac8e792b3e825d087e921a211c8b01f36fc07e1a1691b9",
+      "publicBytes": 4167,
+      "publicSHA256": "ad3456329b83f28c79ac8e792b3e825d087e921a211c8b01f36fc07e1a1691b9",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/saved-older-ready-after-reopen.jpg",
+      "rawFileName": "saved-older-ready-after-reopen.jpg",
+      "rawBytes": 36764,
+      "rawSHA256": "6cbc089f0c6ce3ebf858a442f4571879df16ba9558b45e3f960cce7900081983",
+      "publicBytes": 36764,
+      "publicSHA256": "6cbc089f0c6ce3ebf858a442f4571879df16ba9558b45e3f960cce7900081983",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/saved-older-ready-ax.txt",
+      "rawFileName": "saved-older-ready-ax.txt",
+      "rawBytes": 1640,
+      "rawSHA256": "b35ad00b41ca73c1c79edaac96ab3b0387347966891064aaebdcd5da24c43c71",
+      "publicBytes": 1640,
+      "publicSHA256": "b35ad00b41ca73c1c79edaac96ab3b0387347966891064aaebdcd5da24c43c71",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/server-actual-terminal.json",
+      "rawFileName": "server-actual-terminal.json",
+      "rawBytes": 394,
+      "rawSHA256": "4bd1474a6e1e36933821cd1ae6d2a2423deda7f96163d2de4bec30b2f69f8220",
+      "publicBytes": 394,
+      "publicSHA256": "4bd1474a6e1e36933821cd1ae6d2a2423deda7f96163d2de4bec30b2f69f8220",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/server-intent.json",
+      "rawFileName": "server-intent.json",
+      "rawBytes": 563,
+      "rawSHA256": "f394bf6136efc9f1a15cbbddd3db4a660d081ccc7a0b0a975c23fed465c0e8ed",
+      "publicBytes": 437,
+      "publicSHA256": "7f611503c38ee235d7c167131661f22a742f4949f9c35f18c9351e7820bcc80a",
+      "transformations": [
+        {
+          "kind": "literalPrivatePathReplacement",
+          "replacementToken": "<external-native-stage>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/uk-library-reentry-ax.txt",
+      "rawFileName": "uk-library-reentry-ax.txt",
+      "rawBytes": 93429,
+      "rawSHA256": "0ee0c9bad7963079206e20f1a56da0e36cb7574f4731d261f94f9f1148187882",
+      "publicBytes": 93429,
+      "publicSHA256": "0ee0c9bad7963079206e20f1a56da0e36cb7574f4731d261f94f9f1148187882",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/uk-library-settled-ax.txt",
+      "rawFileName": "uk-library-settled-ax.txt",
+      "rawBytes": 14724,
+      "rawSHA256": "84966b7c8b392022ffd25df8138928332ddfcc4dbeeba7ba630deab651af12fc",
+      "publicBytes": 14724,
+      "publicSHA256": "84966b7c8b392022ffd25df8138928332ddfcc4dbeeba7ba630deab651af12fc",
+      "transformations": []
+    }
+  ]
+}

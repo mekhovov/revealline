@@ -1,0 +1,755 @@
+{
+  "bodyClass": "field-kit sim-worlds mode-play-page",
+  "chooser": {
+    "bounds": {
+      "height": 844,
+      "width": 390,
+      "x": 0,
+      "y": 0
+    },
+    "clientWidth": 386,
+    "scrollWidth": 386
+  },
+  "controls": [
+    {
+      "bounds": {
+        "height": 44,
+        "width": 197.3671875,
+        "x": 22.1953125,
+        "y": -492.328125
+      },
+      "focused": false,
+      "label": "Refresh saved regions",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": -99.484375
+      },
+      "focused": false,
+      "label": "Download: Alpine Highlands — connected mountain study · Station approach",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": -43.484375
+      },
+      "focused": false,
+      "label": "Versions for Alpine Highlands (6)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": true
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 328.046875
+      },
+      "focused": false,
+      "label": "Download: Alpine Highlands — connected mountain study · Station approach",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": true
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 711.578125
+      },
+      "focused": false,
+      "label": "Download: Alpine Highlands — connected mountain study · Station concourse",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": true
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1073.515625
+      },
+      "focused": false,
+      "label": "Download: Alpine Highlands — connected mountain study · Quieter station surfaces",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1435.453125
+      },
+      "focused": false,
+      "label": "Download: Alpine Highlands — connected mountain study · Station surface details",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1797.390625
+      },
+      "focused": false,
+      "label": "Download: Alpine Highlands — connected mountain study · Refined contours",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2137.734375
+      },
+      "focused": false,
+      "label": "Download: Alpine Highlands — connected mountain study · Original study",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 354.3671875
+      },
+      "focused": false,
+      "label": "Fly: Lunar Basin — flight study · Shelter detail · Version composition-r3",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": true
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 410.3671875
+      },
+      "focused": true,
+      "label": "Versions for Lunar Basin (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": true
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 737.8046875
+      },
+      "focused": false,
+      "label": "Fly: Lunar Basin — flight study · Shelter detail · Version composition-r3",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": true
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 789.8046875
+      },
+      "focused": false,
+      "label": "Remove this version: Lunar Basin — flight study · Shelter detail · Version composition-r3",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": true
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 841.8046875
+      },
+      "focused": false,
+      "label": "Remove all versions",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": true
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1159.6484375
+      },
+      "focused": false,
+      "label": "Fly: Lunar Basin — flight study · Version composition-r2",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1211.6484375
+      },
+      "focused": false,
+      "label": "Remove this version: Lunar Basin — flight study · Version composition-r2",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1263.6484375
+      },
+      "focused": false,
+      "label": "Remove all versions",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1651.90625
+      },
+      "focused": false,
+      "label": "Download: Canal City — bridges and courtyards",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1707.90625
+      },
+      "focused": false,
+      "label": "Versions for Canal City (1)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1984.15625
+      },
+      "focused": false,
+      "label": "Download: Canal City — bridges and courtyards",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2084.1640625
+      },
+      "focused": false,
+      "label": "Download: Desert Expedition — rock routes · Rock practice routes",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2140.1640625
+      },
+      "focused": false,
+      "label": "Versions for Desert Expedition (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2446.0078125
+      },
+      "focused": false,
+      "label": "Download: Desert Expedition — rock routes · Rock practice routes",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2742.2578125
+      },
+      "focused": false,
+      "label": "Download: Desert Expedition — 16 km relief study · Open desert terrain",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2473.234375
+      },
+      "focused": false,
+      "label": "Download: Tropical coast — connected harbour · Connected harbour",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2529.234375
+      },
+      "focused": false,
+      "label": "Versions for Tropical coast (3)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2791.890625
+      },
+      "focused": false,
+      "label": "Download: Tropical coast — connected harbour · Connected harbour",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3066.546875
+      },
+      "focused": false,
+      "label": "Download: Tropical coast — six flight districts · Six coastal districts",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3290.015625
+      },
+      "focused": false,
+      "label": "Download: Tropical coast — bounded flight study",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2862.3046875
+      },
+      "focused": false,
+      "label": "Download: Railway Valley — six districts",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2918.3046875
+      },
+      "focused": false,
+      "label": "Versions for Railway Valley (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3151.3671875
+      },
+      "focused": false,
+      "label": "Download: Railway Valley — six districts",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3374.8359375
+      },
+      "focused": false,
+      "label": "Download: Railway Valley — regional preview",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3272.96875
+      },
+      "focused": false,
+      "label": "Download: Coaster Gardens — connected park study · Connected park routes",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3328.96875
+      },
+      "focused": false,
+      "label": "Versions for Coaster Gardens (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3613.21875
+      },
+      "focused": false,
+      "label": "Download: Coaster Gardens — connected park study · Connected park routes",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3909.46875
+      },
+      "focused": false,
+      "label": "Download: Coaster Gardens — 2 km study · Original park study",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3683.6328125
+      },
+      "focused": false,
+      "label": "Download: Hillside Town — civic court materials · Civic courtyard materials",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3739.6328125
+      },
+      "focused": false,
+      "label": "Versions for Hillside Town (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4023.8828125
+      },
+      "focused": false,
+      "label": "Download: Hillside Town — civic court materials · Civic courtyard materials",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4298.5390625
+      },
+      "focused": false,
+      "label": "Download: Hillside Town — terraces and courtyards · Terraces and courtyards",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4072.703125
+      },
+      "focused": false,
+      "label": "Download: Canyon Expanse — broad relief study",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4128.703125
+      },
+      "focused": false,
+      "label": "Versions for Canyon worlds (3)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4361.765625
+      },
+      "focused": false,
+      "label": "Download: Canyon Expanse — broad relief study",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4614.828125
+      },
+      "focused": false,
+      "label": "Download: Canyon Badlands — six districts · Edition · f69cc4d3",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4867.890625
+      },
+      "focused": false,
+      "label": "Download: Canyon Badlands — regional preview · Edition · 5cd92029",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4440.1796875
+      },
+      "focused": false,
+      "label": "Download: Urban earthworks — regional preview",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4496.1796875
+      },
+      "focused": false,
+      "label": "Versions for Urban earthworks (1)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY",
+      "visibleInViewport": false
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 4707.6484375
+      },
+      "focused": false,
+      "label": "Download: Urban earthworks — regional preview",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON",
+      "visibleInViewport": false
+    }
+  ],
+  "document": {
+    "clientWidth": 390,
+    "scrollWidth": 390
+  },
+  "focus": {
+    "bounds": {
+      "height": 44,
+      "width": 311.609375,
+      "x": 39.1953125,
+      "y": 410.3671875
+    },
+    "label": "Versions for Lunar Basin (2)",
+    "tag": "SUMMARY"
+  },
+  "language": "en",
+  "region": {
+    "bounds": {
+      "height": 5234.6796875,
+      "width": 371.609375,
+      "x": 9.1953125,
+      "y": -644.5
+    },
+    "clientWidth": 370,
+    "scrollWidth": 370
+  },
+  "themeAttributes": [
+    [
+      "lang",
+      "en"
+    ],
+    [
+      "data-fpv-worlds",
+      "true"
+    ],
+    [
+      "data-access-state",
+      "unlocked"
+    ],
+    [
+      "data-menu-animation",
+      "on"
+    ],
+    [
+      "data-interface-theme",
+      "legacy"
+    ],
+    [
+      "data-theme-styled",
+      "true"
+    ],
+    [
+      "data-theme-family",
+      "legacy"
+    ],
+    [
+      "data-theme-contrast",
+      "normal"
+    ],
+    [
+      "data-theme-texture",
+      "off"
+    ],
+    [
+      "data-theme-surface",
+      "bevel"
+    ],
+    [
+      "data-theme-material",
+      "legacy"
+    ],
+    [
+      "data-theme-finish",
+      "legacy"
+    ],
+    [
+      "data-theme-hud",
+      "normal"
+    ],
+    [
+      "data-theme-motion",
+      "full"
+    ],
+    [
+      "data-theme-density",
+      "player"
+    ],
+    [
+      "data-theme-text-size",
+      "standard"
+    ],
+    [
+      "data-theme-identity",
+      "244197d98597114d"
+    ],
+    [
+      "style",
+      "--iw-ink: #070914; --iw-panel: #11152b; --iw-panel-raised: #1a2040; --iw-text: #f7f4ff; --iw-muted: #b9bed6; --iw-line: #66709b; --iw-control-line: #7ee7ff; --iw-accent: #7ee7ff; --iw-amber: #ffcf5a; --iw-hazard: #ff718e; --iw-safe: #a7d9b4; --iw-on-accent: #17191b; --iw-selection: #7ee7ff; --iw-on-selection: #17191b; --iw-input: #070914; --iw-input-text: #f7f4ff; --iw-link: #7ee7ff; --iw-focus: #7ee7ff; --iw-on-hazard: #17191b; --iw-on-safe: #17191b; --iw-panel-default-background: #11152b; --iw-panel-default-foreground: #f7f4ff; --iw-panel-default-icon: #f7f4ff; --iw-panel-default-border: #7ee7ff; --iw-panel-hover-background: #11152b; --iw-panel-hover-foreground: #f7f4ff; --iw-panel-hover-icon: #f7f4ff; --iw-panel-hover-border: #7ee7ff; --iw-panel-pressed-background: #7ee7ff; --iw-panel-pressed-foreground: #17191b; --iw-panel-pressed-icon: #17191b; --iw-panel-pressed-border: #7ee7ff; --iw-panel-disabled-background: #11152b; --iw-panel-disabled-foreground: #b9bed6; --iw-panel-disabled-icon: #b9bed6; --iw-panel-disabled-border: #7ee7ff; --iw-panel-loading-background: #11152b; --iw-panel-loading-foreground: #f7f4ff; --iw-panel-loading-icon: #f7f4ff; --iw-panel-loading-border: #7ee7ff; --iw-dialog-default-background: #11152b; --iw-dialog-default-foreground: #f7f4ff; --iw-dialog-default-icon: #f7f4ff; --iw-dialog-default-border: #7ee7ff; --iw-dialog-hover-background: #11152b; --iw-dialog-hover-foreground: #f7f4ff; --iw-dialog-hover-icon: #f7f4ff; --iw-dialog-hover-border: #7ee7ff; --iw-dialog-pressed-background: #7ee7ff; --iw-dialog-pressed-foreground: #17191b; --iw-dialog-pressed-icon: #17191b; --iw-dialog-pressed-border: #7ee7ff; --iw-dialog-disabled-background: #11152b; --iw-dialog-disabled-foreground: #b9bed6; --iw-dialog-disabled-icon: #b9bed6; --iw-dialog-disabled-border: #7ee7ff; --iw-dialog-loading-background: #11152b; --iw-dialog-loading-foreground: #f7f4ff; --iw-dialog-loading-icon: #f7f4ff; --iw-dialog-loading-border: #7ee7ff; --iw-toolbar-default-background: #11152b; --iw-toolbar-default-foreground: #f7f4ff; --iw-toolbar-default-icon: #f7f4ff; --iw-toolbar-default-border: #7ee7ff; --iw-toolbar-hover-background: #11152b; --iw-toolbar-hover-foreground: #f7f4ff; --iw-toolbar-hover-icon: #f7f4ff; --iw-toolbar-hover-border: #7ee7ff; --iw-toolbar-pressed-background: #7ee7ff; --iw-toolbar-pressed-foreground: #17191b; --iw-toolbar-pressed-icon: #17191b; --iw-toolbar-pressed-border: #7ee7ff; --iw-toolbar-disabled-background: #11152b; --iw-toolbar-disabled-foreground: #b9bed6; --iw-toolbar-disabled-icon: #b9bed6; --iw-toolbar-disabled-border: #7ee7ff; --iw-toolbar-loading-background: #11152b; --iw-toolbar-loading-foreground: #f7f4ff; --iw-toolbar-loading-icon: #f7f4ff; --iw-toolbar-loading-border: #7ee7ff; --iw-button-default-background: #1a2040; --iw-button-default-foreground: #f7f4ff; --iw-button-default-icon: #f7f4ff; --iw-button-default-border: #7ee7ff; --iw-button-hover-background: #1a2040; --iw-button-hover-foreground: #f7f4ff; --iw-button-hover-icon: #f7f4ff; --iw-button-hover-border: #7ee7ff; --iw-button-pressed-background: #7ee7ff; --iw-button-pressed-foreground: #17191b; --iw-button-pressed-icon: #17191b; --iw-button-pressed-border: #7ee7ff; --iw-button-disabled-background: #11152b; --iw-button-disabled-foreground: #b9bed6; --iw-button-disabled-icon: #b9bed6; --iw-button-disabled-border: #7ee7ff; --iw-button-loading-background: #1a2040; --iw-button-loading-foreground: #f7f4ff; --iw-button-loading-icon: #f7f4ff; --iw-button-loading-border: #7ee7ff; --iw-input-default-background: #070914; --iw-input-default-foreground: #f7f4ff; --iw-input-default-icon: #f7f4ff; --iw-input-default-border: #7ee7ff; --iw-input-hover-background: #070914; --iw-input-hover-foreground: #f7f4ff; --iw-input-hover-icon: #f7f4ff; --iw-input-hover-border: #7ee7ff; --iw-input-pressed-background: #7ee7ff; --iw-input-pressed-foreground: #17191b; --iw-input-pressed-icon: #17191b; --iw-input-pressed-border: #7ee7ff; --iw-input-disabled-background: #11152b; --iw-input-disabled-foreground: #b9bed6; --iw-input-disabled-icon: #b9bed6; --iw-input-disabled-border: #7ee7ff; --iw-input-loading-background: #070914; --iw-input-loading-foreground: #f7f4ff; --iw-input-loading-icon: #f7f4ff; --iw-input-loading-border: #7ee7ff; --iw-tab-default-background: #1a2040; --iw-tab-default-foreground: #f7f4ff; --iw-tab-default-icon: #f7f4ff; --iw-tab-default-border: #7ee7ff; --iw-tab-hover-background: #1a2040; --iw-tab-hover-foreground: #f7f4ff; --iw-tab-hover-icon: #f7f4ff; --iw-tab-hover-border: #7ee7ff; --iw-tab-pressed-background: #7ee7ff; --iw-tab-pressed-foreground: #17191b; --iw-tab-pressed-icon: #17191b; --iw-tab-pressed-border: #7ee7ff; --iw-tab-disabled-background: #11152b; --iw-tab-disabled-foreground: #b9bed6; --iw-tab-disabled-icon: #b9bed6; --iw-tab-disabled-border: #7ee7ff; --iw-tab-loading-background: #1a2040; --iw-tab-loading-foreground: #f7f4ff; --iw-tab-loading-icon: #f7f4ff; --iw-tab-loading-border: #7ee7ff; --iw-slot-default-background: #070914; --iw-slot-default-foreground: #f7f4ff; --iw-slot-default-icon: #f7f4ff; --iw-slot-default-border: #7ee7ff; --iw-slot-hover-background: #070914; --iw-slot-hover-foreground: #f7f4ff; --iw-slot-hover-icon: #f7f4ff; --iw-slot-hover-border: #7ee7ff; --iw-slot-pressed-background: #7ee7ff; --iw-slot-pressed-foreground: #17191b; --iw-slot-pressed-icon: #17191b; --iw-slot-pressed-border: #7ee7ff; --iw-slot-disabled-background: #11152b; --iw-slot-disabled-foreground: #b9bed6; --iw-slot-disabled-icon: #b9bed6; --iw-slot-disabled-border: #7ee7ff; --iw-slot-loading-background: #070914; --iw-slot-loading-foreground: #f7f4ff; --iw-slot-loading-icon: #f7f4ff; --iw-slot-loading-border: #7ee7ff; --iw-tooltip-default-background: #11152b; --iw-tooltip-default-foreground: #f7f4ff; --iw-tooltip-default-icon: #f7f4ff; --iw-tooltip-default-border: #7ee7ff; --iw-tooltip-hover-background: #11152b; --iw-tooltip-hover-foreground: #f7f4ff; --iw-tooltip-hover-icon: #f7f4ff; --iw-tooltip-hover-border: #7ee7ff; --iw-tooltip-pressed-background: #7ee7ff; --iw-tooltip-pressed-foreground: #17191b; --iw-tooltip-pressed-icon: #17191b; --iw-tooltip-pressed-border: #7ee7ff; --iw-tooltip-disabled-background: #11152b; --iw-tooltip-disabled-foreground: #b9bed6; --iw-tooltip-disabled-icon: #b9bed6; --iw-tooltip-disabled-border: #7ee7ff; --iw-tooltip-loading-background: #11152b; --iw-tooltip-loading-foreground: #f7f4ff; --iw-tooltip-loading-icon: #f7f4ff; --iw-tooltip-loading-border: #7ee7ff; --iw-progress-default-background: #070914; --iw-progress-default-foreground: #f7f4ff; --iw-progress-default-icon: #f7f4ff; --iw-progress-default-border: #7ee7ff; --iw-progress-hover-background: #070914; --iw-progress-hover-foreground: #f7f4ff; --iw-progress-hover-icon: #f7f4ff; --iw-progress-hover-border: #7ee7ff; --iw-progress-pressed-background: #7ee7ff; --iw-progress-pressed-foreground: #17191b; --iw-progress-pressed-icon: #17191b; --iw-progress-pressed-border: #7ee7ff; --iw-progress-disabled-background: #11152b; --iw-progress-disabled-foreground: #b9bed6; --iw-progress-disabled-icon: #b9bed6; --iw-progress-disabled-border: #7ee7ff; --iw-progress-loading-background: #070914; --iw-progress-loading-foreground: #f7f4ff; --iw-progress-loading-icon: #f7f4ff; --iw-progress-loading-border: #7ee7ff; --iw-hud-default-background: #070914; --iw-hud-default-foreground: #f7f4ff; --iw-hud-default-icon: #f7f4ff; --iw-hud-default-border: #7ee7ff; --iw-hud-hover-background: #070914; --iw-hud-hover-foreground: #f7f4ff; --iw-hud-hover-icon: #f7f4ff; --iw-hud-hover-border: #7ee7ff; --iw-hud-pressed-background: #7ee7ff; --iw-hud-pressed-foreground: #17191b; --iw-hud-pressed-icon: #17191b; --iw-hud-pressed-border: #7ee7ff; --iw-hud-disabled-background: #11152b; --iw-hud-disabled-foreground: #b9bed6; --iw-hud-disabled-icon: #b9bed6; --iw-hud-disabled-border: #7ee7ff; --iw-hud-loading-background: #070914; --iw-hud-loading-foreground: #f7f4ff; --iw-hud-loading-icon: #f7f4ff; --iw-hud-loading-border: #7ee7ff; --iw-table-default-background: #11152b; --iw-table-default-foreground: #f7f4ff; --iw-table-default-icon: #f7f4ff; --iw-table-default-border: #7ee7ff; --iw-table-hover-background: #11152b; --iw-table-hover-foreground: #f7f4ff; --iw-table-hover-icon: #f7f4ff; --iw-table-hover-border: #7ee7ff; --iw-table-pressed-background: #7ee7ff; --iw-table-pressed-foreground: #17191b; --iw-table-pressed-icon: #17191b; --iw-table-pressed-border: #7ee7ff; --iw-table-disabled-background: #11152b; --iw-table-disabled-foreground: #b9bed6; --iw-table-disabled-icon: #b9bed6; --iw-table-disabled-border: #7ee7ff; --iw-table-loading-background: #11152b; --iw-table-loading-foreground: #f7f4ff; --iw-table-loading-icon: #f7f4ff; --iw-table-loading-border: #7ee7ff; --iw-inspector-default-background: #11152b; --iw-inspector-default-foreground: #f7f4ff; --iw-inspector-default-icon: #f7f4ff; --iw-inspector-default-border: #7ee7ff; --iw-inspector-hover-background: #11152b; --iw-inspector-hover-foreground: #f7f4ff; --iw-inspector-hover-icon: #f7f4ff; --iw-inspector-hover-border: #7ee7ff; --iw-inspector-pressed-background: #7ee7ff; --iw-inspector-pressed-foreground: #17191b; --iw-inspector-pressed-icon: #17191b; --iw-inspector-pressed-border: #7ee7ff; --iw-inspector-disabled-background: #11152b; --iw-inspector-disabled-foreground: #b9bed6; --iw-inspector-disabled-icon: #b9bed6; --iw-inspector-disabled-border: #7ee7ff; --iw-inspector-loading-background: #11152b; --iw-inspector-loading-foreground: #f7f4ff; --iw-inspector-loading-icon: #f7f4ff; --iw-inspector-loading-border: #7ee7ff; --iw-checkbox-default-background: #1a2040; --iw-checkbox-default-foreground: #f7f4ff; --iw-checkbox-default-icon: #f7f4ff; --iw-checkbox-default-border: #7ee7ff; --iw-checkbox-hover-background: #1a2040; --iw-checkbox-hover-foreground: #f7f4ff; --iw-checkbox-hover-icon: #f7f4ff; --iw-checkbox-hover-border: #7ee7ff; --iw-checkbox-pressed-background: #7ee7ff; --iw-checkbox-pressed-foreground: #17191b; --iw-checkbox-pressed-icon: #17191b; --iw-checkbox-pressed-border: #7ee7ff; --iw-checkbox-disabled-background: #11152b; --iw-checkbox-disabled-foreground: #b9bed6; --iw-checkbox-disabled-icon: #b9bed6; --iw-checkbox-disabled-border: #7ee7ff; --iw-checkbox-loading-background: #1a2040; --iw-checkbox-loading-foreground: #f7f4ff; --iw-checkbox-loading-icon: #f7f4ff; --iw-checkbox-loading-border: #7ee7ff; --iw-radio-default-background: #1a2040; --iw-radio-default-foreground: #f7f4ff; --iw-radio-default-icon: #f7f4ff; --iw-radio-default-border: #7ee7ff; --iw-radio-hover-background: #1a2040; --iw-radio-hover-foreground: #f7f4ff; --iw-radio-hover-icon: #f7f4ff; --iw-radio-hover-border: #7ee7ff; --iw-radio-pressed-background: #7ee7ff; --iw-radio-pressed-foreground: #17191b; --iw-radio-pressed-icon: #17191b; --iw-radio-pressed-border: #7ee7ff; --iw-radio-disabled-background: #11152b; --iw-radio-disabled-foreground: #b9bed6; --iw-radio-disabled-icon: #b9bed6; --iw-radio-disabled-border: #7ee7ff; --iw-radio-loading-background: #1a2040; --iw-radio-loading-foreground: #f7f4ff; --iw-radio-loading-icon: #f7f4ff; --iw-radio-loading-border: #7ee7ff; --iw-slider-default-background: #1a2040; --iw-slider-default-foreground: #f7f4ff; --iw-slider-default-icon: #f7f4ff; --iw-slider-default-border: #7ee7ff; --iw-slider-hover-background: #1a2040; --iw-slider-hover-foreground: #f7f4ff; --iw-slider-hover-icon: #f7f4ff; --iw-slider-hover-border: #7ee7ff; --iw-slider-pressed-background: #7ee7ff; --iw-slider-pressed-foreground: #17191b; --iw-slider-pressed-icon: #17191b; --iw-slider-pressed-border: #7ee7ff; --iw-slider-disabled-background: #11152b; --iw-slider-disabled-foreground: #b9bed6; --iw-slider-disabled-icon: #b9bed6; --iw-slider-disabled-border: #7ee7ff; --iw-slider-loading-background: #1a2040; --iw-slider-loading-foreground: #f7f4ff; --iw-slider-loading-icon: #f7f4ff; --iw-slider-loading-border: #7ee7ff; --iw-scrollbar-default-background: #1a2040; --iw-scrollbar-default-foreground: #f7f4ff; --iw-scrollbar-default-icon: #f7f4ff; --iw-scrollbar-default-border: #7ee7ff; --iw-scrollbar-hover-background: #1a2040; --iw-scrollbar-hover-foreground: #f7f4ff; --iw-scrollbar-hover-icon: #f7f4ff; --iw-scrollbar-hover-border: #7ee7ff; --iw-scrollbar-pressed-background: #7ee7ff; --iw-scrollbar-pressed-foreground: #17191b; --iw-scrollbar-pressed-icon: #17191b; --iw-scrollbar-pressed-border: #7ee7ff; --iw-scrollbar-disabled-background: #11152b; --iw-scrollbar-disabled-foreground: #b9bed6; --iw-scrollbar-disabled-icon: #b9bed6; --iw-scrollbar-disabled-border: #7ee7ff; --iw-scrollbar-loading-background: #1a2040; --iw-scrollbar-loading-foreground: #f7f4ff; --iw-scrollbar-loading-icon: #f7f4ff; --iw-scrollbar-loading-border: #7ee7ff; --iw-notification-default-background: #11152b; --iw-notification-default-foreground: #f7f4ff; --iw-notification-default-icon: #f7f4ff; --iw-notification-default-border: #7ee7ff; --iw-notification-hover-background: #11152b; --iw-notification-hover-foreground: #f7f4ff; --iw-notification-hover-icon: #f7f4ff; --iw-notification-hover-border: #7ee7ff; --iw-notification-pressed-background: #7ee7ff; --iw-notification-pressed-foreground: #17191b; --iw-notification-pressed-icon: #17191b; --iw-notification-pressed-border: #7ee7ff; --iw-notification-disabled-background: #11152b; --iw-notification-disabled-foreground: #b9bed6; --iw-notification-disabled-icon: #b9bed6; --iw-notification-disabled-border: #7ee7ff; --iw-notification-loading-background: #11152b; --iw-notification-loading-foreground: #f7f4ff; --iw-notification-loading-icon: #f7f4ff; --iw-notification-loading-border: #7ee7ff; --iw-primary-default-background: #7ee7ff; --iw-primary-default-foreground: #17191b; --iw-primary-default-icon: #17191b; --iw-primary-default-border: #7ee7ff; --iw-primary-hover-background: #7ee7ff; --iw-primary-hover-foreground: #17191b; --iw-primary-hover-icon: #17191b; --iw-primary-hover-border: #7ee7ff; --iw-primary-pressed-background: #7ee7ff; --iw-primary-pressed-foreground: #17191b; --iw-primary-pressed-icon: #17191b; --iw-primary-pressed-border: #7ee7ff; --iw-primary-disabled-background: #11152b; --iw-primary-disabled-foreground: #b9bed6; --iw-primary-disabled-icon: #b9bed6; --iw-primary-disabled-border: #7ee7ff; --iw-primary-loading-background: #7ee7ff; --iw-primary-loading-foreground: #17191b; --iw-primary-loading-icon: #17191b; --iw-primary-loading-border: #7ee7ff; --iw-danger-default-background: #ff718e; --iw-danger-default-foreground: #17191b; --iw-danger-default-icon: #17191b; --iw-danger-default-border: #7ee7ff; --iw-danger-hover-background: #ff718e; --iw-danger-hover-foreground: #17191b; --iw-danger-hover-icon: #17191b; --iw-danger-hover-border: #7ee7ff; --iw-danger-pressed-background: #ff718e; --iw-danger-pressed-foreground: #17191b; --iw-danger-pressed-icon: #17191b; --iw-danger-pressed-border: #ff718e; --iw-danger-disabled-background: #11152b; --iw-danger-disabled-foreground: #b9bed6; --iw-danger-disabled-icon: #b9bed6; --iw-danger-disabled-border: #7ee7ff; --iw-danger-loading-background: #ff718e; --iw-danger-loading-foreground: #17191b; --iw-danger-loading-icon: #17191b; --iw-danger-loading-border: #7ee7ff; --iw-font-ui: 'Field Kit UI', 'Exo 2', sans-serif; --iw-font-mono: 'Field Kit Mono', 'IBM Plex Mono', monospace; --iw-font-display: 'Field Kit Display', 'Handjet', sans-serif; --iw-material-panel: url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%2311152b%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2047V1h46%22%20stroke%3D%22%2366709b%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M47%201v46H1%22%20stroke%3D%22%2310130f%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E\"); --iw-material-raised: url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%231a2040%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2047V1h46%22%20stroke%3D%22%2366709b%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M47%201v46H1%22%20stroke%3D%22%2310130f%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E\"); --iw-material-inset: url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23070914%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2047V1h46%22%20stroke%3D%22%2366709b%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M47%201v46H1%22%20stroke%3D%22%2310130f%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E\"); --iw-material-primary: url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%237ee7ff%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2047V1h46%22%20stroke%3D%22%2317191b%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M47%201v46H1%22%20stroke%3D%22%2310130f%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E\"); --iw-color-scheme: dark; --iw-target: 44px; --iw-text-size: 16px;"
+    ]
+  ],
+  "viewport": {
+    "height": 844,
+    "width": 390
+  }
+}

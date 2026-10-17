@@ -1,0 +1,430 @@
+{
+  "UTC": "2026-10-17T22:17:39.764Z",
+  "chooser": {
+    "clientWidth": 840,
+    "scrollWidth": 840
+  },
+  "controls": [
+    {
+      "bounds": {
+        "height": 44,
+        "width": 197.3671875,
+        "x": 22.1953125,
+        "y": -1331.109375
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Refresh saved regions",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 39.1953125,
+        "y": -851.890625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Download: Alpine Highlands — connected mountain study · Station approach",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 39.1953125,
+        "y": -795.890625
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Alpine Highlands (6)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": -851.890625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Fly: Lunar Basin — flight study · Shelter detail · Version composition-r3",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": -795.890625
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Lunar Basin (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": -382.078125
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Fly: Lunar Basin — flight study · Shelter detail · Version composition-r3",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": -330.078125
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Remove this version: Lunar Basin — flight study · Shelter detail · Version composition-r3",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": -278.078125
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Remove all versions",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": 104.546875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": true,
+      "focusVisible": true,
+      "focused": true,
+      "label": "Fly: Lunar Basin — flight study · Version composition-r2",
+      "outline": "rgb(126, 231, 255) solid 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": 156.546875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": true,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Remove this version: Lunar Basin — flight study · Version composition-r2",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": 208.546875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": true,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Remove all versions",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.875,
+        "x": 574.9296875,
+        "y": -916.671875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Download: Canal City — bridges and courtyards",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.875,
+        "x": 574.9296875,
+        "y": -860.671875
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Canal City (1)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 39.1953125,
+        "y": 683.1796875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Download: Desert Expedition — rock routes · Rock practice routes",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 39.1953125,
+        "y": 739.1796875
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Desert Expedition (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": 661.5859375
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Download: Tropical coast — connected harbour · Connected harbour",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": 717.5859375
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Tropical coast (3)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.875,
+        "x": 574.9296875,
+        "y": 639.9921875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Download: Railway Valley — six districts",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.875,
+        "x": 574.9296875,
+        "y": 695.9921875
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Railway Valley (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 39.1953125,
+        "y": 1158.625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Download: Coaster Gardens — connected park study · Connected park routes",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 39.1953125,
+        "y": 1214.625
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Coaster Gardens (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": 1180.21875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Download: Hillside Town — civic court materials · Civic courtyard materials",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 307.0625,
+        "y": 1236.21875
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Hillside Town (2)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.875,
+        "x": 574.9296875,
+        "y": 1115.4375
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Download: Canyon Expanse — broad relief study",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.875,
+        "x": 574.9296875,
+        "y": 1171.4375
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Canyon worlds (3)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 39.1953125,
+        "y": 1612.4765625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.125) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.333) 0px -2px 0px 0px inset, color(srgb 0.0214118 0.0275294 0.0611765) 0px 2px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Download: Urban earthworks — regional preview",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 229.8671875,
+        "x": 39.1953125,
+        "y": 1668.4765625
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Versions for Urban earthworks (1)",
+      "outline": "rgb(247, 244, 255) none 3px",
+      "tag": "SUMMARY"
+    }
+  ],
+  "document": {
+    "clientWidth": 844,
+    "scrollWidth": 844
+  },
+  "focusLabel": "Fly: Lunar Basin — flight study · Version composition-r2",
+  "language": "en",
+  "region": {
+    "clientWidth": 824,
+    "scrollWidth": 824
+  },
+  "textSize": "standard",
+  "theme": "legacy",
+  "viewport": {
+    "height": 390,
+    "width": 844
+  }
+}

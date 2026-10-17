@@ -1,0 +1,430 @@
+{
+  "UTC": "2026-10-17T22:19:44.455Z",
+  "chooser": {
+    "clientWidth": 386,
+    "scrollWidth": 386
+  },
+  "controls": [
+    {
+      "bounds": {
+        "height": 44,
+        "width": 243.765625,
+        "x": 22.1953125,
+        "y": -1649.140625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Оновити збережені регіони",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": -1213.109375
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Завантажити: Альпійське високогір’я — пробний гірський світ · Підхід до станції",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": -1157.109375
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Альпійське високогір’я (6)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": -694.4765625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Летіти: Місячна улоговина — тренувальна зона · Деталізовані укриття · Версія composition-r3",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": -638.4765625
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Місячна улоговина (2)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": -267.8515625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Летіти: Місячна улоговина — тренувальна зона · Деталізовані укриття · Версія composition-r3",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": -215.8515625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Вилучити цю версію: Місячна улоговина — тренувальна зона · Деталізовані укриття · Версія composition-r3",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": -163.8515625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Вилучити всі версії",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 197.1796875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": true,
+      "focusVisible": true,
+      "focused": true,
+      "label": "Летіти: Місячна улоговина — тренувальна зона · Версія composition-r2",
+      "outline": "rgb(143, 152, 156) solid 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 249.1796875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": true,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Вилучити цю версію: Місячна улоговина — тренувальна зона · Версія composition-r2",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 301.1796875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": true,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Вилучити всі версії",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 711.03125
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Завантажити: Місто каналів — мости й подвір’я",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 767.03125
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Місто каналів (1)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1186.4765625
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Завантажити: Пустельна експедиція — маршрути серед скель · Маршрути серед скель",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1242.4765625
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Пустельна експедиція (2)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1640.328125
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Завантажити: Тропічне узбережжя — сполучені пірси гавані · Сполучена гавань",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 1696.328125
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Тропічне узбережжя (3)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2072.5859375
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Завантажити: Залізнична долина — шість районів",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2128.5859375
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Залізнична долина (2)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2526.4375
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Завантажити: Сади атракціонів — дослідження парку зі сполученими доріжками · Сполучені паркові маршрути",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 2582.4375
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Сад атракціонів (2)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3001.8828125
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Завантажити: Містечко на схилі — матеріали міського подвір’я · Матеріали міського подвір’я",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3057.8828125
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Містечко на схилі (2)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3412.546875
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Завантажити: Простори каньйону — дослідження рельєфу",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3468.546875
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Світи каньйонів (3)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3823.2109375
+      },
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.145) 0px 2px 0px 0px inset, rgba(255, 255, 255, 0.07) 2px 0px 0px 0px inset, rgba(0, 0, 0, 0.4) 0px -3px 0px 0px inset, rgba(0, 0, 0, 0.2) -2px 0px 0px 0px inset, rgba(0, 0, 0, 0.533) 0px 0px 0px 1px, color(srgb 0.0703529 0.0764706 0.0825882) 0px 4px 0px 0px, rgba(0, 0, 0, 0.2) 0px 5px 0px 0px",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Завантажити: Міські земляні споруди — огляд регіону",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "BUTTON"
+    },
+    {
+      "bounds": {
+        "height": 44,
+        "width": 311.609375,
+        "x": 39.1953125,
+        "y": 3879.2109375
+      },
+      "boxShadow": "none",
+      "centerHitVisible": false,
+      "focusVisible": false,
+      "focused": false,
+      "label": "Версії регіону Міські земляні споруди (1)",
+      "outline": "rgb(243, 237, 221) none 3px",
+      "tag": "SUMMARY"
+    }
+  ],
+  "document": {
+    "clientWidth": 390,
+    "scrollWidth": 390
+  },
+  "focusLabel": "Летіти: Місячна улоговина — тренувальна зона · Версія composition-r2",
+  "language": "uk",
+  "region": {
+    "clientWidth": 370,
+    "scrollWidth": 370
+  },
+  "textSize": "standard",
+  "theme": "industrial-workshop",
+  "viewport": {
+    "height": 844,
+    "width": 390
+  }
+}

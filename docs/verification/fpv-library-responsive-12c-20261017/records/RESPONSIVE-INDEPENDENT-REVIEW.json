@@ -1,0 +1,65 @@
+{
+  "at": "2026-10-17T22:25:13.235634+00:00",
+  "reviewer": "fpv_library_guard_review",
+  "status": "SUPPORTED_SCOPED_OBSERVATIONS_WITH_HEADROOM_COMPLIANCE_UNESTABLISHED",
+  "packet": "FPV-LIBRARY-RESPONSIVE-12C-20261017T2215Z",
+  "productHead": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "rootReceipt": {
+    "file": "ROOT-RESPONSIVE-OBSERVATION-RECEIPT.json",
+    "bytes": 8735,
+    "sha256": "6f7b4734e0bf02998ac10906ade5efc62d33344f09d6c6e127acc26fb697f220"
+  },
+  "requiredHeadroomSupplement": {
+    "file": "ROOT-HEADROOM-LIMITATION-SUPPLEMENT.json",
+    "bytes": 1115,
+    "sha256": "eee2bafe9db71f3290b4a68ed2d93b7045eed9e3cc849148b74aed4eb87caa21"
+  },
+  "rawManifest": {
+    "file": "RAW-EVIDENCE-MANIFEST.json",
+    "bytes": 5544,
+    "sha256": "a3dc64defa6b4a9665243e35663fa067078fa20ba266409e2c3152b11bf521c3",
+    "matchedRows": 36,
+    "matchedBytes": 804621,
+    "mismatches": 0,
+    "includesRootReceipt": true,
+    "supplementBoundSeparately": true
+  },
+  "independentFindings": [
+    "All six named matrix metric files bind the root receipt viewport, locale, theme, exact focused older composition-r2 Fly label, bounds and timestamp. Each has one focused control, centerHitVisible=true and focusVisible=true, height 44 CSS px and width at least 196.796875 CSS px.",
+    "Document, chooser and regional container measured scrollWidth equals clientWidth in all six records. This is scoped container measurement, not proof that all labels, tabs or controls are visible without scrolling.",
+    "All eight JPEG screenshots were visually inspected. The six focus captures show the older Fly control and its focus outline at the requested 390x844, 844x390 and 1280x800 sizes. Card headings, neighboring controls and horizontal collection tabs are partially clipped in several views, as the receipt explicitly limits.",
+    "English Signal Blue and Ukrainian Flight Deck at standard text size are the only two locale/theme pairings observed. Display AX identifies Ukrainian and selected industrial-workshop / Flight Deck. No complete theme/language matrix or contrast accessibility conformance is established.",
+    "The exact saved older Fly label is present in AX and metric records; loading then Ready to arm, paused pose, zero vertical speed and zero drift are observed. Ready screenshot and pause menu support Acro, Touch and Chase state. No payload hash, hidden storage proof or flight-duration claim is made.",
+    "Initial Ukrainian reentry lacks settled regional labels; subsequent settled AX explicitly restores Lunar composition-r3 and composition-r2 labels and actions. Initial unfiltered portrait geometry has 49 controls versus 27 in the corrected English portrait sample and is not used for broad visible-control acceptance.",
+    "HTTP independently has 163 request rows: 2 status 200, 160 status 304 and 1 status 404, plus one error-message row. The global-settings-tools module failure remains preserved as the previously classified absent-core boundary; no new fallback check or resource-success inference is made.",
+    "Browser closure records tab 5 closed, empty remaining tabs and viewport override reset. Server actual terminal is intentional SIGINT with tool EXIT1 / KeyboardInterrupt, not EXIT0 or EXIT130."
+  ],
+  "headroom": {
+    "lastAboveFloorAt": "2026-10-17T22:18:04.717259+00:00",
+    "lastAboveFloorBytes": 3380666368,
+    "postCloseAt": "2026-10-17T22:21:08.501308+00:00",
+    "postCloseBytes": 3170197504,
+    "floorBytes": 3221225472,
+    "shortfallBytes": 51027968,
+    "conclusion": "There is no sample between these times. Later Ukrainian observations do not have established continuous headroom. Crossing time and cause are unknown. Earlier isolated samples also do not prove continuous compliance. The visible records remain observations, not full compliant-window acceptance.",
+    "nextGate": "Hold further renderer/native/heavy work until renewed stable headroom is established."
+  },
+  "publicationRequirements": [
+    "Always carry the root receipt together with the headroom supplement and this review; do not present the original PASS status alone as compliant native acceptance.",
+    "Retain initial geometry and Ukrainian-label negatives, all HTTP failures, intentional EXIT1 and all existing limits.",
+    "Limit 44px/focus claims to the sampled older Fly control; broader library/layout controls remain open."
+  ],
+  "remaining": [
+    "Physical devices and controls",
+    "Other locale/theme/text-size combinations and all-control layout coverage",
+    "Unfamiliar legitimate retained IDs",
+    "Broader School/HUD/input/camera/starting-point/full-player integration",
+    "Original public storage cause and public install/flight",
+    "Process restart, offline, quota, eviction and all-24 coexistence",
+    "Measured performance trace and actual two-hour endurance"
+  ],
+  "limitations": "Exact interaction provenance and no Arm/download/reset assertions rely on root action records, not an independent replay. No new UI, source, package, server, cleanup, download or test work was performed.",
+  "rawPacketModified": false,
+  "publicationPerformed": false,
+  "blockingIssueForScopedEvidencePublication": false
+}

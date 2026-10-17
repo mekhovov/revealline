@@ -1,0 +1,9 @@
+Browser tab: 5, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 4, 9-61, 1727-1728
++			1761 button (collapsed) Фільтри +, ID: journey-filter-summary, Secondary Actions: Expand
++				1762 text Фільтри
++				1763 text +
+~			1721 button (collapsed) ⚙ Інструменти SIM, Secondary Actions: Expand
++				1764 text ⚙
+The focused UI element is 170 button Летіти: Місячна улоговина — тренувальна зона · Версія composition-r2

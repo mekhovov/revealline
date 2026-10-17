@@ -1,0 +1,218 @@
+Browser tab: 5, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html
+	1 container sim-settings
+		2 container
+			3 heading Налаштування, Value: 2
+				214 text Налаштування
+			5 button Назад, ID: close-sim-settings
+		6 tab group Розділи налаштувань
+			7 tab (selectable, settable, boolean) Гра, Value: 0, ID: worlds-settings-tab-gameplay
+			8 tab (selectable, settable, boolean) Керування, Value: 0, ID: worlds-settings-tab-controls
+			9 tab (selectable, settable, boolean) Звук, Value: 0, ID: worlds-settings-tab-audio
+			10 tab (selected, settable, boolean) Екран і мова, Value: 1, ID: worlds-settings-tab-display
+			11 tab (selectable, settable, boolean) Доступність, Value: 0, ID: worlds-settings-tab-accessibility
+			12 tab (selectable, settable, boolean) Прогрес і колекція, Value: 0, ID: worlds-settings-tab-data
+			13 tab (selectable, settable, boolean) Вміст і офлайн, Value: 0, ID: worlds-settings-tab-content
+			14 tab (selectable, settable, boolean) Довідка й додаткове, Value: 0, ID: worlds-settings-tab-extras
+		15 container Description: Екран і мова, ID: worlds-settings-panel-display
+			16 heading Екран і мова, Value: 3
+				215 text Екран і мова
+			18 container
+				19 heading Для всіх ігор, Value: 4
+					216 text Для всіх ігор
+				21 text Language / Мова
+				22 pop up button (collapsed, settable) Language / Мова, Value: Українська, ID: world-language, Secondary Actions: Expand
+					23 menu
+						24 English
+						25 (selected) Українська
+				26 heading Вигляд, Value: 3
+					27 text Вигляд
+				28 container
+					217 text Набір оформлення ворогів
+					30 pop up button (collapsed, settable) Набір оформлення ворогів, Value: Початкове оформлення рівня, ID: enemy-appearance-1, Secondary Actions: Expand
+						31 menu
+							32 (selected) Початкове оформлення рівня
+							33 Військове поле · солдати й техніка
+				218 text Діє з початком нової спроби. Повтор і продовження зберігають прийняте оформлення. Власні авторські зображення зберігаються.
+				35 button (collapsed) Що змінюється?, Secondary Actions: Expand
+					219 text Що змінюється?
+				37 heading Тема, Value: 4, ID: worlds-global-theme-family-heading
+					38 text Тема
+				39 container Тема
+					40 checkbox За кампанією / спільнотою Тема кампанії або спільноти; за замовчуванням у грі — «Польотна палуба»., Value: 0, ID: worlds-global-theme-card-follow-game
+						41 text За кампанією / спільнотою
+						42 text Тема кампанії або спільноти; за замовчуванням у грі — «Польотна палуба».
+					43 checkbox Value: 0, ID: worlds-global-theme-card-legacy, Синій сигнал Оригінальний польотний інтерфейс: нічні сині панелі, чіткі блакитні сигнали й компактні прилади.
+						220 text Синій сигнал
+						46 text Оригінальний польотний інтерфейс: нічні сині панелі, чіткі блакитні сигнали й компактні прилади.
+					47 checkbox Value: 1, ID: worlds-global-theme-card-industrial-workshop, Польотна палуба ✓ Фірмова тема гри: польотний пульт із графітової сталі, світлі написи й теплі бурштинові кнопки.
+						221 container
+							222 text Польотна палуба  ✓
+						49 text Фірмова тема гри: польотний пульт із графітової сталі, світлі написи й теплі бурштинові кнопки.
+					50 checkbox Військове поле Польова техніка й бетонні блокпости. Правила наявних ворогів не змінюються., Value: 0, ID: worlds-global-theme-card-military-field
+						51 text Військове поле
+						52 text Польова техніка й бетонні блокпости. Правила наявних ворогів не змінюються.
+					53 checkbox Жар ливарні Пульт біля ливарної печі: кована сталь, тепла мідь і світло жару., Value: 0, ID: worlds-global-theme-card-ember-foundry
+						54 text Жар ливарні
+						55 text Пульт біля ливарної печі: кована сталь, тепла мідь і світло жару.
+					56 checkbox Полярне реле Арктична радіостанція: синя сталь, світла емаль і чисті крижано-блакитні сигнали., Value: 0, ID: worlds-global-theme-card-polar-relay
+						57 text Полярне реле
+						58 text Арктична радіостанція: синя сталь, світла емаль і чисті крижано-блакитні сигнали.
+					59 checkbox Вишиванка Українська вишивка: червона нитка, чорний льон і теплі світлі відтінки., Value: 0, ID: worlds-global-theme-card-vyshyvanka
+						60 text Вишиванка
+						61 text Українська вишивка: червона нитка, чорний льон і теплі світлі відтінки.
+					62 checkbox Дніпрова порцеляна Сині річкові лінії на білій кераміці, натхненні Дніпром., Value: 0, ID: worlds-global-theme-card-dnipro-porcelain
+						63 text Дніпрова порцеляна
+						64 text Сині річкові лінії на білій кераміці, натхненні Дніпром.
+					65 checkbox Тризуб Мотив українського тризуба в темно-синій емалі й золоті пшениці., Value: 0, ID: worlds-global-theme-card-tryzub
+						66 text Тризуб
+						67 text Мотив українського тризуба в темно-синій емалі й золоті пшениці.
+					68 checkbox Робочий стіл 98 Робочий стіл кінця 1990-х зі сріблястими рамками й бірюзовим тлом., Value: 0, ID: worlds-global-theme-card-windows-classic
+						69 text Робочий стіл 98
+						70 text Робочий стіл кінця 1990-х зі сріблястими рамками й бірюзовим тлом.
+					71 checkbox DOS Навігатор Текстовий навігатор із нічними синіми панелями та яскравими клавішами команд., Value: 0, ID: worlds-global-theme-card-dos
+						72 text DOS Навігатор
+						73 text Текстовий навігатор із нічними синіми панелями та яскравими клавішами команд.
+					74 checkbox Садова майстерня Затишна садова майстерня: теплий папір, дерево й зелень листя., Value: 0, ID: worlds-global-theme-card-orchard-workshop
+						75 text Садова майстерня
+						76 text Затишна садова майстерня: теплий папір, дерево й зелень листя.
+					77 checkbox Неонові руїни Давні піксельні руїни, камінь кольору індиго й м’яке нефритове сяйво., Value: 0, ID: worlds-global-theme-card-neon-ruins
+						78 text Неонові руїни
+						79 text Давні піксельні руїни, камінь кольору індиго й м’яке нефритове сяйво.
+					80 checkbox Кишенькова LCD Кишенькова пригода в шавлієвих і чорнильних тонах ранніх портативних консолей., Value: 0, ID: worlds-global-theme-card-pocket-lcd
+						81 text Кишенькова LCD
+						82 text Кишенькова пригода в шавлієвих і чорнильних тонах ранніх портативних консолей.
+					83 checkbox Мідна обсерваторія Нічна обсерваторія з глибокими синьо-зеленими приладами й теплою міддю., Value: 0, ID: worlds-global-theme-card-copper-observatory
+						84 text Мідна обсерваторія
+						85 text Нічна обсерваторія з глибокими синьо-зеленими приладами й теплою міддю.
+					86 checkbox Станція сакури Весняна садова станція: порцеляна, вишневий червоний і сливове чорнило., Value: 0, ID: worlds-global-theme-card-sakura-station
+						87 text Станція сакури
+						88 text Весняна садова станція: порцеляна, вишневий червоний і сливове чорнило.
+					89 checkbox Value: 0, ID: worlds-global-theme-card-obsidian-reliquary, Обсидіановий релікварій Святилище з вулканічного каменю: старе золото, світлі написи й гранатові деталі.
+						90 text Обсидіановий релікварій
+						91 text Святилище з вулканічного каменю: старе золото, світлі написи й гранатові деталі.
+					92 checkbox Value: 0, ID: worlds-global-theme-card-deep-space, Далекий космос Місток космічного корабля: нічна синява, крижано-блакитні прилади й теплі навігаційні вогні.
+						93 text Далекий космос
+						94 text Місток космічного корабля: нічна синява, крижано-блакитні прилади й теплі навігаційні вогні.
+					95 checkbox Місячний гай Тихий нічний ліс із зеленню папороті та сріблястим місячним сяйвом., Value: 0, ID: worlds-global-theme-card-moonlit-grove
+						96 text Місячний гай
+						97 text Тихий нічний ліс із зеленню папороті та сріблястим місячним сяйвом.
+				98 button (collapsed) Налаштувати вигляд, ID: worlds-global-theme-customize, Secondary Actions: Expand
+					99 text Налаштувати вигляд
+				100 container
+					101 checkbox (settable, integer) Description: Висока контрастність, Value: 0, ID: worlds-global-theme-highContrast
+					102 text Висока контрастність
+				103 container
+					104 checkbox (settable, integer) Description: Непрозоре тло індикаторів, Value: 0, ID: worlds-global-theme-opaqueHud
+					105 text Непрозоре тло індикаторів
+				106 text Виберіть картку теми — інтерфейс оновиться одразу. Вигляд місії зміниться з нової спроби; світ SIM — після повтору або нового польоту. Зображення історії залишаться авторськими.
+			107 checkbox Повний екран, Value: 0
+				223 text Повний екран
+			109 container
+				224 text Камера
+				111 pop up button (collapsed, settable) Description: Camera, Value: За дроном, ID: flight-camera, Secondary Actions: Expand
+					112 menu
+						113 FPV
+						114 (selected) За дроном
+						115 Огляд
+			116 container
+				225 text Квадрокоптер
+				118 pop up button (collapsed, settable) Description: Drone, Value: Гоночний, ID: drone-look, Secondary Actions: Expand
+					119 menu
+						120 (selected) Гоночний
+						121 Піксельний
+						122 Робочий
+			123 button Оглянути дрон, ID: inspect-drone
+			124 container
+				226 text Графіка
+				126 pop up button (collapsed, settable) Description: Visual quality, Value: Збалансовано, ID: flight-quality, Secondary Actions: Expand
+					127 menu
+						128 (selected) Збалансовано
+						129 Швидкодія
+						130 Якість
+			131 container
+				227 text Вертикальне поле зору (°)
+				133 slider (settable, integer) Вертикальне поле зору (°), Value: 82, ID: world-fov
+			134 container
+				228 text Нахил камери
+				136 slider (settable, integer) Нахил камери, Value: 10, ID: world-tilt
+			137 container Оформлення
+				229 text Оформлення
+				139 container
+					230 text Інтерфейс SIM
+					141 pop up button (collapsed, settable) Інтерфейс SIM, Value: Як у грі, ID: sim-appearance-interface, Secondary Actions: Expand
+						142 menu
+							231 (selected) Як у грі
+							232 Авторське оформлення
+							233 Signal Blue
+							234 Flight Deck
+							235 Military Field
+							236 Ember Foundry
+							237 Polar Relay
+							238 Vyshyvanka
+							239 Dnipro Porcelain
+							240 Tryzub
+							241 Desktop 98
+							242 DOS Navigator
+							243 Orchard Workshop
+							244 Neon Ruins
+							245 Pocket LCD
+							246 Copper Observatory
+							247 Sakura Station
+							248 Obsidian Reliquary
+							249 Deep Space
+							250 Moonlit Grove
+				163 container
+					251 text Оформлення світу
+					165 pop up button (collapsed, settable) Оформлення світу, Value: Як у грі, ID: sim-appearance-world, Secondary Actions: Expand
+						166 menu
+							252 (selected) Як у грі
+							253 Авторське оформлення
+							254 Flight Deck
+							255 Military Field
+							256 Ember Foundry
+							257 Polar Relay
+							258 Vyshyvanka
+							259 Dnipro Porcelain
+							260 Tryzub
+							261 Desktop 98
+							262 DOS Navigator
+							263 Orchard Workshop
+							264 Neon Ruins
+							265 Pocket LCD
+							266 Copper Observatory
+							267 Sakura Station
+							268 Obsidian Reliquary
+							269 Deep Space
+							270 Moonlit Grove
+				271 text Зміна інтерфейсу не змінює керування польотом.
+				187 container
+					272 text Набір оформлення ворогів
+					189 pop up button (collapsed, settable) Набір оформлення ворогів, Value: Початкове оформлення рівня, ID: enemy-appearance-1, Secondary Actions: Expand
+						190 menu
+							191 (selected) Початкове оформлення рівня
+							192 Військове поле · солдати й техніка
+				193 container
+					273 text Форма солдатів
+					195 pop up button (collapsed, settable) Форма солдатів, Value: За задумом, Secondary Actions: Expand
+						196 menu
+							197 (selected) За задумом
+							198 Польове спорядження
+							199 Зношене польове спорядження
+							200 Зимове спорядження
+				274 text Діє з початком нової спроби. Повтор і продовження зберігають прийняте оформлення. Власні авторські зображення зберігаються.
+				202 button (collapsed) Що змінюється?, Secondary Actions: Expand
+					275 text Що змінюється?
+			204 container Комфорт камери FPV
+				276 text Комфорт камери FPV
+				206 container
+					277 text Кут огляду / нахил
+					208 pop up button (collapsed, settable) Кут огляду / нахил, Value: Власні, Secondary Actions: Expand
+						209 menu
+							210 (selected) Власні
+							211 Навчання · 82° / 0°
+							212 Універсальний · 95° / 15°
+							213 Перегони · 110° / 25°
+				278 text Навчання: рівний горизонт. Перегони: ширший огляд і нахил для швидкого польоту. Змінюється лише камера; керування й фізика незмінні. Повзунки — для точного налаштування.
+
+The focused UI element is 47 checkbox Value: 1, ID: worlds-global-theme-card-industrial-workshop, Польотна палуба ✓ Фірмова тема гри: польотний пульт із графітової сталі, світлі написи й теплі бурштинові кнопки.

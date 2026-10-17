@@ -1,0 +1,218 @@
+Browser tab: 5, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html
+	1 container sim-settings
+		2 container
+			3 heading Settings, Value: 2
+				4 text Settings
+			5 button Back, ID: close-sim-settings
+		6 tab group Settings categories
+			7 tab (selectable, settable, boolean) Gameplay, Value: 0, ID: worlds-settings-tab-gameplay
+			8 tab (selectable, settable, boolean) Controls, Value: 0, ID: worlds-settings-tab-controls
+			9 tab (selectable, settable, boolean) Audio, Value: 0, ID: worlds-settings-tab-audio
+			10 tab (selected, settable, boolean) Display & Language, Value: 1, ID: worlds-settings-tab-display
+			11 tab (selectable, settable, boolean) Accessibility, Value: 0, ID: worlds-settings-tab-accessibility
+			12 tab (selectable, settable, boolean) Progress & Collection, Value: 0, ID: worlds-settings-tab-data
+			13 tab (selectable, settable, boolean) Content & Offline, Value: 0, ID: worlds-settings-tab-content
+			14 tab (selectable, settable, boolean) Help & Extras, Value: 0, ID: worlds-settings-tab-extras
+		15 container Description: Display & Language, ID: worlds-settings-panel-display
+			16 heading Display & Language, Value: 3
+				17 text Display & Language
+			18 container
+				19 heading All games, Value: 4
+					20 text All games
+				21 text Language / Мова
+				22 pop up button (collapsed, settable) Language / Мова, Value: English, ID: world-language, Secondary Actions: Expand
+					23 menu
+						24 (selected) English
+						25 Українська
+				26 heading Appearance, Value: 3
+					27 text Appearance
+				28 container
+					29 text Enemy appearance preset
+					30 pop up button (collapsed, settable) Enemy appearance preset, Value: Original level artwork, ID: enemy-appearance-1, Secondary Actions: Expand
+						31 menu
+							32 (selected) Original level artwork
+							33 Military Field · soldiers and vehicles
+				34 text Applies when starting a new attempt. Retry and Continue keep accepted artwork. Creator-owned custom artwork is retained.
+				35 button (collapsed) What changes?, Secondary Actions: Expand
+					36 text What changes?
+				37 heading Theme, Value: 4, ID: worlds-global-theme-family-heading
+					38 text Theme
+				39 container Theme
+					40 checkbox Value: 0, ID: worlds-global-theme-card-follow-game, Follow campaign / community Use the campaign or community theme, with Flight Deck as the game default.
+						41 text Follow campaign / community
+						42 text Use the campaign or community theme, with Flight Deck as the game default.
+					43 checkbox Value: 1, ID: worlds-global-theme-card-legacy, Signal Blue ✓ The original flight interface: midnight-blue panels, crisp cyan signals and compact instruments.
+						44 container
+							45 text Signal Blue  ✓
+						46 text The original flight interface: midnight-blue panels, crisp cyan signals and compact instruments.
+					47 checkbox Value: 0, ID: worlds-global-theme-card-industrial-workshop, Flight Deck The game's signature flight console: machined graphite steel, ivory labels and warm amber controls.
+						48 text Flight Deck
+						49 text The game's signature flight console: machined graphite steel, ivory labels and warm amber controls.
+					50 checkbox Military Field Field vehicles and concrete checkpoints. Existing enemy rules stay the same., Value: 0, ID: worlds-global-theme-card-military-field
+						51 text Military Field
+						52 text Field vehicles and concrete checkpoints. Existing enemy rules stay the same.
+					53 checkbox Ember Foundry A furnace-side control room in forged steel, warm copper and ember light., Value: 0, ID: worlds-global-theme-card-ember-foundry
+						54 text Ember Foundry
+						55 text A furnace-side control room in forged steel, warm copper and ember light.
+					56 checkbox Polar Relay An arctic radio station with blue steel, pale enamel and clear ice-blue signals., Value: 0, ID: worlds-global-theme-card-polar-relay
+						57 text Polar Relay
+						58 text An arctic radio station with blue steel, pale enamel and clear ice-blue signals.
+					59 checkbox Vyshyvanka Ukrainian embroidery in scarlet thread, black linen and warm ivory., Value: 0, ID: worlds-global-theme-card-vyshyvanka
+						60 text Vyshyvanka
+						61 text Ukrainian embroidery in scarlet thread, black linen and warm ivory.
+					62 checkbox Dnipro Porcelain River-blue lines on white ceramic, inspired by the Dnipro., Value: 0, ID: worlds-global-theme-card-dnipro-porcelain
+						63 text Dnipro Porcelain
+						64 text River-blue lines on white ceramic, inspired by the Dnipro.
+					65 checkbox Tryzub Ukrainian trident inspiration in navy enamel and wheat gold., Value: 0, ID: worlds-global-theme-card-tryzub
+						66 text Tryzub
+						67 text Ukrainian trident inspiration in navy enamel and wheat gold.
+					68 checkbox Desktop 98 A late-1990s desktop with silver bevels and a familiar teal backdrop., Value: 0, ID: worlds-global-theme-card-windows-classic
+						69 text Desktop 98
+						70 text A late-1990s desktop with silver bevels and a familiar teal backdrop.
+					71 checkbox DOS Navigator A text-mode explorer with midnight-blue panels and bright command keys., Value: 0, ID: worlds-global-theme-card-dos
+						72 text DOS Navigator
+						73 text A text-mode explorer with midnight-blue panels and bright command keys.
+					74 checkbox Orchard Workshop A quiet orchard workshop in warm paper, timber and leaf green., Value: 0, ID: worlds-global-theme-card-orchard-workshop
+						75 text Orchard Workshop
+						76 text A quiet orchard workshop in warm paper, timber and leaf green.
+					77 checkbox Neon Ruins Ancient pixel ruins, indigo stone and softly glowing jade., Value: 0, ID: worlds-global-theme-card-neon-ruins
+						78 text Neon Ruins
+						79 text Ancient pixel ruins, indigo stone and softly glowing jade.
+					80 checkbox Pocket LCD A pocket-size adventure in sage green and dark ink, inspired by early handhelds., Value: 0, ID: worlds-global-theme-card-pocket-lcd
+						81 text Pocket LCD
+						82 text A pocket-size adventure in sage green and dark ink, inspired by early handhelds.
+					83 checkbox Copper Observatory A night-sky observatory with petrol-blue instruments and warm copper., Value: 0, ID: worlds-global-theme-card-copper-observatory
+						84 text Copper Observatory
+						85 text A night-sky observatory with petrol-blue instruments and warm copper.
+					86 checkbox Sakura Station A spring garden station in porcelain, cherry red and plum ink., Value: 0, ID: worlds-global-theme-card-sakura-station
+						87 text Sakura Station
+						88 text A spring garden station in porcelain, cherry red and plum ink.
+					89 checkbox Obsidian Reliquary A volcanic-stone sanctuary with aged gold, bone-white labels and garnet details., Value: 0, ID: worlds-global-theme-card-obsidian-reliquary
+						90 text Obsidian Reliquary
+						91 text A volcanic-stone sanctuary with aged gold, bone-white labels and garnet details.
+					92 checkbox Deep Space A midnight spacecraft bridge with ice-blue instruments and warm navigation lights., Value: 0, ID: worlds-global-theme-card-deep-space
+						93 text Deep Space
+						94 text A midnight spacecraft bridge with ice-blue instruments and warm navigation lights.
+					95 checkbox Moonlit Grove A quiet forest after dark, with fern-green surfaces and silver moonlight., Value: 0, ID: worlds-global-theme-card-moonlit-grove
+						96 text Moonlit Grove
+						97 text A quiet forest after dark, with fern-green surfaces and silver moonlight.
+				98 button (collapsed) Customize appearance, ID: worlds-global-theme-customize, Secondary Actions: Expand
+					99 text Customize appearance
+				100 container
+					101 checkbox (settable, integer) Description: High contrast, Value: 0, ID: worlds-global-theme-highContrast
+					102 text High contrast
+				103 container
+					104 checkbox (settable, integer) Description: Opaque HUD background, Value: 0, ID: worlds-global-theme-opaqueHud
+					105 text Opaque HUD background
+				106 text Choose a theme card to apply it immediately. Mission visuals change on a new attempt; SIM world changes wait for Retry or a new flight. Story pictures stay as authored.
+			107 checkbox Fullscreen, Value: 0
+				108 text Fullscreen
+			109 container
+				110 text Camera
+				111 pop up button (collapsed, settable) Description: Camera, Value: Chase, ID: flight-camera, Secondary Actions: Expand
+					112 menu
+						113 FPV
+						114 (selected) Chase
+						115 Overview
+			116 container
+				117 text Aircraft
+				118 pop up button (collapsed, settable) Description: Drone, Value: Racer, ID: drone-look, Secondary Actions: Expand
+					119 menu
+						120 (selected) Racer
+						121 Pixel
+						122 Utility
+			123 button Inspect drone, ID: inspect-drone
+			124 container
+				125 text Graphics
+				126 pop up button (collapsed, settable) Description: Visual quality, Value: Balanced, ID: flight-quality, Secondary Actions: Expand
+					127 menu
+						128 (selected) Balanced
+						129 Performance
+						130 Quality
+			131 container
+				132 text Vertical field of view (°)
+				133 slider (settable, integer) Vertical field of view (°), Value: 82, ID: world-fov
+			134 container
+				135 text Camera tilt
+				136 slider (settable, integer) Camera tilt, Value: 10, ID: world-tilt
+			137 container Appearance
+				138 text Appearance
+				139 container
+					140 text SIM interface
+					141 pop up button (collapsed, settable) SIM interface, Value: Follow game, ID: sim-appearance-interface, Secondary Actions: Expand
+						142 menu
+							143 (selected) Follow game
+							144 Authored appearance
+							145 Signal Blue
+							146 Flight Deck
+							147 Military Field
+							148 Ember Foundry
+							149 Polar Relay
+							150 Vyshyvanka
+							151 Dnipro Porcelain
+							152 Tryzub
+							153 Desktop 98
+							154 DOS Navigator
+							155 Orchard Workshop
+							156 Neon Ruins
+							157 Pocket LCD
+							158 Copper Observatory
+							159 Sakura Station
+							160 Obsidian Reliquary
+							161 Deep Space
+							162 Moonlit Grove
+				163 container
+					164 text World appearance
+					165 pop up button (collapsed, settable) World appearance, Value: Follow game, ID: sim-appearance-world, Secondary Actions: Expand
+						166 menu
+							167 (selected) Follow game
+							168 Authored appearance
+							169 Flight Deck
+							170 Military Field
+							171 Ember Foundry
+							172 Polar Relay
+							173 Vyshyvanka
+							174 Dnipro Porcelain
+							175 Tryzub
+							176 Desktop 98
+							177 DOS Navigator
+							178 Orchard Workshop
+							179 Neon Ruins
+							180 Pocket LCD
+							181 Copper Observatory
+							182 Sakura Station
+							183 Obsidian Reliquary
+							184 Deep Space
+							185 Moonlit Grove
+				186 text Interface changes preserve your flight controls.
+				187 container
+					188 text Enemy appearance preset
+					189 pop up button (collapsed, settable) Enemy appearance preset, Value: Original level artwork, ID: enemy-appearance-1, Secondary Actions: Expand
+						190 menu
+							191 (selected) Original level artwork
+							192 Military Field · soldiers and vehicles
+				193 container
+					194 text Soldier uniform
+					195 pop up button (collapsed, settable) Soldier uniform, Value: As designed, Secondary Actions: Expand
+						196 menu
+							197 (selected) As designed
+							198 Field kit
+							199 Worn field kit
+							200 Winter kit
+				201 text Applies when starting a new attempt. Retry and Continue keep accepted artwork. Creator-owned custom artwork is retained.
+				202 button (collapsed) What changes?, Secondary Actions: Expand
+					203 text What changes?
+			204 container FPV camera comfort
+				205 text FPV camera comfort
+				206 container
+					207 text Field of view / tilt
+					208 pop up button (collapsed, settable) Field of view / tilt, Value: Custom, Secondary Actions: Expand
+						209 menu
+							210 (selected) Custom
+							211 Learning · 82° / 0°
+							212 All-round · 95° / 15°
+							213 Racing · 110° / 25°
+				214 text Learning gives a level horizon. Racing widens the view and tilts up for faster flight. Only the camera changes; controls and physics stay the same. Use the sliders for finer adjustment.
+
+The focused UI element is 10 tab (selected, settable, boolean) Display & Language, Value: 1, ID: worlds-settings-tab-display
