@@ -99,3 +99,27 @@ After the cue deadline, PCM admission and opt-in hitch journal were committed, e
 Full formatting failed in 26.082 seconds on nine files, each byte-identical to integrated main `b2f251dac0d762d476f725b1bc601a2d6d5485a5`. Eight also match comparison main `8b019`; the additional `game/test/fpv-world-appearance-ui.test.mjs` came from the later main update. The other files are the classic Snake proof fixture, FPV regional preparation clock/controls tests, journey-performance-host, menu-style-host, team-installed-host and both pages-capacity-report files. The full warning paths, current and both main hashes remain in the receipt. No whole-format pass is claimed.
 
 Retained directory: `.cache/solo-followup/bounded-final-checks-20261017T035955Z-72e6822c/`. Receipt SHA-256: `61183611280799bd93588f66c7e09f7fec0efdf2f2a11dd86a4c4c79a98a95f5`. The 196-byte lint log hashes to `477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c`; the 3,885-byte validation log to `442c0393ba399ea6387fc249aaced09aeccee847ddd66400ff97bd5cff448866`; and the 698-byte format log to `1f32e6a795e3b8b2947bcb523d39266c1e1a873dee9f5baeddb31e41e2d67f3e`. Later source edits require their own affected checks and production artifact.
+
+## Frozen chooser follow-up checks
+
+Exact source `488eae03aee7f58dd5837451363015888faa429f`, tree
+`0a6c2e96c32dec8ff65a058aad07a150b341e521`, includes the unused chooser removal,
+committed qualification tools and revised packaging envelope. Under Node 22.22.2,
+full lint passed in 15.606 seconds and full content/localization/generated
+validation passed in 148.752 seconds. HEAD and the worktree stayed clean and
+unchanged through all checks. Each command retained the same 300-second deadline
+and 4 MiB output cap.
+
+Full formatting failed in 26.028 seconds on the same nine files listed above;
+every file remains byte-identical to integrated main `b2f251da`. All three full
+logs are byte-identical to the earlier frozen checks' respective logs, with their
+hashes retained in the new receipt. This is not a whole-format pass or native
+performance qualification. The later report updates are documentation only.
+
+Retained directory:
+`.cache/solo-followup/bounded-final-checks-20261017T050036Z-488eae03/`.
+Receipt SHA-256:
+`60d00b9278a7aceec960c305486197ab67b7d58e42797723ea58d66f4c3d6f56`.
+The separately retained changed-host comparison preserves all 19 baseline-matched
+failures; the complete seven-test performance host gate passes. See
+[the ownership change and exact comparison](solo-chooser-startup-20261017.md).
