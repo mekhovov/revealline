@@ -222,3 +222,8 @@
     transform: none !important;
   }
 }
+.aircraft-practice-controls input[type='file'] {
+  display: block;
+  max-width: 100%;
+  min-height: 44px;
+}
