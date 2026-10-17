@@ -35,6 +35,26 @@ const raw = await read(manifest.fixture.path),
 const workflow = (await read(workflowPath)).toString();
 const protocol = 'optional-audio-start-missing-v1',
   before = '92ff7ef800e542617b4fc3efad96bd07ce6cbecb';
+const historicalBytes = await read(
+  'docs/performance/fixtures/solo-optional-start-audio/34d95-execution-source.json',
+);
+assert.equal(
+  hash(historicalBytes),
+  '506bdb703b1ce3f9ff0198aa60d2cd6852c429b3972d40e81b765b195ec65e11',
+);
+const historical = JSON.parse(historicalBytes);
+assert.equal(historical.revision, '34d95cb9fe471ca56c243f05c4330826ba822fb9');
+const historicalPaths = new Set([
+  'scripts/solo-remote-readiness.mjs',
+  'scripts/solo-qualification-readiness.mjs',
+]);
+for (const p of [path, workflowPath]) {
+  const b = await read(p),
+    r = historical.records.find((r) => r.path === p);
+  assert.equal(b.length, r.bytes);
+  assert.equal(hash(b), r.sha256);
+}
+
 const flags = [
   '--readiness-probe=' + protocol,
   '--source-revision=' + manifest.candidate.revision,
@@ -184,9 +204,14 @@ test('exact before92ff one-shot guard, both installed engines, all current refs 
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(sparse.length, new Set(sparse).size);
   for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools, manifest.fixture]) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(hash(b), ref.sha256, ref.path);
+    if (historicalPaths.has(ref.path)) {
+      const r = historical.records.find((r) => r.path === ref.path);
+      assert.deepEqual({ path: r.path, bytes: r.bytes, sha256: r.sha256 }, ref);
+    } else {
+      const b = await read(ref.path);
+      assert.equal(b.length, ref.bytes, ref.path);
+      assert.equal(hash(b), ref.sha256, ref.path);
+    }
     assert(sparse.includes(ref.path));
   }
   for (const p of [

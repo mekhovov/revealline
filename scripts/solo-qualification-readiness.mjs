@@ -531,7 +531,8 @@ export function createBrowserReadinessProbe(
           : null,
       };
       if (protocol === 'optional-audio-start-missing-v1') {
-        const style = scene?.lastPaint?.actorAppearance?.style;
+        // MainScene retains the exact submitted lease; painter options are derived separately.
+        const style = scene?.lastPaint?.actors?.pin?.()?.style;
         row.actorStyle = ['campaign', 'fpv'].includes(style) ? style : null;
       }
       if (geometryObservation && ['first-running', 'resumed-running'].includes(kind)) {
