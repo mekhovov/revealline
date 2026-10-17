@@ -199,8 +199,8 @@
     },
     {
       "path": "scripts/solo-qualification-next-route.mjs",
-      "bytes": 32924,
-      "sha256": "3583627c435d3b36b66ea25048c1ebe85dcf49e6908ef5385fc579d244a2af4a"
+      "bytes": 33041,
+      "sha256": "3e8a43d8d3397e466204bea8e0281104bfe1eda25875e33153b6930a8eb0f5b0"
     },
     {
       "path": "scripts/solo-qualification-observation.mjs",
@@ -254,8 +254,8 @@
     },
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 86673,
-      "sha256": "ff2d7ad9e406d59997dab21cd8a31bafbdc11d5c68d821dee4acc066effa317c"
+      "bytes": 87426,
+      "sha256": "9ed82517010604ad23f9d98732e0cb001f550949401a8cdff009d81010ac5417"
     },
     {
       "path": "scripts/soundtrack-archive-admissions.mjs",
