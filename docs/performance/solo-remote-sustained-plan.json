@@ -111,13 +111,13 @@
     },
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 58963,
-      "sha256": "b1509f3f4f79862effd1c2e749c5b7915eb02e6d71c73d30abbe413707d613aa"
+      "bytes": 59605,
+      "sha256": "90db5e035dafe5538d347f3cc1b0c38e8e18ffef3c11db3e7b6f803f4619e01f"
     },
     {
       "path": "scripts/solo-qualification.mjs",
-      "bytes": 24877,
-      "sha256": "556ac41f48b67c776a46dd899f56ada6f7c832d4eb3e74ac9cf9a75762feb6a6"
+      "bytes": 26233,
+      "sha256": "88363cc018c21e04ee50addae9e6086b76849c429249cdf4e9a9e9c6c6d24637"
     },
     {
       "path": "scripts/solo-qualification-browser-context.mjs",
@@ -186,8 +186,8 @@
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",
-      "bytes": 14479,
-      "sha256": "604a32fa40b361408dbc0b538afbd36695e834be0fbc7d463f38951959002757"
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
     }
   ],
   "release": {
@@ -322,8 +322,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 36495,
-      "sha256": "348c73c75261b0d676632d4276ec4f65323e495e5d7842e9a9274235f7e4664c"
+      "bytes": 37426,
+      "sha256": "3885cd7fd66fc579e6fce380e028e69151ec77d170e7c5379cc682c9e1b69611"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",

@@ -136,13 +136,13 @@
   "frozenTools": [
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 58963,
-      "sha256": "b1509f3f4f79862effd1c2e749c5b7915eb02e6d71c73d30abbe413707d613aa"
+      "bytes": 59605,
+      "sha256": "90db5e035dafe5538d347f3cc1b0c38e8e18ffef3c11db3e7b6f803f4619e01f"
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",
-      "bytes": 14479,
-      "sha256": "604a32fa40b361408dbc0b538afbd36695e834be0fbc7d463f38951959002757"
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
     },
     {
       "path": "scripts/prepare-solo-audio-fixtures.mjs",
@@ -352,8 +352,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-auxiliary.mjs",
-      "bytes": 20186,
-      "sha256": "7171e72c0576edae42ed774c8cb1fbc82180c979b581cf3ef83ea2fd03c12ddf"
+      "bytes": 21813,
+      "sha256": "9c21ecfe357b4008a4317348311e5acfd25c9561a027319be8495bf54aa7f900"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
