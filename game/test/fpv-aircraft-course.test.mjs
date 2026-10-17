@@ -74,6 +74,12 @@ function createClient() {
     async reportPersistence(value) {
       return simulation.reportPersistence(value);
     },
+    async readSealedSegment(afterIndex) {
+      return simulation.readSealedSegment(afterIndex);
+    },
+    async finalizeArchive(afterIndex) {
+      return simulation.finalizeArchive(afterIndex);
+    },
     dispose() {
       simulation?.dispose();
     },
@@ -220,6 +226,36 @@ test('course checkpoint recovers exact physical and mission state, remains pause
   } finally {
     await flight.dispose();
   }
+});
+
+test('course archive bridge serializes with recovery, seals only paused tails and changes generation on repeated restore', async (t) => {
+  await initAdvancedRuntime();
+  const flight = createAircraftCourseSession(
+    { course: FLIGHT_COURSES[0], mode: 'acro', legacy: true, configuration: configuration() },
+    { createClient },
+  );
+  t.after(() => flight.dispose());
+  const preparing = flight.prepare();
+  const initialReading = flight.readSealedSegment();
+  await preparing;
+  const initial = await initialReading;
+  assert.equal(initial.generation, flight.snapshot().advancedTelemetry.archiveStatus.generation);
+  flight.arm();
+  await flight.step(controls);
+  assert.throws(() => flight.finalizeArchive(), /Pause before/);
+  const [read, recovery] = await Promise.all([flight.readSealedSegment(), flight.exportRecovery()]);
+  assert.equal(read.format, 'AircraftSealedRead.v1');
+  assert.equal(recovery.format, 'AircraftCourseRecovery.v1');
+  flight.pause();
+  const ended = await flight.finalizeArchive();
+  assert.equal(ended.segment.endTick, 1);
+  assert.equal(ended.finalizedThroughIndex, 0);
+  await flight.restoreRecovery(recovery);
+  const firstRestore = await flight.readSealedSegment();
+  assert.notEqual(firstRestore.generation, initial.generation);
+  assert.equal(firstRestore.origin.kind, 'checkpoint');
+  await flight.restoreRecovery(recovery);
+  assert.notEqual((await flight.readSealedSegment()).generation, firstRestore.generation);
 });
 
 test('landing metrics use physical impact speed and hull support height', () => {

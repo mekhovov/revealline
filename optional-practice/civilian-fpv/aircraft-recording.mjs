@@ -18,6 +18,7 @@ export function createAircraftRecorder({
   config,
   checkpoint,
   hash,
+  origin = 'checkpoint',
   enabled = true,
   maxBytes = 24 * 1024 * 1024,
   segmentBytes = 1024 * 1024,
@@ -37,6 +38,7 @@ export function createAircraftRecorder({
   );
   let segments = [],
     serial = 0,
+    lastSealedIndex = -1,
     error = null,
     durableTick = null,
     active = enabled,
@@ -56,6 +58,7 @@ export function createAircraftRecorder({
       hashes: [],
       finalHash: stateHash,
     };
+    if (segments.length) lastSealedIndex = segments.at(-1).index;
     segments.push(segment);
     currentBytes = bytes(segment);
     retainedBytes += currentBytes;
@@ -75,6 +78,21 @@ export function createAircraftRecorder({
     }
   }
   if (active) begin(checkpoint, hash);
+  function sealedStatus() {
+    const first = segments[0];
+    return {
+      origin: {
+        kind:
+          origin === 'fresh' && first?.index === 0 && first.startTick === 0
+            ? 'fresh'
+            : 'checkpoint',
+        startTick: first?.startTick ?? latestTick,
+      },
+      earliestIndex: first?.index ?? serial,
+      lastSealedIndex,
+      latestTick,
+    };
+  }
   function append({ events = [], tick, stateHash, checkpoint: capture }) {
     latestTick = tick;
     if (!active) return;
@@ -106,6 +124,36 @@ export function createAircraftRecorder({
   }
   return {
     append,
+    sealedStatus,
+    readSealedSegment(afterIndex = -1) {
+      required(
+        Number.isSafeInteger(afterIndex) && afterIndex >= -1,
+        'Invalid archive segment cursor',
+      );
+      const status = sealedStatus();
+      const segment = segments.find(
+        (entry) => entry.index > afterIndex && entry.index <= status.lastSealedIndex,
+      );
+      return {
+        ...status,
+        gap: afterIndex < status.earliestIndex - 1 || afterIndex > status.lastSealedIndex,
+        segment: segment ? clone(segment) : null,
+      };
+    },
+    sealCurrent({ checkpoint: capture, stateHash }) {
+      if (active) {
+        const current = segments.at(-1);
+        if (current && (current.endTick > current.startTick || current.events.length)) {
+          try {
+            begin(capture(), stateHash);
+          } catch {
+            active = false;
+            error = 'recording-unavailable';
+          }
+        }
+      }
+      return sealedStatus().lastSealedIndex;
+    },
     status() {
       return {
         format: 'AircraftRecordingStatus.v1',
@@ -161,6 +209,7 @@ export function createAircraftRecorder({
       required(next.identity === identity, 'Recording belongs to another configuration');
       segments = clone(next.segments);
       serial = segments.at(-1).index + 1;
+      lastSealedIndex = segments.at(-1).index - 1;
       latestTick = segments.at(-1).endTick;
       currentBytes = bytes(segments.at(-1));
       retainedBytes = segments.reduce((sum, segment) => sum + bytes(segment), 0);

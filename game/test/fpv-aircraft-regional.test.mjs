@@ -69,6 +69,12 @@ async function sessionFixture(
           async recording() {
             return owner.recording();
           },
+          async readSealedSegment(afterIndex) {
+            return owner.readSealedSegment(afterIndex);
+          },
+          async finalizeArchive(afterIndex) {
+            return owner.finalizeArchive(afterIndex);
+          },
           dispose() {
             owner?.dispose();
           },
@@ -109,6 +115,31 @@ test('every aircraft enters Regional practice in Acro and self-level with frozen
       assert.ok(result.recordingStatus);
       await h.session.dispose();
     }
+});
+
+test('Regional archive bridge shares accepted boundaries with recovery and exposes each restored generation', async (t) => {
+  const h = await sessionFixture(t, 'meteor75-analog-2022');
+  const initial = await h.session.readSealedSegment();
+  assert.equal(initial.generation, h.session.snapshot().advancedTelemetry.archiveStatus.generation);
+  h.session.arm();
+  await h.session.step(neutral);
+  assert.throws(() => h.session.finalizeArchive(), /Pause before/);
+  const [read, recovery] = await Promise.all([
+    h.session.readSealedSegment(),
+    h.session.exportRecovery(),
+  ]);
+  assert.equal(read.format, 'AircraftSealedRead.v1');
+  assert.equal(recovery.format, 'AdvancedRegionalRecovery.v2');
+  h.session.pause();
+  const final = await h.session.finalizeArchive();
+  assert.equal(final.segment.endTick, 1);
+  assert.equal(final.finalizedThroughIndex, 0);
+  await h.session.restoreRecovery(recovery);
+  const first = await h.session.readSealedSegment();
+  assert.notEqual(first.generation, initial.generation);
+  assert.equal(first.origin.kind, 'checkpoint');
+  await h.session.restoreRecovery(recovery);
+  assert.notEqual((await h.session.readSealedSegment()).generation, first.generation);
 });
 
 test('Regional keeps Legacy input response on the selected aircraft without silent rate replacement', async (t) => {

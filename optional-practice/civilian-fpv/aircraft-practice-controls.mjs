@@ -1,5 +1,6 @@
 import { boundedJSON, exactKeys, required } from '../../game/data-json.mjs';
 import { exportJSONFile } from '../../game/platform.mjs';
+import { mountAircraftArchiveControls } from './aircraft-archive-controls.mjs';
 
 export const AIRCRAFT_RECOVERY_BYTES = 44 * 1024 * 1024;
 const DATABASE = 'revealline.fpv.aircraft-recovery.v1';
@@ -175,6 +176,7 @@ export function mountAircraftPracticeControls({
   onPause = () => {},
   key = 'academy',
   platformOptions = {},
+  workerURL,
   store: suppliedStore,
   exportFile = exportJSONFile,
 } = {}) {
@@ -411,6 +413,17 @@ export function mountAircraftPracticeControls({
       if (!disposed) paint();
     }
   }
+  const archives = mountAircraftArchiveControls({
+    parent: root,
+    window: win,
+    locale,
+    getSession,
+    onPause,
+    key,
+    platformOptions,
+    workerURL,
+    exportFile,
+  });
   paint();
   return {
     root,
@@ -427,6 +440,7 @@ export function mountAircraftPracticeControls({
         operationStatus.textContent = '';
       }
       state = next;
+      archives.update(next);
       root.hidden = !(
         session &&
         (typeof session.aircraft === 'function' || Number.isFinite(next?.aircraftRadiusMm))
@@ -452,6 +466,7 @@ export function mountAircraftPracticeControls({
       cancelOperation();
       for (const remove of removers) remove();
       store.close?.();
+      archives.dispose();
       root.remove();
     },
   };

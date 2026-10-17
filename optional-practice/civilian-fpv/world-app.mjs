@@ -9019,6 +9019,7 @@ export function mountWorldApp({
   aircraftControls = mountAircraftPracticeControls({
     parent: playShell.elements.content.pause,
     window: win,
+    workerURL: new URL('../fpv-worlds/advanced-worker.mjs', import.meta.url),
     key: 'world',
     locale: () => locale,
     getSession: () => (replayProof ? null : flight),

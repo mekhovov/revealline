@@ -148,7 +148,13 @@ export function createAdvancedRegionalSession(
     recoveryJob = null,
     recoveryClient = null,
     recoveryVerification = null,
-    checkpointJob = null;
+    checkpointJob = null,
+    checkpointKind = null,
+    archiveGeneration = 0;
+  const archiveEnvelope = (value) => ({
+    ...value,
+    generation: `${archiveGeneration}:${value.generation}`,
+  });
   let telemetry = {
     missionTick: 0,
     seconds: 0,
@@ -228,7 +234,12 @@ export function createAdvancedRegionalSession(
       unscored: true,
       playerReady: false,
       advanced: true,
-      advancedTelemetry: clone(telemetry),
+      advancedTelemetry: {
+        ...clone(telemetry),
+        ...(telemetry.archiveStatus
+          ? { archiveStatus: archiveEnvelope(telemetry.archiveStatus) }
+          : {}),
+      },
       ...(aircraftPhysics
         ? {
             aircraftRadiusMm: radius,
@@ -589,6 +600,42 @@ export function createAdvancedRegionalSession(
     stepJob = job;
     return job;
   }
+  function readArchive(afterIndex = -1, finalize = false) {
+    live();
+    requireValue(aircraftPhysics && initialized && !recoveryJob, 'Aircraft archive is not ready');
+    requireValue(!finalize || status !== 'active', 'Pause before ending the session archive');
+    if (checkpointJob) return checkpointJob.then(() => readArchive(afterIndex, finalize));
+    const pendingStep = stepJob,
+      pendingFrame = frameJob;
+    checkpointKind = 'archive';
+    const operation = (async () => {
+      await pendingStep;
+      await pendingFrame;
+      live();
+      requireValue(!finalize || status !== 'active', 'Pause before ending the session archive');
+      const result = await (finalize
+        ? client.finalizeArchive(afterIndex)
+        : client.readSealedSegment(afterIndex));
+      telemetry.archiveStatus = {
+        generation: result.generation,
+        origin: result.origin,
+        earliestIndex: result.earliestIndex,
+        lastSealedIndex: result.lastSealedIndex,
+        latestTick: result.latestTick,
+      };
+      return archiveEnvelope(result);
+    })();
+    checkpointJob = operation;
+    void operation
+      .finally(() => {
+        if (checkpointJob === operation) {
+          checkpointJob = null;
+          checkpointKind = null;
+        }
+      })
+      .catch(() => {});
+    return operation;
+  }
   return Object.freeze({
     root,
     snapshot,
@@ -643,11 +690,16 @@ export function createAdvancedRegionalSession(
       live();
       return client.recording();
     },
+    readSealedSegment: (afterIndex) => readArchive(afterIndex),
+    finalizeArchive: (afterIndex) => readArchive(afterIndex, true),
     exportRecovery() {
       live();
       requireValue(aircraftPhysics, 'Continuous recovery requires the aircraft backend');
       requireValue(initialized && !recoveryJob, 'Aircraft recovery is not ready');
-      if (checkpointJob) return checkpointJob;
+      if (checkpointJob)
+        return checkpointKind === 'save'
+          ? checkpointJob
+          : checkpointJob.then(() => this.exportRecovery());
       // Lock new missions and terrain transitions until the already accepted
       // interval has drained and its complete worker checkpoint is captured.
       // Capture owners before yielding so later transitions cannot create a
@@ -665,9 +717,13 @@ export function createAdvancedRegionalSession(
         };
       })();
       checkpointJob = operation;
+      checkpointKind = 'save';
       void operation
         .finally(() => {
-          if (checkpointJob === operation) checkpointJob = null;
+          if (checkpointJob === operation) {
+            checkpointJob = null;
+            checkpointKind = null;
+          }
         })
         .catch(() => {});
       return operation;
@@ -745,6 +801,7 @@ export function createAdvancedRegionalSession(
           current();
           const previous = client;
           client = candidate;
+          archiveGeneration++;
           candidate = null;
           telemetry = adopted ?? restored;
           sequence =
