@@ -18,6 +18,7 @@ export const SUPPLEMENTAL_PHASES = Object.freeze({
   'erosion-first-fracture': '3e2c56b4c5aae3343986a8a68d39e402a9822f66093c6556b99042e24947604e',
   'jammer-neutral': 'aa2cbdbba30450e296b75f7458afa101dcd6ad0bc5858dd2de5ffc2dcc1e2c34',
   'jammer-steering': '9169d2a4d583b563cb322d5e374bb62179ef5d6dfa2c2f3d5351926969e5b78f',
+  'latency-long-rail-anchored': '95521abcc88e38128b574dbea8d12e5958c1a98fd7a7789a4a8cfbd7df079768',
 });
 const engines = ['chromium', 'webkit'];
 function validateRelease(plan) {
@@ -33,8 +34,29 @@ function validateRelease(plan) {
   const previous = Object.keys(SUPPLEMENTAL_PHASES).indexOf(plan.phase) - 1;
   assert.equal(
     plan.release.previousPhase,
-    previous < 0 ? 'reviewed-first-eight-diagnostic' : Object.keys(SUPPLEMENTAL_PHASES)[previous],
+    plan.phase === 'latency-long-rail-anchored'
+      ? 'latency-long-rail'
+      : previous < 0
+        ? 'reviewed-first-eight-diagnostic'
+        : Object.keys(SUPPLEMENTAL_PHASES)[previous],
   );
+  if (plan.phase === 'latency-long-rail-anchored') {
+    assert.deepEqual(plan.release.diagnosticPredecessor, {
+      run: 38992974770,
+      phase: 'latency-long-rail',
+      conclusion: 'failure',
+      passedRows: 1,
+      failedRows: 3,
+      allOwnersClosed: true,
+      allFailuresRetained: true,
+    });
+    for (const artifactId of [12085853457, 12086092968])
+      assert(
+        plan.release.evidence.some(
+          (row) => row.runId === 38992974770 && row.artifactId === artifactId,
+        ),
+      );
+  }
   assert(Array.isArray(plan.release.evidence) && plan.release.evidence.length > 0);
   assert(plan.release.evidence.length <= 32);
   for (const row of plan.release.evidence) {

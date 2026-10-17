@@ -9,6 +9,7 @@ on:
       - 'scripts/test-solo-remote-declaration.mjs'
       - 'scripts/test-solo-representative-fixtures.mjs'
       - 'scripts/test-solo-latency-supplement.mjs'
+      - 'scripts/test-solo-latency-anchored.mjs'
       - 'scripts/solo-qualification-replay-identity.mjs'
       - 'scripts/test-solo-qualification-replay-identity.mjs'
       - 'scripts/qualify-solo-runtime.mjs'
@@ -28,7 +29,7 @@ concurrency:
 
 jobs:
   declare:
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'bffcbd838a7bb925da8aaf030695773f893d8bda'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
@@ -121,7 +122,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-supplemental.mjs scripts/test-solo-remote-declaration.mjs scripts/test-solo-representative-fixtures.mjs scripts/test-solo-latency-supplement.mjs scripts/test-solo-qualification-replay-identity.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-supplemental.mjs scripts/test-solo-remote-declaration.mjs scripts/test-solo-representative-fixtures.mjs scripts/test-solo-latency-supplement.mjs scripts/test-solo-latency-anchored.mjs scripts/test-solo-qualification-replay-identity.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
           node scripts/solo-remote-supplemental.mjs bind-plan docs/performance/solo-remote-supplemental-plan.json "$RUNNER_TEMP/solo-supplemental-job.json" '${{ matrix.engine }}'
       - name: Run only this reviewed phase and fixed source pair
         timeout-minutes: ${{ matrix.stepMinutes }}
