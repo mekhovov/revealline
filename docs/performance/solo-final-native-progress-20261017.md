@@ -57,6 +57,36 @@ All three Chromium recovery repetitions and the first WebKit repetition pass
 all 32 members were read back. Context loss/blur remain injected, viewport
 resizing is native, and these are not real GPU-loss or physical-background tests.
 
+The completed six-row recovery cohort is **five passes and one failure**.
+WebKit repetition 3 also passes. Repetition 2 completes all 29 actions and
+matches strict native replay, but retains one uncaught page error with an empty
+message during the earlier public `follow` action into `/game/playground/`.
+It remains failed; neither the responsible function nor a recovery defect is
+established. The final two archives (`12096071327`, 322,806 bytes and
+`12096136278`, 313,955 bytes) and all their members were read back. The complete
+WebKit analysis is 5,269 bytes, SHA-256
+`5dc38e344ea9dda9021c7818ec48031bfde1bfb8575278da40a792ff14dfaeaa`.
+Future error investigation should retain bounded error name/stack and navigation
+context without filtering empty errors or changing the unchanged no-error gate.
+
+A further touch-path audit found a geometry read on every stick/swipe activation,
+although those modes derive their anchor from the contact coordinates. Commit
+`366e1aa37` removes that unused read, preserving D-pad centre measurement and
+all gesture/cancellation rules. The complete steering file passes 26/26; scoped
+lint and formatting pass. Earlier native touch latency failures are unchanged.
+
+The journal-overhead comparison is also complete in both engines. WebKit's
+20 original reports and ten binary journals were independently rehashed, with
+every analyzer field matching the hosted result. Nineteen public scenarios and
+native replays pass; the first enabled arm pauses after only 562 ms, with a
+243 ms application-work p95 from two samples. This is a retained failed partial
+arm, not an overhead estimate. No pair meets the unchanged admission criteria,
+and normal-precision timer uncertainty leaves the 5% overhead gate unresolved.
+The WebKit artifact is `12096156782`, 1,314,499 bytes, SHA-256
+`af096780fa5d039d4ee2f4f1ff61e6f6c3151198bdfad17fb75ab959bbc4f686`;
+all 121 members were read back. Independent analysis: 10,363 bytes, SHA-256
+`ac329a6771ddc3ec5b26a767e919299cff06a060eb104401da6c817560c69bcd`.
+
 Research supports the narrow layout fix: the [Resize Observer specification](https://www.w3.org/TR/resize-observer/)
 delivers border-box dimensions after layout, including padding/borders; Google's
 [layout-thrashing example](https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing)
