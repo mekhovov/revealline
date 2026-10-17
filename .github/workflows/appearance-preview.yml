@@ -20,6 +20,8 @@ on:
       - 'game/ui/edition-lessons.mjs'
       - 'game/ui/edition-mastery.mjs'
       - 'game/ui/edition-solo.mjs'
+      - 'game/ui/library-entry.mjs'
+      - 'game/ui/library-panel.mjs'
       - 'game/capture-presentation-session.mjs'
       - 'game/test/journey-performance-admission.test.mjs'
       - 'game/test/optional-learning-admission.test.mjs'
@@ -29,6 +31,8 @@ on:
       - 'game/test/edition-lessons.test.mjs'
       - 'game/test/capture-presentation-session.test.mjs'
       - 'game/test/solo-dense-replay-persistence.test.mjs'
+      - 'game/test/library-entry.test.mjs'
+      - 'game/test/solo-lazy-library-host.test.mjs'
       - 'game/presentation/**'
       - 'game/ui/theme-*'
       - 'game/ui/menu-controls.css'
@@ -234,6 +238,8 @@ env:
     game/test/edition-lessons.test.mjs
     game/test/capture-presentation-session.test.mjs
     game/test/solo-dense-replay-persistence.test.mjs
+    game/test/library-entry.test.mjs
+    game/test/solo-lazy-library-host.test.mjs
 
 jobs:
   admission:
