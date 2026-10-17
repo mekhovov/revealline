@@ -63,10 +63,42 @@ export const COMBINED_READINESS_PROTOCOL = Object.freeze({
   performanceQualification: false,
 });
 function combinedPlan(plan) {
-  return plan.sourceCohort === COMBINED_READINESS_COHORT || fontCompactPlan(plan);
+  return (
+    plan.sourceCohort === COMBINED_READINESS_COHORT || fontCompactPlan(plan) || fontDprPlan(plan)
+  );
 }
 export function readinessRowPlan(plan, row) {
   if (!combinedPlan(plan)) return plan;
+  if (fontDprPlan(plan)) {
+    const expected = fontDprRows(plan.engine).find((item) => item.id === row.id);
+    assert(expected, 'Undeclared font/DPR row');
+    for (const [key, value] of Object.entries(expected)) assert.deepEqual(row[key], value, key);
+    if (Object.hasOwn(expected, 'dpr'))
+      return {
+        ...plan,
+        sourceCohort: 'readiness-public-dpr-candidate0feb',
+        phase: `public-dpr-${expected.dpr}`,
+        fixture: COMPACT_READINESS_FIXTURES.full,
+        rows: [expected],
+      };
+    return {
+      ...plan,
+      sourceCohort: 'readiness-selected-font-candidate0feb',
+      phase: 'selected-font-cancel',
+      fixture: SELECTED_FONT_JOINED_FIXTURE,
+      rows: [readinessRow(plan.engine, 'selected-font-cancel')],
+      protocol: {
+        name: 'selected-font-cancel-joined-v2',
+        startupWait: 'immediate-partial',
+        externalCadence: 'settled120',
+        observationTimeoutMs: 240000,
+        records: 8,
+        bytes: 16384,
+        numericalGates: 'unchanged-raw',
+        performanceQualification: false,
+      },
+    };
+  }
   const expected = (
     fontCompactPlan(plan) ? fontCompactRows(plan.engine) : combinedReadinessRows(plan.engine)
   ).find((item) => item.id === row.id);
@@ -128,6 +160,29 @@ function combinedFixtureInputs(plan) {
 }
 
 function selection(plan) {
+  if (plan.sourceCohort === 'readiness-selected-font-candidate0feb') {
+    assert.equal(plan.phase, 'selected-font-cancel');
+    return {
+      source: FONT_DPR_SOURCE,
+      fixture: SELECTED_FONT_JOINED_FIXTURE,
+      protocol: 'selected-font-cancel-joined-v2',
+      requestPolicy: 'same-url-two-v2',
+      font: true,
+      resume: false,
+      documents: 1,
+    };
+  }
+  if (plan.sourceCohort === 'readiness-public-dpr-candidate0feb') {
+    assert(['public-dpr-1', 'public-dpr-3'].includes(plan.phase));
+    return {
+      source: FONT_DPR_SOURCE,
+      quality: true,
+      density: true,
+      resume: false,
+      documents: 1,
+      compact: true,
+    };
+  }
   if (plan.sourceCohort === 'readiness-selected-font-candidatec696') {
     assert.equal(plan.phase, 'selected-font-cancel');
     return {
@@ -141,7 +196,11 @@ function selection(plan) {
   }
   if (combinedPlan(plan))
     return {
-      source: fontCompactPlan(plan) ? SELECTED_FONT_SOURCE : RESUME_READINESS_SOURCE,
+      source: fontDprPlan(plan)
+        ? FONT_DPR_SOURCE
+        : fontCompactPlan(plan)
+          ? SELECTED_FONT_SOURCE
+          : RESUME_READINESS_SOURCE,
       combined: true,
     };
   if (plan.sourceCohort === 'readiness-public-effects-candidatec696') {
@@ -243,6 +302,57 @@ export function fontCompactRows(engine) {
 function fontCompactPlan(plan) {
   return plan?.sourceCohort === FONT_COMPACT_COHORT;
 }
+export const FONT_DPR_SOURCE = Object.freeze({
+  revision: '0febd334619731adc26dfa3df78aab02991563af',
+  tree: '692135315b5a4d0dcb98bc24314c644d37cec1ed',
+});
+export const FONT_DPR_COHORT = 'readiness-joined-font-and-dpr-candidate0feb';
+export const SELECTED_FONT_JOINED_FIXTURE = Object.freeze({
+  path: 'docs/performance/fixtures/solo-readiness-font/selected-font-cancel-joined-v2.qualification.fixture',
+  bytes: 5746,
+  sha256: 'e46e4f0a75ef5f982373b464a487efe74e63fa7145500e4ff2ac93cb4a3d46d5',
+});
+export const FONT_DPR_PROTOCOL = Object.freeze({
+  name: 'joined-selected-font-and-same-viewport-dpr-v1',
+  readiness: ['selected-font-cancel-joined-v2'],
+  fontRequests: { maximum: 2, policy: 'same-url-two-v2', originalFetches: 1 },
+  density: [1, 3, 3, 1],
+  effects: ['full', 'full', 'full', 'full'],
+  effectsEngine: 'webkit',
+  viewport: { width: 400, height: 850 },
+  effectsAudio: { muted: true, volume: 0.8, observedOperations: 0 },
+  externalCadence: 'settled120',
+  numericalGates: 'unchanged-raw',
+  performanceQualification: false,
+});
+export function densityComparisonSchedule() {
+  return [1, 3, 3, 1].map((dpr, index) => ({
+    id: `public-full-dpr-p${Math.floor(index / 2) + 1}-dpr${dpr}`,
+    pair: Math.floor(index / 2) + 1,
+    ordinal: index + 1,
+    tier: 'full',
+    dpr,
+    source: 'candidate',
+    engine: 'webkit',
+    timeoutMs: 480000,
+    performanceExclusion: true,
+  }));
+}
+export function fontDprRows(engine) {
+  assert(READINESS_ENGINES.includes(engine));
+  return [
+    { ...readinessRow(engine, 'selected-font-cancel'), phase: 'selected-font-cancel' },
+  ].concat(engine === 'webkit' ? densityComparisonSchedule() : []);
+}
+function fontDprPlan(plan) {
+  return plan?.sourceCohort === FONT_DPR_COHORT;
+}
+function densityPlan(plan) {
+  return fontDprPlan(plan) || plan?.sourceCohort === 'readiness-public-dpr-candidate0feb';
+}
+function comparisonSchedule(plan) {
+  return densityPlan(plan) ? densityComparisonSchedule() : qualityComparisonSchedule();
+}
 export const READINESS_ENGINES = ['chromium', 'webkit'];
 export function readinessRow(engine, phase = 'cold-first30') {
   assert(['cold-first30', 'warm-resume', 'saved-resume', 'selected-font-cancel'].includes(phase));
@@ -257,6 +367,20 @@ export function readinessRow(engine, phase = 'cold-first30') {
   };
 }
 export function validateReadinessPlan(plan) {
+  if (fontDprPlan(plan)) {
+    assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
+    assert.equal(plan.phase, 'joined-selected-font-and-same-viewport-dpr');
+    assert.deepEqual(plan.protocol, FONT_DPR_PROTOCOL);
+    assert.deepEqual(plan.rows, fontDprRows(plan.engine));
+    assert.deepEqual(plan.fixture, SELECTED_FONT_JOINED_FIXTURE);
+    assert.deepEqual(plan.additionalFixtures, [COMPACT_READINESS_FIXTURES.full]);
+    assert.equal(plan.release.comparisonScope, 'same-viewport-dpr-full-muted-only');
+    validateReadinessPlan(readinessRowPlan(plan, plan.rows[0]));
+    const refs = combinedFixtureInputs(plan);
+    assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
+    assert(plan.frozenTools.some((r) => r.path === 'scripts/solo-qualification-observation.mjs'));
+    return plan;
+  }
   if (combinedPlan(plan)) {
     assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
     assert.equal(
@@ -406,9 +530,11 @@ export function bindReadinessJob(manifest, engine) {
   plan.format = 'SoloHostedReadinessPlanV1';
   plan.engine = engine;
   plan.rows = combinedPlan(plan)
-    ? fontCompactPlan(plan)
-      ? fontCompactRows(engine)
-      : combinedReadinessRows(engine)
+    ? fontDprPlan(plan)
+      ? fontDprRows(engine)
+      : fontCompactPlan(plan)
+        ? fontCompactRows(engine)
+        : combinedReadinessRows(engine)
     : [readinessRow(engine, plan.phase)];
   return validateReadinessPlan(plan);
 }
@@ -443,15 +569,17 @@ export async function prepareReadinessMode(ctx) {
   ctx.report.firstEightAllCorrectnessPassed = false;
   return {
     scope: combinedPlan(ctx.plan)
-      ? fontCompactPlan(ctx.plan)
-        ? 'One exact selected-font cancellation per engine; WebKit additionally observes the compact saved Resume route and two muted public-effects pairs. Old failed routes remain failed; all numerical verdicts retained.'
-        : 'Fixed serial warm/saved readiness observations; WebKit additionally has two muted public-effects pairs. All numerical failures retained; no physical qualification or automatic retry.'
+      ? fontDprPlan(ctx.plan)
+        ? 'One joined selected-font correctness observation per engine; WebKit additionally has two counterbalanced Full-effects DPR pairs at the same viewport. All original failures and numeric verdicts retained; no automatic retry or physical qualification.'
+        : fontCompactPlan(ctx.plan)
+          ? 'One exact selected-font cancellation per engine; WebKit additionally observes the compact saved Resume route and two muted public-effects pairs. Old failed routes remain failed; all numerical verdicts retained.'
+          : 'Fixed serial warm/saved readiness observations; WebKit additionally has two muted public-effects pairs. All numerical failures retained; no physical qualification or automatic retry.'
       : 'One candidate correctness pilot per engine; no timing comparison, forced calibration delay, automatic retry or physical-device qualification.',
   };
 }
 export function readinessArguments(ctx, row, url, dir) {
   if (combinedPlan(ctx.plan)) {
-    const effect = qualityComparisonSchedule().find((arm) => arm.id === row.id);
+    const effect = comparisonSchedule(ctx.plan).find((arm) => arm.id === row.id);
     if (effect) return qualityComparisonArguments(ctx, effect, url, dir);
     return readinessArguments({ ...ctx, plan: readinessRowPlan(ctx.plan, row) }, row, url, dir);
   }
@@ -525,6 +653,7 @@ export async function readinessAssessment(
         raw?.snapshots?.at(-1)?.application,
         raw?.readinessDocuments,
         raw?.selectedFontTransport,
+        selected.requestPolicy ?? 'single-v1',
       )
     : selected.resume
       ? assessResumeReadiness({
@@ -743,7 +872,7 @@ export async function runReadinessRow(ctx, row, dir, tmp) {
         await readinessAssessment(activePlan, row, raw, row.command, journal, finalReplayText),
       );
     if (selected.quality) {
-      const arm = qualityComparisonSchedule().find((a) => a.id === row.id);
+      const arm = comparisonSchedule(activePlan).find((a) => a.id === row.id);
       const assessed = await assessQualityComparisonArm(
         raw,
         row.command,
@@ -791,7 +920,7 @@ export async function runReadinessRow(ctx, row, dir, tmp) {
 }
 export async function collectQualityComparison(ctx) {
   const observations = [];
-  for (const arm of qualityComparisonSchedule()) {
+  for (const arm of comparisonSchedule(ctx.plan)) {
     const row = ctx.report.rows.find((value) => value.id === arm.id);
     if (
       !row?.qualityRawReport ||
@@ -811,7 +940,7 @@ export async function collectQualityComparison(ctx) {
   ctx.report.qualityComparison = {
     ...(await assessQualityComparisonCohort(observations, ctx.admitted, ctx.plan)),
     observedArms: observations.map((r) => r.arm.id),
-    requiredArms: qualityComparisonSchedule().map((r) => r.id),
+    requiredArms: comparisonSchedule(ctx.plan).map((r) => r.id),
   };
   return ctx.report.qualityComparison;
 }
@@ -856,11 +985,18 @@ export async function assessQualityComparisonArm(
     QUALITY_COMPARISON_RECIPES: recipes,
     qualificationQualityAudioBoundary,
   } = await import('./solo-qualification-observation.mjs');
-  const compact = plan?.sourceCohort === 'readiness-public-effects-candidatec696';
-  const expectedSource = compact ? SELECTED_FONT_SOURCE.revision : source;
-  const expectedTree = compact
-    ? SELECTED_FONT_SOURCE.tree
-    : 'e87e64d0e14584c2a569d06bae8e7c602c5ed105';
+  const density = densityPlan(plan);
+  const compact = plan?.sourceCohort === 'readiness-public-effects-candidatec696' || density;
+  const expectedSource = density
+    ? FONT_DPR_SOURCE.revision
+    : compact
+      ? SELECTED_FONT_SOURCE.revision
+      : source;
+  const expectedTree = density
+    ? FONT_DPR_SOURCE.tree
+    : compact
+      ? SELECTED_FONT_SOURCE.tree
+      : 'e87e64d0e14584c2a569d06bae8e7c602c5ed105';
   const expectedRecipe = compact
     ? COMPACT_READINESS_FIXTURES[arm?.tier]?.sha256
     : recipes[arm?.tier];
@@ -871,7 +1007,7 @@ export async function assessQualityComparisonArm(
       assert.equal(plan.candidate.revision, expectedSource);
       assert.equal(plan.candidate.tree, expectedTree);
     }
-    assert.deepEqual(arm, qualityComparisonSchedule()[arm.ordinal - 1]);
+    assert.deepEqual(arm, comparisonSchedule(plan)[arm.ordinal - 1]);
     assert.equal(admitted?.status, 'passed');
     const artifact = admitted.artifacts?.candidate;
     assert.equal(artifact?.sourceRevision, expectedSource);
@@ -902,7 +1038,7 @@ export async function assessQualityComparisonArm(
     assert.equal(raw.environment.headless, true);
     assert.deepEqual(raw.environment.requestedDisplay, {
       viewport: { width: 400, height: 850 },
-      deviceScaleFactor: 3,
+      deviceScaleFactor: density ? arm.dpr : 3,
       isMobile: true,
       hasTouch: true,
     });
@@ -966,6 +1102,13 @@ export async function assessQualityComparisonArm(
     assert.equal(q.sourceRevision, expectedSource);
     assert.equal(q.scenarioSHA256, expectedRecipe);
     assert.equal(q.tier, arm.tier);
+    if (density) {
+      assert.equal(q.densityComparison, 'same-viewport-v1');
+      assert.equal(q.deviceScaleFactor, arm.dpr);
+      assert.equal(raw.environment.initialDisplay.width, 400);
+      assert.equal(raw.environment.initialDisplay.height, 850);
+      assert.equal(raw.environment.initialDisplay.devicePixelRatio, arm.dpr);
+    } else assert(!q.densityComparison);
     assert.equal(q.documents, 1);
     assert.equal(q.performanceQualification, false);
     const observation = q.observation;
@@ -1007,6 +1150,21 @@ export async function assessQualityComparisonArm(
     assert.deepEqual(probe.submittedTiers, observation);
     assert.equal(raw.snapshots.length, 2);
     raw.snapshots.forEach(qualificationQualityAudioBoundary);
+    if (density)
+      for (const snapshot of raw.snapshots) {
+        const owner = snapshot.application?.resources?.phaser;
+        for (const surface of [owner?.displayed, owner?.detachedBoard]) {
+          assert.equal(surface?.canvases, 1);
+          assert(Number.isSafeInteger(surface.width) && surface.width > 0);
+          assert(Number.isSafeInteger(surface.height) && surface.height > 0);
+          assert(
+            Number.isSafeInteger(surface.pixels) &&
+              surface.pixels === surface.width * surface.height,
+          );
+        }
+        assert.equal(typeof snapshot.application.canvas?.desynchronized, 'boolean');
+        assert.equal(typeof snapshot.application.canvas?.willReadFrequently, 'boolean');
+      }
     const application = raw.snapshots.at(-1)?.application;
     assert.equal(application?.sourceRevision, expectedSource);
     assert.equal(typeof application.audio?.muted, 'boolean');
@@ -1037,6 +1195,49 @@ export async function assessQualityComparisonArm(
     rawPerformanceGateStatus: numeric,
     numericStatus: numeric,
     observedBaselineMs: raw?.externalCadenceCalibration?.baselineMs ?? null,
+    ...(density
+      ? {
+          rasterObservation: {
+            viewport: { width: 400, height: 850 },
+            deviceScaleFactor: arm.dpr,
+            theoreticalViewportRaster: {
+              width: 400 * arm.dpr,
+              height: 850 * arm.dpr,
+              pixels: 400 * 850 * arm.dpr * arm.dpr,
+            },
+            theoreticalScope:
+              'Viewport arithmetic only; not canvas allocation or physical scanout.',
+            canvases: (raw?.snapshots ?? []).slice(0, 2).map((snapshot) => ({
+              group: snapshot.group ?? null,
+              ...Object.fromEntries(
+                ['displayed', 'detachedBoard'].map((key) => {
+                  const value = snapshot.application?.resources?.phaser?.[key];
+                  return [
+                    key,
+                    value
+                      ? {
+                          canvases: value.canvases,
+                          width: value.width,
+                          height: value.height,
+                          pixels: value.pixels,
+                        }
+                      : null,
+                  ];
+                }),
+              ),
+              contextAttributes: snapshot.application?.canvas
+                ? {
+                    desynchronized: snapshot.application.canvas.desynchronized,
+                    willReadFrequently: snapshot.application.canvas.willReadFrequently,
+                  }
+                : null,
+            })),
+            graphicsBackend: null,
+            graphicsBackendStatus:
+              'unobserved; this quality observer does not request GPU capabilities',
+          },
+        }
+      : {}),
     baselineScope:
       'This arm’s unchanged pre-play calibration; never matched or redefined during gameplay.',
     performanceQualification: false,
@@ -1047,8 +1248,10 @@ export async function assessQualityComparisonArm(
 }
 
 export function qualityComparisonArguments(ctx, arm, url, dir) {
-  assert.deepEqual(arm, qualityComparisonSchedule()[arm.ordinal - 1]);
+  assert.deepEqual(arm, comparisonSchedule(ctx.plan)[arm.ordinal - 1]);
+  const density = densityPlan(ctx.plan);
   const compact =
+    density ||
     fontCompactPlan(ctx.plan) ||
     ctx.plan?.sourceCohort === 'readiness-public-effects-candidatec696';
   return [
@@ -1062,7 +1265,11 @@ export function qualityComparisonArguments(ctx, arm, url, dir) {
     ),
     join(dir, 'report.json'),
     '--source-revision=' +
-      (compact ? SELECTED_FONT_SOURCE.revision : RESUME_READINESS_SOURCE.revision),
+      (density
+        ? FONT_DPR_SOURCE.revision
+        : compact
+          ? SELECTED_FONT_SOURCE.revision
+          : RESUME_READINESS_SOURCE.revision),
     '--server-fixture-access',
     '--browser=webkit',
     '--cpu=1',
@@ -1071,9 +1278,10 @@ export function qualityComparisonArguments(ctx, arm, url, dir) {
     '--cadence=settled120',
     '--context=persistent',
     '--viewport=400x850',
-    '--dpr=3',
+    `--dpr=${density ? arm.dpr : 3}`,
     '--mobile-context',
     `--visual-quality-observation=${arm.tier}`,
+    ...(density ? ['--density-comparison=same-viewport-v1'] : []),
   ];
 }
 
@@ -1081,7 +1289,8 @@ export async function assessQualityComparisonCohort(observations, admitted, plan
   const { qualificationQualityAudioBoundary } = await import(
     './solo-qualification-observation.mjs'
   );
-  const schedule = qualityComparisonSchedule(),
+  const schedule = comparisonSchedule(plan),
+    density = densityPlan(plan),
     results = [];
   if (!Array.isArray(observations) || observations.length !== schedule.length)
     return { status: 'incomplete-comparison', results, performanceQualification: false };
@@ -1109,8 +1318,12 @@ export async function assessQualityComparisonCohort(observations, admitted, plan
       raw?.environment?.browserVersion,
       raw?.environment?.architecture,
       raw?.environment?.osRelease,
-      raw?.environment?.requestedDisplay,
-      raw?.environment?.initialDisplay,
+      density
+        ? { ...raw?.environment?.requestedDisplay, deviceScaleFactor: null }
+        : raw?.environment?.requestedDisplay,
+      density
+        ? { ...raw?.environment?.initialDisplay, devicePixelRatio: null }
+        : raw?.environment?.initialDisplay,
       raw?.environment?.documentCacheControl,
       result.status === 'observed-comparison-arm'
         ? raw.snapshots.map(qualificationQualityAudioBoundary)
@@ -1129,7 +1342,8 @@ export async function assessQualityComparisonCohort(observations, admitted, plan
     results,
     performanceQualification: false,
     physicalQualification: false,
-    scope:
-      'Two counterbalanced pairs only; all raw numerical failures remain failures, and no significance or decoration-causality verdict is inferred.',
+    scope: density
+      ? 'Two same-viewport DPR pairs only. All raw numerical failures remain failures; no significance, GPU causality or physical-device conclusion is inferred.'
+      : 'Two counterbalanced pairs only; all raw numerical failures remain failures, and no significance or decoration-causality verdict is inferred.',
   };
 }

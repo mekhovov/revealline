@@ -313,7 +313,25 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
     if (plan.format === 'SoloHostedReadinessPlanV1') {
       assert.equal(plan.performanceExclusion, true);
-      if (plan.sourceCohort === 'readiness-selected-font-candidatec696') {
+      if (
+        ['readiness-selected-font-candidate0feb', 'readiness-public-dpr-candidate0feb'].includes(
+          plan.sourceCohort,
+        )
+      ) {
+        assert.equal(plan.candidate.revision, '0febd334619731adc26dfa3df78aab02991563af');
+        assert.equal(plan.runtimeRevision, '0febd334619731adc26dfa3df78aab02991563af');
+        assert.equal(plan.candidate.tree, '692135315b5a4d0dcb98bc24314c644d37cec1ed');
+        const { SELECTED_FONT_JOINED_FIXTURE, COMPACT_READINESS_FIXTURES } = await import(
+          './solo-remote-readiness.mjs'
+        );
+        if (plan.sourceCohort === 'readiness-selected-font-candidate0feb') {
+          assert.equal(plan.phase, 'selected-font-cancel');
+          assert.deepEqual(plan.fixture, SELECTED_FONT_JOINED_FIXTURE);
+        } else {
+          assert(['public-dpr-1', 'public-dpr-3'].includes(plan.phase));
+          assert.deepEqual(plan.fixture, COMPACT_READINESS_FIXTURES.full);
+        }
+      } else if (plan.sourceCohort === 'readiness-selected-font-candidatec696') {
         assert.equal(plan.phase, 'selected-font-cancel');
         assert.equal(plan.candidate.revision, 'c696af41857840359ae473558b90682f3d71f2db');
         assert.equal(plan.runtimeRevision, 'c696af41857840359ae473558b90682f3d71f2db');

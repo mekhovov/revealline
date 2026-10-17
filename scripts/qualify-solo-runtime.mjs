@@ -109,7 +109,10 @@ const readinessModule =
 const readinessOptions = readinessModule?.qualificationReadinessOptions(flags, scenario, bytes);
 let readinessDocuments = 0,
   selectedFontHold = null;
-const selectedFontReadiness = readinessOptions?.protocol === 'selected-font-cancel-v1';
+const selectedFontReadiness = [
+  'selected-font-cancel-v1',
+  'selected-font-cancel-joined-v2',
+].includes(readinessOptions?.protocol);
 const qualityOptions = qualificationQualityOptions(
   flags,
   scenario,
@@ -430,7 +433,10 @@ try {
     if (response.status() >= 400 && report.failedResponses.length < 100)
       report.failedResponses.push({ url: response.url(), status: response.status() });
   });
-  if (selectedFontReadiness) selectedFontHold = readinessModule.createSelectedFontHold(url.href);
+  if (selectedFontReadiness)
+    selectedFontHold = readinessModule.createSelectedFontHold(url.href, {
+      requestPolicy: readinessOptions.requestPolicy ?? 'single-v1',
+    });
   if (mirrored || fixtureAccess || selectedFontReadiness)
     await page.route('**/*', async (route) => {
       if (selectedFontHold && (await selectedFontHold.handle(route))) return;
@@ -1375,7 +1381,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             const witness = await page.evaluate(
               () => window.soloQualificationProbe.export().readiness,
             );
-            readinessModule.assertSelectedFontCancelled(witness);
+            readinessModule.assertSelectedFontCancelled(witness, readinessOptions.protocol);
             selectedFontHold.releaseAfterPublicCancellation();
           }
           if (action.label === 'no-automatic-start-after-release')
@@ -1642,6 +1648,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         report.snapshots.at(-1)?.application,
         readinessDocuments,
         report.selectedFontTransport,
+        readinessOptions.requestPolicy ?? 'single-v1',
       );
     } else if (resumeReadiness) {
       const before = report.snapshots.find((row) => row.group === 'before-resume');

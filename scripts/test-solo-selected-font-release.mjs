@@ -17,10 +17,49 @@ import {
 const root = new URL('../', import.meta.url),
   read = (p) => readFile(new URL(p, root));
 const path = 'docs/performance/solo-readiness-font-c696-plan.json',
-  m = JSON.parse(await read(path)),
-  workflow = (await read('.github/workflows/solo-remote-readiness-ab45-temporary.yml')).toString();
-// Independently reviewed current helper identity. A stale overlay plus a stale
-// declaration must not validate merely because they agree with each other.
+  manifestBytes = await read(path),
+  m = JSON.parse(manifestBytes),
+  workflow = (
+    await read('docs/performance/fixtures/solo-readiness-font/0feb-executed-workflow.yml')
+  ).toString();
+const witnessBytes = await read(
+  'docs/performance/fixtures/solo-readiness-font/0feb-execution-source.json',
+);
+const expectedWitnessSHA = '8a8a2672d7f4e70c987e16b92f2480099da8f7f2f827ea3c9968d7540d28ba22';
+function checkedWitness(bytes) {
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), expectedWitnessSHA);
+  const w = JSON.parse(bytes);
+  assert.equal(w.format, 'SoloExecutedReadinessSourceV1');
+  assert.equal(w.sourceRevision, '0febd334619731adc26dfa3df78aab02991563af');
+  assert.equal(w.sourceTree, '692135315b5a4d0dcb98bc24314c644d37cec1ed');
+  assert.equal(new Set(w.records.map((r) => r.path)).size, w.records.length);
+  return w;
+}
+const witness = checkedWitness(witnessBytes);
+function assertHistoricalBindings(value, text) {
+  assert.deepEqual(value, JSON.parse(manifestBytes));
+  for (const [p, b] of [
+    [path, manifestBytes],
+    [witness.workflowPath, Buffer.from(text)],
+  ]) {
+    const ref = witness.records.find((r) => r.path === p);
+    assert(ref, p);
+    assert.equal(b.length, ref.bytes, p);
+    assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256, p);
+  }
+  for (const ref of [
+    ...value.adapterInputs,
+    ...value.frozenTools,
+    value.fixture,
+    ...value.additionalFixtures,
+  ]) {
+    const r = witness.records.find((r) => r.path === ref.path);
+    assert(r, ref.path);
+    assert.deepEqual({ path: r.path, bytes: r.bytes, sha256: r.sha256 }, ref);
+  }
+}
+// Independently reviewed executed helper identity. New prospective declarations
+// separately require their complete frozen references to match current bytes.
 const currentRunner = Object.freeze({
   path: 'scripts/run-solo-remote-correctness.mjs',
   bytes: 62407,
@@ -31,7 +70,7 @@ function assertCurrentRunner(plan) {
   assert.equal(refs.length, 1);
   assert.deepEqual(refs[0], currentRunner);
 }
-test('current release rejects the previously self-consistent but stale unedited runner', () => {
+test('executed release rejects the previously self-consistent but stale runner', () => {
   assertCurrentRunner(m);
   const stale = structuredClone(m);
   Object.assign(
@@ -254,14 +293,14 @@ test('native commands retain the exact one/six routes and declared observation a
     }
   }
 });
-test('every prospective runtime byte is frozen separately from the immutable executed witness', async () => {
+test('executed source authority preserves exact historical declaration, workflow and helper bytes', async () => {
+  assertHistoricalBindings(m, workflow);
   const refs = [...m.adapterInputs, ...m.frozenTools, m.fixture, ...m.additionalFixtures];
   assert(refs.length > 25 && refs.length < 70);
   assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
   for (const ref of refs) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256, ref.path);
+    const entry = witness.records.find((r) => r.path === ref.path);
+    assert.deepEqual({ path: entry.path, bytes: entry.bytes, sha256: entry.sha256 }, ref);
     assert(workflow.includes('            /' + ref.path + '\n'), ref.path);
   }
   for (const p of [
@@ -271,4 +310,14 @@ test('every prospective runtime byte is frozen separately from the immutable exe
     'game/ui/fonts/field-kit/handjet-display-600.woff2',
   ])
     assert(workflow.includes('            /' + p + '\n'), p);
+});
+
+test('mutated witness, executed declaration and archived workflow cannot gain new authority', () => {
+  const changed = Buffer.from(witnessBytes);
+  changed[changed.length - 2] ^= 1;
+  assert.throws(() => checkedWitness(changed));
+  const p = structuredClone(m);
+  p.frozenTools[0].sha256 = '0'.repeat(64);
+  assert.throws(() => assertHistoricalBindings(p, workflow));
+  assert.throws(() => assertHistoricalBindings(m, workflow + '\n'));
 });

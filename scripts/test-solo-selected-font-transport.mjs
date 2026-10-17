@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { createSelectedFontHold, selectedFont } from './solo-qualification-readiness.mjs';
+import {
+  createSelectedFontHold,
+  selectedFont,
+  assertSelectedFontTransport,
+} from './solo-qualification-readiness.mjs';
 const original = await readFile(
   new URL('../game/ui/fonts/field-kit/handjet-display-600.woff2', import.meta.url),
 );
@@ -60,6 +64,7 @@ function fixture(options = {}) {
     },
   };
   const owner = createSelectedFontHold(entry, {
+    requestPolicy: options.requestPolicy ?? 'single-v1',
     now: () => now,
     setTimer: (callback, ms) => {
       const n = ++id;
@@ -336,4 +341,307 @@ test('a fetch arriving after cleanup reserve stays explicitly owned and never re
   assert.equal(r.responseDisposed, false);
   assert(!f.calls.some((c) => c[0] === 'dispose'));
   assert(r.timedOutOperations.includes('response-dispose'));
+});
+
+test('joined mode shares one validated fetch and original response across two held native routes', async () => {
+  const f = fixture({ requestPolicy: 'same-url-two-v2' });
+  const first = f.owner.handle(f.route);
+  await flush();
+  const second = f.owner.handle({ ...f.route });
+  await flush();
+  await f.owner.waitUntilHeld();
+  assert.equal(f.owner.snapshot().ownedRouteCount, 2);
+  assert.equal(f.calls.filter((c) => c[0] === 'fetch').length, 1);
+  assert.equal(f.calls.filter((c) => c[0] === 'fulfill').length, 0);
+  f.owner.releaseAfterPublicCancellation();
+  await Promise.all([first, second]);
+  await f.owner.close();
+  const r = f.owner.snapshot();
+  assert.equal(r.format, 'SoloSelectedFontHoldV2');
+  assert.equal(r.maximumRequests, 2);
+  assert.equal(r.claimed, 2);
+  assert.equal(r.status, 'complete');
+  assert(r.closed && r.responseDisposed && r.released);
+  assert.equal(r.ownedRouteCount, 0);
+  assert.deepEqual(
+    r.routes.map((x) => [x.fulfillmentSettled, x.abortionSettled]),
+    [
+      [true, false],
+      [true, false],
+    ],
+  );
+  assert.equal(f.calls.filter((c) => c[0] === 'fulfill').length, 2);
+  assert.equal(f.calls.filter((c) => c[0] === 'dispose').length, 1);
+  assert.equal(f.timers.size, 0);
+});
+
+test('a second request joining during fetch shares its nonrenewing deadline and response', async () => {
+  let release;
+  const f = fixture({
+    requestPolicy: 'same-url-two-v2',
+    wait: 'fetch',
+    pending: new Promise((r) => (release = r)),
+  });
+  const first = f.owner.handle(f.route);
+  await flush();
+  await f.advance(9000);
+  const second = f.owner.handle({ ...f.route });
+  release();
+  await flush();
+  assert.equal(f.owner.snapshot().status, 'held');
+  await f.advance(50999);
+  assert.equal(f.owner.snapshot().status, 'held');
+  await f.advance(1);
+  await Promise.all([first, second]);
+  await f.owner.close();
+  const r = f.owner.snapshot();
+  assert.equal(r.status, 'failed');
+  assert(r.closed && r.responseDisposed && r.abortSettled);
+  assert.equal(r.ownedRouteCount, 0);
+  assert.equal(f.calls.filter((c) => c[0] === 'fetch').length, 1);
+  assert.equal(f.calls.filter((c) => c[0] === 'abort').length, 2);
+});
+
+test('cancellation aborts both admitted routes and retains no owned response', async () => {
+  const f = fixture({ requestPolicy: 'same-url-two-v2' });
+  const first = f.owner.handle(f.route);
+  await flush();
+  const second = f.owner.handle({ ...f.route });
+  await flush();
+  await f.owner.close();
+  await Promise.all([first, second]);
+  const r = f.owner.snapshot();
+  assert.equal(r.status, 'failed');
+  assert(r.closed && r.responseDisposed);
+  assert.equal(r.ownedRouteCount, 0);
+  assert(r.routes.every((x) => x.abortionSettled && !x.fulfillmentSettled));
+  assert.equal(f.calls.filter((c) => c[0] === 'fetch').length, 1);
+});
+
+test('third request fails the cap without a second fetch and all three routes settle', async () => {
+  const f = fixture({ requestPolicy: 'same-url-two-v2' });
+  const first = f.owner.handle(f.route);
+  await flush();
+  const second = f.owner.handle({ ...f.route });
+  await flush();
+  const third = f.owner.handle({ ...f.route });
+  await Promise.all([first, second, third]);
+  await f.owner.close();
+  const r = f.owner.snapshot();
+  assert.equal(r.status, 'failed');
+  assert.equal(r.claimed, 3);
+  assert.equal(r.routes.length, 2);
+  assert(r.closed && r.responseDisposed);
+  assert.equal(r.ownedRouteCount, 0);
+  assert.equal(f.calls.filter((c) => c[0] === 'fetch').length, 1);
+  assert.equal(f.calls.filter((c) => c[0] === 'abort').length, 3);
+});
+
+test('every joined request must be the same font GET with no range', async () => {
+  for (const change of [
+    { method: () => 'POST' },
+    { resourceType: () => 'other' },
+    { headers: () => ({ range: 'bytes=0-1' }) },
+  ]) {
+    const f = fixture({ requestPolicy: 'same-url-two-v2' });
+    const first = f.owner.handle(f.route);
+    await flush();
+    const second = f.owner.handle({
+      ...f.route,
+      request: () => ({ ...f.route.request(), ...change }),
+    });
+    await Promise.all([first, second]);
+    await f.owner.close();
+    const r = f.owner.snapshot();
+    assert.equal(r.status, 'failed');
+    assert(r.closed && r.responseDisposed);
+    assert.equal(f.calls.filter((c) => c[0] === 'fetch').length, 1);
+    assert(!f.calls.some((c) => c[0] === 'fulfill'));
+  }
+});
+
+test('a request arriving after forwarding starts fails rather than reopening the response lifetime', async () => {
+  let release;
+  const f = fixture({
+    requestPolicy: 'same-url-two-v2',
+    wait: 'fulfill',
+    pending: new Promise((r) => (release = r)),
+  });
+  const first = f.owner.handle(f.route);
+  await flush();
+  f.owner.releaseAfterPublicCancellation();
+  await flush();
+  const second = f.owner.handle({ ...f.route });
+  await second;
+  await first;
+  await f.owner.close();
+  let r = f.owner.snapshot();
+  assert.equal(r.status, 'failed');
+  assert.equal(r.closed, false);
+  assert(r.pendingOperations.includes('response-fulfill'));
+  release();
+  await flush();
+  r = f.owner.snapshot();
+  assert.equal(r.status, 'failed');
+  assert(r.closed);
+  assert.equal(f.calls.filter((c) => c[0] === 'fetch').length, 1);
+});
+
+test('never-settling joined fulfillment remains owned after deadline even if its abort settles', async () => {
+  let reject;
+  const late = new Promise((_, r) => (reject = r));
+  const f = fixture({ requestPolicy: 'same-url-two-v2' });
+  const first = f.owner.handle(f.route);
+  await flush();
+  const second = f.owner.handle({ ...f.route, fulfill: async () => late });
+  await flush();
+  f.owner.releaseAfterPublicCancellation();
+  await flush();
+  await f.advance(62000);
+  await Promise.all([first, second]);
+  await f.owner.close();
+  let r = f.owner.snapshot();
+  assert.equal(r.status, 'failed');
+  assert.equal(r.closed, false);
+  assert(r.pendingOperations.includes('response-fulfill'));
+  assert.equal(r.routes[0].fulfillmentSettled, true);
+  assert.equal(r.routes[1].abortionSettled, true);
+  reject(new Error('late joined native failure'));
+  await flush();
+  r = f.owner.snapshot();
+  assert.equal(r.status, 'failed');
+  assert(r.closed && r.pendingOperations.length === 0);
+  assert(r.timedOutOperations.length > 0);
+});
+
+test('expired joined deadline rejects every fulfillment before native invocation', async () => {
+  const f = fixture({ requestPolicy: 'same-url-two-v2' });
+  const first = f.owner.handle(f.route);
+  await flush();
+  const second = f.owner.handle({ ...f.route });
+  await flush();
+  f.jump(60001);
+  f.owner.releaseAfterPublicCancellation();
+  await Promise.all([first, second]);
+  await f.owner.close();
+  const r = f.owner.snapshot();
+  assert.equal(r.status, 'failed');
+  assert(!f.calls.some((c) => c[0] === 'fulfill'));
+  assert.equal(r.ownedRouteCount, 0);
+  assert(r.closed);
+});
+
+test('V2 assessment requires explicit mode, every admitted route settled and zero uncertainty', async () => {
+  const f = fixture({ requestPolicy: 'same-url-two-v2' });
+  const one = f.owner.handle(f.route);
+  await flush();
+  const two = f.owner.handle({ ...f.route });
+  await flush();
+  f.owner.releaseAfterPublicCancellation();
+  await Promise.all([one, two]);
+  await f.owner.close();
+  const r = f.owner.snapshot();
+  assert(assertSelectedFontTransport(r, 'same-url-two-v2'));
+  assert.throws(() => assertSelectedFontTransport(r));
+  for (const mutate of [
+    (v) => {
+      v.claimed = 3;
+    },
+    (v) => {
+      v.claimed = 1;
+    },
+    (v) => {
+      v.routes[1].fulfillmentSettled = false;
+    },
+    (v) => {
+      v.routes[1].abortionSettled = true;
+    },
+    (v) => {
+      v.routes[1].index = 0;
+    },
+    (v) => {
+      v.ownedRouteCount = 1;
+    },
+    (v) => {
+      v.rejectedOwned = 1;
+    },
+    (v) => {
+      v.pendingOperations = ['response-fulfill'];
+    },
+    (v) => {
+      v.timedOutOperations = ['response-fulfill'];
+    },
+    (v) => {
+      v.records = v.records.filter((x) => x.kind !== 'same-original-request-joined');
+    },
+    (v) => {
+      const j = v.records.splice(
+        v.records.findIndex((x) => x.kind === 'same-original-request-joined'),
+        1,
+      );
+      v.records.push(...j);
+    },
+  ]) {
+    const changed = structuredClone(r);
+    mutate(changed);
+    assert.throws(() => assertSelectedFontTransport(changed, 'same-url-two-v2'));
+  }
+});
+
+test('prospective stable pending route preserves the original deadlines, actions and public cancellation', async () => {
+  const { validateQualification } = await import('./solo-qualification.mjs');
+  const next = JSON.parse(
+    await readFile(
+      new URL(
+        '../docs/performance/fixtures/solo-readiness-font/selected-font-cancel-joined-v2.qualification.fixture',
+        import.meta.url,
+      ),
+    ),
+  );
+  const old = JSON.parse(
+    await readFile(
+      new URL(
+        '../docs/performance/fixtures/solo-readiness-font/selected-font-cancel.qualification.fixture',
+        import.meta.url,
+      ),
+    ),
+  );
+  validateQualification(next);
+  assert.equal(next.timeoutMs, old.timeoutMs);
+  assert.equal(next.actions.length, old.actions.length);
+  assert.equal(next.actions[8].timeoutMs, 5000);
+  assert.equal(next.actions[8].contains, undefined);
+  assert.equal(
+    next.actions[8].selector,
+    'body:not([data-flight-state="running"]):not(:has(dialog[open])) #flight-preparation-status[data-state="busy"]',
+  );
+  assert.equal(next.actions[9].key, 'Escape');
+  assert.deepEqual(next.actions.slice(9), old.actions.slice(9));
+  const restored = structuredClone(next);
+  restored.id = old.id;
+  restored.actions[8] = old.actions[8];
+  assert.deepEqual(restored, old);
+});
+
+test('second request between public cancellation and forwarding is accepted at the actual owner boundary', async () => {
+  const f = fixture({ requestPolicy: 'same-url-two-v2' });
+  const first = f.owner.handle(f.route);
+  await flush();
+  f.owner.releaseAfterPublicCancellation();
+  // Same turn, before the release promise continuation starts native forwarding.
+  const second = f.owner.handle({ ...f.route });
+  await Promise.all([first, second]);
+  await f.owner.close();
+  const r = f.owner.snapshot();
+  const kinds = r.records.map((x) => x.kind);
+  assert(
+    kinds.indexOf('declared-public-cancel-boundary') <
+      kinds.indexOf('same-original-request-joined'),
+  );
+  assert(
+    kinds.indexOf('same-original-request-joined') < kinds.indexOf('original-response-forwarded'),
+  );
+  assert(assertSelectedFontTransport(r, 'same-url-two-v2'));
+  assert.equal(r.status, 'complete');
+  assert.equal(r.ownedRouteCount, 0);
 });
