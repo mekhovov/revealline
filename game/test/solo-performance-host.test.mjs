@@ -198,6 +198,122 @@ test(
     assert.deepEqual(page.errors, []);
   },
 );
+test('ordinary Solo creates optional Worlds only on public opening and reuses its lifecycle owner', async (t) => {
+  const dialogs = [],
+    requests = [];
+  const page = await soloPage(t, {
+    search: '',
+    titleScreen: true,
+    pictures,
+    fetchResponse,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    fetchJSON: (path) => {
+      requests.push(String(path));
+    },
+    browserSetup({ document }) {
+      const create = document.createElement.bind(document);
+      document.createElement = (tag, ...args) => {
+        const element = create(tag, ...args);
+        if (String(tag).toLowerCase() === 'dialog') {
+          assert(dialogs.length < 128, 'Keep the modeled owner inventory bounded.');
+          dialogs.push(element);
+        }
+        return element;
+      };
+    },
+  });
+  const owners = () => dialogs.filter((node) => node.id === 'optional-worlds-dialog');
+  assert.equal(page.$('optional-worlds-dialog'), null);
+  assert.deepEqual(owners(), []);
+  page.$('shell-featured').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Direct Start prepares the accepted attempt',
+    {
+      timeoutMs: 20000,
+    },
+  );
+  page.frame(0);
+  const run = page.rendered.run;
+  assert.equal(run.levelId, 'first-return');
+  assert.equal(page.$('optional-worlds-dialog'), null);
+  assert.deepEqual(owners(), []);
+  assert(!requests.some((path) => path.includes('optional-worlds')));
+  const openWorlds = () => {
+    page.$('settings-button').click();
+    page.$('settings-tab-content').click();
+    assert.equal(page.$('settings-panel-content').hidden, false);
+    const opener = page.$('shell-worlds');
+    assert.equal(opener.closest('#settings-panel-content'), page.$('settings-panel-content'));
+    assert.equal(opener.hidden, false);
+    opener.click();
+  };
+  openWorlds();
+  const panel = page.$('optional-worlds-dialog'),
+    checkpoint = authoritativeCheckpoint(run);
+  assert.equal(panel.open, true, 'The explicit click creates and opens the owner synchronously.');
+  assert.deepEqual(owners(), [panel]);
+  await settle(
+    () => !page.$('optional-worlds-reload').disabled,
+    'Public Worlds inventory completes',
+    {
+      timeoutMs: 15000,
+    },
+  );
+  assert.equal(page.doc.activeElement, page.$('optional-worlds-top-back'));
+  page.$('optional-worlds-top-back').click();
+  assert.equal(panel.open, false);
+  openWorlds();
+  assert.equal(page.$('optional-worlds-dialog'), panel);
+  assert.deepEqual(owners(), [panel]);
+  await settle(
+    () => !page.$('optional-worlds-reload').disabled,
+    'Public Worlds inventory reopens',
+    {
+      timeoutMs: 15000,
+    },
+  );
+  page.doc.hidden = true;
+  page.doc.emit('visibilitychange');
+  assert.equal(panel.open, false);
+  assert.equal(panel.isConnected, true);
+  page.doc.hidden = false;
+  page.doc.emit('visibilitychange');
+  openWorlds();
+  assert.equal(panel.open, true);
+  page.win.emit('pagehide', { persisted: true });
+  assert.equal(panel.open, false);
+  assert.equal(panel.isConnected, true);
+  const staleOpen = page.$('shell-worlds').onclick;
+  page.win.emit('pagehide', { persisted: false });
+  assert.equal(panel.isConnected, false);
+  staleOpen();
+  assert.equal(page.$('optional-worlds-dialog'), null);
+  assert.deepEqual(owners(), [panel]);
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
+test('retiring an unopened Solo page cannot create optional Worlds through a retained opener', async (t) => {
+  const page = await soloPage(t, {
+    search: '',
+    titleScreen: true,
+    pictures,
+    fetchResponse,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+  });
+  const staleOpen = page.$('shell-worlds').onclick,
+    run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run);
+  assert.equal(typeof staleOpen, 'function');
+  assert.equal(page.$('optional-worlds-dialog'), null);
+  page.win.emit('pagehide', { persisted: false });
+  staleOpen();
+  assert.equal(page.$('optional-worlds-dialog'), null);
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
 test('raw scene interruptions preserve exact 250ms boundary and never catch up hidden time', async (t) => {
   const page = await soloPage(t, {
     pictures,

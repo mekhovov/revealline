@@ -1509,7 +1509,8 @@ try {
   let gameShell = null,
     missionPicker = null,
     enemyGuide = null,
-    optionalWorlds = null;
+    optionalWorlds = null,
+    optionalWorldsDisposed = false;
   const demoAudioListeners = new Set();
   let demoAudioOperation = 0,
     demoAudioController = null;
@@ -3585,6 +3586,7 @@ try {
       soundtrackLoad.abort();
       quickMusicControls?.dispose();
       enemyGuide.dispose();
+      optionalWorldsDisposed = true;
       optionalWorlds?.dispose();
       soundtrackPlayer?.dispose();
       soundtrackPanel?.dispose();
@@ -14086,144 +14088,157 @@ try {
       }
     };
   }
-  optionalWorlds = attachOptionalChaptersPanel({
-    onPlayActivation: captureWorldPlay,
-    getLibrary: () => packs,
-    getUsage: () => chapterSnapshot?.usage,
-    sourceChapters:
-      !practiceSession && !runtimeContent
-        ? SOURCE_EXTERNAL_EDITIONS.map((edition) => {
-            const { descriptor, name, description, mode, levels } = edition;
-            return presentSourceChapter(edition, {
-              id: descriptor.id,
-              controlId:
-                descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
-              name,
-              description,
-              mode,
-              themeId: descriptor.themeId,
-              levels,
-              sourceOnly: !isRelease,
-              bytes: descriptor.pack.bytes + descriptor.media.bytes,
-              download: isRelease
-                ? (options) =>
-                    installSourceChapter(descriptor.id, null, { ...options, download: true })
-                : null,
-              backupSupported: !!externalBackup,
-              async inspect({ signal }) {
-                const snapshot = await inspectChapters({ signal });
-                if (snapshot.status !== 'checked') return { status: snapshot.reason };
-                const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
-                if (installed)
+  function getOptionalWorlds() {
+    if (optionalWorldsDisposed) return null;
+    return (optionalWorlds ??= attachOptionalChaptersPanel({
+      onPlayActivation: captureWorldPlay,
+      getLibrary: () => packs,
+      getUsage: () => chapterSnapshot?.usage,
+      sourceChapters:
+        !practiceSession && !runtimeContent
+          ? SOURCE_EXTERNAL_EDITIONS.map((edition) => {
+              const { descriptor, name, description, mode, levels } = edition;
+              return presentSourceChapter(edition, {
+                id: descriptor.id,
+                controlId:
+                  descriptor.id === SOURCE_EXTERNAL_CHAPTER.id
+                    ? 'source'
+                    : `source-${descriptor.id}`,
+                name,
+                description,
+                mode,
+                themeId: descriptor.themeId,
+                levels,
+                sourceOnly: !isRelease,
+                bytes: descriptor.pack.bytes + descriptor.media.bytes,
+                download: isRelease
+                  ? (options) =>
+                      installSourceChapter(descriptor.id, null, { ...options, download: true })
+                  : null,
+                backupSupported: !!externalBackup,
+                async inspect({ signal }) {
+                  const snapshot = await inspectChapters({ signal });
+                  if (snapshot.status !== 'checked') return { status: snapshot.reason };
+                  const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
+                  if (installed)
+                    await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                  return { status: installed ? 'installed' : 'absent' };
+                },
+                install: (files, options) => installSourceChapter(descriptor.id, files, options),
+                async play({ signal, onStatus, launch }) {
+                  if (!storedStateAdopted || !persistenceReady)
+                    throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
+                  const snapshot = await checkedChapters({ signal });
                   await externalChapters.readiness(snapshot, descriptor.id, { signal });
-                return { status: installed ? 'installed' : 'absent' };
-              },
-              install: (files, options) => installSourceChapter(descriptor.id, files, options),
-              async play({ signal, onStatus, launch }) {
-                if (!storedStateAdopted || !persistenceReady)
-                  throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
-                const snapshot = await checkedChapters({ signal });
-                await externalChapters.readiness(snapshot, descriptor.id, { signal });
-                assertWorldPlay(launch);
-                adoptContentCatalog(contentFromChapters(snapshot));
-                const pack = packs.packs.find((item) => item.id === descriptor.id);
-                return requestWorldPlay(pack, { signal, launch, onStatus });
-              },
-              async choose({ signal, onStatus, launch }) {
-                if (!storedStateAdopted || !persistenceReady)
-                  throw new Error(
-                    t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+                  assertWorldPlay(launch);
+                  adoptContentCatalog(contentFromChapters(snapshot));
+                  const pack = packs.packs.find((item) => item.id === descriptor.id);
+                  return requestWorldPlay(pack, { signal, launch, onStatus });
+                },
+                async choose({ signal, onStatus, launch }) {
+                  if (!storedStateAdopted || !persistenceReady)
+                    throw new Error(
+                      t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+                    );
+                  preparationStatus(
+                    onStatus,
+                    t('interface:checkingInstalledChapterOriginals'),
+                    'verifying',
+                    () => !signal?.aborted,
                   );
-                preparationStatus(
-                  onStatus,
-                  t('interface:checkingInstalledChapterOriginals'),
-                  'verifying',
-                  () => !signal?.aborted,
-                );
-                const snapshot = await checkedChapters({ signal });
-                await externalChapters.readiness(snapshot, descriptor.id, { signal });
-                if (signal.aborted || !launch?.isCurrent())
-                  throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
-                // Reconcile only checked content; this does not replace the run.
-                // The explicit selection below still requires Stay / Replace.
-                adoptContentCatalog(contentFromChapters(snapshot));
-                const pack = packs.packs.find((p) => p.id === descriptor.id);
-                return requestWorldLaunch(
-                  resolvePackCampaign(pack, pack.campaigns[0].id),
-                  launch,
-                  onStatus,
-                );
-              },
-            });
-          })
-        : [],
-    loadCatalog: async ({ signal }) => {
-      if (runtimeContent) return { format: 'revealline-optional-chapters.v1', packs: [] };
-      const options = { signal, baseURL: new URL('../', gameDocumentURL(location.href)) };
-      if (isRelease) await loadExternalCatalog(options);
-      return loadOptionalCatalog(options);
-    },
-    install: installOptionalChapter,
-    playInstalled: (pack, options) => {
-      if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
-        throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
-      return requestWorldPlay(pack, options);
-    },
-    play: async (summary, options) => {
-      const pack = packs.packs.find((item) => item.id === summary.id);
-      if (!pack) throw new Error(t('interface:installThisChapterBeforePlaying'));
-      await verifyOptionalInstalled(pack, summary, { signal: options.signal });
-      return requestWorldPlay(pack, options);
-    },
-    chooseInstalled: async (pack, { signal, launch, onStatus }) => {
-      if (courseEntry || courseSession || practice || !storedStateAdopted || !persistenceReady)
-        throw new Error(t('interface:returnToTheNormalGameAndResolveRecoveryBeforeChoosing'));
-      if (signal?.aborted)
-        throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
-      if (!packs.packs.includes(pack))
-        throw new Error(t('interface:installedContentChangedRefreshTheChapterList'));
-      // External originals always go through their descriptor/readiness card.
-      if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
-        throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
-      return requestWorldLaunch(resolvePackCampaign(pack, pack.campaigns[0].id), launch, onStatus);
-    },
-    choose: async (summary, { signal, onStatus, launch }) => {
-      if (courseEntry || courseSession || practice)
-        throw new Error(t('interface:returnFromPracticeBeforeChoosingAWorld'));
-      const pack = packs.packs.find((item) => item.id === summary.id);
-      if (!pack) throw new Error(t('interface:installThisWorldBeforeChoosingIt'));
-      preparationStatus(
-        onStatus,
-        localizedMessage('interface:optionalChapters.verifying', { chapter: summary.name }),
-        'verifying',
-        () => !signal?.aborted,
-      );
-      await verifyOptionalInstalled(pack, summary, { signal });
-      if (signal?.aborted)
-        throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
-      if (packs.packs.find((item) => item.id === summary.id) !== pack)
-        throw new Error(t('interface:installedContentChangedChooseThisWorldAgain'));
-      return requestWorldLaunch(resolvePackCampaign(pack, pack.campaigns[0].id), launch, onStatus);
-    },
-    onOpen: () => {
-      pause(true);
-      clearInput();
-    },
-    onClose: () => {
-      clearInput();
-      gameShell?.openHome();
-    },
-    onChosen: () => {
-      clearInput();
-      controllerReading.refresh();
-      controllerFocus()?.focus({ preventScroll: true });
-    },
-    onRead: (request) => controllerNavigation.beginReading(request),
-    onManage: () => {
-      clearInput();
-      libraryPanel.open('packs');
-    },
-  });
+                  const snapshot = await checkedChapters({ signal });
+                  await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                  if (signal.aborted || !launch?.isCurrent())
+                    throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
+                  // Reconcile only checked content; this does not replace the run.
+                  // The explicit selection below still requires Stay / Replace.
+                  adoptContentCatalog(contentFromChapters(snapshot));
+                  const pack = packs.packs.find((p) => p.id === descriptor.id);
+                  return requestWorldLaunch(
+                    resolvePackCampaign(pack, pack.campaigns[0].id),
+                    launch,
+                    onStatus,
+                  );
+                },
+              });
+            })
+          : [],
+      loadCatalog: async ({ signal }) => {
+        if (runtimeContent) return { format: 'revealline-optional-chapters.v1', packs: [] };
+        const options = { signal, baseURL: new URL('../', gameDocumentURL(location.href)) };
+        if (isRelease) await loadExternalCatalog(options);
+        return loadOptionalCatalog(options);
+      },
+      install: installOptionalChapter,
+      playInstalled: (pack, options) => {
+        if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
+          throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
+        return requestWorldPlay(pack, options);
+      },
+      play: async (summary, options) => {
+        const pack = packs.packs.find((item) => item.id === summary.id);
+        if (!pack) throw new Error(t('interface:installThisChapterBeforePlaying'));
+        await verifyOptionalInstalled(pack, summary, { signal: options.signal });
+        return requestWorldPlay(pack, options);
+      },
+      chooseInstalled: async (pack, { signal, launch, onStatus }) => {
+        if (courseEntry || courseSession || practice || !storedStateAdopted || !persistenceReady)
+          throw new Error(t('interface:returnToTheNormalGameAndResolveRecoveryBeforeChoosing'));
+        if (signal?.aborted)
+          throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
+        if (!packs.packs.includes(pack))
+          throw new Error(t('interface:installedContentChangedRefreshTheChapterList'));
+        // External originals always go through their descriptor/readiness card.
+        if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
+          throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
+        return requestWorldLaunch(
+          resolvePackCampaign(pack, pack.campaigns[0].id),
+          launch,
+          onStatus,
+        );
+      },
+      choose: async (summary, { signal, onStatus, launch }) => {
+        if (courseEntry || courseSession || practice)
+          throw new Error(t('interface:returnFromPracticeBeforeChoosingAWorld'));
+        const pack = packs.packs.find((item) => item.id === summary.id);
+        if (!pack) throw new Error(t('interface:installThisWorldBeforeChoosingIt'));
+        preparationStatus(
+          onStatus,
+          localizedMessage('interface:optionalChapters.verifying', { chapter: summary.name }),
+          'verifying',
+          () => !signal?.aborted,
+        );
+        await verifyOptionalInstalled(pack, summary, { signal });
+        if (signal?.aborted)
+          throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
+        if (packs.packs.find((item) => item.id === summary.id) !== pack)
+          throw new Error(t('interface:installedContentChangedChooseThisWorldAgain'));
+        return requestWorldLaunch(
+          resolvePackCampaign(pack, pack.campaigns[0].id),
+          launch,
+          onStatus,
+        );
+      },
+      onOpen: () => {
+        pause(true);
+        clearInput();
+      },
+      onClose: () => {
+        clearInput();
+        gameShell?.openHome();
+      },
+      onChosen: () => {
+        clearInput();
+        controllerReading.refresh();
+        controllerFocus()?.focus({ preventScroll: true });
+      },
+      onRead: (request) => controllerNavigation.beginReading(request),
+      onManage: () => {
+        clearInput();
+        libraryPanel.open('packs');
+      },
+    }));
+  }
   if (!practiceSession) {
     journeyChooser = {
       open: openUnifiedMissions,
@@ -14294,7 +14309,7 @@ try {
     onTitleCancel: cancelTitleFlight,
     onModeDeparture: requestModeDeparture,
     separateTeam: !!authoredRoute,
-    onWorlds: () => optionalWorlds.open(),
+    onWorlds: () => getOptionalWorlds()?.open(),
     onMissions: !practiceSession
       ? (opener) =>
           journeyChooser.open(opener, {
