@@ -1,7 +1,9 @@
 (async () => {
   const host = globalThis;
   const doc = host.document;
-  if (!doc || host.RevealLineAccess) return;
+  // Community entries replace the document with the shared game host. The
+  // Window and Document survive document.write(), but their root is new.
+  if (!doc || host.RevealLineAccess?.documentElement === doc.documentElement) return;
 
   const meta = (name) => doc.querySelector(`meta[name="${name}"]`)?.content || '';
   const config = Object.freeze({
@@ -20,7 +22,12 @@
   const scriptsReady = new Promise((resolve) => {
     resolveScriptsReady = resolve;
   });
-  host.RevealLineAccess = Object.freeze({ ready, scriptsReady, storageKey });
+  host.RevealLineAccess = Object.freeze({
+    ready,
+    scriptsReady,
+    storageKey,
+    documentElement: doc.documentElement,
+  });
 
   const storage = {
     read() {
