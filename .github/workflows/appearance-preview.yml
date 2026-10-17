@@ -33,6 +33,7 @@ on:
       - 'game/test/solo-dense-replay-persistence.test.mjs'
       - 'game/test/library-entry.test.mjs'
       - 'game/test/solo-lazy-library-host.test.mjs'
+      - 'game/test/solo-transition-performance-host.test.mjs'
       - 'game/presentation/**'
       - 'game/ui/theme-*'
       - 'game/ui/menu-controls.css'
@@ -240,6 +241,7 @@ env:
     game/test/solo-dense-replay-persistence.test.mjs
     game/test/library-entry.test.mjs
     game/test/solo-lazy-library-host.test.mjs
+    game/test/solo-transition-performance-host.test.mjs
 
 jobs:
   admission:
