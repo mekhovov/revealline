@@ -1,15 +1,15 @@
 {
   "format": "FpvInputRecoveryVerification.v1",
-  "createdAt": "2026-10-17T14:36:32.676255+00:00",
+  "createdAt": "2026-10-17T15:02:32.871360+00:00",
   "pass": true,
   "baseRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
   "scope": "Local software acceptance for recoverable Advanced input loss and public startup observation; native follow-up and publication are separate.",
   "checks": {
-    "practiceTests": 740,
+    "practiceTests": 741,
     "practiceFailed": 0,
     "practiceSkipped": 0,
     "newInputHostRegressions": 5,
-    "newStartupDiagnosticRegressions": 4,
+    "newStartupDiagnosticRegressions": 5,
     "realBrowserLocales": [
       "en",
       "uk"
@@ -22,7 +22,8 @@
     "lint": true,
     "scopedFormatting": true,
     "releaseValidation": true,
-    "independentDiffReviews": 2
+    "independentDiffReviews": 2,
+    "privacyCorrectionIndependentReviews": 2
   },
   "numericalEvidenceReuse": {
     "report": "docs/fpv-advanced-runtime-post-publication-qualification.json",
@@ -43,13 +44,13 @@
     },
     {
       "path": "scripts/smoke-fpv-public-fresh-install.mjs",
-      "bytes": 22675,
-      "sha256": "2177e895551c37191df2113896cd9540438071cfcfeb42577b9f3fb948aa567c"
+      "bytes": 23175,
+      "sha256": "ca5c7ade10c45c016ab57e55c318e6b0fc1f0a39bb1ff0c16c68686d4a42fed9"
     },
     {
       "path": "scripts/test-fpv-public-startup.mjs",
-      "bytes": 4699,
-      "sha256": "9c8ed3bf39954d49959a21f6e135937daea0c3d20d578c7dac66bff609d761d8"
+      "bytes": 6010,
+      "sha256": "cdf0059c6b12e77e0b14f07b459ba892cb6016529a67543287fb89c2f6d1ef82"
     },
     {
       "path": "scripts/smoke-fpv-input-recovery.mjs",
@@ -71,7 +72,7 @@
     {
       "path": "docs/fpv-input-recovery-startup-fixture.json",
       "bytes": 1636,
-      "sha256": "6fb064a64909a3aa396b31fb4b6570d5c7eeceee70db6b731bd7025de11da6fb"
+      "sha256": "2524e43b405faf8f41c3d07cbe1bc73fff0a2bc6ac5c3fe5e30795eb11f7241f"
     },
     {
       "path": "docs/fpv-input-recovery-evidence/host-test-observations.json",
@@ -80,8 +81,8 @@
     },
     {
       "path": "docs/fpv-input-recovery-evidence/practice.tap",
-      "bytes": 182283,
-      "sha256": "1b7594bb45759a9f220fceb99e9f456354a30e6cf18f6505831093d9bdf0a372"
+      "bytes": 182541,
+      "sha256": "abea57814d86a844cceea2eccce96005bd5c65f8a35a2cbd640dba7a4373e053"
     },
     {
       "path": "docs/fpv-input-recovery-evidence/pre-fix-host-regression.tap",
@@ -97,6 +98,21 @@
       "path": "docs/fpv-input-recovery-evidence/validation.txt",
       "bytes": 3885,
       "sha256": "dd1dc4ca206fbce320df97d2eaeeeb234d26d45bf0c7e892f071d11adb051b61"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/privacy-regression-before.tap",
+      "bytes": 1253,
+      "sha256": "543d1d4a7936c843a0ed65f7660377aa3a18252c3f4e6ce69319a07b29a1fdce"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/privacy-regression-after.tap",
+      "bytes": 1354,
+      "sha256": "b40f717b749d29052b0b995502790cb584abeb27abdc69ca445b0ba83b260fb1"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/startup-fixture-before-privacy.json",
+      "bytes": 1636,
+      "sha256": "6fb064a64909a3aa396b31fb4b6570d5c7eeceee70db6b731bd7025de11da6fb"
     }
   ],
   "limitations": [
@@ -124,5 +140,13 @@
     "workersTerminated": 2,
     "productionAuthentication": false,
     "iosRuntimeVerified": false
+  },
+  "privacyCorrection": {
+    "finding": "Synthetic review probe demonstrated that arbitrary request/capture exception strings could retain URL userinfo, query or fragment in diagnostic metadata; no actual credential leak was reported.",
+    "resolution": "Network failures retain only exact known codes or request-failed. Capture failures retain state-timeout or state-unavailable. Original action result/error and bounded cleanup remain unchanged.",
+    "regressionFailsBefore": true,
+    "regressionPassesAfter": true,
+    "originalEvidenceCommit": "cce90a419",
+    "scope": "New startup request/capture metadata only; unchanged outer failure stacks and page-error strings are not asserted to be globally URL-free."
   }
 }

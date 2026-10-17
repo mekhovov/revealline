@@ -1,9 +1,10 @@
 # FPV tuning implementation status
 
-Updated 2026-10-17. The latest corrections are merged in
+Updated 2026-10-17. The previous boundary corrections are merged in
 [PR #1564](https://github.com/mekhovov/revealline/pull/1564) and published as
 `fb3caf12bd43743670f47c42dc21f7a406223379`. Available software work and delivery
-for this continuation are complete. Physical and wider-platform qualification
+for that prior continuation are complete. The input-availability continuation
+below is awaiting fresh checks and publication. Physical and wider-platform qualification
 remain deferred; Advanced remains optional, unscored and default-ineligible.
 Historical reports below retain their original source hashes and scope.
 
@@ -14,7 +15,9 @@ rates/profile/import scope and opens one reproduced recovery defect: unavailable
 radio input disables a healthy Advanced practice worker and its exports. The
 correction keeps input failure recoverable while preserving fatal worker handling.
 The live-test runner also gains bounded startup diagnostics so future failures
-retain more evidence than the earlier unexplained timeout. Verification and
+retain more evidence than the earlier unexplained timeout. Review prompted a
+correction that restricts request/capture error metadata to fixed categories.
+All 741 practice tests and browser/native recovery pass. Fresh release checks and
 publication for this correction are in progress.
 
 ## Boundary completion review

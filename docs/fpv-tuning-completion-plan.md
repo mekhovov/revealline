@@ -8,8 +8,10 @@ adds current Betaflight, Liftoff and VelociDrone examples. It retains the existi
 rates/profile/import scope and identifies one reproduced software defect:
 unavailable input can incorrectly disable a healthy Advanced practice worker.
 
-Finish the recoverable-input correction and bounded startup diagnostics, verify
-them, then publish through ordinary checks. Physical and wider-platform gates
+The recoverable-input correction and bounded startup diagnostics pass 741 practice
+tests, EN/UK browser recovery and the desktop fixture. Review also found and fixed
+unconstrained diagnostic exception strings; new request/capture metadata uses
+finite categories. Finish fresh source checks and live publication acceptance. Physical and wider-platform gates
 remain deferred as agreed; no new rate models or unmeasured aircraft effects are
 needed to close the available software scope. The latest review's delivery status
 takes precedence over the historical completion records below.
