@@ -447,7 +447,10 @@ async function main() {
                 ? 'demo'
                 : plan.format === 'SoloHostedRasterPlanV1'
                   ? 'raster'
-                  : plan.format === 'SoloHostedWorkerDiagnosticPlanV1'
+                  : [
+                        'SoloHostedWorkerDiagnosticPlanV1',
+                        'SoloHostedWorkerConfirmationPlanV1',
+                      ].includes(plan.format)
                     ? 'worker-diagnostic'
                     : null;
   let adapter = null,
@@ -496,7 +499,9 @@ async function main() {
                 : extension === 'raster'
                   ? 'SoloHostedNativeRasterCohortV1'
                   : extension === 'worker-diagnostic'
-                    ? 'SoloHostedWorkerDiagnosticCohortV1'
+                    ? plan.format === 'SoloHostedWorkerConfirmationPlanV1'
+                      ? 'SoloHostedWorkerConfirmationCohortV1'
+                      : 'SoloHostedWorkerDiagnosticCohortV1'
                     : extension === 'supplemental'
                       ? 'SoloHostedSupplementalPreflightV1'
                       : 'SoloHostedCorrectness.v1',

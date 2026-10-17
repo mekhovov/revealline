@@ -145,8 +145,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-worker-diagnostic.mjs",
-      "bytes": 7695,
-      "sha256": "51fcfe87d7e9f6ecad82b52a073541a32c27c2b0d9dca9c86f06f8e4fc0a234c"
+      "bytes": 10881,
+      "sha256": "aaf72b0133a4e85d1afa139251b075ac7e4d529d9051bd69c6f60f2e033f7c2c"
     },
     {
       "path": "scripts/verify-solo-mp3-worker.mjs",
