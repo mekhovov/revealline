@@ -1,5 +1,7 @@
 # Public FPV map availability — 16 October 2026 checkpoint
 
+**Latest reconciliation:** the [17 October checkpoint](fpv-public-map-reconciliation-20261017.md) verifies current public source with 24 regional offers and 11 still-unchecked regional public launches. The text and per-offer observations below remain frozen history; later R6/capacity delivery does not repair the recorded persistence failures.
+
 Players can enter [SIM on GitHub Pages](https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?lang=en#packs) directly, or use the main game's **More → SIM**. The latter route was actually followed in the public browser. **Pause → Choose** opens the mission catalogue and regional map offers. Library downloads remain optional.
 
 **Completed public launch coverage:** all 14 built-in environments, all 20 downloadable Worldpacks (one course each), and 13 of 23 regional editions covering all 10 authored families. This does not establish completion of every mission, clearance of every start or physical-device performance.

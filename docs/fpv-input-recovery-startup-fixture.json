@@ -1,0 +1,60 @@
+{
+  "format": "FpvStartupFailureFixture.v1",
+  "generatedAt": "2026-10-17T14:55:12.676Z",
+  "passed": true,
+  "scope": "Synthetic local page with a stalled script and a 404; tests diagnostic capture, not the cause of the earlier public timeout.",
+  "browser": "155.0.8059.85",
+  "startups": [
+    {
+      "stage": "synthetic-script-stall",
+      "passed": false,
+      "requestsSeen": 3,
+      "requestsOmitted": 0,
+      "requests": [
+        {
+          "resource": "/",
+          "type": "document",
+          "startedMs": 6,
+          "status": 200,
+          "finishedMs": 19
+        },
+        {
+          "resource": "/pending.mjs",
+          "type": "script",
+          "startedMs": 19
+        },
+        {
+          "resource": "/missing.mjs",
+          "type": "script",
+          "startedMs": 19,
+          "status": 404,
+          "failedMs": 23,
+          "failure": "net::ERR_ABORTED"
+        }
+      ],
+      "elapsedMs": 1023,
+      "state": {
+        "access": "unlocked",
+        "documentReady": "interactive",
+        "shellPending": true,
+        "settingsPresent": false,
+        "passwordFormPresent": false,
+        "inertScriptCount": 1,
+        "serviceWorkerControlled": false
+      },
+      "pendingRequests": 1
+    }
+  ],
+  "sources": [
+    {
+      "path": "scripts/smoke-fpv-public-fresh-install.mjs",
+      "bytes": 23175,
+      "sha256": "ca5c7ade10c45c016ab57e55c318e6b0fc1f0a39bb1ff0c16c68686d4a42fed9"
+    },
+    {
+      "path": "docs/fpv-input-recovery-evidence/startup-fixture.mjs",
+      "bytes": 3026,
+      "sha256": "20b72dc14031b88d18972df6eb55fde229e271a4c6dc1659288fbb6a77b27d3b"
+    }
+  ]
+}
