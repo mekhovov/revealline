@@ -16,6 +16,7 @@ import {
   applyAircraftComponents,
 } from './aircraft-presets.mjs';
 import { aircraftPerformance } from './aircraft-physics.mjs';
+import { createAircraftPreview } from './aircraft-preview.mjs';
 import { exportJSONFile, exportTextFile } from '../../game/platform.mjs';
 import {
   previewBetaflightImport,
@@ -207,6 +208,7 @@ export function mountFlightTuning({
   );
   rateChoice.value = 'defaults';
   const aircraftSummary = el('p', undefined, aircraftPanel);
+  const aircraftPreview = el('div', undefined, aircraftPanel);
   const aircraftEvidence = el('details', undefined, aircraftPanel);
   el(
     'summary',
@@ -216,7 +218,17 @@ export function mountFlightTuning({
   const aircraftDetails = el('div', undefined, aircraftEvidence);
   function paintAircraft() {
     const preset = getAircraftPreset(aircraftSelect.value);
+    const configuration = createPresetConfiguration(preset.id);
     aircraftSummary.textContent = `${preset.flyingMassGrams} ${t('g flying weight', 'г польотної маси')} · ${preset.propellerDiameterMm} ${t('mm propellers', 'мм пропелери')} · ${preset.wheelbaseMm} ${t('mm wheelbase', 'мм база')} · ${preset.battery.name}`;
+    aircraftPreview.replaceChildren(
+      createAircraftPreview({
+        document: doc,
+        aircraft: configuration.aircraft,
+        name: preset.name,
+        wheelbaseMm: preset.wheelbaseMm,
+        locale: locale(),
+      }),
+    );
     releaseChildren(aircraftDetails);
     aircraftDetails.replaceChildren();
     el(
@@ -228,7 +240,19 @@ export function mountFlightTuning({
       aircraftDetails,
     );
     el('p', `${preset.motor} · ${preset.propeller}`, aircraftDetails, false);
-    const performance = aircraftPerformance(createPresetConfiguration(preset.id).aircraft);
+    const hardwareLabels = {
+      frame: t('Frame', 'Рама'),
+      flightController: t('Flight controller', 'Польотний контролер'),
+      esc: t('Motor controllers', 'Регулятори двигунів'),
+      receiver: t('Receiver', 'Приймач'),
+      camera: t('Installed FPV camera', 'Установлена FPV-камера'),
+      videoTransmitter: t('Video transmitter', 'Відеопередавач'),
+      battery: t('Reference battery', 'Еталонна батарея'),
+      revision: t('Component revision', 'Ревізія компонентів'),
+    };
+    for (const [field, value] of Object.entries(preset.hardware ?? {}))
+      el('p', `${hardwareLabels[field] ?? field}: ${value}`, aircraftDetails, false);
+    const performance = aircraftPerformance(configuration.aircraft);
     el(
       'p',
       `${t('Simulated fresh-pack performance', 'Розрахункові показники зі свіжою батареєю')}: ${t('hover throttle', 'газ зависання')} ${performance.hoverThrottle === null ? '—' : `${(performance.hoverThrottle * 100).toFixed(1)}%`} · ${t('thrust / weight', 'тяга / вага')} ${performance.thrustToWeight.toFixed(2)} · ${performance.fullThrottleVoltage.toFixed(1)} V ${t('under full load', 'під повним навантаженням')}`,
@@ -263,12 +287,20 @@ export function mountFlightTuning({
     const fields = {
       assembledMass: t('Assembled mass', 'Маса зібраного дрона'),
       batteryMass: t('Battery mass', 'Маса батареї'),
+      propeller: t('Propeller dimensions', 'Розміри пропелера'),
       inertia: t('Inertia', 'Інерція'),
       propulsion: t('Propulsion', 'Тяга й двигуни'),
       drag: t('Aerodynamic drag', 'Аеродинамічний опір'),
     };
     for (const [field, label] of Object.entries(fields))
       el('p', `${label}: ${kinds[preset.evidence[field].kind]}`, aircraftDetails, false);
+    if (preset.evidence.propeller.note)
+      el(
+        'p',
+        `${t('Source note (original language)', 'Примітка джерела (мовою оригіналу)')}: ${preset.evidence.propeller.note}`,
+        aircraftDetails,
+        false,
+      );
     if (preset.evidence.batteryMass.kind === 'estimated')
       el(
         'p',

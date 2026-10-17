@@ -2,6 +2,7 @@ import * as THREE from './vendor/three.module.js';
 import { resolveIndustrialEnvironment } from '../../game/presentation/industrial-environments.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
 import { validateAircraftPhysics } from './aircraft-physics.mjs';
+import { aircraftAppearance } from './aircraft-appearance.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
 import { sharedActorAppearance, runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
@@ -151,17 +152,26 @@ export function buildPhysicalAircraftVisual({
   quality = 'balanced',
 }) {
   const aircraft = validateAircraftPhysics(configuration);
+  const appearance = aircraftAppearance(aircraft.id);
+  const underslungBattery = aircraft.id === 'mobula8-analog-2023';
   const unit = 0.22 / aircraft.radius;
   const body = aircraft.geometry.bodyHalfExtents,
     radius = aircraft.geometry.propellerRadius;
-  const tint = material(kind === 'pixel' ? 0xf3a870 : kind === 'utility' ? 0xaec8af : 0x60c5e5, {
-    roughness: 0.5,
-    side: THREE.DoubleSide,
-  });
-  const carbon = material(0x25313b, { roughness: 0.72 });
+  const tint = material(
+    kind === 'pixel' ? 0xf3a870 : kind === 'utility' ? 0xaec8af : appearance.canopyColor,
+    {
+      roughness: 0.5,
+      side: THREE.DoubleSide,
+    },
+  );
+  const carbon = material(appearance.frameColor, { roughness: 0.72, side: THREE.DoubleSide });
   const hardware = material(0x8f9aa3, { roughness: 0.35, metalness: 0.65 });
   const rubber = material(0x17232b, { roughness: 0.9 });
-  const propPaint = material(0xa1d9e7, { roughness: 0.55, transparent: true, opacity: 0.7 });
+  const propPaint = material(appearance.propColor, {
+    roughness: 0.55,
+    transparent: true,
+    opacity: 0.7,
+  });
   const parts = new THREE.Group();
   parts.name = 'physical-aircraft';
   parts.scale.setScalar(unit);
@@ -185,10 +195,10 @@ export function buildPhysicalAircraftVisual({
     return item;
   };
   part(
-    new THREE.BoxGeometry(body.x * 2, body.y * 1.4, body.z * 2),
+    new THREE.BoxGeometry(body.x * 2, body.y * (underslungBattery ? 0.3 : 1.4), body.z * 2),
     carbon,
     'aircraft-body',
-    new THREE.Vector3(0, -body.y * 0.3, 0),
+    new THREE.Vector3(0, underslungBattery ? 0 : -body.y * 0.3, 0),
     bodyParts,
   );
   // The visual battery sits inside the model's central-body collision envelope.
@@ -197,7 +207,7 @@ export function buildPhysicalAircraftVisual({
     new THREE.BoxGeometry(body.x * 1.65, body.y * 0.6, body.z * 1.5),
     tint,
     'aircraft-battery',
-    new THREE.Vector3(0, body.y * 0.7, 0),
+    new THREE.Vector3(0, body.y * (underslungBattery ? -0.7 : 0.7), 0),
     bodyParts,
   );
   for (const z of [-body.z * 0.4, body.z * 0.4])
@@ -205,7 +215,7 @@ export function buildPhysicalAircraftVisual({
       new THREE.BoxGeometry(body.x * 1.72, body.y * 0.04, body.z * 0.12),
       rubber,
       'battery-strap',
-      new THREE.Vector3(0, body.y * 0.98, z),
+      new THREE.Vector3(0, body.y * (underslungBattery ? -0.98 : 0.98), z),
       bodyParts,
     );
   const cameraRadius = Math.min(body.x * 0.36, body.y * 0.35);
@@ -217,6 +227,16 @@ export function buildPhysicalAircraftVisual({
     bodyParts,
   );
   lens.rotation.x = Math.PI / 2;
+  if (aircraft.id === 'mobula8-analog-2023') {
+    const canopy = part(
+      new THREE.SphereGeometry(1, 12, 8),
+      tint,
+      'aircraft-canopy',
+      new THREE.Vector3(0, body.y * 0.45, -body.z * 0.55),
+      bodyParts,
+    );
+    canopy.scale.set(body.x * 0.7, body.y * 0.48, body.z * 0.38);
+  }
   const up = new THREE.Vector3(0, 1, 0),
     rotors = [];
   const segments = quality === 'low' ? 12 : 24;
@@ -245,7 +265,7 @@ export function buildPhysicalAircraftVisual({
     spinner.userData.spin = -rotor.spin;
     spinner.userData.radius = radius;
     parts.add(spinner);
-    for (let blade = 0; blade < 3; blade++) {
+    for (let blade = 0; blade < appearance.bladeCount; blade++) {
       const item = part(
         new THREE.BoxGeometry(radius * 0.94, radius * 0.025, radius * 0.13),
         propPaint,
@@ -253,7 +273,7 @@ export function buildPhysicalAircraftVisual({
         null,
         spinner,
       );
-      const angle = (blade * Math.PI * 2) / 3;
+      const angle = (blade * Math.PI * 2) / appearance.bladeCount;
       item.position.set(Math.cos(angle) * radius * 0.47, 0, Math.sin(angle) * radius * 0.47);
       item.rotation.y = -angle;
     }
@@ -261,7 +281,7 @@ export function buildPhysicalAircraftVisual({
     if (aircraft.geometry.ducted) {
       part(
         new THREE.CylinderGeometry(radius, radius, Math.max(body.y, 0.006) * 2, segments, 1, true),
-        tint,
+        aircraft.id === 'mobula8-analog-2023' ? carbon : tint,
         `aircraft-duct-${index}`,
         position,
       );
