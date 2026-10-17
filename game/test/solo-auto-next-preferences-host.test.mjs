@@ -121,29 +121,35 @@ test(
     h.$('pause-button').click();
     h.frame(0);
 
-    let writes = 0;
+    let reads = 0,
+      writes = 0;
     const notice = h.$('result-auto-next');
     let hidden = notice.hidden;
     Object.defineProperty(notice, 'hidden', {
       configurable: true,
-      get: () => hidden,
+      get: () => {
+        reads++;
+        return hidden;
+      },
       set: (value) => {
         hidden = value;
         writes++;
       },
     });
     h.win.emit('pagehide', { persisted: true });
-    writes = 0;
+    reads = writes = 0;
     preferences.set('autoNext', false);
-    assert(writes > 0, 'A cached page retains its subscription');
+    assert.equal(reads, 1, 'A cached page retains its subscription');
+    assert.equal(writes, 0, 'An already hidden notice requires no redundant DOM write');
     h.win.emit('pagehide', { persisted: false });
-    writes = 0;
+    reads = writes = 0;
     let notifications = 0;
     const stop = preferences.subscribe(() => notifications++);
     preferences.set('autoNext', true);
     preferences.set('autoNext', false);
     stop();
     assert.equal(notifications, 2, 'Other consumers retain the shared owner');
+    assert.equal(reads, 0, 'Retired Solo no longer observes its countdown');
     assert.equal(writes, 0, 'Retired Solo no longer updates its countdown');
     assert.deepEqual(h.errors, []);
   },
