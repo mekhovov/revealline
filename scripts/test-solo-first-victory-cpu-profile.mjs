@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { parse } from 'acorn';
 import { readFile, mkdtemp, mkdir, writeFile, rm, realpath } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
@@ -16,6 +17,7 @@ import {
 } from './solo-remote-cpu-profile.mjs';
 import {
   qualificationNextRouteOptions,
+  executeNextRoute,
   NEXT_ROUTE_PROTOCOL,
   FIRST_VICTORY_CPU_FIXTURE,
 } from './solo-qualification-next-route.mjs';
@@ -118,13 +120,128 @@ function raw() {
         type: 'authored-next-route',
         protocol: NEXT_ROUTE_PROTOCOL,
         mission: 'first-return',
-        status: 'pass',
+        status: 'passed-public-route',
         unsettled: 0,
         heldKeys: [],
       },
     ],
   };
 }
+// Exercise the actual executor and the qualifier's actual normalization statement;
+// the state reader is a deterministic control, not a browser or gameplay proof.
+async function executedFirstVictory(releaseFailure = null) {
+  let at = 0;
+  const record = { type: 'authored-next-route', path: '6', status: 'running' },
+    keys = [],
+    waits = [];
+  let rejected = false;
+  try {
+    await executeNextRoute({
+      action: recipe.actions[6],
+      deadline: recipe.timeoutMs,
+      record,
+      now: () => at,
+      wait: async (ms) => {
+        waits.push(ms);
+        at += ms;
+      },
+      keyboard: {
+        down: async (key) => keys.push(['down', key]),
+        up: async (key) => {
+          keys.push(['up', key]);
+          if (releaseFailure && !rejected) {
+            rejected = true;
+            throw releaseFailure;
+          }
+        },
+      },
+      read: async () => ({
+        phase: at >= 5266 ? 'picture' : 'running',
+        autoNext: false,
+        mission: 'first-return',
+        status: at >= 5266 ? 'won' : 'running',
+        tick: Math.floor((at * 120) / 1000),
+        lives: 3,
+        claimedCount: at >= 5266 ? 1000 : 0,
+        trail: { length: 0 },
+        player: { x: 24.5, y: 0.5, speed: 0 },
+        enemies: [{ id: 'keeper', x: 58.5, y: 23.5, vx: 7.8, vy: -7.8 }],
+        level: structuredClone(recipe.expectedReplayDefinition.level),
+        options: { seed: 1, ...recipe.expectedReplayDefinition.options },
+      }),
+    });
+  } catch (error) {
+    if (!releaseFailure) throw error;
+    assert.equal(error, releaseFailure);
+  }
+  return { record, keys, waits };
+}
+async function actualQualifierNormalization() {
+  const source = (await read('scripts/qualify-solo-runtime.mjs')).toString(),
+    nodes = [];
+  function walk(node) {
+    if (!node || typeof node !== 'object') return;
+    if (
+      node.type === 'IfStatement' &&
+      source.slice(node.test.start, node.test.end) === "record.status === 'running'"
+    )
+      nodes.push(node);
+    for (const value of Object.values(node)) {
+      if (Array.isArray(value)) value.forEach(walk);
+      else if (value && typeof value === 'object') walk(value);
+    }
+  }
+  walk(parse(source, { ecmaVersion: 'latest', sourceType: 'module' }));
+  assert.equal(nodes.length, 1, 'The actual action normalization must be unambiguous');
+  return new Function('record', source.slice(nodes[0].start, nodes[0].end));
+}
+test('actual route executor status survives qualifier normalization and reaches CPU assessment', async () => {
+  const { record, keys, waits } = await executedFirstVictory(),
+    normalize = await actualQualifierNormalization();
+  assert.equal(record.status, 'passed-public-route');
+  assert.equal(record.unsettled, 0);
+  assert.deepEqual(record.heldKeys, []);
+  assert.deepEqual(waits, [1358, 3908]);
+  assert.deepEqual(keys, [
+    ['down', 'ArrowRight'],
+    ['up', 'ArrowRight'],
+    ['down', 'ArrowDown'],
+    ['up', 'ArrowDown'],
+  ]);
+  normalize(record);
+  assert.equal(record.status, 'passed-public-route');
+  const ordinary = { status: 'running' };
+  normalize(ordinary);
+  assert.equal(ordinary.status, 'pass');
+  const r = raw();
+  r.actions = [record];
+  assert.equal(cpuProfileAssessment(plan(), r, closed, readback).status, 'passed');
+  assert.equal(
+    cpuProfileAssessment(plan(), r, closed, readback).performanceQualification,
+    'excluded-cpu-profiling',
+  );
+  r.actions = [{ ...record, status: 'pass' }];
+  assert.equal(cpuProfileAssessment(plan(), r, closed, readback).status, 'failed');
+});
+test('actual route failure and settled cleanup stay failed after qualifier normalization', async () => {
+  const failure = Error('native key release failed'),
+    { record, keys } = await executedFirstVictory(failure),
+    normalize = await actualQualifierNormalization();
+  assert.equal(record.status, 'failed');
+  assert.equal(record.failure, failure.message);
+  assert.equal(record.unsettled, 0);
+  assert.deepEqual(record.heldKeys, []);
+  assert.deepEqual(keys, [
+    ['down', 'ArrowRight'],
+    ['up', 'ArrowRight'],
+    ['up', 'ArrowRight'],
+  ]);
+  normalize(record);
+  const r = raw();
+  r.actions = [record];
+  assert.equal(cpuProfileAssessment(plan(), r, closed, readback).status, 'failed');
+});
+
 test('profile freezes the original first-victory public prefix and keeps its input deadline', () => {
   assert.deepEqual(recipe.actions.slice(0, 7), original.actions.slice(0, 7));
   assert.deepEqual(recipe.actions.slice(7), [
@@ -279,6 +396,7 @@ test('partial or limited profile remains retained evidence without qualifying th
     (r) => (r.replay.scope = 'partial'),
     (r) => (r.replay.nativeVerification.status = 'fail'),
     (r) => (r.actions[0].status = 'fail'),
+    (r) => (r.actions[0].status = 'pass'),
     (r) => (r.actions[0].unsettled = 1),
     (r) => (r.actions[0].heldKeys = ['ArrowDown']),
     (r) => (r.actions[0].mission = 'second-landing'),

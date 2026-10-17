@@ -448,7 +448,7 @@ export function cpuProfileAssessment(plan, raw, command, profileReadback) {
         raw.actions.some(
           (a) =>
             a.type === 'authored-next-route' &&
-            a.status === 'pass' &&
+            a.status === 'passed-public-route' &&
             a.protocol === 'authored-next-geometric-v1' &&
             a.mission === 'first-return' &&
             a.unsettled === 0 &&
