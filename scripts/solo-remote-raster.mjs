@@ -9,10 +9,30 @@ export const RASTER_CASES = ['full', 'reduced', 'minimal'].flatMap((quality) =>
   ['settled', 'acquire', 'warning', 'active'].map((mode) => ({ quality, mode })),
 );
 export const RASTER_JOBS = ['raster-chromium', 'raster-webkit'];
+function validateRelease(plan) {
+  const diagnostic = plan.status === 'reviewed-diagnostic-only';
+  assert(diagnostic || plan.status === 'reviewed-and-released');
+  assert.equal(plan.release?.status, 'reviewed');
+  assert.equal(plan.release.firstEightAllCorrectnessPassed, !diagnostic);
+  if (!diagnostic) return;
+  assert.equal(plan.release.scope, 'independent-native-raster');
+  assert.equal(plan.release.predecessorRun, 38985941469);
+  assert.equal(plan.release.automaticRetries, 0);
+  assert.equal(plan.release.performanceQualification, 'excluded');
+  assert.equal(plan.release.priorProofInspected, true);
+  assert.equal(plan.release.noUnclosedOwners, true);
+  assert.deepEqual(plan.release.evidence, [
+    {
+      runId: 38985941469,
+      artifactId: 12083397932,
+      artifactSHA256: 'f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1',
+      summarySHA256: '3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929',
+    },
+  ]);
+}
 export function validateRasterPlan(plan) {
   assert.equal(plan.format, 'SoloHostedRasterPlanV1');
-  assert.equal(plan.status, 'reviewed-and-released');
-  assert.equal(plan.release?.status, 'reviewed');
+  validateRelease(plan);
   assert.equal(plan.release.candidateRevision, plan.candidate.revision);
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.node, '22.13.1');
@@ -80,7 +100,7 @@ export function validateRasterPlan(plan) {
 }
 export function bindRasterJob(manifest, job) {
   assert.equal(manifest.format, 'SoloHostedRasterManifestV1');
-  assert.equal(manifest.status, 'reviewed-and-released');
+  validateRelease(manifest);
   assert.deepEqual(manifest.jobs, RASTER_JOBS);
   assert(RASTER_JOBS.includes(job));
   const plan = structuredClone(manifest);
@@ -223,9 +243,13 @@ export async function prepareRasterMode(ctx) {
   return {
     scope:
       'Fresh Linux native-API synthetic full12; default browser backend is not inferred as GPU, and historical Mac failure remains unresolved.',
+    firstEightAllCorrectnessPassed: ctx.plan.release.firstEightAllCorrectnessPassed,
+    performanceQualification: 'excluded',
   };
 }
 export async function runRasterRow(ctx, row, dir, tmp) {
+  row.firstEightAllCorrectnessPassed = ctx.plan.release.firstEightAllCorrectnessPassed;
+  row.performanceQualification = 'excluded';
   await verifyInputs(ctx);
   const { startProductionPreview } = await import(
     pathToFileURL(join(ctx.here, 'serve-production-preview.mjs'))
