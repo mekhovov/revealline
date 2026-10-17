@@ -300,10 +300,10 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
       });
       await page.getByRole('tab', { name: 'Controls', exact: true }).click();
       await page
-        .getByRole('button', { name: 'Rates & throttle', exact: true })
+        .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
         .filter({ visible: true })
         .click();
-      await page.getByRole('dialog', { name: 'Rates & throttle', exact: true }).waitFor();
+      await page.getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true }).waitFor();
       await page.getByText(/^Input source:/).waitFor();
       assert.match(await page.getByText(/^Input source:/).textContent(), /Raw input:/);
       await page.evaluate(async () => {
@@ -430,7 +430,7 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
         () => window.pagesWorkerState.created === window.pagesWorkerState.terminated,
       );
       await page
-        .getByRole('dialog', { name: 'Rates & throttle', exact: true })
+        .getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true })
         .getByRole('button', { name: 'Close', exact: true })
         .click();
       return {
