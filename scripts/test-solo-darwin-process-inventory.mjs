@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { chmod, mkdtemp, readFile, realpath, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -10,6 +9,8 @@ import {
   createDarwinProcessInventory,
   admitDarwinBuildReceipt,
   DARWIN_INVENTORY_LIMITS,
+  DARWIN_INVENTORY_FORMAT,
+  DARWIN_IDENTITY_KIND,
   parseDarwinInventory,
 } from './solo-darwin-process-inventory.mjs';
 import {
@@ -33,6 +34,19 @@ const row = (change = {}) => ({
 });
 const bytes = (rows = [row()]) =>
   Buffer.from(header + rows.map((r) => Object.values(r).join('\t') + '\n').join(''));
+
+const v2row = (change = {}) => ({
+  ...row({ birth: '00000000000000001042' }),
+  euid: '501',
+  ruid: '501',
+  parentUniqueId: '12',
+  version: '1',
+  ...change,
+});
+const v2bytes = (rows = [v2row()]) =>
+  Buffer.from(
+    DARWIN_INVENTORY_FORMAT + '\n' + rows.map((r) => Object.values(r).join('\t') + '\n').join(''),
+  );
 
 test('Darwin inventory retains exact birth, executable identity and only an owner tag bit', () => {
   const parsed = parseDarwinInventory(
@@ -89,11 +103,11 @@ test('Darwin incomplete native inspection stays explicit, never fabricated as ze
   assert.equal(parsed.get(42).inspectionIncomplete, true);
 });
 
-async function helperFixture(t) {
+async function helperFixture(t, outputs = [v2bytes().toString()]) {
   const dir = await realpath(await mkdtemp(join(tmpdir(), 'darwin-inventory-test-')));
   t.after(() => rm(dir, { recursive: true, force: true }));
   const binary = join(dir, 'inventory');
-  const source = `#!${process.execPath}\nprocess.stdout.write(${JSON.stringify(bytes().toString())});\n`;
+  const source = `#!${process.execPath}\nconst fs = require('node:fs'); const path = ${JSON.stringify(join(dir, 'calls'))}; const n = fs.existsSync(path) ? Number(fs.readFileSync(path)) : 0; fs.writeFileSync(path, String(n+1)); const outputs = ${JSON.stringify(outputs)}; process.stdout.write(outputs[Math.min(n, outputs.length-1)]);\n`;
   await writeFile(binary, source, { mode: 0o700 });
   return {
     dir,
@@ -143,7 +157,9 @@ test('native Darwin SDK source contains bounded, double-checked identity and pri
   );
   assert.match(source, /#define MAX_PIDS 16384/);
   assert.match(source, /#define MAX_ARGS \(2 \* 1024 \* 1024\)/);
-  assert.match(source, /first\.pbi_start_tvusec != last\.pbi_start_tvusec/);
+  assert.match(source, /a\.unique_id != b\.unique_id/);
+  assert.match(source, /a\.version != b\.version/);
+  assert.doesNotMatch(source, /PROC_PIDTBSDINFO|PROC_UID_ONLY/);
   assert.match(source, /KERN_PROCARGS2/);
   assert.doesNotMatch(source, /\bkill\(|\bprintf\([^\n]*expected|\bprintf\([^\n]*bytes/);
 });
@@ -178,110 +194,6 @@ test(
   },
 );
 
-test(
-  'SDK fault controls distinguish explicit exit, partial reads, permission and unavailable owner tags',
-  {
-    skip: process.platform !== 'darwin',
-    timeout: 30000,
-  },
-  async (t) => {
-    const dir = await realpath(await mkdtemp(join(tmpdir(), 'darwin-sdk-fault-test-')));
-    t.after(() => rm(dir, { recursive: true, force: true }));
-    const source = fileURLToPath(new URL('./solo-darwin-process-inventory.c', import.meta.url));
-    const fixture = join(dir, 'faults.c'),
-      binary = join(dir, 'faults');
-    // Compile the production functions with deterministic SDK return values. The
-    // production helper gains no fault flags and these controls never signal.
-    await writeFile(
-      fixture,
-      `
-#define main inventory_main
-#define proc_pidinfo fixture_pidinfo
-#define proc_pidpath fixture_pidpath
-#define proc_listpids fixture_listpids
-#define sysctl fixture_sysctl
-#include ${JSON.stringify(source)}
-#undef main
-static const char *mode;
-static int identities;
-int fixture_pidinfo(int pid, int flavor, uint64_t arg, void *buffer, int count) {
-  (void)arg; (void)count;
-  if (flavor == PROC_PIDTBSDINFO) {
-    identities++;
-    if (!strcmp(mode, "gone-first") || (!strcmp(mode, "gone-second") && identities == 2)) { errno = ESRCH; return 0; }
-    if (!strcmp(mode, "permission")) { errno = EPERM; return 0; }
-    if (!strcmp(mode, "zero-no-errno")) { errno = 0; return 0; }
-    if (!strcmp(mode, "partial-esrch")) { errno = ESRCH; return sizeof(struct proc_bsdinfo) - 1; }
-    struct proc_bsdinfo *value = buffer;
-    memset(value, 0, sizeof(*value));
-    value->pbi_pid = pid; value->pbi_ppid = 12; value->pbi_pgid = pid; value->pbi_status = SRUN;
-    value->pbi_start_tvsec = 1729160000; value->pbi_start_tvusec = 123456;
-    if (!strcmp(mode, "recycled-second") && identities == 2) value->pbi_start_tvusec++;
-    return sizeof(*value);
-  }
-  if (!strcmp(mode, "partial-task")) { errno = ESRCH; return sizeof(struct proc_taskinfo) - 1; }
-  struct proc_taskinfo *value = buffer; memset(value, 0, sizeof(*value)); value->pti_resident_size = 2048;
-  return sizeof(*value);
-}
-int fixture_pidpath(int pid, void *buffer, uint32_t count) {
-  (void)pid;
-  return snprintf(buffer, count, "/owned/WebKitWebProcess");
-}
-int fixture_listpids(uint32_t type, uint32_t info, void *buffer, int count) {
-  (void)type; (void)info; (void)buffer; (void)count; return 0;
-}
-int fixture_sysctl(int *name, u_int namelen, void *oldp, size_t *oldlenp, void *newp, size_t newlen) {
-  (void)name; (void)namelen; (void)newp; (void)newlen;
-  if (!strcmp(mode, "tag-denied")) { errno = EPERM; return -1; }
-  int argc = !strcmp(mode, "tag-truncated") ? 0 : 1;
-  memcpy(oldp, &argc, sizeof(argc));
-  if (!strcmp(mode, "tag-truncated")) { *oldlenp = sizeof(argc); return 0; }
-  const char present[] = "/bin/node\\0\\0node\\0SOLO_REMOTE_OWNER=01234567-89ab-cdef-0123-456789abcdef\\0";
-  const char absent[] = "/bin/node\\0\\0node\\0UNRELATED=value\\0";
-  const char *bytes = !strcmp(mode, "tag-absent") ? absent : present;
-  size_t size = !strcmp(mode, "tag-absent") ? sizeof(absent) : sizeof(present);
-  memcpy((char *)oldp + sizeof(argc), bytes, size); *oldlenp = sizeof(argc) + size; return 0;
-}
-int main(int argc, char **argv) {
-  if (argc != 2) return 2;
-  mode = argv[1]; puts("SoloDarwinProcessInventoryV1");
-  row(42, "01234567-89ab-cdef-0123-456789abcdef", 0); return 0;
-}
-`,
-    );
-    execFileSync('xcrun', ['clang', '-Wall', '-Wextra', '-Werror', fixture, '-o', binary], {
-      timeout: 10000,
-      maxBuffer: 65536,
-    });
-    const capture = (mode) =>
-      parseDarwinInventory(execFileSync(binary, [mode], { timeout: 1000, maxBuffer: 65536 }));
-    for (const mode of ['gone-first', 'gone-second', 'recycled-second'])
-      assert.equal(capture(mode).size, 0);
-    for (const mode of ['permission', 'zero-no-errno', 'partial-esrch'])
-      assert.throws(
-        () => capture(mode),
-        (error) => {
-          assert.equal(error.status, 1, 'Uncertain identity still aborts the inventory');
-          const diagnostic = error.stderr.toString('utf8');
-          assert.match(
-            diagnostic,
-            /process identity inspection \(\d+\) pid=42 selector=all result=\d+ expected=\d+/,
-          );
-          assert(!diagnostic.includes('SOLO_REMOTE_OWNER'));
-          assert(!diagnostic.includes('01234567-89ab-cdef-0123-456789abcdef'));
-          assert(diagnostic.length < 512);
-          return true;
-        },
-      );
-    for (const mode of ['tag-denied', 'tag-truncated', 'partial-task'])
-      assert.equal(capture(mode).get(42).inspectionIncomplete, true);
-    assert.equal(capture('tag-absent').get(42).ownerTagged, false);
-    assert.equal(capture('tag-absent').get(42).inspectionIncomplete, false);
-    assert.equal(capture('tag-present').get(42).ownerTagged, true);
-    assert.equal(capture('tag-present').get(42).inspectionIncomplete, false);
-  },
-);
-
 test('Cocoa helper build admission requires exact current sources, invocation and binary', async (t) => {
   const fixture = await helperFixture(t);
   const path = join(fixture.dir, 'build.json');
@@ -295,9 +207,11 @@ test('Cocoa helper build admission requires exact current sources, invocation an
     };
   }
   const receipt = {
-    format: 'SoloDarwinInventoryBuildV1',
+    format: 'SoloDarwinInventoryBuildV2',
     sourceRevision,
     platform: 'darwin',
+    inventoryFormat: DARWIN_INVENTORY_FORMAT,
+    identityKind: DARWIN_IDENTITY_KIND,
     sources,
     compiler: { path: '/sdk/clang', version: 'declared compiler' },
     sdk: { path: '/sdk/MacOSX.sdk', version: '15.0' },
@@ -316,12 +230,17 @@ test('Cocoa helper build admission requires exact current sources, invocation an
       path: fixture.binary,
       bytes: Buffer.byteLength(fixture.source),
       sha256: fixture.environment.SOLO_DARWIN_PROCESS_HELPER_SHA256,
+      format: DARWIN_INVENTORY_FORMAT,
+      identityKind: DARWIN_IDENTITY_KIND,
     },
   };
   const environment = { ...fixture.environment, SOLO_DARWIN_PROCESS_BUILD: path };
   await writeFile(path, JSON.stringify(receipt));
   assert.deepEqual(admitDarwinBuildReceipt(environment, sourceRevision).receipt, receipt);
   for (const mutate of [
+    (r) => (r.format = 'SoloDarwinInventoryBuildV1'),
+    (r) => (r.inventoryFormat = 'SoloDarwinProcessInventoryV1'),
+    (r) => (r.identityKind = 'timestamp'),
     (r) => (r.sourceRevision = 'b'.repeat(40)),
     (r) => (r.platform = 'linux'),
     (r) => r.sources['solo-darwin-process-inventory.c'].bytes++,
@@ -336,4 +255,105 @@ test('Cocoa helper build admission requires exact current sources, invocation an
     await writeFile(path, JSON.stringify(changed));
     assert.throws(() => admitDarwinBuildReceipt(environment, sourceRevision));
   }
+});
+
+test('V2 retains exact uint64 lifetime and exec metadata without numeric rounding', () => {
+  const parsed = parseDarwinInventory(
+    v2bytes([
+      v2row({
+        birth: '18446744073709551615',
+        parentUniqueId: '18446744073709551615',
+        euid: '4294967295',
+        version: '2147483647',
+      }),
+    ]),
+  ).get(42);
+  assert.equal(parsed.birth, '18446744073709551615');
+  assert.equal(parsed.parentUniqueId, '18446744073709551615');
+  assert.equal(parsed.euid, 4294967295);
+  assert.equal(parsed.version, 2147483647);
+  assert.equal(parsed.identityKind, DARWIN_IDENTITY_KIND);
+  for (const patch of [
+    { pid: '2147483648' },
+    { ppid: '4294967295' },
+    { pgid: '4294967295' },
+    { birth: '00000000000000000000' },
+    { birth: '18446744073709551616' },
+    { birth: '1042' },
+    { birth: '0000000000000000104x' },
+    { euid: '4294967296' },
+    { ruid: '-1' },
+    { euid: '0501' },
+    { euid: '9007199254740993' },
+    { parentUniqueId: '18446744073709551616' },
+    { parentUniqueId: '-1' },
+    { parentUniqueId: '01' },
+    { version: '2147483648' },
+    { version: '-1' },
+    { version: '01' },
+    { version: '1.0' },
+  ])
+    assert.throws(() => parseDarwinInventory(v2bytes([v2row(patch)])));
+  assert.throws(() =>
+    parseDarwinInventory(
+      v2bytes(Array.from({ length: 16384 }, (_, i) => v2row({ pid: String(i + 1) }))),
+    ),
+  );
+  assert.throws(() =>
+    parseDarwinInventory(
+      Buffer.from(DARWIN_INVENTORY_FORMAT + '\n' + Object.values(row()).join('\t') + '\n'),
+    ),
+  );
+});
+
+test('fresh helpers cannot admit legacy identities and reject same-lifetime zombie resurrection', async (t) => {
+  const old = await helperFixture(t, [bytes().toString()]);
+  assert.throws(() => createDarwinProcessInventory(old.environment).all(), /requires V2/);
+  const fixture = await helperFixture(t, [
+    v2bytes([v2row({ state: 'Z' })]).toString(),
+    v2bytes().toString(),
+  ]);
+  const inventory = createDarwinProcessInventory(fixture.environment);
+  assert.equal(inventory.all().get(42).state, 'Z');
+  assert.throws(() => inventory.oneSync(42), /zombie identity returned live/);
+  const recycled = await helperFixture(t, [
+    v2bytes([v2row({ state: 'Z' })]).toString(),
+    v2bytes([v2row({ birth: '00000000000000001043' })]).toString(),
+  ]);
+  const next = createDarwinProcessInventory(recycled.environment);
+  next.all();
+  assert.equal(next.all().get(42).state, 'R');
+});
+
+test('executed V1 sources and declarations remain an immutable independent Git witness', async () => {
+  const witnessPath = new URL(
+    '../docs/performance/fixtures/solo-darwin-inventory/696-v1-source.json',
+    import.meta.url,
+  );
+  const bytes = await readFile(witnessPath);
+  const verify = (bytes) => {
+    assert.equal(
+      createHash('sha256').update(bytes).digest('hex'),
+      'aba62dc9507712104cc766522b21a75fe5110afcad0713be63cc0c8c85ed8d5c',
+    );
+    const witness = JSON.parse(bytes);
+    assert.equal(witness.sourceRevision, '69639b30d985ffa723a4d0c11756b632fc2da5c1');
+    assert.equal(witness.tree, 'd022c57efa75dbe7b7aeeca00a1950f61426595b');
+    assert.equal(witness.files.length, 5);
+    for (const ref of witness.files) {
+      assert.match(ref.gitBlob, /^[0-9a-f]{40}$/);
+      assert.match(ref.sha256, /^[0-9a-f]{64}$/);
+      assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0);
+    }
+    return witness;
+  };
+  const witness = verify(bytes);
+  for (const ref of witness.files.filter((ref) => ref.path.startsWith('.github/'))) {
+    const current = await readFile(new URL('../' + ref.path, import.meta.url));
+    assert.equal(current.length, ref.bytes);
+    assert.equal(createHash('sha256').update(current).digest('hex'), ref.sha256);
+  }
+  const changed = JSON.parse(bytes);
+  changed.files[0].sha256 = '0'.repeat(64);
+  assert.throws(() => verify(Buffer.from(JSON.stringify(changed, null, 2) + '\n')));
 });

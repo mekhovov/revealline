@@ -19,21 +19,59 @@ export const DARWIN_INVENTORY_LIMITS = Object.freeze({
   maximumBinaryBytes: 1024 ** 2,
   timeoutMs: 3000,
 });
+export const DARWIN_INVENTORY_FORMAT = 'SoloDarwinProcessInventoryV2';
+export const DARWIN_IDENTITY_KIND = 'private-unique-id-uint64';
+const MAX_UINT64 = (1n << 64n) - 1n;
 export function parseDarwinInventory(bytes) {
   assert(Buffer.isBuffer(bytes) && bytes.length <= DARWIN_INVENTORY_LIMITS.maximumOutputBytes);
   const lines = bytes.toString('utf8').split('\n');
-  assert.equal(lines.shift(), 'SoloDarwinProcessInventoryV1', 'Darwin inventory format');
+  const format = lines.shift(),
+    v2 = format === DARWIN_INVENTORY_FORMAT;
+  assert(v2 || format === 'SoloDarwinProcessInventoryV1', 'Darwin inventory format');
   assert.equal(lines.pop(), '', 'Incomplete Darwin inventory output');
   assert(lines.length < DARWIN_INVENTORY_LIMITS.maximumProcesses, 'Darwin process cap');
   const result = new Map();
   for (const line of lines) {
     const fields = line.split('\t');
-    assert.equal(fields.length, 9, 'Darwin inventory row fields');
-    const [pid, ppid, pgid, birth, state, rss, tagged, incomplete, path] = fields;
+    assert.equal(fields.length, v2 ? 13 : 9, 'Darwin inventory row fields');
+    const [
+      pid,
+      ppid,
+      pgid,
+      birth,
+      state,
+      rss,
+      tagged,
+      incomplete,
+      path,
+      euid,
+      ruid,
+      parentUniqueId,
+      version,
+    ] = fields;
     for (const number of [pid, ppid, pgid, rss])
       assert(/^\d+$/.test(number) && Number.isSafeInteger(Number(number)), 'Darwin numeric field');
     assert(Number(pid) > 0 && !result.has(Number(pid)), 'Darwin PID identity');
-    assert(/^\d{7,24}$/.test(birth), 'Darwin birth identity');
+    if (v2) {
+      for (const id of [pid, ppid, pgid]) assert(Number(id) <= 0x7fffffff, 'Darwin PID metadata');
+      assert(
+        /^\d{20}$/.test(birth) && BigInt(birth) > 0n && BigInt(birth) <= MAX_UINT64,
+        'Darwin uint64 lifetime identity',
+      );
+      for (const uid of [euid, ruid])
+        assert(
+          /^(?:0|[1-9]\d{0,9})$/.test(uid) && Number(uid) <= 0xffffffff,
+          'Darwin UID metadata',
+        );
+      assert(
+        /^(?:0|[1-9]\d{0,19})$/.test(parentUniqueId) && BigInt(parentUniqueId) <= MAX_UINT64,
+        'Darwin parent lifetime identity',
+      );
+      assert(
+        /^(?:0|[1-9]\d{0,9})$/.test(version) && Number(version) <= 0x7fffffff,
+        'Darwin exec version metadata',
+      );
+    } else assert(/^\d{7,24}$/.test(birth), 'Darwin birth identity');
     assert(['R', 'Z'].includes(state), 'Darwin live state');
     assert(['0', '1'].includes(tagged) && ['0', '1'].includes(incomplete));
     assert(/^(?:[0-9a-f]{2}){0,4096}$/.test(path), 'Darwin executable path bound');
@@ -49,6 +87,15 @@ export function parseDarwinInventory(bytes) {
       argv,
       ownerTagged: tagged === '1',
       inspectionIncomplete: incomplete === '1',
+      ...(v2
+        ? {
+            identityKind: DARWIN_IDENTITY_KIND,
+            euid: Number(euid),
+            ruid: Number(ruid),
+            parentUniqueId,
+            version: Number(version),
+          }
+        : {}),
     });
   }
   return result;
@@ -64,6 +111,7 @@ export function createDarwinProcessInventory(environment = process.env) {
   assert(initial.isFile() && !initial.isSymbolicLink() && initial.mode & 0o111);
   assert(initial.size <= DARWIN_INVENTORY_LIMITS.maximumBinaryBytes, 'Darwin helper binary cap');
   assert.equal(createHash('sha256').update(readFileSync(binary)).digest('hex'), expected);
+  let previous = new Map();
   const snapshot = (selector, token = '') => {
     assert(token === '' || /^[a-f0-9-]{36}$/.test(token), 'Darwin owner token');
     const current = lstatSync(binary);
@@ -76,16 +124,36 @@ export function createDarwinProcessInventory(environment = process.env) {
         current.ctimeMs === initial.ctimeMs,
       'Darwin helper identity changed',
     );
-    return parseDarwinInventory(
-      execFileSync(binary, [selector, token], {
-        timeout: DARWIN_INVENTORY_LIMITS.timeoutMs,
-        maxBuffer: DARWIN_INVENTORY_LIMITS.maximumOutputBytes,
-        stdio: ['ignore', 'pipe', 'pipe'],
-      }),
+    const output = execFileSync(binary, [selector, token], {
+      timeout: DARWIN_INVENTORY_LIMITS.timeoutMs,
+      maxBuffer: DARWIN_INVENTORY_LIMITS.maximumOutputBytes,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    assert(
+      output.subarray(0, output.indexOf(10)).toString() === DARWIN_INVENTORY_FORMAT,
+      'Fresh Darwin helper requires V2 identity',
     );
+    const rows = parseDarwinInventory(output);
+    for (const row of rows.values()) {
+      const prior = previous.get(row.pid);
+      assert(
+        !(prior?.birth === row.birth && prior.state === 'Z' && row.state !== 'Z'),
+        'Darwin zombie identity returned live',
+      );
+    }
+    if (selector === 'all') previous = new Map(rows);
+    else for (const row of rows.values()) previous.set(row.pid, row);
+    assert(previous.size < DARWIN_INVENTORY_LIMITS.maximumProcesses, 'Darwin identity history cap');
+    return rows;
   };
   return {
-    identity: { path: binary, bytes: initial.size, sha256: expected },
+    identity: {
+      path: binary,
+      bytes: initial.size,
+      sha256: expected,
+      format: DARWIN_INVENTORY_FORMAT,
+      identityKind: DARWIN_IDENTITY_KIND,
+    },
     all: (token) => snapshot('all', token),
     oneSync: (pid) => {
       assert(Number.isSafeInteger(pid) && pid > 0);
@@ -112,9 +180,11 @@ export function admitDarwinBuildReceipt(environment = process.env, sourceRevisio
   );
   const bytes = readFileSync(path);
   const receipt = JSON.parse(bytes);
-  assert.equal(receipt.format, 'SoloDarwinInventoryBuildV1');
+  assert.equal(receipt.format, 'SoloDarwinInventoryBuildV2');
   assert.equal(receipt.sourceRevision, sourceRevision);
   assert.equal(receipt.platform, 'darwin');
+  assert.equal(receipt.inventoryFormat, DARWIN_INVENTORY_FORMAT);
+  assert.equal(receipt.identityKind, DARWIN_IDENTITY_KIND);
   for (const file of ['solo-darwin-process-inventory.c', 'solo-darwin-process-inventory.mjs'])
     assert.deepEqual(receipt.sources[file], sourceIdentity(file), 'Darwin source build identity');
   const inventory = createDarwinProcessInventory(environment);
@@ -183,14 +253,22 @@ function build(directory, receiptPath) {
   const bytes = readFileSync(binary);
   assert(bytes.length <= DARWIN_INVENTORY_LIMITS.maximumBinaryBytes);
   const receipt = {
-    format: 'SoloDarwinInventoryBuildV1',
+    format: 'SoloDarwinInventoryBuildV2',
     sourceRevision,
     platform: process.platform,
+    inventoryFormat: DARWIN_INVENTORY_FORMAT,
+    identityKind: DARWIN_IDENTITY_KIND,
     compiler,
     sdk,
     arguments: args,
     sources,
-    binary: { path: binary, bytes: bytes.length, sha256: sha256(bytes) },
+    binary: {
+      path: binary,
+      bytes: bytes.length,
+      sha256: sha256(bytes),
+      format: DARWIN_INVENTORY_FORMAT,
+      identityKind: DARWIN_IDENTITY_KIND,
+    },
   };
   const encoded = JSON.stringify(receipt, null, 2) + '\n';
   assert(Buffer.byteLength(encoded) <= 128 * 1024);
