@@ -182,6 +182,16 @@ await check(
     try {
       assert.equal(owner.snapshot().textures, 1);
       assert.equal(owner.collisionSnapshot().colliders, 1);
+      const collisionMeshes = owner.collisionMeshes();
+      assert.deepEqual(
+        collisionMeshes.map((mesh) => mesh.id),
+        ['scenery:tile-0:1'],
+      );
+      assert.equal(
+        collisionMeshes[0].vertices[0],
+        66,
+        'Advanced export retains the solid wall only',
+      );
       const [leaf, wall] = owner.group.children;
       assert.equal(leaf.material.map, wall.material.map);
       assert.notEqual(leaf.material, wall.material);

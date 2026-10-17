@@ -1,0 +1,168 @@
+.fpv-tuning,
+.fpv-advanced-dialog {
+  width: min(960px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  box-sizing: border-box;
+  padding: clamp(16px, 3vw, 32px);
+  border: 1px solid #7695ae;
+  border-radius: 16px;
+  background: #10202b;
+  color: #edf5ff;
+  font:
+    16px/1.5 system-ui,
+    sans-serif;
+}
+.fpv-tuning::backdrop,
+.fpv-advanced-dialog::backdrop {
+  background: rgb(0 8 18 / 80%);
+}
+.fpv-tuning :is(h2, h3) {
+  color: #fff;
+  margin-block: 0.5em;
+}
+.fpv-tuning section {
+  border-top: 1px solid #52718b;
+  margin-top: 20px;
+  padding-top: 12px;
+}
+.fpv-tuning label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 8px 0;
+}
+.fpv-tuning :is(input, select, textarea, button) {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-height: 42px;
+  padding: 8px;
+  color: #edf5ff;
+  background: #1b3346;
+  border: 1px solid #7695ae;
+  border-radius: 6px;
+  font: inherit;
+}
+.fpv-tuning input[type='checkbox'] {
+  min-height: 22px;
+  width: 22px;
+  accent-color: #55c8a4;
+}
+.fpv-tuning input[type='range'] {
+  width: 100%;
+  padding: 0;
+  accent-color: #55c8a4;
+}
+.fpv-tuning input[type='number'] {
+  width: 100%;
+}
+.fpv-tuning button {
+  cursor: pointer;
+}
+.fpv-tuning button:hover {
+  background: #304f68;
+}
+.fpv-tuning :focus-visible {
+  outline: 3px solid #f1ca72;
+  outline-offset: 3px;
+}
+.fpv-tuning :disabled {
+  opacity: 0.5;
+}
+.tuning-toolbar,
+.tuning-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+.tuning-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-block: 12px;
+}
+.tuning-fields fieldset {
+  min-width: 0;
+  border: 1px solid #52718b;
+  border-radius: 8px;
+  padding: 12px;
+}
+.tuning-fields legend {
+  padding-inline: 6px;
+  font-weight: 650;
+}
+.tuning-number {
+  border-bottom: 1px solid #36536a;
+  padding-block: 4px;
+}
+.tuning-number label:last-child {
+  font-size: 0;
+  margin-top: 0;
+}
+.fpv-tuning svg {
+  width: 100%;
+  height: auto;
+  background: #07141e;
+  border: 1px solid #52718b;
+}
+.fpv-tuning pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 320px;
+  overflow: auto;
+  font-size: 13px;
+}
+.fpv-tuning textarea {
+  width: 100%;
+  font-family: ui-monospace, monospace;
+}
+.fpv-tuning details {
+  border: 1px solid #52718b;
+  padding: 12px;
+  margin-top: 16px;
+  border-radius: 8px;
+}
+.fpv-tuning summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+.tuning-demonstration {
+  display: grid;
+  place-items: center;
+  height: 130px;
+  perspective: 500px;
+  overflow: hidden;
+}
+.tuning-quad {
+  font-size: 100px;
+  line-height: 1;
+  color: #55c8a4;
+  transform-style: preserve-3d;
+  text-shadow: 0 3px #2d7662;
+}
+.tuning-return {
+  position: absolute;
+  right: 12px;
+  top: 70px;
+  z-index: 12;
+  min-height: 44px;
+  padding: 10px 16px;
+  background: #10202b;
+  color: #fff;
+  border: 2px solid #55c8a4;
+  border-radius: 8px;
+}
+.tuning-return[hidden] {
+  display: none;
+}
+.tuning-return::after {
+  content: attr(data-mode-label);
+  display: block;
+  font-size: 12px;
+  font-weight: normal;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tuning-quad {
+    transform: none !important;
+  }
+}
