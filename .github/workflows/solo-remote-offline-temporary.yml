@@ -27,7 +27,9 @@ concurrency:
 
 jobs:
   correctness:
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository
+    # The declared pair is already dispatched at this exact head. Later PR pushes
+    # must not create an undeclared repeat while independent work continues.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.sha == 'c0ab548e50c00ba30cc7e188df64fb135ff8cf99'
     runs-on: ubuntu-24.04
     timeout-minutes: 165
     env:
