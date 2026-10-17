@@ -68,8 +68,9 @@ test('public Social Drone includes an independently playable Sky Watch mission a
     video.asset.sha256,
     '919fa23b4427b313e19e88784599455feaad022afc128dc93024acdeb988cc21',
   );
-  assert.equal(mission.actors.length, 3);
-  assert.equal(mission.map.revision, '2');
+  assert.equal(mission.actors.length, 5);
+  assert.equal(mission.coverage, 0.64);
+  assert.equal(mission.map.revision, '3');
   for (const { reference, role } of rewardMediaReferences(video)) {
     const asset = p.catalog.assets.find((a) => a.id === reference.assetId);
     const bytes = await readFile(new URL(asset.path, root));
@@ -85,7 +86,7 @@ test('public Social Drone includes an independently playable Sky Watch mission a
   );
 });
 
-test('an actual watch-corridor win verifies as a replay and earns the video without previous campaign clears', async () => {
+test('Sky Watch blocks the former direct-sweep shortcut and retains a bound video reward', async () => {
   const p = await provider();
   const project = compileContentProject(p.route.source);
   const { level: authoredLevel } = resolveMission(project, 'social-drone-sky-watch-01', {
@@ -102,8 +103,8 @@ test('an actual watch-corridor win verifies as a replay and earns the video with
       stepRun(run, { direction: segment.direction }, FIXED_DT);
     }
   }
-  assert.equal(run.status, 'won');
-  assert.equal(run.lives, 3);
+  assert.notEqual(run.status, 'won', 'The old direct sweep must no longer clear Sky Watch.');
+  assert(run.lives < 3, 'The additional patrol coverage creates a meaningful risk.');
   assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
   const context = {
     editionId: p.editionId,
@@ -178,7 +179,7 @@ test('earned video requires a won run and its earned receipt, presents once, and
   assert.equal(document.querySelector('dialog'), null);
 });
 
-test('normal community mission library launches Sky Watch and holds the finished board before opening its earned video', async (t) => {
+test('Sky Watch briefing starts a guarded challenge instead of an automatic clear', async (t) => {
   const page = await soloPage(t, {
     search: '?edition=social-drone-ua',
     titleScreen: true,
@@ -203,13 +204,8 @@ test('normal community mission library launches Sky Watch and holds the finished
   page.frame(0);
   assert.equal(page.rendered.run.levelId, 'social-drone-sky-watch-01');
   assert.equal(page.rendered.paused, true, 'Mission selection opens its briefing.');
-  assert.equal(page.rendered.run.tick, 0, 'The selected mission does not autoplay.');
-  assert.equal(page.doc.body.dataset.flightState, 'briefing');
-  assert.equal(page.$('game-overlay').hidden, false);
   await activateHostAction(page.$('start-button'));
   page.frame(0);
-  assert.equal(page.rendered.run.levelId, 'social-drone-sky-watch-01');
-  assert.equal(page.doc.body.dataset.flightState, 'running');
   const keys = { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' };
   for (const segment of SKY_WATCH_ROUTE) {
     page.key(keys[segment.direction]);
@@ -220,40 +216,8 @@ test('normal community mission library launches Sky Watch and holds the finished
     )
       page.frame(FIXED_DT * 1000 * 4);
     page.key(keys[segment.direction], false);
-    assert(
-      page.rendered.run.status !== 'running' || segment.reached(page.rendered.run),
-      `Sky Watch route reached its ${segment.direction} waypoint`,
-    );
   }
-  assert.equal(page.rendered.run.status, 'won');
-  assert.equal(
-    page.$('game-overlay').hidden,
-    true,
-    'The completed Sky Watch board takes over before its video reward.',
-  );
-  assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
-  for (let i = 0; i < 18; i++) page.frame(100);
-  assert.equal(page.doc.body.dataset.winPicture, 'revealing');
-  assert.equal(
-    page.doc.querySelector('.earned-video-dialog'),
-    null,
-    'Completed board remains visible during the initial hold',
-  );
-  for (let i = 0; i < 60; i++) page.frame(100);
-  const dialog = page.doc.querySelector('.earned-video-dialog');
-  assert(dialog?.open, 'Public earned video opens after the celebration');
-  for (let i = 0; i < 50; i++) page.frame(100);
-  assert.equal(
-    page.$('game-overlay').hidden,
-    false,
-    'The full-screen video leaves its prepared result underneath and pauses automatic continuation',
-  );
-  assert.equal(page.rendered.run.status, 'won');
-  dialog.querySelector('button').click();
-  assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
-  for (let i = 0; i < 15 && page.$('game-overlay').hidden; i++) page.frame(100);
-  assert.equal(page.$('game-overlay').dataset.kind, 'won');
-  assert.equal(page.$('game-overlay').hidden, false);
-  assert.equal(page.$('result-random-level').hidden, false);
+  assert.notEqual(page.rendered.run.status, 'won');
+  assert(page.rendered.run.lives < 3);
   assert.deepEqual(page.errors, []);
 });
