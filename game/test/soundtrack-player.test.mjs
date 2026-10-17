@@ -1009,6 +1009,119 @@ function pairSetup({ fadeMs = 80, readAsset, library, ...options } = {}) {
   return { ...h, second, entries, pairLibrary };
 }
 
+function assertOwnedDecks(h, expectedBytes) {
+  const live = h.created.filter(({ url }) => !h.revoked.includes(url));
+  const expectedDecks = [h.media, h.second].filter(Boolean).map((media, index) => {
+    const resource = live.find(({ url }) => url === media.src);
+    return {
+      index,
+      ownedBlobURLCount: resource ? 1 : 0,
+      ownedBlobBytes: resource?.blob.size ?? 0,
+    };
+  });
+  assert.deepEqual(h.player.preparationDiagnostics().playback, {
+    ownedBlobURLCount: live.length,
+    ownedBlobBytes: live.reduce((bytes, { blob }) => bytes + blob.size, 0),
+    failedRevocationCount: 0,
+    failedRevocationBytes: 0,
+    decks: expectedDecks,
+  });
+  assert.deepEqual(
+    expectedDecks.map((deck) => deck.ownedBlobBytes),
+    expectedBytes,
+  );
+}
+
+test('manual preparation diagnostics follow both owned originals through pause, transfer and replacement', async (t) => {
+  const other = await fixture('owned-next-original');
+  const entries = [original, other].map(({ track }, index) => ({
+    ...track,
+    id: `qa.owned-${index}`,
+  }));
+  const h = pairSetup({
+    fadeMs: 20,
+    library: {
+      ...list(
+        entries.map(({ id }) => id),
+        'off',
+      ),
+      tracks: entries,
+    },
+    readAsset: async (hash) => (hash === original.track.asset.sha256 ? original.blob : other.blob),
+  });
+  t.after(() => h.player.dispose());
+  assertOwnedDecks(h, [0, 0]);
+  await h.player.play();
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === entries[1].id);
+  assertOwnedDecks(h, [original.blob.size, other.blob.size]);
+  const preparedURL = h.second.src;
+  h.second.rejectPlay = new DOMException('A fresh gesture is required.', 'NotAllowedError');
+  h.player.pause();
+  assertOwnedDecks(h, [original.blob.size, 0]);
+  await h.player.play();
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === entries[1].id);
+  const retainedURL = h.second.src;
+  assert.notEqual(retainedURL, preparedURL);
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.media.src, retainedURL, 'the denied deck transfers the same owned URL');
+  assertOwnedDecks(h, [other.blob.size, 0]);
+  assert.equal(h.player.snapshot().status, 'playing');
+  const [remote] = resolvedRemoteTracks([{ sha256: '4'.repeat(64), title: 'Unowned stream' }]);
+  assert.equal(await h.player.playRemotePlaylist([remote]), true);
+  assertOwnedDecks(h, [0, 0]);
+  h.player.dispose();
+  assertOwnedDecks(h, [0, 0]);
+  assert.equal(h.revoked.includes(remote.url), false);
+});
+
+test('manual preparation diagnostics retain blocked originals and report failed revocation uncertainty', async (t) => {
+  const h = setup({
+    library: {
+      ...list([original.track.id], 'off'),
+      tracks: [original.track],
+    },
+  });
+  t.after(() => h.player.dispose());
+  h.media.rejectPlay = new DOMException('A fresh gesture is required.', 'NotAllowedError');
+  assert.equal(await h.player.play(), false);
+  assertOwnedDecks(h, [original.blob.size]);
+  let attempts = 0;
+  h.URLImpl.revokeObjectURL = () => {
+    attempts++;
+    throw new Error('Revocation failed.');
+  };
+  h.player.dispose();
+  assert.deepEqual(h.player.preparationDiagnostics().playback, {
+    ownedBlobURLCount: 0,
+    ownedBlobBytes: 0,
+    failedRevocationCount: 1,
+    failedRevocationBytes: original.blob.size,
+    decks: [{ index: 0, ownedBlobURLCount: 0, ownedBlobBytes: 0 }],
+  });
+  h.player.dispose();
+  assert.equal(attempts, 1);
+  assert.equal(h.player.preparationDiagnostics().playback.failedRevocationCount, 1);
+});
+
+test('a failed media source installation clears the actual original and its diagnostic ownership', async (t) => {
+  const h = setup({
+    library: {
+      ...list([original.track.id], 'off'),
+      tracks: [original.track],
+    },
+  });
+  t.after(() => h.player.dispose());
+  const load = h.media.load;
+  h.media.load = function () {
+    if (this.src) throw new Error('Media source installation failed.');
+    return load.call(this);
+  };
+  await h.player.play();
+  assert.equal(h.created.length, 1);
+  assert.equal(h.revoked.length, 1);
+  assertOwnedDecks(h, [0]);
+});
+
 function remotePairSetup({ fadeMs = 80 } = {}) {
   const second = audioHarness().media,
     entries = resolvedRemoteTracks([
@@ -1247,6 +1360,7 @@ for (const action of ['seek', 'library', 'context', 'suspend', 'dispose']) {
     assert.equal(h.created.length, 1);
     assert.equal(h.second.plays, 0);
     assert.equal(h.player.snapshot().preloadedTrackId, null);
+    assertOwnedDecks(h, [action === 'dispose' ? 0 : original.blob.size, 0]);
   });
 }
 
@@ -1271,6 +1385,7 @@ test('a browser denying the second element reuses the permitted first deck for t
     'transferred ownership retains the original URL',
   );
   await settleUntil(() => h.player.snapshot().preloadedTrackId === 'qa.third');
+  assertOwnedDecks(h, [original.blob.size, original.blob.size]);
   h.media.emit('ended');
   await settleUntil(
     () => h.player.snapshot().track.id === 'qa.third' && h.player.snapshot().playing,
