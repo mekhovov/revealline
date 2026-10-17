@@ -435,7 +435,7 @@ async function main() {
   const extension =
     plan.format === 'SoloHostedOfflinePairPlan.v1'
       ? 'offline'
-      : plan.format === 'SoloHostedSustainedPlanV1'
+      : ['SoloHostedSustainedPlanV1', 'SoloHostedTimingPlanV1'].includes(plan.format)
         ? 'sustained'
         : plan.format === 'SoloHostedAuxiliaryPlanV1'
           ? 'auxiliary'

@@ -181,8 +181,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 48206,
-      "sha256": "c3fb70a4edbc433a1ea8265e5d911eff2d4f96d02006ff7652c9b848d83bf8c0"
+      "bytes": 48240,
+      "sha256": "f5da606da7936f187934c4287b4abee3b587405fb788ac529bd723a69ff27dfb"
     }
   ],
   "release": {
@@ -304,8 +304,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 25168,
-      "sha256": "56b4be744aa0fca88b89b2d70b1b680b3f1090405201af7e288a1050d5fc5591"
+      "bytes": 34629,
+      "sha256": "17f7d84a294d6cbd7866bb527cf6ff731912480faade33a0f2acc2df9c50f3e4"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
