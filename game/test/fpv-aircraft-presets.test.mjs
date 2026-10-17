@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import {
   listAircraftPresets,
   getAircraftPreset,
@@ -13,10 +14,10 @@ import {
 } from '../../optional-practice/civilian-fpv/aircraft-physics.mjs';
 import { createRateEvaluator } from '../../optional-practice/civilian-fpv/rates.mjs';
 
-test('the offline catalog contains twelve distinct immutable aircraft, independently of saved setup capacity', () => {
+test('the offline catalog contains distinct immutable aircraft, independently of saved setup capacity', () => {
   const catalog = listAircraftPresets();
-  assert.equal(catalog.length, 12);
-  assert.equal(new Set(catalog.map((p) => p.id)).size, 12);
+  assert.ok(catalog.some((p) => p.id === 'mobula8-analog-2023'));
+  assert.equal(new Set(catalog.map((p) => p.id)).size, catalog.length);
   assert.throws(() => (catalog[0].battery.massGrams = 999), TypeError);
   assert.throws(() => catalog.push({}), TypeError);
   assert.throws(() => getAircraftPreset('missing'), /Unknown/);
@@ -32,6 +33,56 @@ test('the offline catalog contains twelve distinct immutable aircraft, independe
         1e-10,
     );
   }
+});
+
+test('catalog expansion preserves all twelve original complete default configurations byte for byte', () => {
+  // Captured before adding Mobula8. Covers physics, response, controller, camera,
+  // component baseline and pinned preset revision used by saved flight identities.
+  const originalDefaults = {
+    'air65-ii-racing-2026': 'bb0810c27292d9077c944fdf712c9e95ae841c9171ec4a04fe2eb0b4eb6733f4',
+    'meteor75-analog-2022': 'f787e79d44ce7ed83843ac962f6ec6c7daf3268cc45c3a14c5ef8bbc081f94c7',
+    'meteor75-pro-matrix': '35b1edd5860c1e93c61695baf311a526ca13630abdd72a6c34d0fb7415c569f0',
+    'meteor85-analog': '12c94ae9d41433474a38ad75958e6c4327e1ae1a3a0326e9f57936c1a5ec0bb3',
+    'pavo20-pro-ii-o4-4s': 'fca7fda1b907ad6993a3bba3fbcfc9822a79fe4fab11b5d00c49b6dd49f6f71f',
+    'smart35-analog': '539e6bf442c4b759179f510712cf8054902cbb2b08183c8ec8129cd6c557c04d',
+    'nazgul-eco-xl5-v11': '33547e290356555cd9b1d3f9a865d960082935e4a682a8cdbffaf9e5e740905a',
+    'mach-r5-sport-2050': 'ae487a74fdd8c04b6be7184d6d92a6e429c5ca886b26192ae53e756c4eb9ebae',
+    'rekon7-pro-o3': 'f515e40bdfab754fee902687f58ac2413faeca9d644a59b10384ae2aeec8a407',
+    'chimera7-pro-v2-o4': '94b4387e47e6792a114bde769a3386f4c76a9fe47fca6711c80b703240f3729d',
+    'helion-pro-o4': 'b2d68747f248621b5c31a263a2d952fdb46f7cf4d8f551edb3023855fd5ca742',
+    'holybro-x650-v2': 'c0ab61cb9bc3496926c9b3c869dcf3f2b51ec55f732d092c14c4f87db23b2d42',
+  };
+  for (const [id, expected] of Object.entries(originalDefaults)) {
+    const actual = createHash('sha256')
+      .update(JSON.stringify(createPresetConfiguration(id)))
+      .digest('hex');
+    assert.equal(actual, expected, id);
+  }
+});
+
+test('Mobula8 freezes the analog SPI ELRS components and explicit reference battery without double counting', () => {
+  const preset = getAircraftPreset('mobula8-analog-2023');
+  assert.equal(preset.revision, 1);
+  assert.equal(preset.flyingMassGrams, 69.1);
+  assert.equal(preset.components[0].massGrams, 43);
+  assert.equal(preset.battery.massGrams, 26.1);
+  assert.equal(preset.battery.cells, 2);
+  assert.equal(preset.battery.capacityMah, 450);
+  assert.equal(preset.battery.chemistry, 'lihv');
+  assert.equal(preset.wheelbaseMm, 85);
+  assert.equal(preset.propellerDiameterMm, 52.17);
+  assert.deepEqual(preset.envelopeMm, { width: 120, height: 50, length: 120 });
+  assert.match(preset.hardware.flightController, /X12 ELRS V2\.1/);
+  assert.match(preset.hardware.camera, /Caddx ANT/);
+  assert.match(preset.hardware.battery, /SIM-selected/);
+  assert.match(preset.evidence.propeller.note, /conflicting 51 mm/);
+  assert.deepEqual(preset.evidence.propeller.sources, [0, 2]);
+  assert.deepEqual(preset.evidence.batteryMass.sources, [1]);
+  assert.throws(() => (preset.hardware.camera = 'different camera'), TypeError);
+  const configuration = createPresetConfiguration(preset.id);
+  assert.equal(configuration.aircraft.mass, 0.0691);
+  assert.equal(configuration.aircraft.geometry.propellerRadius, 0.026085);
+  assert.doesNotMatch(JSON.stringify(configuration), /happymodel\.cn|X12 ELRS|Caddx/);
 });
 
 test('documented assembled masses count installed cameras, motors and batteries once', () => {
@@ -74,7 +125,7 @@ test('every preset has valid distinct physical geometry and sag-aware flying aut
       }),
     );
   }
-  assert.equal(identities.size, 12);
+  assert.equal(identities.size, listAircraftPresets().length);
 });
 
 test('starter rates use Actual native units with class maximum, 100 degree center and 25 percent expo on every axis', () => {

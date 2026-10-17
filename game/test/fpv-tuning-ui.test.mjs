@@ -8,7 +8,10 @@ import {
 } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
 import { exportNativeRateProfile } from '../../optional-practice/civilian-fpv/betaflight-import.mjs';
-import { createPresetConfiguration } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
+import {
+  createPresetConfiguration,
+  listAircraftPresets,
+} from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
 function fixture(
@@ -135,7 +138,7 @@ function fixture(
 test('aircraft picker creates an independent editable setup with starter rates and applies it only on restart', async (t) => {
   const f = fixture(t);
   const original = f.store.snapshot();
-  assert.equal(f.find('Aircraft preset', 'select').options.length, 12);
+  assert.equal(f.find('Aircraft preset', 'select').options.length, listAircraftPresets().length);
   assert.equal(f.find('Rates when selecting an aircraft', 'select').value, 'defaults');
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
   assert.match(f.ui.root.textContent, /37.68/);
@@ -150,6 +153,43 @@ test('aircraft picker creates an independent editable setup with starter rates a
   await f.click('Apply & restart');
   assert.equal(f.applied.length, 1);
   assert.equal(f.applied[0].advanced.aircraft.id, 'meteor75-analog-2022');
+});
+
+test('browsing aircraft replaces the preview without saving changes and refreshes its language', (t) => {
+  const f = fixture(t),
+    before = f.store.snapshot();
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  const previous = f.ui.root.querySelector('.tuning-aircraft-preview');
+  assert.match(previous.querySelector('svg').getAttribute('aria-label'), /Meteor75/);
+  assert.equal(previous.querySelectorAll('[data-preview-part="duct"]').length, 4);
+  f.edit('Aircraft preset', 'holybro-x650-v2', { tag: 'select', event: 'change' });
+  assert.equal(previous.isConnected, false);
+  assert.equal(f.ui.root.querySelectorAll('.tuning-aircraft-preview').length, 1);
+  assert.equal(
+    f.ui.root
+      .querySelector('.tuning-aircraft-preview')
+      .querySelectorAll('[data-preview-part="duct"]').length,
+    0,
+  );
+  f.setLocale('uk');
+  assert.match(
+    f.ui.root.querySelector('.tuning-aircraft-preview svg').getAttribute('aria-label'),
+    /Вигляд згори/,
+  );
+  assert.deepEqual(f.store.snapshot(), before);
+});
+
+test('Mobula8 shows its installed components as text with Ukrainian field labels', (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'mobula8-analog-2023', { tag: 'select', event: 'change' });
+  assert.match(f.ui.root.textContent, /Flight controller: X12 ELRS V2.1/);
+  assert.match(f.ui.root.textContent, /Installed FPV camera: Caddx ANT/);
+  assert.match(f.ui.root.textContent, /Motor controllers: Integrated BLHeli_S/);
+  assert.match(f.ui.root.textContent, /Source note \(original language\).*conflicting 51 mm/);
+  f.setLocale('uk');
+  assert.match(f.ui.root.textContent, /Польотний контролер: X12 ELRS V2.1/);
+  assert.match(f.ui.root.textContent, /Установлена FPV-камера: Caddx ANT/);
+  assert.match(f.ui.root.textContent, /Примітка джерела \(мовою оригіналу\).*conflicting 51 mm/);
 });
 
 test('aircraft picker keeps complete current Legacy rates and restores saved custom aircraft after navigation', async (t) => {
@@ -514,7 +554,7 @@ test('curve overlays, axis visibility and diagnostics show actual available meas
     }),
   });
   f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
-  const svg = f.ui.root.querySelector('svg');
+  const svg = f.ui.root.querySelector('[aria-label="Rate curves: zero to full stick"]');
   assert.equal(svg.querySelectorAll('path').length, 6);
   assert.equal(
     svg.querySelectorAll('path').filter((path) => path.getAttribute('stroke-dasharray')).length,

@@ -599,6 +599,8 @@ const FPV_TUNING_FILES = Object.freeze([
   'aircraft-physics.mjs',
   'aircraft-response.mjs',
   'aircraft-presets.mjs',
+  'aircraft-appearance.mjs',
+  'aircraft-preview.mjs',
   'aircraft-recording.mjs',
   'aircraft-terrain.mjs',
   'aircraft-course-session.mjs',
@@ -709,9 +711,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           // Academy now carries the same pinned 4.35 MB Rapier build as World.
           files:
             id === 'civilian-fpv'
-              ? 139
+              ? 141
               : id === 'fpv-worlds'
-                ? 198 // Includes World's same-scope Advanced worker bootstrap.
+                ? 200 // Includes World's same-scope Advanced worker bootstrap.
                 : id === 'civilian-flight'
                   ? 98
                   : policy.limits.files,
