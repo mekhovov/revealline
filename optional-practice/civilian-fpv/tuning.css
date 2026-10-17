@@ -81,15 +81,87 @@
   flex-wrap: wrap;
   margin-block: 12px;
 }
-.tuning-fields fieldset {
+.tuning-aircraft {
+  background: #142c3b;
+  padding: 16px;
+  border: 1px solid #52718b;
+  border-radius: 8px;
+}
+.tuning-aircraft > button {
+  margin: 4px 8px 4px 0;
+}
+.tuning-aircraft a {
+  display: block;
+  color: #8ec5ff;
+  overflow-wrap: anywhere;
+  margin-block: 6px;
+}
+.tuning-aircraft-preview {
+  margin: 12px 0;
+  max-width: 560px;
+  margin-inline: auto;
+}
+.tuning-aircraft-preview svg {
+  display: block;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.tuning-aircraft-preview figcaption {
+  margin-top: 8px;
+  color: #c4d5e5;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.fpv-tuning fieldset {
   min-width: 0;
   border: 1px solid #52718b;
   border-radius: 8px;
   padding: 12px;
 }
-.tuning-fields legend {
+.fpv-tuning legend {
   padding-inline: 6px;
   font-weight: 650;
+}
+.fpv-aircraft-course-filter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr);
+  gap: 6px 12px;
+  align-items: center;
+  min-width: 0;
+  margin-block: 12px;
+  padding: 12px;
+  border: 1px solid #52718b;
+  border-radius: 8px;
+  color: #edf5ff;
+  background: #142c3b;
+}
+.fpv-aircraft-course-filter > span {
+  font-weight: 650;
+}
+.fpv-aircraft-course-filter > small {
+  grid-column: 1 / -1;
+  color: #c4d5e5;
+  line-height: 1.5;
+}
+.fpv-aircraft-course-filter select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid #7695ae;
+  border-radius: 6px;
+  color: #edf5ff;
+  background: #1b3346;
+  font: inherit;
+}
+.fpv-aircraft-course-filter :focus-visible {
+  outline: 3px solid #f1ca72;
+  outline-offset: 3px;
+}
+@media (max-width: 540px) {
+  .fpv-aircraft-course-filter {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .tuning-number {
   border-bottom: 1px solid #36536a;
@@ -165,4 +237,49 @@
   .tuning-quad {
     transform: none !important;
   }
+}
+.aircraft-practice-controls input[type='file'],
+.aircraft-archive-controls input[type='file'] {
+  display: block;
+  max-width: 100%;
+  min-height: 44px;
+}
+.aircraft-challenge-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+  min-width: 0;
+}
+.aircraft-challenge-controls > label {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.aircraft-challenge-controls > p,
+.aircraft-challenge-controls > output {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.aircraft-challenge-controls [hidden] {
+  display: none;
+}
+.aircraft-challenge-controls[hidden],
+.aircraft-challenge-hud[hidden] {
+  display: none;
+}
+.aircraft-challenge-hud {
+  position: absolute;
+  top: 4rem;
+  left: 50%;
+  z-index: 12;
+  transform: translateX(-50%);
+  display: grid;
+  gap: 0.25rem;
+  max-width: 70%;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.5rem;
+  color: white;
+  background: rgb(0 0 0 / 75%);
+  text-align: center;
+  pointer-events: none;
 }

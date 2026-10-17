@@ -76,15 +76,15 @@
       "missions": [
         {
           "bindings": [
-            { "difficulty": "gentle", "gameplayId": "9a1240882fd7567e" },
-            { "difficulty": "standard", "gameplayId": "5de9aeb2adcb93bf" },
-            { "difficulty": "expert", "gameplayId": "99cd4895c1695135" }
+            { "difficulty": "gentle", "gameplayId": "8e25469d776a8bad" },
+            { "difficulty": "standard", "gameplayId": "e47e9d81e7fdf96f" },
+            { "difficulty": "expert", "gameplayId": "64e717258ec21a74" }
           ],
           "missionId": "social-drone-sky-watch-01"
         }
       ]
     },
-    "revision": "2",
+    "revision": "3",
     "scope": { "id": "social-drone-sky-watch-01", "kind": "mission" }
   }
 ]

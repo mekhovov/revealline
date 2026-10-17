@@ -3157,13 +3157,13 @@
       "brandId": "social-drone-ua",
       "id": "social-drone-sky-watch",
       "localizationPath": "game/content/company-campaigns/social-drone-sky-watch.localization.json",
-      "localizationSha256": "a265fa37e2692d8bf8aba0b2bf77c9200d08c0c1098aa328471629311b96e8d4",
+      "localizationSha256": "daf6d512ab34450cf3c0c1ed55d6544927028d6c9e515592d12ed8c917d10be0",
       "modes": [
         "solo"
       ],
       "name": "Sky Watch",
       "publication": "public",
-      "revision": "2",
+      "revision": "3",
       "rewardPath": "game/content/company-campaigns/social-drone-sky-watch.rewards.json",
       "sourcePath": "game/content/company-campaigns/social-drone-sky-watch.json"
     }
