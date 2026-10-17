@@ -20,6 +20,8 @@ import {
   readRasterJSON,
   strictControlReproduced,
   primitiveInputPremises,
+  RASTER_SOURCE_LIMITS,
+  assertRasterSourceBody,
 } from './solo-remote-raster.mjs';
 const MiB = 1024 ** 2;
 const hash = (b) => createHash('sha256').update(b).digest('hex');
@@ -80,6 +82,8 @@ async function stage(kind, run, persistent = plan.engine === 'webkit') {
     errors: [],
     failedRequests: [],
     sources: [],
+    sourceLimits: RASTER_SOURCE_LIMITS,
+    sourceAdmissionFailures: [],
     cleanup: null,
   };
   if (kind === 'full12') report.primary = value;
@@ -154,18 +158,27 @@ async function stage(kind, run, persistent = plan.engine === 'webkit') {
         !['/authoring/motion-lab/presets.json', '/game/content/themes.json'].includes(relative)
       )
         return;
+      const identity = allowed.get(relative);
+      const rejectSource = (reason) => {
+        value.overflow = true;
+        if (value.sourceAdmissionFailures.length < 16)
+          value.sourceAdmissionFailures.push({
+            path: relative.slice(0, 1024),
+            reason,
+            expectedBytes: identity?.bytes ?? null,
+          });
+      };
       if (
         kind === 'primitive' ||
         url.origin !== new URL(plan.address).origin ||
         !allowed.has(relative) ||
-        pending.length >= 256
+        pending.length >= RASTER_SOURCE_LIMITS.records
       ) {
-        value.overflow = true;
+        rejectSource('source-scope-or-count');
         return;
       }
-      const identity = allowed.get(relative);
-      if (identity.bytes > MiB) {
-        value.overflow = true;
+      if (identity.bytes > RASTER_SOURCE_LIMITS.perSourceBytes) {
+        rejectSource('source-bytes');
         return;
       }
       pending.push(
@@ -175,11 +188,7 @@ async function stage(kind, run, persistent = plan.engine === 'webkit') {
           try {
             const bytes = await response.body();
             bytesObserved += bytes.length;
-            assert(bytes.length <= MiB && bytesObserved <= 8 * MiB);
-            Object.assign(row, { bytes: bytes.length, sha256: hash(bytes) });
-            assert.equal(row.status, 200);
-            assert.equal(row.bytes, identity.bytes);
-            assert.equal(row.sha256, identity.sha256);
+            Object.assign(row, assertRasterSourceBody(bytes, identity, row.status, bytesObserved));
           } catch (e) {
             row.failure = String(e);
           }
