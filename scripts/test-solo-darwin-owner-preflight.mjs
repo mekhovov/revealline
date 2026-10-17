@@ -139,7 +139,7 @@ test('one-shot non-browser workflow declares finite setup, native observation an
   );
   assert.equal(
     workflow.match(/^    if: (.+)$/m)?.[1],
-    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'ab45bfde5d54d612cbba9b038a46f13d13f417ec'",
+    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7'",
   );
   assert.match(workflow, /runs-on: macos-15-intel/);
   assert.match(workflow, /timeout-minutes: 24/);

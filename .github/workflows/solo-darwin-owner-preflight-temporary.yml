@@ -18,8 +18,8 @@ concurrency:
 
 jobs:
   preflight:
-    # One source-bound non-browser ownership observation; no browser or media follows.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'ab45bfde5d54d612cbba9b038a46f13d13f417ec'
+    # One observation after the verified argument-capacity fix; prior 4bf results stay failed.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7'
     runs-on: macos-15-intel
     timeout-minutes: 24
     env:
