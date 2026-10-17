@@ -362,3 +362,245 @@ test('existing strict journal reader admits only exact readiness source and cold
     assert.equal((await verifyTimingHitchJournal(q, r, output, url)).status, 'invalid-evidence');
   }
 });
+
+// Prospective contract controls use synthetic package metadata; they are never
+// executable release declarations or native observations.
+const resumeModule = await import('./solo-qualification-readiness.mjs');
+const resumeAdapter = await import('./solo-remote-readiness.mjs');
+function resumeManifest(phase) {
+  const m = manifest();
+  m.sourceCohort = 'readiness-resume-candidate4bf';
+  m.phase = phase;
+  Object.assign(m.candidate, resumeAdapter.RESUME_READINESS_SOURCE);
+  m.runtimeRevision = m.candidate.revision;
+  m.release.candidateRevision = m.candidate.revision;
+  m.fixture = resumeAdapter.RESUME_READINESS_FIXTURES[phase];
+  m.protocol.name = phase + '-v1';
+  m.frozenTools.push(ref('scripts/solo-qualification-replay-identity.mjs'));
+  return m;
+}
+function resumeRaw(phase) {
+  const r = raw(),
+    saved = phase === 'saved-resume',
+    protocol = phase + '-v1',
+    source = resumeAdapter.RESUME_READINESS_SOURCE.revision;
+  const base = r.readinessObservation.records[1];
+  const start = { ...base, kind: 'start-click', atMs: 1, phase: 'briefing', trusted: true };
+  const active = { ...base, atMs: 100 };
+  const paused = { ...base, kind: 'after-running', atMs: 1100, phase: 'paused', tick: 120 };
+  const click = {
+    ...base,
+    kind: 'start-click',
+    atMs: 1500,
+    phase: 'paused',
+    tick: 120,
+    trusted: true,
+    run: saved ? 9 : 2,
+  };
+  const resumed = {
+    ...click,
+    kind: saved ? 'first-running' : 'resumed-running',
+    atMs: 2000,
+    phase: 'running',
+    trusted: null,
+  };
+  const final = { ...resumed, kind: 'after-running', atMs: 2400, phase: 'paused', tick: 168 };
+  const obs = (records) => ({ ...r.readinessObservation, protocol, records });
+  const observations = saved
+    ? [obs([start, active, paused]), obs([click, resumed, final])]
+    : [obs([start, active, paused, click, resumed, final])];
+  const text = (ticks) =>
+    JSON.stringify({
+      replay: {
+        ticks,
+        level: { id: 'first-return' },
+        checkpoint: { hash: String(ticks) },
+        segments: [
+          {
+            ticks,
+            input: {
+              direction: 'left',
+              boost: false,
+              action: false,
+              pickup: false,
+              switchClass: null,
+            },
+          },
+        ],
+      },
+    });
+  const replay = resumeModule.createResumeReplayEvidence(protocol);
+  replay.observe('before-resume', text(120));
+  if (saved) replay.observe('saved-restored', text(120));
+  replay.observe('after-resume', text(168));
+  replay.finish();
+  const app = r.snapshots[0].application;
+  r.snapshots = (
+    saved
+      ? ['before-resume', 'saved-restored-before-resume', 'after-resume']
+      : ['before-resume', 'after-resume']
+  ).map((group) => ({ group, application: structuredClone(app) }));
+  Object.assign(r, {
+    scenarioKind: 'lifecycle',
+    scenarioSHA256: resumeAdapter.RESUME_READINESS_FIXTURES[phase].sha256,
+    sourceRevision: source,
+    buildIdentity: { sourceRevision: source },
+    readinessPilot: { protocol, performanceQualification: false },
+    readinessDocuments: saved ? 2 : 1,
+    readinessObservations: observations,
+    readinessReplayEvidence: replay.report,
+    startupCadenceObservations: Array(saved ? 2 : 1).fill({
+      pilotStartupWait: 'omitted; immediate partial samples retained',
+    }),
+  });
+  r.readinessAssessment = resumeModule.assessResumeReadiness({
+    protocol,
+    documents: r.readinessDocuments,
+    observations,
+    applications: r.snapshots.map((s) => s.application),
+    replayEvidence: replay.report,
+    finalReplayText: text(168),
+  });
+  return { raw: r, text: text(168) };
+}
+test('new warm and saved Resume admission remains one source-specific candidate per engine with no pending package execution', () => {
+  for (const phase of ['warm-resume', 'saved-resume']) {
+    const m = resumeManifest(phase);
+    assert.equal(readinessMatrix(m).include.length, 2);
+    for (const engine of m.engines) {
+      const p = bindReadinessJob(m, engine);
+      assert.equal(p.rows.length, 1);
+      assert.equal(p.rows[0].id, `readiness-${phase}-${engine}`);
+      const args = readinessArguments(
+        { plan: p, here: '/tools/scripts', repository: '/tools' },
+        p.rows[0],
+        'http://127.0.0.1:1/game/',
+        '/evidence',
+      );
+      assert(args.includes('--readiness-probe=' + phase + '-v1'));
+      assert(args.includes('--source-revision=' + m.candidate.revision));
+      assert(args.includes('--cpu=1'));
+      assert(args.includes('--cadence=settled120'));
+    }
+    for (const mutate of [
+      (q) => (q.sourceCohort = 'readiness-candidateab45'),
+      (q) => (q.phase = 'cold-first30'),
+      (q) => (q.candidate.tree = 'a'.repeat(40)),
+      (q) => (q.protocol.name = 'first-running-v1'),
+      (q) =>
+        (q.frozenTools = q.frozenTools.filter(
+          (r) => !r.path.endsWith('solo-qualification-replay-identity.mjs'),
+        )),
+      (q) => (q.candidate = null),
+    ]) {
+      const q = structuredClone(m);
+      mutate(q);
+      assert.throws(() => bindReadinessJob(q, 'chromium'));
+    }
+  }
+});
+test('short Resume correctness is independent of preserved numerical failure and requires final native replay/GPU/journal', async () => {
+  for (const phase of ['warm-resume', 'saved-resume']) {
+    const p = bindReadinessJob(resumeManifest(phase), 'chromium'),
+      { raw: r, text } = resumeRaw(phase),
+      j = { status: 'complete' };
+    assert.equal(r.readinessAssessment.status, 'passed', JSON.stringify(r.readinessAssessment));
+    r.performanceGateStatus = 'fail';
+    const result = await readinessAssessment(p, p.rows[0], r, { ...command, exitCode: 2 }, j, text);
+    assert.equal(result.status, 'failed');
+    assert.equal(result.diagnosticStatus, 'passed');
+    assert.equal(result.rawPerformanceGateStatus, 'fail');
+    assert.equal(result.readinessCorrectness, 'pass');
+    for (const mutate of [
+      (q) => (q.replay.nativeVerification.status = 'fail'),
+      (q) => (q.environment.graphicsCapability.canProceed = false),
+      (q) => (q.readinessDocuments = 9),
+      (q) => (q.readinessObservations[0].dropped = 1),
+      (q) => q.readinessReplayEvidence.receipts[0].ticks++,
+    ]) {
+      const q = structuredClone(r);
+      mutate(q);
+      assert.equal(
+        (await readinessAssessment(p, p.rows[0], q, command, j, text)).readinessCorrectness,
+        'fail',
+      );
+    }
+    assert.equal(
+      (await readinessAssessment(p, p.rows[0], r, command, j, null)).readinessCorrectness,
+      'fail',
+    );
+  }
+});
+test('saved Resume strict binary journal reader requires both positive-active documents and exact reload ownership', async (t) => {
+  const dir = await temp(t),
+    output = join(dir, 'report.json'),
+    url = 'http://127.0.0.1:4321/game/?journey=opening';
+  const p = bindReadinessJob(resumeManifest('saved-resume'), 'chromium');
+  const store = createHitchJournalStore(output, () => 0, { soloURL: url });
+  for (let i = 0; i < 2; i++) {
+    const allocation = store.beginDocument({ url, action: i ? 'reload-7' : 'initial' });
+    let now = 0;
+    const j = createBrowserHitchJournal(
+      {},
+      {
+        performance: { now: () => now, timeOrigin: 1700000000000 + i * 1000 },
+        location: { origin: 'http://127.0.0.1:4321', pathname: '/game/' },
+        document: { hidden: false, hasFocus: () => true, addEventListener() {} },
+        addEventListener() {},
+        btoa: (s) => Buffer.from(s, 'binary').toString('base64'),
+      },
+    );
+    j.configure(allocation);
+    j.first(0, 0);
+    j.subscribe(0);
+    j.phase(2, 0);
+    j.frame(0, 40, 2, 2);
+    j.beginWork(1, 2);
+    j.endWork(55, 2);
+    j.phase(3, 60);
+    now = 100;
+    await store.retain(j.seal('paused'), i ? 'final-existing-public-boundary' : 'before-reload-7');
+  }
+  const r = { hitchJournal: store.finish() };
+  assert.equal((await verifyTimingHitchJournal(p, r, output, url)).status, 'complete');
+  for (const mutate of [
+    (q) => (q.hitchJournal.documents[0].header.runningSeen = false),
+    (q) => (q.hitchJournal.documents[0].header.activeFrames = 0),
+    (q) => (q.hitchJournal.documents[0].boundary = 'before-reload-8'),
+    (q) => (q.hitchJournal.documents[1].identity.action = 'reload-8'),
+    (q) => q.hitchJournal.documents.pop(),
+  ]) {
+    const q = structuredClone(r);
+    mutate(q);
+    assert.equal((await verifyTimingHitchJournal(p, q, output, url)).status, 'invalid-evidence');
+  }
+});
+
+test('both new Resume matrix declarations run from the actual isolated one-file CLI', async (t) => {
+  const dir = await temp(t),
+    file = join(dir, 'solo-remote-readiness.mjs');
+  await writeFile(file, await readFile(new URL('./solo-remote-readiness.mjs', import.meta.url)));
+  for (const phase of ['warm-resume', 'saved-resume']) {
+    const input = join(dir, phase + '.json'),
+      m = resumeManifest(phase);
+    await writeFile(input, JSON.stringify(m));
+    assert.equal(
+      execFileSync(process.execPath, [file, 'matrix-plan', input], {
+        encoding: 'utf8',
+        timeout: 10000,
+        maxBuffer: 16384,
+      }),
+      `matrix=${JSON.stringify(readinessMatrix(m))}\n`,
+    );
+    m.candidate = null;
+    await writeFile(input, JSON.stringify(m));
+    assert.throws(() =>
+      execFileSync(process.execPath, [file, 'matrix-plan', input], {
+        encoding: 'utf8',
+        timeout: 10000,
+        maxBuffer: 16384,
+        stdio: 'pipe',
+      }),
+    );
+  }
+});

@@ -305,17 +305,52 @@ function validateTimingHitchJournalAdmission(plan, selected) {
 export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
   try {
     assert(planHasHitchJournal(plan), 'Journal was not declared');
+    const resumeReadiness =
+      plan.format === 'SoloHostedReadinessPlanV1' &&
+      plan.sourceCohort === 'readiness-resume-candidate4bf';
+    const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
     if (plan.format === 'SoloHostedReadinessPlanV1') {
-      assert.equal(plan.sourceCohort, 'readiness-candidateab45');
-      assert.equal(plan.phase, 'cold-first30');
       assert.equal(plan.performanceExclusion, true);
-      assert.equal(plan.candidate.revision, 'ab45bfde5d54d612cbba9b038a46f13d13f417ec');
-      assert.equal(plan.candidate.tree, '0d8238992621613883efcf0c73a9f4d88f3fcb10');
-      assert.deepEqual(plan.fixture, {
-        path: 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
-        bytes: 6387,
-        sha256: 'aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5',
-      });
+      if (plan.sourceCohort === 'readiness-public-effects-candidate4bf') {
+        assert(['public-effects-full', 'public-effects-reduced'].includes(plan.phase));
+        assert.equal(plan.candidate.revision, '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7');
+        assert.equal(plan.runtimeRevision, '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7');
+        assert.equal(plan.candidate.tree, 'e87e64d0e14584c2a569d06bae8e7c602c5ed105');
+        const { EFFECTS_READINESS_FIXTURES } = await import('./solo-remote-readiness.mjs');
+        assert.deepEqual(
+          plan.fixture,
+          EFFECTS_READINESS_FIXTURES[plan.phase.slice('public-effects-'.length)],
+        );
+      } else if (resumeReadiness) {
+        assert(['warm-resume', 'saved-resume'].includes(plan.phase));
+        assert.equal(plan.candidate.revision, '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7');
+        assert.equal(plan.runtimeRevision, '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7');
+        assert.equal(plan.candidate.tree, 'e87e64d0e14584c2a569d06bae8e7c602c5ed105');
+        assert.deepEqual(
+          plan.fixture,
+          savedReadiness
+            ? {
+                path: 'docs/performance/fixtures/solo-readiness-resume/saved.qualification.fixture',
+                bytes: 4723,
+                sha256: 'b739f37f5bd9c341931ed528a955614aaf1ba05075bb1baab1c2a655a5bcd527',
+              }
+            : {
+                path: 'docs/performance/fixtures/solo-readiness-resume/warm.qualification.fixture',
+                bytes: 3878,
+                sha256: '95f77f635658a53ae5ab89ca9879321a37c22e512c2a0bb751ad5ed194699545',
+              },
+        );
+      } else {
+        assert.equal(plan.sourceCohort, 'readiness-candidateab45');
+        assert.equal(plan.phase, 'cold-first30');
+        assert.equal(plan.candidate.revision, 'ab45bfde5d54d612cbba9b038a46f13d13f417ec');
+        assert.equal(plan.candidate.tree, '0d8238992621613883efcf0c73a9f4d88f3fcb10');
+        assert.deepEqual(plan.fixture, {
+          path: 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
+          bytes: 6387,
+          sha256: 'aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5',
+        });
+      }
     } else
       assert(
         finalSustainedPlan(plan) ? selectedSustainedSource(plan) : selectedTimingSource(plan),
@@ -374,18 +409,22 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
               boundary: 'final-existing-public-boundary',
             },
           ]
-        : warm || firstActive
+        : warm || firstActive || savedReadiness
           ? [
               {
                 role: 'solo',
                 path: url.pathname,
                 action: 'initial',
-                boundary: firstActive ? 'before-reload-8' : 'before-reload-1',
+                boundary: savedReadiness
+                  ? 'before-reload-7'
+                  : firstActive
+                    ? 'before-reload-8'
+                    : 'before-reload-1',
               },
               {
                 role: 'solo',
                 path: url.pathname,
-                action: firstActive ? 'reload-8' : 'reload-1',
+                action: savedReadiness ? 'reload-7' : firstActive ? 'reload-8' : 'reload-1',
                 boundary: 'final-existing-public-boundary',
               },
             ]
@@ -410,7 +449,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
         path: spec.path,
         action: spec.action,
       };
-      const final = firstActive ? index === 0 : index === specs.length - 1,
+      const final = savedReadiness || (firstActive ? index === 0 : index === specs.length - 1),
         preparation = spec.role === 'preparation';
       assert.equal(doc.id, index + 1);
       assert.equal(doc.status, 'complete');
@@ -460,7 +499,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
           ).includes(header.publicPhase),
         );
       }
-      if (firstActive) assert.equal(header.publicPhase, 'paused');
+      if (firstActive || resumeReadiness) assert.equal(header.publicPhase, 'paused');
       if (final) {
         assert.equal(header.runningSeen, true);
         assert.equal(header.workCallsSeen, true);
