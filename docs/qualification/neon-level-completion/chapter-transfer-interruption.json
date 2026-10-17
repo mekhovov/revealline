@@ -1,0 +1,23 @@
+{
+  "format": "revealline-neon-chapter-interruption.v1",
+  "scope": "Native packaged installer on isolated localhost origin; partial response disconnected; automatic retry; origin server then stopped. Not public deployment or every network/storage failure.",
+  "candidateVersion": "0.151.4",
+  "sourceRevision": "3491baf7aed0e19aa918e55c4b8a011c14292ab3",
+  "distributionSHA256": "791724f3fd41c15474c80287ecc42d638bc2d1b958d06c21e8c53def05c03f79",
+  "interruptedResponse": {
+    "path": "/game/content/packs/neon-reference-pack.json",
+    "declaredBytes": 6927774,
+    "sentBytes": 65536
+  },
+  "connectionClosedBeforeCompletion": true,
+  "referencePackRequests": 2,
+  "mosaicPackRequests": 1,
+  "automaticRetryRecovered": true,
+  "selectedChaptersVerifiedReady": true,
+  "serverStoppedBeforeGameLaunch": true,
+  "offlineActivation": "Neon Channels selected from cached chapter through normal chooser",
+  "offlineStart": true,
+  "offlineRetry": true,
+  "offlineResumePause": true,
+  "networkFaultMode": "One partial chapter response; subsequent requests served complete original bytes. No corrupted file was accepted."
+}

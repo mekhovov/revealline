@@ -1,0 +1,248 @@
+{
+  "format": "FPVTuningDeliveryVerification.v1",
+  "generatedAt": "2026-10-17T02:43:35.879964+00:00",
+  "baseRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+  "priorFeatureRevision": "79a9201266daa34e773136521a02a068c557893c",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/1561",
+  "localQualificationPassed": true,
+  "originalQualificationGatesComplete": false,
+  "publicFeatureDeploymentVerified": false,
+  "sourceBinding": "Frozen working tree before final implementation commit. Exact hosted CI and feature deployment remain separate.",
+  "checks": {
+    "practice": {
+      "tests": 701,
+      "pass": 701,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "passed": true,
+      "log": "/private/tmp/fpv-delivery-practice.log",
+      "logSha256": "e4342892a3dfe7b78fba5005ddd286c81702a98a50b60465ffd5c6c0d4ae77c1"
+    },
+    "integration": {
+      "tests": 44,
+      "pass": 44,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "passed": true,
+      "log": "/private/tmp/fpv-delivery-integration.log",
+      "logSha256": "00423a22082381ba62e72d340b9b4ae36255f489582d9e090b8f19d9fdd6ec10"
+    },
+    "releaseValidation": {
+      "command": "npm run validate",
+      "passed": true,
+      "logSha256": "36d238cbb0540dc114673559b00bd2a6afbf9f9accdc359064790efbc7d267f5",
+      "unchangedNavigationWarnings": 7
+    },
+    "lintAndFormatting": {
+      "lintModules": 16,
+      "lintPassed": true,
+      "formattedModules": 13,
+      "preExistingFormatting": [
+        {
+          "path": "game/test/fpv-world-appearance-ui.test.mjs",
+          "preExistingAt": "79a9201266daa34e773136521a02a068c557893c",
+          "baselineFormattingMismatch": true
+        },
+        {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+          "preExistingAt": "79a9201266daa34e773136521a02a068c557893c",
+          "baselineFormattingMismatch": true
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "preExistingAt": "79a9201266daa34e773136521a02a068c557893c",
+          "baselineFormattingMismatch": true
+        }
+      ],
+      "additionalPublicRunnerAndTwoWorkflows": "Lint/format pass; three large existing files retain confirmed baseline formatting debt, no broad rewrite."
+    }
+  },
+  "reports": [
+    {
+      "path": "docs/fpv-historical-update-qualification.json",
+      "sha256": "bb80291cd1c84c858692678a97984e74981b392bafeaa7703d58a6d06e7cfdee",
+      "passed": true
+    },
+    {
+      "path": "docs/fpv-native-current-runtime-20261017.json",
+      "sha256": "e69f208b93103d98ad9299257a45c97e264ffabd76394e6e033e90e68dea3255",
+      "passed": true
+    },
+    {
+      "path": "docs/fpv-regional-urban-streaming-capacity.json",
+      "sha256": "673eafcc2e067cee4abf1031ad0452223d5f6c7491f552c945bafd1ab09c5a29",
+      "passed": true
+    },
+    {
+      "path": "docs/fpv-regional-urban-streaming-verification.json",
+      "sha256": "b8b2bea7ab21b978240fd54b3bf64090e3896ed89a1edf85fb18e8018e2a35fe",
+      "passed": true
+    },
+    {
+      "path": "docs/fpv-tuning-browser-delivery-qualification.json",
+      "sha256": "1b802f85d3c5b01202f1a70570564a2496994de2e94b6b60aaf4ee03a41aae10",
+      "passed": true
+    },
+    {
+      "path": "docs/fpv-advanced-runtime-qualification-2026-10-17-eighth-review.json",
+      "sha256": "e050c8142dcbf973ec920e86849e4223d9f965cf43990732eddc5475d1e4590c",
+      "passed": true
+    },
+    {
+      "path": "docs/fpv-pages-delivery-inventory.json",
+      "sha256": "22bd802265946fb9c9474a2810478ed593c36dad9d56defa22fed3f3e90b3407",
+      "passed": true
+    },
+    {
+      "path": "docs/fpv-pages-delivery-live-testing-evidence.json",
+      "sha256": "6c4f6479df7735374ce6e97b731c49c5b10a6ca7a72e166e5f8347bbbf64b669",
+      "passed": true
+    },
+    {
+      "path": "docs/fpv-public-delivery-baseline.json",
+      "sha256": "68ea44f45088e420bc260f7a9ee4afb17bb7204658affadff91df523b612fe0c",
+      "passed": true
+    }
+  ],
+  "reportSourcePinsVerified": [
+    {
+      "report": "docs/fpv-native-current-runtime-20261017.json",
+      "verifiedSourcePins": 204
+    },
+    {
+      "report": "docs/fpv-historical-update-qualification.json",
+      "verifiedSourcePins": 185
+    },
+    {
+      "report": "docs/fpv-regional-urban-streaming-capacity.json",
+      "verifiedSourcePins": 92
+    },
+    {
+      "report": "docs/fpv-regional-urban-streaming-verification.json",
+      "verifiedSourcePins": 4
+    },
+    {
+      "report": "docs/fpv-tuning-browser-delivery-qualification.json",
+      "verifiedSourcePins": 23
+    },
+    {
+      "report": "docs/fpv-advanced-runtime-qualification-2026-10-17-eighth-review.json",
+      "verifiedSourcePins": 20
+    }
+  ],
+  "sources": [
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "sha256": "059118b2bd9ad085d7730696e56a9df75f83f9062f78fc49df54dc876854cba1"
+    },
+    {
+      "path": ".github/workflows/fastline-release.yml",
+      "sha256": "47cffc25ae57d5c4d55e2003cbca26c92e0971fd2fb3376b377eda3439a69b63"
+    },
+    {
+      "path": "game/platform.mjs",
+      "sha256": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec"
+    },
+    {
+      "path": "game/test/fpv-advanced-terrain.test.mjs",
+      "sha256": "0a8a812cfae11ae04b4cf2a007dc994ca96f3c7a19cdaba41819225fb4075a0a"
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "sha256": "932069f3bc32c5e6395cd78ee1866ef08dd00e2f022ac66d346adc6484ae8340"
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "sha256": "4edab08a5b43ba9d47f6fc9c250a4de3036eb74eadf739140bf614f085792fad"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "sha256": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "sha256": "cdbb034b2142651d819381045b69642d07b337518e597f332c2ede12c6e48933"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "sha256": "b739a4e192bf1f12d3c6aea4d6e9775ccc135769657e20fbd2a1e35eeea207a5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha256": "93f8f7906182f50df92376ed50e07a107b99f8621750983c8d71d70d2d79fdac"
+    },
+    {
+      "path": "publishing/optional-import-capabilities.mjs",
+      "sha256": "d336481a02ef0fe4a3203fecc74fe8f1739c4df035b6d921ee886a0290f0d28d"
+    },
+    {
+      "path": "publishing/optional-module-closure.mjs",
+      "sha256": "dd88effb1ab7f754866a87410f5fd125db7234e22176eaeba393eafaac578d4c"
+    },
+    {
+      "path": "scripts/build-optional-practice.mjs",
+      "sha256": "35b8fb89ec73c6359860d8a49ea4c629e8aab7832632e8a7b1315607adfee6c2"
+    },
+    {
+      "path": "scripts/fpv-regional-streaming-capacity.mjs",
+      "sha256": "e838bbaed952f0d8e711e53f1f8656629f88039236504f7728b48effeedb71eb"
+    },
+    {
+      "path": "scripts/smoke-fpv-historical-update.mjs",
+      "sha256": "a9774a80bc9e0a71b4a1763d7fee12c08e253b1e8210be3da33f3ae3fae14255"
+    },
+    {
+      "path": "scripts/smoke-fpv-public-update.mjs",
+      "sha256": "294da9106bfdb8e23b3b972ff90e0b10dee312138164a1e390f5979e7b76a0aa"
+    },
+    {
+      "path": "scripts/test-bundle-optional-practice.mjs",
+      "sha256": "b81eba66b948264f1585571a1e3a085b6c32dcd8f948a5efb9e074eba85d80e8"
+    },
+    {
+      "path": "scripts/test-optional-core-tools-boundary.mjs",
+      "sha256": "98f177040146d34d05b05239e748020e69424d831fded4783f3686304edad038"
+    },
+    {
+      "path": "scripts/test-world-texture-acceptance.mjs",
+      "sha256": "c841da714cec4b7dafdd3f50d13c214e6081c25191298cc05138f75be0743265"
+    }
+  ],
+  "cleanup": {
+    "removed": "/private/tmp/fpv-rates-seventh-review-20261017-pages",
+    "reason": "Verified superseded task-owned working-tree Pages build; make room for final delivery build",
+    "manifestSha256": "03a3632b4788791e3e6f01b797e8d530b2c35643a54dfe5057dfb690e4ae1dc2",
+    "zipSha256": "5b5575dae69c19b9b279761acfc72b04ea22a8d10e6356590b018e848859fcd6",
+    "repositoryEvidencePreserved": true
+  },
+  "advanced": {
+    "frequency": 250,
+    "scored": false,
+    "defaultEligible": false,
+    "numericMaxErrorPercent": 1.881394646,
+    "numericMinimumCapacity": 60,
+    "urbanMinimumCapacity": 15.093,
+    "measuredHost": "Apple M4 Pro ARM64",
+    "collidersPerFrame": 128,
+    "derivedRecordedColliderDefinitions": 65536,
+    "limits": "Other geometry, frame/event and byte/publication limits unchanged. Single-host numerical/streaming evidence is not measured-aircraft or wider-device qualification."
+  },
+  "preservedFailures": [
+    "docs/fpv-delivery-ci-initial-failure.json",
+    "docs/fpv-historical-update-camera-migration-failure.json",
+    "docs/fpv-historical-update-save-wait-failure.json",
+    "docs/fpv-regional-urban-64-admission-evidence.json",
+    "docs/fpv-regional-urban-candidate128-initial-failure.json",
+    "docs/fpv-regional-urban-candidate128-unpaced-failure.json",
+    "docs/fpv-public-delivery-baseline-runner-change-failure.json"
+  ],
+  "remainingGates": [
+    "Exact committed GitHub checks and normal main Pages publication",
+    "Public old-main\u2192new-main offline upgrade acceptance on prepared profiles",
+    "Measured aircraft/log fitting; radios, physical touch/wider devices and experienced pilots (user-deferred)",
+    "iOS runtime unavailable without Xcode/simulator",
+    "Propwash/ground-effect validation and Advanced scored/default promotion"
+  ]
+}

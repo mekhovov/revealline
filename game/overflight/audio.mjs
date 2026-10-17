@@ -9,10 +9,10 @@ import { createOverflightWorldAudio, overflightAudioSpatial } from './world-audi
  * mute, priorities, sample fallback and voice limits; replay/prepare stay silent. */
 export function createOverflightAudio(
   sound,
-  { presentation = null, getDestruction = () => ({}) } = {},
+  { presentation = null, getDestruction = () => ({}), acquireGain } = {},
 ) {
   let lastTick = '';
-  const worldAudio = createOverflightWorldAudio(sound);
+  const worldAudio = createOverflightWorldAudio(sound, { acquireGain });
   const launched = new WeakSet();
   const eventCursor = (run) =>
     `${run.tick}:${run.phase ?? ''}:${run.progression?.choices ?? 0}:${run.progression?.rerolls ?? 0}`;

@@ -1,0 +1,46 @@
+{
+  "format": "FPVWorldRecordRegressionReceipt.v1",
+  "testedUTC": "2026-10-15T19:14:00.922597+00:00",
+  "productionBase": "e51ff517ed7a870bf57736d9115dda781521f64c",
+  "testedProductionModulesUnchanged": 128,
+  "node": "v20.19.5",
+  "command": "node --test --test-concurrency=1 game/test/fpv-world-record-archive.test.mjs game/test/fpv-world-record-storage.test.mjs",
+  "summary": {
+    "tests": 16,
+    "pass": 16,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "tapSHA256": "a43b5926c75f10eb14be5e554db99940b4d4acbec6a849f103fe8495efbc1aaf",
+  "files": [
+    {
+      "path": "game/test/fpv-world-record-archive.test.mjs",
+      "bytes": 8440,
+      "sha256": "eb7b3f7f713198e46327386654261f3854c7fc5b255bd9ef0a2ebeb5d98b404e"
+    },
+    {
+      "path": "game/test/fpv-world-record-storage.test.mjs",
+      "bytes": 8227,
+      "sha256": "6d9ec755349a30ff0498d0ad8c4f0c7e0ee4a2f3b7ef510bdfb27142ad94afe4"
+    }
+  ],
+  "lint": "passed on both changed test modules, zero warnings",
+  "formatting": "repository Prettier configuration passed",
+  "phaseRouting": {
+    "recordings": "game/test/fpv-world-record-archive.test.mjs",
+    "local-ux": "game/test/fpv-world-record-storage.test.mjs",
+    "existingEntriesPreserved": true
+  },
+  "scope": "Focused automated D6 boundary coverage only. Production files unchanged. Real published proof replay, opaque non-proof storage fixtures, isolated pinned fake-indexeddb6.2.5. No browser, user database, native device or elapsed endurance work.",
+  "remaining": [
+    "exact-head cloud feature phases and normal PR checks",
+    "full D6/release qualification",
+    "aggregate byte-capacity saturation",
+    "real-browser quota/eviction and application restart",
+    "network-wide offline and physical devices/controllers",
+    "actual elapsed two-hour endurance"
+  ],
+  "priorNegativeEvidence": "Two initial assertion mismatches were corrected in test code only. An attempted local full industrial verifier could not read intentionally omitted unrelated suites; its21/23 result is preserved externally and not counted as a complete pass."
+}

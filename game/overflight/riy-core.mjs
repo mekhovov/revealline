@@ -99,6 +99,8 @@ export function createOverflightRiy(run) {
       formationHeading: run.player.heading,
       cooldown: index ? 0.8 : 0.3,
       beamRemaining: 0,
+      shotSegmentCount: 0,
+      shotSegments: Array.from({ length: 3 }, () => ({ x: 0, y: 0, targetX: 0, targetY: 0 })),
       targetX: 0,
       targetY: 0,
       shots: 0,
@@ -165,6 +167,7 @@ function stepLegacyOverflightRiy(run, { focus = false } = {}) {
       escort.x = run.player.x;
       escort.y = run.player.y;
       escort.beamRemaining = 0;
+      escort.shotSegmentCount = 0;
     }
   }
   if (focus && state.cooldown === 0) {
@@ -231,6 +234,8 @@ function stepLegacyOverflightRiy(run, { focus = false } = {}) {
     escort.beamRemaining = 0.12;
     escort.cooldown = escort.interval;
     escort.shots++;
+    escort.shotSegmentCount = 0;
+    recordShotSegment(escort, escort, target);
     // Shared exact queries retain armor, deaths, remains, salvage and sound rules.
     damageOverflightArea(run, target.x, target.y, escort.radius, escort.damage, { origin: escort });
   }
@@ -268,14 +273,23 @@ function clearShot(run, origin, target) {
   );
 }
 
+// Capture admitted links at impact time. Rendering must not reconnect moving
+// actors afterward or imply that a blocked victim received a damage share.
+function recordShotSegment(escort, origin, target) {
+  const segment = escort.shotSegments[escort.shotSegmentCount++];
+  Object.assign(segment, { x: origin.x, y: origin.y, targetX: target.x, targetY: target.y });
+}
+
 function applyShot(run, escort, target, settings, burst = false) {
   if (run.phase !== 'playing' || !clearShot(run, escort, target)) return false;
   escort.heading = Math.atan2(target.y - escort.y, target.x - escort.x);
   escort.targetX = target.x;
   escort.targetY = target.y;
   escort.beamRemaining = 0.12;
+  escort.shotSegmentCount = 0;
   escort.shots++;
   if (escort.role === 'sweeper') {
+    recordShotSegment(escort, escort, target);
     damageOverflightArea(run, target.x, target.y, settings.radius, settings.damage, {
       origin: escort,
     });
@@ -322,10 +336,12 @@ function applyShot(run, escort, target, settings, burst = false) {
       // A rejected link cannot carry the remaining chain through cover or beyond
       // the final enemy's death. Divide only among admitted, clear links above.
       if (!damageOverflightEnemy(run, victim, damage, origin)) break;
+      recordShotSegment(escort, origin, victim);
       origin = { x: victim.x, y: victim.y };
     }
   } else {
     damageOverflightEnemy(run, target, settings.damage, escort);
+    recordShotSegment(escort, escort, target);
     if (!burst && settings.burstCount > 1)
       escort.pending = {
         targetId: target.id,
@@ -352,6 +368,7 @@ function stepSquad(run, focus) {
       escort.x = run.player.x;
       escort.y = run.player.y;
       escort.beamRemaining = 0;
+      escort.shotSegmentCount = 0;
       escort.pending = null;
     }
   }
@@ -492,6 +509,7 @@ export function overflightRiyPresentation(run) {
     cooldown: state.cooldown,
     escorts: state.escorts.map((escort) => ({
       ...escort,
+      shotSegments: escort.shotSegments.map((segment) => ({ ...segment })),
       arcRadians: ((escort.followArc ?? 360) * Math.PI) / 180,
       range: escort.attackRange ?? state.rules.attackRange,
     })),
