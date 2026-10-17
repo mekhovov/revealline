@@ -25,11 +25,23 @@ static void fail_identity(const char *message, pid_t pid, int result, size_t exp
           message, error, pid, identity_only ? "one" : "all", result, expected);
   exit(1);
 }
+static size_t argument_capacity(void) {
+  static size_t capacity = 0;
+  if (capacity) return capacity;
+  int mib[] = {CTL_KERN, KERN_ARGMAX}, maximum = 0;
+  size_t size = sizeof(maximum);
+  if (sysctl(mib, 2, &maximum, &size, NULL, 0) != 0 ||
+      size != sizeof(maximum) || maximum <= (int)sizeof(int) || maximum > MAX_ARGS)
+    fail("argument limit");
+  capacity = (size_t)maximum;
+  return capacity;
+}
 static int tagged(pid_t pid, const char *token) {
   if (!*token) return 0;
   int mib[] = {CTL_KERN, KERN_PROCARGS2, pid};
-  size_t size = MAX_ARGS;
-  char *bytes = malloc(size);
+  const size_t capacity = argument_capacity();
+  size_t size = capacity;
+  char *bytes = malloc(capacity);
   if (!bytes) fail("argument allocation");
   if (sysctl(mib, 3, bytes, &size, NULL, 0) != 0) {
     int error = errno;
@@ -39,7 +51,7 @@ static int tagged(pid_t pid, const char *token) {
     if (errno == EACCES || errno == EPERM || errno == EINVAL) return -1;
     fail("argument inspection");
   }
-  if (size < sizeof(int) || size >= MAX_ARGS) { free(bytes); return -1; }
+  if (size < sizeof(int) || size >= capacity) { free(bytes); return -1; }
   int argc;
   memcpy(&argc, bytes, sizeof(argc));
   if (argc < 0 || argc > 65536) { free(bytes); return -1; }

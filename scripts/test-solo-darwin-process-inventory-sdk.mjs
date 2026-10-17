@@ -19,7 +19,7 @@ const fixture = String.raw`
 #define sysctl fixture_sysctl
 #include ${JSON.stringify(source)}
 #undef main
-static const char *mode; static int unique_calls[3],short_calls[3];
+static const char *mode; static int unique_calls[3],short_calls[3],argument_queries,argument_reads;
 int fixture_pidinfo(int pid,int flavor,uint64_t arg,void *buffer,int count) {
  (void)arg;(void)count;int i=pid-42;
  if(flavor==PROC_PIDTBSDINFO){fprintf(stderr,"FULL_BSD_FORBIDDEN\n");exit(9);}
@@ -54,8 +54,23 @@ int fixture_pidinfo(int pid,int flavor,uint64_t arg,void *buffer,int count) {
 }
 int fixture_pidpath(int pid,void *buffer,uint32_t count){if(!strcmp(mode,"path-saturated")){memset(buffer,1,count);return count;}if(pid==44||!strcmp(mode,"path-denied")){errno=EPERM;return 0;}return snprintf(buffer,count,"/owned/NodeWebKit");}
 int fixture_listpids(uint32_t type,uint32_t info,void *buffer,int count){(void)info;(void)count;if(type!=PROC_ALL_PIDS)exit(9);pid_t rows[]={0,42,43,44};if(!strcmp(mode,"list-denied")){errno=EPERM;return 0;}if(!strcmp(mode,"list-partial"))return 3;if(!strcmp(mode,"list-saturated"))return MAX_PIDS*sizeof(pid_t);if(!strcmp(mode,"list-negative"))rows[3]=-1;if(!strcmp(mode,"list-duplicate"))rows[3]=42;memcpy(buffer,rows,sizeof(rows));return sizeof(rows);}
-int fixture_sysctl(int *name,u_int n,void *oldp,size_t *len,void *newp,size_t newlen){(void)n;(void)newp;(void)newlen;int pid=name[2];if(pid==44||!strcmp(mode,"tag-denied")){errno=EPERM;return -1;}int argc=1;memcpy(oldp,&argc,sizeof(argc));if(!strcmp(mode,"tag-truncated")){*len=sizeof(argc);return 0;}const char yes[]="/node\0\0node\0SOLO_REMOTE_OWNER=01234567-89ab-cdef-0123-456789abcdef\0";const char no[]="/node\0\0node\0OTHER=value\0";const char *b=pid==42?yes:no;size_t size=pid==42?sizeof(yes):sizeof(no);memcpy((char*)oldp+sizeof(argc),b,size);*len=sizeof(argc)+size;return 0;}
-int main(int argc,char **argv){if(argc!=2)return 2;mode=argv[1];char *args[]={"mock","all","01234567-89ab-cdef-0123-456789abcdef"};return inventory_main(3,args);}
+int fixture_sysctl(int *name,u_int n,void *oldp,size_t *len,void *newp,size_t newlen){(void)newp;(void)newlen;
+ int maximum=!strcmp(mode,"argmax-one-mib")?1048576:262144;
+ if(n==2&&name[0]==CTL_KERN&&name[1]==KERN_ARGMAX){
+  argument_queries++;if(!strcmp(mode,"argmax-denied")){errno=EPERM;return -1;}
+  if(!strcmp(mode,"argmax-zero"))maximum=0;
+  if(!strcmp(mode,"argmax-negative"))maximum=-1;
+  if(!strcmp(mode,"argmax-tiny"))maximum=sizeof(int);
+  if(!strcmp(mode,"argmax-over-cap"))maximum=MAX_ARGS+1;
+  memcpy(oldp,&maximum,sizeof(maximum));*len=!strcmp(mode,"argmax-short")?sizeof(maximum)-1:sizeof(maximum);return 0;
+ }
+ if(n!=3||name[0]!=CTL_KERN||name[1]!=KERN_PROCARGS2){fprintf(stderr,"UNKNOWN_SYSCTL\n");exit(9);}
+ argument_reads++;
+ // Match Apple's request-size guard before process lookup, not just returned bytes.
+ if(*len<=sizeof(int)||*len-sizeof(int)>(size_t)maximum){errno=EINVAL;return -1;}
+ if(!strcmp(mode,"tag-saturated")){*len=(size_t)maximum;return 0;}
+ int pid=name[2];if(pid==44||!strcmp(mode,"tag-denied")){errno=EPERM;return -1;}int argc=1;memcpy(oldp,&argc,sizeof(argc));if(!strcmp(mode,"tag-truncated")){*len=sizeof(argc);return 0;}const char yes[]="/node\0\0node\0SOLO_REMOTE_OWNER=01234567-89ab-cdef-0123-456789abcdef\0";const char no[]="/node\0\0node\0OTHER=value\0";const char *b=pid==42?yes:no;size_t size=pid==42?sizeof(yes):sizeof(no);memcpy((char*)oldp+sizeof(argc),b,size);*len=sizeof(argc)+size;return 0;}
+int main(int argc,char **argv){if(argc!=2)return 2;mode=argv[1];char *args[]={"mock","all","01234567-89ab-cdef-0123-456789abcdef"};int result=inventory_main(3,args);if(!strcmp(mode,"argmax-one-mib")||!strcmp(mode,"argmax-repeat"))fprintf(stderr,"argument_queries=%d argument_reads=%d\n",argument_queries,argument_reads);return result;}
 `;
 test.before(async () => {
   if (process.platform !== 'darwin') return;
@@ -95,6 +110,36 @@ nativeTest(
     assert.equal(map.get(44).euid, 0);
     assert.equal(map.get(42).rss, 42 * 1024);
     assert.equal(map.get(42).ownerTagged, true);
+  },
+);
+nativeTest(
+  'kernel argument capacity is queried once and invalid sizes never authorize owner tags',
+  () => {
+    for (const mode of ['argmax-repeat', 'argmax-one-mib']) {
+      const { r, map } = capture(mode);
+      assert.equal(r.status, 0, mode);
+      assert.equal(map.get(42).ownerTagged, true, mode);
+      assert.equal(map.get(42).inspectionIncomplete, false, mode);
+      assert.equal(map.get(43).ownerTagged, false, mode);
+      assert.equal(map.get(44).inspectionIncomplete, true, mode);
+      assert.match(r.stderr.toString(), /argument_queries=1 argument_reads=3/);
+    }
+    for (const mode of [
+      'argmax-denied',
+      'argmax-short',
+      'argmax-zero',
+      'argmax-negative',
+      'argmax-tiny',
+      'argmax-over-cap',
+    ]) {
+      const { r } = capture(mode);
+      assert.equal(r.status, 1, mode);
+      assert.match(r.stderr.toString(), /argument limit/);
+    }
+    const saturated = capture('tag-saturated');
+    assert.equal(saturated.r.status, 0);
+    assert.equal(saturated.map.get(42).inspectionIncomplete, true);
+    assert.equal(saturated.map.get(42).ownerTagged, false);
   },
 );
 nativeTest(
