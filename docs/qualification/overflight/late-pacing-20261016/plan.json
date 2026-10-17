@@ -1,0 +1,73 @@
+{
+  "cases": [
+    {
+      "index": 0,
+      "mode": "survivor",
+      "build": "echo",
+      "layout": "relay-ruins-receiver-gardens",
+      "seed": 202604,
+      "difficulty": "standard",
+      "airframes": 3,
+      "route": "figure-eight",
+      "checkpoint": 240
+    },
+    {
+      "index": 1,
+      "mode": "riy",
+      "build": "echo",
+      "layout": "relay-ruins-receiver-gardens",
+      "seed": 202604,
+      "difficulty": "standard",
+      "airframes": 3,
+      "route": "lure-and-return",
+      "checkpoint": 240
+    },
+    {
+      "index": 2,
+      "mode": "survivor",
+      "build": "fan",
+      "layout": "field-crossing-broken-crossroads",
+      "seed": 17031991,
+      "difficulty": "standard",
+      "airframes": 3,
+      "route": "figure-eight",
+      "checkpoint": 180
+    },
+    {
+      "index": 3,
+      "mode": "riy",
+      "build": "fan",
+      "layout": "freight-depot-shunting-yard",
+      "seed": 19910404,
+      "difficulty": "veteran",
+      "airframes": 3,
+      "route": "figure-eight",
+      "checkpoint": 180
+    },
+    {
+      "index": 4,
+      "mode": "survivor",
+      "build": "systems",
+      "layout": "freight-depot-dispatch-junction",
+      "seed": 26022022,
+      "difficulty": "veteran",
+      "airframes": 1,
+      "route": "tight",
+      "checkpoint": 240
+    },
+    {
+      "index": 5,
+      "mode": "riy",
+      "build": "systems",
+      "layout": "field-crossing-shelterbelt-gaps",
+      "seed": 19910404,
+      "difficulty": "standard",
+      "airframes": 1,
+      "route": "tight",
+      "checkpoint": 180
+    }
+  ],
+  "crowd": "original",
+  "limit": 720,
+  "claim": "Six sampled configurations, three build directions per mode; not a fully crossed balance matrix."
+}

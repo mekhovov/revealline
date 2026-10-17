@@ -1,0 +1,4 @@
+{"index":4,"route":"figure-eight","airframes":1,"phase":"lost","time":286.8333333333333,"damage":100,"elapsedWallSeconds":10.251463124999999}
+{"index":4,"route":"tight","airframes":3,"phase":"won","time":389.9,"damage":280,"firstLifeParity":{"sameLossTick":true,"sameDraftsUntilLoss":true},"elapsedWallSeconds":24.101157666000002}
+{"index":5,"route":"figure-eight","airframes":1,"phase":"lost","time":271.9166666666667,"damage":100,"elapsedWallSeconds":30.372222458}
+{"index":5,"route":"tight","airframes":3,"phase":"won","time":357.6333333333333,"damage":200,"firstLifeParity":{"sameLossTick":true,"sameDraftsUntilLoss":true},"elapsedWallSeconds":40.247850082999996}

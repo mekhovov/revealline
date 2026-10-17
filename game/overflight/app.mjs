@@ -112,6 +112,7 @@ import {
   createOverflightKeyboardState,
   createOverflightJSONPages,
   overflightSortieProject,
+  overflightReviewCrowdSeparation,
 } from './host-loop.mjs';
 import { createOverflightAudio, overflightMusicContext } from './audio.mjs';
 import { createOverflightTouch } from './touch.mjs';
@@ -246,11 +247,15 @@ const benchmarkProtocol = benchmarkTrial
       ...(measureAt !== null ? { measureAt } : {}),
     }
   : {};
+const traceReview = !!reviewBuild && diagnostics && params.get('reviewTrace') === '1';
 const review = createOverflightReviewPlayback({
   build: reviewBuild,
   enabled: params.get('autoplay') === '1',
   stopAt: reviewStopAt,
   route: reviewControls.pilotArgument,
+  trace: traceReview,
+  detailTick:
+    traceReview && params.has('reviewTraceAt') ? Number(params.get('reviewTraceAt')) : null,
   pilot: (run, route) => mode.pilot(run, route),
   selectCard: mode.selectCard,
 });
@@ -294,7 +299,13 @@ const persistOptions = () => {
 };
 let seed = Number(params.get('seed'));
 if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = mode.defaultProject.seed;
+const reviewCrowd = overflightReviewCrowdSeparation(params, {
+  mode: mode.id,
+  build: reviewBuild,
+  fixture,
+});
 let project = mode.createProject({
+  ...(reviewCrowd ? { crowdSeparation: reviewCrowd } : {}),
   seed,
   difficulty: options.difficulty,
   ...(params.get('layout') ? { layout: params.get('layout') } : {}),
@@ -415,6 +426,7 @@ const audioPreferences = createAudioPreferences({ audioMaster, window: win });
 const sound = new Soundscape({ audioMaster, persistentMusic: true });
 sound.configure({ master: 1, sfx: 0.7 });
 const audio = createOverflightAudio(sound, {
+  acquireGain: (settings) => music?.player.acquireGain(settings),
   getDestruction: () => encounterDisplay.snapshot(),
   presentation: {
     async readAudio(slot, settings) {
@@ -1275,6 +1287,7 @@ function measurement({ raw = false } = {}) {
     prototype: mode.prototype ?? null,
     review: reviewIdentity(),
     clipCaptureUsed,
+    reviewTrace: review.traceSnapshot(),
     viewport: {
       width: win.innerWidth,
       height: win.innerHeight,
@@ -1283,6 +1296,7 @@ function measurement({ raw = false } = {}) {
     browser: win.navigator.userAgent,
     appearance: preparationIdentity,
     projectIdentity: compiled.projectIdentity,
+    crowdSeparation: compiled.combat?.crowdSeparation ?? null,
     seed,
     summary: sortieSummary(),
     feedback: {
@@ -1294,6 +1308,7 @@ function measurement({ raw = false } = {}) {
     renderer: rendererStats,
     resourceSamples,
     trialValid:
+      !traceReview &&
       !clipCaptureUsed &&
       !runtimeFailed &&
       clock.stats().droppedSeconds === 0 &&
@@ -1301,6 +1316,7 @@ function measurement({ raw = false } = {}) {
       rendererStats?.valid !== false,
     rawOverflow,
     invalidReasons: [
+      ...(traceReview ? ['review-input-trace-overhead'] : []),
       ...(clipCaptureUsed ? ['review-clip-recording-overhead'] : []),
       ...(runtimeFailed ? ['runtime-failure'] : []),
       ...(clock.stats().droppedSeconds > 0 ? ['dropped-catch-up-time'] : []),
@@ -1647,6 +1663,9 @@ if (reviewBuild) {
     'reviewBuild',
     'reviewStopAt',
     'reviewRoute',
+    'reviewTrace',
+    'reviewTraceAt',
+    'reviewCrowd',
     'autoplay',
     'benchmark',
     'trial',
@@ -2382,18 +2401,21 @@ listen($('record-review-clip'), 'click', () => {
     $('render-host').focus({ preventScroll: true });
   }
 });
-listen($('download-metrics'), 'click', () => {
+function downloadMeasurements({ current = false } = {}) {
   pause({ menu: false });
+  // A finished run must export its final state even after an earlier frozen
+  // inspector download. The separate inspector control retains that snapshot.
+  const json = current
+    ? JSON.stringify(measurement({ raw: true }))
+    : (rawPages?.json ?? JSON.stringify(completedMeasurement ?? measurement({ raw: true })));
   downloadBlob(
-    new Blob(
-      [rawPages?.json ?? JSON.stringify(completedMeasurement ?? measurement({ raw: true }))],
-      {
-        type: 'application/json',
-      },
-    ),
+    new Blob([json], { type: 'application/json' }),
     `overflight-${fixture ?? 'sortie'}-${seed}.json`,
   );
-});
+}
+listen($('download-metrics'), 'click', () => downloadMeasurements());
+listen($('result-download-metrics'), 'click', () => downloadMeasurements({ current: true }));
+
 function acknowledge(type, values = {}) {
   if (studio)
     win.parent.postMessage(
@@ -2492,6 +2514,7 @@ listen(win, 'pageshow', (event) => {
   }
 });
 $('overflight-diagnostics').hidden = !diagnostics;
+$('result-download-metrics').hidden = !diagnostics;
 $('review-clip-controls').hidden = !reviewBuild;
 $('overflight-shell').hidden = false;
 refreshCopy();

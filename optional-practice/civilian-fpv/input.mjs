@@ -73,6 +73,52 @@ const textEntry = (target) =>
   (target?.tagName === 'INPUT' &&
     !['range', 'checkbox', 'radio', 'button', 'submit', 'reset'].includes(target.type));
 
+/** Retain the controls belonging to a committed flight step, not menu input or
+ * a rejected worker proposal. Opening an editor must not mix two input owners. */
+export function createFlightInputDiagnostics({
+  now = () => globalThis.performance?.now?.() ?? 0,
+} = {}) {
+  const samples = new WeakMap();
+  return {
+    record(flight, source, controls, diagnostic, state = flight.snapshot()) {
+      samples.set(flight, {
+        source,
+        at: diagnostic?.sampledAtMs ?? now(),
+        diagnostic: structuredClone(diagnostic ?? {}),
+        calibrated: { ...controls },
+        tick: state.ticks,
+        achieved: state.angular
+          ? Object.fromEntries(
+              Object.entries(state.angular).map(([axis, value]) => [axis, value / 100]),
+            )
+          : null,
+      });
+    },
+    read(flight, source, preview = null) {
+      const last = flight ? samples.get(flight) : null;
+      const sample = last?.source === source ? last : null;
+      const diagnostic = preview ?? sample?.diagnostic;
+      return structuredClone({
+        source,
+        context: preview?.calibrated
+          ? 'live-preview'
+          : !preview && sample
+            ? 'last-flight-sample'
+            : 'unavailable',
+        raw: diagnostic?.raw ?? null,
+        calibrated: preview ? preview.calibrated : (sample?.calibrated ?? null),
+        sampleAgeMs:
+          diagnostic?.sampleAgeMs == null
+            ? null
+            : diagnostic.sampleAgeMs + (preview ? 0 : Math.max(0, now() - sample.at)),
+        cadenceHz: diagnostic?.cadenceHz ?? null,
+        achieved: sample?.achieved ?? null,
+        flightTick: sample?.tick ?? null,
+      });
+    },
+  };
+}
+
 /** Spatial response only: no smoothing queue or additional input latency.
  * A new thumb contact starts at neutral rotation and the retained throttle.
  * The actual applied command (not finger position) belongs in the stick HUD. */
@@ -98,11 +144,14 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
     throttle = 0,
     keyboardPreset = 'two-stick',
     touchResponse = 'precise',
+    ratesApplied = false,
     disposed = false;
   const keys = new Set(),
     touch = neutralFlightInput(),
+    rawTouch = neutralFlightInput(),
     listeners = [],
     releases = [];
+  let diagnostic = null;
   const listen = (target, type, handler) => {
     target.addEventListener(type, handler);
     listeners.push(() => target.removeEventListener(type, handler));
@@ -111,6 +160,7 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
     keys.clear();
     throttle = 0;
     Object.assign(touch, neutralFlightInput());
+    Object.assign(rawTouch, neutralFlightInput());
     for (const release of releases) release();
   };
   listen(win, 'keydown', (event) => {
@@ -173,6 +223,7 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       clear();
       enabled = false;
       owner = value;
+      diagnostic = null;
     },
     enable(value) {
       enabled = !!value;
@@ -189,9 +240,16 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       if (value !== touchResponse) clear();
       touchResponse = value;
     },
+    // Portable curves already shape rotation. Legacy touch precision is an
+    // explicit device aid; it must not be applied again to an imported curve.
+    ratesApplied(value) {
+      ratesApplied = Boolean(value);
+      diagnostic = null;
+      clear();
+    },
     throttle(value) {
       if (owner === 'touch' && enabled && Number.isFinite(value))
-        touch.throttle = clamp(value, 0, 1);
+        rawTouch.throttle = touch.throttle = clamp(value, 0, 1);
     },
     // Hosts may restore throttle only after a deliberate resume of an unscored
     // checkpoint. This neither enables input nor restores held keys/actions.
@@ -199,15 +257,25 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       if (!enabled || !Number.isFinite(value)) return;
       throttle = clamp(value, 0, 1);
       touch.throttle = throttle;
+      rawTouch.throttle = throttle;
     },
     sample(seconds) {
       if (disposed || !enabled || ['radio', 'controller'].includes(owner))
         return neutralFlightInput();
-      if (owner === 'touch') return { ...touch };
-      const command = keyboardFlightValues({ keys, preset: keyboardPreset, throttle, seconds });
+      const command =
+        owner === 'touch'
+          ? { ...touch }
+          : keyboardFlightValues({ keys, preset: keyboardPreset, throttle, seconds });
       throttle = command.throttle;
+      diagnostic = {
+        raw: owner === 'touch' ? { ...rawTouch } : { keys: [...keys].sort() },
+        calibrated: { ...command },
+        sampleAgeMs: null,
+        cadenceHz: null,
+      };
       return command;
     },
+    diagnostics: () => (diagnostic ? structuredClone(diagnostic) : null),
     bindStick(element, side) {
       let pointer = null,
         pickup = null;
@@ -223,10 +291,10 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
             /* already released */
           }
         }
-        if (side === 'left') touch.yaw = 0;
+        if (side === 'left') rawTouch.yaw = touch.yaw = 0;
         else {
-          touch.roll = 0;
-          touch.pitch = 0;
+          rawTouch.roll = touch.roll = 0;
+          rawTouch.pitch = touch.pitch = 0;
         }
       };
       releases.push(release);
@@ -241,7 +309,18 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
             dy: pickup.y - event.clientY,
             travel: pickup.travel,
             throttle: pickup.throttle,
-            response: touchResponse,
+            response: ratesApplied ? 'direct' : touchResponse,
+          }),
+        );
+        Object.assign(
+          rawTouch,
+          touchStickValues({
+            side,
+            dx: event.clientX - pickup.x,
+            dy: pickup.y - event.clientY,
+            travel: pickup.travel,
+            throttle: pickup.throttle,
+            response: 'direct',
           }),
         );
         event.preventDefault();
@@ -322,6 +401,9 @@ export function createFlightGamepad({
     interrupted = false,
     disposed = false;
   const listeners = [];
+  let diagnostic = null,
+    previousTimestamp = null,
+    timestampIntervals = [];
   const axis = (value) =>
     Math.abs(value) <= 0.12 ? 0 : (Math.sign(value) * (Math.abs(value) - 0.12)) / 0.88;
   const button = (pad, index) => {
@@ -433,9 +515,13 @@ export function createFlightGamepad({
         if (wasActive && !actions.includes('pause')) actions.push('pause');
         clear(lost ? 'disconnected' : 'neutral');
         selected = pad ? { key: key(pad), id: pad.id, index: pad.index } : null;
+        diagnostic = null;
+        previousTimestamp = null;
+        timestampIntervals = [];
       }
       connected = Boolean(pad);
       if (!pad) {
+        diagnostic = null;
         clear(
           lost
             ? 'disconnected'
@@ -445,6 +531,26 @@ export function createFlightGamepad({
         );
         return { ...status(), actions };
       }
+      const timestamp = Number.isFinite(pad.timestamp) && pad.timestamp > 0 ? pad.timestamp : null;
+      if (timestamp !== null && previousTimestamp !== null && timestamp > previousTimestamp)
+        timestampIntervals = [...timestampIntervals, timestamp - previousTimestamp].slice(-20);
+      if (timestamp === null || (previousTimestamp !== null && timestamp < previousTimestamp))
+        timestampIntervals = [];
+      previousTimestamp = timestamp;
+      diagnostic = {
+        raw: {
+          axes: Array.from(pad.axes).slice(0, 4),
+          buttons: Object.fromEntries(mappedButtons.map((index) => [index, button(pad, index)])),
+        },
+        sampleAgeMs: timestamp === null ? null : Math.max(0, now - timestamp),
+        sampledAtMs: now,
+        cadenceHz: timestampIntervals.length
+          ? Math.round(
+              (1000 * timestampIntervals.length) /
+                timestampIntervals.reduce((sum, interval) => sum + interval, 0),
+            )
+          : null,
+      };
       const values = Array.from(pad.axes).slice(0, 4).map(axis);
       const centred = values.every((value) => value === 0);
       const released = mappedButtons.every((i) => button(pad, i) <= 0.12);
@@ -503,6 +609,7 @@ export function createFlightGamepad({
     },
     preview: status,
     status,
+    diagnostics: () => (diagnostic ? structuredClone(diagnostic) : null),
     // A separate unscored preview may inherit its current thrust on takeover.
     // Real flight ownership/reset still clears this value and all action edges.
     seedThrottle(value) {
@@ -512,6 +619,9 @@ export function createFlightGamepad({
     },
     reset(nextReason = 'reset') {
       clear(nextReason);
+      diagnostic = null;
+      previousTimestamp = null;
+      timestampIntervals = [];
       interrupted = false;
       lastTime = null;
     },
