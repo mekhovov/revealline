@@ -47,7 +47,9 @@ export function offlineGameplayAssessment(report) {
       : 'failed';
   if (
     value?.status !== 'passed' ||
-    value.route !== 'explicit-supported-opening-url' ||
+    value.route !== 'explicit-installed-starter-url' ||
+    report.preparedGameplay?.routeId !== 'whole-spatial-v25' ||
+    report.preparedGameplay?.groupId !== 'solo:horizon-starter' ||
     value.serverStoppedThroughout !== true ||
     !value.observedBrowserClosed ||
     value.exportCount !== 2 ||
@@ -79,7 +81,7 @@ export function offlineGameplayAssessment(report) {
 
 // The original 600-second diagnostic has already closed before this function.
 // All actions share one new 120-second deadline; none can repair a failed launch.
-export async function playOfflineOpening({
+export async function playOfflineStarter({
   page,
   report,
   address,
@@ -93,6 +95,9 @@ export async function playOfflineOpening({
   now = Date.now,
 }) {
   assert(offlineLaunchAllowsGameplay(report), 'No gameplay after unqualified offline launch');
+  assert.equal(report.preparedGameplay?.routeId, 'whole-spatial-v25');
+  assert.equal(report.preparedGameplay?.groupId, 'solo:horizon-starter');
+  assert.equal(new URL(address).search, '?journey=whole-spatial-v25');
   const started = now(),
     deadline = started + OFFLINE_GAMEPLAY.playTimeoutMs;
   const remaining = (cap = OFFLINE_GAMEPLAY.playTimeoutMs) => {
@@ -132,16 +137,16 @@ export async function playOfflineOpening({
   };
   const value = (report.gameplay = {
     status: 'running',
-    route: 'explicit-supported-opening-url',
+    route: 'explicit-installed-starter-url',
     startedAt: new Date().toISOString(),
     exports: [],
     scope:
-      'Public Opening URL only after successful installed launcher routing; not default-mission or OS installation proof.',
+      'Public installed Starter URL only after successful installed launcher routing; not default-mission or OS installation proof.',
   });
   const exported = [];
   const action = (async () => {
     try {
-      step('offline-direct-opening-gameplay-leg', { destination: address });
+      step('offline-direct-starter-gameplay-leg', { destination: address });
       const response = await page.goto(address, { waitUntil: 'load', timeout: remaining() });
       remaining();
       assert.equal(response.status(), 200);
@@ -172,7 +177,7 @@ export async function playOfflineOpening({
         },
       );
       remaining();
-      step('offline-direct-opening-boot-ready');
+      step('offline-direct-starter-boot-ready');
       const restart = await page.evaluate(
         (key) => ({
           unlocked: document.documentElement.dataset.accessState === 'unlocked',

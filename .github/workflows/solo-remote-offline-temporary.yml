@@ -11,6 +11,7 @@ on:
       - 'scripts/solo-remote-offline.mjs'
       - 'scripts/solo-offline-gameplay.mjs'
       - 'scripts/test-solo-offline-gameplay.mjs'
+      - 'scripts/test-solo-offline-starter.mjs'
       - 'docs/performance/fixtures/solo-remote-offline/**'
       - 'scripts/observe-solo-offline-persistence.mjs'
       - 'scripts/test-solo-remote-offline.mjs'
@@ -27,9 +28,9 @@ concurrency:
 
 jobs:
   correctness:
-    # The declared pair is already dispatched at this exact head. Later PR pushes
-    # must not create an undeclared repeat while independent work continues.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.sha == 'c0ab548e50c00ba30cc7e188df64fb135ff8cf99'
+    # Admit only the next reviewed push after the auxiliary release. The new
+    # Starter-bound pair is distinct from the preserved failed Opening recipe.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'
     runs-on: ubuntu-24.04
     timeout-minutes: 165
     env:
@@ -52,7 +53,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           path: tools
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 1
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         timeout-minutes: 3
         with:
@@ -103,7 +104,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-offline.mjs scripts/test-solo-offline-gameplay.mjs scripts/test-solo-remote-baseline.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-offline.mjs scripts/test-solo-offline-gameplay.mjs scripts/test-solo-offline-starter.mjs scripts/test-solo-remote-baseline.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
       - name: Run two serial offline diagnostics with success-only public gameplay
         timeout-minutes: 104
         working-directory: tools

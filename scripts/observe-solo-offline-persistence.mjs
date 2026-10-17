@@ -15,7 +15,10 @@ import {
 import { createHash } from 'node:crypto';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { assertPairedBaselineArtifact } from './solo-remote-offline.mjs';
+import {
+  assertPairedBaselineArtifact,
+  assertStarterGameplaySelection,
+} from './solo-remote-offline.mjs';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import { startProductionPreview } from './serve-production-preview.mjs';
 import {
@@ -27,7 +30,7 @@ import { verifyNativeQualificationReplay } from './solo-qualification-native-rep
 import {
   offlineLaunchAllowsGameplay,
   offlineGameplayAssessment,
-  playOfflineOpening,
+  playOfflineStarter,
   validateOfflineGameplayPlan,
 } from './solo-offline-gameplay.mjs';
 
@@ -671,6 +674,24 @@ const observation = (async () => {
     contentBytes: [...selected.values()].reduce((n, f) => n + f.bytes, 0),
   };
   assert.deepEqual(selection, plan.selection);
+  let starterRecipe = null;
+  if (plan.gameplay) {
+    const recipeBytes = await readFile(resolve(root, plan.openingRecipe.path));
+    assert.equal(recipeBytes.length, plan.openingRecipe.bytes);
+    assert.equal(sha(recipeBytes), plan.openingRecipe.sha256);
+    starterRecipe = JSON.parse(recipeBytes);
+    const prepared = assertStarterGameplaySelection(
+      core,
+      catalogue,
+      JSON.parse(
+        await artifactFile('game/content-design/runtime/navigation-whole-spatial-v25.json'),
+      ),
+      JSON.parse(await artifactFile('game/content-design/runtime/chapter-journey-opening.json')),
+      starterRecipe,
+    );
+    assert.deepEqual(prepared, plan.preparedGameplay);
+    report.preparedGameplay = prepared;
+  }
   report.selection = selection;
   profile = await mkdtemp(
     join(await realpath(plan.storage.scratch), `solo-offline-pair-${plan.sourceRole}-`),
@@ -699,7 +720,10 @@ const observation = (async () => {
     throw new Error('Server admission completed after deadline');
   }
   const origin = served.url,
-    address = new URL('game/?journey=opening', origin).href;
+    address = new URL(
+      `game/?journey=${plan.preparedGameplay?.routeId ?? 'whole-spatial-v25'}`,
+      origin,
+    ).href;
   report.origin = origin;
   report.address = address;
   const installedEntry = new URL(
@@ -928,7 +952,7 @@ const observation = (async () => {
   let gameplayExports = [];
   if (plan.gameplay) {
     if (offlineLaunchAllowsGameplay(report)) {
-      gameplayExports = await playOfflineOpening({
+      gameplayExports = await playOfflineStarter({
         page,
         report,
         address,
@@ -966,11 +990,7 @@ const observation = (async () => {
     assert.equal(served.mode, 'generated-build');
     assert.equal(served.fixtureAccess, false);
     assert.equal(served.cache, 'policy');
-    const openingPath = resolve(root, plan.openingRecipe.path);
-    const openingBytes = await readFile(openingPath);
-    assert.equal(openingBytes.length, plan.openingRecipe.bytes);
-    assert.equal(sha(openingBytes), plan.openingRecipe.sha256);
-    const opening = JSON.parse(openingBytes);
+    assert(starterRecipe);
     for (const [index, item] of gameplayExports.entries()) {
       ensureOwner();
       const verified = await verifyNativeQualificationReplay({
@@ -980,8 +1000,11 @@ const observation = (async () => {
         observedBrowserClosed: true,
         expected,
         recordingText: item.text,
-        requirements: index === 0 ? opening.replayRequirements : { movingTicks: 60 },
-        expectedDefinition: index === 0 ? opening.expectedReplayDefinition : undefined,
+        requirements: index === 0 ? starterRecipe.replayRequirements : { movingTicks: 60 },
+        expectedDefinition:
+          index === 0
+            ? starterRecipe.expectedReplayDefinition
+            : starterRecipe.expectedNextReplayDefinition,
         timeoutMs: plan.gameplay.replayTimeoutMs,
       });
       report.replays[index].nativeReplay = verified;

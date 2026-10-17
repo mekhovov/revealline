@@ -7,7 +7,7 @@ import {
   OFFLINE_GAMEPLAY,
   offlineGameplayAssessment,
   offlineLaunchAllowsGameplay,
-  playOfflineOpening,
+  playOfflineStarter,
   validateOfflineGameplayPlan,
 } from './solo-offline-gameplay.mjs';
 import { validateOfflinePlan } from './solo-remote-offline.mjs';
@@ -16,6 +16,7 @@ const clone = (value) => structuredClone(value);
 function report() {
   const value = {
     gameplayRequested: true,
+    preparedGameplay: { routeId: 'whole-spatial-v25', groupId: 'solo:horizon-starter' },
     browserVersion: '155.0.1.2',
     artifact: { sourceRevision: 'a'.repeat(40) },
     diagnosticOutcome: 'observed-launcher-and-cache-retained',
@@ -30,7 +31,7 @@ function report() {
     ],
     gameplay: {
       status: 'passed',
-      route: 'explicit-supported-opening-url',
+      route: 'explicit-installed-starter-url',
       serverStoppedThroughout: true,
       observedBrowserClosed: true,
       exportCount: 2,
@@ -64,7 +65,7 @@ test('negative offline launch stays a completed diagnostic and never enters publ
   assert.equal(offlineLaunchAllowsGameplay(value), false);
   assert.equal(offlineGameplayAssessment(value), 'not-run-launch-unqualified');
   await assert.rejects(
-    playOfflineOpening({
+    playOfflineStarter({
       report: value,
       page: new Proxy(
         {},
@@ -214,14 +215,14 @@ test('the added finite work cannot change the original diagnostic timeout or exp
   }
 });
 
-test('the dispatched diagnostic retains its exact-head guard, qualification exclusions and fixed budgets', async () => {
+test('the successor diagnostic retains one push admission, exclusions and fixed budgets', async () => {
   const workflow = await readFile(
     new URL('../.github/workflows/solo-remote-offline-temporary.yml', import.meta.url),
     'utf8',
   );
   assert.match(
     workflow,
-    /^    if: github\.event\.pull_request\.number == 1544 && github\.event\.pull_request\.head\.repo\.full_name == github\.repository && github\.event\.pull_request\.head\.sha == 'c0ab548e50c00ba30cc7e188df64fb135ff8cf99'$/m,
+    /^    if: github\.event\.pull_request\.number == 1544 && github\.event\.pull_request\.head\.repo\.full_name == github\.repository && github\.event\.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'$/m,
   );
   const plan = JSON.parse(
     await readFile(
@@ -247,7 +248,7 @@ test('the dispatched diagnostic retains its exact-head guard, qualification excl
   assert.equal(165 - 155, 10);
 });
 
-test('the direct Opening uses actual bootstrap root readiness before any public Start interaction', async () => {
+test('the installed Starter uses actual bootstrap root readiness before any public Start interaction', async () => {
   for (const ready of [false, true]) {
     const value = report();
     value.replays = [];
@@ -275,7 +276,7 @@ test('the direct Opening uses actual bootstrap root readiness before any public 
         assert(options.timeout > 0 && options.timeout <= 120000);
         const actual = runInNewContext(`(${predicate.toString()})()`, { document });
         assert.equal(actual, ready, 'The predicate must read the real bootstrap owner');
-        if (!actual) throw Error('New Opening document never became ready');
+        if (!actual) throw Error('New installed Starter document never became ready');
       },
       locator() {
         assert.fail('No gameplay in this bounded entry control');
@@ -287,10 +288,10 @@ test('the direct Opening uses actual bootstrap root readiness before any public 
       },
     };
     await assert.rejects(
-      playOfflineOpening({
+      playOfflineStarter({
         page,
         report: value,
-        address: 'https://test.invalid/game/?journey=opening',
+        address: 'https://test.invalid/game/?journey=whole-spatial-v25',
         entryHTMLSha256: createHash('sha256').update(bytes).digest('hex'),
         csp: 'test-policy',
         accessKey: 'public-access',
