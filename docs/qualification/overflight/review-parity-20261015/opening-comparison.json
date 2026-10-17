@@ -1,0 +1,118 @@
+{
+  "format": "OverflightReviewTraceComparisonV1",
+  "nativePath": "docs/qualification/overflight/review-parity-20261015/native-first.json.gz",
+  "headlessPath": "docs/qualification/overflight/review-parity-20261015/headless-opening.json.gz",
+  "projectIdentity": "bdafec1ca5d66423",
+  "seed": 202604,
+  "samplesCompared": 405,
+  "throughTick": 2424,
+  "tolerance": 1e-8,
+  "firstExact": {
+    "tick": 294,
+    "time": 4.9,
+    "fields": [
+      "player"
+    ],
+    "native": {
+      "tick": 294,
+      "input": {
+        "x": 0.8660254037844387,
+        "y": 0.49999999999999994,
+        "boost": false,
+        "focus": false
+      },
+      "player": {
+        "x": 1442.3482219758762,
+        "y": 632.3210928749002,
+        "vx": 157.66844489893134,
+        "vy": 83.47728955711452,
+        "heading": 0.5235987755982988,
+        "hull": 100,
+        "shield": 0,
+        "boostRemaining": 0,
+        "boostCooldown": 0.2166666666666705
+      },
+      "kills": 0,
+      "damageTaken": 0,
+      "xp": 0,
+      "choices": 0,
+      "airframes": 3,
+      "random": 1137354046,
+      "draftRandom": 2654236373,
+      "enemyDigest": 310163055,
+      "focus": {
+        "phase": "follow",
+        "targetId": null,
+        "cooldown": 0
+      },
+      "escorts": [
+        {
+          "role": "sweeper",
+          "x": 1413.5120688017605,
+          "y": 569.0420295561698,
+          "shots": 0,
+          "cooldown": 0
+        },
+        {
+          "role": "breaker",
+          "x": 1383.4392566320676,
+          "y": 658.354413871691,
+          "shots": 0,
+          "cooldown": 0
+        }
+      ]
+    },
+    "headless": {
+      "tick": 294,
+      "input": {
+        "x": 0.8660254037844387,
+        "y": 0.49999999999999994,
+        "boost": false,
+        "focus": false
+      },
+      "player": {
+        "x": 1442.3482219758762,
+        "y": 632.3210928749002,
+        "vx": 157.66844489893134,
+        "vy": 83.47728955711452,
+        "heading": 0.5235987755982987,
+        "hull": 100,
+        "shield": 0,
+        "boostRemaining": 0,
+        "boostCooldown": 0.2166666666666705
+      },
+      "kills": 0,
+      "damageTaken": 0,
+      "xp": 0,
+      "choices": 0,
+      "airframes": 3,
+      "random": 1137354046,
+      "draftRandom": 2654236373,
+      "enemyDigest": 310163055,
+      "focus": {
+        "phase": "follow",
+        "targetId": null,
+        "cooldown": 0
+      },
+      "escorts": [
+        {
+          "role": "sweeper",
+          "x": 1413.5120688017605,
+          "y": 569.0420295561698,
+          "shots": 0,
+          "cooldown": 0
+        },
+        {
+          "role": "breaker",
+          "x": 1383.4392566320676,
+          "y": 658.354413871691,
+          "shots": 0,
+          "cooldown": 0
+        }
+      ]
+    }
+  },
+  "firstMeaningful": null,
+  "firstInput": null,
+  "limitation": "Absolute tolerance ignores tiny arithmetic differences, not RNG/choice/counter changes. enemyDigest is a quantized diagnostic fingerprint, not proof of exact actor equivalence."
+}

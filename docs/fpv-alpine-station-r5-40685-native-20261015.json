@@ -1,0 +1,168 @@
+{
+  "receiptUTC": "2026-10-15T20:31:58.412976+00:00",
+  "sourceRevision": "40685bbc386412a8d95384d92a451e95a26700a0",
+  "packageRevision": "493dd96b0c972207ab9dd5b4478a05ac90a64aa065a0fc7f7699dd27505db547",
+  "artifact": 12002888035,
+  "cloudRun": 38798053058,
+  "origin": "http://127.0.0.1:9203",
+  "scope": "Normal CUA Library admission of exact integrated Station concourse edition; one renderer, no install-store injection. Independent package/source gate preserves all22oldrows plus newr5=23.",
+  "observations": {
+    "normalR5DownloadMiB": 21.5,
+    "normalR4DownloadMiB": 21.5,
+    "bothRetainedAfterReload": true,
+    "initialR5": {
+      "heightM": 114,
+      "status": "Unscored · Ready to arm",
+      "armAvailable": true,
+      "droneResponseActualStatus": "Paused · actual pose retained",
+      "view": "FPV"
+    },
+    "summit": {
+      "heightM": 564,
+      "status": "Unscored · Ready to arm",
+      "disarmed": true,
+      "views": [
+        "Overview",
+        "FPV"
+      ]
+    },
+    "appearance": "Installed FPV summit scene has visible grey apron and open concourse between quieter timber walls; overview also inspected. Bounded material observation, not final region art.",
+    "modeChange": "Self-level→Acro starts a new paused/disarmed preparation at564m with Arm available.",
+    "explicitArmThenPause": {
+      "activeHeightFirstReadM": 563.8,
+      "pausedSettledHeightM": 560,
+      "controlsZero": true
+    },
+    "chaseButtonPressedObserved": true,
+    "enUkSixStartLabels": true,
+    "ukEdition": "Майданчик між корпусами",
+    "reloadKeepsUK": true,
+    "cachedR5": {
+      "status": "Без заліку · Готово до польоту",
+      "heightM": 114,
+      "armAvailable": true,
+      "view": "Chase"
+    },
+    "cachedR4": {
+      "status": "Без заліку · Готово до польоту",
+      "heightM": 114,
+      "armAvailable": true,
+      "view": "FPV"
+    },
+    "responsive": [
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "view": "Chase",
+        "locale": "uk",
+        "horizontalOverflow": false,
+        "menuPx": [
+          80.140625,
+          44
+        ],
+        "armPx": [
+          166,
+          63.1875
+        ]
+      },
+      {
+        "viewport": [
+          844,
+          390
+        ],
+        "view": "FPV",
+        "locale": "uk",
+        "horizontalOverflow": false,
+        "menuPx": [
+          88.140625,
+          44
+        ]
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "views": [
+          "FPV",
+          "Overview"
+        ],
+        "horizontalOverflow": "No visible overflow; no additional numerical layout read on desktop."
+      }
+    ],
+    "viewportReset": true,
+    "rootTabClosed": true
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-acro-arm-pause-native-20261015.txt",
+      "bytes": 3183,
+      "sha256": "732282745345bbb3b105b40f0c1e7dbf51d92d4ae77647017b52ba4ba486f50f"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-cached-r4-native-20261015.txt",
+      "bytes": 1079,
+      "sha256": "73dfbbd8a2688f069f811830307aae566ea160315a782989b5f3e3b2bb2f6be2"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-cached-r5-native-20261015.txt",
+      "bytes": 1107,
+      "sha256": "d6bcd65f4bcec00ea370c1339cce48cf8cd83ffa0962469b9b5f6577eca92dc7"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-dual-retained-native-20261015.txt",
+      "bytes": 19034,
+      "sha256": "938afa30b3371d74a167ae303d112882c9fb89147b67f65907922e9e90a09079"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-first-fpv-native-20261015.png",
+      "bytes": 26234,
+      "sha256": "e921791c203842d875ed9b5663d0fd0882c6870413944dcf77f64bb9705c15d1"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-first-fpv-native-20261015.txt",
+      "bytes": 739,
+      "sha256": "4c0bb187c649cd7273d1f2a3a606c58f08f0fde60dd6abc94d3085495f27f03c"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-landscape-fpv-native-20261015.png",
+      "bytes": 17902,
+      "sha256": "deaf1673a707405643a1d0a429a8231b321995e9dc5ffbac9d40b441596ba88a"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-portrait-native-20261015.png",
+      "bytes": 18615,
+      "sha256": "159ea5b919c69da4c3da887caf8111cb038fbb4d2d3cf7b8268fdac95e478512"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-summit-fpv-ready-native-20261015.png",
+      "bytes": 64808,
+      "sha256": "cc8a8e414f67cf51bd2c5be211ff7369ed7c62c00098677456a02d1c25c1a4ec"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-summit-overview-native-20261015.png",
+      "bytes": 29904,
+      "sha256": "13932719cf24cd5f5b02b78c1278073213723139214831d54149690aad199c98"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-uk-paused-native-20261015.txt",
+      "bytes": 4951,
+      "sha256": "3a8b1d59e0dc12c7ea2c9490e06e5e5fb75edb14ebde1a9ecd0419cf08a6d64e"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/alpine-r5-40685-uk-retained-reload-native-20261015.txt",
+      "bytes": 31103,
+      "sha256": "4f9b693e171733dcf59cec39f54d2cf25182600039f53320c0199b40da209082"
+    }
+  ],
+  "acceptedBoundary": "Normal new/previous edition download, retained reload/cache, representative start/view/mode/explicit-arm/pause, EN/UK and bounded responsive browser admission.",
+  "remaining": [
+    "all-start/all-angle final representative art",
+    "physical touch/controller/radio/device acceptance",
+    "network-wide offline and actual application restart",
+    "two-hour authored route/performance qualification",
+    "public deployment and actual SIM launch"
+  ]
+}

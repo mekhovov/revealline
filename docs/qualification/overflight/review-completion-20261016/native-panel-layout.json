@@ -1,0 +1,29 @@
+{
+  "runtime": "3a6631bd9",
+  "desktop": {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "fontSize": "20px",
+    "gridColumn": "1 / -1",
+    "rowHeight": 77.5,
+    "rowWidth": 832,
+    "text": "Split Compound \u00b7 Guarded approaches \u00b7 attached escorts screen the new layout",
+    "textOverflow": false
+  },
+  "narrow": {
+    "viewport": {
+      "width": 320,
+      "height": 720
+    },
+    "fontSize": "16px",
+    "gridColumn": "1 / -1",
+    "rowHeight": 118.0859375,
+    "rowWidth": 280,
+    "text": "Split Compound \u00b7 Guarded approaches \u00b7 attached escorts screen the new layout",
+    "textOverflow": false
+  },
+  "scope": "Desktop Chromium responsive viewport only; not physical-device testing.",
+  "nativeBeforeAfterSummaryIdentical": true
+}
