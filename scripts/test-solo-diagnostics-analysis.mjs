@@ -258,6 +258,30 @@ test('an unpainted ready scene requires the first full active witness before ada
 
 for (const [name, mutate] of [
   [
+    'failed status without a redundant failure string',
+    ({ reports }) => {
+      reports[0][0].status = 'failed';
+    },
+  ],
+  [
+    'retained interruption without a redundant failure string',
+    ({ reports }) => {
+      reports[0][0].interruption = { signal: 'SIGTERM' };
+    },
+  ],
+  [
+    'interruption cleanup failure',
+    ({ reports }) => {
+      reports[0][0].interruptionCleanupFailure = 'page closed';
+    },
+  ],
+  [
+    'application diagnostics unexpectedly present in off arm',
+    ({ reports }) => {
+      reports.find((report) => !report[0].diagnostics)[0].application = { enabled: true };
+    },
+  ],
+  [
     'quality sample gap',
     ({ reports }) => {
       reports[0][0].external.qualityProbe.samples.splice(2, 8);

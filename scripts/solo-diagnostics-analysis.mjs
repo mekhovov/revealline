@@ -159,7 +159,11 @@ export function diagnosticsObservation(report, execution, configuration) {
   const row = report[0];
   const quality = qualityWitness(row);
   reject(
-    row.status === 'not-observed' || Boolean(row.failure) || Boolean(row.batchFailure),
+    row.status !== 'observed' ||
+      Boolean(row.failure) ||
+      Boolean(row.batchFailure) ||
+      Boolean(row.interruption) ||
+      Boolean(row.interruptionCleanupFailure),
     'Observer reported failed or unobserved evidence.',
   );
   reject(
@@ -234,7 +238,8 @@ export function diagnosticsObservation(report, execution, configuration) {
       row.application?.quality?.tier !== 'full',
       'Adaptive reduction makes the observed workload unsuitable for overhead qualification.',
     );
-  }
+  } else
+    reject(row.application != null, 'Application diagnostics unexpectedly present in off arm.');
   const external = row.external,
     probe = external?.workProbe;
   const phase = Array.isArray(external?.names) ? external.names.indexOf('running') : -1;

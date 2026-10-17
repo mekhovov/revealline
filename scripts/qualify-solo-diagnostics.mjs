@@ -16,6 +16,7 @@ const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const usage = `Usage:
   PLAYWRIGHT_MODULE=<path> [CHROME_EXECUTABLE=<path>] node scripts/qualify-solo-diagnostics.mjs run <Solo URL> <new output directory> --source-revision=<40-hex> [--artifact-manifest=<JSON path>] [--artifact-sha256=<archive hash>] [--calibration=<JSON path>] [--pairs=10] [--seed=1544] [--duration=30000] [--browser=chromium] [--cpu=1] [--server-fixture-access | --fixture-access] [--warm] [--stationary] [--timeout=360000] [--note=<host conditions>]
   node scripts/qualify-solo-diagnostics.mjs analyze <output directory>
+  PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-diagnostics.mjs timer-probe <Solo URL> <new report.json> --source-revision=<40-hex> [--browser=chromium]
 Each arm launches the recorded observer revision once. Existing evidence directories are never reused.
 Defaults: 20 runs, 10 minutes active, approximately 12–18 minutes including readiness.
 Run only on a quiet host; no builds, other tests, profilers or memory collection.`;
@@ -130,7 +131,7 @@ export function observerArguments(configuration, execution) {
   ];
 }
 
-async function timerResolution(configuration, signal) {
+export async function timerResolution(configuration, signal) {
   let browser;
   const startedAt = new Date().toISOString();
   const cancel = () => {
@@ -293,6 +294,25 @@ export async function analyzeDirectory(directory) {
 
 async function main(args) {
   const [mode, address, directory, ...flags] = args;
+  if (mode === 'timer-probe' && address && directory && process.env.PLAYWRIGHT_MODULE) {
+    // Hosted callers own this child through the common process supervisor. The
+    // probe runs before all active arms and never alters clock privacy policy.
+    const output = resolve(directory);
+    const configuration = diagnosticsArguments(address, dirname(output), flags);
+    const controller = new AbortController();
+    const interrupt = () => controller.abort();
+    process.once('SIGINT', interrupt);
+    process.once('SIGTERM', interrupt);
+    try {
+      const result = await timerResolution(configuration, controller.signal);
+      await writeFile(output, JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });
+      process.exitCode = result.status === 'observed' ? 0 : 1;
+    } finally {
+      process.off('SIGINT', interrupt);
+      process.off('SIGTERM', interrupt);
+    }
+    return;
+  }
   if (mode === 'analyze' && address && directory === undefined) {
     const report = await analyzeDirectory(resolve(address));
     const output = join(resolve(address), `analysis-${Date.now()}.json`);
