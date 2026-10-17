@@ -66,6 +66,8 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     'game/test/immutable-presentation-fixture.test.mjs',
     'game/test/controller-confirm-trace.test.mjs',
     'game/test/controller-router.test.mjs',
+    'game/test/controller-boost-settings.test.mjs',
+    'game/test/pause-menu-host.test.mjs',
     'game/test/classic-presentation.test.mjs',
     'game/test/feedback-director.test.mjs',
     'game/test/title-character.test.mjs',
@@ -102,6 +104,7 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     'game/ui/modal-navigation.mjs',
     'game/ui/controller-confirm-trace.mjs',
     'game/ui/controller-router.mjs',
+    'game/ui/controller-boost-settings.mjs',
     'game/ui/classic-view.mjs',
     'game/couch/controller-session.mjs',
     'game/editions/package-budget.mjs',
@@ -168,8 +171,8 @@ test('packaging reserves bounded evidence closure without changing test or gamep
     .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
     .trim()
     .split(/\s+/);
-  assert.equal(focusedTests.length, 115);
-  assert.equal(new Set(focusedTests).size, 115);
+  assert.equal(focusedTests.length, 117);
+  assert.equal(new Set(focusedTests).size, 117);
   const startup = step('Record the bounded packaging start');
   assert.match(startup, /PREVIEW_STARTED_AT=\$\(date \+%s\)/);
   assert.ok(workflow.indexOf(startup) < workflow.indexOf('- uses: actions/checkout'));
