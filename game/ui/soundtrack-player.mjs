@@ -362,14 +362,16 @@ export function createSoundtrackPlayer({
     }
   }
   function gains() {
-    const master = soundscape.getSettings().master;
+    const settings = soundscape.getSettings(),
+      master = settings.master;
     let factor = 1;
     for (const value of gainLeases.values()) factor = Math.min(factor, value);
-    soundscape.configure({ music: volume * fade * factor });
+    const music = volume * fade * factor;
+    if (settings.music !== music) soundscape.configure({ music });
     for (const deck of decks) {
-      const localVolume = Math.max(0, Math.min(1, master * volume * fade * factor * deck.weight));
+      const localVolume = Math.max(0, Math.min(1, master * music * deck.weight));
       if (deck.masterMedia) deck.masterMedia.setLocal({ volume: localVolume });
-      else deck.media.volume = localVolume;
+      else if (deck.media.volume !== localVolume) deck.media.volume = localVolume;
     }
   }
   /** Temporary attenuation only; the player remains the owner of base volume/intent.

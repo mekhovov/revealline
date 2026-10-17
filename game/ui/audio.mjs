@@ -319,6 +319,8 @@ export class Soundscape {
         throw new TypeError(t('interface:unknownMusicStyle'));
       next.style = style;
     }
+    if (Object.keys(next).every((key) => next[key] === this.settings[key]))
+      return this.getSettings();
     if (next.style !== this.settings.style) {
       this.track = { ...DEFAULT_TRACKS.find((t) => t.genre === next.style) };
       if (this.persistentMusic) this.resetMusic();

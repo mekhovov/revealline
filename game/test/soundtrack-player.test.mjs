@@ -645,6 +645,66 @@ test('volume owns the music fader only, combines with master for MP3, and preser
   assert.throws(() => h.player.setVolume(2));
   h.player.dispose();
 });
+test('steady callbacks leave gains and media volume untouched but reconcile changed controls and leases', async (t) => {
+  const h = setup({ library: list([synthIds[0]]) });
+  t.after(() => h.player.dispose());
+  await h.player.play();
+  h.player.update(true, { family: 'neon' });
+  let gainCalls = 0,
+    configurations = 0,
+    mediaWrites = 0,
+    mediaVolume = h.media.volume;
+  for (const key of [
+    'master',
+    'musicBus',
+    'sfxBus',
+    'menuBus',
+    'movementBus',
+    'radioBus',
+    'dialogueBus',
+  ])
+    for (const method of ['cancelScheduledValues', 'setTargetAtTime', 'setValueAtTime']) {
+      const param = h.soundscape[key].gain,
+        original = param[method];
+      param[method] = function (...args) {
+        gainCalls++;
+        return original.apply(this, args);
+      };
+    }
+  const configure = h.soundscape.configure.bind(h.soundscape);
+  h.soundscape.configure = (options) => {
+    configurations++;
+    return configure(options);
+  };
+  Object.defineProperty(h.media, 'volume', {
+    get: () => mediaVolume,
+    set: (value) => {
+      mediaWrites++;
+      mediaVolume = value;
+    },
+  });
+  for (let i = 0; i < 240; i++) {
+    h.context.currentTime += 1 / 120;
+    h.player.update(true, { family: 'neon' });
+  }
+  assert.deepEqual(
+    { gainCalls, configurations, mediaWrites },
+    { gainCalls: 0, configurations: 0, mediaWrites: 0 },
+  );
+  h.player.setVolume(0.4);
+  assert.equal(h.soundscape.getSettings().music, 0.4);
+  assert(gainCalls > 0);
+  configure({ music: 0.1, master: 0.5 });
+  h.player.update(true, { family: 'neon' });
+  assert.equal(h.soundscape.getSettings().music, 0.4);
+  assert.equal(h.media.volume, 0.2);
+  const lease = h.player.acquireGain({ factor: 0.5 });
+  assert.equal(h.soundscape.getSettings().music, 0.2);
+  assert.equal(h.media.volume, 0.1);
+  lease.release();
+  assert.equal(h.soundscape.getSettings().music, 0.4);
+  assert.equal(h.media.volume, 0.2);
+});
 test('seeking a paused synth before creating audio is retained for its first permitted playback', async () => {
   const h = setup({ library: list([synthIds[0]]) });
   await h.player.selectPlaylist('test.queue');
