@@ -112,12 +112,19 @@ export function createReactionVoiceCache({
       revision = generation,
       audioContext = context;
     if (buffers.has(key)) return true;
-    if (pending.has(key)) return pending.get(key).promise;
+    if (pending.has(key)) {
+      const request = pending.get(key);
+      if (request.priority === 'background' && priority === 'demand') {
+        request.priority = 'demand';
+        preparation.promote?.(request.abort.signal, 'demand');
+      }
+      return request.promise;
+    }
     if (pending.size >= REACTION_VOICE_LIMITS.loads || now() < (failures.get(key) ?? 0))
       return false;
     const abort = new AbortController(),
       timeout = setTimeout(() => abort.abort(), 10000),
-      request = { abort, promise: null };
+      request = { abort, promise: null, priority };
     let cancelled = false;
     const eligible = () =>
       !closed &&
@@ -125,7 +132,7 @@ export function createReactionVoiceCache({
       audioContext === sound.context &&
       !sound.audioMaster?.muted &&
       sound.audioMaster?.volume !== 0 &&
-      (priority !== 'background' ||
+      (request.priority !== 'background' ||
         !['playing', 'suspended'].includes(preparation.snapshot().phase));
     const admission = { signal: abort.signal, priority, eligible };
     request.promise = (async () => {
@@ -152,7 +159,7 @@ export function createReactionVoiceCache({
         const buffer = await preparation.run(
           'decode',
           () => audioContext.decodeAudioData(recording.bytes.slice(0)),
-          { ...admission, bytes: reservedBytes },
+          { ...admission, priority: request.priority, bytes: reservedBytes },
         );
         if (
           closed ||

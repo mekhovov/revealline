@@ -12,7 +12,8 @@ export function createMediaPreparation({
 } = {}) {
   const limits = { fetch: fetches, decode: decodes, inspect: 1, main: 1 };
   const active = { fetch: 0, decode: 0, inspect: 0, main: 0 };
-  const queue = [];
+  const queue = [],
+    unsettled = new Set();
   let phase = 'menu',
     closed = false,
     reservedBytes = 0,
@@ -101,18 +102,43 @@ export function createMediaPreparation({
           signal,
           bytes,
           eligible,
-          resolve,
-          reject,
+          resolve(value) {
+            unsettled.delete(task);
+            resolve(value);
+          },
+          reject(error) {
+            unsettled.delete(task);
+            reject(error);
+          },
           sequence: sequence++,
         };
         task.cancel = () => {
           remove(task, aborted());
           drain();
         };
+        unsettled.add(task);
         queue.push(task);
         signal?.addEventListener('abort', task.cancel, { once: true });
         drain();
       });
+    },
+    // Upgrade existing work only. Removed/cancelled tasks cannot be revived.
+    promote(signal, priority = 'demand') {
+      if (!signal || typeof signal.aborted !== 'boolean' || !(priority in priorities))
+        throw new TypeError('Invalid media preparation promotion.');
+      if (closed || signal.aborted) return 0;
+      let promoted = 0;
+      for (const task of unsettled)
+        if (
+          task.signal === signal &&
+          priorities[priority] < priorities[task.priority] &&
+          task.eligible()
+        ) {
+          task.priority = priority;
+          promoted++;
+        }
+      if (promoted) drain();
+      return promoted;
     },
     setPhase(value) {
       if (!phases.has(value)) throw new TypeError('Invalid media preparation phase.');

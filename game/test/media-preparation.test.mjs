@@ -565,3 +565,437 @@ test('a failed replacement retains its actual closed owner without claiming it w
     'This is the actual closed owner, not an inferred fresh owner',
   );
 });
+
+function promotionDeferred() {
+  let resolve;
+  const promise = new Promise((value) => {
+    resolve = value;
+  });
+  return { promise, resolve };
+}
+function promotionOwner(t, decode) {
+  const preparation = createMediaPreparation();
+  const sound = {
+    mediaPreparation: preparation,
+    context: {
+      sampleRate: 48000,
+      decodeAudioData: decode,
+      createBufferSource: () => assert.fail('Loading must not replay a past cue.'),
+    },
+    audioMaster: { muted: false, volume: 1 },
+    settings: { master: 1, sfx: 1 },
+    voices: new Set(),
+  };
+  const director = new FeedbackDirector(sound);
+  t.after(() => {
+    director.close();
+    preparation.close();
+  });
+  return { preparation, sound, director };
+}
+
+test('demand promotes an active effects fetch without restarting its source or changing pending Promise identity', async (t) => {
+  const original = await readFile(new URL('../audio/effects/bell.wav', import.meta.url));
+  const gate = promotionDeferred();
+  let fetched = 0,
+    decoded = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    fetched++;
+    await gate.promise;
+    return new Response(original);
+  });
+  const { preparation, director } = promotionOwner(t, async () => {
+    decoded++;
+    return { length: 480, numberOfChannels: 1 };
+  });
+  const warming = director.prepare(['bell']);
+  await tick();
+  const pending = director.pending.get('bell');
+  assert.equal(director.load('bell'), pending);
+  assert.equal(director.load('bell'), pending);
+  preparation.setPhase('playing');
+  gate.resolve();
+  await warming;
+  await tick();
+  assert.equal(fetched, 1);
+  assert.equal(decoded, 1);
+  assert(director.buffers.has('bell'));
+  assert.equal(director.pending.size, 0);
+  assert.equal(director.pendingRequests.size, 0);
+  assert.equal(preparation.snapshot().reservedDecodeBytes, 0);
+});
+
+test('demand promotes an effects fetch still queued behind required owners', async (t) => {
+  const original = await readFile(new URL('../audio/effects/bell.wav', import.meta.url));
+  let fetched = 0,
+    decoded = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    fetched++;
+    return new Response(original);
+  });
+  const { preparation, director } = promotionOwner(t, async () => {
+    decoded++;
+    return { length: 480, numberOfChannels: 1 };
+  });
+  const gates = [promotionDeferred(), promotionDeferred()];
+  const blockers = gates.map((gate) =>
+    preparation.run('fetch', () => gate.promise, { priority: 'required' }),
+  );
+  await tick();
+  const warming = director.prepare(['bell']);
+  assert.equal(director.load('bell'), director.pending.get('bell'));
+  preparation.setPhase('playing');
+  assert.equal(preparation.snapshot().queued, 1);
+  assert.equal(fetched, 0);
+  gates.forEach((gate) => gate.resolve());
+  await Promise.all(blockers);
+  await warming;
+  await tick();
+  assert.equal(fetched, 1);
+  assert.equal(decoded, 1);
+  assert(director.buffers.has('bell'));
+});
+
+test('promotion covers an admitted effects fetch before its work microtask', async (t) => {
+  const original = await readFile(new URL('../audio/effects/bell.wav', import.meta.url));
+  let fetched = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    fetched++;
+    return new Response(original);
+  });
+  const { preparation, director } = promotionOwner(t, async () => ({
+    length: 480,
+    numberOfChannels: 1,
+  }));
+  const warming = director.prepare(['bell']);
+  assert.equal(preparation.snapshot().active.fetch, 1);
+  assert.equal(fetched, 0);
+  assert.equal(director.load('bell'), director.pending.get('bell'));
+  preparation.setPhase('playing');
+  await warming;
+  await tick();
+  assert.equal(fetched, 1);
+  assert(director.buffers.has('bell'));
+});
+
+test('demand promotion retains an already-running effects decode and its exact reservation', async (t) => {
+  const original = await readFile(new URL('../audio/effects/bell.wav', import.meta.url));
+  const gate = promotionDeferred();
+  let fetched = 0,
+    decoded = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    fetched++;
+    return new Response(original);
+  });
+  const { preparation, director } = promotionOwner(t, () => {
+    decoded++;
+    return gate.promise;
+  });
+  const warming = director.prepare(['bell']);
+  await tick();
+  assert.equal(decoded, 1);
+  const before = preparation.snapshot().reservedDecodeBytes;
+  assert(before > 0);
+  assert.equal(director.load('bell'), director.pending.get('bell'));
+  preparation.setPhase('playing');
+  assert.equal(preparation.snapshot().reservedDecodeBytes, before);
+  gate.resolve({ length: 480, numberOfChannels: 1 });
+  await warming;
+  await tick();
+  assert.equal(fetched, 1);
+  assert.equal(decoded, 1);
+  assert(director.buffers.has('bell'));
+  assert.equal(preparation.snapshot().reservedDecodeBytes, 0);
+});
+
+test('demand joining synchronously cancelled effects preparation preserves cancellation without a retry', async (t) => {
+  let fetched = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    fetched++;
+    assert.fail('Cancelled work must not fetch.');
+  });
+  const { preparation, director } = promotionOwner(t, async () =>
+    assert.fail('No cancelled decode.'),
+  );
+  const gates = [promotionDeferred(), promotionDeferred()];
+  const blockers = gates.map((gate) =>
+    preparation.run('fetch', () => gate.promise, { priority: 'required' }),
+  );
+  await tick();
+  const warming = director.prepare(['bell']),
+    pending = director.pending.get('bell');
+  preparation.setPhase('playing');
+  assert.equal(preparation.snapshot().queued, 0);
+  assert.equal(director.load('bell'), pending);
+  await warming;
+  assert.equal(fetched, 0);
+  assert.equal(director.buffers.has('bell'), false);
+  assert.equal(director.pending.size, 0);
+  assert.equal(director.pendingRequests.size, 0);
+  gates.forEach((gate) => gate.resolve());
+  await Promise.all(blockers);
+  await tick();
+  assert.equal(fetched, 0);
+});
+
+test('promoting a live request cannot bypass muted, replaced-context or disposed effects eligibility', async (t) => {
+  const original = await readFile(new URL('../audio/effects/bell.wav', import.meta.url));
+  let currentGate;
+  t.mock.method(globalThis, 'fetch', async () => {
+    await currentGate.promise;
+    return new Response(original);
+  });
+  for (const reason of ['muted', 'context', 'disposed']) {
+    const gate = promotionDeferred();
+    currentGate = gate;
+    let decoded = 0;
+    const { preparation, sound, director } = promotionOwner(t, async () => {
+      decoded++;
+      return { length: 480, numberOfChannels: 1 };
+    });
+    const warming = director.prepare(['bell']);
+    await tick();
+    if (reason === 'muted') sound.audioMaster.muted = true;
+    if (reason === 'context')
+      sound.context = { sampleRate: 48000, decodeAudioData: () => assert.fail('Wrong owner.') };
+    if (reason === 'disposed') director.close();
+    director.load('bell');
+    preparation.setPhase('playing');
+    gate.resolve();
+    await warming;
+    await tick();
+    assert.equal(decoded, 0, reason);
+    assert.equal(director.buffers.has('bell'), false, reason);
+  }
+});
+
+test('promotion is signal-scoped, idempotent and preserves required ordering and original FIFO within a priority', async (t) => {
+  const preparation = createMediaPreparation({ fetches: 1 }),
+    gate = promotionDeferred();
+  t.after(() => preparation.close());
+  const order = [];
+  const blocker = preparation.run('fetch', () => gate.promise, { priority: 'required' });
+  await tick();
+  const signals = Array.from({ length: 4 }, () => new AbortController());
+  const jobs = [
+    preparation.run('fetch', () => order.push('older-promoted'), {
+      priority: 'background',
+      signal: signals[0].signal,
+    }),
+    preparation.run('fetch', () => order.push('newer-demand'), {
+      priority: 'demand',
+      signal: signals[1].signal,
+    }),
+    preparation.run('fetch', () => order.push('required'), {
+      priority: 'required',
+      signal: signals[2].signal,
+    }),
+    preparation.run('fetch', () => order.push('unrelated-background'), {
+      priority: 'background',
+      signal: signals[3].signal,
+    }),
+  ];
+  assert.equal(preparation.promote(new AbortController().signal), 0);
+  assert.equal(preparation.promote(signals[0].signal), 1);
+  assert.equal(preparation.promote(signals[0].signal), 0);
+  assert.equal(preparation.promote(signals[2].signal), 0);
+  gate.resolve();
+  await blocker;
+  await Promise.all(jobs);
+  await tick();
+  assert.deepEqual(order, ['required', 'older-promoted', 'newer-demand', 'unrelated-background']);
+  assert.equal(preparation.promote(signals[0].signal, 'required'), 0);
+});
+
+test('promotion cannot revive removed, aborted or closed tasks and never runs main work during play', async (t) => {
+  const preparation = createMediaPreparation(),
+    controller = new AbortController();
+  t.after(() => preparation.close());
+  preparation.setPhase('playing');
+  let scans = 0;
+  const main = preparation.run('main', () => scans++, {
+    priority: 'required',
+    signal: controller.signal,
+  });
+  assert.equal(preparation.promote(controller.signal), 0);
+  await tick();
+  assert.equal(scans, 0);
+  preparation.setPhase('paused');
+  await main;
+  assert.equal(scans, 1);
+  preparation.setPhase('suspended');
+  const cancelled = new AbortController();
+  const result = preparation
+    .run('fetch', () => assert.fail('No revived work.'), {
+      priority: 'background',
+      signal: cancelled.signal,
+    })
+    .catch((e) => e.name);
+  assert.equal(preparation.promote(cancelled.signal), 0);
+  assert.equal(await result, 'AbortError');
+  cancelled.abort();
+  assert.equal(preparation.promote(cancelled.signal), 0);
+  preparation.close();
+  assert.equal(preparation.promote(controller.signal, 'required'), 0);
+});
+
+test('reaction demand promotes an active library read and later decode without repeat reads or old speech', async (t) => {
+  const gate = promotionDeferred();
+  let reads = 0,
+    decodes = 0,
+    inspections = 0;
+  const { preparation, sound } = promotionOwner(t, async () => {
+    decodes++;
+    return { duration: 1, length: 48000, numberOfChannels: 1 };
+  });
+  const reactions = createReactionVoiceCache({
+    sound,
+    library: {
+      resolve: async () => {
+        reads++;
+        await gate.promise;
+        return { bytes: new ArrayBuffer(8) };
+      },
+    },
+    inspect: async () => {
+      inspections++;
+      return { channels: 1, maxDecodedSeconds: 1, decodeChannels: 1 };
+    },
+  });
+  t.after(() => reactions.dispose());
+  const warm = reactions.load('line', 'en', { priority: 'background' });
+  await tick();
+  const demand = reactions.load('line', 'en');
+  preparation.setPhase('playing');
+  gate.resolve();
+  assert.deepEqual(await Promise.all([warm, demand]), [true, true]);
+  await tick();
+  assert.equal(reads, 1);
+  assert.equal(decodes, 1);
+  assert.equal(inspections, 1);
+  assert(reactions.get('line', 'en'));
+});
+
+test('reaction demand preserves a running native decode, but mute and cancellation still discard its result', async (t) => {
+  for (const outcome of ['demand', 'muted', 'cancelled']) {
+    const gate = promotionDeferred();
+    let reads = 0,
+      decodes = 0;
+    const { preparation, sound } = promotionOwner(t, () => {
+      decodes++;
+      return gate.promise;
+    });
+    const reactions = createReactionVoiceCache({
+      sound,
+      library: {
+        resolve: async () => {
+          reads++;
+          return { bytes: new ArrayBuffer(8) };
+        },
+      },
+      inspect: async () => ({ channels: 1, maxDecodedSeconds: 1, decodeChannels: 1 }),
+    });
+    t.after(() => reactions.dispose());
+    const warm = reactions.load('line', 'en', { priority: 'background' });
+    await tick();
+    assert.equal(decodes, 1);
+    const bytes = preparation.snapshot().reservedDecodeBytes;
+    assert(bytes > 0);
+    const demand = reactions.load('line', 'en');
+    if (outcome === 'muted') sound.audioMaster.muted = true;
+    if (outcome === 'cancelled') void reactions.cancel();
+    preparation.setPhase('playing');
+    assert.equal(preparation.snapshot().reservedDecodeBytes, bytes);
+    gate.resolve({ duration: 1, length: 48000, numberOfChannels: 1 });
+    assert.deepEqual(await Promise.all([warm, demand]), [
+      outcome === 'demand',
+      outcome === 'demand',
+    ]);
+    await tick();
+    assert.equal(reads, 1);
+    assert.equal(decodes, 1);
+    assert.equal(Boolean(reactions.get('line', 'en')), outcome === 'demand');
+    assert.equal(preparation.snapshot().reservedDecodeBytes, 0);
+  }
+});
+
+test('demand promotion retains the original single deadline for effects and reactions', async (t) => {
+  const nativeTimeout = globalThis.setTimeout,
+    deadlines = [];
+  t.mock.method(globalThis, 'setTimeout', (callback, ms, ...args) => {
+    deadlines.push(ms);
+    return nativeTimeout(callback, ms, ...args);
+  });
+  const original = await readFile(new URL('../audio/effects/bell.wav', import.meta.url));
+  const effectGate = promotionDeferred();
+  t.mock.method(globalThis, 'fetch', async () => {
+    await effectGate.promise;
+    return new Response(original);
+  });
+  const { preparation, sound, director } = promotionOwner(t, async () => ({
+    duration: 1,
+    length: 48000,
+    numberOfChannels: 1,
+  }));
+  const warming = director.prepare(['bell']);
+  await tick();
+  director.load('bell');
+  director.load('bell');
+  assert.deepEqual(deadlines, [10000]);
+  effectGate.resolve();
+  await warming;
+  const reactionGate = promotionDeferred();
+  const reactions = createReactionVoiceCache({
+    sound,
+    library: {
+      resolve: async () => {
+        await reactionGate.promise;
+        return { bytes: new ArrayBuffer(8) };
+      },
+    },
+    inspect: async () => ({ channels: 1, maxDecodedSeconds: 1, decodeChannels: 1 }),
+  });
+  t.after(() => reactions.dispose());
+  const warm = reactions.load('line', 'en', { priority: 'background' });
+  await tick();
+  const demand = reactions.load('line', 'en'),
+    repeat = reactions.load('line', 'en');
+  assert.deepEqual(deadlines, [10000, 10000]);
+  preparation.setPhase('playing');
+  reactionGate.resolve();
+  assert.deepEqual(await Promise.all([warm, demand, repeat]), [true, true, true]);
+  assert.deepEqual(deadlines, [10000, 10000]);
+});
+
+test('a reaction demand joining after queued phase cancellation does not resurrect or retry the removed request', async (t) => {
+  let reads = 0;
+  const { preparation, sound } = promotionOwner(t, async () => assert.fail('No cancelled decode.'));
+  const gates = [promotionDeferred(), promotionDeferred()];
+  const blockers = gates.map((gate) =>
+    preparation.run('fetch', () => gate.promise, { priority: 'required' }),
+  );
+  await tick();
+  const reactions = createReactionVoiceCache({
+    sound,
+    library: {
+      resolve: async () => {
+        reads++;
+        assert.fail('No cancelled read.');
+      },
+    },
+    inspect: async () => assert.fail('No cancelled inspection.'),
+  });
+  t.after(() => reactions.dispose());
+  const warm = reactions.load('line', 'en', { priority: 'background' });
+  await tick();
+  assert.equal(preparation.snapshot().queued, 1);
+  preparation.setPhase('playing');
+  const demand = reactions.load('line', 'en');
+  assert.deepEqual(await Promise.all([warm, demand]), [false, false]);
+  gates.forEach((gate) => gate.resolve());
+  await Promise.all(blockers);
+  await tick();
+  assert.equal(reads, 0);
+  assert.equal(reactions.snapshot().loading, 0);
+  assert.equal(reactions.get('line', 'en'), undefined);
+});
