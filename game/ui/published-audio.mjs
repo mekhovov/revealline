@@ -3,6 +3,7 @@ import { attachMenuAudioSettings } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
 import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from './destruction-audio.mjs';
 import { destructionBufferGain } from './destruction-level.mjs';
+import { inspectPublishedCue } from '../published-cue-inspection.mjs';
 const cueNames = new Set([
   'focus',
   'confirm',
@@ -112,11 +113,20 @@ export function createPublishedCues({ sound, readAudio }) {
           : DESTRUCTION_CUES.includes(name)
             ? 1
             : 15;
-        const reservation = Math.ceil(seconds * (context.sampleRate ?? 48000)) * 2 * 4;
+        const inspected = await inspectPublishedCue(result.blob, {
+          sampleRate: context.sampleRate,
+          maxDuration: seconds,
+          signal: controller.signal,
+          scheduleScan: (work) => preparation.run('main', work, admission),
+        });
         const decoded = await preparation.run(
           'decode',
-          async () => context.decodeAudioData(await result.blob.arrayBuffer()),
-          { ...admission, bytes: reservation },
+          async () => {
+            const bytes = await inspected.blob.arrayBuffer();
+            if (!eligible()) throw new DOMException('Cue decode cancelled.', 'AbortError');
+            return context.decodeAudioData(bytes);
+          },
+          { ...admission, bytes: inspected.reservedBytes },
         );
         if (closed || controller.signal.aborted || !sound.enabled) return null;
         if (
@@ -124,6 +134,10 @@ export function createPublishedCues({ sound, readAudio }) {
           decoded.duration <= 0 ||
           decoded.duration >
             (HUMAN_REACTION_CUES.includes(name) ? 0.7 : DESTRUCTION_CUES.includes(name) ? 1 : 15) ||
+          !Number.isSafeInteger(decoded.length) ||
+          decoded.length <= 0 ||
+          decoded.length > inspected.outputFrames ||
+          decoded.numberOfChannels !== inspected.channels ||
           decoded.length * decoded.numberOfChannels > 4 * 1024 * 1024
         )
           throw new Error(t('interface:publishedCueExceedsItsDecodedBudget'));
