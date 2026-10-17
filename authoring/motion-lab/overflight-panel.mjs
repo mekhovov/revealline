@@ -4,35 +4,30 @@ import {
   paintOverflightEffectGeometry,
   OVERFLIGHT_MOTION_PROFILE,
 } from '../../game/presentation/overflight-motion.mjs';
-import { getLocale, localizedText } from '../../game/i18n/index.mjs';
+import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
 
 /** A scrubbed source preview uses the same bounded profile as the horde renderer. */
 export function mountOverflightMotionPanel(root) {
   if (!root) return { dispose() {} };
-  const doc = root.ownerDocument,
-    words = (en, uk) => (getLocale() === 'uk' ? uk : en);
-  const el = (tag, en, uk) => {
+  const doc = root.ownerDocument;
+  const el = (tag, key) => {
     const node = doc.createElement(tag);
-    if (en) localizedText(node, () => words(en, uk));
+    if (key) localizedText(node, () => t(key));
     return node;
   };
-  const summary = el('summary', 'Overflight · shared effects', 'Проліт · спільні ефекти');
-  const note = el(
-    'p',
-    'Inspect the exact source motion profile used by native play. Warning timing and damage remain simulation-owned.',
-    'Переглядайте той самий профіль руху, що й у грі. Час попереджень і шкода визначаються симуляцією.',
-  );
+  const summary = el('summary', 'tools:motionLab.overflightEffects.heading');
+  const note = el('p', 'tools:motionLab.overflightEffects.description');
   const select = el('select');
-  select.setAttribute('aria-label', words('Effect', 'Ефект'));
-  for (const [kind, en, uk] of [
-    ['drop', 'Payload impact', 'Удар заряду'],
-    ['pulse', 'Pulse', 'Імпульс'],
-    ['warning', 'Warning', 'Попередження'],
-    ['hostile-impact', 'Hostile impact', 'Ворожий удар'],
-    ['slow-field', 'Slow field', 'Поле сповільнення'],
-    ['chain', 'Scanner chain', 'Ланцюг сканера'],
+  localizedAttribute(select, 'aria-label', () => t('tools:motionLab.overflightEffects.effect'));
+  for (const [kind, key] of [
+    ['drop', 'tools:motionLab.overflightEffects.drop'],
+    ['pulse', 'tools:motionLab.overflightEffects.pulse'],
+    ['warning', 'tools:motionLab.overflightEffects.warning'],
+    ['hostile-impact', 'tools:motionLab.overflightEffects.hostileImpact'],
+    ['slow-field', 'tools:motionLab.overflightEffects.slowField'],
+    ['chain', 'tools:motionLab.overflightEffects.chain'],
   ]) {
-    const option = el('option', en, uk);
+    const option = el('option', key);
     option.value = kind;
     select.append(option);
   }
@@ -41,17 +36,19 @@ export function mountOverflightMotionPanel(root) {
   age.min = '0';
   age.max = '100';
   age.value = '25';
-  age.setAttribute('aria-label', words('Animation progress', 'Прогрес анімації'));
+  localizedAttribute(age, 'aria-label', () =>
+    t('tools:motionLab.overflightEffects.animationProgress'),
+  );
   const reduced = el('input');
   reduced.type = 'checkbox';
-  const reducedLabel = el('label', 'Reduced effects', 'Менше ефектів');
+  const reducedLabel = el('label', 'tools:motionLab.overflightEffects.reducedEffects');
   reducedLabel.prepend(reduced);
   const canvas = el('canvas');
   canvas.width = 320;
   canvas.height = 180;
   canvas.style.imageRendering = 'pixelated';
   canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', words('Shared effect preview', 'Перегляд спільного ефекту'));
+  localizedAttribute(canvas, 'aria-label', () => t('tools:motionLab.overflightEffects.preview'));
   const frames = new Map();
   const sourceFrame = (layer) => {
     const key = `${layer.frame}:${layer.tint}`;

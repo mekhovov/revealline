@@ -9,6 +9,17 @@ import { prepareContentPreview } from '../content-design/preview.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createCombatCandidates } from '../content-design/combat-candidates.mjs';
 import { freezeDesign } from '../content-design/catalogs.mjs';
+import {
+  getLocale,
+  localizedMessage,
+  localizedText,
+  setLocale,
+  t as translate,
+} from '../i18n/index.mjs';
+import { captureStudioActionFocus } from '../studio/action-focus.mjs';
+import { createStudioDraftSnapshot } from '../studio/draft-snapshot.mjs';
+import { studioPreviewFailureText, studioPreviewLoadingText } from '../studio/preview-copy.mjs';
+import { Document } from './helpers/couch-dom.mjs';
 
 function fixture({ watchPractice = false } = {}) {
   let clock = 0,
@@ -190,7 +201,7 @@ test('practice render failure before first readiness is visible without a ready 
 // Execute the actual Studio launch/retirement functions and pagehide binding.
 // The bounded media/DOM/timer adapters avoid mounting unrelated editors; project
 // compilation and scenario preparation remain the real production functions.
-async function studioLifecycle() {
+async function studioLifecycle({ localized = false } = {}) {
   const source = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
   const functions = ['launchPreview', 'retirePreview', 'closePreview', 'inspectBoard'];
@@ -214,6 +225,7 @@ async function studioLifecycle() {
     callbacks = [],
     handlers = new Map();
   let focus = 'outside-preview',
+    voiceSuspensions = 0,
     draft = createStarterProject();
   const element = () => ({
     hidden: false,
@@ -238,16 +250,32 @@ async function studioLifecycle() {
       },
     },
   };
+  const document = localized ? new Document() : { createElement: element };
+  if (localized) {
+    for (const [id, tag] of [
+      ['preview-status', 'p'],
+      ['preview-panel', 'section'],
+      ['play', 'button'],
+    ]) {
+      elements[id] = document.createElement(tag);
+      elements[id].id = id;
+      document.body.append(elements[id]);
+    }
+    elements['preview-panel'].hidden = true;
+  }
   const $ = (id) => (elements[id] ??= element());
   const syncEditor = { sync() {} };
+  const session = { current: () => draft, export: () => JSON.stringify(draft) };
   const context = {
     URL,
+    URLSearchParams,
     AbortController,
-    location: { href: 'https://fixture/game/studio/' },
+    location: { href: 'https://fixture/game/studio/', search: '' },
     $,
-    document: { createElement: element },
+    document,
     window: { addEventListener: (type, handler) => handlers.set(type, handler) },
-    session: { current: () => draft },
+    session,
+    currentDraftSnapshot: createStudioDraftSnapshot(() => session),
     freezeDesign,
     syncStudioDifficulty() {},
     acceptanceInspector: syncEditor,
@@ -258,9 +286,21 @@ async function studioLifecycle() {
     timedBonusEditor: syncEditor,
     objectiveEditor: syncEditor,
     relayEditor: syncEditor,
+    teamEnvironmentEditor: syncEditor,
     directionalEditor: syncEditor,
     encounterEditor: syncEditor,
     traceRecovery: syncEditor,
+    discoveryEditor: { ...syncEditor, suspend() {}, dispose() {} },
+    reactionVoiceEditor: {
+      suspend() {
+        voiceSuspensions++;
+      },
+      dispose() {},
+    },
+    huntEditor: { ...syncEditor, dispose() {} },
+    sourceDiscard: { destroy() {} },
+    stopSpatialReviews() {},
+    captureStudioActionFocus,
     setBoardAvailability() {},
     draw() {},
     inspectEffectiveGameplay() {},
@@ -268,7 +308,7 @@ async function studioLifecycle() {
     studioGameplayText() {},
     studioDiagnosticText() {},
     studioItemCaption() {},
-    t: (key) => key,
+    t: localized ? translate : (key) => key,
     compileContentProject,
     prepareContentPreview,
     loadPreviewTheme: ({ signal, themeId }) =>
@@ -279,13 +319,14 @@ async function studioLifecycle() {
         }),
       ),
     sessionStorage: { setItem: (...args) => writes.push(args) },
-    localizedMessage: (key) => key,
+    localizedMessage: localized ? localizedMessage : (key) => key,
     localizedText: (node, value) => {
-      node.textContent = typeof value === 'function' ? value() : value;
+      if (localized) localizedText(node, value);
+      else node.textContent = typeof value === 'function' ? value() : value;
       messages.push(node.textContent);
     },
-    studioPreviewFailureText: (error) => error.message,
-    studioPreviewLoadingText: () => 'loading',
+    studioPreviewFailureText: localized ? studioPreviewFailureText : (error) => error.message,
+    studioPreviewLoadingText: localized ? studioPreviewLoadingText : () => 'loading',
     observePreviewReadiness: (options) =>
       observePreviewReadiness({
         ...options,
@@ -310,15 +351,17 @@ async function studioLifecycle() {
      globalThis.previewActions = { launchPreview, closePreview, inspectBoard };`,
   ).runInNewContext(context);
   return {
+    document,
     elements,
     media,
     writes,
     messages,
     timers,
     callbacks,
-    focus: () => focus,
-    launch: (source = createStarterProject(), missionId = 'nearby-shore') =>
-      context.previewActions.launchPreview(source, missionId),
+    focus: () => (localized ? document.activeElement.id : focus),
+    voiceSuspensions: () => voiceSuspensions,
+    launch: (source = createStarterProject(), missionId = 'nearby-shore', difficulty) =>
+      context.previewActions.launchPreview(source, missionId, difficulty),
     inspect: (source, missionId) => {
       draft = source;
       elements.mission.value = missionId;
@@ -328,6 +371,105 @@ async function studioLifecycle() {
     pagehide: (persisted) => handlers.get('pagehide')({ persisted }),
   };
 }
+
+test('Studio held mission preparation translates without restarting or changing custom draft content', async (context) => {
+  const locale = getLocale(),
+    previousDocument = Object.getOwnPropertyDescriptor(globalThis, 'document'),
+    f = await studioLifecycle({ localized: true }),
+    source = createStarterProject('my-localized-preview'),
+    customName = 'Relay Orchard / ҐЄІЇ',
+    missionId = source.missions[0].id;
+  source.missions[0].name = customName;
+  const authored = JSON.stringify(source);
+  Object.defineProperty(globalThis, 'document', {
+    configurable: true,
+    writable: true,
+    value: f.document,
+  });
+  let pending;
+  context.after(async () => {
+    f.close();
+    for (const media of f.media) media.resolve();
+    await pending?.catch(() => {});
+    f.document.documentElement.remove();
+    if (previousDocument) Object.defineProperty(globalThis, 'document', previousDocument);
+    else delete globalThis.document;
+    setLocale(locale, { persist: false });
+  });
+  setLocale('en', { persist: false });
+  f.elements.mission.value = missionId;
+  f.elements.difficulty.value = 'expert';
+  f.elements.play.focus();
+  pending = f.launch(source, missionId, 'expert');
+  assert.equal(f.media.length, 1);
+  const signal = f.media[0].signal,
+    input = f.document.createElement('textarea');
+  input.value = '{"unapplied":"My draft ҐЄІЇ"}';
+  input.selectionStart = 3;
+  input.selectionEnd = 14;
+  input.scrollTop = 57;
+  f.document.body.append(input);
+  input.focus();
+  f.document.documentElement.scrollTop = 89;
+  const raw = input.value;
+  const unchanged = () => {
+    assert.equal(f.media.length, 1);
+    assert.equal(f.media[0].signal, signal);
+    assert.equal(signal.aborted, false);
+    assert.equal(JSON.stringify(source), authored);
+    assert.equal(f.elements.mission.value, missionId);
+    assert.equal(f.elements.difficulty.value, 'expert');
+    assert.equal(input.value, raw);
+    assert.equal(input.selectionStart, 3);
+    assert.equal(input.selectionEnd, 14);
+    assert.equal(input.scrollTop, 57);
+    assert.equal(f.document.documentElement.scrollTop, 89);
+    assert.equal(f.document.activeElement, input);
+    assert.equal(f.elements['preview-panel'].scrolled ?? 0, 0);
+  };
+  for (const language of ['en', 'uk', 'en', 'uk']) {
+    setLocale(language, { persist: false });
+    assert.equal(
+      f.elements['preview-status'].textContent,
+      language === 'uk' ? 'Готуємо попередній перегляд місії…' : 'Preparing the mission preview…',
+    );
+    assert.doesNotMatch(f.elements['preview-status'].textContent, /\{\{|\}\}|tools:|undefined/);
+    assert.equal(f.elements.preview.src, 'about:blank');
+    assert.equal(f.writes.length, 0);
+    assert.equal(f.timers.size, 0);
+    assert.equal(f.voiceSuspensions(), 1);
+    unchanged();
+  }
+  f.media[0].resolve();
+  await pending;
+  assert.equal(f.writes.length, 1);
+  assert.equal(f.writes[0][0], 'revealline.playground.current');
+  const stored = f.writes[0][1],
+    scenario = JSON.parse(stored),
+    url = f.elements.preview.src;
+  assert.equal(scenario.level.name, customName);
+  assert.equal(scenario.metadata.title, customName);
+  assert.equal(new URL(url).searchParams.get('revision'), 'studio-1');
+  assert.equal(f.timers.size, 1);
+  for (const language of ['en', 'uk', 'en']) {
+    setLocale(language, { persist: false });
+    assert.match(
+      f.elements['preview-status'].textContent,
+      language === 'uk' ? /^Завантаження:/ : /^Loading /,
+    );
+    assert.ok(
+      f.elements['preview-status'].textContent.includes(
+        `${customName} · ${translate('interface:missionLibrary.difficulty.expert')}`,
+      ),
+    );
+    assert.doesNotMatch(f.elements['preview-status'].textContent, /\{\{|\}\}|tools:|undefined/);
+    assert.equal(f.elements.preview.src, url);
+    assert.equal(f.writes.length, 1);
+    assert.equal(f.writes[0][1], stored);
+    assert.equal(f.voiceSuspensions(), 2);
+    unchanged();
+  }
+});
 
 for (const persisted of [false, true])
   test(`Studio pagehide persisted=${persisted} retires pending media without focus or late launch`, async () => {
