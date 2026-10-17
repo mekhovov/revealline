@@ -101,3 +101,24 @@ test('settled arrival and loading hold do not keep rewriting opacity', () => {
   assert.ok(writes > arrivedWrites, 'A new departure still starts its real transition.');
   assert.equal(f.canvas.style.opacity, '0');
 });
+
+test('resource diagnostic retains only the currently allocated transition surface', () => {
+  const f = fixture();
+  assert.equal(f.transition.resourceSnapshot().pixels, 0);
+  f.transition.begin();
+  const held = f.transition.resourceSnapshot();
+  assert.deepEqual(held, {
+    canvases: 1,
+    pixels: 768 * 576,
+    rgbaBytesEstimate: 768 * 576 * 4,
+    loading: true,
+  });
+  for (let i = 0; i < 20; i++) assert.deepEqual(f.transition.resourceSnapshot(), held);
+  assert.equal(f.sampled(), f.canvas);
+  f.transition.clear();
+  assert.equal(f.transition.resourceSnapshot().pixels, 0);
+  f.transition.begin();
+  assert.equal(f.transition.resourceSnapshot().canvases, 1);
+  f.transition.dispose();
+  assert.equal(f.transition.resourceSnapshot().canvases, 0);
+});

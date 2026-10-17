@@ -125,7 +125,96 @@ export function attachDemoHost({
     controlsController = null,
     controlsAudio = null;
   const owners = new WeakMap(),
+    resourceOwners = new Set(),
     listeners = [];
+  let pendingSourceLoads = 0,
+    pendingPreparations = 0,
+    workerHandles = 0,
+    workersCreated = 0,
+    workerTerminationRequests = 0;
+  function observeWorker() {
+    workerHandles++;
+    workersCreated++;
+    let released = false;
+    return () => {
+      if (released) return;
+      released = true;
+      workerHandles--;
+      workerTerminationRequests++;
+    };
+  }
+  function resourceSnapshot() {
+    const pixels = (canvas.width || 0) * (canvas.height || 0),
+      images = new Set(),
+      categories = {},
+      painters = [];
+    let unavailableImages = 0;
+    const summarize = (values) => {
+      let pixels = 0,
+        unknownDimensions = 0;
+      for (const image of values) {
+        const width = image.naturalWidth || image.width || 0,
+          height = image.naturalHeight || image.height || 0;
+        if (width > 0 && height > 0) pixels += width * height;
+        else unknownDimensions++;
+      }
+      return { images: values.size, pixels, rgbaBytesEstimate: pixels * 4, unknownDimensions };
+    };
+    const sources = { presentation: new Set(), actors: new Set(), backdrop: new Set() };
+    for (const owner of resourceOwners) {
+      if (owner.painter) painters.push(owner.painter.resourceSnapshot());
+      for (const [kind, snapshot] of [
+        ['presentation', owner.presentation?.snapshot ?? owner.painter?.presentation],
+        ['actors', owner.actors?.snapshot],
+      ]) {
+        try {
+          for (const slot of Object.keys(snapshot?.resolved?.assets ?? {})) {
+            const image = snapshot.image?.(slot)?.image;
+            if (image) sources[kind].add(image);
+          }
+        } catch {
+          unavailableImages++;
+        }
+      }
+      const backdrop = owner.picture?.backdrop?.image;
+      if (backdrop) sources.backdrop.add(backdrop);
+    }
+    for (const [kind, values] of Object.entries(sources)) {
+      for (const image of values) images.add(image);
+      categories[kind] = summarize(values);
+    }
+    return {
+      format: 'DemoOwnedResourcesV1',
+      active,
+      disposed,
+      phase: preparationPhase(),
+      pendingSourceLoads,
+      pendingPreparations,
+      scenes: resourceOwners.size,
+      display: { canvases: Number(pixels > 0), pixels, rgbaBytesEstimate: pixels * 4 },
+      painters,
+      transition: sceneTransition.resourceSnapshot(),
+      reward: reward.resourceSnapshot(),
+      workers: {
+        observedHandles: workerHandles,
+        created: workersCreated,
+        terminationRequests: workerTerminationRequests,
+        accounting:
+          'Observed bot Worker handles; successful terminate() calls are requests, not proof of native thread exit.',
+      },
+      sharedImages: {
+        categories,
+        uniqueObserved: summarize(images),
+        unavailableSnapshots: unavailableImages,
+        accounting:
+          'Image identity is deduplicated within Demo only. Category rows overlap and are nonadditive with Solo, legacy, enemy and actor pools.',
+      },
+      accounting:
+        'Manual owner snapshot only. Closed Demo retains its display canvas. Pending preparations include canceled work until settlement; unknown native allocations are not zero.',
+      estimate:
+        'Canvas/image RGBA8 dimensions only; browser/GPU copies and overhead are unobservable. No total memory is claimed.',
+    };
+  }
   const listen = (element, type, fn, options) => {
     if (!element) return;
     element.addEventListener(type, fn, options);
@@ -508,8 +597,16 @@ export function attachDemoHost({
     dialog.close();
     onExit({ handoff, origin });
   }
-  async function prepare(source, { signal }) {
-    const player = await source.create({ signal });
+  async function prepare(source, options) {
+    pendingPreparations++;
+    try {
+      return await prepareScene(source, options);
+    } finally {
+      pendingPreparations--;
+    }
+  }
+  async function prepareScene(source, { signal }) {
+    const player = await source.create({ signal, onWorker: observeWorker });
     const owner = { epoch, released: false, losses: new Set(), retiredSurfaces: new WeakSet() };
     let nextPicture = null,
       nextPainter = null,
@@ -526,12 +623,14 @@ export function attachDemoHost({
       nextPainter?.dispose?.();
       nextActors?.release();
       nextPresentation?.release();
+      resourceOwners.delete(owner);
     };
     const check = () => {
       if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
     };
     // A scene deadline must retire its live Worker and painter immediately,
     // even when image/media loading never settles or ignores cancellation.
+    resourceOwners.add(owner);
     signal.addEventListener('abort', release, { once: true });
     try {
       check();
@@ -539,6 +638,7 @@ export function attachDemoHost({
         entry = source.entry;
       const theme = resolveDemoTheme(entry, source.level, current.themeId);
       nextActors = await prepareActors(entry, source.level, theme.id, { signal });
+      owner.actors = nextActors;
       if (released) nextActors?.release();
       check();
       nextPainter = new BoardPainter(presets, {
@@ -563,9 +663,11 @@ export function attachDemoHost({
           }
         },
       });
+      owner.painter = nextPainter;
       nextPresentation = await preparePresentation(nextPainter, entry, source.level, theme.id, {
         signal,
       });
+      owner.presentation = nextPresentation;
       if (released) nextPresentation?.release();
       check();
       nextPainter.setLevel(source.level, { seed: player.info.seed });
@@ -597,6 +699,7 @@ export function attachDemoHost({
             readMedia,
             signal,
           });
+      owner.picture = nextPicture;
       // A media decoder may have completed after the abort cleanup ran.
       if (released) nextPicture.dispose();
       check();
@@ -713,7 +816,13 @@ export function attachDemoHost({
     canvas.focus({ preventScroll: true });
     renderControls();
     try {
-      const sources = await loadSources({ signal });
+      let sources;
+      pendingSourceLoads++;
+      try {
+        sources = await loadSources({ signal });
+      } finally {
+        pendingSourceLoads--;
+      }
       if (!active || signal.aborted || ticket !== epoch) return false;
       director = createDemoDirector({ sources, prepare, onChange: changed });
       busy = false;
@@ -1241,6 +1350,18 @@ export function attachDemoHost({
     get preparationPhase() {
       return preparationPhase();
     },
+    get resourceExportReady() {
+      return (
+        !active ||
+        (!busy &&
+          !handoffPending &&
+          pendingSourceLoads === 0 &&
+          pendingPreparations === 0 &&
+          director?.phase !== 'loading' &&
+          (practice ? practice.phase !== 'playing' : interrupted || lifecycleSuspended))
+      );
+    },
+    resourceSnapshot,
     get backgroundAudio() {
       return active && !practice && !handoffPending && !lifecycleSuspended;
     },

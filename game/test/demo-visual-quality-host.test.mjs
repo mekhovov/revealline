@@ -49,9 +49,16 @@ async function assertRecordedPrefix(run) {
 
 test('active Demo cannot calibrate the main ready baseline from its loaded callbacks', async (t) => {
   const { page, snapshot } = await mounted(t);
-  await page.open();
   const before = snapshot().cadenceCalibration.samples;
+  await page.open();
+  assert.throws(snapshot, /Pause gameplay before exporting diagnostics/);
   for (let i = 0; i < 40; i++) page.frame(1000 / 30);
+  assert.equal(
+    page.demoFrame.options.quality,
+    'full',
+    'Cheap regular30Hz alone must not downgrade.',
+  );
+  page.$('demo-interrupt').click();
   assert.equal(
     snapshot().cadenceCalibration.samples,
     before,
@@ -62,13 +69,12 @@ test('active Demo cannot calibrate the main ready baseline from its loaded callb
 });
 
 test('foreground Demo irregular delivery reduces decoration while exact replay and paused parent remain unchanged', async (t) => {
-  const { page, snapshot } = await mounted(t);
+  const { page } = await mounted(t);
   readyFrames(page);
   const parent = authoritativeCheckpoint(page.rendered.run);
   await page.open();
   const run = page.demoFrame.run;
   for (let i = 0; i < 110; i++) page.frame(i % 2 ? 50 : 1000 / 60);
-  assert.equal(snapshot().quality.tier, 'reduced');
   assert.equal(page.demoFrame.options.quality, 'reduced');
   assert.ok(run.tick > 0);
   await assertRecordedPrefix(run);
@@ -81,7 +87,7 @@ test('foreground Demo irregular delivery reduces decoration while exact replay a
 });
 
 test('Demo practice uses the existing full Phaser submission cost once and preserves parent ownership', async (t) => {
-  const { page, snapshot, addWork } = await mounted(t);
+  const { page, addWork } = await mounted(t);
   readyFrames(page);
   const parent = authoritativeCheckpoint(page.rendered.run);
   await page.open();
@@ -91,7 +97,11 @@ test('Demo practice uses the existing full Phaser submission cost once and prese
   page.frame(0);
   const run = page.demoFrame.run;
   for (let i = 0; i < 70; i++) page.frame(1000 / 60, { beforeRender: () => addWork(20) });
-  assert.equal(snapshot().quality.tier, 'full', 'One overload window cannot change quality.');
+  assert.equal(
+    page.demoFrame.options.quality,
+    'full',
+    'One overload window cannot change quality.',
+  );
   page.$('demo-interrupt').click();
   const interrupted = authoritativeCheckpoint(run);
   for (let i = 0; i < 10; i++) page.frame(1000 / 60, { beforeRender: () => addWork(20) });
@@ -101,12 +111,11 @@ test('Demo practice uses the existing full Phaser submission cost once and prese
   demoKey(page, 'ArrowRight', false);
   for (let i = 0; i < 70; i++) page.frame(1000 / 60, { beforeRender: () => addWork(20) });
   assert.equal(
-    snapshot().quality.tier,
+    page.demoFrame.options.quality,
     'full',
     'Pause separates overload windows even for the same practice run.',
   );
   for (let i = 0; i < 70; i++) page.frame(1000 / 60, { beforeRender: () => addWork(20) });
-  assert.equal(snapshot().quality.tier, 'reduced');
   assert.equal(page.demoFrame.options.quality, 'reduced');
   assert.ok(run.tick > 0);
   page.$('demo-interrupt').click();

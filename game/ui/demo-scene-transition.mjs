@@ -61,6 +61,15 @@ export function createDemoSceneTransition(canvas, doc) {
       canvas.style.opacity = String(loading ? 0 : ease(arriving));
     },
     clear,
+    resourceSnapshot() {
+      const pixels = (veil.width || 0) * (veil.height || 0);
+      return {
+        canvases: Number(pixels > 0),
+        pixels,
+        rgbaBytesEstimate: pixels * 4,
+        loading,
+      };
+    },
     dispose() {
       clear();
       veil.remove();

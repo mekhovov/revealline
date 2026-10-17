@@ -128,3 +128,42 @@ test('scene departure retains only a decoded, displayed reward video frame', asy
   f.reward.reset();
   assert.equal(f.reward.departureFrame(), original);
 });
+
+test('resource diagnostic preserves canceled reward acquisition until actual settlement', async () => {
+  const held = deferred();
+  const f = setup({ acquire: () => held.promise });
+  f.reward.update(f.config);
+  await flush();
+  assert.equal(f.reward.resourceSnapshot().pendingPreparations, 1);
+  f.reward.reset();
+  const cancelled = f.reward.resourceSnapshot();
+  assert.equal(cancelled.pendingPreparations, 1);
+  assert.equal(cancelled.poster.canvases, 0);
+  assert.equal(cancelled.presentation, null);
+  held.resolve({});
+  await flush();
+  assert.equal(f.reward.resourceSnapshot().pendingPreparations, 0);
+  assert.equal(f.options, undefined);
+});
+
+test('resource diagnostic distinguishes the reward poster from unavailable media inspection', async () => {
+  const f = setup();
+  f.config.age = 4;
+  const canvas = f.board.children[0];
+  canvas.width = 640;
+  canvas.height = 480;
+  f.reward.update(f.config);
+  await flush();
+  const report = f.reward.resourceSnapshot();
+  assert.deepEqual(report.poster, {
+    canvases: 1,
+    pixels: 640 * 480,
+    rgbaBytesEstimate: 640 * 480 * 4,
+  });
+  assert.equal(report.pendingPreparations, 0);
+  assert.equal(report.presentationUnavailable, true);
+  assert.equal(report.presentation, null);
+  f.reward.reset();
+  assert.equal(f.reward.resourceSnapshot().poster.canvases, 0);
+  assert.equal(f.reward.resourceSnapshot().presentationUnavailable, false);
+});

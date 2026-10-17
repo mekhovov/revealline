@@ -8,6 +8,8 @@ on:
       - 'game/app.mjs'
       - 'game/replay.mjs'
       - 'game/demo-library.mjs'
+      - 'game/demo-bot-player.mjs'
+      - 'game/demo-sources.mjs'
       - 'game/journey/performance-store.mjs'
       - 'game/journey/performance.mjs'
       - 'game/journey/profile.mjs'
@@ -30,6 +32,12 @@ on:
       - 'game/test/solo-required-progress-preparation-host.test.mjs'
       - 'game/test/owned-recorder.test.mjs'
       - 'game/test/demo-library-indexeddb.test.mjs'
+      - 'game/test/demo-bot.test.mjs'
+      - 'game/test/demo-sources.test.mjs'
+      - 'game/test/demo-scene-transition.test.mjs'
+      - 'game/test/demo-loading-host.test.mjs'
+      - 'game/test/solo-demo-resources-host.test.mjs'
+      - 'game/test/victory-story-ui.test.mjs'
       - 'game/test/optional-learning-admission.test.mjs'
       - 'game/test/optional-replay-admission.test.mjs'
       - 'game/test/solo-pending-verification-gameplay-host.test.mjs'
@@ -85,6 +93,9 @@ on:
       - 'game/ui/soundtrack-player.mjs'
       - 'game/ui/demo-audio.mjs'
       - 'game/ui/demo-host.mjs'
+      - 'game/ui/demo-reward.mjs'
+      - 'game/ui/demo-scene-transition.mjs'
+      - 'game/ui/victory-story.mjs'
       - 'game/ui/title-character.mjs'
       - 'game/ui/soundtrack-panel.mjs'
       - 'game/ui/enemy-guide.mjs'
@@ -254,6 +265,12 @@ env:
     game/test/library-entry.test.mjs
     game/test/solo-lazy-library-host.test.mjs
     game/test/solo-transition-performance-host.test.mjs
+    game/test/demo-scene-transition.test.mjs
+    game/test/victory-story-ui.test.mjs
+    game/test/demo-bot.test.mjs
+    game/test/demo-sources.test.mjs
+    game/test/solo-demo-resources-host.test.mjs
+    game/test/demo-loading-host.test.mjs
 
 jobs:
   admission:
