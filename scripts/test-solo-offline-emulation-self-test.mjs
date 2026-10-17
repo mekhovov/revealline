@@ -3,11 +3,13 @@ import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import {
   OFFLINE_SELF_TEST as plan,
+  OFFLINE_NAVIGATION_SELF_TEST as navigationPlan,
   observeOfflineBranch,
+  observeOfflineNavigationBranch,
   selfTestComplete,
 } from './solo-offline-emulation-self-test.mjs';
 
-function fake(initial = false, failStage = null) {
+function fake(initial = false, failStage = null, onlineAfterNavigation) {
   let online = initial,
     url = 'about:blank',
     connected = true;
@@ -28,7 +30,9 @@ function fake(initial = false, failStage = null) {
       return { online, url };
     },
     async goto(value) {
+      calls.push(['goto', value]);
       url = value;
+      if (typeof onlineAfterNavigation === 'boolean') online = onlineAfterNavigation;
     },
   };
   const browser = { version: () => plan.browserVersion, isConnected: () => connected };
@@ -148,17 +152,127 @@ test('an incomplete branch or uncertain owner is never a completed diagnostic', 
   }
 });
 
+for (const initial of [true, false])
+  test(`navigation controls preserve changing native state and session ownership: ${initial}`, async () => {
+    const branches = [];
+    for (const id of navigationPlan.branches) {
+      const host = fake(initial, null, true);
+      const branch = await observeOfflineNavigationBranch({ id, ...host });
+      branches.push(branch);
+      assert.equal(branch.stages[0].online, initial);
+      assert.equal(branch.browserClosed, true);
+      const navigations = host.calls.filter(([method]) => method === 'goto');
+      assert.deepEqual(
+        navigations.map(([, url]) => url),
+        [
+          'data:text/html,offline-navigation-probe-one',
+          'data:text/html,offline-navigation-probe-two',
+        ],
+      );
+      const states = Object.fromEntries(branch.stages.map((stage) => [stage.stage, stage.online]));
+      assert.equal(states['first-data-navigation-complete'], true);
+      assert.equal(states['second-data-navigation-complete'], true);
+      const attached = host.calls.filter(([method]) => method === 'attach').length;
+      assert.equal(attached, id === 'no-auxiliary-navigation' ? 0 : 1);
+      const detached = host.calls.filter(([method]) => method === 'detach').length;
+      assert.equal(detached, attached, 'Every mutation uses the same explicitly owned session.');
+      const mutations = host.calls.filter(([method]) => method.startsWith('Network.'));
+      if (id === 'no-auxiliary-navigation') assert.deepEqual(mutations, []);
+      else if (id === 'combined-before-navigation') {
+        assert.deepEqual(
+          mutations.map(([method]) => method),
+          ['Network.enable', 'Network.overrideNetworkState'],
+        );
+        assert.equal(states['native-state-overridden-before-navigation'], false);
+        assert(host.calls.findIndex(([method]) => method === 'goto') > 3);
+      } else {
+        assert.deepEqual(
+          mutations.map(([method]) => method),
+          ['Network.overrideNetworkState', 'Network.overrideNetworkState'],
+        );
+        assert.equal(states['native-state-overridden-after-first-navigation'], false);
+        assert.equal(states['native-state-overridden-after-second-navigation'], false);
+        assert.equal(states['auxiliary-session-detached'], false);
+      }
+      assert.equal(host.calls.at(-1)[0], 'close');
+    }
+    assert(
+      selfTestComplete(
+        {
+          format: navigationPlan.format,
+          status: 'completed-diagnostic',
+          qualificationEligible: false,
+          browserVersion: navigationPlan.browserVersion,
+          playwrightVersion: navigationPlan.playwright,
+          branches,
+        },
+        closed(),
+      ),
+      'A complete true-state observation is still diagnostic, never a gameplay pass.',
+    );
+  });
+
+test('navigation failure retains the prior native observations and closes its only session', async () => {
+  const host = fake(false, 'navigate-second-data-document', true);
+  await assert.rejects(
+    observeOfflineNavigationBranch({ id: 'owned-session-after-navigation', ...host }),
+    /injected/,
+  );
+  const last = host.rows.at(-1);
+  assert.equal(last.status, 'failed');
+  assert.equal(last.browserClosed, true);
+  assert.deepEqual(
+    last.stages.map((stage) => stage.online),
+    [false, false, false, true, false],
+  );
+  assert.equal(host.calls.filter(([method]) => method === 'attach').length, 1);
+  assert.equal(host.calls.filter(([method]) => method === 'detach').length, 1);
+});
+
+test('navigation completion requires exact ordered documents, unchanged identity and closed ownership', async () => {
+  const branches = [];
+  for (const id of navigationPlan.branches)
+    branches.push(await observeOfflineNavigationBranch({ id, ...fake(false, null, true) }));
+  const report = {
+    format: navigationPlan.format,
+    status: 'completed-diagnostic',
+    qualificationEligible: false,
+    browserVersion: navigationPlan.browserVersion,
+    playwrightVersion: navigationPlan.playwright,
+    branches,
+  };
+  for (const mutate of [
+    (value) => value.branches.reverse(),
+    (value) => value.branches[0].stages.reverse(),
+    (value) => (value.branches[0].stages[2].url = value.branches[0].stages[1].url),
+    (value) => (value.branches[1].browserClosed = false),
+    (value) => (value.branches[2].stages[3].online = null),
+    (value) => (value.browserVersion = 'changed'),
+    (value) => (value.playwrightVersion = 'changed'),
+    (value) => (value.qualificationEligible = true),
+    (value) => (value.format = plan.format),
+  ]) {
+    const changed = structuredClone(report);
+    mutate(changed);
+    assert.equal(selfTestComplete(changed, closed()), false);
+  }
+  assert.equal(selfTestComplete(report, { ...closed(), ambiguous: [{}] }), false);
+  assert.equal(selfTestComplete(report, { ...closed(), survivors: [{}] }), false);
+});
+
 test('the one-shot diagnostic keeps native controls bounded and cannot enter gameplay', async () => {
   const workflow = await readFile(
     new URL('../.github/workflows/solo-offline-emulation-self-test-temporary.yml', import.meta.url),
     'utf8',
   );
-  assert.match(workflow, /github.event.before == '1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f'/);
+  assert.match(workflow, /github.event.before == 'c9e637ad81fadf49caec884155d1bd0c2496c59c'/);
   assert.match(workflow, /github.event.pull_request.number == 1544/);
   assert.match(workflow, /github.event.action == 'synchronize'/);
   assert.match(workflow, /playwright@1\.62\.1/);
   assert.match(workflow, /--with-deps chromium/);
   assert.match(workflow, /if: always\(\)/);
+  assert.match(workflow, /--navigation-controls/);
+  assert.match(workflow, /name: solo-offline-navigation-emulation-/);
   assert.doesNotMatch(workflow, /continue-on-error|workflow_dispatch|build-b117|distribution.zip/);
   const source = await readFile(
     new URL('./solo-offline-emulation-self-test.mjs', import.meta.url),
@@ -171,4 +285,15 @@ test('the one-shot diagnostic keeps native controls bounded and cannot enter gam
   assert.equal(plan.commandTimeoutMs, 120000);
   assert.equal(plan.operationTimeoutMs, 5000);
   assert.equal(plan.maximumScratchBytes, 256 * 1024 * 1024);
+  for (const key of [
+    'commandTimeoutMs',
+    'operationTimeoutMs',
+    'launchTimeoutMs',
+    'maximumReportBytes',
+    'maximumScratchBytes',
+    'minimumFreeBytes',
+    'browserVersion',
+    'playwright',
+  ])
+    assert.equal(navigationPlan[key], plan[key]);
 });

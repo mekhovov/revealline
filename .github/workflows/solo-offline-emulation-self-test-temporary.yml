@@ -18,7 +18,7 @@ concurrency:
 jobs:
   diagnostic:
     # This is one browser-setup experiment, without a game build or gameplay credit.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f'
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c9e637ad81fadf49caec884155d1bd0c2496c59c'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
@@ -48,15 +48,15 @@ jobs:
           echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-offline-self-test-browsers" >> "$GITHUB_ENV"
           PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/solo-offline-self-test-browsers" node "$RUNNER_TEMP/solo-offline-self-test-tools/node_modules/playwright/cli.js" install --with-deps chromium
           sudo apt-get install -y --no-install-recommends xvfb xauth
-      - name: Observe three fresh native contexts without a game
+      - name: Observe three fresh native navigation controls without a game
         timeout-minutes: 4
-        run: node scripts/solo-offline-emulation-self-test.mjs run "$RUNNER_TEMP/solo-offline-emulation-evidence"
+        run: node scripts/solo-offline-emulation-self-test.mjs run "$RUNNER_TEMP/solo-offline-emulation-evidence" --navigation-controls
       - name: Retain every observed stage and owned closure
         if: always()
         timeout-minutes: 1
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-offline-emulation-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-offline-navigation-emulation-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/solo-offline-emulation-evidence
           if-no-files-found: warn
           retention-days: 14
