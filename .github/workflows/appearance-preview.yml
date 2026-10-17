@@ -81,6 +81,16 @@ on:
       - 'game/test/menu-scene-motion.test.mjs'
       - 'game/test/solo-render-submission.test.mjs'
       - 'game/test/solo-performance-host.test.mjs'
+      - 'game/scenario-entry.mjs'
+      - 'game/playground/model.mjs'
+      - 'game/ui/edition-controller-practice.mjs'
+      - 'game/test/edition-controller-practice.test.mjs'
+      - 'game/test/scenario-mastery.test.mjs'
+      - 'game/test/edition-solo-host.test.mjs'
+      - 'game/test/optional-chapters-host-copy.test.mjs'
+      - 'game/test/optional-world-choice-lifetime.test.mjs'
+      - 'game/test/optional-world-play-lifetime.test.mjs'
+      - 'game/test/optional-world-play-installed-host.test.mjs'
       - 'game/test/solo-preparation-invalidation-host.test.mjs'
       - 'game/test/solo-soundtrack-context-host.test.mjs'
       - 'game/test/flight-information-source.test.mjs'
@@ -211,6 +221,13 @@ jobs:
         game/test/menu-scene-motion.test.mjs
         game/test/solo-render-submission.test.mjs
         game/test/solo-performance-host.test.mjs
+        game/test/edition-controller-practice.test.mjs
+        game/test/scenario-mastery.test.mjs
+        game/test/edition-solo-host.test.mjs
+        game/test/optional-chapters-host-copy.test.mjs
+        game/test/optional-world-choice-lifetime.test.mjs
+        game/test/optional-world-play-lifetime.test.mjs
+        game/test/optional-world-play-installed-host.test.mjs
         game/test/solo-preparation-invalidation-host.test.mjs
         game/test/solo-soundtrack-context-host.test.mjs
         game/test/flight-information-source.test.mjs
