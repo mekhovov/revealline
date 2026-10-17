@@ -69,6 +69,31 @@ export function overflightMarathonNextContract(run, locale = 'en') {
   if (!(next < 5)) return null;
   const language = locale === 'uk' ? 'uk' : 'en';
   const layout = overflightBattlefieldDefinition(run.raidVariant.sequence?.[next]);
+  if (run.compiled?.rulesVersion >= 4) {
+    // Custom V4 projects may omit both battlefield cycling and movement profiles.
+    // Describe their retained geometry without promising built-in transformations.
+    if (!run.raidVariant.sequence)
+      return language === 'uk'
+        ? 'Авторські маршрути · геометрія поля бою зберігається'
+        : 'Authored routes · battlefield geometry is preserved';
+    if ([2, 5].includes(next + 1)) {
+      const upcoming = overflightMarathonProject(run.raidVariant.source, next + 1, run.seed);
+      const reverses = upcoming.encounters.some((encounter) =>
+        [...encounter.packs, ...encounter.objectives].some(
+          (actor, index) => index % 2 && !actor.escortOf && actor.movement,
+        ),
+      );
+      if (!reverses)
+        return [
+          layout?.title[language],
+          language === 'uk'
+            ? 'Авторські підходи · патрульна геометрія зберігається'
+            : 'Authored approaches · patrol geometry is preserved',
+        ]
+          .filter(Boolean)
+          .join(' · ');
+    }
+  }
   const tactics = run.compiled?.rulesVersion >= 4 ? marathonTacticsV4 : OVERFLIGHT_MARATHON_TACTICS;
   return [layout?.title[language], tactics[next][language]].filter(Boolean).join(' · ');
 }

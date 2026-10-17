@@ -125,6 +125,57 @@ test('Marathon previews describe V4 authored-cover routes and retain legacy V3 t
   }
 });
 
+test('custom V4 Marathon previews preserve optional battlefield and movement authoring', () => {
+  for (const retainBattlefield of [false, true]) {
+    const source = createOverflightHuntProject({
+      rulesVersion: 4,
+      layout: 'relay-ruins-receiver-gardens',
+      seed: 42,
+    });
+    if (!retainBattlefield) {
+      delete source.battlefield;
+      delete source.terrain;
+      delete source.presentation;
+    }
+    for (const encounter of source.encounters)
+      for (const actor of [...encounter.packs, ...encounter.objectives]) delete actor.movement;
+    const original = structuredClone(source);
+    const definition = compileOverflightHuntProject(source);
+    const run = variant().createRun(definition);
+    const identity = run.raidVariant.baseIdentity;
+    for (const contract of retainBattlefield ? [5] : [2, 3, 4, 5]) {
+      run.raidVariant.contract = contract - 1;
+      const project = overflightMarathonProject(source, contract, 42);
+      for (const [index, encounter] of project.encounters.entries()) {
+        const before = source.encounters[index];
+        for (const actor of [...encounter.packs, ...encounter.objectives]) {
+          if (actor.escortOf) continue;
+          const authored = [...before.packs, ...before.objectives].find((a) => a.id === actor.id);
+          const offset = (contract - 1) % authored.route.length;
+          assert.deepEqual(actor.route, [
+            ...authored.route.slice(offset),
+            ...authored.route.slice(0, offset),
+          ]);
+          assert.equal(actor.movement, undefined);
+        }
+      }
+      const en = overflightMarathonNextContract(run, 'en');
+      const uk = overflightMarathonNextContract(run, 'uk');
+      assert.doesNotMatch(en, /reverse|new layout|reflected|shifted/i);
+      assert.doesNotMatch(
+        uk,
+        /змінюють напрямок|нова місцевість|нову місцевість|віддзеркал|зміщен/i,
+      );
+      assert.match(en, /authored/i);
+      assert.match(uk, /авторськ/i);
+      assert.equal(overflightMarathonNextContract(run, 'fr'), en);
+    }
+    assert.deepEqual(source, original);
+    assert.equal(run.raidVariant.baseIdentity, identity);
+    assert.deepEqual(run.raidVariant.source, original);
+  }
+});
+
 test('Time Attack and Marathon reject experimental terrain rather than silently changing routes', () => {
   const definition = { ...compiled(), terrain: { obstacles: [] } };
   for (const id of ['time-attack', 'marathon']) {
