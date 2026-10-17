@@ -192,7 +192,7 @@ assert.equal(
   plan.artifact.sourceRevision,
   plan.sourceRole === 'baseline'
     ? 'b11745223861c3973ad4bf440cc536198b8e0371'
-    : '2ec605eb76e38f9c9a3e21b7fa82dd80c580c457',
+    : '3adcd53792043ef02459e86168c6b33a66d6ef00',
 );
 const selectedRoot = selected.payloadRealpath;
 assert(selectedRoot.startsWith(runnerTemp + '/'), 'Only common admitted job-local payloads');

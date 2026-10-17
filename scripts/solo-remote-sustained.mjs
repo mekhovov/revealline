@@ -14,7 +14,7 @@ const MiB = 1024 ** 2;
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const source = {
   baseline: 'b11745223861c3973ad4bf440cc536198b8e0371',
-  candidate: '2ec605eb76e38f9c9a3e21b7fa82dd80c580c457',
+  candidate: '3adcd53792043ef02459e86168c6b33a66d6ef00',
 };
 export const SUSTAINED_PHASES = Object.freeze({
   long29: {

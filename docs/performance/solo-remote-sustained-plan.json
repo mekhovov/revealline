@@ -1,25 +1,25 @@
 {
   "format": "SoloHostedSustainedManifestV1",
-  "cohort": "linux-continuous-long29-saved-reload-2ec-v1",
-  "phase": "long29",
+  "cohort": "linux-sustained-3adcd537-pending-release",
+  "phase": "soak",
   "repository": "mekhovov/revealline",
   "node": "22.13.1",
   "playwright": "1.62.1",
   "candidate": {
-    "revision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
-    "tree": "c4d176a8d5af6dfc0becc70e2a5a42a40ce5a367",
-    "run": 38963874667,
-    "artifact": 12074887637,
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
     "outer": {
-      "bytes": 1090917792,
-      "sha256": "22a0d121c0afe086392aaaec392af3d15c544b920c36d96422c84043259aa33f"
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
     },
     "inner": {
-      "bytes": 1073304249,
-      "sha256": "7049aedea080d135bb83101861cf30e7ca350333a2e0bd8cf75b02003fb012e9"
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
     },
-    "manifestSHA256": "64d8a4bc84d2869c87856935a6d65ca2897c693c8bc46908c1a90110e5e9422c",
-    "producer": "Exact retained Appearance CI package, Node22.13.1 Linux; 819/819 focused checks across65completefiles. No substitute rebuild."
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
   },
   "baseline": {
     "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
@@ -187,10 +187,10 @@
   ],
   "release": {
     "format": "SoloHostedPhaseReleaseV1",
-    "status": "pending-first-eight-and-four-wave-review",
-    "phase": "long29",
-    "previousPhase": "diagnostics",
-    "candidateRevision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
+    "status": "pending-latest-first-eight-and-soak-review",
+    "phase": "soak",
+    "previousPhase": "first8",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
     "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
     "noUnclosedOwners": false,
     "allPriorPlannedJobsClosed": false,
@@ -218,7 +218,7 @@
   "remainingDistinctScope": [
     "Actual30minute soak remains separate and does not prove continuous recording.",
     "Public page-reload equality proves no OS flush, browser restart, power loss or attribution to the Pause write.",
-    "This2ec artifact excludes later Demo-quality runtime; successor qualification needs new artifact authority."
+    "Exact3ad package metadata is pinned; full remote source/ZIP/CSP proof and new source-scoped observations remain required."
   ],
   "jobs": [
     {
@@ -305,12 +305,21 @@
     {
       "path": "scripts/solo-remote-sustained.mjs",
       "bytes": 34629,
-      "sha256": "17f7d84a294d6cbd7866bb527cf6ff731912480faade33a0f2acc2df9c50f3e4"
+      "sha256": "74009ba6e142c9e8ad7641c62d33db0c7feac844778dbc9b4b833f929797aed7"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
       "bytes": 13941,
       "sha256": "b7bd4c75ce4ff04e26545aee7d488d8d674173379d372bb815b47a7935567887"
     }
-  ]
+  ],
+  "bindingScope": {
+    "status": "metadata-and-git-source-bound-release-held",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "candidateArtifact": 12082915872,
+    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
+    "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
+    "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
+  }
 }

@@ -7,20 +7,20 @@
   "helperTimeoutMs": 6000000,
   "evidenceBytes": 268435456,
   "candidate": {
-    "revision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
-    "tree": "c4d176a8d5af6dfc0becc70e2a5a42a40ce5a367",
-    "run": 38963874667,
-    "artifact": 12074887637,
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
     "outer": {
-      "bytes": 1090917792,
-      "sha256": "22a0d121c0afe086392aaaec392af3d15c544b920c36d96422c84043259aa33f"
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
     },
     "inner": {
-      "bytes": 1073304249,
-      "sha256": "7049aedea080d135bb83101861cf30e7ca350333a2e0bd8cf75b02003fb012e9"
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
     },
-    "manifestSHA256": "64d8a4bc84d2869c87856935a6d65ca2897c693c8bc46908c1a90110e5e9422c",
-    "producer": "Exact retained Appearance CI package, Node22.13.1 Linux; 819/819 focused checks across65completefiles. No substitute rebuild."
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
   },
   "baseline": {
     "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
@@ -95,8 +95,8 @@
     }
   },
   "format": "SoloHostedOfflinePairPlan.v1",
-  "status": "integrated-pending-successor-artifact-first8-and-gameplay-review",
-  "cohort": "linux-offline-success-gameplay-unreleased",
+  "status": "bound-3ad-metadata-pending-full-remote-proof-and-reviewed-release",
+  "cohort": "linux-offline-3adcd537-pending-release",
   "profileEvidenceBytes": 1082130432,
   "rowEvidenceBytes": 33554432,
   "scope": "Linux instrumented offline persistence diagnostic, with explicit public Opening capture/Next and two same-engine strict replay checks ONLY after exact successful offline launch. Failed launch remains original negative diagnostic; no gameplay/default-mission/physical-PWA/thermal credit.",
@@ -131,7 +131,7 @@
     "driver": {
       "path": "scripts/observe-solo-offline-persistence.mjs",
       "bytes": 44220,
-      "sha256": "c5d6df6b4e702f8f6da1451af5967d9036a632ab22d9f9bf6f4de7189a7de0c2"
+      "sha256": "eca92648f8b894249ad688ca32253446fc2f5a604673722e8dd6d193ad701495"
     },
     "gameplay": {
       "format": "SoloOfflinePublicGameplayV1",
@@ -151,12 +151,12 @@
     {
       "path": "scripts/solo-remote-offline.mjs",
       "bytes": 19252,
-      "sha256": "7cc6424c122609593b059a722654358b8f293f105c14af8407d3fa5076d4c65c"
+      "sha256": "59241da8bfa58d4c3d66d7b249545e95e1f01f26e1fd15dceee96832aa2d8965"
     },
     {
       "path": "scripts/observe-solo-offline-persistence.mjs",
       "bytes": 44220,
-      "sha256": "c5d6df6b4e702f8f6da1451af5967d9036a632ab22d9f9bf6f4de7189a7de0c2"
+      "sha256": "eca92648f8b894249ad688ca32253446fc2f5a604673722e8dd6d193ad701495"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -176,5 +176,14 @@
     "failure": "No retry or repair. Every failed/partial/not-run row retained. No aggregate offline qualification pass.",
     "successOnlyGameplay": "Original600s restart stage unchanged; optional120s public play/export plus2x120s replay stages, no repair/retry/state injection. Never equate completed-diagnostic with gameplay pass."
   },
-  "setupTimeoutMs": 2400000
+  "setupTimeoutMs": 2400000,
+  "bindingScope": {
+    "status": "metadata-and-git-source-bound-release-held",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "candidateArtifact": 12082915872,
+    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
+    "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
+    "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
+  }
 }
