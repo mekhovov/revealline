@@ -348,6 +348,30 @@ test('existing strict journal reader admits only exact readiness source and cold
   await store.retain(j.seal('paused'), 'final-existing-public-boundary');
   const r = { hitchJournal: store.finish() };
   assert.equal((await verifyTimingHitchJournal(p, r, output, url)).status, 'complete');
+  const current = await import('./solo-remote-readiness.mjs');
+  for (const [sourceCohort, phase, fixture] of [
+    [
+      'readiness-selected-font-candidatec696',
+      'selected-font-cancel',
+      current.SELECTED_FONT_FIXTURE,
+    ],
+    [
+      'readiness-public-effects-candidatec696',
+      'public-effects-full',
+      current.COMPACT_READINESS_FIXTURES.full,
+    ],
+  ]) {
+    const q = structuredClone(p);
+    q.sourceCohort = sourceCohort;
+    q.phase = phase;
+    q.fixture = fixture;
+    Object.assign(q.candidate, current.SELECTED_FONT_SOURCE);
+    q.runtimeRevision = current.SELECTED_FONT_SOURCE.revision;
+    assert.equal((await verifyTimingHitchJournal(q, r, output, url)).status, 'complete');
+    q.candidate.tree = '0'.repeat(40);
+    assert.equal((await verifyTimingHitchJournal(q, r, output, url)).status, 'invalid-evidence');
+  }
+
   for (const mutate of [
     (p) => (p.sourceCohort = 'unreviewed'),
     (p) => (p.phase = 'long29'),
@@ -563,6 +587,21 @@ test('saved Resume strict binary journal reader requires both positive-active do
   }
   const r = { hitchJournal: store.finish() };
   assert.equal((await verifyTimingHitchJournal(p, r, output, url)).status, 'complete');
+  const current = await import('./solo-remote-readiness.mjs'),
+    successor = structuredClone(p);
+  successor.sourceCohort = 'readiness-resume-candidatec696';
+  successor.engine = 'webkit';
+  Object.assign(successor.candidate, current.SELECTED_FONT_SOURCE);
+  successor.runtimeRevision = current.SELECTED_FONT_SOURCE.revision;
+  successor.fixture = current.COMPACT_READINESS_FIXTURES.saved;
+  assert.equal((await verifyTimingHitchJournal(successor, r, output, url)).status, 'complete');
+  const missing = structuredClone(r);
+  missing.hitchJournal.documents.pop();
+  assert.equal(
+    (await verifyTimingHitchJournal(successor, missing, output, url)).status,
+    'invalid-evidence',
+  );
+
   for (const mutate of [
     (q) => (q.hitchJournal.documents[0].header.runningSeen = false),
     (q) => (q.hitchJournal.documents[0].header.activeFrames = 0),
@@ -603,4 +642,60 @@ test('both new Resume matrix declarations run from the actual isolated one-file 
       }),
     );
   }
+});
+
+// Exact compact successor only; the original4bf recipe and tests above stay unchanged.
+test('compact c696 saved Resume retains exact-byte restoration, native replay and two-document journal policy', async () => {
+  const a = await import('./solo-remote-readiness.mjs');
+  const m = resumeManifest('saved-resume');
+  m.sourceCohort = 'readiness-resume-candidatec696';
+  Object.assign(m.candidate, a.SELECTED_FONT_SOURCE);
+  m.runtimeRevision = m.release.candidateRevision = m.candidate.revision;
+  m.fixture = a.COMPACT_READINESS_FIXTURES.saved;
+  const p = bindReadinessJob(m, 'webkit'),
+    r = resumeRaw('saved-resume');
+  r.raw.sourceRevision = r.raw.buildIdentity.sourceRevision = m.candidate.revision;
+  r.raw.scenarioSHA256 = m.fixture.sha256;
+  r.raw.environment.engine = 'webkit';
+  r.raw.environment.contextMode = 'persistent';
+  r.raw.environment.contextOwner = {
+    cleanup: { status: 'closed', profileRemoved: true, browserClosed: true },
+  };
+  r.raw.environment.graphicsCapability = {
+    format: 'SoloReadinessGpuCapabilityV1',
+    engine: 'webkit',
+    canProceed: true,
+    requestBudgetMs: 5000,
+    cleanupBudgetMs: 2000,
+    maximumBytes: 16384,
+    status: 'unsupported',
+    requestSettled: false,
+    sessionDetached: false,
+    reason: 'non-chromium-engine',
+  };
+  r.raw.replay.nativeVerification.engine = 'webkit';
+  const recipe = JSON.parse(await readFile(new URL('../' + m.fixture.path, import.meta.url)));
+  r.raw.actions = recipe.actions.map((x, i) => ({
+    path: String(i),
+    type: x.type,
+    label: x.label ?? null,
+    status: 'pass',
+  }));
+  assert.equal(
+    (await readinessAssessment(p, p.rows[0], r.raw, command, { status: 'complete' }, r.text))
+      .readinessCorrectness,
+    'pass',
+  );
+  const closeIndex = recipe.actions.findIndex(
+    (a) => a.type === 'expect' && a.selector?.includes('body:not(:has(#settings-dialog[open]))'),
+  );
+  const closed = r.raw.actions[closeIndex];
+  assert(closed);
+  closed.status = 'skipped-not-visible';
+  assert.equal(
+    (await readinessAssessment(p, p.rows[0], r.raw, command, { status: 'complete' }, r.text))
+      .readinessCorrectness,
+    'fail',
+  );
+  assert.throws(() => bindReadinessJob(m, 'chromium'));
 });

@@ -102,11 +102,14 @@ const hitchModule = flags.some((flag) => flag.startsWith('--hitch-journal'))
   ? await import('./solo-qualification-hitch-journal.mjs')
   : null;
 const hitchOptions = hitchModule?.qualificationHitchJournalOptions(flags, scenario, bytes);
-const readinessModule = flags.some((flag) => flag.startsWith('--readiness-probe'))
-  ? await import('./solo-qualification-readiness.mjs')
-  : null;
+const readinessModule =
+  scenario.selectedFontCancellation || flags.some((flag) => flag.startsWith('--readiness-probe'))
+    ? await import('./solo-qualification-readiness.mjs')
+    : null;
 const readinessOptions = readinessModule?.qualificationReadinessOptions(flags, scenario, bytes);
-let readinessDocuments = 0;
+let readinessDocuments = 0,
+  selectedFontHold = null;
+const selectedFontReadiness = readinessOptions?.protocol === 'selected-font-cancel-v1';
 const qualityOptions = qualificationQualityOptions(
   flags,
   scenario,
@@ -273,7 +276,9 @@ if (readinessOptions) {
     scope:
       readinessOptions.protocol === 'first-running-v1'
         ? 'Fixed external settled120 B and original first30 actions/raw gates are retained. This is not an equivalent ordinary timing comparator.'
-        : 'Fixed external settled120 B and raw gates are retained. The short public Resume route is correctness-only, not an ordinary timing comparator.',
+        : readinessOptions.protocol === 'selected-font-cancel-v1'
+          ? 'Fixed external settled120 B and raw gates are retained. One exact held native font response, public cancellation and explicit Start are correctness-only.'
+          : 'Fixed external settled120 B and raw gates are retained. The short public Resume route is correctness-only, not an ordinary timing comparator.',
   };
 }
 const resumeReadiness = readinessOptions?.protocol.endsWith('-resume-v1') === true;
@@ -425,8 +430,10 @@ try {
     if (response.status() >= 400 && report.failedResponses.length < 100)
       report.failedResponses.push({ url: response.url(), status: response.status() });
   });
-  if (mirrored || fixtureAccess)
+  if (selectedFontReadiness) selectedFontHold = readinessModule.createSelectedFontHold(url.href);
+  if (mirrored || fixtureAccess || selectedFontReadiness)
     await page.route('**/*', async (route) => {
+      if (selectedFontHold && (await selectedFontHold.handle(route))) return;
       const requested = new URL(route.request().url());
       const decision = mirror?.(requested.href);
       if (decision?.kind === 'blocked') {
@@ -799,6 +806,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
           scope:
             'Retained last submitted paint record only; sparse action-boundary observations do not establish the tier between samples.',
         }),
+        readinessBoundary: (label) => readiness?.boundary(label),
         export: () => ({
           ...(readiness ? { readiness: readiness.export() } : {}),
           ...(quality ? { submittedTiers: quality.export() } : {}),
@@ -1361,6 +1369,20 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             'Pause-only memory profile failed; partial application data retained',
           );
         }
+        if (selectedFontHold) {
+          if (action.label === 'selected-theme') await selectedFontHold.waitUntilHeld();
+          if (action.label === 'public-cancelled') {
+            const witness = await page.evaluate(
+              () => window.soloQualificationProbe.export().readiness,
+            );
+            readinessModule.assertSelectedFontCancelled(witness);
+            selectedFontHold.releaseAfterPublicCancellation();
+          }
+          if (action.label === 'no-automatic-start-after-release')
+            await page.evaluate(() =>
+              window.soloQualificationProbe.readinessBoundary('font-release-no-start'),
+            );
+        }
         if (record.status === 'running') record.status = 'pass';
       } catch (error) {
         record.status = 'fail';
@@ -1417,6 +1439,16 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   report.failure = String(error.stack ?? error);
   process.exitCode = 1;
 } finally {
+  if (selectedFontHold) {
+    await selectedFontHold.close();
+    report.selectedFontTransport = selectedFontHold.snapshot();
+    if (report.selectedFontTransport.status !== 'complete') {
+      report.scenarioStatus = 'fail';
+      report.selectedFontFailure =
+        'Original selected-font response did not complete within its owned fault protocol.';
+      process.exitCode = 1;
+    }
+  }
   if (cpuRecorder) {
     await cpuRecorder.stop(report.scenarioStatus === 'fail' ? 'scenario-failure' : 'actions-ended');
     if (report.cpuProfile.status !== 'retained' || report.cpuProfile.limitReached) {
@@ -1604,7 +1636,14 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   if (readinessOptions) {
     report.readinessDocuments = readinessDocuments;
     report.readinessObservation = report.finalState?.probe?.readiness ?? null;
-    if (resumeReadiness) {
+    if (selectedFontReadiness) {
+      report.readinessAssessment = readinessModule.assessSelectedFontReadiness(
+        report.readinessObservation,
+        report.snapshots.at(-1)?.application,
+        readinessDocuments,
+        report.selectedFontTransport,
+      );
+    } else if (resumeReadiness) {
       const before = report.snapshots.find((row) => row.group === 'before-resume');
       const restored = report.snapshots.find((row) => row.group === 'saved-restored-before-resume');
       const after = report.snapshots.find((row) => row.group === 'after-resume');

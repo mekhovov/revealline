@@ -739,3 +739,81 @@ test('combined effects subplans preserve real bounded binary journal verificatio
     }
   }
 });
+
+// The failed compact route is replaced prospectively only for exact c696.
+test('compact c696 comparison admits exact new source/recipes and preserves all raw numeric failures', async () => {
+  const a = await import('./solo-remote-readiness.mjs');
+  for (const arm of qualityComparisonSchedule()) {
+    const item = model(arm),
+      ref = a.COMPACT_READINESS_FIXTURES[arm.tier],
+      bytes = await readFile(new URL('../' + ref.path, import.meta.url)),
+      scenario = JSON.parse(bytes);
+    const p = {
+      sourceCohort: 'readiness-public-effects-candidatec696',
+      phase: 'public-effects-' + arm.tier,
+      candidate: a.SELECTED_FONT_SOURCE,
+      engine: 'webkit',
+      fixture: ref,
+    };
+    const args = qualityComparisonArguments(
+      { plan: p, here: '/tools/scripts', repository: '/tools' },
+      arm,
+      'http://localhost/game/',
+      '/out',
+    ).slice(4);
+    assert.equal(
+      qualificationQualityOptions(args, scenario, ref.sha256).sourceRevision,
+      a.SELECTED_FONT_SOURCE.revision,
+    );
+    for (const changed of [
+      args.map((x) => (x.startsWith('--source-revision=') ? '--source-revision=' + source : x)),
+      args.concat('--readiness-probe=selected-font-cancel-v1'),
+    ])
+      assert.throws(() => qualificationQualityOptions(changed, scenario, ref.sha256));
+    assert.throws(() =>
+      qualificationQualityOptions(
+        args,
+        { ...scenario, id: scenario.id.replace('-compact-close-v2', '') },
+        ref.sha256,
+      ),
+    );
+    assert.throws(() => qualificationQualityOptions(args, scenario, recipes[arm.tier]));
+    const r = item.raw;
+    r.sourceRevision =
+      r.buildIdentity.sourceRevision =
+      r.qualityComparison.sourceRevision =
+        a.SELECTED_FONT_SOURCE.revision;
+    r.scenarioSHA256 = r.qualityComparison.scenarioSHA256 = ref.sha256;
+    r.snapshots.forEach((s) => (s.application.sourceRevision = a.SELECTED_FONT_SOURCE.revision));
+    const setting = r.actions[0].publicEffects;
+    r.actions = scenario.actions.map((x, i) => ({
+      path: String(i),
+      type: x.type,
+      label: x.label ?? null,
+      status: 'pass',
+      ...(i === 2 ? { publicEffects: setting } : {}),
+    }));
+    const admission = structuredClone(admitted);
+    admission.artifacts.candidate.sourceRevision = a.SELECTED_FONT_SOURCE.revision;
+    admission.artifacts.candidate.sourceTree = a.SELECTED_FONT_SOURCE.tree;
+    const result = await assessQualityComparisonArm(
+      r,
+      item.command,
+      item.journal,
+      arm,
+      admission,
+      p,
+    );
+    assert.equal(result.status, 'observed-comparison-arm', result.failure);
+    assert.equal(result.rawPerformanceGateStatus, 'fail');
+    const i = scenario.actions.findIndex((x) =>
+      x.selector?.includes('body:not(:has(#settings-dialog[open]))'),
+    );
+    assert(i >= 0);
+    r.actions[i].status = 'skipped-not-visible';
+    assert.equal(
+      (await assessQualityComparisonArm(r, item.command, item.journal, arm, admission, p)).status,
+      'invalid-comparison',
+    );
+  }
+});

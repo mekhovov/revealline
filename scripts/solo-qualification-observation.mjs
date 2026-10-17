@@ -417,6 +417,13 @@ export const QUALITY_COMPARISON_RECIPES = Object.freeze({
   full: '6b8a1228961eb06e3731ed1db82f7a3852e45b0b1e0c41ba566cd3c9fbc7f71a',
   reduced: 'd25dca66beea78f53725a594bdcdd3c6228f5dd6d81e85cd21e092d031114b96',
 });
+// Corrected public compact-menu routes are admitted only for their separately
+// declared source. Historical 4bf recipes retain their exact original identity.
+export const COMPACT_QUALITY_COMPARISON_SOURCE = 'c696af41857840359ae473558b90682f3d71f2db';
+export const COMPACT_QUALITY_COMPARISON_RECIPES = Object.freeze({
+  full: 'ed26c97daf58226b48d02eb014cbfa5d9351e686916fd91d41c1741445051ab5',
+  reduced: '2e7c56516c53b6fbcb9f63a807662ecc3d9e63d8812f0ef6377ac41c2532bd9d',
+});
 export function qualificationQualityOptions(flags, scenario, hash) {
   const selected = flags.filter((f) => f.startsWith('--visual-quality-observation'));
   if (!selected.length) return null;
@@ -427,9 +434,15 @@ export function qualificationQualityOptions(flags, scenario, hash) {
   const tier = selected[0].slice('--visual-quality-observation='.length);
   require(selected[0] === `--visual-quality-observation=${tier}` &&
     ['full', 'reduced'].includes(tier), 'Exact quality selector');
-  require(hash === QUALITY_COMPARISON_RECIPES[tier], 'Exact public-effects recipe bytes');
+  const sourceRevision = flags.find((flag) => flag.startsWith('--source-revision='))?.slice(18);
+  require([QUALITY_COMPARISON_SOURCE, COMPACT_QUALITY_COMPARISON_SOURCE].includes(
+    sourceRevision,
+  ), 'Exact public-effects source');
+  const compact = sourceRevision === COMPACT_QUALITY_COMPARISON_SOURCE;
+  const recipes = compact ? COMPACT_QUALITY_COMPARISON_RECIPES : QUALITY_COMPARISON_RECIPES;
+  require(hash === recipes[tier], 'Exact public-effects recipe bytes');
   require(scenario.id ===
-    `public-effects-${tier}-first30-border-v1`, 'Exact public-effects recipe');
+    `public-effects-${tier}-first30-border-v1${compact ? '-compact-close-v2' : ''}`, 'Exact public-effects recipe');
   require(scenario.timeoutMs === 240000, 'Original scenario deadline');
   for (const flag of [
     '--browser=webkit',
@@ -441,7 +454,7 @@ export function qualificationQualityOptions(flags, scenario, hash) {
     '--viewport=400x850',
     '--dpr=3',
     '--mobile-context',
-    `--source-revision=${QUALITY_COMPARISON_SOURCE}`,
+    `--source-revision=${sourceRevision}`,
   ])
     require(flags.filter((f) => f === flag).length === 1, `Required ${flag}`);
   for (const prefix of [
@@ -462,7 +475,7 @@ export function qualificationQualityOptions(flags, scenario, hash) {
   return {
     format: 'SoloPublicEffectsComparisonArmV1',
     tier,
-    sourceRevision: QUALITY_COMPARISON_SOURCE,
+    sourceRevision,
     scenarioSHA256: hash,
     performanceQualification: false,
   };
