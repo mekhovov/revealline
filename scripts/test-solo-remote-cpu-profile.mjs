@@ -230,11 +230,39 @@ test('source/replay/control/profile failures and missing/capped samples remain f
     'failed',
   );
 });
+const schemaWitnessPath =
+  'docs/performance/fixtures/solo-first-victory-cpu/parked-9e-schema-source.json';
+function parkedSchemaSource(bytes, declaration, workflow) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    'b8a6a93d82de1a9636b26bb4e0852344aea187e0349b3d794d59868e69e598e0',
+  );
+  const w = JSON.parse(bytes);
+  assert.equal(w.head, '9e0111e066b5dac7749a33fd0e98e92702851dc6');
+  assert.equal(w.tree, '780fdfcb84a1d5cc6009b697879a98fbe39d0487');
+  for (const [path, b] of [
+    ['docs/performance/solo-remote-cpu-profile-plan.json', declaration],
+    ['.github/workflows/solo-remote-cpu-profile-temporary.yml', workflow],
+  ])
+    verifyHistoricalBytes(
+      b,
+      w.records.find((x) => x.path === path),
+    );
+  return w.records.find((x) => x.path === 'scripts/solo-qualification.mjs');
+}
 test('immutable parked declaration and witnessed source refs remain exact', async () => {
   const witness = await verifyHistoricalDeclaration();
   const errorHistory = await readHistoricalPageErrorRefs(
     'docs/performance/solo-remote-cpu-profile-plan.json',
     '.github/workflows/solo-remote-cpu-profile-temporary.yml',
+  );
+  errorHistory.set(
+    'scripts/solo-qualification.mjs',
+    parkedSchemaSource(
+      await readFile(new URL(schemaWitnessPath, root)),
+      await readFile(new URL('docs/performance/solo-remote-cpu-profile-plan.json', root)),
+      await readFile(new URL('.github/workflows/solo-remote-cpu-profile-temporary.yml', root)),
+    ),
   );
   for (const ref of [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools]) {
     const historical =
@@ -344,4 +372,16 @@ test('historical source witness rejects substituted source authority or declarat
   );
   const tampered = Buffer.concat([manifestBytes, Buffer.from(' ')]);
   assert.throws(() => verifyHistoricalBytes(tampered, witness.files[0]));
+});
+
+test('later parked schema witness rejects changed source and declaration bytes', async () => {
+  const b = await readFile(new URL(schemaWitnessPath, root)),
+    m = await readFile(new URL('docs/performance/solo-remote-cpu-profile-plan.json', root)),
+    w = await readFile(new URL('.github/workflows/solo-remote-cpu-profile-temporary.yml', root));
+  for (const x of [
+    [Buffer.concat([b, Buffer.from(' ')]), m, w],
+    [b, Buffer.concat([m, Buffer.from(' ')]), w],
+    [b, m, Buffer.concat([w, Buffer.from(' ')])],
+  ])
+    assert.throws(() => parkedSchemaSource(...x));
 });

@@ -236,6 +236,40 @@ export function collectUnattributedProcesses(
       } else record.foreignSystemProcesses.push(witness);
     }
   }
+  // Cleanup resamples the live inventory. Keep its first unattributed row
+  // separately so a later empty sample cannot erase the reason for failure.
+  // This is bounded evidence only, never ownership or signal authority.
+  if (ambiguous.length && !record.firstAmbiguousInventory) {
+    const row = ambiguous[0],
+      argv = row.argv ?? '';
+    record.firstAmbiguousInventory = {
+      format: 'SoloFirstAmbiguousInventoryV1',
+      ambiguousCount: ambiguous.length,
+      retainedCount: 1,
+      additionalRowsOmitted: ambiguous.length - 1,
+      row: {
+        pid: row.pid,
+        ppid: row.ppid,
+        pgid: row.pgid,
+        birth: row.birth,
+        state: row.state,
+        rss: row.rss,
+        argv: argv.slice(0, 1024),
+        argvCodeUnits: argv.length,
+        argvTruncated: argv.length > 1024,
+        ownerTagged: row.ownerTagged,
+        inspectionIncomplete: row.inspectionIncomplete,
+        identityKind: row.identityKind,
+        euid: row.euid,
+        ruid: row.ruid,
+        parentUniqueId: row.parentUniqueId,
+        version: row.version,
+        pathInspection: row.pathInspection,
+        rssInspection: row.rssInspection,
+        ownerTagInspection: row.ownerTagInspection,
+      },
+    };
+  }
   return ambiguous;
 }
 

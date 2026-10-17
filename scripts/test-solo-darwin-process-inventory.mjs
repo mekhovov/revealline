@@ -717,3 +717,76 @@ test('setup discovery leaves inventory and compilation bounds separate', async (
   assert.match(build, /execFileSync\(compiler.path, args, \{\s+timeout: 30000,/);
   assert.equal(5000 + DARWIN_TOOLCHAIN_DISCOVERY_TIMEOUT_MS + 30000, 65000);
 });
+
+test('first ambiguous inventory survives cleanup clearing and later PID reuse without gaining ownership', () => {
+  const m = foreignModel();
+  m.row.argv = '/Applications/WebKit.app/WebProcess';
+  const first = { ...m.row };
+  m.record.ambiguous = collectUnattributedProcesses(
+    m.all,
+    m.before,
+    m.owned,
+    m.leader,
+    m.record,
+    true,
+  );
+  assert.deepEqual(m.record.ambiguous, [m.row]);
+  const retained = structuredClone(m.record.firstAmbiguousInventory);
+  assert.equal(retained.format, 'SoloFirstAmbiguousInventoryV1');
+  assert.equal(retained.row.pid, first.pid);
+  assert.equal(retained.row.birth, first.birth);
+  assert.equal(retained.row.argv, first.argv);
+  assert.equal(retained.row.pathInspection, 'complete');
+  assert.equal(retained.row.ownerTagInspection, 'unavailable');
+  assert.equal(retained.ambiguousCount, 1);
+  assert.equal(retained.additionalRowsOmitted, 0);
+  assert.equal(m.owned.has(first.pid), false);
+  m.all.delete(first.pid);
+  m.record.ambiguous = collectUnattributedProcesses(
+    m.all,
+    m.before,
+    m.owned,
+    m.leader,
+    m.record,
+    true,
+  );
+  assert.deepEqual(m.record.ambiguous, []);
+  assert.deepEqual(m.record.firstAmbiguousInventory, retained);
+  m.all.set(first.pid, { ...first, birth: '00000000000000009999', argv: '/other/WebKit' });
+  assert.equal(
+    collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, m.record, true).length,
+    1,
+  );
+  assert.deepEqual(m.record.firstAmbiguousInventory, retained);
+  assert.equal(m.owned.has(first.pid), false);
+});
+
+test('first ambiguous evidence is bounded and does not change foreign exemption or empty inventories', () => {
+  const m = foreignModel();
+  assert.deepEqual(
+    collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, m.record, true),
+    [],
+  );
+  assert.equal(m.record.firstAmbiguousInventory, undefined);
+  m.row.argv = '/WebKit/' + '\u0000'.repeat(20000);
+  for (let i = 0; i < 100; i++) m.all.set(6000 + i, { ...m.row, pid: 6000 + i });
+  const ambiguous = collectUnattributedProcesses(
+    m.all,
+    m.before,
+    m.owned,
+    m.leader,
+    m.record,
+    true,
+  );
+  assert.equal(ambiguous.length, 101);
+  const retained = m.record.firstAmbiguousInventory;
+  assert.equal(retained.ambiguousCount, 101);
+  assert.equal(retained.retainedCount, 1);
+  assert.equal(retained.additionalRowsOmitted, 100);
+  assert.equal(retained.row.argvCodeUnits, m.row.argv.length);
+  assert.equal(retained.row.argv.length, 1024);
+  assert.equal(retained.row.argvTruncated, true);
+  assert(Buffer.byteLength(JSON.stringify(retained)) < 8192);
+  m.row.argv = '/changed';
+  assert.notEqual(retained.row.argv, m.row.argv);
+});

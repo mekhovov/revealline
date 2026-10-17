@@ -903,9 +903,14 @@ export const NEXT_ROUTE_FIXTURE = Object.freeze({
   bytes: 9086,
   sha256: '0fd24c7db64be144da0d05b57ae26289b2a676a4f90df547d918c6cc13cef1a8',
 });
+export const FIRST_VICTORY_CPU_FIXTURE = Object.freeze({
+  bytes: 3527,
+  sha256: '561510be9786c949f65e6fcf0c0352e7e892c710ec80958e7139040e3911caa1',
+});
 export function qualificationNextRouteOptions(flags, scenario, bytes) {
   const selected = flags.filter((value) => value.startsWith('--authored-next-route'));
-  const declared = scenario.nativeRouteProtocol !== undefined;
+  const declared =
+    scenario.nativeRouteProtocol !== undefined || scenario.nativeRouteCpuProfile !== undefined;
   if (!declared) {
     assert.equal(selected.length, 0, 'Next route flag requires exact recipe');
     assert(
@@ -916,6 +921,47 @@ export function qualificationNextRouteOptions(flags, scenario, bytes) {
   }
   assert.deepEqual(selected, [`--authored-next-route=${NEXT_ROUTE_PROTOCOL}`]);
   assert.equal(scenario.nativeRouteProtocol, NEXT_ROUTE_PROTOCOL);
+  if (scenario.nativeRouteCpuProfile !== undefined) {
+    assert.equal(scenario.nativeRouteCpuProfile, 'first-victory-e1cc-v1');
+    assert.equal(scenario.kind, 'performance');
+    assert.equal(scenario.timeoutMs, 240000);
+    assert.equal(scenario.requiredProfile, 'cpu');
+    assert.equal(bytes.length, FIRST_VICTORY_CPU_FIXTURE.bytes);
+    assert.equal(
+      createHash('sha256').update(bytes).digest('hex'),
+      FIRST_VICTORY_CPU_FIXTURE.sha256,
+    );
+    assert.deepEqual(scenario, JSON.parse(bytes), 'Profile recipe differs from admitted bytes');
+    for (const [name, value] of [
+      ['source-revision', NEXT_ROUTE_FINAL_SOURCE],
+      ['cpu', '2.42'],
+      ['browser', 'chromium'],
+      ['cadence', 'settled120'],
+    ])
+      assert.deepEqual(
+        flags.filter((flag) => flag === `--${name}` || flag.startsWith(`--${name}=`)),
+        [`--${name}=${value}`],
+      );
+    for (const flag of ['--cpu-profile', '--work-probe', '--hitch-journal'])
+      assert.deepEqual(
+        flags.filter((value) => value.startsWith(flag)),
+        [flag],
+      );
+    assert(
+      !flags.some((value) =>
+        /^--(?:baseline-runtime|memory-profile|audio-proof|journal-cost-probe|readiness-probe|readiness-geometry)(?:=|$)/.test(
+          value,
+        ),
+      ),
+      'CPU route cannot share another observation mode',
+    );
+    const actions = scenario.actions.filter((action) => action.type === 'authored-next-route');
+    assert.deepEqual(
+      actions.map((action) => validateNextRouteAction(action).mission),
+      ['first-return'],
+    );
+    return { protocol: NEXT_ROUTE_PROTOCOL, sourceRevision: NEXT_ROUTE_FINAL_SOURCE };
+  }
   assert.equal(scenario.kind, 'lifecycle');
   assert.equal(scenario.timeoutMs, 1200000);
   assert.equal(bytes.length, NEXT_ROUTE_FIXTURE.bytes);

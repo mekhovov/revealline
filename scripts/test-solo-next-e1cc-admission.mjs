@@ -4,6 +4,33 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
+
+// This executed declaration is immutable. New declarations must check current files.
+const executionWitnessBytes = await readFile(
+  new URL(
+    '../docs/performance/fixtures/solo-readiness-geometry/7c7-execution-source.json',
+    import.meta.url,
+  ),
+);
+function executedBindings(bytes, declarationBytes, workflowBytes) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    'a54fa43e5f89dc2ccce08f69892421213d5a6a0deb107ebc6dc320f174665613',
+  );
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.head, '7c7cc2648331870683ac7b76850bbeff859f802e');
+  assert.equal(witness.tree, 'e20aabb50c0e82c52c0970a14934b2d05611f53e');
+  for (const [path, value] of [
+    ['docs/performance/solo-next-geometric-e1cc-plan.json', declarationBytes],
+    ['.github/workflows/solo-remote-next-geometric-e1cc-temporary.yml', workflowBytes],
+  ]) {
+    const entry = witness.records.find((r) => r.path === path);
+    assert(entry, path);
+    assert.equal(value.length, entry.bytes, path);
+    assert.equal(createHash('sha256').update(value).digest('hex'), entry.sha256, path);
+  }
+  return witness;
+}
 const root = process.cwd();
 const dir = process.env.SOLO_NEXT_E1CC_PROPOSAL || join(root, 'scripts');
 const { qualificationNextRouteOptions, NEXT_ROUTE_SOURCE, NEXT_ROUTE_FINAL_SOURCE } = await import(
@@ -199,7 +226,7 @@ test('actual package and scoped prior owners bind all six rows at one reviewed p
   assert(!text.includes('npm ci --prefix baseline'));
 });
 
-test('new successor tools use current bytes and its sparse workflow includes every checked input', async () => {
+test('executed7c7 tools retain exact source bindings and historical sparse input coverage', async () => {
   const plan = JSON.parse(
     await readFile(join(root, 'docs/performance/solo-next-geometric-e1cc-plan.json')),
   );
@@ -217,10 +244,16 @@ test('new successor tools use current bytes and its sparse workflow includes eve
   );
   assert.equal(lists.length, 2);
   assert.equal(new Set(lists[1]).size, lists[1].length);
+  const execution = executedBindings(
+    executionWitnessBytes,
+    await readFile(join(root, 'docs/performance/solo-next-geometric-e1cc-plan.json')),
+    Buffer.from(workflow),
+  );
   for (const ref of [...plan.frozenTools, ...plan.adapterInputs, ...Object.values(plan.recipes)]) {
-    const bytes = await readFile(join(root, ref.path));
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+    const entry = execution.records.find((r) => r.path === ref.path);
+    assert(entry, ref.path);
+    assert.equal(entry.bytes, ref.bytes, ref.path);
+    assert.equal(entry.sha256, ref.sha256, ref.path);
     assert(lists[1].includes(ref.path), ref.path);
   }
   for (const path of lists[1]) assert((await readFile(join(root, path))).length > 0, path);
@@ -250,4 +283,21 @@ test('each exact release condition remains mandatory without alternate dispatch'
     assert.throws(() => assertReleaseGuard(wrong));
   }
   assert.throws(() => assertReleaseGuard(text.replace(releaseConditions.join(' && '), 'true')));
+});
+
+test('immutable7c7 witness rejects altered source, declaration and workflow identities', async () => {
+  const declaration = await readFile(
+    join(root, 'docs/performance/solo-next-geometric-e1cc-plan.json'),
+  );
+  const workflow = await readFile(
+    join(root, '.github/workflows/solo-remote-next-geometric-e1cc-temporary.yml'),
+  );
+  executedBindings(executionWitnessBytes, declaration, workflow);
+  for (const slot of [0, 1, 2]) {
+    const inputs = [executionWitnessBytes, declaration, workflow].map((bytes) =>
+      Buffer.from(bytes),
+    );
+    inputs[slot][0] ^= 1;
+    assert.throws(() => executedBindings(...inputs));
+  }
 });

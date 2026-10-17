@@ -378,7 +378,16 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
     if (plan.format === 'SoloHostedReadinessPlanV1') {
       assert.equal(plan.performanceExclusion, true);
-      if (plan.sourceCohort === 'readiness-preparation-row-candidatee1cc') {
+      if (plan.sourceCohort === 'readiness-optional-start-audio-candidatee1cc') {
+        const { optionalAudioReadinessSelection } = await import('./solo-remote-readiness.mjs');
+        const selected = optionalAudioReadinessSelection(plan);
+        assert.equal(plan.candidate.revision, selected.source.revision);
+        assert.equal(plan.runtimeRevision, selected.source.revision);
+        assert.equal(plan.candidate.tree, selected.source.tree);
+        assert.deepEqual(plan.fixture, selected.fixture);
+        assert.equal(plan.protocol.name, selected.protocol);
+        assert.equal(raw.readinessPilot.protocol, selected.protocol);
+      } else if (plan.sourceCohort === 'readiness-preparation-row-candidatee1cc') {
         const { preparationReadinessSelection } = await import('./solo-remote-readiness.mjs');
         const selected = preparationReadinessSelection(plan);
         assert.equal(plan.candidate.revision, selected.source.revision);

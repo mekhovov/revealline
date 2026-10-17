@@ -140,7 +140,7 @@ test('one-shot non-browser workflow declares finite setup, native observation an
   const workflow = completeWorkflow.split('\n  cocoa:\n')[0];
   assert.equal(
     workflow.match(/^    if: (.+)$/m)?.[1],
-    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'",
+    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '7c7cc2648331870683ac7b76850bbeff859f802e'",
   );
   assert.match(workflow, /runs-on: macos-15-intel/);
   assert.match(workflow, /timeout-minutes: 24/);
@@ -236,13 +236,13 @@ test('tools sparse checkout contains complete static owner graph and actual dyna
   assert(listed.length < 200);
 });
 
-test('successor workflow requires every exact one-shot condition before e1cc', async () => {
+test('successor workflow requires every exact one-shot condition before 7c7', async () => {
   const text = await readFile(
     new URL('../.github/workflows/solo-darwin-owner-preflight-temporary.yml', import.meta.url),
     'utf8',
   );
   const expected =
-    "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'";
+    "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '7c7cc2648331870683ac7b76850bbeff859f802e'";
   const check = (value) => {
     assert.deepEqual(
       value.split('\n').filter((s) => s.startsWith('    if: ')),
@@ -256,7 +256,7 @@ test('successor workflow requires every exact one-shot condition before e1cc', a
     'github.event.pull_request.number == 1544',
     'github.event.pull_request.head.repo.full_name == github.repository',
     "github.event.action == 'synchronize'",
-    "github.event.before == 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'",
+    "github.event.before == '7c7cc2648331870683ac7b76850bbeff859f802e'",
   ])
     assert.throws(() => check(preflight.replace(condition, 'true')));
   assert.throws(() => check(preflight.replace(expected, '')));

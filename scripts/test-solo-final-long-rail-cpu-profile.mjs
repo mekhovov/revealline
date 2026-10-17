@@ -266,6 +266,30 @@ test('final profile declaration imports only its two standalone adapters', async
   );
   assert.equal(output, `matrix=${JSON.stringify(cpuProfileMatrix(manifest))}\n`);
 });
+const profileSourceWitnessPath =
+  'docs/performance/fixtures/solo-first-victory-cpu/long-rail-696-source.json';
+function historicalProfileSource(bytes, declarationBytes, workflowBytes) {
+  assert.equal(sha(bytes), 'af8360e8c08d0abf06f3289e936772636b1f86a8be24043788972400aeae0810');
+  const value = JSON.parse(bytes);
+  assert.equal(value.head, '69639b30d985ffa723a4d0c11756b632fc2da5c1');
+  assert.equal(value.tree, 'd022c57efa75dbe7b7aeeca00a1950f61426595b');
+  for (const [file, content] of [
+    [path, declarationBytes],
+    [workflowPath, workflowBytes],
+  ]) {
+    const ref = value.records.find((x) => x.path === file);
+    assert(ref);
+    assert.equal(content.length, ref.bytes);
+    assert.equal(sha(content), ref.sha256);
+  }
+  return new Map(
+    value.records
+      .filter((x) =>
+        ['scripts/solo-remote-cpu-profile.mjs', 'scripts/solo-qualification.mjs'].includes(x.path),
+      )
+      .map((x) => [x.path, x]),
+  );
+}
 async function checkRelease(m, workflow) {
   validateCpuProfilePlan(bindCpuProfileJob(m));
   assert.deepEqual(m.releaseTrigger, {
@@ -297,6 +321,12 @@ async function checkRelease(m, workflow) {
   ])
     assert(command.includes(file));
   const historical = await readHistoricalPageErrorRefs(path, workflowPath);
+  for (const [file, ref] of historicalProfileSource(
+    await readFile(new URL(profileSourceWitnessPath, root)),
+    await readFile(new URL(path, root)),
+    Buffer.from(workflow),
+  ))
+    historical.set(file, ref);
   for (const ref of [m.recipe, m.upload, ...m.adapterInputs, ...m.frozenTools]) {
     const old = historical.get(ref.path);
     assert.deepEqual(
@@ -322,4 +352,16 @@ test('concrete release rejects relaxed activation, omitted source proof and chan
   const m = structuredClone(manifest);
   m.adapterInputs[0].sha256 = 'a'.repeat(64);
   await assert.rejects(checkRelease(m, w));
+});
+
+test('executed Long Rail profile rejects wrong immutable source, declaration or workflow', async () => {
+  const witness = await readFile(new URL(profileSourceWitnessPath, root)),
+    declaration = await readFile(new URL(path, root)),
+    workflow = await readFile(new URL(workflowPath, root));
+  for (const values of [
+    [Buffer.concat([witness, Buffer.from(' ')]), declaration, workflow],
+    [witness, Buffer.concat([declaration, Buffer.from(' ')]), workflow],
+    [witness, declaration, Buffer.concat([workflow, Buffer.from(' ')])],
+  ])
+    assert.throws(() => historicalProfileSource(...values));
 });
