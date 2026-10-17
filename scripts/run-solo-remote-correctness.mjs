@@ -439,15 +439,17 @@ async function main() {
         ? 'sustained'
         : plan.format === 'SoloHostedAuxiliaryPlanV1'
           ? 'auxiliary'
-          : plan.format === 'SoloHostedDemoRecoveryPlanV1'
-            ? 'demo'
-            : plan.format === 'SoloHostedRasterPlanV1'
-              ? 'raster'
-              : null;
+          : plan.format === 'SoloHostedDemoActivePlanV1'
+            ? 'demo-active'
+            : plan.format === 'SoloHostedDemoRecoveryPlanV1'
+              ? 'demo'
+              : plan.format === 'SoloHostedRasterPlanV1'
+                ? 'raster'
+                : null;
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
-    setupActive = ['sustained', 'auxiliary', 'demo', 'raster'].includes(extension);
+    setupActive = ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster'].includes(extension);
   if (extension) {
     adapter = await import(`./solo-remote-${extension}.mjs`);
     adapter[
@@ -456,6 +458,7 @@ async function main() {
         sustained: 'validateSustainedPlan',
         auxiliary: 'validateAuxiliaryPlan',
         demo: 'validateDemoPlan',
+        'demo-active': 'validateDemoActivePlan',
         raster: 'validateRasterPlan',
       }[extension]
     ](plan);
@@ -470,15 +473,23 @@ async function main() {
           ? 'SoloHostedSustained.v1'
           : extension === 'auxiliary'
             ? 'SoloHostedAuxiliary.v1'
-            : extension === 'demo'
-              ? 'SoloHostedDemoRecoveryCohortV1'
-              : extension === 'raster'
-                ? 'SoloHostedNativeRasterCohortV1'
-                : 'SoloHostedCorrectness.v1',
+            : extension === 'demo-active'
+              ? 'SoloHostedDemoScopedRafCohortV1'
+              : extension === 'demo'
+                ? 'SoloHostedDemoRecoveryCohortV1'
+                : extension === 'raster'
+                  ? 'SoloHostedNativeRasterCohortV1'
+                  : 'SoloHostedCorrectness.v1',
     status: 'failed',
-    performanceExclusion: extension === 'sustained' ? plan.performanceExclusion : true,
+    performanceExclusion: ['sustained', 'demo-active'].includes(extension)
+      ? plan.performanceExclusion
+      : true,
     timingQualification:
-      extension === 'sustained' ? 'source-and-host-scoped-raw-gates-required' : 'not-attempted',
+      extension === 'demo-active'
+        ? 'scoped-raf-only-full-cost-unobserved'
+        : extension === 'sustained'
+          ? 'source-and-host-scoped-raw-gates-required'
+          : 'not-attempted',
     startedAt: new Date().toISOString(),
     rows: plan.rows.map((row) => ({ ...row, status: 'not-run' })),
   };
@@ -653,7 +664,7 @@ async function main() {
       moduleIdentity: await digest(browserModule),
       engines: {},
     };
-    for (const engine of ['offline', 'demo'].includes(extension)
+    for (const engine of ['offline', 'demo', 'demo-active'].includes(extension)
       ? ['chromium']
       : ['chromium', 'webkit'])
       report.playwright.engines[engine] = {
@@ -952,7 +963,8 @@ async function main() {
         (extension === 'auxiliary' && plan.rows.some((row) => row.source === 'baseline'))
       )
         await ensureBaseline();
-      if (['sustained', 'auxiliary', 'demo', 'raster'].includes(extension)) await inspect();
+      if (['sustained', 'auxiliary', 'demo', 'demo-active', 'raster'].includes(extension))
+        await inspect();
       setupActive = false;
       report.setupCompletedAt = new Date().toISOString();
       report.modePreparationStartedAt = report.setupCompletedAt;
@@ -963,6 +975,7 @@ async function main() {
             sustained: 'prepareSustainedMode',
             auxiliary: 'prepareAuxiliaryMode',
             demo: 'prepareDemoMode',
+            'demo-active': 'prepareDemoActiveMode',
             raster: 'prepareRasterMode',
           }[extension]
         ](context);
@@ -994,7 +1007,7 @@ async function main() {
         freeBytesAtAdmission: scratchSpace.bavail * scratchSpace.bsize,
         minimumRemainingBytes: GiB,
       };
-      if (['offline', 'demo'].includes(extension)) {
+      if (['offline', 'demo', 'demo-active'].includes(extension)) {
         const authorityPath = join(dir, 'scratch-authority.json');
         await writeFile(
           authorityPath,
@@ -1027,6 +1040,7 @@ async function main() {
               sustained: 'runSustainedRow',
               auxiliary: 'runAuxiliaryRow',
               demo: 'runDemoRow',
+              'demo-active': 'runDemoActiveRow',
               raster: 'runRasterRow',
             }[extension]
           ](context, row, dir, tmp);
@@ -1187,9 +1201,11 @@ async function main() {
           ? 'baseline pinned prior normal Linux artifact with fresh full inner/source verification'
           : 'baseline fresh pinned-source normal Linux build';
     report.artifactScope =
-      extension === 'sustained'
-        ? `Candidate exact retained CI package; ${baselineScope}. Hosted source/context-scoped raw timing gates only; common process/resource supervisor is part of this environment. No authentication, physical-device, GPU or thermal qualification.`
-        : `Candidate exact retained CI package; ${baselineScope}. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification.`;
+      extension === 'demo-active'
+        ? 'Candidate exact retained CI package; candidate-only Linux rAF work/cadence scope. Timer/MessageChannel/full application cost, observer overhead, physical devices and heat remain unqualified. Common process/resource supervisor is part of this hosted environment.'
+        : extension === 'sustained'
+          ? `Candidate exact retained CI package; ${baselineScope}. Hosted source/context-scoped raw timing gates only; common process/resource supervisor is part of this environment. No authentication, physical-device, GPU or thermal qualification.`
+          : `Candidate exact retained CI package; ${baselineScope}. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification.`;
     const finalSpace = await statfs(output);
     assert(finalSpace.bavail * finalSpace.bsize >= GiB + 4 * MiB, 'Final evidence disk reserve');
     assert(
