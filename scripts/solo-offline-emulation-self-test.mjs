@@ -356,6 +356,41 @@ async function child(output, scratch, navigation = false) {
     await save(path, report);
   }
 }
+// Playwright removes its temporary artifacts directories when contexts close.
+// A child disappearing after enumeration is ordinary cleanup; the owned root
+// and all non-ENOENT failures remain mandatory inspection boundaries.
+export async function offlineScratchBytes(
+  root,
+  { readDirectory = readdir, stat = lstat, expectedIdentity = null } = {},
+) {
+  const identity = await stat(root);
+  assert(identity.isDirectory() && !identity.isSymbolicLink(), 'Owned scratch root required');
+  if (expectedIdentity) {
+    assert.equal(identity.dev, expectedIdentity.dev, 'Owned scratch device changed');
+    assert.equal(identity.ino, expectedIdentity.ino, 'Owned scratch inode changed');
+  }
+  let bytes = 0,
+    members = 0;
+  const walk = async (path) => {
+    for (const item of await readDirectory(path, { withFileTypes: true })) {
+      assert(++members <= 5000, 'Owned scratch member limit');
+      const child = join(path, item.name);
+      try {
+        if (item.isDirectory()) await walk(child);
+        else if (item.isFile()) bytes += (await stat(child)).size;
+      } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+      }
+      assert(bytes <= OFFLINE_SELF_TEST.maximumScratchBytes, 'Owned scratch byte limit');
+    }
+  };
+  await walk(root);
+  const current = await stat(root);
+  assert(current.isDirectory() && !current.isSymbolicLink(), 'Owned scratch root required');
+  assert.equal(current.dev, identity.dev, 'Owned scratch device changed');
+  assert.equal(current.ino, identity.ino, 'Owned scratch inode changed');
+  return bytes;
+}
 async function parent(output, navigation = false) {
   const plan = navigation ? OFFLINE_NAVIGATION_SELF_TEST : OFFLINE_SELF_TEST;
   assert.equal(process.platform, 'linux');
@@ -373,24 +408,7 @@ async function parent(output, navigation = false) {
     assert.equal(current.ino, identity.ino);
     const space = await statfs(scratch);
     assert(Number(space.bavail) * Number(space.bsize) >= OFFLINE_SELF_TEST.minimumFreeBytes);
-    let bytes = 0,
-      members = 0;
-    const walk = async (path) => {
-      for (const item of await readdir(path, { withFileTypes: true })) {
-        assert(++members <= 5000);
-        const child = join(path, item.name);
-        if (item.isDirectory()) await walk(child);
-        else if (item.isFile()) {
-          try {
-            bytes += (await lstat(child)).size;
-          } catch (error) {
-            if (error.code !== 'ENOENT') throw error;
-          }
-          assert(bytes <= OFFLINE_SELF_TEST.maximumScratchBytes);
-        }
-      }
-    };
-    await walk(scratch);
+    await offlineScratchBytes(scratch, { expectedIdentity: identity });
   };
   await inspect();
   const sources = {};

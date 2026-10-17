@@ -1,13 +1,115 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { readFile } from 'node:fs/promises';
+import { lstat, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import {
   OFFLINE_SELF_TEST as plan,
   OFFLINE_NAVIGATION_SELF_TEST as navigationPlan,
   observeOfflineBranch,
   observeOfflineNavigationBranch,
+  offlineScratchBytes,
   selfTestComplete,
 } from './solo-offline-emulation-self-test.mjs';
+
+async function scratch(t) {
+  const root = await mkdtemp(join(tmpdir(), 'solo-offline-scratch-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  return root;
+}
+
+for (const kind of ['directory', 'file'])
+  test(`scratch inspection tolerates a retired child ${kind} without losing retained bytes`, async (t) => {
+    const root = await scratch(t),
+      child = join(root, 'playwright-artifacts-retired');
+    await writeFile(join(root, 'retained'), '12345');
+    if (kind === 'directory') {
+      await mkdir(child);
+      await writeFile(join(child, 'transient'), 'retired');
+    } else await writeFile(child, 'retired');
+    assert.equal(
+      await offlineScratchBytes(root, {
+        expectedIdentity: await lstat(root),
+        async readDirectory(path, options) {
+          const entries = await readdir(path, options);
+          if (path === root) await rm(child, { recursive: true });
+          return entries;
+        },
+      }),
+      5,
+    );
+  });
+
+test('scratch inspection rejects missing or changed root ownership', async (t) => {
+  const root = await scratch(t),
+    identity = await lstat(root);
+  await assert.rejects(
+    offlineScratchBytes(root, { expectedIdentity: { dev: identity.dev, ino: identity.ino + 1 } }),
+    /inode changed/,
+  );
+  await assert.rejects(
+    offlineScratchBytes(root, {
+      async readDirectory(path, options) {
+        const entries = await readdir(path, options);
+        await rm(root, { recursive: true });
+        return entries;
+      },
+    }),
+    { code: 'ENOENT' },
+  );
+  await assert.rejects(offlineScratchBytes(root), { code: 'ENOENT' });
+});
+
+test('scratch inspection preserves unexpected traversal and stat failures', async (t) => {
+  const root = await scratch(t),
+    child = join(root, 'child');
+  await mkdir(child);
+  await assert.rejects(
+    offlineScratchBytes(root, {
+      async readDirectory(path, options) {
+        if (path === child) throw Object.assign(new Error('permission'), { code: 'EACCES' });
+        return readdir(path, options);
+      },
+    }),
+    { code: 'EACCES' },
+  );
+  await writeFile(join(root, 'file'), '123');
+  await assert.rejects(
+    offlineScratchBytes(root, {
+      async stat(path) {
+        if (path.endsWith('/file')) throw Object.assign(new Error('IO'), { code: 'EIO' });
+        return lstat(path);
+      },
+    }),
+    { code: 'EIO' },
+  );
+});
+
+test('scratch cleanup races do not relax the existing byte or member caps', async (t) => {
+  const root = await scratch(t);
+  await writeFile(join(root, 'file'), '123');
+  await assert.rejects(
+    offlineScratchBytes(root, {
+      async stat(path) {
+        const info = await lstat(path);
+        if (info.isFile()) info.size = plan.maximumScratchBytes + 1;
+        return info;
+      },
+    }),
+    /byte limit/,
+  );
+  await assert.rejects(
+    offlineScratchBytes(root, {
+      readDirectory: async () =>
+        Array.from({ length: 5001 }, (_, i) => ({
+          name: `retired-${i}`,
+          isDirectory: () => false,
+          isFile: () => true,
+        })),
+    }),
+    /member limit/,
+  );
+});
 
 function fake(initial = false, failStage = null, onlineAfterNavigation) {
   let online = initial,
