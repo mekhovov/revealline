@@ -96,10 +96,10 @@
   },
   "format": "SoloHostedOfflinePairPlan.v1",
   "status": "pinned-for-execution",
-  "cohort": "linux-offline-3adcd537-installed-starter-pair02",
+  "cohort": "linux-offline-3adcd537-installed-starter-owner-pair03",
   "profileEvidenceBytes": 1082130432,
   "rowEvidenceBytes": 33554432,
-  "scope": "Independent Linux offline persistence diagnostic, then public installed current Starter capture/Next and two same-engine strict replay checks ONLY after exact successful offline launch. Successor corrects the uninstalled historical Opening recipe; original failed pair remains retained. No default-mission, physical-PWA, thermal or performance credit.",
+  "scope": "Independent Linux offline persistence diagnostic, then public installed current Starter capture/Next and two same-engine strict replay checks ONLY after exact successful offline launch. This separately declared successor uses corrected direct-child process attribution after pair02 stopped before browser observation. Prior failures remain retained. No b5 runtime, default-mission, physical-PWA, thermal or performance qualification.",
   "rows": [
     {
       "id": "offline-baseline-p1",
@@ -195,7 +195,7 @@
     "firstEightAllCorrectnessPassed": false,
     "successorQualificationReleased": false,
     "performanceQualificationReleased": false,
-    "reason": "Run38989601110 proved exact baseline launcher/cache restart, then failed before Start because the prior public play recipe requested uninstalled archive:journey:opening. This separately declared comparison uses the selected installed Starter route and binds its exact pack, campaign, mission and bootstrap identities before either browser. All original restart, artifact, CSP, resource, ownership, closure, preservation, timeout and candidate admission gates remain unchanged.",
+    "reason": "Run38991754614 passed exact artifact/source/CSP and display checks, then stopped before either browser observation when the short browser-version process exited between process-stat and environment reads. The reviewed common owner now captures the directly spawned child birth synchronously before yielding, checks parent/detached group/preexisting identity, and retains same-birth checks before signaling. Pair03 independently observes the unchanged3ad/b117 packages and installed Starter recipe. No retry of the prior declaration, ownership bypass, resource or timeout changes.",
     "priorEvidence": {
       "run": 38985941469,
       "url": "https://github.com/mekhovov/revealline/actions/runs/38985941469",
@@ -209,7 +209,7 @@
       "allObservedCommandOwnersClosed": true,
       "fullArtifactProofMustRepeatInThisJob": true
     },
-    "outcomePolicy": "Preserve the original failed macOS attempt and failed Linux Opening recipe. This is a new declared installed-Starter comparison, not a retry or repair of either. Positive restart is distinct from gameplay success. No cache writes by observer, arbitrary flush delay, gate or timeout relaxation, first-eight waiver, physical-PWA claim or aggregate offline qualification pass.",
+    "outcomePolicy": "Preserve the original failed macOS attempt, failed Linux Opening recipe, and pair02 setup failure. Pair03 is a new declared installed-Starter comparison with a corrected common owner, not a retry or repair of those observations. Positive restart is distinct from gameplay success. No cache writes by observer, arbitrary flush delay, gate or timeout relaxation, first-eight waiver, b5/final-runtime qualification, physical-PWA claim or aggregate offline qualification pass.",
     "priorOfflineEvidence": {
       "run": 38989601110,
       "url": "https://github.com/mekhovov/revealline/actions/runs/38989601110",
@@ -234,6 +234,33 @@
         "bytes": 14291,
         "sha256": "81f419f85423e160da04495ce35bd6b8d73a2918dc00ca9bd9298ab68bf1ea87"
       }
-    }
+    },
+    "priorSetupEvidence": {
+      "run": 38991754614,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38991754614",
+      "conclusion": "failure",
+      "toolingRevision": "aeadf7f43a8c1aba3af78d6cc8713666b4af49f1",
+      "artifact": 12085378208,
+      "outer": {
+        "bytes": 643692,
+        "sha256": "bca8894d3f066817255f0296cd91e19a46feb6af080c4a40c4aedcb23ec99e49"
+      },
+      "members": 60,
+      "logicalBytes": 1971105,
+      "fullReadback": "passed",
+      "failure": "unattributed-new-browser during offline-browser-version",
+      "baseline": "not-run",
+      "candidate": "not-run",
+      "profilesCreated": 0,
+      "ownedClosureEstablished": false
+    },
+    "ownerCorrection": {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 51780,
+      "sha256": "ea1400a0d1f3bd8b2072e4304bdcb4b451b29acb24d691509a453197a413157a",
+      "admission": "Existing required pre-observation wrapper tests verify these exact bytes, direct-spawn identity rejection, reused-PID rejection and Linux owned-child cleanup. The common runner retains the complete source in evidence.",
+      "scope": "Initial direct child birth only; fresh identity before signals, unknown-browser rejection, bounded cleanup and failed cleanup status remain unchanged."
+    },
+    "onceOnlyBefore": "aeadf7f43a8c1aba3af78d6cc8713666b4af49f1"
   }
 }

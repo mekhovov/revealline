@@ -28,9 +28,9 @@ concurrency:
 
 jobs:
   correctness:
-    # Admit only the next reviewed push after the auxiliary release. The new
-    # Starter-bound pair is distinct from the preserved failed Opening recipe.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'
+    # Admit only the next reviewed push after the pair02 setup failure. Pair03
+    # retains exact artifacts/recipe and corrects only common owner attribution.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'
     runs-on: ubuntu-24.04
     timeout-minutes: 165
     env:
