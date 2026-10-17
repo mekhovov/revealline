@@ -12,10 +12,10 @@ const SOURCE = {
   baseline: 'b11745223861c3973ad4bf440cc536198b8e0371',
   candidate: '3adcd53792043ef02459e86168c6b33a66d6ef00',
 };
-export const FIRST_RETURN_COHORT = 'first-return-main8b-candidatec9';
+export const FIRST_RETURN_COHORT = 'first-return-main8b-candidateadb';
 const FIRST_RETURN_SOURCE = {
   baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
-  candidate: 'c9e637ad81fadf49caec884155d1bd0c2496c59c',
+  candidate: 'adb1c0c7b7dd1a526a0693917f2012d1dbc08b22',
 };
 export const FIRST_RETURN_PHASES = Object.freeze({
   'first-return-retry': 'cb575fd56d6ab8ab796ce5924b0154dc8e18aca4b62502b2028e2fd932f63bee',
@@ -52,9 +52,9 @@ function firstReturnPhase(name) {
   };
 }
 function validateFirstReturnSources(plan) {
-  assert.equal(plan.candidate.tree, '4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c');
+  assert.equal(plan.candidate.tree, 'fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508');
   assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
-  assert.equal(plan.runtimeRevision, '87aca909201ae0a2520d5856dbca351b82dd6e2d');
+  assert.equal(plan.runtimeRevision, '488eae03aee7f58dd5837451363015888faa429f');
   assert(!plan.baseline.publishVerifiedNormal && !plan.baseline.publisher);
   // Keep matrix declaration standalone. The common runner subsequently calls
   // validateBaselineReuse and fully reads both archives, ready proof and source.

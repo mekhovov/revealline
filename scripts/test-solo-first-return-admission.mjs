@@ -22,11 +22,11 @@ const legacy = JSON.parse(
   await readFile(new URL('docs/performance/solo-remote-supplemental-plan.json', root)),
 );
 const source = {
-  candidate: 'c9e637ad81fadf49caec884155d1bd0c2496c59c',
+  candidate: 'adb1c0c7b7dd1a526a0693917f2012d1dbc08b22',
   baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
 };
 const tree = {
-  candidate: '4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c',
+  candidate: 'fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508',
   baseline: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
 };
 const recipes = {};
@@ -61,7 +61,7 @@ function syntheticManifest(phase = 'first-return-retry') {
   const m = structuredClone(legacy);
   Object.assign(m, {
     sourceCohort: FIRST_RETURN_COHORT,
-    runtimeRevision: '87aca909201ae0a2520d5856dbca351b82dd6e2d',
+    runtimeRevision: '488eae03aee7f58dd5837451363015888faa429f',
     status: 'reviewed-diagnostic-only',
     phase,
     phases: structuredClone(phases),
@@ -196,6 +196,15 @@ test('new lifecycle admission is exact-source and two fixed short fixtures; lega
     assert.throws(() => supplementalMatrix({ ...manifest, status: 'held-diagnostic-only' }));
     for (const mutate of [
       (p) => delete p.sourceCohort,
+      (p) => {
+        p.sourceCohort = 'first-return-main8b-candidatec9';
+      },
+      (p) => {
+        p.candidate.revision = 'c9e637ad81fadf49caec884155d1bd0c2496c59c';
+      },
+      (p) => {
+        p.candidate.revision = 'cce49c81d82b79aefc24898f32eeebc609e569fb';
+      },
       (p) => {
         p.sourceCohort = 'other';
       },

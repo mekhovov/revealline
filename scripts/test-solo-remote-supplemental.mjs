@@ -15,9 +15,35 @@ import {
 } from './solo-remote-supplemental.mjs';
 
 const root = new URL('../', import.meta.url);
-const manifest = JSON.parse(
-  await readFile(new URL('docs/performance/solo-remote-supplemental-plan.json', root)),
+const manifestBytes = await readFile(
+  new URL('docs/performance/solo-remote-supplemental-plan.json', root),
 );
+const manifest = JSON.parse(manifestBytes);
+function validateParkedSourceWitness(bytes, declarationBytes) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '260fd676d523aae8900a69c19c440ce05e60ddd7c4281999bf3729a9d827e9f5',
+  );
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.format, 'SoloParkedSupplementalSourceWitness.v1');
+  assert.equal(witness.declarationRevision, '9e0111e066b5dac7749a33fd0e98e92702851dc6');
+  assert.equal(witness.declarationTree, '780fdfcb84a1d5cc6009b697879a98fbe39d0487');
+  assert.equal(witness.declaration.path, 'docs/performance/solo-remote-supplemental-plan.json');
+  assert.equal(declarationBytes.length, witness.declaration.bytes);
+  assert.equal(
+    createHash('sha256').update(declarationBytes).digest('hex'),
+    witness.declaration.sha256,
+  );
+  const declaration = JSON.parse(declarationBytes);
+  assert.deepEqual(
+    [...declaration.adapterInputs, ...declaration.frozenTools].map(({ path, bytes, sha256 }) => ({
+      path,
+      bytes,
+      sha256,
+    })),
+    witness.files,
+  );
+}
 function reviewed(phase = 'latency-long-rail') {
   const m = structuredClone(manifest);
   m.status = 'reviewed-diagnostic-only';
@@ -197,16 +223,51 @@ test('source, deadline, recipe and baseline verifier contracts cannot be altered
     assert.throws(() => validateSupplementalPlan(p));
   }
 });
-test('all executable recipes, uploads, adapters and frozen tools match recorded bytes', async () => {
-  const refs = [
-    ...Object.values(manifest.phases).flatMap(({ recipe, upload }) => [recipe, upload]),
-    ...manifest.adapterInputs,
-    ...manifest.frozenTools,
-  ];
+test('historical recipes remain exact and parked tool pins retain their independently verified source authority', async () => {
+  const witness = await readFile(
+    new URL(
+      'docs/performance/fixtures/solo-remote-correctness/supplemental-parked-source.json',
+      root,
+    ),
+  );
+  validateParkedSourceWitness(witness, manifestBytes);
+  // The later parked declaration was verified against its actual Git source,
+  // not evolving HEAD. New wave contracts verify every current tool byte.
+  const refs = Object.values(manifest.phases).flatMap(({ recipe, upload }) => [recipe, upload]);
   for (const ref of refs) {
     const bytes = await readFile(new URL(ref.path, root));
     assert.equal(bytes.length, ref.bytes, ref.path);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+  }
+});
+test('parked authority rejects a substituted declaration or source witness', async () => {
+  const witnessBytes = await readFile(
+    new URL(
+      'docs/performance/fixtures/solo-remote-correctness/supplemental-parked-source.json',
+      root,
+    ),
+  );
+  const wrongManifest = structuredClone(manifest);
+  wrongManifest.frozenTools[0].sha256 = '0'.repeat(64);
+  assert.throws(() =>
+    validateParkedSourceWitness(witnessBytes, Buffer.from(JSON.stringify(wrongManifest))),
+  );
+  for (const mutate of [
+    (witness) => {
+      witness.declarationRevision = '0'.repeat(40);
+    },
+    (witness) => {
+      witness.files[0].sha256 = '0'.repeat(64);
+    },
+    (witness) => {
+      witness.declaration.sha256 = '0'.repeat(64);
+    },
+  ]) {
+    const wrongWitness = JSON.parse(witnessBytes);
+    mutate(wrongWitness);
+    assert.throws(() =>
+      validateParkedSourceWitness(Buffer.from(JSON.stringify(wrongWitness)), manifestBytes),
+    );
   }
 });
 test('commands keep native elapsed controls, fixed external calibration and explicit portrait WebKit', () => {
