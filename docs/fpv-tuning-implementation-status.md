@@ -1,10 +1,41 @@
 # FPV tuning implementation status
 
-Updated 2026-10-17. [PR #1561](https://github.com/mekhovov/revealline/pull/1561)
+Updated 2026-10-17. The post-publication review below corrects three additional
+failure boundaries. [PR #1561](https://github.com/mekhovov/revealline/pull/1561)
 merged implementation `eaecd6056` into `main` as `b2f251dac` through the normal
 repository controller. The ordinary Pages build, deployment and verification
 all succeeded. Historical reports retain their original source hashes and scope;
-the post-deployment evidence is recorded separately below.
+the post-deployment evidence is recorded separately below. Those public receipts
+qualify the original deployed merge, not the later corrections.
+
+## Post-publication corrections
+
+The refreshed-main review found and fixed three concrete issues:
+
+- Duplicate drone creation and selection now commit atomically. Quota or stale
+  edit failure preserves both the saved library and the visible draft/selection.
+  A successful retry replaces the earlier error with an EN/UK success message.
+- Local preset bundles now match option names case-insensitively, including root
+  options controlling included files, as the independently executed tagged
+  Betaflight App parser does. Original labels and provenance remain intact;
+  ambiguous case-only duplicates are rejected. Firmware support is unchanged.
+- Reaching the Advanced duration/recording limit preserves export, reference
+  capture and explicit restart. Resume stays disabled until successful restart.
+  Typed, allowlisted worker errors distinguish these stops from fatal failures.
+  The 12-minute duration, recording quotas, physics, timing and identities remain
+  unchanged. Actual boundary regressions export and replay retained recordings.
+
+The [updated plan](fpv-tuning-completion-plan.md#post-publication-review--atomic-setup-changes-preset-options-and-flight-limits)
+records the additional primary-source research and scoped acceptance work.
+The [new verification receipt](fpv-post-publication-verification.json) pins the
+final sources: 714 practice tests, 108 final library/UI tests, six browser editor
+cases, renderer/worker smoke, six numerical runtimes and ordinary native staging
+pass. The numerical 250 Hz result stays within 1.8814% of the 2 kHz reference and
+measures at least 81.08× capacity on one host. Publication is the remaining
+delivery step; the prior public reports below remain historical.
+Advanced remains optional and unscored. Physical radio/touch, pilot feedback,
+identified-aircraft measurements, iOS runtime and wider-device qualification are
+deferred; propwash/ground effect and scored/default promotion remain gated.
 
 ## Public delivery
 

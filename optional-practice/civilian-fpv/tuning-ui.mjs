@@ -419,9 +419,12 @@ export function mountFlightTuning({
       const setup = readSetup();
       setup.id = id();
       setup.name += ` ${t('copy', 'копія')}`;
-      await mutate(() => store.saveSetup(setup, library.revision));
-      await mutate(() => store.selectSetup(setup.id, library.revision));
+      await mutate(() => store.createAndSelectSetup(setup, library.revision));
       load(selected);
+      status.textContent = t(
+        'Drone setup duplicated and selected.',
+        'Налаштування дрона продубльовано й вибрано.',
+      );
     },
     setupPanel,
   );
