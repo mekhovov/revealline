@@ -71,6 +71,12 @@ const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
 const bytes = await readFile(resolve(scenarioPath)),
   scenario = validateQualification(JSON.parse(bytes));
+const nextRouteModule =
+  scenario.nativeRouteProtocol !== undefined ||
+  flags.some((flag) => flag.startsWith('--authored-next-route'))
+    ? await import('./solo-qualification-next-route.mjs')
+    : null;
+const nextRouteOptions = nextRouteModule?.qualificationNextRouteOptions(flags, scenario, bytes);
 const display = qualificationDisplayOptions(flags);
 const snapshotStorageOptions = qualificationSnapshotStorage(flags, scenario);
 const engine = option('browser', 'chromium'),
@@ -526,14 +532,17 @@ try {
   function addQualificationProbe(install, options) {
     const cost = options.journalCost === true,
       readiness = options.readinessProbe === true,
-      quality = options.qualityObservation === true;
-    if (!hitchStore && !cost && !readiness && !quality) return page.addInitScript(install, options);
+      quality = options.qualityObservation === true,
+      nextRoute = options.nextRoute === true;
+    if (!hitchStore && !cost && !readiness && !quality && !nextRoute)
+      return page.addInitScript(install, options);
     // Ordering across separate addInitScript calls is unspecified. Construct all
     // opted-in dependencies and the probe in one synchronous installation.
     return page.addInitScript(`if (window.top === window) {
 ${observationInitScript}
 ${quality ? `window.soloQualificationCreateSubmittedTierObservation = ${createSubmittedTierObservation.toString()};` : ''}
 ${readiness ? `window.soloQualificationCreateReadinessProbe = ${readinessModule.createBrowserReadinessProbe.toString()};` : ''}
+${nextRoute ? `window.soloQualificationCreateNextRouteReader = ${nextRouteModule.createNextRouteReader.toString()};` : ''}
 ${cost ? journalCostModule.journalCostInitScript() : ''}
 ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
 (${install.toString()})(${JSON.stringify(options)});
@@ -549,6 +558,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       readinessProbe,
       readinessProtocol,
       qualityObservation,
+      nextRoute,
     }) => {
       const cost = journalCost ? window.soloQualificationJournalCost : null;
       const quality = qualityObservation
@@ -620,6 +630,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             window,
             readinessProtocol,
           )
+        : null;
+      const nextRouteRead = nextRoute
+        ? window.soloQualificationCreateNextRouteReader(() => observedGame, window)
         : null;
       const intervalClock = window.soloQualificationIntervalClock(performance.now());
       let phase = 0,
@@ -812,6 +825,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
           scope:
             'Retained last submitted paint record only; sparse action-boundary observations do not establish the tier between samples.',
         }),
+        ...(nextRouteRead ? { nextRouteRead } : {}),
         readinessBoundary: (label) => readiness?.boundary(label),
         export: () => ({
           ...(readiness ? { readiness: readiness.export() } : {}),
@@ -853,6 +867,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       readinessProbe: Boolean(readinessOptions),
       readinessProtocol: readinessOptions?.protocol,
       qualityObservation: Boolean(qualityOptions),
+      nextRoute: Boolean(nextRouteOptions),
     },
   );
   if (cpuProfile) {
@@ -1211,6 +1226,20 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
               throw error;
             }
           }
+        } else if (action.type === 'authored-next-route') {
+          assert(nextRouteOptions, 'Exact authored route opt-in required');
+          await nextRouteModule.executeNextRoute({
+            action,
+            read: (mission, begin) =>
+              page.evaluate(
+                ({ mission, begin }) => window.soloQualificationProbe.nextRouteRead(mission, begin),
+                { mission, begin },
+              ),
+            keyboard: page.keyboard,
+            wait: (ms) => page.waitForTimeout(ms),
+            deadline: performance.now() + Math.max(0, deadline - Date.now()),
+            record,
+          });
         } else if (action.type === 'key') {
           assert(
             action.ms <= deadline - Date.now(),
