@@ -34,6 +34,61 @@ function diagnosticsSource(plan) {
   assert.equal(plan.sourceCohort, FINAL_DIAGNOSTICS_COHORT);
   return finalSource;
 }
+const SETUP_EDGE = 'a7e0219818842f02399317ca6d2a14bdd506da3d';
+export const DIAGNOSTICS_SETUP_DYNAMIC_ROOTS = Object.freeze([
+  'scripts/soundtrack-distribution.mjs',
+  'scripts/optional-distribution.mjs',
+  'scripts/external-distribution.mjs',
+  'scripts/optional-artwork.mjs',
+]);
+export const DIAGNOSTICS_SETUP_SUCCESSORS = Object.freeze({
+  app: {
+    format: 'SoloVerifierClosureSuccessorV1',
+    priorRun: 39012635468,
+    priorConclusion: 'failure',
+    priorNativeObservations: 0,
+    originalDeclaration: {
+      path: 'docs/performance/solo-final-app-diagnostics-plan.json',
+      bytes: 6192,
+      sha256: '9e590bb13c4eeba71c18ebd8eaf1ebfc2bbf62c8de246b7649ee2d550bb8c652',
+    },
+    reason: 'missing-dynamic-source-verifier-dependencies',
+    runtimeChanged: false,
+    scenarioChanged: false,
+    gateChanged: false,
+    automaticRetries: 0,
+  },
+  journal: {
+    format: 'SoloVerifierClosureSuccessorV1',
+    priorRun: 39012635601,
+    priorConclusion: 'failure',
+    priorNativeObservations: 0,
+    originalDeclaration: {
+      path: 'docs/performance/solo-final-journal-cost-plan.json',
+      bytes: 9350,
+      sha256: '5d13378669eb2286f94466bbb9a1563dcc91e35d275961d73ce03f8989a9db4a',
+    },
+    reason: 'missing-dynamic-source-verifier-dependencies',
+    runtimeChanged: false,
+    scenarioChanged: false,
+    gateChanged: false,
+    automaticRetries: 0,
+  },
+});
+function validateSetupSuccessor(plan, source, journal) {
+  if (plan.setupSuccessor === undefined) {
+    assert.equal(plan.release.onceOnlyBefore, source.revision);
+    return;
+  }
+  assert.equal(source, finalSource, 'Only the witnessed final-package setup can be corrected');
+  assert.deepEqual(plan.setupSuccessor, DIAGNOSTICS_SETUP_SUCCESSORS[journal ? 'journal' : 'app']);
+  assert.equal(plan.release.onceOnlyBefore, SETUP_EDGE);
+  for (const path of DIAGNOSTICS_SETUP_DYNAMIC_ROOTS)
+    assert(
+      plan.frozenTools.some((ref) => ref.path === path),
+      `Missing verifier dependency ${path}`,
+    );
+}
 const FORMAT = 'SoloHostedDiagnosticsPlanV1';
 const engines = ['chromium', 'webkit'];
 const requiredTools = [
@@ -136,7 +191,7 @@ export function validateDiagnosticsPlan(plan) {
     journal ? 'journal-hook-cost-only' : 'app-diagnostics-overhead-only',
   );
   assert.equal(plan.release.candidateRevision, source.revision);
-  assert.equal(plan.release.onceOnlyBefore, source.revision);
+  validateSetupSuccessor(plan, source, journal);
   assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.gameplayPerformanceQualification, false);
   assert.equal(plan.release.hitchJournalOverheadQualification, false);
