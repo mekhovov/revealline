@@ -43,6 +43,7 @@ export function createAircraftRecorder({
     durableTick = null,
     active = enabled,
     currentBytes = 0,
+    streamBytes = 0,
     retainedBytes = 0,
     latestTick = checkpoint.state.missionTick;
   function begin(saved, stateHash) {
@@ -61,6 +62,9 @@ export function createAircraftRecorder({
     if (segments.length) lastSealedIndex = segments.at(-1).index;
     segments.push(segment);
     currentBytes = bytes(segment);
+    // Checkpoints include the admitted terrain and can exceed the event budget
+    // before any flying. They count toward retained memory, not stream rotation.
+    streamBytes = 0;
     retainedBytes += currentBytes;
     trim();
   }
@@ -73,7 +77,7 @@ export function createAircraftRecorder({
       // A checkpoint larger than the entire budget is not a valid recent clip.
       if (segments.length === 1 && segments[0].events.length === 0) {
         segments = [];
-        currentBytes = retainedBytes = 0;
+        currentBytes = streamBytes = retainedBytes = 0;
       }
     }
   }
@@ -109,10 +113,11 @@ export function createAircraftRecorder({
         growth += bytes(entry) + 1;
       }
       currentBytes += growth;
+      streamBytes += growth;
       retainedBytes += growth;
       if (
         (tick > segment.startTick &&
-          (tick - segment.startTick >= AIRCRAFT_SEGMENT_TICKS || currentBytes >= segmentBytes)) ||
+          (tick - segment.startTick >= AIRCRAFT_SEGMENT_TICKS || streamBytes >= segmentBytes)) ||
         segment.events.length >= SEGMENT_EVENT_ROTATION
       )
         begin(capture(), stateHash);
@@ -212,6 +217,11 @@ export function createAircraftRecorder({
       lastSealedIndex = segments.at(-1).index - 1;
       latestTick = segments.at(-1).endTick;
       currentBytes = bytes(segments.at(-1));
+      // Reconstruct the same append accounting without changing recorded data.
+      streamBytes = [...segments.at(-1).events, ...segments.at(-1).hashes].reduce(
+        (total, entry) => total + bytes(entry) + 1,
+        0,
+      );
       retainedBytes = segments.reduce((sum, segment) => sum + bytes(segment), 0);
       trim();
     },
