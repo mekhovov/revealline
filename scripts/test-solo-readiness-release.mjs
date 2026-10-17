@@ -6,9 +6,43 @@ import { bindReadinessJob, readinessMatrix } from './solo-remote-readiness.mjs';
 const root = new URL('../', import.meta.url);
 const manifestPath = 'docs/performance/solo-readiness-ab45-plan.json';
 const workflowPath = '.github/workflows/solo-remote-readiness-ab45-temporary.yml';
+const executedWorkflowArchive =
+  'docs/performance/fixtures/solo-readiness/4bf-executed-workflow.yml';
 const read = (p) => readFile(new URL(p, root));
+const witnessBytes = await read(
+  'docs/performance/fixtures/solo-readiness/4bf-execution-source.json',
+);
+assert.equal(
+  createHash('sha256').update(witnessBytes).digest('hex'),
+  'f390e5d23cf7c38a2b21b241fb77c17bb5ea50c55846dfb9f966cb1a25b11951',
+);
+const witness = JSON.parse(witnessBytes);
+function executedBindings(value, text, proof) {
+  assert.equal(proof.format, 'SoloReadinessExecutedSourceV1');
+  assert.equal(proof.revision, '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7');
+  assert.equal(proof.tree, 'e87e64d0e14584c2a569d06bae8e7c602c5ed105');
+  assert.equal(proof.manifest, manifestPath);
+  assert.equal(proof.workflow, workflowPath);
+  assert.equal(proof.files.length, 44);
+  const refs = [...value.adapterInputs, ...value.frozenTools, value.fixture];
+  assert.deepEqual(
+    proof.files.map((r) => r.path).sort(),
+    [manifestPath, workflowPath, ...refs.map((r) => r.path)].sort(),
+  );
+  for (const ref of refs) {
+    const row = proof.files.find((r) => r.path === ref.path);
+    assert.deepEqual({ path: row.path, bytes: row.bytes, sha256: row.sha256 }, ref);
+    assert.match(row.gitBlob, /^[a-f0-9]{40}$/);
+  }
+  assert.deepEqual(value, plan);
+  const row = proof.files.find((r) => r.path === workflowPath),
+    bytes = Buffer.from(text);
+  assert.equal(bytes.length, row.bytes);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), row.sha256);
+}
 const plan = JSON.parse(await read(manifestPath));
-const workflow = (await read(workflowPath)).toString();
+// The original path remains the executed identity; its bytes are archived before reuse.
+const workflow = (await read(executedWorkflowArchive)).toString();
 const expectedCandidate = {
   revision: 'ab45bfde5d54d612cbba9b038a46f13d13f417ec',
   tree: '0d8238992621613883efcf0c73a9f4d88f3fcb10',
@@ -85,12 +119,33 @@ function check(value, text) {
 }
 test('actual readiness release preserves exact ab45 package, two excluded rows and owned limits', () =>
   check(plan, workflow));
-test('actual readiness release frozen source bytes match independently', async () => {
-  for (const ref of [...plan.adapterInputs, ...plan.frozenTools, plan.fixture]) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256, ref.path);
+test('executed readiness release retains exact 4bf source authority after tooling evolves', async () => {
+  executedBindings(plan, workflow, witness);
+  for (const path of [manifestPath, workflowPath]) {
+    const ref = witness.files.find((r) => r.path === path),
+      bytes = await read(path === workflowPath ? executedWorkflowArchive : path);
+    assert.equal(bytes.length, ref.bytes);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256);
   }
+});
+test('executed source witness rejects changed declaration, source or blob identity', () => {
+  for (const mutate of [
+    (p) => p.files.pop(),
+    (p) => p.files.push(p.files[0]),
+    (p) =>
+      (p.files.find((r) => r.path === 'scripts/qualify-solo-runtime.mjs').sha256 = '0'.repeat(64)),
+    (p) => (p.revision = '0'.repeat(40)),
+    (p) => (p.tree = '0'.repeat(40)),
+    (p) => (p.workflow = 'other.yml'),
+  ]) {
+    const changed = structuredClone(witness);
+    mutate(changed);
+    assert.throws(() => executedBindings(plan, workflow, changed));
+  }
+  const changed = structuredClone(plan);
+  changed.frozenTools[0].bytes++;
+  assert.throws(() => executedBindings(changed, workflow, witness));
+  assert.throws(() => executedBindings(plan, workflow + ' ', witness));
 });
 test('release rejects changed package, numerical promotion, source edge and missing verifier closure', () => {
   for (const mutate of [

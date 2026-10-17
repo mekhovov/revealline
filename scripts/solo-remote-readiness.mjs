@@ -1,4 +1,4 @@
-// Held source-specific correctness pilot; no performance qualification or retries.
+// Source-specific correctness diagnostics; no performance qualification or retries.
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { lstat, open, readFile, realpath, writeFile } from 'node:fs/promises';
@@ -16,11 +16,130 @@ export const READINESS_FIXTURE = Object.freeze({
   bytes: 6387,
   sha256: 'aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5',
 });
+export const RESUME_READINESS_SOURCE = Object.freeze({
+  revision: '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7',
+  tree: 'e87e64d0e14584c2a569d06bae8e7c602c5ed105',
+});
+export const RESUME_READINESS_FIXTURES = Object.freeze({
+  'warm-resume': Object.freeze({
+    path: 'docs/performance/fixtures/solo-readiness-resume/warm.qualification.fixture',
+    bytes: 3878,
+    sha256: '95f77f635658a53ae5ab89ca9879321a37c22e512c2a0bb751ad5ed194699545',
+  }),
+  'saved-resume': Object.freeze({
+    path: 'docs/performance/fixtures/solo-readiness-resume/saved.qualification.fixture',
+    bytes: 4723,
+    sha256: 'b739f37f5bd9c341931ed528a955614aaf1ba05075bb1baab1c2a655a5bcd527',
+  }),
+});
+
+export const COMBINED_READINESS_COHORT = 'readiness-and-muted-effects-candidate4bf';
+export const EFFECTS_READINESS_FIXTURES = Object.freeze({
+  full: {
+    path: 'docs/performance/fixtures/solo-remote-timing/public-effects-full-first30.qualification.fixture',
+    bytes: 7134,
+    sha256: '6b8a1228961eb06e3731ed1db82f7a3852e45b0b1e0c41ba566cd3c9fbc7f71a',
+  },
+  reduced: {
+    path: 'docs/performance/fixtures/solo-remote-timing/public-effects-reduced-first30.qualification.fixture',
+    bytes: 7142,
+    sha256: 'd25dca66beea78f53725a594bdcdd3c6228f5dd6d81e85cd21e092d031114b96',
+  },
+});
+export function combinedReadinessRows(engine) {
+  assert(READINESS_ENGINES.includes(engine));
+  return ['warm-resume', 'saved-resume']
+    .map((phase) => ({ ...readinessRow(engine, phase), phase }))
+    .concat(engine === 'webkit' ? qualityComparisonSchedule() : []);
+}
+export const COMBINED_READINESS_PROTOCOL = Object.freeze({
+  name: 'warm-saved-and-muted-effects-v1',
+  readiness: ['warm-resume-v1', 'saved-resume-v1'],
+  effects: ['full', 'reduced', 'reduced', 'full'],
+  effectsEngine: 'webkit',
+  effectsAudio: { muted: true, volume: 0.8, observedOperations: 0 },
+  externalCadence: 'settled120',
+  numericalGates: 'unchanged-raw',
+  performanceQualification: false,
+});
+function combinedPlan(plan) {
+  return plan.sourceCohort === COMBINED_READINESS_COHORT;
+}
+export function readinessRowPlan(plan, row) {
+  if (!combinedPlan(plan)) return plan;
+  const expected = combinedReadinessRows(plan.engine).find((item) => item.id === row.id);
+  assert(expected, 'Undeclared combined row');
+  for (const [key, value] of Object.entries(expected)) assert.deepEqual(row[key], value, key);
+  const effect = qualityComparisonSchedule().find((arm) => arm.id === row.id);
+  if (effect)
+    return {
+      ...plan,
+      sourceCohort: 'readiness-public-effects-candidate4bf',
+      phase: `public-effects-${effect.tier}`,
+      fixture: EFFECTS_READINESS_FIXTURES[effect.tier],
+      rows: [effect],
+    };
+  assert(['warm-resume', 'saved-resume'].includes(row.phase));
+  assert.equal(row.id, readinessRow(plan.engine, row.phase).id);
+  return {
+    ...plan,
+    sourceCohort: 'readiness-resume-candidate4bf',
+    phase: row.phase,
+    fixture: RESUME_READINESS_FIXTURES[row.phase],
+    rows: [readinessRow(plan.engine, row.phase)],
+    protocol: {
+      name: row.phase + '-v1',
+      startupWait: 'immediate-partial',
+      externalCadence: 'settled120',
+      observationTimeoutMs: 240000,
+      records: 8,
+      bytes: 16384,
+      numericalGates: 'unchanged-raw',
+      performanceQualification: false,
+    },
+  };
+}
+function combinedFixtureInputs(plan) {
+  return [
+    ...plan.adapterInputs,
+    ...plan.frozenTools,
+    plan.fixture,
+    ...(combinedPlan(plan) ? plan.additionalFixtures : []),
+  ];
+}
+
+function selection(plan) {
+  if (combinedPlan(plan)) return { source: RESUME_READINESS_SOURCE, combined: true };
+  if (plan.sourceCohort === 'readiness-public-effects-candidate4bf') {
+    assert(['public-effects-full', 'public-effects-reduced'].includes(plan.phase));
+    return { source: RESUME_READINESS_SOURCE, quality: true, resume: false, documents: 1 };
+  }
+  if (plan.sourceCohort === 'readiness-resume-candidate4bf') {
+    assert(Object.hasOwn(RESUME_READINESS_FIXTURES, plan.phase));
+    return {
+      source: RESUME_READINESS_SOURCE,
+      fixture: RESUME_READINESS_FIXTURES[plan.phase],
+      protocol: plan.phase + '-v1',
+      resume: true,
+      documents: plan.phase === 'saved-resume' ? 2 : 1,
+    };
+  }
+  assert.equal(plan.sourceCohort, 'readiness-candidateab45');
+  assert.equal(plan.phase, 'cold-first30');
+  return {
+    source: READINESS_SOURCE,
+    fixture: READINESS_FIXTURE,
+    protocol: 'first-running-v1',
+    resume: false,
+    documents: 1,
+  };
+}
 export const READINESS_ENGINES = ['chromium', 'webkit'];
-export function readinessRow(engine) {
+export function readinessRow(engine, phase = 'cold-first30') {
+  assert(['cold-first30', 'warm-resume', 'saved-resume'].includes(phase));
   assert(READINESS_ENGINES.includes(engine));
   return {
-    id: `readiness-${engine}`,
+    id: phase === 'cold-first30' ? `readiness-${engine}` : `readiness-${phase}-${engine}`,
     kind: 'readiness',
     source: 'candidate',
     engine,
@@ -29,16 +148,33 @@ export function readinessRow(engine) {
   };
 }
 export function validateReadinessPlan(plan) {
+  if (combinedPlan(plan)) {
+    assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
+    assert.equal(plan.phase, 'warm-saved-and-muted-effects');
+    assert.deepEqual(plan.protocol, COMBINED_READINESS_PROTOCOL);
+    assert.deepEqual(plan.rows, combinedReadinessRows(plan.engine));
+    assert.deepEqual(plan.fixture, RESUME_READINESS_FIXTURES['warm-resume']);
+    assert.deepEqual(plan.additionalFixtures, [
+      RESUME_READINESS_FIXTURES['saved-resume'],
+      EFFECTS_READINESS_FIXTURES.full,
+      EFFECTS_READINESS_FIXTURES.reduced,
+    ]);
+    assert.equal(plan.release.comparisonScope, 'muted-public-effects-bundle-only');
+    validateReadinessPlan(readinessRowPlan(plan, plan.rows[0]));
+    const refs = combinedFixtureInputs(plan);
+    assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
+    assert(plan.frozenTools.some((r) => r.path === 'scripts/solo-qualification-observation.mjs'));
+    return plan;
+  }
   assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
   assert.equal(plan.status, 'reviewed-readiness-diagnostic-only');
-  assert.equal(plan.sourceCohort, 'readiness-candidateab45');
-  assert.equal(plan.phase, 'cold-first30');
+  const selected = selection(plan);
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
-  assert.equal(plan.candidate.revision, READINESS_SOURCE.revision);
-  assert.equal(plan.candidate.tree, READINESS_SOURCE.tree);
-  assert.equal(plan.runtimeRevision, READINESS_SOURCE.revision);
+  assert.equal(plan.candidate.revision, selected.source.revision);
+  assert.equal(plan.candidate.tree, selected.source.tree);
+  assert.equal(plan.runtimeRevision, selected.source.revision);
   assert.deepEqual(plan.baseline, {
     revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
     tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
@@ -52,10 +188,10 @@ export function validateReadinessPlan(plan) {
   assert.equal(plan.helperTimeoutMs, 75 * 60000);
   assert.equal(plan.rowEvidenceBytes, 32 * MiB);
   assert.equal(plan.evidenceBytes, 256 * MiB);
-  assert.deepEqual(plan.fixture, READINESS_FIXTURE);
-  assert.deepEqual(plan.rows, [readinessRow(plan.engine)]);
+  assert.deepEqual(plan.fixture, selected.fixture);
+  assert.deepEqual(plan.rows, [readinessRow(plan.engine, plan.phase)]);
   assert.deepEqual(plan.protocol, {
-    name: 'first-running-v1',
+    name: selected.protocol,
     startupWait: 'immediate-partial',
     externalCadence: 'settled120',
     observationTimeoutMs: 240000,
@@ -69,7 +205,7 @@ export function validateReadinessPlan(plan) {
     plan.release.readinessPrerequisite,
     'diagnosticStatus-passed-and-readinessCorrectness-pass',
   );
-  assert.equal(plan.release.candidateRevision, READINESS_SOURCE.revision);
+  assert.equal(plan.release.candidateRevision, selected.source.revision);
   assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.performanceQualification, 'excluded');
   assert.equal(plan.release.physicalQualification, 'unobserved');
@@ -124,6 +260,10 @@ export function validateReadinessPlan(plan) {
       plan.frozenTools.some((r) => r.path === 'scripts/' + path),
       path,
     );
+  if (selected.resume)
+    assert(
+      plan.frozenTools.some((r) => r.path === 'scripts/solo-qualification-replay-identity.mjs'),
+    );
   return plan;
 }
 export function bindReadinessJob(manifest, engine) {
@@ -133,7 +273,9 @@ export function bindReadinessJob(manifest, engine) {
   delete plan.engines;
   plan.format = 'SoloHostedReadinessPlanV1';
   plan.engine = engine;
-  plan.rows = [readinessRow(engine)];
+  plan.rows = combinedPlan(plan)
+    ? combinedReadinessRows(engine)
+    : [readinessRow(engine, plan.phase)];
   return validateReadinessPlan(plan);
 }
 export function readinessMatrix(manifest) {
@@ -145,7 +287,7 @@ export function readinessMatrix(manifest) {
   };
 }
 async function inputs(ctx) {
-  for (const ref of [...ctx.plan.adapterInputs, ...ctx.plan.frozenTools, ctx.plan.fixture]) {
+  for (const ref of combinedFixtureInputs(ctx.plan)) {
     const path = resolve(ctx.repository, ref.path);
     assert(path.startsWith(ctx.repository + '/') && (await realpath(path)) === path);
     const s = await lstat(path);
@@ -155,40 +297,48 @@ async function inputs(ctx) {
 }
 export async function prepareReadinessMode(ctx) {
   validateReadinessPlan(ctx.plan);
+  const selected = selection(ctx.plan);
   await inputs(ctx);
   assert.equal(ctx.admitted.status, 'passed');
   const a = ctx.admitted.artifacts.candidate;
-  assert.equal(a.sourceRevision, READINESS_SOURCE.revision);
-  assert.equal(a.sourceTree, READINESS_SOURCE.tree);
+  assert.equal(a.sourceRevision, selected.source.revision);
+  assert.equal(a.sourceTree, selected.source.tree);
   assert.equal(a.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(a.archiveIdentity, ctx.plan.candidate.inner);
   ctx.report.performanceExclusion = true;
   ctx.report.firstEightAllCorrectnessPassed = false;
   return {
-    scope:
-      'One candidate correctness pilot per engine; no timing comparison, forced calibration delay, automatic retry or physical-device qualification.',
+    scope: combinedPlan(ctx.plan)
+      ? 'Fixed serial warm/saved readiness observations; WebKit additionally has two muted public-effects pairs. All numerical failures retained; no physical qualification or automatic retry.'
+      : 'One candidate correctness pilot per engine; no timing comparison, forced calibration delay, automatic retry or physical-device qualification.',
   };
 }
 export function readinessArguments(ctx, row, url, dir) {
+  if (combinedPlan(ctx.plan)) {
+    const effect = qualityComparisonSchedule().find((arm) => arm.id === row.id);
+    if (effect) return qualityComparisonArguments(ctx, effect, url, dir);
+    return readinessArguments({ ...ctx, plan: readinessRowPlan(ctx.plan, row) }, row, url, dir);
+  }
+  const selected = selection(ctx.plan);
   return [
     join(ctx.here, 'qualify-solo-runtime.mjs'),
     url,
     resolve(ctx.repository, ctx.plan.fixture.path),
     join(dir, 'report.json'),
-    `--source-revision=${READINESS_SOURCE.revision}`,
+    `--source-revision=${selected.source.revision}`,
     '--server-fixture-access',
     `--browser=${row.engine}`,
     '--cpu=1',
     '--work-probe',
     '--hitch-journal',
     '--cadence=settled120',
-    '--readiness-probe=first-running-v1',
+    `--readiness-probe=${selected.protocol}`,
     ...(row.engine === 'webkit'
       ? ['--context=persistent', '--viewport=400x850', '--dpr=3', '--mobile-context']
       : []),
   ];
 }
-export async function readReadinessJSON(path) {
+export async function readReadinessJSON(path, text = false) {
   const s = await lstat(path);
   assert(s.isFile() && !s.isSymbolicLink() && s.size > 0 && s.size <= 16 * MiB);
   assert.equal(await realpath(path), resolve(path));
@@ -212,18 +362,43 @@ export async function readReadinessJSON(path) {
         linked.size === s.size &&
         linked.mtimeMs === s.mtimeMs,
     );
-    return JSON.parse(b.subarray(0, n));
+    return text ? b.subarray(0, n).toString('utf8') : JSON.parse(b.subarray(0, n));
   } finally {
     await f.close();
   }
 }
-export async function readinessAssessment(plan, row, raw, command, journal) {
-  const { assessReadinessPilot } = await import('./solo-qualification-readiness.mjs');
-  const readiness = assessReadinessPilot(
-    raw?.readinessObservation,
-    raw?.snapshots?.at(-1)?.application,
-    raw?.readinessDocuments,
+export async function readinessAssessment(
+  plan,
+  row,
+  raw,
+  command,
+  journal,
+  finalReplayText = null,
+) {
+  const selected = selection(plan);
+  const { assessReadinessPilot, assessResumeReadiness } = await import(
+    './solo-qualification-readiness.mjs'
   );
+  const groups =
+    selected.documents === 2
+      ? ['before-resume', 'saved-restored-before-resume', 'after-resume']
+      : ['before-resume', 'after-resume'];
+  const readiness = selected.resume
+    ? assessResumeReadiness({
+        protocol: selected.protocol,
+        documents: raw?.readinessDocuments,
+        observations: raw?.readinessObservations,
+        applications: groups.map(
+          (group) => raw?.snapshots?.find((s) => s.group === group)?.application,
+        ),
+        replayEvidence: raw?.readinessReplayEvidence,
+        finalReplayText,
+      })
+    : assessReadinessPilot(
+        raw?.readinessObservation,
+        raw?.snapshots?.at(-1)?.application,
+        raw?.readinessDocuments,
+      );
   let failure = null;
   try {
     assert.equal(command.status, 'closed');
@@ -233,11 +408,11 @@ export async function readinessAssessment(plan, row, raw, command, journal) {
     assert.deepEqual(command.ambiguous, []);
     assert.equal(raw.format, 'SoloQualificationReportV1');
     assert.equal(raw.kind, 'readiness-diagnostic');
-    assert.equal(raw.scenarioKind, 'performance');
+    assert.equal(raw.scenarioKind, selected.resume ? 'lifecycle' : 'performance');
     assert.equal(raw.scenarioStatus, 'pass');
     assert.equal(raw.scenarioSHA256, plan.fixture.sha256);
-    assert.equal(raw.sourceRevision, READINESS_SOURCE.revision);
-    assert.equal(raw.buildIdentity.sourceRevision, READINESS_SOURCE.revision);
+    assert.equal(raw.sourceRevision, selected.source.revision);
+    assert.equal(raw.buildIdentity.sourceRevision, selected.source.revision);
     assert.equal(raw.environment.engine, row.engine);
     assert.equal(typeof raw.environment.browserVersion, 'string');
     assert.equal(raw.environment.cpuThrottle, 1);
@@ -274,13 +449,11 @@ export async function readinessAssessment(plan, row, raw, command, journal) {
     assert.equal(raw.cadenceProtocol, 'settled120');
     assert.equal(raw.cacheMode, 'fresh-context');
     assert.equal(raw.baselineRuntime, false);
-    assert.equal(raw.readinessPilot.protocol, 'first-running-v1');
+    assert.equal(raw.readinessPilot.protocol, selected.protocol);
     assert.equal(raw.readinessPilot.performanceQualification, false);
-    assert.equal(raw.startupCadenceObservations.length, 1);
-    assert.equal(
-      raw.startupCadenceObservations[0].pilotStartupWait,
-      'omitted; immediate partial samples retained',
-    );
+    assert.equal(raw.startupCadenceObservations.length, selected.documents);
+    for (const observation of raw.startupCadenceObservations)
+      assert.equal(observation.pilotStartupWait, 'omitted; immediate partial samples retained');
     assert.deepEqual(raw.readinessAssessment, readiness);
     assert.equal(readiness.status, 'passed');
     assert.equal(journal?.status, 'complete');
@@ -332,6 +505,8 @@ export async function readinessAssessment(plan, row, raw, command, journal) {
 }
 export async function runReadinessRow(ctx, row, dir, tmp) {
   await inputs(ctx);
+  const activePlan = readinessRowPlan(ctx.plan, row);
+  const selected = selection(activePlan);
   const { startProductionPreview } = await import(
     pathToFileURL(join(ctx.here, 'serve-production-preview.mjs'))
   );
@@ -353,7 +528,7 @@ export async function runReadinessRow(ctx, row, dir, tmp) {
     const bytes = Buffer.from(await response.arrayBuffer());
     assert(bytes.length < MiB);
     const build = JSON.parse(bytes);
-    assert.equal(build.sourceRevision, READINESS_SOURCE.revision);
+    assert.equal(build.sourceRevision, selected.source.revision);
     const url = new URL('game/?journey=opening', server.url).href;
     row.served = {
       url,
@@ -381,8 +556,10 @@ export async function runReadinessRow(ctx, row, dir, tmp) {
     const output = join(dir, 'report.json'),
       raw = await readReadinessJSON(output);
     const { verifyTimingHitchJournal } = await import('./solo-remote-sustained.mjs');
-    const journal = await verifyTimingHitchJournal(ctx.plan, raw, output, url);
-    Object.assign(row, await readinessAssessment(ctx.plan, row, raw, row.command, journal));
+    const journal = await verifyTimingHitchJournal(activePlan, raw, output, url);
+    if (!selected.resume && !selected.quality)
+      Object.assign(row, await readinessAssessment(activePlan, row, raw, row.command, journal));
+    let finalReplayText = null;
     row.browserVersion = raw.environment?.browserVersion;
     if (raw.replay) {
       assert.equal(raw.replay.file, output + '.replay.json');
@@ -390,6 +567,37 @@ export async function runReadinessRow(ctx, row, dir, tmp) {
       assert.deepEqual(await ctx.digest(raw.replay.file), {
         bytes: raw.replay.bytes,
         sha256: raw.replay.sha256,
+      });
+      if (selected.resume) {
+        finalReplayText = await readReadinessJSON(raw.replay.file, true);
+        assert.equal(Buffer.byteLength(finalReplayText), raw.replay.bytes);
+        assert.equal(sha(finalReplayText), raw.replay.sha256);
+      }
+    }
+    if (selected.resume)
+      Object.assign(
+        row,
+        await readinessAssessment(activePlan, row, raw, row.command, journal, finalReplayText),
+      );
+    if (selected.quality) {
+      const arm = qualityComparisonSchedule().find((a) => a.id === row.id);
+      const assessed = await assessQualityComparisonArm(
+        raw,
+        row.command,
+        journal,
+        arm,
+        ctx.admitted,
+      );
+      Object.assign(row, assessed, {
+        comparisonStatus: assessed.status,
+        diagnosticStatus: assessed.status === 'observed-comparison-arm' ? 'passed' : 'failed',
+        status:
+          assessed.status === 'observed-comparison-arm' &&
+          assessed.numericStatus === 'pass-observed-window'
+            ? 'passed'
+            : 'failed',
+        qualityRawReport: { path: output, ...(await ctx.digest(output)) },
+        qualityJournal: journal,
       });
     }
     await inputs(ctx);
@@ -415,6 +623,33 @@ export async function runReadinessRow(ctx, row, dir, tmp) {
         throw error;
       });
   }
+  if (combinedPlan(ctx.plan) && selected.quality) await collectQualityComparison(ctx);
+}
+export async function collectQualityComparison(ctx) {
+  const observations = [];
+  for (const arm of qualityComparisonSchedule()) {
+    const row = ctx.report.rows.find((value) => value.id === arm.id);
+    if (
+      !row?.qualityRawReport ||
+      row.serverCleanupFailure ||
+      row.diagnosticStatus !== 'passed' ||
+      row.comparisonStatus !== 'observed-comparison-arm'
+    )
+      continue;
+    assert.equal(row.qualityRawReport.path, join(ctx.evidence, arm.id, 'report.json'));
+    const raw = await readReadinessJSON(row.qualityRawReport.path);
+    assert.deepEqual(await ctx.digest(row.qualityRawReport.path), {
+      bytes: row.qualityRawReport.bytes,
+      sha256: row.qualityRawReport.sha256,
+    });
+    observations.push({ arm, raw, command: row.command, journal: row.qualityJournal });
+  }
+  ctx.report.qualityComparison = {
+    ...(await assessQualityComparisonCohort(observations, ctx.admitted)),
+    observedArms: observations.map((r) => r.arm.id),
+    requiredArms: qualityComparisonSchedule().map((r) => r.id),
+  };
+  return ctx.report.qualityComparison;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const [mode, input, output, engine] = process.argv.slice(2);
@@ -428,4 +663,263 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
     plan.manifestInput = { path: resolve(input), bytes: bytes.length, sha256: sha(bytes) };
     await writeFile(output, JSON.stringify(plan, null, 2) + '\n', { flag: 'wx' });
   }
+}
+
+// Source-bound comparison helpers used only by the explicit combined selector.
+// The explicit combined source declaration admits these diagnostic-only arms.
+export function qualityComparisonSchedule() {
+  return ['full', 'reduced', 'reduced', 'full'].map((tier, index) => ({
+    id: `public-effects-p${Math.floor(index / 2) + 1}-${tier}`,
+    pair: Math.floor(index / 2) + 1,
+    ordinal: index + 1,
+    tier,
+    source: 'candidate',
+    engine: 'webkit',
+    timeoutMs: 480000,
+    performanceExclusion: true,
+  }));
+}
+export async function assessQualityComparisonArm(raw, command, journal, arm, admitted) {
+  const {
+    QUALITY_COMPARISON_SOURCE: source,
+    QUALITY_COMPARISON_RECIPES: recipes,
+    qualificationQualityAudioBoundary,
+  } = await import('./solo-qualification-observation.mjs');
+  let failure = null;
+  try {
+    assert.deepEqual(arm, qualityComparisonSchedule()[arm.ordinal - 1]);
+    assert.equal(admitted?.status, 'passed');
+    const artifact = admitted.artifacts?.candidate;
+    assert.equal(artifact?.sourceRevision, source);
+    assert.equal(artifact.sourceTree, 'e87e64d0e14584c2a569d06bae8e7c602c5ed105');
+    assert.match(artifact.manifestSHA256, /^[a-f0-9]{64}$/);
+    assert(artifact.archiveIdentity?.bytes > 0);
+    assert.match(artifact.archiveIdentity.sha256, /^[a-f0-9]{64}$/);
+    assert.equal(command.status, 'closed');
+    assert([0, 2].includes(command.exitCode));
+    assert(!command.forcedCleanup && !command.cleanupUnconfirmed && !command.violation);
+    assert.deepEqual(command.survivors, []);
+    assert.deepEqual(command.ambiguous, []);
+    assert.equal(raw.format, 'SoloQualificationReportV1');
+    assert.equal(raw.kind, 'performance');
+    assert.equal(raw.scenarioStatus, 'pass');
+    assert(
+      ['pass-observed-window', 'fail', 'inconclusive'].includes(raw.performanceGateStatus),
+      'Required original numerical verdict',
+    );
+    assert.equal(raw.scenarioSHA256, recipes[arm.tier]);
+    assert.equal(raw.sourceRevision, source);
+    assert.equal(raw.buildIdentity.sourceRevision, source);
+    assert.equal(raw.environment.engine, 'webkit');
+    assert.equal(typeof raw.environment.browserVersion, 'string');
+    assert(raw.environment.browserVersion.length > 0);
+    assert.equal(raw.environment.contextMode, 'persistent');
+    assert.equal(raw.environment.cpuThrottle, 1);
+    assert.equal(raw.environment.headless, true);
+    assert.deepEqual(raw.environment.requestedDisplay, {
+      viewport: { width: 400, height: 850 },
+      deviceScaleFactor: 3,
+      isMobile: true,
+      hasTouch: true,
+    });
+    const cleanup = raw.environment.contextOwner?.cleanup;
+    assert.equal(cleanup?.status, 'closed');
+    assert(cleanup.profileRemoved && cleanup.browserClosed);
+    assert.equal(raw.workProbe, true);
+    assert.equal(raw.cadenceProtocol, 'settled120');
+    assert.equal(raw.cacheMode, 'fresh-context');
+    assert.equal(raw.baselineRuntime, false);
+    assert.equal(raw.audioProof, false);
+    assert(!raw.readinessPilot && !raw.journalCost && !raw.cpuProfile && !raw.memory);
+    assert.equal(raw.externalCadenceCalibration.status, 'measured-before-play');
+    assert.equal(raw.externalCadenceCalibration.samples.length, 120);
+    assert(
+      raw.externalCadenceCalibration.baselineMs >= 4 &&
+        raw.externalCadenceCalibration.baselineMs <= 50,
+    );
+    assert.equal(journal?.status, 'complete');
+    assert.deepEqual(raw.pageErrors, []);
+    for (const name of [
+      'failure',
+      'hitchJournalFailure',
+      'replayFailure',
+      'contextCleanupFailure',
+      'finalReadFailure',
+      'failureCleanupFailure',
+      'performanceGateStatusBeforeHitchJournal',
+    ])
+      assert(!raw[name], name);
+    assert(raw.actions.every((a) => a.status === 'pass'));
+    const settings = raw.actions.filter((a) => a.publicEffects);
+    assert.equal(settings.length, 1);
+    assert.equal(settings[0].publicEffects.checked, arm.tier === 'reduced');
+    assert.equal(settings[0].publicEffects.effects, arm.tier);
+    assert(['briefing', 'paused'].includes(settings[0].publicEffects.phase));
+    assert.equal(typeof settings[0].publicEffects.systemReduced, 'boolean');
+    assert.equal(raw.finalState.state, 'paused');
+    assert.deepEqual(raw.finalState.display, raw.environment.initialDisplay);
+    const q = raw.qualityComparison;
+    assert.equal(q.format, 'SoloPublicEffectsComparisonArmV1');
+    assert.equal(q.sourceRevision, source);
+    assert.equal(q.scenarioSHA256, recipes[arm.tier]);
+    assert.equal(q.tier, arm.tier);
+    assert.equal(q.documents, 1);
+    assert.equal(q.performanceQualification, false);
+    const observation = q.observation;
+    assert.equal(observation.format, 'SoloSubmittedTierObservationV1');
+    assert.equal(observation.status, 'complete');
+    assert.equal(observation.invalid, false);
+    assert.equal(observation.overflow, false);
+    assert(
+      Number.isSafeInteger(observation.samples) &&
+        observation.samples > 0 &&
+        observation.samples <= 5000,
+    );
+    assert.equal(observation.activeEntries, 1);
+    const counts = [0, 0, 0];
+    counts[arm.tier === 'full' ? 0 : 1] = observation.samples;
+    assert.deepEqual(
+      observation.counts,
+      counts,
+      'Mixed/adapted tiers retain data but invalidate this fixed-tier comparison',
+    );
+    assert.equal(observation.transitionCount, 1);
+    assert.deepEqual(observation.transitions, [
+      observation.firstAtMs,
+      1,
+      arm.tier === 'full' ? 0 : 1,
+    ]);
+    assert(Number.isFinite(observation.firstAtMs) && Number.isFinite(observation.lastAtMs));
+    assert(observation.lastAtMs - observation.firstAtMs >= 29000);
+    assert(observation.lastAtMs - observation.firstAtMs <= 240000);
+    assert(
+      Number.isSafeInteger(observation.firstTick) && Number.isSafeInteger(observation.lastTick),
+    );
+    assert(observation.lastTick >= observation.firstTick && observation.firstTick >= 0);
+    const probe = raw.finalState.probe;
+    assert.equal(
+      probe.work.totals[probe.phases.indexOf('running') * probe.work.width],
+      observation.samples,
+    );
+    assert.deepEqual(probe.submittedTiers, observation);
+    assert.equal(raw.snapshots.length, 2);
+    raw.snapshots.forEach(qualificationQualityAudioBoundary);
+    const application = raw.snapshots.at(-1)?.application;
+    assert.equal(application?.sourceRevision, source);
+    assert.equal(typeof application.audio?.muted, 'boolean');
+    assert(
+      Number.isFinite(application.audio?.volume) &&
+        application.audio.volume >= 0 &&
+        application.audio.volume <= 1,
+    );
+    assert.equal(application.quality.tier, arm.tier);
+    assert.equal(application.interruptions.count, 0);
+    assert.equal(raw.replay.scope, 'completed-scenario');
+    const native = raw.replay.nativeVerification;
+    assert.equal(native.status, 'pass');
+    assert.equal(native.engine, 'webkit');
+    assert.equal(native.browserVersion, raw.environment.browserVersion);
+    assert.equal(native.observation.match, true);
+    assert.equal(native.observation.levelId, 'first-return');
+    assert(native.observation.features.movingTicks >= 3300);
+    assert(native.observation.features.directionChangesWithMovement >= 20);
+    assert(native.observation.ticks >= observation.lastTick);
+  } catch (error) {
+    failure = String(error.message ?? error).slice(0, 2048);
+  }
+  const numeric = raw?.performanceGateStatus ?? 'unobserved';
+  return {
+    status: failure ? 'invalid-comparison' : 'observed-comparison-arm',
+    failure,
+    rawPerformanceGateStatus: numeric,
+    numericStatus: numeric,
+    observedBaselineMs: raw?.externalCadenceCalibration?.baselineMs ?? null,
+    baselineScope:
+      'This arm’s unchanged pre-play calibration; never matched or redefined during gameplay.',
+    performanceQualification: false,
+    physicalQualification: false,
+    scope:
+      'Muted public preference bundle; zero observed audio operations do not prove native context state or audible output. No causal GPU attribution, overhead-free claim or changed numerical verdict.',
+  };
+}
+
+export function qualityComparisonArguments(ctx, arm, url, dir) {
+  assert.deepEqual(arm, qualityComparisonSchedule()[arm.ordinal - 1]);
+  return [
+    join(ctx.here, 'qualify-solo-runtime.mjs'),
+    url,
+    resolve(
+      ctx.repository,
+      `docs/performance/fixtures/solo-remote-timing/public-effects-${arm.tier}-first30.qualification.fixture`,
+    ),
+    join(dir, 'report.json'),
+    '--source-revision=4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7',
+    '--server-fixture-access',
+    '--browser=webkit',
+    '--cpu=1',
+    '--work-probe',
+    '--hitch-journal',
+    '--cadence=settled120',
+    '--context=persistent',
+    '--viewport=400x850',
+    '--dpr=3',
+    '--mobile-context',
+    `--visual-quality-observation=${arm.tier}`,
+  ];
+}
+
+export async function assessQualityComparisonCohort(observations, admitted) {
+  const { qualificationQualityAudioBoundary } = await import(
+    './solo-qualification-observation.mjs'
+  );
+  const schedule = qualityComparisonSchedule(),
+    results = [];
+  if (!Array.isArray(observations) || observations.length !== schedule.length)
+    return { status: 'incomplete-comparison', results, performanceQualification: false };
+  let matched = true,
+    signature;
+  for (let i = 0; i < schedule.length; i++) {
+    const item = observations[i];
+    try {
+      assert.deepEqual(item.arm, schedule[i]);
+    } catch {
+      matched = false;
+    }
+    const result = await assessQualityComparisonArm(
+      item.raw,
+      item.command,
+      item.journal,
+      schedule[i],
+      admitted,
+    );
+    const raw = item.raw;
+    const current = JSON.stringify([
+      raw?.sourceRevision,
+      raw?.environment?.engine,
+      raw?.environment?.browserVersion,
+      raw?.environment?.architecture,
+      raw?.environment?.osRelease,
+      raw?.environment?.requestedDisplay,
+      raw?.environment?.initialDisplay,
+      raw?.environment?.documentCacheControl,
+      result.status === 'observed-comparison-arm'
+        ? raw.snapshots.map(qualificationQualityAudioBoundary)
+        : null,
+      raw?.actions?.find((action) => action.publicEffects)?.publicEffects.systemReduced,
+    ]);
+    if (signature !== undefined && signature !== current) matched = false;
+    signature ??= current;
+    results.push({ id: schedule[i].id, pair: schedule[i].pair, ...result });
+  }
+  return {
+    status:
+      matched && results.every((r) => r.status === 'observed-comparison-arm')
+        ? 'complete-diagnostic-comparison'
+        : 'invalid-comparison',
+    results,
+    performanceQualification: false,
+    physicalQualification: false,
+    scope:
+      'Two counterbalanced pairs only; all raw numerical failures remain failures, and no significance or decoration-causality verdict is inferred.',
+  };
 }

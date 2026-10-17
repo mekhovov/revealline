@@ -410,3 +410,206 @@ export function aggregateQualificationGates({
       'All requested independent components must resolve before a combined observed-window pass; baseline internal observations remain unknown.',
   };
 }
+
+// Prospective comparison only. No release or artifact authority is supplied here.
+export const QUALITY_COMPARISON_SOURCE = '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7';
+export const QUALITY_COMPARISON_RECIPES = Object.freeze({
+  full: '6b8a1228961eb06e3731ed1db82f7a3852e45b0b1e0c41ba566cd3c9fbc7f71a',
+  reduced: 'd25dca66beea78f53725a594bdcdd3c6228f5dd6d81e85cd21e092d031114b96',
+});
+export function qualificationQualityOptions(flags, scenario, hash) {
+  const selected = flags.filter((f) => f.startsWith('--visual-quality-observation'));
+  if (!selected.length) return null;
+  const require = (ok, reason) => {
+    if (!ok) throw Error(reason);
+  };
+  require(selected.length === 1, 'One quality observation selector');
+  const tier = selected[0].slice('--visual-quality-observation='.length);
+  require(selected[0] === `--visual-quality-observation=${tier}` &&
+    ['full', 'reduced'].includes(tier), 'Exact quality selector');
+  require(hash === QUALITY_COMPARISON_RECIPES[tier], 'Exact public-effects recipe bytes');
+  require(scenario.id ===
+    `public-effects-${tier}-first30-border-v1`, 'Exact public-effects recipe');
+  require(scenario.timeoutMs === 240000, 'Original scenario deadline');
+  for (const flag of [
+    '--browser=webkit',
+    '--context=persistent',
+    '--cpu=1',
+    '--work-probe',
+    '--hitch-journal',
+    '--cadence=settled120',
+    '--viewport=400x850',
+    '--dpr=3',
+    '--mobile-context',
+    `--source-revision=${QUALITY_COMPARISON_SOURCE}`,
+  ])
+    require(flags.filter((f) => f === flag).length === 1, `Required ${flag}`);
+  for (const prefix of [
+    '--browser=',
+    '--context=',
+    '--cpu=',
+    '--cadence=',
+    '--viewport=',
+    '--dpr=',
+    '--source-revision=',
+  ])
+    require(flags.filter((f) => f.startsWith(prefix)).length === 1, 'Duplicate comparison option');
+  require(!flags.some((f) =>
+    /^--(?:baseline-runtime|readiness-probe|journal-cost-probe|cpu-profile|memory-profile|audio-proof|hitch-journal-preparation|hitch-journal-active-document|snapshot-chunks)/.test(
+      f,
+    ),
+  ), 'No mixed observer modes');
+  return {
+    format: 'SoloPublicEffectsComparisonArmV1',
+    tier,
+    sourceRevision: QUALITY_COMPARISON_SOURCE,
+    scenarioSHA256: hash,
+    performanceQualification: false,
+  };
+}
+
+// Serialized into the same top-level init script as the existing observer.
+// No callbacks, DOM reads, allocation or serialization in observe(). It records
+// the application's retained submitted-board record, not physical scanout.
+export function createSubmittedTierObservation() {
+  const counts = new Uint32Array(3),
+    transitions = new Float64Array(32 * 3);
+  let scene = null,
+    run = null,
+    bound = false,
+    invalid = false,
+    overflow = false,
+    samples = 0,
+    changed = 0,
+    previousTier = -1,
+    firstAtMs = null,
+    lastAtMs = null,
+    firstTick = null,
+    lastTick = null,
+    activeEntries = 0,
+    priorActive = false;
+  return {
+    bind(value) {
+      if (bound || !value) invalid = true;
+      else {
+        scene = value;
+        bound = true;
+      }
+    },
+    observe(nowMs, phase) {
+      const active = phase === 2;
+      if (active && !priorActive) activeEntries++;
+      priorActive = active;
+      if (!active) return;
+      if (samples >= 5000) {
+        overflow = true;
+        return;
+      }
+      samples++;
+      if (!Number.isFinite(nowMs) || (lastAtMs !== null && nowMs < lastAtMs)) {
+        invalid = true;
+        return;
+      }
+      firstAtMs ??= nowMs;
+      lastAtMs = nowMs;
+      const paint = scene?.lastPaint,
+        current = paint?.run;
+      if (
+        !bound ||
+        !current ||
+        scene.frameActive !== true ||
+        scene.displayedBoardValid !== true ||
+        scene.submittedRun !== current ||
+        current.status !== 'running' ||
+        paint.tick !== current.tick ||
+        !Number.isSafeInteger(paint.tick) ||
+        paint.tick < 0 ||
+        (lastTick !== null && paint.tick < lastTick)
+      ) {
+        invalid = true;
+        return;
+      }
+      if (run === null) run = current;
+      else if (run !== current) {
+        invalid = true;
+        return;
+      }
+      const tier =
+        paint.quality === 'full'
+          ? 0
+          : paint.quality === 'reduced'
+            ? 1
+            : paint.quality === 'minimal'
+              ? 2
+              : -1;
+      if (tier < 0) {
+        invalid = true;
+        return;
+      }
+      firstTick ??= paint.tick;
+      lastTick = paint.tick;
+      counts[tier]++;
+      if (tier !== previousTier) {
+        if (changed < 32) {
+          const offset = changed * 3;
+          transitions[offset] = nowMs;
+          transitions[offset + 1] = samples;
+          transitions[offset + 2] = tier;
+        } else overflow = true;
+        changed++;
+        previousTier = tier;
+      }
+    },
+    export() {
+      return {
+        format: 'SoloSubmittedTierObservationV1',
+        status: invalid || overflow || !samples ? 'incomplete' : 'complete',
+        samples,
+        counts: Array.from(counts),
+        activeEntries,
+        firstAtMs,
+        lastAtMs,
+        firstTick,
+        lastTick,
+        transitionCount: changed,
+        transitions: Array.from(transitions.subarray(0, Math.min(changed, 32) * 3)),
+        overflow,
+        invalid,
+        scope:
+          'Existing active POST_RENDER callbacks; submitted record only, not physical display completion.',
+      };
+    },
+  };
+}
+
+/** Paused public snapshot gate, called before public Start and after Pause only. */
+export function qualificationQualityAudioBoundary(snapshot, index) {
+  const require = (condition, label) => {
+    if (!condition) throw new Error(`Public Effects muted case: ${label}`);
+  };
+  require(index === 0 || index === 1, 'unexpected snapshot');
+  const group = ['original-art-ready', 'first30-border-paused'][index];
+  require(snapshot?.group === group, 'snapshot group');
+  require(snapshot.phase === (index ? 'paused' : 'briefing'), 'snapshot phase');
+  const master = snapshot.application?.audio;
+  require(master?.muted === true && master.volume === 0.8, 'master muted true / volume 0.8');
+  require(snapshot.application?.interruptions?.count === 0, 'automatic interruption');
+  const activation = snapshot.probe?.audio;
+  require(activation, 'missing native operation counters');
+  const counts = [
+    'oscillatorStarts',
+    'sourceStarts',
+    'sourceStartFailures',
+    'mediaPlayRequests',
+    'mediaPlayResolved',
+    'mediaPlayRejected',
+  ].map((name) => {
+    require(activation[name] === 0, `nonzero or missing ${name}`);
+    return activation[name];
+  });
+  return {
+    group,
+    master: { muted: master.muted, volume: master.volume },
+    observedNativeOperations: counts,
+  };
+}

@@ -1,4 +1,4 @@
-name: Temporary Solo ab45 first-running readiness pilot
+name: Temporary Solo warm and saved Resume plus public effects diagnostic
 
 on:
   pull_request:
@@ -7,14 +7,18 @@ on:
       - 'scripts/solo-qualification-readiness.mjs'
       - 'scripts/solo-readiness-gpu.mjs'
       - '.github/workflows/solo-remote-readiness-ab45-temporary.yml'
-      - 'docs/performance/solo-readiness-ab45-plan.json'
+      - 'docs/performance/solo-readiness-4bf-plan.json'
+      - 'docs/performance/fixtures/solo-readiness-resume/**'
+      - 'docs/performance/fixtures/solo-remote-timing/public-effects-*.qualification.fixture'
+      - 'scripts/solo-qualification-observation.mjs'
+      - 'scripts/qualify-solo-runtime.mjs'
 
 permissions:
   contents: read
   actions: read
 
 concurrency:
-  group: solo-linux-readiness-ab45-${{ github.event.pull_request.number }}
+  group: solo-linux-readiness-4bf-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 
 jobs:
@@ -24,8 +28,8 @@ jobs:
       max-parallel: 2
       matrix:
         engine: [chromium, webkit]
-    # Independent excluded diagnostics on one prospective push edge only.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'ab45bfde5d54d612cbba9b038a46f13d13f417ec'
+    # Reviewed excluded diagnostics on one exact prospective push edge only.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7'
     runs-on: ubuntu-24.04
     timeout-minutes: 130
     env:
@@ -44,9 +48,16 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-remote-readiness-ab45-temporary.yml
+            /docs/performance/fixtures/solo-readiness-resume/saved.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-resume/warm.qualification.fixture
+            /docs/performance/fixtures/solo-readiness/4bf-executed-workflow.yml
+            /docs/performance/fixtures/solo-readiness/4bf-execution-source.json
             /docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture
             /docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture
             /docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture
+            /docs/performance/fixtures/solo-remote-timing/public-effects-full-first30.qualification.fixture
+            /docs/performance/fixtures/solo-remote-timing/public-effects-reduced-first30.qualification.fixture
+            /docs/performance/solo-readiness-4bf-plan.json
             /docs/performance/solo-readiness-ab45-plan.json
             /docs/performance/solo-remote-correctness-plan.json
             /game/build-config.json
@@ -58,6 +69,7 @@ jobs:
             /game/content-design/map.mjs
             /game/content-launch.mjs
             /game/content.mjs
+            /game/content/campaign.json
             /game/content/soundtrack-catalogue.mjs
             /game/controller-bindings.mjs
             /game/controller-boost.mjs
@@ -224,10 +236,15 @@ jobs:
             /scripts/soundtrack-archive-admissions.mjs
             /scripts/soundtrack-distribution.mjs
             /scripts/test-solo-long29-journal-wiring.mjs
+            /scripts/test-solo-qualification-cadence.mjs
             /scripts/test-solo-qualification-hitch-journal.mjs
             /scripts/test-solo-qualification-readiness.mjs
+            /scripts/test-solo-qualification.mjs
+            /scripts/test-solo-quality-comparison.mjs
+            /scripts/test-solo-readiness-4bf-release.mjs
             /scripts/test-solo-readiness-gpu.mjs
             /scripts/test-solo-readiness-release.mjs
+            /scripts/test-solo-readiness-resume.mjs
             /scripts/test-solo-remote-correctness.mjs
             /scripts/test-solo-remote-readiness.mjs
             /scripts/test-solo-source-verifier-smoke.mjs
@@ -242,7 +259,7 @@ jobs:
       - timeout-minutes: 3
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: ab45bfde5d54d612cbba9b038a46f13d13f417ec
+          ref: 4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7
           path: candidate
           persist-credentials: false
           fetch-depth: 1
@@ -259,7 +276,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-readiness-ab45-${{ matrix.engine }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-readiness-4bf-${{ matrix.engine }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -278,9 +295,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-remote-readiness.mjs scripts/test-solo-qualification-readiness.mjs scripts/test-solo-readiness-gpu.mjs scripts/test-solo-qualification-hitch-journal.mjs scripts/test-solo-long29-journal-wiring.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-readiness-release.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-readiness.mjs bind-plan docs/performance/solo-readiness-ab45-plan.json "$RUNNER_TEMP/readiness-plan.json" "${{ matrix.engine }}"
-      - name: Observe one public first-running readiness boundary
+          node --test --test-concurrency=2 scripts/test-solo-remote-readiness.mjs scripts/test-solo-qualification-readiness.mjs scripts/test-solo-readiness-gpu.mjs scripts/test-solo-qualification-hitch-journal.mjs scripts/test-solo-long29-journal-wiring.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-readiness-release.mjs scripts/test-solo-readiness-resume.mjs scripts/test-solo-readiness-4bf-release.mjs scripts/test-solo-quality-comparison.mjs scripts/test-solo-qualification.mjs scripts/test-solo-qualification-cadence.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-readiness.mjs bind-plan docs/performance/solo-readiness-4bf-plan.json "$RUNNER_TEMP/readiness-plan.json" "${{ matrix.engine }}"
+      - name: Observe declared Resume and public effects diagnostics
         timeout-minutes: 78
         working-directory: tools
         env:
@@ -315,9 +332,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-readiness-ab45-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-readiness-4bf-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-readiness-ab45-${{ matrix.engine }}/evidence/
+            ${{ runner.temp }}/solo-linux-readiness-4bf-${{ matrix.engine }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6

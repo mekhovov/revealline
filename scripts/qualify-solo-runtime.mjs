@@ -55,6 +55,9 @@ import {
   externalQualificationBudgets,
   aggregateQualificationGates,
   qualificationPageErrorDetails,
+  qualificationQualityOptions,
+  createSubmittedTierObservation,
+  qualificationQualityAudioBoundary,
 } from './solo-qualification-observation.mjs';
 
 // Public UI only. Never write application storage, run state, clocks or caches.
@@ -104,6 +107,12 @@ const readinessModule = flags.some((flag) => flag.startsWith('--readiness-probe'
   : null;
 const readinessOptions = readinessModule?.qualificationReadinessOptions(flags, scenario, bytes);
 let readinessDocuments = 0;
+const qualityOptions = qualificationQualityOptions(
+  flags,
+  scenario,
+  createHash('sha256').update(bytes).digest('hex'),
+);
+let qualityDocuments = 0;
 const journalCostModule = flags.some((flag) => flag.startsWith('--journal-cost-probe'))
   ? await import('./solo-qualification-journal-cost.mjs')
   : null;
@@ -262,9 +271,16 @@ if (readinessOptions) {
     startupObservation:
       'Immediate partial observation; the optional startup-sample wait is omitted only for this correctness pilot.',
     scope:
-      'Fixed external settled120 B and original first30 actions/raw gates are retained. This is not an equivalent ordinary timing comparator.',
+      readinessOptions.protocol === 'first-running-v1'
+        ? 'Fixed external settled120 B and original first30 actions/raw gates are retained. This is not an equivalent ordinary timing comparator.'
+        : 'Fixed external settled120 B and raw gates are retained. The short public Resume route is correctness-only, not an ordinary timing comparator.',
   };
 }
+const resumeReadiness = readinessOptions?.protocol.endsWith('-resume-v1') === true;
+const resumeReplay = resumeReadiness
+  ? readinessModule.createResumeReplayEvidence(readinessOptions.protocol)
+  : null;
+if (resumeReplay) report.readinessReplayEvidence = resumeReplay.report;
 const replayIdentity = scenario.replayIdentity ? createQualificationReplayIdentity() : null;
 if (replayIdentity) report.replayIdentity = replayIdentity.report;
 await mkdir(dirname(resolve(output)), { recursive: true });
@@ -478,6 +494,10 @@ try {
     await save();
   }
   if (audioProof) await page.addInitScript(installAudioProof, audioOptions);
+  if (qualityOptions)
+    page.on('framenavigated', (frame) => {
+      if (frame === page.mainFrame()) qualityDocuments++;
+    });
   if (readinessOptions)
     page.on('framenavigated', (frame) => {
       if (frame === page.mainFrame()) readinessDocuments++;
@@ -492,12 +512,14 @@ try {
   if (!hitchStore && !journalCostOptions) await page.addInitScript(observationInitScript);
   function addQualificationProbe(install, options) {
     const cost = options.journalCost === true,
-      readiness = options.readinessProbe === true;
-    if (!hitchStore && !cost && !readiness) return page.addInitScript(install, options);
+      readiness = options.readinessProbe === true,
+      quality = options.qualityObservation === true;
+    if (!hitchStore && !cost && !readiness && !quality) return page.addInitScript(install, options);
     // Ordering across separate addInitScript calls is unspecified. Construct all
     // opted-in dependencies and the probe in one synchronous installation.
     return page.addInitScript(`if (window.top === window) {
 ${observationInitScript}
+${quality ? `window.soloQualificationCreateSubmittedTierObservation = ${createSubmittedTierObservation.toString()};` : ''}
 ${readiness ? `window.soloQualificationCreateReadinessProbe = ${readinessModule.createBrowserReadinessProbe.toString()};` : ''}
 ${cost ? journalCostModule.journalCostInitScript() : ''}
 ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
@@ -512,8 +534,13 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       hitchJournal,
       journalCost,
       readinessProbe,
+      readinessProtocol,
+      qualityObservation,
     }) => {
       const cost = journalCost ? window.soloQualificationJournalCost : null;
+      const quality = qualityObservation
+        ? window.soloQualificationCreateSubmittedTierObservation()
+        : null;
       const phases = ['boot', 'briefing', 'running', 'paused', 'result', 'picture', 'other'];
       const counts = phases.map(() => new Float64Array(bounds.length));
       const totals = new Float64Array(phases.length * 5),
@@ -570,12 +597,16 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         },
       });
       const readiness = readinessProbe
-        ? window.soloQualificationCreateReadinessProbe(() => {
-            const scenes =
-              observedGame?.scene?.scenes?.filter((scene) => scene.lastPaint?.run) ?? [];
-            if (scenes.length !== 1) return null;
-            return scenes[0];
-          })
+        ? window.soloQualificationCreateReadinessProbe(
+            () => {
+              const scenes =
+                observedGame?.scene?.scenes?.filter((scene) => scene.lastPaint?.run) ?? [];
+              if (scenes.length !== 1) return null;
+              return scenes[0];
+            },
+            window,
+            readinessProtocol,
+          )
         : null;
       const intervalClock = window.soloQualificationIntervalClock(performance.now());
       let phase = 0,
@@ -702,6 +733,14 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
               [];
             if (scenes.length === 1) costScene = scenes[0];
           }
+          if (quality) {
+            const scenes = observedGame.scene?.scenes;
+            const owners =
+              Array.isArray(scenes) && scenes.length <= 64
+                ? scenes.filter((scene) => Object.hasOwn(scene, 'lastPaint'))
+                : [];
+            quality.bind(owners.length === 1 ? owners[0] : null);
+          }
           workSubscribed = true;
           if (cost) cost.begin(7);
           if (hitchJournal) window.soloQualificationHitchJournal.subscribe(performance.now());
@@ -719,6 +758,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             if (workStarted === undefined) return;
             const workEnded = performance.now(),
               elapsed = workEnded - workStarted;
+            if (quality) quality.observe(workEnded, phase);
             if (cost) {
               cost.endWork(workEnded, costScene?.lastPaint?.quality);
               cost.begin(4);
@@ -761,6 +801,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         }),
         export: () => ({
           ...(readiness ? { readiness: readiness.export() } : {}),
+          ...(quality ? { submittedTiers: quality.export() } : {}),
           firstRafCallback: intervalClock.snapshot(),
           phases,
           bounds,
@@ -796,6 +837,8 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       hitchJournal: Boolean(hitchStore),
       journalCost: Boolean(journalCostOptions),
       readinessProbe: Boolean(readinessOptions),
+      readinessProtocol: readinessOptions?.protocol,
+      qualityObservation: Boolean(qualityOptions),
     },
   );
   if (cpuProfile) {
@@ -1058,8 +1101,20 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
           );
           await prepareObservation(`follow-${path}`);
         } else if (action.type === 'select') await locator.selectOption(action.value, { timeout });
-        else if (action.type === 'check') await locator.setChecked(action.value, { timeout });
-        else if (action.type === 'fill') await locator.fill(action.value, { timeout });
+        else if (action.type === 'check') {
+          await locator.setChecked(action.value, { timeout });
+          if (qualityOptions && action.selector === '#settings-reduced-effects') {
+            record.publicEffects = await locator.evaluate((control) => ({
+              checked: control.checked,
+              effects: document.body.dataset.effects,
+              phase: document.body.dataset.flightState,
+              systemReduced: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+            }));
+            assert.equal(record.publicEffects.checked, qualityOptions.tier === 'reduced');
+            assert.equal(record.publicEffects.effects, qualityOptions.tier);
+            assert.notEqual(record.publicEffects.phase, 'running');
+          }
+        } else if (action.type === 'fill') await locator.fill(action.value, { timeout });
         else if (action.type === 'upload') {
           const file = resolve(dirname(resolve(scenarioPath)), action.file),
             data = await readFile(file);
@@ -1261,6 +1316,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
           nativeReplay = text;
           record.bytes = Buffer.byteLength(text);
           if (replayIdentity) record.identity = replayIdentity.observe(text);
+          if (resumeReplay) record.readinessIdentity = resumeReplay.observe(action.label, text);
         } else if (action.type === 'snapshot') {
           const snapshot = await page.evaluate(() => {
             const phase = document.body.dataset.flightState;
@@ -1298,6 +1354,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             internalDiagnosticStatus: snapshot.application ? 'observed' : 'unavailable-baseline',
           };
           report.snapshots.push(row);
+          if (qualityOptions) qualificationQualityAudioBoundary(row, report.snapshots.length - 1);
           row.memory = await profileMemory();
           assert(
             row.memory?.status !== 'failed',
@@ -1327,6 +1384,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   }
   await execute(scenario.actions);
   replayIdentity?.finish();
+  resumeReplay?.finish();
   if (scenario.expectAudio) {
     const probe = await page.evaluate(() => window.soloQualificationProbe.export());
     const audio = report.snapshots.at(-1)?.application?.audio;
@@ -1459,6 +1517,12 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         report.journalCost.documents = journalCostDocuments;
         if (journalCostDocuments !== 1) report.journalCost.status = 'incomplete';
       }
+      if (qualityOptions)
+        report.qualityComparison = {
+          ...qualityOptions,
+          documents: qualityDocuments,
+          observation: report.finalState?.probe?.submittedTiers ?? null,
+        };
       const probe = report.finalState.probe;
       if (probe)
         report.cadence = probe.phases.map((phase, index) => ({
@@ -1540,11 +1604,30 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   if (readinessOptions) {
     report.readinessDocuments = readinessDocuments;
     report.readinessObservation = report.finalState?.probe?.readiness ?? null;
-    report.readinessAssessment = readinessModule.assessReadinessPilot(
-      report.readinessObservation,
-      report.snapshots.at(-1)?.application,
-      readinessDocuments,
-    );
+    if (resumeReadiness) {
+      const before = report.snapshots.find((row) => row.group === 'before-resume');
+      const restored = report.snapshots.find((row) => row.group === 'saved-restored-before-resume');
+      const after = report.snapshots.find((row) => row.group === 'after-resume');
+      const saved = readinessOptions.protocol === 'saved-resume-v1';
+      report.readinessObservations = saved
+        ? [before?.probe?.readiness ?? null, after?.probe?.readiness ?? null]
+        : [after?.probe?.readiness ?? null];
+      report.readinessAssessment = readinessModule.assessResumeReadiness({
+        protocol: readinessOptions.protocol,
+        documents: readinessDocuments,
+        observations: report.readinessObservations,
+        applications: (saved ? [before, restored, after] : [before, after]).map(
+          (row) => row?.application,
+        ),
+        replayEvidence: resumeReplay.report,
+        finalReplayText: nativeReplay,
+      });
+    } else
+      report.readinessAssessment = readinessModule.assessReadinessPilot(
+        report.readinessObservation,
+        report.snapshots.at(-1)?.application,
+        readinessDocuments,
+      );
     if (report.readinessAssessment.status !== 'passed') {
       report.scenarioStatus = 'fail';
       report.readinessFailure =
