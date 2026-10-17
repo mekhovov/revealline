@@ -1152,6 +1152,102 @@ test('controller format draft can cancel or commit while preserving selector foc
   assert.deepEqual(f.memory.allPuts, []);
 });
 
+for (const choice of ['origin', 'newer choice', 'cancelled'])
+  test(
+    `configured controller preparation restores only its owned focus: ${choice}`,
+    finiteMediaCase(async (t, mediaScope) => {
+      const controller = {
+        index: 0,
+        id: 'Preparation focus controller',
+        connected: true,
+        mapping: 'standard',
+        axes: [0, 0, 0, 0],
+        buttons: Array.from({ length: 17 }, () => ({ value: 0, pressed: false })),
+      };
+      const f = await fixture(t, { pads: [controller] }),
+        p = f.page,
+        entered = mediaScope.entry('The configured picture decoder did not start.'),
+        gate = mediaScope.gate();
+      p.join(0);
+      p.focus('race-options');
+      p.pulse(0, 0);
+      p.focus('race-settings-tab-gameplay');
+      p.pulse(0, 0);
+      assert.equal(!!p.$('race-focus').closest('[hidden],[inert]'), false);
+      p.focus('race-focus');
+      p.pulse(0, 0);
+      assert.equal(p.$('race-setup').hidden, false);
+      const previousRuns = [...p.renders],
+        previousCheckpoint = p.checkpoint(),
+        original = p.$('race-format').value,
+        handler = p.$('race-format').onchange;
+      let preparation;
+      p.$('race-format').onchange = (event) => (preparation = handler(event));
+      t.after(() => {
+        p.$('race-format').onchange = handler;
+      });
+      f.media.setDecodeHook(async () => {
+        entered.resolve();
+        await gate.promise;
+      });
+      p.focus('race-format');
+      p.pulse(0, 0);
+      p.pulse(0, 13);
+      p.pulse(0, 0);
+      mediaScope.observe(preparation);
+      await entered.promise;
+      assert.equal(p.$('race-format').value, 'first-to-two');
+      assert.equal(!!p.$('race-picture-cancel').closest('[hidden],[inert]'), false);
+      assert.equal(!!p.$('race-start').closest('[hidden],[inert]'), true);
+      assert.equal(p.doc.activeElement.id, 'race-picture-cancel');
+      assert.equal(
+        p.renders.every((run, i) => run === previousRuns[i]),
+        true,
+      );
+      assert.deepEqual(p.checkpoint(), previousCheckpoint);
+      if (choice === 'newer choice') {
+        assert.equal(!!p.$('race-turn').closest('[hidden],[inert]'), false);
+        p.focus('race-turn');
+      } else if (choice === 'cancelled') {
+        p.pulse(0, 0);
+        assert.equal(p.$('race-format').value, original);
+        assert.equal(
+          p.renders.every((run, i) => run === previousRuns[i]),
+          true,
+        );
+      }
+      const selectedFocus = p.doc.activeElement;
+      gate.resolve();
+      await mediaScope.join(preparation);
+      assert.equal(p.state(), 'ready');
+      assert.equal(p.tick(), 0);
+      assert.equal(p.editors().length, 0);
+      if (choice === 'origin') {
+        assert.equal(p.doc.activeElement.id, 'race-format');
+        p.frame(0);
+        assert.equal(p.doc.activeElement.id, 'race-format');
+      } else {
+        assert.equal(p.doc.activeElement === selectedFocus, true);
+        p.frame(0);
+      }
+      if (choice === 'cancelled') {
+        assert.equal(p.$('race-format').value, original);
+        assert.equal(
+          p.renders.every((run, i) => run === previousRuns[i]),
+          true,
+        );
+        assert.deepEqual(p.checkpoint(), previousCheckpoint);
+      } else {
+        assert.equal(p.$('race-format').value, 'first-to-two');
+        assert.equal(
+          p.renders.every((run, i) => run !== previousRuns[i]),
+          true,
+        );
+      }
+      assert.deepEqual(f.memory.allPuts, []);
+    }),
+  );
+
 test(
   'pending Next respects a newer deliberate action focus when its picture completes',
   finiteMediaCase(async (t, mediaScope) => {
