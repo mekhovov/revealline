@@ -60,7 +60,8 @@ export function parseProcStat(text) {
     rss: Number(rest[21]) * 4096,
   };
 }
-async function processes() {
+async function processes(darwin = null, ownerToken = '') {
+  if (darwin) return darwin.all(ownerToken);
   const result = new Map();
   for (const name of await readdir('/proc')) {
     if (!/^\d+$/.test(name)) continue;
@@ -97,8 +98,8 @@ export function isOwnedProcess(row, all, owned, leaderPid, tagged) {
   );
 }
 
-// Linux-only, job-local ownership. No machine-wide browser kill and no PID-only
-// signalling. A forced cleanup is a failed row even if every process then exits.
+// Job-local ownership with an explicit pinned Darwin inventory provider.
+// No machine-wide browser kill and no PID-only signalling. A forced cleanup is a failed row even if every process then exits.
 export async function ownedCommand(
   argv,
   {
@@ -112,8 +113,12 @@ export async function ownedCommand(
     receipt = null,
   },
 ) {
-  assert.equal(process.platform, 'linux');
-  const before = await processes();
+  assert(['linux', 'darwin'].includes(process.platform));
+  const darwin =
+    process.platform === 'darwin'
+      ? (await import('./solo-darwin-process-inventory.mjs')).createDarwinProcessInventory(env)
+      : null;
+  const before = await processes(darwin);
   const ownerToken = randomUUID();
   const stream = await open(log, 'wx');
   const child = spawn(argv[0], argv.slice(1), {
@@ -130,7 +135,9 @@ export async function ownedCommand(
   let initialLeaderCapture = 'not-observed',
     initialLeaderFailure = null;
   try {
-    const row = parseProcStat(readFileSync(`/proc/${child.pid}/stat`, 'utf8'));
+    const row = darwin
+      ? darwin.oneSync(child.pid)
+      : parseProcStat(readFileSync(`/proc/${child.pid}/stat`, 'utf8'));
     if (spawnedLeaderIdentity(row, child.pid, process.pid, before)) {
       row.argv = argv.join(' ');
       owned.set(row.pid, row);
@@ -153,6 +160,7 @@ export async function ownedCommand(
     ambiguous: [],
     survivors: [],
     initialLeaderCapture,
+    ...(darwin ? { processInventory: { platform: 'darwin', ...darwin.identity } } : {}),
   };
   let ended = false,
     drained = false,
@@ -187,18 +195,20 @@ export async function ownedCommand(
   });
   const start = Date.now();
   const collect = async () => {
-    const all = await processes();
+    const all = await processes(darwin, ownerToken);
     for (let pass = 0; pass < 8; pass++) {
       let added = false;
       for (const row of all.values()) {
         if (before.has(row.pid) && same(before.get(row.pid), row)) continue;
-        let tagged = false;
-        try {
-          tagged = (await readFile(`/proc/${row.pid}/environ`, 'utf8'))
-            .split('\0')
-            .includes(`SOLO_REMOTE_OWNER=${ownerToken}`);
-        } catch (error) {
-          if (!['ENOENT', 'ESRCH', 'EACCES'].includes(error.code)) throw error;
+        let tagged = darwin ? row.ownerTagged : false;
+        if (!darwin) {
+          try {
+            tagged = (await readFile(`/proc/${row.pid}/environ`, 'utf8'))
+              .split('\0')
+              .includes(`SOLO_REMOTE_OWNER=${ownerToken}`);
+          } catch (error) {
+            if (!['ENOENT', 'ESRCH', 'EACCES'].includes(error.code)) throw error;
+          }
         }
         if (isOwnedProcess(row, all, owned, child.pid, tagged)) {
           if (!same(owned.get(row.pid), row)) {
@@ -212,6 +222,8 @@ export async function ownedCommand(
     const current = [...owned.values()]
       .map((row) => (same(row, all.get(row.pid)) ? all.get(row.pid) : null))
       .filter(live);
+    if (darwin && current.some((row) => row.inspectionIncomplete))
+      violation ??= 'owned-process-inspection-incomplete';
     record.peakRSS = Math.max(
       record.peakRSS ?? 0,
       current.reduce((sum, row) => sum + row.rss, 0),
@@ -219,7 +231,7 @@ export async function ownedCommand(
     record.ambiguous = [...all.values()].filter(
       (row) =>
         live(row) &&
-        browserCommand(row) &&
+        (browserCommand(row) || row.inspectionIncomplete) &&
         !same(before.get(row.pid), row) &&
         !same(owned.get(row.pid), row),
     );
@@ -227,7 +239,7 @@ export async function ownedCommand(
   };
   const signalOwned = async (sig) => {
     for (const row of (await collect()).reverse()) {
-      const fresh = (await processes()).get(row.pid);
+      const fresh = (await processes(darwin, ownerToken)).get(row.pid);
       if (same(row, fresh) && live(fresh)) {
         try {
           process.kill(row.pid, sig);

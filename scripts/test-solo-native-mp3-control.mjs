@@ -9,6 +9,9 @@ import { runInNewContext } from 'node:vm';
 import {
   MP3_CONTROL as plan,
   MP3_BACKEND_CONTROL as backendPlan,
+  MP3_COCOA_CONTROL as cocoaPlan,
+  nativeCocoaEnvironment,
+  nativeOwnerPreflightComplete,
   attachRequestReceipts,
   backendLogObservation,
   createNativeControlRoot,
@@ -678,4 +681,115 @@ test('backend workflow is a single declared WPE arm without changing legacy deli
     GST_DEBUG_NO_COLOR: '1',
     DEBUG: 'pw:browser',
   });
+});
+
+test('Cocoa counterpart preserves original protocol and withholds media for uncertain native owners', () => {
+  const report = {
+    format: 'SoloNativeCocoaOwnerPreflightV1',
+    status: 'closed',
+    browserVersion: '26.5',
+    platform: 'darwin',
+    architecture: 'x64',
+    documentURL: 'about:blank',
+    mediaElements: 0,
+    owner: { cleanup: { status: 'closed', browserClosed: true, profileRemoved: true } },
+  };
+  const command = {
+    status: 'closed',
+    exitCode: 0,
+    processInventory: { platform: 'darwin' },
+    ambiguous: [],
+    survivors: [],
+    tracked: [
+      { argv: '/owned/Playwright.app/Contents/MacOS/Playwright' },
+      { argv: '/owned/Frameworks/WebKit.framework/XPCServices/com.apple.WebKit.WebContent' },
+    ],
+  };
+  assert.equal(nativeOwnerPreflightComplete(report, command), true);
+  for (const change of [
+    { status: 'failed' },
+    { documentURL: 'https://unowned.example/' },
+    { mediaElements: 1 },
+    { browserVersion: '26.4' },
+    { architecture: 'arm64' },
+    { platform: 'linux' },
+    { owner: { cleanup: { status: 'failed-profile-retained' } } },
+  ])
+    assert.equal(nativeOwnerPreflightComplete({ ...report, ...change }, command), false);
+  for (const change of [
+    { status: 'failed' },
+    { exitCode: 1 },
+    { forcedCleanup: true },
+    { cleanupUnconfirmed: true },
+    { violation: 'unattributed-new-browser' },
+    { ambiguous: [{ pid: 1 }] },
+    { survivors: [{ pid: 2 }] },
+    { tracked: command.tracked.slice(0, 1) },
+    { tracked: command.tracked.slice(1) },
+    { processInventory: {} },
+  ])
+    assert.equal(nativeOwnerPreflightComplete(report, { ...command, ...change }), false);
+  for (const key of [
+    'passiveMs',
+    'playbackMs',
+    'sampleMs',
+    'maximumRecords',
+    'maximumLogBytes',
+    'armTimeoutMs',
+    'commandTimeoutMs',
+    'preparationTimeoutMs',
+    'maximumEvidenceBytes',
+  ])
+    assert.equal(cocoaPlan[key], backendPlan[key]);
+  assert.deepEqual(cocoaPlan.arms, ['bossa-blob']);
+  assert.equal(cocoaPlan.maximumSamples, 32);
+});
+
+test('Cocoa is a distinct diagnostic format and cannot inherit a Linux backend result', () => {
+  const result = completed();
+  result.format = cocoaPlan.format;
+  result.rows = result.rows.slice(0, 1);
+  result.host = { platform: 'darwin', architecture: 'x64', release: '24.6.0' };
+  result.backendEnvironment = { DEBUG: 'pw:browser' };
+  Object.assign(result.rows[0].data, {
+    captureMode: cocoaPlan.captureMode,
+    droppedSamples: 0,
+    samples: [{ phase: 'passive' }, { phase: 'playback' }, { phase: 'playback' }],
+  });
+  const command = { status: 'closed', exitCode: 0, ambiguous: [], survivors: [] };
+  assert.equal(nativeControlComplete(result, command, cocoaPlan), true);
+  assert.equal(nativeControlComplete(result, command, backendPlan), false);
+  assert.equal(nativeControlComplete(result, command), false);
+  for (const patch of [{ platform: 'linux' }, { release: '23.6.0' }, { architecture: 'arm64' }])
+    assert.equal(
+      nativeControlComplete({ ...result, host: { ...result.host, ...patch } }, command, cocoaPlan),
+      false,
+    );
+  result.rows[0].data.droppedRecords = 1;
+  assert.equal(nativeControlComplete(result, command, cocoaPlan), false);
+  const environment = {
+    PATH: '/owned',
+    GST_DEBUG: '9',
+    GST_DEBUG_NO_COLOR: '1',
+    GST_DEBUG_FILE: '/unowned',
+    GST_DEBUG_DUMP_DOT_DIR: '/unowned',
+    DEBUG: '*',
+  };
+  assert.deepEqual(nativeCocoaEnvironment(environment), { PATH: '/owned', DEBUG: 'pw:browser' });
+  assert.equal(environment.GST_DEBUG_FILE, '/unowned');
+});
+
+test('macOS control remains held with finite resource bounds, retained failures and no package work', async () => {
+  const workflow = await readFile(
+    new URL('../.github/workflows/solo-native-mp3-cocoa-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  assert.match(workflow, /if: \$\{\{ false \}\}/);
+  assert.match(workflow, /runs-on: macos-15-intel/);
+  assert.match(workflow, /timeout-minutes: 28/);
+  assert.match(workflow, /cancel-in-progress: false/);
+  assert.match(workflow, /SOLO_RUN_DARWIN_OWNER_TESTS: '1'/);
+  assert.match(workflow, /solo-native-mp3-control\.mjs run-cocoa/);
+  assert.match(workflow, /if: always\(\)/);
+  assert.doesNotMatch(workflow, /--with-deps|game-cli\.mjs build|qualify-solo\.mjs/);
 });
