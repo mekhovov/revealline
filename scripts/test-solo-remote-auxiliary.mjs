@@ -21,6 +21,9 @@ const dispatchedManifest = JSON.parse(
 const manifest = structuredClone(dispatchedManifest);
 delete manifest.release.selectedJobs; // Exercise every supported arm independently of this release subset.
 delete manifest.release.musicProofBytes; // General fixtures retain the original probe capacity.
+delete manifest.release.format;
+delete manifest.release.importProbe;
+manifest.release.scope = 'independent-audio-and-synthetic-recovery';
 const clone = (x) => structuredClone(x);
 function admitted() {
   const m = clone(manifest);
@@ -158,13 +161,13 @@ test('parallel auxiliary jobs retain separate job-named evidence artifacts', asy
   assert.match(workflow, /cancel-in-progress: false/);
   assert.match(
     workflow,
-    /github\.event\.action == 'synchronize' && github\.event\.before == 'bffcbd838a7bb925da8aaf030695773f893d8bda'/,
+    /github\.event\.action == 'synchronize' && github\.event\.before == '1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f'/,
   );
 });
 test('a reviewed subset cannot repeat completed unrelated observations', () => {
-  assert.deepEqual(dispatchedManifest.release.selectedJobs, ['music-chromium', 'music-webkit']);
+  assert.deepEqual(dispatchedManifest.release.selectedJobs, ['music-webkit']);
   assert.equal(dispatchedManifest.release.musicProofBytes, 32 * 1024 ** 2);
-  assert.equal(dispatchedManifest.release.correction.previousRun, 38992974900);
+  assert.equal(dispatchedManifest.release.correction.previousRun, 38995660514);
   assert.deepEqual(
     auxiliaryMatrix(dispatchedManifest).include.map((row) => row.job),
     dispatchedManifest.release.selectedJobs,
@@ -580,4 +583,133 @@ test('expanded music identity capacity is prospectively declared and cannot waiv
   const recovery = preparationManifest();
   recovery.release.musicProofBytes = 32 * 1024 ** 2;
   assert.throws(() => auxiliaryMatrix(recovery));
+});
+
+test('import diagnostic admits only one exact candidate WebKit arm and unchanged recipe, deadlines and raw failure gates', () => {
+  const p = bindAuxiliaryJob(dispatchedManifest, 'music-webkit');
+  assert.equal(p.release.firstEightAllCorrectnessPassed, false);
+  assert.equal(p.rows.length, 1);
+  const row = p.rows[0];
+  assert.equal(row.source, 'candidate');
+  assert.equal(row.engine, 'webkit');
+  assert.equal(row.timeoutMs, 600000);
+  assert.equal(p.candidate.revision, '3adcd53792043ef02459e86168c6b33a66d6ef00');
+  assert.equal(
+    p.recipes.music.sha256,
+    'dd68efc71bb3b75ad8fa28817dd7d99630e312300286d142b24b6fab9990c493',
+  );
+  assert.deepEqual(p.release.importProbe, { elements: 8, records: 64 });
+  const args = auxiliaryArguments(
+    { here: '/tools', plan: p, modeState: { recipePath: '/recipe' } },
+    row,
+    'http://localhost/game/',
+    '/evidence',
+  );
+  assert(args.includes('--audio-proof-import-events'));
+  assert(args.includes('--audio-proof-music-capacity'));
+  assert(!args.includes('--baseline-runtime'));
+  const value = raw(p, row);
+  value.audioProofOptions = { aggregateEncodedBytes: 32 * 1024 ** 2, importEvents: true };
+  value.finalState = {
+    audioProof: {
+      importProbe: {
+        records: [{ event: 'loadeddata' }],
+        observedElements: 1,
+        droppedElements: 0,
+        droppedRecords: 0,
+        observerErrors: 0,
+        limits: { elements: 8, records: 64 },
+      },
+    },
+  };
+  assert.equal(auxiliaryAssessment(p, row, value, closed, '123.4').status, 'passed');
+  for (const alter of [
+    (x) => {
+      x.scenarioStatus = 'fail';
+    },
+    (x) => {
+      x.audioIdentity.status = 'unobserved';
+    },
+    (x) => {
+      x.audioProofOptions.importEvents = false;
+    },
+    (x) => {
+      x.finalState.audioProof.importProbe.records = [];
+    },
+    (x) => {
+      x.finalState.audioProof.importProbe.droppedRecords = 1;
+    },
+    (x) => {
+      x.finalState.audioProof.importProbe.droppedElements = 1;
+    },
+    (x) => {
+      x.finalState.audioProof.importProbe.observerErrors = 1;
+    },
+    (x) => {
+      x.finalState.audioProof.importProbe.limits.records = 65;
+    },
+  ]) {
+    const invalid = clone(value);
+    alter(invalid);
+    assert.equal(auxiliaryAssessment(p, row, invalid, closed, '123.4').status, 'failed');
+  }
+  for (const alter of [
+    (x) => {
+      x.release.selectedJobs = ['music-chromium'];
+    },
+    (x) => {
+      x.release.selectedJobs = ['music-chromium', 'music-webkit'];
+    },
+    (x) => {
+      x.release.correction.previousRun = 1;
+    },
+    (x) => {
+      x.release.importProbe.records = 65;
+    },
+    (x) => {
+      x.release.importProbe.elements = 9;
+    },
+    (x) => {
+      x.release.repetitions = [1, 2, 3];
+    },
+    (x) => {
+      x.release.firstEightAllCorrectnessPassed = true;
+    },
+    (x) => {
+      x.release.automaticRetries = 1;
+    },
+  ]) {
+    const invalid = clone(dispatchedManifest);
+    alter(invalid);
+    assert.throws(() => auxiliaryMatrix(invalid));
+  }
+  const invalid = clone(p);
+  invalid.rows.unshift({ ...row, source: 'baseline' });
+  assert.throws(() => validateAuxiliaryPlan(invalid));
+});
+
+test('auxiliary sparse declaration needs no installed package and emits exactly one diagnostic job', async (t) => {
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'aux-declaration-')));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const adapter = join(root, 'adapter.mjs'),
+    file = join(root, 'manifest.json');
+  await writeFile(adapter, await readFile(new URL('./solo-remote-auxiliary.mjs', import.meta.url)));
+  await writeFile(file, JSON.stringify(dispatchedManifest));
+  const actual = execFileSync(process.execPath, [adapter, 'matrix-plan', file], {
+    encoding: 'utf8',
+    timeout: 10000,
+    maxBuffer: 1024 * 1024,
+  });
+  assert.equal(actual, `matrix=${JSON.stringify(auxiliaryMatrix(dispatchedManifest))}\n`);
+  assert.equal(auxiliaryMatrix(dispatchedManifest).include.length, 1);
+  const workflow = await readFile(
+    new URL('../.github/workflows/solo-remote-auxiliary-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  const [declaration, observation] = workflow.split('  auxiliary:\n');
+  assert.match(declaration, /sparse-checkout-cone-mode: false/);
+  assert.match(declaration, /\/scripts\/solo-remote-auxiliary\.mjs/);
+  assert.match(declaration, /\/docs\/performance\/solo-remote-auxiliary-plan\.json/);
+  assert(!observation.includes('sparse-checkout'));
+  assert.match(observation, /scripts\/test-solo-audio-import-probe\.mjs/);
 });

@@ -4,15 +4,23 @@
  * Encoded-byte hashing never reads PCM samples or changes playback controls. */
 export function audioProofOptions(flags, requirements, enabled) {
   const expanded = flags.includes('--audio-proof-music-capacity');
+  const importEvents = flags.includes('--audio-proof-import-events');
   if (
-    expanded &&
+    (expanded || importEvents) &&
     (!enabled || !requirements?.streamedHashes?.length || requirements.recordedHashes?.length)
   )
     throw new TypeError('Music identity capacity requires an explicit streamed-only audio proof');
-  return { aggregateEncodedBytes: (expanded ? 32 : 16) * 1024 * 1024 };
+  return {
+    aggregateEncodedBytes: (expanded ? 32 : 16) * 1024 * 1024,
+    ...(importEvents ? { importEvents: true } : {}),
+  };
 }
 
-export function installAudioProof({ aggregateEncodedBytes = 16 * 1024 * 1024 } = {}) {
+export function installAudioProof({
+  aggregateEncodedBytes = 16 * 1024 * 1024,
+  importEvents = false,
+} = {}) {
+  if (typeof importEvents !== 'boolean') throw new TypeError('Invalid import event opt-in');
   if (![16 * 1024 * 1024, 32 * 1024 * 1024].includes(aggregateEncodedBytes))
     throw new RangeError('Unsupported audio proof byte capacity');
   const sources = [],
@@ -166,7 +174,125 @@ export function installAudioProof({ aggregateEncodedBytes = 16 * 1024 * 1024 } =
     }
     return result;
   };
+  // Separate, explicit metadata diagnostic. Capture listeners run before the
+  // application's non-capture probe listeners can clear the failed media source.
+  // Native load calls, results, errors and application listeners remain untouched.
+  let importProbe = null;
+  if (importEvents) {
+    const retained = new Map(),
+      records = [];
+    const events = ['loadedmetadata', 'loadeddata', 'durationchange', 'error', 'emptied'];
+    const nativeLoad = HTMLMediaElement.prototype.load;
+    let nextElement = 0,
+      droppedElements = 0,
+      droppedRecords = 0,
+      observerErrors = 0,
+      disposed = false;
+    const durationValue = (value) =>
+      Number.isFinite(value)
+        ? { kind: 'finite', value }
+        : {
+            kind: Number.isNaN(value)
+              ? 'NaN'
+              : value === Infinity
+                ? '+Infinity'
+                : value === -Infinity
+                  ? '-Infinity'
+                  : 'non-number',
+          };
+    const sampleImport = (element, event) => {
+      try {
+        if (disposed || !retained.has(element)) return;
+        if (records.length >= 64) {
+          droppedRecords++;
+          return;
+        }
+        const src = element.src || '',
+          currentSrc = element.currentSrc || '';
+        records.push({
+          element: retained.get(element).id,
+          event,
+          atMs: performance.now(),
+          phase: phase(),
+          sourceId: urls.get(src) ?? urls.get(currentSrc) ?? null,
+          currentSourceId: urls.get(currentSrc) ?? null,
+          readyState: element.readyState,
+          networkState: element.networkState,
+          mediaErrorCode: element.error?.code ?? null,
+          duration: durationValue(element.duration),
+        });
+      } catch {
+        observerErrors++;
+      }
+    };
+    function observedLoad(...args) {
+      // Observer errors cannot suppress or replace a native call/error.
+      try {
+        if (!disposed && !retained.has(this)) {
+          if (nextElement < 8) {
+            const listeners = events.map((name) => [name, () => sampleImport(this, name)]);
+            retained.set(this, { id: nextElement++, listeners });
+            for (const [name, listener] of listeners) this.addEventListener(name, listener, true);
+          } else droppedElements++;
+        }
+      } catch {
+        observerErrors++;
+      }
+      sampleImport(this, 'load-before');
+      let result;
+      try {
+        result = nativeLoad.apply(this, args);
+      } catch (error) {
+        sampleImport(this, 'load-throw');
+        throw error;
+      }
+      sampleImport(this, 'load-after');
+      return result;
+    }
+    const dispose = () => {
+      if (disposed) return;
+      disposed = true;
+      for (const [element, { listeners }] of retained)
+        for (const [name, listener] of listeners) element.removeEventListener(name, listener, true);
+      retained.clear();
+      if (HTMLMediaElement.prototype.load === observedLoad)
+        HTMLMediaElement.prototype.load = nativeLoad;
+      window.removeEventListener('pagehide', dispose);
+    };
+    HTMLMediaElement.prototype.load = observedLoad;
+    window.addEventListener('pagehide', dispose, { once: true });
+    importProbe = {
+      dispose,
+      export: () => ({
+        records: records.map((row) => ({ ...row, duration: { ...row.duration } })),
+        observedElements: nextElement,
+        retainedElements: retained.size,
+        droppedElements,
+        droppedRecords,
+        observerErrors,
+        disposed,
+        limits: { elements: 8, records: 64 },
+        scope:
+          'Passive native load/metadata observation; no play, seek, retry, validation bypass or timing qualification.',
+      }),
+    };
+  }
   window.soloAudioProof = {
+    ...(importProbe
+      ? {
+          disposeImportProbe: () => importProbe.dispose(),
+          exportImportProbe: () => ({
+            ...importProbe.export(),
+            sources: sources.map(({ id, kind, bytes, status, sha256 }) => ({
+              id,
+              kind,
+              bytes,
+              status,
+              sha256,
+            })),
+          }),
+        }
+      : {}),
     recordingsReady(hashes) {
       return hashes.every((sha256) =>
         sources.some((row) => row.sha256 === sha256 && row.status === 'resolved' && row.decoded),
@@ -191,6 +317,7 @@ export function installAudioProof({ aggregateEncodedBytes = 16 * 1024 * 1024 } =
         starts: starts.slice(),
         mediaEvents: mediaEvents.slice(),
         windows: windows.map((row) => ({ ...row })),
+        ...(importProbe ? { importProbe: importProbe.export() } : {}),
         copiedBytes,
         capped,
         droppedStarts,
@@ -388,6 +515,9 @@ export function readAudioFailureContext() {
   const options = select?.options;
   return {
     scope: 'Bounded public music controls during intrusive audio diagnosis',
+    ...(globalThis.window?.soloAudioProof?.exportImportProbe
+      ? { importProbe: globalThis.window.soloAudioProof.exportImportProbe() }
+      : {}),
     status: status?.textContent?.slice(0, 1200) ?? null,
     statusState: status?.dataset?.state?.slice(0, 40) ?? null,
     dialogOpen: Boolean(doc.getElementById('soundtrack-dialog')?.open),
