@@ -43,6 +43,8 @@ Chromium retained two fully active rAF intervals over 33 ms, maximum 33.4 ms, an
 
 Chromium's bounded setup witness reports ANGLE/SwiftShader, software compositing and software rasterization; the request settled and its session detached. WebKit correctly reports that this capability API is unsupported. These are Linux hosted observations, not evidence about iPhone 17 Pro Safari or Steam Deck OLED. Both paused exports report `protocol: "http:"` and `secureContext: true` on loopback; that does not reproduce a plaintext LAN origin or establish an iOS security-mode cause.
 
+Both engines’ two paused exports report `willReadFrequently: false` and `desynchronized: false` for the detached board context. Chromium also reports `alpha: true`, `srgb` and `unorm8`; WebKit omits those fields. Phaser’s pixel-art canvas-pool setup establishes that context before CanvasTexture requests its usual readback hint. These observed attributes do not indicate accidental readback-oriented configuration and do not establish hardware acceleration. They describe the detached board, not the separate displayed renderer.
+
 ## Retention and next scope
 
 All 64 artifact members were fully read back with ZIP CRC, exact API digest, member size/hash and path/type checks. Each arm retained 32 members; the original failed statuses remain unchanged.
