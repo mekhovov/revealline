@@ -2,6 +2,7 @@ import { boundedJSON } from '../../game/data-json.mjs';
 import { AIRCRAFT_RECORDING_FORMAT, AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
 import { AIRCRAFT_BACKEND } from './advanced-aircraft-runtime.mjs';
 import { verifyAircraftArchive } from './aircraft-archive-verifier.mjs';
+import { createGhostPathCollector } from './advanced-ghost-path.mjs';
 import {
   ADVANCED_BACKEND,
   ADVANCED_RECORDING_BYTES,
@@ -130,10 +131,10 @@ export function createAdvancedWorkerHandler(postMessage) {
               throw new Error('Comparison ghosts require an Advanced reference arena recording.');
             if (!(record.missionTicks > 0))
               throw new Error('Comparison recording has no flight samples.');
-            const path = [];
+            const collector = createGhostPathCollector();
             const checked = await replayAdvancedRecording(record, {
               onMissionTelemetry(sample) {
-                path.push([
+                collector.add([
                   sample.missionTick,
                   sample.position.x,
                   sample.position.y,
@@ -155,7 +156,11 @@ export function createAdvancedWorkerHandler(postMessage) {
               throw new Error(
                 'Comparison requires the same aircraft, controller, throttle, timing and arena. Rotation rates may differ.',
               );
-            if (path.length !== record.missionTicks - (record.startMissionTick ?? 0) + 1)
+            const collected = collector.snapshot();
+            if (
+              collected.sourceSampleCount !==
+              record.missionTicks - (record.startMissionTick ?? 0) + 1
+            )
               throw new Error('Verified comparison path is incomplete.');
             result = {
               verified: true,
@@ -164,7 +169,7 @@ export function createAdvancedWorkerHandler(postMessage) {
               missionTicks: record.missionTicks,
               startMissionTick: record.startMissionTick ?? 0,
               verificationScope: checked.verificationScope,
-              path,
+              ...collected,
             };
             break;
           }
