@@ -209,8 +209,20 @@
     "pullRequest": 1544,
     "sameRepositoryRequired": true,
     "action": "synchronize",
-    "onceOnlyBefore": "39774cce8697d412d138ef4da11ac547a5f8e535",
-    "toolingRevision": "Exact event pull-request head SHA, independently recorded and verified by the runner."
+    "onceOnlyBefore": "5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0",
+    "toolingRevision": "Exact event pull-request head SHA, independently recorded and verified by the runner.",
+    "priorUnexecutedEdge": {
+      "revision": "5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0",
+      "observedAt": "2026-10-17T21:40:58.671026+00:00",
+      "runCount": 0,
+      "mergeable": "CONFLICTING",
+      "receipt": {
+        "path": ".cache/solo-followup/integration-397-batch/no-dispatch-5e9/receipt.json",
+        "bytes": 621,
+        "sha256": "07ca45eba16843a6b3e37080d28fbb4d21ddcee2f30671120a2d1942fc902595"
+      },
+      "scope": "No workflow or native attempt existed at this observation. Re-admit only this previously unexecuted declaration after resolving the merge conflict; exact397 package and all prior failures remain unchanged."
+    }
   },
   "sourceScope": "Exact 39774 default eight-row correctness only, currently unobserved. Unchanged CPU1/default flags; no journal, readiness, profiling or timing qualification. No transfer of older-source results or physical-device evidence.",
   "priorQualificationReview": {
@@ -497,8 +509,8 @@
   ],
   "toolingClosure": {
     "status": "current-files-refrozen-source-confined-controls-passed",
-    "baseCommit": "d2db461ef1a193f04f1e2a8d63057d31c7ca3d12",
-    "baseTree": "61636d74f86d3a94d06c4384887075e4e39fc826",
+    "baseCommit": "c45e1b40a8a3a1c467f9bcf462037b801c1837b0",
+    "baseTree": "bccbf1f626210c7bae9f3b76b1f7fa315ad78218",
     "runtimeScriptReferences": 40,
     "plannedFiles": 187,
     "controls": {
@@ -506,9 +518,9 @@
       "passed": 40,
       "explicitPlatformSkips": 4,
       "failed": 0,
-      "path": ".cache/solo-followup/final397-first-eight-proposal/activated-closure/source-confined-v2.tap",
-      "bytes": 10689,
-      "sha256": "152053fe456da35e236b1c076de1cc86a84313d0d539232eb7f0bfdb4827f195"
+      "path": ".cache/solo-followup/first8-no-dispatch-5e9/closure/source-confined-v1.tap",
+      "bytes": 10706,
+      "sha256": "c1f66ea5a49f29d8759c510527894aaf0cef737162a1a838327851221c6d50e0"
     },
     "scope": "Current tools bytes frozen individually. Default first-eight mode does not load or freeze optional Next/readiness/lifecycle adapters. Full baseline/candidate source checkouts remain separate. Actual tooling event head is recorded and checked by runner; no historical helper fallback.",
     "copyFiles": 187

@@ -15,6 +15,20 @@ const prior = await json('docs/performance/solo-remote-e1cc-correctness-plan.jso
 const original = await json('docs/performance/solo-remote-correctness-plan.json');
 const source = '39774cce8697d412d138ef4da11ac547a5f8e535';
 const tree = 'cac2369a26cac5282e4260c638b934540d17ced6';
+const before = '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0';
+const expectedNonDispatch = {
+  revision: '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0',
+  observedAt: '2026-10-17T21:40:58.671026+00:00',
+  runCount: 0,
+  mergeable: 'CONFLICTING',
+  receipt: {
+    path: '.cache/solo-followup/integration-397-batch/no-dispatch-5e9/receipt.json',
+    bytes: 621,
+    sha256: '07ca45eba16843a6b3e37080d28fbb4d21ddcee2f30671120a2d1942fc902595',
+  },
+  scope:
+    'No workflow or native attempt existed at this observation. Re-admit only this previously unexecuted declaration after resolving the merge conflict; exact397 package and all prior failures remain unchanged.',
+};
 const tests = [
   testPath,
   'scripts/test-solo-remote-correctness.mjs',
@@ -86,7 +100,7 @@ const expectedOwners = {
     'Each future row retains independent fresh owner checks; same-wave siblings may execute concurrently.',
 };
 const expectedGuard =
-  "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '39774cce8697d412d138ef4da11ac547a5f8e535'";
+  "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0'";
 function binding(value) {
   assert.equal(value.format, 'SoloHostedCorrectnessPlan.v1');
   assert.equal(value.status, 'reviewed-correctness-only');
@@ -94,7 +108,8 @@ function binding(value) {
   assert.equal(value.runtimeRevision, source);
   assert.deepEqual(value.packageBinding, expectedPackageBinding);
   assert.equal(value.releaseTrigger.status, 'reviewed-once-only-synchronize');
-  assert.equal(value.releaseTrigger.onceOnlyBefore, source);
+  assert.equal(value.releaseTrigger.onceOnlyBefore, before);
+  assert.deepEqual(value.releaseTrigger.priorUnexecutedEdge, expectedNonDispatch);
   assert.equal(value.releaseTrigger.pullRequest, 1544);
   assert.equal(value.releaseTrigger.sameRepositoryRequired, true);
   assert.equal(value.releaseTrigger.action, 'synchronize');
@@ -114,6 +129,8 @@ test('exact successful397 package and scoped78 owners bind only this prospective
     (p) => (p.packageBinding = prior.packageBinding),
     (p) => (p.releaseTrigger.onceOnlyBefore = prior.candidate.revision),
     (p) => (p.releaseTrigger.sameRepositoryRequired = false),
+    (p) => (p.releaseTrigger.onceOnlyBefore = source),
+    (p) => (p.releaseTrigger.priorUnexecutedEdge.runCount = 1),
     (p) => (p.currentSourceCorrectness.status = 'passed'),
     (p) => (p.currentSourceCorrectness.receipt = {}),
     (p) => (p.priorQualificationReview = prior.priorQualificationReview),
@@ -210,7 +227,7 @@ function releaseWorkflow(text, oldText) {
   assert(!text.includes('--hitch-journal') && !text.includes('--readiness-probe'));
 }
 
-test('actual workflow executes only the reviewed same-repository PR1544 before397 edge', async () => {
+test('actual workflow executes only the reviewed same-repository PR1544 before5e9 edge', async () => {
   const text = (await read(workflowPath)).toString();
   const oldText = (await read(oldWorkflowPath)).toString();
   releaseWorkflow(text, oldText);
@@ -219,7 +236,7 @@ test('actual workflow executes only the reviewed same-repository PR1544 before39
     repository: 'mekhovov/revealline',
     event: {
       action: 'synchronize',
-      before: source,
+      before,
       pull_request: { number: 1544, head: { repo: { full_name: 'mekhovov/revealline' } } },
     },
   };
@@ -230,6 +247,7 @@ test('actual workflow executes only the reviewed same-repository PR1544 before39
     (g) => (g.event.pull_request.head.repo.full_name = 'fork/revealline'),
     (g) => (g.event.action = 'opened'),
     (g) => (g.event.before = prior.candidate.revision),
+    (g) => (g.event.before = source),
   ]) {
     const changed = structuredClone(allowed);
     change(changed);

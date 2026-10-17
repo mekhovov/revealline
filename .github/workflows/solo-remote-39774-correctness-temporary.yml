@@ -18,7 +18,7 @@ concurrency:
 jobs:
   correctness:
     # Exactly one reviewed successor edge; every native row still needs fresh ownership proof.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '39774cce8697d412d138ef4da11ac547a5f8e535'
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0'
     runs-on: ubuntu-24.04
     timeout-minutes: 145
     env:
