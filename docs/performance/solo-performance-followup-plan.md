@@ -4,6 +4,10 @@ Updated 2026-10-17 for [PR #1544](https://github.com/mekhovov/revealline/pull/15
 
 ## Latest source and open work
 
+**Latest integration:** merge `32abd322a` brings in freshly fetched main `15bcc2e85`. Full lint and content/generated validation pass on the clean frozen merge. Formatting retains the same nine failures, all byte-identical to this main. The affected optional FPV regressions pass 161/161 and shared build/source checks pass 40/40. Only the two prospective Retry/Next helper pins need refreshing; historical package evidence stays unchanged. [Integration and checks](solo-latest-main-15bcc2e8.md).
+
+**Next reviewed observations:** the actual adb package now has separate one-shot first-eight, short Retry/Next and installed-offline declarations, alongside the macOS codec control. They retain all previous failures and every source, owner, deadline and result distinction. These intermediate observations can diagnose remaining issues while the final runtime's 105-file production gate runs; they cannot qualify the later startup/accounting changes. [Offline scope](solo-offline-current-adb1-20261017.md).
+
 **Latest verified package:** Appearance run `39004951633` successfully packages exact `adb1c0c7b` / runtime `488eae03a`. Its 98-file focused gate and full production build pass; compact metadata is independently verified and the full archive will be revalidated by each native consumer. This is an intermediate runtime: the final startup/accounting batch at `8d6b4fd90` still requires its successor package. [Exact package identity and scope](solo-artifact-adb1c0c7.md).
 
 **Current checkpoint, 17 October:** implementation is substantially in place, but qualification remains incomplete. Merge `6bed7bf5a` incorporates main `b2f251dac0d762d476f725b1bc601a2d6d5485a5` while preserving the dirty FPV checkout and published evidence references. The shared platform/export regressions pass 57/57 and generated reaction bytes remain unchanged. The complete validation pass is attributed to its actual shared-worktree inputs, not a later immutable package. [Latest-main evidence](solo-latest-main-b2f251da.md).
