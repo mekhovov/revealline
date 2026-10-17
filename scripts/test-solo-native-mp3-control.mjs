@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { parse } from 'acorn';
 import { createHash, webcrypto } from 'node:crypto';
 import { EventEmitter } from 'node:events';
 import { mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
@@ -22,7 +23,7 @@ import {
   observeNativeArm,
   playbackObservation,
 } from './solo-native-mp3-control.mjs';
-import { AUDIO_RECORDINGS } from './prepare-solo-audio-fixtures.mjs';
+import { AUDIO_RECORDINGS, speechFixtureProvenance } from './prepare-solo-audio-fixtures.mjs';
 import { startProductionPreview } from './serve-production-preview.mjs';
 
 const tagged = (value) => ({ kind: 'finite', value });
@@ -798,7 +799,7 @@ test('macOS control admits only its declared predecessor edge with finite bounds
       'github.event.pull_request.number == 1544',
       'github.event.pull_request.head.repo.full_name == github.repository',
       "github.event.action == 'synchronize'",
-      `github.event.before == '${cocoaPlan.predecessorTools}'`,
+      "github.event.before == 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4'",
     ].join(' && '),
   );
   assert.match(workflow, /SOLO_TOOLING_REVISION: \$\{\{ github.event.pull_request.head.sha \}\}/);
@@ -909,4 +910,96 @@ test('declared Cocoa128 retention keeps the observed87 attempts while legacy64 s
     () => nativePage({ captureMode: cocoaPlan.captureMode, eventCapacityMode: 'arbitrary-256' }),
     /Unknown native event capacity/,
   );
+});
+
+test('Cocoa sparse checkout contains its complete static, used dynamic and fixture closure', async () => {
+  const root = new URL('../', import.meta.url);
+  const workflowPath = '.github/workflows/solo-native-mp3-cocoa-temporary.yml';
+  const workflow = await readFile(new URL(workflowPath, root), 'utf8');
+  const lines = workflow.match(/          sparse-checkout: \|\n((?:            .+\n)+)/)?.[1];
+  assert(lines, 'Cocoa checkout must explicitly select the verified source closure');
+  const paths = lines
+    .trim()
+    .split('\n')
+    .map((line) => line.trim());
+  assert.equal(new Set(paths).size, paths.length);
+  for (const path of paths) assert.match(path, /^\/[A-Za-z0-9_.\/-]+$/);
+  assert.match(workflow, /sparse-checkout-cone-mode: false/);
+  assert.match(workflow, /fetch-depth: 1/);
+  assert.doesNotMatch(workflow, /\n +filter:/); // Pinned checkout supplies blob:none itself.
+  assert.match(
+    workflow,
+    /- timeout-minutes: 2\n +uses: actions\/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09/,
+  );
+  assert.equal(cocoaPlan.predecessorTools, 'adb1c0c7b7dd1a526a0693917f2012d1dbc08b22');
+  // The protocol's historical predecessor stays fixed; only the separate, once-only
+  // source-checkout release edge changes after its zero-observation failure.
+  const roots = [
+    'scripts/solo-native-mp3-control.mjs',
+    'scripts/serve-production-preview.mjs',
+    'scripts/run-solo-remote-correctness.mjs',
+    'scripts/solo-qualification-browser-context.mjs',
+    'scripts/solo-darwin-process-inventory.mjs',
+    ...[
+      'solo-darwin-process-inventory',
+      'solo-native-mp3-control',
+      'solo-qualification-browser-context',
+      'solo-remote-correctness',
+    ].map((name) => `scripts/test-${name}.mjs`),
+  ];
+  // These are the actual Cocoa dynamic entry points. The imported CLI's build
+  // functions and common runner's other cohort dispatchers are never executed.
+  const speech = await speechFixtureProvenance();
+  const data = [
+    'package.json',
+    'package-lock.json',
+    'scripts/solo-darwin-process-inventory.c',
+    'scripts/solo-remote-archive.py',
+    'game/vendor/lz-string-1.5.0.min.js',
+    'game/vendor/LZ-STRING-LICENSE.txt',
+    'authoring/library/licensed-audio/provenance/expansion-downloads.json',
+    speech.path,
+    ...['control', 'backend', 'cocoa'].map(
+      (mode) => `.github/workflows/solo-native-mp3-${mode}-temporary.yml`,
+    ),
+  ];
+  const declared = new Set(paths.map((path) => path.slice(1)));
+  const required = new Set(data),
+    visited = new Set();
+  const visit = async (path) => {
+    if (visited.has(path)) return;
+    visited.add(path);
+    required.add(path);
+    assert(declared.has(path), `Missing Cocoa source dependency: ${path}`);
+    const url = new URL(path, root);
+    const tree = parse(await readFile(url, 'utf8'), {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+    });
+    for (const node of tree.body) {
+      if (
+        !['ImportDeclaration', 'ExportNamedDeclaration', 'ExportAllDeclaration'].includes(
+          node.type,
+        ) ||
+        !node.source?.value.startsWith('.')
+      )
+        continue;
+      const dependency = new URL(node.source.value, url);
+      assert(dependency.href.startsWith(root.href), 'Cocoa source escaped its exact checkout');
+      await visit(decodeURIComponent(dependency.href.slice(root.href.length)));
+    }
+  };
+  for (const path of roots) await visit(path);
+  const assertComplete = (selection) => {
+    assert.deepEqual([...selection].sort(), [...required].sort());
+  };
+  assertComplete(declared);
+  for (const removed of ['game/core/index.mjs', speech.path, data[6]]) {
+    const incomplete = new Set(declared);
+    assert(incomplete.delete(removed));
+    assert.throws(() => assertComplete(incomplete));
+  }
+  for (const path of data) assert((await readFile(new URL(path, root))).length > 0);
+  assert.equal(speech.bytes, 16018);
+  assert.equal(speech.sha256, '8cec12f5da013e765a6b056384ff520a9ec82244060e962f4f515fbb4e32419c');
 });
