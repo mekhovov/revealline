@@ -7,6 +7,38 @@ import assert from 'node:assert/strict';
 import { readEditionZip } from '../publishing/edition-zip.mjs';
 import { validateOptionalPackageAdmission } from '../publishing/optional-package-admission.mjs';
 import { startServer } from './game-cli.mjs';
+import { installOptionalStatusDiagnostics } from './optional-installation-diagnostics.mjs';
+import { withOptionalQuotaDeny } from './optional-installation-quota-probe.mjs';
+import { practiceWorkerCacheInventory } from './practice-worker-cache-inventory.mjs';
+import {
+  selectInstallationDownloadFaults,
+  installationDownloadFaultMatrix,
+  requireInstallationDownloadFaultBudget,
+  readPreparedCacheFingerprints,
+  observeInstallationDownloadFault,
+} from './optional-installation-download-check.mjs';
+import { admitPinnedHistoricalPractice } from './practice-historical-admission.mjs';
+import {
+  selectHistoricalInstallationMode,
+  revealHistoricalAcademyControl,
+} from './practice-historical-ui.mjs';
+import {
+  selectHistoricalActiveSession,
+  prepareHistoricalAcademySession,
+  snapshotPausedAfterTransfer,
+  verifyHistoricalSessionAfterUpdate,
+  disposeHistoricalAcademySession,
+} from './optional-installation-active-session.mjs';
+import {
+  INSTALLATION_WORLD_SEED,
+  selectInstallationWorldSeed,
+  installationWorldReader,
+  assertInstallationWorldSeed,
+  assertInstallationWorldRetention,
+  openInstallationWorldTab,
+  readInstallationWorldCard,
+  seedInstallationWorld,
+} from './optional-installation-world-seed.mjs';
 import {
   OBSERVED_PACKAGES,
   OPERATION_TIMEOUT_MS,
@@ -23,6 +55,32 @@ import {
   revealFPVProfiles,
   expectedImportedProfileExport,
 } from './optional-installation-observer-helpers.mjs';
+
+function selectQuotaPackages(mode) {
+  if (mode === undefined) return ['civilian-fpv'];
+  if (mode === 'all') return ['civilian-fpv', 'civilian-flight', 'fpv-worlds'];
+  throw new Error('OPTIONAL_INSTALLATION_QUOTA_PACKAGES must be omitted or all.');
+}
+function quotaRetryPrevious(id, version, priorVersion) {
+  if (id === 'civilian-fpv') return priorVersion;
+  if (id === 'civilian-flight') return undefined;
+  if (id === 'fpv-worlds') return version;
+  throw new Error('Unknown quota retry package.');
+}
+function assertQuotaPointers(state, baseline, ids, keyFor, except) {
+  for (const id of ids)
+    if (id !== except) assert.equal(state.keys[keyFor(id)], baseline.keys[keyFor(id)]);
+}
+function assertQuotaFailedScopeAbsent(state, scope) {
+  assert.ok(
+    state.caches.every((name) => !name.includes(scope)),
+    'Denied preparation must remove its incomplete staging cache.',
+  );
+  assert.ok(
+    state.workers.every((worker) => !worker.scope.includes(scope)),
+    'Denied preparation must not leave its worker registered.',
+  );
+}
 
 const [
   modulePath,
@@ -50,7 +108,18 @@ async function admitBundle(directory) {
   return { envelopeBytes, envelope, admittedBytes };
 }
 const { envelopeBytes, envelope, admittedBytes } = await admitBundle(bundlePath);
-const previous = previousBundlePath ? await admitBundle(previousBundlePath) : null;
+const historicalPrevious = selectHistoricalInstallationMode(
+  process.env.OPTIONAL_INSTALLATION_PREVIOUS_HISTORICAL,
+);
+assert(
+  !historicalPrevious || previousBundlePath,
+  'Historical mode requires its pinned prior bundle.',
+);
+const previous = previousBundlePath
+  ? historicalPrevious
+    ? await admitPinnedHistoricalPractice(previousBundlePath)
+    : await admitBundle(previousBundlePath)
+  : null;
 const version = envelope.version,
   fpv = 'civilian-fpv',
   gym = 'civilian-flight',
@@ -58,6 +127,8 @@ const version = envelope.version,
   packageIds = Object.keys(OBSERVED_PACKAGES),
   priorVersion = previous?.envelope.version ?? 'v0.0.0',
   failedFixture = 'v0.0.1';
+const quotaPackageIds = selectQuotaPackages(process.env.OPTIONAL_INSTALLATION_QUOTA_PACKAGES);
+const worldSeedEnabled = selectInstallationWorldSeed(process.env.OPTIONAL_INSTALLATION_WORLD_SEED);
 assert.ok(
   new Set([version, priorVersion, failedFixture]).size === 3,
   'Candidate, previous and failed-fixture versions must differ.',
@@ -86,9 +157,81 @@ const { chromium } = await import(pathToFileURL(path.resolve(modulePath)).href);
 const harnessSha256 = sha(await readFile(fileURLToPath(import.meta.url)));
 const helperURL = new URL('./optional-installation-observer-helpers.mjs', import.meta.url);
 const helperSha256 = sha(await readFile(helperURL));
+const historicalAuthority = historicalPrevious
+  ? await Promise.all(
+      ['practice-historical-admission.mjs', 'practice-historical-ui.mjs'].map(async (name) => ({
+        path: name,
+        sha256: sha(await readFile(new URL(name, import.meta.url))),
+      })),
+    )
+  : [];
+const worldSeedURL = new URL('./optional-installation-world-seed.mjs', import.meta.url);
+const continuityURL = new URL(
+  '../authoring/fpv-worlds/storage-continuity/observe.mjs',
+  import.meta.url,
+);
+const worldSeedSourceSha256 = worldSeedEnabled ? sha(await readFile(worldSeedURL)) : null;
+const continuitySource = worldSeedEnabled ? await readFile(continuityURL, 'utf8') : null;
+const continuitySourceSha256 = worldSeedEnabled ? sha(continuitySource) : null;
+const readWorldExpression = worldSeedEnabled ? installationWorldReader(continuitySource) : null;
+const worldSeed = worldSeedEnabled
+  ? {
+      format: 'OptionalInstallationWorldSeed.v1',
+      mode: INSTALLATION_WORLD_SEED,
+      sourceSha256: worldSeedSourceSha256,
+      continuitySourceSha256,
+      preparedBeforeInstallation: false,
+      passed: false,
+      checks: [],
+      scope:
+        'One template copied, named and installed through public Workshop controls; visible Library identity plus read-only exact World Studio database fingerprints. Browser-context offline and process restart only: no machine-wide outage, OS reboot, imported .rlpack/assets, human flight or physical-device qualification.',
+    }
+  : null;
 const password = process.env.OPTIONAL_INSTALLATION_PASSWORD;
+const downloadFaultsEnabled = selectInstallationDownloadFaults(
+  process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
+);
+const downloadMatrix = installationDownloadFaultMatrix(
+  process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
+);
+const activeSessionMode = process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION;
+const activeSessionEnabled = selectHistoricalActiveSession(activeSessionMode);
+assert(
+  !activeSessionEnabled || (historicalPrevious && !downloadFaultsEnabled),
+  'Active-session observation requires pinned historical admission and a separate fault-free run.',
+);
+const activeSessionURL = new URL('./optional-installation-active-session.mjs', import.meta.url);
+const activeSession = activeSessionEnabled
+  ? {
+      sourceSha256: sha(await readFile(activeSessionURL)),
+      passed: false,
+    }
+  : null;
+assert(!downloadFaultsEnabled || worldSeedEnabled, 'Download faults require the saved-world seed.');
+const downloadAuthority = downloadFaultsEnabled
+  ? await Promise.all(
+      [
+        'optional-installation-download-check.mjs',
+        'practice-download-fault.mjs',
+        'practice-worker-cache-inventory.mjs',
+      ].map(async (name) => ({
+        path: name,
+        sha256: sha(await readFile(new URL(name, import.meta.url))),
+      })),
+    )
+  : [];
+const downloadFaults = {
+  mode: downloadMatrix?.selection,
+  cases: [],
+  retries: [],
+  publicEligible: false,
+};
 const transition = {
-  kind: previous ? 'distinct-frozen-candidates' : 'same-payload-path-fixture',
+  kind: historicalPrevious
+    ? 'distinct-historically-admitted-candidates'
+    : previous
+      ? 'distinct-frozen-candidates'
+      : 'same-payload-path-fixture',
   fromVersion: priorVersion,
   toVersion: version,
   changedFiles: null,
@@ -98,6 +241,9 @@ const transition = {
         sourceRevision: previous.envelope.sourceRevision,
         sourceTree: previous.envelope.sourceTree,
         package: previous.envelope.packages.find((row) => row.id === fpv),
+        ...(historicalPrevious
+          ? { historicalAdmission: previous.receipt, observerAuthority: historicalAuthority }
+          : {}),
       }
     : null,
 };
@@ -112,6 +258,31 @@ const entries = new Map(),
 let served, context, cdp, report;
 let currentStep = 'staging admitted packages';
 const acquiringResources = { pending: new Set(), errors: [] };
+const coldRelaunchRounds = Number(process.env.OPTIONAL_INSTALLATION_COLD_RELAUNCHES ?? '1');
+assert.ok(
+  Number.isInteger(coldRelaunchRounds) && coldRelaunchRounds >= 1 && coldRelaunchRounds <= 5,
+  'Cold relaunch repetitions must be an integer from one to five.',
+);
+const statusDiagnosticsEnabled = process.env.OPTIONAL_INSTALLATION_DIAGNOSTICS === '1';
+const statusDiagnostics = { events: [], dropped: 0 };
+const diagnosticURL = new URL('./optional-installation-diagnostics.mjs', import.meta.url);
+const diagnosticSha256 = statusDiagnosticsEnabled ? sha(await readFile(diagnosticURL)) : null;
+const quotaProbeEnabled = process.env.OPTIONAL_INSTALLATION_QUOTA_PROBE === '1';
+assert(
+  !quotaProbeEnabled ||
+    (!activeSessionEnabled && !downloadMatrix?.selection.startsWith('overall-')),
+  'Active-session and overall-timeout lanes must remain separate from quota faults.',
+);
+const quotaProbeURL = new URL('./optional-installation-quota-probe.mjs', import.meta.url);
+const quotaProbeSha256 = quotaProbeEnabled ? sha(await readFile(quotaProbeURL)) : null;
+let quotaProbeReport = null;
+const quotaProbePerPackage = {};
+const quotaCheckpoint = (label, id) => (quotaPackageIds.length === 1 ? label : `${label}:${id}`);
+function recordStatusDiagnostic(event) {
+  if (statusDiagnostics.events.length < 4096)
+    statusDiagnostics.events.push({ step: currentStep, receivedAt: Date.now(), ...event });
+  else statusDiagnostics.dropped++;
+}
 const observationDeadline = Date.now() + OBSERVATION_TIMEOUT_MS;
 function requireObservationTime() {
   if (Date.now() >= observationDeadline)
@@ -137,6 +308,36 @@ async function launchBrowser(offline = false) {
   });
   context.setDefaultTimeout(OPERATION_TIMEOUT_MS);
   context.setDefaultNavigationTimeout(OPERATION_TIMEOUT_MS);
+  if (statusDiagnosticsEnabled) {
+    await context.exposeBinding('__optionalStatusDiagnostic', ({ frame }, event) => {
+      recordStatusDiagnostic({ documentURL: frame.url(), event });
+    });
+    await context.addInitScript(installOptionalStatusDiagnostics);
+    const diagnosticPage = context.pages()[0] ?? (await context.newPage());
+    const diagnosticSession = await context.newCDPSession(diagnosticPage);
+    diagnosticSession.on('ServiceWorker.workerErrorReported', ({ errorMessage }) => {
+      recordStatusDiagnostic({
+        workerError: {
+          versionId: errorMessage.versionId,
+          sourceURL: errorMessage.sourceURL,
+          errorMessage: errorMessage.errorMessage?.slice(0, 1000),
+          lineNumber: errorMessage.lineNumber,
+        },
+      });
+    });
+    diagnosticSession.on('ServiceWorker.workerVersionUpdated', ({ versions }) => {
+      for (const worker of versions)
+        recordStatusDiagnostic({
+          workerVersion: {
+            versionId: worker.versionId,
+            scriptURL: worker.scriptURL,
+            status: worker.status,
+            runningStatus: worker.runningStatus,
+          },
+        });
+    });
+    await diagnosticSession.send('ServiceWorker.enable');
+  }
   context.on('page', (newPage) => newPage.on('pageerror', (error) => errors.push(error.message)));
 }
 const relativeRoot = (id) => `revealline/practice/${id}/`;
@@ -200,6 +401,10 @@ try {
       await stage(fpv, priorVersion, priorEntries);
       await stageLauncher(fpv, priorEntries);
       await stage(fpv, failedFixture);
+      if (downloadFaultsEnabled)
+        for (const id of packageIds) if (id !== fpv) await stage(id, failedFixture);
+      if (quotaProbeEnabled)
+        for (const id of quotaPackageIds) if (id !== fpv) await stage(id, failedFixture);
       await pointer(fpv, priorVersion);
       await pointer(gym, version);
       await pointer(worlds, version);
@@ -252,16 +457,31 @@ try {
         await target.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
       }
       async function revealControl(id, selector, category = 'extras') {
-        if (await page.locator(selector).isVisible()) return;
+        if (isHistoricalAcademy()) {
+          assert.equal(id, fpv, 'Historical adapter is Academy-only.');
+          return (await revealHistoricalAcademyControl(page, selector, { category })).selector;
+        }
+        if (await page.locator(selector).isVisible()) return selector;
         const prefix = OBSERVED_PACKAGES[id].settingsPrefix;
         const tab = page.locator(`#${prefix}-settings-tab-${category}`);
         if (!(await tab.isVisible()))
           await page.locator(`#${prefix}-shell-action-settings`).click();
         await tab.click();
+        return selector;
+      }
+      function isHistoricalAcademy() {
+        const current = new URL(page.url()),
+          expected = new URL(url(entry(fpv, priorVersion)));
+        return (
+          historicalPrevious &&
+          current.origin === expected.origin &&
+          current.pathname === expected.pathname
+        );
       }
       async function clickFPV(selector, category = 'extras') {
-        await revealControl(fpv, selector, category);
-        await page.locator(selector).click();
+        const target = await revealControl(fpv, selector, category);
+        if (isHistoricalAcademy()) await page.locator(target).press('Enter');
+        else await page.locator(target).click();
       }
       async function open(id, selected = version) {
         currentStep = `open ${id} ${selected}`;
@@ -275,14 +495,31 @@ try {
           selector,
         );
       }
-      async function prepare(id) {
-        currentStep = `prepare ${id}`;
+      async function revealOfflineUI(id) {
         const adapter = OBSERVED_PACKAGES[id];
         if (id === fpv) await revealFPVOffline(page, () => clickFPV('#help'));
         else {
           await revealControl(id, adapter.panel, 'content');
           await page.locator(adapter.panel).click();
         }
+      }
+      async function revealOfflineRemoval(id) {
+        await revealOfflineUI(id);
+        if (id === worlds) {
+          // Settings exposes preparation, but removal remains in Library.
+          const library = page.locator('[data-tab="packs"]');
+          await library.waitFor({ state: 'visible' });
+          await library.press('Enter');
+          await page.locator('#packs').waitFor({ state: 'visible' });
+        }
+        const button = id === worlds ? '#remove-runtime' : '#remove-offline';
+        await page.locator(button).waitFor({ state: 'visible' });
+        return button;
+      }
+      async function prepare(id) {
+        currentStep = `prepare ${id}`;
+        const adapter = OBSERVED_PACKAGES[id];
+        await revealOfflineUI(id);
         await activateOfflineAction(page, {
           button: adapter.prepare,
           status: adapter.status,
@@ -331,6 +568,34 @@ try {
           .inputValue();
         await page.locator('[data-close="setup-dialog"]').click();
         return value;
+      }
+      async function readWorldDatabase(target) {
+        requireObservationTime();
+        const database = await boundedOperation('Read-only saved-world fingerprints', () =>
+          target.evaluate(readWorldExpression),
+        );
+        requireObservationTime();
+        return database;
+      }
+      async function verifyWorldSeed(target, label) {
+        if (!worldSeedEnabled) return;
+        currentStep = `saved world retention: ${label}`;
+        const state = await boundedOperation(
+          'Visible saved world and read-only fingerprint verification',
+          async () => {
+            requireObservationTime();
+            await openInstallationWorldTab(target, 'packs');
+            requireObservationTime();
+            return {
+              card: await readInstallationWorldCard(target),
+              database: await readWorldDatabase(target),
+            };
+          },
+        );
+        requireObservationTime();
+        assertInstallationWorldSeed(state, worldSeed.baseline);
+        worldSeed.checks.push({ label, ...state });
+        if (!worldSeed.baseline) worldSeed.baseline = state;
       }
       await open(fpv, priorVersion);
       await prepare(fpv);
@@ -424,6 +689,18 @@ try {
       await open(gym);
       await prepare(gym);
       await open(worlds);
+      if (worldSeedEnabled) {
+        currentStep = 'create saved world through public Workshop UI';
+        const seed = await boundedOperation('Public Workshop project creation', () =>
+          seedInstallationWorld(page, readWorldDatabase),
+        );
+        requireObservationTime();
+        worldSeed.template = seed.template;
+        await open(worlds);
+        await verifyWorldSeed(page, 'before-installation');
+        worldSeed.preparedBeforeInstallation = true;
+        await open(worlds);
+      }
       await prepare(worlds);
       const both = await inspect('all-three-prepared');
       assert.equal(installed(both, fpv).active.version, priorVersion);
@@ -467,37 +744,43 @@ try {
         }
       }
       await context.setOffline(true);
-      const closedPageCount = await closeAllPages(context);
-      page = await context.newPage();
-      cdp = await context.newCDPSession(page);
-      for (const id of packageIds) {
-        currentStep = `offline window relaunch: ${id}`;
-        await page.goto(url(relativeRoot(id) + 'app/'));
-        const networkUnavailable = await page.evaluate(async () => {
-          try {
-            await globalThis.fetch('/offline-network-probe-unowned-by-any-worker', {
-              cache: 'no-store',
-            });
-            return false;
-          } catch {
-            return true;
-          }
-        });
-        assert.equal(
-          networkUnavailable,
-          true,
-          'An uncached network probe must fail during offline relaunch.',
-        );
-        await page.locator('#open').click();
-        await page.waitForURL((observed) =>
-          matchesLaunchedAppURL(observed, url(entry(id, id === fpv ? priorVersion : version))),
-        );
-        await unlockObservedPage(page, password);
-        await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
+      const coldRounds = [];
+      for (let round = 1; round <= coldRelaunchRounds; round++) {
+        const closedPageCount = await closeAllPages(context);
+        page = await context.newPage();
+        cdp = await context.newCDPSession(page);
+        for (const id of packageIds) {
+          currentStep = `offline window relaunch: ${id} (round ${round})`;
+          await page.goto(url(relativeRoot(id) + 'app/'));
+          const networkUnavailable = await page.evaluate(async () => {
+            try {
+              await globalThis.fetch('/offline-network-probe-unowned-by-any-worker', {
+                cache: 'no-store',
+              });
+              return false;
+            } catch {
+              return true;
+            }
+          });
+          assert.equal(
+            networkUnavailable,
+            true,
+            'An uncached network probe must fail during offline relaunch.',
+          );
+          await page.locator('#open').click();
+          await page.waitForURL((observed) =>
+            matchesLaunchedAppURL(observed, url(entry(id, id === fpv ? priorVersion : version))),
+          );
+          await unlockObservedPage(page, password);
+          await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
+          if (id === worlds) await verifyWorldSeed(page, `closed-window-round-${round}`);
+        }
+        coldRounds.push({ round, closedPageCount, packages: packageIds, passed: true });
       }
       const closedTabsRelaunch = {
         passed: true,
-        closedPageCount,
+        closedPageCount: coldRounds[0].closedPageCount,
+        rounds: coldRounds,
         packages: packageIds,
         networkProbeFailed: true,
       };
@@ -527,6 +810,7 @@ try {
           url: globalThis.location.href,
         }));
         assert.equal(app.offlineWindow.standalone, true);
+        if (app.id === worlds) await verifyWorldSeed(appWindow, 'offline-standalone-window');
       }
       await open(gym);
       await open(fpv, priorVersion);
@@ -548,7 +832,10 @@ try {
       page = context.pages()[0] ?? (await context.newPage());
       page.on('pageerror', (error) => errors.push(error.message));
       cdp = await context.newCDPSession(page);
-      for (const id of packageIds) await openPrepared(page, id);
+      for (const id of packageIds) {
+        await openPrepared(page, id);
+        if (id === worlds) await verifyWorldSeed(page, 'browser-process-restart-launcher');
+      }
       for (const app of osApps.filter((row) => row.installed)) {
         const pendingWindow = context
           .waitForEvent('page', { timeout: OPERATION_TIMEOUT_MS })
@@ -563,6 +850,8 @@ try {
           url: globalThis.location.href,
         }));
         assert.equal(app.restartedOfflineWindow.standalone, true);
+        if (app.id === worlds)
+          await verifyWorldSeed(appWindow, 'browser-process-restart-standalone');
       }
       await open(fpv, priorVersion);
       assert.equal(await exportedProof(), savedProof);
@@ -574,25 +863,224 @@ try {
       });
       await inspect('all-three-offline-after-browser-process-restart');
       await context.setOffline(false);
-      await stageLauncher(fpv);
-      await pointer(fpv, version);
-      await page.goto(url(relativeRoot(fpv) + 'app/'));
-      await page.locator('#check').click();
-      await page.locator('#prepare').click();
-      await page.waitForURL((observed) => matchesLaunchedAppURL(observed, url(entry(fpv))));
-      assert.ok(matchesLaunchedAppURL(page.url(), url(entry(fpv))));
-      await prepare(fpv);
-      assert.equal(await exportedProof(), savedProof);
-      assert.equal(await exportedProfiles(), savedProfiles);
-      const upgraded = await inspect(
-        previous
-          ? 'candidate-installed-over-previous-candidate'
-          : 'candidate-installed-over-alternate-path',
-      );
-      assert.equal(installed(upgraded, fpv).active.version, version);
-      assert.equal(installed(upgraded, fpv).previous.version, priorVersion);
-      assert.equal(upgraded.keys[keyFor(gym)], both.keys[keyFor(gym)]);
-      assert.equal(upgraded.keys[keyFor(worlds)], both.keys[keyFor(worlds)]);
+      if (downloadFaultsEnabled) {
+        const baseline = await inspect('download-fault-baseline');
+        const cacheInventories = packageIds.flatMap((id) => {
+          const selected = id === fpv ? priorVersion : version,
+            files = id === fpv ? priorEntries : entries.get(id);
+          return [
+            {
+              scope: '/' + site(id, selected) + `optional-practice/${id}/`,
+              worker: `optional-practice/${id}/worker.js`,
+              required: true,
+            },
+            {
+              scope: '/' + relativeRoot(id) + 'app/',
+              worker: 'launcher/worker.js',
+              required: false,
+            },
+          ].flatMap(({ scope, worker, required }) => {
+            const name = baseline.caches.find((name) => name.includes(`:${scope}:`));
+            assert(!required || name, 'Require the admitted prepared runtime cache.');
+            if (!name) return [];
+            return [
+              practiceWorkerCacheInventory({
+                workerBytes: files.get(worker),
+                baseURL: new URL(scope, served.url).href,
+                cacheName: name,
+              }),
+            ];
+          });
+        });
+        assert.deepEqual(
+          cacheInventories.map((item) => item.name).sort(),
+          baseline.caches,
+          'Every prepared runtime/launcher cache must match an original admitted worker inventory.',
+        );
+        downloadFaults.preparedCaches = await readPreparedCacheFingerprints(page, cacheInventories);
+        async function retainedDownloadRecords() {
+          await open(fpv, priorVersion);
+          assert.equal(await exportedProof(), savedProof);
+          assert.equal(await exportedProfiles(), savedProfiles);
+          await open(worlds);
+          await openInstallationWorldTab(page, 'packs');
+          const retained = {
+            card: await readInstallationWorldCard(page),
+            database: await readWorldDatabase(page),
+          };
+          assertInstallationWorldSeed(retained, worldSeed.baseline);
+          return retained;
+        }
+        function retainedDownloadOwnership(state, id) {
+          assert.deepEqual(state.keys, baseline.keys);
+          assertQuotaFailedScopeAbsent(state, '/' + site(id, failedFixture));
+          for (const worker of baseline.workers)
+            assert(
+              state.workers.some(
+                (row) => row.scope === worker.scope && row.active === worker.active,
+              ),
+            );
+        }
+        for (const id of downloadMatrix.ids) {
+          const member = `optional-practice/${id}/README.md`,
+            body = entries.get(id).get(member);
+          assert(body, 'The exact admitted README dependency is required.');
+          for (const mode of downloadMatrix.modes) {
+            requireInstallationDownloadFaultBudget(
+              downloadMatrix,
+              observationDeadline - Date.now(),
+            );
+            await open(id, failedFixture);
+            await revealOfflineUI(id);
+            requireInstallationDownloadFaultBudget(
+              downloadMatrix,
+              observationDeadline - Date.now(),
+            );
+            currentStep = `real download fault ${id} ${mode}`;
+            const observed = { id, mode, passed: false };
+            downloadFaults.cases.push(observed);
+            await observeInstallationDownloadFault({
+              page,
+              server: served.server,
+              origin: new URL(served.url).origin,
+              dependency: {
+                pathname: '/' + site(id, failedFixture) + member,
+                bytes: body.length,
+                sha256: sha(body),
+              },
+              body,
+              mode,
+              prepare: OBSERVED_PACKAGES[id].prepare,
+              status: OBSERVED_PACKAGES[id].status,
+              receipt: observed,
+            });
+            assert.equal(observed.passed, true);
+            const after = await inspect(`download-fault-preserves-all-pointers:${id}:${mode}`);
+            retainedDownloadOwnership(after, id);
+            assert.deepEqual(
+              await readPreparedCacheFingerprints(page, cacheInventories),
+              downloadFaults.preparedCaches,
+            );
+            const retained = await retainedDownloadRecords();
+            observed.recordsPreserved = true;
+            observed.world = retained;
+          }
+          // The fault wrapper is closed before retry; no file is altered.
+          await open(id, failedFixture);
+          await prepare(id);
+          const ready = await inspect(`download-fault-pristine-retry:${id}`);
+          assert.equal(installed(ready, id).active.version, failedFixture);
+          const remove = await revealOfflineRemoval(id);
+          await activateOfflineAction(page, {
+            button: remove,
+            status: OBSERVED_PACKAGES[id].status,
+            expected: /removed/i,
+          });
+          const restored = await inspect(`download-fault-retry-removal-restores-baseline:${id}`);
+          retainedDownloadOwnership(restored, id);
+          assert.deepEqual(
+            await readPreparedCacheFingerprints(page, cacheInventories),
+            downloadFaults.preparedCaches,
+          );
+          const retained = await retainedDownloadRecords();
+          downloadFaults.retries.push({
+            id,
+            preparedAndRemoved: true,
+            recordsPreserved: true,
+            world: retained,
+          });
+        }
+      }
+      let sessionGuard, upgraded;
+      try {
+        if (activeSessionEnabled) {
+          const priorWindow = appWindows.get(fpv);
+          assert(priorWindow, 'Retained historical standalone window is required.');
+          currentStep = 'prepare real historical active Academy session';
+          sessionGuard = await prepareHistoricalAcademySession(priorWindow, {
+            expectedURL: url(entry(fpv, priorVersion)) + '?lang=en',
+            receipt: activeSession,
+            mode: activeSessionMode,
+          });
+          await page.bringToFront();
+          await snapshotPausedAfterTransfer(sessionGuard);
+        }
+        await stageLauncher(fpv);
+        await pointer(fpv, version);
+        await page.goto(url(relativeRoot(fpv) + 'app/'));
+        await page.locator('#check').click();
+        await page.locator('#prepare').click();
+        await page.waitForURL((observed) => matchesLaunchedAppURL(observed, url(entry(fpv))));
+        assert.ok(matchesLaunchedAppURL(page.url(), url(entry(fpv))));
+        await prepare(fpv);
+        assert.equal(await exportedProof(), savedProof);
+        assert.equal(await exportedProfiles(), savedProfiles);
+        upgraded = await inspect(
+          previous
+            ? 'candidate-installed-over-previous-candidate'
+            : 'candidate-installed-over-alternate-path',
+        );
+        assert.equal(installed(upgraded, fpv).active.version, version);
+        assert.equal(installed(upgraded, fpv).previous.version, priorVersion);
+        assert.equal(upgraded.keys[keyFor(gym)], both.keys[keyFor(gym)]);
+        assert.equal(upgraded.keys[keyFor(worlds)], both.keys[keyFor(worlds)]);
+        if (sessionGuard) {
+          activeSession.update = {
+            activeVersion: installed(upgraded, fpv).active.version,
+            previousVersion: installed(upgraded, fpv).previous.version,
+            checkpoint: 'candidate-installed-over-previous-candidate',
+          };
+          await verifyHistoricalSessionAfterUpdate(sessionGuard);
+          const image = await sessionGuard.page.screenshot({ timeout: 5000 });
+          const imagePath = output + '.active-session-paused.png';
+          await writeFile(imagePath, image, { flag: 'wx' });
+          activeSession.screenshot = { path: imagePath, bytes: image.length, sha256: sha(image) };
+        }
+      } finally {
+        if (sessionGuard) {
+          await disposeHistoricalAcademySession(sessionGuard);
+          await boundedOperation('Restore observer foreground after old-session check', () =>
+            page.bringToFront(),
+          );
+        }
+      }
+      if (quotaProbeEnabled) {
+        // The pristine alternate path is not installed. Unlock it before quota
+        // denial, so authentication writes are not mistaken for install errors.
+        for (const quotaId of quotaPackageIds) {
+          const adapter = OBSERVED_PACKAGES[quotaId];
+          await open(quotaId, failedFixture);
+          await revealOfflineUI(quotaId);
+          currentStep = `controlled origin quota denial during ordinary preparation: ${quotaId}`;
+          const result = await withOptionalQuotaDeny({
+            cdp,
+            origin: new URL(served.url).origin,
+            run: async ({ signal }) => {
+              await activateOfflineAction(page, {
+                button: adapter.prepare,
+                status: adapter.status,
+                expected: /failed|timed out|denied|quota|not available|not supported/i,
+              });
+              signal.throwIfAborted();
+              const denied = await inspect(
+                quotaCheckpoint('controlled-quota-denial-preserves-all-pointers', quotaId),
+              );
+              assertQuotaPointers(denied, upgraded, packageIds, keyFor);
+              assertQuotaFailedScopeAbsent(denied, '/' + site(quotaId, failedFixture));
+            },
+          });
+          quotaProbePerPackage[quotaId] = result;
+          if (quotaId === fpv) quotaProbeReport = result;
+          result.status = await page.locator(adapter.status).textContent();
+          assert.equal(result.completed, true, 'Controlled quota probe or reset failed.');
+          await open(fpv);
+          assert.equal(await exportedProof(), savedProof);
+          assert.equal(await exportedProfiles(), savedProfiles);
+          await inspect(
+            quotaCheckpoint('quota-reset-preserves-imported-proof-and-profile', quotaId),
+          );
+        }
+      }
       const failureFile = site(fpv, failedFixture) + 'optional-practice/civilian-fpv/README.md';
       await put(failureFile, 'Truncated dependency fixture');
       await open(fpv, failedFixture);
@@ -643,6 +1131,42 @@ try {
         afterGymRemoval.caches.filter((name) => name.includes('/practice/civilian-fpv/')),
         rolledBack.caches.filter((name) => name.includes('/practice/civilian-fpv/')),
       );
+      if (quotaProbeEnabled) {
+        // Retry only after ordinary rollback restored the prior-only pointer.
+        // Earlier success would replace the single retained-version slot and
+        // invalidate the existing rollback scenario. Never inject pointer data.
+        for (const quotaId of quotaPackageIds) {
+          const adapter = OBSERVED_PACKAGES[quotaId];
+          await stage(quotaId, failedFixture);
+          await open(quotaId, failedFixture);
+          await prepare(quotaId);
+          const repaired = await inspect(
+            quotaCheckpoint('quota-restored-pristine-retry-prepared', quotaId),
+          );
+          assert.equal(installed(repaired, quotaId).active.version, failedFixture);
+          assert.equal(
+            installed(repaired, quotaId).previous?.version,
+            quotaRetryPrevious(quotaId, version, priorVersion),
+          );
+          if (quotaId === gym) assert.equal(installed(repaired, quotaId).previous, undefined);
+          assertQuotaPointers(repaired, afterGymRemoval, packageIds, keyFor, quotaId);
+          if (quotaId === fpv) {
+            assert.equal(await exportedProof(), savedProof);
+            assert.equal(await exportedProfiles(), savedProfiles);
+          }
+          const removeButton = await revealOfflineRemoval(quotaId);
+          await activateOfflineAction(page, {
+            button: removeButton,
+            status: adapter.status,
+            expected: /removed/i,
+          });
+          const restored = await inspect(
+            quotaCheckpoint('quota-retry-removal-restores-prior-installation', quotaId),
+          );
+          assertQuotaPointers(restored, afterGymRemoval, packageIds, keyFor);
+          quotaProbePerPackage[quotaId].retryPreparedAndRemoved = true;
+        }
+      }
       const installedGym = osApps.find((item) => item.id === gym && item.installed);
       const installedFPV = osApps.find((item) => item.id === fpv && item.installed);
       if (installedGym && installedFPV) {
@@ -677,6 +1201,18 @@ try {
       )
         ? 'passed'
         : 'unverified';
+      for (const item of historicalAuthority)
+        assert.equal(
+          item.sha256,
+          sha(await readFile(new URL(item.path, import.meta.url))),
+          'Historical observer authority changed.',
+        );
+      for (const item of downloadAuthority)
+        assert.equal(
+          item.sha256,
+          sha(await readFile(new URL(item.path, import.meta.url))),
+          'Download observer authority changed.',
+        );
       const harnessStable =
         harnessSha256 === sha(await readFile(fileURLToPath(import.meta.url))) &&
         helperSha256 === sha(await readFile(helperURL));
@@ -701,7 +1237,10 @@ try {
         scope:
           'All three apps in an isolated local persistent Chrome profile, admitted frozen runtime bytes and ordinary offline/profile/backup UI. All tabs/windows close before offline launcher and standalone app reopening; the persistent browser then closes and relaunches the same profile with browser-context offline enabled before app navigation. This is not an OS reboot or machine-wide airplane-mode claim. ' +
           (previous
-            ? 'Two distinct frozen candidates with original versions and source bindings; changed files are listed. '
+            ? 'Two distinct frozen candidates with original versions and source bindings; changed files are listed. ' +
+              (historicalPrevious
+                ? 'Previous Academy uses one explicitly pinned historical admission/UI authority; current candidate retains unchanged current admission. This observer does not migrate historical Gym/Worlds. '
+                : '')
             : 'v0.0.0 holds the same candidate payload at an alternate path. ') +
           'v0.0.1 is a deliberately damaged local path fixture. No release is allocated. Progress comes from a scripted verified input import, not a human flight. No public deployment, arbitrary historical-model migration or physical radio claim.',
         transition,
@@ -721,7 +1260,7 @@ try {
           academyProofTransfer: 'Native import/export button keyboard Enter',
           offlineActions: 'Native button keyboard Enter with fresh status/progress observation',
           limitation:
-            'A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction.',
+            'This observer uses the native keyboard route and does not qualify pointer interaction.',
         },
         proof: {
           input: 'first frozen demonstration frames under an explicit synthetic practice session',
@@ -754,6 +1293,19 @@ try {
               url: globalThis.location.href,
               access: globalThis.document.documentElement.dataset.accessState ?? null,
               status: globalThis.document.querySelector('#status')?.textContent ?? null,
+              offlineStatuses: Object.fromEntries(
+                ['#transfer-status', '#package-status', '#runtime-offline-status'].map(
+                  (selector) => [
+                    selector,
+                    globalThis.document.querySelector(selector)?.textContent?.slice(0, 1024) ??
+                      null,
+                  ],
+                ),
+              ),
+              offlineProgress:
+                globalThis.document
+                  .querySelector('[data-optional-offline-progress]')
+                  ?.textContent?.slice(0, 1024) ?? null,
               open: (() => {
                 const link = globalThis.document.querySelector('#open');
                 return link ? { hidden: link.hidden, href: link.href } : null;
@@ -789,7 +1341,7 @@ try {
       academyProofTransfer: 'Native import/export button keyboard Enter',
       offlineActions: 'Native button keyboard Enter with fresh status/progress observation',
       limitation:
-        'A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction.',
+        'This observer uses the native keyboard route and does not qualify pointer interaction.',
     },
     failure: error.message,
     currentStep,
@@ -838,6 +1390,90 @@ try {
     ...(cleanupErrors.length ? { retainedDirectory: work } : { temporaryProfileRemoved: true }),
   };
   report.passed &&= !cleanupErrors.length;
+  if (worldSeedEnabled) {
+    worldSeed.sourceStable =
+      worldSeedSourceSha256 === sha(await readFile(worldSeedURL)) &&
+      continuitySourceSha256 === sha(await readFile(continuityURL));
+    try {
+      worldSeed.passed =
+        assertInstallationWorldRetention(worldSeed, coldRelaunchRounds) && worldSeed.sourceStable;
+    } catch (error) {
+      worldSeed.passed = false;
+      worldSeed.failure = error.message;
+    }
+    report.worldSeed = worldSeed;
+    report.passed &&= worldSeed.passed;
+  }
+  if (quotaProbeEnabled) {
+    report.quotaProbe = {
+      enabled: true,
+      sourceSha256: quotaProbeSha256,
+      sourceStable: quotaProbeSha256 === sha(await readFile(quotaProbeURL)),
+      result: quotaProbeReport,
+      selectedIDs: quotaPackageIds,
+      perPackage: quotaProbePerPackage,
+      scope: `${quotaPackageIds.length === 1 ? 'Academy only' : 'All three apps, sequentially'}; isolated Chromium origin-wide CDP quota override. Not physical storage exhaustion, eviction or proof of the exact failing cache API. The retry uses a same-payload path fixture, not a distinct release.`,
+    };
+    report.passed &&=
+      report.quotaProbe.sourceStable &&
+      quotaPackageIds.every(
+        (id) =>
+          quotaProbePerPackage[id]?.completed === true &&
+          quotaProbePerPackage[id]?.retryPreparedAndRemoved === true,
+      );
+  }
+  if (downloadFaultsEnabled) {
+    downloadFaults.authority = downloadAuthority;
+    downloadFaults.sourceStable = (
+      await Promise.all(
+        downloadAuthority.map(
+          async (item) => item.sha256 === sha(await readFile(new URL(item.path, import.meta.url))),
+        ),
+      )
+    ).every(Boolean);
+    downloadFaults.passed =
+      downloadFaults.sourceStable &&
+      downloadFaults.cases.length === downloadMatrix.ids.length * downloadMatrix.modes.length &&
+      downloadFaults.cases.every(
+        (item, index) =>
+          item.id === downloadMatrix.ids[Math.floor(index / downloadMatrix.modes.length)] &&
+          item.mode === downloadMatrix.modes[index % downloadMatrix.modes.length],
+      ) &&
+      downloadFaults.cases.every((item) => item.passed && item.recordsPreserved) &&
+      downloadFaults.retries.length === downloadMatrix.ids.length &&
+      downloadFaults.retries.every((item, index) => item.id === downloadMatrix.ids[index]) &&
+      downloadFaults.retries.every((item) => item.preparedAndRemoved && item.recordsPreserved);
+    downloadFaults.scope =
+      downloadMatrix.selection === 'all-short'
+        ? 'Six native download idle/cancel cases on exact admitted bytes at explicitly synthetic v0.0.1 paths. One original byte then held EOF. No actual verification-phase cancellation or five-minute qualification.'
+        : 'One selected-app real five-minute overall-timeout case with continuing original-byte server writes at a synthetic v0.0.1 path. Server writes are not direct browser-receipt evidence; generic failure copy cannot identify the internal timer.';
+    downloadFaults.scope +=
+      ' Owned loopback only; no virtual clocks, runtime modifications, real eviction or physical hardware. Gym records are unpopulated; Academy synthetic proof/profile and populated World fingerprints are retained.';
+    report.downloadFaults = downloadFaults;
+    report.passed &&= downloadFaults.passed;
+  }
+  if (activeSessionEnabled) {
+    activeSession.sourceStable =
+      activeSession.sourceSha256 === sha(await readFile(activeSessionURL));
+    report.activeSession = activeSession;
+    report.passed &&= Boolean(
+      activeSession.passed &&
+        activeSession.cleanup?.completed &&
+        activeSession.sourceStable &&
+        activeSession.update?.activeVersion === version &&
+        activeSession.update?.previousVersion === priorVersion,
+    );
+  }
+  if (statusDiagnosticsEnabled) {
+    report.statusDiagnostics = {
+      ...statusDiagnostics,
+      sourceSha256: diagnosticSha256,
+      sourceStable: diagnosticSha256 === sha(await readFile(diagnosticURL)),
+      limitation:
+        'Opt-in observer wrappers forward original message/registration calls and capture bounded status, registration and page lifecycle events, with first-page CDP worker lifecycle/errors. The CDP session detaches when its page closes. Admitted package files are unchanged; API instrumentation can affect scheduling, so this is diagnostic evidence rather than an uninstrumented acceptance run.',
+    };
+    report.passed &&= report.statusDiagnostics.sourceStable;
+  }
   await writeFile(output, JSON.stringify(report, null, 2) + '\n');
   console.log(
     JSON.stringify({

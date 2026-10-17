@@ -1,0 +1,2840 @@
+{
+  "format": "AdvancedRegionalBrowserSmoke.v1",
+  "createdAt": "2026-10-16T18:13:28.900Z",
+  "runtime": "Chrome",
+  "version": "155.0.8059.85",
+  "passed": true,
+  "sourceStable": true,
+  "scope": "Actual World host, Three renderer, verified six-cell terrain fixture and production Advanced module worker; keyboard/menu restart, pause, recording download and Node replay, recovery file download and verified import, finite controller corruption rejected without adoption, physical cancellation of a real worker replaying a snapshot extended by 30 seconds, verified terrain landing and continued takeoff, exact exported contact replay, switch back to Legacy, disposal. Fixture boot only; production access gate unchanged. One headless Chrome ARM64 host, no native or device qualification.",
+  "sources": [
+    {
+      "path": "authoring/fpv-worlds/regions/endurance-fixture.mjs",
+      "sha256": "7b627678c4ff2ff9d2bc11d0b67ab16e04322aedca22b436901a9e366e3d4c12",
+      "unchanged": true
+    },
+    {
+      "path": "game/audio/human-reactions/portable.mjs",
+      "sha256": "2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696",
+      "unchanged": true
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "unchanged": true
+    },
+    {
+      "path": "game/encounter-display-preferences.mjs",
+      "sha256": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03",
+      "unchanged": true
+    },
+    {
+      "path": "game/fpv-entry.mjs",
+      "sha256": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2",
+      "unchanged": true
+    },
+    {
+      "path": "game/hunt/actor-art.mjs",
+      "sha256": "6e8bd02d8655be40e5e19d639f76ca2a2aa89eba11c5471bd4c37ef323498b4c",
+      "unchanged": true
+    },
+    {
+      "path": "game/hunt/actor-catalog.mjs",
+      "sha256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d",
+      "unchanged": true
+    },
+    {
+      "path": "game/hunt/copy.mjs",
+      "sha256": "9e57f007948c134ca3a18f6c672f9d30d073839c5596f930ff78896b23189011",
+      "unchanged": true
+    },
+    {
+      "path": "game/hunt/industrial-soldier-kit.mjs",
+      "sha256": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524",
+      "unchanged": true
+    },
+    {
+      "path": "game/hunt/preferences.mjs",
+      "sha256": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a",
+      "unchanged": true
+    },
+    {
+      "path": "game/hunt/presentation-catalog.mjs",
+      "sha256": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796",
+      "unchanged": true
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "unchanged": true
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816",
+      "unchanged": true
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "unchanged": true
+    },
+    {
+      "path": "game/overflight/terrain.mjs",
+      "sha256": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+      "unchanged": true
+    },
+    {
+      "path": "game/overflight/world-layout-presentation.mjs",
+      "sha256": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3",
+      "unchanged": true
+    },
+    {
+      "path": "game/overflight/worlds.mjs",
+      "sha256": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c",
+      "unchanged": true
+    },
+    {
+      "path": "game/platform.mjs",
+      "sha256": "1bcc979c6990c197be6cc015a17b05481b3c15a680b55eb33782b14cb54e81a8",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/actor-animation.mjs",
+      "sha256": "53ddaf069ed5da7bae3ab8ef6bf1284f38957ceb91f06315a489814cb2c06234",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/industrial-environments-data.mjs",
+      "sha256": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/industrial-environments.mjs",
+      "sha256": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/industrial-machinery.mjs",
+      "sha256": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/industrial-materials.mjs",
+      "sha256": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/overflight-world-art-v2.mjs",
+      "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/overflight-world-art.mjs",
+      "sha256": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/overflight-world-slots.mjs",
+      "sha256": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "sha256": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0",
+      "unchanged": true
+    },
+    {
+      "path": "game/profile-database.mjs",
+      "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "unchanged": true
+    },
+    {
+      "path": "game/profile-storage.mjs",
+      "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "unchanged": true
+    },
+    {
+      "path": "game/rewards/audio-groups.mjs",
+      "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+      "unchanged": true
+    },
+    {
+      "path": "game/rewards/exploration.mjs",
+      "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+      "unchanged": true
+    },
+    {
+      "path": "game/rewards/learning-profiles.mjs",
+      "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+      "unchanged": true
+    },
+    {
+      "path": "game/rewards/model.mjs",
+      "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+      "unchanged": true
+    },
+    {
+      "path": "game/rewards/store.mjs",
+      "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+      "unchanged": true
+    },
+    {
+      "path": "game/snake/classic-structure-art.mjs",
+      "sha256": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/art-review-navigation.mjs",
+      "sha256": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/wordmark.png",
+      "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv.webp",
+      "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/defeat-sound-controls.mjs",
+      "sha256": "b99f97c97e46fd82cd93338e4448c707bf650e6ffb0d5813d2ec68879b56451e",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/destruction-audio.mjs",
+      "sha256": "b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/destruction-level.mjs",
+      "sha256": "ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/enemy-appearance-controls.mjs",
+      "sha256": "f34c869b039cfd23841a5c8886e7509d2e5f88bc4ecbe0ae56e5fc0f59e1d165",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/human-reaction-policy.mjs",
+      "sha256": "dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/menu-navigation-groups.mjs",
+      "sha256": "1ffb27c5e397d3898a07dead6daccb441323bef01aea1ca1760932f90b21342b",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/native-menu-icons.mjs",
+      "sha256": "efe5de5b8ae9ecaccd393315294ebdbf6fe8c1d8cf29a6db284efe6f2d4e5351",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/reward-knowledge.mjs",
+      "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+      "unchanged": true
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-controller.mjs",
+      "sha256": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "sha256": "7406787e28bcb95037372402b395663076772c55c02a535ec4d3d37735ac2c72",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+      "sha256": "ecdc2b84abaf06e7fcdbbd87929402deb200d9a540a6a52b02b01fad7b98dc66",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "sha256": "bd606bf22bd1dc80f26e11f23b7f368d5139885b433c5a9e8e36b9df26b2de4d",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "sha256": "bb03e8493a578d9d845637fcc1f90a9820400a1b75474fce71c73d4b83c7e5ee",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "sha256": "0e2e763c4bf25005158b8af15a581228fd6f51ec0f5a77f5667fa6a42d5a4581",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "sha256": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/attempts.mjs",
+      "sha256": "c710eda8c25fca79a56f0a30263809ba8f503b484e954aa9933ba39dcbf30dbb",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/battlefield-ground.mjs",
+      "sha256": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/beginner-coach.mjs",
+      "sha256": "216d7c0e37248b7de2833639f980ca665c12b012865e16bde738b8af1f61379e",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/betaflight-import.mjs",
+      "sha256": "fefd959402f8812d8ad4103302e6877da50d86198d2f5cd0e5d7e8c49deb78bb",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/content-definitions.mjs",
+      "sha256": "c3cc752eaef2b2e8d2865e4ba371e49097ba5fd6d069c1ca35f19cf94406ffad",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "sha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-contact.mjs",
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "sha256": "c6841a6a8146b749a3390cc114ace019e8c3135b4d5805e1312f90baae364598",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-response.mjs",
+      "sha256": "89ec7b85d787ac077de36bba66c9e9a851c49721d8f2d598db8c461ecb6ae363",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-support.mjs",
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-environment.mjs",
+      "sha256": "f16dfab709c376b098927155f37b06e21b1f8a9e727da769388d0beba86f790f",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "sha256": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "sha256": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "sha256": "9890ef3de130762da619a4a4d7e4f43b7e5b5c64d8e28d3cbbbf0eecd4f9fdb6",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "sha256": "9fe3bda757f9d9b51fed64bd1d17a3821ddaefc6e58e42ce935cb712be5de3f0",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "sha256": "2d35af03d1df8b026c340b465577df9517e7d6f59df002b1f75235e611311992",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/notebook.mjs",
+      "sha256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/offline.mjs",
+      "sha256": "d6abd2e8142f13aa7d3cf85a3df1491fcbaba78e3ee76eec7835d188131a0d71",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/playlists.mjs",
+      "sha256": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-controls.mjs",
+      "sha256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-guide.mjs",
+      "sha256": "eb42fe3cdbab36e35624a4942e1fee2192fe650cc5b149b3a53f967b9e58549a",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "sha256": "d972a03be9f62d390894958b8fa58ae7ac3f97bab2d797b165fca4ab98c506ed",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-runtime.mjs",
+      "sha256": "3f659e0c8ba6728ad0897218f41e73eebe46316fa6d7046a3ded0ab489106c1e",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-session.mjs",
+      "sha256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-setup.mjs",
+      "sha256": "b1c22d24b845fda354176b3000424a4672a06755ee6f13cfcb958311d3608a1a",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rates.mjs",
+      "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+      "sha256": "7276ecdcf7798741bda92c361da8e417bbff1fa0fbf7885f8e9005f78a0b5997",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "sha256": "02e95765c68d7aeb809d5cc49f441e0247064e198dca3b04d79eac3bc2bfc199",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-locations.mjs",
+      "sha256": "acf37b9a20ac955e49c3bad30822d909ab4db5fa6a7f85a35de4bab512f99902",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-session.mjs",
+      "sha256": "8241c9f04e98a14ddf6c75b882f75d2d169f003517753928680054f8b512d9cd",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/flight-prototype.mjs",
+      "sha256": "c65e6a34d858b92e4b38ed3490efe5eb93472139ce111a42af47699cdabb43cb",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/frame-transaction.mjs",
+      "sha256": "b059fead0f4e67e5401175b2e12f43c8f58d98ceadadcda3ddd65b7e1f781988",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs",
+      "sha256": "b9a4afcdce5f9d02f9210f501b474c09e17220bd656e108712b828f8f3c78233",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs",
+      "sha256": "a57dcc5eff03a659fd918cbc933e3a49f1d29241732623887e3caf3d9c3fb832",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs",
+      "sha256": "8802491835a0f42834bf920e21dc9b6b938ca9c00c6b2829ba033d7cea50d883",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/region-manifest.mjs",
+      "sha256": "c07631c6661450b7a59e1ce069e2ce100064327c1e76c2e422f3ff29eea1cc68",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/region-motion-query.mjs",
+      "sha256": "fba3960fe9e90c0d56d7fbf77711843342b8c9230cd7502dffa9df2bda9686ce",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/restore-containment.mjs",
+      "sha256": "8b23f3519141e29894827ebb84ab7bce8449b87136468d4f46f3df352db762c3",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs",
+      "sha256": "a284324fcd0cceeec6ec398df11c20a5382fa4cedfeb7af9caacef5cff5b290f",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+      "sha256": "184d34c5cff615fd17a00097d8f3cd450a086573bf1e88953a7e92226e389765",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+      "sha256": "f11a55b1cbb3144dbe896eb9156a3d9bb7eb4938596f8903459e025d688c9cf6",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-surface.mjs",
+      "sha256": "c676d16f9c1690f1e8d095c1bdbae5f1b5aac11675fbe8253012881a0428ef56",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/source-window.mjs",
+      "sha256": "42a9b850704000900c16855bccfef6adf4e5925565677eb2d99c4401651fe3f9",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-admission.mjs",
+      "sha256": "35b9af942b3b1526c63f6b41ab030e43806cee74715adbf0a71ada1cbf023c59",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-cell.mjs",
+      "sha256": "9e1d97897578999d1d9c3641b31fdaca96110d7bb848bf0f6e55bbf4138cdc54",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-normals.mjs",
+      "sha256": "94c319af2ca720e8224ac7a975cff8af36b0dd988998e3f559ad820d10505c2e",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-surface.mjs",
+      "sha256": "b5ad2a8b8da1331ae9d7c1d940e00806ca4a50eec0c56463627be09468f91b9f",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/urban-ground-surface.mjs",
+      "sha256": "0ef2eadfd74b7901cd87732769967d5fea2b716d0d918073d1e78c32f8c81ff0",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
+      "sha256": "18573585c1b1f59fe62a9eaefe62275135716291cea072d4acdd3e5a361ecbb2",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+      "sha256": "812b46df0d4c4fef9c76c1b2fc6c7c570b31d9ba83b72bca97ae2e5c1979ad0c",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+      "sha256": "07d5b719b8a37a1f6deec0838c594f575fabce6d1203f3adab96b2723a771fb5",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-terrain-window.mjs",
+      "sha256": "4a4df9f20e84f20cb2c66f2dbc1ea1b38bed12937a5b363509dd90ddea46bca0",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "sha256": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "sha256": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "sha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "sha256": "bc579645b8ad951b534c71b270bef19783b215bc925cc428317930512e51ceb5",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt.mjs",
+      "sha256": "3efbfb2ffb36b381927c4d3fbdb2bf664a2ed3e55558550b4f0d91080e5682ff",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/style.css",
+      "sha256": "caf333f5853e0805126789f96e5013878461f725cd8354c9239be84e5aab81ce",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-library.mjs",
+      "sha256": "ff08c8f3e3da605c86e5518a14043e76a7d5d52c5abcc8f3e12de6d8dfc08696",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "sha256": "8c2b6b03ab44046c6c28fdd79195de566b465d80c18b228a2b6bce04b96238d1",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning.css",
+      "sha256": "1db1a07a432c7fabfb334cf4456556fcd6a5c93d42b04d42632020ef1f76098e",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha256": "d384a73f53f6e49d715f27567d98cf6ba335020be8f1165c4f09f1103afe1571",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-assets.mjs",
+      "sha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sha256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "sha256": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "sha256": "4e2822f1c94bdef24f62fb14629dd4909c8d8ed3aea6708f2fdf2e8ca5b8081b",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-editor.mjs",
+      "sha256": "756be0060ca09ae22c282f9447b4c2689385248beddf263c4f71f3e7f5c47012",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "sha256": "ef930dca37efb2756162851a7ffea920552415d5869925e6bb91afd5e0dcacfc",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-pursuit.mjs",
+      "sha256": "5512d0a2dd104307e3b89adbbabae8e02934553c7bc2f31efa49456ffe0ec878",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "sha256": "50244c9b2d469be8cb68dcd50b1b6b5bc9b6b25c5a72f3db087dc99aab9aabdd",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-records.mjs",
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "sha256": "16a72fb03fdcf1f7d40895058698b8fade0b02bfbd13f601919e82d045fa409a",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "sha256": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "sha256": "7bbf3b12ba925f72209a3a2f6022e732545b5100e1b28718777d18fb78cef2aa",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-zip.mjs",
+      "sha256": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/fpv-worlds/advanced-worker.mjs",
+      "sha256": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/fpv-worlds/index.html",
+      "sha256": "d4bbc350de197693c91b093501b747bc2168e977604696293f36f79d553f9d08",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/install-context.mjs",
+      "sha256": "bae814b206dc1ccf39b5f5b55391e9aae3d38760c07fcdf6cfeb7abea2419acf",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/smoke-fpv-advanced-regional.mjs",
+      "sha256": "7f79dcfaef3961443caa6f9539d5f93b933408339d991fabb075b8392b660fa3",
+      "unchanged": true
+    }
+  ],
+  "workers": [
+    "http://127.0.0.1:57332/optional-practice/fpv-worlds/advanced-worker.mjs",
+    "http://127.0.0.1:57332/optional-practice/fpv-worlds/advanced-worker.mjs",
+    "http://127.0.0.1:57332/optional-practice/fpv-worlds/advanced-worker.mjs",
+    "http://127.0.0.1:57332/optional-practice/fpv-worlds/advanced-worker.mjs",
+    "http://127.0.0.1:57332/optional-practice/fpv-worlds/advanced-worker.mjs"
+  ],
+  "pageErrors": [],
+  "missingRequests": [
+    "/favicon.ico"
+  ],
+  "evidence": {
+    "legacy": {
+      "course": "regional-review-mixed-check",
+      "appearance": {
+        "requested": "industrial-workshop",
+        "appearance": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "drone": "racer"
+        },
+        "fallbackReason": null,
+        "accepted": null,
+        "pending": false
+      },
+      "state": {
+        "position": {
+          "x": 64000,
+          "y": 10000,
+          "z": 6000
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          -767501,
+          0,
+          641048
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "ticks": 0,
+        "grounded": false,
+        "support": null,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "mode": "self-level",
+        "status": "paused",
+        "reason": "prepared",
+        "contacts": 0,
+        "recentres": 1,
+        "originMm": {
+          "x": 64000,
+          "y": 0,
+          "z": 64000
+        },
+        "localPositionMm": {
+          "x": 0,
+          "y": 10000,
+          "z": -58000
+        },
+        "pendingTargetMm": null,
+        "terrain": {
+          "state": "ready",
+          "terrainReady": true,
+          "flightReady": false,
+          "failure": null,
+          "hasRetainedTerrain": true,
+          "geometryBytes": 101424,
+          "reservedGeometryBytes": 101424,
+          "sourceBytes": 122022,
+          "reservedSourceBytes": 122022,
+          "provenance": {
+            "regionId": "mixed-check",
+            "revision": "r1",
+            "positionMm": {
+              "x": 64000,
+              "y": 10000,
+              "z": 6000
+            },
+            "originMm": {
+              "x": 64000,
+              "y": 0,
+              "z": 64000
+            },
+            "compiler": "FPV regional terrain compiler v1",
+            "chunks": [
+              {
+                "chunkId": "tile-0",
+                "collision": {
+                  "id": "tile-0-collision",
+                  "url": "https://terrain.example/tile-0-collision.json",
+                  "bytes": 2290,
+                  "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+                },
+                "scene": {
+                  "id": "tile-0-scene",
+                  "url": "https://terrain.example/tile-0-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+                }
+              },
+              {
+                "chunkId": "tile-1",
+                "collision": {
+                  "id": "tile-1-collision",
+                  "url": "https://terrain.example/tile-1-collision.json",
+                  "bytes": 2290,
+                  "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+                },
+                "scene": {
+                  "id": "tile-1-scene",
+                  "url": "https://terrain.example/tile-1-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+                }
+              }
+            ]
+          },
+          "geometryProfile": "terrain-v1"
+        },
+        "geometryProfile": "terrain-v1",
+        "streaming": {
+          "enabled": true,
+          "pending": false,
+          "failure": null
+        },
+        "model": "regional-authoring-flight-prototype.v1",
+        "unscored": true,
+        "playerReady": false,
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 10026,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "step": 0,
+        "total": 0,
+        "hold": 0,
+        "events": [],
+        "actors": [],
+        "projectiles": [],
+        "score": 0
+      },
+      "replay": null,
+      "sectorTiming": {
+        "status": "unscored",
+        "reference": null,
+        "referenceId": null,
+        "sectors": [],
+        "latest": null
+      },
+      "ghost": {
+        "enabled": false,
+        "loading": false,
+        "referenceId": null,
+        "presentation": {
+          "samples": 0,
+          "visible": false,
+          "trail": false,
+          "pose": null
+        },
+        "resources": {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": null,
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 0
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": []
+          },
+          "registered": {
+            "geometries": 35,
+            "materials": 20,
+            "textures": 3
+          },
+          "renderer": {
+            "calls": 2,
+            "triangles": 4096,
+            "geometries": 2,
+            "textures": 3,
+            "programs": 4,
+            "contextLost": false
+          }
+        }
+      },
+      "editorPresentation": null,
+      "checkpointPractice": null,
+      "sectionReplay": null,
+      "modePractice": false,
+      "records": [],
+      "catalogue": 204,
+      "learning": null,
+      "radio": {
+        "active": false,
+        "frozen": true,
+        "verified": false,
+        "reason": "select-device",
+        "selected": null,
+        "pickup": null,
+        "profile": null,
+        "connectionLost": false,
+        "editing": false,
+        "profileDirty": false,
+        "armSwitchBound": false
+      },
+      "immersive": {
+        "active": false,
+        "mode": "none",
+        "toolsOpen": false
+      },
+      "inputDisplay": {
+        "source": "keyboard",
+        "style": "compact"
+      }
+    },
+    "prepared": {
+      "course": "regional-review-mixed-check",
+      "appearance": {
+        "requested": "industrial-workshop",
+        "appearance": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "drone": "racer"
+        },
+        "fallbackReason": null,
+        "accepted": null,
+        "pending": false
+      },
+      "state": {
+        "position": {
+          "x": 64000,
+          "y": 11780,
+          "z": 6000
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          -767557,
+          0,
+          640981
+        ],
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 10027,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "ticks": 0,
+        "mode": "acro",
+        "status": "paused",
+        "reason": "prepared",
+        "failure": null,
+        "contacts": 0,
+        "recentres": 1,
+        "grounded": false,
+        "support": null,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "originMm": {
+          "x": 64000,
+          "y": 0,
+          "z": 64000
+        },
+        "localPositionMm": {
+          "x": 0,
+          "y": 11780,
+          "z": -58000
+        },
+        "pendingTargetMm": null,
+        "terrain": {
+          "state": "ready",
+          "terrainReady": true,
+          "flightReady": false,
+          "failure": null,
+          "hasRetainedTerrain": true,
+          "geometryBytes": 101424,
+          "reservedGeometryBytes": 101424,
+          "sourceBytes": 122022,
+          "reservedSourceBytes": 122022,
+          "provenance": {
+            "regionId": "mixed-check",
+            "revision": "r1",
+            "positionMm": {
+              "x": 64000,
+              "y": 12000,
+              "z": 6000
+            },
+            "originMm": {
+              "x": 64000,
+              "y": 0,
+              "z": 64000
+            },
+            "compiler": "FPV regional terrain compiler v1",
+            "chunks": [
+              {
+                "chunkId": "tile-0",
+                "collision": {
+                  "id": "tile-0-collision",
+                  "url": "https://terrain.example/tile-0-collision.json",
+                  "bytes": 2290,
+                  "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+                },
+                "scene": {
+                  "id": "tile-0-scene",
+                  "url": "https://terrain.example/tile-0-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+                }
+              },
+              {
+                "chunkId": "tile-1",
+                "collision": {
+                  "id": "tile-1-collision",
+                  "url": "https://terrain.example/tile-1-collision.json",
+                  "bytes": 2290,
+                  "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+                },
+                "scene": {
+                  "id": "tile-1-scene",
+                  "url": "https://terrain.example/tile-1-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+                }
+              }
+            ]
+          },
+          "geometryProfile": "terrain-v1"
+        },
+        "geometryProfile": "terrain-v1",
+        "streaming": {
+          "enabled": true,
+          "pending": false,
+          "failure": null
+        },
+        "model": "regional-advanced-contact.v1",
+        "unscored": true,
+        "playerReady": false,
+        "advanced": true,
+        "advancedTelemetry": {
+          "backend": "civilian-quad-advanced-regional.v1",
+          "terrain": {
+            "frameIdentity": "885077722bc05d41",
+            "touching": false,
+            "contacts": 0,
+            "grounded": false,
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "impactSpeed": 0
+          },
+          "experimental": true,
+          "scored": false,
+          "frequency": 250,
+          "missionHz": 50,
+          "missionTick": 0,
+          "substep": 0,
+          "seconds": 0,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "requestedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "achievedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "calibratedInput": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0
+          },
+          "motorSpeeds": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "voltage": 25.2,
+          "usedAh": 0,
+          "current": 0,
+          "consumedSequence": -1,
+          "consumedTimestampUs": 0,
+          "sampleAgeUs": null,
+          "devicePollHz": null,
+          "saturated": false
+        },
+        "step": 0,
+        "total": 0,
+        "hold": 0,
+        "events": [],
+        "actors": [],
+        "projectiles": [],
+        "score": 0
+      },
+      "replay": null,
+      "sectorTiming": {
+        "status": "unscored",
+        "reference": null,
+        "referenceId": null,
+        "sectors": [],
+        "latest": null
+      },
+      "ghost": {
+        "enabled": false,
+        "loading": false,
+        "referenceId": null,
+        "presentation": {
+          "samples": 0,
+          "visible": false,
+          "trail": false,
+          "pose": null
+        },
+        "resources": {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": null,
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 0
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": []
+          },
+          "registered": {
+            "geometries": 35,
+            "materials": 20,
+            "textures": 3
+          },
+          "renderer": {
+            "calls": 2,
+            "triangles": 4096,
+            "geometries": 2,
+            "textures": 1,
+            "programs": 4,
+            "contextLost": false
+          }
+        }
+      },
+      "editorPresentation": null,
+      "checkpointPractice": null,
+      "sectionReplay": null,
+      "modePractice": false,
+      "records": [],
+      "catalogue": 204,
+      "learning": null,
+      "radio": {
+        "active": false,
+        "frozen": true,
+        "verified": false,
+        "reason": "select-device",
+        "selected": null,
+        "pickup": null,
+        "profile": null,
+        "connectionLost": false,
+        "editing": false,
+        "profileDirty": false,
+        "armSwitchBound": false
+      },
+      "immersive": {
+        "active": false,
+        "mode": "none",
+        "toolsOpen": false
+      },
+      "inputDisplay": {
+        "source": "keyboard",
+        "style": "compact"
+      }
+    },
+    "paused": {
+      "course": "regional-review-mixed-check",
+      "appearance": {
+        "requested": "industrial-workshop",
+        "appearance": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "drone": "racer"
+        },
+        "fallbackReason": null,
+        "accepted": null,
+        "pending": false
+      },
+      "state": {
+        "position": {
+          "x": 64000,
+          "y": 11584.91292476654,
+          "z": 6000
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1938,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          -767557,
+          0,
+          640981
+        ],
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 10027,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "ticks": 10,
+        "mode": "acro",
+        "status": "paused",
+        "reason": "prepared",
+        "failure": null,
+        "contacts": 0,
+        "recentres": 1,
+        "grounded": false,
+        "support": null,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "originMm": {
+          "x": 64000,
+          "y": 0,
+          "z": 64000
+        },
+        "localPositionMm": {
+          "x": 0,
+          "y": 11584.91292476654,
+          "z": -58000
+        },
+        "pendingTargetMm": null,
+        "terrain": {
+          "state": "ready",
+          "terrainReady": true,
+          "flightReady": false,
+          "failure": null,
+          "hasRetainedTerrain": true,
+          "geometryBytes": 101424,
+          "reservedGeometryBytes": 101424,
+          "sourceBytes": 122022,
+          "reservedSourceBytes": 122022,
+          "provenance": {
+            "regionId": "mixed-check",
+            "revision": "r1",
+            "positionMm": {
+              "x": 64000,
+              "y": 12000,
+              "z": 6000
+            },
+            "originMm": {
+              "x": 64000,
+              "y": 0,
+              "z": 64000
+            },
+            "compiler": "FPV regional terrain compiler v1",
+            "chunks": [
+              {
+                "chunkId": "tile-0",
+                "collision": {
+                  "id": "tile-0-collision",
+                  "url": "https://terrain.example/tile-0-collision.json",
+                  "bytes": 2290,
+                  "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+                },
+                "scene": {
+                  "id": "tile-0-scene",
+                  "url": "https://terrain.example/tile-0-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+                }
+              },
+              {
+                "chunkId": "tile-1",
+                "collision": {
+                  "id": "tile-1-collision",
+                  "url": "https://terrain.example/tile-1-collision.json",
+                  "bytes": 2290,
+                  "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+                },
+                "scene": {
+                  "id": "tile-1-scene",
+                  "url": "https://terrain.example/tile-1-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+                }
+              }
+            ]
+          },
+          "geometryProfile": "terrain-v1"
+        },
+        "geometryProfile": "terrain-v1",
+        "streaming": {
+          "enabled": true,
+          "pending": false,
+          "failure": null
+        },
+        "model": "regional-advanced-contact.v1",
+        "unscored": true,
+        "playerReady": false,
+        "advanced": true,
+        "advancedTelemetry": {
+          "backend": "civilian-quad-advanced-regional.v1",
+          "terrain": {
+            "frameIdentity": "885077722bc05d41",
+            "touching": false,
+            "contacts": 0,
+            "grounded": false,
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "impactSpeed": 0
+          },
+          "experimental": true,
+          "scored": false,
+          "frequency": 250,
+          "missionHz": 50,
+          "missionTick": 10,
+          "substep": 50,
+          "seconds": 0.2,
+          "position": {
+            "x": 0,
+            "y": 1.8049129247665405,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": -1.938157558441162,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "requestedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "achievedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "calibratedInput": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0
+          },
+          "motorSpeeds": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "voltage": 25.2,
+          "usedAh": 0,
+          "current": 0,
+          "consumedSequence": 9,
+          "consumedTimestampUs": 180000,
+          "sampleAgeUs": 20000,
+          "devicePollHz": null,
+          "saturated": false
+        },
+        "step": 0,
+        "total": 0,
+        "hold": 0,
+        "events": [],
+        "actors": [],
+        "projectiles": [],
+        "score": 0
+      },
+      "replay": null,
+      "sectorTiming": {
+        "status": "unscored",
+        "reference": null,
+        "referenceId": null,
+        "sectors": [],
+        "latest": null
+      },
+      "ghost": {
+        "enabled": false,
+        "loading": false,
+        "referenceId": null,
+        "presentation": {
+          "samples": 0,
+          "visible": false,
+          "trail": false,
+          "pose": null
+        },
+        "resources": {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "racer",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": null,
+            "actors": [],
+            "actorGoals": [],
+            "projectileBatches": 0,
+            "activeProjectiles": 0,
+            "surfaceDetailGroups": 0
+          },
+          "effects": {
+            "playerPulse": 9233635,
+            "hostilePulse": 16232561,
+            "ghost": 9824751,
+            "ghostEmissive": 2390144,
+            "trail": 9824751,
+            "goalOutline": 9169660,
+            "goalActive": 15266215,
+            "goalComplete": 9808542,
+            "goalInactive": 8366516,
+            "goalGlow": 11069917,
+            "goalGlowInactive": 9030085,
+            "goalEmissive": 8577493,
+            "goalBadge": 10872788,
+            "directionArrow": 15264432
+          },
+          "hunt": null,
+          "importedMaterialBindings": {
+            "applied": 0,
+            "diagnostics": []
+          },
+          "registered": {
+            "geometries": 35,
+            "materials": 20,
+            "textures": 3
+          },
+          "renderer": {
+            "calls": 2,
+            "triangles": 4096,
+            "geometries": 2,
+            "textures": 3,
+            "programs": 4,
+            "contextLost": false
+          }
+        }
+      },
+      "editorPresentation": null,
+      "checkpointPractice": null,
+      "sectionReplay": null,
+      "modePractice": false,
+      "records": [],
+      "catalogue": 204,
+      "learning": null,
+      "radio": {
+        "active": false,
+        "frozen": true,
+        "verified": false,
+        "reason": "paused",
+        "selected": null,
+        "pickup": null,
+        "profile": null,
+        "connectionLost": false,
+        "editing": false,
+        "profileDirty": false,
+        "armSwitchBound": false
+      },
+      "immersive": {
+        "active": false,
+        "mode": "none",
+        "toolsOpen": false
+      },
+      "inputDisplay": {
+        "source": "keyboard",
+        "style": "compact"
+      }
+    },
+    "export": {
+      "bytes": 103089,
+      "backend": "civilian-quad-advanced-regional.v1",
+      "missionTicks": 10,
+      "finalHash": "46d4b9ff",
+      "nodeReplayVerified": true
+    },
+    "rejectedRecovery": {
+      "state": {
+        "position": {
+          "x": 64000,
+          "y": 11584.91292476654,
+          "z": 6000
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1938,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          -767557,
+          0,
+          640981
+        ],
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 10027,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "ticks": 10,
+        "mode": "acro",
+        "status": "paused",
+        "reason": "prepared",
+        "failure": null,
+        "contacts": 0,
+        "recentres": 1,
+        "grounded": false,
+        "support": null,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "originMm": {
+          "x": 64000,
+          "y": 0,
+          "z": 64000
+        },
+        "localPositionMm": {
+          "x": 0,
+          "y": 11584.91292476654,
+          "z": -58000
+        },
+        "pendingTargetMm": null,
+        "terrain": {
+          "state": "ready",
+          "terrainReady": true,
+          "flightReady": false,
+          "failure": null,
+          "hasRetainedTerrain": true,
+          "geometryBytes": 101424,
+          "reservedGeometryBytes": 101424,
+          "sourceBytes": 122022,
+          "reservedSourceBytes": 122022,
+          "provenance": {
+            "regionId": "mixed-check",
+            "revision": "r1",
+            "positionMm": {
+              "x": 64000,
+              "y": 12000,
+              "z": 6000
+            },
+            "originMm": {
+              "x": 64000,
+              "y": 0,
+              "z": 64000
+            },
+            "compiler": "FPV regional terrain compiler v1",
+            "chunks": [
+              {
+                "chunkId": "tile-0",
+                "collision": {
+                  "id": "tile-0-collision",
+                  "url": "https://terrain.example/tile-0-collision.json",
+                  "bytes": 2290,
+                  "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+                },
+                "scene": {
+                  "id": "tile-0-scene",
+                  "url": "https://terrain.example/tile-0-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+                }
+              },
+              {
+                "chunkId": "tile-1",
+                "collision": {
+                  "id": "tile-1-collision",
+                  "url": "https://terrain.example/tile-1-collision.json",
+                  "bytes": 2290,
+                  "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+                },
+                "scene": {
+                  "id": "tile-1-scene",
+                  "url": "https://terrain.example/tile-1-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+                }
+              }
+            ]
+          },
+          "geometryProfile": "terrain-v1"
+        },
+        "geometryProfile": "terrain-v1",
+        "streaming": {
+          "enabled": true,
+          "pending": false,
+          "failure": null
+        },
+        "model": "regional-advanced-contact.v1",
+        "unscored": true,
+        "playerReady": false,
+        "advanced": true,
+        "advancedTelemetry": {
+          "backend": "civilian-quad-advanced-regional.v1",
+          "terrain": {
+            "frameIdentity": "885077722bc05d41",
+            "touching": false,
+            "contacts": 0,
+            "grounded": false,
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "impactSpeed": 0
+          },
+          "experimental": true,
+          "scored": false,
+          "frequency": 250,
+          "missionHz": 50,
+          "missionTick": 10,
+          "substep": 50,
+          "seconds": 0.2,
+          "position": {
+            "x": 0,
+            "y": 1.8049129247665405,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": -1.938157558441162,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "requestedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "achievedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "calibratedInput": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0
+          },
+          "motorSpeeds": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "voltage": 25.2,
+          "usedAh": 0,
+          "current": 0,
+          "consumedSequence": 9,
+          "consumedTimestampUs": 180000,
+          "sampleAgeUs": 20000,
+          "devicePollHz": null,
+          "saturated": false
+        },
+        "step": 0,
+        "total": 0,
+        "hold": 0,
+        "events": [],
+        "actors": [],
+        "projectiles": [],
+        "score": 0
+      },
+      "workers": {
+        "created": 2,
+        "terminated": 1,
+        "live": 1,
+        "recoveryRequests": 1
+      }
+    },
+    "restoredRecovery": {
+      "state": {
+        "position": {
+          "x": 64000,
+          "y": 11584.91292476654,
+          "z": 6000
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1938,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          -767557,
+          0,
+          640981
+        ],
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 10027,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "ticks": 10,
+        "mode": "acro",
+        "status": "paused",
+        "reason": "prepared",
+        "failure": null,
+        "contacts": 0,
+        "recentres": 1,
+        "grounded": false,
+        "support": null,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "originMm": {
+          "x": 64000,
+          "y": 0,
+          "z": 64000
+        },
+        "localPositionMm": {
+          "x": 0,
+          "y": 11584.91292476654,
+          "z": -58000
+        },
+        "pendingTargetMm": null,
+        "terrain": {
+          "state": "ready",
+          "terrainReady": true,
+          "flightReady": false,
+          "failure": null,
+          "hasRetainedTerrain": true,
+          "geometryBytes": 101424,
+          "reservedGeometryBytes": 101424,
+          "sourceBytes": 122022,
+          "reservedSourceBytes": 122022,
+          "provenance": {
+            "regionId": "mixed-check",
+            "revision": "r1",
+            "positionMm": {
+              "x": 64000,
+              "y": 11804.91292476654,
+              "z": 6000
+            },
+            "originMm": {
+              "x": 64000,
+              "y": 0,
+              "z": 64000
+            },
+            "compiler": "FPV regional terrain compiler v1",
+            "chunks": [
+              {
+                "chunkId": "tile-0",
+                "collision": {
+                  "id": "tile-0-collision",
+                  "url": "https://terrain.example/tile-0-collision.json",
+                  "bytes": 2290,
+                  "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+                },
+                "scene": {
+                  "id": "tile-0-scene",
+                  "url": "https://terrain.example/tile-0-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+                }
+              },
+              {
+                "chunkId": "tile-1",
+                "collision": {
+                  "id": "tile-1-collision",
+                  "url": "https://terrain.example/tile-1-collision.json",
+                  "bytes": 2290,
+                  "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+                },
+                "scene": {
+                  "id": "tile-1-scene",
+                  "url": "https://terrain.example/tile-1-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+                }
+              }
+            ]
+          },
+          "geometryProfile": "terrain-v1"
+        },
+        "geometryProfile": "terrain-v1",
+        "streaming": {
+          "enabled": true,
+          "pending": false,
+          "failure": null
+        },
+        "model": "regional-advanced-contact.v1",
+        "unscored": true,
+        "playerReady": false,
+        "advanced": true,
+        "advancedTelemetry": {
+          "backend": "civilian-quad-advanced-regional.v1",
+          "terrain": {
+            "frameIdentity": "885077722bc05d41",
+            "touching": false,
+            "contacts": 0,
+            "grounded": false,
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "impactSpeed": 0
+          },
+          "experimental": true,
+          "scored": false,
+          "frequency": 250,
+          "missionHz": 50,
+          "missionTick": 10,
+          "substep": 50,
+          "seconds": 0.2,
+          "position": {
+            "x": 0,
+            "y": 1.8049129247665405,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": -1.938157558441162,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "requestedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "achievedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "calibratedInput": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0
+          },
+          "motorSpeeds": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "voltage": 25.2,
+          "usedAh": 0,
+          "current": 0,
+          "consumedSequence": 9,
+          "consumedTimestampUs": 180000,
+          "sampleAgeUs": 20000,
+          "devicePollHz": null,
+          "saturated": false
+        },
+        "step": 0,
+        "total": 0,
+        "hold": 0,
+        "events": [],
+        "actors": [],
+        "projectiles": [],
+        "score": 0
+      },
+      "workers": {
+        "created": 3,
+        "terminated": 2,
+        "live": 1,
+        "recoveryRequests": 2
+      }
+    },
+    "cancelledRecovery": {
+      "state": {
+        "position": {
+          "x": 64000,
+          "y": 11584.91292476654,
+          "z": 6000
+        },
+        "velocity": {
+          "x": 0,
+          "y": -1938,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          -767557,
+          0,
+          640981
+        ],
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 10027,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "ticks": 10,
+        "mode": "acro",
+        "status": "paused",
+        "reason": "prepared",
+        "failure": null,
+        "contacts": 0,
+        "recentres": 1,
+        "grounded": false,
+        "support": null,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "originMm": {
+          "x": 64000,
+          "y": 0,
+          "z": 64000
+        },
+        "localPositionMm": {
+          "x": 0,
+          "y": 11584.91292476654,
+          "z": -58000
+        },
+        "pendingTargetMm": null,
+        "terrain": {
+          "state": "ready",
+          "terrainReady": true,
+          "flightReady": false,
+          "failure": null,
+          "hasRetainedTerrain": true,
+          "geometryBytes": 101424,
+          "reservedGeometryBytes": 101424,
+          "sourceBytes": 122022,
+          "reservedSourceBytes": 122022,
+          "provenance": {
+            "regionId": "mixed-check",
+            "revision": "r1",
+            "positionMm": {
+              "x": 64000,
+              "y": 11804.91292476654,
+              "z": 6000
+            },
+            "originMm": {
+              "x": 64000,
+              "y": 0,
+              "z": 64000
+            },
+            "compiler": "FPV regional terrain compiler v1",
+            "chunks": [
+              {
+                "chunkId": "tile-0",
+                "collision": {
+                  "id": "tile-0-collision",
+                  "url": "https://terrain.example/tile-0-collision.json",
+                  "bytes": 2290,
+                  "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+                },
+                "scene": {
+                  "id": "tile-0-scene",
+                  "url": "https://terrain.example/tile-0-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+                }
+              },
+              {
+                "chunkId": "tile-1",
+                "collision": {
+                  "id": "tile-1-collision",
+                  "url": "https://terrain.example/tile-1-collision.json",
+                  "bytes": 2290,
+                  "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+                },
+                "scene": {
+                  "id": "tile-1-scene",
+                  "url": "https://terrain.example/tile-1-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+                }
+              }
+            ]
+          },
+          "geometryProfile": "terrain-v1"
+        },
+        "geometryProfile": "terrain-v1",
+        "streaming": {
+          "enabled": true,
+          "pending": false,
+          "failure": null
+        },
+        "model": "regional-advanced-contact.v1",
+        "unscored": true,
+        "playerReady": false,
+        "advanced": true,
+        "advancedTelemetry": {
+          "backend": "civilian-quad-advanced-regional.v1",
+          "terrain": {
+            "frameIdentity": "885077722bc05d41",
+            "touching": false,
+            "contacts": 0,
+            "grounded": false,
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "impactSpeed": 0
+          },
+          "experimental": true,
+          "scored": false,
+          "frequency": 250,
+          "missionHz": 50,
+          "missionTick": 10,
+          "substep": 50,
+          "seconds": 0.2,
+          "position": {
+            "x": 0,
+            "y": 1.8049129247665405,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": -1.938157558441162,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "requestedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "achievedRates": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "calibratedInput": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0
+          },
+          "motorSpeeds": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "voltage": 25.2,
+          "usedAh": 0,
+          "current": 0,
+          "consumedSequence": 9,
+          "consumedTimestampUs": 180000,
+          "sampleAgeUs": 20000,
+          "devicePollHz": null,
+          "saturated": false
+        },
+        "step": 0,
+        "total": 0,
+        "hold": 0,
+        "events": [],
+        "actors": [],
+        "projectiles": [],
+        "score": 0
+      },
+      "workers": {
+        "created": 4,
+        "terminated": 3,
+        "live": 1,
+        "recoveryRequests": 3
+      },
+      "candidateMissions": 1510
+    },
+    "backToLegacy": {
+      "state": {
+        "position": {
+          "x": 64000,
+          "y": 10000,
+          "z": 6000
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          -767501,
+          0,
+          641048
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "ticks": 0,
+        "grounded": false,
+        "support": null,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "mode": "acro",
+        "status": "paused",
+        "reason": "prepared",
+        "contacts": 0,
+        "recentres": 1,
+        "originMm": {
+          "x": 64000,
+          "y": 0,
+          "z": 64000
+        },
+        "localPositionMm": {
+          "x": 0,
+          "y": 10000,
+          "z": -58000
+        },
+        "pendingTargetMm": null,
+        "terrain": {
+          "state": "ready",
+          "terrainReady": true,
+          "flightReady": false,
+          "failure": null,
+          "hasRetainedTerrain": true,
+          "geometryBytes": 101424,
+          "reservedGeometryBytes": 101424,
+          "sourceBytes": 122022,
+          "reservedSourceBytes": 122022,
+          "provenance": {
+            "regionId": "mixed-check",
+            "revision": "r1",
+            "positionMm": {
+              "x": 64000,
+              "y": 10000,
+              "z": 6000
+            },
+            "originMm": {
+              "x": 64000,
+              "y": 0,
+              "z": 64000
+            },
+            "compiler": "FPV regional terrain compiler v1",
+            "chunks": [
+              {
+                "chunkId": "tile-0",
+                "collision": {
+                  "id": "tile-0-collision",
+                  "url": "https://terrain.example/tile-0-collision.json",
+                  "bytes": 2290,
+                  "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+                },
+                "scene": {
+                  "id": "tile-0-scene",
+                  "url": "https://terrain.example/tile-0-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+                }
+              },
+              {
+                "chunkId": "tile-1",
+                "collision": {
+                  "id": "tile-1-collision",
+                  "url": "https://terrain.example/tile-1-collision.json",
+                  "bytes": 2290,
+                  "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+                },
+                "scene": {
+                  "id": "tile-1-scene",
+                  "url": "https://terrain.example/tile-1-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+                }
+              }
+            ]
+          },
+          "geometryProfile": "terrain-v1"
+        },
+        "geometryProfile": "terrain-v1",
+        "streaming": {
+          "enabled": true,
+          "pending": false,
+          "failure": null
+        },
+        "model": "regional-authoring-flight-prototype.v1",
+        "unscored": true,
+        "playerReady": false,
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 10026,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "step": 0,
+        "total": 0,
+        "hold": 0,
+        "events": [],
+        "actors": [],
+        "projectiles": [],
+        "score": 0
+      },
+      "workers": {
+        "created": 4,
+        "terminated": 4,
+        "live": 0,
+        "recoveryRequests": 3
+      }
+    },
+    "contact": {
+      "position": {
+        "x": 64000,
+        "y": -74.68387603759766,
+        "z": 6000
+      },
+      "velocity": {
+        "x": 0,
+        "y": 250,
+        "z": 0
+      },
+      "orientation": [
+        0,
+        -767557,
+        0,
+        640981
+      ],
+      "attitude": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 10027,
+        "up": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      },
+      "angular": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0
+      },
+      "ticks": 87,
+      "mode": "acro",
+      "status": "active",
+      "reason": null,
+      "failure": null,
+      "contacts": 1,
+      "recentres": 1,
+      "grounded": true,
+      "support": {
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        }
+      },
+      "landingSpeed": 0,
+      "landingTilt": 0,
+      "lastInput": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "localPositionMm": {
+        "x": 0,
+        "y": -74.68387603759766,
+        "z": -58000
+      },
+      "pendingTargetMm": null,
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "failure": null,
+        "hasRetainedTerrain": true,
+        "geometryBytes": 101424,
+        "reservedGeometryBytes": 101424,
+        "sourceBytes": 122022,
+        "reservedSourceBytes": 122022,
+        "provenance": {
+          "regionId": "mixed-check",
+          "revision": "r1",
+          "positionMm": {
+            "x": 64000,
+            "y": 12000,
+            "z": 6000
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional terrain compiler v1",
+          "chunks": [
+            {
+              "chunkId": "tile-0",
+              "collision": {
+                "id": "tile-0-collision",
+                "url": "https://terrain.example/tile-0-collision.json",
+                "bytes": 2290,
+                "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+              },
+              "scene": {
+                "id": "tile-0-scene",
+                "url": "https://terrain.example/tile-0-scene.glb",
+                "bytes": 38384,
+                "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+              }
+            },
+            {
+              "chunkId": "tile-1",
+              "collision": {
+                "id": "tile-1-collision",
+                "url": "https://terrain.example/tile-1-collision.json",
+                "bytes": 2290,
+                "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+              },
+              "scene": {
+                "id": "tile-1-scene",
+                "url": "https://terrain.example/tile-1-scene.glb",
+                "bytes": 38384,
+                "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+              }
+            }
+          ]
+        },
+        "geometryProfile": "terrain-v1"
+      },
+      "geometryProfile": "terrain-v1",
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "model": "regional-advanced-contact.v1",
+      "unscored": true,
+      "playerReady": false,
+      "advanced": true,
+      "advancedTelemetry": {
+        "backend": "civilian-quad-advanced-regional.v1",
+        "terrain": {
+          "frameIdentity": "885077722bc05d41",
+          "touching": true,
+          "contacts": 1,
+          "grounded": true,
+          "normal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "impactSpeed": 0
+        },
+        "experimental": true,
+        "scored": false,
+        "frequency": 250,
+        "missionHz": 50,
+        "missionTick": 87,
+        "substep": 435,
+        "seconds": 1.74,
+        "position": {
+          "x": 0,
+          "y": -9.854683876037598,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0.24983389675617218,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+        },
+        "requestedRates": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "achievedRates": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "calibratedInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "motorSpeeds": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "voltage": 25.2,
+        "usedAh": 0,
+        "current": 0,
+        "consumedSequence": 86,
+        "consumedTimestampUs": 1720000,
+        "sampleAgeUs": 20000,
+        "devicePollHz": null,
+        "saturated": false
+      },
+      "step": 0,
+      "total": 0,
+      "hold": 0,
+      "events": [],
+      "actors": [],
+      "projectiles": [],
+      "score": 0
+    },
+    "takeoff": {
+      "position": {
+        "x": 64000,
+        "y": 438.34808349609375,
+        "z": 6000
+      },
+      "velocity": {
+        "x": 0,
+        "y": 2707,
+        "z": 0
+      },
+      "orientation": [
+        0,
+        -767557,
+        0,
+        640981
+      ],
+      "attitude": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 10027,
+        "up": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      },
+      "angular": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0
+      },
+      "ticks": 204,
+      "mode": "acro",
+      "status": "paused",
+      "reason": "prepared",
+      "failure": null,
+      "contacts": 1,
+      "recentres": 1,
+      "grounded": false,
+      "support": null,
+      "landingSpeed": 0,
+      "landingTilt": 0,
+      "lastInput": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 672
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "localPositionMm": {
+        "x": 0,
+        "y": 438.34808349609375,
+        "z": -58000
+      },
+      "pendingTargetMm": null,
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "failure": null,
+        "hasRetainedTerrain": true,
+        "geometryBytes": 101424,
+        "reservedGeometryBytes": 101424,
+        "sourceBytes": 122022,
+        "reservedSourceBytes": 122022,
+        "provenance": {
+          "regionId": "mixed-check",
+          "revision": "r1",
+          "positionMm": {
+            "x": 64000,
+            "y": 12000,
+            "z": 6000
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional terrain compiler v1",
+          "chunks": [
+            {
+              "chunkId": "tile-0",
+              "collision": {
+                "id": "tile-0-collision",
+                "url": "https://terrain.example/tile-0-collision.json",
+                "bytes": 2290,
+                "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+              },
+              "scene": {
+                "id": "tile-0-scene",
+                "url": "https://terrain.example/tile-0-scene.glb",
+                "bytes": 38384,
+                "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+              }
+            },
+            {
+              "chunkId": "tile-1",
+              "collision": {
+                "id": "tile-1-collision",
+                "url": "https://terrain.example/tile-1-collision.json",
+                "bytes": 2290,
+                "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+              },
+              "scene": {
+                "id": "tile-1-scene",
+                "url": "https://terrain.example/tile-1-scene.glb",
+                "bytes": 38384,
+                "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+              }
+            }
+          ]
+        },
+        "geometryProfile": "terrain-v1"
+      },
+      "geometryProfile": "terrain-v1",
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "model": "regional-advanced-contact.v1",
+      "unscored": true,
+      "playerReady": false,
+      "advanced": true,
+      "advancedTelemetry": {
+        "backend": "civilian-quad-advanced-regional.v1",
+        "terrain": {
+          "frameIdentity": "885077722bc05d41",
+          "touching": false,
+          "contacts": 1,
+          "grounded": false,
+          "normal": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "impactSpeed": 0
+        },
+        "experimental": true,
+        "scored": false,
+        "frequency": 250,
+        "missionHz": 50,
+        "missionTick": 204,
+        "substep": 1020,
+        "seconds": 4.08,
+        "position": {
+          "x": 0,
+          "y": -9.341651916503906,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 2.7072033882141113,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+        },
+        "requestedRates": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "achievedRates": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "calibratedInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0.6720000000000005
+        },
+        "motorSpeeds": [
+          0.665305966942653,
+          0.665305966942653,
+          0.665305966942653,
+          0.665305966942653
+        ],
+        "voltage": 24.259692220470868,
+        "usedAh": 0.002746841174788897,
+        "current": 20.614001134002404,
+        "consumedSequence": 203,
+        "consumedTimestampUs": 4060000,
+        "sampleAgeUs": 20000,
+        "devicePollHz": null,
+        "saturated": false
+      },
+      "step": 0,
+      "total": 0,
+      "hold": 0,
+      "events": [],
+      "actors": [],
+      "projectiles": [],
+      "score": 0
+    },
+    "contactReplay": {
+      "verified": true,
+      "finalHash": "dd27cf8a",
+      "simulationIdentity": "921e120e5e6f27e7",
+      "frames": 1,
+      "colliders": 2,
+      "events": 1
+    },
+    "cleanup": {
+      "created": 5,
+      "terminated": 5,
+      "live": 0,
+      "recoveryRequests": 3
+    }
+  }
+}

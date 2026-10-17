@@ -1,0 +1,400 @@
+{
+  "format": "revealline-fpv-native-staging-evidence.v1",
+  "date": "2026-10-16",
+  "scope": "simulators-only",
+  "source": "/private/tmp/fpv-native-final-20261016-source-r8",
+  "sourceMatches": {
+    "checked": 172,
+    "mismatches": [],
+    "generatedExclusions": [
+      "game/i18n/catalogs.mjs",
+      "game/index.html",
+      "native/fpv-qualification.json",
+      "native/source-packages/civilian-fpv.json",
+      "native/source-packages/fpv-worlds.json",
+      "optional-practice/civilian-fpv/icons/icon-192.png",
+      "optional-practice/civilian-fpv/icons/icon-512.png",
+      "optional-practice/civilian-fpv/worker.js",
+      "optional-practice/fpv-worlds/icons/icon-192.png",
+      "optional-practice/fpv-worlds/icons/icon-512.png",
+      "optional-practice/fpv-worlds/worker.js"
+    ]
+  },
+  "desktop": {
+    "out": "/private/tmp/fpv-native-final-20261016-desktop",
+    "files": 183,
+    "bytes": 18205089,
+    "manifestSha256": "08cda575bd166bd24294f93fb80b164c7adc7689505afc221e05968c8c78d361",
+    "resourceReaderVerified": true,
+    "entry": "revealline://app/game/index.html",
+    "shellHashes": {
+      "main.mjs": "a89a54828ede8dfa2bc32dc60f4aa889eb8bb546bb8bb8451343c59c17750980",
+      "policy.mjs": "92ff61da8d8b74700157d9c77d0f179050a9c45ee9446cedfca3f85a6810cc75",
+      "resources.mjs": "3de16ace66c1c435e50865314f7b5f7222431e7c174b4b78f7b4eb24366a7cfe",
+      "package.json": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8"
+    },
+    "smoke": {
+      "electron": "44.3.0",
+      "host": "darwin",
+      "architecture": "arm64",
+      "finalManifestSha256": "08cda575bd166bd24294f93fb80b164c7adc7689505afc221e05968c8c78d361",
+      "fixtureManifestSha256": "f50eb49079645c8eb3a83089a712a53e5fa86093c25bdcf7400f68b4a3ead4f2",
+      "isolatedProfile": "/private/tmp/fpv-native-smoke-20261016-profile",
+      "launcherRendered": true,
+      "academyAccessGateRenderedOnPriorCandidate": true,
+      "productionAccessGateModified": false,
+      "explicitSeparateTestFixture": true,
+      "simulatorFlightTested": true,
+      "fileDialogsTested": true,
+      "persistenceTested": true,
+      "closedAfterSmoke": true,
+      "evidence": "docs/fpv-native-runtime-qualification.json",
+      "historicalFunctionalManifestSha256": "bd8f1caa38522fb011375957ac075d8422aee638d908b025e19d744556b6a053",
+      "rendererRegression": "docs/fpv-regional-renderer-qualification.json",
+      "scope": "Actual native World reference practice and Regional Advanced worker startup through the new World-scope bootstrap, under unchanged native CSP/resource policy. This checks native routing compatibility; browser service-worker offline behavior is covered by the generated Pages check. Full exports/lifecycle/recovery checks remain historical r5 evidence; renderer checks remain historical r6, and the pointer-save check remains historical r7.",
+      "worldAccessGateRenderedOnPriorCandidate": true,
+      "sourceHashes": {
+        "optional-practice/civilian-fpv/advanced-practice.mjs": "ed34c7081069ca78d6fde9b75ab28930b3da4a7a6b0f774373a3340143318f8b",
+        "optional-practice/civilian-fpv/advanced-worker.mjs": "5983abbe51aa92d4fe53b2cd2c6fc3223969303d821664bbba045a0d2c43695c",
+        "optional-practice/civilian-fpv/app.mjs": "7bc6fe57c5a95cdd8f633ffca73112764b27062e905a2b08a53468ef033820ad",
+        "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+        "optional-practice/civilian-fpv/tuning-ui.mjs": "90e4d96bf7c431cf612923fc06c9e141576d6cf516a061a1b0bdd5ed9d4ad21d",
+        "optional-practice/civilian-fpv/world-app.mjs": "e4bb41954da38d97770239942bb11a9b9d301e035a9183fbfef8bff45b38ce91",
+        "optional-practice/fpv-worlds/advanced-worker.mjs": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514"
+      },
+      "hostPointerSavePassedOnR7": true,
+      "worldWorkerRoutingPassed": true,
+      "testedFixtureManifestSha256": "ddaaa06c0ca07d2a07efa188a3fe7fb066aa8a9230d8186844321fbe06961df2"
+    }
+  },
+  "ios": {
+    "out": "/private/tmp/fpv-native-final-20261016-ios",
+    "files": 188,
+    "bytes": 18279316,
+    "manifestSha256": "7e77ec24db2f01a864a8ac52c4979a71dd3842f72d5ebe9b59f16f408cbea0bb",
+    "sourceManifestSha256": "08cda575bd166bd24294f93fb80b164c7adc7689505afc221e05968c8c78d361",
+    "officialBridgeSha256": "b13cd034a4a09250c6f03271c0c89ee30e672e6efb4016409fad81ccb89a8935",
+    "diagnostics": true,
+    "configurationValid": true,
+    "dependenciesInstalled": true,
+    "nativeProject": true,
+    "privacyManifestLinked": true,
+    "xcode": false,
+    "simulatorTool": false
+  },
+  "tests": [
+    {
+      "suite": "fpv:native:test (native staging, builder, shared export API, desktop policy/resources, iOS bridge/doctor)",
+      "passed": 75
+    },
+    {
+      "suite": "Final simulator native builder/fixture focused rerun",
+      "passed": 7
+    },
+    {
+      "suite": "Renderer preparation/control/texture targeted tests",
+      "passed": 14
+    }
+  ],
+  "nativeRuntimeVerified": false,
+  "limitations": [
+    "Unsigned development shell; installer, signing/notarization and OS/device matrix not qualified.",
+    "Production password gate preserved; authenticated access flow was not exercised.",
+    "No physical USB controller/touchscreen qualification.",
+    "No Xcode or iOS simulator available; iOS runtime remains unqualified.",
+    "Full-game content exceeds unchanged 768 MiB native budget; simulator-only build is explicit.",
+    "Preexisting desktop build-only brace-expansion 5.0.9 advisory remains in the unchanged lockfile.",
+    "Renderer sampler regression is fixed and checked on Chrome/Electron; a full GPU/device matrix is not claimed."
+  ],
+  "fixture": {
+    "out": "/private/tmp/fpv-native-smoke-20261016-desktop",
+    "files": 187,
+    "bytes": 18267067,
+    "manifestSha256": "f50eb49079645c8eb3a83089a712a53e5fa86093c25bdcf7400f68b4a3ead4f2",
+    "resourceReaderVerified": true,
+    "testOnly": true,
+    "productionPagesUnchanged": true
+  },
+  "fullSiteBudget": {
+    "preservedManifest": "/private/tmp/fpv-advanced-review-20261016-manifest.json",
+    "files": 3503,
+    "bytes": 1072272729,
+    "budgetBytes": 805306368,
+    "excessBytes": 266966361,
+    "exactDuplicateBytes": 2839964,
+    "excessAfterPerfectDeduplication": 264126397,
+    "result": "No safe duplicate-removal fix. Larger groups are explicitly referenced runtime/offline/authoring product content; no unrelated content was removed and no limit was raised."
+  },
+  "desktopFunctionalSmokePassed": true,
+  "historicalCandidates": [
+    {
+      "source": "/private/tmp/fpv-native-final-20261016-source-r6",
+      "desktop": {
+        "out": "/private/tmp/fpv-native-final-20261016-desktop",
+        "files": 182,
+        "bytes": 18204303,
+        "manifestSha256": "ac966d138b051ce70ea7c03907e4d09d03f825a8e7b83ea41cd01bb251a53f04",
+        "resourceReaderVerified": true,
+        "entry": "revealline://app/game/index.html",
+        "shellHashes": {
+          "main.mjs": "a89a54828ede8dfa2bc32dc60f4aa889eb8bb546bb8bb8451343c59c17750980",
+          "policy.mjs": "92ff61da8d8b74700157d9c77d0f179050a9c45ee9446cedfca3f85a6810cc75",
+          "resources.mjs": "3de16ace66c1c435e50865314f7b5f7222431e7c174b4b78f7b4eb24366a7cfe",
+          "package.json": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8"
+        },
+        "smoke": {
+          "electron": "44.3.0",
+          "host": "darwin",
+          "architecture": "arm64",
+          "finalManifestSha256": "ac966d138b051ce70ea7c03907e4d09d03f825a8e7b83ea41cd01bb251a53f04",
+          "fixtureManifestSha256": "eee5f8b1e0982371178a8be1d14e8caa712672f181815b729ef03d57e4eb15b9",
+          "isolatedProfile": "/private/tmp/fpv-native-smoke-20261016-profile",
+          "launcherRendered": true,
+          "worldAccessGateRendered": true,
+          "academyAccessGateRenderedOnPriorCandidate": true,
+          "productionAccessGateModified": false,
+          "explicitSeparateTestFixture": true,
+          "simulatorFlightTested": true,
+          "fileDialogsTested": true,
+          "persistenceTested": true,
+          "closedAfterSmoke": true,
+          "evidence": "docs/fpv-native-runtime-qualification.json",
+          "historicalFunctionalManifestSha256": "bd8f1caa38522fb011375957ac075d8422aee638d908b025e19d744556b6a053",
+          "rendererRegression": "docs/fpv-regional-renderer-qualification.json",
+          "scope": "Final r6 cold Legacy preparation, Advanced restart/flight, Legacy return and cleanup; full exports/lifecycle/recovery checks are retained as historical r5 evidence in the runtime report."
+        }
+      },
+      "ios": {
+        "out": "/private/tmp/fpv-native-final-20261016-ios",
+        "files": 187,
+        "bytes": 18278530,
+        "manifestSha256": "1139a9feb4fa4bb23ab71b49b8294e069564fb57abb9f2bcf118e1be01a1aec2",
+        "sourceManifestSha256": "ac966d138b051ce70ea7c03907e4d09d03f825a8e7b83ea41cd01bb251a53f04",
+        "officialBridgeSha256": "b13cd034a4a09250c6f03271c0c89ee30e672e6efb4016409fad81ccb89a8935",
+        "diagnostics": true,
+        "configurationValid": true,
+        "dependenciesInstalled": true,
+        "nativeProject": true,
+        "privacyManifestLinked": true,
+        "xcode": false,
+        "simulatorTool": false
+      },
+      "fixture": {
+        "out": "/private/tmp/fpv-native-smoke-20261016-desktop",
+        "files": 186,
+        "bytes": 18266281,
+        "manifestSha256": "eee5f8b1e0982371178a8be1d14e8caa712672f181815b729ef03d57e4eb15b9",
+        "resourceReaderVerified": true,
+        "testOnly": true,
+        "productionPagesUnchanged": true
+      },
+      "historical": true,
+      "note": "r6 renderer regression candidate. Stage paths are now reused by r7; original r6 source directories and receipts remain available."
+    },
+    {
+      "source": "/private/tmp/fpv-native-final-20261016-source-r7",
+      "desktop": {
+        "out": "/private/tmp/fpv-native-final-20261016-desktop",
+        "files": 182,
+        "bytes": 18204404,
+        "manifestSha256": "d9474c5aa57571bee7df18987c1b43147626794ba145cbcaad3c99fc34abef1c",
+        "resourceReaderVerified": true,
+        "entry": "revealline://app/game/index.html",
+        "shellHashes": {
+          "main.mjs": "a89a54828ede8dfa2bc32dc60f4aa889eb8bb546bb8bb8451343c59c17750980",
+          "policy.mjs": "92ff61da8d8b74700157d9c77d0f179050a9c45ee9446cedfca3f85a6810cc75",
+          "resources.mjs": "3de16ace66c1c435e50865314f7b5f7222431e7c174b4b78f7b4eb24366a7cfe",
+          "package.json": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8"
+        },
+        "smoke": {
+          "electron": "44.3.0",
+          "host": "darwin",
+          "architecture": "arm64",
+          "finalManifestSha256": "d9474c5aa57571bee7df18987c1b43147626794ba145cbcaad3c99fc34abef1c",
+          "fixtureManifestSha256": "c84a6d032d7eb8115aff75b99802f72db7d7abe1c9e2ab4e763387039b003df3",
+          "isolatedProfile": "/private/tmp/fpv-native-smoke-20261016-profile",
+          "launcherRendered": true,
+          "academyAccessGateRenderedOnPriorCandidate": true,
+          "productionAccessGateModified": false,
+          "explicitSeparateTestFixture": true,
+          "simulatorFlightTested": true,
+          "fileDialogsTested": true,
+          "persistenceTested": true,
+          "closedAfterSmoke": true,
+          "evidence": "docs/fpv-native-runtime-qualification.json",
+          "historicalFunctionalManifestSha256": "bd8f1caa38522fb011375957ac075d8422aee638d908b025e19d744556b6a053",
+          "rendererRegression": "docs/fpv-regional-renderer-qualification.json",
+          "scope": "Actual native pointer Save in production World host tuning dialog, followed by cold Regional Legacy preparation, Advanced restart/20-tick flight, Legacy return and disposal. Exact pointerdown/up geometry is covered by the generated Pages browser check, not measured by this native accessibility run. Full exports/lifecycle/recovery checks remain historical r5 evidence; the dedicated renderer regression is historical r6 evidence.",
+          "worldAccessGateRenderedOnPriorCandidate": true,
+          "hostPointerSavePassed": true,
+          "sourceHashes": {
+            "optional-practice/civilian-fpv/app.mjs": "7bc6fe57c5a95cdd8f633ffca73112764b27062e905a2b08a53468ef033820ad",
+            "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+            "optional-practice/civilian-fpv/tuning-ui.mjs": "90e4d96bf7c431cf612923fc06c9e141576d6cf516a061a1b0bdd5ed9d4ad21d",
+            "optional-practice/civilian-fpv/world-app.mjs": "a0a02b05be6dc86ae3c593c3c146d8ce965454c039acda71d705477525cb81e6"
+          }
+        }
+      },
+      "ios": {
+        "out": "/private/tmp/fpv-native-final-20261016-ios",
+        "files": 187,
+        "bytes": 18278631,
+        "manifestSha256": "6c69dc78462da0d1d4c2e24388658cb85a9e60f1905c37318704f3679006a3c8",
+        "sourceManifestSha256": "d9474c5aa57571bee7df18987c1b43147626794ba145cbcaad3c99fc34abef1c",
+        "officialBridgeSha256": "b13cd034a4a09250c6f03271c0c89ee30e672e6efb4016409fad81ccb89a8935",
+        "diagnostics": true,
+        "configurationValid": true,
+        "dependenciesInstalled": true,
+        "nativeProject": true,
+        "privacyManifestLinked": true,
+        "xcode": false,
+        "simulatorTool": false
+      },
+      "fixture": {
+        "out": "/private/tmp/fpv-native-smoke-20261016-desktop",
+        "files": 186,
+        "bytes": 18266382,
+        "manifestSha256": "c84a6d032d7eb8115aff75b99802f72db7d7abe1c9e2ab4e763387039b003df3",
+        "resourceReaderVerified": true,
+        "testOnly": true,
+        "productionPagesUnchanged": true
+      },
+      "currentCandidateChecks": {
+        "passed": true,
+        "scope": "Actual native pointer Save in production World host tuning dialog, followed by cold Regional Legacy preparation, Advanced restart/20-tick flight, Legacy return and disposal. Exact pointerdown/up geometry is covered by the generated Pages browser check, not measured by this native accessibility run.",
+        "tuning": {
+          "operation": "Edit roll maximum from 830 to 840 degrees/second, then activate Save for next flight using one native coordinate pointer click.",
+          "successMessageVisible": true,
+          "savedClickReceipt": "ui:Save for next flight",
+          "libraryRevisionBefore": 4,
+          "libraryRevisionAfter": 5,
+          "profileRevisionBefore": 2,
+          "profileRevisionAfter": 3,
+          "rollMaximumDps": 840,
+          "savedToLocalLibrary": true
+        },
+        "transitions": [
+          "Legacy prepared",
+          "Advanced prepared",
+          "Advanced active",
+          "Advanced paused at tick 20",
+          "Legacy prepared",
+          "Disposed"
+        ],
+        "workers": {
+          "created": 1,
+          "terminated": 1,
+          "live": 0
+        },
+        "pageErrors": [],
+        "stderrBytes": 0,
+        "processExitCode": 0,
+        "storageProbe": {
+          "lockAcquired": true,
+          "transactionComplete": true,
+          "previousVisits": 4,
+          "visits": 5
+        },
+        "sourceHashes": {
+          "optional-practice/civilian-fpv/app.mjs": "7bc6fe57c5a95cdd8f633ffca73112764b27062e905a2b08a53468ef033820ad",
+          "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+          "optional-practice/civilian-fpv/tuning-ui.mjs": "90e4d96bf7c431cf612923fc06c9e141576d6cf516a061a1b0bdd5ed9d4ad21d",
+          "optional-practice/civilian-fpv/world-app.mjs": "a0a02b05be6dc86ae3c593c3c146d8ce965454c039acda71d705477525cb81e6"
+        }
+      },
+      "historical": true,
+      "note": "r7 host-pointer Save candidate. Stage paths are now reused by r8; original r7 source directories and receipts remain available."
+    }
+  ],
+  "currentCandidateChecks": {
+    "passed": true,
+    "scope": "Actual native World reference practice and Regional Advanced worker startup through the new World-scope bootstrap, under unchanged native CSP/resource policy. This checks native routing compatibility; browser service-worker offline behavior is covered by the generated Pages check.",
+    "workerRoute": "optional-practice/fpv-worlds/advanced-worker.mjs",
+    "wrapperResourceStatus": 200,
+    "referencePractice": {
+      "readyVisible": true,
+      "explicitStart": true,
+      "motionReadoutObserved": "Height changed from 1.5 m to 1.1 m; speed reached 2.8 m/s.",
+      "pausedViaEscape": true,
+      "returnedToTuning": true,
+      "finalWorkers": {
+        "created": 1,
+        "terminated": 1,
+        "live": 0
+      }
+    },
+    "regional": {
+      "legacyPrepared": true,
+      "advancedStarted": true,
+      "pausedTick": 20,
+      "returnedToLegacy": true,
+      "disposed": true
+    },
+    "workers": {
+      "created": 2,
+      "terminated": 2,
+      "live": 0
+    },
+    "pageErrors": [],
+    "stderrBytes": 0,
+    "processExitCode": 0,
+    "persistence": {
+      "fullProcessRestart": true,
+      "equalsR7FinalLibrary": true,
+      "libraryRevision": 5,
+      "rollMaximumDps": 840
+    },
+    "storageProbe": {
+      "lockAcquired": true,
+      "transactionComplete": true,
+      "previousVisits": 5,
+      "visits": 6
+    },
+    "sourceHashes": {
+      "optional-practice/civilian-fpv/advanced-practice.mjs": "ed34c7081069ca78d6fde9b75ab28930b3da4a7a6b0f774373a3340143318f8b",
+      "optional-practice/civilian-fpv/advanced-worker.mjs": "5983abbe51aa92d4fe53b2cd2c6fc3223969303d821664bbba045a0d2c43695c",
+      "optional-practice/civilian-fpv/app.mjs": "7bc6fe57c5a95cdd8f633ffca73112764b27062e905a2b08a53468ef033820ad",
+      "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+      "optional-practice/civilian-fpv/tuning-ui.mjs": "90e4d96bf7c431cf612923fc06c9e141576d6cf516a061a1b0bdd5ed9d4ad21d",
+      "optional-practice/civilian-fpv/world-app.mjs": "e4bb41954da38d97770239942bb11a9b9d301e035a9183fbfef8bff45b38ce91",
+      "optional-practice/fpv-worlds/advanced-worker.mjs": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514"
+    },
+    "metadataRefresh": {
+      "format": "FpvNativeMetadataRefresh.v1",
+      "reason": "World complete source archive adds one worker bootstrap; explicit file cap is 180. Byte budgets unchanged.",
+      "policy": {
+        "path": "publishing/optional-package-policy.mjs",
+        "sha256": "e8dca56614b5bd5e09ee3cbe7e86c98082d891cc685b307ea6b193615960e640",
+        "worldFileCap": 180,
+        "worldBytesCap": 20971520
+      },
+      "comparisons": [
+        {
+          "source": "/private/tmp/fpv-native-final-20261016-source-r8",
+          "testedManifest": "/private/tmp/fpv-native-final-20261016-source-r8-pre-policy-manifest.json",
+          "testedManifestSha256": "4b865996b7cf8c02ddb5aa2263f6cbc6bd9ceb5256215a4ee602ff51c44ce9ff",
+          "finalManifestSha256": "08cda575bd166bd24294f93fb80b164c7adc7689505afc221e05968c8c78d361",
+          "files": 183,
+          "unchangedPayloadFiles": 181,
+          "changedMetadataOnly": [
+            "native/fpv-qualification.json",
+            "native/source-packages/fpv-worlds.json"
+          ]
+        },
+        {
+          "source": "/private/tmp/fpv-native-smoke-20261016-source-r8",
+          "testedManifest": "/private/tmp/fpv-native-smoke-20261016-source-r8-pre-policy-manifest.json",
+          "testedManifestSha256": "ddaaa06c0ca07d2a07efa188a3fe7fb066aa8a9230d8186844321fbe06961df2",
+          "finalManifestSha256": "f50eb49079645c8eb3a83089a712a53e5fa86093c25bdcf7400f68b4a3ead4f2",
+          "files": 187,
+          "unchangedPayloadFiles": 185,
+          "changedMetadataOnly": [
+            "native/fpv-qualification.json",
+            "native/source-packages/fpv-worlds.json"
+          ]
+        }
+      ],
+      "runtimePayloadUnchanged": true
+    }
+  }
+}

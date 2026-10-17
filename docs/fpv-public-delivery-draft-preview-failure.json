@@ -1,0 +1,105 @@
+{
+  "format": "FPVPublicUpdateEvidence.v1",
+  "mode": "complete",
+  "generatedAt": "2026-10-17T03:31:55.794Z",
+  "publicRoot": "https://mekhovov.github.io/revealline/",
+  "expectedRevision": "b2f251dac0d762d476f725b1bc601a2d6d5485a5",
+  "runnerSha256": "9b77520d48ed47e8fe373dd946ec368b73dd5cabef482431c193b7b2589a3955",
+  "passed": false,
+  "packages": [],
+  "authentication": "Ordinary public password form in isolated persistent Chrome profiles; no unlock injection.",
+  "limits": [
+    "Single local Chrome host using public HTTPS; no physical-device, pilot, aircraft or performance qualification.",
+    "No publication, cache clearing, forced worker activation, browser-profile replacement or existing user data access.",
+    "Legacy calibration is synthetic and unverified. Camera/input preferences use production DOM handlers.",
+    "New profile/backup checks use production library APIs; CLI patch uses the visible editor. Full backup download/upload UI and raw preset bundles are not covered.",
+    "Advanced remains optional and unscored. Regional scene admission, OS-installed PWAs, storage eviction and other browsers are not covered."
+  ],
+  "publicBinding": {
+    "metadata": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "b2f251dac0d762d476f725b1bc601a2d6d5485a5",
+      "sourceCommittedAt": "2026-10-17T03:10:07Z",
+      "buildVersion": "main-b2f251dac0d7",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    },
+    "metadataSha256": "a74f5241b1f80419964f43b915f9aa590a79fe301a227fadfe71eebecd91f7de",
+    "manifestSha256": "3090dbccef04d66859ff5435ed26954f8cb7986143526a75032a8d27a890fa6f",
+    "pins": {
+      "game/access-gate.mjs": {
+        "path": "game/access-gate.mjs",
+        "bytes": 6833,
+        "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+      },
+      "optional-practice/civilian-fpv/radio-profile.mjs": {
+        "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+        "bytes": 18846,
+        "sha256": "d972a03be9f62d390894958b8fa58ae7ac3f97bab2d797b165fca4ab98c506ed"
+      },
+      "optional-practice/civilian-fpv/app.mjs": {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "bytes": 97364,
+        "sha256": "cdbb034b2142651d819381045b69642d07b337518e597f332c2ede12c6e48933"
+      },
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "bytes": 402518,
+        "sha256": "93f8f7906182f50df92376ed50e07a107b99f8621750983c8d71d70d2d79fdac"
+      },
+      "optional-practice/civilian-fpv/index.html": {
+        "path": "optional-practice/civilian-fpv/index.html",
+        "bytes": 15419,
+        "sha256": "afc6cc55dc832e54aeecb01864c2ecaa067a97154ccdc38b57c81ef60a3c2e84"
+      },
+      "optional-practice/civilian-fpv/worker.js": {
+        "path": "optional-practice/civilian-fpv/worker.js",
+        "bytes": 20856,
+        "sha256": "109e8e232f6c4c8464fe856a16fc68520a4151ce2485b1d29defd11083df7732"
+      },
+      "optional-practice/fpv-worlds/index.html": {
+        "path": "optional-practice/fpv-worlds/index.html",
+        "bytes": 49494,
+        "sha256": "f36752ecf688965c81db7828c0702fe4e41a3d2115602b8e6fd70ec8d085fe10"
+      },
+      "optional-practice/fpv-worlds/worker.js": {
+        "path": "optional-practice/fpv-worlds/worker.js",
+        "bytes": 30104,
+        "sha256": "fb5d33231cd826b934d71d6b117cbc681c39d151c1bc09c0a587be95f59c55e1"
+      },
+      "optional-practice/civilian-fpv/tuning-ui.mjs": {
+        "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+        "bytes": 61741,
+        "sha256": "65fc9b312efc85494cf79354d33e9ce0a136ff5f05c88e16609317e6523cf9d3"
+      },
+      "optional-practice/civilian-fpv/advanced-simulation.mjs": {
+        "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+        "bytes": 63447,
+        "sha256": "bd606bf22bd1dc80f26e11f23b7f368d5139885b433c5a9e8e36b9df26b2de4d"
+      },
+      "optional-practice/civilian-fpv/advanced-worker.mjs": {
+        "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+        "bytes": 6216,
+        "sha256": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3"
+      },
+      "optional-practice/civilian-fpv/rates.mjs": {
+        "path": "optional-practice/civilian-fpv/rates.mjs",
+        "bytes": 9599,
+        "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5"
+      }
+    },
+    "workers": {
+      "civilian-fpv": "7d2eb65182dee3b10a46ed0da87a3a36713162e8e2022e4883f0a36c65eab7fc",
+      "fpv-worlds": "4b1467f7d9d05a85b303b6c8fcc5efc5af0d5c02666bb26db52cb20a9ba64e0a"
+    },
+    "tuningAvailable": true
+  },
+  "preparationStateSha256": "f84aa876f5df6a34cbac2b9077b4952856cd9ef31b2bee38aa332516877d7e50",
+  "browser": {
+    "engine": "chrome",
+    "version": "155.0.8059.85"
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n88 !== 90\n\n    at smokeFPVPublicUpdate (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-public-update.mjs:544:16)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-public-update.mjs:617:18",
+  "runnerStable": true
+}

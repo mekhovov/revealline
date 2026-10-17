@@ -1,0 +1,41 @@
+TAP version 13
+# Subtest: Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+    # Subtest: ADVANCED_DURATION_LIMIT · en
+    ok 1 - ADVANCED_DURATION_LIMIT · en
+      ---
+      duration_ms: 659.769791
+      type: 'test'
+      ...
+    # Subtest: ADVANCED_RECORDING_LIMIT · uk
+    ok 2 - ADVANCED_RECORDING_LIMIT · uk
+      ---
+      duration_ms: 465.498916
+      type: 'test'
+      ...
+    # Subtest: UNKNOWN_LIMIT · en
+    ok 3 - UNKNOWN_LIMIT · en
+      ---
+      duration_ms: 392.164542
+      type: 'test'
+      ...
+    # Subtest: untyped limit text · en
+    ok 4 - untyped limit text · en
+      ---
+      duration_ms: 406.444041
+      type: 'test'
+      ...
+    1..4
+ok 1 - Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+  ---
+  duration_ms: 1934.240166
+  type: 'test'
+  ...
+1..1
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2367.112209

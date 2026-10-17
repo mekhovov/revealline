@@ -1,0 +1,233 @@
+{
+  "format": "FPVTuningFifthReviewVerification.v1",
+  "generatedAt": "2026-10-16T18:20:19.792320+00:00",
+  "branch": "codex/fpv-rates-and-tuning",
+  "baseRevision": "0597edff78fbec0faeccffae413ca48e7a5d91f1",
+  "previousImplementationRevision": "54ad967de886017f07417515f84d210db90669bf",
+  "rebasedCommits": {
+    "da420505a": "6f04efd1f",
+    "6d846f285": "e89af7a15",
+    "c4b771b14": "61454f37d",
+    "8fe7b118f": "054e19d37",
+    "6f75435a4": "54ad967de"
+  },
+  "sourceBinding": "Final working-tree hashes before commit. Historical reports are unchanged. No public deployment.",
+  "availableSoftwareComplete": true,
+  "originalQualificationGatesComplete": false,
+  "completedItems": [
+    "Unsupported/dev firmware headers retain complete version identity and cannot borrow verified defaults",
+    "Pending Advanced aircraft saves preserve later drafts, serialize submission and retain a correct successful revert baseline"
+  ],
+  "checks": {
+    "fullPracticeSuite": {
+      "tests": 673,
+      "pass": 673,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "logSha256": "ac44370fb314b86a7c190370b811dd9d83e7f25377697253c9ddfb0a9e223db0"
+    },
+    "publicationIntegrationSuite": {
+      "tests": 79,
+      "pass": 79,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "logSha256": "8053998ebf51cb4dd165d99b3a80a1fb3117e458415afb18fd1b815398f618f3"
+    },
+    "nativeBuildPlatformSuite": {
+      "command": "npm run fpv:native:test",
+      "node": "v22.22.2",
+      "exitCode": 0,
+      "tests": 75,
+      "suites": 0,
+      "pass": 75,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 6127.395834,
+      "log": "/private/tmp/fpv-native-fifth-review-20261016-tests.log",
+      "passed": true,
+      "logSha256": "67a625e1b94367419aeb6f48ff606b2368e87d8a622f6f07df54f4583c8ac62c"
+    },
+    "releaseValidation": {
+      "passed": true,
+      "command": "npm run validate",
+      "distributionFiles": 3328,
+      "localizationMessages": 13651,
+      "localizationReferences": 9049,
+      "unchangedNavigationWarnings": 7,
+      "logSha256": "36d238cbb0540dc114673559b00bd2a6afbf9f9accdc359064790efbc7d267f5"
+    },
+    "changedModuleLint": {
+      "passed": true,
+      "modules": 7,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "changedModuleFormatting": {
+      "passed": true,
+      "modules": 7,
+      "logSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  },
+  "reports": {
+    "editor": {
+      "path": "docs/fpv-tuning-browser-fifth-review-qualification.json",
+      "sha256": "5c0ddceab4050a1cfd5874d4874cf5bfd149968d112336ba4a7597740fcb295e",
+      "sourcePinsRechecked": 23,
+      "rerunThisReview": true
+    },
+    "advancedComparison": {
+      "path": "docs/fpv-advanced-comparison-fifth-review.json",
+      "sha256": "bce06d39bfe33a25bf702368ea22a43bb666df32787f0d25ea3d04a1ad760337",
+      "sourcePinsRechecked": 23,
+      "rerunThisReview": true,
+      "saveRaceScope": "Explicitly held save callback with real renderer and worker; not an actual browser-lock/storage contention measurement."
+    },
+    "worldRecovery": {
+      "path": "docs/fpv-advanced-regional-browser-smoke-2026-10-16-fifth-review.json",
+      "sha256": "7cac22352eb4a09a7e5064a4592d43af343ccf7bb10abd1547004c10154e3884",
+      "sourcePinsRechecked": 143,
+      "rerunThisReview": true
+    },
+    "historicalRuntimeMatrix": {
+      "path": "docs/fpv-advanced-runtime-qualification-2026-10-16-third-review.json",
+      "sha256": "3381286f3c75e890abd8bb8c84b06df07616183f1df44034a2e478999a416edd",
+      "sourcePinsRechecked": 20,
+      "rerunThisReview": false,
+      "note": "All 20 source pins are identical. Existing six-runtime numerical/determinism observations are reused as historical evidence; no new timing measurement claimed."
+    },
+    "nativeStaging": {
+      "path": "docs/fpv-native-fifth-review-staging.json",
+      "sha256": "4251883872a08ba913678c502860b78fcfcef3315623741d8df7049a41fc7a4f",
+      "sourcePinsRechecked": 197,
+      "rerunThisReview": true
+    },
+    "pages": {
+      "path": "docs/fpv-pages-fifth-review-live-testing-evidence.json",
+      "sha256": "62faf4a2e6b8a6b0f80a528c5cd1c6e63d85790ef56fd0c5b44a17e75fb538cd",
+      "sourcePinsRechecked": 0,
+      "rerunThisReview": true
+    }
+  },
+  "normalPagesBuild": {
+    "output": "/private/tmp/fpv-rates-fifth-review-20261016-pages",
+    "sourceRevision": null,
+    "version": "0.151.1",
+    "manifestEntriesVerified": 3433,
+    "manifestSha256": "ee04f11f81c6b3d740fdee993324b2230f166bb201d717368f86e579ec312d60",
+    "distributionZipSha256": "1aefe089097d5ae21bd14c57c43faa16674466301e5306fd6aa8761dea84b4e2",
+    "distributionZipBytes": 964235049,
+    "changedRuntimeFilesMatchCurrentSource": [
+      "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "optional-practice/civilian-fpv/betaflight-import.mjs"
+    ],
+    "buildOnlyWorkerInputsExcludedFromLiteralByteComparison": [],
+    "workerNote": "Build-only worker generators are checked by npm run validate; normal production build emits manifest-specific bundled workers verified by the generated-site smoke.",
+    "passed": true,
+    "publicationProfile": "main-pages",
+    "capacity": {
+      "maximumBytes": 980000000,
+      "generatedFilesExcludingDownloadZip": 3435,
+      "generatedStagedBytes": 963654068,
+      "localArchiveUpperForecastBytes": 972276736,
+      "forecastHeadroomBytes": 7723264,
+      "publicationMetadataReserveBytes": 65536,
+      "maximumPathBytes": 152,
+      "forecastOnly": true,
+      "note": "Distribution ZIP and its checksum are excluded exactly as in publish-main-pages. This forecasts the empty optional selector. Actual final staging inventory and uploaded archive must still pass the unchanged CI gates."
+    },
+    "publicDeployment": false,
+    "buildLogSha256": "2231071c8448641d5c46bdff60ef82076672c8051941f4c4f4ac85e820bdb201"
+  },
+  "advanced": {
+    "experimental": true,
+    "scoredEligible": false,
+    "defaultEligible": false,
+    "physicsIdentitiesChanged": false,
+    "frozenFrequencyHz": 250,
+    "exactAgreementRuntimes": 6,
+    "arenaGolden": "46294848",
+    "regionalGolden": "9d00dd70",
+    "numericalEvidenceRerunThisReview": false
+  },
+  "verificationBoundary": "Input schedule and flight-history consistency, not authenticated capture of the original physical input stream.",
+  "deferredAcceptance": [
+    "Physical radio and pilot feedback explicitly deferred by user",
+    "Identified real-aircraft measurements were not supplied; physical-touch qualification remains unmeasured",
+    "Validated aircraft parameters, propwash and ground effect await base-aircraft measurements",
+    "Wider architecture, low-end/mobile and iOS runtime matrix; dense-region performance",
+    "Current Electron/iOS runtime was not repeated; previous actual Electron observations remain historical",
+    "Signing, existing installed updates and full-game native distribution",
+    "Exact committed CI publication, public HTTPS and real access-form checks",
+    "Verified Advanced records and default promotion"
+  ],
+  "preservedEvidence": "All prior committed reports remain unchanged, including failed numerical measurements and the earlier pointer/observer results. No unavailable physical acceptance or public-rollout gate is marked complete.",
+  "unrelatedPathsExcluded": [
+    ".specstory/",
+    "docs/codex-migration-guide.md"
+  ],
+  "sources": [
+    {
+      "path": "docs/fpv-advanced-backend.md",
+      "bytes": 24267,
+      "sha256": "f61d3631c89cbcc6bc8cc4579b03f6ce05f9a83c28101e410490133ec11423a7"
+    },
+    {
+      "path": "docs/fpv-pages-live-testing.md",
+      "bytes": 16277,
+      "sha256": "88dc66bd036f62528e3afb9793b9d242841138564d49f3ab49751c7c2c7daeea"
+    },
+    {
+      "path": "docs/fpv-rates-and-tuning.md",
+      "bytes": 18845,
+      "sha256": "f180658328c75b41448e9e9da21c7251e42ecadcf9684839965d2959a486b1d3"
+    },
+    {
+      "path": "docs/fpv-tuning-completion-plan.md",
+      "bytes": 42730,
+      "sha256": "87c5e795927a105f8084feb94edb5bbe22519bb228ce6863521e1cd47d8d16ba"
+    },
+    {
+      "path": "docs/fpv-tuning-implementation-status.md",
+      "bytes": 45465,
+      "sha256": "b7500befe4178fde71b0c0af4f1d0bd8e7ec65e7eb7a7ac22af1439eaac60d98"
+    },
+    {
+      "path": "game/test/fpv-advanced-practice.test.mjs",
+      "bytes": 25567,
+      "sha256": "5c577c045edc4a2c74ffeaf742ce3752e2336f96bdf224592dfa6a71cb8b8a62"
+    },
+    {
+      "path": "game/test/fpv-betaflight-import.test.mjs",
+      "bytes": 23578,
+      "sha256": "15dbd3df4a4124477aabeb99775d85ee59940e6e54295d256ea6f23aec200134"
+    },
+    {
+      "path": "game/test/fpv-tuning-ui.test.mjs",
+      "bytes": 55355,
+      "sha256": "1c3de6a133032d986856186be6a6ae97932ae7edb81a9f5a6e01d81681e2534c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "bytes": 47922,
+      "sha256": "7406787e28bcb95037372402b395663076772c55c02a535ec4d3d37735ac2c72"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/betaflight-import.mjs",
+      "bytes": 37790,
+      "sha256": "fefd959402f8812d8ad4103302e6877da50d86198d2f5cd0e5d7e8c49deb78bb"
+    },
+    {
+      "path": "scripts/smoke-fpv-advanced-comparison.mjs",
+      "bytes": 18493,
+      "sha256": "f53761a69894aaa859ae3dd95f3bf74fee63d2ba24645cd06f5cbf3f8012d59e"
+    },
+    {
+      "path": "scripts/smoke-fpv-tuning.mjs",
+      "bytes": 34637,
+      "sha256": "07b13fc7458bea4253afc9eb1ffc3e4bab9760948fb14b7e8868c3bdec3937b1"
+    }
+  ]
+}

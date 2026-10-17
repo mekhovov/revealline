@@ -1,0 +1,115 @@
+{
+  "format": "revealline-main-pages-receipt.v1",
+  "sourceRevision": "b2f251dac0d762d476f725b1bc601a2d6d5485a5",
+  "files": 3442,
+  "bytes": 963681552,
+  "maximumBytes": 980000000,
+  "measurement": "raw-final-staged-file-bytes; not tar archive size",
+  "completeInventory": true,
+  "withinCapacity": true,
+  "capacityAccepted": true,
+  "inventorySha256": "8bf442768aaf87ffab8b68b68eb3cbc514588dca875f4018af0163c6e36c140d",
+  "largestFiles": [
+    {
+      "path": "game/content/packs/neon-mosaic-pack.json",
+      "bytes": 15623239,
+      "sha256": "b7835f71ad45e7a8fcaae4b81f30fe91cf7c3e7e0e215a8a675f521b8f438ef6"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+      "bytes": 12358446,
+      "sha256": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b"
+    },
+    {
+      "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+      "bytes": 11949780,
+      "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "bytes": 11708176,
+      "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+    },
+    {
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "bytes": 11377254,
+      "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
+    },
+    {
+      "path": "game/content/packs/homeward-skies.json",
+      "bytes": 11371849,
+      "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+    },
+    {
+      "path": "game/content/packs/equipment-workshop.json",
+      "bytes": 11127024,
+      "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+      "bytes": 11067202,
+      "sha256": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+      "bytes": 10719959,
+      "sha256": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+      "bytes": 10329657,
+      "sha256": "33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714"
+    },
+    {
+      "path": "optional/external-chapters/route-worlds-ukraine/media.rlmedia",
+      "bytes": 8825887,
+      "sha256": "39702f79ae56b12430d6f44ac201704ada77d4ae1b3db4f0235d46ed822ed0e0"
+    },
+    {
+      "path": "optional/external-chapters/fracture-lines-ukraine/media.rlmedia",
+      "bytes": 8734108,
+      "sha256": "d94ca5b780356b07e9c0e6ba9853eb74661cfd2a401f8c135c3eb782152a1413"
+    },
+    {
+      "path": "optional/external-chapters/fracture-lines-coupa/media.rlmedia",
+      "bytes": 8718918,
+      "sha256": "974993c218a9b87dae250348905ea712a28b719db4b28336e665179fc4528b1f"
+    },
+    {
+      "path": "optional/external-chapters/fracture-lines-fpv/media.rlmedia",
+      "bytes": 8669310,
+      "sha256": "495b6e39a480524308bd0e129e83fbe2c3ffeacb508d0b434ee85a86e226fd62"
+    },
+    {
+      "path": "game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3",
+      "bytes": 8641768,
+      "sha256": "d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58"
+    },
+    {
+      "path": "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia",
+      "bytes": 8596058,
+      "sha256": "ca68ec6d1c7b1ade630227f810416136bd862f956b9e26dc0a0233e7d28c2e3c"
+    },
+    {
+      "path": "optional/external-chapters/countercurrent-coupa/media.rlmedia",
+      "bytes": 8527514,
+      "sha256": "1edc1f00c0c27f0bab6c90a0dce4edee2cda3106a832b519db09bb63d2d940f4"
+    },
+    {
+      "path": "optional/external-chapters/countercurrent-ukraine/media.rlmedia",
+      "bytes": 8512868,
+      "sha256": "5d70852eb2b990c6c82f3ceba4494b4fb547fe05ba70b9e31da0ac08accc44d6"
+    },
+    {
+      "path": "optional/external-chapters/route-worlds-coupa/media.rlmedia",
+      "bytes": 8280993,
+      "sha256": "f26c91482325aaa0ea7d7484d9aa2de5f2209b1a8fcfc2ba518eb145f8ddd77f"
+    },
+    {
+      "path": "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia",
+      "bytes": 8175624,
+      "sha256": "dc95ace9a12923999c2a740cccfffaa073542344e190c49b5d3b2310ea459afd"
+    }
+  ],
+  "errors": []
+}

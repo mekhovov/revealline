@@ -1,0 +1,187 @@
+{
+  "format": "FpvBoundaryReviewVerification.v1",
+  "createdAt": "2026-10-17T13:34:35.279373+00:00",
+  "pass": true,
+  "baseRevision": "1d631986ad73ba1301a151a76b1607cf03dbe97a",
+  "scope": "Three bounded corrections to history/import intent, preset review metadata and Regional flight-limit lifecycle. Local software acceptance; normal publication and live acceptance recorded separately.",
+  "checks": {
+    "practiceTests": 731,
+    "practiceFailed": 0,
+    "practiceSkipped": 0,
+    "editorBrowserCases": 6,
+    "editorBrowserSourcePins": 23,
+    "actualRegionalBrowser": true,
+    "regionalBrowserSourcePins": 143,
+    "regionalBoundaryMissions": 36000,
+    "regionalBoundaryExportReplayVerified": true,
+    "regionalFullBoundaryRecoveryStaysStopped": true,
+    "regionalExplicitRestart": true,
+    "workersCreated": 8,
+    "workersTerminated": 8,
+    "nativeStagingSourcePins": 209,
+    "lint": true,
+    "scopedFormatting": true,
+    "releaseValidation": true,
+    "independentReviews": 2
+  },
+  "numericalEvidenceReuse": {
+    "report": "docs/fpv-advanced-runtime-post-publication-qualification.json",
+    "sourcePins": 20,
+    "allStillMatch": true,
+    "timingPhysicsAndQuotaUnchanged": true,
+    "freshTimingBenchmarkPerformed": false
+  },
+  "sources": [
+    {
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+      "bytes": 25424,
+      "sha256": "0cb07eea515ef08c6344af480ecc6fde6f1c9fbb8ced8defa7eab203807a0a5d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/betaflight-import.mjs",
+      "bytes": 38750,
+      "sha256": "f5685a77d4b5dc4711f636e86f72bf4a933aed5542a58b1409f381fa6c094068"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "bytes": 62043,
+      "sha256": "32e3a57875aa5057b9e02044603fb7977f7e908994b630401dda68db8f9634f6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 403835,
+      "sha256": "3bfc52f4ab54e9505e21e3f95b684c259300502e9520cc705e6771aa4fb2e944"
+    },
+    {
+      "path": "game/test/fpv-advanced-regional.test.mjs",
+      "bytes": 34395,
+      "sha256": "3b5f17d0e71b7087f8a691bd59220f7f8ad612e3ee5025d483fa1ad6a88679cc"
+    },
+    {
+      "path": "game/test/fpv-betaflight-import.test.mjs",
+      "bytes": 27937,
+      "sha256": "4b3c5f8c03a52a0dfb9a0a9d2c9029fecb7bc1ca86317c42d67e7db5e51bf921"
+    },
+    {
+      "path": "game/test/fpv-tuning-ui.test.mjs",
+      "bytes": 71581,
+      "sha256": "59962c093fbe808a594dc0a00591b2182aeeab6675efc077f411fcb1fbbdc1bd"
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "bytes": 104061,
+      "sha256": "c271df265b054ab022ac25c11ad14e6570d3de1b4cbe681e0094f076cd24bac5"
+    },
+    {
+      "path": "scripts/smoke-fpv-tuning.mjs",
+      "bytes": 47094,
+      "sha256": "f5b2f585bc4de7c882429c3c5aaa9efa95fb8e94452c1c99a9005b9c621fc57a"
+    },
+    {
+      "path": "scripts/smoke-fpv-advanced-regional.mjs",
+      "bytes": 23199,
+      "sha256": "e9e7eb5a4bf4c4880c468303fbbd1554c22377534ea5a5f4dfc0e5bea6d07eb4"
+    },
+    {
+      "path": "game/test/fixtures/fpv/betaflight-preset-review-boolean.json",
+      "bytes": 1808,
+      "sha256": "7f644c2bb95452d7ccd1de8922f88b99f30a109069d016d45e8e6cc86bf5d285"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "docs/fpv-tuning-boundary-review-browser.json",
+      "bytes": 15156,
+      "sha256": "b279a5e2af14e0d33dfe426441bcc44a3064bbd402debc7511ae831a8549685b"
+    },
+    {
+      "path": "docs/fpv-regional-boundary-review-browser.json",
+      "bytes": 89231,
+      "sha256": "875ad50f04b863a2ef0d0f7ed3893e0e2c389256125bcbb3f42c652c4d49527f"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review-staging.json",
+      "bytes": 31065,
+      "sha256": "9c8330be853c73119ffc69d7d6ff1a64dde28a039bb2772afd7ef657646d5061"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/format.txt",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/history-after.tap",
+      "bytes": 25269,
+      "sha256": "31af45f0dad8b05cd3b7f2e6e7d7aea69e857908c36635bdd268f1495be47ae8"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/history-before.tap",
+      "bytes": 48754,
+      "sha256": "4594e38e5bfe5bae6048c3fb5079eb26043b5c244d2d85eaa021f53be36d295b"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/practice.tap",
+      "bytes": 179928,
+      "sha256": "cddd02f032b59e60c42bf5341b15b8004f16d1343d1c1b48e5f0cbb0cc9f053c"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/preset-before.tap",
+      "bytes": 991,
+      "sha256": "0ca500c5c94b6742941368750fd7f5e8fc1cdc9005305634cdba33f69f77ecd2"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/regional-browser-hidden-menu.json",
+      "bytes": 84092,
+      "sha256": "9ca95f8c5460f61145278eaeb9cedcab1b28402c01533f06302bf7399b70924f"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/regional-browser-menu-before.txt",
+      "bytes": 634,
+      "sha256": "ebcd5603d220f4e6fec5bc4ce16474bf590ec2ae597e9ec431ab7596eb48f87f"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/regional-browser-restart-menu.json",
+      "bytes": 84332,
+      "sha256": "9b401a9077d7e7434c51c028d49748610aa163b15270ddc2d3ae913dc3be0799"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/regional-ui-after.tap",
+      "bytes": 983,
+      "sha256": "3ae19efa943f37c4ea3ce824c43312efa51a18b5144dbc6dce901ed8c3a725e4"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/regional-ui-before.tap",
+      "bytes": 3132,
+      "sha256": "117b3047eea09554ac32945ea0c5299723c5b622b7122eb1e509046510649922"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/regional-ui-invalid-probe.tap",
+      "bytes": 4972,
+      "sha256": "9e0250be6a4a4c8fa266e9bcc707dde82536b59eee3ca128fa18694dd7583e95"
+    },
+    {
+      "path": "docs/fpv-boundary-review-evidence/validation.txt",
+      "bytes": 3885,
+      "sha256": "dd1dc4ca206fbce320df97d2eaeeeb234d26d45bf0c7e892f071d11adb051b61"
+    }
+  ],
+  "preservedFailures": [
+    "History/import and preset metadata regressions fail before their corrections.",
+    "The first Regional UI injection omitted the worker session identifier; corrected protocol probe then reproduced both limits as worker-error. Both raw results are retained.",
+    "Initial browser harness attempts targeted hidden menu controls after automatic stop or restart. The final check uses the ordinary pause shortcut, and all runtime sources are unchanged across those attempts.",
+    "Copied before/after logs normalize trailing whitespace only; original temporary outputs remain untouched."
+  ],
+  "limitations": [
+    "Advanced remains optional, unscored and default-ineligible.",
+    "No physical radio/touch, pilot, identified-aircraft, iOS execution or wider-device qualification; propwash/ground effect and promotion remain gated.",
+    "Desktop/iOS staging is not native execution; the separate native runtime receipt describes any actual Electron check.",
+    "The browser duration fixture verifies real simulation history reconstructed from a browser snapshot and extends it offline before verified browser-worker recovery; it is not twelve minutes of physical-device flight.",
+    "Unknown and uncoded worker failures remain unavailable, not exportable limit stops.",
+    "Historical delivery reports retain their exact source scope. New code is not yet claimed deployed by this local receipt."
+  ]
+}
