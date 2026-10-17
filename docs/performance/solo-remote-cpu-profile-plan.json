@@ -1,0 +1,250 @@
+{
+  "repository": "mekhovov/revealline",
+  "candidate": {
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "producer": "Retained exact-source normal Linux b117 producer38978329593/attempt1 under Node22.13.1; no source flags or budgets changed. Each consumer must verify the complete pinned outer/ready/inner/source/CSP before admission. No fallback rebuild or historical macOS artifact substitution.",
+    "historicalArtifactInvestigation": {
+      "mainRun": 38817575550,
+      "pagesArtifact": 12011437947,
+      "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
+      "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
+    },
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV1",
+      "run": 38978329593,
+      "artifact": 12080662080,
+      "name": "solo-normal-baseline-b1174522-38978329593-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-correctness-temporary.yml",
+        "run": 38978329593,
+        "attempt": 1,
+        "toolingRevision": "d569ce092db47d14f974da24063f82f4a280a19a",
+        "toolingTree": "ee4d756b04fd512849cb19ceb613edfbb04c7c68"
+      },
+      "outer": {
+        "bytes": 1073744615,
+        "sha256": "abf5d8ae1f277cc2b640f103a3ab3471ebf13fe78eba518cc7630c7c316b9e62"
+      },
+      "inner": {
+        "bytes": 1073181451,
+        "sha256": "1e9bb6ad49ced329fecd66f9976c024dad2949bdf4b008f376ee50d6bbf36290"
+      },
+      "manifestSHA256": "2a19dfb7227e5d528fe4f072d1eef9e753ac987396a8f5b8248247483814e8a8",
+      "ready": {
+        "bytes": 1602,
+        "sha256": "4e90b38ad8e3d871f122798643c87173dde7d2a006c1e282485c124fcaa2132a"
+      }
+    },
+    "reuse": "Exact API/producer-small-evidence pins only locally; full large outer and ready-body readback remain mandatory in each remote consumer. This binding grants no performance qualification or candidate release."
+  },
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "format": "SoloHostedCpuProfileManifestV1",
+  "status": "reviewed-diagnostic-only",
+  "cohort": "linux-causal-cold-cpu-profile-3ad-v1",
+  "phase": "cold-cpu-profile",
+  "cpu": 2.46,
+  "performanceExclusion": true,
+  "maxParallel": 1,
+  "automaticRetries": 0,
+  "automaticPhaseContinuation": false,
+  "setupTimeoutMs": 2400000,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 134217728,
+  "recipe": {
+    "path": "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+    "bytes": 6387,
+    "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5"
+  },
+  "profile": {
+    "maximumMs": 240000,
+    "maximumBytes": 67108864,
+    "samplingIntervalUs": 1000,
+    "traceBytes": 0,
+    "screenshots": false,
+    "heap": false
+  },
+  "stressOrigin": {
+    "run": 38991754594,
+    "artifact": 12085597903,
+    "artifactSHA256": "0d8c0bdad8ddd7f4bd229c1716369e9f1df72c500fd7613e67962289a1b4e61a",
+    "calibrationSHA256": "adbc497800950de5169e982277517f019456d91a0986743c6c19e378fc7e7ec3",
+    "rate": 2.46,
+    "originalTarget": 1000,
+    "originalVerification": [861, 981, 978],
+    "newHostCalibration": false,
+    "scope": "fixed-diagnostic-factor-only"
+  },
+  "release": {
+    "scope": "single-causal-cpu-profile",
+    "firstEightAllCorrectnessPassed": false,
+    "performanceQualification": "excluded-cpu-profiling",
+    "predecessorRun": 38991754594,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "allPriorPlannedJobsClosed": true,
+    "review": "Root reviewed one exact-source causal profile after complete cold artifact retention. Ten commands closed; two rows never launched after calibration rejection. No first-eight promotion and no repeat of timing qualification."
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-cpu-profile.mjs",
+      "bytes": 13080,
+      "sha256": "25d73b592c3f581ec330b3a013e1f53b7a759e2d346173881010812737787ab3"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 13941,
+      "sha256": "b7bd4c75ce4ff04e26545aee7d488d8d674173379d372bb815b47a7935567887"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/calibrate-solo-performance.mjs",
+      "bytes": 4773,
+      "sha256": "e8a6d45e8cc2a04d65537f2bc0a6d0d8df18caec2766de4cefb9a153ec6bc816"
+    },
+    {
+      "path": "scripts/vendor/devtools-benchmark.mjs",
+      "bytes": 2739,
+      "sha256": "dc39973cdbf82704a3d623dd57d037ea501eb5761596c66e27f301c9e860af6b"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 58150,
+      "sha256": "7db5478c4c4c921c6bf2fff36c3d3b93d87147bcdf2eed796fcf61bbff05bcfe"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 24877,
+      "sha256": "556ac41f48b67c776a46dd899f56ada6f7c832d4eb3e74ac9cf9a75762feb6a6"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-cadence.mjs",
+      "bytes": 7999,
+      "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+    },
+    {
+      "path": "scripts/solo-qualification-observation.mjs",
+      "bytes": 14584,
+      "sha256": "0195f26910e35c68f6dc29e472b84b151b9910f2afd8ce9183ed5ef577d21a7b"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-replay.mjs",
+      "bytes": 1260,
+      "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+    },
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "bytes": 17343,
+      "sha256": "3a631883304de44fbb6c54f088d5a79108495e297c5231e4bee76faf38f363d6"
+    },
+    {
+      "path": "scripts/solo-diagnostics-analysis.mjs",
+      "bytes": 17343,
+      "sha256": "78e021e5751d90e65293d496b577104f2ed16cde685caaadc09d1becccb7fa9f"
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "bytes": 19115,
+      "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-identity.mjs",
+      "bytes": 1866,
+      "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 52196,
+      "sha256": "f9514d7324409bf4c99d1fad9a808aeb597e908f1cc3426f0e322f91696d08c6"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 12875,
+      "sha256": "3bfdf145d2ea6eb4e81eb2394c9ac79ec56b201ab8b24d2bfd6345142af569d1"
+    },
+    {
+      "path": "scripts/solo-qualification-cpu-profile.mjs",
+      "bytes": 3270,
+      "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+    },
+    {
+      "path": "scripts/solo-remote-supplemental.mjs",
+      "bytes": 15895,
+      "sha256": "a476a7db0f056111a0b579f000ce18eb19e87001fc2bdbf8f831460621eb3234"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22428,
+      "sha256": "f6d6187792c5b64e3b36a51a2731b3ae34987018c2220d3f43b055fb28db0691"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    }
+  ],
+  "scope": "One candidate-only exact3ad causal JavaScript CPU profile. Original cold mission, public route and controls. Fixed retained2.46 stress rate is not calibrated on this host. No timeline trace, screenshots, heap samples, physical/GPU/thermal or timing qualification. Baseline source identity checked by common harness; no baseline browser row or baseline artifact acquisition is required.",
+  "deadlines": {
+    "scenarioMs": 240000,
+    "commandMs": 480000,
+    "helperMinutes": 75,
+    "outerSeconds": 4620,
+    "stepMinutes": 78,
+    "jobMinutes": 130,
+    "declarationMinutes": 5
+  },
+  "resources": {
+    "aggregateRSSBytes": 6442450944,
+    "commandOutputBytes": 4194304,
+    "rowEvidenceBytes": 134217728,
+    "jobEvidenceBytes": 268435456,
+    "profileBytes": 67108864,
+    "minimumFreeBytes": 1073741824,
+    "ownership": "Common immutable process birth identity, bounded owned cleanup and per-stage archive/source/CSP admission; no independent machine-wide kills."
+  }
+}

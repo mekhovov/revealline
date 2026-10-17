@@ -481,7 +481,9 @@ async function main() {
                         'SoloHostedWorkerConfirmationPlanV1',
                       ].includes(plan.format)
                     ? 'worker-diagnostic'
-                    : null;
+                    : plan.format === 'SoloHostedCpuProfilePlanV1'
+                      ? 'cpu-profile'
+                      : null;
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
@@ -494,6 +496,7 @@ async function main() {
         'raster',
         'worker-diagnostic',
         'supplemental',
+        'cpu-profile',
       ].includes(extension) ||
       (extension === 'offline' && Boolean(plan.offline.gameplay));
   if (extension) {
@@ -508,6 +511,7 @@ async function main() {
         raster: 'validateRasterPlan',
         'worker-diagnostic': 'validateWorkerDiagnosticPlan',
         supplemental: 'validateSupplementalPlan',
+        'cpu-profile': 'validateCpuProfilePlan',
       }[extension]
     ](plan);
   }
@@ -533,7 +537,9 @@ async function main() {
                       : 'SoloHostedWorkerDiagnosticCohortV1'
                     : extension === 'supplemental'
                       ? 'SoloHostedSupplementalPreflightV1'
-                      : 'SoloHostedCorrectness.v1',
+                      : extension === 'cpu-profile'
+                        ? 'SoloHostedCpuProfileCohortV1'
+                        : 'SoloHostedCorrectness.v1',
     status: 'failed',
     performanceExclusion: ['sustained', 'demo-active'].includes(extension)
       ? plan.performanceExclusion
@@ -1027,6 +1033,7 @@ async function main() {
           'raster',
           'worker-diagnostic',
           'supplemental',
+          'cpu-profile',
         ].includes(extension) ||
         (extension === 'offline' && Boolean(plan.offline.gameplay))
       )
@@ -1045,6 +1052,7 @@ async function main() {
             raster: 'prepareRasterMode',
             'worker-diagnostic': 'prepareWorkerDiagnosticMode',
             supplemental: 'prepareSupplementalMode',
+            'cpu-profile': 'prepareCpuProfileMode',
           }[extension]
         ](context);
       context.modeState = modeState;
@@ -1112,6 +1120,7 @@ async function main() {
               raster: 'runRasterRow',
               'worker-diagnostic': 'runWorkerDiagnosticRow',
               supplemental: 'runSupplementalRow',
+              'cpu-profile': 'runCpuProfileRow',
             }[extension]
           ](context, row, dir, tmp);
         } else {
