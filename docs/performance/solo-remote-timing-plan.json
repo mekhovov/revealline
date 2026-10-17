@@ -1,19 +1,25 @@
 {
   "format": "SoloHostedTimingManifestV1",
-  "cohort": "linux-latest-cold-warm-sentry-long-rail-v1",
+  "cohort": "linux-timing-3adcd537-pending-release",
   "phase": "cold-first30",
   "repository": "mekhovov/revealline",
   "node": "22.13.1",
   "playwright": "1.62.1",
   "candidate": {
-    "revision": "UNBOUND_LATEST_SOURCE",
-    "tree": "UNBOUND",
-    "run": null,
-    "artifact": null,
-    "outer": null,
-    "inner": null,
-    "manifestSHA256": null,
-    "producer": "Pending exact final title/adaptive Demo/menu preparation production artifact; never substitute2ec/d569 or a rebuilt candidate."
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
   },
   "baseline": {
     "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
@@ -211,16 +217,16 @@
     }
   ],
   "phaseOrder": ["cold-first30", "warm-first30", "sentry", "long-rail"],
-  "latestSourceRevision": "UNBOUND_LATEST_SOURCE",
-  "latestRuntimeRevision": "UNBOUND_LATEST_RUNTIME",
+  "latestSourceRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+  "latestRuntimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
   "release": {
     "format": "SoloHostedTimingReleaseV1",
     "status": "pending-latest-artifact-first8-and-reviewed-phase-release",
     "phase": "cold-first30",
     "previousPhase": "latest-first8",
-    "candidateRevision": "UNBOUND_LATEST_SOURCE",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
     "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-    "latestRuntimeRevision": "UNBOUND_LATEST_RUNTIME",
+    "latestRuntimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
     "noUnclosedOwners": false,
     "allPriorPlannedJobsClosed": false,
     "priorProofInspected": false,
@@ -272,7 +278,7 @@
     {
       "path": "scripts/solo-remote-sustained.mjs",
       "bytes": 34629,
-      "sha256": "17f7d84a294d6cbd7866bb527cf6ff731912480faade33a0f2acc2df9c50f3e4"
+      "sha256": "74009ba6e142c9e8ad7641c62d33db0c7feac844778dbc9b4b833f929797aed7"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -287,5 +293,14 @@
     "recipeAuthoritySHA256": "fe176a02707c8b09c46ad290d8d20c99f6dd71d22d9c34ceacf399e1b9b8cd5e",
     "lastRuntimeBoundaryAtDesign": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
     "binding": "Actual final package source/runtime identities and latest-first8 full readback are pending; parent reviewed release required. No historic2ec/d569 artifact substitution."
+  },
+  "bindingScope": {
+    "status": "metadata-and-git-source-bound-release-held",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "candidateArtifact": 12082915872,
+    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
+    "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
+    "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
   }
 }

@@ -24,7 +24,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const manifest = JSON.parse(
   await readFile(new URL('../docs/performance/solo-remote-sustained-plan.json', import.meta.url)),
 );
-const candidate = '2ec605eb76e38f9c9a3e21b7fa82dd80c580c457';
+const candidate = '3adcd53792043ef02459e86168c6b33a66d6ef00';
 const baseline = 'b11745223861c3973ad4bf440cc536198b8e0371';
 const clone = (x) => structuredClone(x);
 function admitted(phase = 'soak') {

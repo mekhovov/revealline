@@ -8,7 +8,7 @@ import {
 } from './solo-offline-gameplay.mjs';
 
 const BASE = 'b11745223861c3973ad4bf440cc536198b8e0371';
-const CANDIDATE = '2ec605eb76e38f9c9a3e21b7fa82dd80c580c457';
+const CANDIDATE = '3adcd53792043ef02459e86168c6b33a66d6ef00';
 const MiB = 1024 ** 2;
 const read = async (path) => JSON.parse(await readFile(path, 'utf8'));
 const save = (path, value) =>

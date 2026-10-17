@@ -1,6 +1,6 @@
 {
   "format": "SoloHostedDemoActivePlanV1",
-  "cohort": "linux-demo-active30-three-candidate-unbound",
+  "cohort": "linux-demo-active-3adcd537-pending-release",
   "repository": "mekhovov/revealline",
   "node": "22.13.1",
   "playwright": "1.62.1",
@@ -38,14 +38,20 @@
     }
   ],
   "candidate": {
-    "revision": null,
-    "tree": null,
-    "run": null,
-    "artifact": null,
-    "outer": null,
-    "inner": null,
-    "manifestSHA256": null,
-    "producer": null
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
   },
   "baseline": {
     "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
@@ -103,7 +109,7 @@
       "application": "CPU stress does not reproduce device GPU, memory or thermal conditions; this CPU1 correctness cohort is not physical-device qualification."
     }
   ],
-  "status": "cache-only-pending-current-artifact-first8-and-peer-review",
+  "status": "bound-3ad-metadata-pending-full-remote-proof-and-reviewed-release",
   "scope": "Scoped active Demo rAF-work/cadence only; full application-cost and instrumentation overhead unqualified. Common process/resource supervisor remains part of this hosted environment.",
   "rowEvidenceBytes": 33554432,
   "demo": {
@@ -170,7 +176,7 @@
         "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
       }
     ],
-    "bindingRequired": "Recompute every source asset, expected clip and manifest module projection from exact new package. Historical values are a prospective unchanged-identity premise, not an accepted source binding.",
+    "bindingRequired": "Exact3ad Git source catalog/replay bytes pinned; remote full package admission must compare these assets to selected inner-manifest members and served bytes before observation. No local large-archive readback or native result is claimed.",
     "watchingMs": 30000,
     "deadlineSeconds": 240,
     "viewport": {
@@ -205,7 +211,7 @@
   "setupTimeoutMs": 2400000,
   "release": {
     "status": "pending",
-    "candidateRevision": null,
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
     "latestFirst8Passed": false,
     "affectedDemoCorrectnessClosed": false,
     "noConcurrentJobLocalWork": false,
@@ -254,5 +260,14 @@
       "sha256": "7082f727692354b48802d718ccdaa97e0e823634605a5bcd87023ffced7883a8"
     },
     "disposition": "Historical failures/contamination and any unexecuted replacements remain untouched; no old-condition completion credit."
+  },
+  "bindingScope": {
+    "status": "metadata-and-git-source-bound-release-held",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "candidateArtifact": 12082915872,
+    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
+    "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
+    "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
   }
 }

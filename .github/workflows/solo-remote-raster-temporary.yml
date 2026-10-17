@@ -54,7 +54,7 @@ jobs:
       - timeout-minutes: 2
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: UNBOUND_EXACT_CANDIDATE_SOURCE
+          ref: 3adcd53792043ef02459e86168c6b33a66d6ef00
           path: candidate
           persist-credentials: false
           fetch-depth: 1
