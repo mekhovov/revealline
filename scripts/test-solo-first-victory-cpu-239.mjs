@@ -26,6 +26,29 @@ const manifest = JSON.parse(await read(path)),
   bytes = await read(manifest.recipe.path),
   recipe = JSON.parse(bytes),
   plan = () => bindCpuProfileJob(manifest);
+const executionWitnessPath =
+  'docs/performance/fixtures/solo-first-victory-cpu/92ff-execution-source.json';
+function checkedExecutionWitness(bytes, declarationBytes, workflowBytes) {
+  assert.equal(sha(bytes), 'd4dca2543cc2eddb9be19e2dd0460cbc673f0f3d1c25c5ea4e997a50430151a7');
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.format, 'SoloFirstVictoryCpu92ffExecutionSourceV1');
+  assert.equal(witness.head, '92ff7ef800e542617b4fc3efad96bd07ce6cbecb');
+  assert.equal(witness.tree, '0cbdde8dbe125e0194d6e23df0b2da288f6c751e');
+  assert.equal(witness.run, 39054542080);
+  assert.equal(witness.conclusion, 'failure');
+  const refs = new Map(witness.records.map((ref) => [ref.path, ref]));
+  assert.equal(refs.size, witness.records.length);
+  for (const [name, content] of [
+    [path, declarationBytes],
+    [workflowPath, workflowBytes],
+  ]) {
+    const ref = refs.get(name);
+    assert(ref, name);
+    assert.equal(content.length, ref.bytes, name);
+    assert.equal(sha(content), ref.sha256, name);
+  }
+  return refs;
+}
 const args = () =>
   cpuProfileArguments(
     { plan: plan(), here: '/tools/scripts', modeState: { recipePath: '/owned/scenario.json' } },
@@ -157,7 +180,7 @@ test('239 source assessment keeps failed or partial profile observations failed'
     actions: [
       {
         type: 'authored-next-route',
-        status: 'pass',
+        status: 'passed-public-route',
         protocol: NEXT_ROUTE_PROTOCOL,
         mission: 'first-return',
         unsettled: 0,
@@ -180,6 +203,7 @@ test('239 source assessment keeps failed or partial profile observations failed'
   for (const change of [
     (r) => (r.sourceRevision = 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'),
     (r) => (r.scenarioStatus = 'fail'),
+    (r) => (r.actions[0].status = 'pass'),
     (r) => (r.replay.scope = 'failed-scenario-partial'),
     (r) => (r.actions[0].unsettled = 1),
     (r) => (r.cpuProfile.stopReason = 'deadline'),
@@ -197,7 +221,7 @@ test('239 source assessment keeps failed or partial profile observations failed'
   );
 });
 
-test('new workflow freezes current files and exact four-condition before239 edge', async () => {
+test('executed workflow freezes exact92ff files and four-condition before239 edge', async () => {
   const text = (await read(workflowPath)).toString();
   const conditions = [
     'github.event.pull_request.number == 1544',
@@ -215,10 +239,16 @@ test('new workflow freezes current files and exact four-condition before239 edge
     ...text.slice(text.indexOf('          path: tools')).matchAll(/^            \/([^\n]+)$/gm),
   ].map((m) => m[1]);
   assert.equal(new Set(sparse).size, sparse.length);
+  const historical = checkedExecutionWitness(
+    await read(executionWitnessPath),
+    await read(path),
+    await read(workflowPath),
+  );
   for (const ref of [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools]) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(sha(b), ref.sha256, ref.path);
+    const original = historical.get(ref.path);
+    assert(original, ref.path);
+    assert.equal(original.bytes, ref.bytes, ref.path);
+    assert.equal(original.sha256, ref.sha256, ref.path);
     assert(sparse.includes(ref.path), ref.path);
   }
   for (const token of [
@@ -253,4 +283,17 @@ test('standalone actual module binds the239 profile without a browser', async (t
   assert.equal(p.manifestInput.bytes, (await read(path)).length);
   delete p.manifestInput;
   assert.deepEqual(p, plan());
+});
+
+test('executed239 release rejects changed witness, declaration and workflow independently', async () => {
+  const w = await read(executionWitnessPath),
+    m = await read(path),
+    f = await read(workflowPath);
+  checkedExecutionWitness(w, m, f);
+  for (const inputs of [
+    [Buffer.concat([w, Buffer.from(' ')]), m, f],
+    [w, Buffer.concat([m, Buffer.from(' ')]), f],
+    [w, m, Buffer.concat([f, Buffer.from(' ')])],
+  ])
+    assert.throws(() => checkedExecutionWitness(...inputs));
 });
