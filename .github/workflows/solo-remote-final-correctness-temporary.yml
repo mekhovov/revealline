@@ -1,10 +1,12 @@
-name: Temporary Solo c696 Linux correctness
+name: Temporary Solo e1cc Linux correctness
 
 on:
   pull_request:
     paths:
       - 'scripts/test-solo-final-correctness.mjs'
       - 'scripts/test-solo-c696-correctness.mjs'
+      - 'scripts/test-solo-e1cc-correctness.mjs'
+      - 'docs/performance/solo-remote-e1cc-correctness-plan.json'
       - '.github/workflows/solo-remote-final-correctness-temporary.yml'
       - 'scripts/run-solo-remote-correctness.mjs'
       - 'scripts/test-solo-current-native-wave.mjs'
@@ -23,13 +25,13 @@ permissions:
   actions: read
 
 concurrency:
-  group: solo-linux-c696-correctness-${{ github.event.pull_request.number }}
+  group: solo-linux-e1cc-correctness-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 
 jobs:
   correctness:
     # One reviewed package-bound successor; later pushes cannot repeat it.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'
     runs-on: ubuntu-24.04
     timeout-minutes: 145
     env:
@@ -45,7 +47,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-c696-correctness" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-e1cc-correctness" >> "$GITHUB_ENV"
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         timeout-minutes: 3
         with:
@@ -58,9 +60,12 @@ jobs:
             /.github/workflows/solo-remote-final-correctness-temporary.yml
             /docs/performance/fixtures/solo-final-wave/a7e-correctness-workflow.yml
             /docs/performance/fixtures/solo-final-wave/a7e-execution-source.json
+            /docs/performance/fixtures/solo-remote-correctness/0feb-c696-source.json
+            /docs/performance/fixtures/solo-remote-correctness/0feb-c696-workflow.yml
             /docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture
             /docs/performance/solo-remote-c696-correctness-plan.json
             /docs/performance/solo-remote-correctness-plan.json
+            /docs/performance/solo-remote-e1cc-correctness-plan.json
             /docs/performance/solo-remote-final-correctness-plan.json
             /game/build-config.json
             /game/campaign-contexts.mjs
@@ -237,6 +242,7 @@ jobs:
             /scripts/soundtrack-distribution.mjs
             /scripts/test-solo-build-worker-closure.mjs
             /scripts/test-solo-c696-correctness.mjs
+            /scripts/test-solo-e1cc-correctness.mjs
             /scripts/test-solo-final-correctness.mjs
             /scripts/test-solo-remote-baseline.mjs
             /scripts/test-solo-remote-correctness.mjs
@@ -254,7 +260,7 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         timeout-minutes: 3
         with:
-          ref: c696af41857840359ae473558b90682f3d71f2db
+          ref: e1cc5dd7656bab349715cd1c3ce6e9f783508c17
           path: candidate
           persist-credentials: false
           fetch-depth: 1
@@ -287,13 +293,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test scripts/test-solo-c696-correctness.mjs scripts/test-solo-final-correctness.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test scripts/test-solo-e1cc-correctness.mjs scripts/test-solo-c696-correctness.mjs scripts/test-solo-final-correctness.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
       - name: Run the eight fixed serial correctness rows
         timeout-minutes: 79
         working-directory: tools
         env:
           GH_TOKEN: ${{ github.token }}
-        run: timeout --signal=TERM --kill-after=30s 78m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-c696-correctness-plan.json "$OUTPUT"
+        run: timeout --signal=TERM --kill-after=30s 78m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-e1cc-correctness-plan.json "$OUTPUT"
       - name: Describe bounded setup evidence without claiming truncated output complete
         if: ${{ always() }}
         timeout-minutes: 2
@@ -323,9 +329,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-c696-correctness-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-e1cc-correctness-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-c696-correctness/evidence/
+            ${{ runner.temp }}/solo-linux-e1cc-correctness/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6

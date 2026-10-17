@@ -121,7 +121,20 @@ export const GEOMETRIC_NEXT_SOURCE = Object.freeze({
   runtime: 'c696af41857840359ae473558b90682f3d71f2db',
   recipeHash: '0fd24c7db64be144da0d05b57ae26289b2a676a4f90df547d918c6cc13cef1a8',
 });
-const geometricNextPlan = (plan) => plan.sourceCohort === GEOMETRIC_NEXT_SOURCE.name;
+export const GEOMETRIC_NEXT_FINAL_SOURCE = Object.freeze({
+  ...GEOMETRIC_NEXT_SOURCE,
+  name: 'next-candidatee1cc-geometric-v1',
+  candidate: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+  candidateTree: '58f19392e25384620d896098fce8616b538e318d',
+  runtime: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+});
+const geometricNextSource = (plan) =>
+  plan.sourceCohort === GEOMETRIC_NEXT_SOURCE.name
+    ? GEOMETRIC_NEXT_SOURCE
+    : plan.sourceCohort === GEOMETRIC_NEXT_FINAL_SOURCE.name
+      ? GEOMETRIC_NEXT_FINAL_SOURCE
+      : null;
+const geometricNextPlan = (plan) => geometricNextSource(plan) !== null;
 const finalSoakCohort = 'soak-main8b-candidatea6e';
 const anchoredSoakHash = '079d4dd76fbd914ddd4da7311f8e6cee4a0ff4fc3bc951842b2921c94c53b8ff';
 const finalLifecycle = Object.freeze({
@@ -147,7 +160,7 @@ function selectedSustainedSource(plan) {
   if (plan.sourceCohort === undefined) return null;
   if (geometricNextPlan(plan)) {
     assert.equal(plan.phase, 'next');
-    return GEOMETRIC_NEXT_SOURCE;
+    return geometricNextSource(plan);
   }
   if (plan.sourceCohort === finalSoakCohort) assert.equal(plan.phase, 'soak');
   else assert(finalLifecyclePlan(plan), 'Unreviewed final lifecycle phase/source');
@@ -235,7 +248,7 @@ const diagnosticComparison = (plan) => plan.release?.status === 'reviewed-diagno
 function validateDiagnosticComparison(release, candidate = source.candidate) {
   assert.equal(
     release.scope,
-    release.sourceCohort === GEOMETRIC_NEXT_SOURCE.name
+    geometricNextPlan(release)
       ? 'independent-candidate-transition-diagnostics'
       : 'independent-comparison-diagnostics',
   );
@@ -280,7 +293,12 @@ function validateSourceCohort(plan, selected) {
     assert.equal(plan.baseline.scope, 'source-only-no-observation');
     assert.equal(plan.candidateOnly, true);
     assert.equal(plan.release.scope, 'independent-candidate-transition-diagnostics');
-    assert.equal(plan.release.onceOnlyBefore, '0febd334619731adc26dfa3df78aab02991563af');
+    assert.equal(
+      plan.release.onceOnlyBefore,
+      geometricNextSource(plan) === GEOMETRIC_NEXT_FINAL_SOURCE
+        ? GEOMETRIC_NEXT_FINAL_SOURCE.candidate
+        : '0febd334619731adc26dfa3df78aab02991563af',
+    );
     assert.equal(plan.nativeRouteProtocol, 'authored-next-geometric-v1');
     const identity = plan.candidate;
     assert(Number.isSafeInteger(identity.run) && identity.run > 0);
@@ -349,13 +367,43 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     assert(planHasHitchJournal(plan), 'Journal was not declared');
     const resumeReadiness =
       plan.format === 'SoloHostedReadinessPlanV1' &&
-      ['readiness-resume-candidate4bf', 'readiness-resume-candidatec696'].includes(
+      (['readiness-resume-candidate4bf', 'readiness-resume-candidatec696'].includes(
         plan.sourceCohort,
-      );
+      ) ||
+        ([
+          'readiness-geometry-corrected-package',
+          'readiness-preparation-row-candidatee1cc',
+        ].includes(plan.sourceCohort) &&
+          ['warm-resume', 'saved-resume'].includes(plan.phase)));
     const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
     if (plan.format === 'SoloHostedReadinessPlanV1') {
       assert.equal(plan.performanceExclusion, true);
-      if (
+      if (plan.sourceCohort === 'readiness-preparation-row-candidatee1cc') {
+        const { preparationReadinessSelection } = await import('./solo-remote-readiness.mjs');
+        const selected = preparationReadinessSelection(plan);
+        assert.equal(plan.candidate.revision, selected.source.revision);
+        assert.equal(plan.runtimeRevision, selected.source.revision);
+        assert.equal(plan.candidate.tree, selected.source.tree);
+        assert.deepEqual(plan.fixture, selected.fixture);
+        assert.equal(plan.protocol.name, selected.protocol);
+        assert.equal(raw.readinessPilot.protocol, selected.protocol);
+        if (selected.geometry) {
+          assert.equal(plan.protocol.geometryObservation, 'phase-boundary-v1');
+          assert.equal(raw.readinessPilot.geometryObservation, 'phase-boundary-v1');
+        } else if (selected.cancelBoundary) {
+          assert.equal(plan.protocol.cancelBoundaryObservation, 'post-command-v3');
+          assert.equal(raw.readinessPilot.cancelBoundaryObservation, 'post-command-v3');
+        }
+      } else if (plan.sourceCohort === 'readiness-geometry-corrected-package') {
+        const { geometryReadinessSelection } = await import('./solo-remote-readiness.mjs');
+        const selected = geometryReadinessSelection(plan);
+        assert.equal(plan.candidate.revision, selected.source.revision);
+        assert.equal(plan.runtimeRevision, selected.source.revision);
+        assert.equal(plan.candidate.tree, selected.source.tree);
+        assert.deepEqual(plan.fixture, selected.fixture);
+        assert.equal(plan.protocol.geometryObservation, 'phase-boundary-v1');
+        assert.equal(raw.readinessPilot.geometryObservation, 'phase-boundary-v1');
+      } else if (
         ['readiness-selected-font-candidate0feb', 'readiness-public-dpr-candidate0feb'].includes(
           plan.sourceCohort,
         )
@@ -1765,7 +1813,9 @@ export async function geometricNextAssessment(plan, row, raw, command, browserVe
     status: !protocolFailure && complete ? inherited.status : 'failed',
     candidateOnly: true,
     scope:
-      'Exactly eleven authored missions and ten manual Next transitions on c696. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, later-layout or native-memory qualification.',
+      geometricNextSource(plan) === GEOMETRIC_NEXT_FINAL_SOURCE
+        ? 'Exactly eleven authored missions and ten manual Next transitions on e1cc. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+        : 'Exactly eleven authored missions and ten manual Next transitions on c696. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, later-layout or native-memory qualification.',
   };
 }
 

@@ -95,7 +95,11 @@ test('closed or background home does no drawing and reduced motion is a static u
   assert.equal(f.calls.length, count + 1);
   f.set({ body: f.body, recipe: f.recipe, image: f.image });
   f.view.update(0, { visible: true, reduced: true });
-  assert.equal(f.hiddenWrites(), 6, 'Returning exact artwork restores visible static presentation.');
+  assert.equal(
+    f.hiddenWrites(),
+    6,
+    'Returning exact artwork restores visible static presentation.',
+  );
   assert.equal(f.calls.length, count + 2);
 });
 

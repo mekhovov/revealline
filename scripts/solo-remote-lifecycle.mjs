@@ -13,6 +13,60 @@ export const LIFECYCLE_SOURCE = Object.freeze({
   tree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
   runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
 });
+export const LIFECYCLE_E1CC_SOURCE = Object.freeze({
+  revision: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+  tree: '58f19392e25384620d896098fce8616b538e318d',
+  runtime: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+});
+// Exact successful118 metadata, independently read back twice. Full package,
+// source and CSP verification is still required remotely before native observation.
+export const LIFECYCLE_E1CC_PACKAGE = Object.freeze({
+  revision: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+  tree: '58f19392e25384620d896098fce8616b538e318d',
+  run: 39037874955,
+  artifact: 12104590541,
+  outer: {
+    bytes: 1091965213,
+    sha256: 'fb85094a61cdc329ccf8a1488b6e3ca1043ef5f249a6b33729bb04141336af1e',
+  },
+  inner: {
+    bytes: 1073790972,
+    sha256: '6c8bbb6aafe3f9d55e2fb445d5846a5e9d02ebd648c4e630889743bf76ec421e',
+  },
+  manifestSHA256: '23f555db20036838cc1601f2cebf8f1a75eb62fb0c6cf36f1e1988035b3e1b64',
+  producer:
+    'Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row.',
+});
+export function lifecycleSourceFor(plan = {}) {
+  if (plan.sourceCohort === undefined) return LIFECYCLE_SOURCE;
+  assert.equal(plan.sourceCohort, 'lifecycle-candidatee1cc-v1');
+  return LIFECYCLE_E1CC_SOURCE;
+}
+export const LIFECYCLE_PREPARATION_RETENTION = 'visible-busy-shared-font-v1';
+export function lifecycleCaseFor(plan = {}) {
+  const source = lifecycleSourceFor(plan);
+  const hidden =
+    plan.job === 'chromium-preparation-hidden' || plan.job?.mode === 'preparation-hidden';
+  const result = hidden
+    ? { ...lifecycleCase(), id: 'chromium-preparation-hidden-r1', mode: 'preparation-hidden' }
+    : lifecycleCase();
+  if (hidden) {
+    assert.equal(source, LIFECYCLE_E1CC_SOURCE);
+    assert.equal(plan.runRetentionPolicy, LIFECYCLE_RUN_RETENTION_POLICY);
+    assert.equal(plan.preparationRetention, LIFECYCLE_PREPARATION_RETENTION);
+  } else assert.equal(plan.preparationRetention, undefined);
+  if (plan.job !== undefined) {
+    if (typeof plan.job === 'string')
+      assert.equal(plan.job, hidden ? 'chromium-preparation-hidden' : 'chromium-background');
+    else assert.deepEqual(plan.job, result);
+  }
+  return result;
+}
+function lifecycleJobs(plan) {
+  return lifecycleSourceFor(plan) === LIFECYCLE_E1CC_SOURCE
+    ? ['chromium-background', 'chromium-preparation-hidden']
+    : ['chromium-background'];
+}
 export const LIFECYCLE_FIXTURE = Object.freeze({
   path: 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
   bytes: 6387,
@@ -55,7 +109,13 @@ export function lifecycleCase() {
     viewport: { width: 1280, height: 800 },
   };
 }
-export function assertLifecycleCandidate(candidate) {
+export function assertLifecycleCandidate(candidate, plan = {}) {
+  const source = lifecycleSourceFor(plan);
+  if (source === LIFECYCLE_E1CC_SOURCE) {
+    assert(LIFECYCLE_E1CC_PACKAGE, 'Exact118 lifecycle package is unresolved');
+    assert.deepEqual(candidate, LIFECYCLE_E1CC_PACKAGE);
+    return;
+  }
   assert.equal(candidate.revision, LIFECYCLE_SOURCE.revision);
   assert.equal(candidate.tree, LIFECYCLE_SOURCE.tree);
   assert.equal(candidate.run, 39008793814);
@@ -77,8 +137,14 @@ export function validateLifecyclePlan(plan) {
   assert.equal(plan.format, 'SoloHostedLifecyclePlanV1');
   assert.equal(plan.status, 'reviewed-lifecycle-diagnostic-only');
   assert.equal(plan.repository, 'mekhovov/revealline');
-  assertLifecycleCandidate(plan.candidate);
-  assert.equal(plan.runtimeRevision, LIFECYCLE_SOURCE.runtime);
+  const source = lifecycleSourceFor(plan);
+  const job = lifecycleCaseFor(plan);
+  assertLifecycleCandidate(plan.candidate, plan);
+  assert.equal(plan.runtimeRevision, source.runtime);
+  if (source === LIFECYCLE_E1CC_SOURCE) {
+    assert.equal(plan.runRetentionPolicy, LIFECYCLE_RUN_RETENTION_POLICY);
+    assert.equal(plan.release.onceOnlyBefore, source.revision);
+  }
   assert.deepEqual(plan.baseline, {
     revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
     tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
@@ -98,10 +164,13 @@ export function validateLifecyclePlan(plan) {
     assert.equal(plan.runRetentionPolicy, LIFECYCLE_RUN_RETENTION_POLICY);
   assert.deepEqual(plan.fixture, LIFECYCLE_FIXTURE);
   assert.deepEqual(plan.predecessor, LIFECYCLE_PREDECESSOR);
-  assert.equal(plan.job, 'chromium-background');
+  assert.equal(
+    plan.job,
+    job.mode === 'preparation-hidden' ? 'chromium-preparation-hidden' : 'chromium-background',
+  );
   assert.deepEqual(plan.release, {
     scope: 'real-native-background-correctness-only',
-    candidateRevision: LIFECYCLE_SOURCE.revision,
+    candidateRevision: source.revision,
     firstEightAllCorrectnessPassed: false,
     performanceQualification: 'excluded',
     physicalQualification: 'unobserved',
@@ -114,7 +183,7 @@ export function validateLifecyclePlan(plan) {
   assert.match(plan.release.onceOnlyBefore, /^[a-f0-9]{40}$/);
   assert.deepEqual(plan.rows, [
     {
-      id: lifecycleCase().id,
+      id: job.id,
       source: 'candidate',
       kind: 'native-lifecycle',
       engine: 'chromium',
@@ -152,19 +221,30 @@ export function validateLifecyclePlan(plan) {
     'solo-qualification-export.mjs',
   ])
     assert(plan.frozenTools.some((r) => r.path === 'scripts/' + name));
+  if (source === LIFECYCLE_E1CC_SOURCE)
+    for (const path of [
+      'scripts/solo-qualification-readiness.mjs',
+      'scripts/solo-qualification-replay-identity.mjs',
+    ])
+      assert(plan.frozenTools.some((ref) => ref.path === path));
   return plan;
 }
 export function bindLifecycleJob(manifest, job) {
   assert.equal(manifest.format, 'SoloHostedLifecycleManifestV1');
-  assert.deepEqual(manifest.jobs, ['chromium-background']);
-  assert.equal(job, 'chromium-background');
+  const jobs = lifecycleJobs(manifest);
+  assert.deepEqual(manifest.jobs, jobs);
+  assert(jobs.includes(job));
+  assert.equal(manifest.preparationRetention, undefined);
   const plan = structuredClone(manifest);
   delete plan.jobs;
   plan.format = 'SoloHostedLifecyclePlanV1';
   plan.job = job;
+  if (job === 'chromium-preparation-hidden')
+    plan.preparationRetention = LIFECYCLE_PREPARATION_RETENTION;
+  const selected = lifecycleCaseFor(plan);
   plan.rows = [
     {
-      id: lifecycleCase().id,
+      id: selected.id,
       source: 'candidate',
       kind: 'native-lifecycle',
       engine: 'chromium',
@@ -176,9 +256,10 @@ export function bindLifecycleJob(manifest, job) {
   return validateLifecyclePlan(plan);
 }
 export function lifecycleMatrix(manifest) {
-  bindLifecycleJob(manifest, 'chromium-background');
+  const jobs = lifecycleJobs(manifest);
+  for (const job of jobs) bindLifecycleJob(manifest, job);
   return {
-    include: [{ job: 'chromium-background', jobMinutes: 100, stepMinutes: 58, outerSeconds: 3420 }],
+    include: jobs.map((job) => ({ job, jobMinutes: 100, stepMinutes: 58, outerSeconds: 3420 })),
   };
 }
 export function assertSamePaused(before, after) {
@@ -369,6 +450,11 @@ export async function lifecycleAssessment(plan, row, raw, command) {
   const { PUBLIC_SECURITY_HEADERS } = await import('./game-cli.mjs');
   let failure = null;
   try {
+    const source = lifecycleSourceFor(plan);
+    assert.equal(raw.sourceCohort, plan.sourceCohort);
+    assert.equal(raw.preparationRetention, plan.preparationRetention);
+    const selected = lifecycleCaseFor(plan);
+    assert.deepEqual(raw.job, selected);
     assert.equal(command.status, 'closed');
     assert(!command.forcedCleanup && !command.cleanupUnconfirmed && !command.violation);
     assert.deepEqual(command.survivors, []);
@@ -376,9 +462,8 @@ export async function lifecycleAssessment(plan, row, raw, command) {
     assert.equal(command.exitCode, 0);
     assert.equal(raw.status, 'pass');
     assert.equal(raw.format, 'SoloHostedNativeLifecycleV1');
-    assert.deepEqual(raw.job, lifecycleCase());
-    assert.equal(row.id, lifecycleCase().id);
-    assert.equal(raw.runtimeRevision, LIFECYCLE_SOURCE.runtime);
+    assert.equal(row.id, selected.id);
+    assert.equal(raw.runtimeRevision, source.runtime);
     assert.deepEqual(raw.protocol, LIFECYCLE_PROTOCOL);
     assert.equal(raw.runRetentionPolicy, plan.runRetentionPolicy);
     assert.equal(raw.observedBrowserClosed, true);
@@ -404,11 +489,12 @@ export async function lifecycleAssessment(plan, row, raw, command) {
       'crashed',
       'unexpectedPageClose',
       'spawnFailure',
+      'fontCleanupFailure',
     ])
       assert(!raw[key], key);
-    assert.equal(raw.buildIdentity.sourceRevision, LIFECYCLE_SOURCE.revision);
-    assert.equal(raw.artifact.sourceRevision, LIFECYCLE_SOURCE.revision);
-    assert.equal(raw.artifact.sourceTree, LIFECYCLE_SOURCE.tree);
+    assert.equal(raw.buildIdentity.sourceRevision, source.revision);
+    assert.equal(raw.artifact.sourceRevision, source.revision);
+    assert.equal(raw.artifact.sourceTree, source.tree);
     assert.equal(raw.artifact.manifestSHA256, plan.candidate.manifestSHA256);
     assert.deepEqual(raw.artifact.archiveIdentity, plan.candidate.inner);
     assert.equal(raw.buildIdentity.sha256, raw.artifact.buildInfoSHA256);
@@ -435,7 +521,10 @@ export async function lifecycleAssessment(plan, row, raw, command) {
     });
     assert.deepEqual(raw.nativeReplay.pageErrors, []);
     assert.deepEqual(raw.nativeReplay.failedRequests, []);
-    assertLifecycleProof(raw);
+    if (selected.mode === 'preparation-hidden') {
+      const { assertHiddenPreparationProof } = await import('./solo-qualification-readiness.mjs');
+      assertHiddenPreparationProof(raw);
+    } else assertLifecycleProof(raw);
     assertLifecycleReplay(raw);
   } catch (error) {
     failure = String(error.message);
@@ -497,11 +586,12 @@ export function lifecycleDisplayCommand(executables, command) {
 }
 export async function prepareLifecycleMode(ctx) {
   validateLifecyclePlan(ctx.plan);
+  const source = lifecycleSourceFor(ctx.plan);
   await verifyInputs(ctx);
   assert.equal(ctx.admitted.status, 'passed');
   const actual = ctx.admitted.artifacts.candidate;
-  assert.equal(actual.sourceRevision, LIFECYCLE_SOURCE.revision);
-  assert.equal(actual.sourceTree, LIFECYCLE_SOURCE.tree);
+  assert.equal(actual.sourceRevision, source.revision);
+  assert.equal(actual.sourceTree, source.tree);
   assert.equal(actual.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(actual.archiveIdentity, ctx.plan.candidate.inner);
   const executables = {};
@@ -528,6 +618,7 @@ export async function prepareLifecycleMode(ctx) {
   };
 }
 export async function runLifecycleRow(ctx, row, dir, tmp) {
+  const source = lifecycleSourceFor(ctx.plan);
   await verifyInputs(ctx);
   const { startProductionPreview } = await import(
     pathToFileURL(join(ctx.here, 'serve-production-preview.mjs'))
@@ -550,13 +641,17 @@ export async function runLifecycleRow(ctx, row, dir, tmp) {
     const bytes = Buffer.from(await response.arrayBuffer());
     assert(bytes.length < MiB);
     const build = JSON.parse(bytes);
-    assert.equal(build.sourceRevision, LIFECYCLE_SOURCE.revision);
+    assert.equal(build.sourceRevision, source.revision);
     for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS))
       assert.equal(response.headers.get(name), value);
     const execution = {
       format: 'SoloHostedLifecycleExecutionV1',
-      job: lifecycleCase(),
-      runtimeRevision: LIFECYCLE_SOURCE.runtime,
+      job: lifecycleCaseFor(ctx.plan),
+      ...(ctx.plan.sourceCohort ? { sourceCohort: ctx.plan.sourceCohort } : {}),
+      ...(ctx.plan.preparationRetention
+        ? { preparationRetention: ctx.plan.preparationRetention }
+        : {}),
+      runtimeRevision: source.runtime,
       protocol: LIFECYCLE_PROTOCOL,
       ...(ctx.plan.runRetentionPolicy ? { runRetentionPolicy: ctx.plan.runRetentionPolicy } : {}),
       artifact: {

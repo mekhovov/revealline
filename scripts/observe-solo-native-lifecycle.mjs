@@ -9,15 +9,21 @@ import { resolve, dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as wait } from 'node:timers/promises';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
+import {
+  createSelectedFontHold,
+  selectedFont,
+  assertSelectedFontTransport,
+  assertHiddenPreparationProof,
+} from './solo-qualification-readiness.mjs';
 import { readPublicQualificationReplay } from './solo-qualification-export.mjs';
 import { verifyNativeQualificationReplay } from './solo-qualification-native-replay.mjs';
 import {
   LIFECYCLE_PROTOCOL,
   LIFECYCLE_RUN_RETENTION_POLICY,
-  LIFECYCLE_SOURCE,
   LIFECYCLE_FIXTURE,
   LIFECYCLE_PREDECESSOR,
-  lifecycleCase,
+  lifecycleCaseFor,
+  lifecycleSourceFor,
   readLifecycleJSON,
   assertSamePaused,
   resumeBounds,
@@ -33,6 +39,13 @@ export function installLifecycleProbe(config, environment = globalThis) {
   if (policy !== undefined && policy !== 'retained-paused-run-with-visible-rejoin-v1')
     throw Error('Unknown lifecycle run retention policy');
   const retainRun = policy !== undefined;
+  const preparationPolicy = config?.preparationRetention;
+  if (
+    preparationPolicy !== undefined &&
+    (preparationPolicy !== 'visible-busy-shared-font-v1' || !retainRun)
+  )
+    throw Error('Unknown preparation retention policy');
+  const retainPreparation = preparationPolicy !== undefined;
   const documentRef = environment.document;
   let phaser,
     game,
@@ -48,6 +61,62 @@ export function installLifecycleProbe(config, environment = globalThis) {
     frames = [],
     phases = [];
   const dropped = { events: 0, phases: 0 };
+  const preparationDetailsValue = () => {
+    const target = documentRef.getElementById('flight-preparation-status');
+    const label = target?.querySelector('.operation-status-label')?.textContent ?? '';
+    const expectedLabel = environment.RevealLineI18n?.t('interface:gettingReadyGameplayIsPaused');
+    if (
+      typeof label !== 'string' ||
+      label.length > 512 ||
+      typeof expectedLabel !== 'string' ||
+      expectedLabel.length > 512
+    )
+      throw Error('Bounded localized preparation label unavailable');
+    const matchingFaces = [];
+    let inspected = 0;
+    if (!documentRef.fonts || typeof documentRef.fonts[Symbol.iterator] !== 'function')
+      throw Error('Native FontFaceSet inventory unavailable');
+    for (const face of documentRef.fonts) {
+      if (++inspected > 64) throw Error('FontFaceSet inventory bound exceeded');
+      const family =
+        typeof face.family === 'string' ? face.family.trim().replace(/^["']|["']$/g, '') : '';
+      if (family !== 'Field Kit Display' || face.weight !== '600') continue;
+      if (
+        matchingFaces.length >= 2 ||
+        !['unloaded', 'loading', 'loaded', 'error'].includes(face.status)
+      )
+        throw Error('Ambiguous native selected-font status');
+      matchingFaces.push({ family, weight: face.weight, status: face.status });
+    }
+    return {
+      status: 'observed',
+      label,
+      expectedLabel,
+      waitingLabelMatches: label === expectedLabel,
+      acceptedTheme: documentRef.documentElement?.dataset.interfaceTheme ?? null,
+      selectedTheme:
+        documentRef.getElementById('theme-card-dnipro-porcelain')?.getAttribute('aria-pressed') ===
+        'true',
+      openDialogs: documentRef.querySelectorAll('dialog[open]').length,
+      inspectedFaces: inspected,
+      matchingFaces,
+    };
+  };
+  const preparationDetails = () => {
+    try {
+      return preparationDetailsValue();
+    } catch (error) {
+      return {
+        status: 'unavailable',
+        failure: String(error?.message ?? error).slice(0, 256),
+        matchingFaces: [],
+        waitingLabelMatches: false,
+        selectedTheme: false,
+        acceptedTheme: null,
+        openDialogs: null,
+      };
+    }
+  };
   const read = (label, checkpoint = false) => {
     const scenes = game?.scene?.scenes ?? [],
       candidates = retainRun
@@ -67,7 +136,11 @@ export function installLifecycleProbe(config, environment = globalThis) {
     )
       identityFailure = true;
     const samePaint = !!retained && paint?.run === retained.run && scene === retained.scene,
-      allowReference = retained && !identityFailure && !paint?.run && phase === 'paused',
+      allowReference =
+        retained &&
+        !identityFailure &&
+        !paint?.run &&
+        (phase === 'paused' || (retainPreparation && phase === 'briefing')),
       run = paint?.run ?? (allowReference ? retained.run : null);
     if (run && !runIds.has(run)) runIds.set(run, nextRunId++);
     const result = {
@@ -94,6 +167,13 @@ export function installLifecycleProbe(config, environment = globalThis) {
             identityFailure,
           }
         : {}),
+      ...(retainPreparation
+        ? {
+            preparation:
+              documentRef.getElementById('flight-preparation-status')?.dataset.state ?? null,
+            preparationDetails: phase === 'running' ? null : preparationDetails(),
+          }
+        : {}),
       status: run?.status ?? null,
       lives: run?.lives ?? null,
       player: run
@@ -110,7 +190,9 @@ export function installLifecycleProbe(config, environment = globalThis) {
     if (checkpoint) {
       if (result.phase === 'running') throw Error('Checkpoint reads are pause-only');
       if (!run || !checkpointFn) throw Error('Retained run/checkpoint unavailable');
-      result.checkpoint = checkpointFn(run);
+      result.checkpoint = retainPreparation
+        ? structuredClone(checkpointFn(run))
+        : checkpointFn(run);
     }
     return result;
   };
@@ -178,6 +260,7 @@ export function installLifecycleProbe(config, environment = globalThis) {
     ...(retainRun
       ? {
           retainObservedRun: () => {
+            if (retainPreparation) throw Error('Preparation boundary requires retainPreparingRun');
             if (retained) throw Error('Only one lifecycle run may be retained');
             const scenes = game?.scene?.scenes ?? [],
               candidates =
@@ -197,6 +280,42 @@ export function installLifecycleProbe(config, environment = globalThis) {
           },
         }
       : {}),
+    ...(retainPreparation
+      ? {
+          retainPreparingRun: () => {
+            if (retained) throw Error('Only one lifecycle run may be retained');
+            const scenes = game?.scene?.scenes ?? [],
+              candidates =
+                scenes.length <= 64 ? scenes.filter((entry) => entry.lastPaint?.run) : [];
+            if (scenes.length > 64 || candidates.length > 1) identityFailure = true;
+            const scene = candidates[0],
+              phase = documentRef.body?.dataset.flightState;
+            if (
+              identityFailure ||
+              !scene ||
+              !['briefing', 'paused'].includes(phase) ||
+              documentRef.visibilityState !== 'visible' ||
+              !documentRef.hasFocus() ||
+              documentRef.querySelectorAll('dialog[open]').length !== 0 ||
+              documentRef.getElementById('flight-preparation-status')?.dataset.state !== 'busy' ||
+              scene.lastPaint.run.tick !== 0 ||
+              scene.lastPaint.run.level?.id !== 'first-return'
+            )
+              throw Error('Current visible busy initial board required');
+            const details = preparationDetails();
+            if (
+              !details.waitingLabelMatches ||
+              !details.selectedTheme ||
+              details.acceptedTheme === 'dnipro-porcelain' ||
+              !details.matchingFaces.length ||
+              !details.matchingFaces.every((face) => face.status === 'loading')
+            )
+              throw Error('Current busy selected-font wait required');
+            retained = { game, scene, run: scene.lastPaint.run };
+            return read('retained-initial-preparation', true);
+          },
+        }
+      : {}),
     installCheckpoint: (fn) => {
       checkpointFn = fn;
     },
@@ -209,6 +328,7 @@ export function installLifecycleProbe(config, environment = globalThis) {
       const current = read('export');
       return {
         ...(retainRun ? { runRetentionPolicy: policy, identityFailure } : {}),
+        ...(retainPreparation ? { preparationRetention: preparationPolicy } : {}),
         events: events.slice(),
         frames: frames.slice(),
         phases: phases.slice(),
@@ -219,6 +339,181 @@ export function installLifecycleProbe(config, environment = globalThis) {
       };
     },
   };
+}
+
+// Prospective explicit mode only; admission remains held until the source-bound
+// adapter accepts this exact tuple. The caller owns one observation deadline.
+export async function runHiddenPreparationScenario({
+  page,
+  context,
+  checked,
+  action,
+  snapshot,
+  report,
+  fontOwner,
+  save,
+  waitFor = wait,
+}) {
+  const click = (selector, timeout = 10000) => checked(page.locator(selector).click({ timeout }));
+  await click('#shell-options');
+  action('public-options');
+  await click('#settings-tab-display');
+  action('public-display');
+  await click('#theme-card-dnipro-porcelain');
+  action('public-selected-dnipro');
+  await checked(
+    page
+      .locator('#theme-card-dnipro-porcelain[aria-pressed="true"]')
+      .waitFor({ state: 'visible', timeout: 5000 }),
+  );
+  await click('#settings-dialog .dialog-close[data-close="settings-dialog"]');
+  const categories = page.locator(
+    '#settings-dialog[open][data-settings-view="categories"] button[data-close="settings-dialog"]',
+  );
+  if (await checked(categories.isVisible())) await checked(categories.click({ timeout: 5000 }));
+  await checked(
+    page
+      .locator(
+        'body:not(:has(#settings-dialog[open])) #shell-home[open] #shell-featured:not(:disabled)',
+      )
+      .waitFor({ state: 'visible', timeout: 5000 }),
+  );
+  await checked(fontOwner.waitUntilHeld());
+  await click('#shell-featured', 60000);
+  action('public-preparation-start');
+  await checked(
+    page.waitForFunction(
+      () => {
+        const probe = window.soloLifecycleProbe.snapshot('association-predicate');
+        const detail = probe.preparationDetails;
+        return (
+          ['briefing', 'paused'].includes(probe.phase) &&
+          probe.visibility === 'visible' &&
+          probe.focused &&
+          probe.runTick === 0 &&
+          probe.levelId === 'first-return' &&
+          probe.preparation === 'busy' &&
+          detail?.openDialogs === 0 &&
+          detail.selectedTheme &&
+          detail.acceptedTheme !== 'dnipro-porcelain' &&
+          detail.waitingLabelMatches &&
+          detail.matchingFaces.length > 0 &&
+          detail.matchingFaces.every((face) => face.status === 'loading')
+        );
+      },
+      null,
+      { timeout: 5000, polling: 100 },
+    ),
+  );
+  const retained = await checked(
+    page.evaluate(() => window.soloLifecycleProbe.retainPreparingRun()),
+  );
+  assert(report.snapshots.length < 32);
+  report.snapshots.push(retained);
+  report.fontTransportBeforeHidden = fontOwner.snapshot();
+  assert.equal(report.fontTransportBeforeHidden.status, 'held');
+  const blank = await checked(context.newPage());
+  await checked(blank.goto('about:blank'));
+  await checked(blank.bringToFront());
+  action('activate-owned-blank-during-preparation');
+  await checked(waitFor(250));
+  const away = await snapshot('preparation-native-away', true);
+  if (away.visibility !== 'hidden') {
+    report.status = 'unobserved';
+    throw Error('Owned blank page did not produce actual hidden preparation');
+  }
+  assert.equal(away.identityFailure, false);
+  assert(['briefing', 'paused'].includes(away.phase));
+  assert.equal(away.runId, retained.runId);
+  assert.deepEqual(away.checkpoint, retained.checkpoint);
+  const native = await checked(page.evaluate(() => window.soloLifecycleProbe.export()));
+  assert(
+    native.events.some(
+      (event) =>
+        event.type === 'visibilitychange' &&
+        event.trusted &&
+        event.visibility === 'hidden' &&
+        event.atMs >= retained.atMs,
+    ),
+  );
+  assert.equal(away.preparationDetails.selectedTheme, true);
+  assert.notEqual(away.preparationDetails.acceptedTheme, 'dnipro-porcelain');
+  assert(
+    away.preparationDetails.matchingFaces.length > 0 &&
+      away.preparationDetails.matchingFaces.every((face) => face.status === 'loading'),
+  );
+  fontOwner.releaseAfterNativeHidden();
+  action('release-unchanged-font-after-native-hidden');
+  await save();
+  await checked(waitFor(10000));
+  const completed = await snapshot('preparation-completed-hidden', true);
+  assert.equal(completed.visibility, 'hidden');
+  assert(['briefing', 'paused'].includes(completed.phase));
+  assert.equal(completed.runId, retained.runId);
+  assert.deepEqual(completed.checkpoint, retained.checkpoint);
+  assert.equal(completed.runTick, 0);
+  assert.equal(completed.preparationDetails.acceptedTheme, 'dnipro-porcelain');
+  assert(
+    completed.preparationDetails.matchingFaces.length > 0 &&
+      completed.preparationDetails.matchingFaces.every((face) => face.status === 'loaded'),
+  );
+  await checked(fontOwner.close());
+  report.fontTransport = fontOwner.snapshot();
+  assertSelectedFontTransport(report.fontTransport, 'same-url-two-v2', 'native-hidden');
+  await checked(page.bringToFront());
+  action('return-to-owned-preparing-game');
+  await checked(
+    page.waitForFunction(
+      () => {
+        const value = window.soloLifecycleProbe.snapshot('return-submission-predicate');
+        return (
+          value.visibility === 'visible' &&
+          value.focused &&
+          ['briefing', 'paused'].includes(value.phase) &&
+          value.runEvidence === 'submitted-board' &&
+          value.retainedIdentityMatched &&
+          !value.identityFailure
+        );
+      },
+      null,
+      { timeout: 10000, polling: 100 },
+    ),
+  );
+  await snapshot('preparation-returned-before-start', true);
+  await checked(waitFor(500));
+  await snapshot('preparation-returned-still-paused', true);
+  const before = await snapshot('before-explicit-resume', true);
+  await checked(page.evaluate(() => window.soloLifecycleProbe.armFrames('resumed-submission')));
+  await click('#start-button');
+  action('public-explicit-start-after-hidden-completion');
+  await checked(
+    page.waitForFunction(() => document.body?.dataset.flightState === 'running', null, {
+      timeout: 10000,
+      polling: 100,
+    }),
+  );
+  await checked(waitFor(400));
+  const resumed = await snapshot('resumed-neutral-no-key');
+  report.resumeProbe = await checked(page.evaluate(() => window.soloLifecycleProbe.export()));
+  report.resumeWitness = resumeBounds(before, report.resumeProbe);
+  assert(report.resumeProbe.frames.length > 0 && report.resumeProbe.frames.length <= 16);
+  assert(resumed.runTick > before.runTick);
+  assert.deepEqual(resumed.player, { ...before.player });
+  await checked(page.keyboard.down('ArrowLeft'));
+  action('fresh-different-key-left');
+  await checked(waitFor(100));
+  await checked(page.keyboard.up('ArrowLeft'));
+  const fresh = await snapshot('fresh-movement');
+  assert(fresh.player.x < resumed.player.x);
+  await checked(page.keyboard.press('Escape'));
+  action('final-public-pause');
+  await checked(
+    page.waitForFunction(() => document.body?.dataset.flightState === 'paused', null, {
+      timeout: 10000,
+      polling: 100,
+    }),
+  );
+  await snapshot('final-paused', true);
 }
 
 export async function writeLifecycleReport(output, report) {
@@ -350,10 +645,14 @@ export async function observeLifecycle(planArg, outputArg) {
   assert.deepEqual(plan.protocol, LIFECYCLE_PROTOCOL);
   if (plan.runRetentionPolicy !== undefined)
     assert.equal(plan.runRetentionPolicy, LIFECYCLE_RUN_RETENTION_POLICY);
-  assert.deepEqual(plan.job, lifecycleCase());
-  assert.equal(plan.runtimeRevision, LIFECYCLE_SOURCE.runtime);
-  assert.equal(plan.artifact.sourceRevision, LIFECYCLE_SOURCE.revision);
-  assert.equal(plan.artifact.sourceTree, LIFECYCLE_SOURCE.tree);
+  const source = lifecycleSourceFor(plan),
+    preparationHidden = plan.job?.mode === 'preparation-hidden';
+  assert.deepEqual(plan.job, lifecycleCaseFor(plan));
+  if (preparationHidden) assert.equal(plan.preparationRetention, 'visible-busy-shared-font-v1');
+  else assert.equal(plan.preparationRetention, undefined);
+  assert.equal(plan.runtimeRevision, source.runtime);
+  assert.equal(plan.artifact.sourceRevision, source.revision);
+  assert.equal(plan.artifact.sourceTree, source.tree);
   assert.match(plan.artifact.buildInfoSHA256, /^[a-f0-9]{64}$/);
   assert.equal(await realpath(process.env.TMPDIR), plan.scratch);
   assert((await lstat(dirname(output))).isDirectory());
@@ -373,6 +672,8 @@ export async function observeLifecycle(planArg, outputArg) {
     job: plan.job,
     protocol: LIFECYCLE_PROTOCOL,
     ...(plan.runRetentionPolicy ? { runRetentionPolicy: plan.runRetentionPolicy } : {}),
+    ...(plan.sourceCohort ? { sourceCohort: plan.sourceCohort } : {}),
+    ...(preparationHidden ? { preparationRetention: plan.preparationRetention } : {}),
     runtimeRevision: plan.runtimeRevision,
     artifact: plan.artifact,
     plan: { path: resolve(planArg), sha256: digest(await readFile(planArg)) },
@@ -396,7 +697,8 @@ export async function observeLifecycle(planArg, outputArg) {
     recording,
     timer,
     stopped = false,
-    closePromise;
+    closePromise,
+    fontOwner;
   const owner = { exited: false, exitCode: null, exitSignal: null, exitPromise: null };
   const checked = async (promise) => {
     const value = await promise;
@@ -533,9 +835,25 @@ export async function observeLifecycle(planArg, outputArg) {
     await checked(
       page.addInitScript(
         installLifecycleProbe,
-        plan.runRetentionPolicy ? { runRetentionPolicy: plan.runRetentionPolicy } : undefined,
+        plan.runRetentionPolicy
+          ? {
+              runRetentionPolicy: plan.runRetentionPolicy,
+              ...(preparationHidden ? { preparationRetention: plan.preparationRetention } : {}),
+            }
+          : undefined,
       ),
     );
+    if (preparationHidden) {
+      fontOwner = createSelectedFontHold(plan.address, {
+        requestPolicy: 'same-url-two-v2',
+        releaseBoundary: 'native-hidden',
+      });
+      await checked(
+        context.route(new URL(selectedFont.relativePath, plan.address).href, (route) =>
+          fontOwner.handle(route),
+        ),
+      );
+    }
     await checked(page.bringToFront());
     const url = new URL(plan.address);
     url.searchParams.set('journey', 'opening');
@@ -574,7 +892,7 @@ export async function observeLifecycle(planArg, outputArg) {
       version: identity.version,
       sha256: digest(text),
     };
-    assert.equal(identity.sourceRevision, LIFECYCLE_SOURCE.revision);
+    assert.equal(identity.sourceRevision, source.revision);
     assert.equal(digest(text), plan.artifact.buildInfoSHA256);
     await checked(
       page.evaluate(
@@ -585,82 +903,96 @@ export async function observeLifecycle(planArg, outputArg) {
         plan.address,
       ),
     );
-    await checked(page.locator('#shell-featured').click({ timeout: 60000 }));
-    action('public-start');
-    await requirePhase('running', 60000);
-    const started = await snapshot('initial-running');
-    assert.equal(started.levelId, 'first-return');
-    assert.equal(started.visibility, 'visible');
-    assert(started.focused);
-    if (plan.runRetentionPolicy) {
-      const retained = await checked(
-        page.evaluate(() => window.soloLifecycleProbe.retainObservedRun()),
+    if (preparationHidden) {
+      await runHiddenPreparationScenario({
+        page,
+        context,
+        checked,
+        action,
+        snapshot,
+        report,
+        fontOwner,
+        save,
+      });
+    } else {
+      await checked(page.locator('#shell-featured').click({ timeout: 60000 }));
+      action('public-start');
+      await requirePhase('running', 60000);
+      const started = await snapshot('initial-running');
+      assert.equal(started.levelId, 'first-return');
+      assert.equal(started.visibility, 'visible');
+      assert(started.focused);
+      if (plan.runRetentionPolicy) {
+        const retained = await checked(
+          page.evaluate(() => window.soloLifecycleProbe.retainObservedRun()),
+        );
+        assert.equal(retained.runId, started.runId);
+        report.snapshots.push(retained);
+      }
+      await checked(page.keyboard.down('ArrowRight'));
+      action('keydown-border-right');
+      await checked(wait(100));
+      const moving = await snapshot('before-interruption-held-right');
+      assert(moving.player.x > started.player.x);
+      const blank = await checked(context.newPage());
+      await checked(blank.goto('about:blank'));
+      await checked(blank.bringToFront());
+      action('activate-owned-blank');
+      await checked(wait(250));
+      const away = await snapshot('after-native-away');
+      if (away.visibility !== 'hidden') {
+        report.status = 'unobserved';
+        throw Error('Owned blank page did not produce actual hidden state');
+      }
+      await requirePhase('paused');
+      const hidden = await snapshot('hidden-paused', true);
+      await save();
+      await checked(wait(10000));
+      const held = await snapshot('hidden-after-ten-seconds', true);
+      assert.equal(held.visibility, 'hidden');
+      assertSamePaused(hidden, held);
+      await checked(page.bringToFront());
+      action('return-to-owned-game');
+      await checked(
+        page.waitForFunction(() => !document.hidden && document.hasFocus(), null, {
+          timeout: 10000,
+          polling: 100,
+        }),
       );
-      assert.equal(retained.runId, started.runId);
-      report.snapshots.push(retained);
+      await checked(page.keyboard.up('ArrowRight'));
+      action('release-original-held-key');
+      const returned = await snapshot('returned-before-resume', true);
+      assertSamePaused(hidden, returned);
+      await checked(wait(500));
+      assertSamePaused(hidden, await snapshot('returned-still-paused', true));
+      const before = await snapshot('before-explicit-resume', true);
+      await checked(page.evaluate(() => window.soloLifecycleProbe.armFrames('resumed-submission')));
+      await checked(page.locator('#start-button').click({ timeout: 10000 }));
+      action('public-explicit-resume');
+      await requirePhase('running');
+      await checked(wait(400));
+      const resumed = await snapshot('resumed-neutral-no-key');
+      assert(resumed.runTick > before.runTick);
+      report.lifecycle = await checked(page.evaluate(() => window.soloLifecycleProbe.export()));
+      report.resumeProbe = structuredClone(report.lifecycle);
+      report.resumeWitness = resumeBounds(before, report.resumeProbe);
+      await checked(page.keyboard.down('ArrowLeft'));
+      action('fresh-different-key-left');
+      await checked(wait(100));
+      await checked(page.keyboard.up('ArrowLeft'));
+      const fresh = await snapshot('fresh-movement');
+      assert(fresh.player.x < resumed.player.x);
+      await checked(page.keyboard.press('Escape'));
+      action('final-public-pause');
+      await requirePhase('paused');
+      await snapshot('final-paused', true);
     }
-    await checked(page.keyboard.down('ArrowRight'));
-    action('keydown-border-right');
-    await checked(wait(100));
-    const moving = await snapshot('before-interruption-held-right');
-    assert(moving.player.x > started.player.x);
-    const blank = await checked(context.newPage());
-    await checked(blank.goto('about:blank'));
-    await checked(blank.bringToFront());
-    action('activate-owned-blank');
-    await checked(wait(250));
-    const away = await snapshot('after-native-away');
-    if (away.visibility !== 'hidden') {
-      report.status = 'unobserved';
-      throw Error('Owned blank page did not produce actual hidden state');
-    }
-    await requirePhase('paused');
-    const hidden = await snapshot('hidden-paused', true);
-    await save();
-    await checked(wait(10000));
-    const held = await snapshot('hidden-after-ten-seconds', true);
-    assert.equal(held.visibility, 'hidden');
-    assertSamePaused(hidden, held);
-    await checked(page.bringToFront());
-    action('return-to-owned-game');
-    await checked(
-      page.waitForFunction(() => !document.hidden && document.hasFocus(), null, {
-        timeout: 10000,
-        polling: 100,
-      }),
-    );
-    await checked(page.keyboard.up('ArrowRight'));
-    action('release-original-held-key');
-    const returned = await snapshot('returned-before-resume', true);
-    assertSamePaused(hidden, returned);
-    await checked(wait(500));
-    assertSamePaused(hidden, await snapshot('returned-still-paused', true));
-    const before = await snapshot('before-explicit-resume', true);
-    await checked(page.evaluate(() => window.soloLifecycleProbe.armFrames('resumed-submission')));
-    await checked(page.locator('#start-button').click({ timeout: 10000 }));
-    action('public-explicit-resume');
-    await requirePhase('running');
-    await checked(wait(400));
-    const resumed = await snapshot('resumed-neutral-no-key');
-    assert(resumed.runTick > before.runTick);
-    report.lifecycle = await checked(page.evaluate(() => window.soloLifecycleProbe.export()));
-    report.resumeProbe = structuredClone(report.lifecycle);
-    report.resumeWitness = resumeBounds(before, report.resumeProbe);
-    await checked(page.keyboard.down('ArrowLeft'));
-    action('fresh-different-key-left');
-    await checked(wait(100));
-    await checked(page.keyboard.up('ArrowLeft'));
-    const fresh = await snapshot('fresh-movement');
-    assert(fresh.player.x < resumed.player.x);
-    await checked(page.keyboard.press('Escape'));
-    action('final-public-pause');
-    await requirePhase('paused');
-    await snapshot('final-paused', true);
     recording = await checked(readPublicQualificationReplay(page, 15000));
     action('public-replay-export');
     await snapshot('after-public-export', true);
     report.lifecycle = await checked(page.evaluate(() => window.soloLifecycleProbe.export()));
-    assertLifecycleProof(report);
+    if (preparationHidden) assertHiddenPreparationProof(report);
+    else assertLifecycleProof(report);
     assert.equal(report.errors.length, 0);
     assert(
       !report.errorOverflow &&
@@ -675,6 +1007,14 @@ export async function observeLifecycle(planArg, outputArg) {
     report.failure = message(error);
   } finally {
     clearTimeout(timer);
+    if (fontOwner) {
+      try {
+        await fontOwner.close();
+        report.fontTransport = fontOwner.snapshot();
+      } catch (error) {
+        report.fontCleanupFailure = message(error);
+      }
+    }
     // Close first on a deadline. No cleanup export may restart timed-out gameplay.
     if (page && !page.isClosed() && !stopped) {
       try {
@@ -786,6 +1126,14 @@ export async function observeLifecycle(planArg, outputArg) {
   ) {
     report.status = 'fail';
     report.failure ??= 'Retained final observation failure';
+  }
+  if (report.status === 'pass' && preparationHidden) {
+    try {
+      assertHiddenPreparationProof(report);
+    } catch (error) {
+      report.status = 'fail';
+      report.failure ??= message(error);
+    }
   }
   report.completedAt = new Date().toISOString();
   await save();

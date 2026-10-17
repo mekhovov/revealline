@@ -1,4 +1,4 @@
-// Exact reviewed source-bound release; native outcomes remain unobserved.
+// Exact executed source-bound release. Original native failures remain unchanged.
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -16,8 +16,38 @@ const read = (p) => readFile(new URL('../' + p, import.meta.url));
 const m = JSON.parse(await read('docs/performance/solo-readiness-font-dpr-c696-plan.json'));
 const original = JSON.parse(await read('docs/performance/solo-readiness-font-c696-plan.json'));
 const workflow = (
-  await read('.github/workflows/solo-remote-readiness-ab45-temporary.yml')
+  await read('docs/performance/fixtures/solo-readiness-font/e1cc-executed-workflow.yml')
 ).toString();
+
+const witnessPath = 'docs/performance/fixtures/solo-readiness-font/e1cc-execution-source.json';
+const witnessSHA256 = '6338947364c7a35f58443fea23ee59fc981598ca4526fbdd4b400c57ce884590';
+const historicalChangedPaths = new Set([
+  'scripts/run-solo-remote-correctness.mjs',
+  'scripts/solo-remote-sustained.mjs',
+  'scripts/solo-remote-readiness.mjs',
+  'scripts/qualify-solo-runtime.mjs',
+  'scripts/solo-qualification-readiness.mjs',
+  'scripts/solo-qualification-next-route.mjs',
+]);
+function verifyExecutedSource(witnessBytes, declarationBytes, workflowBytes) {
+  assert.equal(createHash('sha256').update(witnessBytes).digest('hex'), witnessSHA256);
+  const witness = JSON.parse(witnessBytes);
+  assert.equal(witness.format, 'SoloExecutedReadinessSourceV1');
+  assert.equal(witness.sourceRevision, 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17');
+  assert.equal(witness.sourceTree, '58f19392e25384620d896098fce8616b538e318d');
+  assert.equal(witness.run, 39037875095);
+  const records = new Map(witness.records.map((row) => [row.path, row]));
+  assert.equal(records.size, witness.records.length);
+  for (const [path, bytes] of [
+    [witness.manifestPath, declarationBytes],
+    [witness.workflowPath, workflowBytes],
+  ]) {
+    const row = records.get(path);
+    assert.equal(bytes.length, row.bytes);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), row.sha256);
+  }
+  return records;
+}
 function verify(value, text) {
   assert.equal(value.status, 'reviewed-readiness-diagnostic-only');
   assert.equal(value.sourceCohort, FONT_DPR_C696_COHORT);
@@ -104,7 +134,7 @@ test('reviewed same-source c696 release uses verified115 metadata and cannot bor
     ),
   );
 });
-test('reviewed declaration admits six unchanged bounded rows while current bytes are frozen', async () => {
+test('executed declaration preserves six original bounded rows and exact historical source authority', async () => {
   for (const engine of ['chromium', 'webkit']) {
     const p = bindReadinessJob(m, engine);
     assert.equal(p.rows.length, engine === 'webkit' ? 5 : 1);
@@ -130,10 +160,22 @@ test('reviewed declaration admits six unchanged bounded rows while current bytes
   const refs = [...m.adapterInputs, ...m.frozenTools, m.fixture, ...m.additionalFixtures];
   assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
   assert(refs.length > 25 && refs.length < 70);
+  const witness = verifyExecutedSource(
+    await read(witnessPath),
+    await read('docs/performance/solo-readiness-font-dpr-c696-plan.json'),
+    Buffer.from(workflow),
+  );
+  assert.equal(witness.size, refs.length + 2);
   for (const ref of refs) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256, ref.path);
+    const historical = witness.get(ref.path);
+    assert(historical, ref.path);
+    assert.equal(historical.bytes, ref.bytes, ref.path);
+    assert.equal(historical.sha256, ref.sha256, ref.path);
+    if (!historicalChangedPaths.has(ref.path)) {
+      const b = await read(ref.path);
+      assert.equal(b.length, ref.bytes, ref.path);
+      assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256, ref.path);
+    }
     assert(workflow.includes('            /' + ref.path + '\n'), ref.path);
   }
   for (const item of [
@@ -152,5 +194,22 @@ test('reviewed declaration admits six unchanged bounded rows while current bytes
       ...workflow.matchAll(/^      - timeout-minutes: (\d+)$/gm),
     ].reduce((n, m) => n + Number(m[1]), 0),
     122,
+  );
+});
+
+test('executed witness rejects changed declaration, workflow and source receipt', async () => {
+  const witness = await read(witnessPath),
+    declaration = await read('docs/performance/solo-readiness-font-dpr-c696-plan.json');
+  verifyExecutedSource(witness, declaration, Buffer.from(workflow));
+  for (const [a, b, c] of [
+    [Buffer.concat([witness, Buffer.from(' ')]), declaration, Buffer.from(workflow)],
+    [witness, Buffer.concat([declaration, Buffer.from(' ')]), Buffer.from(workflow)],
+    [witness, declaration, Buffer.from(workflow + ' ')],
+  ])
+    assert.throws(() => verifyExecutedSource(a, b, c));
+  const changed = JSON.parse(witness);
+  changed.records[2].sha256 = '0'.repeat(64);
+  assert.throws(() =>
+    verifyExecutedSource(Buffer.from(JSON.stringify(changed)), declaration, Buffer.from(workflow)),
   );
 });

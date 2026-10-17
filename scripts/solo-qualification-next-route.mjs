@@ -3,6 +3,8 @@ import { createHash } from 'node:crypto';
 
 export const NEXT_ROUTE_PROTOCOL = 'authored-next-geometric-v1';
 export const NEXT_ROUTE_SOURCE = 'c696af41857840359ae473558b90682f3d71f2db';
+export const NEXT_ROUTE_FINAL_SOURCE = 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17';
+const nextRouteSources = Object.freeze([NEXT_ROUTE_SOURCE, NEXT_ROUTE_FINAL_SOURCE]);
 export const NEXT_ROUTE_IDENTITIES = [
   {
     id: 'first-return',
@@ -918,10 +920,11 @@ export function qualificationNextRouteOptions(flags, scenario, bytes) {
   assert.equal(scenario.timeoutMs, 1200000);
   assert.equal(bytes.length, NEXT_ROUTE_FIXTURE.bytes);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), NEXT_ROUTE_FIXTURE.sha256);
-  assert.deepEqual(
-    flags.filter((value) => value.startsWith('--source-revision')),
-    ['--source-revision=' + NEXT_ROUTE_SOURCE],
-  );
+  const sourceFlags = flags.filter((value) => value.startsWith('--source-revision'));
+  assert.equal(sourceFlags.length, 1, 'Exactly one admitted source required');
+  const sourceRevision = sourceFlags[0].slice('--source-revision='.length);
+  assert(nextRouteSources.includes(sourceRevision), 'Unreviewed authored-route source');
+  assert.equal(sourceFlags[0], '--source-revision=' + sourceRevision);
   for (const value of ['--work-probe', '--hitch-journal', '--cadence=settled120'])
     assert(flags.includes(value), `Required ${value}`);
   assert(
@@ -937,5 +940,5 @@ export function qualificationNextRouteOptions(flags, scenario, bytes) {
     actions.map((action) => validateNextRouteAction(action).mission),
     NEXT_ROUTE_IDENTITIES.map((row) => row.id),
   );
-  return { protocol: NEXT_ROUTE_PROTOCOL, sourceRevision: NEXT_ROUTE_SOURCE };
+  return { protocol: NEXT_ROUTE_PROTOCOL, sourceRevision };
 }
