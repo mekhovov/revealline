@@ -1,0 +1,32 @@
+{
+  "pass": true,
+  "node": "v22.22.2",
+  "sourceHashCount": 209,
+  "sourceStable": true,
+  "retainedFlightPrefix": true,
+  "workerCounts": {
+    "created": 2,
+    "terminated": 2,
+    "live": 0
+  },
+  "recordings": [
+    {
+      "file": "paused-recording.json",
+      "missionTicks": 220,
+      "finalHash": "2dd2786e",
+      "frequency": 250,
+      "verified": true,
+      "verificationScope": "complete",
+      "contiguousInputSequences": true
+    },
+    {
+      "file": "resumed-recording.json",
+      "missionTicks": 478,
+      "finalHash": "3830ae85",
+      "frequency": 250,
+      "verified": true,
+      "verificationScope": "complete",
+      "contiguousInputSequences": true
+    }
+  ]
+}

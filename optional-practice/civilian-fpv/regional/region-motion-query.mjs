@@ -6,20 +6,36 @@ const IDENTITY = Object.freeze({ x: 0, y: 0, z: 0, w: 1 });
 const point = (value) =>
   value && AXES.every((key) => Number.isFinite(value[key]) && Math.abs(value[key]) <= 100000000);
 
+function motionEnd(from, delta, radius) {
+  if (
+    !point(from) ||
+    !point(delta) ||
+    !Number.isSafeInteger(radius) ||
+    radius <= 0 ||
+    radius > 2000
+  )
+    throw new TypeError('Invalid regional motion query');
+  const to = Object.fromEntries(AXES.map((key) => [key, from[key] + delta[key]]));
+  if (!point(to)) throw new TypeError('Regional motion exceeds coordinate limits');
+  return to;
+}
+
+/** Coverage is not collision clearance. Advanced resolves contacts in its worker;
+ * this query retains the owner's exact swept-cell proof without repeating them. */
+export function createRegionMotionCoverageQuery({ covers, live }) {
+  return (from, delta, radius) => {
+    live();
+    return covers(from, motionEnd(from, delta, radius), radius)
+      ? { status: 'motion-covered' }
+      : { status: 'unknown-cell' };
+  };
+}
+
 // Only trusted admission modules construct this closure. Verified owners never accept a caller query.
 export function createRegionMotionQuery({ world, local, covers, colliderIds, layer, live }) {
   return (from, delta, radius) => {
     live();
-    if (
-      !point(from) ||
-      !point(delta) ||
-      !Number.isSafeInteger(radius) ||
-      radius <= 0 ||
-      radius > 2000
-    )
-      throw new TypeError('Invalid regional motion query');
-    const to = Object.fromEntries(AXES.map((key) => [key, from[key] + delta[key]]));
-    if (!point(to)) throw new TypeError('Regional motion exceeds coordinate limits');
+    const to = motionEnd(from, delta, radius);
     if (!covers(from, to, radius)) return { status: 'unknown-cell' };
     const hit = world.castShape(
       local(from),

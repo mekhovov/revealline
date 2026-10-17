@@ -1,0 +1,256 @@
+{
+  "format": "FpvBoundaryDeliveryVerification.v1",
+  "createdAt": "2026-10-17T14:24:03.649303+00:00",
+  "pass": true,
+  "softwareDeliveryComplete": true,
+  "scope": "Available software corrections, ordinary main publication, current desktop fixture and fresh public Chrome installs; deferred physical and wider-platform gates remain open. Initial public startup failure is retained separately.",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/1564",
+  "implementationHead": "dcad53bc676fda6cbd6ff227b5a1d52d2f36eece",
+  "deployedRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+  "publication": "https://github.com/mekhovov/revealline/actions/runs/39038793037",
+  "integration": {
+    "initialRebaseBase": "1d631986ad73ba1301a151a76b1607cf03dbe97a",
+    "qualificationSourcePinsUnchangedAtMerge": true
+  },
+  "checks": {
+    "practiceTests": 731,
+    "nonSkippedProductChecks": 12,
+    "skippedGeneralJobs": [
+      "build",
+      "test"
+    ],
+    "publicationJobs": {
+      "build": "success",
+      "deploy": "success",
+      "verify": "success"
+    },
+    "publicPasswordAndOfflinePackages": 2,
+    "publicSourceBindingStable": true,
+    "publishedChangedRuntimeModulesMatchRepository": 4,
+    "publishedSourcePinsMatchHostedInventory": 13,
+    "publicRunnerStable": true,
+    "desktopFixtureProcesses": 2,
+    "desktopSourcePinsMatch": 209,
+    "nativeArtifactHashesVerified": 8,
+    "priorNumericalSourcesStillMatch": 20,
+    "newNumericalBenchmarkPerformed": false,
+    "iosRuntimeVerified": false
+  },
+  "capacity": {
+    "files": 3425,
+    "stagedBytes": 960384263,
+    "actualArchiveBytes": 963368960,
+    "maximumBytes": 980000000,
+    "archiveHeadroomBytes": 16631040,
+    "inventoryCountSumAndUniquePathsVerified": true,
+    "inventoryDigestVerified": true,
+    "hostedArchiveArtifactIdVerified": "12103681604",
+    "hostedArchiveSha256": "2463961b29d2ea0a44dd214059863b86c358be76b6cf5bcf0e7590d1ade38435",
+    "archiveDownloadRepeatedLocally": false
+  },
+  "publicAcceptance": {
+    "browser": {
+      "engine": "chrome",
+      "version": "155.0.8059.85"
+    },
+    "packages": [
+      {
+        "id": "civilian-fpv",
+        "missionTicks": 11,
+        "finalHash": "13902221",
+        "recordingSha256": "ed75fdb3f4cafb8a83d87e7bd653d458cb98626227264ad9237baa926295dcb7",
+        "workerCleanup": {
+          "created": 1,
+          "terminated": 1,
+          "tick": 11
+        }
+      },
+      {
+        "id": "fpv-worlds",
+        "missionTicks": 12,
+        "finalHash": "1d473fbb",
+        "recordingSha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94",
+        "workerCleanup": {
+          "created": 1,
+          "terminated": 1,
+          "tick": 12
+        }
+      }
+    ],
+    "neutralInputLifecycleOnly": true
+  },
+  "preservedObservation": {
+    "initialReport": "docs/fpv-boundary-public-acceptance.json",
+    "initialResult": "failed",
+    "phase": "World startup after ordinary password submission",
+    "timeoutMilliseconds": 60000,
+    "cause": "not established",
+    "sameProfileReopen": "unlocked and ready within the diagnostic observation, without cache clearing or unlock mutation",
+    "diagnostic": "docs/fpv-boundary-delivery/world-startup-diagnostic.json",
+    "freshCompleteRerun": "passed both packages with the frozen runner and unchanged public source bindings",
+    "initialFailureReclassifiedAsHarnessError": false,
+    "sourceReview": "docs/fpv-boundary-delivery/world-startup-review.json",
+    "sourceReviewConclusion": "No concrete missed-unlock race found; initial timeout remains unexplained and not reproduced."
+  },
+  "limits": [
+    "Advanced remains optional, unscored and default-ineligible.",
+    "Physical radio/touch, pilots, aircraft measurements, iOS execution, broader devices, validated propwash/ground effect and scored/default promotion remain deferred.",
+    "Current public acceptance covers fresh installations, ordinary password UI, offline process reopen, saved rates and short neutral-input export/replay/disposal. It does not requalify every manual flow, installed-update path or startup reliability. Prior authentic update receipts retain their historical source scope.",
+    "Current native execution uses a labelled Electron fixture on one ARM64 Mac, not production authentication, a signed installer or a wider native platform matrix. Its Regional recording is 26 mission ticks, not a native maximum-duration flight.",
+    "The optional-release catalogue is present but empty; no separately selected optional release was qualified.",
+    "Archive capacity relies on retained hosted verification and its bound inventory/artifact ID; the large Pages artifact was not downloaded again locally.",
+    "No manual merge, deployment, forced service-worker activation, publication-limit change or gate bypass was used."
+  ],
+  "evidence": [
+    {
+      "path": "docs/fpv-boundary-ci.json",
+      "bytes": 6521,
+      "sha256": "8639cfa22d928e97c298b4e57ee9dd26d4b974be8cb71fd3d163526914712a74"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/archive/main-pages-archive-receipt.json",
+      "bytes": 599,
+      "sha256": "308032f2e3ca88f0dc935effbe784da2c3b3d34505160af1352c84969ba87ca1"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/artifact-index.json",
+      "bytes": 2896,
+      "sha256": "da753e0ea9942dee6bf3f462c5816ec3085d7abaf7127c364ff5e79de08ccd91"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/merge.json",
+      "bytes": 283,
+      "sha256": "30a34fda7c3d5528b02ac4e136cfa152e344f686b26e892a416742ca3caa360d"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/practice/practice-site-receipt.json",
+      "bytes": 132,
+      "sha256": "a78f1a58d0a714f920cc9bb88b5bc930b936b0e6bf6cf1a1e9136b8d1c207e14"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/public-acceptance-startup-failure.json",
+      "bytes": 8168,
+      "sha256": "460b463184d0c239d96b6014cb1d9b44818b243607a35c8f958b53188fb10819"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/public-correction-source-pins.json",
+      "bytes": 1632,
+      "sha256": "c69db47aa9c5ff3c1ede1e88ca81a581e46cbf02ad05cbac4b1e768cd81c8f7c"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/publication-final.json",
+      "bytes": 6274,
+      "sha256": "ea30997210ec2205521fa5de00adba0c9e591aca43519a96ad7e92e3d4387cec"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/publication-start.json",
+      "bytes": 3185,
+      "sha256": "e33735b7bdda376b7f3e5b153d9d5d1042e1979c86566c00c141359a8ad0a8fd"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/staged/main-pages-inventory.json",
+      "bytes": 508129,
+      "sha256": "7e51a6e0fe6b5b2c47293076ab5731f7ff1dd8ddf0b0abadd29645c002a1f0ee"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/staged/main-pages-receipt.json",
+      "bytes": 4429,
+      "sha256": "4092cfd3976a8c91d777eb28e40ddeb043e84ce8e586221a39a8ac14ddf311a5"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/startup-failure-academy-recording.json",
+      "bytes": 3562,
+      "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/world-startup-diagnostic.json",
+      "bytes": 1066,
+      "sha256": "e79c95745c80d4a665bc77b690be2cab5062eabafafd2496fe9c53104b0ac280"
+    },
+    {
+      "path": "docs/fpv-boundary-delivery/world-startup-review.json",
+      "bytes": 1854,
+      "sha256": "77ca8c61351d463c0a125de1f3d9f8716ca834228a4d90ccd43c72342ac0178d"
+    },
+    {
+      "path": "docs/fpv-boundary-public-acceptance-civilian-fpv-recording.json",
+      "bytes": 3562,
+      "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94"
+    },
+    {
+      "path": "docs/fpv-boundary-public-acceptance.json",
+      "bytes": 8168,
+      "sha256": "460b463184d0c239d96b6014cb1d9b44818b243607a35c8f958b53188fb10819"
+    },
+    {
+      "path": "docs/fpv-boundary-public-final-acceptance-civilian-fpv-recording.json",
+      "bytes": 3547,
+      "sha256": "ed75fdb3f4cafb8a83d87e7bd653d458cb98626227264ad9237baa926295dcb7"
+    },
+    {
+      "path": "docs/fpv-boundary-public-final-acceptance-fpv-worlds-recording.json",
+      "bytes": 3562,
+      "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94"
+    },
+    {
+      "path": "docs/fpv-boundary-public-final-acceptance.json",
+      "bytes": 9521,
+      "sha256": "d3e2d3170637a80c2d4e9c7949e08ab73bacd9071d97bdbadf4ac77fa6213bf2"
+    },
+    {
+      "path": "docs/fpv-boundary-review-verification.json",
+      "bytes": 8142,
+      "sha256": "338387bb7b6e121be126f8b0f831c0bc1dcdfedb9b955a59b6e4102589628b58"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review-runtime.json",
+      "bytes": 10329,
+      "sha256": "59972d5505287a6657c6b544dfc88ae683f4665ce7ae75451c9f59abeae0f5d7"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review-staging.json",
+      "bytes": 31065,
+      "sha256": "9c8330be853c73119ffc69d7d6ff1a64dde28a039bb2772afd7ef657646d5061"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/first-session.json",
+      "bytes": 242446,
+      "sha256": "d5efbe152511b4798a6c87b918217111d40ea61426be7fd1848aa98b00a773f8"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/fixture-manifest.json",
+      "bytes": 33944,
+      "sha256": "d4033a0e087456cf562b368c4c34c1a25b003121a794c2ca6c5c575cbef265d4"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/fixture-metadata.json",
+      "bytes": 448,
+      "sha256": "25c844967802e2c078e6dcb2e30d431320f6f46729119a32c77826c7d7aff30b"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/recording-verification.json",
+      "bytes": 595,
+      "sha256": "8d551d98af5c16a48e2217267a491299ded9db85d1c8d4eb4cdb2545cd6a9603"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/regional-recording.json",
+      "bytes": 103961,
+      "sha256": "e4210657f4089c15d4398ae5ee4b0a47146131f94e269ff6574e5e7e4e124ffd"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/regional-recovery.json",
+      "bytes": 652563,
+      "sha256": "df7aadb1c0de582b6b90ac5b0b23d68e7ac27da0be3de6708adeb9bd32e444df"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/second-session.json",
+      "bytes": 15207,
+      "sha256": "4d7c45f18bdba7895699acdf60465420a3aaae97ded5b0b718246d7b96b51afb"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/verify.mjs",
+      "bytes": 3991,
+      "sha256": "6671e44405a8cd2ddcc4ac5dde13b0d889704f9b45b0a01ff4ede0bd347e5f26"
+    }
+  ]
+}
