@@ -41,6 +41,7 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     'game/test/optional-world-play-lifetime.test.mjs',
     'game/test/optional-world-play-installed-host.test.mjs',
     'game/test/solo-preparation-invalidation-host.test.mjs',
+    'game/test/solo-preparation-layout-host.test.mjs',
     'game/test/solo-soundtrack-context-host.test.mjs',
     'game/test/flight-information-source.test.mjs',
     'game/test/flight-information-bridge.test.mjs',
@@ -118,6 +119,17 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
       `Packaging changes require an exact-head playable build: ${path}`,
     );
   }
+  for (const path of [
+    'game/ui/handheld-play.css',
+    'game/ui/device-controls.css',
+    'game/ui/hunt-feedback.css',
+    'game/ui/pixel-theme.css',
+    'game/ui/journey.css',
+  ])
+    assert.ok(
+      changedPaths.includes(`      - '${path}'`),
+      `Layout source requires preparation checks: ${path}`,
+    );
   assert.ok(changedPaths.includes("      - 'game/audio/effects/**'"));
   assert.match(workflow, /permissions:\s+contents: read/);
   assert.match(
@@ -171,8 +183,8 @@ test('packaging reserves bounded evidence closure without changing test or gamep
     .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
     .trim()
     .split(/\s+/);
-  assert.equal(focusedTests.length, 117);
-  assert.equal(new Set(focusedTests).size, 117);
+  assert.equal(focusedTests.length, 118);
+  assert.equal(new Set(focusedTests).size, 118);
   const startup = step('Record the bounded packaging start');
   assert.match(startup, /PREVIEW_STARTED_AT=\$\(date \+%s\)/);
   assert.ok(workflow.indexOf(startup) < workflow.indexOf('- uses: actions/checkout'));

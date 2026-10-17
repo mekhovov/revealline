@@ -11,6 +11,11 @@ on:
       - 'game/ui/menu-controls.css'
       - 'game/ui/industrial-workshop.css'
       - 'game/ui/field-kit*.css'
+      - 'game/ui/handheld-play.css'
+      - 'game/ui/device-controls.css'
+      - 'game/ui/hunt-feedback.css'
+      - 'game/ui/pixel-theme.css'
+      - 'game/ui/journey.css'
       - 'game/ui/edition-tool-provider.mjs'
       - 'game/ui/optional-practice-panel.mjs'
       - 'game/ui/mode-choice.mjs'
@@ -108,6 +113,7 @@ on:
       - 'game/test/optional-world-play-lifetime.test.mjs'
       - 'game/test/optional-world-play-installed-host.test.mjs'
       - 'game/test/solo-preparation-invalidation-host.test.mjs'
+      - 'game/test/solo-preparation-layout-host.test.mjs'
       - 'game/test/solo-soundtrack-context-host.test.mjs'
       - 'game/test/flight-information-source.test.mjs'
       - 'game/test/flight-information-bridge.test.mjs'
@@ -256,6 +262,7 @@ jobs:
         game/test/optional-world-play-lifetime.test.mjs
         game/test/optional-world-play-installed-host.test.mjs
         game/test/solo-preparation-invalidation-host.test.mjs
+        game/test/solo-preparation-layout-host.test.mjs
         game/test/solo-soundtrack-context-host.test.mjs
         game/test/flight-information-source.test.mjs
         game/test/flight-information-bridge.test.mjs

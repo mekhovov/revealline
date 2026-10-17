@@ -1580,6 +1580,26 @@ try {
     pictureResume = null,
     pictureThemePending = null,
     pictureGeneration = 0;
+  let preparationLayout = null;
+  function releasePreparationLayout(owner = preparationLayout) {
+    if (!owner || preparationLayout !== owner) return;
+    preparationLayout = null;
+    delete document.body.dataset.flightLayout;
+    refreshInputPresentation();
+    if (!started || paused) fieldScene?.syncDisplayGeometry();
+  }
+  function prepareFlightLayout() {
+    preparationLayout = { run };
+    // Adopt the eventual CSS geometry without granting simulation, controls,
+    // or the public running state. The existing attempt owns this lease.
+    if (document.body.dataset.flightLayout !== 'preparing')
+      document.body.dataset.flightLayout = 'preparing';
+    refreshInputPresentation();
+    // A layout read belongs to this paused activation, never the active loop.
+    // Reconcile it before deciding whether the existing board is still ready.
+    fieldScene?.syncDisplayGeometry();
+    return preparationLayout;
+  }
   const picturePreparingMessage = localizedMessage(
     'interface:preparingTheChosenPictureFlightStaysPausedUntilItIs',
   );
@@ -1958,6 +1978,7 @@ try {
     preserveResult = false,
     preserveWorld = false,
   } = {}) {
+    releasePreparationLayout();
     if (!preserveWorld) {
       // A newer navigation intent also retires an activation still downloading.
       ++worldPlayEpoch;
@@ -3377,7 +3398,9 @@ try {
         (navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches)
           ? 'touch'
           : document.body.dataset.inputMode,
-      scope: controllerScope(),
+      // Reserve the future touch footprint during paused preparation only.
+      // Actual input/controller ownership continues to use controllerScope().
+      scope: preparationLayout ? 'flight' : controllerScope(),
       running: run?.status === 'running',
     });
     const next = visible ? 'shown' : 'hidden';
@@ -10518,13 +10541,14 @@ try {
       needsFreshVisuals ||
       needsFreshActors ||
       needsCaptureEnvironment;
+    if (pictureResume) return;
+    const layoutOwner = !started || paused ? prepareFlightLayout() : null;
     if (
       needsFlightAssets ||
       !fieldScene?.prepared() ||
       !fieldScene?.cadence.ready ||
       menuStyle.themeHost.preparing
     ) {
-      if (pictureResume) return;
       clearPictureRecovery();
       const owner = flightPictures,
         ticket = ++pictureGeneration,
@@ -10696,6 +10720,7 @@ try {
           }
         })
         .finally(() => {
+          releasePreparationLayout(layoutOwner);
           stagedVisuals?.release();
           stagedActors?.release();
           if (pictureVisualController === controller) pictureVisualController = null;
@@ -10750,6 +10775,9 @@ try {
     localizedText($('pause-button'), () => 'Ⅱ');
     refreshCourse();
     refreshHUD();
+    // The public state now owns the same geometry; removing the lease cannot
+    // briefly restore the paused layout between preparation and active play.
+    releasePreparationLayout(layoutOwner);
     if (courseSession && alignCourseBoard) revealFirstFlightBoard($('arena-shell'));
   }
   function finishDefeatPresentation() {
@@ -12721,6 +12749,7 @@ try {
       this.boardImage = this.add.image(0, 0, 'field').setOrigin(0);
       this.game.canvas.setAttribute('aria-hidden', 'true');
       this.displayCSSWidth = this.game.canvas.clientWidth;
+      this.displayCSSHeight = this.game.canvas.clientHeight;
       this.revision = 0;
       this.preparedState = null;
       this.lastPaint = null;
@@ -12758,10 +12787,12 @@ try {
       this.events.once('shutdown', retireFrameHooks);
       this.events.once('destroy', retireFrameHooks);
       const resized = () => {
-        this.displayCSSWidth = this.game.canvas.clientWidth;
-        this.invalidate();
+        if (!this.syncDisplayGeometry()) this.invalidate();
       };
-      const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(resized) : null;
+      const observer =
+        typeof ResizeObserver === 'function'
+          ? new ResizeObserver(() => this.syncDisplayGeometry())
+          : null;
       observer?.observe(this.game.canvas);
       window.addEventListener('resize', resized);
       const surfaces = [
@@ -12961,6 +12992,15 @@ try {
         finish();
       }
     }
+    syncDisplayGeometry() {
+      const width = this.game.canvas.clientWidth,
+        height = this.game.canvas.clientHeight;
+      if (width === this.displayCSSWidth && height === this.displayCSSHeight) return false;
+      this.displayCSSWidth = width;
+      this.displayCSSHeight = height;
+      this.invalidate();
+      return true;
+    }
     invalidate() {
       ++this.revision;
       this.preparedState = null;
@@ -13073,6 +13113,7 @@ try {
         signal.throwIfAborted();
         if (!current()) throw new DOMException('Preparation superseded.', 'AbortError');
         this.resizeBoard();
+        this.syncDisplayGeometry();
         const state = { ...owner, revision: this.revision };
         await painter.prepare(this.boardTexture.context, run, this.drawOptions(), { signal });
         signal.throwIfAborted();
@@ -13100,6 +13141,10 @@ try {
         });
         signal.throwIfAborted();
         if (!current()) throw new DOMException('Preparation superseded.', 'AbortError');
+        // ResizeObserver may deliver after POST_RENDER. Reconcile the actual
+        // paused layout before accepting its submission; a delayed notification
+        // for this same size is then harmless.
+        this.syncDisplayGeometry();
         // A late presentation or asset acceptance can change the painter while
         // the same attempt and originals remain owned, just as layout changes
         // the scene. Reprepare with the single existing cancellation owner and
