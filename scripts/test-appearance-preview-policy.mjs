@@ -33,6 +33,17 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     'game/test/flight-information-host.test.mjs',
     'game/test/flight-information-details-host.test.mjs',
     'game/test/audio.test.mjs',
+    'game/test/published-audio.test.mjs',
+    'game/test/published-cue-inspection.test.mjs',
+    'game/test/published-cue-closure.test.mjs',
+    'game/test/media-preparation.test.mjs',
+    'game/test/destruction-audio.test.mjs',
+    'game/test/destruction-level.test.mjs',
+    'game/test/human-reaction-audio.test.mjs',
+    'game/test/classic-catch-audio.test.mjs',
+    'game/test/mp3.test.mjs',
+    'game/test/mp3-inspector.test.mjs',
+    'game/test/solo-soundtrack-admission-host.test.mjs',
     'game/test/soundtrack-player.test.mjs',
     'game/test/soundtrack-gain-leases.test.mjs',
     'game/test/audio-master.test.mjs',
@@ -49,6 +60,13 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
   }
   for (const path of [
     'game/ui/audio.mjs',
+    'game/ui/published-audio.mjs',
+    'game/published-cue-inspection.mjs',
+    'game/ui/media-preparation.mjs',
+    'game/mp3-inspection.mjs',
+    'game/ui/mp3-inspector.mjs',
+    'game/mp3-inspection-worker.mjs',
+    'game/test/helpers/pcm-wave.mjs',
     'game/ui/flight-information-source.mjs',
     'game/ui/flight-information-bridge.mjs',
     'game/ui/flight-information-host.mjs',
@@ -66,6 +84,7 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
       `Packaging changes require an exact-head playable build: ${path}`,
     );
   }
+  assert.ok(changedPaths.includes("      - 'game/audio/effects/**'"));
   assert.match(workflow, /permissions:\s+contents: read/);
   assert.match(
     step('Build the full game and separate Worlds playtest'),
