@@ -285,9 +285,10 @@ test('qualifier executes fresh capture only after the native key command and bef
     'report',
     'save',
     'selectedFontPostCommand',
+    'selectedFontSettlementOwner',
     'action',
     'return (async()=>{' + body + '})()',
-  )(page, report, async () => order.push('save'), true, { label: 'public-cancel-back' });
+  )(page, report, async () => order.push('save'), true, null, { label: 'public-cancel-back' });
   assert.deepEqual(order, ['read', 'fresh', 'read', 'save']);
   assert.deepEqual(JSON.parse(JSON.stringify(report.selectedFontPostCommandObservation)), {
     records: ['new'],

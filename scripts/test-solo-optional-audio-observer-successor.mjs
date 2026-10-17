@@ -17,10 +17,39 @@ const root = new URL('../', import.meta.url),
 const path = 'docs/performance/solo-optional-start-audio-e1cc-v4-plan.json',
   oldPath = 'docs/performance/solo-optional-start-audio-e1cc-v3-plan.json';
 const workflowPath = '.github/workflows/solo-remote-optional-start-audio-e1cc-v4-temporary.yml';
-const manifest = JSON.parse(await read(path)),
+const manifestBytes = await read(path);
+const manifest = JSON.parse(manifestBytes),
   old = JSON.parse(await read(oldPath)),
   workflow = (await read(workflowPath)).toString();
 const before = '34d95cb9fe471ca56c243f05c4330826ba822fb9';
+const executedBytes = await read(
+  'docs/performance/fixtures/solo-optional-start-audio/bab3-execution-source.json',
+);
+function executedV4(bytes, declaration, workflowBytes) {
+  assert.equal(hash(bytes), '8a1be51e842c364e616939097096971f71b6ed9629aecb38b4cf65a3f3d62162');
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.revision, 'bab3b2790944c6257f9c1f9b346839996bbefebb');
+  assert.equal(witness.tree, '4bdfc784e14b41ed5d32895b4fa139920f494a63');
+  assert.equal(witness.run, 39059454404);
+  assert.equal(witness.records.length, 6);
+  for (const [p, input] of [
+    [path, declaration],
+    [workflowPath, workflowBytes],
+  ]) {
+    const record = witness.records.find((r) => r.path === p);
+    assert.equal(input.length, record.bytes);
+    assert.equal(hash(input), record.sha256);
+  }
+  for (const record of witness.records) assert.match(record.blob, /^[a-f0-9]{40}$/);
+  return witness;
+}
+const executed = executedV4(executedBytes, manifestBytes, Buffer.from(workflow));
+test('executed bab3 V4 rejects changed witness or historical declaration/workflow', () => {
+  assert.throws(() => executedV4(Buffer.from('{}'), Buffer.from('{}'), Buffer.from(workflow)));
+  assert.throws(() => executedV4(executedBytes, Buffer.from('{}'), Buffer.from(workflow)));
+  assert.throws(() => executedV4(executedBytes, manifestBytes, Buffer.from(workflow + ' ')));
+});
+
 test('v4 preserves exact runtime/fixture/workload/bounds and admits only the declared observer correction', () => {
   const current = bindReadinessJob(manifest, 'chromium'),
     prior = bindReadinessJob(old, 'chromium');
@@ -57,7 +86,7 @@ test('v4 preserves exact runtime/fixture/workload/bounds and admits only the dec
   unchanged.release.observerCorrection = current.release.observerCorrection;
   assert.throws(() => validateReadinessPlan(unchanged));
 });
-test('exact before34d95 guard and current sparse/frozen inputs bind one unchanged e1cc row', async () => {
+test('executed before34d95 guard and exact bab3 sparse/frozen inputs bind one unchanged e1cc row', async () => {
   const terms = [
     'github.event.pull_request.number == 1544',
     'github.event.pull_request.head.repo.full_name == github.repository',
@@ -84,9 +113,18 @@ test('exact before34d95 guard and current sparse/frozen inputs bind one unchange
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(sparse.length, new Set(sparse).size);
   for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools, manifest.fixture]) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(hash(b), ref.sha256, ref.path);
+    const historical = executed.records.find((r) => r.path === ref.path);
+    if (historical) {
+      assert.deepEqual(ref, {
+        path: historical.path,
+        bytes: historical.bytes,
+        sha256: historical.sha256,
+      });
+    } else {
+      const b = await read(ref.path);
+      assert.equal(b.length, ref.bytes, ref.path);
+      assert.equal(hash(b), ref.sha256, ref.path);
+    }
     assert(sparse.includes(ref.path));
   }
   for (const p of [
