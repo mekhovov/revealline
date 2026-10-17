@@ -19,21 +19,22 @@ export const DARWIN_INVENTORY_LIMITS = Object.freeze({
   maximumBinaryBytes: 1024 ** 2,
   timeoutMs: 3000,
 });
-export const DARWIN_INVENTORY_FORMAT = 'SoloDarwinProcessInventoryV2';
+export const DARWIN_INVENTORY_FORMAT = 'SoloDarwinProcessInventoryV3';
 export const DARWIN_IDENTITY_KIND = 'private-unique-id-uint64';
 const MAX_UINT64 = (1n << 64n) - 1n;
 export function parseDarwinInventory(bytes) {
   assert(Buffer.isBuffer(bytes) && bytes.length <= DARWIN_INVENTORY_LIMITS.maximumOutputBytes);
   const lines = bytes.toString('utf8').split('\n');
   const format = lines.shift(),
-    v2 = format === DARWIN_INVENTORY_FORMAT;
+    v3 = format === DARWIN_INVENTORY_FORMAT,
+    v2 = v3 || format === 'SoloDarwinProcessInventoryV2';
   assert(v2 || format === 'SoloDarwinProcessInventoryV1', 'Darwin inventory format');
   assert.equal(lines.pop(), '', 'Incomplete Darwin inventory output');
   assert(lines.length < DARWIN_INVENTORY_LIMITS.maximumProcesses, 'Darwin process cap');
   const result = new Map();
   for (const line of lines) {
     const fields = line.split('\t');
-    assert.equal(fields.length, v2 ? 13 : 9, 'Darwin inventory row fields');
+    assert.equal(fields.length, v3 ? 16 : v2 ? 13 : 9, 'Darwin inventory row fields');
     const [
       pid,
       ppid,
@@ -48,6 +49,9 @@ export function parseDarwinInventory(bytes) {
       ruid,
       parentUniqueId,
       version,
+      pathStatus,
+      rssStatus,
+      tagStatus,
     ] = fields;
     for (const number of [pid, ppid, pgid, rss])
       assert(/^\d+$/.test(number) && Number.isSafeInteger(Number(number)), 'Darwin numeric field');
@@ -77,6 +81,21 @@ export function parseDarwinInventory(bytes) {
     assert(/^(?:[0-9a-f]{2}){0,4096}$/.test(path), 'Darwin executable path bound');
     const argv = Buffer.from(path, 'hex').toString('utf8');
     assert(!argv.includes('\0'), 'Darwin executable path');
+    if (v3) {
+      assert(['0', '1', '2'].includes(pathStatus) && ['0', '1', '2'].includes(rssStatus));
+      assert(['0', '1', '2', '3'].includes(tagStatus));
+      const unobserved = pathStatus === '0' && rssStatus === '0' && tagStatus === '0';
+      assert(unobserved || (pathStatus !== '0' && rssStatus !== '0'), 'Partial detail observation');
+      assert.equal(
+        incomplete === '1',
+        pathStatus === '2' || rssStatus === '2' || tagStatus === '3',
+      );
+      assert.equal(tagged === '1', tagStatus === '2', 'Owner tag provenance');
+      if (unobserved) assert(argv === '' && rss === '0', 'Unobserved details cannot carry values');
+      if (rssStatus !== '1') assert.equal(rss, '0', 'Unknown resident memory is not measured');
+      if (pathStatus === '1')
+        assert(argv.startsWith('/'), 'Observed executable path must be absolute');
+    }
     result.set(Number(pid), {
       pid: Number(pid),
       ppid: Number(ppid),
@@ -87,6 +106,15 @@ export function parseDarwinInventory(bytes) {
       argv,
       ownerTagged: tagged === '1',
       inspectionIncomplete: incomplete === '1',
+      ...(v3
+        ? {
+            pathInspection: ['unobserved', 'complete', 'unavailable'][Number(pathStatus)],
+            rssInspection: ['unobserved', 'complete', 'unavailable'][Number(rssStatus)],
+            ownerTagInspection: ['unobserved', 'absent', 'present', 'unavailable'][
+              Number(tagStatus)
+            ],
+          }
+        : {}),
       ...(v2
         ? {
             identityKind: DARWIN_IDENTITY_KIND,
@@ -131,10 +159,21 @@ export function createDarwinProcessInventory(environment = process.env) {
     });
     assert(
       output.subarray(0, output.indexOf(10)).toString() === DARWIN_INVENTORY_FORMAT,
-      'Fresh Darwin helper requires V2 identity',
+      'Fresh Darwin helper requires V3 identity and detail provenance',
     );
     const rows = parseDarwinInventory(output);
     for (const row of rows.values()) {
+      if (selector === 'all' && row.state !== 'Z') {
+        assert(
+          row.pathInspection !== 'unobserved' && row.rssInspection !== 'unobserved',
+          'Live full inventory omitted detail inspection',
+        );
+        if (token)
+          assert(
+            row.ownerTagInspection !== 'unobserved',
+            'Live full inventory omitted owner tag inspection',
+          );
+      }
       const prior = previous.get(row.pid);
       assert(
         !(prior?.birth === row.birth && prior.state === 'Z' && row.state !== 'Z'),

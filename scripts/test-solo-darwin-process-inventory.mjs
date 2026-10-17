@@ -15,6 +15,8 @@ import {
 } from './solo-darwin-process-inventory.mjs';
 import {
   isOwnedProcess,
+  darwinForeignSystemProcessWitness,
+  collectUnattributedProcesses,
   ownedCommand,
   spawnedLeaderIdentity,
 } from './run-solo-remote-correctness.mjs';
@@ -44,6 +46,18 @@ const v2row = (change = {}) => ({
   ...change,
 });
 const v2bytes = (rows = [v2row()]) =>
+  Buffer.from(
+    'SoloDarwinProcessInventoryV2\n' + rows.map((r) => Object.values(r).join('\t') + '\n').join(''),
+  );
+
+const v3row = (change = {}) => ({
+  ...v2row(),
+  pathStatus: '1',
+  rssStatus: '1',
+  tagStatus: '1',
+  ...change,
+});
+const v3bytes = (rows = [v3row()]) =>
   Buffer.from(
     DARWIN_INVENTORY_FORMAT + '\n' + rows.map((r) => Object.values(r).join('\t') + '\n').join(''),
   );
@@ -103,7 +117,7 @@ test('Darwin incomplete native inspection stays explicit, never fabricated as ze
   assert.equal(parsed.get(42).inspectionIncomplete, true);
 });
 
-async function helperFixture(t, outputs = [v2bytes().toString()]) {
+async function helperFixture(t, outputs = [v3bytes().toString()]) {
   const dir = await realpath(await mkdtemp(join(tmpdir(), 'darwin-inventory-test-')));
   t.after(() => rm(dir, { recursive: true, force: true }));
   const binary = join(dir, 'inventory');
@@ -308,17 +322,19 @@ test('V2 retains exact uint64 lifetime and exec metadata without numeric roundin
 
 test('fresh helpers cannot admit legacy identities and reject same-lifetime zombie resurrection', async (t) => {
   const old = await helperFixture(t, [bytes().toString()]);
-  assert.throws(() => createDarwinProcessInventory(old.environment).all(), /requires V2/);
+  assert.throws(() => createDarwinProcessInventory(old.environment).all(), /requires V3/);
+  const oldV2 = await helperFixture(t, [v2bytes().toString()]);
+  assert.throws(() => createDarwinProcessInventory(oldV2.environment).all(), /requires V3/);
   const fixture = await helperFixture(t, [
-    v2bytes([v2row({ state: 'Z' })]).toString(),
-    v2bytes().toString(),
+    v3bytes([v3row({ state: 'Z' })]).toString(),
+    v3bytes().toString(),
   ]);
   const inventory = createDarwinProcessInventory(fixture.environment);
   assert.equal(inventory.all().get(42).state, 'Z');
   assert.throws(() => inventory.oneSync(42), /zombie identity returned live/);
   const recycled = await helperFixture(t, [
-    v2bytes([v2row({ state: 'Z' })]).toString(),
-    v2bytes([v2row({ birth: '00000000000000001043' })]).toString(),
+    v3bytes([v3row({ state: 'Z' })]).toString(),
+    v3bytes([v3row({ birth: '00000000000000001043' })]).toString(),
   ]);
   const next = createDarwinProcessInventory(recycled.environment);
   next.all();
@@ -356,4 +372,233 @@ test('executed V1 sources and declarations remain an immutable independent Git w
   const changed = JSON.parse(bytes);
   changed.files[0].sha256 = '0'.repeat(64);
   assert.throws(() => verify(Buffer.from(JSON.stringify(changed, null, 2) + '\n')));
+});
+
+test('V3 detail provenance rejects contradictions and preserves legacy absence of evidence', () => {
+  const ordinary = parseDarwinInventory(v3bytes()).get(42);
+  assert.equal(ordinary.pathInspection, 'complete');
+  assert.equal(ordinary.rssInspection, 'complete');
+  assert.equal(ordinary.ownerTagInspection, 'absent');
+  const unknown = parseDarwinInventory(
+    v3bytes([v3row({ rss: '0', incomplete: '1', rssStatus: '2', tagStatus: '3' })]),
+  ).get(42);
+  assert.equal(unknown.pathInspection, 'complete');
+  assert.equal(unknown.inspectionIncomplete, true);
+  const identityOnly = parseDarwinInventory(
+    v3bytes([v3row({ path: '', rss: '0', pathStatus: '0', rssStatus: '0', tagStatus: '0' })]),
+  ).get(42);
+  assert.equal(identityOnly.pathInspection, 'unobserved');
+  for (const change of [
+    { pathStatus: '3' },
+    { rssStatus: '-1' },
+    { tagStatus: '4' },
+    { pathStatus: '0' },
+    { rssStatus: '0' },
+    { incomplete: '1' },
+    { tagged: '1' },
+    { tagStatus: '2' },
+    { tagStatus: '3' },
+    { rssStatus: '2', incomplete: '1' },
+    { path: Buffer.from('comm').toString('hex') },
+    { pathStatus: '0', rssStatus: '0', tagStatus: '0' },
+    { pathStatus: '0', rssStatus: '0', tagStatus: '0', path: '', rss: '0', incomplete: '1' },
+  ])
+    assert.throws(() => parseDarwinInventory(v3bytes([v3row(change)])), JSON.stringify(change));
+  assert.throws(() => parseDarwinInventory(v3bytes().subarray(0, -1)));
+  assert.throws(() =>
+    parseDarwinInventory(
+      Buffer.from(DARWIN_INVENTORY_FORMAT + '\n' + Object.values(v2row()).join('\t') + '\n'),
+    ),
+  );
+  for (const old of [bytes(), v2bytes()])
+    assert.equal(parseDarwinInventory(old).get(42).pathInspection, undefined);
+});
+function foreignModel() {
+  const root = (pid, ppid, pgid, birth, parentUniqueId, version) =>
+    v3row({
+      pid: String(pid),
+      ppid: String(ppid),
+      pgid: String(pgid),
+      birth: String(birth).padStart(20, '0'),
+      parentUniqueId: String(parentUniqueId),
+      version: String(version),
+      euid: '0',
+      ruid: '0',
+      path: Buffer.from('/system/parent').toString('hex'),
+      rss: '0',
+      rssStatus: '2',
+      tagStatus: '0',
+      incomplete: '1',
+    });
+  const all = parseDarwinInventory(
+    v3bytes([
+      root(1025, 1, 1017, 1025, 1, 100),
+      root(1017, 1, 1017, 1017, 1, 90),
+      v3row({
+        pid: '5297',
+        ppid: '5208',
+        pgid: '5297',
+        birth: '00000000000000005297',
+        parentUniqueId: '5208',
+        version: '11092',
+      }),
+      {
+        ...root(5348, 1025, 1017, 5348, 1025, 11196),
+        path: Buffer.from('/bin/ps').toString('hex'),
+        tagStatus: '3',
+      },
+    ]),
+  );
+  return {
+    row: all.get(5348),
+    all,
+    before: new Map([
+      [1025, { ...all.get(1025) }],
+      [1017, { ...all.get(1017) }],
+    ]),
+    owned: new Map([[5297, all.get(5297)]]),
+    leader: 5297,
+    record: { foreignSystemProcesses: [] },
+  };
+}
+const witnessFor = (m) =>
+  darwinForeignSystemProcessWitness(m.row, m.before, m.all, m.owned, m.leader);
+test('actual collector retains exact foreign provenance without ownership or Linux exemption', () => {
+  const m = foreignModel();
+  assert.equal(isOwnedProcess(m.row, m.all, m.owned, m.leader, false), false);
+  assert.deepEqual(
+    collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, m.record, true),
+    [],
+  );
+  assert.equal(m.record.foreignSystemProcesses.length, 1);
+  const w = m.record.foreignSystemProcesses[0];
+  assert.equal(w.format, 'SoloForeignSystemProcessWitnessV1');
+  assert.equal(w.process.executable, '/bin/ps');
+  assert.equal(w.process.pathInspection, 'complete');
+  assert.deepEqual(w.parentBefore, w.parent);
+  assert.deepEqual(w.groupBefore, w.group);
+  assert.equal(w.leader.euid, 501);
+  assert(Buffer.byteLength(JSON.stringify(w)) < 2048);
+  assert.deepEqual(
+    collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, m.record, true),
+    [],
+  );
+  assert.equal(m.record.foreignSystemProcesses.length, 1);
+  assert.equal(m.owned.has(m.row.pid), false);
+  assert.deepEqual(collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, {}, false), [
+    m.row,
+  ]);
+});
+test('foreign rule rejects old ps metadata, unknown descendants, missing leader IDs and lifetime changes', () => {
+  for (const change of [
+    (m) => delete m.row.pathInspection,
+    (m) => (m.row.pathInspection = 'unavailable'),
+    (m) => (m.row.pathInspection = 'unobserved'),
+    (m) => (m.row.argv = '/usr/bin/ps'),
+    (m) => (m.row.argv = '/bin/sh'),
+    (m) => (m.row.argv = '/Applications/WebKit.app/WebProcess'),
+    (m) => (m.row.ownerTagged = true),
+    (m) => (m.row.ownerTagInspection = 'present'),
+    (m) => delete m.row.ownerTagInspection,
+    (m) => delete m.row.rssInspection,
+    (m) => (m.row.euid = 501),
+    (m) => (m.row.ruid = 501),
+    (m) => (m.row.state = undefined),
+    (m) => (m.row.identityKind = 'timestamp'),
+    (m) => (m.row.parentUniqueId = '999'),
+    (m) => (m.row.ppid = 1),
+    (m) => m.before.delete(m.row.ppid),
+    (m) => m.before.delete(m.row.pgid),
+    (m) => m.all.delete(m.row.ppid),
+    (m) => m.all.delete(m.row.pgid),
+    (m) => (m.all.get(m.row.ppid).birth = '00000000000000009999'),
+    (m) => (m.all.get(m.row.pgid).birth = '00000000000000009999'),
+    (m) => m.all.get(m.row.ppid).version++,
+    (m) => delete m.all.get(m.row.ppid).version,
+    (m) => delete m.before.get(m.row.ppid).version,
+    (m) => m.all.get(m.row.pgid).version++,
+    (m) => (m.all.get(m.row.ppid).ruid = 501),
+    (m) => (m.all.get(m.row.pgid).euid = 501),
+    (m) => (m.all.get(m.row.ppid).pgid = 999),
+    (m) => (m.all.get(m.row.pgid).pgid = 999),
+    (m) => (m.all.get(m.row.ppid).ownerTagged = true),
+    (m) => (m.row.pgid = m.leader),
+    (m) => (m.row.ppid = m.leader),
+    (m) => m.owned.set(m.row.pid, m.row),
+    (m) => m.owned.set(m.row.ppid, m.all.get(m.row.ppid)),
+    (m) => m.owned.set(m.row.pgid, m.all.get(m.row.pgid)),
+    ...[undefined, NaN, -1, 0, 4294967296].flatMap((value) => [
+      (m) => (m.owned.get(m.leader).euid = value),
+      (m) => (m.owned.get(m.leader).ruid = value),
+    ]),
+  ]) {
+    const m = foreignModel();
+    change(m);
+    assert.equal(witnessFor(m), null, String(change));
+  }
+  const m = foreignModel();
+  delete m.row.pathInspection;
+  delete m.row.rssInspection;
+  delete m.row.ownerTagInspection;
+  assert.deepEqual(
+    collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, m.record, true),
+    [m.row],
+  );
+});
+test('foreign witness cap fails closed while leaving owned cleanup collection available', () => {
+  const m = foreignModel();
+  m.all.delete(m.row.pid);
+  for (let i = 0; i < 65; i++) {
+    const row = { ...m.row, pid: 6000 + i, birth: String(6000 + i).padStart(20, '0') };
+    m.all.set(row.pid, row);
+  }
+  const ambiguous = collectUnattributedProcesses(
+    m.all,
+    m.before,
+    m.owned,
+    m.leader,
+    m.record,
+    true,
+  );
+  assert.equal(m.record.foreignSystemProcesses.length, 64);
+  assert.equal(m.record.foreignSystemProcessOverflow, true);
+  assert.equal(ambiguous.length, 1);
+  assert.equal(ambiguous[0].pid, 6064);
+  assert.equal(
+    collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, m.record, true).length,
+    1,
+  );
+  assert.equal(m.record.foreignSystemProcesses.length, 64);
+  assert.equal(m.owned.get(m.leader).pid, 5297);
+});
+test('actual live owner wires classifier after unchanged resource guard and keeps fresh signal identity', async () => {
+  const source = await readFile(
+    new URL('./run-solo-remote-correctness.mjs', import.meta.url),
+    'utf8',
+  );
+  assert(
+    source.indexOf('record.ambiguous = collectUnattributedProcesses(') >
+      source.indexOf('current.some((row) => row.inspectionIncomplete)'),
+  );
+  assert(source.includes("violation ??= 'owned-process-inspection-incomplete'"));
+  assert(source.includes('if (same(row, fresh) && live(fresh))'));
+});
+
+test('fresh full-inventory provider rejects identity-only and unobserved-token live output', async (t) => {
+  const identityOnly = v3bytes([
+    v3row({ path: '', rss: '0', pathStatus: '0', rssStatus: '0', tagStatus: '0' }),
+  ]).toString();
+  const one = await helperFixture(t, [identityOnly]);
+  assert.equal(createDarwinProcessInventory(one.environment).oneSync(42).pid, 42);
+  const all = await helperFixture(t, [identityOnly]);
+  assert.throws(() => createDarwinProcessInventory(all.environment).all(), /omitted detail/);
+  const missingTag = await helperFixture(t, [v3bytes([v3row({ tagStatus: '0' })]).toString()]);
+  assert.equal(createDarwinProcessInventory(missingTag.environment).all().size, 1);
+  assert.throws(
+    () =>
+      createDarwinProcessInventory(missingTag.environment).all(
+        '01234567-89ab-cdef-0123-456789abcdef',
+      ),
+    /omitted owner tag/,
+  );
 });
