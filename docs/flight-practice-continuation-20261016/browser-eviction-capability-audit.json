@@ -1,0 +1,110 @@
+{
+  "format": "IsolatedBrowserEvictionCapabilityAudit.v2",
+  "passed": true,
+  "claim": "Fresh owned headless Chrome profile performed browser-managed eviction under an explicitly reduced temporary storage pool, with unchanged native startup timer.",
+  "notQualified": [
+    "App eviction recovery",
+    "Default-policy or physical disk-pressure eviction",
+    "Observed numeric counter delta",
+    "Persistent-storage or installed-app eviction policy",
+    "Hardware behavior"
+  ],
+  "receipt": {
+    "path": "/tmp/practice-eviction-capability-v2-20261016.hj51KA/observation.json",
+    "sha256": "4902eb57abb08d32de4ec45793d511ab188debd2de960d58ccae6cf5ce086664"
+  },
+  "protocol": {
+    "path": "/tmp/practice-eviction-capability-v2-20261016.hj51KA/probe.mjs",
+    "sha256": "671f02141d418d5adf2a62085b4737cb923dbad3532b06fdf2be1ebea5866477"
+  },
+  "browserVersion": "Google Chrome 155.0.8059.80",
+  "sourceBinding": "Public source tag matches reported installed Chrome version; not a whole-framework binary attestation.",
+  "sources": [
+    {
+      "file": "quota_features.cc",
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/155.0.8059.80/storage/browser/quota/quota_features.cc?format=TEXT",
+      "sha256": "27314503b732921a783857b624f9204b481e245cbf70ce964f24a851a6e206b5",
+      "bytes": 1705
+    },
+    {
+      "file": "quota_settings.cc",
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/155.0.8059.80/storage/browser/quota/quota_settings.cc?format=TEXT",
+      "sha256": "93e3cff79b686862c46dc502cb8f58b41b9c492d2c4e5e7d401cf2065347e98f",
+      "bytes": 7081
+    },
+    {
+      "file": "quota_temporary_storage_evictor.cc",
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/155.0.8059.80/storage/browser/quota/quota_temporary_storage_evictor.cc?format=TEXT",
+      "sha256": "192d16c79206c4362683a21e7f0f4167f8d424ee0a8ab74a1c750839876e1e6d",
+      "bytes": 9571
+    },
+    {
+      "file": "quota_manager_impl.h",
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/155.0.8059.80/storage/browser/quota/quota_manager_impl.h?format=TEXT",
+      "sha256": "662260f20c6fd5ea76dc796724c5a8f684cc07063f0f410e8ba05628c17ba3d0",
+      "bytes": 37509
+    },
+    {
+      "file": "quota_manager_impl.cc",
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/155.0.8059.80/storage/browser/quota/quota_manager_impl.cc?format=TEXT",
+      "sha256": "a97d5895f5aa3563819c0cb3db02fed59b2d90afe34bca434803efb4c3d052ac",
+      "bytes": 112503
+    },
+    {
+      "file": "quota_internals.ts",
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/155.0.8059.80/content/browser/resources/quota/quota_internals.ts?format=TEXT",
+      "sha256": "a528ede63e03f61c7fcbb9cf7e78bc57902189902d151673c5618e3343680b75",
+      "bytes": 9562
+    }
+  ],
+  "fixture": {
+    "origin": "http://127.0.0.1:61591",
+    "bytes": 1048576,
+    "sha256": "58c4557029f83dd6fa6e7d50f8802ef0c4301776d39c091d24c9ead0c4d8178a",
+    "cacheHashVerifiedAfterRestart": true
+  },
+  "evidence": {
+    "beforeCounter": "unavailable (evictor not yet constructed)",
+    "afterCounter": 1,
+    "afterRounds": 1,
+    "exactBucketRemoved": true,
+    "originalCacheAbsent": true,
+    "defaultComponentExtensionBucketRetained": true,
+    "effectivePool": "512.00 KB",
+    "firstEvictionAtMs": 306408.96341599996,
+    "elapsedMs": 307649.226666,
+    "cleanupCompleted": true,
+    "ownedProcessAbsenceRechecked": true
+  },
+  "images": [
+    {
+      "name": "effective-pool-version.png",
+      "bytes": 162374,
+      "sha256": "4db416d95853218bb649d5034eabcf341ad00ba7d894a1cf939225202d3608bc"
+    },
+    {
+      "name": "before-quota.png",
+      "bytes": 45814,
+      "sha256": "300ecc13a57bcbe3856b0e1cbf40abfc9730ebc085c7c65f742f2e7b91881e7f"
+    },
+    {
+      "name": "after-quota.png",
+      "bytes": 47210,
+      "sha256": "15dc5242c6d1f4d99a7bea35a293f10ae592268daf21ea2acb272c7f1be15d39"
+    }
+  ],
+  "visualReview": "after-quota.png was inspected: shows pool512.00KB, evicted buckets1, eviction rounds1, errors0. Bucket disappearance is verified from the recorded exact usage-table DOM rows, not claimed visible in the Summary screenshot.",
+  "prior": [
+    {
+      "path": "/tmp/practice-eviction-capability-20261016.denCir/observation.json",
+      "sha256": "a00ac9666ad891328952a75c70b7e91dee8eee159d6a196047adb7c7803b87d6",
+      "retainedAs": "inconclusive"
+    },
+    {
+      "path": "/tmp/practice-eviction-capability-20261016-retry.SW3sE2/observation.json",
+      "sha256": "3380b83eeba55e44b21651e1f2bd1f41653969c94a712115268a6d8979385207",
+      "retainedAs": "inconclusive"
+    }
+  ],
+  "reuse": "Feasible narrow capability recipe. Before integrating into an app recovery observer, obtain review of the explicit controlled-policy scope and independently verify public recovery from genuine origin-wide loss; do not relabel cache-entry deletion/quota-denial receipts or promise record retention."
+}

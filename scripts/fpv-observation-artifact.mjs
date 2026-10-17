@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir, mkdtemp, rm, stat, realpath } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { performance } from 'node:perf_hooks';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -130,14 +131,21 @@ export async function loadFPVObservationArtifact(
   };
 }
 
-export function fpvObservationDeadline(promise, milliseconds, label) {
+export async function fpvObservationDeadline(promise, milliseconds, label) {
+  const expires = performance.now() + milliseconds;
   let timer;
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => {
-      timer = setTimeout(() => reject(new Error(`${label} timed out.`)), milliseconds);
-    }),
-  ]).finally(() => clearTimeout(timer));
+  try {
+    const value = await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`${label} timed out.`)), milliseconds);
+      }),
+    ]);
+    if (performance.now() >= expires) throw new Error(`${label} timed out.`);
+    return value;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 export async function closeFPVObservationResources(operations) {

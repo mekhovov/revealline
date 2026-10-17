@@ -92,14 +92,17 @@ export function historicalHUDSnapshot() {
 
 async function bound(work, ms, label) {
   assert(ms > 0, `Deadline exceeded: ${label}`);
+  const deadline = performance.now() + ms;
   let timer;
   try {
-    return await Promise.race([
+    const result = await Promise.race([
       Promise.resolve().then(work),
       new Promise((_, reject) => {
         timer = setTimeout(() => reject(Error(`Deadline exceeded: ${label}`)), ms);
       }),
     ]);
+    if (performance.now() >= deadline) throw Error(`Deadline exceeded: ${label}`);
+    return result;
   } finally {
     clearTimeout(timer);
   }
@@ -193,12 +196,19 @@ async function space(g) {
     action: 'ordinary press on focused viewport',
   });
 }
+export function historicalHeightIncreased(initial, current, minimum = 0.1) {
+  assert([initial, current, minimum].every(Number.isFinite));
+  assert(initial >= 0 && current >= 0 && initial <= 1.1 && current <= 1.1);
+  assert(minimum > 0 && minimum <= 0.2);
+  // A gravity-driven fall or reset is not resumed upward control.
+  return current - initial >= minimum - 1e-9;
+}
 async function moving(g, initial, minimum = 0.1) {
   await down(g, 'w');
   try {
     for (;;) {
       const snapshot = await read(g, 'active');
-      if (Math.abs(snapshot.height - initial) >= minimum) return snapshot;
+      if (historicalHeightIncreased(initial, snapshot.height, minimum)) return snapshot;
       await operation(g, 'wait for visible height movement', () => delay(50));
     }
   } finally {
@@ -304,6 +314,8 @@ export async function prepareHistoricalAcademySession(
     void acquisition
       .then((handle) => {
         if (g.closed || g.failed) return handle.dispose();
+        // Retain ownership even if the operation's post-await deadline check fails.
+        g.document = handle;
       })
       .catch(() => {
         g.lateOwnershipFailure = true;
@@ -334,7 +346,9 @@ export async function prepareHistoricalAcademySession(
     if (startedUI.phase === 'disarmed') {
       // Old native Start can precede renderer readiness. Preserve that attempt,
       // then wait for the visible Arm button itself to become enabled.
-      await publicControl(g, '#academy-flight-resume', 'press', undefined, { waitEnabled: true });
+      await publicControl(g, '#academy-flight-resume', 'press', undefined, {
+        waitEnabled: true,
+      });
       receipt.startAttempt.additionalArmActivated = true;
     } else assert.equal(startedUI.phase, 'active', 'Unexpected result of explicit Start.');
     const initial = await read(g, 'active');
@@ -360,9 +374,27 @@ export async function snapshotPausedAfterTransfer(g) {
   assert.equal(g.stage, 'running-before-transfer');
   try {
     // Caller foregrounds B naturally. Do not blur A by script or silently pause it here.
+    const transferDeadline = performance.now() + 1500;
+    g.receipt.transferDiagnostics = { attempts: 0, maximumWaitMs: 1500 };
     for (;;) {
+      assert(
+        performance.now() < transferDeadline,
+        'Native focus transfer did not pause within 1500ms.',
+      );
       const raw = await operation(g, 'wait for natural background pause', () =>
-        g.page.evaluate(historicalHUDSnapshot),
+        bound(
+          () => g.page.evaluate(historicalHUDSnapshot),
+          transferDeadline - performance.now(),
+          'read transfer snapshot within 1500ms',
+        ),
+      );
+      g.receipt.transferDiagnostics.attempts++;
+      g.receipt.transferDiagnostics.lastElapsedMs = Math.round(performance.now() - g.started);
+      g.receipt.transferDiagnostics.lastSnapshot = Object.fromEntries(
+        Object.entries(raw).map(([key, value]) => [
+          key,
+          typeof value === 'string' ? value.slice(0, 512) : value,
+        ]),
       );
       if (raw.phase === 'paused') {
         assert(

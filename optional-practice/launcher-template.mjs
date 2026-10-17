@@ -7,6 +7,7 @@ export function installOptionalLauncher(
     inspectOptionalOffline,
     prepareOptionalOffline,
     removeOptionalOffline,
+    optionalOfflineFailureMessage,
     mountPracticeNavigation,
   },
 ) {
@@ -36,6 +37,9 @@ export function installOptionalLauncher(
       game: 'Main game',
       install: 'Add to home screen',
       download: 'Download for offline use',
+      downloadFailed: 'Download not completed. Check connection and browser storage, then retry.',
+      removeFailed:
+        'Could not remove offline files. Check browser storage permissions, then retry.',
       remove: 'Remove this offline copy (keep records)',
       support: 'Support / report a problem',
       'storage-note':
@@ -68,6 +72,10 @@ export function installOptionalLauncher(
       game: 'Основна гра',
       install: 'На початковий екран',
       download: 'Завантажити для роботи офлайн',
+      downloadFailed:
+        'Не вдалося завершити завантаження. Перевірте з’єднання й сховище браузера та повторіть спробу.',
+      removeFailed:
+        'Не вдалося видалити офлайн-файли. Перевірте дозволи сховища браузера та повторіть спробу.',
       remove: 'Видалити цю офлайн-копію (зберегти записи)',
       support: 'Підтримка / повідомити про проблему',
       'storage-note':
@@ -89,7 +97,22 @@ export function installOptionalLauncher(
     launcherReady = false,
     verificationUnknown = false,
     verificationUnavailable = false,
-    stateKey = 'status';
+    stateKey = 'status',
+    failureFeedback = null;
+  const failureMessage = () => {
+    const fallback =
+      copy[locale][failureFeedback.operation === 'remove' ? 'removeFailed' : 'downloadFailed'];
+    if (typeof optionalOfflineFailureMessage !== 'function') return fallback;
+    try {
+      return optionalOfflineFailureMessage(
+        failureFeedback.error,
+        locale,
+        failureFeedback.operation,
+      );
+    } catch {
+      return fallback;
+    }
+  };
   const entryURL = (value) => {
     const url = new URL(value.entry, value.scope);
     url.searchParams.set('lang', locale);
@@ -126,7 +149,7 @@ export function installOptionalLauncher(
       'install-note',
     ])
       if ($(name)) $(name).textContent = copy[locale][name];
-    $('status').textContent = copy[locale][stateKey];
+    $('status').textContent = failureFeedback ? failureMessage() : copy[locale][stateKey];
     if (description) {
       $('title').textContent = description.copy[locale].name;
       for (const name of ['description', 'purpose', 'inputs', 'requirements', 'firstFlight'])
@@ -162,6 +185,7 @@ export function installOptionalLauncher(
   };
   let restoreRevision = 0;
   async function restore() {
+    failureFeedback = null;
     const revision = ++restoreRevision;
     const entries = [];
     let invalid = false,
@@ -367,16 +391,15 @@ export function installOptionalLauncher(
     $('download').onclick = async () => {
       if (!available || busy || checking) return;
       busy = true;
+      failureFeedback = null;
       $('download').disabled = true;
       try {
         await prepareOptionalOffline({ packageId, location: { href: entryURL(available) } });
         await prepareOptionalOffline({ packageId, location });
         await restore();
       } catch (error) {
-        $('status').textContent =
-          (locale === 'uk'
-            ? 'Завантаження не завершено. Повторіть або відкрийте попередню версію. '
-            : 'Download not completed. Retry or open the previous version. ') + error.message;
+        failureFeedback = { error, operation: 'prepare' };
+        render();
       } finally {
         busy = false;
         $('download').disabled = false;
@@ -387,6 +410,7 @@ export function installOptionalLauncher(
       const value = repairReference ?? prepared;
       if (!value || busy || checking) return;
       busy = true;
+      failureFeedback = null;
       try {
         await removeOptionalOffline({ packageId, location: { href: entryURL(value) } });
         prepared = null;
@@ -394,8 +418,8 @@ export function installOptionalLauncher(
         $('previous').hidden = true;
         stateKey = 'available';
         await restore();
-      } catch {
-        stateKey = 'repair';
+      } catch (error) {
+        failureFeedback = { error, operation: 'remove' };
         render();
       } finally {
         busy = false;

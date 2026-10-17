@@ -19,12 +19,59 @@ import { mountFlightNotebook } from '../../optional-practice/civilian-fpv/notebo
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
+function registerOfflineFeedbackTests() {
+  for (const locale of ['en', 'uk'])
+    for (const kind of ['overall', 'cancelled', 'unknown'])
+      test(`Academy offline feedback ${locale} ${kind} uses safe localized reasons`, async (t) => {
+        const previous = getLocale();
+        t.after(() => setLocale(previous));
+        const error =
+          kind === 'cancelled'
+            ? new DOMException('secret', 'AbortError')
+            : new Error(
+                kind === 'overall'
+                  ? 'Download exceeded five minutes. Retry on a faster connection.'
+                  : 'secret backend detail',
+              );
+        const f = await fixture(t, {
+          notebookFactory: null,
+          studioFactory: null,
+          url: `https://example.test/optional-practice/civilian-fpv/?lang=${locale}`,
+          serviceWorker: {
+            getRegistration: async () => undefined,
+            register: async () => {
+              throw error;
+            },
+          },
+        });
+        f.$('install-offline').click();
+        await waitFor(() => !f.$('install-offline').disabled);
+        const text = f.$('transfer-status').textContent;
+        assert.doesNotMatch(text, /secret/);
+        assert.match(
+          text,
+          kind === 'overall'
+            ? locale === 'uk'
+              ? /п’ять хвилин/
+              : /five minutes/
+            : kind === 'cancelled'
+              ? locale === 'uk'
+                ? /скасовано/
+                : /cancelled/
+              : locale === 'uk'
+                ? /Не вдалося/
+                : /failed/,
+        );
+      });
+}
+
 const html = parse(
   await readFile(
     new URL('../../optional-practice/civilian-fpv/index.html', import.meta.url),
     'utf8',
   ),
 );
+registerOfflineFeedbackTests();
 async function fixture(
   t,
   {
@@ -1157,7 +1204,8 @@ test('unavailable offline capability stays explanatory and a failed prepare neve
   });
   f.$('install-offline').click();
   await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(f.$('transfer-status').textContent, 'Offline package unavailable');
+  assert.match(f.$('transfer-status').textContent, /Offline preparation failed/);
+  assert.doesNotMatch(f.$('transfer-status').textContent, /Offline package unavailable/);
   assert.equal(f.$('install-offline').disabled, false);
   assert.equal(f.$('remove-offline').disabled, false);
 });

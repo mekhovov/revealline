@@ -1,0 +1,50 @@
+TAP version 13
+# Subtest: archive admission rejects a missing transitive import even when member hashes and counts match
+ok 1 - archive admission rejects a missing transitive import even when member hashes and counts match
+  ---
+  duration_ms: 210.097709
+  ...
+# Subtest: SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+ok 2 - SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+  ---
+  duration_ms: 2022.603333
+  ...
+# Subtest: optional candidate is byte-reproducible and inventories only its selected public dependency closure
+ok 3 - optional candidate is byte-reproducible and inventories only its selected public dependency closure
+  ---
+  duration_ms: 464.15125
+  ...
+# Subtest: tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+ok 4 - tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+  ---
+  duration_ms: 553.020209
+  ...
+# Subtest: source and generated-worker provenance are mandatory and bounded
+ok 5 - source and generated-worker provenance are mandatory and bounded
+  ---
+  duration_ms: 714.203542
+  ...
+# Subtest: pinned generated launcher code still must match its committed template and isolated closure
+ok 6 - pinned generated launcher code still must match its committed template and isolated closure
+  ---
+  duration_ms: 579.621291
+  ...
+# Subtest: new launcher cannot omit its failure-copy import or service even with updated member pins
+ok 7 - new launcher cannot omit its failure-copy import or service even with updated member pins
+  ---
+  duration_ms: 377.121959
+  ...
+# Subtest: pending human/device gates never become promotion approval and reviewed evidence pins are exact
+ok 8 - pending human/device gates never become promotion approval and reviewed evidence pins are exact
+  ---
+  duration_ms: 594.031333
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8329.051958

@@ -4,6 +4,7 @@ import { mkdtemp, readFile, writeFile, rm, mkdir, symlink } from 'node:fs/promis
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { performance } from 'node:perf_hooks';
 import {
   FPV_OBSERVATION_PROTOCOLS,
   validateFPVArtifactBinding,
@@ -20,6 +21,21 @@ import { buildOptionalPractice } from './build-optional-practice.mjs';
 import { createOptionalPackageCandidate } from '../publishing/optional-package-candidate.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+
+test('shared observation deadline rejects a late response before delayed timer dispatch', async () => {
+  await assert.rejects(
+    fpvObservationDeadline(
+      Promise.resolve().then(() => {
+        const end = performance.now() + 25;
+        while (performance.now() < end) {}
+        return 'too late';
+      }),
+      5,
+      'Late native response',
+    ),
+    /Late native response timed out/,
+  );
+});
 const binding = { version: 'v1.2.3', sourceRevision: 'b'.repeat(40), sourceTree: 'c'.repeat(40) };
 const plan = (kind) => ({
   format: `revealline-fpv-${kind}-plan.v1`,

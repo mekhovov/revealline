@@ -1,0 +1,201 @@
+{
+  "format": "PracticeEvictionGuideIndependentAudit.v1",
+  "passed": true,
+  "report": {
+    "path": "/tmp/practice-eviction-guides-20261016-run2/observation.json",
+    "bytes": 269831,
+    "sha256": "ff877acd1b6352b39d16069729558546584bbfc5c4bee5efb47e3a603b516a5f"
+  },
+  "observer": {
+    "path": "practice-eviction-guide-observer-sections-20261016.mjs",
+    "bytes": 21920,
+    "sha256": "70ba680219f5cce1bd7b7736392322ce037fec09a39c7ddc84d1610e0e8ea639"
+  },
+  "sourceRevision": "11aa297825203fdd0dd4db075f5eaeb9aa34660e",
+  "sourceTree": "13654b1fe99d3fd147fd20ecbfcd30721d1703df",
+  "browser": "155.0.8059.80",
+  "admission": {
+    "format": "revealline-optional-package-admission.v1",
+    "version": "v0.151.1",
+    "sourceRevision": "11aa297825203fdd0dd4db075f5eaeb9aa34660e",
+    "sourceTree": "13654b1fe99d3fd147fd20ecbfcd30721d1703df",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "b27b320f57ac41afe5c6ee08392271930c86f117c0226d33cc84fa806f3b3b13",
+        "files": 94,
+        "bytes": 3767920
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "94b45cbec77d9680f587a90a03b2f7f6b3d087908fcd7b6f0c1c2f6cb141ab27",
+        "files": 101,
+        "bytes": 6785667
+      },
+      {
+        "id": "fpv-worlds",
+        "revision": "87378f9c3dbb72f2ad4c42d265a459e8963124194f2cdd6f9490ed5a9a365d7b",
+        "files": 162,
+        "bytes": 17583980
+      }
+    ],
+    "zipMembersVerified": true,
+    "publicEligible": false
+  },
+  "authorityCount": 9,
+  "servedSourceCount": 745,
+  "overlayCount": 394,
+  "changes": [
+    {
+      "id": "civilian-flight",
+      "members": 94,
+      "changed": [
+        "optional-package.json",
+        "optional-practice/civilian-flight/guide.html",
+        "optional-practice/civilian-flight/worker.js"
+      ]
+    },
+    {
+      "id": "civilian-fpv",
+      "members": 101,
+      "changed": [
+        "optional-package.json",
+        "optional-practice/civilian-fpv/guide.html",
+        "optional-practice/civilian-fpv/worker.js"
+      ]
+    },
+    {
+      "id": "fpv-worlds",
+      "members": 162,
+      "changed": [
+        "optional-package.json",
+        "optional-practice/fpv-worlds/guide.html",
+        "optional-practice/fpv-worlds/worker.js"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "en-civilian-flight",
+      "mainReturnLocale": "en",
+      "warningPhraseCount": 4
+    },
+    {
+      "id": "en-civilian-fpv",
+      "mainReturnLocale": "en",
+      "warningPhraseCount": 4
+    },
+    {
+      "id": "en-fpv-worlds",
+      "mainReturnLocale": "en",
+      "warningPhraseCount": 4
+    },
+    {
+      "id": "uk-civilian-flight",
+      "mainReturnLocale": "uk",
+      "warningPhraseCount": 4
+    },
+    {
+      "id": "uk-civilian-fpv",
+      "mainReturnLocale": "uk",
+      "warningPhraseCount": 4
+    },
+    {
+      "id": "uk-fpv-worlds",
+      "mainReturnLocale": "uk",
+      "warningPhraseCount": 4
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "en-civilian-flight-warning.png",
+      "bytes": 37628,
+      "sha256": "7a1c2e3e326672e53c2bed9fd9105e7c6cf0b65f6655bde972ece21e52ff82fe",
+      "width": 832,
+      "height": 113
+    },
+    {
+      "path": "en-civilian-fpv-warning.png",
+      "bytes": 37628,
+      "sha256": "7a1c2e3e326672e53c2bed9fd9105e7c6cf0b65f6655bde972ece21e52ff82fe",
+      "width": 832,
+      "height": 113
+    },
+    {
+      "path": "en-fpv-worlds-warning.png",
+      "bytes": 37628,
+      "sha256": "7a1c2e3e326672e53c2bed9fd9105e7c6cf0b65f6655bde972ece21e52ff82fe",
+      "width": 832,
+      "height": 113
+    },
+    {
+      "path": "uk-civilian-flight-warning.png",
+      "bytes": 87220,
+      "sha256": "6f2b62049ba82aeeb8c9118b7d2dfce5f5f5d96d1be170ba3e29bb26bef3dda0",
+      "width": 792,
+      "height": 282
+    },
+    {
+      "path": "uk-civilian-fpv-warning.png",
+      "bytes": 87220,
+      "sha256": "6f2b62049ba82aeeb8c9118b7d2dfce5f5f5d96d1be170ba3e29bb26bef3dda0",
+      "width": 792,
+      "height": 282
+    },
+    {
+      "path": "uk-fpv-worlds-warning.png",
+      "bytes": 87220,
+      "sha256": "6f2b62049ba82aeeb8c9118b7d2dfce5f5f5d96d1be170ba3e29bb26bef3dda0",
+      "width": 792,
+      "height": 282
+    }
+  ],
+  "uniqueScreenshotHashes": [
+    "7a1c2e3e326672e53c2bed9fd9105e7c6cf0b65f6655bde972ece21e52ff82fe",
+    "6f2b62049ba82aeeb8c9118b7d2dfce5f5f5d96d1be170ba3e29bb26bef3dda0"
+  ],
+  "rawRequestCount": 7,
+  "unexpectedRequests": 0,
+  "cleanup": true,
+  "pendingOperations": 0,
+  "limitations": [
+    "No app Play, simulator flight, installation, recovery or actual browser eviction exercised.",
+    "Source-shell guide/navigation check, not production or hosting qualification.",
+    "Automated text/geometry and PNG integrity only; visual review is a separate narrated observation, not human readability, assistive technology or physical-device certification."
+  ],
+  "priorAdmission": {
+    "format": "revealline-optional-package-admission.v1",
+    "version": "v0.151.1",
+    "sourceRevision": "1b339bfe6596290b6db17ae0e268e4c8a843071a",
+    "sourceTree": "08e5a779523e8e356cccc9c45b96340676c1c56d",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "ac5095b522fb0c5dbae9d47a1957d87c5778069afdf44b36b57532d8047156cf",
+        "files": 94,
+        "bytes": 3766433
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "bf6f874534664b4c347852a88c676fbdab4dfc9ea148a9e764722a445fe771d9",
+        "files": 101,
+        "bytes": 6784180
+      },
+      {
+        "id": "fpv-worlds",
+        "revision": "fb3d7563a837284537b859ecc92d07ce12039d1c362b149209ea26c06b723b3b",
+        "files": 162,
+        "bytes": 17582493
+      }
+    ],
+    "zipMembersVerified": true,
+    "publicEligible": false
+  },
+  "bothOriginalAdmissionsReproduced": true,
+  "log": {
+    "path": "/tmp/practice-eviction-guides-20261016-run2.log",
+    "bytes": 339,
+    "sha256": "6c7cb0ee02f70c540aec64037c0738f71742dce94065d3c8364f21a7e77efe28"
+  },
+  "helpersBeforeAfterMatchGit": true
+}

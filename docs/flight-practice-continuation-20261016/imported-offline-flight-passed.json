@@ -1,0 +1,2405 @@
+{
+  "format": "OptionalInstallationObservation.v1",
+  "passed": true,
+  "browserPreparationPassed": true,
+  "osInstallationStatus": "passed",
+  "standaloneWindowStatus": "passed",
+  "closedTabsRelaunch": {
+    "passed": true,
+    "closedPageCount": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "closedPageCount": 4,
+        "packages": [
+          "civilian-flight",
+          "civilian-fpv",
+          "fpv-worlds"
+        ],
+        "passed": true
+      }
+    ],
+    "packages": [
+      "civilian-flight",
+      "civilian-fpv",
+      "fpv-worlds"
+    ],
+    "networkProbeFailed": true
+  },
+  "browserRestart": {
+    "attempted": true,
+    "passed": true,
+    "closedPageCount": 4,
+    "contextClosed": true,
+    "packages": [
+      "civilian-flight",
+      "civilian-fpv",
+      "fpv-worlds"
+    ],
+    "networkProbeFailed": true
+  },
+  "harnessStable": true,
+  "createdAt": "2026-10-16T06:43:16.638Z",
+  "browser": "155.0.8059.80",
+  "scope": "All three apps in an isolated local persistent Chrome profile, admitted frozen runtime bytes and ordinary offline/profile/backup UI. All tabs/windows close before offline launcher and standalone app reopening; the persistent browser then closes and relaunches the same profile with browser-context offline enabled before app navigation. This is not an OS reboot or machine-wide airplane-mode claim. v0.0.0 holds the same candidate payload at an alternate path. v0.0.1 is a deliberately damaged local path fixture. No release is allocated. Progress comes from a scripted verified input import, not a human flight. No public deployment, arbitrary historical-model migration or physical radio claim.",
+  "transition": {
+    "kind": "same-payload-path-fixture",
+    "fromVersion": "v0.0.0",
+    "toVersion": "v0.151.1",
+    "changedFiles": [],
+    "previous": null
+  },
+  "envelopeSha256": "c271bc6c248844f756ba4c1a191e6008593d48c4d03b9e4d34836d6a174c73a6",
+  "sourceRevision": "b8aec0821087354ac8a6765a5b95c68d24dd9137",
+  "sourceTree": "3bafa19b36118173b1b19a9039d9572b09692f7b",
+  "artifacts": [
+    {
+      "id": "civilian-flight",
+      "distribution": {
+        "bytes": 3780117,
+        "path": "distribution-optional-civilian-flight.zip",
+        "sha256": "d2597fce476e52698220a30704d199ef12790d7bda403a57ab58d5b12a841ac9"
+      },
+      "manifest": {
+        "bytes": 16741,
+        "path": "manifest-optional-civilian-flight.json",
+        "sha256": "f9c5c4f5269d94b9c65b327b1cd25cabd61ada0613687aea64cfb068e577f546"
+      }
+    },
+    {
+      "id": "civilian-fpv",
+      "distribution": {
+        "bytes": 6799198,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "0985b80110fab4ff4073b0b793e4c7d261398010bcd0c76d3eeeb946596049d8"
+      },
+      "manifest": {
+        "bytes": 18095,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "af899bbb13a6f1eb7d0a93de1a1a763eebec50c4101c5a8fadf5e9c51333983f"
+      }
+    },
+    {
+      "id": "fpv-worlds",
+      "distribution": {
+        "bytes": 17608427,
+        "path": "distribution-optional-fpv-worlds.zip",
+        "sha256": "c433f2299a1a3ed85092dabc7a902bf0f6806d2298165abf6ab9d3ceafa644b4"
+      },
+      "manifest": {
+        "bytes": 29757,
+        "path": "manifest-optional-fpv-worlds.json",
+        "sha256": "db0465ed8d3dc8fe91ea147e51c825a1233587c63b8d658642353e77f2f8ba61"
+      }
+    }
+  ],
+  "harnessSha256": "d6043c8b701fce923dbaf54dcba8169ecb617fc73f4b6c6910e4c52cacf39c77",
+  "helperSha256": "f9dc958bed7445d284a0d906ab18f55f87ef7779d475963b219a3ac44baccb88",
+  "inputRoute": {
+    "academyOfflineDisclosure": "Native summary keyboard Enter",
+    "academyProfileTransfer": "Native summary and import/export button keyboard Enter",
+    "academyProofTransfer": "Native import/export button keyboard Enter",
+    "offlineActions": "Native button keyboard Enter with fresh status/progress observation",
+    "limitation": "This observer uses the native keyboard route and does not qualify pointer interaction."
+  },
+  "proof": {
+    "input": "first frozen demonstration frames under an explicit synthetic practice session",
+    "sha256": "5c7fe2b10e9d9dc7d2a95efa42ded4abacfc383619e5ff51deb0973870e374a6",
+    "attempts": 1
+  },
+  "profiles": {
+    "input": "synthetic unverified radio mapping and independent simulator response imported through Setup",
+    "sha256": "5ea6a02ba3a3aecd84779cdc30bdced5f0a15a00dafae19ce745f17cd0473a0d",
+    "radioVerified": false
+  },
+  "osApps": [
+    {
+      "id": "civilian-flight",
+      "manifestId": "http://127.0.0.1:51067/revealline/practice/civilian-flight/",
+      "installed": true,
+      "state": {
+        "badgeCount": 0,
+        "fileHandlers": []
+      },
+      "launch": {
+        "targetId": "4DAE3D857C7EC335D87AC4621B05DCC4"
+      },
+      "window": {
+        "standalone": true,
+        "url": "http://127.0.0.1:51067/revealline/practice/civilian-flight/app/"
+      },
+      "offlineLaunch": {
+        "targetId": "66FB89654F3B0410E2499235739CAD55"
+      },
+      "offlineWindow": {
+        "standalone": true,
+        "url": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/index.html?lang=en"
+      },
+      "restartLaunch": {
+        "targetId": "993F4D547AA176BA861CAB93DE2501FF"
+      },
+      "restartedOfflineWindow": {
+        "standalone": true,
+        "url": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/index.html?lang=en"
+      },
+      "uninstalled": true
+    },
+    {
+      "id": "civilian-fpv",
+      "manifestId": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/",
+      "installed": true,
+      "state": {
+        "badgeCount": 0,
+        "fileHandlers": []
+      },
+      "launch": {
+        "targetId": "93DCA739BFA3F2A82303A0E812A42F4F"
+      },
+      "window": {
+        "standalone": true,
+        "url": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/app/"
+      },
+      "offlineLaunch": {
+        "targetId": "DF7870430EC29B1897DA7E7559C9729A"
+      },
+      "offlineWindow": {
+        "standalone": true,
+        "url": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/index.html?lang=en"
+      },
+      "restartLaunch": {
+        "targetId": "63E95ABA12DCB08D2DD039FA5DEF74EE"
+      },
+      "restartedOfflineWindow": {
+        "standalone": true,
+        "url": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/index.html?lang=en"
+      },
+      "afterOtherUninstall": {
+        "badgeCount": 0,
+        "fileHandlers": []
+      },
+      "uninstalled": true
+    },
+    {
+      "id": "fpv-worlds",
+      "manifestId": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/",
+      "installed": true,
+      "state": {
+        "badgeCount": 0,
+        "fileHandlers": []
+      },
+      "launch": {
+        "targetId": "D2700D6C1FAF1CB43E35731A668ABE0C"
+      },
+      "window": {
+        "standalone": true,
+        "url": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/app/"
+      },
+      "offlineLaunch": {
+        "targetId": "9142E2165012B039CB533526D29FEE6E"
+      },
+      "offlineWindow": {
+        "standalone": true,
+        "url": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html?lang=en"
+      },
+      "restartLaunch": {
+        "targetId": "4BF24B0AAD9859FBDEA00D5EF665AB6C"
+      },
+      "restartedOfflineWindow": {
+        "standalone": true,
+        "url": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html?lang=en"
+      },
+      "uninstalled": true
+    }
+  ],
+  "checkpoints": [
+    {
+      "label": "all-three-prepared",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.fpv-worlds.%2Frevealline%2Fpractice%2Ffpv-worlds%2F.v1": "{\"active\":{\"id\":\"fpv-worlds\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/\",\"entry\":\"optional-practice/fpv-worlds/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "all-three-relaunched-offline-after-all-windows-closed",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.fpv-worlds.%2Frevealline%2Fpractice%2Ffpv-worlds%2F.v1": "{\"active\":{\"id\":\"fpv-worlds\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/\",\"entry\":\"optional-practice/fpv-worlds/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "all-three-open-offline",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.fpv-worlds.%2Frevealline%2Fpractice%2Ffpv-worlds%2F.v1": "{\"active\":{\"id\":\"fpv-worlds\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/\",\"entry\":\"optional-practice/fpv-worlds/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "all-three-offline-after-browser-process-restart",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.fpv-worlds.%2Frevealline%2Fpractice%2Ffpv-worlds%2F.v1": "{\"active\":{\"id\":\"fpv-worlds\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/\",\"entry\":\"optional-practice/fpv-worlds/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "candidate-installed-over-alternate-path",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.fpv-worlds.%2Frevealline%2Fpractice%2Ffpv-worlds%2F.v1": "{\"active\":{\"id\":\"fpv-worlds\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/\",\"entry\":\"optional-practice/fpv-worlds/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"},\"previous\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "failed-install-preserves-pointers",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.fpv-worlds.%2Frevealline%2Fpractice%2Ffpv-worlds%2F.v1": "{\"active\":{\"id\":\"fpv-worlds\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/\",\"entry\":\"optional-practice/fpv-worlds/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"},\"previous\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "candidate-removed-retained-path-restored",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.fpv-worlds.%2Frevealline%2Fpractice%2Ffpv-worlds%2F.v1": "{\"active\":{\"id\":\"fpv-worlds\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/\",\"entry\":\"optional-practice/fpv-worlds/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "rollback-and-other-package-work-offline",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{\"active\":{\"id\":\"civilian-flight\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/\",\"entry\":\"optional-practice/civilian-flight/index.html\"}}",
+        "revealline.optional-installed.fpv-worlds.%2Frevealline%2Fpractice%2Ffpv-worlds%2F.v1": "{\"active\":{\"id\":\"fpv-worlds\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/\",\"entry\":\"optional-practice/fpv-worlds/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/",
+          "active": "activated"
+        }
+      ]
+    },
+    {
+      "label": "gym-cache-removal-preserves-fpv-and-worlds",
+      "keys": {
+        "revealline.optional-installed.civilian-flight.%2Frevealline%2Fpractice%2Fcivilian-flight%2F.v1": "{}",
+        "revealline.optional-installed.fpv-worlds.%2Frevealline%2Fpractice%2Ffpv-worlds%2F.v1": "{\"active\":{\"id\":\"fpv-worlds\",\"version\":\"v0.151.1\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/\",\"entry\":\"optional-practice/fpv-worlds/index.html\"}}",
+        "revealline.optional-installed.civilian-fpv.%2Frevealline%2Fpractice%2Fcivilian-fpv%2F.v1": "{\"active\":{\"id\":\"civilian-fpv\",\"version\":\"v0.0.0\",\"scope\":\"http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/\",\"entry\":\"optional-practice/civilian-fpv/index.html\"}}"
+      },
+      "caches": [
+        "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+        "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+        "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a"
+      ],
+      "workers": [
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-flight/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/app/",
+          "active": "activated"
+        },
+        {
+          "scope": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/",
+          "active": "activated"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "cleanup": {
+    "errors": [],
+    "temporaryProfileRemoved": true
+  },
+  "worldSeed": {
+    "format": "OptionalInstallationWorldSeed.v1",
+    "mode": "worlds-template-copy",
+    "sourceSha256": "571cccb535fc764a02872bbaa0135d82674bcd3ca7c032d8f21db35db7b8cd07",
+    "continuitySourceSha256": "de8e32ed741a7169c727987af9bd2c8829d9fc1e27517f8bb4fbd57ea002c393",
+    "preparedBeforeInstallation": true,
+    "passed": true,
+    "checks": [
+      {
+        "label": "before-installation",
+        "card": {
+          "id": "studio-mvalp0jx-3d59v",
+          "title": "C4 retained world"
+        },
+        "database": {
+          "name": "revealline-fpv-worlds-v1",
+          "version": 2,
+          "stores": [
+            {
+              "name": "assets",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                  "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                }
+              ],
+              "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+            },
+            {
+              "name": "meta",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                  "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                }
+              ],
+              "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+            },
+            {
+              "name": "projects",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                  "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                },
+                {
+                  "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                  "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                }
+              ],
+              "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+            },
+            {
+              "name": "revisions",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                  "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                },
+                {
+                  "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                  "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                }
+              ],
+              "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+            }
+          ]
+        }
+      },
+      {
+        "label": "closed-window-round-1",
+        "card": {
+          "id": "studio-mvalp0jx-3d59v",
+          "title": "C4 retained world"
+        },
+        "database": {
+          "name": "revealline-fpv-worlds-v1",
+          "version": 2,
+          "stores": [
+            {
+              "name": "assets",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                  "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                }
+              ],
+              "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+            },
+            {
+              "name": "meta",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                  "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                }
+              ],
+              "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+            },
+            {
+              "name": "projects",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                  "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                },
+                {
+                  "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                  "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                }
+              ],
+              "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+            },
+            {
+              "name": "revisions",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                  "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                },
+                {
+                  "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                  "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                }
+              ],
+              "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+            }
+          ]
+        }
+      },
+      {
+        "label": "offline-standalone-window",
+        "card": {
+          "id": "studio-mvalp0jx-3d59v",
+          "title": "C4 retained world"
+        },
+        "database": {
+          "name": "revealline-fpv-worlds-v1",
+          "version": 2,
+          "stores": [
+            {
+              "name": "assets",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                  "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                }
+              ],
+              "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+            },
+            {
+              "name": "meta",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                  "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                }
+              ],
+              "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+            },
+            {
+              "name": "projects",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                  "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                },
+                {
+                  "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                  "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                }
+              ],
+              "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+            },
+            {
+              "name": "revisions",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                  "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                },
+                {
+                  "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                  "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                }
+              ],
+              "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+            }
+          ]
+        }
+      },
+      {
+        "label": "browser-process-restart-launcher",
+        "card": {
+          "id": "studio-mvalp0jx-3d59v",
+          "title": "C4 retained world"
+        },
+        "database": {
+          "name": "revealline-fpv-worlds-v1",
+          "version": 2,
+          "stores": [
+            {
+              "name": "assets",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                  "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                }
+              ],
+              "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+            },
+            {
+              "name": "meta",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                  "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                }
+              ],
+              "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+            },
+            {
+              "name": "projects",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                  "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                },
+                {
+                  "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                  "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                }
+              ],
+              "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+            },
+            {
+              "name": "revisions",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                  "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                },
+                {
+                  "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                  "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                }
+              ],
+              "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+            }
+          ]
+        }
+      },
+      {
+        "label": "browser-process-restart-standalone",
+        "card": {
+          "id": "studio-mvalp0jx-3d59v",
+          "title": "C4 retained world"
+        },
+        "database": {
+          "name": "revealline-fpv-worlds-v1",
+          "version": 2,
+          "stores": [
+            {
+              "name": "assets",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                  "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                }
+              ],
+              "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+            },
+            {
+              "name": "meta",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                  "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                }
+              ],
+              "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+            },
+            {
+              "name": "projects",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                  "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                },
+                {
+                  "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                  "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                }
+              ],
+              "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+            },
+            {
+              "name": "revisions",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                  "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                },
+                {
+                  "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                  "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                }
+              ],
+              "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+            }
+          ]
+        }
+      }
+    ],
+    "scope": "One template copied, named and installed through public Workshop controls; visible Library identity plus read-only exact World Studio database fingerprints. Browser-context offline and process restart only: no machine-wide outage, OS reboot, imported .rlpack/assets, human flight or physical-device qualification. In this explicitly opted-in run only, the baseline also includes the separately pinned Roadworks imported model; see importedWorld for its distinct retention/flight evidence.",
+    "template": {
+      "value": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-loops-01",
+      "label": "First three"
+    },
+    "baseline": {
+      "card": {
+        "id": "studio-mvalp0jx-3d59v",
+        "title": "C4 retained world"
+      },
+      "database": {
+        "name": "revealline-fpv-worlds-v1",
+        "version": 2,
+        "stores": [
+          {
+            "name": "assets",
+            "count": 1,
+            "rows": [
+              {
+                "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+              }
+            ],
+            "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+          },
+          {
+            "name": "meta",
+            "count": 1,
+            "rows": [
+              {
+                "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+              }
+            ],
+            "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+          },
+          {
+            "name": "projects",
+            "count": 2,
+            "rows": [
+              {
+                "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+              },
+              {
+                "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+              }
+            ],
+            "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+          },
+          {
+            "name": "revisions",
+            "count": 2,
+            "rows": [
+              {
+                "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+              },
+              {
+                "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+              }
+            ],
+            "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+          }
+        ]
+      }
+    },
+    "sourceStable": true
+  },
+  "importedWorld": {
+    "format": "OptionalInstallationImportedWorld.v1",
+    "mode": "roadworks-offline-flight",
+    "qualified": false,
+    "publicEligible": false,
+    "passed": true,
+    "source": [
+      {
+        "path": "optional-installation-imported-world.mjs",
+        "sha256": "96ea04ec8a7467f8483a19fd538db788b7bb0116632d9610a29ae90d7c46bebf"
+      },
+      {
+        "path": "practice-imported-world-check.mjs",
+        "sha256": "7df1e605f9bce8b38079809ff5da134f47f2aa43b94bf7813e8694aec7b0e3af"
+      }
+    ],
+    "checks": [
+      {
+        "label": "before-installation",
+        "actions": [],
+        "cleanup": {
+          "completed": true,
+          "errors": []
+        },
+        "state": {
+          "card": {
+            "id": "cc0-road-lab",
+            "title": "Roadworks Practice Park",
+            "digestPrefix": "97fe29db8316"
+          },
+          "database": {
+            "name": "revealline-fpv-worlds-v1",
+            "version": 2,
+            "stores": [
+              {
+                "name": "assets",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                    "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                  }
+                ],
+                "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+              },
+              {
+                "name": "meta",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                    "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                  }
+                ],
+                "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+              },
+              {
+                "name": "projects",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                    "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                  },
+                  {
+                    "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                    "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                  }
+                ],
+                "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+              },
+              {
+                "name": "revisions",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                    "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                  },
+                  {
+                    "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                    "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                  }
+                ],
+                "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+              }
+            ]
+          }
+        },
+        "passed": true
+      },
+      {
+        "label": "closed-window-round-1",
+        "actions": [],
+        "cleanup": {
+          "completed": true,
+          "errors": []
+        },
+        "state": {
+          "card": {
+            "id": "cc0-road-lab",
+            "title": "Roadworks Practice Park",
+            "digestPrefix": "97fe29db8316"
+          },
+          "database": {
+            "name": "revealline-fpv-worlds-v1",
+            "version": 2,
+            "stores": [
+              {
+                "name": "assets",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                    "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                  }
+                ],
+                "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+              },
+              {
+                "name": "meta",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                    "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                  }
+                ],
+                "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+              },
+              {
+                "name": "projects",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                    "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                  },
+                  {
+                    "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                    "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                  }
+                ],
+                "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+              },
+              {
+                "name": "revisions",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                    "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                  },
+                  {
+                    "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                    "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                  }
+                ],
+                "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+              }
+            ]
+          }
+        },
+        "passed": true
+      },
+      {
+        "label": "offline-standalone-window",
+        "actions": [],
+        "cleanup": {
+          "completed": true,
+          "errors": []
+        },
+        "state": {
+          "card": {
+            "id": "cc0-road-lab",
+            "title": "Roadworks Practice Park",
+            "digestPrefix": "97fe29db8316"
+          },
+          "database": {
+            "name": "revealline-fpv-worlds-v1",
+            "version": 2,
+            "stores": [
+              {
+                "name": "assets",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                    "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                  }
+                ],
+                "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+              },
+              {
+                "name": "meta",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                    "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                  }
+                ],
+                "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+              },
+              {
+                "name": "projects",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                    "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                  },
+                  {
+                    "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                    "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                  }
+                ],
+                "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+              },
+              {
+                "name": "revisions",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                    "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                  },
+                  {
+                    "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                    "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                  }
+                ],
+                "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+              }
+            ]
+          }
+        },
+        "passed": true
+      },
+      {
+        "label": "browser-process-restart-launcher",
+        "actions": [],
+        "cleanup": {
+          "completed": true,
+          "errors": []
+        },
+        "state": {
+          "card": {
+            "id": "cc0-road-lab",
+            "title": "Roadworks Practice Park",
+            "digestPrefix": "97fe29db8316"
+          },
+          "database": {
+            "name": "revealline-fpv-worlds-v1",
+            "version": 2,
+            "stores": [
+              {
+                "name": "assets",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                    "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                  }
+                ],
+                "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+              },
+              {
+                "name": "meta",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                    "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                  }
+                ],
+                "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+              },
+              {
+                "name": "projects",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                    "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                  },
+                  {
+                    "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                    "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                  }
+                ],
+                "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+              },
+              {
+                "name": "revisions",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                    "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                  },
+                  {
+                    "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                    "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                  }
+                ],
+                "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+              }
+            ]
+          }
+        },
+        "passed": true
+      },
+      {
+        "label": "browser-process-restart-standalone",
+        "actions": [],
+        "cleanup": {
+          "completed": true,
+          "errors": []
+        },
+        "state": {
+          "card": {
+            "id": "cc0-road-lab",
+            "title": "Roadworks Practice Park",
+            "digestPrefix": "97fe29db8316"
+          },
+          "database": {
+            "name": "revealline-fpv-worlds-v1",
+            "version": 2,
+            "stores": [
+              {
+                "name": "assets",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                    "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                  }
+                ],
+                "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+              },
+              {
+                "name": "meta",
+                "count": 1,
+                "rows": [
+                  {
+                    "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                    "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                  }
+                ],
+                "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+              },
+              {
+                "name": "projects",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                    "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                  },
+                  {
+                    "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                    "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                  }
+                ],
+                "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+              },
+              {
+                "name": "revisions",
+                "count": 2,
+                "rows": [
+                  {
+                    "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                    "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                  },
+                  {
+                    "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                    "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                  }
+                ],
+                "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+              }
+            ]
+          }
+        },
+        "passed": true
+      }
+    ],
+    "flights": [
+      {
+        "label": "browser-process-restart-launcher",
+        "actions": [
+          {
+            "selector": "#worlds-shell-action-settings",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#worlds-settings-tab-gameplay",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#flight-mode",
+            "action": "selectOption",
+            "value": "self-level"
+          },
+          {
+            "selector": "#worlds-settings-tab-controls",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#flight-source",
+            "action": "selectOption",
+            "value": "keyboard"
+          },
+          {
+            "selector": "#flight-keyboard-preset",
+            "action": "selectOption",
+            "value": "two-stick"
+          },
+          {
+            "selector": "#worlds-settings-tab-accessibility",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#worlds-settings-panel-accessibility [data-hud-preference=\"mode\"]",
+            "action": "selectOption",
+            "value": "detailed"
+          },
+          {
+            "selector": "#close-sim-settings",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#worlds-shell-action-settings",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#worlds-settings-tab-content",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "[data-tab=\"packs\"]",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "exact installed card Fly",
+            "action": "press",
+            "value": "Enter"
+          }
+        ],
+        "cleanup": {
+          "completed": true,
+          "errors": []
+        },
+        "samples": [
+          {
+            "height": 0,
+            "phase": "disarmed",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20370.215083
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20439.031583
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20490.985875
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20546.854791
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20620.181125
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20672.942791
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20729.838625
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20794.590541
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20848.876416
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20902.296333
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 20954.954541
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21008.732541
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21063.32475
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21116.459708
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21169.578333
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21222.964083
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21279.480458
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21334.996958
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21387.95775
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21439.773375
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21494.934166
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21549.874666
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21604.124666
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21656.493958
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21712.768458
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21766.277708
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21819.831166
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21873.766791
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21929.62125
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 21982.478666
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22035.285125
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22088.672625
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22142.038708
+          },
+          {
+            "height": 0.1,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22196.552916
+          },
+          {
+            "height": 0.1,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22249.986458
+          },
+          {
+            "height": 0.1,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22302.552625
+          },
+          {
+            "height": 0.2,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22356.445833
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22368.452583
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22582.886
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22797.076958
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 23011.782458
+          }
+        ],
+        "networkProbeFailed": true,
+        "processRestartConfirmed": true,
+        "replay": false,
+        "libraryURL": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html?lang=en#packs",
+        "before": {
+          "height": 0,
+          "phase": "disarmed",
+          "visible": true,
+          "gauge": "Height",
+          "at": 20370.215083
+        },
+        "explicitArm": true,
+        "after": {
+          "height": 0.2,
+          "phase": "active",
+          "visible": true,
+          "gauge": "Height",
+          "at": 22356.445833
+        },
+        "explicitPause": true,
+        "paused": [
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22368.452583
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22582.886
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 22797.076958
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 23011.782458
+          }
+        ],
+        "acceptance": {
+          "observed": true,
+          "exerciseCompleted": false,
+          "machineWideOutageQualified": false
+        },
+        "screenshot": {
+          "path": "/tmp/practice-imported-offline-flight-20261016-run2.json.imported-world-browser-process-restart-launcher-paused-flight.png",
+          "bytes": 204140,
+          "sha256": "ba7dc690a0739dc23779f8b5522b27c7055409aca1b1f199583093d087d435ba"
+        },
+        "passed": true
+      },
+      {
+        "label": "browser-process-restart-standalone",
+        "actions": [
+          {
+            "selector": "#worlds-shell-action-settings",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#worlds-settings-tab-gameplay",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#flight-mode",
+            "action": "selectOption",
+            "value": "self-level"
+          },
+          {
+            "selector": "#worlds-settings-tab-controls",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#flight-source",
+            "action": "selectOption",
+            "value": "keyboard"
+          },
+          {
+            "selector": "#flight-keyboard-preset",
+            "action": "selectOption",
+            "value": "two-stick"
+          },
+          {
+            "selector": "#worlds-settings-tab-accessibility",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#worlds-settings-panel-accessibility [data-hud-preference=\"mode\"]",
+            "action": "selectOption",
+            "value": "detailed"
+          },
+          {
+            "selector": "#close-sim-settings",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#worlds-shell-action-settings",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "#worlds-settings-tab-content",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "[data-tab=\"packs\"]",
+            "action": "press",
+            "value": "Enter"
+          },
+          {
+            "selector": "exact installed card Fly",
+            "action": "press",
+            "value": "Enter"
+          }
+        ],
+        "cleanup": {
+          "completed": true,
+          "errors": []
+        },
+        "samples": [
+          {
+            "height": 0,
+            "phase": "disarmed",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27211.351541
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27278.688125
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27331.988125
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27384.07775
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27440.2325
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27495.867916
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27555.746166
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27608.583458
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27662.597416
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27717.437541
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27772.442541
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27825.971833
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27880.386916
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27933.772916
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 27988.674
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28042.197791
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28097.024833
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28150.534666
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28205.953375
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28257.848125
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28313.679916
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28367.57375
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28422.49
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28476.795958
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28540.699625
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28597.147958
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28650.405125
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28706.000666
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28759.690916
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28814.320458
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28880.493125
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28941.140208
+          },
+          {
+            "height": 0,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 28997.069458
+          },
+          {
+            "height": 0.1,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29051.642
+          },
+          {
+            "height": 0.1,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29118.892208
+          },
+          {
+            "height": 0.2,
+            "phase": "active",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29173.539666
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29186.211291
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29399.782833
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29615.895291
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29830.255708
+          }
+        ],
+        "networkProbeFailed": true,
+        "processRestartConfirmed": true,
+        "replay": false,
+        "libraryURL": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html?lang=en#packs",
+        "before": {
+          "height": 0,
+          "phase": "disarmed",
+          "visible": true,
+          "gauge": "Height",
+          "at": 27211.351541
+        },
+        "explicitArm": true,
+        "after": {
+          "height": 0.2,
+          "phase": "active",
+          "visible": true,
+          "gauge": "Height",
+          "at": 29173.539666
+        },
+        "explicitPause": true,
+        "paused": [
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29186.211291
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29399.782833
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29615.895291
+          },
+          {
+            "height": 0.2,
+            "phase": "paused",
+            "visible": true,
+            "gauge": "Height",
+            "at": 29830.255708
+          }
+        ],
+        "acceptance": {
+          "observed": true,
+          "exerciseCompleted": false,
+          "machineWideOutageQualified": false
+        },
+        "screenshot": {
+          "path": "/tmp/practice-imported-offline-flight-20261016-run2.json.imported-world-browser-process-restart-standalone-paused-flight.png",
+          "bytes": 211205,
+          "sha256": "41dc0e5eca7c39f4edce3d309c2d0ff9e55429987184b8d1c3ed70b103c0a801"
+        },
+        "passed": true
+      }
+    ],
+    "import": {
+      "actions": [
+        {
+          "selector": "#worlds-shell-action-settings",
+          "action": "press",
+          "value": "Enter"
+        },
+        {
+          "selector": "#worlds-settings-tab-content",
+          "action": "press",
+          "value": "Enter"
+        },
+        {
+          "selector": "[data-tab=\"packs\"]",
+          "action": "press",
+          "value": "Enter"
+        },
+        {
+          "selector": "label:has(#import-pack)",
+          "action": "click",
+          "value": {
+            "timeout": 8000
+          }
+        },
+        {
+          "selector": "label:has(#import-pack)",
+          "action": "native file chooser setFiles",
+          "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-road-lab/cc0-road-lab.r1.rlpack"
+        }
+      ],
+      "cleanup": {
+        "completed": true,
+        "errors": []
+      },
+      "libraryURL": "http://127.0.0.1:51067/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html#packs",
+      "baseline": {
+        "card": {
+          "id": "cc0-road-lab",
+          "title": "Roadworks Practice Park",
+          "digestPrefix": "97fe29db8316"
+        },
+        "database": {
+          "name": "revealline-fpv-worlds-v1",
+          "version": 2,
+          "stores": [
+            {
+              "name": "assets",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+                  "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+                }
+              ],
+              "sha256": "8bdae452a975b51585657a4e78d7fdd82d374b2818f5ce85b5cefc1ce72457c1"
+            },
+            {
+              "name": "meta",
+              "count": 1,
+              "rows": [
+                {
+                  "key": "ede4441639d35ac42f907668ec4eee540c310bdb08fafba79c493f990867ed4c",
+                  "sha256": "0cebd3bd5c5b5f33ffc8ee9ceb449f68ac167d83151965c91802c6f77409c9f7"
+                }
+              ],
+              "sha256": "16db337d1cde69004532d84fb631323a73fe8a309a9eaa4d0fc7c5c9b0745435"
+            },
+            {
+              "name": "projects",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "01e873ff1d580f93136db4a14d433b4f98098a7dd9a6a4d25dbb3e79c6f346f8",
+                  "sha256": "0a1f8a3665911216a926ef1fca5fac56c33b2f12c290f63de81359d2ca8bfcbf"
+                },
+                {
+                  "key": "ef0ef9b42e796f2914a30a33f19e29f573335740cfb303389a519462a1dc1e09",
+                  "sha256": "182de7d664c39b2fc544d3885586b56cc0c664b7136fbaca91dfad219c52f0c9"
+                }
+              ],
+              "sha256": "b3dc33b081057165cec945ab9865abe7790e56423394628c9b95e7a62794d9e5"
+            },
+            {
+              "name": "revisions",
+              "count": 2,
+              "rows": [
+                {
+                  "key": "944c093387949d577366595364a08ba6fd6164735050d12003b03ef74d6f9a87",
+                  "sha256": "4d98aeae440f693726c4433cd5b0c21ba9c5a41426477fdf9c9111cbe62d29f8"
+                },
+                {
+                  "key": "db084e889be1d490eb145a4c4a5ecbfc329762f3ece323e939a75ac79f163a52",
+                  "sha256": "191de52dabb91a98f88e72184e996e87364d23a155e892e5ff1c4864a6e33853"
+                }
+              ],
+              "sha256": "ee947efe2a6f270251da66fe4f0a2d009984cf846a7287b0607c14c8d1b82cc1"
+            }
+          ]
+        }
+      },
+      "screenshot": {
+        "path": "/tmp/practice-imported-offline-flight-20261016-run2.json.imported-world-initial-import-import-ready.png",
+        "bytes": 274421,
+        "sha256": "b1770dad1a106df9fa2e92811b7e9197ea17437d2bd35ff518b9d17ebbefce78"
+      },
+      "imported": true
+    },
+    "scope": "One original committed Roadworks .rlpack uploaded through public Library file input; exact nonempty model Blob/project/revision fingerprints retained through existing offline windows/process restart; EN self-level sub-metre lift and explicit pause in restarted Worlds launcher and standalone window. No completed course, physical input, machine-wide outage or public release claim.",
+    "authority": {
+      "pack": {
+        "id": "cc0-road-lab",
+        "title": "Roadworks Practice Park",
+        "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-road-lab/cc0-road-lab.r1.rlpack",
+        "bytes": 63754,
+        "sha256": "97fe29db831659500a8850ed0e0a0252c37b6a6c893b37536e1967404683c355",
+        "assetPath": "models/cc0-road-lab.glb",
+        "assetBytes": 31796,
+        "assetSha256": "2750ad9f976270561277c5623bca10c2bee9cd874eec3a87686f1a4fefd3a944"
+      },
+      "runtime": [
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "bytes": 383101,
+          "sha256": "e1ec97612bbe3f961d0f14c2011dae6c14b0b24cc821444bc968d5ce9b0c0ba2"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-content.mjs",
+          "bytes": 50090,
+          "sha256": "4e2822f1c94bdef24f62fb14629dd4909c8d8ed3aea6708f2fdf2e8ca5b8081b"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-store.mjs",
+          "bytes": 17516,
+          "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+          "bytes": 650712,
+          "sha256": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05"
+        }
+      ]
+    },
+    "packSource": {
+      "sourceRevision": "8e29a04c35eb57de6fb8274347e10397f5fc110e",
+      "sourceTree": "b5254b22dd24cebd127a950e9fdd68f520f41b1c",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-road-lab/cc0-road-lab.r1.rlpack",
+      "sha256": "97fe29db831659500a8850ed0e0a0252c37b6a6c893b37536e1967404683c355"
+    },
+    "sourceRevision": "b8aec0821087354ac8a6765a5b95c68d24dd9137",
+    "sourceTree": "3bafa19b36118173b1b19a9039d9572b09692f7b",
+    "envelopeSha256": "c271bc6c248844f756ba4c1a191e6008593d48c4d03b9e4d34836d6a174c73a6",
+    "package": {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 17608427,
+        "path": "distribution-optional-fpv-worlds.zip",
+        "sha256": "c433f2299a1a3ed85092dabc7a902bf0f6806d2298165abf6ab9d3ceafa644b4"
+      },
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "id": "fpv-worlds",
+      "manifest": {
+        "bytes": 29757,
+        "path": "manifest-optional-fpv-worlds.json",
+        "sha256": "db0465ed8d3dc8fe91ea147e51c825a1233587c63b8d658642353e77f2f8ba61"
+      },
+      "revision": "d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a",
+      "sourceArchive": {
+        "bytes": 17654490,
+        "path": "source-optional-fpv-worlds.zip",
+        "sha256": "5029bca9a40f18f5c789260cd17c77a5d4b592264d25a446b684ef3ef4116a66"
+      },
+      "sourceInventory": {
+        "bytes": 50238,
+        "path": "source-inventory-optional-fpv-worlds.json",
+        "sha256": "4c482233cbeb188c09491556a1f014eb844b58cb78dcbdc9067efcb6461cc58f"
+      }
+    },
+    "sourceStable": true
+  }
+}

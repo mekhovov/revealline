@@ -1,0 +1,375 @@
+{
+  "format": "IndependentNativeC9Audit.v1",
+  "passed": true,
+  "source": "8c93b49ee7a18d01aadbe4b9d5ccf481addcfa74",
+  "tree": "06e9faf7b167a9ba547bfe610920a02d60a925d0",
+  "checks": [
+    {
+      "name": "Exact completed protocol, source and plan identities",
+      "passed": true
+    },
+    {
+      "name": "Original archive pins and exact Git-bound executable authority",
+      "passed": true,
+      "result": {
+        "entries": 10,
+        "archiveScope": "All report script authorities compared with archive and Git; publishing authorities compared with immutable Git."
+      }
+    },
+    {
+      "name": "Every recorded served source matches immutable Git bytes",
+      "passed": true,
+      "result": {
+        "files": 825,
+        "bytes": 21144330
+      }
+    },
+    {
+      "name": "Re-admission of original three packages and reproduction of every overlay member",
+      "passed": true,
+      "result": {
+        "packages": [
+          {
+            "id": "civilian-flight",
+            "revision": "ac5095b522fb0c5dbae9d47a1957d87c5778069afdf44b36b57532d8047156cf",
+            "files": 94,
+            "bytes": 3766433
+          },
+          {
+            "id": "civilian-fpv",
+            "revision": "bf6f874534664b4c347852a88c676fbdab4dfc9ea148a9e764722a445fe771d9",
+            "files": 101,
+            "bytes": 6784180
+          },
+          {
+            "id": "fpv-worlds",
+            "revision": "fb3d7563a837284537b859ecc92d07ce12039d1c362b149209ea26c06b723b3b",
+            "files": 162,
+            "bytes": 17582493
+          }
+        ],
+        "overlayFiles": 394,
+        "selectedArtifact": "bf6f874534664b4c347852a88c676fbdab4dfc9ea148a9e764722a445fe771d9"
+      }
+    },
+    {
+      "name": "Native zoom100→200→100 from recorded control and independent metrics",
+      "passed": true,
+      "result": [
+        {
+          "requested": "1",
+          "metrics": {
+            "outerWidth": 1280,
+            "outerHeight": 900,
+            "innerWidth": 1280,
+            "innerHeight": 813,
+            "dpr": 2,
+            "visualScale": 1,
+            "visualWidth": 1280,
+            "visualHeight": 813,
+            "markerWidth": 200,
+            "css": [
+              {
+                "zoom": "1",
+                "transform": "none"
+              },
+              {
+                "zoom": "1",
+                "transform": "none"
+              },
+              {
+                "zoom": "1",
+                "transform": "none"
+              }
+            ],
+            "frame": "top"
+          }
+        },
+        {
+          "requested": "2",
+          "metrics": {
+            "outerWidth": 1280,
+            "outerHeight": 900,
+            "innerWidth": 640,
+            "innerHeight": 406,
+            "dpr": 4,
+            "visualScale": 1,
+            "visualWidth": 640,
+            "visualHeight": 406.5,
+            "markerWidth": 200,
+            "css": [
+              {
+                "zoom": "1",
+                "transform": "none"
+              },
+              {
+                "zoom": "1",
+                "transform": "none"
+              },
+              {
+                "zoom": "1",
+                "transform": "none"
+              }
+            ],
+            "frame": "top"
+          }
+        },
+        {
+          "requested": "1",
+          "metrics": {
+            "outerWidth": 1280,
+            "outerHeight": 900,
+            "innerWidth": 1280,
+            "innerHeight": 813,
+            "dpr": 2,
+            "visualScale": 1,
+            "visualWidth": 1280,
+            "visualHeight": 813,
+            "markerWidth": 200,
+            "css": [
+              {
+                "zoom": "1",
+                "transform": "none"
+              },
+              {
+                "zoom": "1",
+                "transform": "none"
+              },
+              {
+                "zoom": "1",
+                "transform": "none"
+              }
+            ],
+            "frame": "top"
+          }
+        }
+      ]
+    },
+    {
+      "name": "All six EN/UK journeys, all focus geometry and actual main-return locale",
+      "passed": true,
+      "result": {
+        "witnesses": 66,
+        "toleranceUsed": 1,
+        "legacyFalse": 1,
+        "maximumOverflowDevicePixels": 0.390625,
+        "residuals": [
+          {
+            "case": "en-civilian-flight",
+            "id": "prepare",
+            "rightDevicePixels": 0,
+            "bottomDevicePixels": 0.390625
+          }
+        ]
+      }
+    },
+    {
+      "name": "Every raw request has exact final source-only classification",
+      "passed": true,
+      "result": {
+        "rawFailures": 13,
+        "buildIdentityProbes": 12,
+        "iconProbes": 1,
+        "unexpected": 0,
+        "rawPreserved": true
+      }
+    },
+    {
+      "name": "Complete cleanup, removed owned profile, stable source and explicit limits",
+      "passed": true
+    },
+    {
+      "name": "Every original PNG byte/hash/dimension retained as visually unreviewed",
+      "passed": true,
+      "result": {
+        "images": 18,
+        "visuallyQualified": 0
+      }
+    }
+  ],
+  "limitations": [
+    "Independent read-only receipt and byte audit; no new browser execution.",
+    "Half-device-pixel border-box policy is approximate containment, not zero clipping or a complete painted-outline measurement.",
+    "PNG hashes/dimensions verified only; no image is visually qualified. Native zoom capture may crop or omit pixels.",
+    "No human readability, screen-reader speech, physical keyboard/controller/touch, OS reduced-motion, production-distribution or hosting qualification.",
+    "Admission and overlay reproduction reuse the pinned maintained admission implementation; geometry and request classification are recomputed independently here."
+  ],
+  "report": {
+    "path": "/tmp/practice-native-a11y-8c93-20261016-run1/observation.json",
+    "bytes": 399256,
+    "sha256": "922cd759f416006923e5cf245f81af392959ee80977643d4bf9516b61e3bf65a"
+  },
+  "plan": {
+    "path": "/tmp/practice-native-a11y-8c93-20261016-plan.json",
+    "bytes": 833,
+    "sha256": "e414c02a085ce886a2fb6af27f936f87b7a106a0ebf7803aff4f6d5ad4d74901"
+  },
+  "authorityArchive": {
+    "path": "/tmp/practice-native-8c93-authority-20261016.tgz",
+    "bytes": 1851544,
+    "sha256": "18170fe2303c958cafcdaec66cc404349d39681143932d58d92c20c97f50706e"
+  },
+  "originalsArchive": {
+    "path": "/tmp/practice-native-c9-8c93-passed-originals-20261016.tgz",
+    "bytes": 2330188,
+    "sha256": "75292e0d0a848f50eb4f3ed674dbda3e2394fed0e5646486a304aa4ec8db023d"
+  },
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/155.0.8059.80",
+    "revision": "@43a195105613ac83c21d3f14de279f4a045c7da0",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "jsVersion": "15.5.35.23"
+  },
+  "images": [
+    {
+      "path": "en-civilian-flight-directory-focus.png",
+      "bytes": 3836,
+      "sha256": "3ab882249b214cf419a89d169e154fff02ce3d43eeb53c055f1b66cb6fbdd592",
+      "pixelWidth": 1148,
+      "pixelHeight": 90,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "en-civilian-flight-directory-page.png",
+      "bytes": 73684,
+      "sha256": "4da6973db359b03b8b1c81ecd1d10630625adf7966eaa57d4268ee1e1a4ef98a",
+      "pixelWidth": 1280,
+      "pixelHeight": 812,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "en-civilian-flight-launcher-focus.png",
+      "bytes": 719,
+      "sha256": "fc1c4e22a732f707fceea4a976c5249b1c218cbb1f992b4d18384d5c0b8efe09",
+      "pixelWidth": 1152,
+      "pixelHeight": 114,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "en-civilian-fpv-directory-focus.png",
+      "bytes": 3984,
+      "sha256": "6e7f1940712d1ff50b89a573491821c84a42a809c0aec4ddd33bb4eb2567056e",
+      "pixelWidth": 1148,
+      "pixelHeight": 90,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "en-civilian-fpv-directory-page.png",
+      "bytes": 70231,
+      "sha256": "805cb987cee518cdcf1a4705574716c32fd7eeb1fdb532c71e3f06e719074686",
+      "pixelWidth": 1280,
+      "pixelHeight": 812,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "en-civilian-fpv-launcher-focus.png",
+      "bytes": 719,
+      "sha256": "fc1c4e22a732f707fceea4a976c5249b1c218cbb1f992b4d18384d5c0b8efe09",
+      "pixelWidth": 1152,
+      "pixelHeight": 114,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "en-fpv-worlds-directory-focus.png",
+      "bytes": 3916,
+      "sha256": "6acfd0e64770125109a5d200807e3255bef9763d99b68030ea0ff09e0b489c03",
+      "pixelWidth": 1148,
+      "pixelHeight": 90,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "en-fpv-worlds-directory-page.png",
+      "bytes": 72241,
+      "sha256": "b6bd5b2bb8f78a3abb767e894d50227fed756d1f81e5351e79a6ca595d45a50b",
+      "pixelWidth": 1280,
+      "pixelHeight": 812,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "en-fpv-worlds-launcher-focus.png",
+      "bytes": 719,
+      "sha256": "fc1c4e22a732f707fceea4a976c5249b1c218cbb1f992b4d18384d5c0b8efe09",
+      "pixelWidth": 1152,
+      "pixelHeight": 114,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "uk-civilian-flight-directory-focus.png",
+      "bytes": 1005,
+      "sha256": "8934c968b5a09fd09b5716e10f745ff29130815dcf33b85ac85c1d5ff7a8aab8",
+      "pixelWidth": 1148,
+      "pixelHeight": 90,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "uk-civilian-flight-directory-page.png",
+      "bytes": 62922,
+      "sha256": "2d9b3c941113fda2cd3b710cebf95bdf66967cee9e6e3810f10ca41e6fd8c0e8",
+      "pixelWidth": 1280,
+      "pixelHeight": 812,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "uk-civilian-flight-launcher-focus.png",
+      "bytes": 719,
+      "sha256": "fc1c4e22a732f707fceea4a976c5249b1c218cbb1f992b4d18384d5c0b8efe09",
+      "pixelWidth": 1152,
+      "pixelHeight": 114,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "uk-civilian-fpv-directory-focus.png",
+      "bytes": 1005,
+      "sha256": "8934c968b5a09fd09b5716e10f745ff29130815dcf33b85ac85c1d5ff7a8aab8",
+      "pixelWidth": 1148,
+      "pixelHeight": 90,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "uk-civilian-fpv-directory-page.png",
+      "bytes": 62272,
+      "sha256": "bf0457ec2bfc2900d068a3da3be2244d0c5543e26baf88a6caf0e622f62cbaed",
+      "pixelWidth": 1280,
+      "pixelHeight": 812,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "uk-civilian-fpv-launcher-focus.png",
+      "bytes": 719,
+      "sha256": "fc1c4e22a732f707fceea4a976c5249b1c218cbb1f992b4d18384d5c0b8efe09",
+      "pixelWidth": 1152,
+      "pixelHeight": 114,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "uk-fpv-worlds-directory-focus.png",
+      "bytes": 1005,
+      "sha256": "8934c968b5a09fd09b5716e10f745ff29130815dcf33b85ac85c1d5ff7a8aab8",
+      "pixelWidth": 1148,
+      "pixelHeight": 90,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "uk-fpv-worlds-directory-page.png",
+      "bytes": 64055,
+      "sha256": "75a8856e0aafacadb7ad7b01e87b507117d2ce8ee4372e068b135308f97025bf",
+      "pixelWidth": 1280,
+      "pixelHeight": 812,
+      "visuallyReviewed": false
+    },
+    {
+      "path": "uk-fpv-worlds-launcher-focus.png",
+      "bytes": 719,
+      "sha256": "fc1c4e22a732f707fceea4a976c5249b1c218cbb1f992b4d18384d5c0b8efe09",
+      "pixelWidth": 1152,
+      "pixelHeight": 114,
+      "visuallyReviewed": false
+    }
+  ],
+  "auditScript": {
+    "path": "/tmp/practice-native-c9-independent-audit-20261016.mjs",
+    "bytes": 14526,
+    "sha256": "a48d740998a7d03cd6273f2978cdcf7e65c50793a860625276bd4615dd425fed"
+  }
+}

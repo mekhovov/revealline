@@ -1,0 +1,36 @@
+{
+  "format": "ProductionHomeDeliveryIndependentAudit.v1",
+  "passed": true,
+  "receipt": {
+    "path": "/tmp/practice-production-home-diagnostic-20261016-run2/observation.json",
+    "sha256": "7bae535e7cdc32dea03f09f439728d453060a0730de295454d1c5c3b99607598"
+  },
+  "source": "57d3b748cf83e21513ae40a4df18eb5b2bc00e7b",
+  "selected": {
+    "files": 643,
+    "bytes": 10300719
+  },
+  "recheckedUnion": {
+    "files": 725,
+    "bytes": 18940603
+  },
+  "deliveries": {
+    "file:verified-original-file": 172,
+    "memory:verified-memory": 652,
+    "memory:verified-original-file": 82
+  },
+  "cases": [
+    {
+      "mode": "file",
+      "homeWithinDeadline": false,
+      "homeElapsedMs": 10002.608208000005
+    },
+    {
+      "mode": "memory",
+      "homeWithinDeadline": true,
+      "homeElapsedMs": 7470.135207999992
+    }
+  ],
+  "cleanup": true,
+  "scope": "One EN matched-delivery diagnostic; not a performance benchmark, attribution to SMB specifically, full production qualification, or runtime fix. File mode is not cold OS cache. Prior failed production receipt remains failed. Original full3493 file integrity comes from earlier receipt; this audit verifies recorded subset/request pins and source, not a new full distribution read."
+}

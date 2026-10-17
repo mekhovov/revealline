@@ -14,6 +14,37 @@ import {
 } from './optional-installation-download-check.mjs';
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+test('offline feedback accepts explicit Gym cancel and retains exact legacy receipt without accepting timeouts', () => {
+  const receipt = {
+    mode: 'cancel-hold',
+    cancelAfterPrefixMs: 100,
+    cancelLatencyMs: 50,
+    status: 'Offline download cancelled.',
+  };
+  assert.equal(assertDownloadFaultTiming(receipt, '#package-status'), true);
+  assert.equal(
+    assertDownloadFaultTiming(
+      { ...receipt, status: 'Offline preparation failed. Online practice remains available.' },
+      '#package-status',
+    ),
+    true,
+  );
+  for (const status of [
+    'Download stalled for 30 seconds. Retry online.',
+    'Download exceeded five minutes. Retry on a faster connection.',
+    'Offline preparation failed.',
+  ])
+    assert.throws(() => assertDownloadFaultTiming({ ...receipt, status }, '#package-status'));
+  assert.throws(() =>
+    assertDownloadFaultTiming({ ...receipt, cancelLatencyMs: 5000 }, '#package-status'),
+  );
+  assert.throws(() =>
+    assertDownloadFaultTiming({ ...receipt, mode: 'idle', heldMs: 30000 }, '#package-status'),
+  );
+  assert.throws(() =>
+    assertDownloadFaultTiming({ ...overallReceipt(), status: receipt.status }, '#package-status'),
+  );
+});
 function evaluatedPage(environment) {
   const browser = { ...environment };
   return {

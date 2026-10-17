@@ -42,6 +42,7 @@ import {
 import { attachPracticeInput } from './input.mjs';
 import { PRACTICE_COPY } from './copy.mjs';
 import { preparePracticeOffline, removePracticeOffline } from './offline.mjs';
+import { optionalOfflineFailureMessage } from '../install-context.mjs';
 
 function renderDrillPreview({ container, diagram, document: doc }) {
   const canvas = doc.createElement('canvas');
@@ -604,8 +605,8 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     try {
       await preparePracticeOffline({ navigator: win.navigator, location: win.location });
       $('package-status').textContent = tr('installed');
-    } catch {
-      $('package-status').textContent = tr('installFailed');
+    } catch (error) {
+      $('package-status').textContent = optionalOfflineFailureMessage(error, getLocale());
     }
   };
   $('remove-offline').onclick = async () => {
@@ -616,8 +617,8 @@ export function mountCivilianPractice({ document: doc, window: win }) {
         location: win.location,
       });
       $('package-status').textContent = tr('removed');
-    } catch {
-      $('package-status').textContent = tr('installFailed');
+    } catch (error) {
+      $('package-status').textContent = optionalOfflineFailureMessage(error, getLocale(), 'remove');
     }
   };
   const section = (className) => {
