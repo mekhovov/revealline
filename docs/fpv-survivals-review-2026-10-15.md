@@ -1,8 +1,68 @@
 # FPV Survivals — delivery review and proposed priorities
 
+**Current continuation, 16 October:** [researched remaining delivery plan](fpv-survivals-completion-plan-2026-10-16.md) and [source/evidence report](qualification/overflight/review-completion-20261016/README.md). Historical checkpoints below retain their tested-source boundaries.
+
+**Current local completion:** truthful Marathon previews and a readable full-width
+next-contract panel are implemented. Both exact-map default Systems controls win;
+one-airframe challenge losses remain. Ten native short retries and a fresh15-minute
+local-spacing soak pass (p95 11.1ms / p99 13.4ms on the available Mac). Both earned
+Marathon retain/refit branches clear five contracts with eight ranks and a measured
+score/time/damage tradeoff. The final changed-flow cohort passes61/61. Native panel
+before/after full gameplay summaries match. See the current report for source
+boundaries; human visual/audio/enjoyment judgments and provisional medals remain
+ready for review, while external trials stay skipped. Historical open items below
+are superseded only where the current report explicitly records a completed gate.
+
+
+
+## 16 October — late-choice pacing correction
+
+The [late-pacing comparison](qualification/overflight/late-pacing-20261016/README.md)
+implements 1,250 / 1,550 salvage for choices nine/ten in new V4 Survival/Riy
+sorties, preserving the first eight and all combat parameters. Six paired active
+configurations improve from 3/6 to 4/6 completions; all twelve earned no-input
+branches lose. The two systems configurations still lose and remain open. The
+new named balance revision preserves exact previous authored identities and
+separate mixed-profile records; content and integration cohorts pass 24/24 each.
+Native Echo completes at 6:44 and exactly matches every simulated statistic and
+upgrade tick. Three native Classic/Reactions/boss clips are saved for listening review. Local crowd
+spacing remains experimental; this correction does not mark the full plan complete.
+
+
+
+## 16 October — local spacing capacity follow-up
+
+The [spacing performance follow-up](qualification/overflight/spacing-performance-20261016/README.md)
+adds a bounded 16-pixel index for experimental local spacing while preserving
+exact damage-query ordering. All three fresh native reference trials passed at
+1,500 simulated / 700 visible, as did a separate 2,500 / 1,200 stress trial on
+the available M4 Pro / Chromium setup. The regression cohort passed 154/154 and
+native graphics recovery resumed through the shared shell. This is recorded
+1280×720 local capacity evidence, not Iris Xe, 1080p, enjoyment or full release
+acceptance. Default movement remains unchanged; later-choice pacing is being
+compared separately before changing defaults.
+
+
+
+## Native replay and crowd movement follow-up
+
+The [native parity investigation](qualification/overflight/review-parity-20261015/README.md)
+locates the first different pilot decision at 272.2 seconds and demonstrates a
+cell-boundary discontinuity in the original crowd separation. An explicitly authored
+**Local spacing · experimental** option now shares native and Studio rules; old
+projects and game defaults retain their original behavior. Results can export fresh
+final diagnostics. The native candidate completes at 8:55, while the headless candidate loses at
+323.08 seconds. The native timing trial is invalid and its final draft gap is
+156.53 seconds; packed-crowd CPU cost remains material. Movement and Echo balance
+therefore remain open qualification items; the late-threshold hypothesis is still
+not default tuning.
+
+
 15 October 2026. Latest follow-up rebased onto fetched main `859d5cfc9`; earlier checkpoints below retain their original source boundaries. This is a decision document; implementation, automated checks and human acceptance are separate states.
 
 ## Latest implementation follow-up
+
+The latest continuation integrates main `d6f93f71d`, adds brief shared-music attenuation for local priority cues, and introduces an explicit lure-and-return review route. [Flight and sound evidence](qualification/overflight/lure-mix-20261015/README.md) records **112/112** checks, two native built-in music/effects clips, a headless Riy Echo completion and a contradictory native loss. Build viability remains open: the actual native route/project were verified, but the first later divergence is not yet established. An isolated late-threshold hypothesis shortened measured draft gaps and enabled a Single Drone Echo completion; it is **data only, not released tuning**, pending broader active/unattended and native checks. The complete sound mix now has native built-in samples; subjective listening acceptance and a boss sample remain open.
 
 PR #1489 is merged at `4defb04b81`. The next continuation incorporates main `691351e1d`, adds final-tank armor/hull to native flight reports, and adds explicit native review routes while preserving the tight default. [Echo approach evidence](qualification/overflight/echo-approach-20261015/README.md) records a reproduced Receiver Gardens loss plus two isolated comparisons. All three lost; build viability is still open. The combined changed-flow/records/offline checks pass 72/72.
 
@@ -133,7 +193,7 @@ PR1192, PR1215, PR1226, PR1248 and PR1319 are merged. Corrective runtime `60b0c2
 ## Suggested next batch
 
 1. Review and integrate the flight-report and explicit review-route follow-up; PR1319, PR1344 and PR1489 have merged.
-2. Review Riy Echo and the three intended build techniques; adjust only evidenced problems.
+2. Resolve matched native/headless playback differences, then review Riy Echo and the three intended build techniques. Expand the measured late-pacing proposal across active/unattended controls before changing defaults.
 3. Polish readability and the complete audio mix on those same runs.
 4. Calibrate replay targets, then choose further cross-mode polish.
 
