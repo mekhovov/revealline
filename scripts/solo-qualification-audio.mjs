@@ -2,7 +2,19 @@
 
 /** Explicitly intrusive correctness probe, installed only for --audio-proof.
  * Encoded-byte hashing never reads PCM samples or changes playback controls. */
-export function installAudioProof() {
+export function audioProofOptions(flags, requirements, enabled) {
+  const expanded = flags.includes('--audio-proof-music-capacity');
+  if (
+    expanded &&
+    (!enabled || !requirements?.streamedHashes?.length || requirements.recordedHashes?.length)
+  )
+    throw new TypeError('Music identity capacity requires an explicit streamed-only audio proof');
+  return { aggregateEncodedBytes: (expanded ? 32 : 16) * 1024 * 1024 };
+}
+
+export function installAudioProof({ aggregateEncodedBytes = 16 * 1024 * 1024 } = {}) {
+  if (![16 * 1024 * 1024, 32 * 1024 * 1024].includes(aggregateEncodedBytes))
+    throw new RangeError('Unsupported audio proof byte capacity');
   const sources = [],
     starts = [],
     mediaEvents = [],
@@ -22,7 +34,7 @@ export function installAudioProof() {
       bytes < 1 ||
       bytes > 2 * 1024 * 1024 ||
       sources.length >= 128 ||
-      copiedBytes + bytes > 16 * 1024 * 1024
+      copiedBytes + bytes > aggregateEncodedBytes
     ) {
       capped++;
       return null;
@@ -185,7 +197,7 @@ export function installAudioProof() {
         droppedMediaEvents,
         limits: {
           encodedBytesPerSource: 2 * 1024 * 1024,
-          aggregateEncodedBytes: 16 * 1024 * 1024,
+          aggregateEncodedBytes,
           sources: 128,
           starts: 128,
           mediaEvents: 512,
@@ -365,5 +377,28 @@ export function evaluateAudioProof(proof, requirements) {
     droppedMediaEvents: proof.droppedMediaEvents,
     scope:
       'Exact encoded SHA256 linked to successful native playback APIs. Unresolved/capped identities cannot satisfy requirements; no speaker/output-device claim.',
+  };
+}
+
+/** Public controls at an audio failure or completed import; no playback or storage writes. */
+export function readAudioFailureContext() {
+  const doc = globalThis.document;
+  const select = doc.getElementById('soundtrack-selection');
+  const status = doc.getElementById('soundtrack-status');
+  const options = select?.options;
+  return {
+    scope: 'Bounded public music controls during intrusive audio diagnosis',
+    status: status?.textContent?.slice(0, 1200) ?? null,
+    statusState: status?.dataset?.state?.slice(0, 40) ?? null,
+    dialogOpen: Boolean(doc.getElementById('soundtrack-dialog')?.open),
+    selection: select?.value?.slice(0, 180) ?? null,
+    selectionDisabled: select ? Boolean(select.disabled) : null,
+    optionCount: options?.length ?? 0,
+    options: options
+      ? Array.from({ length: Math.min(64, options.length) }, (_, i) => ({
+          value: options[i].value.slice(0, 180),
+          text: options[i].textContent.slice(0, 180),
+        }))
+      : [],
   };
 }

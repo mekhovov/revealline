@@ -20,6 +20,7 @@ const dispatchedManifest = JSON.parse(
 );
 const manifest = structuredClone(dispatchedManifest);
 delete manifest.release.selectedJobs; // Exercise every supported arm independently of this release subset.
+delete manifest.release.musicProofBytes; // General fixtures retain the original probe capacity.
 const clone = (x) => structuredClone(x);
 function admitted() {
   const m = clone(manifest);
@@ -157,10 +158,13 @@ test('parallel auxiliary jobs retain separate job-named evidence artifacts', asy
   assert.match(workflow, /cancel-in-progress: false/);
   assert.match(
     workflow,
-    /github\.event\.action == 'synchronize' && github\.event\.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'/,
+    /github\.event\.action == 'synchronize' && github\.event\.before == 'bffcbd838a7bb925da8aaf030695773f893d8bda'/,
   );
 });
 test('a reviewed subset cannot repeat completed unrelated observations', () => {
+  assert.deepEqual(dispatchedManifest.release.selectedJobs, ['music-chromium', 'music-webkit']);
+  assert.equal(dispatchedManifest.release.musicProofBytes, 32 * 1024 ** 2);
+  assert.equal(dispatchedManifest.release.correction.previousRun, 38992974900);
   assert.deepEqual(
     auxiliaryMatrix(dispatchedManifest).include.map((row) => row.job),
     dispatchedManifest.release.selectedJobs,
@@ -542,4 +546,38 @@ test('WebKit audio keeps exact original fixtures and rejects context, replay, an
       }
     }
   }
+});
+
+test('expanded music identity capacity is prospectively declared and cannot waive caps', () => {
+  const m = clone(manifest);
+  m.release.musicProofBytes = 32 * 1024 ** 2;
+  const p = bindAuxiliaryJob(m, 'music-chromium'),
+    row = p.rows[1];
+  const args = auxiliaryArguments(
+    { here: '/tools', plan: p, modeState: { recipePath: '/recipe' } },
+    row,
+    'http://localhost/game/',
+    '/evidence',
+  );
+  assert(args.includes('--audio-proof-music-capacity'));
+  const value = raw(p, row);
+  assert.equal(auxiliaryAssessment(p, row, value, closed, '123.4').status, 'failed');
+  value.audioProofOptions = { aggregateEncodedBytes: 32 * 1024 ** 2 };
+  assert.equal(auxiliaryAssessment(p, row, value, closed, '123.4').status, 'passed');
+  value.audioIdentity.capped = 1;
+  assert.equal(auxiliaryAssessment(p, row, value, closed, '123.4').status, 'failed');
+  const speech = bindAuxiliaryJob(m, 'speech-webkit');
+  assert(
+    !auxiliaryArguments(
+      { here: '/tools', plan: speech, modeState: { recipePath: '/recipe' } },
+      speech.rows[1],
+      'http://localhost/game/',
+      '/evidence',
+    ).includes('--audio-proof-music-capacity'),
+  );
+  m.release.musicProofBytes = 64 * 1024 ** 2;
+  assert.throws(() => auxiliaryMatrix(m));
+  const recovery = preparationManifest();
+  recovery.release.musicProofBytes = 32 * 1024 ** 2;
+  assert.throws(() => auxiliaryMatrix(recovery));
 });

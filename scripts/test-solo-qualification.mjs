@@ -18,6 +18,8 @@ import {
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import {
   installAudioProof,
+  audioProofOptions,
+  readAudioFailureContext,
   evaluateAudioProof,
   observedMediaAdvancement,
 } from './solo-qualification-audio.mjs';
@@ -1162,7 +1164,7 @@ test('explicit audio probe preserves native promises and links decoded buffers a
 });
 
 test('audio identity keeps the baseline bank observable without exceeding source or byte bounds', async () => {
-  function probe() {
+  function probe(options = {}) {
     let nativeCalls = 0;
     class Context {
       decodeAudioData() {
@@ -1184,7 +1186,7 @@ test('audio identity keeps the baseline bank observable without exceeding source
       performance: { now: () => 1 },
       Uint8Array,
     };
-    vm.runInNewContext(`(${installAudioProof.toString()})()`, sandbox);
+    vm.runInNewContext(`(${installAudioProof.toString()})(${JSON.stringify(options)})`, sandbox);
     return {
       context: new Context(),
       proof: sandbox.window.soloAudioProof,
@@ -1219,6 +1221,14 @@ test('audio identity keeps the baseline bank observable without exceeding source
     2,
     'Aggregate byte limit remains independent of source capacity',
   );
+  const music = probe({ aggregateEncodedBytes: 32 * 1024 ** 2 });
+  for (let i = 0; i < 16; i++) await music.context.decodeAudioData(new ArrayBuffer(2 * 1024 ** 2));
+  await music.context.decodeAudioData(new ArrayBuffer(1));
+  assert.equal(music.calls(), 17, 'A full observer never suppresses native decoding');
+  assert.equal(music.proof.export().copiedBytes, 32 * 1024 ** 2);
+  assert.equal(music.proof.export().sources.length, 16);
+  assert.equal(music.proof.export().capped, 1);
+  assert.throws(() => probe({ aggregateEncodedBytes: 64 * 1024 ** 2 }));
 });
 
 test('display arguments preserve defaults and label bounded desktop mobile-layout stress', () => {
@@ -1387,4 +1397,52 @@ test('warm reload scenario is explicit and unknown cache labels cannot masquerad
   assert.throws(() => qualificationCacheMode(warm, { workProbe: true, fixtureAccess: true }));
   assert.throws(() => qualificationCacheMode(warm, { workProbe: true, mirrored: true }));
   assert.equal(qualificationCacheMode({}), 'fresh-context');
+});
+
+test('music observer capacity is explicit and cannot alter ordinary or speech observations', () => {
+  assert.equal(audioProofOptions([], {}, false).aggregateEncodedBytes, 16 * 1024 ** 2);
+  assert.equal(
+    audioProofOptions([], { streamedHashes: ['a'] }, true).aggregateEncodedBytes,
+    16 * 1024 ** 2,
+  );
+  const flags = ['--audio-proof-music-capacity'];
+  assert.equal(
+    audioProofOptions(flags, { streamedHashes: ['a'] }, true).aggregateEncodedBytes,
+    32 * 1024 ** 2,
+  );
+  assert.throws(() => audioProofOptions(flags, { streamedHashes: ['a'] }, false));
+  assert.throws(() => audioProofOptions(flags, { recordedHashes: ['a'] }, true));
+  assert.throws(() =>
+    audioProofOptions(flags, { streamedHashes: ['a'], recordedHashes: ['b'] }, true),
+  );
+  assert.throws(() => audioProofOptions(flags, undefined, true));
+});
+
+test('failed audio observations retain bounded public import state without changing controls', () => {
+  const option = { value: 'v'.repeat(200), textContent: 't'.repeat(200) };
+  const nodes = {
+    'soundtrack-selection': {
+      value: 'v'.repeat(200),
+      disabled: false,
+      options: Array(70).fill(option),
+    },
+    'soundtrack-status': { textContent: 'e'.repeat(2000), dataset: { state: 'error' } },
+    'soundtrack-dialog': { open: true },
+  };
+  const before = JSON.stringify(nodes);
+  const report = vm.runInNewContext(`(${readAudioFailureContext.toString()})()`, {
+    document: { getElementById: (id) => nodes[id] },
+  });
+  assert.equal(report.optionCount, 70);
+  assert.equal(report.options.length, 64);
+  assert.equal(report.options[0].value.length, 180);
+  assert.equal(report.status.length, 1200);
+  assert.equal(report.statusState, 'error');
+  assert.equal(report.selectionDisabled, false);
+  assert.equal(JSON.stringify(nodes), before);
+  const absent = vm.runInNewContext(`(${readAudioFailureContext.toString()})()`, {
+    document: { getElementById: () => null },
+  });
+  assert.equal(absent.status, null);
+  assert.equal(absent.optionCount, 0);
 });

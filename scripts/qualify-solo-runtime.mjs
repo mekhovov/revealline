@@ -7,7 +7,12 @@ import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { arch, release, loadavg } from 'node:os';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
-import { installAudioProof, evaluateAudioProof } from './solo-qualification-audio.mjs';
+import {
+  installAudioProof,
+  evaluateAudioProof,
+  audioProofOptions,
+  readAudioFailureContext,
+} from './solo-qualification-audio.mjs';
 import { verifyNativeQualificationReplay } from './solo-qualification-native-replay.mjs';
 import {
   beginQualificationUploadWitness,
@@ -55,7 +60,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--work-probe] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--work-probe] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -69,6 +74,7 @@ const profileMode = qualificationProfileMode(flags, engine, scenario);
 const memoryProfile = profileMode === 'memory-profile',
   audioProof = profileMode === 'audio-proof',
   cpuProfile = profileMode === 'cpu-profile';
+const audioOptions = audioProofOptions(flags, scenario.audioRequirements, audioProof);
 const exportsReplay = (actions) =>
   actions.some(
     (action) =>
@@ -142,6 +148,7 @@ const report = {
   workProbe,
   cadenceProtocol,
   audioProof,
+  audioProofOptions: audioProof ? audioOptions : null,
   sourceRevision: option('source-revision', null),
   scenarioSHA256: createHash('sha256').update(bytes).digest('hex'),
   requestedCoverage: scenario.coverage,
@@ -378,7 +385,7 @@ try {
       );
     await save();
   }
-  if (audioProof) await page.addInitScript(installAudioProof);
+  if (audioProof) await page.addInitScript(installAudioProof, audioOptions);
   await page.addInitScript(
     `window.soloQualificationReadiness = ${readPrePlayReadiness.toString()};
      window.soloQualificationIntervalClock = ${createRafIntervalClock.toString()};
@@ -1118,6 +1125,14 @@ try {
         activeAction = previousAction;
       }
       // Serialize only between actions, never in a browser animation callback.
+      if (
+        audioProof &&
+        action.type === 'expect' &&
+        action.selector === '#soundtrack-use-selection:enabled'
+      ) {
+        // Preserve import feedback before subsequent listening controls replace it.
+        record.audioPublicContext = await page.evaluate(readAudioFailureContext);
+      }
       if (action.type === 'snapshot' || action.type === 'repeat') await save();
     }
   }
@@ -1167,6 +1182,13 @@ try {
   if (page && !page.isClosed()) {
     try {
       if (report.scenarioStatus === 'fail') {
+        if (audioProof) {
+          try {
+            report.audioFailureContext = await page.evaluate(readAudioFailureContext);
+          } catch (error) {
+            report.audioFailureContextError = String(error.stack ?? error);
+          }
+        }
         try {
           const beforeStop = await page.locator('body').getAttribute('data-flight-state');
           report.failureCleanup = { beforeStop, inducedPause: false };
