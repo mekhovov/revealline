@@ -132,12 +132,15 @@ test('deadline control requires its precise failed owner and confirmed owned cle
   assert.throws(() => assessDarwinOwnerCase('browser', {}, [], source));
 });
 
-test('held non-browser workflow declares finite setup, native observation and upload separately', async () => {
+test('one-shot non-browser workflow declares finite setup, native observation and upload separately', async () => {
   const workflow = await readFile(
     new URL('../.github/workflows/solo-darwin-owner-preflight-temporary.yml', import.meta.url),
     'utf8',
   );
-  assert.match(workflow, /    if: false/);
+  assert.equal(
+    workflow.match(/^    if: (.+)$/m)?.[1],
+    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'ab45bfde5d54d612cbba9b038a46f13d13f417ec'",
+  );
   assert.match(workflow, /runs-on: macos-15-intel/);
   assert.match(workflow, /timeout-minutes: 24/);
   assert.match(workflow, /node-version: '22.13.1'/);
