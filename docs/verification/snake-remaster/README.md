@@ -155,6 +155,16 @@ screenshots and the visible transition trace are retained alongside the report.
 No runtime defect was identified. Physical devices and player feedback remain
 deferred; VoiceOver remains skipped; higher-grade expansion remains optional.
 
+## Optional rating evidence follow-up — 15 October 2026
+
+The [calibration follow-through](rating-calibration-followthrough.md) now retains
+five distinct successful clearance-first routes alongside the original pilots.
+This local evidence strategy trades distance for room beside walls and cable;
+it does not inspect future state or retry accepted moves. Complete replay journals
+and source hashes are retained in the v2 evidence report. All five sampled normal
+Solo seed-17 setups clear; no new rating thresholds or gameplay changes are
+published. Additional player execution evidence remains deferred.
+
 ## Original artwork and safety
 
 New structure, pose and material artwork is editable original drawing code in the existing presentation system; no third-party game sprites were copied. Existing shared artwork/audio provenance remains authoritative. Cosmetic state does not consume gameplay randomness or enter gameplay recipe identity.
