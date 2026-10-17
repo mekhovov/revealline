@@ -1,4 +1,4 @@
-// Hosted app-diagnostics overhead only. No hitch journal, profiler or game mutation.
+// Strict app-diagnostics or opt-in journal-hook cost cohorts. No game mutation.
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { lstat, open, readFile, realpath, rename, writeFile } from 'node:fs/promises';
@@ -29,10 +29,32 @@ const requiredTools = [
   'scripts/solo-remote-archive.py',
   'scripts/verify-solo-build.mjs',
 ];
+const journalCostMode = (plan) => plan.probe === 'journal-hook-cost-v1';
+const journalRecipe = Object.freeze({
+  path: 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
+  bytes: 6387,
+  sha256: 'aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5',
+});
+const journalTools = [
+  'scripts/qualify-solo-runtime.mjs',
+  'scripts/solo-qualification-journal-cost.mjs',
+  'scripts/solo-qualification-hitch-journal.mjs',
+  'scripts/solo-journal-cost-analysis.mjs',
+  'scripts/solo-remote-sustained.mjs',
+  'scripts/solo-qualification.mjs',
+  'scripts/solo-qualification-audio.mjs',
+  'scripts/solo-qualification-native-replay.mjs',
+  'scripts/solo-qualification-export.mjs',
+  'scripts/solo-qualification-cpu-profile.mjs',
+  'scripts/solo-qualification-replay-identity.mjs',
+  'scripts/solo-qualification-browser-context.mjs',
+  'scripts/solo-qualification-cadence.mjs',
+  'scripts/solo-qualification-observation.mjs',
+];
 const references = (plan) => [...plan.adapterInputs, ...plan.frozenTools];
-const rowDefinition = (engine) => ({
-  id: `diagnostics-${engine}-candidate`,
-  kind: 'app-diagnostics-overhead',
+const rowDefinition = (engine, journal = false) => ({
+  id: `${journal ? 'journal-cost' : 'diagnostics'}-${engine}-candidate`,
+  kind: journal ? 'journal-hook-cost-overhead' : 'app-diagnostics-overhead',
   source: 'candidate',
   engine,
   timeoutMs: 1800000,
@@ -41,7 +63,12 @@ const rowDefinition = (engine) => ({
 
 export function validateDiagnosticsPlan(plan) {
   assert.equal(plan.format, FORMAT);
-  assert.equal(plan.status, 'reviewed-app-diagnostics-only');
+  const journal = journalCostMode(plan);
+  assert(journal || plan.probe === undefined, 'Unknown diagnostics subtype');
+  assert.equal(
+    plan.status,
+    journal ? 'reviewed-journal-hook-cost-only' : 'reviewed-app-diagnostics-only',
+  );
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.candidate.revision, DIAGNOSTICS_SOURCE);
   assert.equal(plan.candidate.tree, SOURCE_TREE);
@@ -58,12 +85,12 @@ export function validateDiagnosticsPlan(plan) {
   assert.equal(plan.helperTimeoutMs, 85 * 60000);
   assert.equal(plan.evidenceBytes, 512 * MiB);
   assert.equal(plan.rowEvidenceBytes, 128 * MiB);
-  assert.deepEqual(plan.rows, [rowDefinition(plan.engine)]);
+  assert.deepEqual(plan.rows, [rowDefinition(plan.engine, journal)]);
   assert.deepEqual(plan.observation, {
     pairs: 10,
     seed: 1544,
     activeMs: 30000,
-    armTimeoutMs: 360000,
+    armTimeoutMs: journal ? 240000 : 360000,
     timerTimeoutMs: 180000,
     cpuRate: 1,
     reportBytes: 4 * MiB,
@@ -72,13 +99,21 @@ export function validateDiagnosticsPlan(plan) {
     overheadLimit: 0.05,
     profile: 'fresh profile',
     fixtureAccess: 'server',
-    hitchJournal: false,
+    hitchJournal: journal ? 'matched-on-off' : false,
     cpuProfile: false,
     heap: false,
     screenshots: false,
     crossOriginIsolationOverride: false,
   });
-  assert.equal(plan.release.scope, 'app-diagnostics-overhead-only');
+  if (journal) {
+    assert.deepEqual(plan.recipe, journalRecipe);
+    assert.equal(plan.release.fullJournalOverheadQualification, false);
+    assert.equal(plan.release.measurementScope, 'synchronous-hook-envelope-only');
+  } else assert.equal(plan.recipe, undefined);
+  assert.equal(
+    plan.release.scope,
+    journal ? 'journal-hook-cost-only' : 'app-diagnostics-overhead-only',
+  );
   assert.equal(plan.release.candidateRevision, DIAGNOSTICS_SOURCE);
   assert.equal(plan.release.onceOnlyBefore, DIAGNOSTICS_SOURCE);
   assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
@@ -91,7 +126,8 @@ export function validateDiagnosticsPlan(plan) {
     ['scripts/solo-remote-diagnostics.mjs'],
   );
   assert(plan.frozenTools.length >= requiredTools.length && plan.frozenTools.length <= 64);
-  for (const path of requiredTools) assert(plan.frozenTools.some((ref) => ref.path === path));
+  for (const path of [...requiredTools, ...(journal ? journalTools : [])])
+    assert(plan.frozenTools.some((ref) => ref.path === path));
   const refs = references(plan);
   assert.equal(new Set(refs.map(({ path }) => path)).size, refs.length);
   for (const ref of refs) {
@@ -108,7 +144,7 @@ export function bindDiagnosticsJob(manifest, engine) {
     ...structuredClone(manifest),
     format: FORMAT,
     engine,
-    rows: [rowDefinition(engine)],
+    rows: [rowDefinition(engine, journalCostMode(manifest))],
   });
 }
 export function diagnosticsMatrix(manifest) {
@@ -121,7 +157,10 @@ export function diagnosticsMatrix(manifest) {
 }
 
 async function verifyInputs(ctx) {
-  for (const ref of references(ctx.plan)) {
+  for (const ref of [
+    ...references(ctx.plan),
+    ...(journalCostMode(ctx.plan) ? [ctx.plan.recipe] : []),
+  ]) {
     const path = resolve(ctx.repository, ref.path);
     assert(path.startsWith(ctx.repository + '/'));
     assert.equal(await realpath(path), path);
@@ -203,15 +242,45 @@ export async function prepareDiagnosticsMode(ctx) {
   assert.equal(admitted.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(admitted.archiveIdentity, ctx.plan.candidate.inner);
   Object.assign(ctx.report, {
-    appDiagnosticsOverhead: 'unobserved',
+    appDiagnosticsOverhead: journalCostMode(ctx.plan) ? 'not-measured' : 'unobserved',
     hitchJournalOverhead: 'not-measured',
+    ...(journalCostMode(ctx.plan)
+      ? { synchronousJournalHookOverhead: 'unobserved', fullJournalOverheadQualification: false }
+      : {}),
     gameplayPerformanceQualification: false,
     firstEightAllCorrectnessPassed: false,
   });
-  return { browserVersion: null };
+  let recipePath = null;
+  if (journalCostMode(ctx.plan)) {
+    recipePath = join(ctx.work, 'journal-cost.qualification.json');
+    await writeFile(recipePath, await readFile(resolve(ctx.repository, ctx.plan.recipe.path)), {
+      flag: 'wx',
+    });
+    assert.deepEqual(await ctx.digest(recipePath), {
+      bytes: ctx.plan.recipe.bytes,
+      sha256: ctx.plan.recipe.sha256,
+    });
+  }
+  return { browserVersion: null, ...(recipePath ? { recipePath } : {}) };
 }
 
 export function diagnosticsConfiguration(ctx, url, dir) {
+  if (journalCostMode(ctx.plan))
+    return {
+      sourceRevision: DIAGNOSTICS_SOURCE,
+      engine: ctx.plan.engine,
+      browserVersion: null,
+      pairs: 10,
+      seed: 1544,
+      durationMs: 30000,
+      cpuRate: 1,
+      probe: 'journal-hook-cost-v1',
+      recipe: ctx.plan.recipe,
+      profile: 'fresh profile',
+      sourceArchiveSHA256: ctx.plan.candidate.inner.sha256,
+      scope:
+        'Synchronous invoked-hook/application envelopes only; no full journal, browser or GPU overhead claim.',
+    };
   return diagnosticsArguments(url, dir, [
     `--source-revision=${DIAGNOSTICS_SOURCE}`,
     `--artifact-sha256=${ctx.plan.candidate.inner.sha256}`,
@@ -226,6 +295,27 @@ export function diagnosticsConfiguration(ctx, url, dir) {
   ]);
 }
 
+export function journalCostArguments(ctx, execution, url, output) {
+  assert(journalCostMode(ctx.plan));
+  return [
+    join(ctx.here, 'qualify-solo-runtime.mjs'),
+    url,
+    ctx.modeState.recipePath,
+    output,
+    `--browser=${ctx.plan.engine}`,
+    `--source-revision=${DIAGNOSTICS_SOURCE}`,
+    '--server-fixture-access',
+    '--work-probe',
+    '--journal-cost-probe',
+    '--cadence=settled120',
+    '--cpu=1',
+    ...(execution.diagnostics ? ['--hitch-journal'] : []),
+    ...(ctx.plan.engine === 'webkit'
+      ? ['--context=persistent', '--viewport=400x850', '--dpr=3', '--mobile-context']
+      : []),
+  ];
+}
+
 const save = async (path, value) => {
   await writeFile(path + '.tmp', JSON.stringify(value, null, 2) + '\n');
   await rename(path + '.tmp', path);
@@ -237,17 +327,31 @@ const reason = (error) => String(error?.message ?? error).slice(0, 4096);
 export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => performance.now()) {
   const configuration = diagnosticsConfiguration(ctx, url, dir);
   const manifest = {
-    format: DIAGNOSTICS_FORMAT,
+    format: journalCostMode(ctx.plan) ? 'SoloJournalHookCostCohortV1' : DIAGNOSTICS_FORMAT,
     createdAt: new Date().toISOString(),
     configuration,
     node: process.version,
     timerResolution: null,
-    observerSha256: ctx.plan.frozenTools.find((ref) =>
-      ref.path.endsWith('/observe-solo-performance.mjs'),
-    ).sha256,
-    observerLifecycleSha256: ctx.plan.frozenTools.find((ref) =>
-      ref.path.endsWith('/solo-observation-lifecycle.mjs'),
-    ).sha256,
+    ...(journalCostMode(ctx.plan)
+      ? {
+          observerSha256: ctx.plan.frozenTools.find((ref) =>
+            ref.path.endsWith('/qualify-solo-runtime.mjs'),
+          ).sha256,
+          journalCostProbeSha256: ctx.plan.frozenTools.find((ref) =>
+            ref.path.endsWith('/solo-qualification-journal-cost.mjs'),
+          ).sha256,
+          hitchJournalSha256: ctx.plan.frozenTools.find((ref) =>
+            ref.path.endsWith('/solo-qualification-hitch-journal.mjs'),
+          ).sha256,
+        }
+      : {
+          observerSha256: ctx.plan.frozenTools.find((ref) =>
+            ref.path.endsWith('/observe-solo-performance.mjs'),
+          ).sha256,
+          observerLifecycleSha256: ctx.plan.frozenTools.find((ref) =>
+            ref.path.endsWith('/solo-observation-lifecycle.mjs'),
+          ).sha256,
+        }),
     executions: diagnosticsSchedule(10, 1544).map((entry) => ({
       ...entry,
       report: `arm-${String(entry.order).padStart(2, '0')}.json`,
@@ -315,6 +419,8 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
     );
     assert(timer.value.positiveSteps >= 20);
     ctx.modeState.browserVersion = timer.value.browser;
+    if (journalCostMode(ctx.plan))
+      configuration.browserVersion = timer.value.browser.slice(row.engine.length + 1);
     for (const execution of manifest.executions) {
       await inspect();
       await verifyInputs(ctx);
@@ -324,7 +430,9 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
       try {
         execution.command = await command(
           `${row.id}-arm-${execution.order}`,
-          observerArguments(configuration, execution),
+          journalCostMode(ctx.plan)
+            ? journalCostArguments(ctx, execution, url, join(dir, execution.report))
+            : observerArguments(configuration, execution),
           ctx.plan.observation.armTimeoutMs,
           execution.log,
           `arm-${execution.order}.command.json`,
@@ -339,12 +447,27 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
         execution.reportIdentity = readback.identity;
         execution.reportSha256 = readback.identity.sha256;
         reports[execution.order] = readback.value;
-        const raw = readback.value?.[0];
+        const raw = journalCostMode(ctx.plan) ? readback.value : readback.value?.[0];
         assert.equal(
-          raw?.browser,
+          journalCostMode(ctx.plan)
+            ? `${row.engine} ${raw?.environment?.browserVersion}`
+            : raw?.browser,
           ctx.modeState.browserVersion,
           'Native browser changed across arms',
         );
+        if (journalCostMode(ctx.plan) && execution.diagnostics) {
+          const { verifyTimingHitchJournal } = await import('./solo-remote-sustained.mjs');
+          execution.journalReadback = await verifyTimingHitchJournal(
+            {
+              sourceCohort: 'cold-main8b-candidatecce',
+              phase: 'cold-first30',
+              hitchJournal: 'bounded-v1',
+            },
+            raw,
+            join(dir, execution.report),
+            url,
+          );
+        }
       } catch (error) {
         execution.status = 'failed';
         execution.failure = reason(error);
@@ -368,16 +491,20 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
     manifest.finishedAt = new Date().toISOString();
     manifest.failure = row.cohortFailure ?? null;
     await persist();
+    const measured = journalCostMode(ctx.plan)
+      ? (await import('./solo-journal-cost-analysis.mjs')).analyzeJournalCost(manifest, reports)
+      : analyzeDiagnostics(manifest, reports);
     const analysis = {
-      ...analyzeDiagnostics(manifest, reports),
+      ...measured,
       provenance: {
         sourceRevision: DIAGNOSTICS_SOURCE,
         artifactAdmission: row.artifactAdmission,
         served: row.served,
         frozenTools: ctx.plan.frozenTools,
       },
-      scope:
-        'App diagnostics overhead only. Hitch-journal, gameplay performance, physical devices and thermal conditions are not measured.',
+      scope: journalCostMode(ctx.plan)
+        ? measured.scope
+        : 'App diagnostics overhead only. Hitch-journal, gameplay performance, physical devices and thermal conditions are not measured.',
     };
     await writeFile(join(dir, 'analysis.json'), JSON.stringify(analysis, null, 2) + '\n', {
       flag: 'wx',
@@ -387,13 +514,20 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
       ctx.plan.observation.analysisBytes,
     );
     row.analysisReadback = readback.identity;
-    row.appDiagnosticsOverhead = analysis.status;
+    row.appDiagnosticsOverhead = journalCostMode(ctx.plan) ? 'not-measured' : analysis.status;
+    if (journalCostMode(ctx.plan)) row.synchronousJournalHookOverhead = analysis.status;
     row.hitchJournalOverhead = 'not-measured';
     row.plannedPairs = analysis.plannedPairs;
     row.completePairs = analysis.completePairs;
     row.analysisReasons = analysis.reasons;
-    row.status = !row.cohortFailure && analysis.status === 'pass' ? 'passed' : 'failed';
+    row.status =
+      !row.cohortFailure &&
+      analysis.status === (journalCostMode(ctx.plan) ? 'pass-scoped-envelope' : 'pass')
+        ? 'passed'
+        : 'failed';
     ctx.report.appDiagnosticsOverhead = row.appDiagnosticsOverhead;
+    if (journalCostMode(ctx.plan))
+      ctx.report.synchronousJournalHookOverhead = row.synchronousJournalHookOverhead;
   }
 }
 

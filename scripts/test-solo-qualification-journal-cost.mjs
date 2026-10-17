@@ -431,9 +431,11 @@ test('actual collector keeps ordinary app counters byte-equivalent and meters 30
     first = source.indexOf(marker) + marker.length;
   const end = source.indexOf('    {\n      bounds: FRAME_BOUNDS,', first);
   const factory = source.slice(first, end).trim().replace(/,$/, '');
-  const run = (enabled, journalEnabled) => {
+  const run = (enabled, journalEnabled, owners = 1) => {
     const f = fixture();
-    let next, onPhase;
+    let next,
+      onPhase,
+      sceneReads = 0;
     const events = new Map(),
       work = new Map();
     const env = f.environment;
@@ -480,6 +482,12 @@ test('actual collector keeps ordinary app counters byte-equivalent and meters 30
         constructor() {
           this.events = { on: (name, fn) => work.set(name, fn) };
         }
+        get scene() {
+          sceneReads++;
+          return {
+            scenes: Array.from({ length: owners }, () => ({ lastPaint: { quality: 'full' } })),
+          };
+        }
       },
       Core: { Events: { PRE_STEP: 'pre', POST_RENDER: 'post' } },
     };
@@ -501,7 +509,7 @@ test('actual collector keeps ordinary app counters byte-equivalent and meters 30
     onPhase();
     const snapshot = JSON.parse(JSON.stringify(env.soloQualificationProbe.export()));
     const cost = enabled ? f.meter.export() : null;
-    return { snapshot, cost };
+    return { snapshot, cost, sceneReads };
   };
   const normal = run(false, false),
     off = run(true, false),
@@ -515,11 +523,20 @@ test('actual collector keeps ordinary app counters byte-equivalent and meters 30
     assert.equal(result.cost.windows, 4320);
     assert.equal(result.cost.hooks, 12965);
     assert.equal(result.cost.activeWindows, 4320);
+    assert.equal(result.cost.activeQuality.full, 4320);
+    assert.equal(result.cost.activeQuality.unobserved, 0);
+    assert.equal(result.sceneReads, 1);
     assert.equal(result.cost.mixedHooks, 3);
     assert.equal(result.cost.appMs, 9720);
   }
   assert.equal(JSON.stringify(off.snapshot.work), JSON.stringify(normal.snapshot.work));
   assert.equal(JSON.stringify(on.snapshot.work), JSON.stringify(normal.snapshot.work));
+  assert.equal(normal.sceneReads, 0);
+  for (const owners of [0, 2]) {
+    const unknown = run(true, false, owners);
+    assert.equal(unknown.cost.activeQuality.unobserved, 4320);
+    assert.equal(unknown.cost.activeQuality.full, 0);
+  }
 });
 
 test('actual final read preserves partial cost and invalidates missing or replaced documents', async () => {
@@ -542,4 +559,15 @@ test('actual final read preserves partial cost and invalidates missing or replac
     assert.equal(report.journalCost.combinedMs, 260);
     assert.equal(report.journalCost.documents, documents);
   }
+});
+
+test('quantized-zero hooks retain both uncertain endpoints instead of declaring free work', () => {
+  const f = fixture();
+  f.meter.phase(2);
+  for (let i = 0; i < 100; i++) f.hook(5, 1, 1);
+  f.work(2, 4);
+  const value = f.finish();
+  assert.equal(value.zeroDurationHooks, 100);
+  assert.equal(value.hookMs, 0);
+  assert.equal(value.quantizationEndpointCounts[0], 202);
 });

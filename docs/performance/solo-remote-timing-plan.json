@@ -116,8 +116,8 @@
     },
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 66058,
-      "sha256": "f82dfa56b5c9a945e19d5bf83c91143d7f046fc07147da2fde66055cb9c5d0c5"
+      "bytes": 66337,
+      "sha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f"
     },
     {
       "path": "scripts/solo-qualification.mjs",
@@ -186,8 +186,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 53286,
-      "sha256": "615e6d6b0684af0ba13514b73759e3c33b6f59f022dd72811f6f2ed8cd7552fc"
+      "bytes": 53814,
+      "sha256": "6d00e1ba38cdaf0a468a58a999c803e03ae1a6a59b0dffefc8ec87644fa7c311"
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",

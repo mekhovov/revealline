@@ -54,6 +54,10 @@ export function createBrowserJournalCostProbe(options = {}, environment = global
   let lastClock = startedAt,
     lastWorkEnd = -Infinity,
     lastHookEnd = -Infinity;
+  let activeFull = 0,
+    activeReduced = 0,
+    activeMinimal = 0,
+    activeUnknown = 0;
   const clock = (at) => {
     if (!Number.isFinite(at) || at < lastClock) errors |= 1;
     else lastClock = at;
@@ -130,7 +134,7 @@ export function createBrowserJournalCostProbe(options = {}, environment = global
       workStart = at;
       workPhase = phase;
     },
-    endWork(at) {
+    endWork(at, tier) {
       clock(at);
       if (sealed) {
         errors |= 8;
@@ -141,6 +145,12 @@ export function createBrowserJournalCostProbe(options = {}, environment = global
         return;
       }
       if (workStart < lastWorkEnd || at < workStart) errors |= 1;
+      if (workPhase === 2 && phase === 2) {
+        if (tier === 'full') activeFull++;
+        else if (tier === 'reduced') activeReduced++;
+        else if (tier === 'minimal') activeMinimal++;
+        else activeUnknown++;
+      }
       if (usedWindows >= windowLimit) errors |= 32;
       else {
         const offset = usedWindows++ * 4;
@@ -161,7 +171,9 @@ export function createBrowserJournalCostProbe(options = {}, environment = global
       if (workStart !== null || hookStart !== null) errors |= 16;
       sealed = true;
       const rows = new Float64Array(usedWindows * 8),
-        phaseWindows = Array.from({ length: 7 }, () => []);
+        phaseWindows = Array.from({ length: 7 }, () => []),
+        endpointCounts = new Uint32Array(usedWindows).fill(2),
+        tailEndpointCounts = new Uint32Array(7);
       const kindTotals = new Float64Array(8 * 2),
         outsideByPhase = new Float64Array(7),
         initialByPhase = new Float64Array(7),
@@ -174,6 +186,7 @@ export function createBrowserJournalCostProbe(options = {}, environment = global
         maximumUnassignedTailMs = 0,
         mixedWindows = 0,
         mixedHooks = 0;
+      let zeroDurationHooks = 0;
       for (let i = 0; i < usedWindows; i++) {
         const source = i * 4,
           target = i * 8;
@@ -205,8 +218,12 @@ export function createBrowserJournalCostProbe(options = {}, environment = global
         if (!indexes.length || start < rows[indexes[0] * 8]) initialByPhase[p] += duration;
         if (low === indexes.length) {
           tailByPhase[p] += duration;
+          tailEndpointCounts[p] += 2;
           maximumUnassignedTailMs = Math.max(maximumUnassignedTailMs, duration);
-        } else rows[indexes[low] * 8 + 6] += duration;
+        } else {
+          rows[indexes[low] * 8 + 6] += duration;
+          endpointCounts[indexes[low]] += 2;
+        }
       };
       let cursor = 0;
       for (let i = 0; i < usedHooks; i++) {
@@ -220,6 +237,22 @@ export function createBrowserJournalCostProbe(options = {}, environment = global
         maximumHookMs = Math.max(maximumHookMs, duration);
         kindTotals[hooks[offset] * 2]++;
         kindTotals[hooks[offset] * 2 + 1] += duration;
+        if (duration === 0) {
+          // A quantized-zero callback is not evidence of zero true cost. Retain
+          // both endpoints in the sensitivity allowance even without a segment.
+          zeroDurationHooks++;
+          const p = before === after && validPhase(before) ? before : 6,
+            indexes = phaseWindows[p];
+          let low = 0,
+            high = indexes.length;
+          while (low < high) {
+            const middle = (low + high) >>> 1;
+            if (rows[indexes[middle] * 8 + 1] < end) low = middle + 1;
+            else high = middle;
+          }
+          if (low === indexes.length) tailEndpointCounts[p] += 2;
+          else endpointCounts[indexes[low]] += 2;
+        }
         if (before !== after) mixedHooks++;
         while (cursor < usedWindows && windows[cursor * 4 + 1] <= start) cursor++;
         let remaining = start,
@@ -252,6 +285,7 @@ export function createBrowserJournalCostProbe(options = {}, environment = global
         activeWindows,
         mixedWindows,
         mixedHooks,
+        zeroDurationHooks,
         appMs,
         hookMs,
         insideMs,
@@ -260,6 +294,16 @@ export function createBrowserJournalCostProbe(options = {}, environment = global
         maximumHookMs,
         maximumUnassignedTailMs,
         envelopeRequiresTailAssessment: true,
+        activeQuality: {
+          full: activeFull,
+          reduced: activeReduced,
+          minimal: activeMinimal,
+          unobserved: activeUnknown,
+          scope:
+            'Last submitted paint tier from one captured scene owner at each existing active POST_RENDER; no runtime methods called.',
+        },
+        quantizationEndpointCounts: Array.from(endpointCounts),
+        unassignedTailEndpointCounts: Array.from(tailEndpointCounts),
         rowColumns: [
           'start',
           'end',
