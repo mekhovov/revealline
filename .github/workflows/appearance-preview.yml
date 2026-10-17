@@ -86,6 +86,8 @@ on:
       - 'game/ui/preparation-cadence.mjs'
       - 'game/ui/hunt-feedback-layout.mjs'
       - 'game/test/hunt-feedback-layout.test.mjs'
+      - 'game/presentation/host.mjs'
+      - 'game/test/presentation-host.test.mjs'
       - 'game/scenario-entry.mjs'
       - 'game/playground/model.mjs'
       - 'game/ui/edition-controller-practice.mjs'
@@ -228,6 +230,7 @@ jobs:
         game/test/solo-performance-host.test.mjs
         game/test/preparation-cadence.test.mjs
         game/test/hunt-feedback-layout.test.mjs
+        game/test/presentation-host.test.mjs
         game/test/solo-cadence-readiness-host.test.mjs
         game/test/edition-controller-practice.test.mjs
         game/test/scenario-mastery.test.mjs

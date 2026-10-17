@@ -482,3 +482,53 @@ test('the stylesheet model retains failures and ignores detached, replaced or di
     stop();
   }
 });
+
+test('late optional page presentation stops at play without delaying required artwork or leaving busy feedback', async (t) => {
+  let held = false,
+    release;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  t.after(() => release());
+  const h = await fixture(t, {
+    fetchResponse: async (path) => {
+      if (!held && String(path).endsWith('/presentation/compiled/runtime.json')) {
+        held = true;
+        await gate;
+      }
+      if (String(path).includes('/content-design/assets/'))
+        return new Response(await readFile(path));
+    },
+  });
+  const { page } = h;
+  assert.equal(
+    held,
+    true,
+    'The optional full-page release is still reading its original manifest.',
+  );
+  const status = page.$('presentation-preparation-status');
+  assert.equal(status.dataset.state, 'busy');
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  const starting = page.$('start-button').onclick();
+  await h.waitCadence();
+  await h.fill(90);
+  await h.finish(starting);
+  page.frame(0);
+  assert.equal(page.doc.body.dataset.flightState, 'running');
+  assert.equal(page.doc.body.dataset.pictureState, 'ready');
+  const original = structuredClone(page.rendered.backdrop.assetRevision);
+  assert(
+    original,
+    'The required authored original is available while optional release bytes are pending.',
+  );
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  release();
+  await waitFor(() => status.dataset.state !== 'busy', { timeoutMs: 5000 });
+  page.frame(0);
+  assert.equal(status.hidden, true);
+  assert.equal(status.textContent, '');
+  assert.equal(page.doc.body.dataset.flightState, 'running');
+  assert.deepEqual(page.rendered.backdrop.assetRevision, original);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});

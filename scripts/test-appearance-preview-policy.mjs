@@ -30,6 +30,7 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     'game/test/solo-performance-host.test.mjs',
     'game/test/preparation-cadence.test.mjs',
     'game/test/hunt-feedback-layout.test.mjs',
+    'game/test/presentation-host.test.mjs',
     'game/test/solo-cadence-readiness-host.test.mjs',
     'game/test/edition-controller-practice.test.mjs',
     'game/test/scenario-mastery.test.mjs',
@@ -74,6 +75,7 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
   for (const path of [
     'game/ui/preparation-cadence.mjs',
     'game/ui/hunt-feedback-layout.mjs',
+    'game/presentation/host.mjs',
     'game/scenario-entry.mjs',
     'game/playground/model.mjs',
     'game/ui/edition-controller-practice.mjs',
@@ -157,8 +159,8 @@ test('packaging reserves bounded evidence closure without changing test or gamep
     .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
     .trim()
     .split(/\s+/);
-  assert.equal(focusedTests.length, 108);
-  assert.equal(new Set(focusedTests).size, 108);
+  assert.equal(focusedTests.length, 109);
+  assert.equal(new Set(focusedTests).size, 109);
   const startup = step('Record the bounded packaging start');
   assert.match(startup, /PREVIEW_STARTED_AT=\$\(date \+%s\)/);
   assert.ok(workflow.indexOf(startup) < workflow.indexOf('- uses: actions/checkout'));
