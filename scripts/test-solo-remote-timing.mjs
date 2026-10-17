@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
 import test from 'node:test';
 import {
   bindSustainedJob,
@@ -12,9 +15,14 @@ import {
   sustainedArguments,
   validateTimingPlan,
   verifiedMidCalibration,
+  verifyTimingHitchJournal,
 } from './solo-remote-sustained.mjs';
 import { validateQualification } from './solo-qualification.mjs';
 import { validateBaselineReuse } from './solo-remote-baseline.mjs';
+import {
+  createBrowserHitchJournal,
+  createHitchJournalStore,
+} from './solo-qualification-hitch-journal.mjs';
 
 const draft = JSON.parse(
   await readFile(new URL('../docs/performance/solo-remote-timing-plan.json', import.meta.url)),
@@ -23,12 +31,12 @@ const baseline = 'b11745223861c3973ad4bf440cc536198b8e0371';
 const candidate = '1'.repeat(40);
 const runtime = '2'.repeat(40);
 const current = {
-  name: 'cold-main8b-candidatec9',
+  name: 'cold-main8b-candidatecce',
   baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
   baselineTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
-  candidate: 'c9e637ad81fadf49caec884155d1bd0c2496c59c',
-  candidateTree: '4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c',
-  runtime: '87aca909201ae0a2520d5856dbca351b82dd6e2d',
+  candidate: 'cce49c81d82b79aefc24898f32eeebc609e569fb',
+  candidateTree: '71f7e4cb3b0a39c1d281635774371a693794dd22',
+  runtime: '01bcea27ad8c63616e1718121baae12de5bbbb24',
 };
 function currentCold() {
   const manifest = structuredClone(draft);
@@ -228,7 +236,7 @@ test('independent diagnostic admission retains false prerequisite, exact source 
   assert.throws(() => timingMatrix(changed));
 });
 
-test('exact c9/main8b cold successor admits three fresh equivalent pairs without promoting historical correctness', () => {
+test('exact cce/main8b cold successor admits three fresh equivalent pairs without promoting historical correctness', () => {
   const manifest = currentCold();
   validateBaselineReuse(manifest.baseline.reusableArtifact, manifest);
   assert.deepEqual(timingMatrix(manifest), timingMatrix(draft));
@@ -799,4 +807,362 @@ test('warm acceptance cannot relabel a fresh-context run or accept extra resourc
   const extra = report(p);
   extra.resources = [{ status: 'pass' }];
   assert.equal(timingAssessment(p, row, extra, closed, '123.4').status, 'failed');
+});
+
+async function journalManifest() {
+  const m = currentCold();
+  m.hitchJournal = 'bounded-v1';
+  const path = 'scripts/solo-qualification-hitch-journal.mjs';
+  const bytes = await readFile(new URL('../' + path, import.meta.url));
+  m.frozenTools.push({
+    path,
+    bytes: bytes.length,
+    sha256: createHash('sha256').update(bytes).digest('hex'),
+  });
+  return m;
+}
+async function journalFixture(t, { native = false, hitch = true } = {}) {
+  const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-cold-hitch-')));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const output = join(dir, 'report.json'),
+    url = 'http://127.0.0.1:4321/game/?journey=opening';
+  const store = createHitchJournalStore(output, () => 100, { soloURL: url });
+  const allocation = store.beginDocument({ url, action: 'initial' });
+  let now = 0;
+  const environment = {
+    performance: { now: () => now, timeOrigin: 1700000000000 },
+    location: { origin: 'http://127.0.0.1:4321', pathname: '/game/' },
+    document: { hidden: false, hasFocus: () => true, addEventListener() {} },
+    addEventListener() {},
+    btoa: (value) => Buffer.from(value, 'binary').toString('base64'),
+  };
+  if (native)
+    environment.PerformanceObserver = class {
+      static supportedEntryTypes = ['longtask'];
+      observe() {}
+      takeRecords() {
+        return [{ startTime: 5, duration: 55 }];
+      }
+      disconnect() {}
+    };
+  const journal = createBrowserHitchJournal({}, environment);
+  journal.configure(allocation);
+  journal.subscribe(0);
+  journal.first(0, 0);
+  if (hitch) journal.phase(2, 0);
+  journal.frame(0, hitch ? 40.123456789 : 16, 2, 2);
+  journal.beginWork(1, 2);
+  journal.endWork(hitch ? 55.123456789 : 2, 2);
+  if (hitch) journal.phase(3, 60);
+  now = 100;
+  await store.retain(journal.seal('paused'), 'final-existing-public-boundary');
+  const p = bindTimingJob(await journalManifest(), 'chromium', 1),
+    row = p.rows[1],
+    raw = report(p);
+  raw.hitchJournal = store.finish();
+  return { p, row, raw, output, url, path: raw.hitchJournal.documents[0].path };
+}
+
+test('cold journal opt-in is explicit, source-limited and freezes its dynamic helper without changing default flags', async () => {
+  const m = await journalManifest();
+  assert.equal(timingMatrix(m).include.length, 6);
+  for (const engine of ['chromium', 'webkit']) {
+    const p = bindTimingJob(m, engine, 1),
+      ordinary = bindTimingJob(currentCold(), engine, 1);
+    for (const row of p.rows) {
+      const args = (value) =>
+        sustainedArguments(
+          { plan: value, here: '/tools', modeState: { cpu: 2, recipePath: '/owned/recipe' } },
+          row,
+          'http://localhost/game/',
+          '/evidence',
+        );
+      assert.equal(args(p).filter((flag) => flag === '--hitch-journal').length, 1);
+      assert.deepEqual(
+        args(p).filter((flag) => flag !== '--hitch-journal'),
+        args(ordinary),
+      );
+      assert(!args(p).some((flag) => flag.startsWith('--hitch-journal-preparation')));
+    }
+  }
+  for (const mutation of [
+    (p) => {
+      p.hitchJournal = true;
+    },
+    (p) => {
+      p.hitchJournal = 'other';
+    },
+    (p) => {
+      p.hitchJournal = null;
+    },
+    (p) => {
+      p.frozenTools = p.frozenTools.filter(
+        (ref) => !ref.path.endsWith('solo-qualification-hitch-journal.mjs'),
+      );
+    },
+    (p) => {
+      p.frozenTools.push(p.frozenTools.at(-1));
+    },
+    (p) => {
+      p.frozenTools.at(-1).bytes = 0;
+    },
+    (p) => {
+      p.frozenTools.at(-1).bytes = 1024 ** 2;
+    },
+    (p) => {
+      p.frozenTools.at(-1).sha256 = 'pending';
+    },
+    (p) => {
+      p.frozenTools = p.frozenTools.filter((ref) => !ref.path.endsWith('qualify-solo-runtime.mjs'));
+    },
+  ]) {
+    const changed = structuredClone(m);
+    mutation(changed);
+    assert.throws(() => timingMatrix(changed));
+  }
+  const legacy = structuredClone(draft);
+  legacy.hitchJournal = 'bounded-v1';
+  assert.throws(() => timingMatrix(legacy));
+  const lifecycle = JSON.parse(
+    await readFile(new URL('../docs/performance/solo-remote-sustained-plan.json', import.meta.url)),
+  );
+  lifecycle.hitchJournal = 'bounded-v1';
+  assert.throws(() => bindSustainedJob(lifecycle, 'chromium', 1));
+});
+
+test('opted-in cold matrix still runs from the original three-module sparse declaration without the journal helper', async (t) => {
+  const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-cold-declare-')));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  await mkdir(join(dir, 'scripts'));
+  for (const file of [
+    'solo-remote-sustained.mjs',
+    'solo-qualification.mjs',
+    'solo-qualification-observation.mjs',
+  ])
+    await writeFile(join(dir, 'scripts', file), await readFile(new URL(file, import.meta.url)));
+  const manifest = await journalManifest(),
+    input = join(dir, 'manifest.json');
+  await writeFile(input, JSON.stringify(manifest));
+  const actual = execFileSync(
+    process.execPath,
+    [join(dir, 'scripts/solo-remote-sustained.mjs'), 'timing-matrix-plan', input],
+    { encoding: 'utf8', timeout: 10000, maxBuffer: 1024 * 1024, cwd: dir },
+  );
+  assert.equal(actual, `matrix=${JSON.stringify(timingMatrix(manifest))}\n`);
+});
+
+test('post-row journal readback accepts exact fractional binary records and preserves native unsupported/drop-count unknown', async (t) => {
+  for (const native of [false, true]) {
+    const f = await journalFixture(t, { native });
+    const result = await verifyTimingHitchJournal(f.p, f.raw, f.output, f.url);
+    assert.equal(result.status, 'complete');
+    assert.equal(result.activePlayCoverage, 'observed-final-solo');
+    assert.equal(result.activeElapsedMs, 40.123456789);
+    assert.equal(result.nativeTasks, native ? 'observed' : 'unobserved');
+    assert.equal(result.nativeDropped, null);
+    assert.equal(result.readbackVerified, true);
+    assert.equal(timingAssessment(f.p, f.row, f.raw, closed, '123.4', result).status, 'passed');
+  }
+  const clean = await journalFixture(t, { hitch: false });
+  const result = await verifyTimingHitchJournal(clean.p, clean.raw, clean.output, clean.url);
+  assert.equal(result.status, 'complete');
+  assert.equal(result.records, 0, 'No long windows is valid with real positive active coverage');
+  assert.equal(result.bytes, 0);
+});
+
+test('journal evidence rejects lost/navigation/preparation/zero-active/overflow/native-drop and forged aggregate completion', async (t) => {
+  const f = await journalFixture(t);
+  const mutations = [
+    (r) => {
+      delete r.hitchJournal;
+    },
+    (r) => {
+      r.hitchJournal.status = 'incomplete';
+    },
+    (r) => {
+      r.hitchJournal.failures.push('lost document');
+    },
+    (r) => {
+      r.hitchJournal.limits.records++;
+    },
+    (r) => {
+      r.hitchJournal.preparationPolicy = 'first-return-anchored-v1';
+    },
+    (r) => {
+      r.hitchJournal.activePlayCoverage = 'incomplete';
+    },
+    (r) => {
+      r.hitchJournal.documents.push(structuredClone(r.hitchJournal.documents[0]));
+    },
+    (r) => {
+      r.hitchJournal.documents[0].status = 'lost';
+    },
+    (r) => {
+      r.hitchJournal.documents[0].boundary = 'before-reload-1';
+    },
+    (r) => {
+      r.hitchJournal.documents[0].identity.path = '/other/';
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.identity.action = 'follow-4';
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.location.origin = 'http://other.test';
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.complete = false;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.workScope = 'unobserved';
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.activeFrames = 0;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.activeWorkWindows = 0;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.activeElapsedMs = 0;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.lastActiveAt = 0;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.lastActiveAt = 1000;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.firstOverflowAt = 100;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.clockInvalid = true;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.unmatchedWorkStart = 100;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.nativeTasks = 'failed';
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.nativeDropped = 1;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.nativeDropped = 0;
+    },
+    (r) => {
+      r.performanceGateStatusBeforeHitchJournal = 'fail';
+    },
+    (r) => {
+      r.hitchJournalFailure = 'Missing document';
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.records = 174001;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.observed[1]++;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].header.retained[1]++;
+    },
+    (r) => {
+      r.hitchJournal.records++;
+    },
+    (r) => {
+      r.hitchJournal.bytes++;
+    },
+    (r) => {
+      r.hitchJournal.documents[0].bytes++;
+    },
+    (r) => {
+      r.hitchJournal.scope = 'x'.repeat(65536);
+    },
+    (r) => {
+      r.hitchJournal.documents[0].path = join(f.output, '..', 'other.bin');
+    },
+  ];
+  for (const mutate of mutations) {
+    const raw = structuredClone(f.raw);
+    mutate(raw);
+    assert.equal(
+      (await verifyTimingHitchJournal(f.p, raw, f.output, f.url)).status,
+      'invalid-evidence',
+    );
+  }
+});
+
+test('journal binary readback rejects truncated/corrupt/rehashed-invalid/replaced and aliased files within its fixed byte cap', async (t) => {
+  const f = await journalFixture(t),
+    original = await readFile(f.path);
+  for (const data of [original.subarray(0, original.length - 1), Buffer.from(original)]) {
+    if (data.length === original.length) data[data.length - 1] ^= 255;
+    await writeFile(f.path, data);
+    assert.equal(
+      (await verifyTimingHitchJournal(f.p, f.raw, f.output, f.url)).status,
+      'invalid-evidence',
+    );
+  }
+  const invalid = Buffer.from(original);
+  invalid.writeDoubleLE(NaN, 0);
+  await writeFile(f.path, invalid);
+  const raw = structuredClone(f.raw);
+  raw.hitchJournal.documents[0].sha256 = createHash('sha256').update(invalid).digest('hex');
+  assert.equal(
+    (await verifyTimingHitchJournal(f.p, raw, f.output, f.url)).status,
+    'invalid-evidence',
+  );
+  await rm(f.path);
+  await writeFile(f.path + '.other', original);
+  await symlink(f.path + '.other', f.path);
+  assert.equal(
+    (await verifyTimingHitchJournal(f.p, f.raw, f.output, f.url)).status,
+    'invalid-evidence',
+  );
+  await rm(f.path);
+  assert.equal(
+    (await verifyTimingHitchJournal(f.p, f.raw, f.output, f.url)).status,
+    'invalid-evidence',
+  );
+});
+
+test('journal verification cannot erase original numeric/replay failures or turn missing readback into a pass', async (t) => {
+  const f = await journalFixture(t),
+    verified = await verifyTimingHitchJournal(f.p, f.raw, f.output, f.url);
+  for (const performance of ['pass-observed-window', 'fail', 'inconclusive', 'invalid-evidence']) {
+    const raw = structuredClone(f.raw);
+    raw.performanceGateStatus = performance;
+    for (const evidence of [
+      undefined,
+      { status: 'invalid-evidence', failure: 'Lost binary' },
+      verified,
+    ]) {
+      const assessment = timingAssessment(f.p, f.row, raw, closed, '123.4', evidence);
+      assert.equal(assessment.rawPerformanceGateStatus, performance);
+      assert.equal(assessment.performanceGateStatusBeforeHitchJournal, null);
+      assert.equal(assessment.correctness, 'pass');
+      assert.equal(
+        assessment.status,
+        performance === 'pass-observed-window' && evidence === verified ? 'passed' : 'failed',
+      );
+      assert.equal(assessment.performanceQualification, 'not-qualified-diagnostic-only');
+    }
+  }
+  for (const prior of ['fail', 'inconclusive', 'pass-observed-window']) {
+    const contradictory = structuredClone(f.raw);
+    contradictory.performanceGateStatusBeforeHitchJournal = prior;
+    assert.equal(
+      (await verifyTimingHitchJournal(f.p, contradictory, f.output, f.url)).status,
+      'invalid-evidence',
+    );
+    const assessment = timingAssessment(f.p, f.row, contradictory, closed, '123.4', verified);
+    assert.equal(assessment.status, 'failed');
+    assert.equal(assessment.performanceEvidenceStatus, 'invalid-evidence');
+    assert.equal(assessment.rawPerformanceGateStatus, 'pass-observed-window');
+    assert.equal(assessment.performanceGateStatusBeforeHitchJournal, prior);
+  }
+  const broken = structuredClone(f.raw);
+  broken.replay.nativeVerification.status = 'fail';
+  assert.equal(timingAssessment(f.p, f.row, broken, closed, '123.4', verified).status, 'failed');
+  const legacy = plan(),
+    historical = timingAssessment(legacy, legacy.rows[1], report(legacy), closed, '123.4');
+  assert(!Object.hasOwn(historical, 'hitchJournalVerification'));
+  assert(!Object.hasOwn(historical, 'performanceEvidenceStatus'));
 });

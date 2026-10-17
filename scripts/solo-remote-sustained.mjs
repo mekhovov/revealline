@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { lstat, mkdir, readFile, realpath, writeFile } from 'node:fs/promises';
+import { lstat, mkdir, open, readFile, realpath, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -20,12 +20,12 @@ const source = {
   candidate: '3adcd53792043ef02459e86168c6b33a66d6ef00',
 };
 const coldSourceCohort = {
-  name: 'cold-main8b-candidatec9',
+  name: 'cold-main8b-candidatecce',
   baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
   baselineTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
-  candidate: 'c9e637ad81fadf49caec884155d1bd0c2496c59c',
-  candidateTree: '4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c',
-  runtime: '87aca909201ae0a2520d5856dbca351b82dd6e2d',
+  candidate: 'cce49c81d82b79aefc24898f32eeebc609e569fb',
+  candidateTree: '71f7e4cb3b0a39c1d281635774371a693794dd22',
+  runtime: '01bcea27ad8c63616e1718121baae12de5bbbb24',
 };
 export const SUSTAINED_PHASES = Object.freeze({
   long29: {
@@ -162,6 +162,187 @@ function validateColdSourceCohort(plan) {
   return true;
 }
 
+const journalHelper = 'scripts/solo-qualification-hitch-journal.mjs';
+const planHasHitchJournal = (plan) => plan.hitchJournal === 'bounded-v1';
+function validateTimingHitchJournalAdmission(plan, currentCold) {
+  if (plan.hitchJournal === undefined) return;
+  assert.equal(plan.hitchJournal, 'bounded-v1', 'Unknown timing journal policy');
+  assert(currentCold, 'Journal admission is limited to the declared current cold cohort');
+  assert.equal(plan.phase, 'cold-first30');
+  for (const path of [journalHelper, 'scripts/qualify-solo-runtime.mjs']) {
+    const refs = plan.frozenTools?.filter((ref) => ref.path === path);
+    assert.equal(refs?.length, 1, `Journal requires one frozen ${path}`);
+    assert(Number.isSafeInteger(refs[0].bytes) && refs[0].bytes > 0 && refs[0].bytes < MiB);
+    assert.match(refs[0].sha256, /^[a-f0-9]{64}$/);
+  }
+}
+
+// Called only after the observed child has closed. The declaration's sparse
+// import closure remains unchanged; runtime input verification freezes the helper.
+export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
+  try {
+    assert(planHasHitchJournal(plan), 'Journal was not declared');
+    assert.equal(plan.sourceCohort, coldSourceCohort.name);
+    assert.equal(plan.phase, 'cold-first30');
+    const { HITCH_LIMITS, decodeHitchJournal } = await import(
+      './solo-qualification-hitch-journal.mjs'
+    );
+    const report = raw?.hitchJournal;
+    assert(
+      Buffer.byteLength(JSON.stringify(report)) <= HITCH_LIMITS.descriptorBytes,
+      'Journal descriptor cap',
+    );
+    assert.equal(report.format, 'SoloHitchJournalV1');
+    assert.equal(report.status, 'complete');
+    assert(
+      !Object.hasOwn(raw, 'performanceGateStatusBeforeHitchJournal') && !raw.hitchJournalFailure,
+      'Complete journal contradicts its retained failure override',
+    );
+    assert.deepEqual(report.limits, HITCH_LIMITS);
+    assert.deepEqual(report.failures, []);
+    assert.equal(report.preparationPolicy, null, 'Cold recipe has no preparation document');
+    assert.equal(report.activePlayCoverage, 'observed-final-solo');
+    assert.equal(report.documents?.length, 1, 'Cold recipe admits one document without navigation');
+    const doc = report.documents[0],
+      header = doc.header,
+      url = new URL(soloURL);
+    const identity = { role: 'solo', origin: url.origin, path: url.pathname, action: 'initial' };
+    assert.equal(doc.id, 1);
+    assert.equal(doc.status, 'complete');
+    assert.equal(doc.boundary, 'final-existing-public-boundary');
+    assert.equal(doc.readbackVerified, true);
+    assert.deepEqual(doc.identity, identity);
+    assert.equal(header.format, 'SoloHitchJournalDocumentV1');
+    assert.equal(header.documentId, 1);
+    assert.deepEqual(header.identity, identity);
+    assert.deepEqual(header.location, { origin: url.origin, path: url.pathname });
+    for (const key of ['complete', 'configured', 'sealed', 'runningSeen', 'workCallsSeen'])
+      assert.equal(header[key], true);
+    for (const key of ['clockInvalid', 'durationExceeded', 'postSealActive'])
+      assert.equal(header[key], false);
+    for (const key of ['firstOverflowAt', 'unmatchedWorkStart']) assert.equal(header[key], null);
+    assert.equal(header.workScope, 'subscribed-solo');
+    assert(['paused', 'result', 'picture'].includes(header.publicPhase));
+    for (const key of [
+      'timeOrigin',
+      'startedAt',
+      'endedAt',
+      'deadline',
+      'workSubscribedAt',
+      'firstActiveAt',
+      'lastActiveAt',
+      'activeElapsedMs',
+    ])
+      assert(Number.isFinite(header[key]), key);
+    assert(header.startedAt >= 0 && header.endedAt >= header.startedAt);
+    assert(
+      header.endedAt <= header.deadline &&
+        header.deadline <= header.startedAt + HITCH_LIMITS.durationMs,
+    );
+    assert(header.workSubscribedAt >= 0 && header.workSubscribedAt <= header.endedAt);
+    assert(
+      header.firstActiveAt >= 0 &&
+        header.lastActiveAt > header.firstActiveAt &&
+        header.lastActiveAt <= header.endedAt,
+    );
+    assert(header.activeElapsedMs > 0 && header.activeElapsedMs <= HITCH_LIMITS.durationMs);
+    for (const key of ['activeFrames', 'activeWorkWindows'])
+      assert(Number.isSafeInteger(header[key]) && header[key] > 0);
+    assert(
+      header.firstCallback &&
+        ['timestampMs', 'callbackAtMs', 'registeredAtMs'].every((key) =>
+          Number.isFinite(header.firstCallback[key]),
+        ),
+    );
+    assert(['observed', 'unobserved'].includes(header.nativeTasks));
+    assert(
+      header.nativeDropped === null || header.nativeDropped === 0,
+      'Known native drops invalidate coverage',
+    );
+    if (header.nativeTasks === 'unobserved') assert.equal(header.nativeDropped, null);
+    assert(
+      Number.isSafeInteger(header.records) &&
+        header.records >= 0 &&
+        header.records <= HITCH_LIMITS.records,
+    );
+    assert(
+      Number.isSafeInteger(header.capacity) &&
+        header.capacity >= header.records &&
+        header.capacity <= HITCH_LIMITS.records,
+    );
+    assert.equal(report.records, header.records);
+    assert.equal(doc.bytes, header.records * HITCH_LIMITS.recordBytes);
+    assert.equal(report.bytes, doc.bytes);
+    assert.match(doc.sha256, /^[a-f0-9]{64}$/);
+    const path = `${resolve(output)}.hitches.d01.bin`;
+    assert.equal(doc.path, path, 'Journal path must be the owned row sidecar');
+    assert.equal(await realpath(path), path, 'Journal sidecar alias');
+    const before = await lstat(path);
+    assert(
+      before.isFile() && !before.isSymbolicLink() && before.size === doc.bytes,
+      'Journal sidecar size/type',
+    );
+    const file = await open(path, 'r');
+    const bytes = Buffer.alloc(doc.bytes);
+    try {
+      const opened = await file.stat();
+      assert(
+        opened.dev === before.dev && opened.ino === before.ino && opened.size === before.size,
+        'Journal sidecar replaced before readback',
+      );
+      let offset = 0;
+      while (offset < bytes.length) {
+        const read = await file.read(bytes, offset, bytes.length - offset, offset);
+        assert(read.bytesRead > 0, 'Truncated journal sidecar');
+        offset += read.bytesRead;
+      }
+      const after = await file.stat();
+      assert(
+        after.size === before.size && after.mtimeMs === before.mtimeMs,
+        'Journal sidecar changed during readback',
+      );
+    } finally {
+      await file.close();
+    }
+    assert.equal(sha(bytes), doc.sha256, 'Journal sidecar digest');
+    const linked = await lstat(path);
+    assert(
+      linked.isFile() &&
+        !linked.isSymbolicLink() &&
+        linked.dev === before.dev &&
+        linked.ino === before.ino &&
+        linked.size === before.size &&
+        linked.mtimeMs === before.mtimeMs,
+      'Journal sidecar link changed during readback',
+    );
+    const retained = Array(7).fill(0);
+    for (const entry of decodeHitchJournal(bytes)) {
+      assert(
+        entry.startMs >= 0 && entry.endMs <= header.endedAt,
+        'Hitch outside document observation',
+      );
+      retained[entry.kind]++;
+    }
+    assert.deepEqual(header.retained, retained);
+    assert.deepEqual(header.observed, retained, 'Missing individual hitch records');
+    return {
+      status: 'complete',
+      documents: 1,
+      bytes: bytes.length,
+      records: header.records,
+      activePlayCoverage: report.activePlayCoverage,
+      activeFrames: header.activeFrames,
+      activeWorkWindows: header.activeWorkWindows,
+      activeElapsedMs: header.activeElapsedMs,
+      nativeTasks: header.nativeTasks,
+      nativeDropped: header.nativeDropped,
+      readbackVerified: true,
+    };
+  } catch (error) {
+    return { status: 'invalid-evidence', failure: String(error.message ?? error).slice(0, 2048) };
+  }
+}
+
 export function validateTimingPlan(plan) {
   assert.equal(plan.format, 'SoloHostedTimingPlanV1');
   const spec = TIMING_PHASES[plan.phase];
@@ -171,6 +352,7 @@ export function validateTimingPlan(plan) {
   assert.equal(plan.playwright, '1.62.1');
   const currentCold = validateColdSourceCohort(plan);
   const expectedSource = currentCold ? coldSourceCohort : source;
+  validateTimingHitchJournalAdmission(plan, currentCold);
   assert.equal(plan.baseline.revision, expectedSource.baseline);
   assert.match(plan.candidate.revision, /^[a-f0-9]{40}$/);
   assert.notEqual(plan.candidate.revision, expectedSource.baseline);
@@ -364,6 +546,11 @@ export function validateRelease(release, phase) {
 export function validateSustainedPlan(plan) {
   if (timingPlan(plan)) return validateTimingPlan(plan);
   assert.equal(plan.format, 'SoloHostedSustainedPlanV1');
+  assert.equal(
+    plan.hitchJournal,
+    undefined,
+    'Lifecycle journal requires a separate reviewed admission',
+  );
   const spec = SUSTAINED_PHASES[plan.phase];
   assert(spec);
   assert.equal(plan.node, '22.13.1');
@@ -637,6 +824,7 @@ export function sustainedArguments(ctx, row, url, dir) {
     join(dir, 'report.json'),
     ...base,
     '--work-probe',
+    ...(planHasHitchJournal(ctx.plan) ? ['--hitch-journal'] : []),
     '--cadence=settled120',
     ...(ctx.modeState.snapshotStorage ? ['--snapshot-chunks'] : []),
     ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
@@ -703,7 +891,17 @@ export function lifecycleAssessment(plan, row, raw, command, browserVersion) {
   };
 }
 
-export function timingAssessment(plan, row, raw, command, browserVersion) {
+export function timingAssessment(plan, row, raw, command, browserVersion, journalVerification) {
+  if (
+    planHasHitchJournal(plan) &&
+    journalVerification?.status === 'complete' &&
+    (Object.hasOwn(raw ?? {}, 'performanceGateStatusBeforeHitchJournal') ||
+      raw?.hitchJournalFailure)
+  )
+    journalVerification = {
+      status: 'invalid-evidence',
+      failure: 'Complete journal contradicts its retained failure override',
+    };
   const inherited = lifecycleAssessment(plan, row, raw, command, browserVersion);
   const display =
     row.engine === 'webkit'
@@ -746,7 +944,22 @@ export function timingAssessment(plan, row, raw, command, browserVersion) {
     ...inherited,
     protocolStatus: valid ? 'pass' : 'fail',
     correctness: valid ? inherited.correctness : 'fail',
-    status: valid ? inherited.status : 'failed',
+    status:
+      valid && (!planHasHitchJournal(plan) || journalVerification?.status === 'complete')
+        ? inherited.status
+        : 'failed',
+    ...(planHasHitchJournal(plan)
+      ? {
+          hitchJournalVerification: journalVerification ?? {
+            status: 'invalid-evidence',
+            failure: 'Journal not independently verified',
+          },
+          performanceEvidenceStatus:
+            journalVerification?.status === 'complete' ? 'complete' : 'invalid-evidence',
+          performanceGateStatusBeforeHitchJournal:
+            raw?.performanceGateStatusBeforeHitchJournal ?? null,
+        }
+      : {}),
     scope: diagnosticComparison(plan)
       ? 'Independent hosted comparison diagnostics only. Raw numerical/replay/protocol failures remain unchanged; prerequisite remains false and overall performance is not qualified.'
       : 'Latest-source hosted timing only; neither physical-device evidence nor replacement credit for historical macOS observations.',
@@ -957,13 +1170,23 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
           ).readQualificationSnapshotReport(join(dir, 'report.json'), ctx.modeState.snapshotStorage)
         : await checkedJSON(join(dir, 'report.json'), ctx.plan.rowEvidenceBytes);
       assert.equal(raw.environment?.cpuThrottle, ctx.modeState.cpu);
+      const journalVerification = planHasHitchJournal(ctx.plan)
+        ? await verifyTimingHitchJournal(ctx.plan, raw, join(dir, 'report.json'), url)
+        : undefined;
       Object.assign(
         row,
         (timingPlan(ctx.plan)
           ? timingAssessment
           : ctx.plan.phase === 'long29'
             ? longRecordingAssessment
-            : lifecycleAssessment)(ctx.plan, row, raw, command, ctx.modeState.browserVersion),
+            : lifecycleAssessment)(
+          ctx.plan,
+          row,
+          raw,
+          command,
+          ctx.modeState.browserVersion,
+          journalVerification,
+        ),
       );
       row.browserVersion = raw.environment?.browserVersion;
       assert.equal(typeof row.browserVersion, 'string');
