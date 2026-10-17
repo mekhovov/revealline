@@ -788,6 +788,7 @@ try {
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
         schedulePerformanceChunk: scheduleOptionalReplayChunk,
+        canRunProgressWork: () => !optionalVerificationPreparation || !started || paused,
         canRunPerformanceWork: () =>
           !optionalVerificationPreparation ||
           !['playing', 'suspended'].includes(optionalVerificationPreparation.snapshot().phase),
@@ -5154,7 +5155,7 @@ try {
       pictures?.dispose();
     }
   }
-  function finishWorldPlay(request) {
+  async function finishWorldPlay(request) {
     const intent = worldPlayIntents.get(request.launch);
     const prepared = intent?.committed;
     if (!prepared) return false;
@@ -5202,8 +5203,8 @@ try {
       if (current()) request.launch.onSelected();
       return current();
     }
-    if (current() && !dialogOpen()) resume();
-    return started && run === prepared.run;
+    if (current() && !dialogOpen()) await resume();
+    return started && !paused && run === prepared.run && runId === prepared.runId;
   }
   async function requestWorldLaunch(entry, launch, onStatus) {
     if (
@@ -5537,7 +5538,7 @@ try {
     if (!unfinishedFlight()) {
       if (launch && target.same) return false;
       const selected = await applyMissionRequest(request);
-      if (selected && request.kind === 'world-play') finishWorldPlay(request);
+      if (selected && request.kind === 'world-play') await finishWorldPlay(request);
       else if (selected && launch?.isCurrent()) launch.onSelected();
       return selected;
     }
@@ -5689,7 +5690,7 @@ try {
         if (availableFocusTarget(ticket.opener)) ticket.opener.focus({ preventScroll: true });
         return;
       }
-      if (ticket.request.kind === 'world-play') finishWorldPlay(ticket.request);
+      if (ticket.request.kind === 'world-play') await finishWorldPlay(ticket.request);
       else if (ticket.launch) {
         if (ticket.launch.isCurrent()) ticket.launch.onSelected();
       } else if (ticket.request.kind === 'card') {
@@ -6223,10 +6224,17 @@ try {
       clearPreparation();
     }
   }
-  function rememberSelection() {
+  let selectedJourneyRun = null;
+  function rememberSelection({ skipped = null } = {}) {
     const mission = journeyEnabled && journeyMission();
-    if (mission && !practice && !scenario)
-      journeyProfile.record({ type: 'select', mode: 'solo', missionId: mission.id });
+    if (mission && !practice && !scenario && (selectedJourneyRun !== run || skipped)) {
+      const events = [];
+      if (selectedJourneyRun !== run)
+        events.push({ type: 'select', mode: 'solo', missionId: mission.id });
+      if (skipped) events.push({ type: 'skip', mode: 'solo', missionId: skipped.id });
+      journeyProfile.recordMany(events);
+      selectedJourneyRun = run;
+    }
     if (candidateHost?.owns(activeEntry)) return;
     return selectionBookmark.remember({
       campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
@@ -6596,9 +6604,8 @@ try {
     if (candidateHost) {
       const adopted = await prepareResultAttempt(kind, mission.levelIndex, null, mission, {
         briefingOnly,
+        skipped,
       });
-      if (adopted && skipped)
-        journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
       return adopted;
     }
     const owner = { run, runId, mission, feedback: null, cancel: null };
@@ -6656,9 +6663,10 @@ try {
       // navigation or lifecycle work must not revive the preceding pack owner.
       owner.cancel = null;
       if (journeyLaunch === owner) journeyLaunch = null;
-      const adopted = await prepareResultAttempt(kind, index, entry, null, { briefingOnly });
-      if (adopted && skipped)
-        journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
+      const adopted = await prepareResultAttempt(kind, index, entry, null, {
+        briefingOnly,
+        skipped,
+      });
       return adopted;
     } catch (error) {
       if (
@@ -8333,10 +8341,15 @@ try {
   };
   $('switch-class-button').onclick = () => {
     if (!craftSwitchAvailable()) return;
-    const next = $('switch-class-select').value;
+    const next = $('switch-class-select').value,
+      selectedRun = run;
     $('hangar-dialog').close();
-    resume();
-    pendingSwitch = next;
+    const resumed = resume();
+    const apply = () => {
+      if (run === selectedRun && started && !paused) pendingSwitch = next;
+    };
+    if (resumed?.then) return resumed.then(apply);
+    apply();
   };
   document.addEventListener('keydown', (e) => {
     if (
@@ -9807,7 +9820,7 @@ try {
     destinationIndex = levelIndex,
     destinationEntry = null,
     destinationMission = null,
-    { briefingOnly = kind === 'choose' } = {},
+    { briefingOnly = kind === 'choose', skipped = null } = {},
   ) {
     if (resultAttempt?.kind === kind) return;
     const previousEpoch = resultAttemptEpoch,
@@ -10102,13 +10115,14 @@ try {
         // Choosing an exact mission prepares its accepted rules and artwork.
         // Only a fresh Start activation may leave this briefing; Retry/Next
         // retain their existing single-action continuation contract.
+        if (skipped) rememberSelection({ skipped });
         if (briefingOnly) {
           clearInput();
           focusMission();
           return !started && paused && run === nextRun;
         }
-        resume();
-        return started && !paused;
+        await resume();
+        return started && !paused && run === nextRun && runId === nextRunId;
       }
     } catch (error) {
       if (resultAttempt === ticket) {
@@ -10539,6 +10553,7 @@ try {
     alignCourseBoard = true,
     contentSwitchTicket = null,
     resumeCue = runMessageCue,
+    progressAttempt = null,
   } = {}) {
     if (practiceRenderFailure.failed) return;
     if (rendererLost.size) return;
@@ -10584,7 +10599,13 @@ try {
       needsCaptureEnvironment;
     if (pictureResume) return;
     const layoutOwner = !started || paused ? prepareFlightLayout() : null;
+    const needsProgress =
+      journeyProfile &&
+      (progressAttempt?.run !== run || progressAttempt?.runId !== runId) &&
+      ((!started && selectedJourneyRun !== run && journeyMission() && !practice && !scenario) ||
+        !journeyRewardsDurable);
     if (
+      needsProgress ||
       needsFlightAssets ||
       !fieldScene?.prepared() ||
       !fieldScene?.cadence.ready ||
@@ -10594,6 +10615,7 @@ try {
       const owner = flightPictures,
         ticket = ++pictureGeneration,
         selectedRun = run,
+        selectedRunId = runId,
         selectedTheme = theme.id;
       const selectedEntry = activeEntry,
         selectedLevel = activeEntry.campaign.levels[levelIndex],
@@ -10703,6 +10725,25 @@ try {
               collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
             });
           painter.setAttemptAppearance(acceptedCaptureAppearance);
+          if (needsProgress) {
+            feedback.message(() => t('interface:gettingReadyGameplayIsPaused'));
+            // Accepted assets/run own this selection. Required storage settles
+            // while paused, before board submission and quiet cadence grant play.
+            if (!started && selectedJourneyRun !== run) rememberSelection();
+            await journeyProfile.flush();
+            if (
+              controller.signal.aborted ||
+              pictureResume !== ticket ||
+              pictureGeneration !== ticket ||
+              run !== selectedRun ||
+              runId !== selectedRunId ||
+              owner !== flightPictures ||
+              document.hidden ||
+              !document.hasFocus() ||
+              dialogOpen()
+            )
+              return;
+          }
           await fieldScene.prepareBoard(controller.signal);
           if (!fieldScene.cadence.ready) {
             feedback.message(() => t('interface:gettingReadyGameplayIsPaused'));
@@ -10734,7 +10775,12 @@ try {
           feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
           pictureResume = null;
           pictureVisualController = null;
-          resume({ alignCourseBoard, contentSwitchTicket, resumeCue });
+          return resume({
+            alignCourseBoard,
+            contentSwitchTicket,
+            resumeCue,
+            progressAttempt: { run: selectedRun, runId: selectedRunId },
+          });
         })
         .catch((error) => {
           // Lifecycle and ownership cancellation are not missing-original failures.
@@ -10790,7 +10836,7 @@ try {
           collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
         });
       painter.setAttemptAppearance(acceptedCaptureAppearance);
-      rememberSelection();
+      if (selectedJourneyRun !== run) rememberSelection();
     }
     void updatePlayedLevelLink();
     started = true;
@@ -10865,6 +10911,8 @@ try {
       return;
     }
     if (!started || ['won', 'lost'].includes(run?.status)) {
+      if (journeyProfile && !journeyRewardsDurable && (!started || paused))
+        void journeyProfile.flush();
       void updatePlayedLevelLink({ discoverClassic: true });
       return;
     }
@@ -10874,6 +10922,7 @@ try {
     }
     clearInput();
     paused = true;
+    if (journeyProfile && !journeyRewardsDurable) void journeyProfile.flush();
     sound.pause?.();
     if (runMessageCue === 'resumed')
       warning(
@@ -14230,7 +14279,7 @@ try {
       $('journey-save-export').hidden = true;
     }
     window.addEventListener('online', () => {
-      if (!journeyRewardsDurable) void journeyProfile.flush();
+      if (!journeyRewardsDurable && (!started || paused)) void journeyProfile.flush();
     });
   }
   $('journey-skip').onclick = () => {
