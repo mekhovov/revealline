@@ -102,8 +102,7 @@ for (const [kind, [oldPath, path, workflowPath]] of Object.entries(pairs)) {
       kind === 'audio'
         ? [...plan.adapterInputs, ...plan.frozenTools]
         : [...plan.adapterInputs, plan.diagnosticRelease.ownerCorrection];
-    const errorHistory =
-      kind === 'audio' ? await readHistoricalPageErrorRefs(path, workflowPath) : new Map();
+    const errorHistory = await readHistoricalPageErrorRefs(path, workflowPath);
     for (const ref of refs) {
       if (errorHistory.has(ref.path)) {
         const expected = errorHistory.get(ref.path);
