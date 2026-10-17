@@ -1,12 +1,70 @@
 # FPV tuning implementation status
 
 Updated 2026-10-17. Work is on `codex/fpv-rates-and-tuning`, rebased onto
-`origin/main` at `b133a5ec8` before the sixth review. The earlier feature commits
-are now `1fc0a8d9b`, `f42388124`, `96769b66d`, `9641b7e71`, `c60c5421b` and `059c7bf9b`;
-historical reports keep their original hashes. Unrelated local files are
-preserved. A local commit does not deploy GitHub Pages.
+`origin/main` at `8b0199194` before the seventh review. Earlier feature commits
+are now `fcaa60342`, `01dd80fd1`, `726f39f00`, `518fb541c`, `dbaf4f3f9`,
+`2c36cec96` and `c8eb9ec38`; historical reports retain their original hashes.
+Unrelated local files are preserved. A local commit does not deploy GitHub Pages.
 
-## Sixth review — incomplete numeric drafts
+## Seventh review — late imports and existing offline updates
+
+The [updated plan](fpv-tuning-completion-plan.md#seventh-review--late-imports-and-installed-updates)
+adds concrete examples from Betaflight's preset repository, its prompt-based PWA
+update behavior and Liftoff's rate-model selection correction. The literal
+Nicholas Young bundle resolves both its 720°/s default and 540°/s option while
+preserving a nondefault throttle baseline. No new firmware family is advertised.
+
+A reproduced race allowed a delayed import preview to overwrite newer incomplete
+numeric input because it compared only the last valid evaluated values. Numeric
+input/change now cancels pending preview admission before validation. Nine
+regressions cover native/CLI input, blank/off-step/valid edits, navigation,
+edit-back, revert and explicit re-preview. Independent out-of-order completion
+checks confirm a cancelled old digest cannot clear a newer pending preview.
+
+All **692 practice tests**, **105 current-main integration tests**, **75 native
+tests** and the six [editor browser cases](fpv-tuning-browser-seventh-review-qualification.json)
+pass. The first browser attempt requested an export inside a collapsed transfer
+panel; its [failure](fpv-tuning-browser-seventh-review-collapsed-transfer-failure.json)
+is retained. Opening the panel through its normal UI corrected the probe without
+changing production behavior. The final check uses a deliberately held digest
+callback and real WebCrypto completion; it is not a hardware-latency measurement.
+
+The new [existing-install update check](fpv-offline-update-seventh-review.json)
+passes Academy and World. A new worker waits while the old controller and paused
+800°/s recording remain unchanged; saved 900°/s next-flight settings, profile
+history, assigned drone and camera survive byte-for-byte. After scope tabs close,
+normal activation occurs. A full Chrome restart with the same profile offline
+loads the new revision and flies/exports at 900°/s. No cache deletion or forced
+activation is used. The revisions differ by an inert CSS fixture; this qualifies
+local generated-package lifecycle, not historical schema migration, public
+HTTPS, real-password acceptance, eviction or physical-device behavior.
+
+The [native receipt](fpv-native-seventh-review-staging.json) records 200 stable
+source hashes: desktop 183 files / 18,281,667 bytes and iOS 188 files / 18,355,894
+bytes, with access gates, CSP and limits unchanged. No native runtime was launched.
+Prior numerical and Advanced comparison reports retain historical status, with
+all 20 and 23 source pins respectively still identical.
+
+Release validation passes 3,328 distribution files, 13,651 EN/UK messages,
+9,049 references and generated runtime/assets checks. The seven existing
+navigation warnings are unchanged; four-module lint and formatting pass.
+
+The normal production build and [Pages checks](fpv-pages-seventh-review-live-testing-evidence.json)
+pass Academy and World online and in isolated offline contexts. All 3,433 manifest
+entries and the ZIP checksum verify; the changed runtime module matches current
+source. The publication has 3,435 files / 963,672,685 bytes, with 7,704,832 bytes
+of conservative archive headroom below the unchanged cap. The historical sixth
+temporary build was removed only after checking its recorded manifest and ZIP
+digests; repository evidence remains unchanged.
+
+The [combined seventh-review receipt](fpv-tuning-seventh-review-verification.json)
+binds the final sources, new checks, literal preset observations and preserved
+failure. Both concrete tasks are complete, with no further actionable software
+issue found in independent review. All available software scope is complete.
+Physical measurements, wider platforms, public publication and promotion gates
+remain open; Advanced is optional, unscored and ineligible as the default.
+
+## Sixth review — historical incomplete numeric drafts
 
 The [updated plan](fpv-tuning-completion-plan.md#sixth-review--preserve-incomplete-numeric-drafts)
 adds primary examples from Keymap PROPWASH, TRYP, DRL and Orqa. They reinforce

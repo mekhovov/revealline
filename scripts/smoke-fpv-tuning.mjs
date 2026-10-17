@@ -249,6 +249,53 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await unfinishedRate.fill('900');
             await page.keyboard.press('Tab');
             evidence.checks.unfinishedRateDraftNavigation = true;
+            await page
+              .getByText('Import / export · Betaflight and backups', { exact: true })
+              .click();
+            await button('Export SIM rates').click();
+            const digestTransfer = page.getByLabel('Paste CLI or a SIM rate profile', {
+                exact: true,
+              }),
+              digestCandidate = JSON.parse(await digestTransfer.inputValue());
+            digestCandidate.profile.axes.roll.rate = 88;
+            await digestTransfer.fill(JSON.stringify(digestCandidate));
+            // Hold only this component's next digest completion, then use the
+            // real WebCrypto implementation. This tests asynchronous admission,
+            // not a claim that ordinary digest timing is observable by pilots.
+            await page.evaluate(() => {
+              const subtle = crypto.subtle,
+                original = subtle.digest;
+              subtle.digest = function (...args) {
+                return new Promise((resolve, reject) => {
+                  window.qualificationReleaseDigest = () => {
+                    subtle.digest = original;
+                    original.apply(subtle, args).then(resolve, reject);
+                  };
+                });
+              };
+            });
+            await button('Preview import').click();
+            await page.getByRole('status').filter({ hasText: 'Checking import source' }).waitFor();
+            await unfinishedRate.fill('');
+            await page.evaluate(() => window.qualificationReleaseDigest());
+            await page.getByRole('status').filter({ hasText: 'Import changed' }).waitFor();
+            await button('Save import as new profile').click();
+            await page
+              .getByRole('status')
+              .filter({ hasText: 'Preview the import first' })
+              .waitFor();
+            check(
+              (await unfinishedRate.inputValue()) === '' &&
+                (await page.evaluate(() => window.qualificationStore.export())) ===
+                  beforeUnfinishedRate,
+              'Late import preview replaced or saved a newer unfinished edit',
+            );
+            await unfinishedRate.fill('900');
+            await page.keyboard.press('Tab');
+            evidence.checks.pendingImportPreservesNewerNumericText = true;
+            await page
+              .getByText('Import / export · Betaflight and backups', { exact: true })
+              .click();
             const cameraTilt = page.getByLabel('Camera tilt (degrees)', { exact: true }),
               cameraFov = page.getByLabel('Vertical FOV (degrees)', { exact: true });
             await cameraTilt.fill('');

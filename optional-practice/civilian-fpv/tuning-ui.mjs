@@ -1243,8 +1243,16 @@ export function mountFlightTuning({
         step: String(step),
         value: String(value),
       });
-      listen(node, 'input', () => checkedUpdate(node, node === slider));
-      listen(node, 'change', () => checkedUpdate(node, true));
+      // An import requested before this edit cannot replace its newer text,
+      // including incomplete values that have not changed the evaluator yet.
+      listen(node, 'input', () => {
+        if (hashingImport !== null) clearImportPreview();
+        checkedUpdate(node, node === slider);
+      });
+      listen(node, 'change', () => {
+        if (hashingImport !== null) clearImportPreview();
+        checkedUpdate(node, true);
+      });
     }
     if (Object.hasOwn(pending, key)) {
       input.value = pending[key];

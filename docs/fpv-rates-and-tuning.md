@@ -34,7 +34,9 @@ Unfinished numeric entries also survive profile/algorithm navigation, closing an
 reopening the editor, and language changes. They remain visibly invalid until
 corrected; the graph continues to use the last valid value. Explicit revert,
 revision restore or import replacement replaces that draft. These unsaved drafts
-last for the current SIM session, not a browser reload.
+last for the current SIM session, not a browser reload. If you edit a number while
+an import preview is still being checked, that preview is cancelled so it cannot
+replace the newer edit. Preview again when you are ready.
 
 Each axis also has a commanded-rate limit. The new rate profiles support limits up to 1,998 degrees per second; Legacy feel retains its original range. The curve shows the requested rotation. The aircraft's response, self-level assistance and available motor authority determine the achieved rotation.
 
