@@ -44,7 +44,7 @@ Future persistent qualification must declare the context mode and use the same f
 
 ## Remote browser follow-up
 
-A fresh Linux CI cohort can continue browser correctness checks while the local browser and external-drive owners remain blocked. Declare its runner image, Node, pinned Playwright and actual engine versions independently; do not pool its observations with the existing macOS timing matrix. Begin with package/worker/paused-render checks and unchanged baseline/candidate public gameplay with strict same-engine replay verification. Timing qualification needs its own stable reference cadence, calibrated stress and three equivalent runs per scenario.
+A fresh Linux CI cohort can continue browser correctness checks independently of historical local ownership failures. After the host restart, the 17 October read-only process check no longer observed the old task owners; this does not repair their failed cleanup or verify external-drive availability. Declare its runner image, Node, pinned Playwright and actual engine versions independently; do not pool its observations with the existing macOS timing matrix. Begin with package/worker/paused-render checks and unchanged baseline/candidate public gameplay with strict same-engine replay verification. Timing qualification needs its own stable reference cadence, calibrated stress and three equivalent runs per scenario.
 
 Run one browser observation at a time, with a harness deadline below the job deadline and retained partial reports. These choices follow [Playwright’s CI guidance](https://playwright.dev/docs/ci). No automatic retry may replace a failed observation.
 

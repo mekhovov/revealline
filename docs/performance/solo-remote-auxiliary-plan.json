@@ -1,6 +1,6 @@
 {
   "format": "SoloHostedAuxiliaryManifestV1",
-  "status": "bound-3ad-metadata-pending-full-remote-proof-and-reviewed-release",
+  "status": "reviewed-diagnostic-only",
   "createdAt": "2026-10-16T22:25:46.255755+00:00",
   "repository": "mekhovov/revealline",
   "node": "22.13.1",
@@ -67,10 +67,21 @@
   "evidenceBytes": 268435456,
   "rowEvidenceBytes": 33554432,
   "release": {
+    "scope": "independent-audio-and-synthetic-recovery",
+    "predecessorRun": 38985941469,
+    "automaticRetries": 0,
+    "performanceQualification": "excluded",
     "firstEightAllCorrectnessPassed": false,
-    "priorProofInspected": false,
-    "noUnclosedOwners": false,
-    "evidence": []
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "evidence": [
+      {
+        "runId": 38985941469,
+        "artifactId": 12083397932,
+        "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+        "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929"
+      }
+    ]
   },
   "recipes": {
     "speech": {
@@ -323,8 +334,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-auxiliary.mjs",
-      "bytes": 16352,
-      "sha256": "7dd3ceb5f83b1708f8cdd73bccd369fa716e95f724af5c8026ed47233b7d07a1"
+      "bytes": 16993,
+      "sha256": "a58154fe20086c7de9b8aec4cbee674a426cc221ea5975c38ca43a9bf92a56b7"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -333,12 +344,12 @@
     }
   ],
   "bindingScope": {
-    "status": "metadata-and-git-source-bound-release-held",
+    "status": "reviewed-independent-diagnostic-only",
     "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
     "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
     "candidateArtifact": 12082915872,
-    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
-    "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
+    "firstEight": "Exact3ad seven of eight passed; worker WebKit remains failed. This independent audio/fault diagnostic never grants first-eight or timing credit.",
+    "sourceAssets": "Full source/archive/static-worker/CSP admission passed in38985941469 and must be repeated in each consumer.",
     "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
   }
 }
