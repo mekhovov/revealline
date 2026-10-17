@@ -5,6 +5,11 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { inspectMP3 } from '../game/mp3-inspection.mjs';
+import {
+  exportWorkerDiagnostics,
+  parseWorkerOptions,
+  WORKER_DIAGNOSTIC_WINDOW_MS,
+} from './solo-worker-diagnostics.mjs';
 
 // This is a correctness smoke check, not a timing qualification. It opens the
 // real entry and starts Solo through its public UI. Worker construction, imports,
@@ -13,16 +18,11 @@ import { inspectMP3 } from '../game/mp3-inspection.mjs';
 const [address, output, ...flags] = process.argv.slice(2);
 if (!address || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> [CHROME_EXECUTABLE=<path>] node scripts/verify-solo-mp3-worker.mjs <Solo URL> <report.json> [--browser=webkit] [--fixture-access]',
+    'Usage: PLAYWRIGHT_MODULE=<path> [CHROME_EXECUTABLE=<path>] node scripts/verify-solo-mp3-worker.mjs <Solo URL> <report.json> [--browser=webkit] [--fixture-access] [--diagnostics [--idle-control]]',
   );
-const engine = flags.find((flag) => flag.startsWith('--browser='))?.slice(10) ?? 'chromium';
-if (
-  !['chromium', 'webkit'].includes(engine) ||
-  flags.some((flag) => flag !== '--fixture-access' && flag !== `--browser=${engine}`)
-)
-  throw new Error('Invalid MP3 smoke options.');
-const fixtureAccess = flags.includes('--fixture-access');
+const { engine, diagnostics, idleControl, fixtureAccess } = parseWorkerOptions(flags);
 const url = new URL(address);
+if (diagnostics) url.searchParams.set('performance', '1');
 if (!['http:', 'https:'].includes(url.protocol)) throw new Error('Use an HTTP(S) Solo URL.');
 if (fixtureAccess && !['localhost', '127.0.0.1', '[::1]'].includes(url.hostname))
   throw new Error('The explicit access fixture is restricted to local test servers.');
@@ -38,6 +38,16 @@ const report = {
   engine,
   fixtureAccess,
   status: 'failed',
+  ...(diagnostics
+    ? {
+        diagnostics: {
+          mode: idleControl ? 'public-start-idle-control-no-worker-claim' : 'worker-inspection',
+          windowMs: WORKER_DIAGNOSTIC_WINDOW_MS,
+          timingQualification: 'excluded',
+          interpretation: 'Instrumented diagnostic; public pause/export follows the fixed window.',
+        },
+      }
+    : {}),
   workerURLs: [],
   pageErrors: [],
   policyErrors: [],
@@ -97,125 +107,185 @@ try {
   await page.waitForFunction(() => document.body.dataset.flightState === 'running', null, {
     timeout: 60000,
   });
-  report.active = await page.evaluate(async (bytes) => {
-    const [{ createMediaPreparation }, { createMP3Inspector }] = await Promise.all([
-      import(new URL('./ui/media-preparation.mjs', document.baseURI).href),
-      import(new URL('./ui/mp3-inspector.mjs', document.baseURI).href),
-    ]);
-    const preparation = createMediaPreparation();
-    preparation.setPhase('playing');
-    // A bounded transport watchdog keeps unavailable implementations reviewable.
-    // This timeout does not make any claim about gameplay/frame performance.
-    const inspector = createMP3Inspector({ preparation, timeoutMs: 10000 });
-    const blob = new Blob([new Uint8Array(bytes)], { type: 'audio/mpeg' });
-    const cases = [];
-    const flightBefore = document.body.dataset.flightState;
-    const completed = (async () => {
-      for (const [name, source] of [
-        ['valid', blob],
-        ['malformed', new Blob(['junk', blob])],
-        ['truncated', blob.slice(0, -1)],
-      ]) {
-        try {
-          cases.push({ name, status: 'fulfilled', value: await inspector.inspect(source) });
-        } catch (error) {
-          cases.push({
-            name,
-            status: 'rejected',
-            error: { name: error.name, message: error.message },
-          });
-        }
-      }
-    })();
-    const snapshot = () => ({
-      cases,
-      admission: preparation.snapshot(),
-      inspector: inspector.snapshot(),
-      flightBefore,
-      flightAfter: document.body.dataset.flightState,
-    });
-    window.soloMP3Smoke = { preparation, inspector, completed, snapshot };
-    let timer;
-    const settled = await Promise.race([
-      completed.then(() => true),
-      new Promise((resolve) => (timer = setTimeout(() => resolve(false), 12000))),
-    ]);
-    clearTimeout(timer);
-    return { settled, ...snapshot() };
-  }, Array.from(fixture));
-  if (report.active.flightAfter !== 'running') {
-    // Observe only after the failed active-play window. This neither resumes the
-    // game nor changes the running assertion; it distinguishes a public warning
-    // from a hidden/focus transition without adding work to every frame.
-    report.unexpectedPause = await page.evaluate(() => {
-      const message = document.getElementById('run-message');
-      return {
-        phase: 'after-inspection; diagnostic only',
-        flightState: document.body.dataset.flightState,
-        visibilityState: document.visibilityState,
-        hidden: document.hidden,
-        hasFocus: document.hasFocus(),
-        message: message?.textContent?.slice(0, 1000) ?? null,
-        cue: message?.dataset.cue?.slice(0, 80) ?? null,
-      };
-    });
+  if (diagnostics) {
+    report.diagnostics.windowStartedAtMs = await page.evaluate(() => performance.now());
+    report.diagnostics.initialFlightState = await page
+      .locator('body')
+      .getAttribute('data-flight-state');
   }
-  report.mode = report.active.settled ? 'worker' : 'unavailable-or-timed-out';
-  if (!report.active.settled) {
-    // The real unavailable-worker path must park its main-thread scan during
-    // play and complete only after the public pause action and phase handoff.
-    await page.locator('#pause-button').click();
-    await page.waitForFunction(() => document.body.dataset.flightState === 'paused');
-    report.pausedFallback = await page.evaluate(async () => {
-      const { preparation, completed, snapshot } = window.soloMP3Smoke;
-      preparation.setPhase('paused');
-      let timer;
-      try {
-        await Promise.race([
-          completed,
-          new Promise((_, reject) => {
-            timer = setTimeout(() => reject(new Error('Paused fallback did not finish.')), 10000);
-          }),
+  if (idleControl) {
+    report.mode = 'idle-control-no-worker-claim';
+    await page.waitForTimeout(WORKER_DIAGNOSTIC_WINDOW_MS);
+    report.diagnostics.windowEndedAtMs = await page.evaluate(() => performance.now());
+    report.diagnostics.finalFlightState = await page
+      .locator('body')
+      .getAttribute('data-flight-state');
+    await exportWorkerDiagnostics(page, report.diagnostics);
+    assert.equal(report.diagnostics.initialFlightState, 'running');
+    assert.equal(
+      report.diagnostics.finalFlightState,
+      'running',
+      'Game must remain active during the idle control.',
+    );
+    report.status = 'passed';
+  } else {
+    report.active = await page.evaluate(
+      async ({ bytes, diagnostics }) => {
+        const timeline = [];
+        const mark = (phase) => {
+          if (diagnostics) timeline.push({ phase, atMs: performance.now() });
+        };
+        mark('before-module-import');
+        const [{ createMediaPreparation }, { createMP3Inspector }] = await Promise.all([
+          import(new URL('./ui/media-preparation.mjs', document.baseURI).href),
+          import(new URL('./ui/mp3-inspector.mjs', document.baseURI).href),
         ]);
-        return snapshot();
-      } finally {
+        mark('after-module-import');
+        const preparation = createMediaPreparation();
+        preparation.setPhase('playing');
+        // A bounded transport watchdog keeps unavailable implementations reviewable.
+        // This timeout does not make any claim about gameplay/frame performance.
+        const inspector = createMP3Inspector({ preparation, timeoutMs: 10000 });
+        const blob = new Blob([new Uint8Array(bytes)], { type: 'audio/mpeg' });
+        const cases = [];
+        const flightBefore = document.body.dataset.flightState;
+        const completed = (async () => {
+          for (const [name, source] of [
+            ['valid', blob],
+            ['malformed', new Blob(['junk', blob])],
+            ['truncated', blob.slice(0, -1)],
+          ]) {
+            mark(`${name}-inspection-begin`);
+            try {
+              cases.push({ name, status: 'fulfilled', value: await inspector.inspect(source) });
+            } catch (error) {
+              cases.push({
+                name,
+                status: 'rejected',
+                error: { name: error.name, message: error.message },
+              });
+            }
+            mark(`${name}-inspection-settled`);
+          }
+        })();
+        const snapshot = () => ({
+          cases,
+          admission: preparation.snapshot(),
+          inspector: inspector.snapshot(),
+          flightBefore,
+          flightAfter: document.body.dataset.flightState,
+          ...(diagnostics ? { timeline } : {}),
+        });
+        window.soloMP3Smoke = { preparation, inspector, completed, snapshot };
+        let timer;
+        const settled = await Promise.race([
+          completed.then(() => true),
+          new Promise((resolve) => (timer = setTimeout(() => resolve(false), 12000))),
+        ]);
         clearTimeout(timer);
-      }
-    });
-    report.mode = 'paused-fallback';
-  }
-  const checks = report.pausedFallback ?? report.active;
-  const [valid, malformed, truncated] = checks.cases;
-  assert.equal(valid?.status, 'fulfilled', 'Valid MP3 must pass complete structural inspection.');
-  assert.deepEqual(valid.value, expected, 'Worker and canonical inspection metadata must match.');
-  assert.equal(malformed?.status, 'rejected');
-  assert.match(malformed.error.message, /malformed|Unsupported/);
-  assert.equal(truncated?.status, 'rejected');
-  assert.match(truncated.error.message, /Truncated/);
-  assert.equal(checks.inspector.pendingRequests, 0);
-  assert.equal(checks.inspector.workerOwnedBytes, 0);
-  assert.equal(checks.admission.queued, 0);
-  report.validationPassed = true;
-  if (report.pausedFallback) {
-    assert.equal(report.active.cases.length, 0, 'Fallback must not finish during play.');
+        return { settled, ...snapshot() };
+      },
+      { bytes: Array.from(fixture), diagnostics },
+    );
+    if (diagnostics) {
+      const elapsed = await page.evaluate(
+        (start) => performance.now() - start,
+        report.diagnostics.windowStartedAtMs,
+      );
+      if (elapsed < WORKER_DIAGNOSTIC_WINDOW_MS)
+        await page.waitForTimeout(WORKER_DIAGNOSTIC_WINDOW_MS - elapsed);
+      report.diagnostics.windowEndedAtMs = await page.evaluate(() => performance.now());
+      report.diagnostics.finalFlightState = await page
+        .locator('body')
+        .getAttribute('data-flight-state');
+      await exportWorkerDiagnostics(page, report.diagnostics);
+    }
+    if (report.active.flightAfter !== 'running') {
+      // Observe only after the failed active-play window. This neither resumes the
+      // game nor changes the running assertion; it distinguishes a public warning
+      // from a hidden/focus transition without adding work to every frame.
+      report.unexpectedPause = await page.evaluate(() => {
+        const message = document.getElementById('run-message');
+        return {
+          phase: 'after-inspection; diagnostic only',
+          flightState: document.body.dataset.flightState,
+          visibilityState: document.visibilityState,
+          hidden: document.hidden,
+          hasFocus: document.hasFocus(),
+          message: message?.textContent?.slice(0, 1000) ?? null,
+          cue: message?.dataset.cue?.slice(0, 80) ?? null,
+        };
+      });
+    }
+    report.mode = report.active.settled ? 'worker' : 'unavailable-or-timed-out';
+    if (!report.active.settled) {
+      // The real unavailable-worker path must park its main-thread scan during
+      // play and complete only after the public pause action and phase handoff.
+      // Diagnostic export has already used the public Pause, or observed an
+      // automatic pause. Never toggle that stopped game back into play.
+      if (!diagnostics) await page.locator('#pause-button').click();
+      await page.waitForFunction(() => document.body.dataset.flightState === 'paused');
+      report.pausedFallback = await page.evaluate(async () => {
+        const { preparation, completed, snapshot } = window.soloMP3Smoke;
+        preparation.setPhase('paused');
+        let timer;
+        try {
+          await Promise.race([
+            completed,
+            new Promise((_, reject) => {
+              timer = setTimeout(() => reject(new Error('Paused fallback did not finish.')), 10000);
+            }),
+          ]);
+          return snapshot();
+        } finally {
+          clearTimeout(timer);
+        }
+      });
+      report.mode = 'paused-fallback';
+    }
+    const checks = report.pausedFallback ?? report.active;
+    const [valid, malformed, truncated] = checks.cases;
+    assert.equal(valid?.status, 'fulfilled', 'Valid MP3 must pass complete structural inspection.');
+    assert.deepEqual(valid.value, expected, 'Worker and canonical inspection metadata must match.');
+    assert.equal(malformed?.status, 'rejected');
+    assert.match(malformed.error.message, /malformed|Unsupported/);
+    assert.equal(truncated?.status, 'rejected');
+    assert.match(truncated.error.message, /Truncated/);
+    assert.equal(checks.inspector.pendingRequests, 0);
+    assert.equal(checks.inspector.workerOwnedBytes, 0);
+    assert.equal(checks.admission.queued, 0);
+    report.validationPassed = true;
+    if (report.pausedFallback) {
+      assert.equal(report.active.cases.length, 0, 'Fallback must not finish during play.');
+      assert.equal(report.active.admission.active.main, 0);
+      assert.equal(report.active.admission.queued, 1);
+      report.fallbackDeferredUntilPaused = true;
+    }
+    assert.equal(report.active.flightBefore, 'running');
+    assert.equal(
+      report.active.flightAfter,
+      'running',
+      'Game must remain active during inspection.',
+    );
+    assert.equal(
+      report.mode,
+      'worker',
+      'Real worker unavailable; safe fallback recorded separately.',
+    );
+    assert.ok(
+      report.workerURLs.includes(report.expectedWorkerURL),
+      'Expected the unchanged static worker URL.',
+    );
+    assert.equal(report.active.admission.phase, 'playing');
     assert.equal(report.active.admission.active.main, 0);
-    assert.equal(report.active.admission.queued, 1);
-    report.fallbackDeferredUntilPaused = true;
+    if (diagnostics)
+      assert.equal(
+        report.diagnostics.finalFlightState,
+        'running',
+        'Game must remain active throughout the diagnostic window.',
+      );
+    report.status = 'passed';
   }
-  assert.equal(report.active.flightBefore, 'running');
-  assert.equal(report.active.flightAfter, 'running', 'Game must remain active during inspection.');
-  assert.equal(
-    report.mode,
-    'worker',
-    'Real worker unavailable; safe fallback recorded separately.',
-  );
-  assert.ok(
-    report.workerURLs.includes(report.expectedWorkerURL),
-    'Expected the unchanged static worker URL.',
-  );
-  assert.equal(report.active.admission.phase, 'playing');
-  assert.equal(report.active.admission.active.main, 0);
-  report.status = 'passed';
 } catch (error) {
   report.failure = error.message;
   process.exitCode = 1;
