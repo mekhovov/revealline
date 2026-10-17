@@ -1,6 +1,8 @@
 /* global document, localStorage, navigator */
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFile, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import {
   readPublicQualificationReplay,
@@ -22,7 +24,141 @@ export function validateOfflineGameplayPlan(value) {
   return value;
 }
 
+// Retain accepted export bytes while the public UI is already paused/terminal.
+// This is raw evidence only; strict native replay is a separate post-close stage.
+export async function retainOfflineReplayExport({ output, item, ensureOwner, isServerStopped }) {
+  const { entry, text } = item;
+  assert(
+    [
+      ['offline-first-earned-capture', 'first-return'],
+      ['offline-next-continued', 'choose-your-share'],
+    ].some(([label, levelId]) => entry.label === label && entry.levelId === levelId),
+  );
+  assert.equal(typeof text, 'string');
+  assert(
+    Buffer.byteLength(text) > 0 && Buffer.byteLength(text) <= OFFLINE_GAMEPLAY.maximumExportBytes,
+  );
+  assert.equal(Buffer.byteLength(text), entry.bytes);
+  assert.equal(sha(text), entry.sha256);
+  ensureOwner();
+  assert(isServerStopped(), 'Offline origin restarted before replay retention');
+  const path = join(output, `${entry.label}.replay.json`);
+  await writeFile(path, text, { flag: 'wx' });
+  const bytes = await readFile(path);
+  assert.equal(bytes.length, entry.bytes);
+  assert.equal(sha(bytes), entry.sha256);
+  ensureOwner();
+  assert(isServerStopped(), 'Offline origin restarted during replay retention');
+  return {
+    ...entry,
+    path,
+    retention: 'raw-unverified-recording',
+    nativeReplay: { status: 'not-run', reason: 'Awaiting separate post-close strict replay' },
+  };
+}
+
 export const NATIVE_OFFLINE_STATE_POLICY = 'owned-cdp-after-navigation-v1';
+export const OFFLINE_FAILURE_WITNESS_POLICY = 'failed-public-play-dom-v1';
+export const OFFLINE_FAILURE_WITNESS_TIMEOUT_MS = 2000;
+
+// One read after public play has already failed. This separate cleanup reserve
+// never restarts the play clock, changes controls, or contributes a timing sample.
+export async function captureOfflineFailureState({
+  page,
+  value,
+  pending,
+  ensureOwner,
+  isServerStopped,
+}) {
+  assert.equal(value.status, 'failed');
+  assert.equal(value.failureState, undefined, 'Failure witness cannot be reused');
+  assert(
+    value.failure || value.deadlineReached,
+    'A failed action is required before evidence reads',
+  );
+  const witness = (value.failureState = {
+    status: 'pending',
+    policy: OFFLINE_FAILURE_WITNESS_POLICY,
+    maximumMs: OFFLINE_FAILURE_WITNESS_TIMEOUT_MS,
+  });
+  let timer;
+  try {
+    ensureOwner();
+    assert(isServerStopped(), 'Offline server restarted before failure witness');
+    const observation = page.evaluate(() => {
+      const text = (value) => String(value ?? '').slice(0, 512);
+      const identity = (element) =>
+        element
+          ? {
+              tag: text(element.tagName),
+              id: text(element.id),
+              role: text(element.getAttribute('role')),
+            }
+          : null;
+      const next = document.querySelector('#next-button'),
+        rect = next?.getBoundingClientRect();
+      const selected = (selector) => {
+        const element = document.querySelector(selector);
+        return element
+          ? {
+              ...identity(element),
+              hidden: element.hidden,
+              text: text(element.textContent),
+              kind: text(element.dataset.kind),
+            }
+          : null;
+      };
+      return {
+        url: text(globalThis.location.href),
+        online: navigator.onLine,
+        visibility: document.visibilityState,
+        focused: document.hasFocus(),
+        boot: text(document.documentElement.dataset.bootState),
+        flight: text(document.body?.dataset.flightState),
+        activeElement: identity(document.activeElement),
+        controller: text(navigator.serviceWorker?.controller?.scriptURL),
+        overlay: selected('#game-overlay'),
+        preparation: selected('#flight-preparation-status'),
+        notice: selected('#result-auto-next'),
+        hud: selected('#flight-state'),
+        next: next
+          ? {
+              ...identity(next),
+              hidden: next.hidden,
+              disabled: next.disabled,
+              rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
+            }
+          : null,
+      };
+    });
+    observation.catch(() => {});
+    pending.push(observation);
+    const snapshot = await Promise.race([
+      observation,
+      new Promise((_, reject) => {
+        timer = setTimeout(
+          () => reject(Error('Offline failure witness deadline')),
+          OFFLINE_FAILURE_WITNESS_TIMEOUT_MS,
+        );
+      }),
+    ]);
+    ensureOwner();
+    assert(isServerStopped(), 'Offline server restarted during failure witness');
+    assert(
+      Buffer.byteLength(JSON.stringify(snapshot)) <= 16384,
+      'Offline failure witness byte cap',
+    );
+    witness.snapshot = snapshot;
+    witness.status = 'captured';
+  } catch (error) {
+    witness.status = 'unavailable';
+    witness.failure = String(error.message ?? error).slice(0, 512);
+  } finally {
+    clearTimeout(timer);
+  }
+  return witness;
+}
+
 const nativeOfflineParameters = Object.freeze({
   offline: true,
   latency: 0,
@@ -178,9 +314,16 @@ export async function playOfflineStarter({
   step,
   pending,
   restoreNativeState,
+  retainExport,
   now = Date.now,
 }) {
   assert(offlineLaunchAllowsGameplay(report), 'No gameplay after unqualified offline launch');
+  if (report.offlineFailureWitnessPolicy === OFFLINE_FAILURE_WITNESS_POLICY)
+    assert.equal(
+      typeof retainExport,
+      'function',
+      'Independent diagnostic must retain partial exports',
+    );
   assert.equal(report.preparedGameplay?.routeId, 'whole-spatial-v25');
   assert.equal(report.preparedGameplay?.groupId, 'solo:horizon-starter');
   assert.equal(new URL(address).search, '?journey=whole-spatial-v25');
@@ -326,7 +469,15 @@ export async function playOfflineStarter({
           segmentCount: native.segments.length,
         };
         value.exports.push(entry);
-        exported.push({ text, native, entry });
+        const item = { text, native, entry };
+        exported.push(item);
+        if (report.offlineFailureWitnessPolicy === OFFLINE_FAILURE_WITNESS_POLICY) {
+          const retained = retainExport(item);
+          retained.catch(() => {});
+          pending.push(retained);
+          await retained;
+          remaining();
+        }
       };
       await exportReplay('offline-first-earned-capture', 'first-return');
       await click('#replay-dialog .dialog-close');
@@ -352,7 +503,9 @@ export async function playOfflineStarter({
       return exported;
     } catch (error) {
       value.status = 'failed';
-      value.failure = String(error.stack ?? error);
+      if (report.offlineFailureWitnessPolicy === OFFLINE_FAILURE_WITNESS_POLICY)
+        value.failure ??= String(error.stack ?? error);
+      else value.failure = String(error.stack ?? error);
       throw error;
     }
   })();
@@ -370,6 +523,13 @@ export async function playOfflineStarter({
         }, remaining());
       }),
     ]);
+  } catch (error) {
+    if (report.offlineFailureWitnessPolicy === OFFLINE_FAILURE_WITNESS_POLICY) {
+      value.status = 'failed';
+      value.failure ??= String(error.stack ?? error);
+      await captureOfflineFailureState({ page, value, pending, ensureOwner, isServerStopped });
+    }
+    throw error;
   } finally {
     clearTimeout(timer);
   }

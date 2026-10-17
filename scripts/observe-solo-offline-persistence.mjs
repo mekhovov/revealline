@@ -19,6 +19,9 @@ import {
   assertPairedBaselineArtifact,
   assertStarterGameplaySelection,
   offlinePairSources,
+  INDEPENDENT_OFFLINE_FORMAT,
+  INDEPENDENT_OFFLINE_RUNTIME,
+  validateIndependentOfflineAdmission,
 } from './solo-remote-offline.mjs';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import { startProductionPreview } from './serve-production-preview.mjs';
@@ -32,7 +35,9 @@ import {
   offlineLaunchAllowsGameplay,
   offlineGameplayAssessment,
   playOfflineStarter,
+  retainOfflineReplayExport,
   NATIVE_OFFLINE_STATE_POLICY,
+  OFFLINE_FAILURE_WITNESS_POLICY,
   restoreNativeOfflineState,
   validateOfflineGameplayPlan,
 } from './solo-offline-gameplay.mjs';
@@ -141,7 +146,22 @@ const admission = {
 };
 assert(['baseline', 'candidate'].includes(plan.sourceRole));
 assert.match(plan.expectedBrowserVersion, /^\d+\.\d+\.\d+\.\d+$/);
-if (plan.sourceRole === 'candidate') {
+if (pairFormat === INDEPENDENT_OFFLINE_FORMAT) {
+  assert.equal(plan.sourceRole, 'candidate');
+  validateIndependentOfflineAdmission(plan.independentAdmission);
+  assert.equal(plan.runtimeRevision, INDEPENDENT_OFFLINE_RUNTIME);
+  assert.equal(plan.failureWitnessPolicy, OFFLINE_FAILURE_WITNESS_POLICY);
+  assert.equal(plan.expectedBrowserVersion, '151.0.7922.34');
+  for (const key of [
+    'firstArmReport',
+    'firstArmClosure',
+    'firstArmArgv',
+    'firstArmPlanSHA256',
+    'firstArmInvocation',
+  ])
+    assert.equal(plan[key], null, 'Independent candidate must not claim a paired first arm');
+  admission.independentCandidate = plan.independentAdmission;
+} else if (plan.sourceRole === 'candidate') {
   const prior = await checkedJSON(plan.firstArmReport, 2 * 1024 ** 2);
   assertPairedBaselineArtifact(prior, verified.artifacts.baseline, pairFormat);
   assert.equal(prior.format, 'SoloHostedOfflinePersistencePairCaseV1');
@@ -250,6 +270,12 @@ const report = {
   replays: [],
   gameplayRequested: Boolean(plan.gameplay),
   nativeOfflineStatePolicy: NATIVE_OFFLINE_STATE_POLICY,
+  ...(pairFormat === INDEPENDENT_OFFLINE_FORMAT
+    ? {
+        offlineFailureWitnessPolicy: plan.failureWitnessPolicy,
+        runtimeRevision: plan.runtimeRevision,
+      }
+    : {}),
 };
 const gameplayPending = [];
 let diagnosticWatchdog,
@@ -986,8 +1012,22 @@ const observation = (async () => {
         step,
         pending: gameplayPending,
         restoreNativeState,
+        ...(pairFormat === INDEPENDENT_OFFLINE_FORMAT
+          ? {
+              retainExport: async (item) => {
+                assert(report.replays.length < plan.gameplay.maximumExports);
+                const retained = await retainOfflineReplayExport({
+                  output,
+                  item,
+                  ensureOwner,
+                  isServerStopped: () => served === null,
+                });
+                report.replays.push(retained);
+              },
+            }
+          : {}),
       });
-      for (const item of gameplayExports) {
+      for (const item of pairFormat === INDEPENDENT_OFFLINE_FORMAT ? [] : gameplayExports) {
         const path = join(output, `${item.entry.label}.replay.json`);
         await writeFile(path, item.text, { flag: 'wx' });
         report.replays.push({ ...item.entry, path });
