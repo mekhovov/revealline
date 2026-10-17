@@ -1,5 +1,21 @@
 # FPV tuning: reviewed completion plan
 
+## Latest remaining-scope review
+
+Main was fetched and the branch rebased before this continuation; main remains
+`fb3caf12b`. The [input recovery review](fpv-tuning-input-recovery-review.md)
+adds current Betaflight, Liftoff and VelociDrone examples. It retains the existing
+rates/profile/import scope and identifies one reproduced software defect:
+unavailable input can incorrectly disable a healthy Advanced practice worker.
+
+The recoverable-input correction and bounded startup diagnostics pass 741 practice
+tests, EN/UK browser recovery and the desktop fixture. Review also found and fixed
+unconstrained diagnostic exception strings; new request/capture metadata uses
+finite categories. Finish fresh source checks and live publication acceptance. Physical and wider-platform gates
+remain deferred as agreed; no new rate models or unmeasured aircraft effects are
+needed to close the available software scope. The latest review's delivery status
+takes precedence over the historical completion records below.
+
 ## Current completion review
 
 The latest continuation rebased on `1d631986ad73ba1301a151a76b1607cf03dbe97a`
@@ -18,12 +34,14 @@ below. Earlier receipts keep their original source and deployment scope.
 | 3 — Configuration and preset transfer | Implemented for the five explicitly verified releases; latest metadata parity correction is bounded to the tagged parser. |
 | 4 — Advanced backend | Optional unscored backend implemented with fixed timing, recording, recovery and transactional Regional admission; latest Regional limit handling closes an export lifecycle gap. |
 | 5 — Aircraft and comparison | Editable templates, controller tunes and frozen comparison identities implemented. Measured aircraft fitting, propwash/ground effect and scored comparison remain qualification-dependent. |
-| 6 — Delivery and rollout | Existing features published; new corrections follow ordinary CI/publication. Physical-device, pilot, iOS and wider-platform qualification remain deferred. Advanced is not promoted to scored/default use. |
+| 6 — Delivery and rollout | Corrections published in `fb3caf12b`; current public password/offline acceptance and desktop fixture pass. One initial startup timeout is preserved as unexplained. Physical-device, pilot, iOS and wider-platform qualification remain deferred. Advanced is not promoted to scored/default use. |
 
 No additional algorithm, online catalog, automatic PID conversion or physics
 slider is added merely because another simulator advertises one. Complete the
-bounded corrections and their verification, then stop software expansion. The
-user's unavailable measurements remain explicit future acceptance work.
+bounded corrections and their verification before further software expansion. The
+[delivery receipt](fpv-boundary-delivery-verification.json) closes this available
+software scope. The user's unavailable measurements remain explicit future
+acceptance work.
 
 Reviewed 17 October 2026 against the original phased plan and current upstream
 documentation. The first review used implementation `8202201b7` on `741948b14`;

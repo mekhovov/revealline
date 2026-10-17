@@ -22,6 +22,8 @@ const COPY = {
     ready: 'Ready. Start explicitly when your controls are centred and throttle is low.',
     paused: 'Paused. Start explicitly to continue.',
     unavailable: 'Advanced practice is unavailable:',
+    inputUnavailable:
+      'Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained.',
     controls:
       'Arrow keys: pitch/roll · A/D: yaw · W/S: throttle · Escape: pause. Touch controls are below. The supplied radio calibration is used when a radio is connected.',
     roll: 'Roll',
@@ -110,6 +112,8 @@ const COPY = {
     ready: 'Готово. Почніть, коли стіки центровані, а газ знижено.',
     paused: 'Пауза. Натисніть «Почати», щоб продовжити.',
     unavailable: 'Розширена практика недоступна:',
+    inputUnavailable:
+      'Керування недоступне. Практику призупинено. Підключіть пульт знову або виберіть «Клавіатура / дотик», потім почніть вручну. Запис збережено.',
     controls:
       'Стрілки: тангаж/крен · A/D: рискання · W/S: газ · Escape: пауза. Нижче — сенсорні елементи. Для підключеного пульта використовується його калібрування.',
     roll: 'Крен',
@@ -933,19 +937,31 @@ export function mountAdvancedPractice({
       throttle: controls.throttle,
     };
   }
+  function sampleAvailableControls() {
+    try {
+      return sampleControls();
+    } catch {
+      // Input availability does not invalidate the worker or its accepted flight.
+      // Pause before assigning a sequence or dispatching another mission.
+      pause(copy.inputUnavailable);
+      return null;
+    }
+  }
   async function tick() {
     if (!running || disposed || busy) return;
     busy = true;
     const owner = generation,
       started = win.performance.now();
     try {
+      const controls = sampleAvailableControls();
+      if (!controls) return;
       if (lastPollAt !== null && started > lastPollAt)
         observedPollHz = 1000 / (started - lastPollAt);
       lastPollAt = started;
       const sample = {
         sequence: sequence++,
         timestampUs: Math.round((telemetry?.seconds ?? 0) * 1e6),
-        controls: sampleControls(),
+        controls,
       };
       const result = await client.step(sample);
       if (disposed || owner !== generation) return;
@@ -1057,7 +1073,9 @@ export function mountAdvancedPractice({
     if (!initialized || graphicsLost || disposed || exporting || verifying || flightStopCode)
       return;
     try {
-      if (sampleControls().throttle > 0.1 && (telemetry?.missionTick ?? 0) === 0) {
+      const controls = sampleAvailableControls();
+      if (!controls) return;
+      if (controls.throttle > 0.1 && (telemetry?.missionTick ?? 0) === 0) {
         status.textContent = copy.low;
         return;
       }
