@@ -449,7 +449,9 @@ async function main() {
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
-    setupActive = ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster'].includes(extension);
+    setupActive =
+      ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster'].includes(extension) ||
+      (extension === 'offline' && Boolean(plan.offline.gameplay));
   if (extension) {
     adapter = await import(`./solo-remote-${extension}.mjs`);
     adapter[
@@ -963,7 +965,10 @@ async function main() {
         (extension === 'auxiliary' && plan.rows.some((row) => row.source === 'baseline'))
       )
         await ensureBaseline();
-      if (['sustained', 'auxiliary', 'demo', 'demo-active', 'raster'].includes(extension))
+      if (
+        ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster'].includes(extension) ||
+        (extension === 'offline' && Boolean(plan.offline.gameplay))
+      )
         await inspect();
       setupActive = false;
       report.setupCompletedAt = new Date().toISOString();

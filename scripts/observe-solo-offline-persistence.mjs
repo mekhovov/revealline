@@ -23,6 +23,13 @@ import {
   boundedOperation,
 } from './optional-installation-observer-helpers.mjs';
 import { waitQualificationControl } from './solo-qualification-export.mjs';
+import { verifyNativeQualificationReplay } from './solo-qualification-native-replay.mjs';
+import {
+  offlineLaunchAllowsGameplay,
+  offlineGameplayAssessment,
+  playOfflineOpening,
+  validateOfflineGameplayPlan,
+} from './solo-offline-gameplay.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const [planArgument, outputArgument] = process.argv.slice(2);
@@ -47,6 +54,7 @@ assert.match(
 assert.equal(plan.platform.display, 'headed-Xvfb');
 assert(process.env.DISPLAY, 'The declared headed display must be active');
 assert.equal(plan.status, 'pinned-for-execution');
+if (plan.gameplay) validateOfflineGameplayPlan(plan.gameplay);
 assert(!bytes.includes(Buffer.from('${')), 'Unbound plan cannot execute');
 assert.equal(plan.engine, 'chromium', 'Initial declared desktop offline stratum is Chromium only');
 assert.match(plan.artifact.sourceRevision, /^[a-f0-9]{40}$/);
@@ -141,6 +149,7 @@ if (plan.sourceRole === 'candidate') {
     'serverCleanupFailure',
     'launchDrainFailure',
     'observationDrainFailure',
+    'gameplayDrainFailure',
     'errorOverflow',
     'requestFailureOverflow',
     'responseOverflow',
@@ -235,7 +244,11 @@ const report = {
   storageSnapshots: [],
   workerEventOverflow: false,
   replays: [],
+  gameplayRequested: Boolean(plan.gameplay),
 };
+const gameplayPending = [];
+let diagnosticWatchdog,
+  diagnosticStageClosed = false;
 let context,
   browser,
   served,
@@ -584,6 +597,7 @@ const storageSnapshot = async (stage) => {
   report.storageSnapshots.push(row);
 };
 await save();
+const diagnosticStartedAtMs = performance.now();
 const observation = (async () => {
   playwright = await import(pathToFileURL(plan.playwrightModule).href);
   // Require the exact generated deployment policy for the archive, original server responses, and offline SW responses.
@@ -898,9 +912,88 @@ const observation = (async () => {
   report.launcherQualificationStatus = 'instrumented-diagnostic-only';
   report.platformStratum = plan.platform;
   report.interpretation =
-    'New Linux headed Chromium stratum; prior local Mac failures remain failed. Pre-close worker reads may affect backend persistence. The original untouched offline failure remains failed. Post-navigation fetch may recreate an absent cache. No deletion/eviction/browser cause, offline gameplay, physical installed PWA, temperature or performance conclusion follows.';
+    'New Linux headed Chromium stratum; prior local Mac failures remain failed. Pre-close worker reads may affect backend persistence. The original untouched offline failure remains failed. Post-navigation fetch may recreate an absent cache. The restart diagnostic alone gives no deletion/eviction/browser cause, gameplay, physical installed PWA, temperature or performance conclusion. Any separately labeled public Opening gameplay/replay result is evaluated only after this restart premise succeeds.';
   assert.equal(served, null, 'Server must stay stopped after restart');
+  // This fence preserves the original 600-second restart/worker stage unchanged.
+  ensureOwner();
+  report.restartDiagnosticElapsedMs = performance.now() - diagnosticStartedAtMs;
+  if (plan.gameplay)
+    assert(
+      report.restartDiagnosticElapsedMs <= plan.gameplay.diagnosticTimeoutMs,
+      'Original restart diagnostic deadline exceeded',
+    );
+  diagnosticStageClosed = true;
+  clearTimeout(diagnosticWatchdog);
+  report.restartDiagnosticCompletedAt = new Date().toISOString();
+  let gameplayExports = [];
+  if (plan.gameplay) {
+    if (offlineLaunchAllowsGameplay(report)) {
+      gameplayExports = await playOfflineOpening({
+        page,
+        report,
+        address,
+        entryHTMLSha256: plan.artifact.entryHTMLSha256,
+        csp: expected.csp,
+        accessKey: fixture.key,
+        ensureOwner,
+        isServerStopped: () => served === null,
+        step,
+        pending: gameplayPending,
+      });
+      for (const item of gameplayExports) {
+        const path = join(output, `${item.entry.label}.replay.json`);
+        await writeFile(path, item.text, { flag: 'wx' });
+        report.replays.push({ ...item.entry, path });
+      }
+    } else {
+      report.gameplay = { status: 'not-run-launch-unqualified', reason: report.diagnosticOutcome };
+    }
+  }
   await closeContext();
+  if (gameplayExports.length) {
+    ensureOwner();
+    assert(observedClosed, 'Gameplay browser must close before replay');
+    report.gameplay.observedBrowserClosed = true;
+    step('verification-only-server-restart');
+    served = await startProductionPreview({
+      root: plan.artifact.payloadRealpath,
+      port: Number(new URL(origin).port),
+      fixtureAccess: false,
+      cache: 'policy',
+    });
+    ensureOwner();
+    assert.equal(served.url, origin);
+    assert.equal(served.mode, 'generated-build');
+    assert.equal(served.fixtureAccess, false);
+    assert.equal(served.cache, 'policy');
+    const openingPath = resolve(root, plan.openingRecipe.path);
+    const openingBytes = await readFile(openingPath);
+    assert.equal(openingBytes.length, plan.openingRecipe.bytes);
+    assert.equal(sha(openingBytes), plan.openingRecipe.sha256);
+    const opening = JSON.parse(openingBytes);
+    for (const [index, item] of gameplayExports.entries()) {
+      ensureOwner();
+      const verified = await verifyNativeQualificationReplay({
+        playwright,
+        engine: 'chromium',
+        executablePath: plan.chromeExecutable,
+        observedBrowserClosed: true,
+        expected,
+        recordingText: item.text,
+        requirements: index === 0 ? opening.replayRequirements : { movingTicks: 60 },
+        expectedDefinition: index === 0 ? opening.expectedReplayDefinition : undefined,
+        timeoutMs: plan.gameplay.replayTimeoutMs,
+      });
+      report.replays[index].nativeReplay = verified;
+      ensureOwner();
+      assert.equal(verified.status, 'pass');
+      assert.equal(verified.observation.levelId, item.native.level.id);
+    }
+    await stopServer();
+    ensureOwner();
+    report.gameplay.status = 'passed';
+    assert.equal(offlineGameplayAssessment(report), 'passed');
+  }
   await boundedOperation(
     'Drain automatic navigation response owner',
     () => selectedGameResponse,
@@ -915,11 +1008,23 @@ const observation = (async () => {
       !report.responseOverflow &&
       !report.workerEventOverflow,
   );
+  await boundedOperation('Drain public offline actions', () => Promise.all(gameplayPending), 5000);
+  report.gameplayAssessment = offlineGameplayAssessment(report);
+  assert.notEqual(report.gameplayAssessment, 'failed');
   report.status = 'completed-diagnostic';
 })().finally(() => {
   observationSettled = true;
 });
 try {
+  if (plan.gameplay)
+    diagnosticWatchdog = setTimeout(() => {
+      if (!diagnosticStageClosed) {
+        report.restartDiagnosticDeadlineReached = true;
+        report.deadlineReached = true;
+        stopped = true;
+        void closeContext().catch(() => {});
+      }
+    }, plan.gameplay.diagnosticTimeoutMs);
   await Promise.race([
     observation,
     new Promise((_, reject) => {
@@ -936,6 +1041,7 @@ try {
 } finally {
   stopped = true;
   clearTimeout(watchdog);
+  clearTimeout(diagnosticWatchdog);
   if (launchPending)
     await boundedOperation(
       'Drain pending native launch',
@@ -958,6 +1064,14 @@ try {
     ).catch((error) => {
       report.observationDrainFailure = String(error);
     });
+  await boundedOperation(
+    'Drain offline gameplay owner',
+    () => Promise.allSettled(gameplayPending),
+    10000,
+  ).catch((error) => {
+    report.gameplayDrainFailure = String(error);
+    report.status = 'fail';
+  });
   report.observationSettled = observationSettled;
   report.browserClosed = observedClosed;
   if (report.deadlineReached || report.observationDrainFailure || !observationSettled)
@@ -977,6 +1091,7 @@ try {
     report.serverCleanupFailure ||
     report.launchDrainFailure ||
     report.observationDrainFailure ||
+    report.gameplayDrainFailure ||
     !observationSettled
   )
     report.status = 'fail';
