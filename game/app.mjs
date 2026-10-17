@@ -86,6 +86,7 @@ import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { attachJourneySaveNotice } from './ui/journey-save-notice.mjs';
 import { createSoloPerformanceBinding } from './journey/performance-binding.mjs';
+import { JOURNEY_PERFORMANCE_LIMITS } from './journey/performance.mjs';
 import { journeyPerformanceText } from './ui/journey-performance.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { loadAuthoredJourneyRoute } from './content-design/route-loader.mjs';
@@ -396,7 +397,13 @@ import {
   scenarioMasteryCampaign,
 } from './content.mjs';
 import { prepareScenario } from './imports.mjs';
-import { createRecorder, recordInput, exportReplay, MAX_REPLAY_TICKS } from './replay.mjs';
+import {
+  createRecorder,
+  recordInput,
+  exportReplay,
+  exportReplayAsync,
+  MAX_REPLAY_TICKS,
+} from './replay.mjs';
 import { exportReplayPresentation } from './replay-presentation.mjs';
 
 const $ = (id) => document.getElementById(id),
@@ -11767,7 +11774,9 @@ try {
                       mode: 'solo',
                       editionId: authoredRoute.id,
                       missionId: mission.id,
-                      campaignKey: campaignKey(activeEntry.campaign),
+                      // This branch already requires the exact host-owned entry. Its
+                      // immutable execution key was validated during preparation.
+                      campaignKey: activeEntry.executionKey,
                       levelId: run.levelId,
                       levelRevision: String(flightPictures.context.levelRevision),
                       runId,
@@ -11814,14 +11823,23 @@ try {
               acceptedMission && journeyProfile?.snapshot().clears.solo[acceptedMission.id];
             if (acceptedClear?.runId === acceptedRunId) {
               try {
-                const replay = exportReplay(recorder, acceptedRun);
-                void journeyProfile.performance
-                  .capture({
-                    mode: 'solo',
-                    missionId: acceptedMission.id,
-                    ...acceptedClear,
-                    replay,
-                  })
+                // This is the existing downstream JSON array budget, not a
+                // reduced replay limit. Such evidence can never be retained.
+                const optionalReplay =
+                  recorder.segments.length > JOURNEY_PERFORMANCE_LIMITS.arrayItems
+                    ? Promise.reject(new RangeError('Journey performance array budget exceeded.'))
+                    : exportReplayAsync(recorder, acceptedRun, {
+                        scheduleChunk: scheduleOptionalReplayChunk,
+                      });
+                void optionalReplay
+                  .then((replay) =>
+                    journeyProfile.performance.capture({
+                      mode: 'solo',
+                      missionId: acceptedMission.id,
+                      ...acceptedClear,
+                      replay,
+                    }),
+                  )
                   .then((result) => {
                     if (!journeyPerformanceActive || run !== acceptedRun || runId !== acceptedRunId)
                       return;

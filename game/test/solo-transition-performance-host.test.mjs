@@ -53,6 +53,32 @@ test('accepted capture, victory and public result have bounded witnesses without
   assert.equal(run.levelId, levelId);
   const keys = { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' };
   const captures = [];
+  let insideFrame = false,
+    terminalCampaignScans = 0,
+    terminalCheckpointSections = 0;
+  const map = Array.prototype.map,
+    encode = TextEncoder.prototype.encode;
+  Array.prototype.map = function (callback, ...args) {
+    if (
+      insideFrame &&
+      callback?.name === 'normalizedLevel' &&
+      new Error().stack.includes('/library.mjs:')
+    )
+      terminalCampaignScans++;
+    return Reflect.apply(map, this, [callback, ...args]);
+  };
+  t.after(() => {
+    Array.prototype.map = map;
+  });
+  t.mock.method(TextEncoder.prototype, 'encode', function (...args) {
+    if (
+      insideFrame &&
+      new Error().stack.includes('checksum (') &&
+      new Error().stack.includes('/replay.mjs:')
+    )
+      terminalCheckpointSections++;
+    return Reflect.apply(encode, this, args);
+  });
   for (const [direction, ticks] of segments) {
     if (direction !== null) {
       page.key(keys[direction]);
@@ -66,7 +92,12 @@ test('accepted capture, victory and public result have bounded witnesses without
         if (event.type === 'cells.claimed') captures.push(reference.tick);
       const closure = reference.events.some((event) => event.type === 'capture.stopped');
       if (closure || pending === 12 || tick === ticks - 1) {
-        page.frame(pending * FIXED_DT * 1000);
+        insideFrame = true;
+        try {
+          page.frame(pending * FIXED_DT * 1000);
+        } finally {
+          insideFrame = false;
+        }
         pending = 0;
         if (closure && tick < ticks - 1 && run.status !== 'won') {
           page.key(keys[direction]);
@@ -76,6 +107,17 @@ test('accepted capture, victory and public result have bounded witnesses without
     }
   }
   assert.equal(run.status, 'won', 'Only the legal native input route may accept victory');
+  t.diagnostic(JSON.stringify({ terminalCampaignScans, terminalCheckpointSections }));
+  assert.equal(
+    terminalCampaignScans,
+    0,
+    'the accepted immutable execution key needs no terminal campaign scan',
+  );
+  assert.equal(
+    terminalCheckpointSections,
+    0,
+    'optional replay checkpoint hashing must leave the frame callback',
+  );
   assert.ok(captures.length > 0);
   assert.equal(
     liveCaptureCopies,
