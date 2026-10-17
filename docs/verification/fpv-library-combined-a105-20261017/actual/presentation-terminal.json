@@ -1,0 +1,12 @@
+{
+  "UTC": "2026-10-17T16:21:49.239565+00:00",
+  "session": 11320,
+  "actualExitCode": 0,
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "helper": {
+    "path": "/tmp/fpv-library-resume-20261017/combined-main-20261017/verify-presentation-once.py",
+    "bytes": 3480,
+    "SHA256": "93f70b46e78c51653f64a787f0e84e0454f24502f405ca6daa9819eda234a39d"
+  },
+  "receiptSHA256": "4487e877a5e3ba14477a68bdcf3c72ed2ffc5fdbc033686b0ac42c8ab9724442"
+}

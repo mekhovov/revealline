@@ -1,0 +1,32 @@
+{
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "tree": "19395b9bc3a874d0916890e1e3d3d67be87395a9",
+  "run": 39048156331,
+  "externalRoot": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-a105e0fa-combined-20261017",
+  "helpers": [
+    {
+      "path": "/tmp/fpv-library-resume-20261017/combined-main-20261017/qualify-combined-optional.py",
+      "bytes": 7454,
+      "SHA256": "0717d0027ad31341880b4b81d10da91f8ced7e0026b9834e63b51faadc0cdca0"
+    },
+    {
+      "path": "/tmp/fpv-library-resume-20261017/combined-main-20261017/qualify-combined-company.py",
+      "bytes": 5598,
+      "SHA256": "f47ca70b27ea7b9218736b78e253b5c75cee35e7aaa364ae0ccdab9b6bb75d93"
+    },
+    {
+      "path": "/tmp/fpv-library-resume-20261017/combined-main-20261017/qualify-combined-family-labels.py",
+      "bytes": 3448,
+      "SHA256": "e61c26f4f4ff7e822a4df366827f0132083f7b4d7e44ed82b91a04a48f945da1"
+    }
+  ],
+  "scope": "One new optional and one new focused Company original artifact download, each only after exact job success; no old artifacts or completed checks repeated. Corrected optional helper includes missing source dependency before invocation. Fixed current family/label fixture runs once against newly verified original runtime.",
+  "limits": {
+    "optionalArtifactBytes": 67108864,
+    "companyArtifactBytes": 268435456,
+    "externalReserveBytes": 3221225472,
+    "noInternalHeavyWork": true,
+    "noNativeRenderer": true,
+    "noRetries": true
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "UTC": "2026-10-17T16:17:19.458096+00:00",
+  "sourceRevision": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "sourceTree": "19395b9bc3a874d0916890e1e3d3d67be87395a9",
+  "artifactId": 12107220119,
+  "runtimeArchiveSHA256": "4c4dde854f25b37974eb3f436efb9449f7f094fd5a8a5da3d0fcd83e0f850947",
+  "tests": [
+    {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "bytes": 30924,
+      "SHA256": "62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394"
+    },
+    {
+      "path": "game/test/fpv-regional-library-labels.test.mjs",
+      "bytes": 9706,
+      "SHA256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272"
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "bytes": 18572,
+      "SHA256": "145f0d3010e26c3cc4be105050c8e344808983907d3121741c9ae6a8bc382001"
+    },
+    {
+      "path": "game/test/fixtures/fpv-regional-labels-metadata.json",
+      "bytes": 14757,
+      "SHA256": "d19d86f670febf58924cabb169cf93f7e22358ab8ddde493fe68da5fae75046c"
+    }
+  ],
+  "command": [
+    "node",
+    "--import",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-a105e0fa-combined-20261017/functional-family-label-check/fixture-node-prelude.mjs",
+    "--test",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-a105e0fa-combined-20261017/functional-family-label-check/game/test/fpv-regional-library-families.test.mjs",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-a105e0fa-combined-20261017/functional-family-label-check/game/test/fpv-regional-library-labels.test.mjs"
+  ],
+  "actualExitCode": 0,
+  "summary": {
+    "tests": 24,
+    "pass": 24,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "logSHA256": "97a63875e9bc299720d5dd79566e69d567ea2a1901c3d45a4b29d73ce049b894",
+  "runtimeBytesUnchanged": true,
+  "hostSetup": "Shipped i18next engine loaded before generated bootstrap; original package modules and exact source tests unchanged.",
+  "scope": "Packaged family/label software tests using isolated deterministic DOM and metadata callbacks; no database, rendering, flight, native input, storage repair or public claim."
+}

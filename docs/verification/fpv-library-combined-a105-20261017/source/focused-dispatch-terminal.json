@@ -1,0 +1,11 @@
+{
+  "UTC": "2026-10-17T16:09:08.047073+00:00",
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "branch": "codex/fpv-regional-family-library-20261016",
+  "workflow": "company-edition-candidate.yml",
+  "editions": "fpv-learning",
+  "reason": "PR workflow retains compact manifests only; one focused dispatch is necessary for downloadable original Company candidate archive. No existing dispatch for this exact head.",
+  "exitCode": 0,
+  "stdout": "https://github.com/mekhovov/revealline/actions/runs/39048156331\n",
+  "stderr": ""
+}

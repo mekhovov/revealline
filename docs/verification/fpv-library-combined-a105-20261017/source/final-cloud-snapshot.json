@@ -1,0 +1,57 @@
+{
+  "UTC": "2026-10-17T16:23:23.893976+00:00",
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "main": "3c5011f1908bc1fb5d322e07e445373e4cb59321",
+  "draft": true,
+  "runs": [
+    {
+      "id": 39048267310,
+      "name": "Fastline exact-head auto-merge",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "pull_request"
+    },
+    {
+      "id": 39048156331,
+      "name": "Company edition candidates",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "workflow_dispatch"
+    },
+    {
+      "id": 39048107144,
+      "name": "Fastline exact-head auto-merge",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "pull_request"
+    },
+    {
+      "id": 39048107040,
+      "name": "Company edition candidates",
+      "status": "in_progress",
+      "conclusion": null,
+      "event": "pull_request"
+    },
+    {
+      "id": 39048107120,
+      "name": "Industrial feature verification",
+      "status": "in_progress",
+      "conclusion": null,
+      "event": "pull_request"
+    },
+    {
+      "id": 39048107087,
+      "name": "Validate source for continuous main",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "pull_request"
+    },
+    {
+      "id": 39048107163,
+      "name": "Appearance preview",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "pull_request"
+    }
+  ]
+}

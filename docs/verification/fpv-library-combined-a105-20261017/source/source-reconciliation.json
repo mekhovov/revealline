@@ -1,0 +1,52 @@
+{
+  "UTC": "2026-10-17T16:10:08.142599+00:00",
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "tree": "19395b9bc3a874d0916890e1e3d3d67be87395a9",
+  "integratedMain": "3c5011f1908bc1fb5d322e07e445373e4cb59321",
+  "exactProductDeltaFiles": 5,
+  "sources": [
+    {
+      "path": "docs/fpv-regional-family-library-20261016.md",
+      "gitBlob": "bbccbe8547901435b0b27cc2774dfd54a1279d0a",
+      "bytes": 5441,
+      "SHA256": "c87c9a5a9ddadcfe7218355a19178f72b1aa7b48c4be46adb2811adc395319a7",
+      "unchangedFrom": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35"
+    },
+    {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "gitBlob": "5d32059b6ef03211d4998b0e83112be30614c018",
+      "bytes": 30924,
+      "SHA256": "62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394",
+      "unchangedFrom": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "gitBlob": "74100dd421dfe7d23d4c80c1b748552c330b7902",
+      "bytes": 74392,
+      "SHA256": "4e414ab01cd63b8feaaeda1f141a76a7cd85d738084a92b25e1ea4f8eb0f918e",
+      "unchangedFrom": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "gitBlob": "320028f3c02d16f36a644c18525995faa5cd7102",
+      "bytes": 119168,
+      "SHA256": "e75fe38f7a339e844376c9ca2eb35ef6d7f84202b395e0c8d2c491ba915e1529",
+      "unchangedFrom": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35"
+    },
+    {
+      "path": "publishing/industrial-feature-tests.json",
+      "gitBlob": "37c8269b0cefb7db383c35b9032ccf9e3453f5c7",
+      "bytes": 8987,
+      "SHA256": "c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2",
+      "unchangedFrom": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "gitBlob": "58cbec3c213a3a7e5e2d91d08a996c0cc62b6923",
+      "bytes": 50056,
+      "SHA256": "d3c5a16e6686da3c57dc8abcea6b9846c0f3f686681068f972c88b5ce27589a4",
+      "matchesIntegratedMain": "3c5011f1908bc1fb5d322e07e445373e4cb59321"
+    }
+  ],
+  "scope": "Source identity and normal merge only; new cloud/package/native/player gates separate"
+}

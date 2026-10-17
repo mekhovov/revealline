@@ -1,0 +1,45 @@
+{
+  "UTC": "2026-10-17T16:18:06.506409+00:00",
+  "sourceRevision": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "sourceTree": "19395b9bc3a874d0916890e1e3d3d67be87395a9",
+  "artifactId": 12107220119,
+  "runtimeArchiveSHA256": "4c4dde854f25b37974eb3f436efb9449f7f094fd5a8a5da3d0fcd83e0f850947",
+  "tests": [
+    {
+      "path": "game/test/fpv-advanced-practice.test.mjs",
+      "bytes": 37413,
+      "SHA256": "aa68a84a879844cd83c68699781dc3f69200f4d612f54a7e0e03d9a49ecb977b"
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "bytes": 18572,
+      "SHA256": "145f0d3010e26c3cc4be105050c8e344808983907d3121741c9ae6a8bc382001"
+    },
+    {
+      "path": "game/test/helpers/wait-for.mjs",
+      "bytes": 714,
+      "SHA256": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6"
+    }
+  ],
+  "command": [
+    "node",
+    "--import",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-a105e0fa-combined-20261017/functional-family-label-check/fixture-node-prelude.mjs",
+    "--test",
+    "--test-name-pattern=unavailable radio|radio input becoming",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-a105e0fa-combined-20261017/functional-family-label-check/game/test/fpv-advanced-practice.test.mjs"
+  ],
+  "actualExitCode": 0,
+  "summary": {
+    "tests": 26,
+    "pass": 5,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 21,
+    "todo": 0
+  },
+  "logSHA256": "f9718e4a7f122a4d871384614e5229f3a1b88e7c52e2f5062e0bfaa34ab539be",
+  "runtimeBytesUnchanged": true,
+  "hostSetup": "Shipped i18next engine loaded before generated bootstrap; original package modules and exact source tests unchanged.",
+  "scope": "Five existing Advanced unavailable-input tests against exact newly packaged modules, using deterministic DOM/worker and stub renderer. Nineteen unrelated tests intentionally skipped by name filter, including accelerated duration/capacity. No physical input, WebGL/browser, player storage, endurance, public or full Advanced-suite acceptance."
+}

@@ -1,0 +1,14 @@
+{
+  "UTC": "2026-10-17T16:18:06.714329+00:00",
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "helperSHA256": "3e01cebcea8b76673fb35e6e1c29179bc33b305a13294373a79144ec79fb7680",
+  "scope": "Exactly five existing unavailable-radio/input recovery tests. Reuse accepted current external software fixture and unchanged178 runtime; add two exact test fixture sources only; no repeated assetGET/extraction or full Advanced suite.",
+  "actualExitCode": 1,
+  "stdoutSHA256": "5961261b051a6f34956cb6d08761ece2d1c4908c080c36f12a2bb85d3603d1b7",
+  "stderrSHA256": "4af17ab70e04eb96901848b09cb6132efbcf87758cbf61fc9c3c3466e76f03df",
+  "receipt": {
+    "bytes": 2080,
+    "sha256": "5961261b051a6f34956cb6d08761ece2d1c4908c080c36f12a2bb85d3603d1b7",
+    "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-a105e0fa-combined-20261017/packaged-input-recovery-receipt.json"
+  }
+}
