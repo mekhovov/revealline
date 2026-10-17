@@ -488,6 +488,12 @@ const admissionFiles = [
   'game/test/library-entry.test.mjs',
   'game/test/solo-lazy-library-host.test.mjs',
   'game/test/solo-transition-performance-host.test.mjs',
+  'game/test/demo-scene-transition.test.mjs',
+  'game/test/victory-story-ui.test.mjs',
+  'game/test/demo-bot.test.mjs',
+  'game/test/demo-sources.test.mjs',
+  'game/test/solo-demo-resources-host.test.mjs',
+  'game/test/demo-loading-host.test.mjs',
 ];
 async function prepareAdmission(
   mode,
@@ -590,7 +596,7 @@ test('separate predecessor gates each declared complete regression file without 
     .trim()
     .split(/\s+/);
   assert.deepEqual(declared, admissionFiles);
-  assert.equal(new Set(declared).size, 17);
+  assert.equal(new Set(declared).size, 23);
   const existing = workflow
     .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
     .trim()

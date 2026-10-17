@@ -108,11 +108,11 @@ export async function loadDemoSources({
             recordingIdentity,
             campaignKey: campaignKey(entry.campaign),
             levelKey: `${campaignKey(entry.campaign)}/${level.id}`,
-            create: ({ signal }) =>
+            create: ({ signal, onWorker }) =>
               prepareCompleteBotPlayer(
                 simulationLevel,
                 { ...options, seed },
-                { signal, WorkerClass, plannerSeed: seed },
+                { signal, WorkerClass, plannerSeed: seed, onWorker },
               ),
           });
       }

@@ -37,6 +37,8 @@ The generated Field Kit inventory also omitted one retained canonical104 alias. 
 
 The user-approved relocation of one retained 1.09 GB archive is complete: destination readback matches its original SHA-256. Acquisition metadata and reports remain local. This storage operation changes no qualification result.
 
+Demo resource export now observes its existing scene painters, persistent display, transition canvas, reward media, shared images and bot Worker handles. Canceled preparation remains counted until settlement; active playback/practice cannot export. Eight complete source/model files pass 94/94. The new counters do not establish a leak, native allocation totals or repeated-transition plateaus. [Ownership and export boundaries](solo-demo-owned-resources-20261017.md).
+
 ## Native results and their limits
 
 - **Selected font:** run `39066188215` failed before theme activation. Its observer capped all document stylesheets at 32, while the unchanged runtime has 39 stylesheet links and two inline styles. Four command owners closed and the held original requests were released. The separately declared successor inspects only the unique existing font link's stylesheet, retaining the original face request, native actions, cancellation, deadlines and numerical gates. [Observer correction](solo-selected-font-direct-sheet-20261017.md).
@@ -53,7 +55,7 @@ The user-approved relocation of one retained 1.09 GB archive is complete: destin
 2. Retain the actual 397 production outcome and exact package identity. A package predating Restart or later runtime fixes remains evidence only for its own source. Validate final workers, lazy modules, offline closure and CSP through the production build.
 3. Run the separately declared font-owner correction and bounded Cocoa codec diagnostic once their source checks pass. Retain all original failures. Codec correctness and production-game timing remain separate.
 4. Measure the new terminal/progress/recorder paths with the unchanged public workloads and deadlines before expanding transition runs. Retain partial rows, calibration failures, automatic pauses and every hitch. Required saves and maximum profiles need separate attribution from optional work.
-5. Finish final-source three-run comparisons, ten Next transitions, twenty retries, resource retention, thirty-minute sustained play, recovery/orientation, audio, touch and native raster cases. Extend Demo resource observation through existing owners where needed; current Solo counters do not prove Demo painters, rewards, transition surfaces or workers plateau.
+5. Finish final-source three-run comparisons, ten Next transitions, twenty retries, resource retention, thirty-minute sustained play, recovery/orientation, audio, touch and native raster cases. Use the extended Demo owner observations to verify retained-resource plateaus; their source controls alone do not establish a native plateau.
 6. Complete source/build checks, review and push each remaining phase to the existing draft PR. Physical iPhone 17 Pro Safari and Steam Deck OLED Chrome checks remain unavailable here and cannot be replaced by desktop emulation.
 
 Keep local execution to source/model checks with the 256 MiB free-space reserve. Native browsers and production builds run remotely; retain every result and acquire only bounded evidence locally. Do not widen deadlines, alter workloads, weaken gates, mutate hidden application state or introduce benchmark-only quality resets to obtain a pass.

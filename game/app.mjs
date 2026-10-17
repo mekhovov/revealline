@@ -3309,7 +3309,9 @@ try {
     window.RevealLineSoloPerformance = Object.freeze({
       export() {
         const session = performanceSession.export({
-          paused: paused || !started || ['won', 'lost'].includes(run?.status),
+          paused:
+            (paused || !started || ['won', 'lost'].includes(run?.status)) &&
+            (!demoHost || demoHost.resourceExportReady),
         });
         const ownedSoundtrack = soundtrackPlayer?.preparationDiagnostics();
         const mediaAdmission = ownedSoundtrack?.admission ?? sound.mediaPreparation.snapshot();
@@ -3340,6 +3342,7 @@ try {
           audio: audioMaster.snapshot(),
           resources: {
             renderer: painter.resourceSnapshot(),
+            demo: demoHost?.resourceSnapshot() ?? null,
             phaser: fieldScene?.resourceSnapshot() ?? null,
             sharedPresentationImages: sharedImageResources(),
             pcm: {
