@@ -4052,11 +4052,6 @@ lineage=storage?.getItem(WRITER_KEY);
 }
 if(!id(lineage)){
 lineage=randomId();
-try{
-if(ownsWrites())storage?.setItem(WRITER_KEY,lineage);
-}catch{
-/* Counters still use IndexedDB. */
-}
 }
 required(id(lineage),'A unique statistics writer is required.');
 const backend=createProfileRecordBackend({
@@ -4186,20 +4181,6 @@ return attempt;
 observe(attempt,{board='0',sequence,defeats=[]}={}){
 const token=tokenState(attempt);
 if(!token.active||closed)return Promise.resolve(false);
-// Another host/controller can restore a backup while this attempt is
-// paused. Same-document localStorage writes do not emit a storage event;
-// sample the current writer at the next real gameplay contribution.
-if(!ownsWrites()){
-sessionLineage??=randomId();
-required(id(sessionLineage),'A unique session statistics writer is required.');
-}else{
-try{
-const latest=storage?.getItem(WRITER_KEY);
-if(id(latest))lineage=latest;
-}catch{
-/* A private session retains its independently generated writer. */
-}
-}
 required(
 id(String(board))&&
 integer(sequence)&&
@@ -4226,13 +4207,29 @@ return{family:canonicalEnemyFamily(event.family)};
 });
 const current=state.cursors[token.attemptId]??token.baseline;
 if(sequence<=(current.sequences[String(board)]?? -1))return Promise.resolve(false);
+// Browsing a menu or reading statistics must not create durable state.
+// Another host may restore a backup before the first real contribution;
+// adopt its writer before persisting our lazily created identity.
+const writable=ownsWrites();
+if(!writable){
+sessionLineage??=randomId();
+required(id(sessionLineage),'A unique session statistics writer is required.');
+}else{
+try{
+const latest=storage?.getItem(WRITER_KEY);
+if(id(latest))lineage=latest;
+else storage?.setItem(WRITER_KEY,lineage);
+}catch{
+/* A private session retains its independently generated writer. */
+}
+}
 const cumulative={...current.boardCounts[String(board)]};
 for(const{family}of ownedDefeats)add(cumulative,family);
 const event={
 attemptId:token.attemptId,
 gameType:token.gameType,
 baseline:structuredClone(token.baseline),
-lineage:ownsWrites()?lineage:sessionLineage,
+lineage:writable?lineage:sessionLineage,
 board:String(board),
 sequence,
 cumulative,
@@ -4388,12 +4385,16 @@ readable=false;
 }
 function save(){
 if(!attempt|| !identity|| !canWrite()|| !readable)return;
+if(!['live','continue'].includes(currentProvenance))return;
+const cursor=stats.session(attempt);
+if(!Object.values(cursor.counts).some((count)=>count>0))return;
 const rows={...retained};
 delete rows[identity];
-rows[identity]=stats.session(attempt);
+rows[identity]=cursor;
 retained=Object.fromEntries(Object.entries(rows).slice(-16));
 try{
-storage?.setItem(key,JSON.stringify(retained));
+const serialized=JSON.stringify(retained);
+if(storage?.getItem(key)!==serialized)storage?.setItem(key,serialized);
 }catch{
 /* Stats service reports its own durability. */
 }

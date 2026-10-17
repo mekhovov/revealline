@@ -280,7 +280,10 @@ test('picture view keeps a direct Next action and clears the old full-screen rew
   const flowControls = p.$('result-flow-controls');
   if (flowControls) {
     assert.equal(flowControls.parentElement, p.$('next-button').parentElement);
-    assert.equal(p.$('overlay-reading-unit').querySelector('.enemy-stats').dataset.variant, 'panel');
+    assert.equal(
+      p.$('overlay-reading-unit').querySelector('.enemy-stats').dataset.variant,
+      'panel',
+    );
   }
   const more = p.$('earned-result-more');
   if (more) {
@@ -335,7 +338,11 @@ test('automatic Next survives launch clearing the sampled controller frame and t
   );
   const runTotal = p.$('score').parentElement.querySelector('.enemy-stats-run');
   if (runTotal) {
-    assert.equal(runTotal.hidden, false, 'The current run is visible even before its first defeat.');
+    assert.equal(
+      runTotal.hidden,
+      false,
+      'The current run is visible even before its first defeat.',
+    );
     assert.equal(runTotal.querySelector('strong').textContent, '0');
   }
   assert.deepEqual(p.errors, []);

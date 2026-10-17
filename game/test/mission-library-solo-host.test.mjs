@@ -1,10 +1,28 @@
+import { createHash } from 'node:crypto';
+import { includedChapterPage } from './helpers/included-chapter-host.mjs';
+import { includedChapterFixture } from './fixtures/included-bundled.mjs';
+import { verifyIndexedInstalledPack } from '../mission-library/pack-identity.mjs';
+import {
+  isIncludedBundledMission,
+  INCLUDED_BUNDLED_PACK_MAX_BYTES,
+} from '../mission-library/included-bundled-pack.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage } from './helpers/solo-dom.mjs';
+import {
+  presentationSoloPage as soloPage,
+  createPresentationResponses,
+  loadPresentationResponses,
+} from './helpers/presentation-responses.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
-import { classicLibrarySources } from '../mission-library/classic-source.mjs';
+import {
+  classicLibrarySources,
+  prepareMissionLibraryIndex,
+} from '../mission-library/classic-source.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
+import { createRemoteTeamLibrarySources } from '../mission-library/remote-team.mjs';
+import { duelExpeditionLibrarySources } from '../mission-library/multiplayer-expeditions.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { preparePack, emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
@@ -103,7 +121,14 @@ test('installed Custom late mission in a second campaign launches its exact auth
     level.id = `custom-second-${index}`;
   });
   source.campaigns.push(second);
-  const { pack } = await preparePack(source);
+  const { pack } = await preparePack(source, {
+    // Modeled Node boundary only. Production browser decoding stays unchanged.
+    decodeImage: async (dataUrl) => {
+      const image = inspectImageDataUrl(dataUrl);
+      assert.equal(image.valid, true);
+      return { naturalWidth: image.width, naturalHeight: image.height };
+    },
+  });
   const assets = await installedAssets(pack);
   const p = await soloPage(t, { titleScreen: true, assetIndexedDB: assets.indexedDB });
   await open(p);
@@ -157,8 +182,13 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
     p.key('ArrowDown', false);
     for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
     assert.equal(p.rendered.run.status, 'won');
-    for (let tick = 0; tick < 400 && p.$('game-overlay').dataset.kind !== 'won'; tick++)
-      p.frame();
+    assert.equal(p.$('game-overlay').hidden, true, 'Earned picture precedes result actions.');
+    p.$('skip-celebration').onclick();
+    assert.equal(p.$('show-result').hidden, false);
+    p.$('show-result').click();
+    assert.equal(p.$('game-overlay').hidden, false);
+    assert.equal(p.$('skip-celebration').hidden, true);
+    p.frame(0);
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
     assert.equal(p.$('next-button').hidden, false);
   }
@@ -204,7 +234,34 @@ function showAllLifecycles(p) {
   p.$('journey-lifecycle').emit('change');
 }
 async function startPrepared(p, id) {
+  // Selection prepares this exact attempt; only a fresh Start authorizes play.
+  // Retry and Next continue to use running() directly, without another prompt.
+  await settle(() => {
+    p.frame(0);
+    return (
+      p.rendered.run.levelId === id &&
+      p.doc.body.dataset.pictureState === 'ready' &&
+      p.doc.body.dataset.flightState === 'briefing'
+    );
+  });
+  const prepared = p.rendered.run;
+  const preparedCheckpoint = authoritativeCheckpoint(prepared);
+  assert.equal(p.rendered.paused, true);
+  assert.equal(prepared.tick, 0);
+  assert.equal(p.doc.activeElement, p.$('start-button'));
+  assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.$('shell-home').open, false);
+  p.frame(100);
+  assert.equal(p.rendered.run, prepared);
+  assert.deepEqual(
+    authoritativeCheckpoint(prepared),
+    preparedCheckpoint,
+    'Viewing a prepared briefing must not simulate or replace the accepted attempt.',
+  );
+  await activateHostAction(p.$('start-button'));
   await running(p, id);
+  assert.equal(p.rendered.run, prepared, 'Explicit Start activates the same accepted mission.');
+  assert.deepEqual(authoritativeCheckpoint(prepared), preparedCheckpoint);
   assert.equal(p.rendered.paused, false);
   assert.equal(p.$('game-overlay').hidden, true);
 }
@@ -301,13 +358,12 @@ test('Journey setup changes next preset and library details without replacing th
 });
 
 test('unified Solo validates and directly launches the included late Classic', async (t) => {
-  const p = await soloPage(t, { titleScreen: true });
+  const { p, row } = await includedChapterPage(t);
   await open(p);
   p.$('journey-collection').value = 'Classic';
   p.$('journey-collection').emit('change');
-  p.$('journey-search').value = 'night';
+  p.$('journey-search').value = 'Included fixture';
   p.$('journey-search').emit('input');
-  const row = model.missions.filter((mission) => mission.ownerId.includes('night-shift')).at(-1);
   assert.ok(row);
   const card = [...p.$('journey-cards').children].find(
     (button) => button.dataset.missionId === row.id,
@@ -320,20 +376,17 @@ test('unified Solo validates and directly launches the included late Classic', a
   card.click();
   await startPrepared(p, row.runtimeId);
   assert.equal(p.$('journey-chooser').open, false);
-  assert.equal(p.$('journey-search').value, 'night');
+  assert.equal(p.$('journey-search').value, 'Included fixture');
   assert.deepEqual(p.errors, []);
 });
 
 test('unified Solo failed included-chapter read retries inline and preserves the flight until retry succeeds', async (t) => {
   let available = false,
     requests = 0;
-  const p = await soloPage(t, {
-    titleScreen: true,
-    fetchResponse: async (path) => {
-      if (path === 'content/packs/night-shift.json') {
-        requests++;
-        if (!available) throw new TypeError('Download temporarily unavailable');
-      }
+  const { p, row } = await includedChapterPage(t, {
+    request: () => {
+      requests++;
+      if (!available) throw new TypeError('Download temporarily unavailable');
     },
   });
   const initial = p.rendered.run,
@@ -341,11 +394,10 @@ test('unified Solo failed included-chapter read retries inline and preserves the
   await open(p);
   p.$('journey-collection').value = 'Classic';
   p.$('journey-collection').emit('change');
-  p.$('journey-search').value = 'night';
+  p.$('journey-search').value = 'Included fixture';
   p.$('journey-search').emit('input');
-  const row = model.missions.filter((mission) => mission.ownerId.includes('night-shift')).at(-1),
-    selected = () =>
-      [...p.$('journey-cards').children].find((card) => card.dataset.missionId === row.id);
+  const selected = () =>
+    [...p.$('journey-cards').children].find((card) => card.dataset.missionId === row.id);
   const card = selected();
   assert.equal(card.dataset.availabilityState, 'included');
   assert.equal(card.querySelector('.journey-card-action').hidden, true);
@@ -367,7 +419,7 @@ test('unified Solo failed included-chapter read retries inline and preserves the
   assert.equal(p.$('journey-chooser').open, false);
   assert.notEqual(p.rendered.run, initial);
   await open(p);
-  assert.equal(p.$('journey-search').value, 'night');
+  assert.equal(p.$('journey-search').value, 'Included fixture');
   assert.equal(p.doc.activeElement, selected());
   assertReadyCard(selected(), row.name);
   assert.deepEqual(p.errors, []);
@@ -541,7 +593,7 @@ test('Classic hands a Journey card directly to its new-edition host', async (t) 
   assert.deepEqual(p.errors, []);
 });
 
-test('Solo mode filter exposes the same qualified Journey identities in Versus without duplicates', async (t) => {
+test('Solo mode filter retains Solo identities and adds only owned Duel lessons and expeditions without duplicates', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   showAllLifecycles(p);
@@ -549,12 +601,26 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
   p.$('journey-mode').value = 'versus';
   p.$('journey-mode').emit('change');
   const cards = [...p.$('journey-cards').children];
+  const themes = JSON.parse(
+    await readFile(new URL('../content-design/themes.json', import.meta.url), 'utf8'),
+  ).themes;
+  const sources = duelExpeditionLibrarySources({ themes, launch: () => true });
   assert.deepEqual(
-    cards.map((card) => card.dataset.missionId),
-    original,
+    sources.map((source) => source.id),
+    ['journey:humanoid-hunt-v1', 'journey:duel-expedition-v1'],
   );
+  const admitted = createMissionLibrary(sources).missions;
+  assert.ok(admitted.every((mission) => mission.modes.includes('versus')));
+  const expected = [...original, ...admitted.map((mission) => mission.id)];
+  assert.equal(
+    new Set(expected).size,
+    expected.length,
+    'Registered owners do not alias Solo rows.',
+  );
+  assert.deepEqual(cards.map((card) => card.dataset.missionId).sort(), expected.sort());
   assert.equal(new Set(original).size, 435);
-  const target = cards[1];
+  assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, cards.length);
+  const target = cards.find((card) => card.dataset.missionId === original[1]);
   assert.match(target.textContent, /Journey.*Band 1\/12/);
   assertReadyCard(target);
   target.click();
@@ -573,11 +639,33 @@ for (const collection of ['Journey', 'Classic'])
     p.$('journey-mode').value = 'team';
     p.$('journey-mode').emit('change');
     const cards = [...p.$('journey-cards').children];
-    assert.equal(cards.length, 14);
-    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, 14);
-    const target = cards.find((card) =>
-      card.querySelector('.journey-card-tags').textContent.includes(collection),
+    const sources = createRemoteTeamLibrarySources({ launch: () => true });
+    assert.deepEqual(
+      sources.map((source) => source.id),
+      [
+        'journey:team-expedition-v1',
+        'team-journey:humanoid-hunt-v1',
+        'journey:team-cultural-specialist-originals-2',
+        'team-classic:relay-rescue-starter',
+      ],
     );
+    const admitted = createMissionLibrary(sources).missions;
+    assert.ok(admitted.every((mission) => mission.modes.includes('team')));
+    assert.deepEqual(
+      cards.map((card) => card.dataset.missionId).sort(),
+      admitted.map((mission) => mission.id).sort(),
+    );
+    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, cards.length);
+    const retained = admitted.filter((mission) =>
+      [
+        'journey:team-cultural-specialist-originals-2',
+        'team-classic:relay-rescue-starter',
+      ].includes(mission.ownerId),
+    );
+    assert.equal(retained.length, 14, 'Every original Team Journey and Classic identity remains.');
+    const exact = retained.find((mission) => mission.collection === collection);
+    assert.ok(exact);
+    const target = cards.find((card) => card.dataset.missionId === exact.id);
     assertReadyCard(target);
     target.click();
     await settle(() => globalThis.location.href.includes('library-mission='));
@@ -630,4 +718,168 @@ test('unfinished Classic attempt keeps its exact cut through Stay and returns to
   assert.equal(p.rendered.run, old);
   assert.deepEqual(authoritativeCheckpoint(old), checkpoint);
   assert.deepEqual(p.errors, []);
+});
+
+test('procedural included chapter has actual bounded bytes and authenticated runtime owners', async () => {
+  const fixture = await includedChapterFixture();
+  assert.equal(INCLUDED_BUNDLED_PACK_MAX_BYTES, 65536);
+  assert.ok(fixture.bytes.length > 0 && fixture.bytes.length <= INCLUDED_BUNDLED_PACK_MAX_BYTES);
+  assert.equal(
+    createHash('sha256').update(fixture.bytes).digest('hex'),
+    fixture.rows[0].sourceFile.sha256,
+  );
+  assert.equal(fixture.rows[0].sourceFile.bytes, fixture.bytes.length);
+  assert.equal(fixture.rows.length, 3);
+  const index = prepareMissionLibraryIndex({
+    format: 'revealline-mission-library-index.v1',
+    missions: fixture.rows,
+  });
+  for (const row of index.missions) {
+    assert.equal(isIncludedBundledMission(row), true);
+    assert.equal(await verifyIndexedInstalledPack(fixture.pack, row), true);
+    assert.deepEqual(row.modes, ['solo', 'versus']);
+    assert.ok(row.difficultiesByMode.solo.includes('standard'));
+  }
+  assert.deepEqual(fixture.source.visualOverrides, {});
+  assert.deepEqual(fixture.source.levelVisuals, []);
+  assert.deepEqual(fixture.source.music, []);
+});
+
+test('included fixture refuses a false prepared-pack identity and a false byte classification', async () => {
+  const fixture = await includedChapterFixture();
+  const row = fixture.rows[2];
+  assert.equal(
+    await verifyIndexedInstalledPack(fixture.pack, {
+      ...row,
+      packIdentity: { ...row.packIdentity, sha256: '0'.repeat(64) },
+    }),
+    false,
+  );
+  assert.equal(
+    isIncludedBundledMission({ ...row, sourceFile: { ...row.sourceFile, bytes: 65537 } }),
+    false,
+  );
+  assert.equal(isIncludedBundledMission({ ...row, source: 'optional' }), false);
+});
+
+test('the real Night Shift source remains large and must not be classified as included', async () => {
+  const bytes = await readFile(new URL('../content/packs/night-shift.json', import.meta.url));
+  const index = JSON.parse(
+    await readFile(new URL('../content/mission-library-index.json', import.meta.url), 'utf8'),
+  );
+  const rows = index.missions.filter((row) => row.packId === 'night-shift');
+  assert.ok(rows.length > 0);
+  assert.ok(bytes.length > INCLUDED_BUNDLED_PACK_MAX_BYTES);
+  for (const row of rows) {
+    assert.equal(row.sourceFile.bytes, bytes.length);
+    assert.equal(row.sourceFile.sha256, createHash('sha256').update(bytes).digest('hex'));
+    assert.equal(isIncludedBundledMission(row), false);
+  }
+});
+
+const responsePath =
+  '/game/presentation/compiled/assets/' +
+  createHash('sha256')
+    .update(new Uint8Array([1, 2, 3]))
+    .digest('hex') +
+  '.png';
+const requestURL = `http://localhost${responsePath}`;
+const entries = () => new Map([[responsePath, new Uint8Array([1, 2, 3])]]);
+
+test('presentation fixture responses own byte copies, never mutable caller or prior response buffers', async () => {
+  const input = new Uint8Array([1, 2, 3]);
+  const fixture = createPresentationResponses(new Map([[responsePath, input]]));
+  input[0] = 9;
+  const first = new Uint8Array(await (await fixture.wrap()(requestURL)).arrayBuffer());
+  assert.deepEqual([...first], [1, 2, 3]);
+  first[1] = 9;
+  assert.deepEqual(
+    [...new Uint8Array(await (await fixture.wrap()(requestURL)).arrayBuffer())],
+    [1, 2, 3],
+  );
+});
+test('presentation fixture preserves explicit custom failures, values and callback argument identities', async () => {
+  const fixture = createPresentationResponses(entries()),
+    url = new URL(requestURL),
+    controller = new AbortController();
+  controller.abort();
+  const options = { signal: controller.signal };
+  const failure = new Response('Deliberate outage', { status: 503 });
+  assert.equal(
+    await fixture.wrap(async (path, init) => {
+      assert.equal(path, url);
+      assert.equal(init, options);
+      return failure;
+    })(url, options),
+    failure,
+  );
+  assert.equal(await fixture.wrap(() => false)(url), false);
+  const thrown = new Error('Deliberate request failure');
+  await assert.rejects(
+    fixture.wrap(() => {
+      throw thrown;
+    })(url),
+    (error) => error === thrown,
+  );
+});
+test('presentation fixture cannot bypass a held custom original request', async () => {
+  const fixture = createPresentationResponses(entries());
+  let release,
+    entered = false,
+    completed = false;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const pending = fixture
+    .wrap(async () => {
+      entered = true;
+      await gate;
+    })(requestURL)
+    .then((response) => {
+      completed = true;
+      return response;
+    });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(entered, true);
+  assert.equal(completed, false);
+  release();
+  assert.deepEqual([...new Uint8Array(await (await pending).arrayBuffer())], [1, 2, 3]);
+});
+test('presentation fixture honors cancellation after an empty custom callback and before cached response', async () => {
+  const fixture = createPresentationResponses(entries()),
+    controller = new AbortController();
+  const options = { signal: controller.signal };
+  await assert.rejects(
+    fixture.wrap(() => {
+      controller.abort();
+    })(requestURL, options),
+    (error) => error.name === 'AbortError',
+  );
+});
+test('presentation fixture falls through unknown resources and rejects a foreign origin for known bytes', async () => {
+  const fixture = createPresentationResponses(entries());
+  assert.equal(await fixture.wrap()('content/packs/night-shift.json'), undefined);
+  assert.equal(await fixture.wrap()(requestURL + '?different=1'), undefined);
+  await assert.rejects(fixture.wrap()('https://other.invalid' + responsePath), /origin/i);
+  assert.throws(
+    () => createPresentationResponses(new Map([['/outside', new Uint8Array([1])]])),
+    /path/i,
+  );
+});
+test('presentation fixture preloader rejects altered bytes rather than trusting the declared digest', async () => {
+  let payloadReads = 0;
+  await assert.rejects(
+    loadPresentationResponses({
+      read: async (url) => {
+        const bytes = await readFile(url);
+        if (new URL(url).pathname.endsWith('/runtime.json')) return bytes;
+        payloadReads++;
+        const altered = Buffer.from(bytes);
+        altered[0] ^= 1;
+        return altered;
+      },
+    }),
+    /hash|digest/i,
+  );
+  assert.equal(payloadReads, 1);
 });

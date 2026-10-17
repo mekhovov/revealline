@@ -12,10 +12,18 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 function openEarnedResult(page) {
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.$('skip-celebration').onclick();
-  assert.equal(page.$('game-overlay').hidden, true, 'The preview keeps the earned picture in full view.');
+  assert.equal(
+    page.$('game-overlay').hidden,
+    true,
+    'The preview keeps the earned picture in full view.',
+  );
   assert.equal(page.$('show-result').hidden, false, 'The earned picture can return to its result.');
   page.$('show-result').click();
-  assert.equal(page.$('game-overlay').hidden, false, 'The result opens after the picture presentation.');
+  assert.equal(
+    page.$('game-overlay').hidden,
+    false,
+    'The result opens after the picture presentation.',
+  );
   assert.equal(page.$('game-overlay').dataset.kind, 'won');
   assert.equal(page.$('show-result').hidden, true);
   assert.equal(page.$('retry-button').hidden, false);

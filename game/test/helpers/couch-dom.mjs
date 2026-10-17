@@ -11,6 +11,100 @@ const datasetKey = (name) => {
   return datasetKeys.get(name);
 };
 
+// Cache syntax only. Every match still reads the live node/ancestor state.
+// Bounded because tests can construct distinct authored attribute selectors.
+const selectorPlans = new Map();
+const SELECTOR_PLAN_LIMIT = 128;
+function selectorPlan(selector) {
+  if (selectorPlans.has(selector)) {
+    const plan = selectorPlans.get(selector);
+    selectorPlans.delete(selector);
+    selectorPlans.set(selector, plan);
+    return plan;
+  }
+  const plan = selector.split(',').map((value) => {
+    let part = value.trim();
+    if (/\s/.test(part)) {
+      let depth = 0,
+        split = -1;
+      for (let index = 0; index < part.length; index++) {
+        if (['[', '('].includes(part[index])) depth++;
+        if ([']', ')'].includes(part[index])) depth--;
+        if (depth === 0 && /\s/.test(part[index])) split = index;
+      }
+      if (split >= 0)
+        return {
+          kind: 'descendant',
+          ancestor: part.slice(0, split).trim(),
+          descendant: part.slice(split + 1),
+        };
+    }
+    if (part === '.race-pad button') return { kind: 'race-button' };
+    if (part === ':disabled') return { kind: 'disabled' };
+    if (part.startsWith('.')) return { kind: 'class', value: part.slice(1) };
+    if (part.startsWith('#')) return { kind: 'id', value: part.slice(1) };
+    const excluded = [...part.matchAll(/:not\(([^)]+)\)/g)].map((match) => match[1]);
+    part = part.replace(/:not\([^)]+\)/g, '');
+    const tag = part.match(/^[a-z][a-z0-9-]*/i)?.[0];
+    const attributes = [...part.matchAll(/\[([^=*\]]+)(?:(\*?=)["']?([^"'\]]+)["']?)?\]/g)].map(
+      ([, key, operator, value]) => ({ key, operator, value }),
+    );
+    return {
+      kind: 'compound',
+      excluded,
+      tag: tag?.toUpperCase(),
+      attributes,
+      accepted: !!tag || part.startsWith('[') || part === '*',
+    };
+  });
+  selectorPlans.set(selector, plan);
+  if (selectorPlans.size > SELECTOR_PLAN_LIMIT)
+    selectorPlans.delete(selectorPlans.keys().next().value);
+  return plan;
+}
+function matchesPlan(node, plan) {
+  if (plan.kind === 'descendant')
+    return (
+      node.matches(plan.descendant) &&
+      (plan.ancestor.endsWith('>')
+        ? !!node.parentElement?.matches(plan.ancestor.slice(0, -1).trim())
+        : !!node.parentElement?.closest(plan.ancestor))
+    );
+  if (plan.kind === 'race-button')
+    return node.tagName === 'BUTTON' && !!node.parentElement?.closest('.race-pad');
+  if (plan.kind === 'disabled') return node.disabled;
+  if (plan.kind === 'class') return node.classList.contains(plan.value);
+  if (plan.kind === 'id') return node.id === plan.value;
+  if (plan.excluded.some((item) => node.matches(item))) return false;
+  if (plan.tag && node.tagName !== plan.tag) return false;
+  for (const { key, operator, value } of plan.attributes) {
+    const actual =
+      key === 'hidden'
+        ? node.hidden
+          ? ''
+          : null
+        : key === 'disabled'
+          ? node.disabled
+            ? ''
+            : null
+          : key === 'inert'
+            ? node.inert
+              ? ''
+              : null
+            : key === 'open'
+              ? node.open
+                ? ''
+                : null
+              : node.getAttribute(key);
+    if (
+      actual === null ||
+      (value !== undefined && (operator === '*=' ? !actual.includes(value) : actual !== value))
+    )
+      return false;
+  }
+  return plan.accepted;
+}
+
 export class Events {
   listeners = new Map();
   captureListeners = new Map();
@@ -349,65 +443,7 @@ export class Element extends Events {
     if (name.startsWith('data-')) delete this.dataset[datasetKey(name)];
   }
   matches(selector) {
-    return selector.split(',').some((part) => {
-      part = part.trim();
-      if (/\s/.test(part)) {
-        let depth = 0,
-          split = -1;
-        for (let index = 0; index < part.length; index++) {
-          if (['[', '('].includes(part[index])) depth++;
-          if ([']', ')'].includes(part[index])) depth--;
-          if (depth === 0 && /\s/.test(part[index])) split = index;
-        }
-        if (split >= 0) {
-          const ancestor = part.slice(0, split).trim(),
-            descendant = part.slice(split + 1);
-          return (
-            this.matches(descendant) &&
-            (ancestor.endsWith('>')
-              ? !!this.parentElement?.matches(ancestor.slice(0, -1).trim())
-              : !!this.parentElement?.closest(ancestor))
-          );
-        }
-      }
-      if (part === '.race-pad button')
-        return this.tagName === 'BUTTON' && !!this.parentElement?.closest('.race-pad');
-      if (part === ':disabled') return this.disabled;
-      if (part.startsWith('.')) return this.classList.contains(part.slice(1));
-      if (part.startsWith('#')) return this.id === part.slice(1);
-      const excluded = [...part.matchAll(/:not\(([^)]+)\)/g)].map((match) => match[1]);
-      if (excluded.some((item) => this.matches(item))) return false;
-      part = part.replace(/:not\([^)]+\)/g, '');
-      const tag = part.match(/^[a-z][a-z0-9-]*/i)?.[0];
-      if (tag && this.tagName !== tag.toUpperCase()) return false;
-      for (const match of part.matchAll(/\[([^=*\]]+)(?:(\*?=)["']?([^"'\]]+)["']?)?\]/g)) {
-        const [, key, operator, value] = match;
-        const actual =
-          key === 'hidden'
-            ? this.hidden
-              ? ''
-              : null
-            : key === 'disabled'
-              ? this.disabled
-                ? ''
-                : null
-              : key === 'inert'
-                ? this.inert
-                  ? ''
-                  : null
-                : key === 'open'
-                  ? this.open
-                    ? ''
-                    : null
-                  : this.getAttribute(key);
-        if (
-          actual === null ||
-          (value !== undefined && (operator === '*=' ? !actual.includes(value) : actual !== value))
-        )
-          return false;
-      }
-      return !!tag || part.startsWith('[') || part === '*';
-    });
+    return selectorPlan(selector).some((plan) => matchesPlan(this, plan));
   }
   closest(selector) {
     for (let node = this; node?.nodeType === 1; node = node.parentNode)

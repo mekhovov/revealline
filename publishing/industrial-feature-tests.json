@@ -192,6 +192,27 @@
         "game/test/coop-picture-landing-recovery.test.mjs",
         "game/test/fpv-world-record-storage.test.mjs"
       ]
+    },
+    {
+      "id": "host-integration",
+      "files": [
+        "game/test/backup-set-host.test.mjs",
+        "game/test/collection-context-host.test.mjs",
+        "game/test/collection-records-return-host.test.mjs",
+        "game/test/device-controls-host.test.mjs",
+        "game/test/difficulty-host.test.mjs",
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/fpv-role-host.test.mjs",
+        "game/test/history-picture-host.test.mjs",
+        "game/test/session-only-release-next-host.test.mjs",
+        "game/test/settings-assists-host.test.mjs",
+        "game/test/text-face-host.test.mjs",
+        "game/test/text-size-host.test.mjs",
+        "game/test/ukraine-role-host.test.mjs",
+        "game/test/enemy-stats.test.mjs",
+        "game/test/enemy-stats-events.test.mjs",
+        "game/test/team-enemy-stats-ownership.test.mjs"
+      ]
     }
   ]
 }

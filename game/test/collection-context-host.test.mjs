@@ -19,37 +19,54 @@ import { emptyLibrary, recordLibraryCompletion, saveLibrary } from '../library.m
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 
 const profileKey = 'revealline.library.dev.v1';
 const source = JSON.parse(
   await readFile(new URL('../content/packs/night-shift.json', import.meta.url)),
 );
-const { pack } = await preparePack({
-  ...source,
-  id: 'collection-context-fixture',
-  name: 'Collection context fixture',
-  campaigns: [
-    {
-      ...source.campaigns[0],
-      id: 'collection-earned-chapter',
-      title: 'Earned chapter',
-      levels: [0, 1, 2].map((i) => ({
-        version: 'xonix-level.v1',
-        id: `collection-map-${i}`,
-        revision: '1',
-        name: `Earned map ${i}`,
-        width: 48,
-        height: 36,
-        spawn: { x: 24.5, y: 0.5 },
-        walls: [],
-        enemies: [],
-        objectives: [],
-        supplies: [],
-        goal: { coverage: 0.5 },
-      })),
+const { pack } = await preparePack(
+  {
+    ...source,
+    id: 'collection-context-fixture',
+    name: 'Collection context fixture',
+    // The fixture renames all three maps. Keep their real artwork attached to
+    // those new identities rather than retaining the source pack's level IDs.
+    levelVisuals: source.levelVisuals.map((entry) => ({
+      ...entry,
+      levelId: `collection-map-${source.campaigns[0].levels.findIndex((level) => level.id === entry.levelId)}`,
+    })),
+    campaigns: [
+      {
+        ...source.campaigns[0],
+        id: 'collection-earned-chapter',
+        title: 'Earned chapter',
+        levels: [0, 1, 2].map((i) => ({
+          version: 'xonix-level.v1',
+          id: `collection-map-${i}`,
+          revision: '1',
+          name: `Earned map ${i}`,
+          width: 48,
+          height: 36,
+          spawn: { x: 24.5, y: 0.5 },
+          walls: [],
+          enemies: [],
+          objectives: [],
+          supplies: [],
+          goal: { coverage: 0.5 },
+        })),
+      },
+    ],
+  },
+  {
+    async decodeImage(dataUrl) {
+      const image = new RasterImage();
+      image.src = dataUrl;
+      await image.decode();
+      return image;
     },
-  ],
-});
+  },
+);
 const entries = createExecutionCatalog([resolvePackCampaign(pack, pack.campaigns[0].id)]).entries;
 
 async function setup(t, modes = ['standard', 'gentle'], { installed = true } = {}) {
