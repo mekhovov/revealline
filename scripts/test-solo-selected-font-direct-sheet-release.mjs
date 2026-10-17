@@ -14,6 +14,7 @@ import { verifyTimingHitchJournal } from './solo-remote-sustained.mjs';
 import { createHash } from 'node:crypto';
 import {
   bindReadinessJob,
+  prepareReadinessMode,
   readinessMatrix,
   readinessArguments,
   readinessAssessment,
@@ -28,8 +29,62 @@ const workflowPath = '.github/workflows/solo-remote-selected-font-direct-sheet-e
 const priorPath = 'docs/performance/solo-selected-font-settlement-e1cc-plan.json';
 const manifest = JSON.parse(await read(manifestPath));
 const prior = JSON.parse(await read(priorPath));
+// This exact source already executed. The additive Git witness is historical only;
+// future declarations must still admit their own current helper bytes.
+const executed816Bytes = await readFile(
+  new URL(
+    'docs/performance/fixtures/solo-native-816/executed-source.json',
+    process.env.SOLO_EXECUTED_816_PROPOSAL || new URL('../', import.meta.url),
+  ),
+);
+function executed816Bindings(bytes, bindings) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '017ca49b181d9e2aece4fc059dfac32b21ecea47f2759f262255efd93d1ff45f',
+  );
+  const value = JSON.parse(bytes);
+  assert.equal(value.format, 'Solo816ExecutedSourceWitnessV1');
+  assert.equal(value.revision, '8161953a10b9c37e603d78f236e277da380e57ad');
+  assert.equal(value.tree, '3cc69ce4de5367590e9bd11e4eeed38ddd510d9a');
+  assert.equal(value.postHocExactGitReadback, true);
+  assert.deepEqual(
+    value.runs.map((r) => r.run),
+    [39073210040, 39073210270, 39073210265, 39073210308],
+  );
+  assert.equal(value.records.length, 73);
+  assert.equal(new Set(value.records.map((r) => r.path)).size, value.records.length);
+  for (const ref of value.records) assert.match(ref.blob, /^[a-f0-9]{40}$/);
+  for (const [path, input] of bindings) {
+    const ref = value.records.find((r) => r.path === path);
+    assert(ref, path);
+    assert.equal(input.length, ref.bytes, path);
+    assert.equal(createHash('sha256').update(input).digest('hex'), ref.sha256, path);
+  }
+  return value;
+}
+function executed816Ref(execution, ref) {
+  const entry = execution.records.find((r) => r.path === ref.path);
+  assert(entry, ref.path);
+  assert.equal(entry.bytes, ref.bytes, ref.path);
+  assert.equal(entry.sha256, ref.sha256, ref.path);
+}
+
+const executed816 = executed816Bindings(executed816Bytes, [
+  [manifestPath, await read(manifestPath)],
+  [workflowPath, await read(workflowPath)],
+]);
+test('executed816 rejects changed witness bytes and original declaration or workflow bytes', () => {
+  assert.throws(() => executed816Bindings(Buffer.from('{}'), []));
+  const ref = executed816.records.find((r) => r.path === manifestPath);
+  assert.throws(() => executed816Bindings(executed816Bytes, [[ref.path, Buffer.from('{}')]]));
+  const workflowRef = executed816.records.find((r) => r.path === workflowPath);
+  assert.throws(() =>
+    executed816Bindings(executed816Bytes, [[workflowRef.path, Buffer.from('{}')]]),
+  );
+  assert.throws(() => executed816Ref(executed816, { ...ref, sha256: '0'.repeat(64) }));
+  assert.throws(() => executed816Ref(executed816, { ...ref, bytes: ref.bytes + 1 }));
+});
 const plan = () => bindReadinessJob(manifest, 'webkit');
-const sha = (b) => createHash('sha256').update(b).digest('hex');
 test('direct-sheet successor changes only declared observer attribution and preserves old V4 source and workload', () => {
   const p = plan(),
     old = bindReadinessJob(prior, 'webkit');
@@ -165,7 +220,7 @@ test('actual enriched dispatch arguments preserve one existing font demand proto
     assert(args.includes(flag), flag);
   assert(!args.includes('--baseline-runtime'));
 });
-test('one-shot workflow and all current helper references are exact; historical source is separate', async () => {
+test('executed816 one-shot workflow and historical helper references are exact', async () => {
   const w = (await read(workflowPath)).toString();
   const terms = [
     'github.event.pull_request.number == 1544',
@@ -203,9 +258,7 @@ test('one-shot workflow and all current helper references are exact; historical 
   const sparse = [...w.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(sparse.length, new Set(sparse).size);
   for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools, manifest.fixture]) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(sha(b), ref.sha256, ref.path);
+    executed816Ref(executed816, ref);
     assert(sparse.includes(ref.path));
   }
   for (const path of [
@@ -280,4 +333,34 @@ test('successor preserves actual serialized assessment and journal failure bound
       for (const fn of cleanup) await fn();
     }
   }
+});
+
+test('historical font witness cannot authorize changed current tools before package or native work', async () => {
+  const repository = await realpath(new URL('../', import.meta.url));
+  const target = 'scripts/run-solo-remote-correctness.mjs';
+  const calls = [];
+  let admitted = 0;
+  await assert.rejects(
+    prepareReadinessMode({
+      plan: plan(),
+      repository,
+      digest: async (path) => {
+        calls.push(path);
+        const bytes = await readFile(path);
+        return {
+          bytes: bytes.length,
+          sha256: path.endsWith('/' + target)
+            ? '0'.repeat(64)
+            : createHash('sha256').update(bytes).digest('hex'),
+        };
+      },
+      get admitted() {
+        admitted++;
+        throw new Error('package continuation must not run');
+      },
+    }),
+    { code: 'ERR_ASSERTION' },
+  );
+  assert(calls.includes(join(repository, target)));
+  assert.equal(admitted, 0);
 });

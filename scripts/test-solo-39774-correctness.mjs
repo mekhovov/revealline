@@ -15,6 +15,61 @@ const prior = await json('docs/performance/solo-remote-e1cc-correctness-plan.jso
 const original = await json('docs/performance/solo-remote-correctness-plan.json');
 const source = '39774cce8697d412d138ef4da11ac547a5f8e535';
 const tree = 'cac2369a26cac5282e4260c638b934540d17ced6';
+// This exact source already executed. The additive Git witness is historical only;
+// future declarations must still admit their own current helper bytes.
+const executed816Bytes = await readFile(
+  new URL(
+    'docs/performance/fixtures/solo-native-816/executed-source.json',
+    process.env.SOLO_EXECUTED_816_PROPOSAL || new URL('../', import.meta.url),
+  ),
+);
+function executed816Bindings(bytes, bindings) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '017ca49b181d9e2aece4fc059dfac32b21ecea47f2759f262255efd93d1ff45f',
+  );
+  const value = JSON.parse(bytes);
+  assert.equal(value.format, 'Solo816ExecutedSourceWitnessV1');
+  assert.equal(value.revision, '8161953a10b9c37e603d78f236e277da380e57ad');
+  assert.equal(value.tree, '3cc69ce4de5367590e9bd11e4eeed38ddd510d9a');
+  assert.equal(value.postHocExactGitReadback, true);
+  assert.deepEqual(
+    value.runs.map((r) => r.run),
+    [39073210040, 39073210270, 39073210265, 39073210308],
+  );
+  assert.equal(value.records.length, 73);
+  assert.equal(new Set(value.records.map((r) => r.path)).size, value.records.length);
+  for (const ref of value.records) assert.match(ref.blob, /^[a-f0-9]{40}$/);
+  for (const [path, input] of bindings) {
+    const ref = value.records.find((r) => r.path === path);
+    assert(ref, path);
+    assert.equal(input.length, ref.bytes, path);
+    assert.equal(createHash('sha256').update(input).digest('hex'), ref.sha256, path);
+  }
+  return value;
+}
+function executed816Ref(execution, ref) {
+  const entry = execution.records.find((r) => r.path === ref.path);
+  assert(entry, ref.path);
+  assert.equal(entry.bytes, ref.bytes, ref.path);
+  assert.equal(entry.sha256, ref.sha256, ref.path);
+}
+
+const executed816 = executed816Bindings(executed816Bytes, [
+  [planPath, await read(planPath)],
+  [workflowPath, await read(workflowPath)],
+]);
+test('executed816 rejects changed witness bytes and original declaration or workflow bytes', () => {
+  assert.throws(() => executed816Bindings(Buffer.from('{}'), []));
+  const ref = executed816.records.find((r) => r.path === planPath);
+  assert.throws(() => executed816Bindings(executed816Bytes, [[ref.path, Buffer.from('{}')]]));
+  const workflowRef = executed816.records.find((r) => r.path === workflowPath);
+  assert.throws(() =>
+    executed816Bindings(executed816Bytes, [[workflowRef.path, Buffer.from('{}')]]),
+  );
+  assert.throws(() => executed816Ref(executed816, { ...ref, sha256: '0'.repeat(64) }));
+  assert.throws(() => executed816Ref(executed816, { ...ref, bytes: ref.bytes + 1 }));
+});
 const before = '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0';
 const expectedNonDispatch = {
   revision: '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0',
@@ -280,7 +335,7 @@ async function currentRef(ref) {
   assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
 }
 
-test('current runtime references are rehashed without using historical source as current authority', async () => {
+test('executed816 runtime references bind to exact historical Git source', async () => {
   const refs = [...plan.adapterInputs, ...plan.frozenTools, plan.fixture];
   assert.equal(plan.adapterInputs.length, 1);
   assert.equal(plan.adapterInputs[0].path, 'scripts/solo-remote-baseline.mjs');
@@ -290,8 +345,8 @@ test('current runtime references are rehashed without using historical source as
     plan.adapterInputs.length + plan.frozenTools.length,
   );
   for (const ref of refs) {
-    await currentRef(ref);
-    await assert.rejects(() => currentRef({ ...ref, sha256: '0'.repeat(64) }));
+    executed816Ref(executed816, ref);
+    assert.throws(() => executed816Ref(executed816, { ...ref, sha256: '0'.repeat(64) }));
   }
   for (const name of [
     'soundtrack-distribution',
@@ -316,4 +371,17 @@ test('executed e1cc inputs and all historical failures remain separate, immutabl
     plan.currentSourceCorrectness.earlierHistory.earlierHistory.historicalPredecessor.failedRows,
     1,
   );
+});
+
+test('current first-eight reference checking still rejects stale bytes independently of historical witness', async () => {
+  const path = 'scripts/run-solo-remote-correctness.mjs';
+  const bytes = await read(path);
+  const ref = {
+    path,
+    bytes: bytes.length,
+    sha256: createHash('sha256').update(bytes).digest('hex'),
+  };
+  await currentRef(ref);
+  await assert.rejects(() => currentRef({ ...ref, bytes: ref.bytes + 1 }));
+  await assert.rejects(() => currentRef({ ...ref, sha256: '0'.repeat(64) }));
 });

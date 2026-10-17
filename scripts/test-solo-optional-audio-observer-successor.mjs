@@ -58,6 +58,59 @@ function executedV4(bytes, declaration, workflowBytes) {
   return witness;
 }
 const executed = executedV4(executedBytes, manifestBytes, Buffer.from(workflow));
+// Exact prior execution source, never a substitute for current prospective inputs.
+const priorToolBytes = await readFile(
+  new URL(
+    'docs/performance/fixtures/solo-native-816/legacy-tool-supplement.json',
+    process.env.SOLO_EXECUTED_816_PROPOSAL || new URL('../', import.meta.url),
+  ),
+);
+function priorToolBindings(bytes, declarationBytes, workflowBytes) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    'ed447c4cf0031ab5767539a617344a9a1eb402c54d5959adfe07a2f2744dc067',
+  );
+  const supplement = JSON.parse(bytes);
+  assert.equal(supplement.format, 'SoloPriorExecutedToolSupplementV1');
+  assert.equal(supplement.postHocExactGitReadback, true);
+  const execution = supplement.executions.find(
+    (v) => v.revision === 'bab3b2790944c6257f9c1f9b346839996bbefebb',
+  );
+  assert(execution);
+  assert.equal(execution.tree, '4bdfc784e14b41ed5d32895b4fa139920f494a63');
+  assert.equal(execution.records.length, 51);
+  assert.equal(new Set(execution.records.map((r) => r.path)).size, execution.records.length);
+  for (const ref of execution.records) assert.match(ref.blob, /^[a-f0-9]{40}$/);
+  for (const [p, b] of [
+    [path, declarationBytes],
+    [workflowPath, workflowBytes],
+  ]) {
+    const ref = execution.records.find((r) => r.path === p);
+    assert(ref, p);
+    assert.equal(b.length, ref.bytes, p);
+    assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256, p);
+  }
+  return execution;
+}
+const priorTools = priorToolBindings(priorToolBytes, await read(path), await read(workflowPath));
+function priorToolRef(ref) {
+  const exact = priorTools.records.find((r) => r.path === ref.path);
+  assert(exact, ref.path);
+  assert.equal(exact.bytes, ref.bytes, ref.path);
+  assert.equal(exact.sha256, ref.sha256, ref.path);
+}
+test('prior tool supplement rejects changed original source, declaration, workflow and reference', () => {
+  assert.throws(() => priorToolBindings(Buffer.from('{}'), Buffer.from('{}'), Buffer.from('{}')));
+  assert.throws(() => priorToolBindings(priorToolBytes, Buffer.from('{}'), Buffer.from(workflow)));
+  assert.throws(() =>
+    priorToolBindings(priorToolBytes, Buffer.from(JSON.stringify(manifest)), Buffer.from('{}')),
+  );
+  const ref = manifest.frozenTools.find(
+    (r) => r.path === 'scripts/run-solo-remote-correctness.mjs',
+  );
+  priorToolRef(ref);
+  assert.throws(() => priorToolRef({ ...ref, sha256: '0'.repeat(64) }));
+});
 test('executed bab3 V4 rejects changed witness or historical declaration/workflow', () => {
   assert.throws(() => executedV4(Buffer.from('{}'), Buffer.from('{}'), Buffer.from(workflow)));
   assert.throws(() => executedV4(executedBytes, Buffer.from('{}'), Buffer.from(workflow)));
@@ -127,6 +180,7 @@ test('executed before34d95 guard and exact bab3 sparse/frozen inputs bind one un
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(sparse.length, new Set(sparse).size);
   for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools, manifest.fixture]) {
+    priorToolRef(ref);
     const historical = executed.records.find((r) => r.path === ref.path);
     if (historical) {
       assert.deepEqual(ref, {
@@ -134,10 +188,6 @@ test('executed before34d95 guard and exact bab3 sparse/frozen inputs bind one un
         bytes: historical.bytes,
         sha256: historical.sha256,
       });
-    } else {
-      const b = await read(ref.path);
-      assert.equal(b.length, ref.bytes, ref.path);
-      assert.equal(hash(b), ref.sha256, ref.path);
     }
     assert(sparse.includes(ref.path));
   }
