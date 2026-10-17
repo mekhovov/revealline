@@ -1,0 +1,39 @@
+{
+  "format": "FPVStorageLifecycleStaticReview.v1",
+  "source": "741948b14a09a816e49054c443511186bb99eb41",
+  "api": "GitHub contents API at exact commit; local Git blob SHA and byte length independently matched",
+  "modules": [
+    {
+      "name": "regional-delivery.mjs",
+      "sha": "bdb4ad478f880170a2d0a2c6d4f68e9dd663402a",
+      "size": 17560,
+      "sha256": "7276ecdcf7798741bda92c361da8e417bbff1fa0fbf7885f8e9005f78a0b5997"
+    },
+    {
+      "name": "regional-library.mjs",
+      "sha": "ecc2ff11d27940be93f150c109b3692e23e3d45c",
+      "size": 63555,
+      "sha256": "02e95765c68d7aeb809d5cc49f441e0247064e198dca3b04d79eac3bc2bfc199"
+    },
+    {
+      "name": "world-app.mjs",
+      "sha": "4c451f17672ad4374706e4e0eaf37d6e00a79700",
+      "size": 382452,
+      "sha256": "e126bfe9b7e310971a49af8ba41fb856cbea82fca739648d84ed3208ef7f7785"
+    },
+    {
+      "name": "world-records.mjs",
+      "sha": "1fb632f11e8db0ace7423c392230d5aa4ed8d872",
+      "size": 11475,
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+    },
+    {
+      "name": "world-store.mjs",
+      "sha": "81fcfb872f2d13e9b8c74f2a057cfd8cc47d0b57",
+      "size": 17516,
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+    }
+  ],
+  "finding": "Explicit close paths identified; original public native owner/trigger and original database contents remain unknown. No production repair justified.",
+  "browserOrPlayerStorageAccess": false
+}

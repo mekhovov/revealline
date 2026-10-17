@@ -1,0 +1,33 @@
+{
+  "format": "FPVCursorCountBeforeFix.v1",
+  "kind": "synthetic memory-only regression; tool output retained in task",
+  "baselineHead": "9b3f10cf301fd1ecb5bd8e3026f1e567691256a7",
+  "moduleSHA256": "56274e55d7e266b0e10a30c1b5e417c9ccc3870a7eb26b5152f321787fe10731",
+  "runtime": "v20.19.5",
+  "commandExit": 1,
+  "groups": 11,
+  "passed": 10,
+  "failed": 1,
+  "failure": {
+    "test": "cursor deliveries are a lower bound even when a caller skips to exhaustion",
+    "assertion": "An exhausted cursor does not establish the store total",
+    "actual": 5,
+    "expected": null
+  },
+  "earlierBoundedReproduction": {
+    "seededRetainedRows": 5,
+    "continue": {
+      "deliveries": 5,
+      "reportedRetainedRows": 5
+    },
+    "advance10": {
+      "deliveries": 1,
+      "reportedRetainedRows": 1
+    },
+    "continueKey10": {
+      "deliveries": 1,
+      "reportedRetainedRows": 1
+    }
+  },
+  "browserOrPlayerStorageAccess": false
+}

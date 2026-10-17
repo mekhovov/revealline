@@ -1,4 +1,5 @@
 // Authoring diagnostics only. No database is opened, enumerated or transacted by this tool.
+import { createTransactionObservation } from "./transactions.mjs";
 export const OWNERSHIP_LIMITS = Object.freeze({
   events: 128,
   connections: 32,
@@ -75,6 +76,7 @@ export function ownedCallers(stack) {
 export function createIDBOwnershipObserver({
   indexedDB,
   captureExplicitClose = false,
+  captureTransactions = false,
   now = () => globalThis.performance.now(),
   stack = () => new Error().stack,
 } = {}) {
@@ -129,6 +131,15 @@ export function createIDBOwnershipObserver({
     retire.add(remove);
     return remove;
   }
+  const transactions = captureTransactions
+    ? createTransactionObservation({
+        record,
+        caller,
+        diagnosticError() {
+          counts.diagnosticErrors = increment(counts.diagnosticErrors);
+        },
+      })
+    : null;
   function trackDatabase(db, openCaller, trusted) {
     if (connections.length === OWNERSHIP_LIMITS.connections) {
       counts.droppedConnections = increment(counts.droppedConnections);
@@ -173,6 +184,7 @@ export function createIDBOwnershipObserver({
         });
       }),
     );
+    transactions?.attach(db, row);
     if (!captureExplicitClose) return;
     const own = Object.getOwnPropertyDescriptor(db, "close"),
       original = db.close;
@@ -305,10 +317,12 @@ export function createIDBOwnershipObserver({
         ownedRetireActions: retire.size,
         connections,
         events,
+        transactions: transactions?.snapshot() ?? { enabled: false },
         coverage: {
           factoryFacade: true,
           ambientFactoryOrPrototypePatched: false,
           explicitCloseInterceptionRequested: captureExplicitClose,
+          transactionInterceptionRequested: captureTransactions,
           nativeRequestAndDatabaseIdentityPreserved: true,
           connectionsOutsideFacade: "not-observed",
           borrowedCloseReceivers: "not-observed",
@@ -322,6 +336,7 @@ export function createIDBOwnershipObserver({
     stop() {
       if (stopped) return;
       stopped = true;
+      transactions?.stop();
       for (const remove of [...retire]) safe(remove);
       pending.clear();
       // Close listeners are retired, not the connections. Delegation remains usable.

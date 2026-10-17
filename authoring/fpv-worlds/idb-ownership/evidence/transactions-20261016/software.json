@@ -1,0 +1,88 @@
+{
+  "format": "FPVAuthoringTransactionSoftware.v1",
+  "productionSource": "741948b14a09a816e49054c443511186bb99eb41",
+  "productionWorldStore": {
+    "bytes": 17516,
+    "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+  },
+  "sourceFiles": {
+    "observe.mjs": {
+      "bytes": 11901,
+      "sha256": "7d83d64aaad96f00b9d53287090394bc6c6b2c6c32830c6fed645d5f8fc88721"
+    },
+    "transactions.mjs": {
+      "bytes": 12381,
+      "sha256": "56274e55d7e266b0e10a30c1b5e417c9ccc3870a7eb26b5152f321787fe10731"
+    },
+    "host.mjs": {
+      "bytes": 4895,
+      "sha256": "cd8ce972275d6e4a9af26429edac44eabcc242ea18633506290122b3bf402a36"
+    },
+    "prepare.mjs": {
+      "bytes": 3202,
+      "sha256": "fc9bdbb4e8cd1cc729efd3e24caee054bc75cbee62a41e5f22572bc139862fd0"
+    },
+    "access.mjs": {
+      "bytes": 2664,
+      "sha256": "addae5fb9d3458611e560ac65ec496db31a441b445f451a15f4f2acc55b2e30b"
+    },
+    "verify.mjs": {
+      "bytes": 18030,
+      "sha256": "f3e98f7346c24bbf8f768c223fa972ae62698c449a1a05273fc874268078a564"
+    },
+    "verify-transactions.mjs": {
+      "bytes": 13878,
+      "sha256": "5bb4494c6d6fb13933405cf392e231a18ee37af9bc696181f82f6741ba144f35"
+    },
+    "README.md": {
+      "bytes": 12793,
+      "sha256": "466ae7f186f472a0811aaaa3f8650b5ffbe067a32550d9f99512fba86a078c60"
+    },
+    "audit-20261016.md": {
+      "bytes": 6506,
+      "sha256": "d1e564b5bb2e027b213df110ccfd8513d37304558b7a605c1b492a0da22c3e82"
+    }
+  },
+  "reports": {
+    "before-integration-node20.tap": {
+      "bytes": 7767,
+      "sha256": "efdaa48e6c729a742c7531bceaf14ac34a2033dffaea4400c8f808d72ee17a6c"
+    },
+    "node20.tap": {
+      "bytes": 5096,
+      "sha256": "3da82d1474e6981fecb502048da0bbb5b83f4f94f31350849d33f67ee4217184"
+    },
+    "node22.tap": {
+      "bytes": 5395,
+      "sha256": "aa4f4f8f75cccef68dc5d6676a7f6cb81c6f5a441840ac9205ab73a3800e211c"
+    }
+  },
+  "runs": [
+    {
+      "node": "20.19.5",
+      "tests": 20,
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "node": "22.22.2",
+      "tests": 20,
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "beforeIntegration": {
+    "node": "20.19.5",
+    "tests": 7,
+    "passed": 0,
+    "failed": 7,
+    "reason": "New capture option absent; diagnostic API tests fail before integration."
+  },
+  "preservedUnfinishedSource": {
+    "bytes": 9980,
+    "sha256": "f7eebdd7ec0e288ac841ecf6471d4467348724a869f1304e55fb3395e1ad292a"
+  },
+  "scope": "New isolated memory-only fake IndexedDB and synthetic events/close/abort/upgrade; existing production WorldStore listing source unchanged. No browser or player storage access. Native transaction interception and original public cause/contents remain open."
+}
