@@ -317,12 +317,14 @@ test('bounded raw read rejects symlinks, oversized reports and invalid JSON', as
     await rm(dir, { recursive: true, force: true });
   }
 });
-test('held workflow and common owner registration keep one phase and all partial evidence', async () => {
+test('one-shot workflow and common owner registration keep one phase and all partial evidence', async () => {
   const workflow = await readFile(
     new URL('.github/workflows/solo-remote-supplemental-temporary.yml', root),
     'utf8',
   );
   assert.match(workflow, /max-parallel: 2/);
+  assert(!workflow.includes('fetch-depth: 0'));
+  assert(workflow.includes("github.event.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'"));
   assert.match(workflow, /cancel-in-progress: false/);
   assert.match(
     workflow,
