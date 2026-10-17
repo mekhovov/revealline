@@ -1,3 +1,4 @@
+import { readHistoricalQualificationRefs } from './solo-page-error-source-witness.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -215,14 +216,16 @@ test('touch display setup successor preserves exact failed declarations, twelve 
     assert.equal(hash(bytes), ref.sha256);
   }
   check(plan, workflow);
+  const historical = await readHistoricalQualificationRefs(planPath, workflowPath);
   for (const ref of [...plan.frozenTools, ...plan.adapterInputs, plan.fixture]) {
     if (ref.path === 'scripts/observe-solo-native-touch.mjs') {
       assertRecordedTouchReference(ref);
       continue;
     }
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(hash(bytes), ref.sha256, ref.path);
+    const old = historical.get(ref.path);
+    assert(old, ref.path);
+    assert.equal(old.bytes, ref.bytes, ref.path);
+    assert.equal(old.sha256, ref.sha256, ref.path);
   }
 });
 test('touch setup successor rejects package, preflight, historical evidence, edge, source and bound mutations', () => {

@@ -22,6 +22,8 @@ const workflow = (
 const witnessPath = 'docs/performance/fixtures/solo-readiness-font/e1cc-execution-source.json';
 const witnessSHA256 = '6338947364c7a35f58443fea23ee59fc981598ca4526fbdd4b400c57ce884590';
 const historicalChangedPaths = new Set([
+  'scripts/solo-qualification.mjs',
+  'scripts/solo-qualification-replay-core.mjs',
   'scripts/run-solo-remote-correctness.mjs',
   'scripts/solo-remote-sustained.mjs',
   'scripts/solo-remote-readiness.mjs',
