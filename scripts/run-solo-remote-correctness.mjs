@@ -334,15 +334,37 @@ export function functionalResult(row, raw, command, revision) {
   );
 }
 
-async function evidenceSize(root) {
+const evidenceFilesystem = Object.freeze({ lstat, readdir });
+// A live writer may atomically rename a partial report after enumeration. Only
+// that sampled descendant may disappear; root ownership and settled readback
+// remain strict. This is a sampled size bound, never a final file inventory.
+export async function evidenceSize(
+  root,
+  { transient = false, filesystem = evidenceFilesystem } = {},
+) {
+  const owner = await filesystem.lstat(root);
+  assert(owner.isDirectory() && !owner.isSymbolicLink(), 'Evidence root must be a directory');
   let size = 0,
     count = 0;
   const walk = async (dir) => {
-    for (const name of await readdir(dir)) {
-      const path = join(dir, name),
-        info = await lstat(path);
-      assert(!info.isSymbolicLink(), 'Evidence symlink');
+    let names;
+    try {
+      names = await filesystem.readdir(dir);
+    } catch (error) {
+      if (transient && dir !== root && error.code === 'ENOENT') return;
+      throw error;
+    }
+    for (const name of names) {
       assert(++count <= 2000, 'Evidence file-count cap');
+      const path = join(dir, name);
+      let info;
+      try {
+        info = await filesystem.lstat(path);
+      } catch (error) {
+        if (transient && error.code === 'ENOENT') continue;
+        throw error;
+      }
+      assert(!info.isSymbolicLink(), 'Evidence symlink');
       if (info.isDirectory()) await walk(path);
       else {
         assert(info.isFile());
@@ -351,6 +373,13 @@ async function evidenceSize(root) {
     }
   };
   await walk(root);
+  const current = await filesystem.lstat(root);
+  assert(
+    current.isDirectory() && !current.isSymbolicLink(),
+    'Evidence root must remain a directory',
+  );
+  assert.equal(current.dev, owner.dev, 'Evidence root device changed');
+  assert.equal(current.ino, owner.ino, 'Evidence root identity changed');
   return size;
 }
 async function sourceIdentity(path, revision) {
@@ -475,7 +504,8 @@ async function main() {
   const plan = await json(planPath);
   const extension =
     plan.format === 'SoloHostedOfflinePairPlan.v1' ||
-    plan.format === 'SoloHostedOfflineCurrentPairPlan.v2'
+    plan.format === 'SoloHostedOfflineCurrentPairPlan.v2' ||
+    plan.format === 'SoloHostedOfflineCandidatePlan.v1'
       ? 'offline'
       : ['SoloHostedSustainedPlanV1', 'SoloHostedTimingPlanV1'].includes(plan.format)
         ? 'sustained'
@@ -537,9 +567,11 @@ async function main() {
   const report = {
     format:
       extension === 'offline'
-        ? plan.format === 'SoloHostedOfflineCurrentPairPlan.v2'
-          ? 'SoloHostedOfflineCurrentPair.v2'
-          : 'SoloHostedOfflinePair.v1'
+        ? plan.format === 'SoloHostedOfflineCandidatePlan.v1'
+          ? 'SoloHostedOfflineCandidate.v1'
+          : plan.format === 'SoloHostedOfflineCurrentPairPlan.v2'
+            ? 'SoloHostedOfflineCurrentPair.v2'
+            : 'SoloHostedOfflinePair.v1'
         : extension === 'sustained'
           ? 'SoloHostedSustained.v1'
           : extension === 'auxiliary'
@@ -598,12 +630,13 @@ async function main() {
     const fs = await statfs(output);
     assert(fs.bavail * fs.bsize >= GiB + 4 * MiB, 'disk-floor-plus-finalization-reserve');
     assert(
-      (await evidenceSize(evidence)) <= plan.evidenceBytes - 4 * MiB,
+      (await evidenceSize(evidence, { transient: true })) <= plan.evidenceBytes - 4 * MiB,
       'aggregate-evidence-cap',
     );
     if (profileEvidence)
       assert(
-        (await evidenceSize(profileEvidence)) <= plan.profileEvidenceBytes - 4 * MiB,
+        (await evidenceSize(profileEvidence, { transient: true })) <=
+          plan.profileEvidenceBytes - 4 * MiB,
         'profile-evidence-cap',
       );
   };
