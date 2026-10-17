@@ -207,16 +207,22 @@ export function darwinForeignSystemProcessWitness(row, before, all, owned, leade
 // A known executable is not an unknown browser merely because unrelated RSS or
 // environment reads failed. V3 complete paths come only from proc_pidpath inside
 // an unchanged short-BSD/unique-ID/exec-version bracket, never argv or comm.
-// This exact root /bin/ps case is classification only: no foreign-lineage proof,
+// These exact root executables are classification only: no foreign-lineage proof,
 // ownership, zero-RSS claim, owner-tag absence claim, or signal authority.
 export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, leaderPid) {
   const leader = owned.get(leaderPid);
+  const knownExecutable =
+    (row?.argv === '/bin/ps' && row.ppid > 1) ||
+    (row?.argv === '/usr/libexec/thermald' &&
+      row.ppid === 1 &&
+      row.parentUniqueId === '1' &&
+      row.pgid === row.pid);
   if (
     !darwinKernelIdentity(row) ||
     row.state !== 'R' ||
     row.euid !== 0 ||
     row.ruid !== 0 ||
-    row.argv !== '/bin/ps' ||
+    !knownExecutable ||
     row.pathInspection !== 'complete' ||
     !['complete', 'unavailable'].includes(row.rssInspection) ||
     !['absent', 'unavailable'].includes(row.ownerTagInspection) ||
@@ -231,7 +237,6 @@ export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, lea
     all.get(row.pid).pathInspection !== 'complete' ||
     same(before.get(row.pid), row) ||
     same(owned.get(row.pid), row) ||
-    row.ppid <= 1 ||
     row.pgid <= 1 ||
     row.pgid === leaderPid ||
     isOwnedProcess(row, all, owned, leaderPid, false) ||
@@ -242,8 +247,7 @@ export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, lea
     return null;
   return {
     format: 'SoloKnownNonBrowserProcessWitnessV1',
-    scope:
-      'Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.',
+    scope: `Exact root kernel ${row.argv} executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.`,
     process: {
       pid: row.pid,
       ppid: row.ppid,

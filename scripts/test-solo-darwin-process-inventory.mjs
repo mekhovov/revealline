@@ -1,7 +1,16 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { chmod, mkdtemp, readFile, realpath, rm, symlink, writeFile } from 'node:fs/promises';
+import {
+  chmod,
+  mkdir,
+  mkdtemp,
+  readFile,
+  realpath,
+  rm,
+  symlink,
+  writeFile,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -200,6 +209,14 @@ test(
         log: join(dir, `${id}.log`),
         timeoutMs,
       });
+      if (process.env.SOLO_DARWIN_OWNER_EVIDENCE) {
+        const bytes = JSON.stringify({ case: id, result }, null, 2) + '\n';
+        assert(Buffer.byteLength(bytes) <= 1048576);
+        await mkdir(process.env.SOLO_DARWIN_OWNER_EVIDENCE, { recursive: true });
+        await writeFile(join(process.env.SOLO_DARWIN_OWNER_EVIDENCE, `${id}.json`), bytes, {
+          flag: 'wx',
+        });
+      }
       assert.equal(result.processInventory.platform, 'darwin');
       assert.equal(result.initialLeaderCapture, 'direct-child-birth');
       assert.deepEqual(result.survivors, []);
@@ -514,6 +531,68 @@ function observedPsModel(change = {}) {
 }
 const collectModel = (m, darwin = true) =>
   collectUnattributedProcesses(m.all, m.before, m.owned, m.leader, m.record, darwin);
+
+function observedThermaldModel() {
+  // The actual Cocoa prerequisite failure in run39054542040 retained this row.
+  // Leader identity below is a modeled non-root owner, not a native observation.
+  const m = observedPsModel();
+  m.all.delete(m.row.pid);
+  m.row = {
+    ...m.row,
+    pid: 17275,
+    ppid: 1,
+    pgid: 17275,
+    birth: '00000000000000017275',
+    argv: '/usr/libexec/thermald',
+    parentUniqueId: '1',
+    version: 35176,
+  };
+  m.all.set(m.row.pid, m.row);
+  return m;
+}
+
+test('retained kernel thermald row has narrow launchd classification, never ownership or readable resource claims', () => {
+  const m = observedThermaldModel();
+  assert.deepEqual(collectModel(m), []);
+  const w = m.record.foreignSystemProcesses[0];
+  assert.equal(w.format, 'SoloKnownNonBrowserProcessWitnessV1');
+  assert.equal(w.process.executable, '/usr/libexec/thermald');
+  assert.equal(w.process.parentUniqueId, '1');
+  assert.equal(w.process.version, 35176);
+  assert.equal(w.process.rss, null);
+  assert.equal(w.process.ownerTagged, null);
+  assert.equal(m.row.inspectionIncomplete, true);
+  assert.deepEqual([...m.owned.keys()], [3266]);
+  assert.deepEqual(collectModel(m, false), [m.row]);
+});
+
+test('thermald classification rejects altered executable, lineage, privilege, ownership and kernel provenance', () => {
+  for (const mutate of [
+    (m) => (m.row.argv = '/usr/libexec/thermald-helper'),
+    (m) => (m.row.argv = '/usr/libexec/WebKit'),
+    (m) => (m.row.argv = '/usr/libexec/thermald -- browser'),
+    (m) => (m.row.ppid = 2),
+    (m) => (m.row.parentUniqueId = '2'),
+    (m) => (m.row.pgid = 2),
+    (m) => (m.row.pgid = m.leader),
+    (m) => (m.row.euid = 501),
+    (m) => (m.row.ruid = 501),
+    (m) => (m.row.pathInspection = 'unavailable'),
+    (m) => (m.row.ownerTagged = true),
+    (m) => (m.row.ownerTagInspection = 'present'),
+    (m) => (m.row.identityKind = 'timestamp'),
+    (m) => (m.row.version = -1),
+  ]) {
+    const m = observedThermaldModel();
+    mutate(m);
+    assert.deepEqual(collectModel(m), [m.row], String(mutate));
+    assert.equal(m.record.foreignSystemProcesses.length, 0);
+  }
+  const m = observedThermaldModel();
+  const unknown = { ...m.row, pid: 17276, birth: '00000000000000017276', argv: '' };
+  m.all.set(unknown.pid, unknown);
+  assert.deepEqual(collectModel(m), [unknown]);
+});
 
 test('exact retained root kernel ps row is non-browser while resource and tag values stay unknown', () => {
   const m = observedPsModel();
