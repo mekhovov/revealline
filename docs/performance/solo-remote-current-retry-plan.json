@@ -229,8 +229,8 @@
     },
     {
       "path": "scripts/game-cli.mjs",
-      "bytes": 92165,
-      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
     },
     {
       "path": "scripts/hosted-soundtrack-publication.mjs",
