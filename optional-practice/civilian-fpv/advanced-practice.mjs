@@ -24,6 +24,7 @@ import { AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
 import { exportJSONFile, onNativeInactive } from '../../game/platform.mjs';
 import { mountAircraftArchiveControls } from './aircraft-archive-controls.mjs';
 import { sampleGhostPath } from './advanced-ghost-path.mjs';
+import { mountPropulsionEvidencePanel } from './propulsion-evidence-ui.mjs';
 
 const COPY = {
   en: {
@@ -460,12 +461,14 @@ export function mountAdvancedPractice({
   tuneFields.style.cssText =
     'display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px';
   const fieldInputs = [];
+  let evidencePanel = null;
   const batteryLabel = el('label', copy.batteryDepletion, settings),
     batteryDepletion = el('input', '', batteryLabel);
   batteryDepletion.type = 'checkbox';
   batteryDepletion.setAttribute('aria-label', copy.batteryDepletion);
   listen(batteryDepletion, 'change', () => {
     tunePreview.textContent = copy.draftConfiguration;
+    evidencePanel?.refresh();
   });
   const numericFields = [
     ['aircraft.mass', 'Mass (kg)', 'Маса (кг)', 0.01, 10],
@@ -663,6 +666,7 @@ export function mountAdvancedPractice({
     fieldInputs.push({ path: path.split('.'), field, label, min, max });
     listen(field, 'input', () => {
       tunePreview.textContent = copy.draftConfiguration;
+      evidencePanel?.refresh();
     });
   }
   function fillTuning() {
@@ -690,6 +694,7 @@ export function mountAdvancedPractice({
     batteryDepletion.type = physical ? 'checkbox' : 'hidden';
     batteryDepletion.checked = physical && draftConfiguration.aircraft.battery.depletion;
     comparisonExplanation.textContent = physical ? copy.clipComparisonHelp : copy.comparisonHelp;
+    evidencePanel?.refresh();
     const performance = physical ? aircraftPerformance(draftConfiguration.aircraft) : null;
     const hover =
       performance?.hoverThrottle == null
@@ -819,6 +824,12 @@ export function mountAdvancedPractice({
     }
   });
   fillTuning();
+  evidencePanel = mountPropulsionEvidencePanel({
+    parent: tuning,
+    locale: () => locale,
+    // Read the validated editable fields, not the saved or running configuration.
+    getAircraft: () => readTuning().aircraft,
+  });
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x93bed2);
   scene.fog = new THREE.Fog(0x93bed2, 35, 130);
@@ -1427,6 +1438,7 @@ export function mountAdvancedPractice({
     win.cancelAnimationFrame(frame);
     client?.dispose();
     archiveControls.dispose();
+    evidencePanel.dispose();
     verificationClient?.dispose();
     verificationClient = null;
     verificationGeneration++;
