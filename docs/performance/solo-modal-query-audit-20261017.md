@@ -70,6 +70,28 @@ diff checks also pass. The tested modal helper is 6,558 bytes with SHA-256
 This establishes deterministic application/host correctness, not native-browser
 or physical-device timing.
 
+## Shared dialog-presence lookup
+
+The application also needs a boolean answer before processing gameplay controls.
+`hasOpenDialog()` now shares the existing observed empty-result cache with
+`topDialog()`. It preserves a true presence result when multiple pre-existing
+open dialogs have unknown top-layer ordering and `topDialog()` correctly returns
+null. Queued open-attribute and subtree records are consumed before either lookup;
+unsupported observers retain discovery polling, and destroyed owners return false.
+The app initializes the owner before possible callbacks and retains its original
+query fallback only until attachment completes.
+
+Four additional deterministic tests cover shared absence polling, ambiguous
+opens, queued mutation delivery, inserted/removed open subtrees, unsupported
+observers, and destruction. Across 120 unchanged presence-plus-top polls the
+whole-document discovery runs once. The focused helper selection passes
+**17/17**; the complete six-file modal/controller selection against the integrated
+application passes **315/315**, with no skips or failures (209.7 seconds).
+Scoped lint, formatting, and diff checks pass. The helper is 6,871 bytes with
+SHA-256 `c92dd889157305078ed7a9a3e28e67262bf1195f591b3bfc0df44917c3a9bc8a`.
+These are correctness and call-count results; they do not establish a native
+speedup or supersede any historical timing failure.
+
 ## Retained local evidence
 
 Files are under `.cache/solo-followup/`; reports are immutable observations.
@@ -87,3 +109,5 @@ Files are under `.cache/solo-followup/`; reports are immutable observations.
 | `modal-close-order-focused-v1.tap`              | `cb081f611abb205886715acc03016f904cd9ac278e594fb26132c3104ec91c0d` |
 | `modal-close-order-regressions-v1.tap`          | `3b5c4eda2af151a5ebb27a410136550030251ba1eec2977513e4931a4dd25ba0` |
 | `modal-close-order-red-controls/before-fix.tap` | `881e6a5b2e1a7d7d2f6314062dbca327842586b759a676e34b73c5bccd7adbc6` |
+| `modal-presence-focused-v1.tap`                 | `71d88a210390daa85753f9438e3ad5e6407bfd34e00b687928361e6e103e4491` |
+| `modal-presence-regressions-v1.tap`             | `301eeff3da5d24404a6c9e18f050a88bba09456cacbec42f29f8122d0799a079` |
