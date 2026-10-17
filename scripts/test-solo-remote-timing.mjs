@@ -14,6 +14,7 @@ import {
   verifiedMidCalibration,
 } from './solo-remote-sustained.mjs';
 import { validateQualification } from './solo-qualification.mjs';
+import { validateBaselineReuse } from './solo-remote-baseline.mjs';
 
 const draft = JSON.parse(
   await readFile(new URL('../docs/performance/solo-remote-timing-plan.json', import.meta.url)),
@@ -21,6 +22,63 @@ const draft = JSON.parse(
 const baseline = 'b11745223861c3973ad4bf440cc536198b8e0371';
 const candidate = '1'.repeat(40);
 const runtime = '2'.repeat(40);
+const current = {
+  name: 'cold-main8b-candidatec9',
+  baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  baselineTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+  candidate: 'c9e637ad81fadf49caec884155d1bd0c2496c59c',
+  candidateTree: '4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c',
+  runtime: '87aca909201ae0a2520d5856dbca351b82dd6e2d',
+};
+function currentCold() {
+  const manifest = structuredClone(draft);
+  // Synthetic package metadata exercises declaration admission only. These
+  // identities are not publication records and must never enter a release plan.
+  const packageIdentity = (run, artifact) => ({
+    run,
+    artifact,
+    outer: { bytes: 100, sha256: 'a'.repeat(64) },
+    inner: { bytes: 90, sha256: 'b'.repeat(64) },
+    manifestSHA256: 'c'.repeat(64),
+  });
+  Object.assign(manifest, {
+    sourceCohort: current.name,
+    latestSourceRevision: current.candidate,
+    latestRuntimeRevision: current.runtime,
+    candidate: {
+      revision: current.candidate,
+      tree: current.candidateTree,
+      ...packageIdentity(31, 32),
+    },
+    baseline: {
+      revision: current.baseline,
+      tree: current.baselineTree,
+      reusableArtifact: {
+        format: 'SoloHostedNormalBaselineReuseV2',
+        sourceRevision: current.baseline,
+        sourceTree: current.baselineTree,
+        name: 'solo-normal-baseline-8b019919-33-1',
+        ...packageIdentity(33, 34),
+        ready: { bytes: 80, sha256: 'd'.repeat(64) },
+        producer: {
+          repository: 'mekhovov/revealline',
+          workflow: '.github/workflows/solo-remote-baseline-temporary.yml',
+          run: 33,
+          attempt: 1,
+          toolingRevision: current.candidate,
+          toolingTree: current.candidateTree,
+        },
+      },
+    },
+  });
+  Object.assign(manifest.release, {
+    sourceCohort: current.name,
+    candidateRevision: current.candidate,
+    baselineRevision: current.baseline,
+    latestRuntimeRevision: current.runtime,
+  });
+  return manifest;
+}
 function released(phase = 'cold-first30') {
   const plan = structuredClone(draft);
   Object.assign(plan, { phase, latestSourceRevision: candidate, latestRuntimeRevision: runtime });
@@ -168,6 +226,265 @@ test('independent diagnostic admission retains false prerequisite, exact source 
     changed.release.candidateRevision =
       '1'.repeat(40);
   assert.throws(() => timingMatrix(changed));
+});
+
+test('exact c9/main8b cold successor admits three fresh equivalent pairs without promoting historical correctness', () => {
+  const manifest = currentCold();
+  validateBaselineReuse(manifest.baseline.reusableArtifact, manifest);
+  assert.deepEqual(timingMatrix(manifest), timingMatrix(draft));
+  const rows = [];
+  for (const { engine, repetition } of timingMatrix(manifest).include) {
+    const p = bindTimingJob(manifest, engine, repetition);
+    const legacy = bindTimingJob(draft, engine, repetition);
+    rows.push(...p.rows);
+    assert.deepEqual(p.rows, legacy.rows);
+    for (const key of [
+      'recipes',
+      'helperTimeoutMs',
+      'setupTimeoutMs',
+      'calibrationTimeoutMs',
+      'calibrationPreset',
+      'evidenceBytes',
+      'rowEvidenceBytes',
+      'resources',
+      'deadlines',
+    ])
+      assert.deepEqual(p[key], legacy[key]);
+    assert.equal(p.release.predecessorRun, 38985941469);
+    assert.equal(p.release.firstEightAllCorrectnessPassed, false);
+    assert.equal(p.release.performanceQualification, 'not-qualified-diagnostic-only');
+    assert.equal(p.release.automaticRetries, 0);
+    assert.equal(p.release.automaticPhaseContinuation, false);
+    for (const row of p.rows) {
+      const args = (value) =>
+        sustainedArguments(
+          { plan: value, here: '/tools', modeState: { cpu: 2, recipePath: '/owned/recipe.json' } },
+          row,
+          'http://localhost/game/',
+          '/evidence',
+        );
+      assert.deepEqual(
+        args(p),
+        args(legacy).map((value) =>
+          value.startsWith('--source-revision=')
+            ? `--source-revision=${p[row.source].revision}`
+            : value,
+        ),
+      );
+    }
+  }
+  assert.equal(rows.length, 12);
+});
+
+test('cold successor rejects incomplete packages, wrong source/tree/profile and any broadened release', () => {
+  for (const mutate of [
+    (p) => {
+      p.sourceCohort = 'unreviewed-source';
+    },
+    (p) => {
+      delete p.sourceCohort;
+    },
+    (p) => {
+      delete p.release.sourceCohort;
+    },
+    (p) => {
+      p.release.sourceCohort = 'other';
+    },
+    (p) => {
+      p.phase = p.release.phase = 'warm-first30';
+      p.release.previousPhase = 'cold-first30';
+    },
+    (p) => {
+      p.release.status = 'reviewed-and-released';
+      p.release.firstEightAllCorrectnessPassed = true;
+    },
+    (p) => {
+      p.release.status = 'pending-review';
+    },
+    (p) => {
+      p.release.firstEightAllCorrectnessPassed = true;
+    },
+    (p) => {
+      p.release.latestProductionPackageVerified = false;
+    },
+    (p) => {
+      p.release.automaticRetries = 1;
+    },
+    (p) => {
+      p.release.automaticPhaseContinuation = true;
+    },
+    (p) => {
+      p.release.predecessorRun = 1;
+    },
+    (p) => {
+      p.release.performanceQualification = 'qualified';
+    },
+    (p) => {
+      p.candidate.revision =
+        p.latestSourceRevision =
+        p.release.candidateRevision =
+          draft.candidate.revision;
+    },
+    (p) => {
+      p.candidate.tree = draft.candidate.tree;
+    },
+    (p) => {
+      p.latestRuntimeRevision = p.release.latestRuntimeRevision = draft.latestRuntimeRevision;
+    },
+    (p) => {
+      p.baseline.revision = p.release.baselineRevision = baseline;
+    },
+    (p) => {
+      p.baseline.tree = draft.baseline.tree;
+    },
+    (p) => {
+      p.baseline = structuredClone(draft.baseline);
+      p.release.baselineRevision = baseline;
+    },
+    (p) => {
+      p.baseline.publishVerifiedNormal = true;
+    },
+    (p) => {
+      p.baseline.publisher = { status: 'stale-publication-authority' };
+    },
+    (p) => {
+      delete p.baseline.reusableArtifact;
+    },
+    (p) => {
+      p.baseline.reusableArtifact.format = 'SoloHostedNormalBaselineReuseV1';
+    },
+    (p) => {
+      p.baseline.reusableArtifact.sourceRevision = baseline;
+    },
+    (p) => {
+      p.baseline.reusableArtifact.sourceTree = draft.baseline.tree;
+    },
+    (p) => {
+      p.baseline.reusableArtifact.name = 'main-pages';
+    },
+    (p) => {
+      p.baseline.reusableArtifact.producer.workflow = '.github/workflows/main.yml';
+    },
+    (p) => {
+      p.baseline.reusableArtifact.producer.repository = 'other/repository';
+    },
+    (p) => {
+      p.baseline.reusableArtifact.producer.run++;
+    },
+    (p) => {
+      p.baseline.reusableArtifact.producer.attempt = 0;
+    },
+    (p) => {
+      p.baseline.reusableArtifact.producer.toolingRevision = 'pending';
+    },
+    (p) => {
+      delete p.baseline.reusableArtifact.ready;
+    },
+    (p) => {
+      p.baseline.reusableArtifact.ready.bytes = 2 * 1024 ** 2 + 1;
+    },
+    (p) => {
+      p.baseline.reusableArtifact.ready.sha256 = 'pending';
+    },
+  ]) {
+    const p = currentCold();
+    mutate(p);
+    assert.throws(() => timingMatrix(p));
+  }
+  for (const role of ['candidate', 'baseline'])
+    for (const mutate of [
+      (identity) => {
+        delete identity.artifact;
+      },
+      (identity) => {
+        identity.run = 0;
+      },
+      (identity) => {
+        identity.manifestSHA256 = 'pending';
+      },
+      (identity) => {
+        delete identity.outer;
+      },
+      (identity) => {
+        identity.outer.bytes = 2 * 1024 ** 3 + 1;
+      },
+      (identity) => {
+        identity.inner.bytes = 0;
+      },
+      (identity) => {
+        identity.inner.sha256 = 'pending';
+      },
+    ]) {
+      const p = currentCold();
+      mutate(role === 'candidate' ? p.candidate : p.baseline.reusableArtifact);
+      assert.throws(() => timingMatrix(p));
+    }
+});
+
+test('new source admission retains every raw timing verdict, strict replay and clean-owner requirement', () => {
+  for (const engine of ['chromium', 'webkit']) {
+    const p = bindTimingJob(currentCold(), engine, 1);
+    for (const row of p.rows) {
+      for (const raw of [
+        'pass-observed-window',
+        'fail',
+        'inconclusive',
+        'review-required',
+        'partial-baseline-internal-unknown',
+        'invalid-evidence',
+        'insufficient-samples',
+      ]) {
+        const r = report(p, row.source);
+        r.performanceGateStatus = raw;
+        const observed = timingAssessment(
+          p,
+          row,
+          r,
+          { ...closed, exitCode: raw === 'fail' ? 2 : 0 },
+          '123.4',
+        );
+        assert.equal(observed.status, raw === 'pass-observed-window' ? 'passed' : 'failed');
+        assert.equal(observed.rawPerformanceGateStatus, raw);
+        assert.equal(observed.sourceCohort, current.name);
+        assert.equal(observed.performanceQualification, 'not-qualified-diagnostic-only');
+        assert.equal(observed.firstEightAllCorrectnessPassed, false);
+      }
+      for (const mutate of [
+        (r) => {
+          r.replay.nativeVerification.status = 'fail';
+        },
+        (r) => {
+          r.sourceRevision = draft[row.source].revision;
+        },
+        (r) => {
+          r.buildIdentity.sourceRevision = draft[row.source].revision;
+        },
+        (r) => {
+          r.pageErrors.push('startup error');
+        },
+        (r) => {
+          r.cadenceProtocol = 'blank30';
+        },
+        (r) => {
+          r.kind = 'cpu-profile';
+        },
+      ]) {
+        const r = report(p, row.source);
+        mutate(r);
+        assert.equal(timingAssessment(p, row, r, closed, '123.4').status, 'failed');
+      }
+      assert.equal(
+        timingAssessment(
+          p,
+          row,
+          report(p, row.source),
+          { status: 'unclosed', exitCode: 0 },
+          '123.4',
+        ).status,
+        'failed',
+      );
+    }
+  }
 });
 
 test('diagnostic admission preserves cold/warm/combat recipe commands and every numeric failure', () => {

@@ -19,6 +19,14 @@ const source = {
   baseline: 'b11745223861c3973ad4bf440cc536198b8e0371',
   candidate: '3adcd53792043ef02459e86168c6b33a66d6ef00',
 };
+const coldSourceCohort = {
+  name: 'cold-main8b-candidatec9',
+  baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  baselineTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+  candidate: 'c9e637ad81fadf49caec884155d1bd0c2496c59c',
+  candidateTree: '4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c',
+  runtime: '87aca909201ae0a2520d5856dbca351b82dd6e2d',
+};
 export const SUSTAINED_PHASES = Object.freeze({
   long29: {
     previous: 'diagnostics',
@@ -84,14 +92,14 @@ export const TIMING_PHASES = Object.freeze({
 const timingPlan = (plan) => plan.format === 'SoloHostedTimingPlanV1';
 const roleRevision = (plan, role) => (timingPlan(plan) ? plan[role].revision : source[role]);
 const diagnosticComparison = (plan) => plan.release?.status === 'reviewed-diagnostic-only';
-function validateDiagnosticComparison(release) {
+function validateDiagnosticComparison(release, candidate = source.candidate) {
   assert.equal(release.scope, 'independent-comparison-diagnostics');
   assert.equal(release.predecessorRun, 38985941469);
   assert.equal(release.firstEightAllCorrectnessPassed, false);
   assert.equal(release.performanceQualification, 'not-qualified-diagnostic-only');
   assert.equal(release.automaticRetries, 0);
   assert.equal(release.automaticPhaseContinuation, false);
-  assert.equal(release.candidateRevision, source.candidate);
+  assert.equal(release.candidateRevision, candidate);
 }
 function comparisonLabels(plan) {
   return diagnosticComparison(plan)
@@ -99,8 +107,59 @@ function comparisonLabels(plan) {
         comparisonAdmission: 'independent-diagnostic',
         performanceQualification: 'not-qualified-diagnostic-only',
         firstEightAllCorrectnessPassed: false,
+        ...(plan.sourceCohort ? { sourceCohort: plan.sourceCohort } : {}),
       }
     : {};
+}
+
+// Declaration checks only. The common runner must still verify each complete
+// package, V2 ready proof, source tree and CSP before admitting either role.
+function validateColdSourceCohort(plan) {
+  if (plan.sourceCohort === undefined) {
+    assert.equal(plan.release.sourceCohort, undefined);
+    return false;
+  }
+  assert.equal(plan.sourceCohort, coldSourceCohort.name);
+  assert.equal(plan.release.sourceCohort, coldSourceCohort.name);
+  assert.equal(plan.phase, 'cold-first30');
+  assert.equal(plan.release.status, 'reviewed-diagnostic-only');
+  assert.equal(plan.candidate.revision, coldSourceCohort.candidate);
+  assert.equal(plan.candidate.tree, coldSourceCohort.candidateTree);
+  assert.equal(plan.baseline.revision, coldSourceCohort.baseline);
+  assert.equal(plan.baseline.tree, coldSourceCohort.baselineTree);
+  assert.equal(plan.latestRuntimeRevision, coldSourceCohort.runtime);
+  assert(
+    !plan.baseline.publishVerifiedNormal && !plan.baseline.publisher,
+    'Reuse the verified normal baseline',
+  );
+  const reuse = plan.baseline.reusableArtifact;
+  assert.equal(reuse?.format, 'SoloHostedNormalBaselineReuseV2');
+  assert.equal(reuse.sourceRevision, coldSourceCohort.baseline);
+  assert.equal(reuse.sourceTree, coldSourceCohort.baselineTree);
+  assert.equal(reuse.producer.repository, plan.repository);
+  assert.equal(reuse.producer.workflow, '.github/workflows/solo-remote-baseline-temporary.yml');
+  assert.equal(reuse.producer.run, reuse.run);
+  assert(Number.isSafeInteger(reuse.producer.attempt) && reuse.producer.attempt > 0);
+  assert.match(reuse.producer.toolingRevision, /^[a-f0-9]{40}$/);
+  assert.match(reuse.producer.toolingTree, /^[a-f0-9]{40}$/);
+  assert.equal(reuse.name, `solo-normal-baseline-8b019919-${reuse.run}-${reuse.producer.attempt}`);
+  for (const identity of [plan.candidate, reuse]) {
+    assert(Number.isSafeInteger(identity.run) && identity.run > 0);
+    assert(Number.isSafeInteger(identity.artifact) && identity.artifact > 0);
+    assert.match(identity.manifestSHA256, /^[a-f0-9]{64}$/);
+    for (const name of ['outer', 'inner']) {
+      assert(
+        Number.isSafeInteger(identity[name]?.bytes) &&
+          identity[name].bytes > 0 &&
+          identity[name].bytes <= 2 * 1024 ** 3,
+      );
+      assert.match(identity[name].sha256, /^[a-f0-9]{64}$/);
+    }
+  }
+  assert(Number.isSafeInteger(reuse.ready?.bytes) && reuse.ready.bytes > 0);
+  assert(reuse.ready.bytes <= 2 * MiB);
+  assert.match(reuse.ready.sha256, /^[a-f0-9]{64}$/);
+  return true;
 }
 
 export function validateTimingPlan(plan) {
@@ -110,9 +169,11 @@ export function validateTimingPlan(plan) {
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
-  assert.equal(plan.baseline.revision, source.baseline);
+  const currentCold = validateColdSourceCohort(plan);
+  const expectedSource = currentCold ? coldSourceCohort : source;
+  assert.equal(plan.baseline.revision, expectedSource.baseline);
   assert.match(plan.candidate.revision, /^[a-f0-9]{40}$/);
-  assert.notEqual(plan.candidate.revision, source.baseline);
+  assert.notEqual(plan.candidate.revision, expectedSource.baseline);
   assert.equal(plan.candidate.revision, plan.latestSourceRevision);
   assert.match(plan.latestRuntimeRevision, /^[a-f0-9]{40}$/);
   assert(['chromium', 'webkit'].includes(plan.engine));
@@ -125,14 +186,17 @@ export function validateTimingPlan(plan) {
     'Explicit latest-source timing release required',
   );
   if (diagnostic) {
-    validateDiagnosticComparison(release);
-    assert.equal(plan.candidate.revision, source.candidate);
-    assert.equal(plan.latestRuntimeRevision, '0d9fef1120face4c0f9998ebd24a94e6df0d85c0');
+    validateDiagnosticComparison(release, expectedSource.candidate);
+    assert.equal(plan.candidate.revision, expectedSource.candidate);
+    assert.equal(
+      plan.latestRuntimeRevision,
+      currentCold ? coldSourceCohort.runtime : '0d9fef1120face4c0f9998ebd24a94e6df0d85c0',
+    );
   }
   assert.equal(release.phase, plan.phase);
   assert.equal(release.previousPhase, spec.previous);
   assert.equal(release.candidateRevision, plan.candidate.revision);
-  assert.equal(release.baselineRevision, source.baseline);
+  assert.equal(release.baselineRevision, expectedSource.baseline);
   assert.equal(release.latestRuntimeRevision, plan.latestRuntimeRevision);
   for (const field of [
     'noUnclosedOwners',
