@@ -472,6 +472,12 @@ test('compact upload follows the successful full archive and preserves the origi
 
 const admissionFiles = [
   'game/test/journey-performance-admission.test.mjs',
+  'game/test/journey-performance-observation-admission.test.mjs',
+  'game/test/journey-profile-owned-transition.test.mjs',
+  'game/test/journey-required-progress-admission.test.mjs',
+  'game/test/solo-required-progress-preparation-host.test.mjs',
+  'game/test/owned-recorder.test.mjs',
+  'game/test/demo-library-indexeddb.test.mjs',
   'game/test/optional-learning-admission.test.mjs',
   'game/test/optional-replay-admission.test.mjs',
   'game/test/solo-pending-verification-gameplay-host.test.mjs',
@@ -563,7 +569,7 @@ async function prepareAdmission(
   return { proof, files, reads, root };
 }
 
-test('separate predecessor gates eleven complete regression files without extending the existing preview clock', async () => {
+test('separate predecessor gates each declared complete regression file without extending the existing preview clock', async () => {
   const prefix = workflow.split('  preview:\n')[0];
   assert.match(prefix, /admission:\s+runs-on: ubuntu-latest\s+timeout-minutes: 19/);
   assert.doesNotMatch(prefix, /PREVIEW_STARTED_AT|game-cli.mjs build/);
@@ -584,7 +590,7 @@ test('separate predecessor gates eleven complete regression files without extend
     .trim()
     .split(/\s+/);
   assert.deepEqual(declared, admissionFiles);
-  assert.equal(new Set(declared).size, 11);
+  assert.equal(new Set(declared).size, 17);
   const existing = workflow
     .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
     .trim()
