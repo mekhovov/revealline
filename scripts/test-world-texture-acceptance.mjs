@@ -11,7 +11,7 @@ test('texture inspection closes over actual bounded optional-package bytes and t
   assert.equal(result.packageQualification, 'development-only');
   assert.ok(result.packageFiles <= result.limits.files);
   assert.ok(result.packageBytes <= result.limits.bytes);
-  assert.equal(result.limits.files, 162);
+  assert.equal(result.limits.files, 180);
   assert.equal(result.limits.bytes, 20 * 1024 * 1024);
   assert.equal(result.limits.files, OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.files);
   assert.equal(result.limits.bytes, OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.bytes);
@@ -30,6 +30,8 @@ test('texture inspection closes over actual bounded optional-package bytes and t
     'optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs',
     'optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs',
     'optional-practice/civilian-fpv/regional/restore-containment.mjs',
+    'optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs',
+    'optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs',
     'optional-practice/civilian-fpv/flight-contact.mjs',
     'optional-practice/civilian-fpv/flight-support.mjs',
     'optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js',

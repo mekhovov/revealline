@@ -1,8 +1,12 @@
+import { canalViews } from './canal-city/views.mjs';
+import { lunarViews } from './lunar-basin/views.mjs';
 import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
+import { configureSceneryPreviewDepth } from "./preview-depth.mjs";
 import { createSceneryLighting } from './scenery-lighting.mjs';
 import { createVerifiedMixedWindow } from './verified-mixed-window.mjs';
 import { createVerifiedSceneryWindow } from './verified-scenery-window.mjs';
 import { validateRegionManifest, REGION_LIMITS } from './region-manifest.mjs';
+import { desertLandmarkViews } from './desert-expedition/landmark-views.mjs';
 const canvas = document.querySelector('canvas'),
   status = document.querySelector('#status'),
   input = document.querySelector('#manifest');
@@ -55,14 +59,55 @@ const canyonDistrictViews = [
   ['Split Ravine', [180, 34, 590], [235, 95, 550], [160, 24, 630]],
   ['Sunset Shelf', [570, 125, 620], [720, 200, 760], [570, 112, 620]],
 ];
+const railwayExpanseViews = [
+  ['Freight district', [640, 75, 640], [820, 170, 460], [640, 72, 640]],
+  ['Freight hall approach', [588, 72, 574], [588, 69, 558], [588, 70, 650]],
+  ['River viaduct', [2048, 40, 2048], [1920, 42, 1970], [2070, 46, 2080]],
+  ['Quarry conveyor', [3456, 75, 600], [3456, 72, 548], [3456, 80, 670]],
+  ['Station canopy', [640, 71, 3200], [640, 68, 3120], [640, 69, 3240]],
+  ['Foundry yard', [2048, 76, 3200], [1960, 78, 3090], [2070, 80, 3240]],
+  ['Timber sidings', [3456, 72, 3200], [3427, 69, 3110], [3427, 70, 3280]],
+];
+const coasterViews = [
+  ['Arrival gardens', [384, 14, 384], [285, 50, 485], [384, 13, 384]],
+  ['Loop meadow', [1280, 14, 384], [1330, 35, 485], [1408, 18, 448]],
+  ['Ridge station', [1664, 14, 640], [1565, 55, 745], [1664, 18, 640]],
+  ['Service courts', [1408, 14, 1408], [1300, 42, 1500], [1408, 15, 1408]],
+  ['Woodland promenade', [640, 14, 1664], [545, 35, 1760], [640, 13, 1664]],
+  ['River gardens', [384, 14, 1152], [285, 40, 1250], [384, 13, 1152]],
+];
+const alpineViews = [
+  ['Glacial valley', [640, 120, 700], [750, 170, 840], [630, 114, 690]],
+  ['Switchback pass', [1700, 272, 665], [1880, 345, 800], [1700, 272, 675]],
+  ['Snow saddle', [3000, 434, 800], [3130, 495, 950], [3000, 441, 790]],
+  ['Snow contour overview', [3400, 575, 3100], [3900, 1260, 3650], [3456, 470, 3200], 2000, true],
+  ['Scree contour overview', [1800, 350, 1100], [1350, 900, 650], [1740, 330, 1100], 2000, true],
+  ['Summit station', [3400, 575, 3100], [3550, 655, 3260], [3400, 576, 3120]],
+  ['Summit concourse pilot height', [3400, 564, 3100], [3370, 564, 3100], [3440, 566, 3100]],
+  ['Summit opaque wall detail', [3400, 564, 3100], [3390, 564, 3092], [3400, 566, 3080.5]],
+  ['Summit roof seams', [3400, 582, 3100], [3370, 584, 3092], [3400, 576, 3068]],
+  ['Summit cable approach', [3280, 565, 3155], [3320, 570, 3030], [3260, 550, 3155]],
+  ['Summit lookout approach', [3495, 580, 3185], [3445, 576, 3155], [3495, 590, 3185]],
+  ['Viaduct gorge', [2400, 219, 3070], [2530, 285, 3220], [2400, 224, 3070]],
+  ['Reservoir dam', [800, 184, 2800], [970, 250, 2970], [800, 184, 2790]],
+];
 const views =
-  { canyon: canyonViews, 'canyon-districts': canyonDistrictViews, railway: railwayViews }[
-    new URLSearchParams(location.search).get('views')
-  ] ?? urbanViews;
+  {
+    'coaster-gardens': coasterViews,
+    canyon: canyonViews,
+    'canyon-districts': canyonDistrictViews,
+    railway: railwayViews,
+    'railway-expanse': railwayExpanseViews,
+    alpine: alpineViews,
+    'desert-landmarks': desertLandmarkViews,
+    'canal-city': canalViews,
+    'lunar-basin': lunarViews,
+  }[new URLSearchParams(location.search).get('views')] ?? urbanViews;
 let window = null,
   busy = false,
   closed = false,
-  controller = null;
+  controller = null,
+  includesTerrain = false;
 const mm = (p) => ({
   x: Math.round(p[0] * 1000),
   y: Math.round(p[1] * 1000),
@@ -92,12 +137,13 @@ async function view(v) {
     const local = (p) => [p[0] - origin.x / 1000, p[1] - origin.y / 1000, p[2] - origin.z / 1000];
     camera.position.fromArray(local(v[2]));
     camera.lookAt(...local(v[3]));
+    configureSceneryPreviewDepth(camera, window.group, { overview: v[5] === true, far: v[4] ?? 1400 });
     lighting.focus(window.group, local(v[3]), v === views[0]);
     let meshCount = 0;
     window.group.traverse((object) => {
       if (object.isMesh) meshCount++;
     });
-    status.textContent = `${v[0]} · ${result.provenance.chunks.length} verified cells · ${meshCount} matching meshes/colliders · ${result.geometryBytes} geometry bytes · no flight admission`;
+    status.textContent = `${v[0]} · ${includesTerrain ? 'terrain + scenery' : 'scenery only'} · ${result.provenance.chunks.length} verified cells · ${meshCount} rendered meshes · ${result.geometryBytes} geometry bytes · no flight admission`;
     draw();
   } catch (error) {
     if (!closed) status.textContent = `Preparation stopped: ${error.message}`;
@@ -144,7 +190,8 @@ document.querySelector('form').addEventListener('submit', async (event) => {
   controller = new AbortController();
   try {
     const url = new URL(input.value, location.href);
-    const companion = new URLSearchParams(location.search).get('companion');
+    const parameters = new URLSearchParams(location.search);
+    const companion = parameters.get('companion') || parameters.get('terrain');
     const companionURL = companion ? new URL(companion, location.href) : null;
     const [manifest, terrain] = await Promise.all([
       loadManifest(url, controller.signal),
@@ -155,6 +202,7 @@ document.querySelector('form').addEventListener('submit', async (event) => {
     const scenerySource = {
       baseURL: new URL('./', url).href,
       surfaceStyle: new URLSearchParams(location.search).get('surface') ?? 'plain',
+      surfaceQuality: new URLSearchParams(location.search).get('quality') ?? 'balanced',
     };
     window = terrain
       ? createVerifiedMixedWindow(terrain, {
@@ -166,8 +214,13 @@ document.querySelector('form').addEventListener('submit', async (event) => {
           scenery: { manifest, source: scenerySource },
         })
       : createVerifiedSceneryWindow(manifest, scenerySource);
+    includesTerrain = Boolean(terrain);
     controls(false);
-    await view(views[0]);
+    const requestedView = new URLSearchParams(location.search).get('view');
+    const selected = views.find(
+      (row) => row[0].toLowerCase().replaceAll(' ', '-') === requestedView,
+    );
+    await view(selected ?? views[0]);
   } catch (error) {
     if (!closed) status.textContent = `Preparation stopped: ${error.message}`;
   } finally {
@@ -180,6 +233,7 @@ document.querySelector('#release').onclick = async () => {
   controls(true);
   await window?.dispose();
   window = null;
+  includesTerrain = false;
   lighting.release();
   status.textContent = 'Resources released; no live scenery or collision.';
   draw();

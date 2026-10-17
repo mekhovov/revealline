@@ -1,5 +1,10 @@
 # Media campaign delivery register
 
+> **Current execution — 16 October 2026:** use [Creator plan review and portable-sharing delivery](delivery-plan-2026-10-16.md).
+> The user selected GitHub Pages, desktop/built-in-browser delivery and portable-file sharing, and
+> explicitly deferred public accounts/uploads. The dated register below preserves historical evidence;
+> its hosting priority, release queue and completion claims are not current acceptance.
+
 Approved 24 September 2026. Browser-first, local and account-free creation; images are reveal rewards; Solo first; portable files before a free self-hosted community store. This register implements the approved sequence and does not supersede another task's release ownership.
 
 | Phase | Deliverable                                                                                   | Acceptance gate                                                                                                 | Status                                                                                                                                                                                                    |

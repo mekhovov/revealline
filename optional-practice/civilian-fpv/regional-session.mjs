@@ -1,4 +1,4 @@
-import { attitude } from './math.mjs';
+import { attitude, rotate, Q } from './math.mjs';
 import { quantizeFlightInput } from './model.mjs';
 import { createRegionalFlightPrototype } from './regional/flight-prototype.mjs';
 import { validateRegionManifest } from './regional/region-manifest.mjs';
@@ -110,10 +110,37 @@ export function regionalReviewEntry(configuration, { installedIdentity = null } 
 }
 
 /** Only verified installed descriptor identities enter the ordinary regional Library. */
-export function regionalLibraryEntry(configuration, { sha256 } = {}) {
+export function regionalLibraryEntry(configuration, { sha256, descriptor = null } = {}) {
   if (typeof sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(sha256))
     throw new TypeError('Installed regional identity is required');
-  return regionalReviewEntry(configuration, { installedIdentity: sha256 });
+  const entry = regionalReviewEntry(configuration, { installedIdentity: sha256 });
+  if (descriptor) {
+    if (
+      descriptor.id !== entry.course.id ||
+      typeof descriptor.revision !== 'string' ||
+      !/^[a-z][a-z0-9-]{0,63}$/.test(descriptor.revision) ||
+      !['en', 'uk'].every(
+        (locale) =>
+          typeof descriptor.title?.[locale] === 'string' &&
+          descriptor.title[locale].trim() &&
+          descriptor.title[locale].length <= 120,
+      )
+    )
+      throw new TypeError('Installed regional presentation identity is invalid');
+    // Catalogue labels are presentation-only aliases for an exact approved pin.
+    // Retained unoffered versions keep their immutable descriptor title.
+    const title = configuration.catalogueTitle ?? descriptor.title;
+    if (
+      !['en', 'uk'].every(
+        (locale) =>
+          typeof title[locale] === 'string' && title[locale].trim() && title[locale].length <= 120,
+      )
+    )
+      throw new TypeError('Installed regional catalogue title is invalid');
+    entry.installedRevision = descriptor.revision;
+    for (const locale of ['en', 'uk']) entry.course.locales[locale].title = title[locale];
+  }
+  return entry;
 }
 
 /** Select only an authored start in the currently verified regional configuration. */
@@ -148,6 +175,80 @@ export function regionalSavedLocation(entry, value) {
   const location = validateSavedRegionalLocation(value, regionalLocationIdentity(entry));
   const savedStart = validateRegionalLocationStart(location.pose, entry.configuration.manifest);
   return { ...entry, configuration: { ...entry.configuration, savedStart } };
+}
+
+/** Optional observer target. An authored start or exact-revision saved place, never a route. */
+export function regionalNavigationTarget(entry, { spawnId, location } = {}) {
+  if (!entry?.regional || entry.course?.format !== 'FPVRegionalFlightPresentation.v1')
+    throw new TypeError('Regional navigation needs a current regional flight');
+  if ((typeof spawnId === 'string') === Boolean(location))
+    throw new TypeError('Choose one regional navigation target');
+  let position, id, label;
+  if (location) {
+    const saved = validateSavedRegionalLocation(location, regionalLocationIdentity(entry));
+    position = validateRegionalLocationStart(saved.pose, entry.configuration.manifest).position;
+    id = saved.id;
+    label = saved.label;
+  } else {
+    const selected = regionalStartingPoint(entry, spawnId);
+    position = selected.configuration.manifest.spawns.find(
+      (spawn) => spawn.id === spawnId,
+    ).position;
+    id = spawnId;
+  }
+  return Object.freeze({
+    packIdentity: entry.packIdentity,
+    kind: location ? 'saved' : 'start',
+    id,
+    label,
+    position: Object.freeze({ ...position }),
+  });
+}
+
+/** Global millimetres keep this direction invariant when the renderer recentres.
+ * Bearing is relative to the drone nose, including Chase/Overview, not the screen.
+ * No visibility, clear route, proximity completion or simulation authority is inferred.
+ */
+export function regionalNavigationFeedback(entry, target, state) {
+  if (!entry?.regional || !target || target.packIdentity !== entry.packIdentity) return null;
+  const p = state?.position,
+    q = state?.orientation;
+  if (
+    !p ||
+    !['x', 'y', 'z'].every(
+      (axis) => Number.isFinite(p[axis]) && Number.isFinite(target.position?.[axis]),
+    ) ||
+    !Array.isArray(q) ||
+    q.length !== 4 ||
+    !q.every(Number.isFinite) ||
+    Math.hypot(...q) < Q * 0.9 ||
+    Math.hypot(...q) > Q * 1.1
+  )
+    return null;
+  const x = target.position.x - p.x,
+    z = target.position.z - p.z,
+    horizontalMm = Math.hypot(x, z),
+    verticalMm = target.position.y - p.y,
+    nose = rotate(q, { x: 0, y: 0, z: -Q }),
+    validHeading = Math.hypot(nose.x, nose.z) >= Q * 0.05,
+    targetBearing = Math.atan2(x, -z),
+    noseBearing = Math.atan2(nose.x, -nose.z),
+    relative = Math.atan2(
+      Math.sin(targetBearing - noseBearing),
+      Math.cos(targetBearing - noseBearing),
+    );
+  return {
+    horizontalMm,
+    verticalMm,
+    // At the target's ground position, avoid an arbitrary north arrow. No completion check.
+    sector:
+      horizontalMm < 1000 || !validHeading
+        ? null
+        : ((Math.round(relative / (Math.PI / 4)) % 8) + 8) % 8,
+    headingValid: validHeading,
+    relativeRadians: validHeading && horizontalMm >= 1000 ? relative : null,
+    height: verticalMm > 2000 ? 'above' : verticalMm < -2000 ? 'below' : 'level',
+  };
 }
 
 /** The production host owns input, menus and arming; this adapter owns only regional state. */

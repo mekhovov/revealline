@@ -1,10 +1,23 @@
 /** Original, bounded authoring surface study. Colour/roughness only; never moves vertices. */
 import * as THREE from '../vendor/three.module.js';
 import { createUrbanGroundSurface, createRailwayGroundSurface } from './urban-ground-surface.mjs';
+import { createRailwayExpanseGround } from './railway-expanse-ground.mjs';
+import { createHillsideGroundSurface } from './hillside-ground-surface.mjs';
 
 export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
   if (
-    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement'].includes(style) ||
+    ![
+      'plain',
+      'canyon',
+      'urban',
+      'railway',
+      'tropical',
+      'railway-expanse',
+      'tropical-settlement',
+      'desert',
+      'hillside-town',
+      'lunar-regolith',
+    ].includes(style) ||
     !['performance', 'balanced', 'quality'].includes(quality)
   )
     throw new TypeError('Unknown regional terrain surface profile');
@@ -36,6 +49,7 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
     )
   )
     throw new TypeError('Terrain surface needs a bounded integer origin');
+  if (style === 'hillside-town') return createHillsideGroundSurface({ quality, originMm });
   if (style === 'urban') return createUrbanGroundSurface({ quality, originMm });
   if (style === 'tropical' || style === 'tropical-settlement')
     return createTropicalGroundSurface({
@@ -43,7 +57,10 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
       originMm,
       settlement: style === 'tropical-settlement',
     });
+  if (style === 'desert') return createDesertGroundSurface({ quality, originMm });
+  if (style === 'lunar-regolith') return createLunarRegolith({ quality, originMm });
   if (style === 'railway') return createRailwayGroundSurface({ quality, originMm });
+  if (style === 'railway-expanse') return createRailwayExpanseGround({ quality, originMm });
   const material = new THREE.MeshStandardMaterial({
     color: style === 'plain' ? 0x687647 : 0xffffff,
     roughness: 1,
@@ -234,6 +251,188 @@ tropicalTint *= 1.0 + (terrainNoise(tp * 3.5) - 0.5) * nearGrain * 0.1;
 ${quality === 'quality' ? 'tropicalTint *= 1.0 + (terrainNoise(tp * 12.0) - 0.5) * nearGrain * 0.06;' : ''}`
 }
 diffuseColor.rgb *= tropicalTint;`,
+    );
+  };
+  return material;
+}
+
+/**
+ * Original Desert Expedition study: global metre coordinates match natural-r1's
+ * authored playa, dunes, wash, mesas and pediment. This is an explicit opt-in,
+ * never a guess based on terrain height or a default for other regional sources.
+ * Colour and roughness only: narrow lines below are grain, never fake obstacles.
+ */
+function createDesertGroundSurface({ quality, originMm }) {
+  const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, metalness: 0 });
+  const uniforms = {
+    desertOrigin: {
+      value: new THREE.Vector3(originMm.x / 1000, originMm.y / 1000, originMm.z / 1000),
+    },
+    desertSand: { value: new THREE.Color(0xd6b887) },
+    desertAlluvium: { value: new THREE.Color(0xb29a79) },
+    desertSalt: { value: new THREE.Color(0xdfdbc9) },
+    desertRock: { value: new THREE.Color(0x9b7256) },
+    desertPediment: { value: new THREE.Color(0x807363) },
+  };
+  material.name = `Desert sand, salt and stone · ${quality}`;
+  material.customProgramCacheKey = () => `fpv-desert-ground-v1-${quality}`;
+  material.userData.setRegionalSurfaceQuality = (next) => {
+    validateTerrainSurface('desert', next);
+    if (quality === next) return;
+    quality = next;
+    material.name = `Desert sand, salt and stone · ${quality}`;
+    material.needsUpdate = true;
+  };
+  material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, uniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace(
+        '#include <common>',
+        '#include <common>\nuniform vec3 desertOrigin;\nvarying vec3 vDesertPoint;\nvarying vec3 vDesertNormal;',
+      )
+      .replace(
+        '#include <begin_vertex>',
+        '#include <begin_vertex>\nvDesertPoint = (modelMatrix * vec4(transformed, 1.0)).xyz + desertOrigin;\nvDesertNormal = normalize(mat3(modelMatrix) * normal);',
+      );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <common>',
+      `#include <common>
+varying vec3 vDesertPoint;
+varying vec3 vDesertNormal;
+uniform vec3 desertSand;
+uniform vec3 desertAlluvium;
+uniform vec3 desertSalt;
+uniform vec3 desertRock;
+uniform vec3 desertPediment;
+float desertMask(vec2 p, vec2 c, vec2 r) {
+  return 1.0 - smoothstep(0.7, 1.3, length((p - c) / r));
+}
+${quality === 'performance' ? '' : noise}`,
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <color_fragment>',
+      `#include <color_fragment>
+vec3 dp = vDesertPoint;
+// Smooth outer bounds keep this source-specific treatment out of unrelated coordinates.
+float desertBounds = smoothstep(0.0, 32.0, dp.x) * smoothstep(0.0, 32.0, dp.z)
+  * (1.0 - smoothstep(16352.0, 16384.0, dp.x)) * (1.0 - smoothstep(16352.0, 16384.0, dp.z));
+float desertDunes = desertMask(dp.xz, vec2(3200.0, 3300.0), vec2(2600.0, 2350.0));
+float desertPlaya = desertMask(dp.xz, vec2(3400.0, 11500.0), vec2(2550.0, 2200.0));
+float desertPlayaLevel = 38.0 + 0.0008 * (dp.x - 3400.0) + 0.0004 * (dp.z - 11500.0);
+// Raised island/headland rock must not be painted as a flat salt lake.
+desertPlaya *= 1.0 - smoothstep(3.0, 20.0, dp.y - desertPlayaLevel);
+float desertWashX = 6500.0 + 650.0 * sin(dp.z / 1700.0) + 220.0 * sin(dp.z / 690.0 + 0.4);
+float desertWashWave = sin(dp.z / 1100.0);
+float desertWashWidth = 150.0 + 35.0 * desertWashWave * desertWashWave;
+float desertWash = 1.0 - smoothstep(0.65, 1.5, abs(dp.x - desertWashX) / desertWashWidth);
+float desertScarp = smoothstep(11200.0, 12600.0, dp.x) * (1.0 - smoothstep(4400.0, 6900.0, dp.z));
+float desertMesas = max(
+  1.0 - smoothstep(0.65, 1.15, length((dp.xz - vec2(10400.0, 9300.0)) / vec2(1050.0, 1600.0))),
+  1.0 - smoothstep(0.62, 1.2, length((dp.xz - vec2(13500.0, 10400.0)) / vec2(1300.0, 1250.0))));
+float desertPlain = desertMask(dp.xz, vec2(11000.0, 14000.0), vec2(2700.0, 1850.0));
+float desertCliff = smoothstep(0.07, 0.36, 1.0 - abs(normalize(vDesertNormal).y));
+float desertStone = max(desertCliff, max(desertScarp * 0.6, desertMesas * 0.72));
+float desertPatch = ${quality === 'performance' ? '0.5 + 0.18 * sin(dp.x * 0.0037 + dp.z * 0.0021) * sin(dp.z * 0.0043)' : 'terrainNoise(dp * vec3(0.008, 0.014, 0.008))'};
+vec3 desertTint = mix(desertAlluvium, desertSand, 0.35 + desertDunes * 0.65);
+desertTint = mix(desertTint, desertPediment, desertPlain * (0.45 + desertPatch * 0.25));
+desertTint = mix(desertTint, desertRock, desertStone);
+desertTint = mix(desertTint, desertAlluvium * 0.9, desertWash * (1.0 - desertPlaya) * 0.65);
+desertTint = mix(desertTint, desertSalt, desertPlaya);
+desertTint *= 0.97 + desertPatch * 0.06;
+${
+  quality === 'performance'
+    ? ''
+    : `
+float desertNear = 1.0 - smoothstep(0.08, 0.6, length(fwidth(dp)));
+// Low contrast directional sand grain is filtered away at distance, not normal displacement.
+float desertGrain = sin((dp.x + 0.38 * dp.z) * 2.6 + terrainNoise(dp * 0.4) * 3.0);
+desertTint *= 1.0 + desertGrain * desertNear * desertDunes * 0.025;
+${quality === 'quality' ? 'desertTint *= 1.0 + (terrainNoise(dp * 5.0) - 0.5) * desertNear * 0.045;' : ''}`
+}
+diffuseColor.rgb *= mix(desertAlluvium, desertTint, desertBounds);`,
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <roughnessmap_fragment>',
+      `#include <roughnessmap_fragment>
+roughnessFactor = clamp(1.0 - desertStone * 0.08, 0.9, 1.0);`,
+    );
+  };
+  return material;
+}
+
+/** Original fictional regolith. Metre-scaled colour only, no relief or lunar physics. */
+function createLunarRegolith({ quality, originMm }) {
+  const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, metalness: 0 });
+  const uniforms = {
+    lunarOrigin: {
+      value: new THREE.Vector3(originMm.x / 1000, originMm.y / 1000, originMm.z / 1000),
+    },
+    lunarMare: { value: new THREE.Color(0x74777b) },
+    lunarUpland: { value: new THREE.Color(0xb2b0a7) },
+    lunarRock: { value: new THREE.Color(0x64696e) },
+    lunarDust: { value: new THREE.Color(0xc6c3b9) },
+  };
+  material.name = `Lunar regolith · ${quality}`;
+  material.userData.setRegionalSurfaceQuality = (next) => {
+    validateTerrainSurface('lunar-regolith', next);
+    if (quality === next) return;
+    quality = next;
+    material.name = `Lunar regolith · ${quality}`;
+    material.needsUpdate = true;
+  };
+  material.customProgramCacheKey = () => `fpv-lunar-regolith-v1-${quality}`;
+  material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, uniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace(
+        '#include <common>',
+        '#include <common>\nuniform vec3 lunarOrigin;\nvarying vec3 vLunarPoint;\nvarying vec3 vLunarNormal;',
+      )
+      .replace(
+        '#include <begin_vertex>',
+        '#include <begin_vertex>\nvLunarPoint = (modelMatrix * vec4(transformed, 1.0)).xyz + lunarOrigin;\nvLunarNormal = normalize(mat3(modelMatrix) * normal);',
+      );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <common>',
+      `#include <common>
+varying vec3 vLunarPoint;
+varying vec3 vLunarNormal;
+uniform vec3 lunarMare;
+uniform vec3 lunarUpland;
+uniform vec3 lunarRock;
+uniform vec3 lunarDust;
+${quality === 'performance' ? '' : noise}`,
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <color_fragment>',
+      `#include <color_fragment>
+vec3 lp = vLunarPoint;
+float lunarSlope = 1.0 - abs(normalize(vLunarNormal).y);
+// Broad districts follow the original composition-r1 relief. No cell-local phase reset.
+float lunarPatch = ${quality === 'performance' ? '0.5 + 0.17*sin(lp.x*0.031 + lp.z*0.017)*sin(lp.z*0.023 - lp.x*0.011)' : 'terrainNoise(lp * vec3(0.025,0.018,0.025))'};
+float lunarMareMask = 1.0 - smoothstep(0.45, 1.35, length((lp.xz-vec2(150,155))/vec2(255,245)));
+float lunarHighland = smoothstep(24.0, 43.0, lp.y + (lunarPatch-0.5)*5.0);
+float lunarCraterRadius = length((lp.xz-vec2(151,591))*vec2(1.0,1.08));
+float lunarEjecta = (1.0-smoothstep(17.0,54.0,abs(lunarCraterRadius-117.0))) * 0.35;
+vec3 lunarTint = mix(lunarMare, lunarUpland, max(1.0-lunarMareMask, lunarHighland)*0.78);
+lunarTint = mix(lunarTint, lunarDust, lunarEjecta + lunarHighland*0.12);
+lunarTint = mix(lunarTint, lunarRock, smoothstep(0.08,0.44,lunarSlope)*0.6);
+lunarTint *= 0.91 + lunarPatch*0.18;
+${
+  quality === 'performance'
+    ? ''
+    : `
+// Dust mottling at ~0.8 m, then ~0.18 m grain; fade before distant aliasing.
+float lunarFootprint = length(fwidth(lp));
+float lunarDetail = 1.0-smoothstep(0.08,0.6,lunarFootprint);
+lunarTint *= 1.0 + (terrainNoise(lp*1.25)-0.5)*0.13*lunarDetail;
+${quality === 'quality' ? 'lunarTint *= 1.0 + (terrainNoise(lp*5.5)-0.5)*0.07*(1.0-smoothstep(0.025,0.18,lunarFootprint));' : ''}`
+}
+diffuseColor.rgb *= lunarTint;`,
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <roughnessmap_fragment>',
+      '#include <roughnessmap_fragment>\nroughnessFactor = 0.98;',
     );
   };
   return material;

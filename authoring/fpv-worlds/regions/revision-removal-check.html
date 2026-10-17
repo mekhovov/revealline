@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" data-theme-density="studio">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Exact regional version removal review</title>
+    <script
+      src="../../../game/presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      data-theme-follow-context="true"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+  </head>
+  <body>
+    <h1>Exact regional version removal review</h1>
+    <p>
+      This explicit check creates two new, uniquely named test databases. It installs two small
+      fixture versions, removes only test records, and checks that retained versions and saved
+      places survive. It never opens normal player databases or launches flight. Test databases are
+      closed and retained for inspection.
+    </p>
+    <button id="run">Run isolated storage checks</button>
+    <pre id="result" role="status">Ready</pre>
+    <script type="module" src="../../../game/presentation/theme-entry.mjs"></script>
+    <script type="module" src="./revision-removal-check.mjs"></script>
+  </body>
+</html>

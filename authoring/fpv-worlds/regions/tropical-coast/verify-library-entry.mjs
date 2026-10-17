@@ -15,10 +15,24 @@ import {
 
 const root = resolve(process.argv[2] ?? '');
 assert(process.argv[2], 'Provide the exact Tropical coastal source pair');
-const identity = {
-  id: 'tropical-coastal-study',
-  sha256: 'ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443',
-};
+const harbour = process.argv[3] === 'harbour';
+const settlement = process.argv[3] === 'settlement' || harbour;
+assert(!process.argv[3] || settlement, 'Unknown Tropical source fixture');
+const identity = settlement
+  ? {
+      id: 'tropical-coastal-districts',
+      sha256: harbour
+        ? '44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce'
+        : 'dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49',
+    }
+  : {
+      id: 'tropical-coastal-study',
+      sha256: 'ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443',
+    };
+const style = settlement ? 'tropical-settlement' : 'tropical';
+const label = settlement
+  ? 'Coastal settlement paths and shoreline'
+  : 'Tropical sand and dune grass';
 const pin = REGIONAL_LIBRARY_PINS.find(
   (row) => row.id === identity.id && row.pin.sha256 === identity.sha256,
 );
@@ -36,10 +50,19 @@ const configuration = await loadRegionalReview({
   fetchImpl,
 });
 assert.equal(configuration.manifest.id, identity.id);
-const sourcePins = {
-  terrain: '076a93c6d08181b2ee0d4d4c172d974435df8cf6b7e210d4a9a2ada3753756fd',
-  scenery: 'd31187a12b26c11a359e1914963767e9e2da1a70839f755ae7667f1e022e84e3',
-};
+const sourcePins = settlement
+  ? {
+      terrain: harbour
+        ? 'afd29e7dc274087cc3cae309942c6a4b64d4858fd1a86fa39fbcffff73b78b7a'
+        : '3946fc2ffed922dadc171e609753c63590ef3daade337c04395b6356612448a5',
+      scenery: harbour
+        ? '7e973e3651fea67852f7a235a33465364160398c31463f8efa54a07bcf1752fc'
+        : 'ba0339e6e3f8285169a4f10fe1dc456de2fab36632496412b9a7104a6e1ae4c9',
+    }
+  : {
+      terrain: '076a93c6d08181b2ee0d4d4c172d974435df8cf6b7e210d4a9a2ada3753756fd',
+      scenery: 'd31187a12b26c11a359e1914963767e9e2da1a70839f755ae7667f1e022e84e3',
+    };
 for (const [layer, hash] of Object.entries(sourcePins))
   assert.equal(
     createHash('sha256')
@@ -48,7 +71,7 @@ for (const [layer, hash] of Object.entries(sourcePins))
     hash,
   );
 const bound = applyRegionalAppearance(configuration, identity);
-assert.equal(bound.source.surfaceStyle, 'tropical');
+assert.equal(bound.source.surfaceStyle, style);
 assert.equal(configuration.source.surfaceStyle, undefined, 'Do not mutate the verified input');
 assert.equal(bound.source.fetchImpl, fetchImpl);
 assert.equal(bound.scenery, configuration.scenery);
@@ -118,21 +141,24 @@ for (const [quality, expected] of [
     const digest = hash.digest('hex');
     geometryDigest ??= digest;
     assert.equal(digest, geometryDigest, 'Presentation choices cannot change geometry');
-    if (expected === 'plain') assert([...names].every((name) => !name.startsWith('Tropical sand')));
-    else assert(names.has(`Tropical sand and dune grass · ${expected}`));
+    if (expected === 'plain') assert([...names].every((name) => !name.startsWith(label)));
+    else assert(names.has(`${label} · ${expected}`));
     let liveMaterialUpdates = 0;
     if (expected !== 'plain') {
       const before = session.snapshot();
       session.root.traverse((object) => {
         if (!object.isMesh) return;
         for (const material of [object.material].flat()) {
-          if (!material.name.startsWith('Tropical sand')) continue;
+          if (!material.name.startsWith(label)) continue;
           const geometry = object.geometry;
           const initialVersion = material.version;
           for (const next of ['performance', 'quality', expected]) {
             material.userData.setRegionalSurfaceQuality(next);
-            assert.equal(material.name, `Tropical sand and dune grass · ${next}`);
-            assert.equal(material.customProgramCacheKey(), `fpv-tropical-ground-v1-${next}`);
+            assert.equal(material.name, `${label} · ${next}`);
+            assert.equal(
+              material.customProgramCacheKey(),
+              `fpv-tropical-${settlement ? 'settlement' : 'ground'}-v1-${next}`,
+            );
             assert.equal(object.geometry, geometry);
           }
           assert(material.version > initialVersion);
@@ -159,16 +185,40 @@ for (const [quality, expected] of [
     await session.dispose();
   }
 }
+const starts = [];
+if (settlement) {
+  assert.equal(configuration.manifest.spawns.length, 6);
+  for (const spawn of configuration.manifest.spawns) {
+    const session = createRegionalSession({
+      ...regionalPresentationOptions(bound, 'balanced'),
+      spawnId: spawn.id,
+    });
+    try {
+      await session.prepare();
+      const state = session.snapshot();
+      assert.equal(state.status, 'paused');
+      assert.equal(state.ticks, 0);
+      assert.deepEqual(state.lastInput, { roll: 0, pitch: 0, yaw: 0, throttle: 0 });
+      starts.push({ id: spawn.id, status: state.status, ticks: state.ticks });
+    } finally {
+      await session.dispose();
+      assert.equal(session.root.children.length, 0);
+      assert.equal(session.snapshot().terrain.geometryBytes, 0);
+      assert.equal(session.snapshot().terrain.textureBytes, 0);
+    }
+  }
+}
 console.log(
   JSON.stringify(
     {
       passed: true,
       descriptorIdentity: identity,
+      starts,
       records,
       launchOnly: true,
       sourcePins,
       claim:
-        'Verified source-to-material launch evidence; live mid-flight surface tier updates remain separate.',
+        'Verified exact-pin launch, live material-only tier updates and disposal. Native player, package and sustained flight acceptance remain separate.',
     },
     null,
     2,

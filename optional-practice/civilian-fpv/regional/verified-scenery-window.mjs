@@ -6,6 +6,7 @@ import {
   adoptVerifiedFrame,
   readFramePose,
   prepareVerifiedFrame,
+  verifiedCollisionFrame,
 } from './frame-transaction.mjs';
 /** Exact-source scenery preparation coordinator. Detached authoring resources, never live flight. */
 import { validateRegionManifest, createRegionPlanner, SPARSE_SCENERY_FORMAT } from './region-manifest.mjs';
@@ -41,9 +42,10 @@ export function createVerifiedSceneryWindow(
     timeoutMs = 120000,
     maxGeometryBytes = 8 * 1024 * 1024,
     surfaceStyle = 'plain',
+    surfaceQuality = 'balanced',
   } = {},
 ) {
-  validateScenerySurface(surfaceStyle);
+  validateScenerySurface(surfaceStyle, surfaceQuality);
   fail(typeof retainCommitted === 'boolean', 'Invalid retained-frame option');
   const manifest = validateRegionManifest(input),
     planner = createRegionPlanner(manifest);
@@ -197,12 +199,26 @@ export function createVerifiedSceneryWindow(
         originMm: plan.origin,
         maxGeometryBytes: requiredBytes,
         surfaceStyle,
+        surfaceQuality,
       });
+      const nextProvenance = {
+        regionId: manifest.id,
+        revision: manifest.revision,
+        positionMm: { ...point },
+        originMm: { ...plan.origin },
+        compiler: cells.some((cell) => cell.format === 'FPVRegionIndexedScenery.v1')
+          ? 'FPV indexed scenery compiler v1'
+          : 'FPV regional scenery compiler v1',
+        chunks: receipts,
+      };
       preparing = staged;
       current(token);
       if (supportPose?.requireClearRestore) await staged.prepareRestoreProof(() => current(token));
       if (frameTransaction?.prepare)
-        await prepareVerifiedFrame(frameTransaction, staged.group, () => current(token));
+        await prepareVerifiedFrame(frameTransaction, staged.group, () => current(token), () => {
+          current(token);
+          return verifiedCollisionFrame(nextProvenance, staged.collisionMeshes());
+        });
       supportPose = readFramePose(frameTransaction, supportPose, planner);
       current(token);
       if (supportPose) {
@@ -222,16 +238,6 @@ export function createVerifiedSceneryWindow(
         const { positionMm, radiusMm } = supportPose;
         requireRestoreClearance(staged.restoreClearance({ ...positionMm, y: positionMm.y + radiusMm }, radiusMm));
       }
-      const nextProvenance = {
-        regionId: manifest.id,
-        revision: manifest.revision,
-        positionMm: { ...point },
-        originMm: { ...plan.origin },
-        compiler: cells.some((cell) => cell.format === 'FPVRegionIndexedScenery.v1')
-          ? 'FPV indexed scenery compiler v1'
-          : 'FPV regional scenery compiler v1',
-        chunks: receipts,
-      };
       adoptVerifiedFrame(
         frameTransaction,
         { group: staged.group, provenance: structuredClone(nextProvenance) },
@@ -272,6 +278,10 @@ export function createVerifiedSceneryWindow(
       return queryReady() ? committed.restoreClearance(...args) : { status: 'ambiguous', reason: 'unknown-cell' };
     },
     restoreSnapshot: () => committed?.restoreSnapshot() ?? { certificateBytes: 0, certified: false, preparing: false },
+    collisionFrame() {
+      fail(queryReady(), 'Verified collision geometry is unavailable');
+      return verifiedCollisionFrame(provenance, committed.collisionMeshes());
+    },
     collisionSnapshot: () =>
       regionalCollisionCounts(committed, preparing === committed ? null : preparing),
     get group() {
@@ -325,6 +335,10 @@ export function createVerifiedSceneryWindow(
     flightSupport(...args) {
       if (disposed) throw new Error('Verified geometry is disposed');
       return queryReady() ? committed.flightSupport(...args) : { status: 'not-ready' };
+    },
+    motionCoverage(...args) {
+      if (disposed) throw new Error('Verified geometry is disposed');
+      return queryReady() ? committed.motionCoverage(...args) : { status: 'not-ready' };
     },
     castMotion(...args) {
       if (disposed) throw new Error('Verified geometry is disposed');

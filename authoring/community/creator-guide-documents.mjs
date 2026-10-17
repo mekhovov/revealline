@@ -33,8 +33,8 @@ export const CREATOR_GUIDE_DOCUMENTS = Object.freeze(
     {
       id: 'creator-guide',
       path: 'authoring/community/creator-guide.md',
-      bytes: 14334,
-      sha256: 'ebf2867fc7472766440d105861db13b163c862b0e1cfa436bbed0da559741c64',
+      bytes: 15093,
+      sha256: '2cc26163d79036cdc3e31188ecf061b6268f89ecf8930370c5a6b84d634e357f',
       titleKey: 'tools:completeWalkthroughAndTroubleshooting',
     },
     {
@@ -61,15 +61,15 @@ export const CREATOR_GUIDE_DOCUMENTS = Object.freeze(
     {
       id: 'overview',
       path: 'authoring/community/README.md',
-      bytes: 23414,
-      sha256: 'e31330d3b525eb2ad2bc0cafc6eec64dab31b12256d353209437a45ee4955671',
+      bytes: 23787,
+      sha256: 'c62203b15fe51174e5a970590febd2a158a79417d1ff6ff82a7402fdec39a787',
       titleKey: 'tools:presentationCheckpointsAndTeamTestExport',
     },
     {
       id: 'delivery',
       path: 'authoring/community/delivery-plan.md',
-      bytes: 29647,
-      sha256: '2e4273e37fb771c6266775fd0ee49b4fab5ac84b151a57eb4ea22f95c0c7b8fd',
+      bytes: 24126,
+      sha256: 'b8d7a9cecb6c03dbecb070bba0f521e1de9ff551ba0b83a6937926749bbae946',
       titleKey: 'tools:automaticCreationAndCommunityStoreDeliveryPlan',
     },
   ].map((entry) => Object.freeze(entry)),
