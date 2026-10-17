@@ -12913,12 +12913,14 @@ try {
           if (signal.aborted) cancel();
         });
         signal.throwIfAborted();
-        if (!current() || painter.paintRevision !== state.paintRevision)
-          throw new DOMException('Preparation superseded.', 'AbortError');
-        // Theme acceptance and layout can invalidate only the scene while the
-        // same flight and originals remain owned. Prepare the new display context
-        // and await its own submission; never accept the superseded snapshot.
-        if (this.revision !== state.revision) continue;
+        if (!current()) throw new DOMException('Preparation superseded.', 'AbortError');
+        // A late presentation or asset acceptance can change the painter while
+        // the same attempt and originals remain owned, just as layout changes
+        // the scene. Reprepare with the single existing cancellation owner and
+        // await a fresh submission; never accept the superseded paint. Actual
+        // run/look ownership, lifecycle and renderer interruption still abort.
+        if (painter.paintRevision !== state.paintRevision || this.revision !== state.revision)
+          continue;
         this.preparedState = state;
         return;
       }
