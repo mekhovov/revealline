@@ -29,3 +29,9 @@ Each receipt covers tracked/nonignored text sources before and after its run, pl
 | Separate passive Start diagnostic                  | One case passes; no attribution conclusion | `9a9ecbe25bad74bb206059cc9e3d080899ce9c2409c1679f246a25e5fd6dab48` |
 
 The earlier focused CI run `39059454486` remains failed at its ninety-minute deadline. Its partial inventory and raw output are separate from these complete-file or focused observations. Continue shared Team/Versus regression review and final-source native qualification; these source successes do not satisfy those gates.
+
+## Failure-only Start observation
+
+The two retained Start boundaries now opt into a test-helper observation only after the existing wait rejects. It captures bounded public preparation/status, focus/dialog state, scene submission/cadence flags and run identity, separating actual wall time from the modeled scene clock. Successful waits take no snapshots. The existing five-second local / twenty-second CI limits, wait implementation and original Error identity, cause and stack remain unchanged. Stale getters or a frozen Error cannot replace the original failure.
+
+Seven source-extracted success/failure controls pass, including hostile strings bounded before encoding and exactly two opt-in sites. Their 1,724-byte TAP has SHA-256 `e2b089efbabdd73f85079d21e7a92372d6f15ea316d222765af629077d53b097`; the three-file test-only patch has SHA-256 `ebb2428cc6783d6b0eb2a5dc7d91dd88304583dcf67cedb60d5f814bbe2c35b9`. No additional host run was used to clear either timeout. Their causes remain unresolved; the next required run can retain a more useful failure boundary.
