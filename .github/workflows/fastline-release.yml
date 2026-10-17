@@ -49,6 +49,7 @@ jobs:
       origin_run: ${{ steps.resume.outputs.origin_run }}
       artifact_id: ${{ steps.resume.outputs.artifact_id }}
       artifact_digest: ${{ steps.resume.outputs.artifact_digest }}
+      evidence_adapter_supported: ${{ steps.evidence_contract.outputs.evidenceAdapterSupported }}
     steps:
       - name: Check out trusted admission code
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -59,6 +60,8 @@ jobs:
           sparse-checkout: |
             publishing/fastline-release-inputs.mjs
             publishing/fastline-release-objects.mjs
+            publishing/fastline-release-evidence.mjs
+            publishing/test-policy.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up admission runtime
@@ -89,6 +92,7 @@ jobs:
             package.json
             package-lock.json
             game/build-config.json
+            publishing/test-policy.json
           sparse-checkout-cone-mode: false
 
       - name: Require exact source identity
@@ -100,6 +104,13 @@ jobs:
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           echo "source_tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
+
+      - name: Require a supported exact-source evidence contract
+        id: evidence_contract
+        env:
+          SOURCE_TEST_POLICY: source/publishing/test-policy.json
+          MODE: ${{ inputs.mode }}
+        run: node publishing/fastline-release-evidence.mjs
 
       - name: Require merged PR, current main and published predecessor
         id: authority
@@ -308,11 +319,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Confirm read-only shadow completion
+        env:
+          EVIDENCE_ADAPTER_SUPPORTED: ${{ needs.admission.outputs.evidence_adapter_supported }}
         run: |
           printf '%s\n' \
             '### Fastline shadow run complete' \
             '' \
             'Admission authorities matched. No tag, release, asset, archive, selector, deployment, or public object was written.' >> "$GITHUB_STEP_SUMMARY"
+          if [ "$EVIDENCE_ADAPTER_SUPPORTED" != true ]; then
+            echo 'Publication remains blocked: the exact source requires full-test evidence, and the current Fastline coordinator has no compatible adapter.' >> "$GITHUB_STEP_SUMMARY"
+          fi
 
   continue-publication:
     if: >-

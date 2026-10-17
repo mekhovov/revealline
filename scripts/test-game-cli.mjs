@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { request } from 'node:http';
 import { createHash } from 'node:crypto';
+import { inflateRawSync } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { generatePackCatalogs } from './generate-pack-catalogs.mjs';
@@ -177,8 +178,20 @@ test('direct CLI invocation works through an aliased directory and reports comma
   assert.match(bad.stderr, /Unknown command/);
 });
 
-test('real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source', async (t) => {
+async function frozenSnapshotFixture(t, admitted = false) {
   const { root, directory } = await fixture(t);
+  const archiveContract = {
+    format: 'revealline-distribution-zip.v2',
+    maxExpandedBytes: 1073741824,
+  };
+  if (admitted) {
+    const configPath = path.join(root, 'game/build-config.json');
+    const config = JSON.parse(await fs.readFile(configPath));
+    await fs.writeFile(
+      configPath,
+      JSON.stringify({ ...config, distributionArchive: archiveContract }),
+    );
+  }
   const environment = Object.fromEntries(
     Object.entries(process.env).filter(([key]) => !key.startsWith('GIT_')),
   );
@@ -230,6 +243,7 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     'scripts/pack-indexes.mjs',
     'scripts/brand-icons.mjs',
     'scripts/build-entry-writer.mjs',
+    'scripts/distribution-zip.mjs',
     'game/data-json.mjs',
     'game/content-launch.mjs',
   ])
@@ -303,6 +317,10 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   const info = JSON.parse(await fs.readFile(path.join(site, 'game/build-info.json')));
   assert.equal(info.sourceRevision, commit);
   assert.equal(info.version, 'fixture-v1');
+  for (const value of [release, manifest, info]) {
+    assert.equal(Object.hasOwn(value, 'distributionArchive'), admitted);
+    if (admitted) assert.deepEqual(value.distributionArchive, archiveContract);
+  }
   assert.deepEqual(await fs.readFile(path.join(site, 'game/core.mjs')), oldCore);
   const sourceEntries = new Map(readTarEntries(archive).map((entry) => [entry.name, entry.bytes]));
   assert.deepEqual(sourceEntries.get('game/core.mjs'), oldCore);
@@ -312,17 +330,22 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
       (name) => name.startsWith('releases/') || name.startsWith('.git/'),
     ),
   );
-  // Read the ZIP's actual stored entries independently of createZip's writer.
+  // Read actual member bytes independently of createZip's writer.
   const zipped = new Map();
   let offset = 0;
   while (zip.readUInt32LE(offset) === 0x04034b50) {
-    assert.equal(zip.readUInt16LE(offset + 8), 0);
+    const method = zip.readUInt16LE(offset + 8);
+    assert.ok(admitted ? method === 0 || method === 8 : method === 0);
     const size = zip.readUInt32LE(offset + 18);
     const nameLength = zip.readUInt16LE(offset + 26);
     const extraLength = zip.readUInt16LE(offset + 28);
     const name = zip.subarray(offset + 30, offset + 30 + nameLength).toString();
     const start = offset + 30 + nameLength + extraLength;
-    const bytes = zip.subarray(start, start + size);
+    const compressed = zip.subarray(start, start + size);
+    const originalSize = zip.readUInt32LE(offset + 22);
+    const bytes =
+      method === 8 ? inflateRawSync(compressed, { maxOutputLength: originalSize }) : compressed;
+    assert.equal(bytes.length, originalSize);
     assert.equal(crc32(bytes), zip.readUInt32LE(offset + 14));
     assert.ok(!zipped.has(name));
     zipped.set(name, bytes);
@@ -384,7 +407,12 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   assert.deepEqual(await fs.readFile(path.join(site, 'distribution.zip')), zip);
   assert.deepEqual(JSON.parse(await fs.readFile(path.join(root, 'releases/index.json'))), index);
   assert.equal(git('status', '--porcelain'), statusBefore);
-});
+}
+
+test('real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source', (t) =>
+  frozenSnapshotFixture(t));
+test('source-admitted Git snapshot binds its archive marker into release, manifest and build identity', (t) =>
+  frozenSnapshotFixture(t, true));
 
 test('build is byte-reproducible and each manifest checksum covers exact output bytes', async (t) => {
   const { root, out, directory } = await fixture(t);

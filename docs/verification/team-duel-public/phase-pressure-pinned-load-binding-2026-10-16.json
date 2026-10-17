@@ -1,0 +1,42 @@
+{
+  "format": "revealline-pinned-game-review.v1",
+  "observer": {
+    "commit": "b7f54e275b67918e734a92bc860c9380e6f591e1",
+    "tree": "746dd29079203333e58955a35d57832ecb99cae5",
+    "files": {
+      "docs/verification/journey-performance.html": {
+        "blob": "bf4e9a4e77b058c2c8151906f60931e68ed22d7f",
+        "bytes": 5721,
+        "sha256": "0bd1fcc959ca120bdf2e0d628b5511e4bdcb6a058b7dab857ae566a0d26c2491"
+      },
+      "docs/verification/journey-performance.mjs": {
+        "blob": "3050e9da4928bf7f551ddacd33c17252f21adf85",
+        "bytes": 33673,
+        "sha256": "5f70fcd849145d32f0d8483b2354f8bec3e5f9a8ac2201503ddf14dea115fd0d"
+      }
+    }
+  },
+  "sources": {
+    "baseline": {
+      "commit": "2169552a0571b9d62bce116054f1e21aabd10fa1",
+      "tree": "06d51897023aec814d1d8eb07bace50f9826ba8c",
+      "url": "http://127.0.0.1:58360/docs/verification/journey-performance.html"
+    },
+    "candidate": {
+      "commit": "b7f54e275b67918e734a92bc860c9380e6f591e1",
+      "tree": "746dd29079203333e58955a35d57832ecb99cae5",
+      "url": "http://127.0.0.1:58361/docs/verification/journey-performance.html"
+    }
+  },
+  "limits": {
+    "memberBytes": 67108864,
+    "sharedBlobCacheBytes": 67108864,
+    "sharedBlobCacheEntries": 512,
+    "readersPerOrigin": 4,
+    "receiptBytesPerOrigin": 4194304,
+    "receiptEventsPerOrigin": 10000
+  },
+  "scope": "Exact Git source with identical observer-only overlay; not a packaged build, native result or budget verdict.",
+  "receiptSemantics": "Response-prepared pins identify offered bytes, not confirmed browser consumption.",
+  "helperSha256": "b6ee9e5cdd8f793632375f0eca3d116dd1370d787878cea6be88772fe7ccc925"
+}

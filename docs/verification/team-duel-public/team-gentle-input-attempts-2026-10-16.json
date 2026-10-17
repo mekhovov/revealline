@@ -1,0 +1,30 @@
+[
+  {
+    "at": "2026-10-16T03:49:09.677Z",
+    "action": "Resume; P1 South/P2 North 600ms, both West 80ms, P1 North/P2 South 1000ms"
+  },
+  {
+    "at": "2026-10-16T03:49:54.430Z",
+    "action": "Native focused Resume; P1 South/P2 North 600ms, both West 80ms, P1 North/P2 South 1000ms"
+  },
+  {
+    "at": "2026-10-16T03:50:34.221Z",
+    "action": "P1 South/P2 North 600ms, both East 80ms, P1 North/P2 South 1000ms"
+  },
+  {
+    "at": "2026-10-16T03:50:46.265Z",
+    "action": "P1 South/P2 North 600ms, both West 80ms, P1 North/P2 South 1000ms"
+  },
+  {
+    "at": "2026-10-16T03:51:20.468Z",
+    "action": "P1 East/P2 West 700ms, both South 150ms, P1 West/P2 East 1000ms"
+  },
+  {
+    "at": "2026-10-16T03:51:35.122Z",
+    "action": "P1 East/P2 West 900ms, both South 250ms, P1 West/P2 East 1100ms"
+  },
+  {
+    "at": "2026-10-16T03:51:56.031Z",
+    "action": "P1 South/P2 North 600ms, both West 80ms, P1 North/P2 South 1000ms"
+  }
+]

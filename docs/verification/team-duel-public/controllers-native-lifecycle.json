@@ -1,0 +1,57 @@
+{
+  "format": "revealline.team-controller-lifecycle-native.v1",
+  "date": "2026-10-15",
+  "source": "90616ad4453a2c31d29ea29e532e6ecefbf459a0",
+  "scope": "Local source, native Mac in-app browser, Team Expedition Homecoming, two physical DualSense controllers. User operates hardware; agent uses normal UI for assignment, pause, settings and explicit Resume.",
+  "initialAssignment": {
+    "player1": "Standard, device index 2",
+    "player2": "Standard, device index 3",
+    "connected": 2
+  },
+  "userReports": [
+    "Both are on now",
+    "player 2 disconnected",
+    "Player 2 is connected again",
+    "Player 2 is off"
+  ],
+  "observations": [
+    {
+      "action": "Human movement",
+      "result": "Coverage advanced from 0.0% to 20.7%; no agent gameplay keys after the two assignments."
+    },
+    {
+      "action": "First reported disconnect",
+      "result": "UI confirms one controller, Player 1 Standard and Player 2 unassigned. Agent manually paused at 31.0%,two reserves,8:17. Earlier manual pause/studio navigation and intervening user Resume mean this first interval does not establish automatic-pause causality."
+    },
+    {
+      "action": "Reconnect",
+      "result": "Returned device visible but not automatically joined; explicit JoinPlayer 2 restores its original seat without shiftingPlayer 1."
+    },
+    {
+      "action": "Return from Settings",
+      "result": "Still PAUSED at 31.0%,two reserves,8:17. No automatic gameplay resume."
+    },
+    {
+      "action": "Explicit Resume, then controlled live Player 2 power-off",
+      "result": "User instructed to leavePlayer 1 untouched. Arena automatically PAUSED at 31.0%,two reserves,8:36. No agent input between explicit Resume and observing PAUSED."
+    },
+    {
+      "action": "Seat and retention inspection",
+      "result": "One controller; Player 1 Standard,Player 2 unassigned. Settings Back retains PAUSED,31.0%,two reserves,8:36."
+    }
+  ],
+  "passed": [
+    "Team Player 2 disconnect seat preservation",
+    "Team Player 2 reconnect/rejoin preserves other seat",
+    "Reconnection and settings return keep accepted arena paused",
+    "Explicit Resume works",
+    "Controlled live Player 2 power-off automatically pauses both players"
+  ],
+  "limits": [
+    "One Mac/browser and physical controller family",
+    "Single Team seat lifecycle sample; no native Duel disconnect or other controller/device certification",
+    "Human reports and native UI observations, not a timestamped OS/gamepad event trace",
+    "No independent game checkpoint injection or hardware telemetry used",
+    "No balance/enjoyment study; human playtesting waiver retained"
+  ]
+}

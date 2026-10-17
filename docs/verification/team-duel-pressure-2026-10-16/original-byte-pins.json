@@ -1,0 +1,141 @@
+{
+  "format": "revealline-lossless-original-pins.v1",
+  "scope": "Original pre-compression bytes; raw capture JSON is not reformatted. JPEG bytes copied without editing.",
+  "files": {
+    "baseline-binding.json.gz": {
+      "originalName": "baseline-binding.json",
+      "bytes": 483707,
+      "sha256": "c4a1632ec5809becb3406b799135bec7e3fc662fd3b7bf0caa0c8efc20156759"
+    },
+    "baseline-duel-binding.json.gz": {
+      "originalName": "baseline-duel-binding.json",
+      "bytes": 484147,
+      "sha256": "e2c9c14f1ed26a7f328dd74d4e9a6fbaca68af07f163c87bb0150e24fd0c104a"
+    },
+    "baseline-http.log.gz": {
+      "originalName": "baseline-http.log",
+      "bytes": 242847,
+      "sha256": "c79fe022e452bc1681565f8668bc2f5fd296e1a4b2e30c65e2b33d0ded6205f0"
+    },
+    "candidate-binding.json.gz": {
+      "originalName": "candidate-binding.json",
+      "bytes": 483707,
+      "sha256": "6a9b428da55b077b456eb1c757821cd5fd6c591000b08ac63be960b8a412c3cb"
+    },
+    "candidate-duel-binding.json.gz": {
+      "originalName": "candidate-duel-binding.json",
+      "bytes": 484147,
+      "sha256": "6f707c44d476e32633a34f4bd3f37c17e962ad03cf6c07b7ef4bc4c13bbff845"
+    },
+    "candidate-http.log.gz": {
+      "originalName": "candidate-http.log",
+      "bytes": 232603,
+      "sha256": "a59a3358e7d8f48fd5d53a20120ec70392d9f1754f032d3ae92400d362250998"
+    },
+    "duel-extension.json.gz": {
+      "originalName": "duel-extension.json",
+      "bytes": 2042,
+      "sha256": "2b499cd02845437151ca10842da3127a4ff3eb7d0fd03ad4399bf456fb1f5dc4"
+    },
+    "pressure-baseline-team-1.json.gz": {
+      "originalName": "pressure-baseline-team-1.json",
+      "bytes": 56440,
+      "sha256": "6a8456ad2360c1eecbfc0aa8a09d4358ade4a38ebf4574cc09d58bef5f0c4432"
+    },
+    "pressure-baseline-team-1.jpg": {
+      "originalName": "pressure-baseline-team-1.jpg",
+      "bytes": 155967,
+      "sha256": "d3d3050a075f3f08cb9375df4cd53f138472fdd004ecaf2891d4150f04413be0"
+    },
+    "pressure-candidate-team-1.json.gz": {
+      "originalName": "pressure-candidate-team-1.json",
+      "bytes": 56384,
+      "sha256": "f85cd356858979d59ad476d837ae867c8e5df47271bd3f863d598ae84e481cdb"
+    },
+    "pressure-candidate-team-1.jpg": {
+      "originalName": "pressure-candidate-team-1.jpg",
+      "bytes": 155972,
+      "sha256": "f2ea9d7d36c3f520526f62d99f92b52d098c3b83c7e111a4548529dbacdca462"
+    },
+    "pressure-baseline-team-2.json.gz": {
+      "originalName": "pressure-baseline-team-2.json",
+      "bytes": 51436,
+      "sha256": "1353dd725f7e441ac008d0477c63a07fffcfe1101696a4c614ad8e28bd8f0daa"
+    },
+    "pressure-baseline-team-2.jpg": {
+      "originalName": "pressure-baseline-team-2.jpg",
+      "bytes": 155371,
+      "sha256": "69113b06db4524414fd34f0638c641f4fe0e270b778b7db508a5d21f9726d2af"
+    },
+    "pressure-candidate-team-2.json.gz": {
+      "originalName": "pressure-candidate-team-2.json",
+      "bytes": 51484,
+      "sha256": "96586bea8d18275a4679dacc0f6848502a38b3e287821b5978a90efd754b73e3"
+    },
+    "pressure-candidate-team-2.jpg": {
+      "originalName": "pressure-candidate-team-2.jpg",
+      "bytes": 154312,
+      "sha256": "f27dc80fb85ca6ee53536b354a39f95e5970086333b818b613d7f36040275d85"
+    },
+    "pressure-baseline-duel-1.json.gz": {
+      "originalName": "pressure-baseline-duel-1.json",
+      "bytes": 104290,
+      "sha256": "3d9b1d25141f47e7663e65672ea265235d309223eb40a7d29ef0428189eb2c7d"
+    },
+    "pressure-baseline-duel-1.jpg": {
+      "originalName": "pressure-baseline-duel-1.jpg",
+      "bytes": 130993,
+      "sha256": "028b2745c62c1d436a851a0498632611ecfea0e404733f764e551f5250894c99"
+    },
+    "pressure-candidate-duel-1.json.gz": {
+      "originalName": "pressure-candidate-duel-1.json",
+      "bytes": 104691,
+      "sha256": "d00575662b79f1b40fa3785fd943d24d40ef8737adbe16d9958ac8b9547c763d"
+    },
+    "pressure-candidate-duel-1.jpg": {
+      "originalName": "pressure-candidate-duel-1.jpg",
+      "bytes": 131490,
+      "sha256": "db6cad545175272f076fe031192fef8b4254d3ed5fd513a51be98cf601e7fdba"
+    },
+    "pressure-baseline-duel-2.json.gz": {
+      "originalName": "pressure-baseline-duel-2.json",
+      "bytes": 104740,
+      "sha256": "5c1a2460ac192a2e77b75e45d1ad630f53d34fe9d67543486089b1c22114448a"
+    },
+    "pressure-baseline-duel-2.jpg": {
+      "originalName": "pressure-baseline-duel-2.jpg",
+      "bytes": 131753,
+      "sha256": "9c924660f463c2a19eb21502199e453f99b6eff74786450a3287595021fe61de"
+    },
+    "pressure-candidate-duel-2.json.gz": {
+      "originalName": "pressure-candidate-duel-2.json",
+      "bytes": 104726,
+      "sha256": "7bbed70091bb2bd5337ed2e165350b732de11d1c5e34a81f603a9464e96b3186"
+    },
+    "pressure-candidate-duel-2.jpg": {
+      "originalName": "pressure-candidate-duel-2.jpg",
+      "bytes": 131782,
+      "sha256": "9f608ecec652731cf1811c04dc18e76447696a0007d222559d81f56d5ab33a4d"
+    },
+    "pressure-native-inputs.json.gz": {
+      "originalName": "pressure-native-inputs.json",
+      "bytes": 31951,
+      "sha256": "2eeb1a25714fd2a0727fa2406d838533f48e2339017ad010fc34ea6034718435"
+    },
+    "pressure-native-settings.json.gz": {
+      "originalName": "pressure-native-settings.json",
+      "bytes": 1702,
+      "sha256": "37c6894b6c63afb55ed8666217f262b8236520068f16248dc7655826a85390ea"
+    },
+    "pressure-baseline-first-load-discard.json.gz": {
+      "originalName": "pressure-baseline-first-load-discard.json",
+      "bytes": 5082,
+      "sha256": "86f5e7d3422a95e5dbe7bf5b4702887c1a872464728a6044e50a525740c02e6d"
+    },
+    "pressure-candidate-first-load-discard.json.gz": {
+      "originalName": "pressure-candidate-first-load-discard.json",
+      "bytes": 5092,
+      "sha256": "07c0f7dfa9c6b5fe8df9ab3307085d1eec792f1a12ff15d12303ee2fe3fa4bfa"
+    }
+  }
+}

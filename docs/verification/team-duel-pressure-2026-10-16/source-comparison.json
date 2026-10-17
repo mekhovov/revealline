@@ -1,0 +1,37 @@
+{
+  "format": "revealline-pressure-source-comparison.v1",
+  "sources": {
+    "baseline": "2169552a0571b9d62bce116054f1e21aabd10fa1",
+    "candidate": "85b2fd4f4b11e828947317400528d1e9bbd48f45"
+  },
+  "groups": {
+    "game/coop/": {
+      "baselineMembers": 23,
+      "candidateMembers": 23,
+      "changedPaths": [],
+      "exactModeBlobMapsEqual": true
+    },
+    "game/core/": {
+      "baselineMembers": 32,
+      "candidateMembers": 32,
+      "changedPaths": [],
+      "exactModeBlobMapsEqual": true
+    },
+    "authoring/": {
+      "baselineMembers": 16650,
+      "candidateMembers": 16650,
+      "changedPaths": [],
+      "exactModeBlobMapsEqual": true
+    }
+  },
+  "changedProductionGamePaths": [
+    "game/build-config.json",
+    "game/couch/index.html",
+    "game/downloads.mjs",
+    "game/installed-app.mjs",
+    "game/ui/feedback-director.mjs",
+    "game/ui/install-offline-panel.mjs",
+    "game/ui/published-audio.mjs"
+  ],
+  "scope": "Git source comparison, not identical runtime trajectories or exclusion of indirect scheduling effects. No gameplay/collision/input/mission/encounter correction inferred from the recovery variation."
+}

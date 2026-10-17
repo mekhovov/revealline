@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-16T06:09:06.794946+00:00",
+  "ownedLoopbackConnectionResults": {
+    "63765": 61,
+    "63766": 61
+  },
+  "scope": "Read-only socket check confirms the two owned pressure ports no longer accept connections. Native tabs were closed and temporary browser visibility restored by the UI session; no AudioContext disposal inference."
+}

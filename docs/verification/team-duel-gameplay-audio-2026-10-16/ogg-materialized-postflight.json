@@ -1,0 +1,42 @@
+{
+  "format": "revealline-native-audio-materialized-postflight.v1",
+  "checkedAt": "2026-10-16T05:32:39.638337+00:00",
+  "sourceCommit": "6e74a45aa5aa892fc0903b2c36c98ed49ceb6201",
+  "baseSource": "42774e835ff34c367b51c1fd83bd0664269d60ec",
+  "scope": "Exact same-candidate regular Git members, extended after retained MP3 phases with13 picture originals for native OGG preview. No gameplay/compiled-output/approval changes, full-site, publication, consumption or performance claim.",
+  "files": 2192,
+  "bytes": 249837752,
+  "checks": {
+    "exactFileSet": true,
+    "regularFilesOnly": true,
+    "allByteLengths": true,
+    "allSha256": true,
+    "allGitBlobSha1": true
+  },
+  "addedPicturePaths": [
+    "game/content-design/assets/team-partners-r1/changing-courtyard.png",
+    "game/content-design/assets/team-partners-r1/crossed-gardens.png",
+    "game/content-design/assets/team-partners-r1/divided-workshop.png",
+    "game/content-design/assets/team-partners-r1/last-rendezvous.png",
+    "game/content-design/assets/team-partners-r1/shared-lookout.png",
+    "game/content-design/assets/team-partners-r1/split-orchards.png",
+    "game/content-design/assets/team-partners-r1/stepping-exchange.png",
+    "game/content-design/assets/team-partners-r1/switchback-partners.png",
+    "game/content-design/assets/team-partners-r1/twin-depots.png",
+    "game/content-design/assets/team-partners-r1/weaver-crossing.png",
+    "game/content-design/assets/team-windows-r1/coolant-crossing.png",
+    "game/content-design/assets/team-windows-r1/depot-dash.png",
+    "game/content-design/assets/team-windows-r1/window-exchange.png"
+  ],
+  "materializedBindingOriginal": {
+    "bytes": 486654,
+    "sha256": "4fbf7bb4cb79f84a7674d4452ca0d26c854f224c8156df11af516d2c75dffe08"
+  },
+  "httpLogOriginal": {
+    "bytes": 69356,
+    "sha256": "edaaeaed8a1b4db075f692623cbc1ba89a7ae6a197b5cbf287e28250babd6dea"
+  },
+  "requests": 693,
+  "non200": [],
+  "cleanup": "Owned tab7 closed; server17131 interrupted; visibility false. Native context closure not observed."
+}

@@ -218,3 +218,128 @@ test('numeric retention keeps the newest ten releases in every semantic major', 
     versions.filter((version) => !['v0.0.0', 'v0.1.0', 'v1.0.0', 'v1.1.0'].includes(version)),
   );
 });
+
+const distributionContract = {
+  format: 'revealline-distribution-zip.v2',
+  maxExpandedBytes: 1024 * 1024 * 1024,
+};
+function archiveFixture(sourceFormat = 1) {
+  const f = fixture();
+  f.manifest.distributionArchive = { ...distributionContract };
+  const record = JSON.parse(f.recordBytes);
+  record.distributionArchive = { ...distributionContract };
+  if (sourceFormat === 2) {
+    delete record.sourceArchiveSha256;
+    Object.assign(record, {
+      formatVersion: 2,
+      sourceTree: 'e'.repeat(40),
+      sourceUrl: `https://github.com/mekhovov/revealline/archive/${record.sourceRevision}.tar.gz`,
+      sourceManifestSha256: 'f'.repeat(64),
+    });
+  }
+  const bind = () => {
+    f.manifestBytes = jsonBytes(f.manifest);
+    record.manifestSha256 = digest(f.manifestBytes);
+    f.recordBytes = jsonBytes(record);
+    f.pin.manifestSha256 = record.manifestSha256;
+    f.pin.recordSha256 = digest(f.recordBytes);
+    return f;
+  };
+  return { f, record, bind };
+}
+for (const sourceFormat of [1, 2])
+  test(`distribution archive v2 retains exact pinned metadata with source format ${sourceFormat}`, () => {
+    const { f, bind } = archiveFixture(sourceFormat);
+    const checked = validateMetadata(bind());
+    assert.equal(checked.record.formatVersion, sourceFormat);
+    assert.deepEqual(checked.record.distributionArchive, distributionContract);
+    assert.deepEqual(checked.manifest.distributionArchive, distributionContract);
+    assert.deepEqual(checked.recordBytes, f.recordBytes);
+    assert.deepEqual(checked.manifestBytes, f.manifestBytes);
+    const bridges = metadataBridges(
+      checked,
+      'https://mekhovov.github.io/revealline-archive-06/releases/v0.44.0/site/',
+    );
+    assert.deepEqual(bridges.get('manifest.json'), f.manifestBytes);
+  });
+
+test('distribution archive markers must be present on both records and match exactly', () => {
+  for (const mutate of [
+    (f, r) => {
+      delete r.distributionArchive;
+    },
+    (f) => {
+      delete f.manifest.distributionArchive;
+    },
+    (f) => {
+      f.manifest.distributionArchive.maxExpandedBytes--;
+    },
+    (f) => {
+      f.manifest.distributionArchive.format = 'revealline-distribution-zip.v3';
+    },
+    (f) => {
+      f.manifest.distributionArchive.extra = true;
+    },
+    (f) => {
+      f.manifest.distributionArchive = null;
+    },
+  ]) {
+    const { f, record, bind } = archiveFixture();
+    mutate(f, record);
+    assert.throws(() => validateMetadata(bind()), /archive contract/i);
+  }
+});
+
+test('distribution archive admission rejects unknown fields, formats and invalid expanded limits', () => {
+  for (const contract of [
+    null,
+    [],
+    {},
+    { ...distributionContract, extra: true },
+    { ...distributionContract, format: 'revealline-distribution-zip.v3' },
+    { ...distributionContract, maxExpandedBytes: 0 },
+    { ...distributionContract, maxExpandedBytes: -1 },
+    { ...distributionContract, maxExpandedBytes: 1.5 },
+    { ...distributionContract, maxExpandedBytes: true },
+    { ...distributionContract, maxExpandedBytes: '1073741824' },
+    { ...distributionContract, maxExpandedBytes: 1073741825 },
+  ]) {
+    const { f, record, bind } = archiveFixture();
+    f.manifest.distributionArchive = record.distributionArchive = contract;
+    assert.throws(() => validateMetadata(bind()), /archive contract/i);
+  }
+});
+
+test('distribution archive admission includes manifest bytes and keeps the hosted 800 MB cap', () => {
+  const bounded = archiveFixture();
+  // Payload fits this declared bound, while the manifest itself does not.
+  bounded.record.distributionArchive.maxExpandedBytes = bounded.f.manifest.totalBytes;
+  bounded.f.manifest.distributionArchive = { ...bounded.record.distributionArchive };
+  assert.throws(() => validateMetadata(bounded.bind()), /frozen manifest/i);
+  const tooLarge = archiveFixture();
+  tooLarge.f.manifest.files[0].bytes = 800_000_001;
+  tooLarge.f.manifest.totalBytes = tooLarge.f.manifest.files.reduce(
+    (sum, row) => sum + row.bytes,
+    0,
+  );
+  assert.throws(() => validateMetadata(tooLarge.bind()), /frozen manifest/i);
+});
+
+test('distribution archive markers do not relax pin, identity or safe-path validation', () => {
+  const pin = archiveFixture();
+  const pinned = pin.bind();
+  assert.throws(
+    () =>
+      validateMetadata({
+        ...pinned,
+        manifestBytes: Buffer.concat([pinned.manifestBytes, Buffer.from(' ')]),
+      }),
+    /pin mismatch/i,
+  );
+  const identity = archiveFixture();
+  identity.record.sourceRevision = 'e'.repeat(40);
+  assert.throws(() => validateMetadata(identity.bind()), /record mismatch/i);
+  const path = archiveFixture();
+  path.f.manifest.files[0].path = '../outside.html';
+  assert.throws(() => validateMetadata(path.bind()), /Unsafe publication path/);
+});

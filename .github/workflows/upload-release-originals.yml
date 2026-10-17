@@ -37,9 +37,11 @@ jobs:
           filter: blob:none
           sparse-checkout: |
             .github/workflows/upload-release-originals.yml
+            .github/workflows/qualify-release-source.yml
             publishing/test-policy.mjs
             publishing/test-policy.json
             publishing/utility/
+            scripts/distribution-zip.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up explicit test policy runtime

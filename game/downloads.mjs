@@ -754,10 +754,12 @@ async function selectEdition({
               channel.port1.close();
             };
             const abort = () => {
+              channel.port1.postMessage({ format: panelProtocol, action: 'cancel' });
               cleanup();
               reject(signal.reason || new DOMException('App selection paused.', 'AbortError'));
             };
             const timer = setTimeout(() => {
+              channel.port1.postMessage({ format: panelProtocol, action: 'cancel' });
               cleanup();
               resolve({
                 activated: false,
@@ -778,6 +780,7 @@ async function selectEdition({
         : await activateInstalledEdition(candidate, {
             readAsset: readAssetStore,
             prepare,
+            signal,
             restorePrevious: new URL(location.href).searchParams.has('rollback'),
           });
       return result;

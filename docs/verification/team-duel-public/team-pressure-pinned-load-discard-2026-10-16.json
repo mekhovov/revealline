@@ -1,0 +1,222 @@
+[
+  {
+    "action": "Navigation timing",
+    "mode": "team",
+    "outcome": "browser entries; no device qualification",
+    "browserAtFrameLoad": {
+      "navigation": {
+        "responseStartMs": 447.10000000009313,
+        "domInteractiveMs": 456.29999999981374,
+        "domContentLoadedMs": 6512.200000000186,
+        "loadEventEndMs": 7100.899999999907
+      },
+      "paint": {
+        "firstPaintMs": 6544,
+        "firstContentfulPaintMs": 6544
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 7128091,
+        "totalBytes": 7465311,
+        "limitBytes": 4395630592
+      }
+    },
+    "resourcesAtFrameLoad": 30
+  },
+  {
+    "action": "Load to playable menu",
+    "mode": "team",
+    "outcome": "timeout; not a passing sample",
+    "ms": null,
+    "mission": "first-connection",
+    "trustedActivation": null,
+    "focusAtActivation": {
+      "atMs": 7102.5,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": null,
+          "tag": "INPUT"
+        }
+      },
+      "accessState": "locked",
+      "toolState": "loading",
+      "controls": {
+        "coop-start": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 30000.100000000093,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": null,
+          "tag": "BODY"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "loading",
+      "controls": {
+        "coop-start": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    }
+  },
+  {
+    "action": "Load to playable menu",
+    "mode": "team",
+    "outcome": "navigation timeout; not a passing sample",
+    "ms": null
+  }
+]

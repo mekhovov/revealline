@@ -1,0 +1,87 @@
+[
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890157/job/116839286473",
+    "name": "release-ready",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890212/job/116830270016",
+    "name": "feature (local-ux)",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890212/job/116830270174",
+    "name": "feature (rooms)",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890212/job/116830270042",
+    "name": "feature (recordings)",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38857118034/job/116830982711",
+    "name": "reconcile",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890126/job/116830433696",
+    "name": "assemble",
+    "state": "SKIPPED"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890157/job/116830352430",
+    "name": "focused",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890157/job/116830354075",
+    "name": "test",
+    "state": "SKIPPED"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890157/job/116830353729",
+    "name": "build",
+    "state": "SKIPPED"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890212/job/116830270447",
+    "name": "feature (creator)",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890212/job/116830269818",
+    "name": "feature (gameplay)",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890157/job/116830269788",
+    "name": "preflight",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890212/job/116830270173",
+    "name": "feature (presentation)",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890125/job/116830269910",
+    "name": "optional-practice",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890147/job/116830270054",
+    "name": "preview",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890125/job/116830269823",
+    "name": "candidate",
+    "state": "SUCCESS"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38856890126/job/116830269532",
+    "name": "verify",
+    "state": "SUCCESS"
+  }
+]

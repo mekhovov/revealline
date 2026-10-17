@@ -1,0 +1,341 @@
+{
+  "format": "revealline-team-duel-gameplay-audio-artifacts.v1",
+  "scope": "Exact retained diagnostic, candidate, native and hosted artifacts; source/publication/acoustic scopes remain separate in the report.",
+  "files": [
+    {
+      "path": "actual-host-final-seven.tap.gz",
+      "bytes": 611,
+      "sha256": "56517af2f4bb3b18b083e996e358639c022445466767c0e44d1213e50ce3cd13"
+    },
+    {
+      "path": "before-fix-candidate-requests.jsonl.gz",
+      "bytes": 134650,
+      "sha256": "30f75535d9d3ed51ccaa12f5a194e7778dad6c156b4ad0b3fd5cb0d8a8203bfa"
+    },
+    {
+      "path": "before-fix-transport-binding.json",
+      "bytes": 1675,
+      "sha256": "fdb459b4f06152d52c1c641f840457d5cee1b80b4f86bfd77a3e41f68b28882f"
+    },
+    {
+      "path": "candidate-binding.json",
+      "bytes": 42776,
+      "sha256": "f85cae4824b9d939815d2ecc6503aa2cd79a0acd3a252fb1d90cebcd89b467d6"
+    },
+    {
+      "path": "corrected-candidate-binding.json",
+      "bytes": 43541,
+      "sha256": "bd104cd580a9a4c9295e6706e336088459af444e860a4426139988910537cb9c"
+    },
+    {
+      "path": "corrected-candidate-requests.jsonl.gz",
+      "bytes": 72169,
+      "sha256": "aa42abd2cacff033310cd63c781c3918e47e587903bb44de08cbb25d1df64108"
+    },
+    {
+      "path": "corrected-review-candidate.bundle",
+      "bytes": 120744,
+      "sha256": "6d3e22114b73718c388cc2623d1d9d2b53b870b75312dad8a015838034ce9046"
+    },
+    {
+      "path": "corrected-transport-binding.json",
+      "bytes": 1675,
+      "sha256": "34510b9d72b39c8b9c37d30adec7b3de68b2853c6f1ecd80f5d3b5edf707cefd"
+    },
+    {
+      "path": "duel-actions.json.gz",
+      "bytes": 334,
+      "sha256": "a1581c0ed0541ac494049709939a346e9a297751065b52711a90bf937005bf76"
+    },
+    {
+      "path": "duel-before-fix.jpg",
+      "bytes": 74754,
+      "sha256": "6939221e337707ac1f5f799d767e2b77e6f48a872363057fe415a1bd4700febb"
+    },
+    {
+      "path": "duel-before-fix.json.gz",
+      "bytes": 9967,
+      "sha256": "e83b3d50cc81951529963d9268e649797e64f4873293a6fe4f5216dad091d7de"
+    },
+    {
+      "path": "duel-cold.json.gz",
+      "bytes": 9055,
+      "sha256": "d4404c154c8311470087e5dea5b521a67a649c922cd867a8d7766be10e0a5447"
+    },
+    {
+      "path": "duel-corrected-actions.json.gz",
+      "bytes": 917,
+      "sha256": "b9b09fb1baf6930c7f8e0d5c2bbece482dbcf92c21cd7d7dad06e1b36d1daadc"
+    },
+    {
+      "path": "duel-corrected-cold.json.gz",
+      "bytes": 9175,
+      "sha256": "c6a6df6031ac8b72de7332524048f277d99e786f2cf1098b8fba0c40ba3ed25c"
+    },
+    {
+      "path": "duel-corrected-followup.json.gz",
+      "bytes": 11884,
+      "sha256": "9951866348b780d4fd5de5c79c63033e356183da2cfc65b4c6472ba79a276251"
+    },
+    {
+      "path": "duel-corrected-paused.json.gz",
+      "bytes": 10702,
+      "sha256": "99d3b088fbc7a74e471714ae57c4d57c1f3d64146514ef5b725459b148ca2390"
+    },
+    {
+      "path": "duel-corrected-result.jpg",
+      "bytes": 107065,
+      "sha256": "c2668923b190a2440be3c03dcabaa9f289239794ec4370ab6fa8875d785c5421"
+    },
+    {
+      "path": "duel-corrected-result.json.gz",
+      "bytes": 11874,
+      "sha256": "28947fed9c8d3e40fc8b80b87f87be57e3af4dc8a0cf974003b1b8a92b4c66bd"
+    },
+    {
+      "path": "duel-corrected-warm.json.gz",
+      "bytes": 10684,
+      "sha256": "5659e3481b18a74ff7c4a1d6ba48a0504fc0cd9d6222e5a2a8a031170e9a193a"
+    },
+    {
+      "path": "duel-warm.json.gz",
+      "bytes": 9966,
+      "sha256": "bdf709d4f4f9dbd0e17bb69b295971dde25bbf1c0d3db025411db277be2adb6c"
+    },
+    {
+      "path": "gameplay-observer-routing-final.tap.gz",
+      "bytes": 2994,
+      "sha256": "59ef748183c59f0c7ee9f74c43216f1e16084f32b45fb009ee2823d6dc978d4f"
+    },
+    {
+      "path": "hosted-690a-checks.json",
+      "bytes": 3526,
+      "sha256": "ba99fbc10c076e6ba1cdd494ec066710bf914794958f912f9f89368c01d7c3ab"
+    },
+    {
+      "path": "hosted-690a-focused.log.gz",
+      "bytes": 203014,
+      "sha256": "71936aa0f25733ee6a87340f53fa3f65113fb3ce99c6cf3cc7de8e2bd0e5c49e"
+    },
+    {
+      "path": "hosted-85b2-binding.json",
+      "bytes": 997,
+      "sha256": "ffe2485d87fb0831af789b7143c06bd7a17499a247d8382d211e743d221ad7ec"
+    },
+    {
+      "path": "hosted-85b2-checks.json",
+      "bytes": 2655,
+      "sha256": "8dccb0cbe5c3386894bde4b042eee98451f8ddb88edb5ade2684a3c1a816d641"
+    },
+    {
+      "path": "hosted-85b2-focused.log.gz",
+      "bytes": 202474,
+      "sha256": "c5fa96918d4a1bc3a7611fd412065c2d001926bfff629f9fc1534d1cce0450a7"
+    },
+    {
+      "path": "local-review-candidate.bundle",
+      "bytes": 110696,
+      "sha256": "5b3bf7911c7ad7405f27c306d82b35771926731285ec09c83234e4e4dc514fd5"
+    },
+    {
+      "path": "mp3-gentle-http.log.gz",
+      "bytes": 8981,
+      "sha256": "ad1876ee5c9992ac127a47af544da46ddb88563c6f870076e79fff8ab9a6fb6c"
+    },
+    {
+      "path": "mp3-gentle-postflight.json",
+      "bytes": 1284,
+      "sha256": "19a2bd746ebc96818ee4fedd110f28280cd97ad00fe80fb680bcdec4f8007b1e"
+    },
+    {
+      "path": "mp3-materialized-binding.json.gz",
+      "bytes": 165174,
+      "sha256": "e67ea9ba5817806f859d6c7d6cab66904c665ba094d48e8009be6f5c0819a31b"
+    },
+    {
+      "path": "mp3-materialized-http.log.gz",
+      "bytes": 9119,
+      "sha256": "871c7137b7b03bd3f02e6de8d3a889d342308bb22f51d5999faf67eb500fa844"
+    },
+    {
+      "path": "mp3-materialized-postflight.json",
+      "bytes": 1155,
+      "sha256": "a564f987618f6f6992df346241890bbfc92dccce50ec635a5e9c14bb6f2d98fa"
+    },
+    {
+      "path": "native-impact-host-red-valid.tap.gz",
+      "bytes": 994,
+      "sha256": "30e8f0edbe5452fa6932ed4b88e9a8a424b5bdd41d3d657f0df6cddef577aada"
+    },
+    {
+      "path": "native-impact-host-red-wide.tap.gz",
+      "bytes": 941,
+      "sha256": "462166f85803c09c890a1d331ef96c68d758cc0fb7d8920e4793bdbb13236ea4"
+    },
+    {
+      "path": "native-impact-host-red.tap.gz",
+      "bytes": 1002,
+      "sha256": "fee260ec15f9c84aaf01f21fe8e2326869137c1781836874c43c65245339e39e"
+    },
+    {
+      "path": "native-impact-host-route-diagnostic.tap.gz",
+      "bytes": 1251,
+      "sha256": "7d570e9cfae7fc9c3857beee96ae38ae24aa07753638e35f71dbef1458c390ee"
+    },
+    {
+      "path": "native-impact-host-route-final.tap.gz",
+      "bytes": 621,
+      "sha256": "e6222ce2c5e795dd8188d6206807ceb70b3652f61d5a5abc172bf84efaa91670"
+    },
+    {
+      "path": "ogg-materialized-binding.json.gz",
+      "bytes": 166443,
+      "sha256": "a36effc689aea0874aaeebbf050f6ea862d46d1bb76e15acd9effc5532ef68c4"
+    },
+    {
+      "path": "ogg-materialized-http.log.gz",
+      "bytes": 8874,
+      "sha256": "fb0073818bd746d33bc4575459ba788913f7bc75c9692fd18ff70907a714322f"
+    },
+    {
+      "path": "ogg-materialized-postflight.json",
+      "bytes": 2048,
+      "sha256": "db8691b0bd4868f062b447ec524131689f99e288ef62fa220a3480ac1133e4a4"
+    },
+    {
+      "path": "raw-observation-pins.json",
+      "bytes": 5846,
+      "sha256": "46dfe35310228cc4b0984af85138a298a0af5afa5b98c2f4d7c44cea4c0c105e"
+    },
+    {
+      "path": "studio-line-impact-audio-cohort.log.gz",
+      "bytes": 2994,
+      "sha256": "34ffc8f8e9dfd1c2ff357cd03dcc74e3ce79f9c69a0a40206f6f8d8ae6f93b72"
+    },
+    {
+      "path": "studio-line-impact-regression-green.log.gz",
+      "bytes": 600,
+      "sha256": "1171fa776d078b12259c7a4c53a2cd3ff68130b03f745f1aab7bec8c4ea0d78f"
+    },
+    {
+      "path": "studio-line-impact-regression-red.log.gz",
+      "bytes": 913,
+      "sha256": "01405805b1e272d64c8c8099f0297ac9d6fdd8dd6503f3ddecf4d6f658ada3c2"
+    },
+    {
+      "path": "team-actions.json.gz",
+      "bytes": 454,
+      "sha256": "b88f9af83fd2367275ef29a35ec3b992392753c5f6c88e61c64e560e7beb524f"
+    },
+    {
+      "path": "team-cold.json.gz",
+      "bytes": 7678,
+      "sha256": "fc45069f7e15198c2c4a726d4da048701ede67a5b822f16b21873f4dc9bbeb83"
+    },
+    {
+      "path": "team-mp3-actions.json.gz",
+      "bytes": 1145,
+      "sha256": "60536b31094ac582ab4901d3109d4791a56d3aff3fbe936f7dd7a826fb846ce3"
+    },
+    {
+      "path": "team-mp3-attempts.jpg",
+      "bytes": 90853,
+      "sha256": "de33bf793a11efe17d97dade8493a5770d89be9626421e72d11e7b311da835e8"
+    },
+    {
+      "path": "team-mp3-attempts.json.gz",
+      "bytes": 10487,
+      "sha256": "dee2b46de4174d3dfb27602f6efe139edfd7c382e9a0b5776f7039a09a1dc39c"
+    },
+    {
+      "path": "team-mp3-cold.json.gz",
+      "bytes": 7148,
+      "sha256": "263f3c2f2567c380c5ff308ea72e45e87ab5f3b6733a3f5760d11c4f569d5850"
+    },
+    {
+      "path": "team-mp3-final.json.gz",
+      "bytes": 11176,
+      "sha256": "4891cac5b32152e55490f0cc6ff90d47033c4f49c54cdd3887447392c70006bd"
+    },
+    {
+      "path": "team-mp3-gentle-actions.json.gz",
+      "bytes": 701,
+      "sha256": "4dcb7bdf7fd4423e55004b73d0e9a2abb0faf350cbc6e016baae2b02e5b46b30"
+    },
+    {
+      "path": "team-mp3-gentle-cold.json.gz",
+      "bytes": 6725,
+      "sha256": "3e8459bb264c1c12f0bc79406ca5cd243fc08249df54d7841e0a8d919edd7801"
+    },
+    {
+      "path": "team-mp3-gentle-followup.json.gz",
+      "bytes": 7789,
+      "sha256": "984f6f76b2c91b07f92cac7e3830794c89162af3c8ed45fcb5a7aab9d42a7c87"
+    },
+    {
+      "path": "team-mp3-gentle-ready.json.gz",
+      "bytes": 7791,
+      "sha256": "3f44002d6da70535e01604f1c529dd8e8ec2523cef4288123107e5a7a2b61f58"
+    },
+    {
+      "path": "team-mp3-gentle-result.jpg",
+      "bytes": 105579,
+      "sha256": "72d721b7aaf511c1e3d1f510fdf62b5911b410aef1252974f183de29ad04af2d"
+    },
+    {
+      "path": "team-ogg-actions.json.gz",
+      "bytes": 916,
+      "sha256": "4793c60f21c4cead43587d2f90b4ec9bf25f9abee5e8ca31445c7cfc7074f993"
+    },
+    {
+      "path": "team-ogg-cold-approach.jpg",
+      "bytes": 98722,
+      "sha256": "e50c3e83cbf1fa8c98c0f102dc9ebe0e9dc477d33379ef30c5e6ba283ca370cf"
+    },
+    {
+      "path": "team-ogg-cold-near.jpg",
+      "bytes": 98772,
+      "sha256": "7fe7ec3f2914d6bd933d048632235b0e2c0ef261a7b62545259313abd9f1214b"
+    },
+    {
+      "path": "team-ogg-cold.json.gz",
+      "bytes": 5773,
+      "sha256": "967d4226bd3f357ad64f0560cd0be9436d2fa5f135edd6eb874125a7c0795d16"
+    },
+    {
+      "path": "team-ogg-followup.json.gz",
+      "bytes": 7046,
+      "sha256": "ff8904ed334ffa812255e03103981e86447c53273bca931a1f8a906d2d37e6e6"
+    },
+    {
+      "path": "team-ogg-ready.json.gz",
+      "bytes": 7037,
+      "sha256": "8ebb2ae19d5a461b9c34c35cd573edd48b9bf3c3c786152915fa69674580bab8"
+    },
+    {
+      "path": "team-ogg-result.jpg",
+      "bytes": 98885,
+      "sha256": "c8b197998a2698818bd803a1cf4ff649d91bf025e37afd05aeb28f144fc8c37c"
+    },
+    {
+      "path": "team-ogg-warm-near.jpg",
+      "bytes": 98660,
+      "sha256": "7c24b045b5463ace95c492c25a93c46dfe63aa9c5f8446a19a1bfcdc50205f4f"
+    },
+    {
+      "path": "team-ogg-warm-start.jpg",
+      "bytes": 102828,
+      "sha256": "061d28af11579c0159fa6e782012e1491bb9f4cbd10734f85ff4d61bcbf7b498"
+    },
+    {
+      "path": "team-ready.json.gz",
+      "bytes": 10396,
+      "sha256": "3a5c61dd16d5ed22cd9425887016ddd4a223e274b9c796e4382d7785b1f93a39"
+    },
+    {
+      "path": "team.jpg",
+      "bytes": 105763,
+      "sha256": "a8e8a69b82276f8aef884441dcca86a9da6d420f94d4fb322d555deeb4f39b63"
+    }
+  ]
+}

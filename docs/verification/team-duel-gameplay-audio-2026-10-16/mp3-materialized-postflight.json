@@ -1,0 +1,32 @@
+{
+  "format": "revealline-native-audio-materialized-postflight.v1",
+  "checkedAt": "2026-10-16T05:20:16.379317+00:00",
+  "sourceCommit": "6e74a45aa5aa892fc0903b2c36c98ed49ceb6201",
+  "baseSource": "42774e835ff34c367b51c1fd83bd0664269d60ec",
+  "scope": "Exact Git-member development preview before/after native Team MP3 attempt. Not production admission, a complete website, browser-consumption receipt, public/offline qualification or performance transport.",
+  "files": 2179,
+  "bytes": 214677185,
+  "checks": {
+    "exactFileSet": true,
+    "regularFilesOnly": true,
+    "allByteLengths": true,
+    "allSha256": true,
+    "allGitBlobSha1": true
+  },
+  "materializedBindingOriginal": {
+    "bytes": 482478,
+    "sha256": "35db854c954f32efe6b67ddd42b17b61cf9150de741e6dc2aed7fd95a86dc04b"
+  },
+  "httpLogOriginal": {
+    "bytes": 71965,
+    "sha256": "0c4a0d4e0fcc46e21cdc05589e9834c890f9fc518934ff22fc625028757b96a1"
+  },
+  "requests": 716,
+  "non200": [
+    {
+      "path": "/favicon.ico",
+      "status": 404
+    }
+  ],
+  "cleanup": "Owned tab5 closed and Python server93269 interrupted after the final paused observation; browser visibility false."
+}
