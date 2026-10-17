@@ -65,6 +65,34 @@ test('worker deadline rejects every outstanding request and terminates CPU owner
   assert.equal(FakeWorker.instances.at(-1).terminated, true);
 });
 
+test('worker client preserves only explicit flight-limit codes, never matching error text', async () => {
+  const client = createAdvancedWorkerClient({ Worker: FakeWorker });
+  const worker = FakeWorker.instances.at(-1);
+  try {
+    for (const code of [
+      'ADVANCED_DURATION_LIMIT',
+      'ADVANCED_RECORDING_LIMIT',
+      undefined,
+      'WORKER_FAILURE',
+    ]) {
+      const request = client.step();
+      const rejected = assert.rejects(request, (error) => {
+        assert.equal(error.code, code?.startsWith('ADVANCED_') ? code : undefined);
+        return true;
+      });
+      worker.reply({
+        ...worker.messages.at(-1),
+        error: 'Advanced flight duration limit reached',
+        code,
+      });
+      await rejected;
+      assert.equal(worker.terminated, false);
+    }
+  } finally {
+    client.dispose();
+  }
+});
+
 test('complete recording verification has a bounded duration budget without weakening flight deadlines', async (t) => {
   const delays = [],
     realTimer = globalThis.setTimeout;

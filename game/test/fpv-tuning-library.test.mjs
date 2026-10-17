@@ -169,6 +169,48 @@ test('a single atomic edit saves rates, profile name, drone assignment and camer
   assert.equal(store.effective().camera.verticalFov, 100);
 });
 
+test('drone creation and selection commit together and invalid submissions cannot replace an existing setup', async () => {
+  const storage = memory(),
+    store = createTuningLibraryStore({ storage });
+  const original = store.snapshot().setups[0];
+  await store.createAndSelectSetup(setup('copy', 'legacy-feel', { tilt: 31, verticalFov: 103 }));
+  assert.equal(storage.writes.length, 1);
+  assert.equal(store.snapshot().revision, 1);
+  assert.equal(store.snapshot().selectedSetupId, 'copy');
+  assert.deepEqual(store.snapshot().setups[0], original);
+  assert.equal(store.effective().camera.tilt, 31);
+  const before = store.export();
+  await assert.rejects(store.createAndSelectSetup(setup('copy')), /duplicate drone setup/);
+  await assert.rejects(
+    store.createAndSelectSetup(setup('bad-camera', null, { tilt: 61, verticalFov: 95 })),
+    /Camera tilt/,
+  );
+  assert.equal(store.export(), before);
+  assert.equal(storage.getItem(TUNING_LIBRARY_KEY), before);
+  assert.equal(storage.writes.length, 1);
+});
+
+test('failed or stale drone creation preserves both saved setups and their selected identity', async () => {
+  const storage = memory(),
+    store = createTuningLibraryStore({ storage });
+  await store.saveSetup(setup('my-drone'));
+  const write = storage.setItem,
+    before = store.export();
+  storage.setItem = () => {
+    throw new Error('Quota exceeded');
+  };
+  await assert.rejects(store.createAndSelectSetup(setup('copy')), /Quota exceeded/);
+  assert.equal(store.export(), before);
+  assert.equal(storage.getItem(TUNING_LIBRARY_KEY), before);
+  storage.setItem = write;
+  const other = createTuningLibraryStore({ storage });
+  await other.saveProfile('legacy-feel', { name: 'Saved elsewhere' });
+  const newer = storage.getItem(TUNING_LIBRARY_KEY);
+  await assert.rejects(store.createAndSelectSetup(setup('copy')), /Another tab/);
+  assert.equal(store.export(), before);
+  assert.equal(storage.getItem(TUNING_LIBRARY_KEY), newer);
+});
+
 test('stale tabs cannot overwrite saved changes and refresh does not resurrect removed entries', async () => {
   const storage = memory(),
     first = createTuningLibraryStore({ storage }),
@@ -426,6 +468,30 @@ test('queued profile creation and updates snapshot caller-owned response objects
   const saved = store.snapshot().profiles.find((profile) => profile.id === 'queued');
   assert.equal(saved.name, 'Submitted update');
   assert.equal(saved.response.rates.axes.yaw.expo, 24);
+});
+
+test('queued drone creation selects the submitted snapshot and rejects a later competing write', async () => {
+  const locks = deferredLibraryLock(),
+    storage = memory(),
+    store = createTuningLibraryStore({ storage, locks });
+  const submitted = setup('submitted', 'legacy-feel', { tilt: 31, verticalFov: 103 });
+  const creating = store.createAndSelectSetup(submitted);
+  submitted.id = 'changed-after-click';
+  submitted.camera.tilt = 55;
+  locks.release();
+  await creating;
+  assert.equal(store.snapshot().selectedSetupId, 'submitted');
+  assert.equal(store.effective().camera.tilt, 31);
+  assert.equal(storage.writes.length, 1);
+  const queued = store.createAndSelectSetup(setup('competing-copy'));
+  const other = createTuningLibraryStore({ storage });
+  await other.saveProfile('legacy-feel', { name: 'Other tab' });
+  const before = storage.getItem(TUNING_LIBRARY_KEY);
+  locks.release();
+  await assert.rejects(queued, /Another tab/);
+  assert.equal(storage.getItem(TUNING_LIBRARY_KEY), before);
+  assert.equal(store.snapshot().selectedSetupId, 'submitted');
+  assert.equal(store.snapshot().setups.length, 2);
 });
 
 test('queued setup and combined editing saves retain submitted IDs, camera, assignment and Advanced values', async () => {

@@ -13,6 +13,10 @@ This document supplements the original plan; the
 [implementation status](fpv-tuning-implementation-status.md) retains earlier
 results and limitations.
 
+The post-publication review below starts from refreshed main `63c36670a` and
+reopens three specific failure boundaries. Earlier passing reports remain bound
+to their original sources; they are not rewritten as evidence for later fixes.
+
 On 16 October the user confirmed that radio and real-pilot feedback are unavailable
 and directed continuation without them. No identified-aircraft measurements were
 provided, and physical-touch qualification remains unmeasured. These open
@@ -666,3 +670,62 @@ corrections required no deployed-runtime changes. Short neutral-input flights
 establish lifecycle behavior; they do not qualify physical fidelity or performance.
 All available software and this public delivery scope are complete. The deferred
 physical, wider-platform and Advanced promotion gates above remain open.
+
+## Post-publication review — atomic setup changes, preset options and flight limits
+
+Reviewed again on 17 October 2026. The delivery-evidence commit was rebased onto
+`63c36670a` before new edits; that main update contains only unrelated Snake
+evidence/tests. The user again requested completion and supplied the live test
+credential. Credentials remain transient and are excluded from project files.
+
+Fresh primary-source examples refine the existing acceptance work:
+
+| Source reviewed | Observation | Decision for this SIM |
+| --- | --- | --- |
+| [WebFPV patch notes](https://webfpv.org/notes/) | Separate aircraft tunes/cameras and saved edits prevent one aircraft from replacing another's settings; reported headless checks are distinguished from pilot testing. | Exercise setup creation/selection and storage failure as one user operation. Keep physical qualification separate from browser regressions. |
+| [FPV Tools](https://github.com/FPVibe/fpv-tools#-rate-profile-comparison) | Browser-local profile history, overlay comparison and CLI transfer; its merge tool explicitly identifies base/import and target firmware. | Retain per-profile drafts, explicit patch baselines and versioned transfer receipts. Verify failures preserve the active library and draft. |
+| [QuadMath browser SIM](https://quadmath.com/sim.html) | Aircraft build estimates feed mass, inertia, thrust, motor response and battery sag; the page labels them approximate and separates CLI settings. | Continue to distinguish rate/throttle compatibility from measured aircraft replication. Do not introduce unvalidated effect sliders to close a qualification gate. |
+| [SimITL](https://github.com/AJ92/SimITL) and [pr0p](https://pr0p.dev/) | Actual Betaflight execution is a distinct architecture; the published SimITL README identifies its firmware basis and native build targets. | Preserve the controller interface and explicit RC-processing ownership. Actual firmware integration remains a separately scoped future decision with its own timing, replay, delivery and licensing review. |
+
+These are documented product features and implementation descriptions, not
+independently verified flight fidelity. They do not add an online preset catalog,
+another firmware family or automatic PID conversion to this release.
+
+### Software corrections completed in this review
+
+1. **Atomic drone duplication.** Creation and selection now commit in one write,
+   retaining immutable submitted values, revision checks and validation. A quota
+   or stale-write failure leaves the saved library, displayed selection and draft
+   unchanged. A successful retry replaces the previous error with an EN/UK
+   confirmation. Unit and real-browser failure/retry checks pass.
+2. **Export at a flight limit.** Typed duration/capacity errors pause the arena
+   attempt and preserve export, reference capture and explicit restart. Resume
+   remains disabled until successful restart; lost workers and invalid sessions
+   remain fatal. Actual 720-second and capacity-boundary regressions use the
+   production worker handler and mounted host, export retained recordings and
+   replay exactly. The capacity fixture queues high-cadence input through the
+   supported input API; it does not claim that the browser host polls at 250 Hz.
+   Timing, duration, recording and recovery limits are unchanged.
+3. **Case-insensitive preset options.** The exact tagged [Betaflight App parser](https://github.com/betaflight/betaflight-configurator/blob/2026.6.2/src/components/tabs/presets/PresetsRepoIndexed/PresetParser.js)
+   matches option names case-insensitively. A root option labelled `Race rates`
+   now controls an included `RACE RATES` option. Visible labels and ordering are
+   preserved, ambiguous case-only duplicates are rejected, and default, explicit
+   and disabled selections match independently executed upstream fixtures.
+   This correction adds no firmware-version compatibility claim.
+4. **Verification.** All 714 practice tests pass, followed by 108 final library/UI
+   tests after the retry-message correction. All six final browser editor cases,
+   production renderer/worker comparison smoke, lint, formatting and release
+   validation pass. The refreshed six-runtime numerical matrix retains exact
+   arena/Regional replay agreement and selects 250 Hz; maximum response-metric
+   error is 1.8814%, minimum measured capacity 81.08× on one M4 Pro. This remains
+   a headless numerical reference, not physical-flight qualification. Ordinary
+   desktop/iOS package staging passes with 208 stable source pins; current-source
+   native execution is not claimed. See the [verification receipt](fpv-post-publication-verification.json).
+5. **Delivery.** Submit these exact fixes and retained evidence through the normal
+   reviewed main publication process, then verify both public routes through the
+   ordinary password form, offline installation and recording export/replay.
+   Earlier public receipts remain historical until that new deployment passes.
+
+Physical radio/touch hardware, pilot feedback, identified-aircraft measurements,
+iOS execution and broader hardware remain unavailable. Those dependencies do not
+block these software corrections or justify enabling scored/default Advanced.
