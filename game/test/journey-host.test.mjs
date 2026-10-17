@@ -12,6 +12,8 @@ import {
 import { journeyMissionId } from '../journey/catalog.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
 
 const campaign = {
   version: 'xonix-campaign.v1',
@@ -325,6 +327,9 @@ for (const cancel of ['button', 'Escape', 'new chooser'])
   });
 
 test('Historical Journey refuses an edited same-ID pack without replacing the current flight or awarding progress', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
   const edited = JSON.parse(
     await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url), 'utf8'),
   );
@@ -350,6 +355,27 @@ test('Historical Journey refuses an edited same-ID pack without replacing the cu
   assert.equal(p.doc.body.dataset.flightState, 'paused');
   assert.deepEqual((await backend.read()).clears.solo, {});
   assert.match(p.$('run-message').textContent, /imported content is kept/);
+  const checkpoint = authoritativeCheckpoint(original),
+    saved = p.storage.getItem('revealline.suspended.dev.v1'),
+    focused = p.doc.activeElement;
+  p.doc.documentElement.scrollTop = 61;
+  for (const language of ['uk', 'en']) {
+    setLocale(language, { persist: false });
+    assert.ok(
+      p
+        .$('run-message')
+        .textContent.includes(
+          translate('interface:theInstalledCampaignDiffersFromThisJourneyEditionYourImported'),
+        ),
+      'The actionable known mismatch remains localized, instead of becoming an opaque retry.',
+    );
+    p.frame(0);
+    assert.equal(p.rendered.run, original);
+    assert.deepEqual(authoritativeCheckpoint(original), checkpoint);
+    assert.equal(p.storage.getItem('revealline.suspended.dev.v1'), saved);
+    assert.equal(p.doc.activeElement, focused);
+    assert.equal(p.doc.documentElement.scrollTop, 61);
+  }
   assert.deepEqual(p.errors, []);
 });
 
