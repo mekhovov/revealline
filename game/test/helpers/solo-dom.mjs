@@ -652,18 +652,118 @@ export async function soloPage(
     try {
       await waitFor(predicate, { message: phase, timeoutMs: initialReadyTimeoutMs });
     } catch (error) {
-      error.message += `\n${JSON.stringify({
-        phase,
-        timeoutMs: initialReadyTimeoutMs,
-        elapsedMs: Number((Number(hrtime.bigint() - started) / 1e6).toFixed(3)),
-        pack: $('pack-select').value,
-        pictureState: doc.body.dataset.pictureState,
-        packStatus: $('pack-status').textContent,
-        runMessage: $('run-message').textContent,
-        start: $('start-button').textContent,
-        presentationFixture: presentationFixture?.snapshot(),
-        errors: errors.map((value) => String(value?.stack ?? value)),
-      })}`;
+      // Initial picture selection precedes the first modeled frame. Observe
+      // only existing public state on failure; never advance or retry its work.
+      try {
+        const read = (get, fallback = null) => {
+          try {
+            return get();
+          } catch {
+            return fallback;
+          }
+        };
+        const text = (value, limit = 64) =>
+          typeof value === 'string' ? value.slice(0, limit) : null;
+        const number = (value) => (Number.isFinite(value) ? value : null);
+        const flag = (get) =>
+          read(() => {
+            const value = get();
+            return typeof value === 'boolean' ? value : null;
+          });
+        const status = (id) => {
+          const element = read(() => $(id));
+          return {
+            id,
+            hidden: flag(() => element.hidden),
+            state: text(
+              read(() => element.dataset.state),
+              24,
+            ),
+            stage: text(
+              read(() => element.dataset.stage),
+              32,
+            ),
+            message: text(
+              read(() => element.textContent),
+              80,
+            ),
+          };
+        };
+        const fixture = read(() => presentationFixture?.snapshot());
+        const fixtureNumber = (key) => number(read(() => fixture[key]));
+        const errorCount = number(read(() => errors.length));
+        const existingErrors = [];
+        for (let i = 0; i < Math.min(errorCount ?? 0, 4); i++)
+          existingErrors.push(
+            text(
+              read(() => (typeof errors[i] === 'string' ? errors[i] : errors[i]?.message)),
+              80,
+            ),
+          );
+        const diagnostic = {
+          format: 'SoloInitialPictureFailureV1',
+          phase: text(phase, 96),
+          timeoutMs: initialReadyTimeoutMs,
+          elapsedMs: number(Number((Number(hrtime.bigint() - started) / 1e6).toFixed(3))),
+          pack: text(read(() => $('pack-select').value)),
+          pictureState: text(
+            read(() => doc.body.dataset.pictureState),
+            24,
+          ),
+          packStatus: text(
+            read(() => $('pack-status').textContent),
+            96,
+          ),
+          runMessage: text(
+            read(() => $('run-message').textContent),
+            96,
+          ),
+          start: text(read(() => $('start-button').textContent)),
+          page: {
+            hidden: flag(() => doc.hidden),
+            focused: flag(() => doc.hasFocus()),
+            documentConnected: flag(() => doc.documentElement.isConnected),
+            documentOwned: globalThis.document === doc,
+            windowOwned: globalThis.window === win,
+            activeId: text(read(() => doc.activeElement?.id)),
+            flight: text(
+              read(() => doc.body.dataset.flightState),
+              24,
+            ),
+          },
+          preparation: [
+            'flight-preparation-status',
+            'presentation-preparation-status',
+            'theme-preparation-status',
+            'craft-preparation-status',
+          ].map(status),
+          // The existing transport snapshot is summarized without copying its
+          // source inventory or any image bytes into an assertion failure.
+          presentationFixture: fixture
+            ? {
+                requests: fixtureNumber('requests'),
+                hits: fixtureNumber('hits'),
+                joined: fixtureNumber('joined'),
+                reads: fixtureNumber('reads'),
+                failures: fixtureNumber('failures'),
+                uncached: fixtureNumber('uncached'),
+                retainedBytes: fixtureNumber('retainedBytes'),
+                retainedEntries: fixtureNumber('retainedEntries'),
+                pending: number(read(() => fixture.pending.length)),
+              }
+            : null,
+          errors: existingErrors,
+          omittedErrors:
+            errorCount === null ? null : Math.max(0, errorCount - existingErrors.length),
+        };
+        const encoded = JSON.stringify(diagnostic);
+        if (Buffer.byteLength(encoded, 'utf8') <= 8192 && typeof error?.message === 'string') {
+          // Preserve V8's original lazy stack header, cause and Error identity.
+          void error.stack;
+          error.message += `\n${encoded}`;
+        }
+      } catch {}
+
       throw error;
     }
   }
