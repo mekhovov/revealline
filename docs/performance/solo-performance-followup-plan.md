@@ -8,7 +8,7 @@ The affected devices are **iPhone 17 Pro Safari on the published HTTPS site** an
 
 The six agreed phases remain the scope. Principal runtime changes are implemented, including the final-layout preparation correction. **Qualification is not complete:** earlier matched candidate timing rows still fail the unchanged gates, and later correctness successes do not clear those failures. Keep the PR draft until its required checks are resolved or explicitly reported as unavailable.
 
-Work remains isolated on `codex/solo-performance`. Main `1d631986a` was integrated through `b48b3c4a6`; the original checkout and unfinished FPV work are untouched. Mission URLs, simulation, 120 Hz replay ticks, capture rules, saves and campaign identities remain unchanged. Native callbacks remain uncapped (`limit: 0`, `smoothStep: false`). Actual elapsed time above 250 ms still pauses before catch-up. No renderer-worker migration or WebGL rewrite is included.
+Work remains isolated on `codex/solo-performance`. The fresh main check found three further FPV/documentation commits; main `fb3caf12b` was fetched and integrated through `8907704da`. The original checkout and unfinished FPV work are untouched. The e1cc production package remains identified as e1cc, not relabeled as the newer integration. Mission URLs, simulation, 120 Hz replay ticks, capture rules, saves and campaign identities remain unchanged. Native callbacks remain uncapped (`limit: 0`, `smoothStep: false`). Actual elapsed time above 250 ms still pauses before catch-up. No renderer-worker migration or WebGL rewrite is included.
 
 The [previous full plan at e1cc](https://github.com/mekhovov/revealline/blob/e1cc5dd7656bab349715cd1c3ce6e9f783508c17/docs/performance/solo-performance-followup-plan.md) preserves the accumulated chronology. This revision consolidates the current decisions; all original reports, failed observations and immutable declarations remain evidence.
 
@@ -37,6 +37,8 @@ Implementation details and evidence: [layout preparation](solo-preparation-layou
 - **DPR diagnostic in that run:** all four workloads and strict native replays completed, but all were already Reduced before Start despite the preceding Full preference selection. Their declared Full comparison failed. Display and detached canvases were 1152 × 576 in every row; theoretical physical viewport pixels are not canvas allocations. Keep the raw Reduced observations exploratory, and do not reset adaptive quality just to force a benchmark tier.
 
 The last full content validation passed after refreshing the canonical practice style projection. Full lint passed after the subsequent helper changes. Existing repository-wide formatting failures were byte-identical to main; changed authored files must still pass formatting. Source checks are not substitutes for a production build or native observations.
+
+The subsequent main integration changed 56 FPV/documentation paths and no production file under `game/` (the changes there are tests/fixtures). All 195 controls in the four changed FPV test files passed in the integrated worktree; retained TAP SHA-256 is `5875ca5e49705cc02b6fa646df476209fe56a7b048d814703a3d577494cce61d`. This confirms the source integration, not a new production package or device result.
 
 ## Next execution order
 
