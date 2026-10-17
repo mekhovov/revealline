@@ -411,7 +411,7 @@ test('actual serialized paused settlement refuses unavailable/busy owners and ne
 test('actual serialized collector retains submitted campaign identity only for the audio opt-in', () => {
   const run = { tick: 0, level: { id: 'first-return' } },
     scene = {
-      lastPaint: { run, actorAppearance: { style: 'campaign' } },
+      lastPaint: { run, actors: { pin: () => ({ style: 'campaign' }) } },
       cadence: { snapshot: () => ({}) },
     };
   const env = {

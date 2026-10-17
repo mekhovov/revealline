@@ -394,6 +394,26 @@ export const OPTIONAL_AUDIO_ROUTE_CORRECTION = Object.freeze({
   gateChanged: false,
   automaticRetries: 0,
 });
+export const OPTIONAL_AUDIO_OBSERVER_CORRECTION = Object.freeze({
+  format: 'SoloOptionalAudioSubmittedLeaseSuccessorV1',
+  priorRun: 39057302158,
+  priorJob: 117467786946,
+  priorTooling: '34d95cb9fe471ca56c243f05c4330826ba822fb9',
+  priorConclusion: 'failure',
+  priorScenarioStatus: 'fail',
+  priorClaimedAudioRequests: 1,
+  priorNativeReplayStatus: 'pass',
+  originalDeclaration: {
+    path: 'docs/performance/solo-optional-start-audio-e1cc-v3-plan.json',
+    bytes: 14930,
+    sha256: '144b720a599c5b17125730818a56eefbf300121677609fff84e4182e7e96ffcc',
+  },
+  reason: 'submitted-actor-lease-and-exact-optional-second-close-witness',
+  runtimeChanged: false,
+  scenarioChanged: false,
+  gateChanged: false,
+  automaticRetries: 0,
+});
 const optionalAudioPlan = (plan) => plan?.sourceCohort === OPTIONAL_AUDIO_READINESS_COHORT;
 export function optionalAudioReadinessSelection(plan) {
   assert(optionalAudioPlan(plan));
@@ -855,10 +875,18 @@ export function validateReadinessPlan(plan) {
       });
       if (plan.release.routeCorrection !== undefined) {
         assert.deepEqual(plan.release.routeCorrection, OPTIONAL_AUDIO_ROUTE_CORRECTION);
-        assert.equal(plan.release.onceOnlyBefore, '92ff7ef800e542617b4fc3efad96bd07ce6cbecb');
-      } else assert.equal(plan.release.onceOnlyBefore, '239c574ecddd5bb6d5896e621d9edc53e7f6a313');
+        if (plan.release.observerCorrection !== undefined) {
+          assert.deepEqual(plan.release.observerCorrection, OPTIONAL_AUDIO_OBSERVER_CORRECTION);
+          assert.equal(plan.release.onceOnlyBefore, '34d95cb9fe471ca56c243f05c4330826ba822fb9');
+        } else
+          assert.equal(plan.release.onceOnlyBefore, '92ff7ef800e542617b4fc3efad96bd07ce6cbecb');
+      } else {
+        assert.equal(plan.release.observerCorrection, undefined);
+        assert.equal(plan.release.onceOnlyBefore, '239c574ecddd5bb6d5896e621d9edc53e7f6a313');
+      }
     } else {
       assert.equal(plan.release.routeCorrection, undefined);
+      assert.equal(plan.release.observerCorrection, undefined);
       assert.equal(plan.release.onceOnlyBefore, '7c7cc2648331870683ac7b76850bbeff859f802e');
     }
   }
@@ -1269,8 +1297,16 @@ export async function readinessAssessment(
         assert(
           a.status === 'pass' ||
             (expected.optional === true &&
-              expected.selector ===
-                '#settings-dialog[open][data-settings-view="categories"] button[data-close="settings-dialog"]' &&
+              (expected.selector ===
+                '#settings-dialog[open][data-settings-view="categories"] button[data-close="settings-dialog"]' ||
+                (selected.protocol === 'optional-audio-start-missing-v1' &&
+                  selected.source.revision === GEOMETRY_READINESS_SOURCE.revision &&
+                  selected.fixture.path === OPTIONAL_AUDIO_SETTINGS_FIXTURE.path &&
+                  selected.fixture.bytes === OPTIONAL_AUDIO_SETTINGS_FIXTURE.bytes &&
+                  selected.fixture.sha256 === OPTIONAL_AUDIO_SETTINGS_FIXTURE.sha256 &&
+                  i === 4 &&
+                  expected.type === 'click' &&
+                  expected.selector === '#settings-dialog[open] .dialog-close')) &&
               a.status === 'skipped-not-visible'),
         );
       }
