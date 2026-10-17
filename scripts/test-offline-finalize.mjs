@@ -200,3 +200,15 @@ test('new browser canonical original consumer blocks the main-only projection', 
     /canonical.*consumer/i,
   );
 });
+
+for (const name of ['game/i18n/catalogs.mjs', 'app/i18n/catalogs.mjs'])
+  test(`empty duplicate compiled catalogue rejects atomically: ${name}`, () => {
+    const { entries, catalogue } = canonicalFixture();
+    entries.push({ name, bytes: Buffer.alloc(0) });
+    const before = JSON.stringify({ entries, catalogue });
+    assert.throws(
+      () => applyPublicationProfile(entries, catalogue, 'main-pages', null),
+      /canonical.*catalogue/i,
+    );
+    assert.equal(JSON.stringify({ entries, catalogue }), before);
+  });

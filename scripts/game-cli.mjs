@@ -633,9 +633,11 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
       new Set(canonicalEntries.map((entry) => entry.name)).size !== canonicalLocalePaths.size
     )
       fail('Main Pages canonical locale originals are incomplete or duplicated.');
-    for (const name of ['game/i18n/catalogs.mjs', 'app/i18n/catalogs.mjs'])
-      if (entries.filter((entry) => entry.name === name && entry.bytes.length).length !== 1)
+    for (const name of ['game/i18n/catalogs.mjs', 'app/i18n/catalogs.mjs']) {
+      const compiled = entries.filter((entry) => entry.name === name);
+      if (compiled.length !== 1 || !compiled[0].bytes.length)
         fail(`Main Pages canonical locale projection needs its compiled catalogue: ${name}`);
+    }
     if (
       catalogue.files.some((file) => canonicalLocalePaths.has(file.path)) ||
       catalogue.groups.some((group) => group.files.some((name) => canonicalLocalePaths.has(name)))
