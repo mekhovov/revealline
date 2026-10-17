@@ -6,6 +6,7 @@ on:
       - '.github/workflows/solo-remote-timing-temporary.yml'
       - 'scripts/solo-remote-sustained.mjs'
       - 'scripts/test-solo-remote-sustained.mjs'
+      - 'scripts/test-solo-remote-declaration.mjs'
       - 'scripts/test-solo-remote-timing.mjs'
       - 'scripts/solo-qualification-replay-identity.mjs'
       - 'scripts/test-solo-qualification-replay-identity.mjs'
@@ -36,6 +37,12 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
           fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/solo-remote-sustained.mjs
+            /scripts/solo-qualification.mjs
+            /scripts/solo-qualification-observation.mjs
+            /docs/performance/solo-remote-timing-plan.json
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -113,7 +120,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-sustained.mjs scripts/test-solo-remote-timing.mjs scripts/test-solo-qualification-replay-identity.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-declaration.mjs scripts/test-solo-remote-sustained.mjs scripts/test-solo-remote-timing.mjs scripts/test-solo-qualification-replay-identity.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
           node scripts/solo-remote-sustained.mjs bind-timing-plan docs/performance/solo-remote-timing-plan.json "$RUNNER_TEMP/solo-timing-job.json" '${{ matrix.engine }}' '${{ matrix.repetition }}'
       - name: Collect this reviewed diagnostic phase with unchanged gates
         timeout-minutes: ${{ matrix.stepMinutes }}

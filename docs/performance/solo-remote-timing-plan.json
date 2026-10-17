@@ -186,8 +186,13 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 50572,
-      "sha256": "9a2c0b4c865c7655b9f101494964efb3ab0d423405545bf7a8253fa2af958e04"
+      "bytes": 51780,
+      "sha256": "ea1400a0d1f3bd8b2072e4304bdcb4b451b29acb24d691509a453197a413157a"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 12875,
+      "sha256": "3bfdf145d2ea6eb4e81eb2394c9ac79ec56b201ab8b24d2bfd6345142af569d1"
     }
   ],
   "jobs": [

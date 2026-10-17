@@ -6,6 +6,7 @@ on:
       - '.github/workflows/solo-remote-supplemental-temporary.yml'
       - 'scripts/solo-remote-supplemental.mjs'
       - 'scripts/test-solo-remote-supplemental.mjs'
+      - 'scripts/test-solo-remote-declaration.mjs'
       - 'scripts/test-solo-representative-fixtures.mjs'
       - 'scripts/test-solo-latency-supplement.mjs'
       - 'scripts/solo-qualification-replay-identity.mjs'
@@ -27,7 +28,7 @@ concurrency:
 
 jobs:
   declare:
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
@@ -39,6 +40,10 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
           fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/solo-remote-supplemental.mjs
+            /docs/performance/solo-remote-supplemental-plan.json
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -116,7 +121,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-supplemental.mjs scripts/test-solo-representative-fixtures.mjs scripts/test-solo-latency-supplement.mjs scripts/test-solo-qualification-replay-identity.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-supplemental.mjs scripts/test-solo-remote-declaration.mjs scripts/test-solo-representative-fixtures.mjs scripts/test-solo-latency-supplement.mjs scripts/test-solo-qualification-replay-identity.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
           node scripts/solo-remote-supplemental.mjs bind-plan docs/performance/solo-remote-supplemental-plan.json "$RUNNER_TEMP/solo-supplemental-job.json" '${{ matrix.engine }}'
       - name: Run only this reviewed phase and fixed source pair
         timeout-minutes: ${{ matrix.stepMinutes }}
