@@ -1,11 +1,18 @@
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile, mkdtemp, mkdir, rm, rename } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
+import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import {
   focusedCommandExecutionPlan,
+  applyFocusedTestPolicy,
+  parseFocusedShard,
+  focusedCommandShard,
+  assertFocusedShardCoverage,
   focusedTestPlan,
   loadFocusedExecutionInputs,
   packageScriptShellSemantics,
@@ -930,7 +937,7 @@ test('focused CI installs the locked native fixture owner before selected checks
     path.join(directory, '../.github/workflows/deploy-pages.yml'),
     'utf8',
   );
-  const focused = workflow.split('  focused:\n')[1].split('\n  test:')[0];
+  const focused = workflow.split('  focused_shards:\n')[1].split('\n  focused:')[0];
   assert.match(focused, /timeout-minutes: 90/u);
   const steps = focused.split(/\n      - /);
   const install = steps.findIndex((step) =>
@@ -968,4 +975,390 @@ test('focused CI installs the locked native fixture owner before selected checks
     owner.devDependencies['fake-indexeddb'],
   );
   assert.equal(lock.packages['node_modules/fake-indexeddb'].dev, true);
+});
+
+const shardHash = (value) => createHash('sha256').update(value).digest('hex');
+const shardIdentity = {
+  sourceRevision: '1'.repeat(40),
+  workflowRevision: '2'.repeat(40),
+  policyDigest: '3'.repeat(64),
+  testPolicySha256: '4'.repeat(64),
+  manifestSha256: '5'.repeat(64),
+  changedPathsSha256: '6'.repeat(64),
+  fallbackHandled: false,
+};
+function shardReceipts(commands) {
+  return [1, 2, 3, 4].map((index) => {
+    const shard = { index, total: 4 },
+      selected = focusedCommandShard(commands, shard);
+    return {
+      format: 'revealline-focused-shard.v1',
+      state: 'complete',
+      shard,
+      identity: { ...shardIdentity, sourceTree: '7'.repeat(40) },
+      plan: { commands, sha256: shardHash(JSON.stringify(commands)) },
+      indices: selected.indices,
+      result: { attempted: selected.commands.length, failures: [], exitCode: 0 },
+    };
+  });
+}
+
+test('four deterministic partitions retain every selected command once, in order, with its exact deadline', () => {
+  for (const count of [0, 1, 3, 4, 5, 193]) {
+    const commands = Array.from({ length: count }, (_, i) => ({
+      id: `command-${i}`,
+      command: 'node',
+      args: ['--test', `game/test/case-${i}.test.mjs`],
+      timeoutMs: (i + 1) * 1000,
+    }));
+    const receipts = shardReceipts(commands);
+    const union = receipts.flatMap((receipt) => receipt.indices).sort((a, b) => a - b);
+    assert.deepEqual(
+      union,
+      commands.map((_, index) => index),
+    );
+    for (let index = 1; index <= 4; index++) {
+      const part = focusedCommandShard(commands, parseFocusedShard(`${index}/4`));
+      for (let offset = 0; offset < part.commands.length; offset++)
+        assert.equal(
+          part.commands[offset],
+          commands[part.indices[offset]],
+          'No command is copied or rewritten',
+        );
+    }
+    assert.equal(assertFocusedShardCoverage(receipts.reverse(), shardIdentity).commands, count);
+  }
+  for (const value of ['', '0/4', '5/4', '1/3', '1/04', '1/4x', '1/4\n', null])
+    assert.throws(() => parseFocusedShard(value));
+  assert.throws(() =>
+    focusedCommandShard(
+      [
+        { id: 'x', command: 'node', args: [] },
+        { id: 'x', command: 'node', args: [] },
+      ],
+      { index: 1, total: 4 },
+    ),
+  );
+});
+
+test('partitioning follows the unchanged explicit policy and exact package-script deduplication', async () => {
+  const required = JSON.parse(await readFile(path.join(directory, 'test-policy.json'), 'utf8'));
+  const waived = { ...required, mode: 'waived', authorization: 'explicit-user-request-20260922' };
+  const commands = [
+    { id: 'package', command: 'npm', args: ['run', 'tests'] },
+    { id: 'covered', command: 'node', args: ['--test', 'game/test/a.test.mjs'] },
+    { id: 'uncovered', command: 'node', args: ['--test', 'game/test/b.test.mjs'] },
+    { id: 'validation', command: 'node', args: ['scripts/check.mjs'], timeoutMs: 1234 },
+  ];
+  const inputs = {
+    packageScripts: { tests: 'node --test game/test/a.test.mjs' },
+    repositoryFiles: ['game/test/a.test.mjs'],
+    shellSemantics: 'posix',
+  };
+  for (const [policy, ids] of [
+    [required, ['package', 'uncovered', 'validation']],
+    [waived, ['validation']],
+  ]) {
+    const selected = applyFocusedTestPolicy(commands, policy, inputs);
+    const final = focusedCommandExecutionPlan(selected.commands, inputs).commands;
+    assert.deepEqual(
+      final.map(({ id }) => id),
+      ids,
+    );
+    const receipts = shardReceipts(final);
+    assert.equal(assertFocusedShardCoverage(receipts, shardIdentity).commands, ids.length);
+    if (policy === waived) {
+      assert.equal(selected.waivedTests.length, 3);
+      assert.ok(
+        selected.waivedTests.every(({ verdict }) => verdict === 'WAIVED_SKIPPED_NOT_PASSED'),
+      );
+    }
+  }
+  const onlyTests = applyFocusedTestPolicy(commands.slice(0, 3), waived, inputs);
+  assert.equal(onlyTests.commands.length, 0);
+  assert.equal(onlyTests.waivedTests.length, 3);
+  assert.equal(
+    assertFocusedShardCoverage(shardReceipts(onlyTests.commands), shardIdentity).commands,
+    0,
+  );
+  // Different fail-closed package discovery on one runner cannot silently omit a command.
+  const final = focusedCommandExecutionPlan(commands, inputs).commands;
+  const receipts = shardReceipts(final);
+  receipts[0] = shardReceipts(focusedCommandExecutionPlan(commands).commands)[0];
+  assert.throws(
+    () => assertFocusedShardCoverage(receipts, shardIdentity),
+    /complete execution plan/,
+  );
+});
+
+test('coverage rejects dropped, duplicate, mutated, unfinished and failed receipts or identities', () => {
+  const commands = Array.from({ length: 9 }, (_, i) => ({
+    id: `c${i}`,
+    command: 'node',
+    args: ['-e', '0'],
+    timeoutMs: 1000,
+  }));
+  const original = shardReceipts(commands);
+  const mutations = [
+    (r) => r.pop(),
+    (r) => r.push(r[0]),
+    (r) => {
+      r[1] = structuredClone(r[0]);
+    },
+    (r) => {
+      r[0].state = 'planned';
+    },
+    (r) => {
+      r[0].result = null;
+    },
+    (r) => {
+      r[0].result.exitCode = 1;
+    },
+    (r) => {
+      r[0].result.exitCode = 124;
+    },
+    (r) => {
+      r[0].result.failures = [{ id: 'c0', signal: 'SIGTERM' }];
+    },
+    (r) => {
+      r[0].result.attempted--;
+    },
+    (r) => {
+      r[0].indices.pop();
+    },
+    (r) => {
+      r[0].indices.push(1);
+    },
+    (r) => {
+      r[0].indices.reverse();
+    },
+    (r) => {
+      r[0].plan.commands[0].timeoutMs++;
+    },
+    (r) => {
+      r[0].plan.commands[0].args = ['-e', '1'];
+      r[0].plan.sha256 = shardHash(JSON.stringify(r[0].plan.commands));
+    },
+    (r) => {
+      r[0].identity.sourceTree = '8'.repeat(40);
+    },
+    (r) => {
+      r[0].identity.sourceTree = '';
+    },
+    (r) => {
+      r[0].shard.total = 3;
+    },
+    ...Object.keys(shardIdentity).map((key) => (r) => {
+      r[0].identity[key] =
+        key === 'fallbackHandled' ? true : 'f'.repeat(key.endsWith('Revision') ? 40 : 64);
+    }),
+  ];
+  for (const mutate of mutations) {
+    const receipts = original.map((r) => structuredClone(r));
+    mutate(receipts);
+    assert.throws(() => assertFocusedShardCoverage(receipts, shardIdentity), String(mutate));
+  }
+  assert.throws(() => assertFocusedShardCoverage(original, {}), /expected focused identity/);
+  assert.equal(assertFocusedShardCoverage(original, shardIdentity).commands, 9);
+});
+
+async function tinyShardFixture(t) {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'focused-shards-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const git = (...args) => {
+    const result = spawnSync('git', args, { cwd: root, encoding: 'utf8', timeout: 10000 });
+    assert.equal(result.status, 0, result.stderr);
+    return result.stdout.trim();
+  };
+  await writeFile(path.join(root, 'package.json'), JSON.stringify({ private: true, scripts: {} }));
+  git('init', '-q');
+  git('add', 'package.json');
+  git(
+    '-c',
+    'user.name=Focused Fixture',
+    '-c',
+    'user.email=focused@example.invalid',
+    'commit',
+    '-qm',
+    'fixture',
+  );
+  const source = git('rev-parse', 'HEAD'),
+    workflow = 'b'.repeat(40);
+  const admission = {
+    format: 'revealline-admission.v1',
+    headSha: source,
+    baseSha: 'c'.repeat(40),
+    workflowRevision: workflow,
+    policyDigest: 'd'.repeat(64),
+    classification: 'maintenance',
+    dependencies: [],
+    paths: ['game/app.mjs'],
+  };
+  const commands = Array.from({ length: 7 }, (_, i) => ({
+    id: `tiny-${i}`,
+    command: 'node',
+    args: ['-e', `require('node:fs').appendFileSync('executed.txt','${i}\\n')`],
+    timeoutMs: 2000,
+  }));
+  const manifest = {
+    format: 'revealline-focused-test-map.v1',
+    categories: [{ id: 'tiny', pathPatterns: ['^game/'], commands }],
+    ignoredPathPatterns: [],
+    runtimePathPatterns: ['^game/'],
+    fallbackCommands: [],
+  };
+  await writeFile(path.join(root, 'admission.json'), JSON.stringify(admission));
+  await writeFile(path.join(root, 'paths.txt'), 'game/app.mjs\n');
+  await writeFile(path.join(root, 'manifest.json'), JSON.stringify(manifest));
+  await writeFile(
+    path.join(root, 'policy.json'),
+    await readFile(path.join(directory, 'test-policy.json')),
+  );
+  const prefix = 'focused-shard-123-1-',
+    receipts = path.join(root, 'receipts');
+  await mkdir(receipts);
+  const common = [
+    '--manifest',
+    path.join(root, 'manifest.json'),
+    '--test-policy',
+    path.join(root, 'policy.json'),
+  ];
+  const invoke = (args, env = {}) =>
+    spawnSync(process.execPath, [path.join(directory, 'focused-tests.mjs'), ...args], {
+      cwd: root,
+      encoding: 'utf8',
+      timeout: 15000,
+      maxBuffer: 512 * 1024,
+      env: {
+        ...process.env,
+        PATH: path.dirname(process.execPath) + path.delimiter + process.env.PATH,
+        EXPECTED_SOURCE: source,
+        EXPECTED_AUTOMATION: workflow,
+        GITHUB_OUTPUT: '',
+        GITHUB_STEP_SUMMARY: '',
+        ...env,
+      },
+    });
+  const run = (i, extra = []) =>
+    invoke([
+      '--root',
+      root,
+      '--paths',
+      path.join(root, 'paths.txt'),
+      ...common,
+      '--shard',
+      `${i}/4`,
+      '--receipt',
+      path.join(receipts, prefix + i, 'receipt.json'),
+      '--admission',
+      path.join(root, 'admission.json'),
+      ...extra,
+    ]);
+  const verify = (extra = [], env = {}) =>
+    invoke(
+      [
+        '--verify-shards',
+        receipts,
+        '--artifact-prefix',
+        prefix,
+        '--admission',
+        path.join(root, 'admission.json'),
+        ...common,
+        ...extra,
+      ],
+      env,
+    );
+  return { root, run, verify, invoke, common, receipts, prefix, commands, manifest };
+}
+
+test('actual sharded CLI executes the exact union and verifier refuses missing or mismatched artifacts', async (t) => {
+  const f = await tinyShardFixture(t);
+  const unsharded = f.invoke([
+    '--root',
+    f.root,
+    '--paths',
+    path.join(f.root, 'paths.txt'),
+    ...f.common,
+  ]);
+  assert.equal(unsharded.status, 0, unsharded.stderr);
+  const defaultExecutions = (await readFile(path.join(f.root, 'executed.txt'), 'utf8'))
+    .trim()
+    .split('\n')
+    .map(Number)
+    .sort((a, b) => a - b);
+  await writeFile(path.join(f.root, 'executed.txt'), '');
+  for (let i = 1; i <= 4; i++) {
+    const result = f.run(i);
+    assert.equal(result.status, 0, result.stderr);
+  }
+  assert.deepEqual(
+    (await readFile(path.join(f.root, 'executed.txt'), 'utf8'))
+      .trim()
+      .split('\n')
+      .map(Number)
+      .sort((a, b) => a - b),
+    defaultExecutions,
+  );
+  assert.deepEqual(defaultExecutions, [0, 1, 2, 3, 4, 5, 6]);
+  let result = f.verify();
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /"commands":7/);
+  result = f.verify([], { EXPECTED_AUTOMATION: 'c'.repeat(40) });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /admission identity/);
+  const last = path.join(f.receipts, f.prefix + 4),
+    held = path.join(f.root, 'held');
+  await rename(last, held);
+  result = f.verify();
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /artifacts/);
+  await rename(held, last);
+  const file = path.join(last, 'receipt.json'),
+    original = await readFile(file, 'utf8');
+  const receipt = JSON.parse(original);
+  receipt.state = 'planned';
+  await writeFile(file, JSON.stringify(receipt));
+  result = f.verify();
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /did not complete/);
+  await writeFile(file, original);
+  await writeFile(
+    path.join(f.root, 'manifest.json'),
+    JSON.stringify({ ...f.manifest, ignoredPathPatterns: ['changed'] }),
+  );
+  result = f.verify();
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /manifestSha256/);
+});
+
+test('actual CLI preserves failed output and fails closed on invalid options, checkout and bounded receipt input', async (t) => {
+  const f = await tinyShardFixture(t);
+  const failed = structuredClone(f.manifest);
+  failed.categories[0].commands[0].args = ['-e', 'process.exit(7)'];
+  await writeFile(path.join(f.root, 'manifest.json'), JSON.stringify(failed));
+  let result = f.run(1);
+  assert.equal(result.status, 7, result.stderr);
+  const file = path.join(f.receipts, f.prefix + 1, 'receipt.json'),
+    receipt = JSON.parse(await readFile(file, 'utf8'));
+  assert.equal(receipt.state, 'complete');
+  assert.equal(receipt.result.exitCode, 7);
+  assert.equal(receipt.result.failures.length, 1);
+  for (const extra of [['--shard', '2/4'], ['--plan-only'], ['--fallback-handled']]) {
+    result = f.run(1, extra);
+    assert.equal(result.status, 1, result.stderr);
+  }
+  result = f.verify(['--root', f.root]);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /cannot execute/);
+  const admission = JSON.parse(await readFile(path.join(f.root, 'admission.json'), 'utf8'));
+  admission.headSha = 'e'.repeat(40);
+  await writeFile(path.join(f.root, 'admission.json'), JSON.stringify(admission));
+  result = f.run(1);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /admission identity/);
+  // Bounded JSON reader rejects before parsing or reading an arbitrarily large receipt.
+  await writeFile(path.join(f.root, 'admission.json'), ' '.repeat(8 * 1024 * 1024 + 1));
+  result = f.verify();
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /exceeds its bound/);
 });
