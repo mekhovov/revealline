@@ -95,8 +95,8 @@
     }
   },
   "format": "SoloHostedOfflinePairPlan.v1",
-  "status": "bound-3ad-metadata-pending-full-remote-proof-and-reviewed-release",
-  "cohort": "linux-offline-3adcd537-pending-release",
+  "status": "pinned-for-execution",
+  "cohort": "linux-offline-3adcd537-causal-pair01",
   "profileEvidenceBytes": 1082130432,
   "rowEvidenceBytes": 33554432,
   "scope": "Linux instrumented offline persistence diagnostic, with explicit public Opening capture/Next and two same-engine strict replay checks ONLY after exact successful offline launch. Failed launch remains original negative diagnostic; no gameplay/default-mission/physical-PWA/thermal credit.",
@@ -178,12 +178,37 @@
   },
   "setupTimeoutMs": 2400000,
   "bindingScope": {
-    "status": "metadata-and-git-source-bound-release-held",
+    "status": "reviewed-independent-offline-diagnostic",
     "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
     "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
     "candidateArtifact": 12082915872,
-    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
+    "firstEight": "Exact3ad first-eight run38985941469 retained: seven rows passed; WebKit worker gameplay remained paused after a long frame. This independent Chromium offline diagnostic does not waive that failure or release successor timing qualification.",
     "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
     "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
+  },
+  "diagnosticRelease": {
+    "format": "SoloOfflineIndependentDiagnosticReleaseV1",
+    "status": "reviewed-for-cause-analysis",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "firstEightAllCorrectnessPassed": false,
+    "successorQualificationReleased": false,
+    "performanceQualificationReleased": false,
+    "reason": "The unresolved launcher-cache disappearance needs a direct before/after restart comparison. A WebKit active-play worker interruption does not determine Chromium launcher persistence. Execute the existing two-arm diagnostic with all original artifact, CSP, ownership, preservation, readiness and success-only gameplay gates intact.",
+    "priorEvidence": {
+      "run": 38985941469,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38985941469",
+      "conclusion": "failure",
+      "toolingRevision": "ddbb565a0640b61f83edde5828a2825942cf26ab",
+      "artifact": 12083397932,
+      "archiveBytes": 796542,
+      "archiveSha256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+      "summarySha256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929",
+      "retentionSha256": "bee5afca4ed0d5b53bdaebd701e7809bf19c87aca301c04c7ffa975e040628eb",
+      "allObservedCommandOwnersClosed": true,
+      "fullArtifactProofMustRepeatInThisJob": true
+    },
+    "outcomePolicy": "Keep both observed negative and positive restart results as diagnostics. An original failed/partial run stays unchanged. No retry, repair, cache write by the observer, arbitrary flush delay, first-eight waiver, physical-PWA claim or aggregate offline qualification pass."
   }
 }
