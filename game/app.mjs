@@ -1,4 +1,5 @@
 import { loadBaseArtwork } from './base-artwork.mjs';
+import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
 import { getLocale } from './i18n/index.mjs';
@@ -1333,6 +1334,12 @@ try {
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
+  const continuousPreferences = continuousPlayPreferences();
+  let automaticNextEnabled = continuousPreferences.snapshot().autoNext;
+  const stopAutomaticNextView = continuousPreferences.subscribe(({ autoNext }) => {
+    automaticNextEnabled = autoNext;
+    if (!autoNext) clearResultAutoAdvance({ dismiss: true });
+  });
   const actorPreferences = createActorStylePreferences({
     window,
     getStorage: () => profileStorage(),
@@ -3611,6 +3618,7 @@ try {
       soundtrackPanel?.dispose();
       stopMasterView();
       stopDisplayView();
+      stopAutomaticNextView();
       stopBoardThemeView();
       stopBoardGroundView();
       stopActorView();
@@ -8278,6 +8286,7 @@ try {
   }
   function automaticResultContinuationAvailable() {
     if (
+      !automaticNextEnabled ||
       practice ||
       scenario ||
       courseSession ||
