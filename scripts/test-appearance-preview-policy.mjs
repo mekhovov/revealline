@@ -164,7 +164,7 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
 test('packaging reserves bounded evidence closure without changing test or gameplay deadlines', () => {
   assert.match(
     workflow,
-    /preview:\s+needs: admission\s+runs-on: ubuntu-latest\s+timeout-minutes: 70/,
+    /preview:\s+needs: \[admission, team_admission\]\s+runs-on: ubuntu-latest\s+timeout-minutes: 70/,
   );
   for (const [name, minutes] of [
     ['Run focused appearance, SIM and curated-community checks', 45],
@@ -235,7 +235,11 @@ test('actual build admission fails closed before spawning a build when closure t
   }
 });
 
-async function bindEvidence(mode, outcome, { mutateProof, omitProof = false, artifact = {} } = {}) {
+async function bindEvidence(
+  mode,
+  outcome,
+  { mutateProof, omitProof = false, mutateTeamProof, omitTeamProof = false, artifact = {} } = {},
+) {
   const root = '.cache/appearance-preview/';
   const files = new Map([
     [
@@ -272,6 +276,11 @@ async function bindEvidence(mode, outcome, { mutateProof, omitProof = false, art
   const proofResult = await prepareAdmission(mode, mode === 'waived' ? 'skipped' : 'success');
   const proof = structuredClone(proofResult.proof);
   mutateProof?.(proof);
+  const teamResult = await prepareAdmission(mode, mode === 'waived' ? 'skipped' : 'success', {
+    team: true,
+  });
+  const teamProof = structuredClone(teamResult.proof);
+  mutateTeamProof?.(teamProof);
   const source = step('Bind checksums and policy-qualified evidence to the exact source')
     .match(/node --input-type=module <<'NODE'\n([\s\S]*?)\n          NODE/)[1]
     .replace(/^ {10}/gm, '')
@@ -312,6 +321,11 @@ async function bindEvidence(mode, outcome, { mutateProof, omitProof = false, art
         ADMISSION_ARTIFACT_ID: '345',
         ADMISSION_ARTIFACT_URL: 'https://example.test/run/1/artifacts/345',
         ADMISSION_ARTIFACT_DIGEST: 'c'.repeat(64),
+        APPEARANCE_TEAM_TEST_FILES: teamFiles.join(' '),
+        TEAM_ADMISSION_PROOF: omitTeamProof ? '' : JSON.stringify(teamProof),
+        TEAM_ADMISSION_ARTIFACT_ID: '346',
+        TEAM_ADMISSION_ARTIFACT_URL: 'https://example.test/run/1/artifacts/346',
+        TEAM_ADMISSION_ARTIFACT_DIGEST: 'd'.repeat(64),
         ...artifact,
       },
     },
@@ -495,12 +509,20 @@ const admissionFiles = [
   'game/test/solo-demo-resources-host.test.mjs',
   'game/test/demo-loading-host.test.mjs',
 ];
+const teamFiles = [
+  'game/test/couch-static-pictures.test.mjs',
+  'game/test/couch-static-picture-host.test.mjs',
+  'game/test/couch-shell.test.mjs',
+  'game/test/couch-installed-chapters.test.mjs',
+];
+
 async function prepareAdmission(
   mode,
   outcome,
-  { missing = false, oversize = false, symlink = false } = {},
+  { missing = false, oversize = false, symlink = false, team = false } = {},
 ) {
-  const root = '.cache/appearance-admission/';
+  const root = team ? '.cache/appearance-team-admission/' : '.cache/appearance-admission/';
+  const prefix = team ? 'team-admission' : 'admission';
   const policyBytes = Buffer.from(
     JSON.stringify({
       ...acceptedPolicy,
@@ -512,10 +534,12 @@ async function prepareAdmission(
   const files = new Map([['publishing/test-policy.json', policyBytes]]);
   if (mode === 'required' && !missing)
     files.set(
-      root + 'admission-tests.tap',
+      root + `${prefix}-tests.tap`,
       Buffer.from('TAP version 13\n1..1\nok 1 - complete regression\n'),
     );
-  const source = step('Bind exact-source admission proof')
+  const source = step(
+    team ? 'Bind exact-source Team admission proof' : 'Bind exact-source admission proof',
+  )
     .match(/node --input-type=module <<'NODE'\n([\s\S]*?)\n          NODE/)[1]
     .replace(/^ {10}/gm, '')
     .replace(/^import .*;\n/gm, '');
@@ -565,18 +589,19 @@ async function prepareAdmission(
         TEST_POLICY_SHA256: digest(policyBytes),
         ADMISSION_RESULT: outcome,
         APPEARANCE_ADMISSION_TEST_FILES: admissionFiles.join(' '),
+        APPEARANCE_TEAM_TEST_FILES: teamFiles.join(' '),
         GITHUB_OUTPUT: 'outputs',
       },
     },
   );
   assert.match(output, /^proof=.+\n$/);
   const proof = JSON.parse(output.slice('proof='.length));
-  assert.deepEqual(JSON.parse(files.get(root + 'admission-proof.json')), proof);
+  assert.deepEqual(JSON.parse(files.get(root + `${prefix}-proof.json`)), proof);
   return { proof, files, reads, root };
 }
 
 test('separate predecessor gates each declared complete regression file without extending the existing preview clock', async () => {
-  const prefix = workflow.split('  preview:\n')[0];
+  const prefix = workflow.split('  team_admission:\n')[0];
   assert.match(prefix, /admission:\s+runs-on: ubuntu-latest\s+timeout-minutes: 19/);
   assert.doesNotMatch(prefix, /PREVIEW_STARTED_AT|game-cli.mjs build/);
   const stepMinutes = [...prefix.matchAll(/        timeout-minutes: ([0-9]+)/g)].map((match) =>
@@ -645,7 +670,7 @@ test('separate predecessor gates each declared complete regression file without 
   assert.match(retain, /path: \.cache\/appearance-admission\//);
   assert.match(retain, /if-no-files-found: error/);
   const preview = workflow.slice(workflow.indexOf('  preview:\n'));
-  assert.match(preview, /^  preview:\s+needs: admission/);
+  assert.match(preview, /^  preview:\s+needs: \[admission, team_admission\]/);
   assert.doesNotMatch(preview.slice(0, preview.indexOf('    env:')), /if:.*always/);
 });
 
@@ -759,6 +784,183 @@ test('preview and compact identity retain the exact predecessor evidence and rej
     { ADMISSION_ARTIFACT_URL: 'https://example.test/other' },
     { ADMISSION_ARTIFACT_DIGEST: '' },
     { ADMISSION_ARTIFACT_ID: '9007199254740992' },
+  ])
+    await assert.rejects(
+      bindEvidence('required', 'success', { artifact }),
+      /artifact identity required/,
+    );
+});
+
+test('Team proof has a separate finite envelope, seven triggers and four complete regression files', async () => {
+  const job = workflow.split('  team_admission:\n')[1]?.split('  preview:\n')[0];
+  assert(job, 'The separate Team predecessor must exist.');
+  assert.match(job, /runs-on: ubuntu-latest\s+timeout-minutes: 24/);
+  const minutes = [...job.matchAll(/        timeout-minutes: ([0-9]+)/g)].map((x) => Number(x[1]));
+  assert.deepEqual(minutes, [3, 2, 1, 3, 10, 1, 2]);
+  assert.equal(
+    minutes.reduce((a, b) => a + b, 0),
+    22,
+  ); // two-minute outer reserve
+  assert.doesNotMatch(job, /PREVIEW_STARTED_AT|game-cli.mjs build|continue-on-error/);
+  assert.match(job, /ref: \$\{\{ github.event.pull_request.head.sha \}\}/);
+  assert.match(job, /persist-credentials: false/);
+  const declared = workflow
+    .match(/APPEARANCE_TEAM_TEST_FILES: >-\n([\s\S]*?)\n  APPEARANCE_ADMISSION_TEST_FILES:/)[1]
+    .trim()
+    .split(/\s+/);
+  assert.deepEqual(declared, teamFiles);
+  assert.equal(new Set(declared).size, 4);
+  const original = workflow
+    .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
+    .trim()
+    .split(/\s+/);
+  for (const path of [
+    ...teamFiles,
+    'game/couch/couch.mjs',
+    'game/couch/couch-shell.mjs',
+    'game/couch/couch-static-pictures.mjs',
+  ]) {
+    await access(new URL(`../${path}`, import.meta.url));
+    assert(workflow.includes(`      - '${path}'`));
+  }
+  for (const file of teamFiles) assert(!admissionFiles.includes(file) && !original.includes(file));
+  for (const output of ['proof', 'artifactId', 'artifactURL', 'artifactDigest']) {
+    assert(job.includes(`      ${output}:`));
+    assert(workflow.includes(`needs.team_admission.outputs.${output}`));
+  }
+  const run = step('Run complete Team artwork and preparation regressions');
+  assert.match(run, /timeout-minutes: 10/);
+  assert.match(run, /if: steps\.test_policy\.outputs\.runTests == 'true'/);
+  assert.match(run, /read -r -a test_files <<< "\$APPEARANCE_TEAM_TEST_FILES"/);
+  assert.match(run, /node --test --test-concurrency=1 "\$\{test_files\[@\]\}"/);
+  assert.doesNotMatch(run, /test-name-pattern/);
+  assert.match(
+    step('Install Team admission test dependencies'),
+    /if: steps\.test_policy\.outputs\.runTests == 'true'/,
+  );
+  const retain = step('Retain Team admission proof and partial diagnostics');
+  assert.match(retain, /always\(\)/);
+  for (const result of ['success', 'failure', 'cancelled'])
+    assert(retain.includes(`steps.admission_tests.outcome == '${result}'`));
+  assert.match(retain, /path: \.cache\/appearance-team-admission\//);
+  assert.match(retain, /name: appearance-team-admission-/);
+  assert.match(retain, /if-no-files-found: error/);
+});
+
+test('actual Team proof retains bounded output and rejects failed, missing or misleading admission', async () => {
+  const passed = await prepareAdmission('required', 'success', { team: true });
+  assert.deepEqual(passed.proof.files, teamFiles);
+  assert.equal(passed.proof.output.path, 'team-admission-tests.tap');
+  assert.equal(
+    passed.proof.output.sha256,
+    digest(passed.files.get(passed.root + passed.proof.output.path)),
+  );
+  assert.equal(
+    passed.proof.output.bytes,
+    passed.files.get(passed.root + passed.proof.output.path).length,
+  );
+  const waived = await prepareAdmission('waived', 'skipped', { team: true });
+  assert.equal(waived.proof.result, 'waived');
+  assert.equal(waived.proof.executed, false);
+  assert.equal(waived.proof.command, null);
+  assert.equal(waived.proof.output.path, 'team-admission-tests-waived.json');
+  assert(!waived.reads.some((x) => x.endsWith('.tap')));
+  for (const outcome of ['failure', 'cancelled', 'skipped', ''])
+    await assert.rejects(
+      prepareAdmission('required', outcome, { team: true }),
+      /outcome does not match/,
+    );
+  await assert.rejects(
+    prepareAdmission('waived', 'success', { team: true }),
+    /outcome does not match/,
+  );
+  await assert.rejects(
+    prepareAdmission('required', 'success', { team: true, missing: true }),
+    /Missing proof input/,
+  );
+  for (const bad of [{ oversize: true }, { symlink: true }])
+    await assert.rejects(
+      prepareAdmission('required', 'success', { team: true, ...bad }),
+      /Bounded admission output/,
+    );
+});
+
+test('preview requires both same-source predecessor proofs and binds distinct Team artifact identity', async () => {
+  for (const mode of ['required', 'waived']) {
+    const { identity } = await bindEvidence(mode, mode === 'required' ? 'success' : 'skipped');
+    assert.equal(identity.focusedTests.additionalCohorts.length, 2);
+    const [original, team] = identity.focusedTests.additionalCohorts;
+    assert.deepEqual(original.files, admissionFiles);
+    assert.deepEqual(team.files, teamFiles);
+    assert.equal(team.receipt.path, 'team-admission-proof.json');
+    assert.equal(team.artifact.id, 346);
+    assert.equal(team.artifact.url, 'https://example.test/run/1/artifacts/346');
+    assert.equal(team.artifact.sha256, 'd'.repeat(64));
+    assert.equal(team.sourceRevision, original.sourceRevision);
+    assert.equal(team.sourceTree, original.sourceTree);
+    assert.equal(team.result, mode === 'required' ? 'passed' : 'waived');
+    const { receipt, artifact, ...raw } = team;
+    assert.equal(receipt.sha256, digest(Buffer.from(JSON.stringify(raw, null, 2) + '\n')));
+    assert.equal(receipt.bytes, Buffer.byteLength(JSON.stringify(raw, null, 2) + '\n'));
+    assert.notDeepEqual(artifact, original.artifact);
+  }
+  for (const mutateTeamProof of [
+    (x) => {
+      x.sourceRevision = 'f'.repeat(40);
+    },
+    (x) => {
+      x.sourceTree = 'f'.repeat(40);
+    },
+    (x) => {
+      x.workflowRun += '/other';
+    },
+    (x) => {
+      x.node = 'v20';
+    },
+    (x) => {
+      x.testPolicy.policySha256 = 'f'.repeat(64);
+    },
+    (x) => {
+      x.result = 'failed';
+    },
+    (x) => {
+      x.executed = false;
+    },
+    (x) => {
+      x.command = null;
+    },
+    (x) => {
+      x.files = admissionFiles;
+    },
+    (x) => {
+      x.files.pop();
+    },
+    (x) => {
+      x.output.path = 'admission-tests.tap';
+    },
+    (x) => {
+      x.output.bytes = 0;
+    },
+    (x) => {
+      x.output.bytes = 8 * 1024 ** 2 + 1;
+    },
+    (x) => {
+      x.output.sha256 = '';
+    },
+  ])
+    await assert.rejects(
+      bindEvidence('required', 'success', { mutateTeamProof }),
+      /Predecessor admission/,
+    );
+  await assert.rejects(
+    bindEvidence('required', 'success', { omitTeamProof: true }),
+    /predecessor admission proof/,
+  );
+  for (const artifact of [
+    { TEAM_ADMISSION_ARTIFACT_ID: '' },
+    { TEAM_ADMISSION_ARTIFACT_URL: 'https://example.test/other' },
+    { TEAM_ADMISSION_ARTIFACT_DIGEST: '' },
+    { TEAM_ADMISSION_ARTIFACT_ID: '9007199254740992' },
   ])
     await assert.rejects(
       bindEvidence('required', 'success', { artifact }),
