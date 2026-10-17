@@ -9,10 +9,12 @@ import {
   assertPairedBaselineArtifact,
   baselineAllowsCandidate,
   offlineExecutionValid,
+  offlinePairSources,
   readBoundedJSON,
   starterSelection,
   validateOfflinePlan,
 } from './solo-remote-offline.mjs';
+import { OFFLINE_GAMEPLAY, NATIVE_OFFLINE_STATE_POLICY } from './solo-offline-gameplay.mjs';
 
 const BASE = 'b11745223861c3973ad4bf440cc536198b8e0371';
 const CANDIDATE = '3adcd53792043ef02459e86168c6b33a66d6ef00';
@@ -337,3 +339,284 @@ with tempfile.TemporaryDirectory() as d:
     );
   },
 );
+
+const CURRENT_FORMAT = 'SoloHostedOfflineCurrentPairPlan.v2';
+const currentPlan = () => {
+  // Adapter admission fixture only: no candidate artifact/download identity, so
+  // this cannot be an executable declaration for the common artifact owner.
+  const value = plan(),
+    sources = offlinePairSources(CURRENT_FORMAT);
+  Object.assign(value, {
+    format: CURRENT_FORMAT,
+    playwright: '1.62.1',
+    helperTimeoutMs: 6000000,
+    setupTimeoutMs: 2400000,
+    baseline: {
+      revision: sources.baseline,
+      tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+      reusableArtifact: {
+        format: 'SoloHostedNormalBaselineReuseV2',
+        sourceRevision: sources.baseline,
+        sourceTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+      },
+    },
+    candidate: { revision: sources.candidate, tree: '71f7e4cb3b0a39c1d281635774371a693794dd22' },
+    diagnosticRelease: {
+      format: 'SoloNativeOfflineStateDiagnosticReleaseV1',
+      status: 'reviewed-for-cause-analysis',
+      candidateRevision: sources.candidate,
+      baselineRevision: sources.baseline,
+      firstEightAllCorrectnessPassed: false,
+      successorQualificationReleased: false,
+      performanceQualificationReleased: false,
+      onceOnlyBefore: sources.candidate,
+      nativeStateEvidence: {
+        run: 39001646012,
+        sourceRevision: sources.candidate,
+        browserVersion: '151.0.7922.34',
+        conclusion: 'failure',
+        qualificationEligible: false,
+      },
+    },
+  });
+  for (const row of value.rows) row.timeoutMs = 1200000;
+  Object.assign(value.offline, {
+    observationTimeoutMs: 960000,
+    gameplay: OFFLINE_GAMEPLAY,
+    nativeStatePolicy: NATIVE_OFFLINE_STATE_POLICY,
+    expectedBrowserVersion: '151.0.7922.34',
+    openingRecipe: {
+      path: 'docs/performance/fixtures/solo-remote-offline/installed-starter.qualification.fixture',
+      bytes: 5811,
+      sha256: '21b2d99269a7a21cc1ac7c6e960f17531c5d2cfd1ec7ac4d4b523520b25e0cb5',
+    },
+  });
+  return value;
+};
+
+test('current offline format admits only the exact cce/8b sources and preserves original fixed pair bounds', () => {
+  validateOfflinePlan(currentPlan());
+  validateOfflinePlan(plan());
+  assert.deepEqual(offlinePairSources(), { baseline: BASE, candidate: CANDIDATE });
+  assert(Object.isFrozen(offlinePairSources(CURRENT_FORMAT)));
+  assert.throws(() => offlinePairSources('unreviewed'));
+  for (const mutate of [
+    (p) => {
+      delete p.format;
+    },
+    (p) => {
+      p.format = 'unreviewed';
+    },
+    (p) => {
+      p.candidate.revision = CANDIDATE;
+    },
+    (p) => {
+      p.baseline.revision = BASE;
+    },
+    (p) => {
+      p.baseline.tree = 'a'.repeat(40);
+    },
+    (p) => {
+      p.candidate.tree = 'b'.repeat(40);
+    },
+    (p) => {
+      p.baseline.reusableArtifact.format = 'SoloHostedNormalBaselineReuseV1';
+    },
+    (p) => {
+      p.baseline.reusableArtifact.sourceRevision = BASE;
+    },
+    (p) => {
+      p.offline.gameplay = null;
+    },
+    (p) => {
+      p.offline.openingRecipe.sha256 = 'c'.repeat(64);
+    },
+    (p) => {
+      p.offline.nativeStatePolicy = 'unreviewed';
+    },
+    (p) => {
+      p.offline.expectedBrowserVersion = '151.0.7922.35';
+    },
+    (p) => {
+      p.playwright = '1.62.2';
+    },
+    (p) => {
+      p.diagnosticRelease.firstEightAllCorrectnessPassed = true;
+    },
+    (p) => {
+      p.diagnosticRelease.successorQualificationReleased = true;
+    },
+    (p) => {
+      p.diagnosticRelease.performanceQualificationReleased = true;
+    },
+    (p) => {
+      p.diagnosticRelease.onceOnlyBefore = CANDIDATE;
+    },
+    (p) => {
+      p.diagnosticRelease.nativeStateEvidence.run++;
+    },
+    (p) => {
+      p.diagnosticRelease.nativeStateEvidence.conclusion = 'success';
+    },
+    (p) => {
+      p.diagnosticRelease.nativeStateEvidence.qualificationEligible = true;
+    },
+    (p) => {
+      p.diagnosticRelease.nativeStateEvidence.sourceRevision = CANDIDATE;
+    },
+    (p) => {
+      p.rows.reverse();
+    },
+    (p) => {
+      p.rows[0].timeoutMs++;
+    },
+    (p) => {
+      p.offline.profileMaximumBytes++;
+    },
+    (p) => {
+      p.offline.downloadTimeoutMs++;
+    },
+    (p) => {
+      p.resources.automaticRetries++;
+    },
+  ]) {
+    const changed = structuredClone(currentPlan());
+    mutate(changed);
+    assert.throws(() => validateOfflinePlan(changed));
+  }
+});
+
+test('current candidate admission requires the matching 8b first arm and every archive/source witness', () => {
+  const sources = offlinePairSources(CURRENT_FORMAT),
+    paired = {
+      sourceRole: 'baseline',
+      sourceRevision: sources.baseline,
+      sourceTree: 'tree',
+      archiveIdentity: { bytes: 20, sha256: 'archive' },
+      payloadRealpath: '/owned/baseline',
+      manifestSHA256: 'manifest',
+      sourceProof: { path: '/owned/source.json', bytes: 9, sha256: 'proof' },
+    };
+  const prior = {
+    pairFormat: CURRENT_FORMAT,
+    nativeOfflineStatePolicy: NATIVE_OFFLINE_STATE_POLICY,
+    admission: { selected: structuredClone(paired) },
+    artifact: {
+      sourceRevision: paired.sourceRevision,
+      sourceTree: paired.sourceTree,
+      archiveIdentity: paired.archiveIdentity,
+      manifest: { sha256: paired.manifestSHA256 },
+      payloadRealpath: paired.payloadRealpath,
+    },
+    securityPolicies: { sourceProof: paired.sourceProof },
+  };
+  assertPairedBaselineArtifact(prior, paired, CURRENT_FORMAT);
+  assert.throws(
+    () => assertPairedBaselineArtifact(prior, paired),
+    'Historical default cannot accept current sources',
+  );
+  for (const mutate of [
+    (r) => {
+      delete r.pairFormat;
+    },
+    (r) => {
+      r.pairFormat = 'SoloHostedOfflinePairPlan.v1';
+    },
+    (r) => {
+      r.nativeOfflineStatePolicy = 'unreviewed';
+    },
+    (r) => {
+      r.artifact.sourceRevision = BASE;
+    },
+    (r) => {
+      r.admission.selected.sourceRevision = BASE;
+    },
+    (r) => {
+      r.artifact.sourceTree = 'other';
+    },
+    (r) => {
+      r.artifact.archiveIdentity.sha256 = 'other';
+    },
+    (r) => {
+      r.artifact.payloadRealpath = '/other';
+    },
+    (r) => {
+      r.artifact.manifest.sha256 = 'other';
+    },
+    (r) => {
+      r.securityPolicies.sourceProof.sha256 = 'other';
+    },
+  ]) {
+    const changed = structuredClone(prior);
+    mutate(changed);
+    assert.throws(() => assertPairedBaselineArtifact(changed, paired, CURRENT_FORMAT));
+  }
+});
+
+test('current negative outcomes remain negative and cannot bypass pair identity or owned closure', () => {
+  const sources = offlinePairSources(CURRENT_FORMAT),
+    observation = raw();
+  Object.assign(observation, {
+    pairFormat: CURRENT_FORMAT,
+    sourceRole: 'baseline',
+    nativeOfflineStatePolicy: NATIVE_OFFLINE_STATE_POLICY,
+    artifact: { sourceRevision: sources.baseline },
+    gameplayRequested: true,
+    gameplay: { status: 'not-run-launch-unqualified' },
+    replays: [],
+  });
+  const row = {
+    source: 'baseline',
+    status: 'completed-diagnostic',
+    browserVersion: observation.browserVersion,
+    rawOffline: observation,
+    command: command(),
+    preservation: { status: 'passed' },
+    retirement: { status: 'passed' },
+  };
+  assert.equal(baselineAllowsCandidate(row, sources.baseline, CURRENT_FORMAT), true);
+  assert.equal(observation.offlineNavigation.publicBootReady, false);
+  assert.equal(observation.qualificationEligible, false);
+  for (const mutate of [
+    (r) => {
+      delete r.rawOffline.pairFormat;
+    },
+    (r) => {
+      delete r.rawOffline.nativeOfflineStatePolicy;
+    },
+    (r) => {
+      r.rawOffline.sourceRole = 'candidate';
+    },
+    (r) => {
+      r.rawOffline.offlineNavigation.nativeState = { status: 'failed' };
+    },
+    (r) => {
+      r.rawOffline.offlineNavigation.nativeState = {};
+    },
+    (r) => {
+      r.rawOffline.offlineNavigation.publicBootReady = true;
+    },
+    (r) => {
+      r.rawOffline.artifact.sourceRevision = BASE;
+    },
+    (r) => {
+      r.rawOffline.workerSnapshots[0].keysMatch = false;
+    },
+    (r) => {
+      r.command.violation = 'inspection failure';
+    },
+    (r) => {
+      r.command.survivors.push({ pid: 1 });
+    },
+    (r) => {
+      r.preservation.status = 'failed';
+    },
+    (r) => {
+      r.retirement.status = 'failed';
+    },
+  ]) {
+    const changed = structuredClone(row);
+    mutate(changed);
+    assert.equal(baselineAllowsCandidate(changed, sources.baseline, CURRENT_FORMAT), false);
+  }
+});

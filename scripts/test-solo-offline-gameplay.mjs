@@ -265,10 +265,24 @@ test('the successor diagnostic retains one push admission, exclusions and fixed 
   assert.equal(admission.candidate, 'not-observed-baseline-gate');
   assert.equal(admission.ownedClosureEstablished, true);
   const owner = plan.diagnosticRelease.ownerCorrection;
-  assert.equal(owner.path, 'scripts/run-solo-remote-correctness.mjs');
-  const ownerBytes = await readFile(new URL(`../${owner.path}`, import.meta.url));
-  assert.equal(ownerBytes.length, owner.bytes);
-  assert.equal(createHash('sha256').update(ownerBytes).digest('hex'), owner.sha256);
+  const historical = JSON.parse(
+    await readFile(
+      new URL(
+        '../docs/performance/fixtures/solo-remote-offline/owner-pair04-source.json',
+        import.meta.url,
+      ),
+      'utf8',
+    ),
+  );
+  assert.deepEqual(historical, {
+    format: 'SoloHistoricalOfflineOwnerSourceV1',
+    run: 38995660465,
+    sourceRevision: '1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f',
+    path: 'scripts/run-solo-remote-correctness.mjs',
+    bytes: 52211,
+    sha256: '42750c0bb862b5ca28dfb8394b6381694418b0ed9240a70f006652fcfde28235',
+  });
+  for (const key of ['path', 'bytes', 'sha256']) assert.equal(owner[key], historical[key]);
   assert.match(workflow, /timeout-minutes: 165/);
   assert.match(workflow, /timeout-minutes: 104/);
   assert.match(workflow, /30s 103m node/);
