@@ -94,8 +94,14 @@ evidence. A synthetic close in a memory test does not explain the public failure
 successful count for each relevant listed store can establish empty. World
 `active-only` means only projects were read; retained contents remain unknown.
 `active-and-retained` requires both projects and the revisions cursor to finish.
-Counts are raw store-row counts, with overlap between active and retained; they
-are not unique world counts. Filtered, partially traversed, stopped, refused,
+Unfiltered `getAll()` provides an exact row count. Cursor `reads[].rows` counts
+observed deliveries: caller-owned `advance(n)` or `continue(key)` can skip rows,
+so an exhausted nonempty cursor has `rowsExact: false` and is only a lower bound.
+The corresponding `listing.activeRows` or `listing.retainedRows` stays null when
+the exact total is unknown. A cursor that exhausts without delivering a row has an
+exact zero; a completed cursor with deliveries still establishes nonempty.
+Active and retained rows overlap and are not unique world counts. Filtered,
+partially traversed, stopped, refused,
 overflowed and outside-facade observations cannot establish empty. A successful
 read characterizes that observed connection at that time, not original data loss,
 current UI state, liveness or retention across a restart.
@@ -180,7 +186,7 @@ This DOM model is not browser-layout acceptance. Fake IndexedDB lacks native Web
 small delegated-boundary sentinels test those contracts explicitly. Its forced-close
 helper and synthetic events are software stimuli, **not observed browser failures**.
 
-Ten additional groups exercise the actual main741 WorldStore listing in isolated
+Eleven additional groups exercise the actual main741 WorldStore listing in isolated
 fake IndexedDB, active/retained/empty counts, pending/immediate and mid-read aborts,
 filtered/incomplete/stopped reads, caller-owned cursor progression, same-connection
 close attribution, thrown identity, one argument coercion, detached snapshots,
