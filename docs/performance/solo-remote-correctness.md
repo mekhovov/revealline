@@ -181,7 +181,7 @@ payload again. Later diagnostic lanes cannot mark the first-eight gate passed.
 
 ### Separate worker-pause attribution cohort
 
-A prospective six-window diagnostic compares three worker inspections with three
+The predeclared six-window diagnostic compares three worker inspections with three
 public-Start idle controls in the fixed order worker/control, control/worker,
 worker/control. Each fresh WebKit context observes twelve seconds. This adds
 opt-in bounded application diagnostics and eight worker-stage timestamps; it
@@ -198,7 +198,42 @@ qualify timing, physical devices or a successor performance stage. Full exact
 be retained, including failures; correlation with worker timestamps alone does
 not establish causation. The focused wrapper/contract group passes 24 tests,
 with three Linux-only cleanup tests explicitly skipped on this macOS host.
-Execution results remain pending.
+
+[Run 38990108478](https://github.com/mekhovov/revealline/actions/runs/38990108478)
+completed on October 17, 2026 using tooling
+`74959676f2fc3de8039cebc30fb86905c562d661`. All three worker observations and all
+three idle controls passed their declared checks. Every window began and ended
+with visible, focused, running gameplay; no safety interruption or page error
+was recorded. Worker validation accepted the valid MP3 and rejected malformed
+and truncated inputs, with no pending request or retained worker bytes. All
+process owners closed cleanly. Full candidate archive/source/CSP admission
+passed before these observations.
+
+The original seven-of-eight failure remains unresolved. This instrumented
+twelve-second cohort did not reproduce it and does not replace the ordinary
+worker probe or qualify frame cadence. Internal cadence calibration remained
+provisional. Callback intervals are measured separately from application work:
+the first worker window contains a **204 ms playing interval**, with 17 ms of
+update and 2 ms of draw work. Its interval began 199 ms before the recorded
+`before-module-import` timestamp, so proximity to worker inspection does not
+identify the worker as its cause. This gap remains an investigation target.
+
+All six observations also retain 130–229 ms intervals attributed to preparation
+that cross the transition into playing. Their asynchronous/rendering cause has
+not been isolated. The 272–294 ms maximum preceding-playing intervals occur
+after the declared twelve-second windows, across the public Menu/Pause action;
+they remain in the evidence and are not attributed to active worker inspection.
+No interval is discarded or converted into a performance pass by this phase
+distinction.
+
+The 323,237-byte evidence artifact `12084916681` has SHA-256
+`68a7c1ce133f90b01a59d6fddf5c454b754861d637ec1139aaee4fcc2e060927`.
+All 48 members and their producer inventory were independently read back.
+The immutable analysis has SHA-256
+`e0dd826a388fcc6012dfe580cc715f5753d739b698286c1b6f79a7017a504c0c`;
+it retains raw phase transitions, worker-stage timestamps, interval endpoints,
+application work and preparation/resource snapshots. Evidence remains under
+`.cache/solo-followup/remote-worker-diagnostic-38990108478/`.
 
 ## Other CI evidence
 

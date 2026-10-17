@@ -29,7 +29,11 @@ const manifest = JSON.parse(
 const bound = () => {
   const value = structuredClone(manifest);
   value.status = 'reviewed-and-released';
-  value.release = { status: 'reviewed', candidateRevision: 'a'.repeat(40) };
+  value.release = {
+    status: 'reviewed',
+    candidateRevision: 'a'.repeat(40),
+    firstEightAllCorrectnessPassed: true,
+  };
   value.candidate = {
     revision: 'a'.repeat(40),
     tree: 'b'.repeat(40),
@@ -51,7 +55,9 @@ const control = (count) => ({
   invariantFailures: ['Identical-input raster differs; concealment unobserved: full/acquire'],
 });
 test('unbound raster plans refuse execution and exact per-engine limits remain fixed', () => {
-  assert.throws(() => bindRasterJob(manifest, 'raster-webkit'));
+  const held = structuredClone(manifest);
+  held.status = 'bound-3ad-metadata-pending-full-remote-proof-and-reviewed-release';
+  assert.throws(() => bindRasterJob(held, 'raster-webkit'));
   const plan = bound();
   assert.equal(plan.rows.length, 1);
   assert.equal(plan.rows[0].timeoutMs, 1200000);
@@ -70,6 +76,45 @@ test('unbound raster plans refuse execution and exact per-engine limits remain f
     change(next);
     assert.throws(() => validateRasterPlan(next));
   }
+});
+test('independent raster diagnostic retains the failed predecessor and all strict limits', () => {
+  const plan = bindRasterJob(manifest, 'raster-webkit');
+  assert.equal(plan.status, 'reviewed-diagnostic-only');
+  assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
+  assert.equal(plan.candidate.revision, '3adcd53792043ef02459e86168c6b33a66d6ef00');
+  assert.equal(plan.performanceExclusion, true);
+  for (const change of [
+    (p) => (p.release.firstEightAllCorrectnessPassed = true),
+    (p) => (p.release.predecessorRun = 1),
+    (p) => (p.release.scope = 'successor-performance'),
+    (p) => (p.release.automaticRetries = 1),
+    (p) => (p.release.performanceQualification = 'passed'),
+    (p) => (p.release.priorProofInspected = false),
+    (p) => (p.release.noUnclosedOwners = false),
+    (p) => (p.release.evidence[0].summarySHA256 = '0'.repeat(64)),
+    (p) => (p.raster.pixelTolerance = 1),
+    (p) => p.raster.cases.pop(),
+    (p) => (p.raster.retryCount = 1),
+  ]) {
+    const changed = structuredClone(plan);
+    change(changed);
+    assert.throws(() => validateRasterPlan(changed));
+  }
+});
+test('raster release is limited to one exact push edge and shallow pinned source checkouts', async () => {
+  const workflow = await readFile(
+    new URL('../.github/workflows/solo-remote-raster-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  assert.match(workflow, /github\.event\.pull_request\.number == 1544/);
+  assert.match(
+    workflow,
+    /github\.event\.pull_request\.head\.repo\.full_name == github\.repository/,
+  );
+  assert.match(workflow, /github\.event\.action == 'synchronize'/);
+  assert.match(workflow, /github\.event\.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'/);
+  assert.equal((workflow.match(/fetch-depth: 1/g) ?? []).length, 3);
+  assert.doesNotMatch(workflow, /fetch-depth: 0/);
 });
 test('conditional localization requires complete clean exact control-failure class', () => {
   for (const count of [2, 12]) {

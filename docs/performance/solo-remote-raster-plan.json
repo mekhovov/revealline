@@ -1,8 +1,8 @@
 {
   "format": "SoloHostedRasterManifestV1",
-  "status": "bound-3ad-metadata-pending-full-remote-proof-and-reviewed-release",
+  "status": "reviewed-diagnostic-only",
   "repository": "mekhovov/revealline",
-  "cohort": "linux-raster-3adcd537-pending-release",
+  "cohort": "linux-raster-3adcd537-independent-diagnostic",
   "node": "22.13.1",
   "playwright": "1.62.1",
   "jobs": ["raster-chromium", "raster-webkit"],
@@ -34,15 +34,29 @@
     "role": "Source identity only; no build or browser baseline in candidate visual regression."
   },
   "release": {
-    "status": "pending",
+    "status": "reviewed",
     "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
-    "evidence": []
+    "scope": "independent-native-raster",
+    "predecessorRun": 38985941469,
+    "automaticRetries": 0,
+    "performanceQualification": "excluded",
+    "firstEightAllCorrectnessPassed": false,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "evidence": [
+      {
+        "runId": 38985941469,
+        "artifactId": 12083397932,
+        "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+        "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929"
+      }
+    ]
   },
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-raster.mjs",
-      "bytes": 13406,
-      "sha256": "cf7f8f19a845d26582244c71a492d3344377904e7ca010814c520d8bc862dfda"
+      "bytes": 14522,
+      "sha256": "43ca618ca3261f962e9fbd888c8095239d6b6e1638caefe289bb268a942c431f"
     }
   ],
   "frozenTools": [
@@ -58,8 +72,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 49275,
-      "sha256": "1fea4a3d16ada4136ed4ed2e0df9539bb9ea6b13eb5feff9c971d15059566b64"
+      "bytes": 50313,
+      "sha256": "e118b8fbf1f86a56a1d6aa472e808fcd77ddbaa699611c6c6b874b497e4f8037"
     },
     {
       "path": "scripts/solo-qualification-browser-context.mjs",
@@ -271,7 +285,7 @@
     },
     "attributeWitness": "Only conditional fresh prefix uses a declared forwarding getContext wrapper, collecting <=512 unique actual contexts and reading attributes once after all fixed draws. Full12 primary is exact-original/unwrapped. Conditional prefix PNGs must match all corresponding primary captures exactly before deeper localization."
   },
-  "scope": "All12 unchanged synthetic presentation cases per Linux engine using default native Canvas APIs. New Linux browser/backend stratum, no software-force or GPU/physical-device claim. Original Mac strict failure retained. Public production payload/CSP; no live gameplay or authentication claim. Default backend unknown; actual context attributes recorded only where the conditional diagnostic is admitted.",
+  "scope": "All12 unchanged synthetic presentation cases per Linux engine using default native Canvas APIs. New Linux browser/backend stratum, no software-force or GPU/physical-device claim. Original Mac strict failure retained. Public production payload/CSP; no live gameplay or authentication claim. Default backend unknown; actual context attributes recorded only where the conditional diagnostic is admitted. Independent diagnostic only: the original seven-of-eight correctness failure remains unresolved; this observation cannot release timing or resolve the historical strict raster failure.",
   "acceptance": {
     "primary": "All12 strict original invariants including identical-input, concealment, exposed positive controls, actor/lane visibility, animation, zero-dt stability and same-owner source replacement/restoration. Visual review remains pending separately.",
     "conditional": "Only a clean full12 exact known control-failure class admits a fresh two-case prefix. All retained prefix PNGs must equal the same new cohort primary prefix; then14 compositor captures and6 fixed historical-input primitive draws. No automatic retry or relaxed threshold.",
@@ -304,11 +318,11 @@
     "stageProtocol": "Each stage120s observation, fresh browser/context, existing bounded cleanup and common outer1200s row. Four stages maximum; no extra warmup."
   },
   "bindingScope": {
-    "status": "metadata-and-git-source-bound-release-held",
+    "status": "independent-diagnostic-full-proof-reverified-before-every-row",
     "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
     "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
     "candidateArtifact": 12082915872,
-    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
+    "firstEight": "Exact3ad run38985941469 retained seven passes and one WebKit worker auto-pause failure. This independent visual diagnostic retains firstEightAllCorrectnessPassed=false.",
     "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
     "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
   }

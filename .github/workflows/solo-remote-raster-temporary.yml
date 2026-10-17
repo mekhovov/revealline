@@ -1,4 +1,4 @@
-name: Temporary Solo Linux native raster correctness
+name: Temporary Solo Linux independent native raster diagnostic
 
 on:
   pull_request:
@@ -27,8 +27,8 @@ jobs:
       max-parallel: 2
       matrix:
         job: [raster-chromium, raster-webkit]
-    # Prospective only: remove false solely with the exact reviewed plan/artifact binding.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && false
+    # Independent excluded diagnostics on one prospective push edge only.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'
     runs-on: ubuntu-24.04
     timeout-minutes: 125
     env:
@@ -43,7 +43,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           path: tools
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 1
       - timeout-minutes: 2
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
