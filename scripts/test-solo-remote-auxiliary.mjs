@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { mkdtemp, readFile, realpath, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -186,6 +187,133 @@ test('a reviewed subset cannot repeat completed unrelated observations', () => {
   const qualified = admitted();
   qualified.release.selectedJobs = ['music-chromium'];
   assert.throws(() => auxiliaryMatrix(qualified));
+});
+
+function preparationManifest() {
+  const value = clone(manifest);
+  // Synthetic admission fixture only. Real package byte identities are unknown
+  // until Appearance completes and must be pinned before any native execution.
+  value.candidate.revision = 'bffcbd838a7bb925da8aaf030695773f893d8bda';
+  Object.assign(value.release, {
+    format: 'SoloStartPreparationConfirmationReleaseV1',
+    scope: 'independent-start-preparation-confirmation',
+    runtimeFix: 'b5b985f7049537a278632ba82228bb671f7f135a',
+    candidateRevision: value.candidate.revision,
+    selectedJobs: ['recovery-chromium', 'recovery-webkit'],
+    repetitions: [1, 2, 3],
+  });
+  return value;
+}
+
+test('preparation confirmation declares six distinct existing-recipe observations with unchanged bounds', () => {
+  const value = preparationManifest();
+  const matrix = auxiliaryMatrix(value);
+  assert.deepEqual(
+    matrix.include.map(({ observation }) => observation),
+    ['chromium', 'webkit'].flatMap((engine) => [1, 2, 3].map((n) => `recovery-${engine}-r${n}`)),
+  );
+  for (const row of matrix.include) {
+    const p = bindAuxiliaryJob(value, row.job, row.repetition);
+    assert.equal(row.jobMinutes, 105);
+    assert.equal(row.stepMinutes, 63);
+    assert.equal(row.outerSeconds, 3720);
+    assert.equal(p.rows.length, 1);
+    assert.equal(p.rows[0].timeoutMs, 420000);
+    assert.equal(p.rows[0].id, `${row.observation}-candidate`);
+    assert.equal(p.rows[0].source, 'candidate');
+    assert.equal(p.helperTimeoutMs, 3600000);
+    assert.equal(p.release.firstEightAllCorrectnessPassed, false);
+    const args = auxiliaryArguments(
+      { here: '/tools', plan: p, modeState: { recipePath: '/scenario' } },
+      p.rows[0],
+      'http://localhost/game/',
+      '/evidence',
+    );
+    assert(args.includes(`--source-revision=${value.candidate.revision}`));
+    assert(!args.includes('--audio-proof'));
+    const observation = raw(p, p.rows[0]);
+    assert.equal(auxiliaryAssessment(p, p.rows[0], observation, closed, '123.4').status, 'passed');
+    observation.buildIdentity.sourceRevision = manifest.candidate.revision;
+    assert.equal(auxiliaryAssessment(p, p.rows[0], observation, closed, '123.4').status, 'failed');
+  }
+});
+
+test('preparation repetitions cannot reuse old source, expand jobs, alter ownership or add retries', () => {
+  for (const change of [
+    (p) => {
+      p.candidate.revision = manifest.candidate.revision;
+    },
+    (p) => {
+      p.release.candidateRevision = manifest.candidate.revision;
+    },
+    (p) => {
+      p.release.runtimeFix = '0'.repeat(40);
+    },
+    (p) => {
+      p.release.selectedJobs.push('speech-webkit');
+    },
+    (p) => {
+      p.release.repetitions = [1, 1, 2];
+    },
+    (p) => {
+      p.release.repetitions = [1, 2, 3, 4];
+    },
+    (p) => {
+      p.release.automaticRetries = 1;
+    },
+    (p) => {
+      p.release.noUnclosedOwners = false;
+    },
+    (p) => {
+      p.release.firstEightAllCorrectnessPassed = true;
+    },
+  ]) {
+    const value = preparationManifest();
+    change(value);
+    assert.throws(() => auxiliaryMatrix(value));
+  }
+  assert.throws(() => bindAuxiliaryJob(preparationManifest(), 'recovery-webkit', 0));
+  assert.throws(() => bindAuxiliaryJob(preparationManifest(), 'recovery-webkit', 4));
+  assert.throws(() => bindAuxiliaryJob(manifest, 'recovery-webkit', 2));
+  const p = bindAuxiliaryJob(preparationManifest(), 'recovery-webkit', 2);
+  p.observationId = 'recovery-webkit-r1';
+  assert.throws(() => validateAuxiliaryPlan(p));
+  const old = plan('recovery-webkit');
+  old.observationId = 'recovery-webkit-r1';
+  old.rows[0].id = 'recovery-webkit-r1-candidate';
+  assert.throws(() => validateAuxiliaryPlan(old));
+});
+
+test('preparation declaration needs only the exact adapter and manifest, and binds one named repetition', async (t) => {
+  const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-recovery-declaration-')));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const module = join(dir, 'adapter.mjs');
+  const input = join(dir, 'manifest.json');
+  const output = join(dir, 'observation.json');
+  const value = preparationManifest();
+  await writeFile(module, await readFile(new URL('./solo-remote-auxiliary.mjs', import.meta.url)));
+  await writeFile(input, JSON.stringify(value));
+  const options = { encoding: 'utf8', timeout: 10000, maxBuffer: 1024 * 1024, cwd: dir };
+  assert.equal(
+    execFileSync(process.execPath, [module, 'matrix-plan', input], options),
+    `matrix=${JSON.stringify(auxiliaryMatrix(value))}\n`,
+  );
+  execFileSync(
+    process.execPath,
+    [module, 'bind-plan', input, output, 'recovery-webkit', '2'],
+    options,
+  );
+  const bound = JSON.parse(await readFile(output));
+  validateAuxiliaryPlan(bound);
+  assert.equal(bound.observationId, 'recovery-webkit-r2');
+  assert.equal(bound.rows[0].id, 'recovery-webkit-r2-candidate');
+  assert.equal(bound.manifestInput.path, input);
+  assert.equal(
+    bound.manifestInput.sha256,
+    createHash('sha256')
+      .update(await readFile(input))
+      .digest('hex'),
+  );
 });
 test('verified baseline reuse requires its separately pinned verifier without permitting arbitrary helpers', () => {
   const p = plan();

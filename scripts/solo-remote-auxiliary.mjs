@@ -11,6 +11,14 @@ const SOURCE = {
   baseline: 'b11745223861c3973ad4bf440cc536198b8e0371',
   candidate: '3adcd53792043ef02459e86168c6b33a66d6ef00',
 };
+const PREPARATION_SOURCE = 'bffcbd838a7bb925da8aaf030695773f893d8bda';
+const PREPARATION_FIX = 'b5b985f7049537a278632ba82228bb671f7f135a';
+const preparationConfirmation = (plan) =>
+  plan.release?.format === 'SoloStartPreparationConfirmationReleaseV1';
+function sourceRevision(plan, role) {
+  assert(['baseline', 'candidate'].includes(role));
+  return role === 'candidate' && preparationConfirmation(plan) ? PREPARATION_SOURCE : SOURCE[role];
+}
 export const AUXILIARY_JOBS = Object.freeze({
   'speech-chromium': {
     recipe: 'speech',
@@ -71,11 +79,23 @@ function validateRelease(plan) {
   assert(diagnostic || plan.status === 'reviewed-and-released');
   assert.equal(plan.release.firstEightAllCorrectnessPassed, !diagnostic);
   if (diagnostic) {
-    assert.equal(plan.release.scope, 'independent-audio-and-synthetic-recovery');
+    assert.equal(
+      plan.release.scope,
+      preparationConfirmation(plan)
+        ? 'independent-start-preparation-confirmation'
+        : 'independent-audio-and-synthetic-recovery',
+    );
     assert.equal(plan.release.predecessorRun, 38985941469);
     assert.equal(plan.release.automaticRetries, 0);
     assert.equal(plan.release.performanceQualification, 'excluded');
   }
+  if (preparationConfirmation(plan)) {
+    assert(diagnostic, 'Start confirmation remains independent correctness evidence');
+    assert.equal(plan.release.runtimeFix, PREPARATION_FIX);
+    assert.equal(plan.release.candidateRevision, PREPARATION_SOURCE);
+    assert.deepEqual(plan.release.selectedJobs, ['recovery-chromium', 'recovery-webkit']);
+    assert.deepEqual(plan.release.repetitions, [1, 2, 3]);
+  } else assert.equal(plan.release.repetitions, undefined);
   if (plan.release.selectedJobs !== undefined) {
     const selected = plan.release.selectedJobs;
     assert(diagnostic, 'Subset observations require an independent diagnostic release');
@@ -109,7 +129,14 @@ export function validateAuxiliaryPlan(plan) {
   assert(spec);
   if (plan.release.selectedJobs)
     assert(plan.release.selectedJobs.includes(plan.job), 'Job is outside this reviewed release');
-  assert.equal(plan.candidate.revision, SOURCE.candidate);
+  assert.equal(plan.candidate.revision, sourceRevision(plan, 'candidate'));
+  if (preparationConfirmation(plan)) {
+    assert(plan.release.repetitions.includes(plan.repetition));
+    assert.equal(plan.observationId, `${plan.job}-r${plan.repetition}`);
+  } else {
+    assert.equal(plan.repetition, undefined);
+    assert.equal(plan.observationId, undefined);
+  }
   assert.equal(plan.baseline.revision, SOURCE.baseline);
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
@@ -139,7 +166,7 @@ export function validateAuxiliaryPlan(plan) {
       performanceExclusion,
     })),
     spec.roles.map((source) => ({
-      id: `${plan.job}-${source}`,
+      id: `${plan.observationId ?? plan.job}-${source}`,
       source,
       kind: 'auxiliary',
       engine: spec.engine,
@@ -168,7 +195,7 @@ export function validateAuxiliaryPlan(plan) {
   assert.equal(plan.musicBundle.bytes, 3124928);
   return plan;
 }
-export function bindAuxiliaryJob(manifest, job) {
+export function bindAuxiliaryJob(manifest, job, repetition = 1) {
   assert.equal(manifest.format, 'SoloHostedAuxiliaryManifestV1');
   validateRelease(manifest);
   assert.deepEqual(
@@ -183,9 +210,14 @@ export function bindAuxiliaryJob(manifest, job) {
   delete plan.jobs;
   plan.format = 'SoloHostedAuxiliaryPlanV1';
   plan.job = job;
+  if (preparationConfirmation(plan)) {
+    assert(plan.release.repetitions.includes(repetition));
+    plan.repetition = repetition;
+    plan.observationId = `${job}-r${repetition}`;
+  } else assert.equal(repetition, 1);
   plan.helperTimeoutMs = spec.helperMinutes * 60000;
   plan.rows = spec.roles.map((source) => ({
-    id: `${job}-${source}`,
+    id: `${plan.observationId ?? job}-${source}`,
     source,
     kind: 'auxiliary',
     engine: spec.engine,
@@ -197,16 +229,20 @@ export function bindAuxiliaryJob(manifest, job) {
 export function auxiliaryMatrix(manifest) {
   validateRelease(manifest);
   return {
-    include: (manifest.release.selectedJobs ?? Object.keys(AUXILIARY_JOBS)).map((job) => {
-      const plan = bindAuxiliaryJob(manifest, job);
-      const spec = AUXILIARY_JOBS[plan.job];
-      return {
-        job,
-        jobMinutes: spec.jobMinutes,
-        stepMinutes: spec.helperMinutes + 3,
-        outerSeconds: (spec.helperMinutes + 2) * 60,
-      };
-    }),
+    include: (manifest.release.selectedJobs ?? Object.keys(AUXILIARY_JOBS)).flatMap((job) =>
+      (manifest.release.repetitions ?? [1]).map((repetition) => {
+        const plan = bindAuxiliaryJob(manifest, job, repetition);
+        const spec = AUXILIARY_JOBS[plan.job];
+        return {
+          job,
+          observation: plan.observationId ?? job,
+          repetition,
+          jobMinutes: spec.jobMinutes,
+          stepMinutes: spec.helperMinutes + 3,
+          outerSeconds: (spec.helperMinutes + 2) * 60,
+        };
+      }),
+    ),
   };
 }
 export async function readAuxiliaryJSON(path, maximum = 32 * MiB) {
@@ -318,7 +354,7 @@ export function auxiliaryArguments(ctx, row, url, dir) {
     '--cadence=settled120',
     '--cpu=1',
     `--browser=${row.engine}`,
-    `--source-revision=${SOURCE[row.source]}`,
+    `--source-revision=${sourceRevision(ctx.plan, row.source)}`,
     ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
     ...(row.engine === 'webkit' ? ['--context=persistent'] : []),
     ...(spec.recipe !== 'recovery' ? ['--audio-proof'] : []),
@@ -337,8 +373,8 @@ export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
     command.ambiguous?.length === 0 &&
     raw?.scenarioStatus === 'pass' &&
     raw.scenarioSHA256 === HASHES[spec.recipe] &&
-    raw.sourceRevision === SOURCE[row.source] &&
-    raw.buildIdentity?.sourceRevision === SOURCE[row.source] &&
+    raw.sourceRevision === sourceRevision(plan, row.source) &&
+    raw.buildIdentity?.sourceRevision === sourceRevision(plan, row.source) &&
     raw.environment?.engine === row.engine &&
     raw.environment?.cpuThrottle === 1 &&
     raw.environment?.contextMode === (row.engine === 'webkit' ? 'persistent' : 'ephemeral') &&
@@ -402,7 +438,7 @@ export async function runAuxiliaryRow(ctx, row, dir, tmp) {
     assert.equal(response.status, 200);
     const bytes = Buffer.from(await response.arrayBuffer()),
       build = JSON.parse(bytes);
-    assert.equal(build.sourceRevision, SOURCE[row.source]);
+    assert.equal(build.sourceRevision, sourceRevision(ctx.plan, row.source));
     for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS))
       assert.equal(response.headers.get(name), value);
     const url = new URL('game/?journey=opening', server.url).href;
@@ -459,13 +495,13 @@ export async function runAuxiliaryRow(ctx, row, dir, tmp) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  const [mode, input, output, job] = process.argv.slice(2);
+  const [mode, input, output, job, repetition = '1'] = process.argv.slice(2);
   const bytes = await readFile(input);
   if (mode === 'matrix-plan')
     process.stdout.write(`matrix=${JSON.stringify(auxiliaryMatrix(JSON.parse(bytes)))}\n`);
   else {
     assert.equal(mode, 'bind-plan');
-    const plan = bindAuxiliaryJob(JSON.parse(bytes), job);
+    const plan = bindAuxiliaryJob(JSON.parse(bytes), job, Number(repetition));
     plan.manifestInput = {
       path: resolve(input),
       bytes: bytes.length,
