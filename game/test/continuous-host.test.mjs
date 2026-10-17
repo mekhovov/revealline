@@ -466,8 +466,8 @@ test('dynamic saved-route handler follows current mutable inputs and a replaceme
     },
   });
   const firstDate = '2026-09-12';
-  page.$('library-button').click();
-  page.doc.querySelector('[data-library-panel="challenges"]').click();
+  await activateHostAction(page.$('library-button'));
+  await activateHostAction(page.doc.querySelector('[data-library-panel="challenges"]'));
   page.$('challenge-date').value = firstDate;
   page.$('challenge-kind').value = 'calm';
   await page.$('launch-challenge').onclick();
@@ -533,8 +533,8 @@ test('dynamic saved-route handler follows current mutable inputs and a replaceme
   );
 
   const secondDate = '2026-09-13';
-  page.$('library-button').click();
-  page.doc.querySelector('[data-library-panel="challenges"]').click();
+  await activateHostAction(page.$('library-button'));
+  await activateHostAction(page.doc.querySelector('[data-library-panel="challenges"]'));
   page.$('challenge-date').value = secondDate;
   page.$('challenge-kind').value = 'daily';
   await page.$('launch-challenge').onclick();
