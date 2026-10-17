@@ -615,7 +615,7 @@ export function timingMatrix(manifest) {
         phase: plan.phase,
         engine,
         repetition,
-        jobMinutes: 120,
+        jobMinutes: selectedTimingSource(plan) === finalTimingSource ? 122 : 120,
         stepMinutes: 78,
         outerSeconds: 77 * 60,
       };
@@ -790,7 +790,7 @@ export function sustainedMatrix(manifest) {
         phase: plan.phase,
         engine,
         repetition,
-        jobMinutes: spec.jobMinutes,
+        jobMinutes: spec.jobMinutes + (plan.sourceCohort === finalSoakCohort ? 2 : 0),
         stepMinutes: spec.helperMinutes + 3,
         outerSeconds: (spec.helperMinutes + 2) * 60,
       };
