@@ -1,5 +1,30 @@
 # FPV tuning: reviewed completion plan
 
+## Current completion review
+
+The latest continuation rebased on `1d631986ad73ba1301a151a76b1607cf03dbe97a`
+before edits. The [boundary review](fpv-tuning-boundary-review.md) records fresh
+primary-source examples and three concrete corrections: history restoration
+supersedes pending imports, preset review metadata matches the tagged parser,
+and Regional flight limits retain recording export and explicit restart.
+Its verification and delivery status takes precedence over the historical reviews
+below. Earlier receipts keep their original source and deployment scope.
+
+| Original phase | Current disposition |
+| --- | --- |
+| 0 — Base and compatibility | Rebased; legacy identities, migration and historical recordings retained. |
+| 1 — Rates and throttle | Five models and exact verified-version throttle behavior implemented. |
+| 2 — Profiles, setups and tuning | Implemented; latest history/import transition receives additional regression coverage. |
+| 3 — Configuration and preset transfer | Implemented for the five explicitly verified releases; latest metadata parity correction is bounded to the tagged parser. |
+| 4 — Advanced backend | Optional unscored backend implemented with fixed timing, recording, recovery and transactional Regional admission; latest Regional limit handling closes an export lifecycle gap. |
+| 5 — Aircraft and comparison | Editable templates, controller tunes and frozen comparison identities implemented. Measured aircraft fitting, propwash/ground effect and scored comparison remain qualification-dependent. |
+| 6 — Delivery and rollout | Existing features published; new corrections follow ordinary CI/publication. Physical-device, pilot, iOS and wider-platform qualification remain deferred. Advanced is not promoted to scored/default use. |
+
+No additional algorithm, online catalog, automatic PID conversion or physics
+slider is added merely because another simulator advertises one. Complete the
+bounded corrections and their verification, then stop software expansion. The
+user's unavailable measurements remain explicit future acceptance work.
+
 Reviewed 17 October 2026 against the original phased plan and current upstream
 documentation. The first review used implementation `8202201b7` on `741948b14`;
 the second review rebased the accumulated work onto `3585f2c32` before edits.
@@ -719,12 +744,27 @@ another firmware family or automatic PID conversion to this release.
    arena/Regional replay agreement and selects 250 Hz; maximum response-metric
    error is 1.8814%, minimum measured capacity 81.08× on one M4 Pro. This remains
    a headless numerical reference, not physical-flight qualification. Ordinary
-   desktop/iOS package staging passes with 208 stable source pins; current-source
-   native execution is not claimed. See the [verification receipt](fpv-post-publication-verification.json).
-5. **Delivery.** Submit these exact fixes and retained evidence through the normal
-   reviewed main publication process, then verify both public routes through the
-   ordinary password form, offline installation and recording export/replay.
-   Earlier public receipts remain historical until that new deployment passes.
+   desktop/iOS package staging passes with 208 stable source pins. The subsequent
+   [actual Electron fixture check](fpv-native-post-publication-runtime.json)
+   preserves the complete library across two clean app processes and replays both
+   native exports exactly, with all workers disposed. It does not qualify iOS,
+   a distributed installer or physical controls. See the [local verification receipt](fpv-post-publication-verification.json).
+5. **Delivery completed.** [PR #1562](https://github.com/mekhovov/revealline/pull/1562)
+   passed all 12 non-skipped product checks and merged through the normal
+   controller as `80494f63d`. The normal [publication](https://github.com/mekhovov/revealline/actions/runs/39002032297)
+   passed build, deploy and verification. Both public routes pass ordinary
+   password access, saved 900°/s rates, visible offline installation, complete
+   browser-process restart offline and short unscored export/exact replay/worker
+   disposal. The actual archive remains 966,676,480 bytes, within the unchanged
+   cap. See the [final delivery receipt](fpv-post-publication-delivery-verification.json).
+   A concurrent main change only adds a display-density attribute to an authoring
+   test page; every FPV qualification source pin remains unchanged in the merge.
+   Current public acceptance covers fresh installations; authentic existing-update
+   receipts retain their earlier source scope.
+
+All available software corrections and this delivery scope are complete. The
+fresh public flights establish lifecycle behavior, not aircraft fidelity. The
+desktop result is an actual Electron fixture check, not an iOS or installer claim.
 
 Physical radio/touch hardware, pilot feedback, identified-aircraft measurements,
 iOS execution and broader hardware remain unavailable. Those dependencies do not

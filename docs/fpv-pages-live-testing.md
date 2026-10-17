@@ -17,7 +17,45 @@ No optional-package selector change or optional-package release/promotion is
 needed for direct-route live testing. The repository's existing main-branch
 review and product-release policies still apply.
 
-## Public publication — 17 October 2026
+## Follow-up publication — 17 October 2026
+
+[PR #1562](https://github.com/mekhovov/revealline/pull/1562) delivers atomic drone
+duplication, case-insensitive preset-option matching and export/reference/restart
+after genuine Advanced flight limits. All 12 non-skipped product checks pass on
+`2af1ee906`; general test/build jobs were explicitly skipped. The normal controller
+merged it as `80494f63db57be3e44586d8271c70c3e7a3cb403`, and the ordinary
+[Pages publication](https://github.com/mekhovov/revealline/actions/runs/39002032297)
+passed build, deploy and verification. A concurrent authoring-page display fix
+changes no source pinned by FPV qualification.
+
+The [current public acceptance](fpv-post-publication-public-acceptance.json)
+passes Academy and World in fresh isolated Chrome profiles. Both start locked,
+accept the normal password form, save 900°/s Actual rates and install offline
+through visible controls. New browser processes reopened offline retain those
+rates and run Advanced reference practice. Academy exports 12 ticks with hash
+`1d473fbb`; World exports 11 ticks with hash `13902221`. Each recording replays
+exactly and returning to tuning disposes its worker. Public metadata, manifest,
+source pins and runner remain unchanged during acceptance. Credentials are
+excluded from reports. These short neutral-input flights verify lifecycle, not
+physical fidelity or performance; the different tick counts are recorded as such.
+
+The [current desktop fixture check](fpv-native-post-publication-runtime.json)
+separately verifies actual Electron UI, OS recording saves, exact library
+retention across process reopen, two successful replays and complete worker
+disposal. The fixture is explicitly labelled and retains locked production pages;
+it does not qualify native production authentication, iOS or a signed installer.
+
+The [final delivery verification](fpv-post-publication-delivery-verification.json)
+pins these receipts and all hosted artifacts. The staged site contains 3,442 files
+and 963,685,141 bytes; the actual uploaded archive is 966,676,480 bytes, leaving
+13,323,520 bytes below the unchanged 980,000,000-byte cap. The optional catalogue
+is present and empty. No manual merge/deploy, forced worker activation or gate
+bypass was used. Current public acceptance covers fresh installations; the
+authentic installed-update evidence below retains its original source scope.
+Advanced remains optional, unscored and default-ineligible, with physical and
+wider-platform qualification deferred.
+
+## Original public publication — 17 October 2026
 
 [PR #1561](https://github.com/mekhovov/revealline/pull/1561) delivered implementation
 `eaecd60562917b7cf47d4995af00d561b154debd`. After its 12 non-skipped product
