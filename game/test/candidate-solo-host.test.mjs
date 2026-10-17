@@ -435,7 +435,7 @@ for (const route of ['opening', 'authored'])
       const [id] = row;
       playRoute(p, row);
       assert.equal(p.$('game-overlay').hidden, true, 'Every clear first keeps its full picture.');
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('journey-chooser')?.open ?? false, false);
       if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
       p.$('show-result').click();
       assert.equal(p.$('game-overlay').dataset.kind, 'won');
@@ -450,7 +450,7 @@ for (const route of ['opening', 'authored'])
       picture = p.rendered.backdrop,
       checkpoint = authoritativeCheckpoint(completed);
     p.$('next-button').click();
-    await settle(() => p.$('journey-chooser').open && p.$('journey-collection'));
+    await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
     assert.equal(p.$('journey-chooser').open, true);
     p.change('journey-collection', 'Journey');
     assert.equal(p.rendered.run.levelId, rows.at(-1)[0]);

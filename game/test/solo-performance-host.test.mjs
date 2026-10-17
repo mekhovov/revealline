@@ -8,6 +8,7 @@ import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { FIXED_DT, stepRun } from '../core/index.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 const pictures = { Image: PNGImage };
 const fetchResponse = async (path) =>
   String(path).includes('/content-design/assets/') ? new Response(await readFile(path)) : undefined;
@@ -96,6 +97,107 @@ test('direct Start prepares a paused board without browsing other mission owners
   }
   assert.deepEqual(page.errors, []);
 });
+test(
+  'ordinary Solo constructs Missions and its backup only on the first public browse, then reuses both',
+  { timeout: 90000 },
+  async (t) => {
+    const dialogs = [],
+      requests = [];
+    let exportedBackup = null;
+    const page = await soloPage(t, {
+      search: '',
+      titleScreen: true,
+      pictures,
+      fetchResponse,
+      journeyIndexedDB: managedIndexedDB().indexedDB,
+      fetchJSON: (path) => {
+        requests.push(String(path));
+      },
+      browserSetup({ document, globals }) {
+        const create = document.createElement.bind(document);
+        document.createElement = (tag, ...args) => {
+          const element = create(tag, ...args);
+          if (String(tag).toLowerCase() === 'dialog') {
+            assert(dialogs.length < 128, 'Keep the modeled owner inventory bounded.');
+            dialogs.push(element);
+          }
+          return element;
+        };
+        globals.URL = class extends globals.URL {
+          static createObjectURL(blob) {
+            if (blob.type === 'application/json') {
+              assert(blob.size < 1024 * 1024, 'Keep the fresh profile export bounded.');
+              exportedBackup = blob;
+            }
+            return super.createObjectURL(blob);
+          }
+        };
+      },
+    });
+    const missionOwners = () =>
+      dialogs.filter((node) => ['journey-chooser', 'journey-backup'].includes(node.id));
+    const catalogue = page.$('missions-catalogue'),
+      catalogueHandler = catalogue.onclick;
+    assert.equal(typeof catalogueHandler, 'function');
+    assert.equal(page.$('journey-chooser'), null);
+    assert.equal(page.$('journey-backup'), null);
+    assert.deepEqual(missionOwners(), []);
+    page.$('shell-featured').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Direct Start must prepare the accepted attempt',
+      { timeoutMs: 20000 },
+    );
+    page.frame(0);
+    const run = page.rendered.run;
+    assert.equal(run.levelId, 'first-return');
+    assert.deepEqual(missionOwners(), []);
+    assert(!requests.some((path) => path.includes('mission-library-index')));
+    page.$('shell-menu').click();
+    const checkpoint = authoritativeCheckpoint(run);
+    await openMissionLibrary(page, 'shell-play');
+    const chooser = page.$('journey-chooser'),
+      backup = page.$('journey-backup');
+    assert.deepEqual(missionOwners(), [chooser, backup]);
+    assert(page.$('journey-collection'), 'The first mounted chooser is the unified browser.');
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.equal(page.$('missions-catalogue'), catalogue);
+    assert.equal(catalogue.onclick, catalogueHandler);
+    const backupButton = page.$('journey-backup-open');
+    backupButton.focus();
+    backupButton.click();
+    assert.equal(backup.open, true);
+    assert.equal(page.doc.activeElement, page.$('journey-backup-export'));
+    await page.$('journey-backup-export').onclick();
+    assert(exportedBackup, 'Use the actual scoped profile export, retaining its edition identity.');
+    const raw = await exportedBackup.text();
+    page.$('journey-backup-file').files = [{ size: Buffer.byteLength(raw), text: async () => raw }];
+    await page.$('journey-backup-file').onchange();
+    assert.equal(
+      page.$('journey-backup-apply').disabled,
+      false,
+      page.$('journey-backup-status').textContent,
+    );
+    await page.$('journey-backup-apply').onclick();
+    assert.match(page.$('journey-backup-status').textContent, /Merged and saved locally/);
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    page.$('journey-backup-back').click();
+    assert.equal(backup.open, false);
+    assert.equal(page.doc.activeElement, backupButton);
+    page.$('journey-back').click();
+    assert.equal(chooser.open, false);
+    assert.equal(page.doc.activeElement, page.$('shell-play'));
+    await openMissionLibrary(page, 'shell-play');
+    assert.equal(page.$('journey-chooser'), chooser);
+    assert.equal(page.$('journey-backup'), backup);
+    assert.deepEqual(missionOwners(), [chooser, backup]);
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.deepEqual(page.errors, []);
+  },
+);
 test('raw scene interruptions preserve exact 250ms boundary and never catch up hidden time', async (t) => {
   const page = await soloPage(t, {
     pictures,

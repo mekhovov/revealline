@@ -85,7 +85,7 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       p.key('ArrowDown', false);
       for (let i = 0; i < 1000 && p.rendered.run.status !== 'won'; i++) p.frame();
       assert.equal(p.rendered.run.status, 'won');
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('journey-chooser')?.open ?? false, false);
       p.$('next-button').click();
       await running(p, 'choose-your-share');
       assert.equal(p.rendered.run.player.speed, 0);
@@ -149,7 +149,7 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       p.$('journey-skip').click();
       await running(p, 'behind-the-patrol');
       assert.equal(p.$('theme-select').value, 'border-bloom-actors-v1');
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('journey-chooser')?.open ?? false, false);
       assert.equal(p.rendered.run.player.speed, 0);
       assert.equal(
         Object.keys((await backend.read()).clears.solo).length,
