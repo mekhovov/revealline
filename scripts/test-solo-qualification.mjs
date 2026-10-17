@@ -32,6 +32,7 @@ import {
   frozenExternalCadence,
   externalQualificationBudgets,
   aggregateQualificationGates,
+  qualificationPageErrorDetails,
 } from './solo-qualification-observation.mjs';
 import {
   validateQualification,
@@ -56,6 +57,82 @@ const scenario = (actions, extra = {}) => ({
 });
 
 const preparationSelector = '[data-presentation-status="auxiliary"]';
+
+test('WebKit empty error stack retains its nonempty message without rewriting the legacy string', () => {
+  // Playwright1.62.1 wkPage._onConsoleMessage constructs this exact Error shape
+  // when a JavaScript console error has text but no native stackTrace.
+  const error = new Error('The operation was interrupted');
+  error.name = 'AbortError';
+  error.stack = '';
+  assert.equal(String(error.stack ?? error), '', 'Retained historical observation-loss control');
+  const actual = qualificationPageErrorDetails(error);
+  assert.equal(actual.fields.name.value, 'AbortError');
+  assert.equal(actual.fields.message.value, 'The operation was interrupted');
+  assert.equal(actual.fields.stack.value, '');
+  for (const field of Object.values(actual.fields)) {
+    assert.equal(field.readFailed, false);
+    assert.equal(field.truncated, false);
+  }
+  assert.equal(error.stack, '', 'The error and legacy verdict authority are unchanged');
+});
+
+test('error details never stringify arbitrary values or follow nested errors and hostile accessors', () => {
+  const forbidden = {
+    toJSON() {
+      assert.fail('Arbitrary object serialization');
+    },
+    toString() {
+      assert.fail('Arbitrary object coercion');
+    },
+  };
+  const error = { message: forbidden, stack: Symbol('private') };
+  Object.defineProperty(error, 'name', {
+    get() {
+      throw Error('Unreadable name');
+    },
+  });
+  Object.defineProperty(error, 'cause', {
+    get() {
+      assert.fail('Nested cause inspected');
+    },
+  });
+  const actual = qualificationPageErrorDetails(error);
+  assert.equal(actual.fields.name.readFailed, true);
+  assert.equal(actual.fields.message.type, 'object');
+  assert.equal(actual.fields.message.value, null);
+  assert.equal(actual.fields.stack.type, 'symbol');
+  assert.doesNotThrow(() => JSON.stringify(actual));
+  for (const value of [null, undefined, 17, false, 'thrown text', 2n, Symbol('thrown')]) {
+    const result = qualificationPageErrorDetails(value);
+    assert.equal(result.thrownType, value === null ? 'null' : typeof value);
+    assert.doesNotThrow(() => JSON.stringify(result));
+  }
+});
+
+test('error metadata truncation stays below32KiB per event including JSON escapes and multibyte text', () => {
+  for (const text of ['\0', '"\\\n', '\u{1f6f0}', '\ud800']) {
+    const input = text.repeat(10000);
+    const details = qualificationPageErrorDetails({ name: input, message: input, stack: input });
+    for (const [name, limit] of [
+      ['name', 128],
+      ['message', 1024],
+      ['stack', 4096],
+    ]) {
+      assert.equal(details.fields[name].value.length, limit);
+      assert.equal(details.fields[name].originalCodeUnits, input.length);
+      assert.equal(details.fields[name].truncated, true);
+    }
+    assert(Buffer.byteLength(JSON.stringify(details)) < 32 * 1024);
+    assert(Buffer.byteLength(JSON.stringify(Array(100).fill(details))) < 100 * 32 * 1024);
+  }
+  const exact = qualificationPageErrorDetails({
+    name: 'n'.repeat(128),
+    message: 'm'.repeat(1024),
+    stack: 's'.repeat(4096),
+  });
+  assert(Object.values(exact.fields).every((field) => !field.truncated));
+});
+
 function preparationPage(initial, settled = initial, failure = null) {
   let state = initial;
   const observed = { waits: 0, timeout: null };

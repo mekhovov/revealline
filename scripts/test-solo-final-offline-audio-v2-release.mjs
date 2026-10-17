@@ -1,3 +1,4 @@
+import { readHistoricalPageErrorRefs } from './solo-page-error-source-witness.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -101,7 +102,15 @@ for (const [kind, [oldPath, path, workflowPath]] of Object.entries(pairs)) {
       kind === 'audio'
         ? [...plan.adapterInputs, ...plan.frozenTools]
         : [...plan.adapterInputs, plan.diagnosticRelease.ownerCorrection];
+    const errorHistory =
+      kind === 'audio' ? await readHistoricalPageErrorRefs(path, workflowPath) : new Map();
     for (const ref of refs) {
+      if (errorHistory.has(ref.path)) {
+        const expected = errorHistory.get(ref.path);
+        assert.equal(ref.bytes, expected.bytes, ref.path);
+        assert.equal(ref.sha256, expected.sha256, ref.path);
+        continue;
+      }
       if (kind === 'offline' && ref.path === 'scripts/solo-remote-offline.mjs') {
         const witness = validateOfflineWitness(await readFile(new URL(witnessPath, root)));
         for (const historical of [path, workflowPath]) {

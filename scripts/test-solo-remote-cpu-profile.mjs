@@ -1,3 +1,4 @@
+import { readHistoricalPageErrorRefs } from './solo-page-error-source-witness.mjs';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -231,8 +232,13 @@ test('source/replay/control/profile failures and missing/capped samples remain f
 });
 test('immutable parked declaration and witnessed source refs remain exact', async () => {
   const witness = await verifyHistoricalDeclaration();
+  const errorHistory = await readHistoricalPageErrorRefs(
+    'docs/performance/solo-remote-cpu-profile-plan.json',
+    '.github/workflows/solo-remote-cpu-profile-temporary.yml',
+  );
   for (const ref of [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools]) {
-    const historical = witness.files.find((row) => row.path === ref.path);
+    const historical =
+      witness.files.find((row) => row.path === ref.path) ?? errorHistory.get(ref.path);
     const actual = historical
       ? { bytes: historical.bytes, sha256: historical.sha256 }
       : await digest(new URL(ref.path, root));

@@ -1,3 +1,4 @@
+import { readHistoricalPageErrorRefs } from './solo-page-error-source-witness.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -219,6 +220,9 @@ test('preparation copies exact route and upload without baseline acquisition or 
   await mkdir(join(temporary, 'work'));
   await mkdir(join(temporary, 'evidence'));
   const p = plan();
+  // Current preparer control uses today's files; immutable execution is checked separately.
+  for (const ref of [...p.adapterInputs, ...p.frozenTools])
+    Object.assign(ref, await digest(new URL(ref.path, root)));
   const ctx = {
     plan: p,
     repository: await realpath(root),
@@ -292,9 +296,11 @@ async function checkRelease(m, workflow) {
     'scripts/test-solo-qualification-cpu-profile.mjs',
   ])
     assert(command.includes(file));
+  const historical = await readHistoricalPageErrorRefs(path, workflowPath);
   for (const ref of [m.recipe, m.upload, ...m.adapterInputs, ...m.frozenTools]) {
+    const old = historical.get(ref.path);
     assert.deepEqual(
-      await digest(new URL(ref.path, root)),
+      old ? { bytes: old.bytes, sha256: old.sha256 } : await digest(new URL(ref.path, root)),
       { bytes: ref.bytes, sha256: ref.sha256 },
       ref.path,
     );
@@ -303,7 +309,7 @@ async function checkRelease(m, workflow) {
   assert(workflow.includes(path));
   assert(workflow.includes(workflowPath));
 }
-test('actual one-shot release freezes all current dependencies and uses actual verifier smoke', async () =>
+test('actual one-shot release preserves historical observation dependencies and uses actual verifier smoke', async () =>
   checkRelease(manifest, await readFile(new URL(workflowPath, root), 'utf8')));
 test('concrete release rejects relaxed activation, omitted source proof and changed current bytes', async () => {
   const w = await readFile(new URL(workflowPath, root), 'utf8');
