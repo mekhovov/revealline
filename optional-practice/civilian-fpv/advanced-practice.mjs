@@ -23,6 +23,7 @@ import {
 import { AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
 import { exportJSONFile, onNativeInactive } from '../../game/platform.mjs';
 import { mountAircraftArchiveControls } from './aircraft-archive-controls.mjs';
+import { sampleGhostPath } from './advanced-ghost-path.mjs';
 
 const COPY = {
   en: {
@@ -102,6 +103,7 @@ const COPY = {
     comparisonMismatch:
       'This aircraft setup uses a different comparison class. Restore the setup or choose another reference.',
     positionGap: 'Position gap at the same flight time',
+    sampledGhost: 'Approximate ghost display; sample interval',
     maneuver: 'Repeatable practice',
     maneuverHelp:
       'Choose a short exercise, then restart from the same launch point. Follow the cues manually; no controls or scores are automated. Keep a reference or export it before returning to edit rates.',
@@ -204,6 +206,7 @@ const COPY = {
     comparisonMismatch:
       'Ці налаштування дрона належать до іншого класу порівняння. Відновіть налаштування або виберіть інший орієнтир.',
     positionGap: 'Відстань між позиціями в той самий час польоту',
+    sampledGhost: 'Приблизне відображення примари; інтервал вибірки',
     maneuver: 'Повторювана практика',
     maneuverHelp:
       'Виберіть коротку вправу й перезапустіть із тієї самої точки. Виконуйте підказки самостійно; автоматичного керування чи оцінки немає. Залиште орієнтир або експортуйте його перед поверненням до зміни рейтів.',
@@ -1000,7 +1003,7 @@ export function mountAdvancedPractice({
     const tick = telemetry?.missionTick ?? 0,
       startTick = comparison.startMissionTick ?? 0;
     ghost.visible = ghost.visible && tick >= startTick;
-    const point = comparison.path[Math.max(0, Math.min(tick, comparison.missionTicks) - startTick)];
+    const point = sampleGhostPath(comparison.path, tick);
     if (!point) {
       ghost.visible = false;
       return;
@@ -1011,6 +1014,8 @@ export function mountAdvancedPractice({
       (telemetry?.missionTick ?? 0) > comparison.missionTicks
         ? copy.comparisonEnded
         : `${copy.positionGap}: ${Math.hypot((telemetry?.position.x ?? point[1]) - point[1], (telemetry?.position.y ?? point[2]) - point[2], (telemetry?.position.z ?? point[3]) - point[3]).toFixed(2)} m · ${((telemetry?.missionTick ?? 0) / 50).toFixed(2)} s`;
+    if (comparison.pathStride > 1)
+      comparisonInfo.textContent += ` · ${copy.sampledGhost}: ${(comparison.pathStride / 50).toFixed(2)} s`;
   }
   function cancelVerification() {
     verificationGeneration++;
