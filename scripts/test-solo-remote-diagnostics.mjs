@@ -585,3 +585,49 @@ test('normal coarse timer uncertainty stays unresolved at the original5% limit',
   assert.equal(result.analysis.status, 'unresolved');
   assert.equal(result.analysis.limit, 0.05);
 });
+
+test('explicit final diagnostics setup successors retain prior failed declarations and unchanged gates', async () => {
+  const { DIAGNOSTICS_SETUP_SUCCESSORS, DIAGNOSTICS_SETUP_DYNAMIC_ROOTS } = await import(
+    './solo-remote-diagnostics.mjs'
+  );
+  for (const [name, file] of [
+    ['app', 'app-diagnostics'],
+    ['journal', 'journal-cost'],
+  ]) {
+    const original = JSON.parse(
+      await readFile(join(repository, `docs/performance/solo-final-${file}-plan.json`)),
+    );
+    const plan = structuredClone(original);
+    plan.release.onceOnlyBefore = 'a7e0219818842f02399317ca6d2a14bdd506da3d';
+    plan.setupSuccessor = structuredClone(DIAGNOSTICS_SETUP_SUCCESSORS[name]);
+    const priorBytes = await readFile(
+      join(repository, plan.setupSuccessor.originalDeclaration.path),
+    );
+    assert.equal(priorBytes.length, plan.setupSuccessor.originalDeclaration.bytes);
+    assert.equal(sha(priorBytes), plan.setupSuccessor.originalDeclaration.sha256);
+    for (const path of DIAGNOSTICS_SETUP_DYNAMIC_ROOTS) {
+      const bytes = await readFile(join(repository, path));
+      plan.frozenTools.push({ path, bytes: bytes.length, sha256: sha(bytes) });
+    }
+    bindDiagnosticsJob(original, 'webkit');
+    bindDiagnosticsJob(plan, 'webkit');
+    assert.deepEqual(plan.observation, original.observation);
+    for (const mutate of [
+      (p) => delete p.setupSuccessor,
+      (p) => p.setupSuccessor.priorRun++,
+      (p) => p.setupSuccessor.priorNativeObservations++,
+      (p) => (p.setupSuccessor.originalDeclaration.sha256 = '0'.repeat(64)),
+      (p) => (p.setupSuccessor.gateChanged = true),
+      (p) => (p.release.onceOnlyBefore = original.release.onceOnlyBefore),
+      (p) => (p.observation.overheadLimit = 0.06),
+      (p) => (p.release.firstEightAllCorrectnessPassed = true),
+      ...DIAGNOSTICS_SETUP_DYNAMIC_ROOTS.map(
+        (path) => (p) => (p.frozenTools = p.frozenTools.filter((r) => r.path !== path)),
+      ),
+    ]) {
+      const changed = structuredClone(plan);
+      mutate(changed);
+      assert.throws(() => bindDiagnosticsJob(changed, 'webkit'));
+    }
+  }
+});
