@@ -1,5 +1,7 @@
 # FPV Survivals maps and movement — implementation status
 
+**17 October continuation:** [current researched integration/review plan](fpv-survivals-completion-plan-2026-10-17.md) and [fresh completion report](qualification/overflight/integration-20261017/README.md). The entire twenty-commit unmerged stack is preserved and rebased onto main `b133a5ec8` in a new successor branch. Accepted custom V4 Marathon previews now avoid unsupported layout/reversal promises;101 fresh integration checks pass. Previous native measurements retain their tested-source boundaries. Main-target PR admission/merge and human review remain separate from completed local work.
+
 **Current continuation, 16 October:** [researched remaining delivery plan](fpv-survivals-completion-plan-2026-10-16.md) and [source/evidence report](qualification/overflight/review-completion-20261016/README.md). Historical checkpoints below retain their tested-source boundaries.
 
 **Current local completion:** truthful Marathon previews and a readable full-width
