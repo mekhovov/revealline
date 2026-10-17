@@ -1,0 +1,12 @@
+{"index":0,"pacing":"current","active":"lost","time":316.3333333333333,"gap":66.96666666666667,"park":"lost"}
+{"index":0,"pacing":"late-1250-1550","active":"won","time":404.1666666666667,"gap":43.01666666666668,"park":"lost"}
+{"index":1,"pacing":"current","active":"won","time":500.6666666666667,"gap":88.83333333333334,"park":"lost"}
+{"index":1,"pacing":"late-1250-1550","active":"won","time":528.8333333333334,"gap":52.91666666666666,"park":"lost"}
+{"index":2,"pacing":"current","active":"won","time":322.51666666666665,"gap":42.89999999999999,"park":"lost"}
+{"index":2,"pacing":"late-1250-1550","active":"won","time":321.53333333333336,"gap":42.89999999999999,"park":"lost"}
+{"index":3,"pacing":"current","active":"won","time":378.5833333333333,"gap":38.19999999999999,"park":"lost"}
+{"index":3,"pacing":"late-1250-1550","active":"won","time":348.8333333333333,"gap":26.700000000000003,"park":"lost"}
+{"index":4,"pacing":"current","active":"lost","time":293.03333333333336,"gap":37.89999999999999,"park":"lost"}
+{"index":4,"pacing":"late-1250-1550","active":"lost","time":274.8333333333333,"gap":37.89999999999999,"park":"lost"}
+{"index":5,"pacing":"current","active":"lost","time":338.1166666666667,"gap":47.400000000000006,"park":"lost"}
+{"index":5,"pacing":"late-1250-1550","active":"lost","time":295.06666666666666,"gap":41.66666666666667,"park":"lost"}

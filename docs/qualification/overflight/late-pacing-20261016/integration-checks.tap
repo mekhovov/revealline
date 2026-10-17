@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: offline actions serialize button intent and retain the invoking dialog owner
+ok 1 - offline actions serialize button intent and retain the invoking dialog owner
+  ---
+  duration_ms: 9.804792
+  ...
+# Subtest: native offload uses only the runtime remover and retains world and proof data
+ok 2 - native offload uses only the runtime remover and retains world and proof data
+  ---
+  duration_ms: 7.793375
+  ...
+# Subtest: unavailable workers disable both native controls without invoking operations
+ok 3 - unavailable workers disable both native controls without invoking operations
+  ---
+  duration_ms: 0.457667
+  ...
+# Subtest: disposal aborts the download and a late success cannot repaint the removed host
+ok 4 - disposal aborts the download and a late success cannot repaint the removed host
+  ---
+  duration_ms: 0.725667
+  ...
+# Subtest: pagehide cancels preparation, reports cancellation and releases busy ownership
+ok 5 - pagehide cancels preparation, reports cancellation and releases busy ownership
+  ---
+  duration_ms: 6.985
+  ...
+# Subtest: failed removal remains retryable and never reports a removed installation
+ok 6 - failed removal remains retryable and never reports a removed installation
+  ---
+  duration_ms: 5.863208
+  ...
+# Subtest: FPV offline entry navigation retains language and game return while using its pinned document
+ok 7 - FPV offline entry navigation retains language and game return while using its pinned document
+  ---
+  duration_ms: 43.485917
+  ...
+# Subtest: entry navigation never substitutes an unadmitted document
+ok 8 - entry navigation never substitutes an unadmitted document
+  ---
+  duration_ms: 0.117208
+  ...
+# Subtest: overflight: all 18 authored maps retain compiled rules through export and fresh native profile import
+ok 9 - overflight: all 18 authored maps retain compiled rules through export and fresh native profile import
+  ---
+  duration_ms: 3679.350042
+  ...
+# Subtest: overflight-riy: all 18 authored maps retain compiled rules through export and fresh native profile import
+ok 10 - overflight-riy: all 18 authored maps retain compiled rules through export and fresh native profile import
+  ---
+  duration_ms: 2002.65175
+  ...
+# Subtest: overflight-hunt: all 18 authored maps retain compiled rules through export and fresh native profile import
+ok 11 - overflight-hunt: all 18 authored maps retain compiled rules through export and fresh native profile import
+  ---
+  duration_ms: 2915.232
+  ...
+# Subtest: V4 Marathon rotates all five layouts with carried resources, fresh terrain and a reproducible retry
+ok 12 - V4 Marathon rotates all five layouts with carried resources, fresh terrain and a reproducible retry
+  ---
+  duration_ms: 789.614875
+  ...
+# Subtest: global family and publisher admission preserve Overflight bytes and reject resource closure changes
+ok 13 - global family and publisher admission preserve Overflight bytes and reject resource closure changes
+  ---
+  duration_ms: 171.498875
+  ...
+# Subtest: global install, exact recovery, offload and reinstall use the native Overflight library
+ok 14 - global install, exact recovery, offload and reinstall use the native Overflight library
+  ---
+  duration_ms: 1263.449042
+  ...
+# Subtest: atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions
+ok 15 - atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions
+  ---
+  duration_ms: 563.820541
+  ...
+# Subtest: existing Studio v1 installations migrate as local owners without altering their content
+ok 16 - existing Studio v1 installations migrate as local owners without altering their content
+  ---
+  duration_ms: 32.253709
+  ...
+# Subtest: failed profile transactions roll back edition installation and offload without losing a local owner
+ok 17 - failed profile transactions roll back edition installation and offload without losing a local owner
+  ---
+  duration_ms: 379.844042
+  ...
+# Subtest: Survivor records separate fastest victories, most cleared, failure details and chosen branches
+ok 18 - Survivor records separate fastest victories, most cleared, failure details and chosen branches
+  ---
+  duration_ms: 13.967125
+  ...
+# Subtest: mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+ok 19 - mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+  ---
+  duration_ms: 36.445625
+  ...
+# Subtest: storage failures retain session achievements and recover without dropping a stronger record
+ok 20 - storage failures retain session achievements and recover without dropping a stronger record
+  ---
+  duration_ms: 0.913167
+  ...
+# Subtest: record captures result before asynchronous profile access or retry changes the run
+ok 21 - record captures result before asynchronous profile access or retry changes the run
+  ---
+  duration_ms: 2.525584
+  ...
+# Subtest: invalid and review results cannot overwrite records; disposal closes access
+ok 22 - invalid and review results cannot overwrite records; disposal closes access
+  ---
+  duration_ms: 65.909333
+  ...
+# Subtest: global family and publisher admission preserve Riy bytes and reject resource closure changes
+ok 23 - global family and publisher admission preserve Riy bytes and reject resource closure changes
+  ---
+  duration_ms: 425.203875
+  ...
+# Subtest: global install, exact recovery, offload and reinstall use the native Riy library
+ok 24 - global install, exact recovery, offload and reinstall use the native Riy library
+  ---
+  duration_ms: 1736.342875
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11670.930583

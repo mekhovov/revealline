@@ -1,0 +1,126 @@
+{
+  "format": "revealline-neon-upgrade-acceptance.v1",
+  "date": "2026-10-16",
+  "scope": "Disposable same-origin local publication fixture. No public deployment or user profile was changed.",
+  "sourceVersion": "0.151.1",
+  "targetVersion": "0.151.2",
+  "targetIsLocalQualificationLabel": true,
+  "targetSourceRevision": "d4b2e97745c33cbcd2bbca304320aa49d64d7a53",
+  "targetDistributionSHA256": "d95c31328fd589e8b21288144bfa20a57e97ac4f15b8098ccdde74fc139df12e",
+  "targetDistributionFiles": 3492,
+  "publicationHelper": "publishing/pages-controller/launcher.mjs:publishOfflineLauncher",
+  "baseline": {
+    "backupBytes": 22263822,
+    "backupSHA256": "37471776be7243a32fd7f1eb1445288081e312266a780232f7c9839a0e87f126",
+    "packs": ["neon-reference-pack", "neon-mosaic-pack"],
+    "pictures": 1,
+    "scores": 1,
+    "pictureReceipts": 1,
+    "nativeSessionFormat": "xonix-session.v6",
+    "savedMission": "Relay Orchard",
+    "checkpoint": {
+      "algorithm": "fnv1a64-state-v2",
+      "hash": "01a48ec4cae3b974",
+      "sections": {
+        "identity": "7d2294a5a0009b0c",
+        "configuration": "016385845cadd377",
+        "board": "fdfff9d1d17aa722",
+        "player": "24fef299027edf2c",
+        "trail": "f0ca473df9efdcc8",
+        "enemies": "c5c02019273370d2",
+        "objectives": "d11fe845cc91952e",
+        "supplies": "e1b45854413ff5f8",
+        "ability": "f6b5aef539d929bb",
+        "clock": "258e0a8d73f4d005",
+        "continuation": "a1e7286b42b404e7",
+        "result": "5b9bc4ba528108e4"
+      }
+    },
+    "earnedOriginalSHA256": "a197cfeb34f1f4af19707eb5a179640f1262a4e999c449b1b9f154ec81991f2c",
+    "originalsBundleBytes": 294199,
+    "originalsBundleSHA256": "dbd4897baacfa66faca91f2a119f7ce617b32baac68f3fdbd51d6048748c58ce",
+    "originalsBundleCapturedBeforeBaselinePlay": true
+  },
+  "result": "Reviewed older-profile migration, exact full-backup preservation, original media retention, interrupted runtime preparation/retry, and offline saved-flight restore/Resume passed in the scoped fixture.",
+  "notQualified": [
+    "bulk-content mid-file connection loss (separate from the qualified runtime-preparation interruption)",
+    "public deployment"
+  ],
+  "afterCopy": {
+    "backupBytes": 22263822,
+    "backupSHA256": "37471776be7243a32fd7f1eb1445288081e312266a780232f7c9839a0e87f126",
+    "entireBackupDeeplyEqual": true,
+    "libraryDeeplyEqual": true,
+    "packsDeeplyEqual": true,
+    "sessionDeeplyEqual": true,
+    "externalChaptersDeeplyEqual": true
+  },
+  "initialCandidateResult": "Whole backup preserved exactly, but Finish app selection refused runtime preparation after the reviewed copy.",
+  "activationDefectMessage": "Repair gameplay before selecting this edition.",
+  "fixedCandidate": {
+    "version": "0.151.3",
+    "sourceRevision": "140808f9b3110417767e3fbc599ae5e9a2930110",
+    "distributionSHA256": "2d863dd88e8e8c42441228654b84e36d0a14e7ff4c9f97f3180f2e8cfba771d2",
+    "distributionFiles": 3492,
+    "scope": "Local qualification label, not a public release or repository version bump.",
+    "afterCopy": {
+      "entireBackupByteEqual": true,
+      "bytes": 22263822,
+      "sha256": "37471776be7243a32fd7f1eb1445288081e312266a780232f7c9839a0e87f126"
+    },
+    "connectionLoss": {
+      "phase": "runtime worker registration during Finish app selection",
+      "requestHeldBeforeResponse": true,
+      "serverStoppedWhileRequestPending": true,
+      "activationFailedVisibly": true,
+      "olderEditionStillSelected": "0.151.1",
+      "source": "native app launcher while the origin server remained stopped"
+    },
+    "originals": {
+      "sourceOriginals": 1,
+      "retainedOriginals": 2,
+      "sourceOriginalBytesPreservedExactly": true,
+      "sourceRevisionsPreservedExactly": true,
+      "sourceAssignmentsPreservedExactly": true,
+      "postUpgradeBundleBytes": 342019,
+      "additionalOriginalNote": "The shared store also retains an authored picture accepted during baseline gameplay; the pre-play originals export was a subset."
+    },
+    "activationRetrySucceeded": true,
+    "offlineRecovery": {
+      "originServerStopped": true,
+      "targetVersion": "0.151.3",
+      "entryJourney": "legacy",
+      "mission": "Relay Orchard",
+      "nativeSessionFormat": "xonix-session.v6",
+      "checkpointMatchesBaseline": true,
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "01a48ec4cae3b974",
+        "sections": {
+          "identity": "7d2294a5a0009b0c",
+          "configuration": "016385845cadd377",
+          "board": "fdfff9d1d17aa722",
+          "player": "24fef299027edf2c",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "c5c02019273370d2",
+          "objectives": "d11fe845cc91952e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "258e0a8d73f4d005",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "exportBytes": 6768,
+      "exportSHA256": "124ff52974aa13b915a584eef959b02d10d3394deae7116dd06339e926f0116f",
+      "verifiedPausedRestore": true,
+      "explicitResume": true,
+      "clockBeforeResume": "0:32",
+      "clockAfterResumeAndPause": "0:46",
+      "livesAfterResume": 3,
+      "targetPercent": 58,
+      "noProfileCleared": true,
+      "defaultJourneyNote": "The bare game entry opens Journey with an independent save slot. Opening Legacy reveals the retained Classic flight; no save loss or repair was inferred."
+    }
+  }
+}

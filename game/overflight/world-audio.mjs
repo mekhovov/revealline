@@ -11,20 +11,32 @@ export const overflightAudioSpatial = (run, point) => ({
 
 /** Observe accepted simulation states. No future warning sound is scheduled:
  * pause, slow resume, cancelled attacks and pooled records stay authoritative. */
-export function createOverflightWorldAudio(sound) {
+export function createOverflightWorldAudio(sound, { acquireGain = () => null } = {}) {
   let owner = null,
     warnings = new Map(),
     shots = new Map(),
     nextAmbience = 0,
     nextEscort = 0,
     lastEscortRole = null,
-    quietUntil = 0;
+    quietUntil = 0,
+    musicLease = null,
+    musicUntil = 0;
   const stopAmbience = () => {
     for (const voice of sound.voices ?? [])
       if (voice.ambience && voice.board === 'overflight') voice.stop();
   };
-  function reset() {
+  const releaseMusic = () => {
+    const owned = musicLease;
+    musicLease = null;
+    musicUntil = 0;
+    owned?.release();
+  };
+  const suspend = () => {
     stopAmbience();
+    releaseMusic();
+  };
+  function reset() {
+    suspend();
     owner = null;
     warnings.clear();
     shots.clear();
@@ -33,7 +45,7 @@ export function createOverflightWorldAudio(sound) {
   }
   return {
     reset,
-    suspend: stopAmbience,
+    suspend,
     update(run, { foreground = false } = {}) {
       if (owner !== run) {
         reset();
@@ -41,10 +53,11 @@ export function createOverflightWorldAudio(sound) {
         for (const escort of run.riy?.escorts ?? []) shots.set(escort, escort.shots ?? 0);
       }
       if (run.phase !== 'playing' || run.fixture) {
-        stopAmbience();
+        suspend();
         return;
       }
       const now = Number.isFinite(run.time) ? run.time : (run.tick ?? 0) / 60;
+      if (musicLease && now >= musicUntil) releaseMusic();
       const activeWarnings = new Set();
       let charge = null,
         audibleWarning = false;
@@ -80,6 +93,12 @@ export function createOverflightWorldAudio(sound) {
       if (foreground || audibleWarning) {
         quietUntil = now + 0.75;
         stopAmbience();
+      }
+      // Borrow the shared player's gain; never edit the saved volume or own a
+      // second music bus. Rungs/damage briefly make room, not the entire warning.
+      if (foreground || charge) {
+        musicUntil = now + 0.35;
+        musicLease ??= acquireGain({ factor: 0.55 });
       }
       if (charge && !foreground)
         sound.encounter('warning-charge', {

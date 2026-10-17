@@ -234,6 +234,7 @@
         "^scripts/(?:test-)?pages-capacity-report\\.mjs$",
         "^scripts/(?:write-main-pages-metadata|test-main-pages-metadata)\\.mjs$",
         "^scripts/(?:test-)?pages-candidate-[a-z-]+\\.(?:mjs|py)$",
+        "^scripts/(?:test-)?pages-stack-[a-z0-9-]+\\.(?:mjs|py)$",
         "^\\.github/workflows/"
       ],
       "commands": [
@@ -257,6 +258,13 @@
             "scripts/test-pages-candidate-overlay.mjs",
             "scripts/test-pages-candidate-archive.mjs",
             "scripts/test-pages-candidate-measurement.mjs",
+            "scripts/test-pages-candidate-stack.mjs",
+            "scripts/test-pages-stack-contract.mjs",
+            "scripts/test-pages-stack-source.mjs",
+            "scripts/test-pages-stack-packet.mjs",
+            "scripts/test-pages-stack-measurement.mjs",
+            "scripts/test-pages-stack-artifacts.mjs",
+            "scripts/test-pages-stack-e2e.mjs",
             "publishing/test-policy.test.mjs"
           ]
         }

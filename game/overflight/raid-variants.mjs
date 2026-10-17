@@ -46,14 +46,56 @@ export const OVERFLIGHT_MARATHON_TACTICS = Object.freeze([
     uk: 'Спільне командування · перехресні маршрути та зміщений супровід',
   },
 ]);
+// V4 keeps routes and escort offsets inside each layout's authored cover. Its
+// preview must not promise the reflected geometry used by legacy V3 contracts.
+const marathonTacticsV4 = Object.freeze([
+  OVERFLIGHT_MARATHON_TACTICS[0],
+  OVERFLIGHT_MARATHON_TACTICS[1],
+  {
+    en: 'Guarded approaches · attached escorts screen the new layout',
+    uk: 'Захищені підходи · супровід прикриває нову місцевість',
+  },
+  {
+    en: 'Return approach · reordered routes through familiar cover',
+    uk: 'Повторний підхід · новий порядок маршрутів серед знайомих укриттів',
+  },
+  {
+    en: 'Combined command · selected columns reverse through familiar cover',
+    uk: 'Спільне командування · окремі колони змінюють напрямок серед знайомих укриттів',
+  },
+]);
 export function overflightMarathonNextContract(run, locale = 'en') {
   const next = run.raidVariant?.contract;
   if (!(next < 5)) return null;
   const language = locale === 'uk' ? 'uk' : 'en';
   const layout = overflightBattlefieldDefinition(run.raidVariant.sequence?.[next]);
-  return [layout?.title[language], OVERFLIGHT_MARATHON_TACTICS[next][language]]
-    .filter(Boolean)
-    .join(' · ');
+  if (run.compiled?.rulesVersion >= 4) {
+    // Custom V4 projects may omit both battlefield cycling and movement profiles.
+    // Describe their retained geometry without promising built-in transformations.
+    if (!run.raidVariant.sequence)
+      return language === 'uk'
+        ? 'Авторські маршрути · геометрія поля бою зберігається'
+        : 'Authored routes · battlefield geometry is preserved';
+    if ([2, 5].includes(next + 1)) {
+      const upcoming = overflightMarathonProject(run.raidVariant.source, next + 1, run.seed);
+      const reverses = upcoming.encounters.some((encounter) =>
+        [...encounter.packs, ...encounter.objectives].some(
+          (actor, index) => index % 2 && !actor.escortOf && actor.movement,
+        ),
+      );
+      if (!reverses)
+        return [
+          layout?.title[language],
+          language === 'uk'
+            ? 'Авторські підходи · патрульна геометрія зберігається'
+            : 'Authored approaches · patrol geometry is preserved',
+        ]
+          .filter(Boolean)
+          .join(' · ');
+    }
+  }
+  const tactics = run.compiled?.rulesVersion >= 4 ? marathonTacticsV4 : OVERFLIGHT_MARATHON_TACTICS;
+  return [layout?.title[language], tactics[next][language]].filter(Boolean).join(' · ');
 }
 const words = {
   en: {
@@ -482,9 +524,9 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
         run: { ...run, review: true },
       });
       const $ = (id) => document.getElementById(id);
-      const stat = (label, value) => {
+      const stat = (label, value, { detail = false } = {}) => {
         const row = document.createElement('div');
-        row.className = 'overflight-result-stat';
+        row.className = `overflight-result-stat${detail ? ' overflight-result-detail' : ''}`;
         const name = document.createElement('dt'),
           amount = document.createElement('dd');
         name.textContent = label;
@@ -538,6 +580,7 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
           stat(
             document.documentElement.lang === 'uk' ? 'Наступний контракт' : 'Next contract',
             overflightMarathonNextContract(run, document.documentElement.lang),
+            { detail: true },
           );
       }
       if (actions) {

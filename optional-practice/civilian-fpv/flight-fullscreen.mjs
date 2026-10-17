@@ -526,6 +526,21 @@ export function mountFlightSetup({
   };
 }
 
+/** Restore the legacy per-host camera before a new tuning library captures its baseline. */
+export function restoreFlightComfortCamera({ window: win, host, fov, tilt }) {
+  let camera;
+  try {
+    camera = JSON.parse(
+      win.localStorage?.getItem(`revealline.fpv.flight-comfort.v1.${host}.camera`) ?? 'null',
+    );
+  } catch {
+    return;
+  }
+  if (!camera || !Number.isFinite(camera.fov) || !Number.isFinite(camera.tilt)) return;
+  fov.value = String(Math.max(Number(fov.min), Math.min(Number(fov.max), camera.fov)));
+  tilt.value = String(Math.max(Number(tilt.min), Math.min(Number(tilt.max), camera.tilt)));
+}
+
 /** Shared, optional display preferences. No input, physics or scoring ownership. */
 export function mountFlightComfort({
   document: doc,
@@ -651,17 +666,7 @@ export function mountFlightComfort({
     updatingCamera = false;
     cameraChanged();
   });
-  const rememberedCamera = read(cameraKey);
-  if (
-    rememberedCamera &&
-    Number.isFinite(rememberedCamera.fov) &&
-    Number.isFinite(rememberedCamera.tilt)
-  ) {
-    fov.value = String(Math.max(Number(fov.min), Math.min(Number(fov.max), rememberedCamera.fov)));
-    tilt.value = String(
-      Math.max(Number(tilt.min), Math.min(Number(tilt.max), rememberedCamera.tilt)),
-    );
-  }
+  restoreFlightComfortCamera({ window: win, host, fov, tilt });
   let best;
   if (comparison) {
     best = group(comparison.root);
@@ -7363,6 +7368,22 @@ if(action?.parentElement===parent)action.after(root);
 else parent.append(root);
 let language=locale;
 const render=(state)=>{
+if(state.phase==='cancelled'&& !root.hidden){
+// Pointer-down cancels the timer, not the player's pending click. Keep
+// this exact flex slot until the result retires so sibling targets cannot
+// move between press and release (including wrapped/centred action rows).
+if(root.contains(doc.activeElement)){
+const target=[...parent.querySelectorAll('button')].find(
+(button)=> !root.contains(button)&& !button.disabled&& !button.hidden,
+);
+target?.focus();
+}
+root.style.visibility='hidden';
+root.inert=true;
+return;
+}
+root.style.visibility='';
+root.inert=false;
 const copy=
 FLOW_COPY[
 (typeof language==='function'?language():language)==='uk'?'uk':'en'

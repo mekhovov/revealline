@@ -391,3 +391,70 @@ real older/equal/diverged/newer/missing/malformed base fixtures and unchanged
 source composition. Scoped lint and formatting pass. Independent review found
 no concrete blocker. Exact-head CI and actual runner acceptance remain required;
 #1541 remains draft with its native-art and other qualification holds intact.
+
+## Single-candidate runner acceptance — independently verified
+
+PR #1546 merged as `3585f2c321e5a1031dadcb82454a09bf68ce604c`. All applicable
+checks passed at exact head `589694dac2da95420788634c1a31018963e08d11`, with only
+existing test/build policy skips. Focused CI passed 293 tests without failures or
+skips. A creator startup test initially remained at picture pending; its unchanged
+failed-job rerun passed 255/255. Original failure evidence is preserved, and no
+root-cause certainty, timeout change or waiver is claimed. Production publication
+`38848215722` passed build/deploy/verify; receipts, artifact provenance and five
+live hashes passed independent checks. Archive remained 966,236,160 bytes.
+
+Main subsequently advanced to `20768f599e052a63b92324ce784f7c066b9b91b9`; its
+publication `38849572972` also passed those production evidence/live checks.
+The first manual diagnostic, `38850049796`, froze that controller main and draft
+#1541 head `a206d87ce9fa9ff07d587d4ddd47b536580a4add`. All three jobs passed.
+Synthetic source `7a2dbfff88ccf97cd379db193cf7d23503195e4a` is deliberately distinct
+from controller/run identity. An independent complete artifact download matched
+GitHub's ZIP digest, then every actual tar member path/type/size/hash passed.
+Preflight artifact ID/checksum, all artifact run/controller identities, trusted
+metadata, 18-file renderer closure, four overlay files and final PR/main freshness
+were independently checked. No candidate code or HTML was executed by the audit.
+
+Verified candidate archive: 966,266,880 bytes, raw 963,286,378 bytes, 3,426 files,
+SHA-256 `c41c73ad8559d20e5495b05f201f818e1372b717bf0bd868e4bad11de8552448`.
+Its complete raw/archive totals equal the pinned main publication, not isolated
+PR attribution or savings. The measurement was current at the recorded refresh;
+later input changes invalidate current eligibility. Merge, deployment and
+qualification flags stay false. #1541 remains draft with all qualification holds.
+Remaining dated gaps are 16,266,880 bytes to 950 MB and 66,266,880 bytes to 900 MB.
+
+## Tiny parent-first composition — under verification
+
+The next isolated branch starts at the verified main above. This unit adds only
+an object-composition foundation and tiny real-Git fixtures, not a stack workflow
+or a real combined measurement. It composes two or three ordered exact heads on
+frozen main, requires actual parent-head ancestry, records deterministic trees
+and commits, and refuses conflicts. It never fetches, checks out, updates refs or
+changes index/worktree; only unreferenced diagnostic objects may be written.
+It does not validate a PR graph, grant qualification, or change the existing
+single-candidate workflow. Frozen PR graph/freshness, unsupported-path checks,
+external overlay binding and independent complete archive verification remain
+mandatory for the subsequent bounded real-stack measurement.
+
+Independent review reproduced ambient Git attribute/config/ancestry overrides
+against the initial scratch implementation. The corrected foundation pins tracked
+attributes to each current synthetic parent, disables external attributes,
+rejects private/common info overrides and ambient merge configuration, disables
+replacement objects, rejects grafts and fixes UTF-8 commit encoding. It does not
+change user settings. Ten expanded real-Git tests passed independently with zero
+skips, preserving HEAD, refs, index, configuration and worktree. Focused-routing
+regression first failed before the test was registered, then passed all 45 cases.
+Git's
+[attribute precedence](https://git-scm.com/docs/gitattributes) and
+[object attribute source](https://git-scm.com/docs/git#Documentation/git.txt---attr-sourcetree-ish)
+are implementation references, not substitutes for executable regression tests.
+No hosted verification, merged helper, combined measurement or capacity reduction
+is claimed by this work-in-progress record.
+
+Local integrated verification passed 141 scoped tests with zero failures/skips;
+ESLint, scoped formatting and independent integration review passed. The initial
+external-fixture run stalled at tiny Git initialization and was interrupted, not
+accepted. The identical suites passed with only tiny synthetic fixtures in a local
+temporary directory; the source checkout and large artifacts remained external.
+The routing regression first failed without registration, then passed 45/45.
+Hosted exact-head checks and source-bound production remain required before this
+foundation may advance to the separate combined-measurement implementation.

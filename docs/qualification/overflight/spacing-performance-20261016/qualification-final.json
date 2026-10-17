@@ -1,0 +1,262 @@
+{
+  "format": "OverflightLocalSpacingFrameQualificationV1",
+  "runtimeCommit": "5f1906a46",
+  "scope": "Available Mac / Chromium / recorded native viewport only; no Iris Xe, Safari, input-device, enjoyment or full-release acceptance.",
+  "referenceComplete": true,
+  "sameConfiguration": true,
+  "referencePass": true,
+  "rows": [
+    {
+      "path": "docs/qualification/overflight/spacing-performance-20261016/native-reference-1.json.gz",
+      "sha256": "5316c5969e85e4145a3907c163e45b3cb3d2d489406cc3d6b92ff003ec333d47",
+      "fixture": "reference",
+      "trial": "1",
+      "projectIdentity": "4d510ee776db78d7",
+      "crowdSeparation": "local-v1",
+      "seed": 202604,
+      "appearance": {
+        "projectIdentity": "4d510ee776db78d7",
+        "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+        "presentation": {
+          "id": "field-kit",
+          "revision": 104
+        },
+        "themeIdentity": "9670af00f1ea5378",
+        "familyId": "industrial-workshop",
+        "familyRevision": "r3",
+        "interfaceId": "industrial-workshop",
+        "interfaceRevision": "r3",
+        "arcade": {
+          "id": "industrial-workshop",
+          "revision": "r2"
+        },
+        "actorArtRevision": "industrial-roster-v3",
+        "equipment": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "materialStyle": "steel",
+        "materialVariant": "steel",
+        "characterId": "scout",
+        "playerSlot": "player.scout.detailed",
+        "cast": "authored",
+        "visualIdentity": "eb5cda0d8f2f7bbb"
+      },
+      "reducedEffects": false,
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "devicePixelRatio": 2
+      },
+      "backing": {
+        "width": 960,
+        "height": 540
+      },
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "expected": {
+        "alive": 1500,
+        "visible": 700
+      },
+      "population": true,
+      "valid": true,
+      "hz": 119.84960050132571,
+      "p95": 10.899999991059303,
+      "p99": 13,
+      "slowFraction": 0.00020859407592824363,
+      "worst": 76,
+      "intervals": 14382,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "passes": true
+    },
+    {
+      "path": "docs/qualification/overflight/spacing-performance-20261016/native-reference-2.json.gz",
+      "sha256": "c3f712f82f23bee40ce4d4255e9b3b8997ca7059509cafab8fdb7915ecfbe639",
+      "fixture": "reference",
+      "trial": "2",
+      "projectIdentity": "4d510ee776db78d7",
+      "crowdSeparation": "local-v1",
+      "seed": 202604,
+      "appearance": {
+        "projectIdentity": "4d510ee776db78d7",
+        "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+        "presentation": {
+          "id": "field-kit",
+          "revision": 104
+        },
+        "themeIdentity": "9670af00f1ea5378",
+        "familyId": "industrial-workshop",
+        "familyRevision": "r3",
+        "interfaceId": "industrial-workshop",
+        "interfaceRevision": "r3",
+        "arcade": {
+          "id": "industrial-workshop",
+          "revision": "r2"
+        },
+        "actorArtRevision": "industrial-roster-v3",
+        "equipment": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "materialStyle": "steel",
+        "materialVariant": "steel",
+        "characterId": "scout",
+        "playerSlot": "player.scout.detailed",
+        "cast": "authored",
+        "visualIdentity": "eb5cda0d8f2f7bbb"
+      },
+      "reducedEffects": false,
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "devicePixelRatio": 2
+      },
+      "backing": {
+        "width": 960,
+        "height": 540
+      },
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "expected": {
+        "alive": 1500,
+        "visible": 700
+      },
+      "population": true,
+      "valid": true,
+      "hz": 119.83662884062348,
+      "p95": 10.700000002980232,
+      "p99": 12.800000011920929,
+      "slowFraction": 0.0002086230876216968,
+      "worst": 50.6000000089407,
+      "intervals": 14380,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "passes": true
+    },
+    {
+      "path": "docs/qualification/overflight/spacing-performance-20261016/native-reference-3.json.gz",
+      "sha256": "a2bfa8b85dd79b30882b9efa0f834078551a270f5c5d32d0b43e53ca8bd5c4e0",
+      "fixture": "reference",
+      "trial": "3",
+      "projectIdentity": "4d510ee776db78d7",
+      "crowdSeparation": "local-v1",
+      "seed": 202604,
+      "appearance": {
+        "projectIdentity": "4d510ee776db78d7",
+        "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+        "presentation": {
+          "id": "field-kit",
+          "revision": 104
+        },
+        "themeIdentity": "9670af00f1ea5378",
+        "familyId": "industrial-workshop",
+        "familyRevision": "r3",
+        "interfaceId": "industrial-workshop",
+        "interfaceRevision": "r3",
+        "arcade": {
+          "id": "industrial-workshop",
+          "revision": "r2"
+        },
+        "actorArtRevision": "industrial-roster-v3",
+        "equipment": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "materialStyle": "steel",
+        "materialVariant": "steel",
+        "characterId": "scout",
+        "playerSlot": "player.scout.detailed",
+        "cast": "authored",
+        "visualIdentity": "eb5cda0d8f2f7bbb"
+      },
+      "reducedEffects": false,
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "devicePixelRatio": 2
+      },
+      "backing": {
+        "width": 960,
+        "height": 540
+      },
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "expected": {
+        "alive": 1500,
+        "visible": 700
+      },
+      "population": true,
+      "valid": true,
+      "hz": 119.88383284930354,
+      "p95": 11.100000008940697,
+      "p99": 13.299999997019768,
+      "slowFraction": 0.00006951202558042541,
+      "worst": 43.29999999701977,
+      "intervals": 14386,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "passes": true
+    },
+    {
+      "path": "docs/qualification/overflight/spacing-performance-20261016/native-stress-1.json.gz",
+      "sha256": "4d1a0d98ee708a7f85d8e6a4b33b02b220b7dc7a325b9d9e2d4e3704178899ac",
+      "fixture": "stress",
+      "trial": "1",
+      "projectIdentity": "4d510ee776db78d7",
+      "crowdSeparation": "local-v1",
+      "seed": 202604,
+      "appearance": {
+        "projectIdentity": "4d510ee776db78d7",
+        "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+        "presentation": {
+          "id": "field-kit",
+          "revision": 104
+        },
+        "themeIdentity": "9670af00f1ea5378",
+        "familyId": "industrial-workshop",
+        "familyRevision": "r3",
+        "interfaceId": "industrial-workshop",
+        "interfaceRevision": "r3",
+        "arcade": {
+          "id": "industrial-workshop",
+          "revision": "r2"
+        },
+        "actorArtRevision": "industrial-roster-v3",
+        "equipment": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "materialStyle": "steel",
+        "materialVariant": "steel",
+        "characterId": "scout",
+        "playerSlot": "player.scout.detailed",
+        "cast": "authored",
+        "visualIdentity": "eb5cda0d8f2f7bbb"
+      },
+      "reducedEffects": false,
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "devicePixelRatio": 2
+      },
+      "backing": {
+        "width": 960,
+        "height": 540
+      },
+      "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "expected": {
+        "alive": 2500,
+        "visible": 1200
+      },
+      "population": true,
+      "valid": true,
+      "hz": 119.96123239644064,
+      "p95": 11.299999997019768,
+      "p99": 12.5,
+      "slowFraction": 0.00006946856547412296,
+      "worst": 35.6000000089407,
+      "intervals": 14395,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "passes": true
+    }
+  ]
+}
