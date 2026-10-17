@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-10-17T17:44:30.485Z",
+  "measuredAt": "2026-10-17T18:31:35.180Z",
   "runtime": {
     "node": "v20.19.5",
     "platform": "darwin",
@@ -21,15 +21,15 @@
     },
     {
       "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
-      "sha256": "a58e05065df415e50db85618c5d40c89c390b6d7a7d3fa87329ff6df5b980334"
+      "sha256": "89e9818c274139127badce59338526b2cb00e5090b2a659703920428b9cf1749"
     },
     {
       "path": "optional-practice/civilian-fpv/aircraft-recording.mjs",
-      "sha256": "fecdd478223f372f9bc34a6b2ecc5dea0337e390d880cbf0079a0e7e79764ae4"
+      "sha256": "b58193dd357c5b87576fcc3d25cc8cff28cad83bd3f3852247c6667e6597179c"
     },
     {
       "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
-      "sha256": "da900f401b17d0453608bb30c01842e92211a668d00ca2216fbe14ee3f10e4d7"
+      "sha256": "fd35f9f339ae3a98b1dc1b16c13eba18acd3b76f8430363937476c21a02f6156"
     },
     {
       "path": "game/test/helpers/fpv-aircraft-qualification.mjs",
@@ -51,8 +51,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 130.28304200000002,
-            "capacity": 23.02678809111626,
+            "elapsedMs": 189.00491699999998,
+            "capacity": 15.872602933393528,
             "finalHash": "73dbcb79",
             "metrics": {
               "steadyRate": 100.76448778589085,
@@ -62,8 +62,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 109.82833300000004,
-            "capacity": 27.31535586541224,
+            "elapsedMs": 131.68216700000005,
+            "capacity": 22.78212812217769,
             "finalHash": "621777e1",
             "metrics": {
               "steadyRate": 100.76407370479245,
@@ -73,8 +73,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 105.52862500000003,
-            "capacity": 28.42830559007093,
+            "elapsedMs": 113.08562500000005,
+            "capacity": 26.5285707179847,
             "finalHash": "0def8848",
             "metrics": {
               "steadyRate": 102.78590873687796,
@@ -107,7 +107,7 @@
                 "peakRate": 0.0007515470743811769,
                 "absoluteError": 0.018456223142271248
               },
-              "minimumCapacity": 128.74431379280736,
+              "minimumCapacity": 123.32293652465695,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -123,7 +123,7 @@
                 "peakRate": 0.0007406650557798822,
                 "absoluteError": 0.018311971611176033
               },
-              "minimumCapacity": 132.7507052381216,
+              "minimumCapacity": 129.77813346599572,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -139,7 +139,7 @@
                 "peakRate": 0.00130925786875927,
                 "absoluteError": 0.011529449923448228
               },
-              "minimumCapacity": 133.31235293147907,
+              "minimumCapacity": 126.00784751672823,
               "repeatHashesAgree": true
             }
           },
@@ -169,7 +169,7 @@
                 "peakRate": 0.0006216993349679582,
                 "absoluteError": 0.009322617039379177
               },
-              "minimumCapacity": 88.71736864284607,
+              "minimumCapacity": 86.56363823970632,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -185,7 +185,7 @@
                 "peakRate": 0.0006049283389979497,
                 "absoluteError": 0.009197331662630861
               },
-              "minimumCapacity": 91.10833102474956,
+              "minimumCapacity": 84.65399443399998,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -201,7 +201,7 @@
                 "peakRate": 0.0010854587815363806,
                 "absoluteError": 0.006042611861189457
               },
-              "minimumCapacity": 84.8394311957304,
+              "minimumCapacity": 78.41095905019009,
               "repeatHashesAgree": true
             }
           },
@@ -231,7 +231,7 @@
                 "peakRate": 0.0004026024211906223,
                 "absoluteError": 0.00405036470668688
               },
-              "minimumCapacity": 55.45901578733311,
+              "minimumCapacity": 54.01917615930642,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -247,7 +247,7 @@
                 "peakRate": 0.0003833919428146605,
                 "absoluteError": 0.003981235690094923
               },
-              "minimumCapacity": 54.7339553020263,
+              "minimumCapacity": 55.384956555947646,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -263,7 +263,7 @@
                 "peakRate": 0.0007216690490900569,
                 "absoluteError": 0.002767276437016131
               },
-              "minimumCapacity": 55.126411752951064,
+              "minimumCapacity": 55.3924974813492,
               "repeatHashesAgree": true
             }
           },
@@ -285,8 +285,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 93.20658300000014,
-            "capacity": 32.18656776635611,
+            "elapsedMs": 91.38262499999996,
+            "capacity": 32.82899785380428,
             "finalHash": "7b126a23",
             "metrics": {
               "steadyRate": 100.76315291000023,
@@ -296,8 +296,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 92.13545799999997,
-            "capacity": 32.560754188685976,
+            "elapsedMs": 91.54566699999987,
+            "capacity": 32.770529707320875,
             "finalHash": "b8131aac",
             "metrics": {
               "steadyRate": 100.76329036747201,
@@ -307,8 +307,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 92.93062500000019,
-            "capacity": 32.28214595565233,
+            "elapsedMs": 95.68791699999997,
+            "capacity": 31.351920849107845,
             "finalHash": "6a03c7f8",
             "metrics": {
               "steadyRate": 102.78390791881722,
@@ -341,7 +341,7 @@
                 "peakRate": 0.0007551021823950218,
                 "absoluteError": 0.01863220194423021
               },
-              "minimumCapacity": 133.6605581415413,
+              "minimumCapacity": 133.51927524313203,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -357,7 +357,7 @@
                 "peakRate": 0.0007443579131564954,
                 "absoluteError": 0.0185581913999861
               },
-              "minimumCapacity": 142.07769111249146,
+              "minimumCapacity": 136.63821084833694,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -373,7 +373,7 @@
                 "peakRate": 0.0012816153314814832,
                 "absoluteError": 0.011455433857991942
               },
-              "minimumCapacity": 137.8544507894773,
+              "minimumCapacity": 128.63827637058898,
               "repeatHashesAgree": true
             }
           },
@@ -403,7 +403,7 @@
                 "peakRate": 0.0006144465565784427,
                 "absoluteError": 0.009412644992955759
               },
-              "minimumCapacity": 88.28571304971425,
+              "minimumCapacity": 80.45079260791363,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -419,7 +419,7 @@
                 "peakRate": 0.0006068797019644997,
                 "absoluteError": 0.009399218303866204
               },
-              "minimumCapacity": 91.85489571897395,
+              "minimumCapacity": 89.41389016171252,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -435,7 +435,7 @@
                 "peakRate": 0.0010545222052807009,
                 "absoluteError": 0.005957137893728045
               },
-              "minimumCapacity": 92.42606877269688,
+              "minimumCapacity": 89.75799091457728,
               "repeatHashesAgree": true
             }
           },
@@ -465,7 +465,7 @@
                 "peakRate": 0.00040951827872407273,
                 "absoluteError": 0.004115034372816913
               },
-              "minimumCapacity": 55.800501155461184,
+              "minimumCapacity": 52.69575312981139,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -481,7 +481,7 @@
                 "peakRate": 0.0003936937553769324,
                 "absoluteError": 0.004081836345433504
               },
-              "minimumCapacity": 55.48769410566394,
+              "minimumCapacity": 49.32469640361654,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -497,7 +497,7 @@
                 "peakRate": 0.0006928332396006909,
                 "absoluteError": 0.0026250398297692295
               },
-              "minimumCapacity": 56.60782371448158,
+              "minimumCapacity": 42.571382452430775,
               "repeatHashesAgree": true
             }
           },
@@ -519,8 +519,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 93.82375000000002,
-            "capacity": 31.97484645412275,
+            "elapsedMs": 241.11633400000028,
+            "capacity": 12.442126795109603,
             "finalHash": "019f8253",
             "metrics": {
               "steadyRate": 100.76169466474784,
@@ -530,8 +530,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 94.74962499999992,
-            "capacity": 31.662394442194387,
+            "elapsedMs": 152.35858299999973,
+            "capacity": 19.690390530870225,
             "finalHash": "c770843d",
             "metrics": {
               "steadyRate": 100.76176894283437,
@@ -541,8 +541,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 94.20545799999991,
-            "capacity": 31.845288624359778,
+            "elapsedMs": 119.33720800000037,
+            "capacity": 25.138848564313577,
             "finalHash": "5f389958",
             "metrics": {
               "steadyRate": 102.78961155319409,
@@ -575,7 +575,7 @@
                 "peakRate": 0.0007850606175907406,
                 "absoluteError": 0.01878283018581067
               },
-              "minimumCapacity": 136.53508098237097,
+              "minimumCapacity": 124.34331188411254,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -591,7 +591,7 @@
                 "peakRate": 0.0007645045819538295,
                 "absoluteError": 0.018619228110914026
               },
-              "minimumCapacity": 133.78373858657463,
+              "minimumCapacity": 110.69089567383098,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -607,7 +607,7 @@
                 "peakRate": 0.0012349651083673626,
                 "absoluteError": 0.01145129912025847
               },
-              "minimumCapacity": 134.60233422881285,
+              "minimumCapacity": 131.88214325891326,
               "repeatHashesAgree": true
             }
           },
@@ -637,7 +637,7 @@
                 "peakRate": 0.0006403605172913565,
                 "absoluteError": 0.009504316993657955
               },
-              "minimumCapacity": 91.39711828541893,
+              "minimumCapacity": 89.96862164382924,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -653,7 +653,7 @@
                 "peakRate": 0.0006340091091116594,
                 "absoluteError": 0.00939730964836921
               },
-              "minimumCapacity": 77.10190986056864,
+              "minimumCapacity": 93.13552382911107,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -669,7 +669,7 @@
                 "peakRate": 0.0010220446679227487,
                 "absoluteError": 0.0059059691417270195
               },
-              "minimumCapacity": 91.5061909886109,
+              "minimumCapacity": 87.98234487612844,
               "repeatHashesAgree": true
             }
           },
@@ -699,7 +699,7 @@
                 "peakRate": 0.00041258808318652573,
                 "absoluteError": 0.004235097798098881
               },
-              "minimumCapacity": 54.88875878220146,
+              "minimumCapacity": 51.080494635585985,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -715,7 +715,7 @@
                 "peakRate": 0.00041502837008114743,
                 "absoluteError": 0.0041430875888905086
               },
-              "minimumCapacity": 55.46213369964459,
+              "minimumCapacity": 51.37774386694475,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -731,7 +731,7 @@
                 "peakRate": 0.0006847712548434589,
                 "absoluteError": 0.0026641136751803856
               },
-              "minimumCapacity": 56.908313593262086,
+              "minimumCapacity": 53.62249729729236,
               "repeatHashesAgree": true
             }
           },
@@ -753,8 +753,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 94.30433300000004,
-            "capacity": 31.81189988375188,
+            "elapsedMs": 102.12495900000022,
+            "capacity": 29.375776787337497,
             "finalHash": "2904c462",
             "metrics": {
               "steadyRate": 100.76147311077446,
@@ -764,8 +764,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 93.79387499999984,
-            "capacity": 31.985031005489486,
+            "elapsedMs": 97.45945800000027,
+            "capacity": 30.782030411045294,
             "finalHash": "574c20b9",
             "metrics": {
               "steadyRate": 100.76110513382442,
@@ -775,8 +775,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 94.44187499999998,
-            "capacity": 31.765570092715762,
+            "elapsedMs": 95.99945800000023,
+            "capacity": 31.250176433287706,
             "finalHash": "8bb0420d",
             "metrics": {
               "steadyRate": 102.80642961368504,
@@ -809,7 +809,7 @@
                 "peakRate": 0.0007939804151445925,
                 "absoluteError": 0.019043422201199253
               },
-              "minimumCapacity": 134.42892910554394,
+              "minimumCapacity": 134.40483857418693,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -825,7 +825,7 @@
                 "peakRate": 0.000780667266569529,
                 "absoluteError": 0.01887399223544566
               },
-              "minimumCapacity": 140.7776029215678,
+              "minimumCapacity": 134.9876823739876,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -841,7 +841,7 @@
                 "peakRate": 0.00129798676033335,
                 "absoluteError": 0.011787341743848904
               },
-              "minimumCapacity": 137.3071046860946,
+              "minimumCapacity": 135.33223861581448,
               "repeatHashesAgree": true
             }
           },
@@ -871,7 +871,7 @@
                 "peakRate": 0.0006485503685140644,
                 "absoluteError": 0.009781131389379673
               },
-              "minimumCapacity": 85.68144279324189,
+              "minimumCapacity": 89.41200341839875,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -887,7 +887,7 @@
                 "peakRate": 0.0006394287904758166,
                 "absoluteError": 0.0096281688586666
               },
-              "minimumCapacity": 89.29712092985255,
+              "minimumCapacity": 88.10702066109614,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -903,7 +903,7 @@
                 "peakRate": 0.0010776177470952972,
                 "absoluteError": 0.006240699131954723
               },
-              "minimumCapacity": 89.76335954812383,
+              "minimumCapacity": 85.95300914608814,
               "repeatHashesAgree": true
             }
           },
@@ -933,7 +933,7 @@
                 "peakRate": 0.00041863560988346973,
                 "absoluteError": 0.004355324759412085
               },
-              "minimumCapacity": 55.227768522012134,
+              "minimumCapacity": 50.43478991808539,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -949,7 +949,7 @@
                 "peakRate": 0.0004312914384929674,
                 "absoluteError": 0.00422719637648353
               },
-              "minimumCapacity": 50.01128754759923,
+              "minimumCapacity": 49.852347317714255,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -965,7 +965,7 @@
                 "peakRate": 0.0007048489559465506,
                 "absoluteError": 0.002892577698890194
               },
-              "minimumCapacity": 51.68314784825803,
+              "minimumCapacity": 53.84848382862724,
               "repeatHashesAgree": true
             }
           },
@@ -987,8 +987,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 95.61549999999988,
-            "capacity": 31.375666079244514,
+            "elapsedMs": 105.3060830000004,
+            "capacity": 28.488382765124676,
             "finalHash": "b211c7ad",
             "metrics": {
               "steadyRate": 100.77287440400659,
@@ -998,8 +998,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 97.6982080000007,
-            "capacity": 30.706806822904863,
+            "elapsedMs": 98.60949999999957,
+            "capacity": 30.42303226362585,
             "finalHash": "b66a2c4c",
             "metrics": {
               "steadyRate": 100.77240824312716,
@@ -1009,8 +1009,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 92.88774999999987,
-            "capacity": 32.297046704221,
+            "elapsedMs": 99.29954199999975,
+            "capacity": 30.211619707168516,
             "finalHash": "5c2286aa",
             "metrics": {
               "steadyRate": 102.79647802788405,
@@ -1043,7 +1043,7 @@
                 "peakRate": 0.0008877380569610476,
                 "absoluteError": 0.019859862975123866
               },
-              "minimumCapacity": 137.0726258290159,
+              "minimumCapacity": 133.68859443332087,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1059,7 +1059,7 @@
                 "peakRate": 0.0008472697107198056,
                 "absoluteError": 0.019727109010356594
               },
-              "minimumCapacity": 138.01670002070264,
+              "minimumCapacity": 130.48560391477372,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1075,7 +1075,7 @@
                 "peakRate": 0.0011671924532861999,
                 "absoluteError": 0.01148019540755042
               },
-              "minimumCapacity": 123.50041677273967,
+              "minimumCapacity": 124.00558884921678,
               "repeatHashesAgree": true
             }
           },
@@ -1105,7 +1105,7 @@
                 "peakRate": 0.0007382940358944543,
                 "absoluteError": 0.010528094800108379
               },
-              "minimumCapacity": 88.24459613625166,
+              "minimumCapacity": 85.20568809316134,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1121,7 +1121,7 @@
                 "peakRate": 0.0006932206724070625,
                 "absoluteError": 0.010396084329665474
               },
-              "minimumCapacity": 89.46666594298122,
+              "minimumCapacity": 82.46959717065488,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1137,7 +1137,7 @@
                 "peakRate": 0.0009638330943176579,
                 "absoluteError": 0.005976427504644294
               },
-              "minimumCapacity": 91.48142643450862,
+              "minimumCapacity": 85.98863121376452,
               "repeatHashesAgree": true
             }
           },
@@ -1167,7 +1167,7 @@
                 "peakRate": 0.00048376584836703004,
                 "absoluteError": 0.004853521296763254
               },
-              "minimumCapacity": 54.565833396068754,
+              "minimumCapacity": 49.30510616005676,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1183,7 +1183,7 @@
                 "peakRate": 0.0004461200639811104,
                 "absoluteError": 0.004778686865862563
               },
-              "minimumCapacity": 55.80534441086736,
+              "minimumCapacity": 52.26765394457418,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1199,7 +1199,7 @@
                 "peakRate": 0.000631781243691713,
                 "absoluteError": 0.0026601924212351085
               },
-              "minimumCapacity": 55.679890813961556,
+              "minimumCapacity": 35.937881372048246,
               "repeatHashesAgree": true
             }
           },
@@ -1221,8 +1221,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 85.43120799999997,
-            "capacity": 35.115973076255706,
+            "elapsedMs": 108.00520899999992,
+            "capacity": 27.776438079018966,
             "finalHash": "c87a1998",
             "metrics": {
               "steadyRate": 100.77266309455933,
@@ -1232,8 +1232,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 87.66391699999986,
-            "capacity": 34.22160568070447,
+            "elapsedMs": 108.78245799999968,
+            "capacity": 27.577975853423066,
             "finalHash": "a1ebb290",
             "metrics": {
               "steadyRate": 100.77136535861823,
@@ -1243,8 +1243,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 87.3681660000002,
-            "capacity": 34.33744963812097,
+            "elapsedMs": 94.61466699999983,
+            "capacity": 31.707557560816714,
             "finalHash": "4657fabd",
             "metrics": {
               "steadyRate": 102.77021210842675,
@@ -1277,7 +1277,7 @@
                 "peakRate": 0.0008537830003930044,
                 "absoluteError": 0.02001184263580928
               },
-              "minimumCapacity": 130.53717483352554,
+              "minimumCapacity": 107.20348071119861,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1293,7 +1293,7 @@
                 "peakRate": 0.0008485158478660485,
                 "absoluteError": 0.019856987619859323
               },
-              "minimumCapacity": 128.99734833050755,
+              "minimumCapacity": 130.27783746432476,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1309,7 +1309,7 @@
                 "peakRate": 0.0011347340890724218,
                 "absoluteError": 0.011367552167594967
               },
-              "minimumCapacity": 138.301427962244,
+              "minimumCapacity": 127.48462216744994,
               "repeatHashesAgree": true
             }
           },
@@ -1339,7 +1339,7 @@
                 "peakRate": 0.000697510822788677,
                 "absoluteError": 0.010661712451973214
               },
-              "minimumCapacity": 79.47291864929507,
+              "minimumCapacity": 81.15382561568603,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1355,7 +1355,7 @@
                 "peakRate": 0.0006892669777891452,
                 "absoluteError": 0.010537267273909062
               },
-              "minimumCapacity": 75.08125856911781,
+              "minimumCapacity": 85.60300181192977,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1371,7 +1371,7 @@
                 "peakRate": 0.0009430116268794536,
                 "absoluteError": 0.005904257300766979
               },
-              "minimumCapacity": 88.8033745282314,
+              "minimumCapacity": 86.56509695290872,
               "repeatHashesAgree": true
             }
           },
@@ -1401,7 +1401,7 @@
                 "peakRate": 0.0004483949845736127,
                 "absoluteError": 0.004985681879108961
               },
-              "minimumCapacity": 32.53604937332474,
+              "minimumCapacity": 50.20867982552435,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1417,7 +1417,7 @@
                 "peakRate": 0.0004535380771147815,
                 "absoluteError": 0.004969527088031704
               },
-              "minimumCapacity": 46.22843395401426,
+              "minimumCapacity": 54.098526942193224,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1433,7 +1433,7 @@
                 "peakRate": 0.000620840882220813,
                 "absoluteError": 0.0026229927999658438
               },
-              "minimumCapacity": 46.90327607970254,
+              "minimumCapacity": 53.47371109373082,
               "repeatHashesAgree": true
             }
           },
@@ -1455,8 +1455,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 88.2348750000001,
-            "capacity": 34.00016150076709,
+            "elapsedMs": 90.90104200000042,
+            "capacity": 33.00292201270901,
             "finalHash": "5aa2dff0",
             "metrics": {
               "steadyRate": 100.76862005009772,
@@ -1466,8 +1466,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 87.664041,
-            "capacity": 34.22155727455001,
+            "elapsedMs": 96.13504099999955,
+            "capacity": 31.206103089923413,
             "finalHash": "d6436ca4",
             "metrics": {
               "steadyRate": 100.76955621226183,
@@ -1477,8 +1477,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 85.44366700000046,
-            "capacity": 35.11085262761468,
+            "elapsedMs": 94.9027500000002,
+            "capacity": 31.61130736464427,
             "finalHash": "a80f10b5",
             "metrics": {
               "steadyRate": 102.73879067747178,
@@ -1511,7 +1511,7 @@
                 "peakRate": 0.0009197884208522404,
                 "absoluteError": 0.019994697310777753
               },
-              "minimumCapacity": 135.4147116167661,
+              "minimumCapacity": 109.4867175093787,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1527,7 +1527,7 @@
                 "peakRate": 0.0009066218064375078,
                 "absoluteError": 0.02011320512466354
               },
-              "minimumCapacity": 136.5602023603715,
+              "minimumCapacity": 104.37354372813058,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1543,7 +1543,7 @@
                 "peakRate": 0.0012182656696726156,
                 "absoluteError": 0.011749487763814225
               },
-              "minimumCapacity": 131.3190450916781,
+              "minimumCapacity": 110.9616211492863,
               "repeatHashesAgree": true
             }
           },
@@ -1573,7 +1573,7 @@
                 "peakRate": 0.0007595401773225441,
                 "absoluteError": 0.010611142854268403
               },
-              "minimumCapacity": 89.12027151976088,
+              "minimumCapacity": 83.43037908678473,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1589,7 +1589,7 @@
                 "peakRate": 0.000748398931167655,
                 "absoluteError": 0.01076029206698253
               },
-              "minimumCapacity": 88.55249697526935,
+              "minimumCapacity": 90.04209467926212,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1605,7 +1605,7 @@
                 "peakRate": 0.0010246709731302642,
                 "absoluteError": 0.006290532737448978
               },
-              "minimumCapacity": 88.7940647205714,
+              "minimumCapacity": 89.1630938024276,
               "repeatHashesAgree": true
             }
           },
@@ -1635,7 +1635,7 @@
                 "peakRate": 0.0004906799863028769,
                 "absoluteError": 0.004773531537483352
               },
-              "minimumCapacity": 55.188442039111536,
+              "minimumCapacity": 54.96468518976555,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1651,7 +1651,7 @@
                 "peakRate": 0.00048392814478101384,
                 "absoluteError": 0.004976179486897349
               },
-              "minimumCapacity": 56.84630889810551,
+              "minimumCapacity": 51.748711431210836,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1667,7 +1667,7 @@
                 "peakRate": 0.0006733988370551227,
                 "absoluteError": 0.0029111637445411024
               },
-              "minimumCapacity": 55.88816777628013,
+              "minimumCapacity": 51.06046196953017,
               "repeatHashesAgree": true
             }
           },
@@ -1689,8 +1689,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 85.92570799999976,
-            "capacity": 34.913881652275805,
+            "elapsedMs": 96.1938339999997,
+            "capacity": 31.187030137503506,
             "finalHash": "9d5ce005",
             "metrics": {
               "steadyRate": 100.76178559149719,
@@ -1700,8 +1700,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 88.75,
-            "capacity": 33.80281690140845,
+            "elapsedMs": 100.4213749999999,
+            "capacity": 29.874117935549112,
             "finalHash": "b3a6c293",
             "metrics": {
               "steadyRate": 100.76163191216415,
@@ -1711,8 +1711,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 86.27920799999993,
-            "capacity": 34.77083377955906,
+            "elapsedMs": 96.28179199999977,
+            "capacity": 31.158539300971956,
             "finalHash": "f85c4c9e",
             "metrics": {
               "steadyRate": 102.79356666022825,
@@ -1745,7 +1745,7 @@
                 "peakRate": 0.0007663404344457469,
                 "absoluteError": 0.019072584947791113
               },
-              "minimumCapacity": 130.35354967706385,
+              "minimumCapacity": 121.40321723382291,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1761,7 +1761,7 @@
                 "peakRate": 0.0007595863277978101,
                 "absoluteError": 0.0189643893360275
               },
-              "minimumCapacity": 139.46542345328794,
+              "minimumCapacity": 124.8121317392117,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1777,7 +1777,7 @@
                 "peakRate": 0.001281107855185027,
                 "absoluteError": 0.011716711101805898
               },
-              "minimumCapacity": 134.73810079550404,
+              "minimumCapacity": 126.5082151272227,
               "repeatHashesAgree": true
             }
           },
@@ -1807,7 +1807,7 @@
                 "peakRate": 0.0006220682235744607,
                 "absoluteError": 0.009785762832105553
               },
-              "minimumCapacity": 89.567612351372,
+              "minimumCapacity": 87.47694617981112,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1823,7 +1823,7 @@
                 "peakRate": 0.0006206557563555931,
                 "absoluteError": 0.009739355594822613
               },
-              "minimumCapacity": 92.84823760581803,
+              "minimumCapacity": 74.65990732366062,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1839,7 +1839,7 @@
                 "peakRate": 0.0010613281598695083,
                 "absoluteError": 0.006209602556374013
               },
-              "minimumCapacity": 88.39355758287849,
+              "minimumCapacity": 86.48129324587302,
               "repeatHashesAgree": true
             }
           },
@@ -1869,7 +1869,7 @@
                 "peakRate": 0.00040589664110771286,
                 "absoluteError": 0.004381087382383707
               },
-              "minimumCapacity": 52.92366465258633,
+              "minimumCapacity": 52.909198151224146,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1885,7 +1885,7 @@
                 "peakRate": 0.000404413771496292,
                 "absoluteError": 0.00435415569428355
               },
-              "minimumCapacity": 55.24929744532872,
+              "minimumCapacity": 53.39840058974702,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -1901,7 +1901,7 @@
                 "peakRate": 0.0006998964354674514,
                 "absoluteError": 0.0027836209349954635
               },
-              "minimumCapacity": 55.687555687554436,
+              "minimumCapacity": 35.25319615170932,
               "repeatHashesAgree": true
             }
           },
@@ -1923,8 +1923,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 86.51366699999926,
-            "capacity": 34.67660202173636,
+            "elapsedMs": 120.06954099999894,
+            "capacity": 24.98552068255201,
             "finalHash": "e2a84765",
             "metrics": {
               "steadyRate": 101.07811427768725,
@@ -1934,8 +1934,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 85.54362500000025,
-            "capacity": 35.06982548378083,
+            "elapsedMs": 98.63616700000057,
+            "capacity": 30.41480717716842,
             "finalHash": "26a9b36c",
             "metrics": {
               "steadyRate": 101.07720628861263,
@@ -1945,8 +1945,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 83.0652910000008,
-            "capacity": 36.116167943118036,
+            "elapsedMs": 94.24020799999926,
+            "capacity": 31.833546038014088,
             "finalHash": "072d7932",
             "metrics": {
               "steadyRate": 103.58116601835289,
@@ -1979,7 +1979,7 @@
                 "peakRate": 0.0012460007671401432,
                 "absoluteError": 0.016689260165628793
               },
-              "minimumCapacity": 137.34089172144064,
+              "minimumCapacity": 118.5823480293077,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -1995,7 +1995,7 @@
                 "peakRate": 0.0012353074151701157,
                 "absoluteError": 0.016572895072802105
               },
-              "minimumCapacity": 140.13179956275712,
+              "minimumCapacity": 135.00059062758257,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2011,7 +2011,7 @@
                 "peakRate": 0.0015083891857496027,
                 "absoluteError": 0.008626190693746991
               },
-              "minimumCapacity": 136.69579471791243,
+              "minimumCapacity": 127.17298357484175,
               "repeatHashesAgree": true
             }
           },
@@ -2041,7 +2041,7 @@
                 "peakRate": 0.001024320475161525,
                 "absoluteError": 0.009270703940597822
               },
-              "minimumCapacity": 91.48340152607771,
+              "minimumCapacity": 93.20786519035714,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2057,7 +2057,7 @@
                 "peakRate": 0.0010251368565781802,
                 "absoluteError": 0.009177592816267696
               },
-              "minimumCapacity": 91.54039508285238,
+              "minimumCapacity": 88.96401405631514,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2073,7 +2073,7 @@
                 "peakRate": 0.0012623193153395757,
                 "absoluteError": 0.0043670237711562285
               },
-              "minimumCapacity": 92.82692614556959,
+              "minimumCapacity": 89.62949407885147,
               "repeatHashesAgree": true
             }
           },
@@ -2103,7 +2103,7 @@
                 "peakRate": 0.0006787065608877932,
                 "absoluteError": 0.004525952128341173
               },
-              "minimumCapacity": 60.749189378004935,
+              "minimumCapacity": 59.19217479449179,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2119,7 +2119,7 @@
                 "peakRate": 0.0006646425128052213,
                 "absoluteError": 0.004433685923084748
               },
-              "minimumCapacity": 62.76659457226013,
+              "minimumCapacity": 57.47433847419624,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2135,7 +2135,7 @@
                 "peakRate": 0.0008461164897011588,
                 "absoluteError": 0.001939142582086751
               },
-              "minimumCapacity": 60.18652767912322,
+              "minimumCapacity": 54.62507506168134,
               "repeatHashesAgree": true
             }
           },
@@ -2157,8 +2157,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 88.46558300000106,
-            "capacity": 33.91149301531155,
+            "elapsedMs": 91.35325000000012,
+            "capacity": 32.839554148319806,
             "finalHash": "65e652ec",
             "metrics": {
               "steadyRate": 101.20885964012653,
@@ -2168,8 +2168,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 88.53425000000061,
-            "capacity": 33.88519132426128,
+            "elapsedMs": 93.48070799999914,
+            "capacity": 32.09218312723977,
             "finalHash": "58f2b390",
             "metrics": {
               "steadyRate": 101.21594920188357,
@@ -2179,8 +2179,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 85.45216600000094,
-            "capacity": 35.10736053197255,
+            "elapsedMs": 92.28683300000012,
+            "capacity": 32.507345874573424,
             "finalHash": "3cd30442",
             "metrics": {
               "steadyRate": 103.74149860522891,
@@ -2213,7 +2213,7 @@
                 "peakRate": 0.0013586500161406436,
                 "absoluteError": 0.015189155146149323
               },
-              "minimumCapacity": 134.18640701536884,
+              "minimumCapacity": 116.59617067860752,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2229,7 +2229,7 @@
                 "peakRate": 0.001330411971220187,
                 "absoluteError": 0.015208944808874305
               },
-              "minimumCapacity": 135.3017208078824,
+              "minimumCapacity": 125.23220137337965,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2245,7 +2245,7 @@
                 "peakRate": 0.0015723230905678308,
                 "absoluteError": 0.007521482061502545
               },
-              "minimumCapacity": 133.3165472987307,
+              "minimumCapacity": 125.19300588407265,
               "repeatHashesAgree": true
             }
           },
@@ -2275,7 +2275,7 @@
                 "peakRate": 0.001112845263735022,
                 "absoluteError": 0.008357618823912226
               },
-              "minimumCapacity": 92.07632009743286,
+              "minimumCapacity": 82.62404720014608,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2291,7 +2291,7 @@
                 "peakRate": 0.0010885861154174637,
                 "absoluteError": 0.00838859803232399
               },
-              "minimumCapacity": 89.77925436054932,
+              "minimumCapacity": 78.47616859255244,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2307,7 +2307,7 @@
                 "peakRate": 0.0013223797591006778,
                 "absoluteError": 0.0036742268401879397
               },
-              "minimumCapacity": 92.52631633489152,
+              "minimumCapacity": 70.27070759463993,
               "repeatHashesAgree": true
             }
           },
@@ -2337,7 +2337,7 @@
                 "peakRate": 0.0007355318793364629,
                 "absoluteError": 0.004056358075957096
               },
-              "minimumCapacity": 59.15769382486151,
+              "minimumCapacity": 55.05349015454516,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2353,7 +2353,7 @@
                 "peakRate": 0.000713645109631694,
                 "absoluteError": 0.004080697118766355
               },
-              "minimumCapacity": 56.05333093275665,
+              "minimumCapacity": 52.028609352968694,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2369,7 +2369,7 @@
                 "peakRate": 0.000880366961726952,
                 "absoluteError": 0.0015660690013740495
               },
-              "minimumCapacity": 60.93979276448388,
+              "minimumCapacity": 56.407191330259096,
               "repeatHashesAgree": true
             }
           },
@@ -2391,8 +2391,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 83.63837499999863,
-            "capacity": 35.86870261408174,
+            "elapsedMs": 88.53862500000105,
+            "capacity": 33.88351693964035,
             "finalHash": "250308c6",
             "metrics": {
               "steadyRate": 101.63570786872307,
@@ -2402,8 +2402,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 87.31295900000077,
-            "capacity": 34.359160820560135,
+            "elapsedMs": 101.24775000000045,
+            "capacity": 29.63028808047573,
             "finalHash": "14cf57e3",
             "metrics": {
               "steadyRate": 101.63621501038266,
@@ -2413,8 +2413,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 86.22637500000019,
-            "capacity": 34.792138716256986,
+            "elapsedMs": 98.34245899999951,
+            "capacity": 30.505643549141016,
             "finalHash": "1430c559",
             "metrics": {
               "steadyRate": 103.4609000473965,
@@ -2447,7 +2447,7 @@
                 "peakRate": 0.0014444073712484467,
                 "absoluteError": 0.011745823617246182
               },
-              "minimumCapacity": 126.16129898700638,
+              "minimumCapacity": 87.01915787673938,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2463,7 +2463,7 @@
                 "peakRate": 0.0014348433935886628,
                 "absoluteError": 0.011736631858479127
               },
-              "minimumCapacity": 136.809560908799,
+              "minimumCapacity": 115.31254504396033,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2479,7 +2479,7 @@
                 "peakRate": 0.0021342342702854065,
                 "absoluteError": 0.0049875521628780116
               },
-              "minimumCapacity": 134.67560014813893,
+              "minimumCapacity": 114.70904528617996,
               "repeatHashesAgree": true
             }
           },
@@ -2509,7 +2509,7 @@
                 "peakRate": 0.0011847303485042616,
                 "absoluteError": 0.0063260374692159895
               },
-              "minimumCapacity": 85.52937852899323,
+              "minimumCapacity": 85.45000106812668,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2525,7 +2525,7 @@
                 "peakRate": 0.0011806581153727303,
                 "absoluteError": 0.006313223698356056
               },
-              "minimumCapacity": 92.86296425948889,
+              "minimumCapacity": 75.3652066022823,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2541,7 +2541,7 @@
                 "peakRate": 0.00186024828033961,
                 "absoluteError": 0.0019474294597841893
               },
-              "minimumCapacity": 93.82904510618775,
+              "minimumCapacity": 59.913425100730336,
               "repeatHashesAgree": true
             }
           },
@@ -2571,7 +2571,7 @@
                 "peakRate": 0.000791361541115932,
                 "absoluteError": 0.0030309812497380925
               },
-              "minimumCapacity": 61.865927091129876,
+              "minimumCapacity": 43.107422705912505,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2587,7 +2587,7 @@
                 "peakRate": 0.0007570606612194478,
                 "absoluteError": 0.002919172989141479
               },
-              "minimumCapacity": 60.45319706430391,
+              "minimumCapacity": 48.005248317787675,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2603,7 +2603,7 @@
                 "peakRate": 0.0012602569558516196,
                 "absoluteError": 0.0005333465819299931
               },
-              "minimumCapacity": 62.19383529729079,
+              "minimumCapacity": 47.70723709722447,
               "repeatHashesAgree": true
             }
           },
@@ -2625,8 +2625,8 @@
         "frequency": 2000,
         "axes": {
           "roll": {
-            "elapsedMs": 84.93812499999876,
-            "capacity": 35.319828404500846,
+            "elapsedMs": 109.3392500000009,
+            "capacity": 27.437539584366778,
             "finalHash": "130c01cb",
             "metrics": {
               "steadyRate": 102.48049085183935,
@@ -2636,8 +2636,8 @@
             }
           },
           "pitch": {
-            "elapsedMs": 84.03454200000124,
-            "capacity": 35.699605526498324,
+            "elapsedMs": 123.78104100000019,
+            "capacity": 24.236344885805213,
             "finalHash": "b7685847",
             "metrics": {
               "steadyRate": 102.48238409476708,
@@ -2647,8 +2647,8 @@
             }
           },
           "yaw": {
-            "elapsedMs": 83.99033400000008,
-            "capacity": 35.718395881126,
+            "elapsedMs": 149.21216599999934,
+            "capacity": 20.105599164078974,
             "finalHash": "5bbf6dd1",
             "metrics": {
               "steadyRate": 98.73222646919868,
@@ -2681,7 +2681,7 @@
                 "peakRate": 0.002034252627335881,
                 "absoluteError": 0.007836540348958485
               },
-              "minimumCapacity": 138.71843860745233,
+              "minimumCapacity": 98.05804218947387,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2697,7 +2697,7 @@
                 "peakRate": 0.002051669094837128,
                 "absoluteError": 0.007835612783009793
               },
-              "minimumCapacity": 135.41928994520632,
+              "minimumCapacity": 109.9090641712103,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2713,7 +2713,7 @@
                 "peakRate": 0.001500493489104174,
                 "absoluteError": 0.0015671126659358712
               },
-              "minimumCapacity": 141.00063450285566,
+              "minimumCapacity": 123.17293480046102,
               "repeatHashesAgree": true
             }
           },
@@ -2743,7 +2743,7 @@
                 "peakRate": 0.001673201437001862,
                 "absoluteError": 0.003973185838744551
               },
-              "minimumCapacity": 100.26500709809524,
+              "minimumCapacity": 77.71098058486938,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2759,7 +2759,7 @@
                 "peakRate": 0.0016804978105824718,
                 "absoluteError": 0.003965133754438961
               },
-              "minimumCapacity": 103.7553667031084,
+              "minimumCapacity": 90.50319777965203,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2775,7 +2775,7 @@
                 "peakRate": 0.0018205825802386905,
                 "absoluteError": 0.00010912087782817166
               },
-              "minimumCapacity": 103.05235227814546,
+              "minimumCapacity": 95.58845880242639,
               "repeatHashesAgree": true
             }
           },
@@ -2805,7 +2805,7 @@
                 "peakRate": 0.001079222590024827,
                 "absoluteError": 0.0017327304725443876
               },
-              "minimumCapacity": 61.25944393455148,
+              "minimumCapacity": 57.97344097532686,
               "repeatHashesAgree": true
             },
             "pitch": {
@@ -2821,7 +2821,7 @@
                 "peakRate": 0.0011265724727089733,
                 "absoluteError": 0.0017768171911524552
               },
-              "minimumCapacity": 58.756276516829395,
+              "minimumCapacity": 59.247311490310985,
               "repeatHashesAgree": true
             },
             "yaw": {
@@ -2837,7 +2837,7 @@
                 "peakRate": 0.001384017748719183,
                 "absoluteError": 0.0010344291351779993
               },
-              "minimumCapacity": 62.55946407392529,
+              "minimumCapacity": 60.110302404912524,
               "repeatHashesAgree": true
             }
           },
