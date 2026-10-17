@@ -19,13 +19,19 @@ import {
   verifyHitchJournalFile,
 } from './solo-qualification-hitch-journal.mjs';
 
-function fixture({ records = HITCH_LIMITS.records, native = false, configure = true } = {}) {
+function fixture({
+  records = HITCH_LIMITS.records,
+  native = false,
+  configure = true,
+  subscribe = true,
+} = {}) {
   let now = 0,
     observer;
   const documentEvents = new Map(),
     events = new Map();
   const environment = {
     performance: { now: () => now, timeOrigin: 1700000000000 },
+    location: { origin: 'https://solo.test', pathname: '/game/' },
     document: {
       hidden: false,
       hasFocus: () => true,
@@ -64,7 +70,7 @@ function fixture({ records = HITCH_LIMITS.records, native = false, configure = t
   const journal = createBrowserHitchJournal({ records }, environment);
   journal.first(0, 0);
   if (configure) journal.configure({ id: 1, records, remainingMs: HITCH_LIMITS.durationMs });
-  journal.subscribe(0);
+  if (subscribe) journal.subscribe(0);
   return {
     journal,
     environment,
@@ -294,14 +300,16 @@ test('writer preserves independent document binaries with one row-wide capacity 
   const two = fixture({ configure: false });
   two.journal.configure(allocation);
   two.journal.beginWork(5, 2);
-  two.journal.endWork(100, 3);
+  two.journal.endWork(100, 2);
+  two.journal.frame(0, 110, 2, 2);
+  two.at(110);
   const second = await store.retain(two.journal.seal('result'), 'final');
   assert.notEqual(first.path, second.path);
   assert.equal((await readFile(first.path)).length, 24);
   assert.equal([...decodeHitchJournal(await readFile(second.path))][0].durationMs, 95);
   assert.equal(store.finish().status, 'complete');
-  assert.equal(store.report.records, 2);
-  assert.equal(store.report.bytes, 48);
+  assert.equal(store.report.records, 3);
+  assert.equal(store.report.bytes, 72);
   assert(Buffer.byteLength(JSON.stringify(store.report)) < HITCH_LIMITS.descriptorBytes);
 });
 
@@ -659,10 +667,300 @@ test('encoded control characters and multibyte failure reasons fit the metadata 
   ];
   for (let i = 0; i < 64; i++) {
     store.fail(reasons[i % reasons.length]);
-    if (i < 63) store.beginDocument();
+    if (i < 63) {
+      try {
+        store.beginDocument();
+      } catch (error) {
+        assert.match(error.message, /descriptor cap/);
+      }
+    }
   }
   assert.equal(store.finish().status, 'incomplete');
   assert.equal(store.report.failures.length, 64);
   assert(store.report.failures.every((reason) => Buffer.byteLength(JSON.stringify(reason)) <= 256));
+  assert(Buffer.byteLength(JSON.stringify(store.report)) <= HITCH_LIMITS.descriptorBytes);
+});
+
+const anchoredURL = 'https://solo.test/game/';
+const preparationOptions = { soloURL: anchoredURL, preparationPolicy: 'first-return-anchored-v1' };
+function preparedDocument(allocation) {
+  const f = fixture({ configure: false, subscribe: false });
+  f.environment.location.pathname = '/game/playground/';
+  f.journal.configure(allocation);
+  f.journal.phase(6, 1);
+  f.journal.frame(0, 40, 6, 6);
+  f.at(40);
+  return f;
+}
+function activeDocument(allocation) {
+  const f = fixture({ configure: false });
+  f.journal.configure(allocation);
+  f.journal.phase(2, 0);
+  f.journal.frame(0, 40, 2, 2);
+  f.journal.beginWork(1, 2);
+  f.journal.endWork(3, 2);
+  f.journal.phase(3, 40);
+  f.at(40);
+  return f;
+}
+
+test('preparation opt-in admits only the exact anchored fixture and exact flag', async () => {
+  const bytes = await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture',
+      import.meta.url,
+    ),
+  );
+  const recipe = JSON.parse(bytes);
+  const flags = [
+    '--hitch-journal',
+    '--work-probe',
+    '--hitch-journal-preparation=first-return-anchored-v1',
+  ];
+  assert.equal(
+    qualificationHitchJournalOptions(flags, recipe, bytes).preparationPolicy,
+    'first-return-anchored-v1',
+  );
+  for (const selected of [
+    flags.slice(2),
+    [...flags, flags[2]],
+    [...flags.slice(0, 2), '--hitch-journal-preparation=any'],
+    [...flags.slice(0, 2), '--hitch-journal-preparation'],
+  ])
+    assert.throws(() => qualificationHitchJournalOptions(selected, recipe, bytes));
+  assert.throws(() =>
+    qualificationHitchJournalOptions(flags, recipe, Buffer.concat([bytes, Buffer.from(' ')])),
+  );
+  for (const recipeChange of [
+    (r) => {
+      r.id = 'other';
+    },
+    (r) => {
+      r.entryPath = 'other/';
+    },
+    (r) => {
+      r.actions[4].selector = '#different';
+    },
+    (r) => {
+      r.actions[4].type = 'reload';
+    },
+  ]) {
+    const changed = structuredClone(recipe);
+    recipeChange(changed);
+    assert.throws(() => qualificationHitchJournalOptions(flags, changed, bytes));
+  }
+});
+
+test('declared preparation retains timing but only subsequent positive Solo work grants active coverage', async (t) => {
+  const store = createHitchJournalStore(
+    join(await temporary(t), 'report.json'),
+    () => 0,
+    preparationOptions,
+  );
+  const pre = preparedDocument(
+    store.beginDocument({ url: anchoredURL + 'playground/', action: 'initial' }),
+  );
+  const prepResult = pre.journal.seal(undefined);
+  assert.equal(prepResult.header.workScope, 'unobserved-preparation');
+  assert.equal(prepResult.header.complete, true);
+  assert.equal(prepResult.header.activeFrames, 0);
+  assert.equal(recordsOf(prepResult).filter((row) => row.kind === 1).length, 1);
+  await store.retain(prepResult, 'before-follow-4');
+  const game = activeDocument(
+    store.beginDocument({ url: anchoredURL + '?preview=accepted', action: 'follow-4' }),
+  );
+  await store.retain(game.journal.seal('paused'), 'final');
+  assert.equal(store.finish().status, 'complete');
+  assert.equal(store.report.activePlayCoverage, 'observed-final-solo');
+  assert.equal(store.report.documents.length, 2);
+});
+
+test('preparation-only, zero-active and unsubscribed final Solo cannot complete a row', async (t) => {
+  for (const mode of [
+    'preparation-only',
+    'zero-active',
+    'unsubscribed',
+    'zero-duration',
+    'retrograde',
+  ]) {
+    const store = createHitchJournalStore(
+      join(await temporary(t), 'report.json'),
+      () => 0,
+      preparationOptions,
+    );
+    const pre = preparedDocument(
+      store.beginDocument({ url: anchoredURL + 'playground/', action: 'initial' }),
+    );
+    await store.retain(pre.journal.seal(undefined), 'before-follow-4');
+    if (mode !== 'preparation-only') {
+      const game = fixture({ configure: false, subscribe: mode !== 'unsubscribed' });
+      game.journal.configure(store.beginDocument({ url: anchoredURL, action: 'follow-4' }));
+      if (mode === 'zero-active') {
+        game.journal.frame(0, 40, 3, 3);
+        game.journal.beginWork(0, 3);
+        game.journal.endWork(10, 3);
+      } else if (mode === 'zero-duration') {
+        game.journal.frame(0, 0, 2, 2);
+        game.journal.beginWork(0, 2);
+        game.journal.endWork(0, 2);
+      } else {
+        game.journal.frame(0, 40, 2, 2);
+        game.journal.beginWork(0, 2);
+        game.journal.endWork(10, 2);
+        if (mode === 'retrograde') game.journal.frame(0, 10, 2, 2);
+      }
+      game.at(40);
+      await store.retain(game.journal.seal('paused'), 'final');
+    }
+    assert.equal(store.finish().status, 'incomplete', mode);
+    assert.equal(store.report.activePlayCoverage, 'incomplete', mode);
+  }
+});
+
+test('wrong document role, location, action and undeclared missing phase are rejected', async (t) => {
+  const file = join(await temporary(t), 'report.json');
+  for (const request of [
+    { url: 'https://other.test/game/playground/', action: 'initial' },
+    { url: anchoredURL, action: 'initial' },
+    { url: anchoredURL + 'playground/', action: 'follow-4' },
+  ]) {
+    const store = createHitchJournalStore(file, () => 0, preparationOptions);
+    assert.throws(() => store.beginDocument(request));
+  }
+  const store = createHitchJournalStore(file, () => 0, preparationOptions);
+  store.beginDocument({ url: anchoredURL + 'playground/', action: 'initial' });
+  assert.throws(() => store.beginDocument({ url: anchoredURL, action: 'follow-5' }));
+  assert.throws(() => store.beginDocument({ url: anchoredURL + 'other/', action: 'follow-4' }));
+  const f = fixture({ configure: false, subscribe: false });
+  assert.throws(
+    () =>
+      f.journal.configure({
+        id: 1,
+        records: 1,
+        remainingMs: 100,
+        identity: {
+          role: 'preparation',
+          origin: 'https://solo.test',
+          path: '/game/playground/',
+          action: 'initial',
+        },
+      }),
+    /location/,
+  );
+  assert.throws(() => fixture().journal.seal(undefined), /boundary/);
+  assert.throws(() => fixture().journal.seal('declared-preparation'), /Undeclared/);
+});
+
+test('active or subscribed preparation and mismatched export identities cannot gain an exemption', async (t) => {
+  for (const action of ['phase', 'frame', 'work', 'subscribe']) {
+    const store = createHitchJournalStore(
+      join(await temporary(t), 'report.json'),
+      () => 0,
+      preparationOptions,
+    );
+    const f = preparedDocument(
+      store.beginDocument({ url: anchoredURL + 'playground/', action: 'initial' }),
+    );
+    if (action === 'phase') {
+      f.journal.phase(2, 41);
+      f.journal.phase(6, 42);
+    }
+    if (action === 'frame') f.journal.frame(40, 80, 2, 2);
+    if (action === 'work') {
+      f.journal.beginWork(40, 2);
+      f.journal.endWork(41, 2);
+    }
+    if (action === 'subscribe') f.journal.subscribe(40);
+    assert.throws(() => f.journal.seal(undefined), /Preparation/);
+  }
+  const store = createHitchJournalStore(
+    join(await temporary(t), 'report.json'),
+    () => 0,
+    preparationOptions,
+  );
+  const f = preparedDocument(
+    store.beginDocument({ url: anchoredURL + 'playground/', action: 'initial' }),
+  );
+  const result = f.journal.seal(undefined);
+  await assert.rejects(store.retain(result, 'before-follow-5'));
+  await assert.rejects(
+    store.retain(
+      {
+        ...result,
+        header: { ...result.header, identity: { ...result.header.identity, role: 'solo' } },
+      },
+      'before-follow-4',
+    ),
+  );
+});
+
+test('lost preparatory data and restored document IDs remain incomplete despite a valid final Solo', async (t) => {
+  const store = createHitchJournalStore(
+    join(await temporary(t), 'report.json'),
+    () => 0,
+    preparationOptions,
+  );
+  const old = preparedDocument(
+    store.beginDocument({ url: anchoredURL + 'playground/', action: 'initial' }),
+  );
+  const game = activeDocument(store.beginDocument({ url: anchoredURL, action: 'follow-4' }));
+  await assert.rejects(store.retain(old.journal.seal(undefined), 'before-follow-4'), /Lost/);
+  await store.retain(game.journal.seal('paused'), 'final');
+  assert.equal(store.finish().status, 'incomplete');
+  assert.equal(store.report.documents[0].status, 'lost');
+  assert.throws(
+    () => store.beginDocument({ url: anchoredURL, action: 'follow-4' }),
+    /Only the declared/,
+  );
+});
+
+test('export rejects relocated documents, unreported preparation work and impossible active timestamps', async (t) => {
+  const store = createHitchJournalStore(join(await temporary(t), 'report.json'), () => 0, {
+    soloURL: anchoredURL,
+  });
+  const game = activeDocument(store.beginDocument({ url: anchoredURL, action: 'initial' }));
+  game.environment.location.pathname = '/unrelated/';
+  assert.throws(() => game.journal.seal('paused'), /location changed/);
+  game.environment.location.pathname = '/game/';
+  const result = game.journal.seal('paused');
+  await assert.rejects(
+    store.retain(
+      { ...result, header: { ...result.header, lastActiveAt: result.header.endedAt + 1 } },
+      'final',
+    ),
+    /timestamps/,
+  );
+  await store.retain(result, 'final');
+  assert.equal(store.finish().status, 'complete');
+  const prepStore = createHitchJournalStore(
+    join(await temporary(t), 'report.json'),
+    () => 0,
+    preparationOptions,
+  );
+  const prep = preparedDocument(
+    prepStore.beginDocument({ url: anchoredURL + 'playground/', action: 'initial' }),
+  );
+  prep.journal.beginWork(41, 6);
+  prep.journal.endWork(42, 6);
+  assert.throws(() => prep.journal.seal(undefined), /Preparation/);
+});
+
+test('large document identities cannot exhaust the reserved serialized failure budget', async (t) => {
+  const url = anchoredURL + 'x'.repeat(1000);
+  const store = createHitchJournalStore(join(await temporary(t), 'report.json'), () => 0, {
+    soloURL: url,
+  });
+  let rejected = 0;
+  for (let i = 0; i < 64; i++) {
+    try {
+      store.beginDocument({ url, action: 'x'.repeat(128) });
+    } catch (error) {
+      assert.match(error.message, /descriptor cap/);
+      rejected++;
+    }
+    store.fail('\0'.repeat(256));
+  }
+  assert(rejected > 0);
+  assert.equal(store.finish().status, 'incomplete');
   assert(Buffer.byteLength(JSON.stringify(store.report)) <= HITCH_LIMITS.descriptorBytes);
 });

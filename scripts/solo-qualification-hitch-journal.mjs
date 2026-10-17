@@ -12,12 +12,30 @@ export const HITCH_LIMITS = Object.freeze({
   descriptorBytes: 65536,
 });
 
-export function qualificationHitchJournalOptions(flags, scenario) {
-  const selected = flags.filter((flag) => flag.startsWith('--hitch-journal'));
+export function qualificationHitchJournalOptions(flags, scenario, scenarioBytes) {
+  const preparation = flags.filter((flag) => flag.startsWith('--hitch-journal-preparation'));
+  const selected = flags.filter(
+    (flag) => flag.startsWith('--hitch-journal') && !flag.startsWith('--hitch-journal-preparation'),
+  );
+  assert(!preparation.length || selected.length, 'Preparation policy requires the journal');
   if (!selected.length) return null;
   assert.deepEqual(selected, ['--hitch-journal'], 'One exact --hitch-journal flag required');
   assert(flags.includes('--work-probe'), 'Hitch journal requires the work probe');
   assert(scenario.timeoutMs <= HITCH_LIMITS.durationMs, 'Hitch journal forty-minute bound');
+  if (preparation.length) {
+    assert.deepEqual(preparation, ['--hitch-journal-preparation=first-return-anchored-v1']);
+    assert.equal(
+      createHash('sha256').update(scenarioBytes).digest('hex'),
+      '079d4dd76fbd914ddd4da7311f8e6cee4a0ff4fc3bc951842b2921c94c53b8ff',
+    );
+    assert.deepEqual(scenario, JSON.parse(scenarioBytes), 'Preparation recipe bytes changed');
+    assert.equal(scenario.id, 'thirty-minute-lifecycle-soak-first-return-anchored-v1');
+    assert.equal(scenario.entryPath, 'playground/');
+    assert.equal(scenario.readySelector, '#import-file');
+    assert.equal(scenario.actions[4].type, 'follow');
+    assert.equal(scenario.actions[4].selector, '#open-preview');
+    return { ...HITCH_LIMITS, preparationPolicy: 'first-return-anchored-v1' };
+  }
   return HITCH_LIMITS;
 }
 
@@ -53,6 +71,18 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
     nativeObserver = null,
     nativeDropped = null,
     nativeFailure = false;
+  let identity = { role: 'solo', origin: null, path: null, action: null },
+    runningSeen = false,
+    workCallsSeen = false,
+    activeFrames = 0,
+    activeWorkWindows = 0,
+    activeElapsedMs = 0,
+    firstActiveAt = null,
+    lastActiveAt = null;
+  const active = (start, end) => {
+    firstActiveAt = firstActiveAt === null ? start : Math.min(firstActiveAt, start);
+    lastActiveAt = lastActiveAt === null ? end : Math.max(lastActiveAt, end);
+  };
   let lastFrameEnd = null,
     lastWorkEnd = null;
   const nativeSupported =
@@ -113,6 +143,24 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
     return {
       format: 'SoloHitchJournalDocumentV1',
       documentId,
+      identity,
+      location:
+        identity.origin === null
+          ? null
+          : { origin: environment.location?.origin, path: environment.location?.pathname },
+      workScope:
+        identity.role === 'preparation'
+          ? 'unobserved-preparation'
+          : workSubscribedAt === null
+            ? 'unobserved'
+            : 'subscribed-solo',
+      runningSeen,
+      workCallsSeen,
+      activeFrames,
+      activeWorkWindows,
+      activeElapsedMs,
+      firstActiveAt,
+      lastActiveAt,
       configured,
       sealed,
       startedAt,
@@ -136,7 +184,9 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
       complete:
         configured &&
         firstCallback !== null &&
-        workSubscribedAt !== null &&
+        (identity.role === 'preparation'
+          ? !runningSeen && !workCallsSeen && workSubscribedAt === null
+          : workSubscribedAt !== null) &&
         firstOverflowAt === null &&
         !clockInvalid &&
         !durationExceeded &&
@@ -162,6 +212,15 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
       )
         throw Error('Hitch document allocation');
       documentId = allocation.id;
+      identity = allocation.identity ?? identity;
+      if (!['solo', 'preparation'].includes(identity.role))
+        throw Error('Unknown hitch document role');
+      if (
+        identity.origin !== null &&
+        (environment.location?.origin !== identity.origin ||
+          environment.location?.pathname !== identity.path)
+      )
+        throw Error('Hitch document location mismatch');
       limit = allocation.records;
       deadline = Math.min(deadline, environment.performance.now() + allocation.remainingMs);
       // Init runs before navigation returns. Preserve its boot records, but never
@@ -181,9 +240,11 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
         return;
       }
       if (next !== phase) append(4, at, at, phase, next, flags(), flags());
+      if (next === 2) runningSeen = true;
       phase = next;
     },
     frame(start, end, before, after) {
+      if (before === 2 || after === 2) runningSeen = true;
       if (
         !Number.isFinite(start) ||
         !Number.isFinite(end) ||
@@ -193,6 +254,11 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
         clockInvalid = true;
       else if (end - start > 33) append(1, start, end, before, after, previousFrameFlags, flags());
       else if (sealed && (before === 2 || after === 2)) postSealActive = true;
+      if (!sealed && !clockInvalid && before === 2 && after === 2 && end > start) {
+        activeFrames++;
+        activeElapsedMs += end - start;
+        active(start, end);
+      }
       lastFrameEnd = end;
       previousFrameFlags = flags();
     },
@@ -206,6 +272,8 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
       workSubscribedAt ??= at;
     },
     beginWork(at, currentPhase) {
+      workCallsSeen = true;
+      if (currentPhase === 2) runningSeen = true;
       if (workStart !== null || !Number.isFinite(at) || (lastWorkEnd !== null && at < lastWorkEnd))
         clockInvalid = true;
       workStart = at;
@@ -221,15 +289,47 @@ export function createBrowserHitchJournal(options = {}, environment = globalThis
       else if (at - workStart >= 50)
         append(2, workStart, at, workPhase, currentPhase, workFlags, flags());
       else if (sealed && (workPhase === 2 || currentPhase === 2)) postSealActive = true;
+      if (!sealed && !clockInvalid && workPhase === 2 && currentPhase === 2 && at > workStart) {
+        activeWorkWindows++;
+        active(workStart, at);
+      }
       lastWorkEnd = at;
       workStart = null;
     },
     state,
     seal(currentPhase) {
       if (sealed) throw Error('Hitch journal may export once per document');
+      if (
+        identity.origin !== null &&
+        (environment.location?.origin !== identity.origin ||
+          environment.location?.pathname !== identity.path)
+      )
+        throw Error('Hitch document location changed before export');
       if (currentPhase === 'running' || currentPhase === 2)
         throw Error('Hitch journal export requires a non-running boundary');
-      if (!['boot', 'briefing', 'paused', 'result', 'picture', 'other'].includes(currentPhase))
+      if (identity.role === 'preparation') {
+        if (
+          currentPhase !== undefined ||
+          phase !== 6 ||
+          runningSeen ||
+          workCallsSeen ||
+          workSubscribedAt !== null
+        )
+          throw Error('Preparation document cannot claim Solo work or flight state');
+        currentPhase = 'declared-preparation';
+      } else if (currentPhase === 'declared-preparation')
+        throw Error('Undeclared preparation boundary');
+      if (
+        ![
+          'boot',
+          'briefing',
+          'paused',
+          'result',
+          'picture',
+          'other',
+          'declared-preparation',
+        ].includes(currentPhase)
+      )
         throw Error('Hitch journal public boundary unavailable');
       if (nativeObserver) {
         nativeEntries(nativeObserver.takeRecords());
@@ -333,7 +433,13 @@ export async function verifyHitchJournalFile(path, expectedBytes, expectedSha256
   }
 }
 
-export function createHitchJournalStore(output, now = () => performance.now()) {
+export function createHitchJournalStore(output, now = () => performance.now(), options = {}) {
+  assert(
+    options.preparationPolicy === undefined ||
+      options.preparationPolicy === 'first-return-anchored-v1',
+  );
+  const soloURL = options.soloURL ? new URL(options.soloURL) : null;
+  assert(!options.preparationPolicy || soloURL, 'Preparation requires the admitted Solo URL');
   const report = {
     format: 'SoloHitchJournalV1',
     status: 'observing',
@@ -342,6 +448,8 @@ export function createHitchJournalStore(output, now = () => performance.now()) {
     records: 0,
     documents: [],
     failures: [],
+    activePlayCoverage: 'unobserved',
+    preparationPolicy: options.preparationPolicy ?? null,
     scope:
       'Individual observed rAF>33ms and work>=50ms windows; native tasks feature-detected. Pending native entries drain at seal; later/unreported delivery is unobserved and absent drop-count capability is not zero. No physical display or overhead-free claim.',
   };
@@ -356,20 +464,50 @@ export function createHitchJournalStore(output, now = () => performance.now()) {
       report.failures.push(retained);
     }
   };
+  const documentIdentity = (navigation, index) => {
+    if (!soloURL) return { role: 'solo', origin: null, path: null, action: null };
+    const target = new URL(navigation?.url);
+    assert.equal(target.origin, soloURL.origin, 'Hitch document origin');
+    let role = 'solo';
+    if (options.preparationPolicy) {
+      assert(index <= 2, 'Only the declared preparation and Solo documents are admitted');
+      assert.equal(
+        navigation.action,
+        index === 1 ? 'initial' : 'follow-4',
+        'Hitch navigation action',
+      );
+      role = index === 1 ? 'preparation' : 'solo';
+    }
+    assert.equal(
+      target.pathname,
+      role === 'preparation' ? new URL('playground/', soloURL).pathname : soloURL.pathname,
+      'Hitch document path',
+    );
+    assert(navigation.action.length <= 128);
+    return { role, origin: target.origin, path: target.pathname, action: navigation.action };
+  };
   return {
     report,
     fail,
-    beginDocument() {
+    beginDocument(navigation) {
       startedAt ??= now();
       if (current?.status === 'open') {
         current.status = 'lost';
         fail('Document replaced before its single export');
       }
       assert(report.documents.length < HITCH_LIMITS.documents, 'Hitch document cap');
-      current = { id: report.documents.length + 1, status: 'open' };
+      const identity = documentIdentity(navigation, report.documents.length + 1);
+      const next = { id: report.documents.length + 1, status: 'open', identity };
+      assert(
+        Buffer.byteLength(JSON.stringify({ ...report, documents: [...report.documents, next] })) <=
+          HITCH_LIMITS.descriptorBytes - 20480,
+        'Hitch descriptor cap',
+      );
+      current = next;
       report.documents.push(current);
       return {
         id: current.id,
+        identity,
         records: HITCH_LIMITS.records - report.records,
         remainingMs: Math.max(0, HITCH_LIMITS.durationMs - (now() - startedAt)),
       };
@@ -378,6 +516,7 @@ export function createHitchJournalStore(output, now = () => performance.now()) {
       assert(current?.status === 'open');
       return {
         id: current.id,
+        identity: current.identity,
         records: HITCH_LIMITS.records - report.records,
         remainingMs: Math.max(0, HITCH_LIMITS.durationMs - (now() - startedAt)),
       };
@@ -387,6 +526,31 @@ export function createHitchJournalStore(output, now = () => performance.now()) {
       const header = result?.header;
       assert(header?.format === 'SoloHitchJournalDocumentV1');
       assert.equal(header.documentId, current.id, 'Lost/unconfigured document');
+      assert.deepEqual(header.identity, current.identity, 'Changed hitch document identity');
+      assert.deepEqual(
+        header.location,
+        current.identity.origin === null
+          ? null
+          : { origin: current.identity.origin, path: current.identity.path },
+        'Changed hitch document location',
+      );
+      const preparation = current.identity.role === 'preparation';
+      assert.equal(
+        header.workScope,
+        preparation
+          ? 'unobserved-preparation'
+          : header.workSubscribedAt === null
+            ? 'unobserved'
+            : 'subscribed-solo',
+      );
+      if (preparation) {
+        assert.equal(boundary, 'before-follow-4');
+        assert.equal(header.publicPhase, 'declared-preparation');
+        assert.equal(header.workSubscribedAt, null);
+        assert.equal(header.runningSeen, false);
+        assert.equal(header.workCallsSeen, false);
+        assert.equal(header.phase, 6);
+      } else assert.notEqual(header.publicPhase, 'declared-preparation');
       assert.equal(header.sealed, true);
       assert.equal(header.configured, true);
       assert(Number.isSafeInteger(header.records) && header.records >= 0);
@@ -396,7 +560,15 @@ export function createHitchJournalStore(output, now = () => performance.now()) {
           header.capacity <= HITCH_LIMITS.records - report.records,
       );
       assert(
-        ['boot', 'briefing', 'paused', 'result', 'picture', 'other'].includes(header.publicPhase),
+        [
+          'boot',
+          'briefing',
+          'paused',
+          'result',
+          'picture',
+          'other',
+          'declared-preparation',
+        ].includes(header.publicPhase),
       );
       assert.equal(typeof result.base64, 'string');
       assert(result.base64.length <= 5568000 && /^[A-Za-z0-9+/]*={0,2}$/.test(result.base64));
@@ -440,12 +612,38 @@ export function createHitchJournalStore(output, now = () => performance.now()) {
         ),
       );
       assert.equal(header.observed[0], 0);
+      assert.equal(typeof header.runningSeen, 'boolean');
+      assert.equal(typeof header.workCallsSeen, 'boolean');
+      for (const key of ['activeFrames', 'activeWorkWindows'])
+        assert(Number.isSafeInteger(header[key]) && header[key] >= 0);
+      assert(Number.isFinite(header.activeElapsedMs) && header.activeElapsedMs >= 0);
+      for (const key of ['firstActiveAt', 'lastActiveAt'])
+        assert(header[key] === null || Number.isFinite(header[key]));
+      if (header.activeFrames || header.activeWorkWindows) {
+        assert(
+          header.runningSeen &&
+            header.firstActiveAt !== null &&
+            header.lastActiveAt > header.firstActiveAt,
+        );
+      } else
+        assert(
+          header.firstActiveAt === null &&
+            header.lastActiveAt === null &&
+            header.activeElapsedMs === 0,
+        );
+      if (preparation) assert(header.activeFrames === 0 && header.activeWorkWindows === 0);
       if (header.complete) {
-        assert(header.firstCallback !== null && header.workSubscribedAt !== null);
+        assert(header.firstCallback !== null && (preparation || header.workSubscribedAt !== null));
         assert(header.firstOverflowAt === null && header.unmatchedWorkStart === null);
         assert(!header.clockInvalid && !header.durationExceeded && !header.postSealActive);
         assert(header.nativeTasks !== 'failed' && !(header.nativeDropped > 0));
         assert(header.endedAt <= header.deadline);
+        assert(
+          header.lastActiveAt === null ||
+            (header.firstActiveAt >= 0 && header.lastActiveAt <= header.endedAt),
+          'Active timestamps outside document observation',
+        );
+        assert(header.activeElapsedMs <= HITCH_LIMITS.durationMs);
         assert.deepEqual(header.observed, retained, 'Missing observed hitch records');
       }
       const path = `${resolve(output)}.hitches.d${String(current.id).padStart(2, '0')}.bin`;
@@ -489,6 +687,18 @@ export function createHitchJournalStore(output, now = () => performance.now()) {
         fail('Final document unavailable');
       }
       if (!report.documents.length) fail('No observed document');
+      const final = report.documents.at(-1);
+      const active =
+        final?.status === 'complete' &&
+        final.identity.role === 'solo' &&
+        ['paused', 'result', 'picture'].includes(final.header.publicPhase) &&
+        final.header.workScope === 'subscribed-solo' &&
+        final.header.activeFrames > 0 &&
+        final.header.activeWorkWindows > 0 &&
+        final.header.activeElapsedMs > 0 &&
+        final.header.lastActiveAt > final.header.firstActiveAt;
+      report.activePlayCoverage = active ? 'observed-final-solo' : 'incomplete';
+      if (!active) fail('No positive final Solo frame/work coverage');
       if (startedAt !== null && now() - startedAt > HITCH_LIMITS.durationMs)
         fail('Row observation exceeded forty minutes');
       if (!report.failures.length) report.status = 'complete';

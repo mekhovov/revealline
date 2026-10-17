@@ -61,7 +61,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--hitch-journal] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--hitch-journal [--hitch-journal-preparation=first-return-anchored-v1]] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -97,7 +97,7 @@ const baselineRuntime = flags.includes('--baseline-runtime'),
 const hitchModule = flags.some((flag) => flag.startsWith('--hitch-journal'))
   ? await import('./solo-qualification-hitch-journal.mjs')
   : null;
-const hitchOptions = hitchModule?.qualificationHitchJournalOptions(flags, scenario);
+const hitchOptions = hitchModule?.qualificationHitchJournalOptions(flags, scenario, bytes);
 assert(cadenceProtocol === 'blank30' || workProbe, 'Settled cadence requires the work probe');
 assert(
   !baselineRuntime || (workProbe && /^[0-9a-f]{40}$/.test(option('source-revision', ''))),
@@ -244,7 +244,12 @@ const report = {
 const replayIdentity = scenario.replayIdentity ? createQualificationReplayIdentity() : null;
 if (replayIdentity) report.replayIdentity = replayIdentity.report;
 await mkdir(dirname(resolve(output)), { recursive: true });
-const hitchStore = hitchOptions ? hitchModule.createHitchJournalStore(output) : null;
+const hitchStore = hitchOptions
+  ? hitchModule.createHitchJournalStore(output, undefined, {
+      soloURL: url.href,
+      preparationPolicy: hitchOptions.preparationPolicy,
+    })
+  : null;
 if (hitchStore) {
   report.hitchJournal = hitchStore.report;
   report.limitations.push(
@@ -268,10 +273,10 @@ let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder
 let activeAction = null;
 let partialReplay = false;
 let memorySnapshots = 0;
-function beginHitchDocument() {
+function beginHitchDocument(address, action) {
   if (!hitchStore) return;
   try {
-    hitchStore.beginDocument();
+    hitchStore.beginDocument({ url: address, action });
   } catch (error) {
     hitchStore.fail(error.message);
   }
@@ -712,7 +717,7 @@ ${hitchModule.hitchJournalInitScript()}
     await cpuRecorder.start();
   }
   const entryURL = scenario.entryPath ? new URL(scenario.entryPath, url) : url;
-  beginHitchDocument();
+  beginHitchDocument(entryURL.href, 'initial');
   const response = await page.goto(entryURL.href, {
     waitUntil: 'domcontentloaded',
     timeout: 120000,
@@ -882,7 +887,7 @@ ${hitchModule.hitchJournalInitScript()}
           else await locator.click({ timeout });
         } else if (action.type === 'reload') {
           if (hitchStore) await sealHitchDocument(`before-reload-${path}`);
-          beginHitchDocument();
+          if (hitchStore) beginHitchDocument(page.url(), `reload-${path}`);
           await page.reload({ waitUntil: 'domcontentloaded', timeout });
           if (hitchStore) await configureHitchDocument();
           if (
@@ -929,7 +934,7 @@ ${hitchModule.hitchJournalInitScript()}
           destination.searchParams.set('performance', '1');
           record.navigation.destination = destination.href;
           if (hitchStore) await sealHitchDocument(`before-follow-${path}`);
-          beginHitchDocument();
+          beginHitchDocument(destination.href, `follow-${path}`);
           await page.goto(destination.href, {
             waitUntil: 'domcontentloaded',
             timeout: followRemaining(),
