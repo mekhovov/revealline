@@ -287,8 +287,8 @@ export function mountFlightTuning({
     el(
       'p',
       t(
-        'The controller and aerodynamic coefficients are SIM estimates. Battery depletion is off; battery mass, power limits and voltage sag still affect flight.',
-        'Контролер і аеродинамічні коефіцієнти є оцінками SIM. Розряд батареї вимкнено; її маса, обмеження потужності й просідання напруги впливають на політ.',
+        'The controller and aerodynamic coefficients are SIM estimates. Built-in presets start with battery depletion off; battery mass, power limits and voltage sag still affect flight.',
+        'Контролер і аеродинамічні коефіцієнти є оцінками SIM. У вбудованих пресетах розряджання батареї спочатку вимкнено; її маса, обмеження потужності й просідання напруги впливають на політ.',
       ),
       aircraftDetails,
     );
@@ -634,6 +634,44 @@ export function mountFlightTuning({
       );
     },
     componentPanel,
+  );
+  const batteryPracticePanel = el('fieldset', undefined, setupPanel);
+  el(
+    'legend',
+    t('Optional battery endurance', 'Необов’язкова автономність батареї'),
+    batteryPracticePanel,
+  );
+  const batteryDepletion = field(
+    t('Battery depletion (optional)', 'Розряджання батареї (необов’язково)'),
+    'checkbox',
+    batteryPracticePanel,
+  );
+  el(
+    'p',
+    t(
+      'Enabled: using charge gradually reduces available motor power. Disabled: charge stays full while battery mass, power limits and voltage sag still affect handling. Ordinary practice has no time limit.',
+      'Увімкнено: витрата заряду поступово зменшує доступну потужність моторів. Вимкнено: заряд залишається повним, а маса батареї, обмеження потужності й просідання напруги впливають на керованість. Звичайна практика не має обмеження часу.',
+    ),
+    batteryPracticePanel,
+  );
+  el(
+    'p',
+    t(
+      'Save for next flight keeps the current flight unchanged. A fresh-battery restart saves this draft and starts a new flight from the launch point with full charge. Pause, resume and checkpoint recovery preserve the flight’s remaining charge and original conditions. Use the same course, mode and setup for repeatable tests.',
+      'Збереження для наступного польоту не змінює поточний. Перезапуск зі свіжою батареєю зберігає чернетку й починає новий політ із точки старту з повним зарядом. Пауза, продовження й відновлення з контрольної точки зберігають залишок заряду та початкові умови польоту. Для повторюваних тестів використовуйте ті самі трасу, режим і налаштування.',
+    ),
+    batteryPracticePanel,
+  );
+  action(
+    t('Fresh battery & restart flight', 'Свіжа батарея й перезапуск польоту'),
+    () => {
+      if (
+        library.setups.find((setup) => setup.id === library.selectedSetupId)?.advanced?.aircraft
+          .format === 'AdvancedAircraft.v2'
+      )
+        return applyAndRestart();
+    },
+    batteryPracticePanel,
   );
   const tilt = field(t('Camera tilt (degrees)', 'Нахил камери (градуси)'), 'number', setupPanel);
   Object.assign(tilt, { min: '0', max: '60', step: 'any' });
@@ -1204,19 +1242,16 @@ export function mountFlightTuning({
     );
   }
   action(t('Save for next flight', 'Зберегти для наступного польоту'), save, actions);
-  action(
-    t('Apply & restart', 'Застосувати й перезапустити'),
-    async () => {
-      const epoch = openEpoch;
-      assignment.value = selected;
-      await save();
-      if (disposed || epoch !== openEpoch || !root.open) return;
-      endDraftTest();
-      close();
-      onApply(store.effective());
-    },
-    actions,
-  );
+  async function applyAndRestart() {
+    const epoch = openEpoch;
+    assignment.value = selected;
+    await save();
+    if (disposed || epoch !== openEpoch || !root.open) return;
+    endDraftTest();
+    close();
+    onApply(store.effective());
+  }
+  action(t('Apply & restart', 'Застосувати й перезапустити'), applyAndRestart, actions);
   action(
     t('Test draft · unscored', 'Перевірити чернетку · без заліку'),
     () => {
@@ -1317,6 +1352,7 @@ export function mountFlightTuning({
         // empty camera field to zero or discarding it during navigation.
         cameraText: { tilt: tilt.value, verticalFov: fov.value },
         componentsText: componentInventory ? componentText() : null,
+        batteryDepletion: batteryDepletion.checked,
         baseRevision: editRevision,
       });
     }
@@ -1370,6 +1406,9 @@ export function mountFlightTuning({
       String(saved.history.at(-1)?.revision ?? ''),
     );
     setupName.value = pendingSetup?.name ?? setup.name;
+    batteryPracticePanel.hidden = setup.advanced?.aircraft.format !== 'AdvancedAircraft.v2';
+    batteryDepletion.checked =
+      pendingSetup?.batteryDepletion ?? setup.advanced?.aircraft.battery.depletion ?? false;
     if (setup.preset && listAircraftPresets().some((item) => item.id === setup.preset.id)) {
       aircraftSelect.value = setup.preset.id;
       paintAircraft();
@@ -1452,6 +1491,8 @@ export function mountFlightTuning({
       setup.advanced.aircraft = components.aircraft;
       setup.components = components.components;
     }
+    if (setup.advanced?.aircraft.format === 'AdvancedAircraft.v2')
+      setup.advanced.aircraft.battery.depletion = batteryDepletion.checked;
     return setup;
   }
   function acceptOwnSave(previousRevision, { reloadAircraft = false } = {}) {
