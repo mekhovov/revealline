@@ -1,0 +1,69 @@
+TAP version 13
+# Subtest: local crowd force crosses grid boundaries continuously and uses neighboring cells
+ok 1 - local crowd force crosses grid boundaries continuously and uses neighboring cells
+  ---
+  duration_ms: 1.670125
+  ...
+# Subtest: coincident bodies receive finite opposite separation and distant bodies have no force
+ok 2 - coincident bodies receive finite opposite separation and distant bodies have no force
+  ---
+  duration_ms: 0.22975
+  ...
+# Subtest: Survival authors local separation explicitly without rewriting earlier content or records
+ok 3 - Survival authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 22.151667
+  ...
+# Subtest: Riy authors local separation explicitly without rewriting earlier content or records
+ok 4 - Riy authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 24.410458
+  ...
+# Subtest: the native simulation uses authored local spacing and preserves complete area damage
+ok 5 - the native simulation uses authored local spacing and preserves complete area damage
+  ---
+  duration_ms: 29.132459
+  ...
+# Subtest: same and new-seed sorties preserve explicitly authored local crowd rules
+ok 6 - same and new-seed sorties preserve explicitly authored local crowd rules
+  ---
+  duration_ms: 2.384625
+  ...
+# Subtest: Raid does not advertise or silently accept the Survivor-only movement experiment
+ok 7 - Raid does not advertise or silently accept the Survivor-only movement experiment
+  ---
+  duration_ms: 2.943125
+  ...
+# Subtest: local broad phase matches every nearby body across rebuilds, radii and arena edges
+ok 8 - local broad phase matches every nearby body across rebuilds, radii and arena edges
+  ---
+  duration_ms: 8.902708
+  ...
+# Subtest: local spacing freezes coordinates before its first query and allocates its fine index only on demand
+ok 9 - local spacing freezes coordinates before its first query and allocates its fine index only on demand
+  ---
+  duration_ms: 0.942917
+  ...
+# Subtest: diagnostic fixtures explicitly select local spacing without enabling it in ordinary play or Raid
+not ok 10 - diagnostic fixtures explicitly select local spacing without enabling it in ordinary play or Raid
+  ---
+  duration_ms: 0.661166
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-crowd-steering.test.mjs:252:1'
+  failureType: 'testCodeFailure'
+  error: 'overflightReviewCrowdSeparation is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-crowd-steering.test.mjs:256:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 9
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 341.287

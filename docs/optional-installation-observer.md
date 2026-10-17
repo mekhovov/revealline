@@ -17,13 +17,98 @@ The report identifies both sources and lists every changed FPV runtime file. The
 initial launcher comes from the previous candidate; update stages the current
 launcher's exact bytes before advancing the candidate pointer.
 
+The sole historical diagnostic exception is explicitly enabled with
+`OPTIONAL_INSTALLATION_PREVIOUS_HISTORICAL=v0.142.4-98ad851`. It accepts only the
+hash-pinned historical source/tree/envelope and committed validator closure in
+`scripts/practice-historical-admission.mjs`; current B still passes current
+admission. Unknown modes or other prior snapshots reject. This is not a general
+historical registry or publisher-policy exception. See the
+[genuine historical upgrade result](flight-practice-historical-upgrade-2026-10-16.md).
+
+## Optional short download-fault lane
+
+Set `OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS=all-short` together with
+`OPTIONAL_INSTALLATION_WORLD_SEED=worlds-template-copy` to add six checks: all
+three apps × real inactivity and native download cancellation. Only the owned
+loopback server's one exact admitted README dependency is delayed, at the explicit
+unpublished `v0.0.1` recovery path. Its first byte and all immutable app files are
+unchanged. The current/prior package distinction is recorded independently;
+these recovery paths do not represent real release migrations.
+
+The idle case requires an observed downloading state and approximately 30 seconds
+without new bytes before app-side request termination. The Cancel case clicks
+the visible Cancel download button once, well before that deadline, and requires
+prompt termination plus cancellation copy where exposed. Gym currently shows its
+generic failure copy; its prompt request-abort evidence is required separately.
+A server safety timeout, ineffective Cancel, silent retry, stale status or missing
+request cannot pass. Monotonic server events distinguish bytes written from the
+browser's separate received-progress witness. No accelerated clock is used.
+
+After every fault, installation pointers, existing prepared-cache URL/size/hash
+inventories, original workers, exact Academy proof/profile exports and the
+nonempty World project fingerprints must remain unchanged. The temporary failed
+scope must have no cache/worker. A pristine retry and scoped removal must restore
+the same baseline and recheck those records. Gym practice records are unpopulated
+in this lane. Helper hashes and independent fault/browser cleanup are recorded.
+
+This lane does **not** establish cancellation during local verification, the real
+five-minute overall limit, actual quota exhaustion/eviction or real hardware.
+Network delay cannot deterministically pause local hashing/cache writes; a
+Verifying label alone is insufficient evidence. The fixed real trickle transport
+is used by the separately bounded lane below, never by a shortened-clock substitute.
+
+## Separate real five-minute lane
+
+Use exactly one of `overall-civilian-flight`, `overall-civilian-fpv` or
+`overall-fpv-worlds` as `OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS`, with the same
+saved-world seed. Each invocation runs one app's real overall-timeout case and
+one pristine retry/removal. Run all three separately to cover all apps. The
+default and six-case `all-short` journey are unchanged. Quota faults cannot be
+combined with this lane. The existing ten-minute aggregate limit is not increased;
+at least 390 seconds must remain before attaching its fault.
+
+The owned server writes successive original dependency bytes every five seconds.
+Acceptance requires approximately five-minute client termination (295–315 seconds),
+at least 55 contiguous original-byte writes, no 30-second write gap, no silent
+retry, and no server safety/cleanup termination or Cancel. This measures server
+transmission plus native client failure, not direct browser receipt of every byte.
+Generic failure text cannot identify the internal timer. All existing pointer,
+worker, six-cache admitted pin, proof/profile and World retention checks recur
+after failure and retry/removal. Native execution is still required; synthetic
+timing regressions are not five-minute qualification.
+
+## Separate historical active-session lane
+
+With the pinned historical admission above, set
+`OPTIONAL_INSTALLATION_ACTIVE_SESSION=academy-v0.142.4-98ad851`. Do not combine it
+with download/quota faults. The retained historical standalone window uses normal
+Settings, keyboard selection and Detailed HUD, explicit Start/Arm, visible Height
+movement and explicit pause/resume. An initially disarmed Start is retained; the
+observer waits for the public Arm control's enabled state rather than hidden
+renderer state. No completed course/proof is manufactured.
+
+Foregrounding the separate update tab naturally pauses the historical flight.
+Only then does the real current package prepare and advance active/previous
+pointers. The old window must retain its immutable URL, document identity and time
+origin, remain paused with stable visible height after focus returns, and move
+again only after explicit resume. The whole helper, including update, has one
+30-second budget. Native input ownership, pending actions and cleanup are checked;
+the parent also requires actual B preparation and exact record retention.
+An original paused screenshot and source hash are retained. This is historical
+Academy session continuity, not uninterrupted background flight, exact simulation
+tick continuity, all-app migration or a human/physical-input review. Native results
+must be recorded separately from its synthetic unit tests.
+
+## Default journey and evidence boundaries
+
 Omit the last argument to retain the older same-payload path-fixture check. In that
 mode `v0.0.0` holds the current payload under a different local version path. Both
 modes reserve `v0.0.1` for a deliberately truncated dependency. Fixture paths must
 not collide with either candidate version. They are never published releases.
 
 The observer uses installed Chrome, a temporary persistent browser profile and an
-isolated loopback server with production-style headers. It never opens the user's
+isolated loopback server with the existing preview security headers (which allow
+validated HTTPS media/catalogue connections). It never opens the user's
 normal browser profile. All three test apps are uninstalled and the temporary profile
 removed on completion. Cleanup failures retain that directory and identify it in
 the receipt instead of hiding the failure.

@@ -1,0 +1,77 @@
+{
+  "runtimeCommit": "2b8ab74d0e55d855550d63552989b45a23c4d6cb",
+  "projectIdentity": "cb0d163cafd3ce11",
+  "seed": 202604,
+  "operation": "overflight-riy",
+  "review": {
+    "automated": true,
+    "build": "echo",
+    "stopAt": null,
+    "route": "lure-and-return",
+    "inputHz": 10,
+    "upgradeDelayMs": 1500
+  },
+  "nativeFinal": {
+    "phase": "won",
+    "time": 535.6,
+    "kills": 3731,
+    "choices": 10,
+    "damageCauses": {
+      "contact": 220,
+      "lane": 0,
+      "fan": 0,
+      "ground": 0
+    },
+    "airframesLost": 2,
+    "maxDraftGap": 156.53333333333333,
+    "finalDefeated": true
+  },
+  "freshResultDownload": {
+    "previousSnapshotTime": 469.93333333333334,
+    "finalSnapshotTime": 535.6,
+    "finalPhase": "won",
+    "sameProject": true
+  },
+  "performance": {
+    "trialValid": false,
+    "invalidReasons": [
+      "dropped-catch-up-time"
+    ],
+    "droppedSeconds": 12.803999999999998,
+    "qualification": "Not accepted as a performance trial"
+  },
+  "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "devicePixelRatio": 2
+  },
+  "appearance": {
+    "projectIdentity": "cb0d163cafd3ce11",
+    "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+    "presentation": {
+      "id": "field-kit",
+      "revision": 104
+    },
+    "themeIdentity": "9670af00f1ea5378",
+    "familyId": "industrial-workshop",
+    "familyRevision": "r3",
+    "interfaceId": "industrial-workshop",
+    "interfaceRevision": "r3",
+    "arcade": {
+      "id": "industrial-workshop",
+      "revision": "r2"
+    },
+    "actorArtRevision": "industrial-roster-v3",
+    "equipment": {
+      "id": "overflight-field-kit",
+      "revision": 1
+    },
+    "materialStyle": "steel",
+    "materialVariant": "steel",
+    "characterId": "scout",
+    "playerSlot": "player.scout.detailed",
+    "cast": "authored",
+    "visualIdentity": "7991fdd94797933d"
+  }
+}
