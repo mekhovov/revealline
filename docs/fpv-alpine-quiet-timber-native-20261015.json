@@ -1,0 +1,46 @@
+{
+  "format": "FPVAlpineQuietTimberNative.v1",
+  "sourceHead": "d2550a17bb032cc6440dc010a6c92be67abeb3da",
+  "viewerHead": "939df428257597e6af41fa62c24af5987ffb991c",
+  "origin": "http://127.0.0.1:9190",
+  "reviewer": "coordinator CUA native observation",
+  "scope": "Bounded same-camera source material appearance only",
+  "nativeAccepted": true,
+  "residentCells": 9,
+  "meshes": 34,
+  "geometryBytes": 767476,
+  "observations": [
+    "Original r3 strong wavy/repeating grain visible in both inspected views.",
+    "R4 wider softer seams and quieter grain reduce visual noise in both inspected still views.",
+    "Backed window panels, masonry plinth, roof and corridor appear unchanged.",
+    "Both versions release to no live scenery or collision."
+  ],
+  "notEstablished": [
+    "All-angle or motion aliasing cure",
+    "Physical-device performance or all-tier native rendering",
+    "Immutable r4 delivery or player/Library admission",
+    "Full-region representative art, offline/restart or public launch"
+  ],
+  "evidence": [
+    {
+      "file": "alpine-quiet-timber-before-concourse-native-20261015.png",
+      "bytes": 103940,
+      "sha256": "dfb275b7cfe1cf76fac3723f88c7eaa98caffb17fafd239d9f9718bf937e3b76"
+    },
+    {
+      "file": "alpine-quiet-timber-before-wall-native-20261015.png",
+      "bytes": 102478,
+      "sha256": "465d00f046818e0ca778f7e572250a82b4d73ad8dfcd63a1495593ef273d09d8"
+    },
+    {
+      "file": "alpine-quiet-timber-after-concourse-native-20261015.png",
+      "bytes": 94008,
+      "sha256": "2920e2f295cd1c4f4e2396290777918b2b6993c2b4f64363ad2b7898e6ee059f"
+    },
+    {
+      "file": "alpine-quiet-timber-after-wall-native-20261015.png",
+      "bytes": 90837,
+      "sha256": "9b62d52940ec7ff604de73b919a8f92589e6a2a86767132e63c6a73e645d7b67"
+    }
+  ]
+}

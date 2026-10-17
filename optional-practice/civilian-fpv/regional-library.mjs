@@ -79,8 +79,181 @@ export const CANAL_CITY_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const LUNAR_BASIN_LIBRARY_PIN = Object.freeze({
+  id: 'lunar-basin-study',
+  title: { en: 'Lunar Basin — flight study', uk: 'Місячна улоговина — тренувальна зона' },
+  description: {
+    en: '768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity.',
+    uk: '768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття, розколоті скелі, звивисте русло, край кратера, кам’яні плити й антену на опорах. Раннє дослідження вигаданого ландшафту з малонаповненими околицями. Використовує земну фізику польоту симулятора, а не місячне тяжіння.',
+  },
+  bytes: 1981832,
+  appearance: { terrain: 'lunar-regolith', scenery: 'lunar-survey' },
+  startHeadings: Object.freeze({
+    'mare-apron': 14799,
+    'ejecta-fan': 13685,
+    'sinuous-rille': 14974,
+    'terraced-crater': 15193,
+    'fractured-highland': 14799,
+    'observatory-ridge': 14974,
+  }),
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/423f60966ec5dd4946a05ae1ea3c59f4910216ef/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r2/delivery.json',
+    bytes: 18790,
+    sha256: '1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a',
+  },
+});
+
+export const LUNAR_SHELTER_LIBRARY_PIN = Object.freeze({
+  ...LUNAR_BASIN_LIBRARY_PIN,
+  edition: { en: 'Shelter detail', uk: 'Деталізовані укриття' },
+  description: {
+    en: '768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity.',
+    uk: '768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття з ребрами покрівлі й обладнанням на опорах, розколоті скелі, звивисте русло та антену. Окремий пробний варіант composition-r3; попередня версія залишається доступною. Малонаповнений вигаданий ландшафт. Використовує земну фізику польоту симулятора, а не місячне тяжіння.',
+  },
+  bytes: 2093869,
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/f58a1b5197a78243e30e42858d45ded1f55baa31/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r3/delivery.json',
+    bytes: 14759,
+    sha256: 'e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Braced cable towers and a supported lookout make the station approach easier to read. Keep exploring the open concourse and connected snow and scree routes. Earlier Alpine editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Вежі канатної дороги з розкосами та підпори оглядового майданчика роблять підхід до станції виразнішим. Досліджуйте відкритий прохід між корпусами та сполучені маршрути серед снігу й осипів. Попередні альпійські версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station approach',
+      uk: 'Підхід до станції',
+    },
+    bytes: 22814245,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ca76af991b127f6ed81434162832a79518add9a8/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r6/delivery.json',
+      bytes: 115316,
+      sha256: '92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. A restrained grey apron distinguishes the station’s open concourse and approaches beneath the quieter timber wings. Explore the same connected snow and scree landscape. Separate material study; earlier editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Стримане сіре покриття вирізняє відкритий прохід між корпусами та підходи до станції з дерев’яним облицюванням. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station concourse',
+      uk: 'Майданчик між корпусами',
+    },
+    bytes: 22699845,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json',
+      bytes: 115316,
+      sha256: '32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa',
+    },
+  },
+  LUNAR_SHELTER_LIBRARY_PIN,
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Wider, softer timber seams make the summit station less visually busy. Explore the same connected snow and scree landscape. A separate material study; previous Alpine editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Ширші й м’якші шви дерев’яного облицювання зменшують візуальний шум на верхній станції. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні альпійські версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Quieter station surfaces',
+      uk: 'Стриманіші поверхні станції',
+    },
+    bytes: 22694120,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/02f2b140d06cc930d8d4dd6b01abcd860db75436/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/delivery.json',
+      bytes: 115316,
+      sha256: '0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Original timber station cladding, opaque backed panels and roof seams add detail to the refined-contour landscape. Separate station-r3 study; earlier Alpine editions remain available. The wider landscape and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Оригінальне дерев’яне облицювання станції, непрозорі панелі й шви покрівлі додають деталей ландшафту з уточненими контурами. Окремий пробний варіант station-r3; попередні альпійські версії залишаються доступними. Деталі решти місцевості та маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station surface details',
+      uk: 'Деталі поверхонь станції',
+    },
+    bytes: 22694130,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ffb79b67479f9ed5c8104610695ac8b5cb04edc7/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r3/delivery.json',
+      bytes: 115316,
+      sha256: 'c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d',
+    },
+  },
+  LUNAR_BASIN_LIBRARY_PIN,
   {
     id: 'alpine-highlands-study',
     title: {
@@ -145,7 +318,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '768 × 768 m · connected wooden harbour decks and shore approach · six starting areas, unscored free flight. Separate harbour-r3 revision; the earlier coastal settlement remains available. Early coastal study; visual water only.',
       uk: '768 × 768 м · сполучені дерев’яні пірси гавані та вихід на берег · шість стартових місць, вільний політ без заліку. Окрема версія harbour-r3; попереднє прибережне поселення залишається доступним. Раннє дослідження узбережжя; вода лише візуальна.',
     },
-    bytes: 7952305,
+    bytes: 7958922,
     appearance: { terrain: 'tropical-settlement' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json',
@@ -220,7 +393,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available.',
       uk: '384 × 384 м · відкритий ринковий прохід, озеленене міське подвір’я, різні дахи й чотири стартові точки · вільний політ без заліку. Невелике дослідження містечка з виразнішими матеріалами фасадів; дальні тераси ще малодетальні. Початкова версія містечка залишається доступною.',
     },
-    bytes: 8660487,
+    bytes: 8667066,
     appearance: { terrain: 'hillside-town' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json',
@@ -239,7 +412,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '384 × 384 m · three terraces, graded streets, open doorways and an elevated pad · unscored free flight. Choose one of four starting points. Early town study with original building-kit materials.',
       uk: '384 × 384 м · три тераси, похилі вулиці, відкриті дверні проходи й піднятий майданчик · вільний політ без заліку. Виберіть одну з чотирьох стартових точок. Ранній огляд містечка з оригінальними матеріалами набору будівель.',
     },
-    bytes: 8352486,
+    bytes: 8359044,
     appearance: { terrain: 'plain' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json',
@@ -258,7 +431,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '768 × 768 m · harbour, lagoon piers, reef rocks, palm valley, hillside huts and bamboo grove · unscored free flight. Follow shoreline routes, practise pier openings and explore the village paths. Early coastal study; visual water only.',
       uk: '768 × 768 м · гавань, пірси лагуни, прибережні скелі, пальмова долина, хатини на схилі й бамбуковий гай · вільний політ без заліку. Літайте вздовж берега, крізь отвори пірсів і над стежками поселення. Раннє дослідження узбережжя; вода лише візуальна.',
     },
-    bytes: 7857157,
+    bytes: 7863766,
     appearance: { terrain: 'tropical-settlement' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json',
@@ -296,7 +469,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '384 × 384 m · two piers, a stilt hut, palms and dunes · unscored free flight. Practise open bays, low passes and a shoreline circuit. Early coastal preview; visual water only.',
       uk: '384 × 384 м · два пірси, хатина на палях, пальми й дюни · вільний політ без заліку. Тренуйте проходи, низький політ та маршрут уздовж берега. Ранній огляд узбережжя; вода лише візуальна.',
     },
-    bytes: 5982641,
+    bytes: 5989243,
     appearance: { terrain: 'tropical' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json',
@@ -399,6 +572,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
       'tropical-settlement',
       'desert',
       'hillside-town',
+      'lunar-regolith',
     ].includes(terrain)
   )
     throw new TypeError('Unknown trusted regional terrain appearance');
@@ -418,6 +592,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
     ...configuration,
     // Re-resolving an unknown or older pin clears any previous revision's hints.
     authoredStartHeadings: Object.freeze(authoredStartHeadings),
+    catalogueTitle: approved?.title ? Object.freeze({ ...approved.title }) : null,
     source: { ...configuration.source, surfaceStyle: terrain },
     ...(configuration.scenery &&
     (sceneryStyle !== 'plain' || configuration.scenery.source?.surfaceStyle)
@@ -657,7 +832,7 @@ export function mountRegionalLibrary({
       const saved = row.saved,
         hash = saved?.sha256 ?? row.pin.sha256,
         card = el('article', undefined, 'world-catalogue-card'),
-        name = saved?.descriptor.title ?? row.title,
+        name = row.title ?? saved?.descriptor.title,
         buttons = el('div', undefined, 'button-row');
       const peers = rows.filter((other) => other.id === row.id),
         baseEdition = edition(row),
@@ -950,7 +1125,12 @@ export function mountRegionalLibrary({
               ? 'Не вдалося перевірити збережену місцевість. Виберіть «Відновити завантаження», щоб замінити лише файли цієї версії. Інші версії та збережені місця залишаться.'
               : 'Не вдалося перевірити збережену місцевість. Саме ця версія зараз недоступна для відновлення. Інші версії та збережені місця залишаться.',
           );
-        } else if (error?.name === 'QuotaExceededError')
+        } else if (error?.code === 'world-library-full')
+          show(
+            'The saved scenery library is full. Existing versions and saved places are kept. Keep flying a saved version, or review “Remove this version” for scenery you choose to replace, then retry.',
+            'Бібліотеку збереженої місцевості заповнено. Наявні версії та збережені місця залишаться. Літайте у збереженій версії або перегляньте «Вилучити цю версію» для місцевості, яку вирішите замінити, і повторіть спробу.',
+          );
+        else if (error?.name === 'QuotaExceededError')
           show(
             'Not enough device storage. Free space or use “Remove this version” for a saved scenery download you no longer need, then retry. Existing downloads are retained.',
             'Недостатньо місця на пристрої. Звільніть місце або виберіть «Вилучити цю версію» для збереженої місцевості, яка більше не потрібна, і повторіть. Наявні завантаження збережено.',

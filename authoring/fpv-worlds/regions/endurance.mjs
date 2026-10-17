@@ -3,6 +3,9 @@ import { createRegionalFlightPrototype } from '../../../optional-practice/civili
 import { createEnduranceFixture, createEndurancePilot, digest } from './endurance-fixture.mjs';
 import { createEnduranceClock } from './endurance-clock.mjs';
 import { createEnduranceObservation } from './endurance-observation.mjs';
+import { createEnduranceLifecycle } from './endurance-lifecycle.mjs';
+import { createEnduranceReportDisplay } from './endurance-report-display.mjs';
+import { createEnduranceAttribution } from './endurance-attribution.mjs';
 
 const $ = (id) => document.getElementById(id);
 const assert = (value, message) => {
@@ -63,9 +66,42 @@ function buttons() {
   $('stop').disabled = !run;
   $('release').disabled = authored ? !busy && !flight : busy || !flight;
   if (authored) $('release').textContent = busy ? 'Cancel preparation' : 'Release resources';
-  $('export').disabled = !report;
+  $('export').disabled = !report && !run;
   for (const name of ['label', 'duration', 'quality', 'import', 'focus-policy'])
     if ($(name)) $(name).disabled = busy || Boolean(run);
+}
+function timedSnapshot(segment, phase) {
+  const token = segment.attribution.begin(phase);
+  try {
+    return flight.snapshot();
+  } finally {
+    segment.attribution.end(token);
+  }
+}
+function timedCommand(segment, state) {
+  const token = segment.attribution.begin('pilot-command');
+  try {
+    return segment.pilot.command(state);
+  } finally {
+    segment.attribution.end(token);
+  }
+}
+function timedStep(segment, command) {
+  const token = segment.attribution.begin('flight-step');
+  try {
+    return flight.step(command);
+  } finally {
+    segment.attribution.end(token);
+  }
+}
+function timedDraw(segment) {
+  const state = timedSnapshot(segment, 'snapshot-for-draw'),
+    token = segment.attribution.begin('renderer-draw');
+  try {
+    return renderer.draw(state, { cameraMode: 'chase' });
+  } finally {
+    segment.attribution.end(token);
+  }
 }
 function sample() {
   const state = flight.snapshot(),
@@ -112,26 +148,34 @@ function sample() {
 }
 function observe() {
   if (!run || !flight) return;
-  const row = sample();
-  for (const [key, value] of Object.entries({ ...row.owned, ...row.collision }))
-    run.peaks[key] = Math.max(run.peaks[key] ?? 0, value);
-  for (const key of ['geometries', 'textures', 'programs']) {
-    const value = row.renderer[key];
-    if (Number.isFinite(value))
-      run.peaks[`renderer${key}`] = Math.max(run.peaks[`renderer${key}`] ?? 0, value);
-  }
-  run.lastSample = row;
-  const second = Math.floor(row.elapsedMs / 1000),
-    minute = Math.floor(second / 60);
-  if (second !== run.lastSecond) {
-    run.lastSecond = second;
-    run.recent.push(row);
-    if (run.recent.length > 120) run.recent.shift();
-  }
-  if (minute !== run.lastMinute) {
-    run.lastMinute = minute;
-    run.minutes.push(row);
-    assert(run.minutes.length <= 121, 'Diagnostic history cap exceeded');
+  const segment = run,
+    started = performance.now(),
+    token = segment.attribution.begin('sample-collection');
+  try {
+    const row = sample();
+    for (const [key, value] of Object.entries({ ...row.owned, ...row.collision }))
+      run.peaks[key] = Math.max(run.peaks[key] ?? 0, value);
+    for (const key of ['geometries', 'textures', 'programs']) {
+      const value = row.renderer[key];
+      if (Number.isFinite(value))
+        run.peaks[`renderer${key}`] = Math.max(run.peaks[`renderer${key}`] ?? 0, value);
+    }
+    run.lastSample = row;
+    const second = Math.floor(row.elapsedMs / 1000),
+      minute = Math.floor(second / 60);
+    if (second !== run.lastSecond) {
+      run.lastSecond = second;
+      run.recent.push(row);
+      if (run.recent.length > 120) run.recent.shift();
+    }
+    if (minute !== run.lastMinute) {
+      run.lastMinute = minute;
+      run.minutes.push(row);
+      assert(run.minutes.length <= 121, 'Diagnostic history cap exceeded');
+    }
+  } finally {
+    record(segment.observerSamples, performance.now() - started);
+    segment.attribution.end(token);
   }
 }
 function buildReport(segment, final = null) {
@@ -153,6 +197,8 @@ function buildReport(segment, final = null) {
     mode: 'self-level',
     clock: segment.clock.snapshot(),
     observation: segment.observation.snapshot(),
+    lifecycleDiagnostics: segment.lifecycle.snapshot(),
+    attributionDiagnostics: segment.attribution.snapshot(),
     ...(authored
       ? { commandedRoute: segment.pilot.snapshot() }
       : { reversals: segment.pilot.reversals }),
@@ -162,6 +208,13 @@ function buildReport(segment, final = null) {
     frameIntervalsMs: { ...summarize(segment.intervals), histogramMs: segment.histogram },
     physicsSubmissionCPU: summarize(segment.physics),
     drawSubmissionCPU: summarize(segment.draw),
+    observerCPU: {
+      frameChecks: summarize(segment.observerChecks),
+      sampleCollection: summarize(segment.observerSamples),
+      liveDisplay: segment.display.snapshot(),
+      scope:
+        'Synchronous frame checks, sample collection and bounded live JSON/text submission only. Excludes asynchronous observer callbacks, final/export serialization, browser layout, GPU completion and garbage collection attribution.',
+    },
     preparation: {
       initial: preparation.initial,
       completedStages: preparation.completedStages,
@@ -216,6 +269,8 @@ async function release() {
 async function finish(reason = null) {
   if (!run) return;
   const segment = run;
+  segment.lifecycle.stop();
+  segment.attribution.stop();
   if (reason) segment.clock.invalidate(reason);
   try {
     observe();
@@ -285,6 +340,9 @@ async function readSourceHashes() {
       'endurance.mjs',
       'endurance-clock.mjs',
       'endurance-observation.mjs',
+      'endurance-lifecycle.mjs',
+      'endurance-report-display.mjs',
+      'endurance-attribution.mjs',
       'authored-endurance-fixture.mjs',
     ]) {
       const response = await fetch(new URL(path, import.meta.url), {
@@ -367,14 +425,40 @@ $('prepare').onclick = async () => {
       geometryProfile: 'terrain-scenery-v1',
       continuous: true,
       prepareFrame: async (group, options) => {
-        observe();
-        await renderer.prepareRegionalFrame(group, options);
-        const result = renderer.regionalPreparation();
-        assert(result?.status === 'prepared', 'Renderer frame preparation did not complete');
-        preparation.completedStages++;
-        preparation.maximumElapsedMs = Math.max(preparation.maximumElapsedMs, result.elapsedMs);
-        preparation.initial ??= result;
-        observe();
+        const segment = run,
+          preparationToken = segment?.attribution.beginPreparation();
+        let endedAt = null,
+          outcome = 'rejected',
+          result = null;
+        try {
+          observe();
+          const token = segment?.attribution.begin('prepare-renderer-submit');
+          let prepared;
+          try {
+            prepared = renderer.prepareRegionalFrame(group, options);
+          } finally {
+            segment?.attribution.end(token);
+          }
+          await prepared;
+          endedAt = performance.now();
+          result = renderer.regionalPreparation();
+          assert(result?.status === 'prepared', 'Renderer frame preparation did not complete');
+          preparation.completedStages++;
+          preparation.maximumElapsedMs = Math.max(preparation.maximumElapsedMs, result.elapsedMs);
+          preparation.initial ??= result;
+          observe();
+          outcome = 'fulfilled';
+        } catch (error) {
+          endedAt ??= performance.now();
+          outcome = error?.name === 'AbortError' ? 'cancelled' : 'rejected';
+          throw error;
+        } finally {
+          segment?.attribution.endPreparation(preparationToken, {
+            endedAt,
+            outcome,
+            receipt: result,
+          });
+        }
       },
     });
     renderer.setRegional(flight, fixture.terrain.manifest);
@@ -421,6 +505,7 @@ $('start').onclick = () => {
       });
       history = history.slice(-8);
     }
+    report = null;
     run = {
       clock: createEnduranceClock({
         startedAt,
@@ -428,6 +513,8 @@ $('start').onclick = () => {
         targetMs: Number($('duration').value),
       }),
       observation,
+      lifecycle: createEnduranceLifecycle({ startedAt }),
+      attribution: createEnduranceAttribution({ startedAt }),
       label: $('label').value,
       quality: $('quality').value,
       startedUTC: new Date().toISOString(),
@@ -439,6 +526,14 @@ $('start').onclick = () => {
       intervals: counters(),
       physics: counters(),
       draw: counters(),
+      observerChecks: counters(),
+      observerSamples: counters(),
+      display: createEnduranceReportDisplay({
+        write: (text) => {
+          $('result').textContent = text;
+        },
+      }),
+      observationPolicy: observation.snapshot().policy,
       histogram: Array(251).fill(0),
       peaks: {},
       recent: [],
@@ -448,6 +543,8 @@ $('start').onclick = () => {
       lastSample: null,
     };
     observe();
+    $('result').textContent =
+      'Live summary starts with the next observed second. Full raw samples remain retained for final report or explicit export.';
     buttons();
     $('status').textContent =
       `${authored ? 'Running commanded Urban circuit' : 'Running synthetic flight'} in real elapsed time. ` +
@@ -476,9 +573,10 @@ $('release').onclick = async () => {
   $('status').textContent = 'Resources released. Prepare to start another segment.';
 };
 $('export').onclick = () => {
-  if (!report) return;
+  if (!report && !run) return;
+  const exported = run ? { ...buildReport(run), provisional: true, accepted: false } : report;
   const url = URL.createObjectURL(
-    new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' }),
+    new Blob([JSON.stringify(exported, null, 2)], { type: 'application/json' }),
   );
   const link = document.createElement('a');
   link.href = url;
@@ -525,64 +623,98 @@ $('import').onchange = async () => {
 };
 function frame() {
   if (closed) return;
-  if (run) {
-    try {
-      const observationFailure = run.observation.observe({
-        at: performance.now(),
-        visible: document.visibilityState === 'visible',
-        focused: document.hasFocus(),
-      });
-      assert(!observationFailure, observationFailure);
-      assert(
-        JSON.stringify(dimensions()) === JSON.stringify(run.dimensions),
-        'Viewport or canvas changed',
-      );
-      const now = performance.now();
-      if (run.previous !== null) {
-        const delta = now - run.previous;
-        record(run.intervals, delta);
-        run.histogram[Math.min(250, Math.floor(delta))]++;
-      }
-      run.previous = now;
-      const start = performance.now();
-      const clock = run.clock.advance(
-        now,
-        () => {
-          const before = flight.snapshot(),
-            state = flight.step(run.pilot.command(before));
-          if (authored) assert(state.contacts === 0, 'Unexpected contact on authored review route');
-          const size = fixture.terrain.manifest.grid.cellSizeMm;
-          if (
-            ['x', 'z'].some(
-              (key) =>
-                Math.floor(before.position[key] / size) !== Math.floor(state.position[key] / size),
+  const frameOwner = run,
+    observerStarted = frameOwner ? performance.now() : null;
+  frameOwner?.attribution.frame();
+  const frameToken = frameOwner?.attribution.begin('frame-callback');
+  try {
+    if (run) {
+      const segment = run;
+      const checkToken = segment.attribution.begin('observer-checks');
+      run.lifecycle.frame(observerStarted);
+      try {
+        const observationFailure = run.observation.observe({
+          at: performance.now(),
+          visible: document.visibilityState === 'visible',
+          focused: document.hasFocus(),
+        });
+        assert(!observationFailure, observationFailure);
+        assert(
+          JSON.stringify(dimensions()) === JSON.stringify(run.dimensions),
+          'Viewport or canvas changed',
+        );
+        const now = performance.now();
+        record(run.observerChecks, now - observerStarted);
+        segment.attribution.end(checkToken);
+        if (run.previous !== null) {
+          const delta = now - run.previous;
+          record(run.intervals, delta);
+          run.histogram[Math.min(250, Math.floor(delta))]++;
+        }
+        run.previous = now;
+        const start = performance.now();
+        const clock = run.clock.advance(
+          now,
+          () => {
+            const before = timedSnapshot(segment, 'snapshot-before-step'),
+              command = timedCommand(segment, before),
+              state = timedStep(segment, command);
+            if (authored)
+              assert(state.contacts === 0, 'Unexpected contact on authored review route');
+            const size = fixture.terrain.manifest.grid.cellSizeMm;
+            if (
+              ['x', 'z'].some(
+                (key) =>
+                  Math.floor(before.position[key] / size) !==
+                  Math.floor(state.position[key] / size),
+              )
             )
-          )
-            run.cellCrossings++;
-          return state.status === 'active' && state.ticks === before.ticks + 1;
-        },
-        Date.now(),
-      );
-      record(run.physics, performance.now() - start);
-      const drawStart = performance.now();
-      assert(renderer.draw(flight.snapshot(), { cameraMode: 'chase' }), 'Graphics unavailable');
-      record(run.draw, performance.now() - drawStart);
-      run.frames++;
-      if (clock.status !== 'running') {
-        void finish();
-      } else if (Math.floor(clock.elapsedMs / 1000) !== run.lastSecond) {
-        observe();
-        report = buildReport(run);
-        $('result').textContent = JSON.stringify(report, null, 2);
-        $('status').textContent =
-          `${(clock.elapsedMs / 1000).toFixed(1)} / ${clock.targetMs / 1000} real seconds · ${clock.ticks} ticks · ${run.lastSample.recentres} recentres · ${authored ? run.pilot.snapshot().acceptedWaypoints : run.pilot.reversals} ${authored ? 'accepted waypoints' : 'turns'} · ${run.observation.snapshot().policy}`;
-        buttons();
+              run.cellCrossings++;
+            return state.status === 'active' && state.ticks === before.ticks + 1;
+          },
+          Date.now(),
+        );
+        record(run.physics, performance.now() - start);
+        const drawStart = performance.now();
+        assert(timedDraw(segment), 'Graphics unavailable');
+        record(run.draw, performance.now() - drawStart);
+        run.frames++;
+        if (clock.status !== 'running') {
+          void finish();
+        } else if (Math.floor(clock.elapsedMs / 1000) !== run.lastSecond) {
+          observe();
+          const displayToken = segment.attribution.begin('live-display');
+          try {
+            run.display.live({
+              elapsedMs: clock.elapsedMs,
+              targetMs: clock.targetMs,
+              ticks: clock.ticks,
+              frames: run.frames,
+              cellCrossings: run.cellCrossings,
+              recentres: run.lastSample.recentres,
+              routeProgress: authored
+                ? run.pilot.snapshot().acceptedWaypoints
+                : run.pilot.reversals,
+              observationPolicy: run.observationPolicy,
+              maximumFrameIntervalMs: run.intervals.max,
+            });
+            $('status').textContent =
+              `${(clock.elapsedMs / 1000).toFixed(1)} / ${clock.targetMs / 1000} real seconds · ${clock.ticks} ticks · ${run.lastSample.recentres} recentres · ${authored ? run.pilot.snapshot().acceptedWaypoints : run.pilot.reversals} ${authored ? 'accepted waypoints' : 'turns'} · ${run.observationPolicy}`;
+            buttons();
+          } finally {
+            segment.attribution.end(displayToken);
+          }
+        }
+      } catch (error) {
+        segment.attribution.end(checkToken);
+        void finish(error.message);
       }
-    } catch (error) {
-      void finish(error.message);
-    }
-  } else if (flight && renderer && !busy) renderer.draw(flight.snapshot(), { cameraMode: 'chase' });
-  frameId = requestAnimationFrame(frame);
+    } else if (flight && renderer && !busy)
+      renderer.draw(flight.snapshot(), { cameraMode: 'chase' });
+    frameId = requestAnimationFrame(frame);
+  } finally {
+    frameOwner?.attribution.end(frameToken);
+  }
 }
 function observeWindow(type, focused = document.hasFocus()) {
   if (!run) return;
@@ -599,7 +731,8 @@ addEventListener('focus', () => observeWindow('focus', true));
 document.addEventListener('visibilitychange', () => observeWindow('visibilitychange'));
 addEventListener(
   'pagehide',
-  () => {
+  (event) => {
+    run?.lifecycle.pageExit(event);
     closed = true;
     generation++;
     preparationAbort?.abort(new DOMException('Review page left', 'AbortError'));

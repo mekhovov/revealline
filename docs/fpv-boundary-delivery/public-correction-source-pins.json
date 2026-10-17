@@ -1,0 +1,38 @@
+{
+  "format": "FpvPublishedBoundarySources.v1",
+  "createdAt": "2026-10-17T14:14:50.489Z",
+  "pass": true,
+  "expectedRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+  "manifestSha256": "10f078eaa95537231faf71d73c62a42b418b724b85d6ed0459de42b79c06b7a9",
+  "metadataStable": true,
+  "sources": [
+    {
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+      "publicBytes": 25424,
+      "publicSha256": "0cb07eea515ef08c6344af480ecc6fde6f1c9fbb8ced8defa7eab203807a0a5d",
+      "repositorySha256": "0cb07eea515ef08c6344af480ecc6fde6f1c9fbb8ced8defa7eab203807a0a5d",
+      "byteIdenticalToRepository": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/betaflight-import.mjs",
+      "publicBytes": 38750,
+      "publicSha256": "f5685a77d4b5dc4711f636e86f72bf4a933aed5542a58b1409f381fa6c094068",
+      "repositorySha256": "f5685a77d4b5dc4711f636e86f72bf4a933aed5542a58b1409f381fa6c094068",
+      "byteIdenticalToRepository": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "publicBytes": 62043,
+      "publicSha256": "32e3a57875aa5057b9e02044603fb7977f7e908994b630401dda68db8f9634f6",
+      "repositorySha256": "32e3a57875aa5057b9e02044603fb7977f7e908994b630401dda68db8f9634f6",
+      "byteIdenticalToRepository": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "publicBytes": 403835,
+      "publicSha256": "3bfc52f4ab54e9505e21e3f95b684c259300502e9520cc705e6771aa4fb2e944",
+      "repositorySha256": "3bfc52f4ab54e9505e21e3f95b684c259300502e9520cc705e6771aa4fb2e944",
+      "byteIdenticalToRepository": true
+    }
+  ]
+}

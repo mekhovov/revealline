@@ -1,0 +1,200 @@
+{
+  "description": "Factual rate defaults and source digests extracted from the five upstream release tags. These are not flight-controller code. Custom firmware defaults are outside this compatibility claim.",
+  "versions": [
+    {
+      "version": "4.5.2",
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.2/src/main/fc/controlrate_profile.c",
+          "sha256": "adf8ae7ce41e806ba011f5b51d6684e72964febef7aff12be1a2fcec905ca547"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.2/src/main/fc/rc_controls.h",
+          "sha256": "775d23ec7e36804acb2c18032e7a08f0d9027ccef38c0b5f877c75549a69c9a2"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.2/src/main/cli/settings.c",
+          "sha256": "904a5e0935176f5d03eb7e9ae496b176df7dda0e61b5c66b7678f97354c2a3eb"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.2/src/main/config/config.c",
+          "sha256": "a09ae1b81edaa6f7db4a1e40a88da235c0e0ea1c9a9e40c59b8e2c32ba84de29"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.2/src/main/target/common_pre.h",
+          "sha256": "e497015200faf24a8d17c3f1f4bce41f48e7d422dd4cae6dd7d8b1b720d82f11"
+        }
+      ],
+      "defaults": {
+        "mid": 50,
+        "expo": 0,
+        "limitPercent": 100,
+        "hover": null,
+        "rcRate": 7,
+        "rate": 67,
+        "axisExpo": 0
+      },
+      "profileCount": 4,
+      "algorithm": "actual",
+      "axisLimit": 1998,
+      "quickRatesRcExpo": false,
+      "limitType": "off"
+    },
+    {
+      "version": "4.5.5",
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.5/src/main/fc/controlrate_profile.c",
+          "sha256": "adf8ae7ce41e806ba011f5b51d6684e72964febef7aff12be1a2fcec905ca547"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.5/src/main/fc/rc_controls.h",
+          "sha256": "775d23ec7e36804acb2c18032e7a08f0d9027ccef38c0b5f877c75549a69c9a2"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.5/src/main/cli/settings.c",
+          "sha256": "904a5e0935176f5d03eb7e9ae496b176df7dda0e61b5c66b7678f97354c2a3eb"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.5/src/main/config/config.c",
+          "sha256": "ad6e9e4af0ee2b6fda4413460e516b14ed75d297f4715c7969a19292c3144825"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/4.5.5/src/main/target/common_pre.h",
+          "sha256": "e497015200faf24a8d17c3f1f4bce41f48e7d422dd4cae6dd7d8b1b720d82f11"
+        }
+      ],
+      "defaults": {
+        "mid": 50,
+        "expo": 0,
+        "limitPercent": 100,
+        "hover": null,
+        "rcRate": 7,
+        "rate": 67,
+        "axisExpo": 0
+      },
+      "profileCount": 4,
+      "algorithm": "actual",
+      "axisLimit": 1998,
+      "quickRatesRcExpo": false,
+      "limitType": "off"
+    },
+    {
+      "version": "2025.12.4",
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.4/src/main/fc/controlrate_profile.c",
+          "sha256": "81885ec3ae55e5dbfc7f50bd27fec4b9e67ec63002dae34e7aba204dcb80174e"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.4/src/main/fc/rc_controls.h",
+          "sha256": "0245d103e0ced0e05e6085bc0fad2dbe9bd116ceb97b8b8095f66cba15af46a1"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.4/src/main/cli/settings.c",
+          "sha256": "094138fafac50a9e92b0d9829887ccd7b17d0afbaf5cc70f8f40de0fb6ffbe38"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.4/src/main/config/config.c",
+          "sha256": "eb3052c6ed31613d39ff986e30012028e32dedc58fd784af60d42835c216e9f6"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.4/src/main/target/common_pre.h",
+          "sha256": "48c96fd6c7b444630f8b743f6b4b68771e1eab065723e0a5e9fb3101d434f696"
+        }
+      ],
+      "defaults": {
+        "mid": 50,
+        "expo": 0,
+        "limitPercent": 100,
+        "hover": 50,
+        "rcRate": 7,
+        "rate": 67,
+        "axisExpo": 0
+      },
+      "profileCount": 4,
+      "algorithm": "actual",
+      "axisLimit": 1998,
+      "quickRatesRcExpo": false,
+      "limitType": "off"
+    },
+    {
+      "version": "2025.12.5",
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.5/src/main/fc/controlrate_profile.c",
+          "sha256": "81885ec3ae55e5dbfc7f50bd27fec4b9e67ec63002dae34e7aba204dcb80174e"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.5/src/main/fc/rc_controls.h",
+          "sha256": "0245d103e0ced0e05e6085bc0fad2dbe9bd116ceb97b8b8095f66cba15af46a1"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.5/src/main/cli/settings.c",
+          "sha256": "094138fafac50a9e92b0d9829887ccd7b17d0afbaf5cc70f8f40de0fb6ffbe38"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.5/src/main/config/config.c",
+          "sha256": "eb3052c6ed31613d39ff986e30012028e32dedc58fd784af60d42835c216e9f6"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2025.12.5/src/main/target/common_pre.h",
+          "sha256": "48c96fd6c7b444630f8b743f6b4b68771e1eab065723e0a5e9fb3101d434f696"
+        }
+      ],
+      "defaults": {
+        "mid": 50,
+        "expo": 0,
+        "limitPercent": 100,
+        "hover": 50,
+        "rcRate": 7,
+        "rate": 67,
+        "axisExpo": 0
+      },
+      "profileCount": 4,
+      "algorithm": "actual",
+      "axisLimit": 1998,
+      "quickRatesRcExpo": false,
+      "limitType": "off"
+    },
+    {
+      "version": "2026.6.2",
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2026.6.2/src/main/fc/controlrate_profile.c",
+          "sha256": "81885ec3ae55e5dbfc7f50bd27fec4b9e67ec63002dae34e7aba204dcb80174e"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2026.6.2/src/main/fc/rc_controls.h",
+          "sha256": "0245d103e0ced0e05e6085bc0fad2dbe9bd116ceb97b8b8095f66cba15af46a1"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2026.6.2/src/main/cli/settings.c",
+          "sha256": "80e948f5e3d30234d6e1cd51bc1642a896791a509e6bdd7ae3133ac6e0644804"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2026.6.2/src/main/config/config.c",
+          "sha256": "8b0dc5f6dd5ea8b094dac215209b1084d09cb941cd6e5e3e11767959bd91dbb7"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/betaflight/betaflight/2026.6.2/src/main/target/common_pre.h",
+          "sha256": "fd9c767c92ee317520ae64a0f1e2b1eb73dfa7b2e90bb9cf06e0465944e5d1ae"
+        }
+      ],
+      "defaults": {
+        "mid": 50,
+        "expo": 0,
+        "limitPercent": 100,
+        "hover": 50,
+        "rcRate": 7,
+        "rate": 67,
+        "axisExpo": 0
+      },
+      "profileCount": 4,
+      "algorithm": "actual",
+      "axisLimit": 1998,
+      "quickRatesRcExpo": false,
+      "limitType": "off"
+    }
+  ]
+}

@@ -1,0 +1,658 @@
+TAP version 13
+# Subtest: migration preserves the existing response and camera without writing or replacing legacy storage
+ok 1 - migration preserves the existing response and camera without writing or replacing legacy storage
+  ---
+  duration_ms: 2.009583
+  type: 'test'
+  ...
+# Subtest: new Actual profiles, player default and complete per-drone overrides resolve independently
+ok 2 - new Actual profiles, player default and complete per-drone overrides resolve independently
+  ---
+  duration_ms: 3.254875
+  type: 'test'
+  ...
+# Subtest: shared edits update future resolutions, while a captured flight configuration remains immutable
+ok 3 - shared edits update future resolutions, while a captured flight configuration remains immutable
+  ---
+  duration_ms: 2.425333
+  type: 'test'
+  ...
+# Subtest: names, duplicate IDs and camera do not change simulation identity; bounded revision history can revert
+ok 4 - names, duplicate IDs and camera do not change simulation identity; bounded revision history can revert
+  ---
+  duration_ms: 34.827083
+  type: 'test'
+  ...
+# Subtest: deletion reassigns explicit users and the default atomically; a valid default always survives
+ok 5 - deletion reassigns explicit users and the default atomically; a valid default always survives
+  ---
+  duration_ms: 0.826208
+  type: 'test'
+  ...
+# Subtest: a single atomic edit saves rates, profile name, drone assignment and camera together
+ok 6 - a single atomic edit saves rates, profile name, drone assignment and camera together
+  ---
+  duration_ms: 0.711708
+  type: 'test'
+  ...
+# Subtest: drone creation and selection commit together and invalid submissions cannot replace an existing setup
+ok 7 - drone creation and selection commit together and invalid submissions cannot replace an existing setup
+  ---
+  duration_ms: 0.507334
+  type: 'test'
+  ...
+# Subtest: failed or stale drone creation preserves both saved setups and their selected identity
+ok 8 - failed or stale drone creation preserves both saved setups and their selected identity
+  ---
+  duration_ms: 0.492584
+  type: 'test'
+  ...
+# Subtest: stale tabs cannot overwrite saved changes and refresh does not resurrect removed entries
+ok 9 - stale tabs cannot overwrite saved changes and refresh does not resurrect removed entries
+  ---
+  duration_ms: 1.157375
+  type: 'test'
+  ...
+# Subtest: Web Locks serialize competing tabs while still rejecting a stale draft
+ok 10 - Web Locks serialize competing tabs while still rejecting a stale draft
+  ---
+  duration_ms: 0.702375
+  type: 'test'
+  ...
+# Subtest: storage read/write failures preserve the previous state and visibly report the failure
+ok 11 - storage read/write failures preserve the previous state and visibly report the failure
+  ---
+  duration_ms: 0.859292
+  type: 'test'
+  ...
+# Subtest: backup restore is validated, atomic, detached and uses a fresh local revision
+ok 12 - backup restore is validated, atomic, detached and uses a fresh local revision
+  ---
+  duration_ms: 1.839375
+  type: 'test'
+  ...
+# Subtest: corrupt saved bytes are retained until an explicit valid backup restore
+ok 13 - corrupt saved bytes are retained until an explicit valid backup restore
+  ---
+  duration_ms: 0.392042
+  type: 'test'
+  ...
+# Subtest: recovery still rejects stale corrupt bytes and preserves data if replacement storage fails
+ok 14 - recovery still rejects stale corrupt bytes and preserves data if replacement storage fails
+  ---
+  duration_ms: 0.516584
+  type: 'test'
+  ...
+# Subtest: profile/setup limits and referenced identities are validated before any write
+ok 15 - profile/setup limits and referenced identities are validated before any write
+  ---
+  duration_ms: 36.101041
+  type: 'test'
+  ...
+# Subtest: saved Advanced aircraft/controller remain detached across rate and camera edits and full backup restore
+ok 16 - saved Advanced aircraft/controller remain detached across rate and camera edits and full backup restore
+  ---
+  duration_ms: 3.216125
+  type: 'test'
+  ...
+# Subtest: invalid or incomplete Advanced backup setup rejects atomically without changing existing rates or camera
+ok 17 - invalid or incomplete Advanced backup setup rejects atomically without changing existing rates or camera
+  ---
+  duration_ms: 1.074458
+  type: 'test'
+  ...
+# Subtest: queued profile creation and updates snapshot caller-owned response objects before waiting for a Web Lock
+ok 18 - queued profile creation and updates snapshot caller-owned response objects before waiting for a Web Lock
+  ---
+  duration_ms: 0.649209
+  type: 'test'
+  ...
+# Subtest: queued drone creation selects the submitted snapshot and rejects a later competing write
+ok 19 - queued drone creation selects the submitted snapshot and rejects a later competing write
+  ---
+  duration_ms: 0.368083
+  type: 'test'
+  ...
+# Subtest: queued setup and combined editing saves retain submitted IDs, camera, assignment and Advanced values
+ok 20 - queued setup and combined editing saves retain submitted IDs, camera, assignment and Advanced values
+  ---
+  duration_ms: 1.084958
+  type: 'test'
+  ...
+# Subtest: queued restore already owns a validated snapshot and a competing revision still rejects
+ok 21 - queued restore already owns a validated snapshot and a competing revision still rejects
+  ---
+  duration_ms: 0.404
+  type: 'test'
+  ...
+# Subtest: queued public APIs reject accessor-bearing payloads without running caller code or requesting a lock
+ok 22 - queued public APIs reject accessor-bearing payloads without running caller code or requesting a lock
+  ---
+  duration_ms: 0.744083
+  type: 'test'
+  ...
+# Subtest: resetting externally removed storage reuses the original detached migration settings
+ok 23 - resetting externally removed storage reuses the original detached migration settings
+  ---
+  duration_ms: 0.36425
+  type: 'test'
+  ...
+# Subtest: effective configuration fingerprints include Advanced physical tuning and exclude labels and camera
+ok 24 - effective configuration fingerprints include Advanced physical tuning and exclude labels and camera
+  ---
+  duration_ms: 0.910333
+  type: 'test'
+  ...
+# Subtest: import receipts survive rename, duplication, revision restore and backup without changing flight identity
+ok 25 - import receipts survive rename, duplication, revision restore and backup without changing flight identity
+  ---
+  duration_ms: 16.283542
+  type: 'test'
+  ...
+# Subtest: mismatched or future import receipts fail atomically and never enable ignored controller settings
+ok 26 - mismatched or future import receipts fail atomically and never enable ignored controller settings
+  ---
+  duration_ms: 3.208833
+  type: 'test'
+  ...
+# Subtest: queued provenance creation owns its receipt before waiting for a lock
+ok 27 - queued provenance creation owns its receipt before waiting for a lock
+  ---
+  duration_ms: 1.12275
+  type: 'test'
+  ...
+# Subtest: pointer opening restores focus to its trigger even when the browser did not focus it
+ok 28 - pointer opening restores focus to its trigger even when the browser did not focus it
+  ---
+  duration_ms: 10.247084
+  type: 'test'
+  ...
+# Subtest: native tuning downloads use JSON and inert CLI shares and retain text after cancellation
+ok 29 - native tuning downloads use JSON and inert CLI shares and retain text after cancellation
+  ---
+  duration_ms: 19.164209
+  type: 'test'
+  ...
+# Subtest: a pending export cannot duplicate or report its late failure into a reopened editor
+ok 30 - a pending export cannot duplicate or report its late failure into a reopened editor
+  ---
+  duration_ms: 3.933708
+  type: 'test'
+  ...
+# Subtest: algorithm drafts retain native values and linked roll/pitch edits keep yaw independent
+ok 31 - algorithm drafts retain native values and linked roll/pitch edits keep yaw independent
+  ---
+  duration_ms: 20.890042
+  type: 'test'
+  ...
+# Subtest: curve overlays, axis visibility and diagnostics show actual available measurements
+ok 32 - curve overlays, axis visibility and diagnostics show actual available measurements
+  ---
+  duration_ms: 2.962625
+  type: 'test'
+  ...
+# Subtest: save for next flight never invokes restart; apply and restart is a distinct explicit action
+ok 33 - save for next flight never invokes restart; apply and restart is a distinct explicit action
+  ---
+  duration_ms: 13.6585
+  type: 'test'
+  ...
+# Subtest: unscored draft test returns to the same numeric and camera draft, then reverts without saving
+ok 34 - unscored draft test returns to the same numeric and camera draft, then reverts without saving
+  ---
+  duration_ms: 10.082708
+  type: 'test'
+  ...
+# Subtest: drone drafts survive rate-profile changes, reopening and independent setup selection
+ok 35 - drone drafts survive rate-profile changes, reopening and independent setup selection
+  ---
+  duration_ms: 14.808292
+  type: 'test'
+  ...
+# Subtest: a retained drone draft cannot overwrite another tab and explicit refresh discards it
+ok 36 - a retained drone draft cannot overwrite another tab and explicit refresh discards it
+  ---
+  duration_ms: 2.941125
+  type: 'test'
+  ...
+# Subtest: Save drone assignment & camera rejects incomplete or out-of-range camera values before changing a flight or library
+ok 37 - Save drone assignment & camera rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 4.992292
+  type: 'test'
+  ...
+# Subtest: Save for next flight rejects incomplete or out-of-range camera values before changing a flight or library
+ok 38 - Save for next flight rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 18.20625
+  type: 'test'
+  ...
+# Subtest: Apply & restart rejects incomplete or out-of-range camera values before changing a flight or library
+ok 39 - Apply & restart rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 17.960334
+  type: 'test'
+  ...
+# Subtest: Duplicate drone setup rejects incomplete or out-of-range camera values before changing a flight or library
+ok 40 - Duplicate drone setup rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 3.109667
+  type: 'test'
+  ...
+# Subtest: Test draft · unscored rejects incomplete or out-of-range camera values before changing a flight or library
+ok 41 - Test draft · unscored rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 17.011417
+  type: 'test'
+  ...
+# Subtest: Advanced reference quad · experimental rejects incomplete or out-of-range camera values before changing a flight or library
+ok 42 - Advanced reference quad · experimental rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 17.609
+  type: 'test'
+  ...
+# Subtest: incomplete camera text survives independent draft navigation and leaves rate exports available
+ok 43 - incomplete camera text survives independent draft navigation and leaves rate exports available
+  ---
+  duration_ms: 9.214
+  type: 'test'
+  ...
+# Subtest: valid fractional camera migration, editing, testing and Advanced preview retain exact degrees
+ok 44 - valid fractional camera migration, editing, testing and Advanced preview retain exact degrees
+  ---
+  duration_ms: 13.622333
+  type: 'test'
+  ...
+# Subtest: actual numeric editing keeps partial text and commits representable units
+ok 45 - actual numeric editing keeps partial text and commits representable units
+  ---
+  duration_ms: 5.799708
+  type: 'test'
+  ...
+# Subtest: quick numeric editing keeps partial text and commits representable units
+ok 46 - quick numeric editing keeps partial text and commits representable units
+  ---
+  duration_ms: 6.541541
+  type: 'test'
+  ...
+# Subtest: betaflight numeric editing keeps partial text and commits representable units
+ok 47 - betaflight numeric editing keeps partial text and commits representable units
+  ---
+  duration_ms: 5.514083
+  type: 'test'
+  ...
+# Subtest: Save and Test commit pending numeric text, while blank values block stale-value saves
+ok 48 - Save and Test commit pending numeric text, while blank values block stale-value saves
+  ---
+  duration_ms: 9.344958
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive algorithm navigation and still block stale-value saves
+ok 49 - unfinished rates survive algorithm navigation and still block stale-value saves
+  ---
+  duration_ms: 11.936625
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive profile navigation and still block stale-value saves
+ok 50 - unfinished rates survive profile navigation and still block stale-value saves
+  ---
+  duration_ms: 7.540416
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive close navigation and still block stale-value saves
+ok 51 - unfinished rates survive close navigation and still block stale-value saves
+  ---
+  duration_ms: 7.8875
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive locale navigation and still block stale-value saves
+ok 52 - unfinished rates survive locale navigation and still block stale-value saves
+  ---
+  duration_ms: 9.029375
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive throttle version navigation and still block stale-value saves
+ok 53 - unfinished rates survive throttle version navigation and still block stale-value saves
+  ---
+  duration_ms: 7.37575
+  type: 'test'
+  ...
+# Subtest: algorithm drafts retain invalid ranges and fractional pending units without crossing algorithms
+ok 54 - algorithm drafts retain invalid ranges and fractional pending units without crossing algorithms
+  ---
+  duration_ms: 6.080792
+  type: 'test'
+  ...
+# Subtest: unfinished throttle and assistance fields survive repaint while linked edits replace their peer text
+ok 55 - unfinished throttle and assistance fields survive repaint while linked edits replace their peer text
+  ---
+  duration_ms: 8.847541
+  type: 'test'
+  ...
+# Subtest: Revert draft explicitly replaces unfinished numeric drafts
+ok 56 - Revert draft explicitly replaces unfinished numeric drafts
+  ---
+  duration_ms: 14.122875
+  type: 'test'
+  ...
+# Subtest: Restore revision to draft explicitly replaces unfinished numeric drafts
+ok 57 - Restore revision to draft explicitly replaces unfinished numeric drafts
+  ---
+  duration_ms: 13.187792
+  type: 'test'
+  ...
+# Subtest: Preview import explicitly replaces unfinished numeric drafts
+ok 58 - Preview import explicitly replaces unfinished numeric drafts
+  ---
+  duration_ms: 20.141458
+  type: 'test'
+  ...
+# Subtest: committing untouched linked axes preserves unequal rates and a pending pitch edit wins
+ok 59 - committing untouched linked axes preserves unequal rates and a pending pitch edit wins
+  ---
+  duration_ms: 16.403791
+  type: 'test'
+  ...
+# Subtest: import preview creates a new profile only on save and assignment remains explicit
+ok 60 - import preview creates a new profile only on save and assignment remains explicit
+  ---
+  duration_ms: 16.260208
+  type: 'test'
+  ...
+# Subtest: malformed import or changed input invalidates an earlier preview and cannot create a profile
+ok 61 - malformed import or changed input invalidates an earlier preview and cannot create a profile
+  ---
+  duration_ms: 9.533375
+  type: 'test'
+  ...
+# Subtest: headerless CLI version selection and firmware-default baseline support deliberate imports
+ok 62 - headerless CLI version selection and firmware-default baseline support deliberate imports
+  ---
+  duration_ms: 22.5075
+  type: 'test'
+  ...
+# Subtest: unsupported firmware headers invalidate a prior preview and cannot save against another version
+ok 63 - unsupported firmware headers invalidate a prior preview and cannot save against another version
+  ---
+  duration_ms: 22.774541
+  type: 'test'
+  ...
+# Subtest: shared profile users, name history and per-drone vertical camera values remain visible
+ok 64 - shared profile users, name history and per-drone vertical camera values remain visible
+  ---
+  duration_ms: 12.582833
+  type: 'test'
+  ...
+# Subtest: stale tab notification preserves the draft and a save cannot overwrite newer stored settings
+ok 65 - stale tab notification preserves the draft and a save cannot overwrite newer stored settings
+  ---
+  duration_ms: 9.266542
+  type: 'test'
+  ...
+# Subtest: Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation
+ok 66 - Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation
+  ---
+  duration_ms: 0.761042
+  type: 'test'
+  ...
+# Subtest: Apply and restart explicitly assigns an otherwise unassigned new profile to the current drone
+ok 67 - Apply and restart explicitly assigns an otherwise unassigned new profile to the current drone
+  ---
+  duration_ms: 6.231667
+  type: 'test'
+  ...
+# Subtest: local preset folder upload resolves official paths from firmware-presets and refreshes selected options
+ok 68 - local preset folder upload resolves official paths from firmware-presets and refreshes selected options
+  ---
+  duration_ms: 22.761583
+  type: 'test'
+  ...
+# Subtest: local preset folder upload resolves official paths from presets and refreshes selected options
+ok 69 - local preset folder upload resolves official paths from presets and refreshes selected options
+  ---
+  duration_ms: 23.576833
+  type: 'test'
+  ...
+# Subtest: changed preset options require resolution before preview/save (resolved text)
+ok 70 - changed preset options require resolution before preview/save (resolved text)
+  ---
+  duration_ms: 13.730708
+  type: 'test'
+  ...
+# Subtest: changed preset options require resolution before preview/save (existing preview)
+ok 71 - changed preset options require resolution before preview/save (existing preview)
+  ---
+  duration_ms: 20.446625
+  type: 'test'
+  ...
+# Subtest: choosing a different preset entry discards old option choices and controls
+ok 72 - choosing a different preset entry discards old option choices and controls
+  ---
+  duration_ms: 13.814542
+  type: 'test'
+  ...
+# Subtest: failed preset resolution cannot preview stale text, while deliberate pasted CLI replaces the preset
+ok 73 - failed preset resolution cannot preview stale text, while deliberate pasted CLI replaces the preset
+  ---
+  duration_ms: 12.719792
+  type: 'test'
+  ...
+# Subtest: failed drone selection restores the visible selection and retains drafts (quota)
+ok 74 - failed drone selection restores the visible selection and retains drafts (quota)
+  ---
+  duration_ms: 3.452458
+  type: 'test'
+  ...
+# Subtest: failed drone selection restores the visible selection and retains drafts (stale tab)
+ok 75 - failed drone selection restores the visible selection and retains drafts (stale tab)
+  ---
+  duration_ms: 2.965292
+  type: 'test'
+  ...
+# Subtest: duplicating a drone creates and selects its draft in one storage write
+ok 76 - duplicating a drone creates and selects its draft in one storage write
+  ---
+  duration_ms: 2.240208
+  type: 'test'
+  ...
+# Subtest: failed drone duplication preserves the library and editable draft (quota)
+ok 77 - failed drone duplication preserves the library and editable draft (quota)
+  ---
+  duration_ms: 2.45625
+  type: 'test'
+  ...
+# Subtest: failed drone duplication preserves the library and editable draft (stale tab)
+ok 78 - failed drone duplication preserves the library and editable draft (stale tab)
+  ---
+  duration_ms: 1.626041
+  type: 'test'
+  ...
+# Subtest: failed drone duplication preserves the library and editable draft (invalid camera)
+ok 79 - failed drone duplication preserves the library and editable draft (invalid camera)
+  ---
+  duration_ms: 1.950125
+  type: 'test'
+  ...
+# Subtest: ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller
+ok 80 - ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller
+  ---
+  duration_ms: 9.57275
+  type: 'test'
+  ...
+# Subtest: a retained draft reopened after another tab edits the same profile cannot overwrite the newer revision
+ok 81 - a retained draft reopened after another tab edits the same profile cannot overwrite the newer revision
+  ---
+  duration_ms: 16.217334
+  type: 'test'
+  ...
+# Subtest: a save waiting for a browser lock keeps its click-time values and disables editing until completion
+ok 82 - a save waiting for a browser lock keeps its click-time values and disables editing until completion
+  ---
+  duration_ms: 6.994375
+  type: 'test'
+  ...
+# Subtest: an oversized upload invalidates an earlier successful import preview
+ok 83 - an oversized upload invalidates an earlier successful import preview
+  ---
+  duration_ms: 8.27575
+  type: 'test'
+  ...
+# Subtest: an unreadable upload invalidates an earlier successful import preview
+ok 84 - an unreadable upload invalidates an earlier successful import preview
+  ---
+  duration_ms: 6.935292
+  type: 'test'
+  ...
+# Subtest: an earlier upload completing after a newer selection cannot replace its text
+ok 85 - an earlier upload completing after a newer selection cannot replace its text
+  ---
+  duration_ms: 12.866667
+  type: 'test'
+  ...
+# Subtest: an invalid preset folder selection clears an existing import preview immediately
+ok 86 - an invalid preset folder selection clears an existing import preview immediately
+  ---
+  duration_ms: 7.161959
+  type: 'test'
+  ...
+# Subtest: overlapping preset folder reads publish only the newest complete bundle
+ok 87 - overlapping preset folder reads publish only the newest complete bundle
+  ---
+  duration_ms: 12.285791
+  type: 'test'
+  ...
+# Subtest: switching locale updates accessible controls without changing numeric, name, camera or assignment drafts
+ok 88 - switching locale updates accessible controls without changing numeric, name, camera or assignment drafts
+  ---
+  duration_ms: 7.478792
+  type: 'test'
+  ...
+# Subtest: cancel while Apply waits for a browser lock never restarts a flight afterward
+ok 89 - cancel while Apply waits for a browser lock never restarts a flight afterward
+  ---
+  duration_ms: 6.192125
+  type: 'test'
+  ...
+# Subtest: close while Apply waits for a browser lock never restarts a flight afterward
+ok 90 - close while Apply waits for a browser lock never restarts a flight afterward
+  ---
+  duration_ms: 5.465542
+  type: 'test'
+  ...
+# Subtest: close-and-reopen while Apply waits for a browser lock never restarts a flight afterward
+ok 91 - close-and-reopen while Apply waits for a browser lock never restarts a flight afterward
+  ---
+  duration_ms: 6.441667
+  type: 'test'
+  ...
+# Subtest: closing a draft comparison retains the unscored return affordance until a normal flight starts
+ok 92 - closing a draft comparison retains the unscored return affordance until a normal flight starts
+  ---
+  duration_ms: 1.701125
+  type: 'test'
+  ...
+# Subtest: import receipt stays visible through save, duplicate, manual edit and revision restoration
+ok 93 - import receipt stays visible through save, duplicate, manual edit and revision restoration
+  ---
+  duration_ms: 27.378
+  type: 'test'
+  ...
+# Subtest: uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization
+ok 94 - uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization
+  ---
+  duration_ms: 13.359917
+  type: 'test'
+  ...
+# Subtest: a delayed import source hash cannot publish after edit
+ok 95 - a delayed import source hash cannot publish after edit
+  ---
+  duration_ms: 2.010416
+  type: 'test'
+  ...
+# Subtest: a delayed import source hash cannot publish after reopen
+ok 96 - a delayed import source hash cannot publish after reopen
+  ---
+  duration_ms: 1.708416
+  type: 'test'
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (blank)
+ok 97 - a pending native import cannot replace a newer numeric draft (blank)
+  ---
+  duration_ms: 12.157875
+  type: 'test'
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (905)
+ok 98 - a pending native import cannot replace a newer numeric draft (905)
+  ---
+  duration_ms: 14.857417
+  type: 'test'
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (920)
+ok 99 - a pending native import cannot replace a newer numeric draft (920)
+  ---
+  duration_ms: 13.091041
+  type: 'test'
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (blank)
+ok 100 - a pending CLI import cannot replace a newer numeric draft (blank)
+  ---
+  duration_ms: 13.071625
+  type: 'test'
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (905)
+ok 101 - a pending CLI import cannot replace a newer numeric draft (905)
+  ---
+  duration_ms: 13.006166
+  type: 'test'
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (920)
+ok 102 - a pending CLI import cannot replace a newer numeric draft (920)
+  ---
+  duration_ms: 13.974875
+  type: 'test'
+  ...
+# Subtest: a cancelled pending import stays cancelled after algorithm round trip
+ok 103 - a cancelled pending import stays cancelled after algorithm round trip
+  ---
+  duration_ms: 3.552417
+  type: 'test'
+  ...
+# Subtest: a cancelled pending import stays cancelled after edit back to saved value
+ok 104 - a cancelled pending import stays cancelled after edit back to saved value
+  ---
+  duration_ms: 2.675083
+  type: 'test'
+  ...
+# Subtest: a cancelled pending import stays cancelled after revert
+ok 105 - a cancelled pending import stays cancelled after revert
+  ---
+  duration_ms: 2.895459
+  type: 'test'
+  ...
+# Subtest: saving an import rejects changed preview rates instead of replacing visible edits
+ok 106 - saving an import rejects changed preview rates instead of replacing visible edits
+  ---
+  duration_ms: 14.507916
+  type: 'test'
+  ...
+# Subtest: firmware-default patch preview accepts a verified file header without a manual version
+ok 107 - firmware-default patch preview accepts a verified file header without a manual version
+  ---
+  duration_ms: 11.783416
+  type: 'test'
+  ...
+# Subtest: rotation-only CLI export crosses throttle versions only after an explicit choice
+ok 108 - rotation-only CLI export crosses throttle versions only after an explicit choice
+  ---
+  duration_ms: 14.169583
+  type: 'test'
+  ...
+1..108
+# tests 108
+# suites 0
+# pass 108
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1053.7345

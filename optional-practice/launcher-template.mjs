@@ -83,6 +83,7 @@ export function installOptionalLauncher(
       ? 'uk'
       : 'en';
   let prepared = null,
+    retained = null,
     available = null,
     repairReference = null,
     launcherReady = false,
@@ -134,6 +135,7 @@ export function installOptionalLauncher(
       if ($('support')) $('support').href = description.support;
     }
     if (prepared) $('open').href = entryURL(prepared);
+    if (retained) $('previous').href = entryURL(retained);
     if (available) $('prepare').href = entryURL(available);
     if ($('download')) $('download').hidden = !available;
     if ($('remove')) $('remove').hidden = !prepared && stateKey !== 'repair';
@@ -161,14 +163,12 @@ export function installOptionalLauncher(
   let restoreRevision = 0;
   async function restore() {
     const revision = ++restoreRevision;
-    let nextPrepared = null,
-      nextRepair = null,
-      nextLauncherReady = false,
-      nextUnknown = false,
-      nextState = available ? 'available' : 'status';
-    const links = new Map();
-    // Keep the last verified actions visible while checking. Publish one complete
-    // result, so a slower older check cannot hide a newer rollback action.
+    const entries = [];
+    let invalid = false,
+      shell = 'absent';
+    // Each action belongs to its own verified package. A stalled retained copy
+    // or launcher-shell check must not conceal a ready active package (or vice versa).
+    // The aggregate status stays Checking until all checks finish.
     stateKey = 'checking';
     render();
     try {
@@ -180,53 +180,81 @@ export function installOptionalLauncher(
         ['previous', 'previous'],
       ])
         if (state[key]) {
-          const value = validate(state[key]);
-          const ready = await readiness(new URL('./', new URL(value.entry, value.scope)));
-          if (ready === 'unknown') {
-            nextUnknown = true;
-            const href = entryURL(value);
-            if (!$(element).hidden && $(element).href === href) {
-              links.set(element, href);
-              if (key === 'active') nextPrepared = value;
-            }
-            continue;
+          try {
+            const value = validate(state[key]);
+            entries.push({
+              key,
+              element,
+              value,
+              status: 'pending',
+              previouslyVerified: !$(element).hidden && $(element).href === entryURL(value),
+            });
+          } catch {
+            invalid = true;
           }
-          if (ready === 'unavailable') {
-            nextState = 'repair';
-            nextRepair ??= value;
-            continue;
-          }
-          if (key === 'active') {
-            nextPrepared = value;
-            nextState = 'offline';
-          }
-          links.set(element, entryURL(value));
         }
     } catch {
-      // An incomplete verification cannot advertise a newly prepared version.
-      nextPrepared = null;
-      links.clear();
-      nextState = 'error';
+      invalid = true;
     }
-    if (nextPrepared) {
-      const ready = await readiness(new URL('./', location.href));
-      nextLauncherReady = ready === 'ready';
-      if (ready === 'unknown') nextUnknown = true;
-      else if (!nextLauncherReady) nextState = 'repair';
-    }
-    if (revision !== restoreRevision) return;
-    prepared = nextPrepared;
-    repairReference = nextRepair;
-    launcherReady = nextLauncherReady;
-    verificationUnknown = nextUnknown;
-    verificationUnavailable = nextState === 'repair';
-    stateKey = nextUnknown && !verificationUnavailable ? 'unverified' : nextState;
-    for (const element of ['open', 'previous']) {
-      const href = links.get(element);
-      if (href) $(element).href = href;
-      $(element).hidden = !href;
-    }
-    render();
+    const active = entries.find((entry) => entry.key === 'active');
+    if (active) shell = 'pending';
+    const publish = () => {
+      if (revision !== restoreRevision || hidden) return;
+      prepared = null;
+      retained = null;
+      repairReference = null;
+      for (const element of ['open', 'previous']) {
+        const entry = entries.find((item) => item.element === element);
+        const usable =
+          entry &&
+          (entry.status === 'ready' ||
+            (['pending', 'unknown'].includes(entry.status) && entry.previouslyVerified));
+        $(element).hidden = !usable;
+        if (usable) {
+          $(element).href = entryURL(entry.value);
+          if (entry.key === 'active') prepared = entry.value;
+          else retained = entry.value;
+        }
+        if (entry?.status === 'unavailable') repairReference ??= entry.value;
+      }
+      launcherReady = shell === 'ready';
+      verificationUnknown =
+        entries.some((entry) => entry.status === 'unknown') || (!!prepared && shell === 'unknown');
+      verificationUnavailable = !!repairReference || (!!prepared && shell === 'unavailable');
+      stateKey =
+        entries.some((entry) => entry.status === 'pending') || shell === 'pending'
+          ? 'checking'
+          : verificationUnavailable
+            ? 'repair'
+            : verificationUnknown
+              ? 'unverified'
+              : invalid
+                ? 'error'
+                : prepared
+                  ? 'offline'
+                  : available
+                    ? 'available'
+                    : 'status';
+      render();
+    };
+    publish();
+    await Promise.all([
+      ...entries.map(async (entry) => {
+        entry.status = await readiness(
+          new URL('./', new URL(entry.value.entry, entry.value.scope)),
+        ).catch(() => 'unknown');
+        publish();
+      }),
+      ...(active
+        ? [
+            (async () => {
+              shell = await readiness(new URL('./', location.href)).catch(() => 'unknown');
+              publish();
+            })(),
+          ]
+        : []),
+    ]);
+    return revision === restoreRevision && !hidden;
   }
   $('locale').value = locale;
   $('locale').onchange = () => {
@@ -239,6 +267,7 @@ export function installOptionalLauncher(
     hidden = false;
   globalThis.addEventListener?.('pagehide', () => {
     hidden = true;
+    restoreRevision++;
     activeRequest?.abort();
   });
   globalThis.addEventListener?.('pageshow', () => {
@@ -246,6 +275,7 @@ export function installOptionalLauncher(
   });
   const check = async (play = false) => {
     if (busy) return;
+    const revision = restoreRevision;
     busy = true;
     $('check').disabled = true;
     const controller = new AbortController();
@@ -278,7 +308,7 @@ export function installOptionalLauncher(
       } finally {
         await reader.cancel().catch(() => {});
       }
-      if (hidden || controller.signal.aborted) return;
+      if (hidden || revision !== restoreRevision || controller.signal.aborted) return;
       const bytes = new Uint8Array(size);
       let offset = 0;
       for (const chunk of chunks) {
@@ -301,7 +331,7 @@ export function installOptionalLauncher(
       render();
       if (play) location.assign(entryURL(value));
     } catch {
-      if (!hidden) {
+      if (!hidden && revision === restoreRevision) {
         stateKey = verificationUnavailable
           ? 'repair'
           : verificationUnknown
@@ -326,8 +356,7 @@ export function installOptionalLauncher(
     checking = true;
     $('check').disabled = true;
     try {
-      await restore();
-      await check(play);
+      if (await restore()) await check(play);
     } finally {
       checking = false;
       $('check').disabled = false;

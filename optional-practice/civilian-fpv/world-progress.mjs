@@ -1,4 +1,7 @@
 import { boundedJSON } from '../../game/data-json.mjs';
+import { flightComparisonIdentity } from './model.mjs';
+import { TUNED_RESPONSE_FORMAT } from './flight-response.mjs';
+import { responseIdentity } from './radio-profile.mjs';
 import {
   createWorldFlight,
   initWorldRuntime,
@@ -94,27 +97,49 @@ export function evaluateWorldResult(
       : Math.min(state.step, course.steps[proof.mode].length - 1),
   };
 }
-export function compatibleGhost(record, flightIdentity) {
-  const a = record?.proof,
-    b = flightIdentity;
-  if (
-    record?.status !== 'verified' ||
-    record.diagnostic !== 'complete' ||
-    a?.session !== 'practice' ||
-    !a ||
-    !b
-  )
-    return false;
-  return [
+/** A shortlist only: selected ghosts and sector references still replay their own proof. */
+export function compatibleFlightComparison(a, b) {
+  if (!a || !b) return false;
+  const contextKeys = [
     'model',
     'backend',
     'courseIdentity',
     'worldIdentity',
     'mode',
-    'responseIdentity',
     'rulesIdentity',
     'conditionsIdentity',
-  ].every((key) => a[key] === b[key]);
+  ];
+  if (!contextKeys.every((key) => a[key] === b[key])) return false;
+  const hasComparison =
+    Object.hasOwn(a, 'comparisonIdentity') || Object.hasOwn(b, 'comparisonIdentity');
+  if (!hasComparison) return a.responseIdentity === b.responseIdentity;
+  if (typeof a.comparisonIdentity !== 'string' || a.comparisonIdentity !== b.comparisonIdentity)
+    return false;
+  // Imported status labels cannot grant a different response access to a class.
+  // Recompute from recorded values wherever this is a proof rather than a runtime identity.
+  try {
+    for (const value of [a, b]) {
+      if (Object.hasOwn(value, 'frames') && !value.response) return false;
+      if (
+        value.response &&
+        (value.response.format !== TUNED_RESPONSE_FORMAT ||
+          responseIdentity(value.response) !== value.responseIdentity ||
+          flightComparisonIdentity(value, value.response) !== value.comparisonIdentity)
+      )
+        return false;
+    }
+  } catch {
+    return false;
+  }
+  return true;
+}
+export function compatibleGhost(record, flightIdentity) {
+  return (
+    record?.status === 'verified' &&
+    record.diagnostic === 'complete' &&
+    record.proof?.session === 'practice' &&
+    compatibleFlightComparison(record.proof, flightIdentity)
+  );
 }
 
 /** Legacy callers receive the safe, complete original course. A geometric

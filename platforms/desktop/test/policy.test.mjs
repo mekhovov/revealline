@@ -138,7 +138,7 @@ test('storage identity stays stable while install paths and versions move', () =
     );
 });
 
-test('only user-initiated same-window local JSON or ZIP exports reach the native save dialog', () => {
+test('only user-initiated same-window local JSON, ZIP or bounded plain-text settings reach the native save dialog', () => {
   const valid = {
     url: 'blob:revealline://app/1234-5678',
     pageURL: `${APP_ORIGIN}game/`,
@@ -149,6 +149,7 @@ test('only user-initiated same-window local JSON or ZIP exports reach the native
     ownsWindow: true,
   };
   assert.equal(downloadDecision(valid).allowed, true);
+  assert.equal(downloadDecision(valid).maxBytes, MAX_DOWNLOAD_BYTES);
   assert.equal(
     downloadDecision({ ...valid, filename: 'packs.zip', mimeType: 'application/zip' }).allowed,
     true,
@@ -175,4 +176,25 @@ test('only user-initiated same-window local JSON or ZIP exports reach the native
       false,
       JSON.stringify(changes),
     );
+  const text = {
+    ...valid,
+    filename: 'betaflight-rates.txt',
+    mimeType: 'text/plain;charset=utf-8',
+    bytes: 1024 * 1024,
+  };
+  const textDecision = downloadDecision(text);
+  assert.equal(textDecision.allowed, true);
+  assert.equal(textDecision.maxBytes, 1024 * 1024);
+  assert.equal(textDecision.extension, 'txt');
+  for (const changes of [
+    { bytes: 1024 * 1024 + 1 },
+    { mimeType: 'text/html' },
+    { mimeType: 'application/javascript' },
+    { filename: 'rates.js' },
+    { filename: 'rates.txt.html' },
+    { userGesture: false },
+    { ownsWindow: false },
+    { url: 'https://example.test/rates.txt' },
+  ])
+    assert.equal(downloadDecision({ ...text, ...changes }).allowed, false, JSON.stringify(changes));
 });
