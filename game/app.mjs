@@ -12379,6 +12379,7 @@ try {
     restartRequest = null;
     restartDialog.close();
     if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
+    if ($('settings-dialog').open) $('settings-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     demo = false;
     try {
