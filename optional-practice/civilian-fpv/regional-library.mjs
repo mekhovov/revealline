@@ -1,10 +1,12 @@
 import { openRegionalLibrary } from './regional-delivery.mjs';
 import { validateTerrainSurface } from './regional/terrain-surface.mjs';
+import { validateScenerySurface } from './regional/scenery-surface.mjs';
 import { REGION_CELL_SIZES_MM } from './regional/region-manifest.mjs';
 
 // This immutable source needs the separately qualified 512 m natural-cell capability.
 // Older runtimes keep their current catalogue rather than offering an unloadable entry.
 export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
+  edition: { en: 'Open desert terrain', uk: 'Відкритий пустельний рельєф' },
   id: 'desert-expedition-study',
   title: {
     en: 'Desert Expedition — 16 km relief study',
@@ -24,6 +26,7 @@ export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
 });
 
 export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
+  edition: { en: 'Rock practice routes', uk: 'Маршрути серед скель' },
   id: 'desert-expedition-study',
   title: {
     en: 'Desert Expedition — rock routes',
@@ -35,6 +38,15 @@ export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
   },
   bytes: 48164518,
   appearance: { terrain: 'desert' },
+  // Exact reviewed landmark revision: face each nearby composition from its unchanged start.
+  startHeadings: Object.freeze({
+    'crescent-dunes': 14446,
+    'dry-wash': 15163,
+    'salt-basin': 17740,
+    'sunrise-escarpment': 12247,
+    'mesa-corridor': 10280,
+    'rocky-plain': 14839,
+  }),
   pin: {
     url: 'https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json',
     bytes: 329271,
@@ -42,12 +54,261 @@ export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const CANAL_CITY_LIBRARY_PIN = Object.freeze({
+  id: 'canal-city-study',
+  title: { en: 'Canal City — bridges and courtyards', uk: 'Місто каналів — мости й подвір’я' },
+  description: {
+    en: '384 × 384 m · six starting points · unscored free flight. Follow the canals beneath a masonry arch and high walkway, pass through warehouses and courtyards, or weave around basin moorings. Early composition study; surrounding banks remain sparse. Water is visual only.',
+    uk: '384 × 384 м · шість місць старту · вільний політ без заліку. Літайте каналами під кам’яною аркою та високим переходом, крізь склади й подвір’я або між швартовними стовпами. Раннє дослідження композиції; навколишні береги ще малонаповнені. Вода лише візуальна.',
+  },
+  bytes: 6771851,
+  appearance: { terrain: 'plain' },
+  // Consumed by the separately gated trusted authored-heading helper (#1424).
+  startHeadings: Object.freeze({
+    'north-arch': 18000,
+    'warehouse-passage': 9000,
+    highwalk: 18000,
+    'lock-bend': 18000,
+    courtyard: 18000,
+    'turning-basin': 2974,
+  }),
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/04b0d9c5db0687d8df2ea9a3ea07b9ca9ddcaa5a/authoring/fpv-worlds/regions/canal-city/delivery-district-r2/delivery.json',
+    bytes: 6580,
+    sha256: '891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87',
+  },
+});
+
+export const LUNAR_BASIN_LIBRARY_PIN = Object.freeze({
+  id: 'lunar-basin-study',
+  title: { en: 'Lunar Basin — flight study', uk: 'Місячна улоговина — тренувальна зона' },
+  description: {
+    en: '768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity.',
+    uk: '768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття, розколоті скелі, звивисте русло, край кратера, кам’яні плити й антену на опорах. Раннє дослідження вигаданого ландшафту з малонаповненими околицями. Використовує земну фізику польоту симулятора, а не місячне тяжіння.',
+  },
+  bytes: 1981832,
+  appearance: { terrain: 'lunar-regolith', scenery: 'lunar-survey' },
+  startHeadings: Object.freeze({
+    'mare-apron': 14799,
+    'ejecta-fan': 13685,
+    'sinuous-rille': 14974,
+    'terraced-crater': 15193,
+    'fractured-highland': 14799,
+    'observatory-ridge': 14974,
+  }),
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/423f60966ec5dd4946a05ae1ea3c59f4910216ef/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r2/delivery.json',
+    bytes: 18790,
+    sha256: '1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a',
+  },
+});
+
+export const LUNAR_SHELTER_LIBRARY_PIN = Object.freeze({
+  ...LUNAR_BASIN_LIBRARY_PIN,
+  edition: { en: 'Shelter detail', uk: 'Деталізовані укриття' },
+  description: {
+    en: '768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity.',
+    uk: '768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття з ребрами покрівлі й обладнанням на опорах, розколоті скелі, звивисте русло та антену. Окремий пробний варіант composition-r3; попередня версія залишається доступною. Малонаповнений вигаданий ландшафт. Використовує земну фізику польоту симулятора, а не місячне тяжіння.',
+  },
+  bytes: 2093869,
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/f58a1b5197a78243e30e42858d45ded1f55baa31/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r3/delivery.json',
+    bytes: 14759,
+    sha256: 'e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Braced cable towers and a supported lookout make the station approach easier to read. Keep exploring the open concourse and connected snow and scree routes. Earlier Alpine editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Вежі канатної дороги з розкосами та підпори оглядового майданчика роблять підхід до станції виразнішим. Досліджуйте відкритий прохід між корпусами та сполучені маршрути серед снігу й осипів. Попередні альпійські версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station approach',
+      uk: 'Підхід до станції',
+    },
+    bytes: 22814245,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ca76af991b127f6ed81434162832a79518add9a8/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r6/delivery.json',
+      bytes: 115316,
+      sha256: '92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. A restrained grey apron distinguishes the station’s open concourse and approaches beneath the quieter timber wings. Explore the same connected snow and scree landscape. Separate material study; earlier editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Стримане сіре покриття вирізняє відкритий прохід між корпусами та підходи до станції з дерев’яним облицюванням. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station concourse',
+      uk: 'Майданчик між корпусами',
+    },
+    bytes: 22699845,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json',
+      bytes: 115316,
+      sha256: '32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa',
+    },
+  },
+  LUNAR_SHELTER_LIBRARY_PIN,
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Wider, softer timber seams make the summit station less visually busy. Explore the same connected snow and scree landscape. A separate material study; previous Alpine editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Ширші й м’якші шви дерев’яного облицювання зменшують візуальний шум на верхній станції. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні альпійські версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Quieter station surfaces',
+      uk: 'Стриманіші поверхні станції',
+    },
+    bytes: 22694120,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/02f2b140d06cc930d8d4dd6b01abcd860db75436/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/delivery.json',
+      bytes: 115316,
+      sha256: '0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Original timber station cladding, opaque backed panels and roof seams add detail to the refined-contour landscape. Separate station-r3 study; earlier Alpine editions remain available. The wider landscape and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Оригінальне дерев’яне облицювання станції, непрозорі панелі й шви покрівлі додають деталей ландшафту з уточненими контурами. Окремий пробний варіант station-r3; попередні альпійські версії залишаються доступними. Деталі решти місцевості та маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station surface details',
+      uk: 'Деталі поверхонь станції',
+    },
+    bytes: 22694130,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ffb79b67479f9ed5c8104610695ac8b5cb04edc7/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r3/delivery.json',
+      bytes: 115316,
+      sha256: 'c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d',
+    },
+  },
+  LUNAR_BASIN_LIBRARY_PIN,
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Refined snow and scree contours connect the glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Separate review-r2 study; the earlier revision remains available. Landscape and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Уточнені межі снігу й осипів у льодовиковій долині, на серпантині, сніговій сідловині, біля верхньої станції, віадука та греблі. Окремий пробний варіант review-r2; попередня версія залишається доступною. Деталі місцевості та маршрутів ще вдосконалюються.',
+    },
+    edition: { en: 'Refined contours', uk: 'Уточнені контури' },
+    bytes: 21759827,
+    appearance: { terrain: 'plain', scenery: 'alpine-overlays' },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2/delivery.json',
+      bytes: 115311,
+      sha256: 'a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Explore a glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Early landscape study; scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Досліджуйте льодовикову долину, перевал із серпантином, снігову сідловину, верхню станцію, ущелину з віадуком і греблю водосховища. Ранній варіант ландшафту; деталі місцевості та маршрутів ще вдосконалюються.',
+    },
+    edition: { en: 'Original study', uk: 'Початковий варіант' },
+    bytes: 21066886,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/07be16fe40ade4c398299c4e64cb542b7523856c/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r1/delivery.json',
+      bytes: 114992,
+      sha256: '8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a',
+    },
+  },
+  CANAL_CITY_LIBRARY_PIN,
   ...(REGION_CELL_SIZES_MM.includes(512000)
     ? [DESERT_LANDMARKS_LIBRARY_PIN, DESERT_EXPEDITION_LIBRARY_PIN]
     : []),
   {
+    edition: { en: 'Connected harbour', uk: 'Сполучена гавань' },
     id: 'tropical-coastal-districts',
     title: {
       en: 'Tropical coast — connected harbour',
@@ -57,7 +318,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '768 × 768 m · connected wooden harbour decks and shore approach · six starting areas, unscored free flight. Separate harbour-r3 revision; the earlier coastal settlement remains available. Early coastal study; visual water only.',
       uk: '768 × 768 м · сполучені дерев’яні пірси гавані та вихід на берег · шість стартових місць, вільний політ без заліку. Окрема версія harbour-r3; попереднє прибережне поселення залишається доступним. Раннє дослідження узбережжя; вода лише візуальна.',
     },
-    bytes: 7952305,
+    bytes: 7958922,
     appearance: { terrain: 'tropical-settlement' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json',
@@ -84,6 +345,64 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Connected park routes', uk: 'Сполучені паркові маршрути' },
+    id: 'coaster-gardens-study',
+    title: {
+      en: 'Coaster Gardens — connected park study',
+      uk: 'Сади атракціонів — дослідження парку зі сполученими доріжками',
+    },
+    description: {
+      en: '2.048 × 2.048 km · six starting points · unscored free flight. Explore the supported loop, linked approach paths, station courts and woodland routes. Early static park study; district scenery is still being refined and rides do not move.',
+      uk: '2,048 × 2,048 км · шість стартових точок · вільний політ без заліку. Досліджуйте петлю на опорах, сполучені підходи, площі станцій і лісові маршрути. Ранній варіант парку; оформлення районів ще вдосконалюється, атракціони нерухомі.',
+    },
+    bytes: 34214390,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json',
+      bytes: 32824,
+      sha256: '935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a',
+    },
+  },
+  {
+    edition: { en: 'Original park study', uk: 'Початкове дослідження парку' },
+    id: 'coaster-gardens-study',
+    title: {
+      en: 'Coaster Gardens — 2 km study',
+      uk: 'Сади атракціонів — пробний світ 2 км',
+    },
+    description: {
+      en: '2.048 × 2.048 km · six park districts and six starting points · unscored free flight. Explore garden plazas, a looping landmark, station terraces, service halls and woodland paths. Early static park study; rides do not move.',
+      uk: '2,048 × 2,048 км · шість паркових районів і шість стартових точок · вільний політ без заліку. Досліджуйте садові площі, петлю атракціону, тераси станції, службові павільйони й лісові доріжки. Ранній варіант парку; атракціони нерухомі.',
+    },
+    bytes: 33908597,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json',
+      bytes: 29654,
+      sha256: '4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5',
+    },
+  },
+  {
+    edition: { en: 'Civic courtyard materials', uk: 'Матеріали міського подвір’я' },
+    id: 'hillside-town-study',
+    title: {
+      en: 'Hillside Town — civic court materials',
+      uk: 'Містечко на схилі — матеріали міського подвір’я',
+    },
+    description: {
+      en: '384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available.',
+      uk: '384 × 384 м · відкритий ринковий прохід, озеленене міське подвір’я, різні дахи й чотири стартові точки · вільний політ без заліку. Невелике дослідження містечка з виразнішими матеріалами фасадів; дальні тераси ще малодетальні. Початкова версія містечка залишається доступною.',
+    },
+    bytes: 8667066,
+    appearance: { terrain: 'hillside-town' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json',
+      bytes: 6579,
+      sha256: 'f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573',
+    },
+  },
+  {
+    edition: { en: 'Terraces and courtyards', uk: 'Тераси та подвір’я' },
     id: 'hillside-town-study',
     title: {
       en: 'Hillside Town — terraces and courtyards',
@@ -93,7 +412,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '384 × 384 m · three terraces, graded streets, open doorways and an elevated pad · unscored free flight. Choose one of four starting points. Early town study with original building-kit materials.',
       uk: '384 × 384 м · три тераси, похилі вулиці, відкриті дверні проходи й піднятий майданчик · вільний політ без заліку. Виберіть одну з чотирьох стартових точок. Ранній огляд містечка з оригінальними матеріалами набору будівель.',
     },
-    bytes: 8352486,
+    bytes: 8359044,
     appearance: { terrain: 'plain' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json',
@@ -102,6 +421,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Six coastal districts', uk: 'Шість прибережних районів' },
     id: 'tropical-coastal-districts',
     title: {
       en: 'Tropical coast — six flight districts',
@@ -111,7 +431,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '768 × 768 m · harbour, lagoon piers, reef rocks, palm valley, hillside huts and bamboo grove · unscored free flight. Follow shoreline routes, practise pier openings and explore the village paths. Early coastal study; visual water only.',
       uk: '768 × 768 м · гавань, пірси лагуни, прибережні скелі, пальмова долина, хатини на схилі й бамбуковий гай · вільний політ без заліку. Літайте вздовж берега, крізь отвори пірсів і над стежками поселення. Раннє дослідження узбережжя; вода лише візуальна.',
     },
-    bytes: 7857157,
+    bytes: 7863766,
     appearance: { terrain: 'tropical-settlement' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json',
@@ -149,7 +469,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '384 × 384 m · two piers, a stilt hut, palms and dunes · unscored free flight. Practise open bays, low passes and a shoreline circuit. Early coastal preview; visual water only.',
       uk: '384 × 384 м · два пірси, хатина на палях, пальми й дюни · вільний політ без заліку. Тренуйте проходи, низький політ та маршрут уздовж берега. Ранній огляд узбережжя; вода лише візуальна.',
     },
-    bytes: 5982641,
+    bytes: 5989243,
     appearance: { terrain: 'tropical' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json',
@@ -243,14 +563,46 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
   if (
-    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement', 'desert'].includes(
-      terrain,
-    )
+    ![
+      'plain',
+      'canyon',
+      'urban',
+      'railway',
+      'tropical',
+      'tropical-settlement',
+      'desert',
+      'hillside-town',
+      'lunar-regolith',
+    ].includes(terrain)
   )
     throw new TypeError('Unknown trusted regional terrain appearance');
+  const sceneryStyle = validateScenerySurface(approved?.appearance?.scenery ?? 'plain');
+  const authoredStartHeadings = {};
+  for (const [id, heading] of Object.entries(approved?.startHeadings ?? {})) {
+    if (
+      !configuration.manifest.spawns.some((spawn) => spawn.id === id) ||
+      !Number.isSafeInteger(heading) ||
+      heading < 0 ||
+      heading >= 36000
+    )
+      throw new TypeError('Invalid trusted regional starting heading');
+    authoredStartHeadings[id] = heading;
+  }
   return {
     ...configuration,
+    // Re-resolving an unknown or older pin clears any previous revision's hints.
+    authoredStartHeadings: Object.freeze(authoredStartHeadings),
+    catalogueTitle: approved?.title ? Object.freeze({ ...approved.title }) : null,
     source: { ...configuration.source, surfaceStyle: terrain },
+    ...(configuration.scenery &&
+    (sceneryStyle !== 'plain' || configuration.scenery.source?.surfaceStyle)
+      ? {
+          scenery: {
+            ...configuration.scenery,
+            source: { ...configuration.scenery.source, surfaceStyle: sceneryStyle },
+          },
+        }
+      : {}),
   };
 }
 
@@ -262,13 +614,36 @@ export function regionalPresentationOptions(configuration, quality) {
     configuration.source?.surfaceStyle ?? 'plain',
     tiers[quality],
   );
+  const sceneryStyle = validateScenerySurface(
+    configuration.scenery?.source?.surfaceStyle ?? 'plain',
+    tiers[quality],
+  );
+  const spawnId = configuration.spawnId ?? configuration.manifest?.spawns?.[0]?.id;
+  const headings = configuration.authoredStartHeadings ?? {};
+  const initialHeading =
+    !configuration.savedStart && Object.hasOwn(headings, spawnId)
+      ? headings[spawnId]
+      : 'region-centre';
   return {
     ...configuration,
+    initialHeading,
     source: {
       ...configuration.source,
       surfaceStyle: surface.style,
       surfaceQuality: surface.quality,
     },
+    ...(configuration.scenery && sceneryStyle !== 'plain'
+      ? {
+          scenery: {
+            ...configuration.scenery,
+            source: {
+              ...configuration.scenery.source,
+              surfaceStyle: sceneryStyle,
+              surfaceQuality: tiers[quality],
+            },
+          },
+        }
+      : {}),
   };
 }
 
@@ -345,6 +720,8 @@ export function mountRegionalLibrary({
   tools.append(refresh, cancel);
   root.append(heading, help, tools, message, cards);
   parent.before(home, root);
+  const failedLoads = new Set();
+  const failureKey = (row) => `${row.id}:${row.saved?.sha256 ?? row.pin?.sha256}`;
   let closed = false,
     operation = null,
     epoch = 0,
@@ -429,14 +806,55 @@ export function mountRegionalLibrary({
           saved,
         })),
     ];
+    // Labels are presentation only. Identity and focus continue to use the full pin hash.
+    const rowHash = (row) => row.saved?.sha256 ?? row.pin.sha256;
+    const edition = (row) => {
+      if (row.edition) return title(row.edition);
+      if (row.saved) return `${txt('Version', 'Версія')} ${row.saved.descriptor.revision}`;
+      return '';
+    };
+    const identitySuffix = (row, peers) => {
+      const hash = rowHash(row);
+      let length = 8;
+      while (
+        length < hash.length &&
+        peers.some(
+          (other) =>
+            other !== row &&
+            rowHash(other) !== hash &&
+            rowHash(other).slice(0, length) === hash.slice(0, length),
+        )
+      )
+        length++;
+      return hash.slice(0, length);
+    };
     for (const row of rows) {
       const saved = row.saved,
         hash = saved?.sha256 ?? row.pin.sha256,
         card = el('article', undefined, 'world-catalogue-card'),
-        name = saved?.descriptor.title ?? row.title,
+        name = row.title ?? saved?.descriptor.title,
         buttons = el('div', undefined, 'button-row');
+      const peers = rows.filter((other) => other.id === row.id),
+        baseEdition = edition(row),
+        needsIdentity =
+          peers.length > 1 &&
+          (!baseEdition || peers.some((other) => other !== row && edition(other) === baseEdition)),
+        editionLabel = [
+          baseEdition || (needsIdentity ? txt('Edition', 'Варіант') : ''),
+          needsIdentity ? identitySuffix(row, peers) : '',
+        ]
+          .filter(Boolean)
+          .join(' · '),
+        revisionLabel =
+          saved && row.edition ? `${txt('Version', 'Версія')} ${saved.descriptor.revision}` : '',
+        actionName = [title(name), editionLabel, revisionLabel].filter(Boolean).join(' · ');
       card.dataset.regionKey = hash;
       card.append(el('strong', title(name)));
+      if (editionLabel) {
+        const label = el('p', editionLabel);
+        label.dataset.regionEdition = '';
+        card.append(label);
+      }
       if (row.description) card.append(el('p', title(row.description)));
       card.append(
         el(
@@ -452,14 +870,32 @@ export function mountRegionalLibrary({
       if (saved) {
         const play = action(txt('Fly', 'Летіти'), () => run('fly', row), Boolean(operation));
         play.dataset.regionAction = 'fly';
-        play.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${title(name)}`);
+        play.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${actionName}`);
         const remove = action(
           txt('Remove this version', 'Вилучити цю версію'),
           () => run('review-remove', row),
           Boolean(operation),
         );
         remove.dataset.regionAction = 'remove';
-        buttons.append(play, remove);
+        remove.setAttribute(
+          'aria-label',
+          `${txt('Remove this version', 'Вилучити цю версію')}: ${actionName}`,
+        );
+        buttons.append(play);
+        if (row.pin && failedLoads.has(failureKey(row))) {
+          const repair = action(
+            txt('Repair download', 'Відновити завантаження'),
+            () => run('repair', row),
+            Boolean(operation),
+          );
+          repair.dataset.regionAction = 'repair';
+          repair.setAttribute(
+            'aria-label',
+            `${txt('Repair download', 'Відновити завантаження')}: ${actionName}`,
+          );
+          buttons.append(repair);
+        }
+        buttons.append(remove);
         if (records.filter((record) => record.id === row.id).length > 1) {
           const removeAll = action(
             txt('Remove all versions', 'Вилучити всі версії'),
@@ -476,7 +912,7 @@ export function mountRegionalLibrary({
           Boolean(operation),
         );
         download.dataset.regionAction = 'install';
-        download.setAttribute('aria-label', `${txt('Download', 'Завантажити')}: ${title(name)}`);
+        download.setAttribute('aria-label', `${txt('Download', 'Завантажити')}: ${actionName}`);
         buttons.append(download);
       }
       card.append(buttons);
@@ -547,12 +983,30 @@ export function mountRegionalLibrary({
     operation = controller;
     if (kind === 'refresh') show('', '');
     paint();
-    const deadline = regionalOperationDeadline(win, controller, kind);
-    let committed = false;
+    const deadline = regionalOperationDeadline(
+      win,
+      controller,
+      kind === 'repair' ? 'install' : kind,
+    );
+    let verifiedLoad = false,
+      committed = false,
+      committedRefreshDeadline = null;
     try {
       const store = await waitFor(dbReady, signal);
       signal.throwIfAborted();
-      if (kind === 'install') {
+      if (kind === 'install' || kind === 'repair') {
+        if (
+          kind === 'repair' &&
+          (!row.saved ||
+            !failedLoads.has(failureKey(row)) ||
+            !pins.some(
+              (offered) =>
+                offered.id === row.id &&
+                offered.pin.sha256 === row.saved.sha256 &&
+                offered.pin === row.pin,
+            ))
+        )
+          throw new Error('Repair requires the exact offered saved revision');
         show('Checking regional download…', 'Перевірка завантаження регіону…');
         const options = {
           pageURL: win.location.href,
@@ -575,9 +1029,20 @@ export function mountRegionalLibrary({
         if (inspected.descriptor.id !== row.id)
           throw new Error('Regional catalogue identity mismatch');
         signal.throwIfAborted();
-        await store.install(row.pin, options);
+        if (kind === 'repair') await store.repair(row.pin, { ...options, id: row.id });
+        else await store.install(row.pin, options);
+        failedLoads.delete(failureKey(row));
         committed = true;
-        records = await store.list({ includeRevisions: true });
+        // The atomic save has finished. A metadata refresh must not retain the
+        // transaction's uncancellable UI or wait forever after navigation.
+        deadline.stop();
+        cancel.disabled = false;
+        committedRefreshDeadline = regionalOperationDeadline(win, controller, 'refresh');
+        show(
+          'Region saved. Refreshing saved regions…',
+          'Регіон збережено. Оновлення списку регіонів…',
+        );
+        records = await waitFor(store.list({ includeRevisions: true }), signal);
         show(
           'Region saved. Choose Fly when you are ready.',
           'Регіон збережено. Виберіть «Летіти», коли будете готові.',
@@ -585,10 +1050,12 @@ export function mountRegionalLibrary({
       } else if (kind === 'fly') {
         show('Checking saved scenery…', 'Перевірка збереженої місцевості…');
         const configuration = await waitFor(
-          store.load(row.id, { sha256: row.saved.sha256 }),
+          store.load(row.id, { sha256: row.saved.sha256, signal }),
           signal,
         );
         signal.throwIfAborted();
+        verifiedLoad = true;
+        failedLoads.delete(failureKey(row));
         if (requestEpoch === epoch && visible())
           await fly(applyRegionalAppearance(configuration, row.saved, pins), row.saved, {
             isCurrent: () => requestEpoch === epoch && visible() && !signal.aborted,
@@ -630,7 +1097,7 @@ export function mountRegionalLibrary({
         records = await waitFor(store.list({ includeRevisions: true }), signal);
         removal = null;
       }
-    } catch {
+    } catch (error) {
       if (kind === 'remove') removal = null;
       if (!closed && requestEpoch === epoch) {
         if (committed)
@@ -648,6 +1115,26 @@ export function mountRegionalLibrary({
             'Cancelled. Existing downloads are retained.',
             'Скасовано. Наявні завантаження збережено.',
           );
+        else if (kind === 'fly' && !verifiedLoad && error?.code === 'regional-cache-invalid') {
+          failedLoads.add(failureKey(row));
+          show(
+            row.pin
+              ? 'Saved scenery could not be verified. Choose Repair download to replace only this version’s files. Other versions and saved places are kept.'
+              : 'Saved scenery could not be verified. This exact version is not currently offered for repair. Other versions and saved places are kept.',
+            row.pin
+              ? 'Не вдалося перевірити збережену місцевість. Виберіть «Відновити завантаження», щоб замінити лише файли цієї версії. Інші версії та збережені місця залишаться.'
+              : 'Не вдалося перевірити збережену місцевість. Саме ця версія зараз недоступна для відновлення. Інші версії та збережені місця залишаться.',
+          );
+        } else if (error?.code === 'world-library-full')
+          show(
+            'The saved scenery library is full. Existing versions and saved places are kept. Keep flying a saved version, or review “Remove this version” for scenery you choose to replace, then retry.',
+            'Бібліотеку збереженої місцевості заповнено. Наявні версії та збережені місця залишаться. Літайте у збереженій версії або перегляньте «Вилучити цю версію» для місцевості, яку вирішите замінити, і повторіть спробу.',
+          );
+        else if (error?.name === 'QuotaExceededError')
+          show(
+            'Not enough device storage. Free space or use “Remove this version” for a saved scenery download you no longer need, then retry. Existing downloads are retained.',
+            'Недостатньо місця на пристрої. Звільніть місце або виберіть «Вилучити цю версію» для збереженої місцевості, яка більше не потрібна, і повторіть. Наявні завантаження збережено.',
+          );
         else
           show(
             'Could not complete this action. Existing downloads are retained; refresh and retry.',
@@ -656,6 +1143,7 @@ export function mountRegionalLibrary({
       }
     } finally {
       deadline.stop();
+      committedRefreshDeadline?.stop();
       operation = null;
       cancel.disabled = false;
       doc.removeEventListener('focusin', trackFocus);
@@ -666,7 +1154,11 @@ export function mountRegionalLibrary({
           const card = [...cards.children].find((item) => item.dataset.regionKey === hash);
           (
             card?.querySelector(
-              kind.startsWith('review-remove') ? '[data-region-action="confirm-remove"]' : 'button',
+              kind.startsWith('review-remove')
+                ? '[data-region-action="confirm-remove"]'
+                : failedLoads.has(failureKey(row)) && row.pin
+                  ? '[data-region-action="repair"]'
+                  : 'button',
             ) ?? refresh
           ).focus();
         }

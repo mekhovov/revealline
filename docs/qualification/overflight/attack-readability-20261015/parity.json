@@ -1,0 +1,63 @@
+{
+  "base": "859d5cfc9",
+  "candidate": "f494367b70ef3f7d0b7cb4a42f7587498ebdcfb5",
+  "kind": "constructed simulation parity, not balance qualification",
+  "cases": [
+    {
+      "rulesVersion": 2,
+      "branch": "wide",
+      "escortBranch": null,
+      "compared": 16,
+      "maxLinks": 1,
+      "time": 15,
+      "damageDealt": 876,
+      "damageTaken": 20,
+      "phase": "playing"
+    },
+    {
+      "rulesVersion": 4,
+      "branch": "wide",
+      "escortBranch": "burst",
+      "compared": 16,
+      "maxLinks": 1,
+      "time": 15,
+      "damageDealt": 1560.0000000000007,
+      "damageTaken": 20,
+      "phase": "playing"
+    },
+    {
+      "rulesVersion": 4,
+      "branch": "wide",
+      "escortBranch": "chain",
+      "compared": 16,
+      "maxLinks": 3,
+      "time": 15,
+      "damageDealt": 1563.6000000000004,
+      "damageTaken": 20,
+      "phase": "playing"
+    },
+    {
+      "rulesVersion": 4,
+      "branch": "double",
+      "escortBranch": "burst",
+      "compared": 16,
+      "maxLinks": 1,
+      "time": 15,
+      "damageDealt": 982.0000000000009,
+      "damageTaken": 20,
+      "phase": "playing"
+    },
+    {
+      "rulesVersion": 4,
+      "branch": "double",
+      "escortBranch": "chain",
+      "compared": 16,
+      "maxLinks": 3,
+      "time": 15,
+      "damageDealt": 985.6000000000009,
+      "damageTaken": 20,
+      "phase": "playing"
+    }
+  ],
+  "passed": true
+}

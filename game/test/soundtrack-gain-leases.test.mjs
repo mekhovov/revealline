@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { createOverflightWorldAudio } from '../overflight/world-audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
@@ -256,3 +257,36 @@ test('reentrant disposal during mixer allocation cannot publish a surviving leas
   assert.equal(h.player.snapshot().status, 'disposed');
   assert.equal(h.media.plays, 0);
 });
+
+for (const mp3 of [false, true]) {
+  test(`Overflight priority cues borrow ${mp3 ? 'MP3' : 'synth'} gain without overriding commentator or volume intent`, async (t) => {
+    const h = setup(t, { mp3 });
+    await h.player.play();
+    const before = h.player.snapshot();
+    const state = { phase: 'playing', time: 0, player: { x: 0, y: 0 }, priorityAttacks: [] };
+    const audio = createOverflightWorldAudio(
+      { encounter() {} },
+      { acquireGain: (settings) => h.player.acquireGain(settings) },
+    );
+    t.after(() => audio.reset());
+    audio.update(state, { foreground: true });
+    mix(h, 0.6 * 0.55);
+    const comment = h.player.acquireGain({ factor: 0.2 });
+    mix(h, 0.6 * 0.2);
+    h.player.setVolume(0.4);
+    mix(h, 0.4 * 0.2);
+    state.time = 0.36;
+    audio.update(state);
+    mix(h, 0.4 * 0.2);
+    comment.release();
+    mix(h, 0.4);
+    assert.equal(h.player.snapshot().trackId, before.trackId);
+    assert.equal(h.player.snapshot().status, before.status);
+    assert.equal(h.soundscape.getSettings().sfx, 0.7);
+    assert.equal(h.soundscape.getSettings().master, 0.8);
+    audio.update(state, { foreground: true });
+    state.phase = 'paused';
+    audio.update(state);
+    mix(h, 0.4);
+  });
+}

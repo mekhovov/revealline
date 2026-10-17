@@ -1,0 +1,160 @@
+{
+  "head": "e5ac39905998266f18dfc9b27bd1271ab0270e2a",
+  "sourceHashes": {
+    "original64": "12aec43a0e0da62828c83e1e06679974df093c996ccec1616bf2eb66c3b5424e",
+    "fine32": "c8bf3163178c556a1231ed7975b2112e5ca7d2a4c5292440549735a0086b8502",
+    "fine16": "ce19d6b3417a9429695c98bef669cc7cb35963210acc751fc434a9b06a4ae650"
+  },
+  "runtime": "v20.19.5",
+  "platform": "darwin",
+  "arch": "arm64",
+  "scope": "Alternating grid-rebuild/local-force kernels, 30 warmups and 120 samples per implementation/scene; no render/audio/full simulation; workstation load included.",
+  "maxError": 5.334274688628682e-15,
+  "checksum": 2.375877272697835e-14,
+  "results": [
+    {
+      "version": "original64",
+      "capacity": 1500,
+      "crowded": false,
+      "samples": 120,
+      "mean": 0.18659343333333236,
+      "p50": 0.11033300000002555,
+      "p95": 0.37999999999999545,
+      "p99": 0.8962089999999989,
+      "worst": 3.474458999999996,
+      "extraIndexBytes": 0
+    },
+    {
+      "version": "fine32",
+      "capacity": 1500,
+      "crowded": false,
+      "samples": 120,
+      "mean": 0.16733847500000015,
+      "p50": 0.10499999999998977,
+      "p95": 0.4698750000000018,
+      "p99": 0.557707999999991,
+      "worst": 0.6502499999999998,
+      "extraIndexBytes": 18240
+    },
+    {
+      "version": "fine16",
+      "capacity": 1500,
+      "crowded": false,
+      "samples": 120,
+      "mean": 0.1868003666666676,
+      "p50": 0.11945800000000872,
+      "p95": 0.4926670000000115,
+      "p99": 0.6232909999999947,
+      "worst": 1.074750000000023,
+      "extraIndexBytes": 54960
+    },
+    {
+      "version": "original64",
+      "capacity": 1500,
+      "crowded": true,
+      "samples": 120,
+      "mean": 6.697564558333357,
+      "p50": 3.995875000000069,
+      "p95": 21.025792000000138,
+      "p99": 43.519374999999854,
+      "worst": 53.389666000000034,
+      "extraIndexBytes": 0
+    },
+    {
+      "version": "fine32",
+      "capacity": 1500,
+      "crowded": true,
+      "samples": 120,
+      "mean": 6.762437158333326,
+      "p50": 3.3643749999998818,
+      "p95": 26.858749999999873,
+      "p99": 58.05054199999995,
+      "worst": 112.37104099999988,
+      "extraIndexBytes": 18240
+    },
+    {
+      "version": "fine16",
+      "capacity": 1500,
+      "crowded": true,
+      "samples": 120,
+      "mean": 4.0088229499999795,
+      "p50": 2.0067920000000186,
+      "p95": 15.970207999999957,
+      "p99": 37.843624999999975,
+      "worst": 46.467791000000034,
+      "extraIndexBytes": 54960
+    },
+    {
+      "version": "original64",
+      "capacity": 2500,
+      "crowded": false,
+      "samples": 120,
+      "mean": 0.46271905833334587,
+      "p50": 0.3323750000004111,
+      "p95": 1.185667000000194,
+      "p99": 1.8826669999998558,
+      "worst": 4.075874999999996,
+      "extraIndexBytes": 0
+    },
+    {
+      "version": "fine32",
+      "capacity": 2500,
+      "crowded": false,
+      "samples": 120,
+      "mean": 0.3889472583333031,
+      "p50": 0.33245899999974426,
+      "p95": 1.0089170000001104,
+      "p99": 1.209875000000011,
+      "worst": 1.5689589999997224,
+      "extraIndexBytes": 22240
+    },
+    {
+      "version": "fine16",
+      "capacity": 2500,
+      "crowded": false,
+      "samples": 120,
+      "mean": 0.5336680083333325,
+      "p50": 0.4258749999999054,
+      "p95": 1.4799169999996593,
+      "p99": 1.7419169999998303,
+      "worst": 1.7687499999997272,
+      "extraIndexBytes": 58960
+    },
+    {
+      "version": "original64",
+      "capacity": 2500,
+      "crowded": true,
+      "samples": 120,
+      "mean": 10.699455933333281,
+      "p50": 7.58404100000007,
+      "p95": 22.87683399999969,
+      "p99": 46.710957999999664,
+      "worst": 67.64066700000012,
+      "extraIndexBytes": 0
+    },
+    {
+      "version": "fine32",
+      "capacity": 2500,
+      "crowded": true,
+      "samples": 120,
+      "mean": 7.661390999999984,
+      "p50": 4.6527500000001965,
+      "p95": 19.365250000000742,
+      "p99": 39.53479200000038,
+      "worst": 79.28645800000004,
+      "extraIndexBytes": 22240
+    },
+    {
+      "version": "fine16",
+      "capacity": 2500,
+      "crowded": true,
+      "samples": 120,
+      "mean": 5.452375741666659,
+      "p50": 3.169625000000451,
+      "p95": 10.503958999999668,
+      "p99": 44.384833999999955,
+      "worst": 116.5756250000004,
+      "extraIndexBytes": 58960
+    }
+  ]
+}
