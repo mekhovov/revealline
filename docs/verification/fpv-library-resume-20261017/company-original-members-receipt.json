@@ -1,0 +1,37 @@
+{
+  "UTC": "2026-10-17T15:48:22.167786+00:00",
+  "sourceRevision": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+  "sourceTree": "40df634e1c11facb81049c01513401d173f1da01",
+  "run": 39045136739,
+  "artifactId": 12105907865,
+  "githubArtifactBytes": 78424645,
+  "githubArtifactSHA256": "c22cd3c42e0ff61d4166ca0edfb4aeb2c6788ede976b9e903bd440680cddcd8b",
+  "topLevelChecksums": 7,
+  "allMemberHashes": true,
+  "archives": [
+    {
+      "role": "runtime",
+      "files": 1141,
+      "contentBytesIncludingMetadata": 41257347,
+      "archiveBytes": 41429009,
+      "archiveSHA256": "949f0c2f5b264c2b4d543813d1256a084e4bc24d2f203e628ae7be921b910f94"
+    },
+    {
+      "role": "source",
+      "files": 1141,
+      "contentBytesIncludingMetadata": 65352487,
+      "archiveBytes": 65525867,
+      "archiveSHA256": "adf6683a0036c076da2cc2ac48445487c1d64008b9d7c9bff7003b9cfede05b3"
+    }
+  ],
+  "existingCompanyRuntimeLimits": {
+    "files": 2000,
+    "bytes": 83886080,
+    "policySHA256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+    "gitBlob": "1709c3dc71a4c2282e378db940dac2c899669323"
+  },
+  "runtimeAlsoUnder72MiB": true,
+  "cloudReproducibleBuilds": 2,
+  "publicEligible": false,
+  "scope": "Current exact9e97 original Company runtime/source member sets,lengths,hashes and unchanged existing runtime budget. Source inventory separately hashed, not assigned runtime budget. No native/player/public/latest-main integration acceptance. Optional originals have their own receipt."
+}

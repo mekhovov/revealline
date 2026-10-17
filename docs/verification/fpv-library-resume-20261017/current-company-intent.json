@@ -1,0 +1,12 @@
+{
+  "recordedUTC": "2026-10-17T15:47:01.820297+00:00",
+  "actualToolSession": 29311,
+  "helper": "/tmp/fpv-library-resume-20261017/qualify-current-company.py",
+  "helperBytes": 5597,
+  "helperSHA256": "4c10a2af2ec2d6d749c9315e2d014e11db021778a17d1f1b4d97ad93ef140237",
+  "head": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+  "run": 39045136739,
+  "outputRoot": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-9e97eeb7-resume-20261017",
+  "actualResult": "pending",
+  "operation": "One current Company original artifact GET and external full member/budget verification; exclusive new files and exact successful run/head checks; no recompile or native renderer."
+}

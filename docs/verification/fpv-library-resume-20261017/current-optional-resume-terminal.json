@@ -1,0 +1,11 @@
+{
+  "recordedUTC": "2026-10-17T15:42:11.623010+00:00",
+  "actualToolSession": 82930,
+  "actualExitCode": 0,
+  "actualReceipt": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-9e97eeb7-resume-20261017/qualification-original-members-and-closure.json",
+  "receiptBytes": 3508,
+  "receiptSHA256": "aae7981a718e92987de27ac0c72780d5544a948493d9ed1938a20497ace41539",
+  "priorSession62065ExitCode": 1,
+  "secondGETOrBuild": false,
+  "scope": "Current exact9e97 optional original archives and finished import closures only"
+}

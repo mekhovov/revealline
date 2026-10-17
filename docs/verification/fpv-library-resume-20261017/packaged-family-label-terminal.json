@@ -1,0 +1,14 @@
+{
+  "recordedUTC": "2026-10-17T15:44:48.094877+00:00",
+  "actualToolSession": 37896,
+  "actualExitCode": 0,
+  "helper": "qualify-packaged-family-labels.py",
+  "helperSHA256": "cc676556621db6a0770508e357fe47ad3c8f7b8ee37a2639b990f07870380d58",
+  "receipt": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-9e97eeb7-resume-20261017/packaged-family-label-receipt.json",
+  "receiptBytes": 2265,
+  "receiptSHA256": "49b747ff134198fda5966ea7f2f4c3d42d8545cc42d02a0c19361f42ed65aed9",
+  "runtimeBytesUnchanged": true,
+  "tests": 24,
+  "pass": 24,
+  "failedOrSkipped": 0
+}

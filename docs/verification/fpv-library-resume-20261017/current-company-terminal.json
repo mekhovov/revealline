@@ -1,0 +1,17 @@
+{
+  "UTC": "2026-10-17T15:50:06.362901+00:00",
+  "session": 29311,
+  "actualExitCode": 0,
+  "actualObservedCompletion": "2026-10-17T15:48:22.167786+00:00",
+  "helper": {
+    "path": "/tmp/fpv-library-resume-20261017/qualify-current-company.py",
+    "bytes": 5597,
+    "sha256": "4c10a2af2ec2d6d749c9315e2d014e11db021778a17d1f1b4d97ad93ef140237"
+  },
+  "receipt": {
+    "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-9e97eeb7-resume-20261017/company-original-members-receipt.json",
+    "bytes": 1503,
+    "sha256": "cf33de7e6ad79a0c78c6a82c563fe95c02fae77a56360a9c94ad8f5012723f8a"
+  },
+  "note": "Observed tool terminal, not file-length inference. Exactly one invocation; no duplicate GET/build."
+}
