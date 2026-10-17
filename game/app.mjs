@@ -791,7 +791,6 @@ try {
     unifiedChooser = null,
     disposeUnifiedPreview = null,
     cancelUnifiedOpening = null,
-    retiredJourneyChooser = null,
     unifiedOpenRevision = 0,
     unifiedLaunchRevision = 0,
     unifiedDisposed = false,
@@ -13758,8 +13757,6 @@ try {
             );
           })
         : null;
-      retiredJourneyChooser?.destroy();
-      retiredJourneyChooser = null;
       unifiedChooser = attachJourneyChooser({
         library: result.library,
         profile,
@@ -13990,29 +13987,6 @@ try {
             })
         : t('interface:journeyTechnicalTestPreview'),
     );
-    journeyChooser = attachJourneyChooser({
-      catalog: journeyCatalog,
-      profile: journeyProfile,
-      onChoose: (mission) => {
-        // Browsing retains Home for Back. Only deliberate mission selection
-        // leaves it before the staged preparation owns the next attempt.
-        if ($('shell-home').open) $('shell-home').close();
-        return launchJourneyMission(mission);
-      },
-      getCard: candidateHost
-        ? (mission) => candidateHost.card(mission, journeyPreferences.snapshot().difficulty)
-        : undefined,
-      onPause: () => {
-        pause(true);
-        clearInput();
-        clearSkipConfirmation();
-      },
-      onReturn: (opener) => {
-        clearInput();
-        (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({ preventScroll: true });
-      },
-    });
-    $('journey-chooser').querySelector('.journey-footer').append($('missions-catalogue'));
     refreshJourneySkip();
     $('journey-save-retry').onclick = () => void journeyProfile.flush();
     $('journey-save-export').onclick = async () => {
@@ -14253,7 +14227,6 @@ try {
     },
   });
   if (!practiceSession) {
-    retiredJourneyChooser = journeyChooser;
     journeyChooser = {
       open: openUnifiedMissions,
       primary: () => unifiedChooser?.primary(),
