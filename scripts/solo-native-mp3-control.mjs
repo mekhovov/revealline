@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
+import { constants } from 'node:fs';
 import {
   copyFile,
   lstat,
   mkdir,
   mkdtemp,
+  open,
   readFile,
   readdir,
   realpath,
@@ -70,6 +72,8 @@ export const MP3_COCOA_CONTROL = Object.freeze({
   arms: Object.freeze(['bossa-blob']),
   captureMode: 'independent-events-samples-v1',
   maximumSamples: 32,
+  maximumRecords: 128,
+  eventCapacityMode: 'cocoa-128-v1',
   ownerPreflightTimeoutMs: 120000,
   hostPlatform: 'darwin',
   hostArchitecture: 'x64',
@@ -151,10 +155,19 @@ async function bounded(label, run, ms = MP3_CONTROL.operationTimeoutMs) {
 
 // This function is the complete external script of the native control page. It
 // does not import the application, patch native methods or replace media values.
-export function installNativeMP3Control(captureMode = null) {
+export function installNativeMP3Control(captureMode = null, eventCapacityMode = null) {
   if (captureMode !== null && captureMode !== 'independent-events-samples-v1')
     throw Error('Unknown native observation mode');
-  const plan = { maximumRecords: 64, maximumRanges: 8, sampleMs: 500 };
+  if (
+    eventCapacityMode !== null &&
+    (eventCapacityMode !== 'cocoa-128-v1' || captureMode !== 'independent-events-samples-v1')
+  )
+    throw Error('Unknown native event capacity mode');
+  const plan = {
+    maximumRecords: eventCapacityMode === 'cocoa-128-v1' ? 128 : 64,
+    maximumRanges: 8,
+    sampleMs: 500,
+  };
   const records = [],
     samples = [],
     eventCounts = {};
@@ -219,6 +232,7 @@ export function installNativeMP3Control(captureMode = null) {
   };
   const snapshot = () => ({
     ...(captureMode ? { captureMode, samples, droppedSamples } : {}),
+    ...(eventCapacityMode ? { eventCapacityMode } : {}),
     identity,
     records,
     eventCounts,
@@ -482,7 +496,7 @@ export async function createNativeControlRoot(destination, assets, plan = MP3_CO
   );
   await writeFile(
     join(destination, 'control.mjs'),
-    `(${installNativeMP3Control.toString()})(${JSON.stringify(plan.captureMode ?? null)});\n`,
+    `(${installNativeMP3Control.toString()})(${JSON.stringify(plan.captureMode ?? null)}${plan === MP3_COCOA_CONTROL ? `,${JSON.stringify(plan.eventCapacityMode)}` : ''});\n`,
   );
 }
 
@@ -641,6 +655,9 @@ export function nativeControlComplete(report, command, plan = MP3_CONTROL) {
           MP3_CONTROL.playbackMs &&
         !row.droppedRequests &&
         !row.data?.droppedRecords &&
+        (plan === MP3_COCOA_CONTROL
+          ? row.data?.eventCapacityMode === plan.eventCapacityMode
+          : row.data?.eventCapacityMode === undefined) &&
         (plan === MP3_CONTROL ||
           (row.data?.captureMode === plan.captureMode &&
             Array.isArray(row.data.samples) &&
@@ -893,6 +910,67 @@ export function backendLogObservation(bytes) {
     qualificationEligible: false,
   };
 }
+// Raw failure evidence is useful even when the writer produced partial JSON.
+// This never turns failed preparation into admission for a media observation.
+export async function retainCocoaPreparationProvenance(source, destination) {
+  let handle;
+  try {
+    const before = await lstat(source);
+    assert(before.isFile() && !before.isSymbolicLink(), 'Unsafe preparation provenance');
+    assert(before.size <= MP3_CONTROL.maximumReportBytes, 'Preparation provenance cap');
+    handle = await open(source, constants.O_RDONLY | constants.O_NOFOLLOW);
+    const identity = await handle.stat();
+    assert(
+      identity.dev === before.dev && identity.ino === before.ino,
+      'Preparation source replaced',
+    );
+    const buffer = Buffer.alloc(before.size + 1);
+    let count = 0;
+    while (count < buffer.length) {
+      const read = await handle.read(buffer, count, buffer.length - count, count);
+      if (!read.bytesRead) break;
+      count += read.bytesRead;
+    }
+    const after = await handle.stat(),
+      path = await lstat(source);
+    assert(
+      count === before.size &&
+        after.size === before.size &&
+        after.mtimeMs === before.mtimeMs &&
+        after.ctimeMs === before.ctimeMs &&
+        path.isFile() &&
+        !path.isSymbolicLink() &&
+        path.dev === before.dev &&
+        path.ino === before.ino,
+      'Preparation provenance changed during retention',
+    );
+    const bytes = buffer.subarray(0, count);
+    await writeFile(destination, bytes, { flag: 'wx' });
+    let jsonStatus = 'partial-or-invalid',
+      sourceStatus = null;
+    try {
+      const parsed = JSON.parse(bytes);
+      jsonStatus = 'parsed';
+      if (typeof parsed?.status === 'string') sourceStatus = parsed.status.slice(0, 128);
+    } catch {
+      /* Preserve the exact original bytes, including partial failure JSON. */
+    }
+    return {
+      status: 'retained-original',
+      bytes: bytes.length,
+      sha256: sha256(bytes),
+      jsonStatus,
+      sourceStatus,
+    };
+  } catch (error) {
+    return {
+      status: error.code === 'ENOENT' ? 'unavailable' : 'retention-failed',
+      failure: failure(error),
+    };
+  } finally {
+    await handle?.close();
+  }
+}
 async function parent(output, plan = MP3_CONTROL) {
   requirePlan(plan);
   assert.equal(process.platform, plan === MP3_COCOA_CONTROL ? 'darwin' : 'linux');
@@ -1003,6 +1081,11 @@ async function parent(output, plan = MP3_CONTROL) {
         receipt: join(output, 'preparation-command.json'),
       },
     );
+    if (plan === MP3_COCOA_CONTROL)
+      summary.fixtureProvenance = await retainCocoaPreparationProvenance(
+        join(fixtures, 'provenance.json'),
+        join(output, 'fixture-provenance.json'),
+      );
     assert(
       preparation.status === 'closed' &&
         preparation.exitCode === 0 &&
@@ -1013,13 +1096,20 @@ async function parent(output, plan = MP3_CONTROL) {
         preparation.ambiguous?.length === 0,
       'Original fixture preparation/ownership failed',
     );
+    if (plan === MP3_COCOA_CONTROL)
+      assert.equal(
+        summary.fixtureProvenance.status,
+        'retained-original',
+        'Preparation evidence unavailable',
+      );
     const bundle = await readFile(join(fixtures, 'recorded-music.rlsound'));
     assert.equal(bundle.length, 3124928);
     assert.equal(
       sha256(bundle),
       'aa25ae643608cfa9a2dd6aac1a3dcd7ba65d667f998144d0927c194df7c1e99f',
     );
-    await copyFile(join(fixtures, 'provenance.json'), join(output, 'fixture-provenance.json'));
+    if (plan !== MP3_COCOA_CONTROL)
+      await copyFile(join(fixtures, 'provenance.json'), join(output, 'fixture-provenance.json'));
     const assets = [];
     for (const pin of AUDIO_RECORDINGS)
       assets.push({
