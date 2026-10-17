@@ -1,3 +1,4 @@
+import { activateHostAction } from './helpers/host-action.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -110,10 +111,10 @@ test(
       async (t) => {
         const surface = rendering(),
           page = await pageWithArt(t, storage, surface, assetIndexedDB, false);
-        page.$('library-button').click();
+        await activateHostAction(page.$('library-button'));
         page.doc.querySelector('[data-library-panel="packs"]').click();
         page.$('pack-json').value = originalBytes;
-        page.$('install-pack').click();
+        await activateHostAction(page.$('install-pack'));
         await settle(
           () => !page.$('install-pack').disabled,
           'The original Classic Lab pack must install.',

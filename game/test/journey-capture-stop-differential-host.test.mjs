@@ -86,7 +86,7 @@ async function setup(
   }
   await settle(() => page.doc.body.dataset.flightState === 'running');
   assert.equal(page.$('shell-home').open, false);
-  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(page.$('journey-chooser')?.open ?? false, false);
   frames(page, 3);
   const run = page.rendered.run;
   assert.equal(run.levelId, missionId);

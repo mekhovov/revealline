@@ -161,7 +161,7 @@ for (const stopOnCapture of [false, true])
           levelVisuals: [],
           music: [],
         };
-      page.$('library-button').click();
+      await activateHostAction(page.$('library-button'));
       page.doc.querySelector('[data-library-panel="packs"]').click();
       assert.equal(page.$('library-packs').hidden, false);
       page.$('pack-json').value = JSON.stringify(candidate);
