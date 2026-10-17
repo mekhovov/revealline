@@ -6,8 +6,6 @@ import { copyFile, lstat, mkdir, open, readFile, realpath, writeFile } from 'nod
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
-import { startProductionPreview } from './serve-production-preview.mjs';
-import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 
 const MiB = 1024 ** 2;
 const SOURCE = {
@@ -296,6 +294,8 @@ export function supplementalAssessment(plan, row, raw, command, browserVersion) 
 }
 export async function runSupplementalRow(ctx, row, dir, tmp) {
   await verifyInputs(ctx);
+  const { startProductionPreview } = await import('./serve-production-preview.mjs');
+  const { PUBLIC_SECURITY_HEADERS } = await import('./game-cli.mjs');
   let server;
   try {
     server = await startProductionPreview({

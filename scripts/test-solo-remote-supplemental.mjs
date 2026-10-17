@@ -324,7 +324,7 @@ test('one-shot workflow and common owner registration keep one phase and all par
   );
   assert.match(workflow, /max-parallel: 2/);
   assert(!workflow.includes('fetch-depth: 0'));
-  assert(workflow.includes("github.event.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'"));
+  assert(workflow.includes("github.event.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'"));
   assert.match(workflow, /cancel-in-progress: false/);
   assert.match(
     workflow,
