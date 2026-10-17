@@ -10,6 +10,9 @@ import {
 } from './solo-remote-sustained.mjs';
 import { assertFinalWaveBindings } from './solo-final-wave-witness.mjs';
 import {
+  QUALIFICATION_TOOL_WITNESS_PATH,
+  historicalQualificationRefs,
+  readHistoricalQualificationRefs,
   PAGE_ERROR_WITNESS_PATH,
   validatePageErrorSourceWitness,
   historicalPageErrorRefs,
@@ -131,11 +134,13 @@ test('eight concrete releases preserve exact package, routes, diagnostic gates a
   }
 });
 
-test('dispatched declarations preserve exact old observation refs while remaining helpers match current bytes', async () => {
+test('dispatched declarations preserve every exact historical helper and recipe reference', async () => {
   for (const phase of stages) {
     const p = names(phase),
       m = JSON.parse(await read(p.manifest));
     const historical = await readHistoricalPageErrorRefs(p.manifest, p.workflow);
+    for (const [file, ref] of await readHistoricalQualificationRefs(p.manifest, p.workflow))
+      historical.set(file, ref);
     for (const ref of [...m.frozenTools, ...m.adapterInputs, ...Object.values(m.recipes)]) {
       if (historical.has(ref.path)) {
         const expected = historical.get(ref.path);
@@ -266,6 +271,71 @@ test('historical error witness rejects changed metadata, declarations and workfl
       );
       assert.throws(() =>
         historicalPageErrorRefs(witness, manifest, 'unknown', manifestBytes, workflowBytes),
+      );
+    }
+});
+
+test('additive qualification history rejects changed bytes, foreign releases and altered frozen refs', async () => {
+  const bytes = await read(QUALIFICATION_TOOL_WITNESS_PATH),
+    witness = JSON.parse(bytes);
+  for (const source of witness.sources)
+    for (const release of source.releases) {
+      const manifest = await read(release.manifest),
+        workflow = await read(release.workflow);
+      const refs = historicalQualificationRefs(
+        bytes,
+        release.manifest,
+        release.workflow,
+        manifest,
+        workflow,
+      );
+      assert.equal(refs.size, release.references.length);
+      for (const args of [
+        [
+          Buffer.concat([bytes, Buffer.from(' ')]),
+          release.manifest,
+          release.workflow,
+          manifest,
+          workflow,
+        ],
+        [
+          bytes,
+          release.manifest,
+          release.workflow,
+          Buffer.concat([manifest, Buffer.from(' ')]),
+          workflow,
+        ],
+        [
+          bytes,
+          release.manifest,
+          release.workflow,
+          manifest,
+          Buffer.concat([workflow, Buffer.from(' ')]),
+        ],
+        [bytes, release.manifest, 'unknown', manifest, workflow],
+      ])
+        assert.throws(() => historicalQualificationRefs(...args));
+      const changed = structuredClone(witness);
+      changed.sources[0].records[0].sha256 = '0'.repeat(64);
+      assert.throws(() =>
+        historicalQualificationRefs(
+          Buffer.from(JSON.stringify(changed)),
+          release.manifest,
+          release.workflow,
+          manifest,
+          workflow,
+        ),
+      );
+      const alteredPlan = JSON.parse(manifest);
+      (alteredPlan.frozenTools || alteredPlan.adapterInputs)[0].sha256 = '0'.repeat(64);
+      assert.throws(() =>
+        historicalQualificationRefs(
+          bytes,
+          release.manifest,
+          release.workflow,
+          Buffer.from(JSON.stringify(alteredPlan)),
+          workflow,
+        ),
       );
     }
 });

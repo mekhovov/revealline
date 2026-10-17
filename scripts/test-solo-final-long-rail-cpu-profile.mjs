@@ -1,3 +1,4 @@
+import { readHistoricalQualificationRefs } from './solo-page-error-source-witness.mjs';
 import { readHistoricalPageErrorRefs } from './solo-page-error-source-witness.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -321,6 +322,8 @@ async function checkRelease(m, workflow) {
   ])
     assert(command.includes(file));
   const historical = await readHistoricalPageErrorRefs(path, workflowPath);
+  for (const [file, ref] of await readHistoricalQualificationRefs(path, workflowPath))
+    historical.set(file, ref);
   for (const [file, ref] of historicalProfileSource(
     await readFile(new URL(profileSourceWitnessPath, root)),
     await readFile(new URL(path, root)),

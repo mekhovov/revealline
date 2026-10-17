@@ -134,3 +134,62 @@ export async function readHistoricalPageErrorRefs(manifestPath, workflowPath) {
   }
   return refs;
 }
+
+// Additional immutable source authority for completed historical declarations.
+// A new declaration is deliberately not recognized by this test-only reader.
+export const QUALIFICATION_TOOL_WITNESS_PATH =
+  'docs/performance/fixtures/solo-representative/prior-qualification-tools.json';
+export function historicalQualificationRefs(
+  bytes,
+  manifestPath,
+  workflowPath,
+  manifestBytes,
+  workflowBytes,
+) {
+  assert.equal(hash(bytes), '9418521e3e90d3e67e66bd331e8c456d989ac178524a3507c6b09ed1d6d3e958');
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.format, 'SoloQualificationHistoricalToolSupplementV1');
+  assert.equal(witness.postHocExactGitReadback, true);
+  assert.deepEqual(
+    witness.sources.map((s) => [s.revision, s.tree]),
+    [
+      ['c41a02216c0811952232a387fd1743e09452c269', '7fff7e134c67aa268e63cab5b08a7f3473bb5703'],
+      ['69639b30d985ffa723a4d0c11756b632fc2da5c1', 'd022c57efa75dbe7b7aeeca00a1950f61426595b'],
+      ['7c7cc2648331870683ac7b76850bbeff859f802e', 'e20aabb50c0e82c52c0970a14934b2d05611f53e'],
+    ],
+  );
+  const source = witness.sources.find((s) =>
+    s.releases.some((r) => r.manifest === manifestPath && r.workflow === workflowPath),
+  );
+  assert(source, 'Unwitnessed historical qualification release');
+  const release = source.releases.find(
+    (r) => r.manifest === manifestPath && r.workflow === workflowPath,
+  );
+  const refs = new Map(source.records.map((r) => [r.path, r]));
+  assert.equal(refs.size, source.records.length);
+  for (const [path, content] of [
+    [manifestPath, manifestBytes],
+    [workflowPath, workflowBytes],
+  ]) {
+    const ref = refs.get(path);
+    assert(ref, path);
+    assert.equal(content.length, ref.bytes, path);
+    assert.equal(hash(content), ref.sha256, path);
+  }
+  return new Map(
+    release.references.map((path) => {
+      const ref = refs.get(path);
+      assert(ref, path);
+      return [path, ref];
+    }),
+  );
+}
+export async function readHistoricalQualificationRefs(manifestPath, workflowPath) {
+  return historicalQualificationRefs(
+    await readFile(new URL(QUALIFICATION_TOOL_WITNESS_PATH, root)),
+    manifestPath,
+    workflowPath,
+    await readFile(new URL(manifestPath, root)),
+    await readFile(new URL(workflowPath, root)),
+  );
+}

@@ -1,3 +1,4 @@
+import { readHistoricalQualificationRefs } from './solo-page-error-source-witness.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -218,13 +219,17 @@ async function currentRef(ref) {
   assert.equal(bytes.length, ref.bytes, ref.path);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
 }
-test('every prospective runtime input uses current bytes and audited source-verifier roots', async () => {
+test('executed e1cc runtime inputs retain exact historical bytes and audited source-verifier roots', async () => {
+  const historical = await readHistoricalQualificationRefs(path, workflowPath);
   const refs = [...plan.adapterInputs, ...plan.frozenTools, plan.fixture];
   assert.equal(refs.length, 41);
   assert.equal(new Set(refs.map((ref) => ref.path)).size, refs.length);
   for (const ref of refs) {
-    await currentRef(ref);
-    await assert.rejects(() => currentRef({ ...ref, sha256: '0'.repeat(64) }));
+    const prior = historical.get(ref.path);
+    assert(prior, ref.path);
+    assert.equal(prior.bytes, ref.bytes, ref.path);
+    assert.equal(prior.sha256, ref.sha256, ref.path);
+    assert.notEqual(prior.sha256, '0'.repeat(64));
   }
   for (const name of [
     'soundtrack-distribution',
@@ -248,4 +253,16 @@ test('fresh scoped prior-owner evidence retains both failed cohorts and grants n
     plan.priorQualificationReview.scope,
     /no Darwin, unrelated CI, future-wave or native-success assertion/,
   );
+});
+
+test('current source checking still rejects stale byte and digest claims for future releases', async () => {
+  const current = await read('scripts/solo-qualification-replay-core.mjs');
+  const ref = {
+    path: 'scripts/solo-qualification-replay-core.mjs',
+    bytes: current.length,
+    sha256: createHash('sha256').update(current).digest('hex'),
+  };
+  await currentRef(ref);
+  await assert.rejects(() => currentRef({ ...ref, bytes: ref.bytes + 1 }));
+  await assert.rejects(() => currentRef({ ...ref, sha256: '0'.repeat(64) }));
 });

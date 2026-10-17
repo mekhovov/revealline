@@ -1,3 +1,4 @@
+import { readHistoricalQualificationRefs } from './solo-page-error-source-witness.mjs';
 import { readHistoricalPageErrorRefs } from './solo-page-error-source-witness.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -103,6 +104,8 @@ for (const [kind, [oldPath, path, workflowPath]] of Object.entries(pairs)) {
         ? [...plan.adapterInputs, ...plan.frozenTools]
         : [...plan.adapterInputs, plan.diagnosticRelease.ownerCorrection];
     const errorHistory = await readHistoricalPageErrorRefs(path, workflowPath);
+    for (const [file, ref] of await readHistoricalQualificationRefs(path, workflowPath))
+      errorHistory.set(file, ref);
     for (const ref of refs) {
       if (errorHistory.has(ref.path)) {
         const expected = errorHistory.get(ref.path);

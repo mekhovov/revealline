@@ -1,3 +1,4 @@
+import { readHistoricalQualificationRefs } from './solo-page-error-source-witness.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -123,10 +124,12 @@ test('raster setup successor preserves the immutable failed declaration and exac
     '5fade8474629c12b6e170faeef29917aeb418a32baeb6074eddb14a739d92fc3',
   );
   check(plan, workflow);
+  const historical = await readHistoricalQualificationRefs(planPath, workflowPath);
   for (const ref of [...plan.adapterInputs, ...plan.frozenTools, plan.raster.fixture]) {
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+    const old = historical.get(ref.path);
+    assert(old, ref.path);
+    assert.equal(old.bytes, ref.bytes, ref.path);
+    assert.equal(old.sha256, ref.sha256, ref.path);
   }
 });
 test('raster successor rejects changed source, cases, failed evidence, limits, edge and missing smoke', () => {

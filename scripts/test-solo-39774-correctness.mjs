@@ -1,3 +1,4 @@
+import { readHistoricalQualificationRefs } from './solo-page-error-source-witness.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -359,7 +360,16 @@ test('executed816 runtime references bind to exact historical Git source', async
 
 test('executed e1cc inputs and all historical failures remain separate, immutable evidence', async () => {
   assert.equal(plan.historicalInputs.length, 4);
-  for (const ref of plan.historicalInputs) await currentRef(ref);
+  const historical = await readHistoricalQualificationRefs(
+    'docs/performance/solo-remote-e1cc-correctness-plan.json',
+    '.github/workflows/solo-remote-final-correctness-temporary.yml',
+  );
+  for (const ref of plan.historicalInputs) {
+    const old = historical.get(ref.path);
+    assert(old, ref.path);
+    assert.equal(old.bytes, ref.bytes, ref.path);
+    assert.equal(old.sha256, ref.sha256, ref.path);
+  }
   assert.equal(plan.currentSourceCorrectness.historicalPredecessor.run, 39044567174);
   assert.equal(
     plan.currentSourceCorrectness.historicalPredecessor.candidate,

@@ -1,3 +1,4 @@
+import { readHistoricalQualificationRefs } from './solo-page-error-source-witness.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -114,14 +115,16 @@ function check(value, text) {
 
 test('actual native touch release retains twelve fixed observations, exact failed predecessor and bounded owned workflow', async () => {
   check(plan, workflow);
+  const historical = await readHistoricalQualificationRefs(planPath, workflowPath);
   for (const ref of [...plan.adapterInputs, ...plan.frozenTools, plan.fixture]) {
     if (ref.path === 'scripts/observe-solo-native-touch.mjs') {
       assertRecordedTouchReference(ref);
       continue;
     }
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+    const old = historical.get(ref.path);
+    assert(old, ref.path);
+    assert.equal(old.bytes, ref.bytes, ref.path);
+    assert.equal(old.sha256, ref.sha256, ref.path);
   }
 });
 test('touch release rejects source, protocol, evidence, scope, one-shot and dynamic closure mutations', () => {
