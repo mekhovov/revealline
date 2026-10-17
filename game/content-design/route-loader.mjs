@@ -8,6 +8,7 @@ const SHIPPED_ROUTE_SNAPSHOT = null;
  * modules, never URLs derived from user/imported data. Keep source construction
  * and validation unchanged; module failures propagate to the existing boot UI. */
 export async function loadAuthoredJourneyRoute(id, options = {}) {
+  options.assertCurrent?.();
   if (!isAuthoredJourneyRouteId(id)) return null;
   if (SHIPPED_ROUTE_SNAPSHOT?.id === id) return loadRouteSnapshot(SHIPPED_ROUTE_SNAPSHOT, options);
   let factories;
@@ -93,7 +94,9 @@ export async function loadAuthoredJourneyRoute(id, options = {}) {
     const [first, second] = await Promise.all([opening, border]);
     factories = { ...first, ...second };
   }
+  options.assertCurrent?.();
   // Published snapshots do not need historical source construction code.
   const { createAuthoredJourneyRouteDefinition } = await import('./route-definition.mjs');
+  options.assertCurrent?.();
   return createAuthoredJourneyRouteDefinition(id, factories);
 }
