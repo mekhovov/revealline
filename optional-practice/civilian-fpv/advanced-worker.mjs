@@ -1,4 +1,8 @@
 import { boundedJSON } from '../../game/data-json.mjs';
+import { AIRCRAFT_RECORDING_FORMAT, AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
+import { AIRCRAFT_BACKEND } from './advanced-aircraft-runtime.mjs';
+import { verifyAircraftArchive } from './aircraft-archive-verifier.mjs';
+import { createGhostPathCollector } from './advanced-ghost-path.mjs';
 import {
   ADVANCED_BACKEND,
   ADVANCED_RECORDING_BYTES,
@@ -14,6 +18,7 @@ import {
 export function createAdvancedWorkerHandler(postMessage) {
   let simulation = null,
     session = null,
+    archiveVerification = null,
     queue = Promise.resolve();
   async function execute(message) {
     const { id, session: requestSession, type } = message ?? {};
@@ -48,11 +53,11 @@ export function createAdvancedWorkerHandler(postMessage) {
             break;
           case 'step':
             if (message.sample) simulation.enqueueInput(message.sample);
-            result = simulation.stepMission();
+            result = simulation.stepMission({ motions: message.motions });
             break;
           case 'propose':
             if (message.sample) simulation.enqueueInput(message.sample);
-            result = simulation.proposeMission();
+            result = simulation.proposeMission({ motions: message.motions });
             break;
           case 'commit':
             result = simulation.commitMission(message.decision);
@@ -82,25 +87,54 @@ export function createAdvancedWorkerHandler(postMessage) {
           case 'recording':
             result = simulation.recording();
             break;
+          case 'recording-status':
+            result = simulation.recordingStatus?.() ?? null;
+            break;
+          case 'recording-persistence':
+            result = simulation.reportPersistence?.(message.status) ?? null;
+            break;
+          case 'read-sealed-segment':
+            if (!simulation.readSealedSegment)
+              throw new Error('Session archives require aircraft physics');
+            result = simulation.readSealedSegment(message.afterIndex);
+            break;
+          case 'finalize-archive':
+            if (!simulation.finalizeArchive)
+              throw new Error('Session archives require aircraft physics');
+            result = simulation.finalizeArchive(message.afterIndex);
+            break;
+          case 'verify-archive': {
+            const controller = new AbortController();
+            archiveVerification = controller;
+            try {
+              result = await verifyAircraftArchive(message.archive, {
+                signal: controller.signal,
+                onProgress: (progress) => postMessage({ id, session: requestSession, progress }),
+              });
+            } finally {
+              if (archiveVerification === controller) archiveVerification = null;
+            }
+            break;
+          }
           case 'verify-recording': {
             const record = boundedJSON(message.recording, {
-              maxBytes: ADVANCED_RECORDING_BYTES,
-              maxNodes: 2000000,
-              maxArray: 300000,
-              maxString: 2 * 1024 * 1024,
-              maxDepth: 30,
+              maxBytes: AIRCRAFT_RECORDING_BYTES,
+              maxNodes: 3000000,
+              maxArray: 500000,
+              maxString: 12 * 1024 * 1024,
+              maxDepth: 40,
             });
             if (
-              record.format !== 'AdvancedRecording.v1' ||
-              simulation.configuration().backend !== ADVANCED_BACKEND
+              !['AdvancedRecording.v1', AIRCRAFT_RECORDING_FORMAT].includes(record.format) ||
+              ![ADVANCED_BACKEND, AIRCRAFT_BACKEND].includes(simulation.configuration().backend)
             )
               throw new Error('Comparison ghosts require an Advanced reference arena recording.');
             if (!(record.missionTicks > 0))
               throw new Error('Comparison recording has no flight samples.');
-            const path = [];
+            const collector = createGhostPathCollector();
             const checked = await replayAdvancedRecording(record, {
               onMissionTelemetry(sample) {
-                path.push([
+                collector.add([
                   sample.missionTick,
                   sample.position.x,
                   sample.position.y,
@@ -112,21 +146,30 @@ export function createAdvancedWorkerHandler(postMessage) {
                 ]);
               },
             });
-            if (checked.verificationScope !== 'complete' || !checked.verified)
+            if (
+              !['complete', 'checkpoint-clip'].includes(checked.verificationScope) ||
+              !checked.verified
+            )
               throw new Error('Comparison recording was not completely verified.');
             const reference = simulation.comparison();
             if (checked.comparison.comparisonClass !== reference.comparisonClass)
               throw new Error(
                 'Comparison requires the same aircraft, controller, throttle, timing and arena. Rotation rates may differ.',
               );
-            if (path.length !== record.missionTicks + 1)
+            const collected = collector.snapshot();
+            if (
+              collected.sourceSampleCount !==
+              record.missionTicks - (record.startMissionTick ?? 0) + 1
+            )
               throw new Error('Verified comparison path is incomplete.');
             result = {
               verified: true,
               scored: false,
               comparison: checked.comparison,
               missionTicks: record.missionTicks,
-              path,
+              startMissionTick: record.startMissionTick ?? 0,
+              verificationScope: checked.verificationScope,
+              ...collected,
             };
             break;
           }
@@ -163,6 +206,7 @@ export function createAdvancedWorkerHandler(postMessage) {
       return queue;
     },
     dispose() {
+      archiveVerification?.abort();
       simulation?.dispose();
       simulation = null;
       session = null;

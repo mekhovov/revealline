@@ -27,6 +27,7 @@ export const FPV_REPLAY_COMMON_INPUTS = Object.freeze([
   'game/presentation/theme-system.mjs',
   'game/snake/classic-structure-art.mjs',
   'game/vendor/i18next-26.4.2.min.js',
+  'optional-practice/civilian-fpv/aircraft-mission-checkpoint.mjs',
   'optional-practice/civilian-fpv/battlefield-ground.mjs',
   'optional-practice/civilian-fpv/catalogue.mjs',
   'optional-practice/civilian-fpv/flight-response.mjs',

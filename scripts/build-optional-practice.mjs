@@ -243,7 +243,7 @@ export function buildBundledOptionalPractice(entries, { packageId = 'civilian-fp
   requireValid(
     files.length + 1 <= policy.limits.files &&
       files.reduce((total, file) => total + file.bytes, worker.bytes.length) <= policy.limits.bytes,
-    'Complete bundled optional output exceeds package limits',
+    `Complete bundled optional output exceeds package limits: ${packageId} has ${files.length + 1}/${policy.limits.files} files and ${files.reduce((total, file) => total + file.bytes, worker.bytes.length)}/${policy.limits.bytes} bytes`,
   );
   return {
     files,
@@ -372,7 +372,7 @@ export async function buildOptionalPractice(
   requireValid(
     files.length <= limits.files &&
       files.reduce((total, file) => total + file.bytes, 0) <= limits.bytes,
-    'Optional practice exceeds unchanged package limits',
+    `Optional practice exceeds unchanged package limits: ${packageId} has ${files.length}/${limits.files} files and ${files.reduce((total, file) => total + file.bytes, 0)}/${limits.bytes} bytes`,
   );
   const workerTemplateSha256 = hash(Buffer.from(installWorker.toString()));
   const revision = hash(

@@ -595,6 +595,24 @@ const FPV_TUNING_FILES = Object.freeze([
   'advanced-controller.mjs',
   'advanced-terrain.mjs',
   'advanced-simulation.mjs',
+  'advanced-aircraft-runtime.mjs',
+  'aircraft-physics.mjs',
+  'aircraft-response.mjs',
+  'aircraft-presets.mjs',
+  'aircraft-recording.mjs',
+  'aircraft-terrain.mjs',
+  'aircraft-course-session.mjs',
+  'aircraft-mission-checkpoint.mjs',
+  'aircraft-practice-controls.mjs',
+  'aircraft-course-advice.mjs',
+  'aircraft-archive.mjs',
+  'aircraft-archive-controls.mjs',
+  'aircraft-archive-verifier.mjs',
+  'advanced-ghost-path.mjs',
+  'propulsion-evidence.mjs',
+  'propulsion-evidence-ui.mjs',
+  'aircraft-challenge.mjs',
+  'aircraft-challenge-ui.mjs',
   'advanced-worker.mjs',
   'advanced-worker-client.mjs',
   'advanced-practice.mjs',
@@ -617,9 +635,10 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ...policy,
         // Original aggregate locale files are retained as source hashes, while
         // only selected messages ship. Academy's reviewed input inventory is
-        // 12,603,530 bytes; this separate 12 MiB + 128 KiB accounting allowance
-        // leaves runtime and complete published-source output capped at 12 MiB.
-        ...(id === 'civilian-fpv' ? { sourceInputBytes: 12 * 1024 * 1024 + 128 * 1024 } : {}),
+        // 12,993,305 bytes with archives, bench inspection and optional challenges.
+        // The 12 MiB + 448 KiB input allowance retains aggregate locale hashes;
+        // those full locale inputs do not ship in standalone SIM archives.
+        ...(id === 'civilian-fpv' ? { sourceInputBytes: 12 * 1024 * 1024 + 448 * 1024 } : {}),
         // The canonical browser is projected into an existing package module.
         // Admit only its message families, including plural and dynamic keys.
         localeKeyPrefixes: Object.freeze({
@@ -681,13 +700,18 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         limits: Object.freeze({
           ...policy.limits,
           // Includes tuning/worker, the native-safe boot and platform adapter;
+          // Ghost sampling, bench inspection and optional challenges add five explicit
+          // files to each complete runtime/source envelope. The installed-core
+          // Academy cache includes the shared full locale catalog; its measured
+          // 12,819,887-byte closure requires a 256 KiB allowance above 12 MiB.
+          // Standalone Academy remains below 12 MiB; World stays at 20 MiB.
           // World also admits its single Regional Advanced adapter.
           // Academy now carries the same pinned 4.35 MB Rapier build as World.
           files:
             id === 'civilian-fpv'
-              ? 121
+              ? 139
               : id === 'fpv-worlds'
-                ? 180 // Includes World's same-scope Advanced worker bootstrap.
+                ? 198 // Includes World's same-scope Advanced worker bootstrap.
                 : id === 'civilian-flight'
                   ? 98
                   : policy.limits.files,
@@ -695,7 +719,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
             id === 'fpv-worlds'
               ? 20 * 1024 * 1024
               : id === 'civilian-fpv'
-                ? 12 * 1024 * 1024
+                ? 12 * 1024 * 1024 + 256 * 1024
                 : policy.limits.bytes,
         }),
         localFiles: Object.freeze([
