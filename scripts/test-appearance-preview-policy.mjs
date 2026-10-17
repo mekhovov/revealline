@@ -27,6 +27,16 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     .split(/\s+/);
   for (const path of [
     'game/test/solo-preparation-invalidation-host.test.mjs',
+    'game/test/solo-soundtrack-context-host.test.mjs',
+    'game/test/flight-information-source.test.mjs',
+    'game/test/flight-information-bridge.test.mjs',
+    'game/test/flight-information-host.test.mjs',
+    'game/test/flight-information-details-host.test.mjs',
+    'game/test/audio.test.mjs',
+    'game/test/soundtrack-player.test.mjs',
+    'game/test/soundtrack-gain-leases.test.mjs',
+    'game/test/audio-master.test.mjs',
+    'game/test/soundtrack-master.test.mjs',
     'game/test/modal-navigation.test.mjs',
     'game/test/controller-confirm-trace.test.mjs',
   ]) {
@@ -38,6 +48,8 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     );
   }
   for (const path of [
+    'game/ui/audio.mjs',
+    'game/ui/soundtrack-player.mjs',
     'game/ui/modal-navigation.mjs',
     'game/ui/controller-confirm-trace.mjs',
     'game/editions/package-budget.mjs',
