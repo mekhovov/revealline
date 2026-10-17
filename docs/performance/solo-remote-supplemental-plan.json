@@ -400,8 +400,8 @@
     },
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 58645,
-      "sha256": "efbd404d90ba8ae861be6d9eaefc2415654d052d0d40fe7d3508ce0e259e7fee"
+      "bytes": 58963,
+      "sha256": "b1509f3f4f79862effd1c2e749c5b7915eb02e6d71c73d30abbe413707d613aa"
     },
     {
       "path": "scripts/reviewed-soundtrack-batches.mjs",
@@ -431,7 +431,7 @@
     {
       "path": "scripts/solo-qualification-audio.mjs",
       "bytes": 14479,
-      "sha256": "d5940bd0126abd978c21da192d79632e3b2dbf174b1115b7851804aa4b163e51"
+      "sha256": "604a32fa40b361408dbc0b538afbd36695e834be0fbc7d463f38951959002757"
     },
     {
       "path": "scripts/solo-qualification-browser-context.mjs",

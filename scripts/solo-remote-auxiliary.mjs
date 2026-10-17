@@ -78,6 +78,10 @@ function validateRelease(plan) {
   const diagnostic = plan.status === 'reviewed-diagnostic-only';
   assert(diagnostic || plan.status === 'reviewed-and-released');
   assert.equal(plan.release.firstEightAllCorrectnessPassed, !diagnostic);
+  if (plan.release.musicProofBytes !== undefined) {
+    assert(diagnostic && !preparationConfirmation(plan));
+    assert.equal(plan.release.musicProofBytes, 32 * MiB);
+  }
   if (diagnostic) {
     assert.equal(
       plan.release.scope,
@@ -358,6 +362,9 @@ export function auxiliaryArguments(ctx, row, url, dir) {
     ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
     ...(row.engine === 'webkit' ? ['--context=persistent'] : []),
     ...(spec.recipe !== 'recovery' ? ['--audio-proof'] : []),
+    ...(spec.recipe === 'music' && ctx.plan.release.musicProofBytes
+      ? ['--audio-proof-music-capacity']
+      : []),
   ];
 }
 export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
@@ -392,6 +399,10 @@ export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
     !raw.contextCleanupFailure &&
     !raw.replayFailure;
   const audio = raw?.audioIdentity;
+  const capacityMatches =
+    !plan.release.musicProofBytes ||
+    spec.recipe !== 'music' ||
+    raw?.audioProofOptions?.aggregateEncodedBytes === plan.release.musicProofBytes;
   const admitted =
     spec.recipe === 'recovery'
       ? raw?.performanceGateStatus === 'excluded-synthetic-recovery'
@@ -405,7 +416,7 @@ export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
           audio.droppedMediaEvents,
         ].every((n) => n === 0);
   return {
-    status: common && admitted ? 'passed' : 'failed',
+    status: common && admitted && capacityMatches ? 'passed' : 'failed',
     correctness: common ? 'pass' : 'fail',
     performanceQualification: 'excluded',
     firstEightAllCorrectnessPassed: plan.release.firstEightAllCorrectnessPassed,

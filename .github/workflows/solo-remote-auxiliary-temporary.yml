@@ -22,7 +22,7 @@ concurrency:
 jobs:
   declare:
     # Independent diagnostics only. One declared push edge; failed first-eight gate stays false.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'bffcbd838a7bb925da8aaf030695773f893d8bda'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: '22.13.1'
           package-manager-cache: false
-      - name: Admit only the reviewed audio and main-recovery jobs
+      - name: Admit only the two reviewed music diagnostic jobs
         id: phase
         timeout-minutes: 1
         run: node scripts/solo-remote-auxiliary.mjs matrix-plan docs/performance/solo-remote-auxiliary-plan.json >> "$GITHUB_OUTPUT"

@@ -129,8 +129,8 @@
     },
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 58150,
-      "sha256": "7db5478c4c4c921c6bf2fff36c3d3b93d87147bcdf2eed796fcf61bbff05bcfe"
+      "bytes": 58963,
+      "sha256": "b1509f3f4f79862effd1c2e749c5b7915eb02e6d71c73d30abbe413707d613aa"
     },
     {
       "path": "scripts/solo-qualification.mjs",
@@ -204,8 +204,8 @@
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",
-      "bytes": 12875,
-      "sha256": "3bfdf145d2ea6eb4e81eb2394c9ac79ec56b201ab8b24d2bfd6345142af569d1"
+      "bytes": 14479,
+      "sha256": "604a32fa40b361408dbc0b538afbd36695e834be0fbc7d463f38951959002757"
     },
     {
       "path": "scripts/solo-qualification-cpu-profile.mjs",
@@ -214,8 +214,8 @@
     },
     {
       "path": "scripts/solo-remote-supplemental.mjs",
-      "bytes": 15895,
-      "sha256": "a476a7db0f056111a0b579f000ce18eb19e87001fc2bdbf8f831460621eb3234"
+      "bytes": 16612,
+      "sha256": "1b6bf962595e663b1fa606657444e30e6c03f5e254e65783d9333bb08771b3fa"
     },
     {
       "path": "scripts/solo-remote-archive.py",
