@@ -4,6 +4,8 @@ Updated 2026-10-17 for [PR #1544](https://github.com/mekhovov/revealline/pull/15
 
 ## Latest source and open work
 
+**Latest verified package:** Appearance run `39004951633` successfully packages exact `adb1c0c7b` / runtime `488eae03a`. Its 98-file focused gate and full production build pass; compact metadata is independently verified and the full archive will be revalidated by each native consumer. This is an intermediate runtime: the final startup/accounting batch at `8d6b4fd90` still requires its successor package. [Exact package identity and scope](solo-artifact-adb1c0c7.md).
+
 **Current checkpoint, 17 October:** implementation is substantially in place, but qualification remains incomplete. Merge `6bed7bf5a` incorporates main `b2f251dac0d762d476f725b1bc601a2d6d5485a5` while preserving the dirty FPV checkout and published evidence references. The shared platform/export regressions pass 57/57 and generated reaction bytes remain unchanged. The complete validation pass is attributed to its actual shared-worktree inputs, not a later immutable package. [Latest-main evidence](solo-latest-main-b2f251da.md).
 
 The earlier combined runtime `87aca9092` removes repeated dialog searches, soundtrack identity construction, unchanged audio gain scheduling and completed-flight snapshot projection. Its full lint/content checks and 125/125 timing/render plus 154/154 audio regressions remain separately recorded. Eight full-format failures at that revision match selected main exactly. [Earlier integration evidence](solo-latest-main-87aca9092.md).
