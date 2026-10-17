@@ -41,6 +41,19 @@ Keep required evaluation inside preparation or an explicitly open paused menu,
 and measure the resulting production startup separately. Do not revise the
 current frozen package's source identity or reinterpret earlier observations.
 
+Two primary-source examples refine this decision. Chrome's script-evaluation
+guidance explains that a large dynamic import still creates a large evaluation
+task; making its network request asynchronous does not make evaluation free.
+Keep optional menu evaluation behind the accepted pause boundary, with required
+startup work completed before play. [Script evaluation and long tasks](https://web.dev/articles/script-evaluation-and-long-tasks).
+WebKit's Speedometer work found that allocations in one workload can cause
+collection during a later workload. Removing the unreachable chooser therefore
+eliminates unnecessary allocation and ownership, but a stopwatch around its
+constructor alone cannot establish its full cost. Preserve startup and subsequent
+active-play observations in the matched runs; do not force garbage collection or
+discard early frames to make the comparison cleaner.
+[WebKit allocation and collection findings](https://webkit.org/blog/15249/).
+
 Raw outputs and helper hashes are retained under
 `.cache/solo-followup/eager-graph-cce/receipt.json`. Both main inventory outputs
 are 1,352 bytes: baseline SHA-256
