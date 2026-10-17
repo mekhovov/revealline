@@ -1,0 +1,21 @@
+{
+  "format": "FPVPublicWaitHarnessDiagnostic.v1",
+  "checkedAt": "2026-10-17T03:27:37.730Z",
+  "cases": [
+    {
+      "name": "sync false",
+      "error": "TimeoutError",
+      "elapsedMs": 303
+    },
+    {
+      "name": "async false",
+      "result": false,
+      "elapsedMs": 1
+    },
+    {
+      "name": "async delayed true",
+      "result": false,
+      "elapsedMs": 2
+    }
+  ]
+}

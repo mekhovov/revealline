@@ -111,7 +111,7 @@ this completion scope.
 | Propwash and ground effect                       | Depends on measured base aircraft           | A validated base model and dedicated measurements; no arbitrary realism sliders.                                                                                                       |
 | Verified Advanced records and default promotion  | Gated on the above                          | Qualified platform matrix, comparison integration and reviewed promotion decision. No automatic promotion from a local benchmark.                                                      |
 | Full-game native distribution                    | Separate product packaging constraint       | A reviewed distribution that fits the existing site budget. The simulator-only stage remains the feature qualification artifact.                                                       |
-| Public Pages HTTPS and installed-update behavior | Requires publication                        | Exact deployed commit, real access form, fresh and existing installs, offline update retention and final archive/inventory gates. Local fixture tests remain separately labeled.       |
+| Public Pages HTTPS and installed-update behavior | Passed on one Chrome desktop                | Exact deployed merge, ordinary password access, fresh and authentic old-main installs, offline restart/retention and final archive/inventory gates pass. OS-installed PWAs, eviction and other devices remain outside this check. |
 
 Software completion means all six work items above have implementation and
 verification evidence. It does not relabel deferred physical gates as passed.
@@ -598,9 +598,10 @@ adding another tuning feature:
    unchanged publication caps, and use the ordinary main publication workflow
    for live delivery. Bind any live acceptance to the exact deployed commit.
 
-[PR #1561](https://github.com/mekhovov/revealline/pull/1561) is open as a draft
-while these final checks run. The repository automatically merges eligible
-non-draft PRs and publishes `main`; draft status prevents premature publication.
+[PR #1561](https://github.com/mekhovov/revealline/pull/1561) remained a draft
+until the final implementation's 12 non-skipped product checks passed. It then
+became ready and the normal repository controller merged it as `b2f251dac`.
+The ordinary main publication's build, deploy and verification all succeeded.
 Physical radio/pilot work, measured aircraft fitting, wider hardware, validated
 propwash/ground effect and Advanced competition/default promotion retain their
 original prerequisites.
@@ -635,11 +636,33 @@ original prerequisites.
 - **Pages:** the ordinary production build passes online/offline acceptance and
   all 3,433 manifest hashes. Publication limits are unchanged. The public old-main
   baseline passes normal password access and preserves offline installations for
-  the upgrade. Exact committed CI, main publication and public upgrade acceptance
-  remain delivery steps, not new feature work.
+  the upgrade. Exact committed CI and main publication subsequently passed; the
+  [public delivery receipts](fpv-public-delivery-artifacts/delivery-summary.json)
+  and [fresh password check](fpv-public-fresh-password-acceptance.json) bind those
+  results to the deployed merge. Public installed-update acceptance is recorded
+  separately in the [Pages testing guide](fpv-pages-live-testing.md).
 
 See the [migration evidence](fpv-historical-update-qualification.md),
 [dense terrain evidence](fpv-regional-urban-streaming-qualification.md),
 [native evidence](fpv-native-current-runtime-20261017.json),
 [numerical matrix](fpv-advanced-runtime-qualification-2026-10-17-eighth-review.json), and
 [Pages evidence](fpv-pages-delivery-live-testing-evidence.json).
+
+### Public delivery completed
+
+The [public delivery verification](fpv-public-delivery-verification.json) binds
+the deployed merge, all 12 non-skipped product checks, successful main publication
+and the retained actual archive/inventory receipts. Both Academy and World pass
+[fresh installation](fpv-public-fresh-install-acceptance.json) and the
+[authentic old-main update](fpv-public-delivery-acceptance.json) on public HTTPS.
+The checks use ordinary password access, visible installers and new browser
+processes reopened offline. Saved settings/cameras, rates, CLI patches, backup
+restore, draft revert and short Advanced export/replay/disposal are verified
+within the scopes recorded in each receipt.
+
+The [Pages guide](fpv-pages-live-testing.md) preserves baseline provenance,
+resumed activation checkpoints and all failed harness attempts. Four test-harness
+corrections required no deployed-runtime changes. Short neutral-input flights
+establish lifecycle behavior; they do not qualify physical fidelity or performance.
+All available software and this public delivery scope are complete. The deferred
+physical, wider-platform and Advanced promotion gates above remain open.

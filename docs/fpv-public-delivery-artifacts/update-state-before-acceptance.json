@@ -1,0 +1,396 @@
+{
+  "format": "FPVPublicUpdateState.v1",
+  "root": "https://mekhovov.github.io/revealline/",
+  "binding": {
+    "metadata": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "sourceCommittedAt": "2026-10-17T01:45:42Z",
+      "buildVersion": "main-8b01991942dc",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    },
+    "metadataSha256": "e4a9e1a685d0ffde4a9187f606467971e138b56a7d923c3bbb4efe33468ff056",
+    "manifestSha256": "2daa85149b7d3a4eebfe8a456b05d91c657f2b80b6c9231e4ba69eeea550eebe",
+    "pins": {
+      "game/access-gate.mjs": {
+        "path": "game/access-gate.mjs",
+        "bytes": 6833,
+        "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+      },
+      "optional-practice/civilian-fpv/radio-profile.mjs": {
+        "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+        "bytes": 18265,
+        "sha256": "5edfc0ff6a04119758537f887f35b4d61da4f617c45abe032a0161ed91df9b44"
+      },
+      "optional-practice/civilian-fpv/app.mjs": {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "bytes": 91200,
+        "sha256": "14d093ef41ecd88f45ac047c96d77fa451ae42c5933fb977cb33fe9bd0cb5b60"
+      },
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "bytes": 382499,
+        "sha256": "a4e7f91ab66c4a55b9dd1059b78e6a50772bf43bf3aab82d6a5544dc9bdb1a60"
+      },
+      "optional-practice/civilian-fpv/index.html": {
+        "path": "optional-practice/civilian-fpv/index.html",
+        "bytes": 16356,
+        "sha256": "05bf1a15825e7ffd5f277917f3c1e03fc19deacb6caac8881a814e30a1b066cb"
+      },
+      "optional-practice/civilian-fpv/worker.js": {
+        "path": "optional-practice/civilian-fpv/worker.js",
+        "bytes": 18676,
+        "sha256": "bd0b15dbb3d5531adba2b3ab177492fd85373d95e09ddb5371108374f69ef6de"
+      },
+      "optional-practice/fpv-worlds/index.html": {
+        "path": "optional-practice/fpv-worlds/index.html",
+        "bytes": 50299,
+        "sha256": "341de7f578381ddaf09e690d9a75c47f5e29f4e95a9e799eb14c9f656ffbf385"
+      },
+      "optional-practice/fpv-worlds/worker.js": {
+        "path": "optional-practice/fpv-worlds/worker.js",
+        "bytes": 27960,
+        "sha256": "1746e2e5abf906223fba941332ebea9f6eec5435c12aa6971700b7e3a0cb7027"
+      }
+    },
+    "workers": {
+      "civilian-fpv": "3c695f880ce0bd4056234b052a15ff9674dec131c8844d09cb2db94b8d8d4fae",
+      "fpv-worlds": "a4ea20b2c21aefa0eef3d03e330670e65c4b99cd92df2b6923edf52b7b6f8882"
+    },
+    "tuningAvailable": false
+  },
+  "packages": [
+    {
+      "id": "civilian-fpv",
+      "base": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+      "profile": "/tmp/fpv-public-update-civilian-fpv-mlHu95",
+      "legacy": {
+        "format": "FlightProfiles.v2",
+        "radio": {
+          "format": "RadioProfile.v2",
+          "id": "public-synthetic",
+          "name": "Public migration fixture",
+          "device": {
+            "id": "TX15 Joystick (Vendor: 1209 Product: 4f54)",
+            "mapping": "",
+            "axes": 8,
+            "buttons": 24
+          },
+          "stickMode": 2,
+          "throttleStyle": "full-travel",
+          "verified": false,
+          "channels": {
+            "roll": {
+              "axis": 0,
+              "min": -1,
+              "center": 0.004,
+              "max": 1,
+              "invert": false,
+              "deadZone": 0.07
+            },
+            "pitch": {
+              "axis": 1,
+              "min": -1,
+              "center": 0.004,
+              "max": 1,
+              "invert": false,
+              "deadZone": 0.02
+            },
+            "yaw": {
+              "axis": 3,
+              "min": -0.996,
+              "center": 0.004,
+              "max": 1,
+              "invert": false,
+              "deadZone": 0.02
+            },
+            "throttle": {
+              "axis": 2,
+              "min": -1,
+              "center": null,
+              "max": 1,
+              "invert": false,
+              "deadZone": 0
+            }
+          },
+          "switches": {
+            "arm": {
+              "axis": 4,
+              "off": -1,
+              "on": 1
+            },
+            "pause": null,
+            "reset": {
+              "button": 1,
+              "threshold": 0.5,
+              "invert": false
+            }
+          }
+        },
+        "response": {
+          "format": "FlightResponseProfile.v1",
+          "id": "gentle-v1",
+          "name": "Gentle",
+          "maxRate": 480,
+          "maxTilt": 42,
+          "expo": 45,
+          "responseTicks": 11
+        },
+        "radios": [
+          {
+            "format": "RadioProfile.v2",
+            "id": "public-synthetic",
+            "name": "Public migration fixture",
+            "device": {
+              "id": "TX15 Joystick (Vendor: 1209 Product: 4f54)",
+              "mapping": "",
+              "axes": 8,
+              "buttons": 24
+            },
+            "stickMode": 2,
+            "throttleStyle": "full-travel",
+            "verified": false,
+            "channels": {
+              "roll": {
+                "axis": 0,
+                "min": -1,
+                "center": 0.004,
+                "max": 1,
+                "invert": false,
+                "deadZone": 0.07
+              },
+              "pitch": {
+                "axis": 1,
+                "min": -1,
+                "center": 0.004,
+                "max": 1,
+                "invert": false,
+                "deadZone": 0.02
+              },
+              "yaw": {
+                "axis": 3,
+                "min": -0.996,
+                "center": 0.004,
+                "max": 1,
+                "invert": false,
+                "deadZone": 0.02
+              },
+              "throttle": {
+                "axis": 2,
+                "min": -1,
+                "center": null,
+                "max": 1,
+                "invert": false,
+                "deadZone": 0
+              }
+            },
+            "switches": {
+              "arm": {
+                "axis": 4,
+                "off": -1,
+                "on": 1
+              },
+              "pause": null,
+              "reset": {
+                "button": 1,
+                "threshold": 0.5,
+                "invert": false
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "tilt": 27,
+        "verticalFov": 108,
+        "keyboard": "two-stick",
+        "touch": "direct"
+      },
+      "storage": {
+        "revealline.fpv.touch-response.v1": "direct",
+        "revealline.fpv.flight-comfort.v1.academy.camera": "{\"fov\":108,\"tilt\":27}",
+        "revealline.flight-profiles.v1.library.v2": "{\"format\":\"FlightProfiles.v2\",\"radio\":{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.07,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"public-synthetic\",\"name\":\"Public migration fixture\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":false},\"radios\":[{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.07,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"public-synthetic\",\"name\":\"Public migration fixture\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":false}],\"response\":{\"expo\":45,\"format\":\"FlightResponseProfile.v1\",\"id\":\"gentle-v1\",\"maxRate\":480,\"maxTilt\":42,\"name\":\"Gentle\",\"responseTicks\":11}}",
+        "revealline.fpv.appearance.v1": "{\"format\":\"SimAppearancePreferences.v1\",\"interface\":\"follow-game\",\"world\":\"follow-game\"}"
+      },
+      "oldWorkerRevision": "3c695f880ce0bd4056234b052a15ff9674dec131c8844d09cb2db94b8d8d4fae",
+      "activation": {
+        "expectedRevision": "b2f251dac0d762d476f725b1bc601a2d6d5485a5",
+        "manifestSha256": "3090dbccef04d66859ff5435ed26954f8cb7986143526a75032a8d27a890fa6f",
+        "waiting": {
+          "type": "practice-status",
+          "ready": true,
+          "status": "ready",
+          "revision": "7d2eb65182dee3b10a46ed0da87a3a36713162e8e2022e4883f0a36c65eab7fc",
+          "total": 12424293,
+          "scope": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+          "state": "installed"
+        },
+        "retainedCaches": [
+          "revealline.optional.package.v1:/revealline/optional-practice/civilian-fpv/:3c695f880ce0bd4056234b052a15ff9674dec131c8844d09cb2db94b8d8d4fae",
+          "revealline-official-downloads-v1",
+          "revealline.optional.package.v1:/revealline/optional-practice/civilian-fpv/:7d2eb65182dee3b10a46ed0da87a3a36713162e8e2022e4883f0a36c65eab7fc"
+        ],
+        "observedAt": "2026-10-17T03:29:04.455Z",
+        "oldControllerRetained": true,
+        "naturalActivationAfterScopeClosed": true
+      }
+    },
+    {
+      "id": "fpv-worlds",
+      "base": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/",
+      "profile": "/tmp/fpv-public-update-fpv-worlds-w3T4ez",
+      "legacy": {
+        "format": "FlightProfiles.v2",
+        "radio": {
+          "format": "RadioProfile.v2",
+          "id": "public-synthetic",
+          "name": "Public migration fixture",
+          "device": {
+            "id": "TX15 Joystick (Vendor: 1209 Product: 4f54)",
+            "mapping": "",
+            "axes": 8,
+            "buttons": 24
+          },
+          "stickMode": 2,
+          "throttleStyle": "full-travel",
+          "verified": false,
+          "channels": {
+            "roll": {
+              "axis": 0,
+              "min": -1,
+              "center": 0.004,
+              "max": 1,
+              "invert": false,
+              "deadZone": 0.07
+            },
+            "pitch": {
+              "axis": 1,
+              "min": -1,
+              "center": 0.004,
+              "max": 1,
+              "invert": false,
+              "deadZone": 0.02
+            },
+            "yaw": {
+              "axis": 3,
+              "min": -0.996,
+              "center": 0.004,
+              "max": 1,
+              "invert": false,
+              "deadZone": 0.02
+            },
+            "throttle": {
+              "axis": 2,
+              "min": -1,
+              "center": null,
+              "max": 1,
+              "invert": false,
+              "deadZone": 0
+            }
+          },
+          "switches": {
+            "arm": {
+              "axis": 4,
+              "off": -1,
+              "on": 1
+            },
+            "pause": null,
+            "reset": {
+              "button": 1,
+              "threshold": 0.5,
+              "invert": false
+            }
+          }
+        },
+        "response": {
+          "format": "FlightResponseProfile.v1",
+          "id": "gentle-v1",
+          "name": "Gentle",
+          "maxRate": 480,
+          "maxTilt": 42,
+          "expo": 45,
+          "responseTicks": 11
+        },
+        "radios": [
+          {
+            "format": "RadioProfile.v2",
+            "id": "public-synthetic",
+            "name": "Public migration fixture",
+            "device": {
+              "id": "TX15 Joystick (Vendor: 1209 Product: 4f54)",
+              "mapping": "",
+              "axes": 8,
+              "buttons": 24
+            },
+            "stickMode": 2,
+            "throttleStyle": "full-travel",
+            "verified": false,
+            "channels": {
+              "roll": {
+                "axis": 0,
+                "min": -1,
+                "center": 0.004,
+                "max": 1,
+                "invert": false,
+                "deadZone": 0.07
+              },
+              "pitch": {
+                "axis": 1,
+                "min": -1,
+                "center": 0.004,
+                "max": 1,
+                "invert": false,
+                "deadZone": 0.02
+              },
+              "yaw": {
+                "axis": 3,
+                "min": -0.996,
+                "center": 0.004,
+                "max": 1,
+                "invert": false,
+                "deadZone": 0.02
+              },
+              "throttle": {
+                "axis": 2,
+                "min": -1,
+                "center": null,
+                "max": 1,
+                "invert": false,
+                "deadZone": 0
+              }
+            },
+            "switches": {
+              "arm": {
+                "axis": 4,
+                "off": -1,
+                "on": 1
+              },
+              "pause": null,
+              "reset": {
+                "button": 1,
+                "threshold": 0.5,
+                "invert": false
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "tilt": 27,
+        "verticalFov": 108,
+        "keyboard": "two-stick",
+        "touch": "direct"
+      },
+      "storage": {
+        "revealline.fpv.touch-response.v1": "direct",
+        "revealline.fpv.world-settings.v1": "{\"flight-mode\":\"self-level\",\"flight-source\":\"keyboard\",\"flight-touch-response\":\"direct\",\"flight-camera\":\"fpv\",\"drone-look\":\"racer\",\"flight-quality\":\"balanced\",\"flight-stick-display\":\"compact\",\"flight-drone-guide\":\"compact\",\"flight-guide-scale\":\"standard\",\"world-fov\":\"108\",\"world-tilt\":\"27\"}",
+        "revealline.flight-profiles.v1.library.v2": "{\"format\":\"FlightProfiles.v2\",\"radio\":{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.07,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"public-synthetic\",\"name\":\"Public migration fixture\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":false},\"radios\":[{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.07,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"public-synthetic\",\"name\":\"Public migration fixture\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":false}],\"response\":{\"expo\":45,\"format\":\"FlightResponseProfile.v1\",\"id\":\"gentle-v1\",\"maxRate\":480,\"maxTilt\":42,\"name\":\"Gentle\",\"responseTicks\":11}}",
+        "revealline.fpv.appearance.v1": "{\"format\":\"SimAppearancePreferences.v1\",\"interface\":\"follow-game\",\"world\":\"follow-game\"}",
+        "revealline.fpv.flight-comfort.v1.worlds.camera": "{\"fov\":108,\"tilt\":27}"
+      },
+      "oldWorkerRevision": "a4ea20b2c21aefa0eef3d03e330670e65c4b99cd92df2b6923edf52b7b6f8882"
+    }
+  ]
+}

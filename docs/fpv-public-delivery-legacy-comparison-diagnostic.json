@@ -1,0 +1,279 @@
+{
+  "format": "FPVPublicLegacyComparisonDiagnostic.v1",
+  "checkedAt": "2026-10-17T03:30:50.204Z",
+  "deepEqual": true,
+  "serializedEqual": false,
+  "actual": {
+    "format": "FlightProfiles.v2",
+    "radio": {
+      "channels": {
+        "pitch": {
+          "axis": 1,
+          "center": 0.004,
+          "deadZone": 0.02,
+          "invert": false,
+          "max": 1,
+          "min": -1
+        },
+        "roll": {
+          "axis": 0,
+          "center": 0.004,
+          "deadZone": 0.07,
+          "invert": false,
+          "max": 1,
+          "min": -1
+        },
+        "throttle": {
+          "axis": 2,
+          "center": null,
+          "deadZone": 0,
+          "invert": false,
+          "max": 1,
+          "min": -1
+        },
+        "yaw": {
+          "axis": 3,
+          "center": 0.004,
+          "deadZone": 0.02,
+          "invert": false,
+          "max": 1,
+          "min": -0.996
+        }
+      },
+      "device": {
+        "axes": 8,
+        "buttons": 24,
+        "id": "TX15 Joystick (Vendor: 1209 Product: 4f54)",
+        "mapping": ""
+      },
+      "format": "RadioProfile.v2",
+      "id": "public-synthetic",
+      "name": "Public migration fixture",
+      "stickMode": 2,
+      "switches": {
+        "arm": {
+          "axis": 4,
+          "off": -1,
+          "on": 1
+        },
+        "pause": null,
+        "reset": {
+          "button": 1,
+          "invert": false,
+          "threshold": 0.5
+        }
+      },
+      "throttleStyle": "full-travel",
+      "verified": false
+    },
+    "response": {
+      "expo": 45,
+      "format": "FlightResponseProfile.v1",
+      "id": "gentle-v1",
+      "maxRate": 480,
+      "maxTilt": 42,
+      "name": "Gentle",
+      "responseTicks": 11
+    },
+    "radios": [
+      {
+        "channels": {
+          "pitch": {
+            "axis": 1,
+            "center": 0.004,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "roll": {
+            "axis": 0,
+            "center": 0.004,
+            "deadZone": 0.07,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "throttle": {
+            "axis": 2,
+            "center": null,
+            "deadZone": 0,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "yaw": {
+            "axis": 3,
+            "center": 0.004,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -0.996
+          }
+        },
+        "device": {
+          "axes": 8,
+          "buttons": 24,
+          "id": "TX15 Joystick (Vendor: 1209 Product: 4f54)",
+          "mapping": ""
+        },
+        "format": "RadioProfile.v2",
+        "id": "public-synthetic",
+        "name": "Public migration fixture",
+        "stickMode": 2,
+        "switches": {
+          "arm": {
+            "axis": 4,
+            "off": -1,
+            "on": 1
+          },
+          "pause": null,
+          "reset": {
+            "button": 1,
+            "invert": false,
+            "threshold": 0.5
+          }
+        },
+        "throttleStyle": "full-travel",
+        "verified": false
+      }
+    ]
+  },
+  "expected": {
+    "format": "FlightProfiles.v2",
+    "radio": {
+      "format": "RadioProfile.v2",
+      "id": "public-synthetic",
+      "name": "Public migration fixture",
+      "device": {
+        "id": "TX15 Joystick (Vendor: 1209 Product: 4f54)",
+        "mapping": "",
+        "axes": 8,
+        "buttons": 24
+      },
+      "stickMode": 2,
+      "throttleStyle": "full-travel",
+      "verified": false,
+      "channels": {
+        "roll": {
+          "axis": 0,
+          "min": -1,
+          "center": 0.004,
+          "max": 1,
+          "invert": false,
+          "deadZone": 0.07
+        },
+        "pitch": {
+          "axis": 1,
+          "min": -1,
+          "center": 0.004,
+          "max": 1,
+          "invert": false,
+          "deadZone": 0.02
+        },
+        "yaw": {
+          "axis": 3,
+          "min": -0.996,
+          "center": 0.004,
+          "max": 1,
+          "invert": false,
+          "deadZone": 0.02
+        },
+        "throttle": {
+          "axis": 2,
+          "min": -1,
+          "center": null,
+          "max": 1,
+          "invert": false,
+          "deadZone": 0
+        }
+      },
+      "switches": {
+        "arm": {
+          "axis": 4,
+          "off": -1,
+          "on": 1
+        },
+        "pause": null,
+        "reset": {
+          "button": 1,
+          "threshold": 0.5,
+          "invert": false
+        }
+      }
+    },
+    "response": {
+      "format": "FlightResponseProfile.v1",
+      "id": "gentle-v1",
+      "name": "Gentle",
+      "maxRate": 480,
+      "maxTilt": 42,
+      "expo": 45,
+      "responseTicks": 11
+    },
+    "radios": [
+      {
+        "format": "RadioProfile.v2",
+        "id": "public-synthetic",
+        "name": "Public migration fixture",
+        "device": {
+          "id": "TX15 Joystick (Vendor: 1209 Product: 4f54)",
+          "mapping": "",
+          "axes": 8,
+          "buttons": 24
+        },
+        "stickMode": 2,
+        "throttleStyle": "full-travel",
+        "verified": false,
+        "channels": {
+          "roll": {
+            "axis": 0,
+            "min": -1,
+            "center": 0.004,
+            "max": 1,
+            "invert": false,
+            "deadZone": 0.07
+          },
+          "pitch": {
+            "axis": 1,
+            "min": -1,
+            "center": 0.004,
+            "max": 1,
+            "invert": false,
+            "deadZone": 0.02
+          },
+          "yaw": {
+            "axis": 3,
+            "min": -0.996,
+            "center": 0.004,
+            "max": 1,
+            "invert": false,
+            "deadZone": 0.02
+          },
+          "throttle": {
+            "axis": 2,
+            "min": -1,
+            "center": null,
+            "max": 1,
+            "invert": false,
+            "deadZone": 0
+          }
+        },
+        "switches": {
+          "arm": {
+            "axis": 4,
+            "off": -1,
+            "on": 1
+          },
+          "pause": null,
+          "reset": {
+            "button": 1,
+            "threshold": 0.5,
+            "invert": false
+          }
+        }
+      }
+    ]
+  },
+  "difference": null
+}

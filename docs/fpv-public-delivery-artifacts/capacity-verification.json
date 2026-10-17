@@ -1,0 +1,17 @@
+{
+  "format": "fpv-public-capacity-verification.v1",
+  "verifiedAt": "2026-10-17T03:24:51.396Z",
+  "sourceRevision": "b2f251dac0d762d476f725b1bc601a2d6d5485a5",
+  "runId": 38997742653,
+  "allChecksPass": true,
+  "files": 3442,
+  "stagedBytes": 963681552,
+  "archiveBytes": 966676480,
+  "maximumBytes": 980000000,
+  "stagedHeadroomBytes": 16318448,
+  "archiveHeadroomBytes": 13323520,
+  "inventorySha256": "8bf442768aaf87ffab8b68b68eb3cbc514588dca875f4018af0163c6e36c140d",
+  "archiveSha256": "2ea3593a13da42573c9d62d824a0815478d220d26c660be790a02db031812ed3",
+  "artifactId": "12087768016",
+  "scope": "Downloaded small hosted receipts and inventory; verified source identity, counts, totals, inventory hashes and bounds. Actual archive content verification was performed by the successful hosted Pages build. The large Pages artifact was not downloaded locally."
+}

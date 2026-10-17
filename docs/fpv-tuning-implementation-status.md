@@ -1,10 +1,43 @@
 # FPV tuning implementation status
 
-Updated 2026-10-17. Work is on `codex/fpv-rates-and-tuning`, rebased onto
-`origin/main` at `8b0199194` before the seventh review. Earlier feature commits
-are now `fcaa60342`, `01dd80fd1`, `726f39f00`, `518fb541c`, `dbaf4f3f9`,
-`2c36cec96` and `c8eb9ec38`; historical reports retain their original hashes.
-Unrelated local files are preserved. A local commit does not deploy GitHub Pages.
+Updated 2026-10-17. [PR #1561](https://github.com/mekhovov/revealline/pull/1561)
+merged implementation `eaecd6056` into `main` as `b2f251dac` through the normal
+repository controller. The ordinary Pages build, deployment and verification
+all succeeded. Historical reports retain their original source hashes and scope;
+the post-deployment evidence is recorded separately below.
+
+## Public delivery
+
+The [CI receipt](fpv-public-delivery-ci.json) records all 12 non-skipped product
+checks passing for the final implementation commit. General test/build jobs were
+explicitly skipped and are not counted as passes. The [publication receipt](fpv-public-delivery-artifacts/delivery-summary.json)
+binds the live site to merge `b2f251dac0d762d476f725b1bc601a2d6d5485a5`.
+Its 3,442 staged files total 963,681,552 bytes; the actual uploaded archive is
+966,676,480 bytes, leaving 13,323,520 bytes below the unchanged 980,000,000-byte
+cap. The empty optional-release catalogue is present; that catalogue check does
+not qualify separately selected optional releases.
+
+The [fresh public-password check](fpv-public-fresh-password-acceptance.json)
+passes Academy and World on the exact deployed version. Each fresh isolated
+Chrome context starts locked, accepts the ordinary password form and opens
+Rates & throttle without page errors. Credentials are excluded from evidence.
+The [fresh-install check](fpv-public-fresh-install-acceptance.json) also passes
+visible offline preparation, a complete offline browser-process restart, retained
+900°/s rates and Advanced recording export/exact replay/worker disposal on both
+routes. The [existing-install update](fpv-public-delivery-acceptance.json) passes
+both authentic old-main profiles: natural worker activation, offline process
+restart, preserved Legacy settings and 27°/108° camera, CLI patch import, backup
+restore, draft revert and Advanced export/exact replay/disposal. Academy resumes
+an explicitly recorded earlier activation checkpoint; World observes activation
+in the final run. The [Pages guide](fpv-pages-live-testing.md) retains the failed
+harness attempts and exact baseline provenance. No old install was recreated to
+manufacture an update pass. Both flight checks use short neutral-input recordings
+and establish lifecycle behavior only.
+No manual merge, deployment, forced worker activation or capacity override was
+used. Advanced remains optional, unscored and default-ineligible; physical
+aircraft/radio/touch/pilot and wider-platform qualification remain open.
+The [combined public receipt](fpv-public-delivery-verification.json) records
+completion of the available software delivery scope and hashes its evidence.
 
 ## Current delivery — historical migration and bounded Urban flight
 
@@ -46,7 +79,8 @@ canonical generated iOS-bridge import is restored, with an exact shared
 builder/publication capability check and its sparse-workflow dependency listed.
 Tests retain their assertions while using the existing 180-file World envelope
 and waiting for actual asynchronous export completion. No production dependency
-collector is bypassed and no test is disabled; hosted reruns remain separate.
+collector is bypassed and no test is disabled; the hosted reruns subsequently
+passed as recorded in the public delivery receipt above.
 
 All **701 practice tests**, **44 integration tests**, six editor-browser cases and
 release validation pass. The normal [Pages build/checks](fpv-pages-delivery-live-testing-evidence.json)
@@ -57,9 +91,10 @@ prepares preserved offline installations for the coming upgrade. The fresh
 passes all 250/500/1,000 Hz gates with 20 matching source pins and identical arena
 and Regional hashes. At the frozen 250 Hz, maximum response-metric error is
 1.8814% and minimum capacity is 60× on one Apple M4 Pro; this excludes rendering
-and production streaming. Exact committed CI, main publication and the public
-upgrade remain pending. Physical aircraft, radio/touch, pilot and wider-platform
-gates remain open. Advanced stays optional, unscored and default-ineligible.
+and production streaming. Exact committed CI and main publication subsequently
+passed; public-browser results are recorded separately above. Physical aircraft,
+radio/touch, pilot and wider-platform gates remain open. Advanced stays optional,
+unscored and default-ineligible.
 
 ## Seventh review — historical late imports and existing offline updates
 

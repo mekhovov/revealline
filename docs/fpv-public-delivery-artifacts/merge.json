@@ -1,0 +1,12 @@
+{
+  "capturedAt": "2026-10-17T03:11:11.485Z",
+  "headRefOid": "eaecd60562917b7cf47d4995af00d561b154debd",
+  "isDraft": false,
+  "mergeCommit": {
+    "oid": "b2f251dac0d762d476f725b1bc601a2d6d5485a5"
+  },
+  "mergedAt": "2026-10-17T03:10:08Z",
+  "number": 1561,
+  "state": "MERGED",
+  "url": "https://github.com/mekhovov/revealline/pull/1561"
+}

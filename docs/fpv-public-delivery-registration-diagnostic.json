@@ -1,0 +1,57 @@
+[
+  {
+    "id": "civilian-fpv",
+    "base": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+    "old": "3c695f880ce0bd4056234b052a15ff9674dec131c8844d09cb2db94b8d8d4fae",
+    "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/index.html?lang=en",
+    "controller": {
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/worker.js",
+      "state": "activated"
+    },
+    "byBase": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+    "byDocument": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+    "registrations": [
+      {
+        "scope": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+        "active": {
+          "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/worker.js",
+          "state": "activated"
+        },
+        "waiting": null,
+        "installing": null
+      }
+    ],
+    "caches": [
+      "revealline.optional.package.v1:/revealline/optional-practice/civilian-fpv/:3c695f880ce0bd4056234b052a15ff9674dec131c8844d09cb2db94b8d8d4fae",
+      "revealline-official-downloads-v1",
+      "revealline.optional.package.v1:/revealline/optional-practice/civilian-fpv/:7d2eb65182dee3b10a46ed0da87a3a36713162e8e2022e4883f0a36c65eab7fc"
+    ]
+  },
+  {
+    "id": "fpv-worlds",
+    "base": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/",
+    "old": "a4ea20b2c21aefa0eef3d03e330670e65c4b99cd92df2b6923edf52b7b6f8882",
+    "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?lang=en",
+    "controller": {
+      "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/worker.js",
+      "state": "activated"
+    },
+    "byBase": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/",
+    "byDocument": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/",
+    "registrations": [
+      {
+        "scope": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/",
+        "active": {
+          "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/worker.js",
+          "state": "activated"
+        },
+        "waiting": null,
+        "installing": null
+      }
+    ],
+    "caches": [
+      "revealline.optional.package.v1:/revealline/optional-practice/fpv-worlds/:a4ea20b2c21aefa0eef3d03e330670e65c4b99cd92df2b6923edf52b7b6f8882",
+      "revealline-official-downloads-v1"
+    ]
+  }
+]

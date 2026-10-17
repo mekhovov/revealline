@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-10-17T03:24:59.153Z",
+  "url": "https://mekhovov.github.io/revealline/main-deployment.json?fpv-check=b2f251dac0d762d476f725b1bc601a2d6d5485a5-1792207498688",
+  "status": 200,
+  "headers": {
+    "accept-ranges": "bytes",
+    "access-control-allow-origin": "*",
+    "age": "0",
+    "cache-control": "max-age=600",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-length": "222",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Sat, 17 Oct 2026 03:24:59 GMT",
+    "etag": "W/\"6ad2ea5c-12f\"",
+    "expires": "Sat, 17 Oct 2026 03:34:59 GMT",
+    "last-modified": "Sat, 17 Oct 2026 03:24:12 GMT",
+    "server": "GitHub.com",
+    "vary": "Accept-Encoding",
+    "via": "1.1 varnish",
+    "x-cache": "MISS",
+    "x-cache-hits": "0",
+    "x-fastly-request-id": "f2a3c168ea232c8f59055375608d4a9e5859ef0e",
+    "x-github-edge-region": "fra",
+    "x-github-request-id": "FA78:3D3AA5:1E62069:1EB82C8:6AD2EA8A",
+    "x-proxy-cache": "MISS",
+    "x-served-by": "cache-fra-eddf8230042-FRA",
+    "x-timer": "S1792207499.026394,VS0,VE111"
+  },
+  "body": "{\n  \"format\": \"revealline-main-deployment.v1\",\n  \"channel\": \"main\",\n  \"sourceRevision\": \"b2f251dac0d762d476f725b1bc601a2d6d5485a5\",\n  \"sourceCommittedAt\": \"2026-10-17T03:10:07Z\",\n  \"buildVersion\": \"main-b2f251dac0d7\",\n  \"play\": \"game/\",\n  \"releases\": \"https://github.com/mekhovov/revealline/releases\"\n}\n"
+}

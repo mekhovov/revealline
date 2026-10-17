@@ -1,0 +1,174 @@
+{
+  "format": "FPVPublicDraftPreviewDiagnostic.v1",
+  "checkedAt": "2026-10-17T03:34:21.660Z",
+  "profile": "/tmp/fpv-public-update-civilian-fpv-mlHu95",
+  "offlineReadOnlyInspection": true,
+  "savedRateDegreesPerSecond": 900,
+  "importedRateDegreesPerSecond": 880,
+  "priorRecordingRateDegreesPerSecond": 880,
+  "explanation": "Import preview updates the active draft. Save import remembers that draft under its original profile before selecting the newly imported profile. Selecting the original profile restores its retained draft; Advanced flies the draft. Revert draft is required to test the saved 900 degree per second profile.",
+  "inspection": {
+    "defaultProfileId": "public-rates",
+    "selectedSetupId": "my-drone",
+    "setup": {
+      "camera": {
+        "tilt": 27,
+        "verticalFov": 108
+      },
+      "id": "my-drone",
+      "name": "My drone",
+      "profileId": null
+    },
+    "savedProfile": {
+      "history": [],
+      "id": "public-rates",
+      "name": "Public rates acceptance",
+      "response": {
+        "format": "FlightResponseProfile.v2",
+        "maxTilt": 30,
+        "rates": {
+          "algorithm": "actual",
+          "axes": {
+            "pitch": {
+              "expo": 0,
+              "limit": 1998,
+              "rate": 67,
+              "rcRate": 7
+            },
+            "roll": {
+              "expo": 0,
+              "limit": 1998,
+              "rate": 90,
+              "rcRate": 7
+            },
+            "yaw": {
+              "expo": 0,
+              "limit": 1998,
+              "rate": 67,
+              "rcRate": 7
+            }
+          },
+          "format": "FpvRateProfile.v1",
+          "quickRatesRcExpo": false,
+          "throttle": {
+            "expo": 0,
+            "hover": 50,
+            "limitPercent": 100,
+            "limitType": "off",
+            "mid": 50,
+            "model": "betaflight-2025.12"
+          }
+        },
+        "responseTicks": 8
+      },
+      "revision": 0
+    },
+    "importedProfiles": [
+      {
+        "history": [],
+        "id": "tuning-1d785b9b-51e7-465c-a84e-178f27ecb250",
+        "name": "Public rates acceptance",
+        "provenance": {
+          "baseline": {
+            "kind": "draft",
+            "profileId": "public-rates",
+            "revision": 0,
+            "sha256": "aacbd1483ab614b9901b33d2d09925778a82a069fcd85de320b09fc95cd7118d"
+          },
+          "firmware": {
+            "origin": "manual",
+            "version": "2025.12.5"
+          },
+          "format": "FpvRateImportReceipt.v1",
+          "operation": "patch",
+          "preset": null,
+          "rateIdentity": "7c26b9edc690a45f",
+          "resultSha256": "5ee1f3562869197eaeb1349aae46c25c7e442989fb244bc167494cce1c9a877b",
+          "review": {
+            "applied": {
+              "entries": [
+                "{\"field\":\"rates_type\",\"value\":\"actual\"}",
+                "{\"field\":\"roll_srate\",\"value\":88}"
+              ],
+              "shortened": false,
+              "total": 2
+            },
+            "changed": {
+              "entries": ["{\"after\":88,\"before\":90,\"field\":\"roll_srate\"}"],
+              "shortened": false,
+              "total": 1
+            },
+            "ignored": {
+              "entries": [],
+              "shortened": false,
+              "total": 0
+            },
+            "inferred": {
+              "entries": [],
+              "shortened": false,
+              "total": 0
+            },
+            "normalizations": {
+              "entries": [],
+              "shortened": false,
+              "total": 0
+            },
+            "warnings": {
+              "entries": [
+                "Source version was selected manually because the file has no firmware header."
+              ],
+              "shortened": false,
+              "total": 1
+            }
+          },
+          "source": {
+            "bytes": 43,
+            "encoding": "utf-8",
+            "kind": "cli",
+            "sha256": "11bda4154ff6836f396b59196a2930f42bbf3468363935725b3ae1a295fb0ca6"
+          },
+          "sourceProfile": 0
+        },
+        "response": {
+          "format": "FlightResponseProfile.v2",
+          "maxTilt": 30,
+          "rates": {
+            "algorithm": "actual",
+            "axes": {
+              "pitch": {
+                "expo": 0,
+                "limit": 1998,
+                "rate": 67,
+                "rcRate": 7
+              },
+              "roll": {
+                "expo": 0,
+                "limit": 1998,
+                "rate": 88,
+                "rcRate": 7
+              },
+              "yaw": {
+                "expo": 0,
+                "limit": 1998,
+                "rate": 67,
+                "rcRate": 7
+              }
+            },
+            "format": "FpvRateProfile.v1",
+            "quickRatesRcExpo": false,
+            "throttle": {
+              "expo": 0,
+              "hover": 50,
+              "limitPercent": 100,
+              "limitType": "off",
+              "mid": 50,
+              "model": "betaflight-2025.12"
+            }
+          },
+          "responseTicks": 8
+        },
+        "revision": 0
+      }
+    ]
+  }
+}

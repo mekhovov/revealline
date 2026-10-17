@@ -1,0 +1,289 @@
+{
+  "capturedAt": "2026-10-17T03:26:06.173Z",
+  "conclusion": "success",
+  "createdAt": "2026-10-17T03:10:10Z",
+  "databaseId": 38997742653,
+  "event": "workflow_dispatch",
+  "headBranch": "main",
+  "headSha": "b2f251dac0d762d476f725b1bc601a2d6d5485a5",
+  "jobs": [
+    {
+      "completedAt": "2026-10-17T03:23:48Z",
+      "conclusion": "success",
+      "databaseId": 117293911323,
+      "name": "build",
+      "startedAt": "2026-10-17T03:10:14Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-17T03:10:15Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-17T03:10:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:11:34Z",
+          "conclusion": "success",
+          "name": "Check out the exact protected main revision",
+          "number": 2,
+          "startedAt": "2026-10-17T03:10:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:11:41Z",
+          "conclusion": "success",
+          "name": "Set up deterministic build runtime",
+          "number": 3,
+          "startedAt": "2026-10-17T03:11:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:11:41Z",
+          "conclusion": "success",
+          "name": "Bind the deployment identity",
+          "number": 4,
+          "startedAt": "2026-10-17T03:11:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:12:15Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before build",
+          "number": 5,
+          "startedAt": "2026-10-17T03:11:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:12:18Z",
+          "conclusion": "success",
+          "name": "Install locked build dependencies",
+          "number": 6,
+          "startedAt": "2026-10-17T03:12:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:22:38Z",
+          "conclusion": "success",
+          "name": "Build the rolling main snapshot",
+          "number": 7,
+          "startedAt": "2026-10-17T03:12:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:22:38Z",
+          "conclusion": "success",
+          "name": "Stage reviewed Flight practice releases (including an explicit empty directory)",
+          "number": 8,
+          "startedAt": "2026-10-17T03:22:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:22:38Z",
+          "conclusion": "success",
+          "name": "Add rolling-channel identity metadata",
+          "number": 9,
+          "startedAt": "2026-10-17T03:22:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:22:40Z",
+          "conclusion": "success",
+          "name": "Verify Pages capacity and record the exact inventory",
+          "number": 10,
+          "startedAt": "2026-10-17T03:22:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:23:13Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source after build",
+          "number": 11,
+          "startedAt": "2026-10-17T03:22:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:23:14Z",
+          "conclusion": "success",
+          "name": "Upload deployment receipt",
+          "number": 12,
+          "startedAt": "2026-10-17T03:23:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:23:43Z",
+          "conclusion": "success",
+          "name": "Upload the exact Pages artifact",
+          "number": 13,
+          "startedAt": "2026-10-17T03:23:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:23:45Z",
+          "conclusion": "success",
+          "name": "Verify the uploaded Pages archive against its inventory",
+          "number": 14,
+          "startedAt": "2026-10-17T03:23:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:23:46Z",
+          "conclusion": "success",
+          "name": "Preserve archive acceptance or failure evidence",
+          "number": 15,
+          "startedAt": "2026-10-17T03:23:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:23:46Z",
+          "conclusion": "success",
+          "name": "Post Set up deterministic build runtime",
+          "number": 29,
+          "startedAt": "2026-10-17T03:23:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:23:46Z",
+          "conclusion": "success",
+          "name": "Post Check out the exact protected main revision",
+          "number": 30,
+          "startedAt": "2026-10-17T03:23:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:23:46Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 31,
+          "startedAt": "2026-10-17T03:23:46Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38997742653/job/117293911323"
+    },
+    {
+      "completedAt": "2026-10-17T03:24:23Z",
+      "conclusion": "success",
+      "databaseId": 117296575501,
+      "name": "deploy",
+      "startedAt": "2026-10-17T03:23:51Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-17T03:23:54Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-17T03:23:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:24:22Z",
+          "conclusion": "success",
+          "name": "Deploy the exact protected main snapshot",
+          "number": 2,
+          "startedAt": "2026-10-17T03:23:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:24:22Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 3,
+          "startedAt": "2026-10-17T03:24:22Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38997742653/job/117296575501"
+    },
+    {
+      "completedAt": "2026-10-17T03:25:03Z",
+      "conclusion": "success",
+      "databaseId": 117296687733,
+      "name": "verify",
+      "startedAt": "2026-10-17T03:24:26Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-17T03:24:27Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-17T03:24:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:24:52Z",
+          "conclusion": "success",
+          "name": "Check out the deployed source and selector",
+          "number": 2,
+          "startedAt": "2026-10-17T03:24:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:24:58Z",
+          "conclusion": "success",
+          "name": "Set up the matching verification runtime",
+          "number": 3,
+          "startedAt": "2026-10-17T03:24:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:24:58Z",
+          "conclusion": "success",
+          "name": "Verify the public root identifies the exact main revision",
+          "number": 4,
+          "startedAt": "2026-10-17T03:24:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:24:59Z",
+          "conclusion": "success",
+          "name": "Verify selected practice versions and every published dependency",
+          "number": 5,
+          "startedAt": "2026-10-17T03:24:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:25:00Z",
+          "conclusion": "success",
+          "name": "Preserve the public practice verification receipt",
+          "number": 6,
+          "startedAt": "2026-10-17T03:24:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:25:00Z",
+          "conclusion": "success",
+          "name": "Post Set up the matching verification runtime",
+          "number": 11,
+          "startedAt": "2026-10-17T03:25:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:25:00Z",
+          "conclusion": "success",
+          "name": "Post Check out the deployed source and selector",
+          "number": 12,
+          "startedAt": "2026-10-17T03:25:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-17T03:25:00Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "startedAt": "2026-10-17T03:25:00Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38997742653/job/117296687733"
+    }
+  ],
+  "name": "Publish GitHub Pages from main",
+  "startedAt": "2026-10-17T03:10:10Z",
+  "status": "completed",
+  "updatedAt": "2026-10-17T03:25:04Z",
+  "url": "https://github.com/mekhovov/revealline/actions/runs/38997742653"
+}
