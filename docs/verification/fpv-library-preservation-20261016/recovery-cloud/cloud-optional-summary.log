@@ -1,0 +1,151 @@
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1230511Z ok 131 - 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1232300Z # Subtest: 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1233273Z ok 132 - 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1240933Z # Subtest: Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1242070Z ok 135 - Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1244190Z # Subtest: practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1245294Z ok 136 - practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1273796Z # Subtest: an installation pointer is recorded only after a verified worker activates
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1274626Z ok 143 - an installation pointer is recorded only after a verified worker activates
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1285326Z # Subtest: verified app actions do not wait for unrelated retained-version or launcher checks
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1286222Z ok 147 - verified app actions do not wait for unrelated retained-version or launcher checks
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1290859Z # Subtest: invalid retained metadata cannot blank a separately verified active app
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1291679Z ok 149 - invalid retained metadata cannot blank a separately verified active app
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1299051Z # Subtest: stable launcher keeps locale and appearance on auto-play and verified offline fallback
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1300112Z ok 152 - stable launcher keeps locale and appearance on auto-play and verified offline fallback
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1318277Z # Subtest: pagehide cancels its package operation and a fresh owner can reinstall
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1319061Z ok 159 - pagehide cancels its package operation and a fresh owner can reinstall
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1352085Z # Subtest: civilian-flight inspection exceptions are inconclusive without changing cached bytes
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1353041Z ok 171 - civilian-flight inspection exceptions are inconclusive without changing cached bytes
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1354819Z # Subtest: civilian-flight status distinguishes verified bytes from missing and hash-mismatched files
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1355834Z ok 172 - civilian-flight status distinguishes verified bytes from missing and hash-mismatched files
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1357547Z # Subtest: civilian-flight worker keeps cancellation received before its controller exists
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1358450Z ok 173 - civilian-flight worker keeps cancellation received before its controller exists
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1360316Z # Subtest: civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1361391Z ok 174 - civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1363257Z # Subtest: civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1364320Z ok 175 - civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1366109Z # Subtest: civilian-flight read-only status does not recreate a cache removed after its names were read
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1367117Z ok 176 - civilian-flight read-only status does not recreate a cache removed after its names were read
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1368848Z # Subtest: civilian-flight status cannot certify an empty dependency set or a missing package
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1369774Z ok 177 - civilian-flight status cannot certify an empty dependency set or a missing package
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1371549Z # Subtest: package inspection exceptions are inconclusive without changing cached bytes
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1372411Z ok 178 - package inspection exceptions are inconclusive without changing cached bytes
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1374245Z # Subtest: package status distinguishes verified bytes from missing and hash-mismatched files
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1375172Z ok 179 - package status distinguishes verified bytes from missing and hash-mismatched files
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1376897Z # Subtest: package worker keeps cancellation received before its controller exists
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1377701Z ok 180 - package worker keeps cancellation received before its controller exists
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1379354Z # Subtest: package worker waits for final writes then rejects cancellation, without announcing ready
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1380435Z ok 181 - package worker waits for final writes then rejects cancellation, without announcing ready
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1382179Z # Subtest: package old controlling worker does not recreate an offloaded cache on a later asset read
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1383157Z ok 182 - package old controlling worker does not recreate an offloaded cache on a later asset read
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1384869Z # Subtest: package read-only status does not recreate a cache removed after its names were read
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1385781Z ok 183 - package read-only status does not recreate a cache removed after its names were read
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1387408Z # Subtest: package status cannot certify an empty dependency set or a missing package
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1388235Z ok 184 - package status cannot certify an empty dependency set or a missing package
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1400536Z # Subtest: shared practice entry is explicit, pauses once and never prefetches package bytes
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1401433Z ok 189 - shared practice entry is explicit, pauses once and never prefetches package bytes
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1403102Z # Subtest: closing an in-flight optional catalog discards late results and restores its opener
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1404166Z ok 190 - closing an in-flight optional catalog discards late results and restores its opener
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1411183Z # Subtest: local gym and FPV previews stay separate and usable while the public catalog is unavailable
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1412206Z ok 193 - local gym and FPV previews stay separate and usable while the public catalog is unavailable
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1413925Z # Subtest: SIM opens the checked bundled entry directly without an interstitial or package download
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1414880Z ok 194 - SIM opens the checked bundled entry directly without an interstitial or package download
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1422448Z # Subtest: standalone directory preserves selected locale for main game, guide and package links
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1423402Z ok 197 - standalone directory preserves selected locale for main game, guide and package links
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1473962Z # Subtest: practice promises do not overwrite old promises and explicit conflicting imports fail closed
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1474958Z ok 216 - practice promises do not overwrite old promises and explicit conflicting imports fail closed
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1485727Z # Subtest: archive admission rejects a missing transitive import even when member hashes and counts match
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1486759Z ok 220 - archive admission rejects a missing transitive import even when member hashes and counts match
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1488599Z # Subtest: SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1489616Z ok 221 - SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1494699Z # Subtest: tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1495861Z ok 223 - tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1508081Z # Subtest: matching originals are verified without another POST
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1508700Z ok 228 - matching originals are verified without another POST
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1510358Z # Subtest: other-envelope originals exceeding the combined budget prevent every optional POST
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1511310Z ok 229 - other-envelope originals exceeding the combined budget prevent every optional POST
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1519403Z # Subtest: preflight rejects missing-id with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1519956Z ok 233 - preflight rejects missing-id with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1521375Z # Subtest: preflight rejects wrong-id with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1522067Z ok 234 - preflight rejects wrong-id with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1523419Z # Subtest: preflight rejects foreign-repository with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1524177Z ok 235 - preflight rejects foreign-repository with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1525499Z # Subtest: preflight rejects published with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1526033Z ok 236 - preflight rejects published with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1527325Z # Subtest: preflight rejects prerelease with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1527873Z ok 237 - preflight rejects prerelease with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1529185Z # Subtest: preflight rejects wrong-target with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1529741Z ok 238 - preflight rejects wrong-target with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1531188Z # Subtest: preflight rejects foreign-endpoint with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1531799Z ok 239 - preflight rejects foreign-endpoint with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1533140Z # Subtest: preflight rejects duplicate-name with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1533721Z ok 240 - preflight rejects duplicate-name with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1535035Z # Subtest: preflight rejects duplicate-id with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1535604Z ok 241 - preflight rejects duplicate-id with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1536912Z # Subtest: preflight rejects missing-digest with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1537495Z ok 242 - preflight rejects missing-digest with zero POSTs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1571357Z # Subtest: reconciliation keeps all original receipt pins while allowing only the verified status distinction
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:00.1572454Z ok 252 - reconciliation keeps all original receipt pins while allowing only the verified status distinction
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:01.1740655Z # Subtest: only reviewed original package bytes enter isolated versioned paths and the stable launcher
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:01.1741478Z ok 253 - only reviewed original package bytes enter isolated versioned paths and the stable launcher
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:03.8763753Z # Subtest: input bytes remain unchanged and metadata/chunk integrity is verified
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:03.8764687Z ok 263 - input bytes remain unchanged and metadata/chunk integrity is verified
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:03.8766870Z # Subtest: unsupported animation, bit depths and row filters fail rather than imply equality
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:03.8767939Z ok 264 - unsupported animation, bit depths and row filters fail rather than imply equality
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7251288Z # Subtest: bundled FPV pins final default bytes and has its own bounded cache outside core
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7252133Z ok 288 - bundled FPV pins final default bytes and has its own bounded cache outside core
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7253886Z # Subtest: bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7254791Z ok 289 - bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7256654Z # Subtest: actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7257827Z ok 290 - actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7259792Z # Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7261238Z ok 291 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7266253Z # Subtest: rewritten archive hashes cannot replace a reviewed vendor dependency
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7267019Z ok 293 - rewritten archive hashes cannot replace a reviewed vendor dependency
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7268684Z # Subtest: package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7269671Z ok 294 - package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7271627Z # Subtest: source budget includes the final source-inventory member, not only its listed dependencies
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7272631Z ok 295 - source budget includes the final source-inventory member, not only its listed dependencies
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7274210Z # Subtest: generic optional worker cleanup owns only its exact package scope
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7274664Z ok 296 - generic optional worker cleanup owns only its exact package scope
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7296989Z # Subtest: optional practice archives are reproducible, admitted completely and absent from core build inputs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7297609Z ok 310 - optional practice archives are reproducible, admitted completely and absent from core build inputs
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7300545Z # Subtest: an unexpected runtime import fails closed before a package can be published
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7301035Z ok 312 - an unexpected runtime import fails closed before a package can be published
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7317499Z # Subtest: config resolves paths relative to itself and pins candidate manifests without admitting archives
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:29.7318096Z ok 323 - config resolves paths relative to itself and pins candidate manifests without admitting archives
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:50.6435541Z # tests 334
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:50.6435906Z # pass 334
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:50.6436071Z # fail 0
+optional-practice	Verify optional routes, replay, input and installation isolation	2026-10-16T02:31:50.6459414Z # skipped 0
+optional-practice	Freeze twice and verify optional package artifacts	﻿2026-10-16T02:31:50.6546726Z ##[group]Run node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate --base-path /revealline/ --packages civilian-flight,civilian-fpv,fpv-worlds
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:50.6547698Z ^[[36;1mnode scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate --base-path /revealline/ --packages civilian-flight,civilian-fpv,fpv-worlds^[[0m
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:50.6604129Z shell: /usr/bin/bash -e {0}
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:50.6604357Z ##[endgroup]
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7835523Z {
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7836197Z   "output": "/home/runner/work/revealline/revealline/.cache/optional-flight-candidate",
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7836774Z   "version": "v0.151.1",
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7837211Z   "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7837754Z   "sourceTree": "dab7b812eb88c9e744f67b0d9d1cca70df492c7c",
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7838170Z   "packageIds": [
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7838357Z     "civilian-flight",
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7838549Z     "civilian-fpv",
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7838815Z     "fpv-worlds"
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7838980Z   ],
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7839160Z   "reproducibleBuilds": 2,
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7839397Z   "committedInputsVerified": true,
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7839634Z   "zipMembersVerified": true,
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7839857Z   "publicEligible": false
+optional-practice	Freeze twice and verify optional package artifacts	2026-10-16T02:31:59.7840342Z }
+optional-practice	Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f	2026-10-16T02:31:59.8189678Z   name: optional-flight-candidate-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3
+optional-practice	Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f	2026-10-16T02:31:59.8190272Z   path: .cache/optional-flight-candidate/
+optional-practice	Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f	2026-10-16T02:32:01.7670984Z SHA256 digest of uploaded artifact zip is b476b71480a81c565c7d5a700faa25097e4477dd518d9fe0a3b3fd7d8914aaa6
+optional-practice	Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f	2026-10-16T02:32:02.0331929Z Artifact optional-flight-candidate-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3.zip successfully finalized. Artifact ID 12021476397
+optional-practice	Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f	2026-10-16T02:32:02.0333143Z Artifact optional-flight-candidate-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3 has been successfully uploaded! Final size is 23157547 bytes. Artifact ID is 12021476397
+optional-practice	Report optional-package boundary	﻿2026-10-16T02:32:02.0493545Z ##[group]Run echo 'The assisted orientation gym, FPV Flight Studio and FPV World Studio are separately admitted optional candidates, independent of core and edition offline caches.' >> "$GITHUB_STEP_SUMMARY"
+optional-practice	Report optional-package boundary	2026-10-16T02:32:02.0495409Z ^[[36;1mecho 'The assisted orientation gym, FPV Flight Studio and FPV World Studio are separately admitted optional candidates, independent of core and edition offline caches.' >> "$GITHUB_STEP_SUMMARY"^[[0m
+optional-practice	Report optional-package boundary	2026-10-16T02:32:02.0497387Z ^[[36;1mecho 'Archive integrity was checked. Automated route/replay tests follow the explicit test policy; waived suites are skipped, not passed. This is not publication, physical radio evidence or real flight proficiency.' >> "$GITHUB_STEP_SUMMARY"^[[0m
+optional-practice	Report optional-package boundary	2026-10-16T02:32:02.0570422Z shell: /usr/bin/bash -e {0}
+optional-practice	Report optional-package boundary	2026-10-16T02:32:02.0570776Z ##[endgroup]
+

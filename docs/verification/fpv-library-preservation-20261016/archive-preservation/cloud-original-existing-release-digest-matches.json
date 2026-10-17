@@ -1,0 +1,29 @@
+{
+  "capturedAt": "2026-10-16T04:06:09.672250+00:00",
+  "queriedSHA256": [
+    "90dd794fa64e7601f4909f1b19f0e124f0459b0b9d35d8852b78ff4e5f0ec6f5",
+    "5b58b6edad94eda3dc092f068f29a71553c8218bd931dddc45d78db28368889b",
+    "5c609f93f64c4aef0875ad40ac62d5c9db9d6932ac70712e4f3ede4efa3637c3",
+    "50314e05aafc0863e6be34781c779a5bef3aabed56620be73f7ddcb330929cb2"
+  ],
+  "method": "Paginated authenticated repository release asset metadata; exact digest matching.",
+  "matchesOutsideOwnedDraftRelease": [],
+  "ownedDraftMatchesAtCheckpoint": [
+    {
+      "assetID": 646078171,
+      "digest": "sha256:5b58b6edad94eda3dc092f068f29a71553c8218bd931dddc45d78db28368889b",
+      "name": "actions-b65d80f7-12022169497--company-candidate--5b58b6edad94.zip",
+      "releaseID": 414505790,
+      "size": 78418143,
+      "state": "uploaded"
+    },
+    {
+      "assetID": 646069449,
+      "digest": "sha256:90dd794fa64e7601f4909f1b19f0e124f0459b0b9d35d8852b78ff4e5f0ec6f5",
+      "name": "actions-b65d80f7-12022193739--optional-flight-candidate--90dd794fa64e.zip",
+      "releaseID": 414505790,
+      "size": 23157773,
+      "state": "uploaded"
+    }
+  ]
+}

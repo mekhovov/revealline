@@ -1,0 +1,51 @@
+{
+  "members": [
+    {
+      "path": "capacity-inventory.json",
+      "bytes": 1725,
+      "sha256": "f5d23a21b85c8b5591b33ed7ca980433b004a50c0edd8e1a8cf1f7aa32d2bd7e",
+      "compressedBytes": 957,
+      "crc32": "db94a831",
+      "depth": 0
+    },
+    {
+      "path": "checksums.json",
+      "bytes": 949,
+      "sha256": "05cee496bdbf54364de9c73842a9d613f664fdf5def29320e77cf3ef4a47d055",
+      "compressedBytes": 493,
+      "crc32": "2fb51d5a",
+      "depth": 0
+    },
+    {
+      "path": "candidate-verification.json",
+      "bytes": 2143,
+      "sha256": "3005217296126cf5454fb6b63f86ac92f9febfe9574732b8f70929b89705db1a",
+      "compressedBytes": 1015,
+      "crc32": "73f04017",
+      "depth": 0
+    },
+    {
+      "path": "editions.json",
+      "bytes": 1835,
+      "sha256": "cce428ed44086088294d01d4f175e21a52d988a3d49d47f16cc3b16fca9f875d",
+      "compressedBytes": 899,
+      "crc32": "950027bc",
+      "depth": 0
+    },
+    {
+      "path": "manifest-fpv-learning.json",
+      "bytes": 158190,
+      "sha256": "b5d447efe392b673660487c6d0739091a49f5a6f9d0c4e81be3fb03094ec7a49",
+      "compressedBytes": 57565,
+      "crc32": "2f4b5507",
+      "depth": 0
+    }
+  ],
+  "forbiddenNames": [],
+  "unmatchedSecretPatternMembers": [],
+  "knownVendorWasmPatternOccurrences": [],
+  "nestedArchives": 0,
+  "memberCountIncludingNested": 5,
+  "uncompressedBytesIncludingNested": 164842,
+  "inspectionPassed": true
+}

@@ -1,0 +1,76 @@
+release-ready	Set up job	﻿2026-10-16T02:35:00.1058434Z Current runner version: '2.337.0'
+release-ready	Set up job	2026-10-16T02:35:00.1087415Z ##[group]Runner Image Provisioner
+release-ready	Set up job	2026-10-16T02:35:00.1088377Z Hosted Compute Agent
+release-ready	Set up job	2026-10-16T02:35:00.1088969Z Version: 20261012.601
+release-ready	Set up job	2026-10-16T02:35:00.1089703Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+release-ready	Set up job	2026-10-16T02:35:00.1090487Z Build Date: 2026-10-12T17:48:21Z
+release-ready	Set up job	2026-10-16T02:35:00.1091231Z Worker ID: {610ed02d-ca56-46ef-9432-49d67c816214}
+release-ready	Set up job	2026-10-16T02:35:00.1092019Z Region: westus
+release-ready	Set up job	2026-10-16T02:35:00.1092561Z Cloud: Azure
+release-ready	Set up job	2026-10-16T02:35:00.1093184Z ##[endgroup]
+release-ready	Set up job	2026-10-16T02:35:00.1094713Z ##[group]Operating System
+release-ready	Set up job	2026-10-16T02:35:00.1095437Z Ubuntu
+release-ready	Set up job	2026-10-16T02:35:00.1096284Z 24.04.5
+release-ready	Set up job	2026-10-16T02:35:00.1096831Z LTS
+release-ready	Set up job	2026-10-16T02:35:00.1097410Z ##[endgroup]
+release-ready	Set up job	2026-10-16T02:35:00.1098011Z ##[group]Runner Image
+release-ready	Set up job	2026-10-16T02:35:00.1098656Z Image: ubuntu-24.04
+release-ready	Set up job	2026-10-16T02:35:00.1099281Z Version: 20261012.334.1
+release-ready	Set up job	2026-10-16T02:35:00.1100365Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+release-ready	Set up job	2026-10-16T02:35:00.1102171Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+release-ready	Set up job	2026-10-16T02:35:00.1103184Z ##[endgroup]
+release-ready	Set up job	2026-10-16T02:35:00.1104333Z ##[group]GITHUB_TOKEN Permissions
+release-ready	Set up job	2026-10-16T02:35:00.1107034Z Contents: read
+release-ready	Set up job	2026-10-16T02:35:00.1107701Z Metadata: read
+release-ready	Set up job	2026-10-16T02:35:00.1108277Z ##[endgroup]
+release-ready	Set up job	2026-10-16T02:35:00.1110941Z Secret source: Actions
+release-ready	Set up job	2026-10-16T02:35:00.1111933Z Cache mode: write
+release-ready	Set up job	2026-10-16T02:35:00.1112929Z Prepare workflow directory
+release-ready	Set up job	2026-10-16T02:35:00.1458766Z Prepare all required actions
+release-ready	Set up job	2026-10-16T02:35:00.1567418Z Complete job name: release-ready
+release-ready	Apply the selected PR gate policy	﻿2026-10-16T02:35:00.2434144Z ##[group]Run test "$PREFLIGHT_RESULT" = success
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2435243Z ^[[36;1mtest "$PREFLIGHT_RESULT" = success^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2436237Z ^[[36;1mif [ "$ADMISSION" != hold ]; then^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2437309Z ^[[36;1m  if [ "$FOCUSED_REQUIRED" = true ]; then^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2438158Z ^[[36;1m    test "$FOCUSED_RESULT" = success^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2438861Z ^[[36;1m  else^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2439515Z ^[[36;1m    test "$FOCUSED_REQUIRED" = false^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2440263Z ^[[36;1m    test "$FOCUSED_RESULT" = skipped^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2440941Z ^[[36;1m  fi^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2441627Z ^[[36;1mfi^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2442254Z ^[[36;1mif [ "$ADMISSION" = maintenance ]; then^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2443847Z ^[[36;1m  echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2445345Z ^[[36;1m  exit 0^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2445916Z ^[[36;1mfi^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2447134Z ^[[36;1mif [ "$ADMISSION" = scheduled ]; then^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2448487Z ^[[36;1m  echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2449724Z ^[[36;1m  exit 0^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2450306Z ^[[36;1mfi^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2451024Z ^[[36;1mif [ "$ADMISSION" = release-evidence ]; then^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2452353Z ^[[36;1m  echo 'Docs-only post-merge release evidence: exact-source validation is required without allocating another product version.'^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2453621Z ^[[36;1m  test "$BUILD_RESULT" = success^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2454309Z ^[[36;1m  exit 0^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2454850Z ^[[36;1mfi^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2455486Z ^[[36;1mif [ "$ADMISSION" != release ]; then^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2457038Z ^[[36;1m  echo '::error::This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.'^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2458487Z ^[[36;1m  exit 1^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2459035Z ^[[36;1mfi^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2459570Z ^[[36;1mtest "$BUILD_RESULT" = success^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2460345Z ^[[36;1mif [ "$FULL_CI" = true ]; then^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2461022Z ^[[36;1m  test "$TEST_RESULT" = success^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2462018Z ^[[36;1melse^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2462749Z ^[[36;1m  echo "Full tests are deferred and do not block this PR."^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.2463547Z ^[[36;1mfi^[[0m
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3526950Z shell: /usr/bin/bash -e {0}
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3528420Z env:
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3529259Z   ADMISSION: maintenance
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3530118Z   BUILD_RESULT: skipped
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3530927Z   FOCUSED_RESULT: success
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3531729Z   FOCUSED_REQUIRED: true
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3532542Z   FULL_CI: false
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3533338Z   PREFLIGHT_RESULT: success
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3534184Z   TEST_RESULT: skipped
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3534976Z ##[endgroup]
+release-ready	Apply the selected PR gate policy	2026-10-16T02:35:00.3839682Z Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.
+release-ready	Complete job	﻿2026-10-16T02:35:00.4013757Z Cleaning up orphan processes
+

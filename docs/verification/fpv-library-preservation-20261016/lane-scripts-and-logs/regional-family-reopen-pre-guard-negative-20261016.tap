@@ -1,0 +1,116 @@
+TAP version 13
+# Subtest: 24 exact current offers form ten explicit families without changing pins or choosing by title/hash order
+ok 1 - 24 exact current offers form ten explicit families without changing pins or choosing by title/hash order # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.461292
+  ...
+# Subtest: active saved editions win defaults, unoffered revisions remain exact, and unfamiliar retained IDs stay visible
+ok 2 - active saved editions win defaults, unoffered revisions remain exact, and unfamiliar retained IDs stay visible # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039417
+  ...
+# Subtest: one family card retains every exact version and performs no mutation during open/refresh/locale changes
+ok 3 - one family card retains every exact version and performs no mutation during open/refresh/locale changes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035125
+  ...
+# Subtest: primary Fly keeps the active saved identity; explicit version download is separate and focus stays in its drawer
+ok 4 - primary Fly keeps the active saved identity; explicit version download is separate and focus stays in its drawer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031833
+  ...
+# Subtest: failed primary Fly exposes exact repair, and destructive actions still require a reviewed confirmation
+ok 5 - failed primary Fly exposes exact repair, and destructive actions still require a reviewed confirmation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03325
+  ...
+# Subtest: a revealed Repair action does not force Versions open again after the player closes it
+ok 6 - a revealed Repair action does not force Versions open again after the player closes it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034166
+  ...
+# Subtest: unoffered saved worlds keep localized labels and explicit Fly/removal controls inside Versions
+ok 7 - unoffered saved worlds keep localized labels and explicit Fly/removal controls inside Versions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.074667
+  ...
+# Subtest: remove-all confirmation stays scoped to its exact world ID, including families with multiple IDs
+ok 8 - remove-all confirmation stays scoped to its exact world ID, including families with multiple IDs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030542
+  ...
+# Subtest: finishing an explicit download does not reopen Versions or steal focus after the player closes its drawer
+ok 9 - finishing an explicit download does not reopen Versions or steal focus after the player closes its drawer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.119042
+  ...
+# Subtest: a deferred saved-region refresh preserves the exact focused Fly edition across an active-version change
+ok 10 - a deferred saved-region refresh preserves the exact focused Fly edition across an active-version change # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.085584
+  ...
+# Subtest: idempotent Library reopen keeps focus before refresh while genuinely required host moves remain intact
+not ok 11 - idempotent Library reopen keeps focus before refresh while genuinely required host moves remain intact
+  ---
+  duration_ms: 34.156958
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-regional-family-library-source-20261016/game/test/fpv-regional-library-families.test.mjs:496:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    An already-adjacent root must not be reinserted before focus capture
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-regional-family-library-source-20261016/game/test/fpv-regional-library-families.test.mjs:520:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: refresh keeps a pre-existing radio focus lease through body blur, with full world ID plus hash identity
+ok 12 - refresh keeps a pre-existing radio focus lease through body blur, with full world ID plus hash identity # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.428459
+  ...
+# Subtest: refresh never changes a vanished Fly action into Download or a different primary Fly, in EN and UK
+ok 13 - refresh never changes a vanished Fly action into Download or a different primary Fly, in EN and UK # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038416
+  ...
+# Subtest: refresh keeps Versions as the safe confirmation target when the same displayed edition no longer has Fly
+ok 14 - refresh keeps Versions as the safe confirmation target when the same displayed edition no longer has Fly # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033
+  ...
+# Subtest: refresh of a no-longer-listed retained family returns connected focus without implying removal or taking action
+ok 15 - refresh of a no-longer-listed retained family returns connected focus without implying removal or taking action # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.07425
+  ...
+# Subtest: a pending metadata refresh respects later disclosure and navigation choices instead of restoring stale primary intent
+ok 16 - a pending metadata refresh respects later disclosure and navigation choices instead of restoring stale primary intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034833
+  ...
+# Subtest: SIM controller navigation opens Versions and reaches exact actions without activating on join or traversing hidden editions
+ok 17 - SIM controller navigation opens Versions and reaches exact actions without activating on join or traversing hidden editions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028083
+  ...
+# Subtest: calibrated-radio menu gestures open Versions and focus an edition without flying or writing on disclosure
+ok 18 - calibrated-radio menu gestures open Versions and focus an edition without flying or writing on disclosure # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.131625
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 17
+# todo 0
+# duration_ms 1206.725708

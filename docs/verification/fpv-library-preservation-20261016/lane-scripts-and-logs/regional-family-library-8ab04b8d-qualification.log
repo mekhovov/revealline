@@ -1,0 +1,122 @@
+{
+  "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+  "sourceTree": "dab7b812eb88c9e744f67b0d9d1cca70df492c7c",
+  "version": "v0.151.1",
+  "scope": "Every archive member length/hash and exact inventory verified; not native/browser qualification",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "kind": "distribution",
+      "verifiedMembers": 94,
+      "uncompressedBytes": 3748578,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3762262,
+      "archiveSHA256": "a3c013d6fe89814860b3988da5d72519d0b091bb312f94d9db5cd7b6f1d47cf7"
+    },
+    {
+      "id": "civilian-flight",
+      "kind": "source",
+      "verifiedMembers": 96,
+      "uncompressedBytes": 3783306,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3797326,
+      "archiveSHA256": "8ff04917062cb5486512d160d0cabbed1e55f5e8f7cdf628b7a7d025f3e05241"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "distribution",
+      "verifiedMembers": 101,
+      "uncompressedBytes": 6766304,
+      "limits": {
+        "files": 104,
+        "bytes": 8388608
+      },
+      "archiveBytes": 6781322,
+      "archiveSHA256": "69d52d6003d6fb8d514fd638e2f2c52f669a3fb50a780c6bbbbb8224091684b8"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "source",
+      "verifiedMembers": 103,
+      "uncompressedBytes": 6802465,
+      "limits": {
+        "files": 104,
+        "bytes": 8388608
+      },
+      "archiveBytes": 6817787,
+      "archiveSHA256": "135971f6b79c13b641db1a065e3ae252e4f131950499bcd41b806dc0389cb695"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "distribution",
+      "verifiedMembers": 162,
+      "uncompressedBytes": 17574592,
+      "limits": {
+        "files": 164,
+        "bytes": 20971520
+      },
+      "archiveBytes": 17601020,
+      "archiveSHA256": "47ae369ca6fcf448e5a75e552ce1a4323b0f464ec67565535eeab24f3177b1cf"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "source",
+      "verifiedMembers": 164,
+      "uncompressedBytes": 17619301,
+      "limits": {
+        "files": 164,
+        "bytes": 20971520
+      },
+      "archiveBytes": 17646033,
+      "archiveSHA256": "341bc2cd2392c88468e252e30ed552a81d7df6fd0280a03c67a75680cf0e637c"
+    }
+  ]
+}
+[{"id":"civilian-flight","modules":68,"imports":96},{"id":"civilian-fpv","modules":81,"imports":152},{"id":"fpv-worlds","modules":134,"imports":340}]
+{
+  "capturedAt": "2026-10-16T02:37:01.547854+00:00",
+  "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+  "sourceTree": "dab7b812eb88c9e744f67b0d9d1cca70df492c7c",
+  "cloudRun": 38840608785,
+  "artifactId": 12020917390,
+  "packageRevision": "2f7cf1e44d94c82359bb74143950b17f981fd2be587019f0ead30e490efb5197",
+  "runtimeArchiveSHA256": "47ae369ca6fcf448e5a75e552ce1a4323b0f464ec67565535eeab24f3177b1cf",
+  "githubArtifactSHA256": "e75ad312329bfe2a8e004855a080f7de0f612de91f209748dddaf75ce2bc29d1",
+  "topLevelChecksums": 15,
+  "allArchiveReceipt": "all-package-members-receipt.json",
+  "importClosureReceipt": "archive-import-closure-receipt.json",
+  "packagedFamilyAndLabelChecks": {
+    "passed": true,
+    "cases": 24,
+    "tests": [
+      {
+        "path": "game/test/fpv-regional-library-families.test.mjs",
+        "sha256": "62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394"
+      },
+      {
+        "path": "game/test/fpv-regional-library-labels.test.mjs",
+        "sha256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272"
+      },
+      {
+        "path": "game/test/helpers/couch-dom.mjs",
+        "sha256": "145f0d3010e26c3cc4be105050c8e344808983907d3121741c9ae6a8bc382001"
+      },
+      {
+        "path": "game/test/fixtures/fpv-regional-labels-metadata.json",
+        "sha256": "d19d86f670febf58924cabb169cf93f7e22358ab8ddde493fe68da5fae75046c"
+      }
+    ],
+    "runtimeBytesUnchanged": true,
+    "sourceAdaptations": [],
+    "hostSetup": "Shipped i18next engine loaded before generated bootstrap, matching its documented browser host dependency. The prior81 standalone host omission remains preserved in its separate qualification folder; this source is tested with its standard host engine from the start."
+  },
+  "nativeAccepted": false,
+  "publicAccepted": false,
+  "scope": "Exact optional cloud package, six source/distribution archive member inventories/hashes/budgets and three finished import closures checked. Twenty-four exact-source software groups exercise shipped Library/UI/input modules using isolated synthetic metadata/callbacks and deterministic DOM. No player data, real assets loaded, runtime renderer, native DOM, physical device, offline/restart/public acceptance, storage failure diagnosis or budget change."
+}

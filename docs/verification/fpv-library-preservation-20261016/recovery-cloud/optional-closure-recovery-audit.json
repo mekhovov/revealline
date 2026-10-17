@@ -1,0 +1,44 @@
+{
+  "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+  "exactValidatorFilesMatchGitHub": [
+    {
+      "path": "publishing/edition-zip.mjs",
+      "bytes": 6736,
+      "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+    },
+    {
+      "path": "publishing/optional-module-closure.mjs",
+      "bytes": 2040,
+      "sha256": "bb6ba3bad5692024ffd644f6e31f08441e4cf375be75b3a1582af1778d3270e4"
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "bytes": 27532,
+      "sha256": "bf07c6cc53ca4c53e170f320822e2a62db038f6835f89a9be967e1b2ff2417bc"
+    },
+    {
+      "path": "publishing/vendor/acorn-8.18.0.mjs",
+      "bytes": 233301,
+      "sha256": "953573b8fdab71599749ea5f2b33d3e760c2116178f9423ee7458dbe39d59453"
+    }
+  ],
+  "finishedArchiveImportClosuresReverified": [
+    {
+      "id": "civilian-flight",
+      "modules": 68,
+      "imports": 96
+    },
+    {
+      "id": "civilian-fpv",
+      "modules": 81,
+      "imports": 152
+    },
+    {
+      "id": "fpv-worlds",
+      "modules": 134,
+      "imports": 340
+    }
+  ],
+  "originalClosureReceiptUnchanged": true,
+  "scope": "Archive bytes and static module closure only; no source fallback, browser, database or flight"
+}

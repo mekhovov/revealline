@@ -1,0 +1,753 @@
+{
+  "format": "IndependentCapturedMainPrimarySourcePrivacyReview.v1",
+  "createdUTC": "2026-10-16T08:34:13.340727+00:00",
+  "scope": "Exact main-app source81-object capture only; excludes all private companion roots, source caches and unrelated metadata.",
+  "capturedSourceHead": "d177dbac9cb5da0b5219c6f27105b9f4d0ddcac7",
+  "sourcePreservationEligible": true,
+  "verifiedRawObjectCounts": {
+    "commit": 4,
+    "tree": 27,
+    "blob": 50
+  },
+  "verifiedRawObjectBytes": 3935274,
+  "rawObjectSHA1SHA256AndSizesAllVerified": true,
+  "blobsReviewed": 50,
+  "commitMetadataReviewed": 4,
+  "finiteCredentialPatterns": 6,
+  "credentialCandidates": 0,
+  "extraPrivacyPatterns": 4,
+  "extraContextFindings": 2,
+  "exactContextDispositions": [
+    {
+      "sha": "d177dbac9cb5da0b5219c6f27105b9f4d0ddcac7",
+      "type": "commit",
+      "bytes": 247,
+      "SHA256": "af74757e1e1f2c24065062608ae822218688cecd914d2b1dd27c46c4c57e0490",
+      "paths": [],
+      "rawGitIdentityVerified": true,
+      "context": "Main-app FPV source and review-document commit metadata",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "1ff0d996d827493f87f8a31b659d9c24c1cdcf41",
+      "type": "commit",
+      "bytes": 251,
+      "SHA256": "9747c9ea47b8c5c11076c8c05e0264c7d0a4ea0402d7587224a4c6de4779ec13",
+      "paths": [],
+      "rawGitIdentityVerified": true,
+      "context": "Main-app FPV source and review-document commit metadata",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "3f0d3abbc92675d61efd71ed6039d2d89ef46059",
+      "type": "commit",
+      "bytes": 255,
+      "SHA256": "69e4b8796b4f160a8adc7d9f30a8be16d8264841bb7436553cf40916866e4229",
+      "paths": [],
+      "rawGitIdentityVerified": true,
+      "context": "Main-app FPV source and review-document commit metadata",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "1506e44f4ae353a6389da90eb9ffad1a011783aa",
+      "type": "commit",
+      "bytes": 1324,
+      "SHA256": "815a9160846ca6196a1f46e7ece1ca38b0b764dc71943df2dbe014d40612cf18",
+      "paths": [],
+      "rawGitIdentityVerified": true,
+      "context": "Main-app FPV source and review-document commit metadata",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "03c99b88c8316fefab4fe35d0728c73a51fe2af0",
+      "type": "blob",
+      "bytes": 26051,
+      "SHA256": "3d4a8c73fbc7097c9586f9718032e8205c5e0a3acc0ecd20ef764ffcba34a78a",
+      "paths": [
+        "game/test/fpv-advanced-regional.test.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "08f80af6017c2b0175cdd1e3ff60586b06447801",
+      "type": "blob",
+      "bytes": 4555,
+      "SHA256": "bb0a2503c284a9e7b1ea9ee0c6596beaa6f54418159de71d8204759483eab40b",
+      "paths": [
+        "game/test/fpv-advanced-terrain-storage.test.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "ad22b9d831759ed57e3e4605d0fc0c23e75564a4",
+      "type": "blob",
+      "bytes": 12106,
+      "SHA256": "54c9905c63a60145363a443f280dbf6c330ba151fb3e0ad16095ab75f723e806",
+      "paths": [
+        "game/test/fpv-advanced-worker.test.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "dffd8f55152b3d73b3720f91a758a13e58a3dfb2",
+      "type": "blob",
+      "bytes": 19047,
+      "SHA256": "d2f7935f2581507c0f27fc84e7a70310e3067d9b7befb8830a7d2cce57c0478a",
+      "paths": [
+        "game/test/fpv-advanced.test.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "b31b9e05351ad3f143a2157ef2bf19b684c9036b",
+      "type": "blob",
+      "bytes": 21364,
+      "SHA256": "738b70b2406f7ec00c410a3c866d3224428d88bb82596f66506ecc2516fbd547",
+      "paths": [
+        "game/test/fpv-betaflight-import.test.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "ba1ae55ef95a719fc11aac69b87d9050b7ec87f2",
+      "type": "blob",
+      "bytes": 48043,
+      "SHA256": "d011065a407ec9ad24633bed62a692519254fd943450526858709e8030638caf",
+      "paths": [
+        "game/test/fpv-tuning-ui.test.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "8ede0769b7e66a661adfbe01f620e5af84413c0d",
+      "type": "blob",
+      "bytes": 94010,
+      "SHA256": "5ef5d3987dd54318e373092d6d72ec536b4c5722b30db2fb494cd94e7792a8d4",
+      "paths": [
+        "game/test/fpv-world-appearance-ui.test.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "59eaca5fcb37174c3ca5d479d84c0c2dc7415635",
+      "type": "blob",
+      "bytes": 18652,
+      "SHA256": "7f79dcfaef3961443caa6f9539d5f93b933408339d991fabb075b8392b660fa3",
+      "paths": [
+        "scripts/smoke-fpv-advanced-regional.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "81422759e6932755155bf0393b777d85bf04a652",
+      "type": "blob",
+      "bytes": 28045,
+      "SHA256": "3eb785028b1145fe4c6beb398c9d4ef1242cafae3c6baa1e8371a2cc8d0c950c",
+      "paths": [
+        "scripts/smoke-fpv-tuning.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "84fd279b4cf0200e8f20ece1201209c7ffdcdfbc",
+      "type": "blob",
+      "bytes": 17614,
+      "SHA256": "f52cf4ea85f9cecb72b3171f28df15ea89a33681f38ef18a586fc9269ae617e9",
+      "paths": [
+        "scripts/test-fpv-flight-log-comparison.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "aafea144c0392590b1ac3af8c3195d97d798ca40",
+      "type": "blob",
+      "bytes": 24165,
+      "SHA256": "ecdc2b84abaf06e7fcdbbd87929402deb200d9a540a6a52b02b01fad7b98dc66",
+      "paths": [
+        "optional-practice/civilian-fpv/advanced-regional.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "2eb12a551674386f81b5fa5243673c60073a1b06",
+      "type": "blob",
+      "bytes": 63447,
+      "SHA256": "bd606bf22bd1dc80f26e11f23b7f368d5139885b433c5a9e8e36b9df26b2de4d",
+      "paths": [
+        "optional-practice/civilian-fpv/advanced-simulation.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "fbdc009ef85fca36563635f409e87963af242a87",
+      "type": "blob",
+      "bytes": 4000,
+      "SHA256": "0e2e763c4bf25005158b8af15a581228fd6f51ec0f5a77f5667fa6a42d5a4581",
+      "paths": [
+        "optional-practice/civilian-fpv/advanced-worker-client.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "c58cf3e45c01b800d7878c450d992abe06d0d8c5",
+      "type": "blob",
+      "bytes": 6216,
+      "SHA256": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3",
+      "paths": [
+        "optional-practice/civilian-fpv/advanced-worker.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "59a106ef0b656cb375506f5a906023bd9907179d",
+      "type": "blob",
+      "bytes": 37560,
+      "SHA256": "550a6c32dc0bb8bf8eca15f8e5b24a15a277dde6232a951e2286361c44d223ab",
+      "paths": [
+        "optional-practice/civilian-fpv/betaflight-import.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "4b1d6eae2f0c10755c29353a854cd4c30b7f38d6",
+      "type": "blob",
+      "bytes": 59508,
+      "SHA256": "6b82719afe20dac20346c8c5a3a88132b557faf96f8740ee92ea7be6344c2d43",
+      "paths": [
+        "optional-practice/civilian-fpv/tuning-ui.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "bc48e00da04483f784febd004b9909e9c63f70aa",
+      "type": "blob",
+      "bytes": 402372,
+      "SHA256": "e273310b7b4224c62e301a68a67d7c793cecda9f9a3746b7a389e9c97bb9b1ba",
+      "paths": [
+        "optional-practice/civilian-fpv/world-app.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "d35f5954f51da76b0d62e805eb5f8371424da039",
+      "type": "blob",
+      "bytes": 24248,
+      "SHA256": "5ccae913c3f848e9867451c1104a8bbab8d3ab608cf8cee2a0e7b4f7843e3ae3",
+      "paths": [
+        "docs/fpv-advanced-backend.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "84101bb930f57f1e1292aaf1a5e9c8af99ebba38",
+      "type": "blob",
+      "bytes": 82772,
+      "SHA256": "4e07efcfb58e63b6ba16002b1b4618722aa5c890acf32379e20c65ab3dc6af51",
+      "paths": [
+        "docs/fpv-advanced-regional-browser-smoke-2026-10-16-second-review-final.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "4f2a0dc4e7feed6b47ce76f0e5708f46fa7f008e",
+      "type": "blob",
+      "bytes": 68068,
+      "SHA256": "2b3df6181295fda4afda7bac8803e30c964288d2a298cf4029d9b4d48eba53c3",
+      "paths": [
+        "docs/fpv-advanced-regional-browser-smoke-2026-10-16-second-review-pointer-attempt.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [
+        {
+          "pattern": "local-home-path",
+          "matchSHA256": "68e1934e4ca5c0320cb1b7d85a23422a5344f5ca28a72236922d5b868f48891b",
+          "line": 1836,
+          "disposition": "Exact app-source stack frame in a controlled fixture pointer-interception negative; no unrelated home file or browser/player payload. Original path value not copied into this receipt."
+        },
+        {
+          "pattern": "local-home-path",
+          "matchSHA256": "68e1934e4ca5c0320cb1b7d85a23422a5344f5ca28a72236922d5b868f48891b",
+          "line": 1836,
+          "disposition": "Exact app-source stack frame in a controlled fixture pointer-interception negative; no unrelated home file or browser/player payload. Original path value not copied into this receipt."
+        }
+      ],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "40a4631bcbd12ea932096702df98ccaab6aaa9af",
+      "type": "blob",
+      "bytes": 82773,
+      "SHA256": "baf68f1bbec83d0dac285015d9193d5561d37b89d8f8e19b05b924122ac0bdb9",
+      "paths": [
+        "docs/fpv-advanced-regional-browser-smoke-2026-10-16-second-review.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "759ebc96a43b12cea408da69c319877d1f4777b8",
+      "type": "blob",
+      "bytes": 82773,
+      "SHA256": "239533cb927bc234027d7fa0cf67c03bda1628f8586688560ecf22a4872a0803",
+      "paths": [
+        "docs/fpv-advanced-regional-browser-smoke-2026-10-16-third-review.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "134fdd73d753acfe1aba1d3c75784661b269c0fb",
+      "type": "blob",
+      "bytes": 585709,
+      "SHA256": "4eb86147f63505d269417677e5c9105d430dd2446f5f94f4d87bd5c6990f283e",
+      "paths": [
+        "docs/fpv-advanced-runtime-qualification-2026-10-16-second-review.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "74c8836f54a884e4dbca5be7c2f68fc5c474659d",
+      "type": "blob",
+      "bytes": 585733,
+      "SHA256": "3381286f3c75e890abd8bb8c84b06df07616183f1df44034a2e478999a416edd",
+      "paths": [
+        "docs/fpv-advanced-runtime-qualification-2026-10-16-third-review.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "fe89ee8e6cc0babdd6783d66e0cf0244cb4e2317",
+      "type": "blob",
+      "bytes": 18571,
+      "SHA256": "4892851fc231348dd56c128e8f2ca1a56e8e82b4c4cd855596f82ea4640f6724",
+      "paths": [
+        "docs/fpv-advanced-runtime-qualification.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "af01120207cdc69c9a6b795946caf271fae213db",
+      "type": "blob",
+      "bytes": 8677,
+      "SHA256": "999a17f69cc595097766f49c059e2f71357ec6f37a7be941e80307629f86dd76",
+      "paths": [
+        "docs/fpv-flight-log-comparison.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "1a5f00aefae9fb7aedd337ab2cac71be507ccc82",
+      "type": "blob",
+      "bytes": 38763,
+      "SHA256": "e14c6b2070679dfd9e46e3ef9ec2e36c9f1bba1e7603a52a09e561f79fbb55f2",
+      "paths": [
+        "docs/fpv-native-second-review-qualification.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "6a2a11e8f1eab884a08dbb6175b8565c626bb653",
+      "type": "blob",
+      "bytes": 34648,
+      "SHA256": "8980a918978ecf2e5d324e82858f439d6de68510a26d527e46519aca7e382627",
+      "paths": [
+        "docs/fpv-native-third-review-staging.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "e55188e2c0c1a4ac47f14787f159526604904dc2",
+      "type": "blob",
+      "bytes": 13573,
+      "SHA256": "b1321d205357dbf0e7cdccbc475b22a9cd62f8e9c0ff6a83391901fc6b338e72",
+      "paths": [
+        "docs/fpv-pages-live-testing.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "7cc3e55084812d2505be3828eca6cafbe3c6be16",
+      "type": "blob",
+      "bytes": 55560,
+      "SHA256": "5b877f3c60eadd3e0735531f22342b355c722cf8ff867918b006dc513daa48a4",
+      "paths": [
+        "docs/fpv-pages-second-review-live-testing-evidence.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "c247721e53e540b19242b7a24276f469afe3e7db",
+      "type": "blob",
+      "bytes": 55559,
+      "SHA256": "508af2f3358d5abe7205a87b252c3e0178134f4f6b64f31f78e142fdb00951a8",
+      "paths": [
+        "docs/fpv-pages-third-review-live-testing-evidence.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "ea350913d1b544c1abef4585c3caf8986296d5b7",
+      "type": "blob",
+      "bytes": 17459,
+      "SHA256": "fc74692059d6933dc21b22de4689fd744bebc1b90333430548ddd37afbaa5504",
+      "paths": [
+        "docs/fpv-rates-and-tuning.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "72b4508ff0b0a934087a22e13a268f299440b427",
+      "type": "blob",
+      "bytes": 14372,
+      "SHA256": "00fd4f18f28a7a5b2facb6a60c2bd8fdf8fc92de3c7e63fd5418f67e240297c6",
+      "paths": [
+        "docs/fpv-regional-contact-capacity-2026-10-16-second-review.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "9ff7244db62659c319e94d19e41ca8d02f98ebe7",
+      "type": "blob",
+      "bytes": 10980,
+      "SHA256": "cebec08d476993298428da4d52bff83333c61a3e7b22ec9da917f1ead6db1b2c",
+      "paths": [
+        "docs/fpv-tuning-browser-second-review-before-linked-fix.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "a6c361e7ee566f4f06bccd510c0f2eabbc7638f5",
+      "type": "blob",
+      "bytes": 10980,
+      "SHA256": "596554af4edaf56ba578e78308d6bea3c9c4d891e90f36c75dad6694c371b1a9",
+      "paths": [
+        "docs/fpv-tuning-browser-second-review-qualification.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "25d829beeea8c88a2de80d901dd1fdfba98b4711",
+      "type": "blob",
+      "bytes": 11568,
+      "SHA256": "8938b05630d6962b8da7ecf6babaf8acda8eb72acfdeea87478f5dceabc8e7e0",
+      "paths": [
+        "docs/fpv-tuning-browser-third-review-qualification.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "3d8e973382387199e9fbecfc5c165e0b30e7534f",
+      "type": "blob",
+      "bytes": 32196,
+      "SHA256": "408d057a000c918b01e3bb72473bbae6e8ec53dedc5bca0beecf342b14b9c732",
+      "paths": [
+        "docs/fpv-tuning-completion-plan.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "dd7903a06740f88763645da936c5c9e8c5a9413c",
+      "type": "blob",
+      "bytes": 36210,
+      "SHA256": "234755884ddd42e8a9c916c2c75f405f7e77129792abc50cb97a9aabd3b89abd",
+      "paths": [
+        "docs/fpv-tuning-implementation-status.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "1d389748e2d0a6619341515e4be2c085e7f2eb68",
+      "type": "blob",
+      "bytes": 10206,
+      "SHA256": "7f33a983ca32ceb64a7c4c63b615dceca1652244b44349a3e5a040b869fb125b",
+      "paths": [
+        "docs/fpv-tuning-second-review-verification.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "61af4233b33dd36e77d624b97bb8bf8045ca1e5e",
+      "type": "blob",
+      "bytes": 8683,
+      "SHA256": "f8bc3ce8ce4f7ad1ad5a0a7fc3e50803aa06f6676897aa31def623c1bd5d32d7",
+      "paths": [
+        "docs/fpv-tuning-third-review-verification.json"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Structured controlled app fixture/build/runtime review evidence, including retained failures; no raw user browser/player store serialization",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "91da525fc4ac74af7e4e079d8eeb190ef550af7e",
+      "type": "blob",
+      "bytes": 23365,
+      "SHA256": "a9caab3dde145e9ef73ec76ec1b629db6dad76eb2ce4fea06f34ef9bd6a34ea5",
+      "paths": [
+        "docs/fpv-advanced-backend.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "53b4c4844e30c0fa72b6ee1cd1b3926058964964",
+      "type": "blob",
+      "bytes": 11826,
+      "SHA256": "d18657fbb99257168bf5fbc2bdee452cfb0b7251f9dd7e00e3dcfa86f8d604e7",
+      "paths": [
+        "docs/fpv-pages-live-testing.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "8c83fd4ddb1f5700b529d510d153394aa6540750",
+      "type": "blob",
+      "bytes": 17070,
+      "SHA256": "c4127cd9622f9beec4280950e94e7d0fc8adca345523e124f8e1c3bf40c8ee0d",
+      "paths": [
+        "docs/fpv-rates-and-tuning.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "36aceb55c20a1d44a6e78b01c6e5bb222cc7e86c",
+      "type": "blob",
+      "bytes": 24892,
+      "SHA256": "81480f3c648e6f8d7f89440ac55577a98bfc4f4f2a656f1445c7d81bd8f00ef6",
+      "paths": [
+        "docs/fpv-tuning-completion-plan.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "c20f0d65fc2a935dd74aa0f3a111377b9a143cc8",
+      "type": "blob",
+      "bytes": 31467,
+      "SHA256": "a022b19dd0442e51e6c421dcce4ed6466e7c8cb6542956ffa591da26e4b38222",
+      "paths": [
+        "docs/fpv-tuning-implementation-status.md"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "4da8aae1711e82fe957a36f4bf09054dc491fb6d",
+      "type": "blob",
+      "bytes": 25352,
+      "SHA256": "f4c8bfe7ddfbbf9d9d595fda954b24f0d3dca2641dd328abb9d0f07c3b260bcb",
+      "paths": [
+        "scripts/smoke-fpv-tuning.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "b707cffa763f373263a13c156d2212ca86654dc1",
+      "type": "blob",
+      "bytes": 62846,
+      "SHA256": "3d0fddb60a45bf5e5bb4e8a57bb5329d8eefa7a5ff8c8e8b0d6f858d78c73691",
+      "paths": [
+        "optional-practice/civilian-fpv/advanced-simulation.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "e494dc3cadddc21f86867a9c02588abfe4ae0e55",
+      "type": "blob",
+      "bytes": 57767,
+      "SHA256": "40d17b2d4867e775e85870980783cd0fbca9dc4cf463aedc17e1d902ed156926",
+      "paths": [
+        "optional-practice/civilian-fpv/tuning-ui.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "b45657afa6ceaf2f940808e311222f403ba206ac",
+      "type": "blob",
+      "bytes": 12030,
+      "SHA256": "86855c06d76d3c616e092ded447aeee55ea6b77bc0b681411622a1aba2104bcd",
+      "paths": [
+        "game/test/fpv-advanced-worker.test.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    },
+    {
+      "sha": "261b10afea10f5fbf28be25f4b28a31e1baa4ca9",
+      "type": "blob",
+      "bytes": 43806,
+      "SHA256": "3c89995dd0d9f839fe0fe81eb5e701b25b09560ba4a353e25900fdec0aa609f4",
+      "paths": [
+        "game/test/fpv-tuning-ui.test.mjs"
+      ],
+      "rawGitIdentityVerified": true,
+      "context": "Authored FPV module, test, smoke helper or technical review document",
+      "finitePatternFindings": [],
+      "publicMainAppSourcePreservationEligible": true
+    }
+  ],
+  "currentGitHubCommitPresence": [
+    {
+      "sha": "d177dbac9cb5da0b5219c6f27105b9f4d0ddcac7",
+      "GitHubPublicAtReview": false
+    },
+    {
+      "sha": "1ff0d996d827493f87f8a31b659d9c24c1cdcf41",
+      "GitHubPublicAtReview": true
+    },
+    {
+      "sha": "3f0d3abbc92675d61efd71ed6039d2d89ef46059",
+      "GitHubPublicAtReview": true
+    },
+    {
+      "sha": "1506e44f4ae353a6389da90eb9ffad1a011783aa",
+      "GitHubPublicAtReview": true
+    }
+  ],
+  "publicCopyApprovalIsExactObjectAllowlistOnly": true,
+  "noOriginalAppBrowserPlayerBodyReadsOrMutation": true,
+  "noCodeOrAppExecution": true,
+  "appQualificationAssertionsIndependentlyAccepted": false,
+  "backupOnlyNotShippingOrMainMerge": true,
+  "allVolumeComplete": false
+}

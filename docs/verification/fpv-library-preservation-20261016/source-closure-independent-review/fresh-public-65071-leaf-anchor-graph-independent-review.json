@@ -1,0 +1,47 @@
+{
+  "format": "IndependentGitHubPublicTypedLeafAnchorGraphReview.v1",
+  "createdUTC": "2026-10-16T07:47:17.448737+00:00",
+  "accepted": true,
+  "publicPrerequisiteCommitCount": 13537,
+  "rawPublicCommitSHA1AndTreeBindingsIndependentlyVerified": 13537,
+  "recordedRawCommitBatchSHA256": "f8bf7133649af476d0a2f3ec2afb5f1097a990d691bbcbe246cadf34b4dfa7b3",
+  "proofDataGraphOnlyNoGitHistoryWalk": true,
+  "currentPreservationHeadRefsReadback": 320,
+  "all269OriginalIndependentTipRefsUnchanged": true,
+  "currentUmbrellaHead": "3854ea0e74bc73c05df1531a3d0fcfc87c9b5298",
+  "additionalPublicSourceParentsAnchoredAt": "a3e9201d3b3075d1fe1a2336b1b0eaa974055db8",
+  "currentDraft1551HeadContainsA3e": "ae0377a7a020c5bcdc71ac772d1c150cb0cbc501",
+  "priorIndependentArchivalEdgeProofs": [
+    {
+      "file": "public-anchor-independent-readback.json",
+      "sha256": "c9c6a1eeda1d443c12b7ca1858fa1727880219aa0695cd9b42ae2b7f48ea89f4"
+    },
+    {
+      "file": "latest-public-boundary-independent-readback.json",
+      "sha256": "0639f9026b007489d6d0662551716962ecfb891b4d299c5f36837f6715950862"
+    },
+    {
+      "file": "latest-public-object-gap-anchor-independent-review.json",
+      "sha256": "5dee25204d04124ad4d3b054f87023310a8792059b17e0d61f4a3f5dbb5c0ab0"
+    },
+    {
+      "file": "final-public-inventory-anchor-independent-review.json",
+      "sha256": "f84bfce58cafd98f533d5dc6e9bfd8e90fae25bb2c5a042d0dcc57bc4cef9b58"
+    }
+  ],
+  "all13537PublicInputsReachableFromCurrentDedicatedPreservationRefsOrPinned1551": true,
+  "missingPublicInputCommitSHAs": [],
+  "typedLeafSetFile": "GitHub-13537-public-typed-blob-IDs-v2.txt",
+  "typedLeafSetSHA256": "28e1ae2e2ef89dd8cd86983c3bb70729180d00c4691ab3e138041920c95f2c7b",
+  "typedBlobLeaves": 65071,
+  "publicTreesRecordedRawSHA1Verified": 55647,
+  "publicTreeReadbackManifestSHA256": "97ba37cb20db07e999bec9b80ccd1a1f5a1338fdb8b2e1fafea16f1e3432ec84",
+  "publicCommitTreeBindingsSHA256": "85c760faab188676086cb16afd4b5d8eb6eddb7f331ffc3943586c708dfd35d7",
+  "freshGitHubOnlyTypedProjectionReceiptSHA256": "ae985fd033d0f5f03fd2ff2af4aa7612261e8ccd5f4b287b2574c21370b67aea",
+  "helperReviewedSHA256": "4cdfeb505b4492f5d545c0722fd57adc94649c49f38c0fe436cdb0ebc2ea50fe",
+  "sourceBodyReads": 0,
+  "originalStoreReads": 0,
+  "newPayloadCopies": 0,
+  "wholeVolumeComplete": false,
+  "qualification": "Exact public Git leaf membership plus anchored commit-tree reachability. Existing coverage is not permission to duplicate sensitive/private contexts; private-origin and staged-index metadata remain separately scoped. No single umbrella-only restore claim."
+}

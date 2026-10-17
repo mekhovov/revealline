@@ -1,0 +1,21 @@
+{
+  "validatorSource": "81c0d6587cdb582835a64e3d69c4c130460fb11a",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "modules": 68,
+      "imports": 96
+    },
+    {
+      "id": "civilian-fpv",
+      "modules": 81,
+      "imports": 152
+    },
+    {
+      "id": "fpv-worlds",
+      "modules": 134,
+      "imports": 340
+    }
+  ],
+  "scope": "Finished archive imports only; no checkout source fallback or execution"
+}

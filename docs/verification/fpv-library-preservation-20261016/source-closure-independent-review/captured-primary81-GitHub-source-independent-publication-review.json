@@ -1,0 +1,627 @@
+{
+  "format": "IndependentCapturedPrimary81GitHubSourcePublicationReview.v1",
+  "createdUTC": "2026-10-16T08:52:48.366354+00:00",
+  "repository": "mekhovov/revealline",
+  "centralPreservationHead": "fe1940b10e556d47d590e1ff7c1b8f2059349028",
+  "centralParentsExactly": [
+    "a5fb2f2119d6e6d53fcac6fd7109e95b869bbc0d",
+    "d177dbac9cb5da0b5219c6f27105b9f4d0ddcac7"
+  ],
+  "sourceHead": "d177dbac9cb5da0b5219c6f27105b9f4d0ddcac7",
+  "sourceBranch": "codex/preservation-captured-primary-HEAD-20261016",
+  "sourceDraftPR": 1556,
+  "exactPublicSource81ObjectChecks": [
+    {
+      "sha": "d177dbac9cb5da0b5219c6f27105b9f4d0ddcac7",
+      "type": "commit",
+      "bytes": 247,
+      "SHA256": "af74757e1e1f2c24065062608ae822218688cecd914d2b1dd27c46c4c57e0490",
+      "GitHubReadback": "exact-GitHub-commit-identity-tree-parent-metadata-verified"
+    },
+    {
+      "sha": "1ff0d996d827493f87f8a31b659d9c24c1cdcf41",
+      "type": "commit",
+      "bytes": 251,
+      "SHA256": "9747c9ea47b8c5c11076c8c05e0264c7d0a4ea0402d7587224a4c6de4779ec13",
+      "GitHubReadback": "exact-GitHub-commit-identity-tree-parent-metadata-verified"
+    },
+    {
+      "sha": "3f0d3abbc92675d61efd71ed6039d2d89ef46059",
+      "type": "commit",
+      "bytes": 255,
+      "SHA256": "69e4b8796b4f160a8adc7d9f30a8be16d8264841bb7436553cf40916866e4229",
+      "GitHubReadback": "exact-GitHub-commit-identity-tree-parent-metadata-verified"
+    },
+    {
+      "sha": "1506e44f4ae353a6389da90eb9ffad1a011783aa",
+      "type": "commit",
+      "bytes": 1324,
+      "SHA256": "815a9160846ca6196a1f46e7ece1ca38b0b764dc71943df2dbe014d40612cf18",
+      "GitHubReadback": "exact-GitHub-commit-identity-tree-parent-metadata-verified"
+    },
+    {
+      "sha": "1d45ac0915c76bfbfc07d7a2f56ed1f38699311d",
+      "type": "tree",
+      "bytes": 859,
+      "SHA256": "3ed808744f52fe62519d0ba3bb7a17ebfad26c905ebbb3c5e36b52835eb6fd3b",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "aaac29b88825b0ff3555b80630f5d58a08d3d46a",
+      "type": "tree",
+      "bytes": 10429,
+      "SHA256": "abfe3b01444f2ab278670b9e481c5e1a45dc62c2d7969332f66094cbb4c0b1ef",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "4494f5f1c99187cbce3a2ea12519536e743d5cf1",
+      "type": "tree",
+      "bytes": 106938,
+      "SHA256": "27198b11adbf706a6e8a632edc4844eb286d7f41a1bba16a5efb3b2d322a1dfa",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "dfd48dd397bc4d238cf4e7e6c2d4320b03453e19",
+      "type": "tree",
+      "bytes": 2526,
+      "SHA256": "4d9321a6fe71c1bc1f958b947455ef65ab3d8dccc5e05967c28a1af38af94f7f",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "ac7ef50bdff0b425d2eedbc5e05c4899fe2339c8",
+      "type": "tree",
+      "bytes": 385,
+      "SHA256": "67dffddd1b0eb71f532f4a5bfd7e28033654d02805dffe1f05937cb015f13730",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "548304c8fbd7c13dcf14de437f1ffbb364598a1f",
+      "type": "tree",
+      "bytes": 859,
+      "SHA256": "28043beea1d5927dba90cdd29c6bb6f6e3356e6667d947164e3bbd3a1f7a97ec",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "679beb85c65dcc111d09a8a09ef103c57e919d6d",
+      "type": "tree",
+      "bytes": 29662,
+      "SHA256": "48420f114537af1b79aec6a6c8f0faa35dc8e6bb755d56f29e0de21acde41518",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "cd23149418f973ec12e2a1d5c1b229b7b1b36e25",
+      "type": "tree",
+      "bytes": 385,
+      "SHA256": "8d40267dcbfcc8bd296e12696cd3114ce6ff669e5b6bc7d972ae580c79e586a4",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "7734b48fdbb0544bca93f981c6bfbda8433f41fb",
+      "type": "tree",
+      "bytes": 4007,
+      "SHA256": "095675812a4b5f3b9eee59aa0465c8db4cad5fc366da9e391ab06e44a26609d6",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "cfd6e470b8116a17dc51048774d67582f097a664",
+      "type": "tree",
+      "bytes": 1445,
+      "SHA256": "c9fe62b0ff623260a90ffa859d397fde8e0392b5ff5ad71747cb0fb12dde5ae4",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "97e7368a0ee5a839a7d89e75982c2715f691d353",
+      "type": "tree",
+      "bytes": 60885,
+      "SHA256": "cf16952530b7cc29488aee138a0a551578d62d4ebb8080550fc0259b5b2160ad",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "be67c61ea4ec85d1856d6a1dd0237c81448c8a0f",
+      "type": "tree",
+      "bytes": 60414,
+      "SHA256": "22a483c77ea16ade437a87bb67be971399cb6303d0ee910599f89c5f69067fe6",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "06673cea34b2e9c3d1753242ffeba4dcc6badcf2",
+      "type": "tree",
+      "bytes": 29662,
+      "SHA256": "960533aa6481d1bcd02770583ab687965ef28ec7c942d04279be7fa8f271f5dd",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "69e5255e1256a3aa58b3b1b7b32db9644be7528a",
+      "type": "tree",
+      "bytes": 4007,
+      "SHA256": "89dbacb35a160c09ee2ee2dd65a2a035a63dd299dc7b62337df3a1f0f3bff4bf",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "af7ef63f0e479918a8a6e2a3799af08771742d5f",
+      "type": "tree",
+      "bytes": 10429,
+      "SHA256": "3cf0f8573061495abe673fbf3e2f4e0018d0f5cd9e30a5c1b8a989a4f8119ed5",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "d8cbf74118aff0ccbdb80b254523946650dd4da7",
+      "type": "tree",
+      "bytes": 859,
+      "SHA256": "a028b2470c2aa7ad587efdb5f16723cbfd7631770139609065a88f28b09e1cbe",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "e0637ac5ebd0001431ab7fee17b394c7d6ad5c13",
+      "type": "tree",
+      "bytes": 859,
+      "SHA256": "7f43b37cb3909b4110811596bb393ccbf0a5475ec5947bf37d89a33f29769181",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "39bcbfebc1b6dd580ce38efc883cdfec17456276",
+      "type": "tree",
+      "bytes": 29482,
+      "SHA256": "b1bb72c386fa8c3b927204976c5d5db4d8b4ef0a5ea85146c5d5e1fd77659fa6",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "3e6ad48cc51e1a4a64c5eaa537b9ceff49a5ed02",
+      "type": "tree",
+      "bytes": 10429,
+      "SHA256": "06307dbbe1c9e9298fa12313512cbedd4c49d5e29d1ca309cd8c2cad09b65570",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "6b1ed64f09d33335c942dc485a8e7dde5648a244",
+      "type": "tree",
+      "bytes": 106938,
+      "SHA256": "8dab80e53271a1b232312193a1ade41c2d1a11f397da4c4c4dd3466634154cc1",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "9f7e2602eb46f32be2cc120c61bb9f6da167596a",
+      "type": "tree",
+      "bytes": 10429,
+      "SHA256": "fa658d0a092f4a2f4e64ae98ec4ed5288f93ffd79b9e5d15fb05cf85fceb68ef",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "56daf6c84867074f04d1a85c3ea6d033f4c3d224",
+      "type": "tree",
+      "bytes": 2526,
+      "SHA256": "e88f9f22c4381fb70c78a04a3bb0dd6075efca65654c72f3f046fed5786c746b",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "9fa03059518c24cc2f876ab6a8b8a5adfa4210bc",
+      "type": "tree",
+      "bytes": 106938,
+      "SHA256": "3915a8e26ccc05af94996cbb72a5908ff9d12166f592fbcd7c1bc7f5fae5b714",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "f68fe362ce69c02772b7c2ecb41f8c15b2f56a36",
+      "type": "tree",
+      "bytes": 58435,
+      "SHA256": "abe9e6e0992b099c0a3b70492b9574c448ec8ad9554cf8abb2018da514e76c2c",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "ca0643273f49649666e43339c4f46ae583c4441f",
+      "type": "tree",
+      "bytes": 59553,
+      "SHA256": "8436c431a68865440ef51689de624017bc076257474519f065de165abf3bce3f",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "850ac23519422d02307b8d4dfda7348f37742289",
+      "type": "tree",
+      "bytes": 29662,
+      "SHA256": "564d908735e8152c2fd41593519fec7d48bcfe27a162b9b273b78c248d46835f",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "ad3240b963dadf8a3c8636bd42b2927799eca2bb",
+      "type": "tree",
+      "bytes": 106938,
+      "SHA256": "4d12f58aba736ceff7a7709e12bc8a7e0c0b00edf06bc2d484099030b1d6474d",
+      "GitHubReadback": "full-GitHub-tree-entry-body-reconstructed-and-hash-verified"
+    },
+    {
+      "sha": "03c99b88c8316fefab4fe35d0728c73a51fe2af0",
+      "type": "blob",
+      "bytes": 26051,
+      "SHA256": "3d4a8c73fbc7097c9586f9718032e8205c5e0a3acc0ecd20ef764ffcba34a78a",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "08f80af6017c2b0175cdd1e3ff60586b06447801",
+      "type": "blob",
+      "bytes": 4555,
+      "SHA256": "bb0a2503c284a9e7b1ea9ee0c6596beaa6f54418159de71d8204759483eab40b",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "ad22b9d831759ed57e3e4605d0fc0c23e75564a4",
+      "type": "blob",
+      "bytes": 12106,
+      "SHA256": "54c9905c63a60145363a443f280dbf6c330ba151fb3e0ad16095ab75f723e806",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "dffd8f55152b3d73b3720f91a758a13e58a3dfb2",
+      "type": "blob",
+      "bytes": 19047,
+      "SHA256": "d2f7935f2581507c0f27fc84e7a70310e3067d9b7befb8830a7d2cce57c0478a",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "b31b9e05351ad3f143a2157ef2bf19b684c9036b",
+      "type": "blob",
+      "bytes": 21364,
+      "SHA256": "738b70b2406f7ec00c410a3c866d3224428d88bb82596f66506ecc2516fbd547",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "ba1ae55ef95a719fc11aac69b87d9050b7ec87f2",
+      "type": "blob",
+      "bytes": 48043,
+      "SHA256": "d011065a407ec9ad24633bed62a692519254fd943450526858709e8030638caf",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "8ede0769b7e66a661adfbe01f620e5af84413c0d",
+      "type": "blob",
+      "bytes": 94010,
+      "SHA256": "5ef5d3987dd54318e373092d6d72ec536b4c5722b30db2fb494cd94e7792a8d4",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "59eaca5fcb37174c3ca5d479d84c0c2dc7415635",
+      "type": "blob",
+      "bytes": 18652,
+      "SHA256": "7f79dcfaef3961443caa6f9539d5f93b933408339d991fabb075b8392b660fa3",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "81422759e6932755155bf0393b777d85bf04a652",
+      "type": "blob",
+      "bytes": 28045,
+      "SHA256": "3eb785028b1145fe4c6beb398c9d4ef1242cafae3c6baa1e8371a2cc8d0c950c",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "84fd279b4cf0200e8f20ece1201209c7ffdcdfbc",
+      "type": "blob",
+      "bytes": 17614,
+      "SHA256": "f52cf4ea85f9cecb72b3171f28df15ea89a33681f38ef18a586fc9269ae617e9",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "aafea144c0392590b1ac3af8c3195d97d798ca40",
+      "type": "blob",
+      "bytes": 24165,
+      "SHA256": "ecdc2b84abaf06e7fcdbbd87929402deb200d9a540a6a52b02b01fad7b98dc66",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "2eb12a551674386f81b5fa5243673c60073a1b06",
+      "type": "blob",
+      "bytes": 63447,
+      "SHA256": "bd606bf22bd1dc80f26e11f23b7f368d5139885b433c5a9e8e36b9df26b2de4d",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "fbdc009ef85fca36563635f409e87963af242a87",
+      "type": "blob",
+      "bytes": 4000,
+      "SHA256": "0e2e763c4bf25005158b8af15a581228fd6f51ec0f5a77f5667fa6a42d5a4581",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "c58cf3e45c01b800d7878c450d992abe06d0d8c5",
+      "type": "blob",
+      "bytes": 6216,
+      "SHA256": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "59a106ef0b656cb375506f5a906023bd9907179d",
+      "type": "blob",
+      "bytes": 37560,
+      "SHA256": "550a6c32dc0bb8bf8eca15f8e5b24a15a277dde6232a951e2286361c44d223ab",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "4b1d6eae2f0c10755c29353a854cd4c30b7f38d6",
+      "type": "blob",
+      "bytes": 59508,
+      "SHA256": "6b82719afe20dac20346c8c5a3a88132b557faf96f8740ee92ea7be6344c2d43",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "bc48e00da04483f784febd004b9909e9c63f70aa",
+      "type": "blob",
+      "bytes": 402372,
+      "SHA256": "e273310b7b4224c62e301a68a67d7c793cecda9f9a3746b7a389e9c97bb9b1ba",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "d35f5954f51da76b0d62e805eb5f8371424da039",
+      "type": "blob",
+      "bytes": 24248,
+      "SHA256": "5ccae913c3f848e9867451c1104a8bbab8d3ab608cf8cee2a0e7b4f7843e3ae3",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "84101bb930f57f1e1292aaf1a5e9c8af99ebba38",
+      "type": "blob",
+      "bytes": 82772,
+      "SHA256": "4e07efcfb58e63b6ba16002b1b4618722aa5c890acf32379e20c65ab3dc6af51",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "4f2a0dc4e7feed6b47ce76f0e5708f46fa7f008e",
+      "type": "blob",
+      "bytes": 68068,
+      "SHA256": "2b3df6181295fda4afda7bac8803e30c964288d2a298cf4029d9b4d48eba53c3",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "40a4631bcbd12ea932096702df98ccaab6aaa9af",
+      "type": "blob",
+      "bytes": 82773,
+      "SHA256": "baf68f1bbec83d0dac285015d9193d5561d37b89d8f8e19b05b924122ac0bdb9",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "759ebc96a43b12cea408da69c319877d1f4777b8",
+      "type": "blob",
+      "bytes": 82773,
+      "SHA256": "239533cb927bc234027d7fa0cf67c03bda1628f8586688560ecf22a4872a0803",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "134fdd73d753acfe1aba1d3c75784661b269c0fb",
+      "type": "blob",
+      "bytes": 585709,
+      "SHA256": "4eb86147f63505d269417677e5c9105d430dd2446f5f94f4d87bd5c6990f283e",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "74c8836f54a884e4dbca5be7c2f68fc5c474659d",
+      "type": "blob",
+      "bytes": 585733,
+      "SHA256": "3381286f3c75e890abd8bb8c84b06df07616183f1df44034a2e478999a416edd",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "fe89ee8e6cc0babdd6783d66e0cf0244cb4e2317",
+      "type": "blob",
+      "bytes": 18571,
+      "SHA256": "4892851fc231348dd56c128e8f2ca1a56e8e82b4c4cd855596f82ea4640f6724",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "af01120207cdc69c9a6b795946caf271fae213db",
+      "type": "blob",
+      "bytes": 8677,
+      "SHA256": "999a17f69cc595097766f49c059e2f71357ec6f37a7be941e80307629f86dd76",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "1a5f00aefae9fb7aedd337ab2cac71be507ccc82",
+      "type": "blob",
+      "bytes": 38763,
+      "SHA256": "e14c6b2070679dfd9e46e3ef9ec2e36c9f1bba1e7603a52a09e561f79fbb55f2",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "6a2a11e8f1eab884a08dbb6175b8565c626bb653",
+      "type": "blob",
+      "bytes": 34648,
+      "SHA256": "8980a918978ecf2e5d324e82858f439d6de68510a26d527e46519aca7e382627",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "e55188e2c0c1a4ac47f14787f159526604904dc2",
+      "type": "blob",
+      "bytes": 13573,
+      "SHA256": "b1321d205357dbf0e7cdccbc475b22a9cd62f8e9c0ff6a83391901fc6b338e72",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "7cc3e55084812d2505be3828eca6cafbe3c6be16",
+      "type": "blob",
+      "bytes": 55560,
+      "SHA256": "5b877f3c60eadd3e0735531f22342b355c722cf8ff867918b006dc513daa48a4",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "c247721e53e540b19242b7a24276f469afe3e7db",
+      "type": "blob",
+      "bytes": 55559,
+      "SHA256": "508af2f3358d5abe7205a87b252c3e0178134f4f6b64f31f78e142fdb00951a8",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "ea350913d1b544c1abef4585c3caf8986296d5b7",
+      "type": "blob",
+      "bytes": 17459,
+      "SHA256": "fc74692059d6933dc21b22de4689fd744bebc1b90333430548ddd37afbaa5504",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "72b4508ff0b0a934087a22e13a268f299440b427",
+      "type": "blob",
+      "bytes": 14372,
+      "SHA256": "00fd4f18f28a7a5b2facb6a60c2bd8fdf8fc92de3c7e63fd5418f67e240297c6",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "9ff7244db62659c319e94d19e41ca8d02f98ebe7",
+      "type": "blob",
+      "bytes": 10980,
+      "SHA256": "cebec08d476993298428da4d52bff83333c61a3e7b22ec9da917f1ead6db1b2c",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "a6c361e7ee566f4f06bccd510c0f2eabbc7638f5",
+      "type": "blob",
+      "bytes": 10980,
+      "SHA256": "596554af4edaf56ba578e78308d6bea3c9c4d891e90f36c75dad6694c371b1a9",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "25d829beeea8c88a2de80d901dd1fdfba98b4711",
+      "type": "blob",
+      "bytes": 11568,
+      "SHA256": "8938b05630d6962b8da7ecf6babaf8acda8eb72acfdeea87478f5dceabc8e7e0",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "3d8e973382387199e9fbecfc5c165e0b30e7534f",
+      "type": "blob",
+      "bytes": 32196,
+      "SHA256": "408d057a000c918b01e3bb72473bbae6e8ec53dedc5bca0beecf342b14b9c732",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "dd7903a06740f88763645da936c5c9e8c5a9413c",
+      "type": "blob",
+      "bytes": 36210,
+      "SHA256": "234755884ddd42e8a9c916c2c75f405f7e77129792abc50cb97a9aabd3b89abd",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "1d389748e2d0a6619341515e4be2c085e7f2eb68",
+      "type": "blob",
+      "bytes": 10206,
+      "SHA256": "7f33a983ca32ceb64a7c4c63b615dceca1652244b44349a3e5a040b869fb125b",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "61af4233b33dd36e77d624b97bb8bf8045ca1e5e",
+      "type": "blob",
+      "bytes": 8683,
+      "SHA256": "f8bc3ce8ce4f7ad1ad5a0a7fc3e50803aa06f6676897aa31def623c1bd5d32d7",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "91da525fc4ac74af7e4e079d8eeb190ef550af7e",
+      "type": "blob",
+      "bytes": 23365,
+      "SHA256": "a9caab3dde145e9ef73ec76ec1b629db6dad76eb2ce4fea06f34ef9bd6a34ea5",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "53b4c4844e30c0fa72b6ee1cd1b3926058964964",
+      "type": "blob",
+      "bytes": 11826,
+      "SHA256": "d18657fbb99257168bf5fbc2bdee452cfb0b7251f9dd7e00e3dcfa86f8d604e7",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "8c83fd4ddb1f5700b529d510d153394aa6540750",
+      "type": "blob",
+      "bytes": 17070,
+      "SHA256": "c4127cd9622f9beec4280950e94e7d0fc8adca345523e124f8e1c3bf40c8ee0d",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "36aceb55c20a1d44a6e78b01c6e5bb222cc7e86c",
+      "type": "blob",
+      "bytes": 24892,
+      "SHA256": "81480f3c648e6f8d7f89440ac55577a98bfc4f4f2a656f1445c7d81bd8f00ef6",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "c20f0d65fc2a935dd74aa0f3a111377b9a143cc8",
+      "type": "blob",
+      "bytes": 31467,
+      "SHA256": "a022b19dd0442e51e6c421dcce4ed6466e7c8cb6542956ffa591da26e4b38222",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "4da8aae1711e82fe957a36f4bf09054dc491fb6d",
+      "type": "blob",
+      "bytes": 25352,
+      "SHA256": "f4c8bfe7ddfbbf9d9d595fda954b24f0d3dca2641dd328abb9d0f07c3b260bcb",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "b707cffa763f373263a13c156d2212ca86654dc1",
+      "type": "blob",
+      "bytes": 62846,
+      "SHA256": "3d0fddb60a45bf5e5bb4e8a57bb5329d8eefa7a5ff8c8e8b0d6f858d78c73691",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "e494dc3cadddc21f86867a9c02588abfe4ae0e55",
+      "type": "blob",
+      "bytes": 57767,
+      "SHA256": "40d17b2d4867e775e85870980783cd0fbca9dc4cf463aedc17e1d902ed156926",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "b45657afa6ceaf2f940808e311222f403ba206ac",
+      "type": "blob",
+      "bytes": 12030,
+      "SHA256": "86855c06d76d3c616e092ded447aeee55ea6b77bc0b681411622a1aba2104bcd",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    },
+    {
+      "sha": "261b10afea10f5fbf28be25f4b28a31e1baa4ca9",
+      "type": "blob",
+      "bytes": 43806,
+      "SHA256": "3c89995dd0d9f839fe0fe81eb5e701b25b09560ba4a353e25900fdec0aa609f4",
+      "GitHubReadback": "full-GitHub-raw-body-verified"
+    }
+  ],
+  "blobsFullBodySHA1SHA256SizeVerified": 50,
+  "treesFullEntryBodySHA1SHA256SizeVerified": 27,
+  "commitIdentitiesTreesParentsVerified": 4,
+  "mainOnlyProjectionProofFullReadbacks": [
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/complete-index-public-source-proof/five-public-index-HEAD-anchor-receipt-v1.json",
+      "GitBlobSHA1": "39852e8c386aad15b2a707e8838802c7909cc7b0",
+      "SHA256": "042f3c142bbeba7002d7677cd0fd91c5153ecee4af026df98fa1abe066e28c5b",
+      "bytes": 1369,
+      "fullReadback": "PASSED"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/complete-index-public-source-proof/GitHub-five-public-index-HEAD-typed-blob-IDs-v1.txt",
+      "GitBlobSHA1": "cdfb165b382da1da4c6e55872a77582b86b51123",
+      "SHA256": "a8aa115a25b08ff1dff7ccdcc4e880bf5f8abbd2973b6b6f63b95c0a41d45f32",
+      "bytes": 1437952,
+      "fullReadback": "PASSED"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/complete-index-public-source-proof/GitHub-five-public-index-HEAD-tree-readback-v1.json",
+      "GitBlobSHA1": "b8dcc3bb23227a3329aeb80182d3d7189ed57490",
+      "SHA256": "62f82526aff8879e1a7c528f79b92113372fe59c063043833fd6ea3066529ee9",
+      "bytes": 459445,
+      "fullReadback": "PASSED"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/complete-index-public-source-proof/GitHub-five-public-index-HEAD-projection-receipt-v1.json",
+      "GitBlobSHA1": "d0abcb2958ceffca6759a68759ad2069a5f8a0ba",
+      "SHA256": "c51b401123d847bf9ad605dca90740c778117c0700e57996b458807437dedf78",
+      "bytes": 18744,
+      "fullReadback": "PASSED"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/complete-index-public-source-proof/captured-primary-four-commit-source-publication-v1.json",
+      "GitBlobSHA1": "c921436ada02c1e11d1ef1cf390a3b82be6fc982",
+      "SHA256": "5d3a30cb2963956521afc3e81843f14d4a9f79600c34e583e56b6aeeebabb8fd",
+      "bytes": 3285,
+      "fullReadback": "PASSED"
+    }
+  ],
+  "independentPrivacyReviewSHA256": "34141fe0e9a7c7589fe7f636ef9d5026d7702de3ab9e01274d6a4c78b2be644f",
+  "noOriginalSourceStoreOrWorkingBodyReads": true,
+  "noPrivateCompanionDataIncluded": true,
+  "functionalNativeOrShippingAcceptance": false,
+  "allVolumeComplete": false
+}

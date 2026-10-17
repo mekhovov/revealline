@@ -1,0 +1,182 @@
+{
+  "checkedManifestFiles": [
+    {
+      "path": "package.json",
+      "bytes": 8685,
+      "sha256": "f79eff6955790ad400f963d2f8dc37e654c99d6b0ce8950a1608e55e726d72a9"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 40069,
+      "sha256": "3f3658479a210da64b4797b34645cdb583457d2b3a380a3217b01a18ea46c3f1"
+    },
+    {
+      "path": "authoring/fpv-worlds/package.json",
+      "bytes": 469,
+      "sha256": "27e192770b8aa6df8811806b2de80d3719c94762993f1da3a2d95403abbafe43"
+    },
+    {
+      "path": "authoring/fpv-worlds/package-lock.json",
+      "bytes": 26330,
+      "sha256": "9c9acded2d86889e2822e293d28c940994646744874ba45b873f9a2d50d58b03"
+    },
+    {
+      "path": "platforms/desktop/package.json",
+      "bytes": 524,
+      "sha256": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8"
+    },
+    {
+      "path": "platforms/desktop/package-lock.json",
+      "bytes": 24795,
+      "sha256": "e8add4e03916f8f5ea8fd429bfc84ce7f00126794f0f65cb170078a11ac343a7"
+    },
+    {
+      "path": "platforms/ios/package.json",
+      "bytes": 898,
+      "sha256": "a2052c0a297424eb062c03594039899c38444d0fa133a1bb33203a78787b4b98"
+    },
+    {
+      "path": "platforms/ios/package-lock.json",
+      "bytes": 58727,
+      "sha256": "3ab42e4275216f1bfb4a7ad47c4aff1fda18a9e28a1851be11594b4c1806483c"
+    },
+    {
+      "path": "services/community/package.json",
+      "bytes": 1796,
+      "sha256": "6f5065f5487e2420585d802de43ede34676ff81058ccd73f7a3d93d205ee09c8"
+    },
+    {
+      "path": "services/community/package-lock.json",
+      "bytes": 105631,
+      "sha256": "fec8f359b80ff7a3126acf60cb8c30ba4efe2a55ef1efb968223ab35dcdf4515"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/tropical-coast/intake-v1/intake-tools/package.json",
+      "bytes": 223,
+      "sha256": "c3ac6e1c78087c04ebc407ce67f2e9b901ebfd192fe8050838f1f1b1e1df386c"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/tropical-coast/intake-v1/intake-tools/package-lock.json",
+      "bytes": 566,
+      "sha256": "a4170d2f459628df86c9f0ed61961148b18179932d9ffc673053d4db23f73eec"
+    }
+  ],
+  "absoluteOrLocalFileDependencyValues": [],
+  "authoringHelperDefaults": [
+    {
+      "path": "authoring/fpv-worlds/regions/verify-host-session.mjs",
+      "line": 14,
+      "defaultFixturePath": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+      "override": "Pass a restored local fixture directory in this argument; do not recreate the old mount.",
+      "requiresBaselineSessionModuleArgumentFirst": false,
+      "sourceSHA256": "8383d97b5095193b228a8b9529213c0fcbda6805c50ca03213218ea3833a07fb",
+      "referencedByCheckedStandardPackageScriptsOrWorkflows": false,
+      "processArgvIndex": 2,
+      "fixturePositionalArgumentAfterScript": 1
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/verify-optional-navigation.mjs",
+      "line": 15,
+      "defaultFixturePath": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+      "override": "Pass a restored local fixture directory in this argument; do not recreate the old mount.",
+      "requiresBaselineSessionModuleArgumentFirst": false,
+      "sourceSHA256": "c9130510a322365cf8991fc6595785627526ab6b3456341932697cf364a8925f",
+      "referencedByCheckedStandardPackageScriptsOrWorkflows": false,
+      "processArgvIndex": 2,
+      "fixturePositionalArgumentAfterScript": 1
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/verify-restore-containment.mjs",
+      "line": 108,
+      "defaultFixturePath": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+      "override": "Pass a restored local fixture directory in this argument; do not recreate the old mount.",
+      "requiresBaselineSessionModuleArgumentFirst": false,
+      "sourceSHA256": "10e3c33eec97e8ae5a243a4e4d0374fb6de8af7da2d37875209902f0b212126c",
+      "referencedByCheckedStandardPackageScriptsOrWorkflows": false,
+      "processArgvIndex": 2,
+      "fixturePositionalArgumentAfterScript": 1
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/verify-session-snapshot-reuse.mjs",
+      "line": 12,
+      "defaultFixturePath": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+      "override": "Pass a restored local fixture directory in this argument; do not recreate the old mount.",
+      "requiresBaselineSessionModuleArgumentFirst": true,
+      "sourceSHA256": "90443389b5600810d2415df7c79478a13ff416128833c52fb4e7946c55e5ced0",
+      "referencedByCheckedStandardPackageScriptsOrWorkflows": false,
+      "processArgvIndex": 3,
+      "fixturePositionalArgumentAfterScript": 2
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/verify-finite-runtime-position.mjs",
+      "line": 16,
+      "defaultFixturePath": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+      "override": "Pass a restored local fixture directory in this argument; do not recreate the old mount.",
+      "requiresBaselineSessionModuleArgumentFirst": false,
+      "sourceSHA256": "93316ecef02ad61da6cee5176ffd6f3202d0888dcf19cbd4c2446bd38b0b35d5",
+      "referencedByCheckedStandardPackageScriptsOrWorkflows": false,
+      "processArgvIndex": 2,
+      "fixturePositionalArgumentAfterScript": 1
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/verify-saved-locations.mjs",
+      "line": 18,
+      "defaultFixturePath": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+      "override": "Pass a restored local fixture directory in this argument; do not recreate the old mount.",
+      "requiresBaselineSessionModuleArgumentFirst": false,
+      "sourceSHA256": "1001e325acd142b4ecf0a542896db9003e19f45dfb4088ecf06e62f8016a9736",
+      "referencedByCheckedStandardPackageScriptsOrWorkflows": false,
+      "processArgvIndex": 2,
+      "fixturePositionalArgumentAfterScript": 1
+    }
+  ],
+  "installedInternalAuthoringPackages": [
+    {
+      "name": "@gltf-transform/core",
+      "version": "4.5.1",
+      "internalAuthoringPackagePresent": true
+    },
+    {
+      "name": "@gltf-transform/extensions",
+      "version": "4.5.1",
+      "internalAuthoringPackagePresent": true
+    },
+    {
+      "name": "@gltf-transform/functions",
+      "version": "4.5.1",
+      "internalAuthoringPackagePresent": true
+    },
+    {
+      "name": "gltf-validator",
+      "version": "2.0.0-dev.3.10",
+      "internalAuthoringPackagePresent": true
+    }
+  ],
+  "committedAuthoringLockPins": [
+    {
+      "name": "@gltf-transform/core",
+      "version": "4.5.1",
+      "resolved": "https://registry.npmjs.org/@gltf-transform/core/-/core-4.5.1.tgz",
+      "integrity": "sha512-OWgBYssKHKoXMIrMb2N20jXqWRnMP9HdtcTFQBEAJtz4P+OOxx5fozl5eAeK7nktIs5uDE/lu4NbkE5VCZaR9g=="
+    },
+    {
+      "name": "@gltf-transform/extensions",
+      "version": "4.5.1",
+      "resolved": "https://registry.npmjs.org/@gltf-transform/extensions/-/extensions-4.5.1.tgz",
+      "integrity": "sha512-3jTe+GWRy4fj1TU790LPsO+rpO/4byUWPTpNkjy6M6h8RvrUivRf12Mptc0770K4ZczibpJDNHXZFkFsFMRDLA=="
+    },
+    {
+      "name": "@gltf-transform/functions",
+      "version": "4.5.1",
+      "resolved": "https://registry.npmjs.org/@gltf-transform/functions/-/functions-4.5.1.tgz",
+      "integrity": "sha512-rfm4nQY2DJ+ip1e15xp7YfQwhRno3kPLcGw4EZiRk1dVwMV3cdFMcF08glYcO/+oLyYkUEs3xXMJYXa0cPgcTg=="
+    },
+    {
+      "name": "gltf-validator",
+      "version": "2.0.0-dev.3.10",
+      "resolved": "https://registry.npmjs.org/gltf-validator/-/gltf-validator-2.0.0-dev.3.10.tgz",
+      "integrity": "sha512-odJ4k0tRkGXiDGn78yDBg+fBbAIvBnXxh3RwAta0emSxGtyagFE8B4xELB1oYe3S5RD8Ci3uZAsZaascH2LAEQ=="
+    }
+  ],
+  "recovery": "If authoring dependencies need reinstall, npm ci --prefix authoring/fpv-worlds uses committed registry/integrity pins. This static audit did not install or execute packages."
+}

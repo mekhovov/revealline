@@ -1,0 +1,80 @@
+{
+  "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+  "sourceTree": "dab7b812eb88c9e744f67b0d9d1cca70df492c7c",
+  "version": "v0.151.1",
+  "scope": "Every archive member length/hash and exact inventory verified; not native/browser qualification",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "kind": "distribution",
+      "verifiedMembers": 94,
+      "uncompressedBytes": 3748578,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3762262,
+      "archiveSHA256": "a3c013d6fe89814860b3988da5d72519d0b091bb312f94d9db5cd7b6f1d47cf7"
+    },
+    {
+      "id": "civilian-flight",
+      "kind": "source",
+      "verifiedMembers": 96,
+      "uncompressedBytes": 3783306,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3797326,
+      "archiveSHA256": "8ff04917062cb5486512d160d0cabbed1e55f5e8f7cdf628b7a7d025f3e05241"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "distribution",
+      "verifiedMembers": 101,
+      "uncompressedBytes": 6766304,
+      "limits": {
+        "files": 104,
+        "bytes": 8388608
+      },
+      "archiveBytes": 6781322,
+      "archiveSHA256": "69d52d6003d6fb8d514fd638e2f2c52f669a3fb50a780c6bbbbb8224091684b8"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "source",
+      "verifiedMembers": 103,
+      "uncompressedBytes": 6802465,
+      "limits": {
+        "files": 104,
+        "bytes": 8388608
+      },
+      "archiveBytes": 6817787,
+      "archiveSHA256": "135971f6b79c13b641db1a065e3ae252e4f131950499bcd41b806dc0389cb695"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "distribution",
+      "verifiedMembers": 162,
+      "uncompressedBytes": 17574592,
+      "limits": {
+        "files": 164,
+        "bytes": 20971520
+      },
+      "archiveBytes": 17601020,
+      "archiveSHA256": "47ae369ca6fcf448e5a75e552ce1a4323b0f464ec67565535eeab24f3177b1cf"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "source",
+      "verifiedMembers": 164,
+      "uncompressedBytes": 17619301,
+      "limits": {
+        "files": 164,
+        "bytes": 20971520
+      },
+      "archiveBytes": 17646033,
+      "archiveSHA256": "341bc2cd2392c88468e252e30ed552a81d7df6fd0280a03c67a75680cf0e637c"
+    }
+  ]
+}

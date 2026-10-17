@@ -1,0 +1,445 @@
+{
+  "capturedAt": "2026-10-16T04:14:15.628441+00:00",
+  "roots": {
+    "canonical-primary": "<canonical-primary>",
+    "historical-root": "<historical-root>"
+  },
+  "skippedDirectoryNames": [
+    ".cache",
+    ".cursor",
+    ".git",
+    ".gstack",
+    ".specstory"
+  ],
+  "counts": {
+    "canonical-primary": {
+      "directoriesScannedWithoutFollowingLinks": 5108,
+      "symlinks": 42,
+      "alexDependentLinks": 0,
+      "brokenLinks": 0
+    },
+    "historical-root": {
+      "directoriesScannedWithoutFollowingLinks": 162,
+      "symlinks": 4,
+      "alexDependentLinks": 0,
+      "brokenLinks": 2
+    }
+  },
+  "links": [
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/postject",
+      "target": "../postject/dist/cli.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/postject/dist/cli.js",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/postject/dist/cli.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/node-which",
+      "target": "../which/bin/node-which",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/which/bin/node-which",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/which/bin/node-which",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/electron-osx-flat",
+      "target": "../@electron/osx-sign/bin/electron-osx-flat.mjs",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/osx-sign/bin/electron-osx-flat.mjs",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/osx-sign/bin/electron-osx-flat.mjs",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/install-electron",
+      "target": "../electron/install.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/install.js",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/install.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/electron-osx-sign",
+      "target": "../@electron/osx-sign/bin/electron-osx-sign.mjs",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/osx-sign/bin/electron-osx-sign.mjs",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/osx-sign/bin/electron-osx-sign.mjs",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/semver",
+      "target": "../semver/bin/semver.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/semver/bin/semver.js",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/semver/bin/semver.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/asar",
+      "target": "../@electron/asar/bin/asar.mjs",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/asar/bin/asar.mjs",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/asar/bin/asar.mjs",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/electron-packager",
+      "target": "../@electron/packager/bin/electron-packager.mjs",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/packager/bin/electron-packager.mjs",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/packager/bin/electron-packager.mjs",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/electron-fuses",
+      "target": "../@electron/fuses/dist/bin.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/fuses/dist/bin.js",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/fuses/dist/bin.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/electron-windows-sign",
+      "target": "../@electron/windows-sign/bin/electron-windows-sign.mjs",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/windows-sign/bin/electron-windows-sign.mjs",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/@electron/windows-sign/bin/electron-windows-sign.mjs",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/.bin/electron",
+      "target": "../electron/cli.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/cli.js",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/cli.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Resources",
+      "target": "Versions/Current/Resources",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Resources",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Libraries",
+      "target": "Versions/Current/Libraries",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Libraries",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Libraries",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Helpers",
+      "target": "Versions/Current/Helpers",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Helpers",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Electron Framework",
+      "target": "Versions/Current/Electron Framework",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Electron Framework",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Electron Framework",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/Current",
+      "target": "A",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Resources",
+      "target": "Versions/Current/Resources",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current/Resources",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A/Resources",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/ReactiveObjC",
+      "target": "Versions/Current/ReactiveObjC",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current/ReactiveObjC",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A/ReactiveObjC",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current",
+      "target": "A",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Resources",
+      "target": "Versions/Current/Resources",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Versions/Current/Resources",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Versions/A/Resources",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Squirrel",
+      "target": "Versions/Current/Squirrel",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Versions/Current/Squirrel",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Versions/A/Squirrel",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Versions/Current",
+      "target": "A",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Versions/A",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Squirrel.framework/Versions/A",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Resources",
+      "target": "Versions/Current/Resources",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Versions/Current/Resources",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Versions/A/Resources",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Mantle",
+      "target": "Versions/Current/Mantle",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Versions/Current/Mantle",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Versions/A/Mantle",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Versions/Current",
+      "target": "A",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Versions/A",
+      "resolvedTarget": "<canonical-primary>/platforms/desktop/node_modules/electron/dist/Electron.app/Contents/Frameworks/Mantle.framework/Versions/A",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/is-docker",
+      "target": "../is-docker/cli.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/is-docker/cli.js",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/is-docker/cli.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/native-run",
+      "target": "../native-run/bin/native-run",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/native-run/bin/native-run",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/native-run/bin/native-run",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/rimraf",
+      "target": "../rimraf/dist/esm/bin.mjs",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/rimraf/dist/esm/bin.mjs",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/rimraf/dist/esm/bin.mjs",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/node-which",
+      "target": "../which/bin/node-which",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/which/bin/node-which",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/which/bin/node-which",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/capacitor",
+      "target": "../@capacitor/cli/bin/capacitor",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/@capacitor/cli/bin/capacitor",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/@capacitor/cli/bin/capacitor",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/cap",
+      "target": "../@capacitor/cli/bin/capacitor",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/@capacitor/cli/bin/capacitor",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/@capacitor/cli/bin/capacitor",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/semver",
+      "target": "../semver/bin/semver.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/semver/bin/semver.js",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/semver/bin/semver.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/esbuild",
+      "target": "../esbuild/bin/esbuild",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/esbuild/bin/esbuild",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/esbuild/bin/esbuild",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/uuid",
+      "target": "../uuid/dist/esm/bin/uuid",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/uuid/dist/esm/bin/uuid",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/uuid/dist/esm/bin/uuid",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "platforms/ios/node_modules/.bin/tree-kill",
+      "target": "../tree-kill/cli.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/platforms/ios/node_modules/tree-kill/cli.js",
+      "resolvedTarget": "<canonical-primary>/platforms/ios/node_modules/tree-kill/cli.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "node_modules/.bin/acorn",
+      "target": "../acorn/bin/acorn",
+      "lexicalAbsoluteTarget": "<canonical-primary>/node_modules/acorn/bin/acorn",
+      "resolvedTarget": "<canonical-primary>/node_modules/acorn/bin/acorn",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "node_modules/.bin/prettier",
+      "target": "../prettier/bin/prettier.cjs",
+      "lexicalAbsoluteTarget": "<canonical-primary>/node_modules/prettier/bin/prettier.cjs",
+      "resolvedTarget": "<canonical-primary>/node_modules/prettier/bin/prettier.cjs",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "node_modules/.bin/node-which",
+      "target": "../which/bin/node-which",
+      "lexicalAbsoluteTarget": "<canonical-primary>/node_modules/which/bin/node-which",
+      "resolvedTarget": "<canonical-primary>/node_modules/which/bin/node-which",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "node_modules/.bin/eslint",
+      "target": "../eslint/bin/eslint.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/node_modules/eslint/bin/eslint.js",
+      "resolvedTarget": "<canonical-primary>/node_modules/eslint/bin/eslint.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "node_modules/.bin/lz-string",
+      "target": "../lz-string/bin/bin.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/node_modules/lz-string/bin/bin.js",
+      "resolvedTarget": "<canonical-primary>/node_modules/lz-string/bin/bin.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "authoring/fpv-worlds/node_modules/node_modules",
+      "target": "<canonical-primary>/authoring/fpv-worlds/node_modules",
+      "lexicalAbsoluteTarget": "<canonical-primary>/authoring/fpv-worlds/node_modules",
+      "resolvedTarget": "<canonical-primary>/authoring/fpv-worlds/node_modules",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "canonical-primary",
+      "path": "authoring/fpv-worlds/node_modules/.bin/semver",
+      "target": "../semver/bin/semver.js",
+      "lexicalAbsoluteTarget": "<canonical-primary>/authoring/fpv-worlds/node_modules/semver/bin/semver.js",
+      "resolvedTarget": "<canonical-primary>/authoring/fpv-worlds/node_modules/semver/bin/semver.js",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "historical-root",
+      "path": "node_modules/gltf-validator",
+      "target": "<internal-preservation>/saved-dependencies/gltf-validator-2.0.0-dev.3.10",
+      "lexicalAbsoluteTarget": "<internal-preservation>/saved-dependencies/gltf-validator-2.0.0-dev.3.10",
+      "resolvedTarget": "<internal-preservation>/saved-dependencies/gltf-validator-2.0.0-dev.3.10",
+      "exists": true,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "historical-root",
+      "path": "node_modules/@gltf-transform/core",
+      "target": "/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/core",
+      "lexicalAbsoluteTarget": "/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/core",
+      "resolvedTarget": "/private/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/core",
+      "exists": false,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "historical-root",
+      "path": "node_modules/@gltf-transform/extensions",
+      "target": "/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/extensions",
+      "lexicalAbsoluteTarget": "/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/extensions",
+      "resolvedTarget": "/private/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/extensions",
+      "exists": false,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "historical-root",
+      "path": "authoring/fpv-worlds/node_modules",
+      "target": "<canonical-primary>/authoring/fpv-worlds/node_modules",
+      "lexicalAbsoluteTarget": "<canonical-primary>/authoring/fpv-worlds/node_modules",
+      "resolvedTarget": "<canonical-primary>/authoring/fpv-worlds/node_modules",
+      "exists": true,
+      "dependsOnAlex": false
+    }
+  ],
+  "method": "Read-only directory metadata walk, no symlink following during traversal; individual link targets resolved/stat checked. No file content, browser or player data read."
+}

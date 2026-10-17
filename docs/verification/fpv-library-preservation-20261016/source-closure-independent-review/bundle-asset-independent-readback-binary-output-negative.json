@@ -1,0 +1,9 @@
+{
+  "format": "IndependentBundleReadbackNegative.v1",
+  "createdUTC": "2026-10-16T06:03:46.948476+00:00",
+  "assetId": 646261949,
+  "observedBytesEmitted": 0,
+  "fullReadbackVerified": false,
+  "failure": "Authenticated gh API process returned nonzero before emitting data; source lane independently identified CLI binary terminal-escape output protection. Stderr values were not persisted or displayed. Retry must explicitly allow binary bytes and must never render them.",
+  "sourceMutation": false
+}

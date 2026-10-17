@@ -1,0 +1,22 @@
+{
+  "format": "OriginalCapturedSymlinkValueBindingReview.v1",
+  "createdUTC": "2026-10-16T05:01:24.482713+00:00",
+  "linkPathRelativeToNewRestoreRoot": "fpv-package-qualification-20261014/batched-storage-103be7a7/independent-storage-checks/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+  "originalTargetSHA256": "b01face14009c2f3263d6f014d5f45acf3c2e84e3616e2da2b371a3889ed9cc0",
+  "originalTargetUTF8ByteCount": 129,
+  "hashInput": "Exact original captured symlink value encoded as UTF-8; no alias, newline or normalization. Value omitted to avoid publishing a home path.",
+  "capturedInventorySHA256": "e256e438a5693cf6a6871c8fc9bf6df571e63cdcbaa7c0b680812a38f8ec59b5",
+  "capturedRowCount": 1,
+  "currentReadlinkExactlyMatchesCapturedValue": true,
+  "mappingPayloadSourceCommit": "0959055975afe3a929c8f2c8602a6ab77488277c",
+  "coverageAdditionalExactCommitBindingVerified": true,
+  "sourceSubtree": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+  "sourceTreeGitSHA1": "032814d85295c4bc54652eeb5e62e0001e1914b5",
+  "previousPublishedCommit": "6de22defb14f5143e8ed38f7fcd275ffb0977ca1",
+  "priorPayloadHashes": {
+    "mappingSHA256": "7481ee9fa728080207a09aaee555df9d79dd02b50b5791922e5db2a5809c7aa4",
+    "coverageSHA256": "c5afcc0f601d5ab90f2f1981e61b7d02fb2c830926decca538911578980507db"
+  },
+  "sourceMutation": false,
+  "restorationPerformedByThisBindingReview": false
+}

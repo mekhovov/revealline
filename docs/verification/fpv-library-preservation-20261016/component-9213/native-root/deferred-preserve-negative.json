@@ -1,0 +1,16 @@
+{
+  "case": "deferred-preserve-original81c",
+  "result": "FAIL",
+  "observation": {
+    "currentPrimary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+    "focusReport": "No Library action focused (actual active element: BODY).",
+    "focusTag": "BODY",
+    "phase": "Metadata resolved: another saved edition is now active; exact prior Fly must remain intended unless you moved focus.",
+    "scrollWidth": 390,
+    "versionsOpen": false,
+    "viewport": [
+      390,
+      844
+    ]
+  }
+}

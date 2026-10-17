@@ -1,0 +1,52 @@
+{
+  "volumeRestored": true,
+  "priorEvidenceReadable": true,
+  "files": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/native-root/native-receipt.json",
+      "bytes": 6463,
+      "sha256": "e86aa7c0f7b5a15db65d3bc3cc88ab8f78014647d858a51fb08575eb7dd8b5e4"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-reopen-pre-guard-negative-20261016.tap",
+      "bytes": 6314,
+      "sha256": "3b9b1ffe7b7b7df6b0b1cb9e15d3880ebaf216fe74a16617cc1f4078372217d3"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/packaged-family-label-checks.tap",
+      "bytes": 3310,
+      "sha256": "2c6896a4edb3d1fa42f0e2ad64b297742ee5afee4edcbaf933831e3ed4f31541"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/qualification-receipt.json",
+      "bytes": 2248,
+      "sha256": "82d26b621c26de3bb6abff572d2c7840cc843eee3a0a76847482ec2b05883626"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/company-original-members-receipt.json",
+      "bytes": 1868,
+      "sha256": "359e9843e9bb18dacee35a86ff32c6dd5d463b046fd2b7c6efec36f2ef61d5c0"
+    }
+  ],
+  "nativeEvidenceFiles": [
+    "console.json",
+    "deferred-preserve-negative.json",
+    "deferred-preserve-negative.png",
+    "deferred-preserve-repeat-handheld.json",
+    "deferred-preserve-repeat-handheld.png",
+    "handheld-all-uk.json",
+    "handheld-all-uk.png",
+    "handheld-empty-uk.json",
+    "landscape-empty-uk.json",
+    "landscape-empty-uk.png",
+    "landscape-retained-en.json",
+    "native-observations.json",
+    "native-receipt.json",
+    "portrait-all-uk.json",
+    "portrait-all-uk.png",
+    "portrait-retained-en.json",
+    "portrait-versions-en.png",
+    "root-review-comment.md"
+  ],
+  "scope": "Existing receipts and isolated fixture evidence only. No original player database accessed; no data loss inferred."
+}

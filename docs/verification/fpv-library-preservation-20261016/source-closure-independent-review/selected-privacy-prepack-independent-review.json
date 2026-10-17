@@ -1,0 +1,414 @@
+{
+  "format": "IndependentSelectedPrivacyPrepackDispositionReview.v1",
+  "createdUTC": "2026-10-16T05:30:39.932118+00:00",
+  "ownerInputs": [
+    {
+      "file": "selected-privacy-disposition-prepack.json",
+      "bytes": 1955,
+      "sha256": "414b4aaf0ffd7863aec1de83e0af5a8039743d98fb5b8b8f9502b3fcd34a92ca",
+      "stableRead": true
+    },
+    {
+      "file": "selected-object-closure-audit-resumed-final.json",
+      "bytes": 21121861,
+      "sha256": "8833a0092128293afdde4599b0c4554f0b955452ac78b8dcd33c461ae8f38fc4",
+      "stableRead": true
+    }
+  ],
+  "independentURLReviewSHA256": "85ed8c63c0d4122830cd0810d59eb7d021fd2c47bc2defcfb0bce1a9d63c0031",
+  "independentTemplateReviewSHA256": "20f584fc5dedcd1e4d238e709e20df412ced66c281ebfc2268f4db52aaf3e5c7",
+  "selectedCommitCount": 2790,
+  "changedFileVersionCount": 61506,
+  "traversalErrors": [],
+  "emittedFindingCount": 50,
+  "all50EmittedFindingsMatchExactReviewedURLTriples": true,
+  "emittedFindingsWithoutValuesOrContexts": [
+    {
+      "commit": "0bcdfc47ed17130781bb2d0c23541ce4e458f31d",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "35b15a00988af7ff5b0a46ce850a63437751ebc5",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "0bec54d60aec38450427be980a9e2c4494f93e42",
+      "path": "game/test/installed-app.test.mjs",
+      "object": "0ba05234424ca87495ea4a991837a101b7e57a4a",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "10ba7617ed269ed8ead5a4f9e40faa58ff73ff0a",
+      "path": "game/test/installed-app.test.mjs",
+      "object": "3a98aca8414be0bf64d4043ce7c8cd2a16da8ec9",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "25216a817f97ede4855311ef31d207f28d71ad53",
+      "path": "game/test/completion-rewards.test.mjs",
+      "object": "2204d8c6409f09fbf0038d9b45f0e81d11268b99",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "2d283313e3e640891c5867dc29b4af2d615d7f3b",
+      "path": "game/test/demo-audio.test.mjs",
+      "object": "524d40b713d6db2059d2e019dead7d63628c1e0a",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "2d283313e3e640891c5867dc29b4af2d615d7f3b",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f99a11d7155c908c1dbb53df1f84153107925e2e",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "2f84798042aa89785f6bb73cb1c60a9d348e11bf",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "043c82ff2dab2bb8d00e9f0e77cd11ce57feb2c0",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "303c045fb79c68b57f1b19d20e1c6982e60d679f",
+      "path": "game/test/installed-app.test.mjs",
+      "object": "0ba05234424ca87495ea4a991837a101b7e57a4a",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "3639444fbf0161aae15b21d38402be92a5c54a96",
+      "path": "game/test/landing-release-history-host.test.mjs",
+      "object": "aa5079969da9bcc396a687222ec29afa2e142d25",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "3e5de5fdf190b543cd9a992b5409608375824144",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "40d7141ca26d02dd249106713cfda3e0d0e78327",
+      "path": "game/test/edition-offline-client.test.mjs",
+      "object": "8cbb34af4efad23fa5c86676e95c567418aba803",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "4762f657e3f4f2888e15c89e889f04d1c9058c0b",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "47890a956d05eaf49d8bb8d72a942f2076896457",
+      "path": "game/test/demo-audio.test.mjs",
+      "object": "524d40b713d6db2059d2e019dead7d63628c1e0a",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "47890a956d05eaf49d8bb8d72a942f2076896457",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f99a11d7155c908c1dbb53df1f84153107925e2e",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "4b3ea38f78ec6007313416707e5b67104d917b7d",
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "object": "c1a2dfdf7256f7d63a57e3616dfc0f1e58b95b43",
+      "secretPattern": "credential_url",
+      "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931"
+    },
+    {
+      "commit": "4c10d40af2652324b66562a6a9b06907ddba7c82",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "35b15a00988af7ff5b0a46ce850a63437751ebc5",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "4c7c3e550878e086995030321053c9321a466693",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "043c82ff2dab2bb8d00e9f0e77cd11ce57feb2c0",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "4d1fcc05390dce153ce7802846f19332ed130d58",
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "object": "da0d30a679807855b8b1f209216c34275889adbf",
+      "secretPattern": "credential_url",
+      "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931"
+    },
+    {
+      "commit": "4ec773768954b75c60cea9235d2a0481760362ae",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "35b15a00988af7ff5b0a46ce850a63437751ebc5",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "517df7649b01d77cd7b25ff185183a22acf0688a",
+      "path": "game/test/demo-audio.test.mjs",
+      "object": "524d40b713d6db2059d2e019dead7d63628c1e0a",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "517df7649b01d77cd7b25ff185183a22acf0688a",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f99a11d7155c908c1dbb53df1f84153107925e2e",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "542c3435263fcdfbc908c9ac166700a0eae59155",
+      "path": "game/test/company-studio-learning-guided.test.mjs",
+      "object": "d253814dc27837294d2d66c79890c45df145c53e",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "542c3435263fcdfbc908c9ac166700a0eae59155",
+      "path": "game/test/completion-rewards.test.mjs",
+      "object": "25a827dff63fe229b21e378bfcfbfe9d6339d39e",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "57fc02970426a11a0ea11953b9cf0ff6d194a444",
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "object": "c1a2dfdf7256f7d63a57e3616dfc0f1e58b95b43",
+      "secretPattern": "credential_url",
+      "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931"
+    },
+    {
+      "commit": "598ea5e6069d81e306919308e790ffd725585e84",
+      "path": "game/test/completion-rewards.test.mjs",
+      "object": "2204d8c6409f09fbf0038d9b45f0e81d11268b99",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "649887eed17b1a704715cae2205f57b82875584b",
+      "path": "game/test/edition-offline-client.test.mjs",
+      "object": "de8d70cc3b3b8245d37fe843e60d9be9d937d852",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "64c900958d24c2c615b0fc562c8b0f51e215289f",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "6b9e28f7130f6c41ac61ef1a269a926ffc4043be",
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "object": "e94529c1e526abf72b47541637aefe7a48f1f18f",
+      "secretPattern": "credential_url",
+      "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931"
+    },
+    {
+      "commit": "701e2febea9879dd1f46b920562b9a244f6c51af",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "704a3f3daff1a349793ab5d6753d99727e553554",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "35b15a00988af7ff5b0a46ce850a63437751ebc5",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "765ba6f5e6a97b41b94ad5f78312f155734e90d7",
+      "path": "game/test/completion-rewards.test.mjs",
+      "object": "2204d8c6409f09fbf0038d9b45f0e81d11268b99",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "896b500f913f3f13192b32c1b7f7bd9492be589c",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "9606e9363d6918d6925f4c97495d373bd15d7cff",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "043c82ff2dab2bb8d00e9f0e77cd11ce57feb2c0",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "98c0c9bc3b40b48687f1f2c7a6c9f4b898ba47ca",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "9aed6a18f2a91c80e43c5890e4f7e440503f7146",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "043c82ff2dab2bb8d00e9f0e77cd11ce57feb2c0",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "a8534ab737595d99a50faeca3871a5bd228e9377",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "043c82ff2dab2bb8d00e9f0e77cd11ce57feb2c0",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "a9a5a08ca220ddf4d5ce6c78edfdbb49247e5d9a",
+      "path": "game/test/installed-app.test.mjs",
+      "object": "0ba05234424ca87495ea4a991837a101b7e57a4a",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "b351d28c0d279d89c111bc3dc42a3d6619177081",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "043c82ff2dab2bb8d00e9f0e77cd11ce57feb2c0",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "b7a510fe07efed7a8321c63fea0c61166958ffe2",
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "object": "f5f1a4dda73166182d622020e36be0e5c4f272cd",
+      "secretPattern": "credential_url",
+      "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931"
+    },
+    {
+      "commit": "cf5b92140f253f31d534437ef495c12395f015e1",
+      "path": "scripts/test-optional-installation-quota-probe.mjs",
+      "object": "49c62b894132884c5dbb5b190db8a8ee18f19b6d",
+      "secretPattern": "credential_url",
+      "matchSHA256": "a28b8176f57374f4f478f28ad1530d57fff8e37cdb58a74e5146350154124e29"
+    },
+    {
+      "commit": "d422af6a4bc8e8081964a2467bf2e19e209cbd6e",
+      "path": "game/test/community-routes.test.mjs",
+      "object": "3dc42163e07d19b69dd10ee776a1aaef0e130e38",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "d422af6a4bc8e8081964a2467bf2e19e209cbd6e",
+      "path": "game/test/installed-app.test.mjs",
+      "object": "ae82437e027d6f28c446ac49a263c9387085db39",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "d60a4d6e73eaaaa4f07395873f57bf036d618859",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "da1622ac68b94378cc3e31e695d97637d4ae8b54",
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "object": "f5f1a4dda73166182d622020e36be0e5c4f272cd",
+      "secretPattern": "credential_url",
+      "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931"
+    },
+    {
+      "commit": "da7c073172938b9d3dd6fb7f287a8ddf388e54a2",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "35b15a00988af7ff5b0a46ce850a63437751ebc5",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "dc4c2830531386bccbae9bd1c4039e2318445f98",
+      "path": "game/test/edition-offline-client.test.mjs",
+      "object": "8cbb34af4efad23fa5c86676e95c567418aba803",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "ec76741fd4cdb042b6602682042e7be1c0dd46f8",
+      "path": "game/test/installed-app.test.mjs",
+      "object": "0ba05234424ca87495ea4a991837a101b7e57a4a",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "f387988995fbdf76121e71df8525b75792c03fa4",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "object": "043c82ff2dab2bb8d00e9f0e77cd11ce57feb2c0",
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "commit": "f91e1f60ce71b6fe3791fdd8af977e1d66583ae6",
+      "path": "game/test/installed-app.test.mjs",
+      "object": "0ba05234424ca87495ea4a991837a101b7e57a4a",
+      "secretPattern": "credential_url",
+      "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19"
+    },
+    {
+      "commit": "1d0a9368dfea4a29f0b69b4e2e88f8e59fcb132c",
+      "path": "scripts/test-optional-installation-quota-probe.mjs",
+      "object": "49c62b894132884c5dbb5b190db8a8ee18f19b6d",
+      "secretPattern": "credential_url",
+      "matchSHA256": "a28b8176f57374f4f478f28ad1530d57fff8e37cdb58a74e5146350154124e29"
+    }
+  ],
+  "allSelectedEnvExampleVersionsExactlyMatchSevenReviewedBlobIds": true,
+  "allSevenTemplateBodiesIndependentlyReverified": true,
+  "selectedTemplateBindings": [
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "2a0032724d98ef1e12ea758d190334985924bb29"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "42ef9193fdd1b59c90e6d7463a6ccd15b7a78854"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "53f6988974464ea05dc5170931a880afc03fc8ba"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "757d362afca581d4ec2f13c08d4cd40180ab2fe8"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "782f897d2e310d976b19a457872cabeb4e410601"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "c6d46b494c2c349c54087882a0622c21bda525d5"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "dfb86a292aa85d92160749b48f1913c6ef281f32"
+    }
+  ],
+  "strictNoExemptionPackBlobScanStillRequired": true,
+  "publicPreservationAccepted": false,
+  "privateConfigOrPlayerDataRead": false,
+  "sourceMutation": false,
+  "scope": "Complete selected traversal and emitted-finding reconciliation only. The running strict final allowlist scan must enumerate all URL occurrences including the two hashes skipped by the historical scanner, then reconcile every actual path/blob/match triple before upload. Bundle object allowlist, durable asset readback and cold restore remain separate gates."
+}

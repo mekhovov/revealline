@@ -1,0 +1,36 @@
+{
+  "capturedAt": "2026-10-16T02:35:19.889334+00:00",
+  "sourceRevision": "81c0d6587cdb582835a64e3d69c4c130460fb11a",
+  "sourceTree": "2079c94d36b74838cb96cf357e5501dd24ef2235",
+  "run": 38839243409,
+  "artifactId": 12020816649,
+  "githubArtifactSHA256": "40138377866713e03bf7ce8e4c48ec8f5e28ec865cea904a0e2d3adc6053aeb2",
+  "topLevelChecksums": 7,
+  "allMemberHashes": true,
+  "archives": [
+    {
+      "role": "runtime",
+      "files": 1140,
+      "contentBytesIncludingMetadata": 41248443,
+      "archiveBytes": 41419969,
+      "archiveSHA256": "7765014e1bf4ed92f98f4cb4b1c02464c794f691833f9813b9b92c98eab58bb6"
+    },
+    {
+      "role": "source",
+      "files": 1140,
+      "contentBytesIncludingMetadata": 65343658,
+      "archiveBytes": 65516902,
+      "archiveSHA256": "701bc55064916ed33787ea46965e35ff90dc464702aac03ccdad91557d1d7d12"
+    }
+  ],
+  "existingCompanyRuntimeLimits": {
+    "files": 2000,
+    "bytes": 83886080,
+    "sourceSHA256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e"
+  },
+  "runtimeAlsoUnder72MiB": true,
+  "companyBudgetPolicyByteIdenticalToPriorFac28Qualification": true,
+  "cloudReproducibleBuilds": 2,
+  "publicEligible": false,
+  "scope": "Exact regional family-card candidate only; 24 unchanged offered identities; no browser heap/time or public closing/zero-saved cause or fix claim. Every exact downloaded original Company top-level checksum and runtime/source ZIP member length/hash checked externally. Existing Company policy is unchanged; source inventory is separately hashed, not assigned runtime limits. This source predates merged metadata-listing #1537; combined-main qualification remains distinct. Actual runtime also remains below72MiB. Optional package qualification has its own receipt. No native/player data, offline/restart, original-public-profile persistence, or publication acceptance."
+}

@@ -1,0 +1,129 @@
+{
+  "capturedAt": "2026-10-16T04:38:24.973482+00:00",
+  "scope": "Independent six exact early candidate-blob object/hash and finite pattern/context checks; no raw matches, source bodies, credentials or private contexts published. Not a full-history privacy clearance.",
+  "candidateBlobCount": 6,
+  "reviewedFixtureHashCount": 2,
+  "envExampleAllHistoricalVersionsIndividuallyReviewedByThisAudit": false,
+  "metadataScanOwnerConfirmation": "Source owner confirms raw commit metadata/messages and ref/reflog identifiers also scanned; private tag/type accounting remains explicit in final closure.",
+  "finalAllPrivateObjectsCleared": false,
+  "rows": [
+    {
+      "path": "game/test/music-credit.test.mjs",
+      "gitBlobSHA1": "4bdac7f36d13af95d59feac6cc0c5574a21f69c7",
+      "bytes": 4748,
+      "blobSHA256": "95a0e00cda6dae46d503db256b77c082fec0daee96176a76f2660b3b9f8864cf",
+      "rawGitObjectIdentityVerified": true,
+      "patternClass": "credential_url",
+      "matchCount": 1,
+      "matchSHA256": [
+        "093866188144b0216fb125431572e8ac2df8980dfeeb6ebeb3d9f3987d1e4c1d"
+      ],
+      "matchesSourceReviewReceipt": true,
+      "matchedValuesOrContextPublished": false,
+      "isTestFixturePath": true,
+      "allMatchesImmediateQuotedLiterals": true,
+      "everyMatchInExactReviewedFixtureHashSet": true,
+      "disposition": "Known exact URL-credential rejection fixture match; no blanket path exemption."
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "gitBlobSHA1": "b7f1069c03a63e70b128b07925ee03ce7c86ee87",
+      "bytes": 47682,
+      "blobSHA256": "62850e6b7cf4dcbba1edac620ccf6cf94c1b49e417a3ac0831ec9b0b08d5f3cf",
+      "rawGitObjectIdentityVerified": true,
+      "patternClass": "credential_url",
+      "matchCount": 1,
+      "matchSHA256": [
+        "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44"
+      ],
+      "matchesSourceReviewReceipt": true,
+      "matchedValuesOrContextPublished": false,
+      "isTestFixturePath": true,
+      "allMatchesImmediateQuotedLiterals": true,
+      "everyMatchInExactReviewedFixtureHashSet": true,
+      "disposition": "Known exact URL-credential rejection fixture match; no blanket path exemption."
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "gitBlobSHA1": "15d3d98d279d276c78a9c334f97e408288bc973d",
+      "bytes": 790451,
+      "blobSHA256": "5cc839f7fab54a366f0ff5737210ba5797fed624fb8445dd307b80adb86c59da",
+      "rawGitObjectIdentityVerified": true,
+      "patternClass": "google_api_key",
+      "matchCount": 1,
+      "matchSHA256": [
+        "0790e84d2ab50e5384daad076ad7488d0983a1d8a60647df4d931987969b1a57"
+      ],
+      "matchesSourceReviewReceipt": true,
+      "matchedValuesOrContextPublished": false,
+      "correctedBoundaryPatternMatches": 0,
+      "enclosingPayloadChecks": [
+        {
+          "enclosingQuotedPayloadFound": true,
+          "base64Decoded": true,
+          "compressedJSONDecoded": false
+        }
+      ],
+      "disposition": "Generated catalog candidate: corrected boundary result and exact blob/context recorded. Independent decode facts are explicit; final full-history policy/scan remains source-owner gate."
+    },
+    {
+      "path": "game/test/community-account-upload.test.mjs",
+      "gitBlobSHA1": "5b013c2a4206e05a89346f5181481c82cbb7f835",
+      "bytes": 6775,
+      "blobSHA256": "82a67e19cc7b56559fd9a76e356049a6bccebcca71faa243705ce2dae0b2bd4f",
+      "rawGitObjectIdentityVerified": true,
+      "patternClass": "credential_url",
+      "matchCount": 1,
+      "matchSHA256": [
+        "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44"
+      ],
+      "matchesSourceReviewReceipt": true,
+      "matchedValuesOrContextPublished": false,
+      "isTestFixturePath": true,
+      "allMatchesImmediateQuotedLiterals": true,
+      "everyMatchInExactReviewedFixtureHashSet": true,
+      "disposition": "Known exact URL-credential rejection fixture match; no blanket path exemption."
+    },
+    {
+      "path": "scripts/test-production-panel.mjs",
+      "gitBlobSHA1": "00d8dbee9e2254730ea4c3d0356e9d55cbce445b",
+      "bytes": 14126,
+      "blobSHA256": "19c2c32ba77244566a3a38d6c7dc5f786e21a4102ac6cce4556aedae7bb0c088",
+      "rawGitObjectIdentityVerified": true,
+      "patternClass": "credential_url",
+      "matchCount": 1,
+      "matchSHA256": [
+        "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44"
+      ],
+      "matchesSourceReviewReceipt": true,
+      "matchedValuesOrContextPublished": false,
+      "isTestFixturePath": true,
+      "allMatchesImmediateQuotedLiterals": true,
+      "everyMatchInExactReviewedFixtureHashSet": true,
+      "disposition": "Known exact URL-credential rejection fixture match; no blanket path exemption."
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "gitBlobSHA1": "00540241b5568567a3d58e47be6547c8388b7886",
+      "bytes": 708683,
+      "blobSHA256": "517e69980b586c8a2aa55ebb8015bbaa4a8f5ed3ba9f2fc2bd2260204c21d85c",
+      "rawGitObjectIdentityVerified": true,
+      "patternClass": "google_api_key",
+      "matchCount": 1,
+      "matchSHA256": [
+        "697f2be6d91147946eaa41bc0c4803e50f84583dfdccb2c45d1f356aab9cbe93"
+      ],
+      "matchesSourceReviewReceipt": true,
+      "matchedValuesOrContextPublished": false,
+      "correctedBoundaryPatternMatches": 0,
+      "enclosingPayloadChecks": [
+        {
+          "enclosingQuotedPayloadFound": true,
+          "base64Decoded": true,
+          "compressedJSONDecoded": false
+        }
+      ],
+      "disposition": "Generated catalog candidate: corrected boundary result and exact blob/context recorded. Independent decode facts are explicit; final full-history policy/scan remains source-owner gate."
+    }
+  ]
+}

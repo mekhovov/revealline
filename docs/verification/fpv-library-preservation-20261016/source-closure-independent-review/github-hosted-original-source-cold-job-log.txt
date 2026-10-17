@@ -1,0 +1,92 @@
+﻿2026-10-16T06:14:10.4828559Z Current runner version: '2.337.0'
+2026-10-16T06:14:10.4855414Z ##[group]Runner Image Provisioner
+2026-10-16T06:14:10.4856298Z Hosted Compute Agent
+2026-10-16T06:14:10.4856881Z Version: 20261012.601
+2026-10-16T06:14:10.4857644Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-16T06:14:10.4858368Z Build Date: 2026-10-12T17:48:21Z
+2026-10-16T06:14:10.4859083Z Worker ID: {834e57f7-e835-4c40-bd59-065febea0475}
+2026-10-16T06:14:10.4859801Z Region: northcentralus
+2026-10-16T06:14:10.4860404Z Cloud: Azure
+2026-10-16T06:14:10.4861034Z ##[endgroup]
+2026-10-16T06:14:10.4862587Z ##[group]Operating System
+2026-10-16T06:14:10.4863360Z Ubuntu
+2026-10-16T06:14:10.4863913Z 24.04.5
+2026-10-16T06:14:10.4864797Z LTS
+2026-10-16T06:14:10.4865445Z ##[endgroup]
+2026-10-16T06:14:10.4866037Z ##[group]Runner Image
+2026-10-16T06:14:10.4866632Z Image: ubuntu-24.04
+2026-10-16T06:14:10.4867268Z Version: 20261012.334.1
+2026-10-16T06:14:10.4868839Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-16T06:14:10.4870530Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-16T06:14:10.4871561Z ##[endgroup]
+2026-10-16T06:14:10.4872740Z ##[group]GITHUB_TOKEN Permissions
+2026-10-16T06:14:10.4875231Z Contents: write
+2026-10-16T06:14:10.4875882Z Metadata: read
+2026-10-16T06:14:10.4876449Z ##[endgroup]
+2026-10-16T06:14:10.4878580Z Secret source: Actions
+2026-10-16T06:14:10.4879536Z Cache mode: write
+2026-10-16T06:14:10.4880695Z Prepare workflow directory
+2026-10-16T06:14:10.5230893Z Prepare all required actions
+2026-10-16T06:14:10.5336145Z Complete job name: original-source-cold-restore
+2026-10-16T06:14:10.6158311Z ##[group]Run python3 - <<'PY'
+2026-10-16T06:14:10.6159380Z [36;1mpython3 - <<'PY'[0m
+2026-10-16T06:14:10.6160351Z [36;1mimport os,json,subprocess,hashlib,base64,pathlib,struct,datetime,time[0m
+2026-10-16T06:14:10.6163482Z [36;1mROOT=pathlib.Path(os.environ['RUNNER_TEMP'])/'fpv-original-source-cold';ROOT.mkdir(exist_ok=False);REPO='mekhovov/revealline';MANIFEST_OID='fa480ab2e044215378bc580d1e5eb2bb611596d5';MANIFEST_SHA256='f0c47c80d5798f186a15573330cbdcbd033b250dfeb3086653e6cdb1a81a3477';BUNDLE_SHA256='d21fd37f7ca6231ce0b6622e5591b3db4dac282f9f62520f024620d797292636';ASSET=646261949[0m
+2026-10-16T06:14:10.6166411Z [36;1m[0m
+2026-10-16T06:14:10.6166976Z [36;1mdef api(path):[0m
+2026-10-16T06:14:10.6167998Z [36;1m p=subprocess.run(['gh','api','repos/'+REPO+'/'+path],capture_output=True,check=True);return json.loads(p.stdout)[0m
+2026-10-16T06:14:10.6169165Z [36;1mdef sha256(path):[0m
+2026-10-16T06:14:10.6169790Z [36;1m h=hashlib.sha256()[0m
+2026-10-16T06:14:10.6170573Z [36;1m with path.open('rb') as f:[0m
+2026-10-16T06:14:10.6171281Z [36;1m  while b:=f.read(1048576):h.update(b)[0m
+2026-10-16T06:14:10.6172018Z [36;1m return h.hexdigest()[0m
+2026-10-16T06:14:10.6174662Z [36;1mblob=api('git/blobs/'+MANIFEST_OID);body=base64.b64decode(blob['content']);assert hashlib.sha1(b'blob '+str(len(body)).encode()+b'\0'+body).hexdigest()==MANIFEST_OID;assert hashlib.sha256(body).hexdigest()==MANIFEST_SHA256;m=json.loads(body);manifest=ROOT/'allowlist.json';manifest.write_bytes(body);assert len(m['objects'])==17824 and len(m['prerequisiteCommitSHAs'])==555[0m
+2026-10-16T06:14:10.6177805Z [36;1masset=api('releases/assets/'+str(ASSET));assert asset['size']==389261798 and asset['state']=='uploaded' and asset['digest']=='sha256:'+BUNDLE_SHA256;bundle=ROOT/'history.bundle'[0m
+2026-10-16T06:14:10.6179300Z [36;1mwith bundle.open('xb') as f:[0m
+2026-10-16T06:14:10.6181015Z [36;1m p=subprocess.run(['gh','api','--allow-escape-sequences','-H','Accept: application/octet-stream','repos/'+REPO+'/releases/assets/'+str(ASSET)],stdout=f,stderr=subprocess.PIPE,timeout=1200);assert p.returncode==0,p.stderr[:500][0m
+2026-10-16T06:14:10.6183003Z [36;1massert bundle.stat().st_size==389261798 and sha256(bundle)==BUNDLE_SHA256[0m
+2026-10-16T06:14:10.6186801Z [36;1mrepo=ROOT/'recovery.git';env={k:v for k,v in os.environ.items() if k not in ['GIT_DIR','GIT_COMMON_DIR','GIT_WORK_TREE','GIT_OBJECT_DIRECTORY','GIT_ALTERNATE_OBJECT_DIRECTORIES','GIT_INDEX_FILE']};env.update(GIT_NO_LAZY_FETCH='1',GIT_OPTIONAL_LOCKS='0',GIT_TERMINAL_PROMPT='0',GIT_AUTHOR_NAME='Codex',GIT_AUTHOR_EMAIL='codex@users.noreply.github.com',GIT_COMMITTER_NAME='Codex',GIT_COMMITTER_EMAIL='codex@users.noreply.github.com',GIT_AUTHOR_DATE='2026-10-16T05:20:00Z',GIT_COMMITTER_DATE='2026-10-16T05:20:00Z')[0m
+2026-10-16T06:14:10.6190340Z [36;1mdef git(args,timeout=600):[0m
+2026-10-16T06:14:10.6191729Z [36;1m p=subprocess.run(['git','--git-dir='+str(repo)]+args,capture_output=True,env=env,timeout=timeout);assert p.returncode==0,(args,p.stderr[-1200:]);return p.stdout[0m
+2026-10-16T06:14:10.6193327Z [36;1msubprocess.run(['git','init','--bare',str(repo)],capture_output=True,check=True)[0m
+2026-10-16T06:14:10.6195181Z [36;1mfor k,v in [('remote.origin.url','https://github.com/'+REPO+'.git'),('remote.origin.promisor','true'),('remote.origin.partialclonefilter','blob:none')]:git(['config',k,v])[0m
+2026-10-16T06:14:10.6197739Z [36;1mkeys=m['prerequisiteCommitSHAs'];git(['fetch','--depth=1','--filter=blob:none','--no-tags','origin']+keys,1200);assert not (repo/'objects/info/alternates').exists();assert not (repo/'objects').is_symlink();assert set((repo/'shallow').read_text().splitlines())==set(keys)[0m
+2026-10-16T06:14:10.6200277Z [36;1mfirst=git(['cat-file','commit',keys[0]]);tree=next(l[5:].decode() for l in first.split(b'\n\n',1)[0].splitlines() if l.startswith(b'tree '));args=['commit-tree',tree][0m
+2026-10-16T06:14:10.6201545Z [36;1mfor p in keys:args+=['-p',p][0m
+2026-10-16T06:14:10.6204214Z [36;1mp=subprocess.run(['git','--git-dir='+str(repo)]+args,input=b'Local verification-only prerequisite support; recreate from declared GitHub commits.\n',capture_output=True,env=env,timeout=60);assert p.returncode==0;support=p.stdout.decode().strip();git(['update-ref','refs/preservation/verification-only-public-prerequisites',support])[0m
+2026-10-16T06:14:10.6206873Z [36;1m# All later verification must succeed with lazy fetching disabled and an unusable remote URL.[0m
+2026-10-16T06:14:10.6209032Z [36;1mgit(['config','remote.origin.url','https://example.invalid/no-lazy-fetch']);git(['bundle','verify',str(bundle)]);git(['bundle','unbundle',str(bundle)]);git(['update-ref',m['ref'],m['head']]);git(['fsck','--connectivity-only','--no-reflogs'])[0m
+2026-10-16T06:14:10.6210688Z [36;1mraw=bundle.open('rb');lines=[][0m
+2026-10-16T06:14:10.6211327Z [36;1mwhile True:[0m
+2026-10-16T06:14:10.6212084Z [36;1m l=raw.readline();lines.append(l)[0m
+2026-10-16T06:14:10.6212754Z [36;1m if l==b'\n':break[0m
+2026-10-16T06:14:10.6214780Z [36;1mposition=raw.tell();assert raw.read(4)==b'PACK';version,n=struct.unpack('>II',raw.read(8));assert version==2 and n==17824;raw.seek(-20,2);packSHA=raw.read(20).hex();raw.close();headerPrereqs={l[1:41].decode() for l in lines if l.startswith(b'-')};assert headerPrereqs==set(keys)[0m
+2026-10-16T06:14:10.6218317Z [36;1midx=repo/'objects/pack'/('pack-'+packSHA+'.idx');d=idx.read_bytes();assert d[:4]==b'\xfftOc' and struct.unpack('>I',d[4:8])[0]==2 and hashlib.sha1(d[:-20]).digest()==d[-20:];count=struct.unpack('>I',d[1028:1032])[0];ids={d[1032+i*20:1052+i*20].hex() for i in range(count)};assert ids=={v['sha'] for v in m['objects']};assert not ids&set(m['forbiddenObjectSHAs']);assert d[-40:-20].hex()==packSHA[0m
+2026-10-16T06:14:10.6221583Z [36;1mp=subprocess.Popen(['git','--git-dir='+str(repo),'cat-file','--batch'],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,env=env);rowHash=hashlib.sha256();total=0;types={};started=time.time()[0m
+2026-10-16T06:14:10.6223475Z [36;1mfor number,v in enumerate(sorted(m['objects'],key=lambda x:x['sha']),1):[0m
+2026-10-16T06:14:10.6226210Z [36;1m oid=v['sha'];p.stdin.write((oid+'\n').encode());p.stdin.flush();h=p.stdout.readline().split();assert len(h)==3 and h[0].decode()==oid;kind=h[1].decode();size=int(h[2]);assert kind==v['type'] and size+len(kind)+len(str(size))+2==v['rawBytes'];digest=hashlib.sha1(kind.encode()+b' '+str(size).encode()+b'\0');bodyHash=hashlib.sha256();left=size[0m
+2026-10-16T06:14:10.6311182Z [36;1m while left:[0m
+2026-10-16T06:14:10.6312729Z [36;1m  b=p.stdout.read(min(left,1048576));assert b;left-=len(b);digest.update(b);bodyHash.update(b)[0m
+2026-10-16T06:14:10.6315444Z [36;1m assert p.stdout.read(1)==b'\n' and digest.hexdigest()==oid;rowHash.update(json.dumps({'sha':oid,'type':kind,'bytes':size,'bodySHA256':bodyHash.hexdigest()},sort_keys=True,separators=(',',':')).encode()+b'\n');total+=size;types[kind]=types.get(kind,0)+1[0m
+2026-10-16T06:14:10.6317506Z [36;1m if number%2000==0:print(json.dumps({'coldObjectsVerified':number,'of':17824}),flush=True)[0m
+2026-10-16T06:14:10.6318392Z [36;1mp.stdin.close();p.terminate()[0m
+2026-10-16T06:14:10.6319894Z [36;1mreached={l.split()[0] for l in git(['rev-list','--parents',m['head']]).decode().splitlines()};selected={v['sha'] for v in m['objects'] if v['type']=='commit' and not v.get('archivalSynthetic')};assert len(selected)==2790 and selected<=reached[0m
+2026-10-16T06:14:10.6321461Z [36;1mfor oid in m['forbiddenObjectSHAs']:[0m
+2026-10-16T06:14:10.6322526Z [36;1m p=subprocess.run(['git','--git-dir='+str(repo),'cat-file','-e',oid],capture_output=True,env=env,timeout=15);assert p.returncode!=0[0m
+2026-10-16T06:14:10.6331333Z [36;1mreceipt={'format':'GitHubHostedOriginalSourceHistoryColdRestore.v1','createdUTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'runId':os.environ['GITHUB_RUN_ID'],'runURL':'https://github.com/'+REPO+'/actions/runs/'+os.environ['GITHUB_RUN_ID'],'assetId':ASSET,'assetBytes':389261798,'assetSHA256':BUNDLE_SHA256,'manifestGitBlob':MANIFEST_OID,'manifestSHA256':MANIFEST_SHA256,'declaredPublicPrerequisites':555,'bundleVerify':True,'unbundle':True,'nativeFsckConnectivity':True,'actualPackIDsExactlyAllowlist':True,'all17824NewRawGitObjectSHA1Readbacks':True,'all2790SelectedCommitsReachable':True,'allExcludedPrivateObjectsAbsent':True,'newObjectTypes':types,'newObjectBodyBytes':total,'sortedObjectReadbackRowsSHA256':rowHash.hexdigest(),'noAlexOrOriginalSourceStoreInputs':True,'noAlternatesOrObjectDirectorySymlinks':True,'verificationRemoteDisabledAfterGitHubFetch':True,'localPublicPrerequisiteSupportRecreated':True,'scope':'Original16-store checkpoint only. Expanded all-volume and private companion preservation remain separate. Sparse public prerequisites require GitHub for omitted public bodies/older ancestry; no app persistence/offline/endurance qualification.'};(ROOT/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt),flush=True)[0m
+2026-10-16T06:14:10.6340992Z [36;1mwith open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('Original source checkpoint cold restore passed.\n\n```json\n'+json.dumps(receipt,indent=2)+'\n```\n')[0m
+2026-10-16T06:14:10.6342206Z [36;1mPY[0m
+2026-10-16T06:14:10.7136825Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-16T06:14:10.7137890Z env:
+2026-10-16T06:14:10.7141886Z   GH_TOKEN: ***
+2026-10-16T06:14:10.7142380Z ##[endgroup]
+2026-10-16T06:14:25.6423286Z {"coldObjectsVerified": 2000, "of": 17824}
+2026-10-16T06:14:26.2862846Z {"coldObjectsVerified": 4000, "of": 17824}
+2026-10-16T06:14:26.8695896Z {"coldObjectsVerified": 6000, "of": 17824}
+2026-10-16T06:14:27.5932518Z {"coldObjectsVerified": 8000, "of": 17824}
+2026-10-16T06:14:28.0734825Z {"coldObjectsVerified": 10000, "of": 17824}
+2026-10-16T06:14:28.5526731Z {"coldObjectsVerified": 12000, "of": 17824}
+2026-10-16T06:14:29.1070770Z {"coldObjectsVerified": 14000, "of": 17824}
+2026-10-16T06:14:29.6459475Z {"coldObjectsVerified": 16000, "of": 17824}
+2026-10-16T06:14:30.2722239Z {"format": "GitHubHostedOriginalSourceHistoryColdRestore.v1", "createdUTC": "2026-10-16T06:14:30.271276+00:00", "runId": "38860055058", "runURL": "https://github.com/mekhovov/revealline/actions/runs/38860055058", "assetId": 646261949, "assetBytes": 389261798, "assetSHA256": "d21fd37f7ca6231ce0b6622e5591b3db4dac282f9f62520f024620d797292636", "manifestGitBlob": "fa480ab2e044215378bc580d1e5eb2bb611596d5", "manifestSHA256": "f0c47c80d5798f186a15573330cbdcbd033b250dfeb3086653e6cdb1a81a3477", "declaredPublicPrerequisites": 555, "bundleVerify": true, "unbundle": true, "nativeFsckConnectivity": true, "actualPackIDsExactlyAllowlist": true, "all17824NewRawGitObjectSHA1Readbacks": true, "all2790SelectedCommitsReachable": true, "allExcludedPrivateObjectsAbsent": true, "newObjectTypes": {"blob": 4677, "tree": 10340, "commit": 2807}, "newObjectBodyBytes": 988614745, "sortedObjectReadbackRowsSHA256": "65ff9c9dade88c6bc0261cde9b78f8718349b6bdcdfe0cd62eb347ad8a4daa9b", "noAlexOrOriginalSourceStoreInputs": true, "noAlternatesOrObjectDirectorySymlinks": true, "verificationRemoteDisabledAfterGitHubFetch": true, "localPublicPrerequisiteSupportRecreated": true, "scope": "Original16-store checkpoint only. Expanded all-volume and private companion preservation remain separate. Sparse public prerequisites require GitHub for omitted public bodies/older ancestry; no app persistence/offline/endurance qualification."}
+2026-10-16T06:14:30.2988266Z Cleaning up orphan processes

@@ -1,0 +1,32 @@
+{
+  "format": "FPVAppReviewPortableLinkMapping.v1",
+  "createdAt": "2026-10-16T04:25:41.728279+00:00",
+  "sourceRoot": "/Volumes/alex/CodexMigrationStaging",
+  "mapping": {
+    "linkPathRelativeToNewRestoreRoot": "fpv-package-qualification-20261014/batched-storage-103be7a7/independent-storage-checks/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+    "newTargetRelativeToNewRestoreRoot": "_github-review-dependencies/urban-bando-delivery-review-r1",
+    "relativeSymlinkValue": "../../../../../../../_github-review-dependencies/urban-bando-delivery-review-r1",
+    "originalTargetAlias": "<internal-app-worktrees>/fpv-rgba-isolated-20261015/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+    "payloadSource": {
+      "repository": "mekhovov/revealline",
+      "commit": "0959055975afe3a929c8f2c8602a6ab77488277c",
+      "subtree": "authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+      "treeGitSHA1": "032814d85295c4bc54652eeb5e62e0001e1914b5",
+      "fileManifest": "outside-root-target-github-coverage.json",
+      "files": 39,
+      "bytes": 1461705,
+      "allLocalBytesMatchedPublishedGitBlobIdentities": true
+    },
+    "recipe": [
+      "Choose an existing new global restore root and a still-nonexistent dependency destination under it; do not recreate the old user-home or volume path.",
+      "Fetch each listed GitHub Git blob from repos/mekhovov/revealline/git/blobs/{gitBlobSHA1}, decode its base64 content into an exclusive new file at newTargetRelativeToNewRestoreRoot/{file.path}, and verify byte length/SHA256 against the39-file manifest. Alternatively obtain this exact subtree from the bound preserved source commit.",
+      "After the global restore has created safe real parent directories, create the one missing leaf symlink using relativeSymlinkValue. Refuse an existing destination or link; do not follow symlink parents.",
+      "Record this explicitly reviewed mapping and all39verified file identities; then resolve all282restored links and require every selected file hash, target and separate source-checkout receipt before a complete portable restore claim."
+    ],
+    "performedByThisAudit": false,
+    "originalTargetSHA256": "b01face14009c2f3263d6f014d5f45acf3c2e84e3616e2da2b371a3889ed9cc0",
+    "originalTargetSHA256Encoding": "UTF-8 bytes of the exact captured symlink value; no path normalization, alias substitution or newline"
+  },
+  "capturedRootOtherLinks": "The other281targets use the existing sourceRoot-prefix\u2192newRestoreRoot relative rewrite. exact-link-dispositions.json records their selected terminal payload counts and alias chains.",
+  "scope": "Read-only proven data closure plus explicit portable recipe; no original link, source file, player data or restore destination was mutated."
+}

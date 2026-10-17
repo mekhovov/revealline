@@ -1,0 +1,12 @@
+{
+  "capturedAt": "2026-10-16T03:58:06.982277+00:00",
+  "observations": [
+    {
+      "operation": "First original Actions ZIP API download attempt",
+      "result": "HTTP415 before any ZIP bytes or upload",
+      "cause": "Actions archive endpoint requires normal GitHub JSON media type for the redirect request; release asset downloads use octet-stream.",
+      "resolution": "Use endpoint-specific media type while preserving authenticated API redirect and unauthenticated signed blob download.",
+      "sourceOrPackageChanges": false
+    }
+  ]
+}

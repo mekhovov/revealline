@@ -1,0 +1,15 @@
+{
+  "actions": "Fixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture load request (no asset bytes) · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture Fly requested — NO FLIGHT STARTED · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+  "focusAction": "fly",
+  "focusReport": "Actual DOM focus: · fly · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d · connected · enabled",
+  "focusTag": "BUTTON",
+  "focusVersion": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+  "phase": "Metadata resolved: another saved edition is now active; exact prior Fly must remain intended unless you moved focus.",
+  "primary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+  "scrollWidth": 390,
+  "versionsOpen": true,
+  "viewport": [
+    390,
+    844
+  ]
+}

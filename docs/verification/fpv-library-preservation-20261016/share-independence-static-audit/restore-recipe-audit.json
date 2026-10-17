@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-10-16T04:19:34.544124+00:00",
+  "originalArchiveRestore": {
+    "path": "docs/verification/fpv-library-preservation-20261016/archive-preservation/restore-original-archives.py",
+    "sha256": "2ee96f986480dd304d549795cda166f5762ba1fed14694b98c48302eda8ddd75",
+    "explicitNewDestinationRequired": true,
+    "hardcodedOldVolumeRequired": false,
+    "restoresOriginalZIPsOnly": true
+  },
+  "bulkPortableRestore": {
+    "path": "bulk-pack-lane/restore.py",
+    "sha256": "6efc5c5146bcde1c5eb4db814b5a373a39457b7ee1d212069a7344519f199608",
+    "explicitIndexCacheRestoreRootAndReceiptRequired": true,
+    "absoluteCapturedSourceRootLinksBecomeRelative": true,
+    "outsideCapturedSourceRootLinksNotCreated": true,
+    "unresolvedInternalLinksPreventComplete": true,
+    "requiresSeparateGitCheckoutRestore": true,
+    "fullRestoreNotExecutedByThisAudit": true
+  },
+  "outsideCapturedRootStagedReviewLink": [
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/batched-storage-103be7a7/independent-storage-checks/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+      "target": "<internal-app-worktrees>/fpv-rgba-isolated-20261015/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    }
+  ],
+  "knownValidatorRepair": {
+    "scope": "Ignored local development dependency only; no tracked source or player data changed. Original external package remains intact.",
+    "package": "gltf-validator",
+    "version": "2.0.0-dev.3.10",
+    "oldTarget": "/Volumes/alex/CodexMigrationStaging/fpv-temp/canyon-validation-deps/node_modules/gltf-validator",
+    "newTarget": "<internal-preservation>/saved-dependencies/gltf-validator-2.0.0-dev.3.10",
+    "link": "<historical-root>/node_modules/gltf-validator",
+    "portableReinstall": "Install gltf-validator@2.0.0-dev.3.10 from npm or the committed authoring lockfile; no alex share required."
+  },
+  "scope": "Recipes were read statically only. No existing destination, source link, app source, dependency, player data or browser was modified."
+}

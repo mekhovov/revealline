@@ -1,0 +1,28 @@
+{
+  "capturedAt": "2026-10-16T04:08:40.416262+00:00",
+  "sourceHeadSHA": "b65d80f716b8db646bfdf5f714892f1c0f6409b0",
+  "manualRunID": 38844826436,
+  "pullRequestRunID": 38844752667,
+  "optional": {
+    "manualArtifactID": 12022193739,
+    "pullRequestArtifactID": 12022893240,
+    "sameEveryTopLevelMemberBytesAndSHA256": true,
+    "manualTopLevelMemberCount": 16,
+    "pullRequestTopLevelMemberCount": 16,
+    "wrapperDigestDiffers": true,
+    "releaseAssetUploadedForPRVariant": false,
+    "sameEveryRecursiveMemberBytesAndSHA256": true,
+    "recursiveMemberCount": 736,
+    "postTransferRecursiveEqualityVerifiedAt": "2026-10-16T04:08:44.734550+00:00"
+  },
+  "capacity": {
+    "manualArtifactID": 12022404306,
+    "pullRequestArtifactID": 12023586313,
+    "sameEveryTopLevelMemberBytesAndSHA256": false,
+    "manualTopLevelMemberCount": 5,
+    "pullRequestTopLevelMemberCount": 22,
+    "pullRequestAllTopLevelMembersPreservedAsExactJSONPayloads": true,
+    "releaseAssetUploadedForPRVariant": true,
+    "scope": "Distinct original PR wrapper preserved as supplemental21st release asset, plus all exact JSON payloads and member provenance in Git."
+  }
+}

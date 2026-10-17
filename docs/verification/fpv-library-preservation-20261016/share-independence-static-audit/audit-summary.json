@@ -1,0 +1,91 @@
+{
+  "capturedAt": "2026-10-16T04:19:34.548758+00:00",
+  "scope": "Read-only static link/path audit of the two existing internal application checkouts and root preservation inventories. Independent GitHub-restored player/package audit is root-owned and is not claimed here.",
+  "rootAliases": {
+    "canonical-primary": "User canonical revealline checkout, no unrelated local path published.",
+    "historical-root": "Existing fpv-progress-isolated-20261015 application checkout.",
+    "internal-preservation": "Internal fpv-volume-preservation-20261016 recovery folder.",
+    "internal-app-worktrees": "Other existing internal application worktrees."
+  },
+  "sourceHeads": {
+    "canonical-primary": "f69a58fb7170fd742e14205b8df9faf493653115",
+    "historical-root": "9276bd4ef4f6189a6eda51910a0782d1dca51d87",
+    "productPR1540": "b65d80f716b8db646bfdf5f714892f1c0f6409b0"
+  },
+  "liveCheckoutCounts": {
+    "canonical-primary": {
+      "directoriesScannedWithoutFollowingLinks": 5108,
+      "symlinks": 42,
+      "alexDependentLinks": 0,
+      "brokenLinks": 0
+    },
+    "historical-root": {
+      "directoriesScannedWithoutFollowingLinks": 162,
+      "symlinks": 4,
+      "alexDependentLinks": 0,
+      "brokenLinks": 2
+    }
+  },
+  "liveAlexDependentLinks": [],
+  "preexistingDanglingHistoricalRootConvenienceLinks": [
+    {
+      "root": "historical-root",
+      "path": "node_modules/@gltf-transform/core",
+      "target": "/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/core",
+      "lexicalAbsoluteTarget": "/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/core",
+      "resolvedTarget": "/private/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/core",
+      "exists": false,
+      "dependsOnAlex": false
+    },
+    {
+      "root": "historical-root",
+      "path": "node_modules/@gltf-transform/extensions",
+      "target": "/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/extensions",
+      "lexicalAbsoluteTarget": "/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/extensions",
+      "resolvedTarget": "/private/tmp/fpv-coaster-tools-20261015/node_modules/@gltf-transform/extensions",
+      "exists": false,
+      "dependsOnAlex": false
+    }
+  ],
+  "activeAuthoringResolution": "All four queried authoring packages resolve from authoring/fpv-worlds in both roots through the internal canonical authoring node_modules; root-level convenience links are not their active resolution.",
+  "checkedGitMetadata": {
+    "bothCommonGitDirectoriesInternal": true,
+    "objectsOrRefsOrHooksOrIndexSymlinksToAlex": false,
+    "objectAlternatesPresent": false,
+    "localCoreWorktreeHooksPathFsmonitorOverridesPresent": false,
+    "rawGitConfigurationReadOrPublished": false
+  },
+  "checkedPackageManifestAndLockfileCount": 12,
+  "hardcodedAlexPathsInCheckedApplicationRuntimeBuildPinsAndWorkflowSources": 0,
+  "authoringExplicitLocalFixtureOverridesRequiredWhenUsingDefaults": 6,
+  "inventoryUniqueStagedOrExternalCheckoutLinks": 282,
+  "inventoryAlexAbsoluteTargets": 281,
+  "inventoryOutsideCapturedRootTargetCount": 1,
+  "primaryFileRows": 85733,
+  "supplementInventoryCountsArePrefixSnapshots": true,
+  "unresolvedShareDependencyFoundInLiveCanonicalOrHistoricalApplication": false,
+  "allStagedReviewsPortableOrGlobalBackupCompleteClaimed": false,
+  "mutations": "Only new small audit report files and a preservation-only child commit/PR body update; no app source, symlink, package installation, player data or browser changes.",
+  "olderExclusionsReview": {
+    "counts": {
+      "file": 80518,
+      "excluded": 28,
+      "symlink": 240,
+      "git-checkout": 14
+    },
+    "currentPrimaryInventoryPreferred": true,
+    "note": "Excluded dependency/cache/Git/history paths are not normal application runtime paths. Restore their tools from the relevant committed lockfile before replaying old development checks; this audit does not certify all old excluded installs."
+  },
+  "inventoryAll282TargetDispositionsRecorded": true,
+  "capturedRootTargetMappings": 281,
+  "outsideRootTargetClosure": {
+    "files": 39,
+    "bytes": 1461705,
+    "sourceCommit": "0959055975afe3a929c8f2c8602a6ab77488277c",
+    "treeGitSHA1": "032814d85295c4bc54652eeb5e62e0001e1914b5",
+    "allTrackedAndMatchPublishedGitHub": true,
+    "uniqueLocalPayloads": [],
+    "portableMapping": "portable-link-mapping.json",
+    "mappingAppliedOrRestoreExecuted": false
+  }
+}

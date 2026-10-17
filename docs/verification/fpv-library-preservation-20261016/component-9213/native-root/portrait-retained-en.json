@@ -1,0 +1,217 @@
+{
+  "controls": [
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Refresh saved regions",
+      "w": 179.609375,
+      "x": 25
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Download: Alpine Highlands — connected mountain study · Station approach",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Alpine Highlands (6)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Download: Lunar Basin — flight study · Shelter detail",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Lunar Basin (2)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Download: Canal City — bridges and courtyards",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Canal City (1)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Fly: Desert Expedition — 16 km relief study · Open desert terrain · Version fixture-6ecb9197",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Desert Expedition (3)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Download: Tropical coast — connected harbour · Connected harbour",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Tropical coast (3)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Download: Railway Valley — six districts",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Railway Valley (2)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Download: Coaster Gardens — connected park study · Connected park routes",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Coaster Gardens (2)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Download: Hillside Town — civic court materials · Civic courtyard materials",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Hillside Town (2)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Download: Canyon Expanse — broad relief study",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Canyon worlds (3)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Download: Urban earthworks — regional preview",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for Urban earthworks (1)",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Fly: My retained landscape · Version fixture-retained-r1",
+      "w": 306,
+      "x": 42
+    },
+    {
+      "disabled": false,
+      "h": 44,
+      "label": "Versions for My retained landscape (1)",
+      "w": 306,
+      "x": 42
+    }
+  ],
+  "families": [
+    {
+      "family": "alpine",
+      "versions": 6
+    },
+    {
+      "family": "lunar",
+      "versions": 2
+    },
+    {
+      "family": "canal",
+      "versions": 1
+    },
+    {
+      "family": "desert",
+      "versions": 3
+    },
+    {
+      "family": "tropical",
+      "versions": 3
+    },
+    {
+      "family": "railway",
+      "versions": 2
+    },
+    {
+      "family": "coaster",
+      "versions": 2
+    },
+    {
+      "family": "hillside",
+      "versions": 2
+    },
+    {
+      "family": "canyon",
+      "versions": 3
+    },
+    {
+      "family": "urban",
+      "versions": 1
+    },
+    {
+      "family": "retained:personal-landscape",
+      "versions": 1
+    }
+  ],
+  "language": "en",
+  "viewport": [
+    390,
+    844
+  ],
+  "width": 390
+}

@@ -1,0 +1,63 @@
+{
+  "capturedAt": "2026-10-16T03:18:01.770506+00:00",
+  "head": "b65d80f716b8db646bfdf5f714892f1c0f6409b0",
+  "tree": "98a19c4b9465279e910f7fd5c7b37d10b2c9d566",
+  "parents": [
+    "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+    "2169552a0571b9d62bce116054f1e21aabd10fa1"
+  ],
+  "mergeMethod": "Ordinary GitHub branch merge endpoint after two local Git versions refused their clean-worktree pre-merge stash check. No reset, rebase, force, settings changes or protection bypass. Local checkout will fast-forward normally.",
+  "featureFilesAllUnchanged": true,
+  "files": [
+    {
+      "path": "docs/fpv-regional-family-library-20261016.md",
+      "bytes": 5441,
+      "sha256": "c87c9a5a9ddadcfe7218355a19178f72b1aa7b48c4be46adb2811adc395319a7",
+      "unchangedFromAccepted8ab": true
+    },
+    {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "bytes": 30924,
+      "sha256": "62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394",
+      "unchangedFromAccepted8ab": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "bytes": 74392,
+      "sha256": "4e414ab01cd63b8feaaeda1f141a76a7cd85d738084a92b25e1ea4f8eb0f918e",
+      "unchangedFromAccepted8ab": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "bytes": 119168,
+      "sha256": "e75fe38f7a339e844376c9ca2eb35ef6d7f84202b395e0c8d2c491ba915e1529",
+      "unchangedFromAccepted8ab": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "bytes": 17516,
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+      "matchesLatestMain": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "bytes": 38417,
+      "sha256": "fa05c07d694b96042ad4285294b1b676c60ef85b5122175a0d7b0b0268a1e8d6",
+      "unchangedFromAccepted8ab": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+      "bytes": 17560,
+      "sha256": "7276ecdcf7798741bda92c361da8e417bbff1fa0fbf7885f8e9005f78a0b5997",
+      "unchangedFromAccepted8ab": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-session.mjs",
+      "bytes": 14398,
+      "sha256": "8241c9f04e98a14ddf6c75b882f75d2d169f003517753928680054f8b512d9cd",
+      "unchangedFromAccepted8ab": true
+    }
+  ],
+  "draftRequired": true,
+  "scope": "Combined source identity only; packages and full-player/native still pending"
+}

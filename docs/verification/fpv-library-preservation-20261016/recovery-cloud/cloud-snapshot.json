@@ -1,0 +1,474 @@
+{
+  "pr": {
+    "auto_merge": null,
+    "base": "428329745c3078941338ae6157e2ae1a55c28462",
+    "draft": true,
+    "head": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+    "html_url": "https://github.com/mekhovov/revealline/pull/1540",
+    "mergeable_state": "clean",
+    "number": 1540,
+    "state": "open",
+    "title": "SIM: group regional editions into family cards",
+    "updated_at": "2026-10-16T02:35:14Z"
+  },
+  "main": {
+    "commit": {
+      "date": "2026-10-16T02:08:51Z",
+      "message": "Merge pull request #1537 from mekhovov/codex/fpv-library-metadata-listing-20261016\n\nBound retained revision payloads during Library listing",
+      "tree": {
+        "sha": "b572d61dd705afaef3d37b608e0d9fddd83d6b62",
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/trees/b572d61dd705afaef3d37b608e0d9fddd83d6b62"
+      }
+    },
+    "html_url": "https://github.com/mekhovov/revealline/commit/741948b14a09a816e49054c443511186bb99eb41",
+    "sha": "741948b14a09a816e49054c443511186bb99eb41"
+  },
+  "runs": {
+    "runs": [
+      {
+        "conclusion": "success",
+        "created_at": "2026-10-16T02:33:20Z",
+        "event": "pull_request",
+        "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/38841029345",
+        "id": 38841029345,
+        "name": "Fastline exact-head auto-merge",
+        "status": "completed",
+        "updated_at": "2026-10-16T02:35:00Z"
+      },
+      {
+        "conclusion": "success",
+        "created_at": "2026-10-16T02:29:36Z",
+        "event": "workflow_dispatch",
+        "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/38840697239",
+        "id": 38840697239,
+        "name": "Company edition candidates",
+        "status": "completed",
+        "updated_at": "2026-10-16T02:44:51Z"
+      },
+      {
+        "conclusion": "success",
+        "created_at": "2026-10-16T02:28:32Z",
+        "event": "pull_request",
+        "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/38840608782",
+        "id": 38840608782,
+        "name": "Appearance preview",
+        "status": "completed",
+        "updated_at": "2026-10-16T02:41:50Z"
+      },
+      {
+        "conclusion": "success",
+        "created_at": "2026-10-16T02:28:32Z",
+        "event": "pull_request",
+        "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/38840608847",
+        "id": 38840608847,
+        "name": "Industrial feature verification",
+        "status": "completed",
+        "updated_at": "2026-10-16T02:42:05Z"
+      },
+      {
+        "conclusion": "success",
+        "created_at": "2026-10-16T02:28:32Z",
+        "event": "pull_request",
+        "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/38840608789",
+        "id": 38840608789,
+        "name": "Fastline exact-head auto-merge",
+        "status": "completed",
+        "updated_at": "2026-10-16T02:28:44Z"
+      },
+      {
+        "conclusion": "success",
+        "created_at": "2026-10-16T02:28:32Z",
+        "event": "pull_request",
+        "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/38840608797",
+        "id": 38840608797,
+        "name": "Validate source for continuous main",
+        "status": "completed",
+        "updated_at": "2026-10-16T02:35:03Z"
+      },
+      {
+        "conclusion": "success",
+        "created_at": "2026-10-16T02:28:32Z",
+        "event": "pull_request",
+        "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/38840608785",
+        "id": 38840608785,
+        "name": "Company edition candidates",
+        "status": "completed",
+        "updated_at": "2026-10-16T02:59:15Z"
+      }
+    ],
+    "total_count": 7
+  },
+  "pullRequestArtifacts": {
+    "artifacts": [
+      {
+        "created_at": "2026-10-16T02:59:13Z",
+        "digest": "sha256:889b9966288f025642ceb494e5627e5420809a44590207715ee559d730047747",
+        "expired": false,
+        "id": 12022115964,
+        "name": "company-capacity-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "size_in_bytes": 996305,
+        "workflow_run": {
+          "head_branch": "codex/fpv-regional-family-library-20261016",
+          "head_repository_id": 1367404328,
+          "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+          "id": 38840608785,
+          "repository_id": 1367404328
+        }
+      },
+      {
+        "created_at": "2026-10-16T02:31:29Z",
+        "digest": "sha256:e75ad312329bfe2a8e004855a080f7de0f612de91f209748dddaf75ce2bc29d1",
+        "expired": false,
+        "id": 12020917390,
+        "name": "optional-flight-candidate-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "size_in_bytes": 23157547,
+        "workflow_run": {
+          "head_branch": "codex/fpv-regional-family-library-20261016",
+          "head_repository_id": 1367404328,
+          "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+          "id": 38840608785,
+          "repository_id": 1367404328
+        }
+      }
+    ],
+    "total_count": 2
+  },
+  "manualArtifacts": {
+    "artifacts": [
+      {
+        "created_at": "2026-10-16T02:44:48Z",
+        "digest": "sha256:c12dce2a7f0b333ee101417728baa287b79ad8497f782c3976c9e48cbd0e0df6",
+        "expired": false,
+        "id": 12021498368,
+        "name": "company-candidate-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "size_in_bytes": 78418184,
+        "updated_at": "2026-10-16T02:44:48Z",
+        "workflow_run": {
+          "head_branch": "codex/fpv-regional-family-library-20261016",
+          "head_repository_id": 1367404328,
+          "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+          "id": 38840697239,
+          "repository_id": 1367404328
+        }
+      },
+      {
+        "created_at": "2026-10-16T02:32:01Z",
+        "digest": "sha256:b476b71480a81c565c7d5a700faa25097e4477dd518d9fe0a3b3fd7d8914aaa6",
+        "expired": false,
+        "id": 12021476397,
+        "name": "optional-flight-candidate-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "size_in_bytes": 23157547,
+        "updated_at": "2026-10-16T02:32:01Z",
+        "workflow_run": {
+          "head_branch": "codex/fpv-regional-family-library-20261016",
+          "head_repository_id": 1367404328,
+          "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+          "id": 38840697239,
+          "repository_id": 1367404328
+        }
+      },
+      {
+        "created_at": "2026-10-16T02:44:45Z",
+        "digest": "sha256:a60d7b4c9ad958d55151c99be0560d21293c305c21a38701ebd657f0d82e209e",
+        "expired": false,
+        "id": 12021229581,
+        "name": "company-capacity-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+        "size_in_bytes": 61605,
+        "updated_at": "2026-10-16T02:44:45Z",
+        "workflow_run": {
+          "head_branch": "codex/fpv-regional-family-library-20261016",
+          "head_repository_id": 1367404328,
+          "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+          "id": 38840697239,
+          "repository_id": 1367404328
+        }
+      }
+    ],
+    "total_count": 3
+  },
+  "manualRun": {
+    "conclusion": "success",
+    "created_at": "2026-10-16T02:29:36Z",
+    "event": "workflow_dispatch",
+    "head_branch": "codex/fpv-regional-family-library-20261016",
+    "head_sha": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/38840697239",
+    "id": 38840697239,
+    "name": "Company edition candidates",
+    "status": "completed",
+    "updated_at": "2026-10-16T02:44:51Z"
+  },
+  "sourceGateJobs": {
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 116779575503,
+        "name": "preflight",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Check out the workflow's test policy",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Set up Node.js",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Read explicit automated-suite policy",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Classify the pull request for the release train",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Preserve exact source and admission metadata",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Record temporary fast-release policy",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Set up Node.js",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Check out the workflow's test policy",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 15,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "success",
+        "id": 116779650587,
+        "name": "focused",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Check out exact pull-request source",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Check out trusted focused-gate automation",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Set up Node.js",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Download the immutable preflight path inventory",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Capture the reviewed changed-path set",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Select the fail-closed focused gate",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Verify exact tracked source before commands",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Install dependencies once for selected focused gates",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Install pinned authoring dependencies for selected focused gates",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run selected focused gates",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Verify exact tracked source after commands",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Set up Node.js",
+            "number": 22,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Check out trusted focused-gate automation",
+            "number": 23,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Check out exact pull-request source",
+            "number": 24,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 25,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "skipped",
+        "id": 116779651670,
+        "name": "build",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "conclusion": "skipped",
+        "id": 116779652082,
+        "name": "test",
+        "status": "completed",
+        "steps": []
+      },
+      {
+        "conclusion": "success",
+        "id": 116781239478,
+        "name": "release-ready",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Apply the selected PR gate policy",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 3,
+            "status": "completed"
+          }
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "format": "revealline-release-test-policy.v1",
+    "mode": "required",
+    "authorization": "explicit-user-request-20261004",
+    "scope": "automated-test-suites",
+    "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+    "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+  },
+  "workflowInspected": ".github/workflows/company-edition-candidate.yml at 8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3; single editions string input; no new dispatch needed",
+  "relatedMergedPr": {
+    "base": "9ce5d517b1cd9524284d313e23dce61e333f322f",
+    "draft": false,
+    "head": "bc9bc71f192729f0661a0483d7d64609c1973343",
+    "html_url": "https://github.com/mekhovov/revealline/pull/1537",
+    "merge_commit_sha": "741948b14a09a816e49054c443511186bb99eb41",
+    "merged": true,
+    "merged_at": "2026-10-16T02:08:52Z",
+    "number": 1537,
+    "state": "closed"
+  },
+  "publicComments": [
+    {
+      "id": 6206108007,
+      "url": "https://github.com/mekhovov/revealline/pull/1540#issuecomment-6206108007",
+      "createdAt": "2026-10-16T01:42:43Z",
+      "updatedAt": "2026-10-16T02:35:14Z",
+      "body": "<!-- fastline-controller-status -->\n### Fastline queue status\n\n- Purpose: SIM: group regional editions into family cards\n- Target: unassigned\n- Predecessor: none declared\n- Blocker/status: source or admission metadata changed since the successful gate\n- Checked SHA: `8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3`\n- Next: Resolve the blocker, then rerun `release-ready` on the resulting exact head.\n\n_This single bot-owned comment is updated in place._"
+    },
+    {
+      "id": 6206342274,
+      "url": "https://github.com/mekhovov/revealline/pull/1540#issuecomment-6206342274",
+      "createdAt": "2026-10-16T02:01:10Z",
+      "updatedAt": "2026-10-16T02:01:10Z",
+      "body": "Independent root source review is accepted at exact `81c0d6587cdb582835a64e3d69c4c130460fb11a` after the asynchronous-refresh focus correction.\n\nThe initial review found that an active-version refresh could leave the old primary focused node disconnected. That regression was reproduced before fixing it. The child commit preserves full world ID/hash/action intent, reveals the exact previous action when it still exists, and safely focuses Versions/Refresh when it does not. Confirmation cannot silently switch to another Fly or Download. Explicit navigation cancels stale restoration.\n\nRoot independently ran the family and existing label suites: **23 passed / 0 failed / 0 skipped**. All 24 offers, unknown retained IDs, active saved defaults, destructive confirmation scope, EN/UK and actual menu-navigation adapter behavior are covered in the isolated software fixture. No material source finding remains.\n\n**Still open:** exact-head CI/original package qualification, native DOM disabled-focus and responsive/theme/input observations, normal-player integration and actual public rollout. Software controller/radio samples are not physical-device acceptance. The original public storage failures remain unrelated and unexplained. Keep Draft until the applicable remaining gates are accepted.\n\nRoot review receipt SHA-256: `af49fc1fc2c05432b0aa78c232690eee332429f2274489e07408f7cb8b1751b0`.\n\n```json\n{\n  \"reviewedAt\": \"2026-10-16T02:01:09.005462+00:00\",\n  \"pr\": 1540,\n  \"head\": \"81c0d6587cdb582835a64e3d69c4c130460fb11a\",\n  \"sourceReviewAccepted\": true,\n  \"files\": {\n    \"optional-practice/civilian-fpv/regional-library.mjs\": {\n      \"bytes\": 74142,\n      \"sha256\": \"25dc7de4cfe5f9f08095b2934a36d508a1d2291307ab8880ca353b3c994d80b5\"\n    },\n    \"optional-practice/civilian-fpv/world-style.css\": {\n      \"bytes\": 119168,\n      \"sha256\": \"e75fe38f7a339e844376c9ca2eb35ef6d7f84202b395e0c8d2c491ba915e1529\"\n    },\n    \"game/test/fpv-regional-library-families.test.mjs\": {\n      \"bytes\": 28369,\n      \"sha256\": \"750c242925a776a345b9920469f7df5d7fce334bc9b58f3bc6b4c67e45b51169\"\n    },\n    \"docs/fpv-regional-family-library-20261016.md\": {\n      \"bytes\": 4831,\n      \"sha256\": \"1e6158a64907b882df4cc988addd5407269b4ef768b8890372d63a4836871259\"\n    }\n  },\n  \"finding\": \"Original asynchronous-refresh primary focus loss reproduced and corrected in the child commit.\",\n  \"verifiedCorrection\": \"Exact world ID, pin hash and action intent survives primary-display changes; missing action does not become Download or another Fly. Explicit navigation cancels stale intent.\",\n  \"command\": \"node --test game/test/fpv-regional-library-families.test.mjs game/test/fpv-regional-library-labels.test.mjs\",\n  \"rootSoftwareResult\": {\n    \"tests\": 23,\n    \"pass\": 23,\n    \"fail\": 0,\n    \"skipped\": 0\n  },\n  \"preserved\": [\n    \"All24 exact offers and unknown retained IDs\",\n    \"Active saved default without render-time writes\",\n    \"Explicit repair/removal confirmations scoped to exact world ID\",\n    \"EN/UK and controller/radio adapter focus behavior in isolated DOM fixture\"\n  ],\n  \"remaining\": [\n    \"Current exact-head CI and original package qualification\",\n    \"Native DOM disabled-focus and responsive/theme/controller/touch behavior\",\n    \"Normal-player download/Fly and actual public deployment/launch\"\n  ],\n  \"notClaimed\": [\n    \"Physical-device support from simulated input\",\n    \"Real browser focus/layout from mock DOM\",\n    \"Original public persistence repair\",\n    \"Native all-24 retention\"\n  ]\n}\n```\n"
+    },
+    {
+      "id": 6206505387,
+      "url": "https://github.com/mekhovov/revealline/pull/1540#issuecomment-6206505387",
+      "createdAt": "2026-10-16T02:13:44Z",
+      "updatedAt": "2026-10-16T02:13:44Z",
+      "body": "Exact-head optional package qualification completed for `81c0d6587cdb582835a64e3d69c4c130460fb11a`; source remains unchanged and this PR remains Draft.\n\nThe successful [optional cloud job](https://github.com/mekhovov/revealline/actions/runs/38837878854/job/116771127870) produced original artifact `12019858512` (23,157,373 bytes; SHA-256 `5de33cab799f59cd889d54fd979cba95435c461ee0be92c161931072cefbdeb1`). External read-only qualification verified its GitHub digest/source/tree, all envelope checksums, exact membership/length/hash of all six distribution/source archives, their existing budgets and all three finished-module import closures (68/81/134 modules). FPV Worlds revision is `b49bd26e9fb7d6fde9c383eb624824452cfb957dee1acbf262753acebf432c08`, runtime ZIP SHA-256 `c1152ca1a81b451387bce73e5034479d16943565faac05410a1c281893326113`.\n\nAll 23 exact-source family/UI/navigation and label groups also pass against the shipped modules, with unchanged runtime members and no source-test adaptations. The first standalone Node invocation omitted the generated package's required i18next host engine and failed before tests; its full report is preserved. Loading the shipped engine as external host setup, matching the browser host boundary, allowed the tests to run. This setup does not patch production modules.\n\nExternal receipt: `regional-family-library-81c0d658/qualification-receipt.json`, SHA-256 `82d26b621c26de3bb6abff572d2c7840cc843eee3a0a76847482ec2b05883626`. Its scope is original optional archives and isolated software checks, not native installation, live player storage, visual/physical hardware acceptance or public availability.\n\nA separate no-WebGL component preview is staged for root-owned native review using this exact package and current CSS, synthetic in-memory metadata and explicit callback-only actions. It does not open the default database, fetch scenery or start flight. Native acceptance is still open. Original Company qualification is separately queued through the supported [FPV Learning workflow](https://github.com/mekhovov/revealline/actions/runs/38839243409), and the PR's all-edition candidate continues. Latest-main combined qualification remains distinct because this exact source predates merged metadata-listing #1537. No closing-database, retained-state, offline/restart, endurance or public fix is claimed.\n"
+    },
+    {
+      "id": 6206683188,
+      "url": "https://github.com/mekhovov/revealline/pull/1540#issuecomment-6206683188",
+      "createdAt": "2026-10-16T02:28:39Z",
+      "updatedAt": "2026-10-16T02:28:39Z",
+      "body": "Root native component review of exact `81c0d6587cdb582835a64e3d69c4c130460fb11a`: **HOLD for a reproduced focus failure.**\n\nThe frozen synthetic preview at `9213` imports the unchanged packaged Library, input module and stylesheet. The visible deferred-refresh control focuses the old Desert Fly, then calls the production `open()` API. With no intervening input, both 390 × 844 and 1280 × 800 observations finish with BODY focus, Versions closed and a changed primary edition. This is separate from a proven repaint-only bug: `open()` unconditionally reinserts the already-positioned root before refresh captures focus. Preserve the original negative; qualify any child fix and new stage separately.\n\nOther bounded checks pass: no document horizontal overflow in sampled 390 × 844, 844 × 390 and 1280 × 800 EN/UK layouts; visible production controls are at least 44 px high. Empty/all synthetic scenarios retain all 24 offers in ten families. The default fixture also keeps two synthetic retained rows, including one unfamiliar ID. Native Enter/Space operate Versions; the old Desert Fly calls its exact `6ecb9197…` identity; ArrowDown moves from Alpine Versions to exact R6 Fly then its removal-review action. No physical controller is represented by these keyboard checks.\n\nReceipt: `fpv-temp/regional-family-component-review-9213/native-root/native-receipt.json`, SHA-256 `e86aa7c0f7b5a15db65d3bc3cc88ab8f78014647d858a51fb08575eb7dd8b5e4`. Eight frozen HTTP/source files were independently rehashed. Sixteen evidence files retain raw observations and distinct screenshots; console warning/error entries are zero for this component tab. The exact-label no-match and a tool wait capped below the preview’s five-second delay are separately recorded as tool preparation limits.\n\nScope: callback-only synthetic component; no database, WebGL, scenery, actual flight, player-storage access or persistence. This does not qualify full-player themes, physical input, performance, public gameplay or the original public saved-map failures. Tab 57 closed normally and viewport override reset. Frozen preview and all prior evidence remain unchanged. Draft stays held.\n"
+    }
+  ]
+}

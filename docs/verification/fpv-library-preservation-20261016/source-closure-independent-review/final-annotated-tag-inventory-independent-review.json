@@ -1,0 +1,1107 @@
+{
+  "format": "IndependentFinalAnnotatedTagInventoryReview.v1",
+  "createdUTC": "2026-10-16T05:17:05.828472+00:00",
+  "ownerClosureReceipt": {
+    "file": "all-annotated-tag-final-inventory-closure.json",
+    "bytes": 109651,
+    "sha256": "91ab06f740a5ba0c98652db165ee258d838d97c567137a0c0e968ae58b1f17b5",
+    "stableRead": true
+  },
+  "verifiedInputHashes": [
+    {
+      "file": "remaining-stores-annotated-tag-inventories.json",
+      "bytes": 124787,
+      "sha256": "61df9eb5d2f91d70de9d5c129b35529aae2c6ad46e35b0d07a41db60ffef2fbe",
+      "stableRead": true
+    },
+    {
+      "file": "object-store-identity-reconciliation.json",
+      "bytes": 1476290,
+      "sha256": "ae8c6a81c9e5009851606db82b6306b5c8103f3a739b0d92b3b6ed8549133be5",
+      "stableRead": true
+    },
+    {
+      "file": "all-object-shadow-retry-reports.json",
+      "bytes": 1219578,
+      "sha256": "aa454407eddb2232d48c1fe3b8dc9358ce66f4c50b2bc55a3d500b27ab26bfa3",
+      "stableRead": true
+    },
+    {
+      "file": "packed-gap-GitHub-type-classification.json",
+      "bytes": 32880,
+      "sha256": "38405bb1df2d12dc8e723dfe0d708bc4ce1a79a0983d72942e114381c256c804",
+      "stableRead": true
+    },
+    {
+      "file": "primary-complete-object-header-map.tsv",
+      "bytes": 7299111,
+      "sha256": "b0b9a1f498ce133abe0b1c82800130fc05eda7d174314410171be95519170e1a",
+      "stableRead": true
+    }
+  ],
+  "capturedStoreCount": 16,
+  "allStoreIdentitySetsMatchOriginalCommitInventory": true,
+  "remainingHeaderInventoriesComplete": 12,
+  "primaryPlusOtherExistingStoreProofs": 4,
+  "uniqueAnnotatedTagIdentityCount": 175,
+  "exactUnionMatchesCompletePrimaryHeaderMap": true,
+  "all175IdentitiesIndependentlyBoundToCurrentGithubTagRefs": true,
+  "githubRefBindings": [
+    {
+      "tagObject": "00c2b328c81dc8894186d7971466424cca1ca8b8",
+      "githubRefs": [
+        "refs/tags/v0.61.5"
+      ]
+    },
+    {
+      "tagObject": "015093327ac5f465c51cd69074388b4010497156",
+      "githubRefs": [
+        "refs/tags/v0.61.7"
+      ]
+    },
+    {
+      "tagObject": "0217d8972b6deb1b18b5ea00a44488576a16d1b3",
+      "githubRefs": [
+        "refs/tags/v0.87.0"
+      ]
+    },
+    {
+      "tagObject": "02a68c18c373cbe3988dd12070adb02751815f9e",
+      "githubRefs": [
+        "refs/tags/v0.115.0"
+      ]
+    },
+    {
+      "tagObject": "03bf36ae9a36f5e776464bd5ef75043cfba727d7",
+      "githubRefs": [
+        "refs/tags/v0.60.0"
+      ]
+    },
+    {
+      "tagObject": "04952417a80e51651131b4b7f0a447783c099333",
+      "githubRefs": [
+        "refs/tags/v0.132.1"
+      ]
+    },
+    {
+      "tagObject": "04eaf221699a5c1108a2a166b33303ccdae3d8be",
+      "githubRefs": [
+        "refs/tags/v0.60.3"
+      ]
+    },
+    {
+      "tagObject": "0794241d17ebc1660338feac57a374518bd8722c",
+      "githubRefs": [
+        "refs/tags/v0.45.0"
+      ]
+    },
+    {
+      "tagObject": "07ee7d2c75d8de0c3d6087177c252f04833f493a",
+      "githubRefs": [
+        "refs/tags/v0.60.4"
+      ]
+    },
+    {
+      "tagObject": "081f62bdb9a06941acd52ceeab2e3eaa8f480e30",
+      "githubRefs": [
+        "refs/tags/v0.57.3"
+      ]
+    },
+    {
+      "tagObject": "08e1aeb0aa8b0a02e3ac535f00f62dc907bdf9f3",
+      "githubRefs": [
+        "refs/tags/v0.89.0"
+      ]
+    },
+    {
+      "tagObject": "097896b0210d1cb6f67db245f9a622edd12940de",
+      "githubRefs": [
+        "refs/tags/v0.61.4"
+      ]
+    },
+    {
+      "tagObject": "0bd5836da5cc4ffd914227c929d4bf3a26032877",
+      "githubRefs": [
+        "refs/tags/v0.95.0"
+      ]
+    },
+    {
+      "tagObject": "0c95c88e8af58f6726945f838e90f6c175c122bd",
+      "githubRefs": [
+        "refs/tags/v0.108.0"
+      ]
+    },
+    {
+      "tagObject": "0d06433cbcd5bafdda630d8590198bde05c3d4b8",
+      "githubRefs": [
+        "refs/tags/v0.64.3"
+      ]
+    },
+    {
+      "tagObject": "0e80b9e425a8b9765d0a62beccb473f204215605",
+      "githubRefs": [
+        "refs/tags/v0.141.6"
+      ]
+    },
+    {
+      "tagObject": "1090d1b8c49742eb6aca12d6cda4ad2ecc7bbba7",
+      "githubRefs": [
+        "refs/tags/v0.61.21"
+      ]
+    },
+    {
+      "tagObject": "1315f7154a3f701d356a5d3e862c18d342155c3b",
+      "githubRefs": [
+        "refs/tags/v0.132.3"
+      ]
+    },
+    {
+      "tagObject": "13c6d9632d1f2e41bc32c6b39a5db7999050c76e",
+      "githubRefs": [
+        "refs/tags/v0.84.0"
+      ]
+    },
+    {
+      "tagObject": "1427b8c737a4541be23f086de7f48bfc70ee6309",
+      "githubRefs": [
+        "refs/tags/v0.26.0"
+      ]
+    },
+    {
+      "tagObject": "15edf83529e289a967289820bbc43ecd344c8779",
+      "githubRefs": [
+        "refs/tags/v0.11.0"
+      ]
+    },
+    {
+      "tagObject": "17f3e06c02597dc09c2c106eec7f70cdbd9c7bd0",
+      "githubRefs": [
+        "refs/tags/v0.86.0"
+      ]
+    },
+    {
+      "tagObject": "1d5a6949cc9910fcc606b11213eddc5a9ecfb7d4",
+      "githubRefs": [
+        "refs/tags/v0.132.2"
+      ]
+    },
+    {
+      "tagObject": "1e2a3f3d5b731f27aa4ed36670b9fd803fb4c300",
+      "githubRefs": [
+        "refs/tags/v0.30.0"
+      ]
+    },
+    {
+      "tagObject": "1e2aae2ea43decce1ee5229eb9869b173574d1de",
+      "githubRefs": [
+        "refs/tags/v0.106.0"
+      ]
+    },
+    {
+      "tagObject": "22008a584b2b4c08d1cf37840d87b95e2888bca6",
+      "githubRefs": [
+        "refs/tags/v0.82.1"
+      ]
+    },
+    {
+      "tagObject": "222c5f1eee4bfc2db5cad8a3991aa51fafc77b65",
+      "githubRefs": [
+        "refs/tags/v0.68.2"
+      ]
+    },
+    {
+      "tagObject": "2398d0365ed0135e9626219e77332df64940b7fa",
+      "githubRefs": [
+        "refs/tags/v0.113.1"
+      ]
+    },
+    {
+      "tagObject": "23d74a6b7df7e34154ee916736fa463a63748bc8",
+      "githubRefs": [
+        "refs/tags/v0.62.1"
+      ]
+    },
+    {
+      "tagObject": "24c1dea2a86c595d935c47857aca672cc2d2afd9",
+      "githubRefs": [
+        "refs/tags/v0.115.1"
+      ]
+    },
+    {
+      "tagObject": "253ed21b6897a0784ba3d8d2b871c952fee90451",
+      "githubRefs": [
+        "refs/tags/v0.55.0"
+      ]
+    },
+    {
+      "tagObject": "27b7c212817e094ccf86d2b0cc4aa953235224e6",
+      "githubRefs": [
+        "refs/tags/v0.61.9"
+      ]
+    },
+    {
+      "tagObject": "28f58571b64efdfa730f276941b3c97b03dac058",
+      "githubRefs": [
+        "refs/tags/v0.68.1"
+      ]
+    },
+    {
+      "tagObject": "299375ec717442f7967543f991c994643c6e2bd3",
+      "githubRefs": [
+        "refs/tags/v0.17.1"
+      ]
+    },
+    {
+      "tagObject": "2a65f2917d2ed86a273d1fb2e45f25de232e3563",
+      "githubRefs": [
+        "refs/tags/v0.97.0"
+      ]
+    },
+    {
+      "tagObject": "2c61fb61e510a8a8941b77eb7843aabdce1e26df",
+      "githubRefs": [
+        "refs/tags/v0.37.0"
+      ]
+    },
+    {
+      "tagObject": "2c725cfdaf9b9955978d26a77dfbcadeb2ef9aea",
+      "githubRefs": [
+        "refs/tags/v0.111.0"
+      ]
+    },
+    {
+      "tagObject": "302c7647286827281df9211c799e26f24547e7bf",
+      "githubRefs": [
+        "refs/tags/v0.90.0"
+      ]
+    },
+    {
+      "tagObject": "30f93a1d5c072fbd58769dc533ba64217e293374",
+      "githubRefs": [
+        "refs/tags/v0.64.0"
+      ]
+    },
+    {
+      "tagObject": "3269fc70de936f77022aa68e63acf050ff63f8b7",
+      "githubRefs": [
+        "refs/tags/v0.53.0"
+      ]
+    },
+    {
+      "tagObject": "34a25b9088f89f71b28006d9c9dbe97fc1f30858",
+      "githubRefs": [
+        "refs/tags/v0.48.0"
+      ]
+    },
+    {
+      "tagObject": "398c3d07d840b35c7dbc92ec1a63a04da9c22591",
+      "githubRefs": [
+        "refs/tags/v0.85.0"
+      ]
+    },
+    {
+      "tagObject": "39f071ae3ad38d648f8bd2fa82a79bccce33fc84",
+      "githubRefs": [
+        "refs/tags/v0.16.0"
+      ]
+    },
+    {
+      "tagObject": "3adac423d22a47598997098145001f1ee3e3ea41",
+      "githubRefs": [
+        "refs/tags/v0.20.0"
+      ]
+    },
+    {
+      "tagObject": "3ee73d59903c94d1838c481a727f7c57f4918406",
+      "githubRefs": [
+        "refs/tags/v0.40.0"
+      ]
+    },
+    {
+      "tagObject": "4148e33b818326f065c0a8057646231b3d6b43cd",
+      "githubRefs": [
+        "refs/tags/v0.44.0"
+      ]
+    },
+    {
+      "tagObject": "41cb3a3f7b9c6d04eea93d2ec67041b07636e5a5",
+      "githubRefs": [
+        "refs/tags/v0.141.4"
+      ]
+    },
+    {
+      "tagObject": "424c32f95c5ef586c1567040a1a13cefc122ab88",
+      "githubRefs": [
+        "refs/tags/v0.77.0"
+      ]
+    },
+    {
+      "tagObject": "43885ec8f1a5521547a81c8d2bbc925099561b30",
+      "githubRefs": [
+        "refs/tags/v0.61.22"
+      ]
+    },
+    {
+      "tagObject": "4444c3d8479fb0a30a9dd38a360261f5166e7613",
+      "githubRefs": [
+        "refs/tags/v0.59.0"
+      ]
+    },
+    {
+      "tagObject": "469638432d73ea6f74e02f1e552b3157c047c4ff",
+      "githubRefs": [
+        "refs/tags/v0.41.0"
+      ]
+    },
+    {
+      "tagObject": "46be19b49016eebb0d05fefa12ed23df3982d0e6",
+      "githubRefs": [
+        "refs/tags/v0.23.0"
+      ]
+    },
+    {
+      "tagObject": "49b528a4c55c13b96e16bf8d1443e015bba8d7a0",
+      "githubRefs": [
+        "refs/tags/v0.132.5"
+      ]
+    },
+    {
+      "tagObject": "4dfdd664e3dab3f7837c86907e2cc26a29854472",
+      "githubRefs": [
+        "refs/tags/v0.61.1"
+      ]
+    },
+    {
+      "tagObject": "4f14195f94f17efee4915264c740f0c6e9afefd0",
+      "githubRefs": [
+        "refs/tags/v0.17.0"
+      ]
+    },
+    {
+      "tagObject": "51e2d15ebdf5d97ed794b6ce3076f87fced952c1",
+      "githubRefs": [
+        "refs/tags/v0.132.0"
+      ]
+    },
+    {
+      "tagObject": "526e900abd6ca6c375d4de67f3cef424ac040279",
+      "githubRefs": [
+        "refs/tags/v0.96.0"
+      ]
+    },
+    {
+      "tagObject": "52b2b2f7bd248357bfae88f1ec5b0b072bf22185",
+      "githubRefs": [
+        "refs/tags/v0.80.0"
+      ]
+    },
+    {
+      "tagObject": "5582c527bcb5fc9b760b23dfdb3bbb8ece93ea43",
+      "githubRefs": [
+        "refs/tags/v0.61.3"
+      ]
+    },
+    {
+      "tagObject": "57ef1b15ed8f887d8c905df499d85ca302df2fc6",
+      "githubRefs": [
+        "refs/tags/v0.12.0"
+      ]
+    },
+    {
+      "tagObject": "5a1f832ba77f3f8541829596cb720c3848e19ad2",
+      "githubRefs": [
+        "refs/tags/v0.69.2"
+      ]
+    },
+    {
+      "tagObject": "5be3df9129a8a178f6ff94a2a408ca6d96ea261c",
+      "githubRefs": [
+        "refs/tags/v0.80.3"
+      ]
+    },
+    {
+      "tagObject": "5f7aa8f8e557a643ffda625145b7f72203ee3c24",
+      "githubRefs": [
+        "refs/tags/v0.60.7"
+      ]
+    },
+    {
+      "tagObject": "6211817554fc82bfc65b8c15bf825beb82301859",
+      "githubRefs": [
+        "refs/tags/v0.29.2"
+      ]
+    },
+    {
+      "tagObject": "632bf35908ea33fb9356d41d758d302f19361c12",
+      "githubRefs": [
+        "refs/tags/v0.60.2"
+      ]
+    },
+    {
+      "tagObject": "67a6fc9c6d0dce662949cb06f55a7228f22967bf",
+      "githubRefs": [
+        "refs/tags/v0.57.2"
+      ]
+    },
+    {
+      "tagObject": "6cd54b4e22282e2ab5f1506a1ebee95f7752f88a",
+      "githubRefs": [
+        "refs/tags/v0.78.0"
+      ]
+    },
+    {
+      "tagObject": "6e18ea11d87c3d54e11405a938dd7551e63f8976",
+      "githubRefs": [
+        "refs/tags/v0.38.0"
+      ]
+    },
+    {
+      "tagObject": "6eb25743751f8e55078c0bbc32efaf6c197baf89",
+      "githubRefs": [
+        "refs/tags/v0.21.0"
+      ]
+    },
+    {
+      "tagObject": "725bbe5e04aba9ee77c4261fb057b9ad54767de1",
+      "githubRefs": [
+        "refs/tags/v0.60.1"
+      ]
+    },
+    {
+      "tagObject": "74721a379e648f796e58a01fadf193f2467c2375",
+      "githubRefs": [
+        "refs/tags/v0.65.0"
+      ]
+    },
+    {
+      "tagObject": "750c60d08fc6c049cf25fee5a9fb5d2477e756bf",
+      "githubRefs": [
+        "refs/tags/v0.141.1"
+      ]
+    },
+    {
+      "tagObject": "753c8ccd0cc73a7b93cb275c0b7283b367165c24",
+      "githubRefs": [
+        "refs/tags/v0.79.1"
+      ]
+    },
+    {
+      "tagObject": "7667bbb830aa0a59a85831f3c94f82280b0c6aeb",
+      "githubRefs": [
+        "refs/tags/v0.110.1"
+      ]
+    },
+    {
+      "tagObject": "78d91a364e83c463c65513755c9e84aaccbc56f3",
+      "githubRefs": [
+        "refs/tags/v0.10.0"
+      ]
+    },
+    {
+      "tagObject": "79852d67fd35a8622626f10093e047e3853a8f7d",
+      "githubRefs": [
+        "refs/tags/v0.142.3"
+      ]
+    },
+    {
+      "tagObject": "7a53131435fa3e7b42991e0621584b3643699b94",
+      "githubRefs": [
+        "refs/tags/v0.49.0"
+      ]
+    },
+    {
+      "tagObject": "7a84f22481a6ac5f835cbde6777ad08260260bcf",
+      "githubRefs": [
+        "refs/tags/v0.24.0"
+      ]
+    },
+    {
+      "tagObject": "7aaa39e0b2ae10d6438b026cebacae5268c4b058",
+      "githubRefs": [
+        "refs/tags/v0.8.0"
+      ]
+    },
+    {
+      "tagObject": "7c03c06a0f4d15af31b0bbd2a6fa4e3a44c5ab18",
+      "githubRefs": [
+        "refs/tags/v0.27.0"
+      ]
+    },
+    {
+      "tagObject": "7d66703cceac832613fdd347c15f759897f00e0b",
+      "githubRefs": [
+        "refs/tags/v0.116.1"
+      ]
+    },
+    {
+      "tagObject": "7d76d4b963e429d136ba0ee23dbb16e5bb49444c",
+      "githubRefs": [
+        "refs/tags/v0.52.0"
+      ]
+    },
+    {
+      "tagObject": "7fd492d653e1763a0f98d63d8d3fe746a84f0ded",
+      "githubRefs": [
+        "refs/tags/v0.36.0"
+      ]
+    },
+    {
+      "tagObject": "824892b44adca6d27f3e1ccf3f435d0ed03bdaf5",
+      "githubRefs": [
+        "refs/tags/v0.76.0"
+      ]
+    },
+    {
+      "tagObject": "84a5cb8d0d0f8d5edb9811f81c00de5e96a512d0",
+      "githubRefs": [
+        "refs/tags/v0.60.9"
+      ]
+    },
+    {
+      "tagObject": "84e846d8f26a0ef79d9a3ae8d4e442516886df4d",
+      "githubRefs": [
+        "refs/tags/v0.60.5"
+      ]
+    },
+    {
+      "tagObject": "869406bdd6fa21ff6f5271e87c7325a6a9708088",
+      "githubRefs": [
+        "refs/tags/v0.131.0"
+      ]
+    },
+    {
+      "tagObject": "8825d8c21fbb8f26c53d6b59f08cf77e16e7c3ed",
+      "githubRefs": [
+        "refs/tags/v0.101.0"
+      ]
+    },
+    {
+      "tagObject": "8994ae79181904bd1ddc588441dc0b8a0432dff0",
+      "githubRefs": [
+        "refs/tags/v0.62.0"
+      ]
+    },
+    {
+      "tagObject": "8a51ef1da7d69786a5c60e2125234e907e32a4be",
+      "githubRefs": [
+        "refs/tags/v0.18.0"
+      ]
+    },
+    {
+      "tagObject": "8a791ab186af446ef884dc0184c6fedcc726e563",
+      "githubRefs": [
+        "refs/tags/v0.9.0"
+      ]
+    },
+    {
+      "tagObject": "8aca496c217199fbca442bd04a8ca0a231429c7a",
+      "githubRefs": [
+        "refs/tags/v0.15.0"
+      ]
+    },
+    {
+      "tagObject": "8b2c1106606ab42d3246b1bc836c4e6b1ad1cb3f",
+      "githubRefs": [
+        "refs/tags/v0.57.1"
+      ]
+    },
+    {
+      "tagObject": "8ce113979ab250bbd4ce294786dfddbaf9efe154",
+      "githubRefs": [
+        "refs/tags/v0.5.0"
+      ]
+    },
+    {
+      "tagObject": "8d3f0b7fa99b3efdc5c59e2bcec2faac3237149f",
+      "githubRefs": [
+        "refs/tags/v0.116.0"
+      ]
+    },
+    {
+      "tagObject": "8d64aa0959cd0560ea917bc8fad8bf02d9892eb0",
+      "githubRefs": [
+        "refs/tags/v0.63.0"
+      ]
+    },
+    {
+      "tagObject": "8eabeb78d79938340f3b4c66c7c9cac186914f20",
+      "githubRefs": [
+        "refs/tags/v0.58.0"
+      ]
+    },
+    {
+      "tagObject": "8f769643d246211d3ae3d451eb74eeb5ed448ab0",
+      "githubRefs": [
+        "refs/tags/v0.13.0"
+      ]
+    },
+    {
+      "tagObject": "90c91b4569de7b0d9dd3d0aaedba46b65e91e1e4",
+      "githubRefs": [
+        "refs/tags/v0.79.0"
+      ]
+    },
+    {
+      "tagObject": "919f963de3b2588f566b81972f368f909fa144e0",
+      "githubRefs": [
+        "refs/tags/v0.57.4"
+      ]
+    },
+    {
+      "tagObject": "9649852a5555b34687cbe5c9556952c0346bc55c",
+      "githubRefs": [
+        "refs/tags/v0.80.1"
+      ]
+    },
+    {
+      "tagObject": "972dedddefe8a25286b9664b064ecfa6ad742c5f",
+      "githubRefs": [
+        "refs/tags/v0.83.0"
+      ]
+    },
+    {
+      "tagObject": "98349a781f6eff0372ce2a4177d140fae5270335",
+      "githubRefs": [
+        "refs/tags/v0.103.0"
+      ]
+    },
+    {
+      "tagObject": "98d7cc11b97a2b06f386775851cd21cf7a9f354e",
+      "githubRefs": [
+        "refs/tags/v0.105.0"
+      ]
+    },
+    {
+      "tagObject": "991bfc31408833971330a883f9617e0f62fbe647",
+      "githubRefs": [
+        "refs/tags/v0.66.0"
+      ]
+    },
+    {
+      "tagObject": "9a915a210fe3a86cfa644fa33c53cbfeb1a7c123",
+      "githubRefs": [
+        "refs/tags/v0.60.8"
+      ]
+    },
+    {
+      "tagObject": "a055a08d6f53600276abdf8291d08313c3baf413",
+      "githubRefs": [
+        "refs/tags/v0.58.1"
+      ]
+    },
+    {
+      "tagObject": "a13d39481346d1cc08e26ca4be47e94ece8de7a2",
+      "githubRefs": [
+        "refs/tags/v0.91.0"
+      ]
+    },
+    {
+      "tagObject": "a52d56fea73ec1bb6c57b13bcb44f54dd5a93e46",
+      "githubRefs": [
+        "refs/tags/v0.54.0"
+      ]
+    },
+    {
+      "tagObject": "a8dad60a92cd04e7c52221f51952fe0fcffdfb82",
+      "githubRefs": [
+        "refs/tags/v0.51.0"
+      ]
+    },
+    {
+      "tagObject": "aacc45fce2203a11685362c99bc25368d4e037b1",
+      "githubRefs": [
+        "refs/tags/v0.60.6"
+      ]
+    },
+    {
+      "tagObject": "aaccca78bf40dee6d7457fc12656c9e6d70e0a0b",
+      "githubRefs": [
+        "refs/tags/v0.141.5"
+      ]
+    },
+    {
+      "tagObject": "abbc18111d445360e4666fe7193adfd191197b2b",
+      "githubRefs": [
+        "refs/tags/v0.29.1"
+      ]
+    },
+    {
+      "tagObject": "acb858f6b13323779df46b63c0905881b01a0584",
+      "githubRefs": [
+        "refs/tags/v0.110.0"
+      ]
+    },
+    {
+      "tagObject": "acf29013a2fae552af3fc58c73668806017d3c02",
+      "githubRefs": [
+        "refs/tags/archive/pr-1124-unified-appearance-20261009"
+      ]
+    },
+    {
+      "tagObject": "ad7a0557011625fe68e5bb2ea7a77e7068b11c53",
+      "githubRefs": [
+        "refs/tags/v0.100.0"
+      ]
+    },
+    {
+      "tagObject": "ad9bd22e8240dfb11031796b88ca02896f37f0af",
+      "githubRefs": [
+        "refs/tags/v0.114.0"
+      ]
+    },
+    {
+      "tagObject": "ae775ae6283eb9bebf6f47d9758a3f82a43975bf",
+      "githubRefs": [
+        "refs/tags/v0.132.4"
+      ]
+    },
+    {
+      "tagObject": "b12479e46307dbc6178ee4189cba6940a6baba73",
+      "githubRefs": [
+        "refs/tags/v0.19.0"
+      ]
+    },
+    {
+      "tagObject": "b203b267cffe9467613735cf6678708d7c77e7df",
+      "githubRefs": [
+        "refs/tags/v0.113.0"
+      ]
+    },
+    {
+      "tagObject": "b454e8199df054ad38ff9383b28a66433fa7b3ad",
+      "githubRefs": [
+        "refs/tags/v0.47.0"
+      ]
+    },
+    {
+      "tagObject": "b61d48560efd0423f163557c46ef81b5bafbecbd",
+      "githubRefs": [
+        "refs/tags/v0.14.0"
+      ]
+    },
+    {
+      "tagObject": "b956962dd2c0b3023cef2b7e0eaa0e092ab55e65",
+      "githubRefs": [
+        "refs/tags/v0.61.23"
+      ]
+    },
+    {
+      "tagObject": "ba3c1ffb67fc5bb9db261b621a27e1282905a6f5",
+      "githubRefs": [
+        "refs/tags/v0.46.0"
+      ]
+    },
+    {
+      "tagObject": "bb848efb07da55907134c1093aa5e621130a8334",
+      "githubRefs": [
+        "refs/tags/v0.107.0"
+      ]
+    },
+    {
+      "tagObject": "bd22efa264ee35cf1695768fff15436b8083d47b",
+      "githubRefs": [
+        "refs/tags/v0.7.0"
+      ]
+    },
+    {
+      "tagObject": "be78ff4adfa5be834ccee7cfaf150300ef604232",
+      "githubRefs": [
+        "refs/tags/v0.32.0"
+      ]
+    },
+    {
+      "tagObject": "bea244d1d3ab5198106cb1665b1d70cc7692f7f0",
+      "githubRefs": [
+        "refs/tags/v0.81.0"
+      ]
+    },
+    {
+      "tagObject": "bfc81bd69ee375076048c061013c35b1f66032c7",
+      "githubRefs": [
+        "refs/tags/v0.59.1"
+      ]
+    },
+    {
+      "tagObject": "c0fcc9a37d453671de6c1ce127df5fe06e853e8f",
+      "githubRefs": [
+        "refs/tags/v0.42.0"
+      ]
+    },
+    {
+      "tagObject": "c22adc04d41e227ce17c0dedc6b420f5cedc6653",
+      "githubRefs": [
+        "refs/tags/v0.68.0"
+      ]
+    },
+    {
+      "tagObject": "c2beab7ee071dd42a3b8dbf049264d0425d72fe2",
+      "githubRefs": [
+        "refs/tags/v0.39.0"
+      ]
+    },
+    {
+      "tagObject": "c2df1df751e271ae327576d0bd57e46bdbba1367",
+      "githubRefs": [
+        "refs/tags/v0.94.0"
+      ]
+    },
+    {
+      "tagObject": "c3d9aaf2874d754288cc25b6aa9fd004b2ef1991",
+      "githubRefs": [
+        "refs/tags/v0.130.0"
+      ]
+    },
+    {
+      "tagObject": "c3fd6145392491748c4578eef15b51983af84f9e",
+      "githubRefs": [
+        "refs/tags/v0.57.0"
+      ]
+    },
+    {
+      "tagObject": "c67e765633f293132901a4b14f8af62784254546",
+      "githubRefs": [
+        "refs/tags/v0.56.0"
+      ]
+    },
+    {
+      "tagObject": "c68126f033096f69e0659f7ee983cdae50ec7574",
+      "githubRefs": [
+        "refs/tags/v0.93.0"
+      ]
+    },
+    {
+      "tagObject": "c89548424345a17701b4ac2495063d6977bde698",
+      "githubRefs": [
+        "refs/tags/v0.114.1"
+      ]
+    },
+    {
+      "tagObject": "cb2b368b2a1652920250c6c2a7055051018ece55",
+      "githubRefs": [
+        "refs/tags/v0.69.1"
+      ]
+    },
+    {
+      "tagObject": "cb32accb796fcc52f3e8237e2400b8b802543047",
+      "githubRefs": [
+        "refs/tags/v0.109.0"
+      ]
+    },
+    {
+      "tagObject": "d08e87e797005550c76c6f86ff67564427470904",
+      "githubRefs": [
+        "refs/tags/v0.50.0"
+      ]
+    },
+    {
+      "tagObject": "d139371e181fb88afdffa55cc8308f8d5cb42a97",
+      "githubRefs": [
+        "refs/tags/v0.61.2"
+      ]
+    },
+    {
+      "tagObject": "d299ff0c3f3d232e9066cff8fd0d40ab93edeaf2",
+      "githubRefs": [
+        "refs/tags/v0.22.0"
+      ]
+    },
+    {
+      "tagObject": "d3842c884bca345569ceb675b0ebe78d83c78e86",
+      "githubRefs": [
+        "refs/tags/v0.69.3"
+      ]
+    },
+    {
+      "tagObject": "d409071affdf4bb9dbbc2c3f24f4675dbcccfc85",
+      "githubRefs": [
+        "refs/tags/v0.61.24"
+      ]
+    },
+    {
+      "tagObject": "d60ca331711292161aaa055b14dda771299617c7",
+      "githubRefs": [
+        "refs/tags/v0.98.0"
+      ]
+    },
+    {
+      "tagObject": "d6b9a83d1364c81f23251fae4c3d30241b2e36df",
+      "githubRefs": [
+        "refs/tags/v0.61.8"
+      ]
+    },
+    {
+      "tagObject": "d731a14381c73f1060cfd3927d966c30fda87072",
+      "githubRefs": [
+        "refs/tags/v0.80.2"
+      ]
+    },
+    {
+      "tagObject": "dc0afc51bf6290555eb1b37287b7374040062b68",
+      "githubRefs": [
+        "refs/tags/v0.34.0"
+      ]
+    },
+    {
+      "tagObject": "dc612f49b844c65895b75f8ddcd47543077a715f",
+      "githubRefs": [
+        "refs/tags/v0.35.0"
+      ]
+    },
+    {
+      "tagObject": "dd422ed4a4613ae66f2d803b6dcde7fd945d41dd",
+      "githubRefs": [
+        "refs/tags/v0.61.0"
+      ]
+    },
+    {
+      "tagObject": "de2a8f7d23e27781e34402918c2ceaf552982f25",
+      "githubRefs": [
+        "refs/tags/v0.70.0"
+      ]
+    },
+    {
+      "tagObject": "defad0ab0d624a6f270c340208db7d82bcf28193",
+      "githubRefs": [
+        "refs/tags/v0.112.0"
+      ]
+    },
+    {
+      "tagObject": "df3e545f03432486a7eee321fb0799fb7490a1cb",
+      "githubRefs": [
+        "refs/tags/v0.88.0"
+      ]
+    },
+    {
+      "tagObject": "dfd756751bdad13f7cfbeacfcd7477f134c4134d",
+      "githubRefs": [
+        "refs/tags/v0.104.0"
+      ]
+    },
+    {
+      "tagObject": "dfdeca8b9f56e40674f2c6369f9b4dc0e5e7b25d",
+      "githubRefs": [
+        "refs/tags/v0.69.0"
+      ]
+    },
+    {
+      "tagObject": "e0829b8c93b4a60148b94ea5c44a40af65d97287",
+      "githubRefs": [
+        "refs/tags/v0.141.0"
+      ]
+    },
+    {
+      "tagObject": "e51019404f4798c75e0efeacafc54360e67d6750",
+      "githubRefs": [
+        "refs/tags/v0.25.0"
+      ]
+    },
+    {
+      "tagObject": "e87d4ad077b6057c2c65efed99310087d39c8318",
+      "githubRefs": [
+        "refs/tags/v0.28.0"
+      ]
+    },
+    {
+      "tagObject": "e898f563ff7c6c58bf6c148a8b6c85ffd10a22d6",
+      "githubRefs": [
+        "refs/tags/v0.76.1"
+      ]
+    },
+    {
+      "tagObject": "e8c11ea668e40028e650eec42bdd004f3f7e607c",
+      "githubRefs": [
+        "refs/tags/v0.61.6"
+      ]
+    },
+    {
+      "tagObject": "e8e55efb584e709209c345d8f109e8c6a8a84fd4",
+      "githubRefs": [
+        "refs/tags/v0.67.0"
+      ]
+    },
+    {
+      "tagObject": "ea19641e2777a81d7c58d9850923feea0bc2e99f",
+      "githubRefs": [
+        "refs/tags/v0.92.0"
+      ]
+    },
+    {
+      "tagObject": "eb0f14fd584c8d9180e4bf3a28b1befc1f3bd7ee",
+      "githubRefs": [
+        "refs/tags/v0.82.0"
+      ]
+    },
+    {
+      "tagObject": "ec4936441e6ced7e1931bc4511d733cd1f5a5928",
+      "githubRefs": [
+        "refs/tags/v0.141.8"
+      ]
+    },
+    {
+      "tagObject": "ef957d2573cc07a5aef366f8eab2a24dbaa08965",
+      "githubRefs": [
+        "refs/tags/v0.33.0"
+      ]
+    },
+    {
+      "tagObject": "eff751d470acef2ca2e56f5d346f94ced2f2af71",
+      "githubRefs": [
+        "refs/tags/v0.6.0"
+      ]
+    },
+    {
+      "tagObject": "f07889a5220722112d3b6eeb7ae97eecc60c40a5",
+      "githubRefs": [
+        "refs/tags/v0.61.20"
+      ]
+    },
+    {
+      "tagObject": "f21134c68f768377d528e60d3baf6b30a8d161dc",
+      "githubRefs": [
+        "refs/tags/v0.64.1"
+      ]
+    },
+    {
+      "tagObject": "f321a2eb5a9c63e039fdc52e55693c85f8724252",
+      "githubRefs": [
+        "refs/tags/v0.141.3"
+      ]
+    },
+    {
+      "tagObject": "f352058fa29245e0da52784600f0f71582f2e5f2",
+      "githubRefs": [
+        "refs/tags/v0.111.1"
+      ]
+    },
+    {
+      "tagObject": "f5ac69ca00f9be204df9e15dd523a3057df78a8d",
+      "githubRefs": [
+        "refs/tags/v0.141.2"
+      ]
+    },
+    {
+      "tagObject": "f948b00e90b974b521fd9d215c4eaa8af118195f",
+      "githubRefs": [
+        "refs/tags/v0.31.0"
+      ]
+    },
+    {
+      "tagObject": "fe04904513825e8b63a37ef14beaac2311ce0449",
+      "githubRefs": [
+        "refs/tags/v0.29.0"
+      ]
+    },
+    {
+      "tagObject": "fe1f350eaca309d740d02ab621fe68395dfb13e4",
+      "githubRefs": [
+        "refs/tags/v0.64.2"
+      ]
+    }
+  ],
+  "additionalDanglingTagIdentities": [],
+  "supersedesEarlierTagInventoryLimitation": true,
+  "historicalLimitationPreservedInPriorReceipts": true,
+  "tagMessageBodiesReadOrUploadedByThisReview": false,
+  "sourceMutation": false,
+  "scope": "Captured16-store annotated-tag identity closure, not final private bundle or complete offline repository acceptance. Raw messages were not re-published because all captured tag objects already have current GitHub refs."
+}
