@@ -383,7 +383,7 @@ for (const outcome of ['ready', 'error', 'deliberate focus', 'background return'
         f.media.fail();
         expected = retry;
       } else if (outcome === 'deliberate focus') {
-        expected = p.$('race-help');
+        expected = p.$('race-options');
         expected.focus();
       } else if (outcome === 'background return') {
         p.doc.hidden = true;
@@ -393,9 +393,10 @@ for (const outcome of ['ready', 'error', 'deliberate focus', 'background return'
         p.doc.emit('visibilitychange');
         expected = p.doc.body;
       } else if (outcome === 'scope return') {
-        p.$('race-help').click();
-        p.$('race-help-back').click();
-        expected = p.$('race-help');
+        assert.equal(!!p.$('race-options').closest('[hidden],[inert]'), false);
+        p.$('race-options').click();
+        p.$('race-options-back').click();
+        expected = p.$('race-options');
         assert.equal(p.doc.activeElement === expected, true);
       }
       gate.resolve();
@@ -685,8 +686,11 @@ for (const outcome of ['untouched', 'deliberate mode link', 'blur and return', '
       assert.equal(f.page.tick(), 0);
       assert.deepEqual(f.memory.allPuts, []);
       assert.deepEqual(
-        document.getElementById('race-mode-choices').children.map((item) => item.dataset.gameMode),
-        ['solo', 'versus', 'team'],
+        document
+          .getElementById('race-mode-choices')
+          .children.map((item) => item.dataset.gameMode)
+          .filter(Boolean),
+        ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
       );
       assert.equal(
         document.getElementById('race-solo-return').getAttribute('href'),
@@ -828,11 +832,18 @@ for (const interruption of ['Cancel', 'Help', 'View', 'Setup confirmation', 'dis
         await action(p, 'race-picture-cancel');
         assert.equal(p.doc.activeElement === p.$('race-start'), true);
       } else if (interruption === 'Help') {
+        await action(p, 'race-options');
+        await action(p, 'race-settings-tab-extras');
+        assert.equal(!!p.$('race-help').closest('[hidden],[inert]'), false);
         await action(p, 'race-help');
         await action(p, 'race-help-back');
+        await action(p, 'race-options-back');
       } else if (interruption === 'View') {
         await action(p, 'race-review');
       } else if (interruption === 'Setup confirmation') {
+        await action(p, 'race-options');
+        await action(p, 'race-settings-tab-gameplay');
+        assert.equal(!!p.$('race-focus').closest('[hidden],[inert]'), false);
         await action(p, 'race-focus');
       } else p.win.emit('pagehide', { persisted: false });
       if (interruption !== 'dispose') retainedResult(p, before);
@@ -1050,7 +1061,7 @@ for (const outcome of ['win', 'draw'])
     }),
   );
 
-for (const initialFocus of ['BODY', 'race-help'])
+for (const initialFocus of ['BODY', 'race-options'])
   test(
     `a direct Rematch click from ${initialFocus} focus owns preparation without an extra Start`,
     finiteMediaCase(async (t, mediaScope) => {
@@ -1074,7 +1085,7 @@ for (const initialFocus of ['BODY', 'race-help'])
       const pending = mediaScope.observe(action(p, 'race-start'));
       await entered.promise;
       retainedResult(p, before);
-      assert.equal(p.doc.activeElement, p.$('race-picture-cancel'));
+      assert.equal(p.doc.activeElement === p.$('race-picture-cancel'), true);
       gate.resolve();
       await mediaScope.join(pending);
       assert.equal(p.state(), 'running');
@@ -1097,9 +1108,13 @@ test('controller format draft can cancel or commit while preserving selector foc
   const f = await fixture(t, { pads: [controller] }),
     p = f.page;
   p.join(0);
-  p.focus('race-optional-setup-toggle');
+  assert.equal(!!p.$('race-options').closest('[hidden],[inert]'), false);
+  p.focus('race-options');
+  p.pulse(0, 0);
+  p.focus('race-settings-tab-gameplay');
   p.pulse(0, 0);
   assert.equal(p.$('race-optional-setup').open, true);
+  assert.equal(!!p.$('race-focus').closest('[hidden],[inert]'), false);
   p.focus('race-focus');
   p.pulse(0, 0);
   assert.equal(p.$('race-setup').hidden, false);
@@ -1113,7 +1128,7 @@ test('controller format draft can cancel or commit while preserving selector foc
   p.pulse(0, 1);
   assert.equal(p.editors().length, 0);
   assert.equal(p.$('race-format').value, 'single');
-  assert.equal(p.doc.activeElement, p.$('race-format'));
+  assert.equal(p.doc.activeElement === p.$('race-format'), true);
   assert.equal(f.reads.length, reads, 'Cancelling the draft cannot acquire a new original.');
   p.pulse(0, 0);
   p.pulse(0, 13);
@@ -1126,9 +1141,11 @@ test('controller format draft can cancel or commit while preserving selector foc
   assert.equal(p.editors().length, 0);
   assert.equal(p.state(), 'ready');
   assert.equal(p.tick(), 0);
-  assert.equal(p.doc.activeElement, p.$('race-format'));
+  assert.equal(p.doc.activeElement === p.$('race-format'), true);
   assert.match(p.$('race-format-note').textContent, /first to two/i);
   assert.match(p.$('race-format-help').textContent, /first to two/i);
+  p.pulse(0, 1);
+  assert.equal(p.$('race-options-panel').hidden, false);
   p.pulse(0, 1);
   assert.equal(p.$('race-main').hidden, false);
   assert.equal(p.state(), 'ready');
@@ -1151,7 +1168,8 @@ test(
     p.$('race-start').focus();
     const next = mediaScope.observe(action(p, 'race-start'));
     await entered.promise;
-    p.$('race-help').focus();
+    assert.equal(!!p.$('race-options').closest('[hidden],[inert]'), false);
+    p.$('race-options').focus();
     gate.resolve();
     await mediaScope.join(next);
     assert.equal(
@@ -1159,7 +1177,7 @@ test(
       'ready',
       'A newer action choice requires a fresh Start after preparation.',
     );
-    assert.equal(p.doc.activeElement === p.$('race-help'), true);
+    assert.equal(p.doc.activeElement === p.$('race-options'), true);
     assert.equal(p.$('race-start').disabled, false);
     assert.deepEqual(f.memory.allPuts, []);
   }),
@@ -1185,7 +1203,8 @@ test(
     const observe = (event) => {
       if (event.target !== p.$('race-start')) return;
       queueMicrotask(() => {
-        p.$('race-help').focus();
+        assert.equal(!!p.$('race-options').closest('[hidden],[inert]'), false);
+        p.$('race-options').focus();
         p.doc.body.focus();
         moved = true;
       });
@@ -1219,6 +1238,9 @@ test(
     p.$('race-start').focus();
     const next = mediaScope.observe(action(p, 'race-start'));
     await entered.promise;
+    await action(p, 'race-options');
+    await action(p, 'race-settings-tab-gameplay');
+    assert.equal(!!p.$('race-focus').closest('[hidden],[inert]'), false);
     await action(p, 'race-focus');
     retainedResult(p, completed);
     f.media.setDecodeHook(null);
@@ -1386,7 +1408,7 @@ for (const outcome of ['cancel', 'decode refusal'])
       const failure = new Error('Owned test image decode refused.');
       if (outcome === 'cancel') {
         enter('race-picture-cancel');
-        assert.equal(p.doc.activeElement, p.$('race-start'));
+        assert.equal(p.doc.activeElement === p.$('race-start'), true);
       } else {
         gate.reject(failure);
         await mediaScope.join(next);
@@ -1394,18 +1416,22 @@ for (const outcome of ['cancel', 'decode refusal'])
         assert.deepEqual(diagnostics, [['Next picture preparation failed.', failure]]);
       }
       retainedResult(p, result);
+      enter('race-options');
+      enter('race-settings-tab-extras');
+      assert.equal(!!p.$('race-help').closest('[hidden],[inert]'), false);
       enter('race-help');
       const region = p.$('race-help-reading');
       region.clientHeight = 100;
       region.scrollHeight = 600;
       enter('race-help-read');
-      assert.equal(p.doc.activeElement, region);
+      assert.equal(p.doc.activeElement === region, true);
       assert.equal(key('ArrowDown').defaultPrevented, true);
       assert.ok(region.scrollTop > 0);
       assert.equal(key('Escape').defaultPrevented, true);
-      assert.equal(p.doc.activeElement, p.$('race-help-read'));
+      assert.equal(p.doc.activeElement === p.$('race-help-read'), true);
       assert.equal(p.$('race-help-reading-done').disabled, true);
       enter('race-help-back');
+      enter('race-options-back');
       if (outcome === 'cancel') {
         gate.resolve();
         await mediaScope.join(next);
@@ -1430,12 +1456,13 @@ for (const outcome of ['cancel', 'decode refusal'])
       await retryEntered.promise;
       // Deliberately choosing another visible action removes automatic Start
       // permission; successful preparation must expose a fresh Ready action.
-      p.$('race-help').focus();
+      assert.equal(!!p.$('race-options').closest('[hidden],[inert]'), false);
+      p.$('race-options').focus();
       retryGate.resolve();
       await mediaScope.join(retry);
       p.frames(20);
       assert.equal(p.state(), 'ready');
-      assert.equal(p.doc.activeElement, p.$('race-help'));
+      assert.equal(p.doc.activeElement === p.$('race-options'), true);
       assert.equal(p.$('race-start').disabled, false);
       assert.equal(
         p.renders.every((run, i) => run !== result.runs[i]),

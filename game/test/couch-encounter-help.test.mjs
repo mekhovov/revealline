@@ -117,6 +117,8 @@ test('Versus Help reads actual optional board rules without advancing either pau
   const checkpoints = p.checkpoint(),
     boards = [...p.renders],
     writes = p.storage.writes.length;
+  p.$('race-options').click();
+  p.$('race-settings-tab-extras').click();
   p.$('race-help').focus();
   key(p, 'Enter');
   const section = p.$('race-encounter-help');
@@ -165,6 +167,8 @@ test('combined mission Help localizes its existing reader and preserves paused b
   // Uncommitted setup controls must not become the rules of the held round.
   p.$('race-level').value = 'an-uncommitted-choice';
   p.$('race-class').value = 'carrier';
+  p.$('race-options').click();
+  p.$('race-settings-tab-extras').click();
   p.$('race-help').click();
   const section = p.$('race-encounter-help');
   const rows = section.querySelectorAll('[data-encounter-topic]');
@@ -215,6 +219,8 @@ test('absent and disabled patrol rules add no Help section or actions', async (t
       else level.classic.combatPatrols.enabled = enabled;
       const p = await host(t, level);
       const checkpoint = p.checkpoint();
+      p.$('race-options').click();
+      p.$('race-settings-tab-extras').click();
       p.$('race-help').click();
       const section = p.$('race-encounter-help');
       assert.equal(section.hidden, true);
@@ -234,6 +240,8 @@ test('reading encounter guidance after the real time limit retains both result b
   const checkpoint = p.checkpoint(),
     boards = [...p.renders],
     writes = p.storage.writes.length;
+  p.$('race-options').click();
+  p.$('race-settings-tab-extras').click();
   p.$('race-help').click();
   assert.equal(p.$('race-encounter-help').hidden, false);
   p.$('race-help-read').focus();
@@ -266,6 +274,8 @@ test('controller reading uses the existing end-only Help return and survives cac
   p.join(0);
   // A separate pointer entry follows the controller's neutral/echo interval.
   p.frames(200);
+  p.$('race-options').click();
+  p.$('race-settings-tab-extras').click();
   p.$('race-help').click();
   p.frame(0);
   p.$('race-help-reading').scrollHeight = 600;

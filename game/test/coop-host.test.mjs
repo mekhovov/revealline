@@ -49,14 +49,16 @@ function deferred() {
   return { promise, resolve };
 }
 
-test('the same Team mode choices belong to the lobby and active pause panel, never the live arena', async (t) => {
+test('Team mode choices stay in the lobby while a retained pause exposes confirmed Home departure', async (t) => {
   const f = await page(t, { nativeFocus: true, capturePaint: true });
   const modes = f.$('coop-mode-actions');
   const solo = f.$('coop-solo');
   const versus = f.$('coop-versus');
   assert.deepEqual(
-    modes.children.map((element) => element.dataset.gameMode),
-    ['solo', 'versus', 'team'],
+    modes.children
+      .filter((element) => element.dataset.gameMode)
+      .map((element) => element.dataset.gameMode),
+    ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
   );
   assert.equal(modes.parentNode, f.$('coop-lobby-modes'));
   assert.equal(modes.hidden, false);
@@ -76,24 +78,14 @@ test('the same Team mode choices belong to the lobby and active pause panel, nev
   assert.equal(f.$('coop-overlay').hidden, true);
   f.$('coop-pause').click();
   assert.equal(modes.parentNode, f.$('coop-pause-modes'));
-  assert.equal(modes.hidden, false);
-  assert.equal(f.$('coop-overlay').contains(modes), true);
-  assert.equal(f.$('coop-solo'), solo);
-  assert.equal(f.$('coop-versus'), versus);
-  tabToTeamAction(f, 'coop-solo');
-  f.tap('Tab');
-  assert.equal(f.doc.activeElement, versus, 'visible mode order is keyboard order');
-  f.tap('Tab');
-  assert.equal(f.doc.activeElement, current, 'Keyboard traversal also reaches the current mode.');
-  f.tap('Enter');
-  assert.equal(f.$('coop-overlay').hidden, false);
-  assert.equal(f.$('coop-discard-dialog').open, false);
-  assert.equal(f.visits.length, 0, 'Confirming the current mode does not depart or resume.');
-  tabToTeamAction(f, 'coop-versus');
+  assert.equal(modes.hidden, true, 'The retained pause does not expose destructive mode links.');
+  boundedIdentity(f.$('coop-solo'), solo);
+  boundedIdentity(f.$('coop-versus'), versus);
+  tabToTeamAction(f, 'coop-home-paused');
   f.tap('Enter');
   assert.equal(f.$('coop-discard-dialog').open, true);
   f.tap('Escape');
-  assert.equal(f.doc.activeElement, versus, 'moving links retain their checked departure owner');
+  boundedIdentity(f.doc.activeElement, f.$('coop-home-paused'));
   assert.equal(f.visits.length, 0);
   f.$('coop-resume').click();
   assert.equal(modes.hidden, true);
@@ -582,6 +574,8 @@ test('paused Help reading and Back return to an action without resuming the shar
   f.tick(60);
   f.$('coop-pause').click();
   const clock = f.$('coop-clock').textContent;
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-extras').click();
   f.disclose('coop-help');
   f.$('coop-help-read').click();
   assert.equal(f.doc.activeElement.id, 'coop-help-reading');
@@ -590,8 +584,8 @@ test('paused Help reading and Back return to an action without resuming the shar
   f.press('Escape');
   assert.equal(f.doc.activeElement.id, 'coop-help-read');
   f.press('Escape');
-  assert.equal(f.$('coop-help').open, false);
-  assert.equal(f.doc.activeElement.id, 'coop-help-toggle');
+  assert.equal(f.$('coop-options').open, false, 'Back retires the current Settings owner.');
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   f.press('Escape');
   assert.equal(f.doc.activeElement.id, 'coop-resume');
   assert.equal(f.$('coop-overlay').hidden, false);
@@ -600,12 +594,27 @@ test('paused Help reading and Back return to an action without resuming the shar
   f.$('coop-settings-open').click();
   f.$('coop-settings-tab-controls').click();
   f.$('coop-touch').focus();
-  assert.equal(f.press('ArrowDown').defaultPrevented, false, 'Native select arrows stay native.');
+  const touchBefore = f.$('coop-touch').value;
   assert.equal(
-    f.press('Enter').defaultPrevented,
-    false,
-    'Select confirmation is not player-two Support.',
+    f.press('ArrowDown').defaultPrevented,
+    true,
+    'Settings arrows navigate before editing.',
   );
+  assert.equal(f.$('coop-touch').value, touchBefore);
+  assert.notEqual(f.doc.activeElement.id, 'coop-touch');
+  f.$('coop-touch').focus();
+  assert.equal(f.press('Enter').defaultPrevented, true, 'Confirm enters the Settings draft.');
+  assert.equal(f.$('coop-touch').hasAttribute('data-controller-editing'), true);
+  f.press('ArrowDown');
+  assert.equal(
+    f.$('coop-touch').value,
+    touchBefore,
+    'A draft does not change the accepted setting.',
+  );
+  f.press('Escape');
+  assert.equal(f.$('coop-touch').hasAttribute('data-controller-editing'), false);
+  assert.equal(f.$('coop-touch').value, touchBefore);
+  assert.equal(f.doc.activeElement.id, 'coop-touch');
   f.tick(60);
   assert.equal(f.$('coop-clock').textContent, clock);
   assert.equal(f.$('coop-overlay').hidden, false);
@@ -1375,53 +1384,62 @@ const modePanelLinks = [
   ['coop-solo', '../?journey=legacy'],
   ['coop-versus', './?journey=legacy'],
 ];
-for (const [id, path] of modePanelLinks)
-  for (const fault of [false, true])
-    test(`in-panel ${id} keyboard departure from ${fault ? 'fault' : 'pause'} preserves its exact Stay/Back opener`, async (t) => {
-      const errors = [];
-      t.mock.method(console, 'error', (error) => errors.push(error));
-      const f = await page(t, { nativeFocus: true, capturePaint: true });
-      playingTeam(f);
-      if (fault) {
-        f.failNextPaint();
-        f.tick();
-        assert.equal(errors.length, 1);
-        assert.equal(f.$('coop-resume').hidden, true);
-      } else f.$('coop-pause').click();
-      tabToTeamAction(f, id);
-      const before = heldTeam(f);
-      f.tap('Enter');
-      assert.equal(f.$('coop-discard-dialog').open, true);
-      assert.equal(f.doc.activeElement.id, 'coop-discard-stay');
-      assert.match(
-        f.$('coop-discard-copy').textContent,
-        fault ? /cannot resume/ : /both players paused/,
-      );
-      unchangedPaused(f, before);
-      f.tap('Escape');
-      assert.equal(f.$('coop-discard-dialog').open, false);
-      assert.equal(f.doc.activeElement.id, id);
-      unchangedPaused(f, before);
-      f.tap('Enter');
-      f.tap('Enter');
-      assert.equal(f.$('coop-discard-dialog').open, false, 'Enter on Stay is not Resume.');
-      assert.equal(f.doc.activeElement.id, id);
-      unchangedPaused(f, before);
-      f.$(id).setAttribute('href', 'https://other.invalid/not-a-mode');
-      f.tap('Enter');
-      f.tap('Tab');
-      assert.equal(f.doc.activeElement.id, 'coop-discard-confirm');
-      f.tap('Enter');
-      assert.deepEqual(f.visits, [new URL(path, globalThis.location.href).href]);
-      f.tick(75);
-      assert.deepEqual(heldTeam(f), before, 'Leaving never resumes or replaces the old page run.');
-    });
-
-for (const [id, path] of modePanelLinks)
-  test(`in-panel ${id} is reachable by actual controller navigation and requires a separate discard`, async (t) => {
+for (const fault of [false, true])
+  test(`public Home keyboard departure from ${fault ? 'fault' : 'pause'} preserves its exact Stay/Back opener`, async (t) => {
+    const id = 'coop-home-paused',
+      path = '../?journey=legacy';
+    const errors = [];
+    t.mock.method(console, 'error', (error) => errors.push(error));
     const f = await page(t, { nativeFocus: true, capturePaint: true });
     playingTeam(f);
-    f.$('coop-pause').click();
+    if (fault) {
+      f.failNextPaint();
+      f.tick();
+      assert.equal(errors.length, 1);
+      assert.equal(f.$('coop-resume').hidden, true);
+    } else f.$('coop-pause').click();
+    tabToTeamAction(f, id);
+    const before = heldTeam(f);
+    f.tap('Enter');
+    assert.equal(f.$('coop-discard-dialog').open, true);
+    assert.equal(f.doc.activeElement.id, 'coop-discard-stay');
+    assert.match(
+      f.$('coop-discard-copy').textContent,
+      fault ? /cannot resume/ : /both players paused/,
+    );
+    unchangedPaused(f, before);
+    f.tap('Escape');
+    assert.equal(f.$('coop-discard-dialog').open, false);
+    assert.equal(f.doc.activeElement.id, id);
+    unchangedPaused(f, before);
+    f.tap('Enter');
+    f.tap('Enter');
+    assert.equal(f.$('coop-discard-dialog').open, false, 'Enter on Stay is not Resume.');
+    assert.equal(f.doc.activeElement.id, id);
+    unchangedPaused(f, before);
+    f.$(id).setAttribute('href', 'https://other.invalid/not-a-mode');
+    f.tap('Enter');
+    f.tap('Tab');
+    assert.equal(f.doc.activeElement.id, 'coop-discard-confirm');
+    f.tap('Enter');
+    assert.deepEqual(f.visits, [new URL(path, globalThis.location.href).href]);
+    f.tick(75);
+    assert.deepEqual(heldTeam(f), before, 'Leaving never resumes or replaces the old page run.');
+  });
+
+for (const fault of [false, true])
+  test(`public Home from ${fault ? 'fault' : 'pause'} is controller reachable and requires a separate discard`, async (t) => {
+    const id = 'coop-home-paused',
+      path = '../?journey=legacy';
+    const errors = [];
+    t.mock.method(console, 'error', (error) => errors.push(error));
+    const f = await page(t, { nativeFocus: true, capturePaint: true });
+    playingTeam(f);
+    if (fault) {
+      f.failNextPaint();
+      f.tick();
+      assert.equal(errors.length, 1);
+    } else f.$('coop-pause').click();
     const before = heldTeam(f);
     const pad = {
       index: 0,
@@ -1440,19 +1458,9 @@ for (const [id, path] of modePanelLinks)
     };
     f.tick(2);
     button(0); // South adoption/release has no departure action.
-    for (let i = 0; i < 20 && f.doc.activeElement.id !== 'coop-solo'; i++) button(13);
-    assert.equal(f.doc.activeElement.id, 'coop-solo', 'Down reaches the horizontal mode group.');
-    button(15); // D-pad Right moves between the visible mode choices.
-    assert.equal(f.doc.activeElement.id, 'coop-versus');
-    button(15);
-    assert.equal(f.doc.activeElement.id, 'team-current-mode');
-    button(0);
-    assert.equal(f.$('coop-discard-dialog').open, false);
-    assert.equal(f.$('coop-overlay').hidden, false);
-    assert.equal(f.visits.length, 0, 'Confirming the current mode cannot depart or resume.');
-    button(14);
-    if (id === 'coop-solo') button(14);
-    assert.equal(f.doc.activeElement.id, id);
+    for (let i = 0; i < 20 && f.doc.activeElement.id !== id; i++) button(13);
+    assert.equal(f.doc.activeElement.id, id, 'Down reaches the visible Home action.');
+    assert.equal(f.doc.activeElement.closest('[hidden],[inert]'), null);
     unchangedPaused(f, before);
     button(0);
     assert.equal(f.$('coop-discard-dialog').open, true);
@@ -1468,7 +1476,7 @@ for (const [id, path] of modePanelLinks)
     assert.deepEqual(heldTeam(f), before);
   });
 
-test('in-panel Solo keeps the exact existing one-use return context and does not consume or rewrite it', async (t) => {
+test('visible lobby Solo keeps the exact existing one-use return context and does not consume or rewrite it', async (t) => {
   const entries = new Map(),
     returnStorage = {
       getItem: (key) => entries.get(key) ?? null,
@@ -1492,17 +1500,12 @@ test('in-panel Solo keeps the exact existing one-use return context and does not
     nativeFocus: true,
     capturePaint: true,
   });
-  playingTeam(f);
-  f.$('coop-pause').click();
-  tabToTeamAction(f, 'coop-solo');
   assert.equal(f.$('coop-solo').getAttribute('href'), `../?mode-return=${ticket.token}`);
-  const before = heldTeam(f);
-  f.tap('Enter');
-  f.tap('Escape');
-  unchangedPaused(f, before);
+  for (let n = 0; n < 24 && f.doc.activeElement !== f.$('coop-solo'); n++) f.tap('Tab');
+  boundedIdentity(f.doc.activeElement, f.$('coop-solo'));
+  assert.equal(f.doc.activeElement.closest('[hidden],[inert]'), null);
   assert.deepEqual([...entries], recorded);
-  f.tap('Enter');
-  f.tap('Tab');
+  f.$('coop-solo').setAttribute('href', 'https://other.invalid/not-a-mode');
   f.tap('Enter');
   assert.deepEqual(f.visits, [new URL(`../?mode-return=${ticket.token}`, ticket.href).href]);
   assert.deepEqual([...entries], recorded);
@@ -1541,11 +1544,11 @@ for (const [id, path] of modePanelLinks)
     assert.deepEqual(heldTeam(f), before);
   });
 
-test('in-panel navigation failure keeps the paused attempt and explicit retryable actions', async (t) => {
+test('public Home navigation failure keeps the paused attempt and explicit retryable actions', async (t) => {
   const f = await page(t, { nativeFocus: true, capturePaint: true });
   playingTeam(f);
   f.$('coop-pause').click();
-  tabToTeamAction(f, 'coop-versus');
+  tabToTeamAction(f, 'coop-home-paused');
   const before = heldTeam(f);
   f.tap('Enter');
   f.tap('Tab');
@@ -1560,16 +1563,16 @@ test('in-panel navigation failure keeps the paused attempt and explicit retryabl
   assert.equal(f.$('coop-discard-dialog').open, false);
   assert.equal(f.doc.activeElement.id, 'coop-resume');
   unchangedPaused(f, before);
-  tabToTeamAction(f, 'coop-versus');
+  tabToTeamAction(f, 'coop-home-paused');
   f.tap('Enter');
   assert.equal(f.$('coop-discard-dialog').open, true);
 });
 
-test('in-panel departure loses its authority on blur; background return cannot reuse Confirm', async (t) => {
+test('public Home departure loses its authority on blur; background return cannot reuse Confirm', async (t) => {
   const f = await page(t, { nativeFocus: true, capturePaint: true });
   playingTeam(f);
   f.$('coop-pause').click();
-  tabToTeamAction(f, 'coop-solo');
+  tabToTeamAction(f, 'coop-home-paused');
   f.tap('Enter');
   const before = heldTeam(f);
   f.doc.focused = false;
@@ -1606,15 +1609,19 @@ for (const interruption of ['blur', 'hidden', 'persisted pagehide'])
     // distinct pointer activation. This test owns lifecycle retirement, not the
     // guard that deliberately rejects an immediate synthetic click after A.
     f.tick(151);
+    f.$('coop-settings-open').click();
+    f.$('coop-settings-tab-extras').click();
     f.disclose('coop-help');
     const region = f.$('coop-help-reading'),
       done = f.$('coop-help-reading-done');
     region.clientHeight = 100;
     region.scrollHeight = 800;
-    pad.buttons[13] = { pressed: true, value: 1 };
-    f.tick();
-    pad.buttons[13] = { pressed: false, value: 0 };
-    f.tick(2);
+    for (let i = 0; i < 24 && f.doc.activeElement !== f.$('coop-help-read'); i++) {
+      pad.buttons[13] = { pressed: true, value: 1 };
+      f.tick();
+      pad.buttons[13] = { pressed: false, value: 0 };
+      f.tick(2);
+    }
     boundedIdentity(
       f.doc.activeElement,
       f.$('coop-help-read'),
@@ -1679,8 +1686,9 @@ for (const interruption of ['blur', 'hidden', 'persisted pagehide'])
     assert.deepEqual(heldTeam(f), before);
     pad.buttons[0] = { pressed: false, value: 0 };
     f.tick(2);
-    f.tap('Escape'); // Close the still-open disclosure, not the paused flight.
-    assert.equal(f.$('coop-help').open, false);
+    f.tap('Escape'); // Close the current Settings owner; its hidden disclosure may retain state.
+    assert.equal(f.$('coop-options').open, false);
+    boundedIdentity(f.doc.activeElement, f.$('coop-settings-open'));
     f.tap('Escape'); // Focus the real Resume action without activating it.
     assert.equal(f.doc.activeElement, f.$('coop-resume'));
     unchangedPaused(f, before);

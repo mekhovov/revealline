@@ -46,7 +46,7 @@ async function host(t, mode, { resizeWindow = false } = {}) {
     : await couchPage(t, { coarse: true, pads: [pad()], beforeImport });
   if (team) f.pads.push(pad());
   const prefix = team ? 'coop' : 'race';
-  const tick = (n = 1) => (team ? f.tick(n) : f.frames(n));
+  const tick = (n = 1, elapsed) => (team ? f.tick(n, elapsed) : f.frames(n, elapsed));
   const control = (suffix) => f.$(`${prefix}-${suffix}`);
   const press = (key) => {
     if (team) return f.press(key);
@@ -91,6 +91,9 @@ async function host(t, mode, { resizeWindow = false } = {}) {
       tick(2);
     },
     openHelp() {
+      control(team ? 'settings-open' : 'options').click();
+      control('settings-tab-extras').click();
+      assert.equal(control('settings-panel-extras').hidden, false);
       if (team) f.disclose('coop-help');
       else {
         assert.equal(
@@ -120,6 +123,7 @@ async function host(t, mode, { resizeWindow = false } = {}) {
         control('help').querySelector('summary').focus();
         control('help').emit('toggle', { bubbles: false });
       } else control('help-back').click();
+      control(team ? 'settings-close' : 'options-back').click();
       tick();
     },
   };
@@ -264,12 +268,13 @@ for (const mode of ['Versus', 'Team']) {
   test(`${mode} fresh input changes reading copy while an idle pad preserves keyboard ownership`, async (t) => {
     const f = await host(t, mode);
     f.join();
-    if (mode === 'Versus') {
+    {
       const held = f.state();
       // Joining owns the Confirm gesture and its 1250 ms native echo tail.
       // This separate native Help entry follows 151 neutral 120 Hz frames
       // (1258.3 ms); waiting cannot start or change either ready run.
-      f.frames(151, 1000 / 120);
+      if (mode === 'Team') f.tick(151, 1000 / 120);
+      else f.frames(151, 1000 / 120);
       assert.deepEqual(f.state(), held);
     }
     f.openHelp();
