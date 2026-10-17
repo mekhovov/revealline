@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { mkdtemp, writeFile, symlink, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile, symlink, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import test from 'node:test';
@@ -341,6 +342,90 @@ with tempfile.TemporaryDirectory() as d:
 );
 
 const CURRENT_FORMAT = 'SoloHostedOfflineCurrentPairPlan.v2';
+const CURRENT_HEAD = 'adb1c0c7b7dd1a526a0693917f2012d1dbc08b22';
+test('first executable current pair binds the verified package and unchanged owner closure', async () => {
+  const source = (path) => readFile(new URL(`../${path}`, import.meta.url));
+  const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const declaration = JSON.parse(
+    await source('docs/performance/solo-remote-offline-current-plan.json'),
+  );
+  validateOfflinePlan(declaration);
+  assert.equal(declaration.candidate.revision, CURRENT_HEAD);
+  assert.equal(declaration.candidate.run, 39004951633);
+  assert.equal(declaration.candidate.artifact, 12090923917);
+  assert.deepEqual(declaration.candidate.outer, {
+    bytes: 1091842485,
+    sha256: 'f4d227caf2152d4de62a3e638e1ffda9e8373bac4d8fbf1b1300d15fb236e010',
+  });
+  assert.deepEqual(declaration.candidate.inner, {
+    bytes: 1073748678,
+    sha256: '66eff1484b7e7e6e39f67aa70533e13be7b345fb68d270b857a5cacfb5ac642f',
+  });
+  assert.equal(
+    declaration.candidate.manifestSHA256,
+    '9152f392cadc6caebea9237e041fd3041943bec73b21be2b26fb4d781cacc38a',
+  );
+  assert.equal(declaration.baseline.reusableArtifact.artifact, 12088541389);
+  assert.equal(
+    declaration.bindingScope.runtimeRevision,
+    '488eae03aee7f58dd5837451363015888faa429f',
+  );
+  assert.equal(declaration.bindingScope.performanceQualification, false);
+  assert.notEqual(
+    declaration.diagnosticRelease.nativeStateEvidence.sourceRevision,
+    declaration.candidate.revision,
+  );
+  for (const ref of [
+    ...declaration.adapterInputs,
+    declaration.offline.driver,
+    declaration.offline.openingRecipe,
+    declaration.diagnosticRelease.ownerCorrection,
+  ]) {
+    const bytes = await source(ref.path);
+    assert.equal(bytes.length, ref.bytes, ref.path);
+    assert.equal(digest(bytes), ref.sha256, ref.path);
+  }
+  for (const [path, expected] of [
+    [
+      'docs/performance/solo-remote-offline-plan.json',
+      '515bc01bb3d06bcaf0a0b6538c8c57eeab9c894f449215ecff44de48bfbf014d',
+    ],
+    [
+      '.github/workflows/solo-remote-offline-temporary.yml',
+      '2f7a5209ef0a8ba020830c031efdb81b4c2c3be167511f345a0bbb4f7b80fe2b',
+    ],
+  ])
+    assert.equal(digest(await source(path)), expected, 'Executed V1 authority stays immutable');
+  const workflow = (
+    await source('.github/workflows/solo-remote-offline-current-temporary.yml')
+  ).toString();
+  assert.deepEqual(
+    workflow.split('\n').filter((line) => line.startsWith('    if:')),
+    [
+      `    if: github.event.action == 'synchronize' && github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.before == '${CURRENT_HEAD}'`,
+    ],
+  );
+  assert(!workflow.includes('workflow_dispatch'));
+  assert(workflow.includes(`ref: ${CURRENT_HEAD}`));
+  assert(workflow.includes(`ref: ${declaration.baseline.revision}`));
+  assert(workflow.includes('timeout-minutes: 165'));
+  assert(workflow.includes('timeout-minutes: 104'));
+  assert(
+    workflow.includes(
+      'timeout --signal=TERM --kill-after=30s 103m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-offline-current-plan.json',
+    ),
+  );
+  assert(workflow.includes('if: ${{ always() }}'));
+  for (const testFile of [
+    'test-solo-remote-correctness.mjs',
+    'test-solo-remote-offline.mjs',
+    'test-solo-offline-gameplay.mjs',
+    'test-solo-offline-starter.mjs',
+    'test-solo-remote-baseline.mjs',
+  ])
+    assert(workflow.includes(`scripts/${testFile}`));
+});
+
 const currentPlan = () => {
   // Adapter admission fixture only: no candidate artifact/download identity, so
   // this cannot be an executable declaration for the common artifact owner.
@@ -360,7 +445,7 @@ const currentPlan = () => {
         sourceTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
       },
     },
-    candidate: { revision: sources.candidate, tree: '71f7e4cb3b0a39c1d281635774371a693794dd22' },
+    candidate: { revision: sources.candidate, tree: 'fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508' },
     diagnosticRelease: {
       format: 'SoloNativeOfflineStateDiagnosticReleaseV1',
       status: 'reviewed-for-cause-analysis',
@@ -372,7 +457,7 @@ const currentPlan = () => {
       onceOnlyBefore: sources.candidate,
       nativeStateEvidence: {
         run: 39001646012,
-        sourceRevision: sources.candidate,
+        sourceRevision: 'cce49c81d82b79aefc24898f32eeebc609e569fb',
         browserVersion: '151.0.7922.34',
         conclusion: 'failure',
         qualificationEligible: false,
@@ -394,7 +479,7 @@ const currentPlan = () => {
   return value;
 };
 
-test('current offline format admits only the exact cce/8b sources and preserves original fixed pair bounds', () => {
+test('current offline format admits only the exact packaged adb/8b sources and distinct historical probe and preserves original fixed pair bounds', () => {
   validateOfflinePlan(currentPlan());
   validateOfflinePlan(plan());
   assert.deepEqual(offlinePairSources(), { baseline: BASE, candidate: CANDIDATE });
@@ -409,6 +494,9 @@ test('current offline format admits only the exact cce/8b sources and preserves 
     },
     (p) => {
       p.candidate.revision = CANDIDATE;
+    },
+    (p) => {
+      p.candidate.revision = 'cce49c81d82b79aefc24898f32eeebc609e569fb';
     },
     (p) => {
       p.baseline.revision = BASE;
@@ -463,6 +551,9 @@ test('current offline format admits only the exact cce/8b sources and preserves 
     },
     (p) => {
       p.diagnosticRelease.nativeStateEvidence.sourceRevision = CANDIDATE;
+    },
+    (p) => {
+      p.diagnosticRelease.nativeStateEvidence.sourceRevision = p.candidate.revision;
     },
     (p) => {
       p.rows.reverse();
