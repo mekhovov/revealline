@@ -61,7 +61,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--hitch-journal] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -94,6 +94,10 @@ assert(
 const baselineRuntime = flags.includes('--baseline-runtime'),
   workProbe = flags.includes('--work-probe'),
   cadenceProtocol = qualificationCadenceOption(flags);
+const hitchModule = flags.some((flag) => flag.startsWith('--hitch-journal'))
+  ? await import('./solo-qualification-hitch-journal.mjs')
+  : null;
+const hitchOptions = hitchModule?.qualificationHitchJournalOptions(flags, scenario);
 assert(cadenceProtocol === 'blank30' || workProbe, 'Settled cadence requires the work probe');
 assert(
   !baselineRuntime || (workProbe && /^[0-9a-f]{40}$/.test(option('source-revision', ''))),
@@ -240,6 +244,13 @@ const report = {
 const replayIdentity = scenario.replayIdentity ? createQualificationReplayIdentity() : null;
 if (replayIdentity) report.replayIdentity = replayIdentity.report;
 await mkdir(dirname(resolve(output)), { recursive: true });
+const hitchStore = hitchOptions ? hitchModule.createHitchJournalStore(output) : null;
+if (hitchStore) {
+  report.hitchJournal = hitchStore.report;
+  report.limitations.push(
+    'Opt-in bounded individual hitch journal; native long tasks are feature-detected and unsupported/dropped observations remain explicit. Single binary export per document at existing non-running boundaries. Added observer overhead requires a separate matched measurement.',
+  );
+}
 const snapshotStore = snapshotStorageOptions
   ? await (
       await import('./solo-qualification-snapshot-store.mjs')
@@ -257,6 +268,38 @@ let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder
 let activeAction = null;
 let partialReplay = false;
 let memorySnapshots = 0;
+function beginHitchDocument() {
+  if (!hitchStore) return;
+  try {
+    hitchStore.beginDocument();
+  } catch (error) {
+    hitchStore.fail(error.message);
+  }
+}
+async function configureHitchDocument() {
+  if (!hitchStore) return;
+  try {
+    await page.evaluate(
+      (allocation) => window.soloQualificationHitchJournal.configure(allocation),
+      hitchStore.allocation(),
+    );
+  } catch (error) {
+    hitchStore.fail(`Document configuration: ${error.message}`);
+  }
+}
+async function sealHitchDocument(boundary) {
+  if (!hitchStore) return;
+  try {
+    const result = await page.evaluate(() =>
+      window.soloQualificationHitchJournal.seal(document.body?.dataset.flightState),
+    );
+    await hitchStore.retain(result, boundary);
+    const after = await page.evaluate(() => window.soloQualificationHitchJournal.state());
+    if (after.postSealActive) hitchStore.fail('Active work after the sealed public boundary');
+  } catch (error) {
+    hitchStore.fail(`Document export: ${error.message}`);
+  }
+}
 async function profileMemory() {
   if (!memoryProfile) return undefined;
   if (memorySnapshots++ >= 64)
@@ -394,13 +437,22 @@ try {
     await save();
   }
   if (audioProof) await page.addInitScript(installAudioProof, audioOptions);
-  await page.addInitScript(
-    `window.soloQualificationReadiness = ${readPrePlayReadiness.toString()};
+  const observationInitScript = `window.soloQualificationReadiness = ${readPrePlayReadiness.toString()};
      window.soloQualificationIntervalClock = ${createRafIntervalClock.toString()};
-     window.soloQualificationFrozenCadence = ${frozenExternalCadence.toString()};`,
-  );
-  await page.addInitScript(
-    ({ bounds, workProbe, externalCadenceCalibration }) => {
+     window.soloQualificationFrozenCadence = ${frozenExternalCadence.toString()};`;
+  if (!hitchStore) await page.addInitScript(observationInitScript);
+  function addQualificationProbe(install, options) {
+    if (!hitchStore) return page.addInitScript(install, options);
+    // Ordering across separate addInitScript calls is unspecified. Construct all
+    // opted-in dependencies and the probe in one synchronous installation.
+    return page.addInitScript(`if (window.top === window) {
+${observationInitScript}
+${hitchModule.hitchJournalInitScript()}
+(${install.toString()})(${JSON.stringify(options)});
+}`);
+  }
+  await addQualificationProbe(
+    ({ bounds, workProbe, externalCadenceCalibration, hitchJournal }) => {
       const phases = ['boot', 'briefing', 'running', 'paused', 'result', 'picture', 'other'];
       const counts = phases.map(() => new Float64Array(bounds.length));
       const totals = new Float64Array(phases.length * 5),
@@ -459,6 +511,7 @@ try {
       const intervalClock = window.soloQualificationIntervalClock(performance.now());
       let phase = 0,
         previousPhase = 0,
+        journalPrevious = null,
         tailCount = 0;
       const audio = {
         oscillatorStarts: 0,
@@ -505,6 +558,7 @@ try {
           const update = () => {
             const n = phases.indexOf(document.body.dataset.flightState);
             phase = n < 0 ? 6 : n;
+            if (hitchJournal) window.soloQualificationHitchJournal.phase(phase);
           };
           update();
           new MutationObserver(update).observe(document.body, {
@@ -517,12 +571,20 @@ try {
       function frame(now) {
         const dt = intervalClock.observe(now);
         if (dt === null) {
+          if (hitchJournal) {
+            window.soloQualificationHitchJournal.first(now, performance.now());
+            journalPrevious = now;
+          }
           previousPhase = phase;
           requestAnimationFrame(frame);
           return;
         }
         const previous = now - dt,
           offset = previousPhase * 5;
+        if (hitchJournal) {
+          window.soloQualificationHitchJournal.frame(journalPrevious, now, previousPhase, phase);
+          journalPrevious = now;
+        }
         let bucket = 0;
         while (bounds[bucket] !== null && dt > bounds[bucket]) bucket++;
         counts[previousPhase][bucket]++;
@@ -556,12 +618,16 @@ try {
           if (!observedGame)
             throw new Error('Phaser owner unavailable for independent observation');
           workSubscribed = true;
+          if (hitchJournal) window.soloQualificationHitchJournal.subscribe(performance.now());
           observedGame.events.on(window.Phaser.Core.Events.PRE_STEP, () => {
             workStarted = performance.now();
+            if (hitchJournal) window.soloQualificationHitchJournal.beginWork(workStarted, phase);
           });
           observedGame.events.on(window.Phaser.Core.Events.POST_RENDER, () => {
             if (workStarted === undefined) return;
-            const elapsed = performance.now() - workStarted;
+            const workEnded = performance.now(),
+              elapsed = workEnded - workStarted;
+            if (hitchJournal) window.soloQualificationHitchJournal.endWork(workEnded, phase);
             workStarted = undefined;
             const offset = phase * workWidth;
             workTotals[offset]++;
@@ -619,6 +685,7 @@ try {
                 recent: Array.from(workRecent.subarray(0, Math.min(5000, workCount) * 2)),
               }
             : null,
+          ...(hitchJournal ? { hitchJournal: window.soloQualificationHitchJournal.state() } : {}),
           now: performance.now(),
         }),
       };
@@ -627,6 +694,7 @@ try {
       bounds: FRAME_BOUNDS,
       workProbe,
       externalCadenceCalibration: report.externalCadenceCalibration,
+      hitchJournal: Boolean(hitchStore),
     },
   );
   if (cpuProfile) {
@@ -644,10 +712,12 @@ try {
     await cpuRecorder.start();
   }
   const entryURL = scenario.entryPath ? new URL(scenario.entryPath, url) : url;
+  beginHitchDocument();
   const response = await page.goto(entryURL.href, {
     waitUntil: 'domcontentloaded',
     timeout: 120000,
   });
+  if (hitchStore) await configureHitchDocument();
   assert.equal(
     response.headers()['content-security-policy'],
     PUBLIC_SECURITY_HEADERS['Content-Security-Policy'],
@@ -811,7 +881,10 @@ try {
             record.status = 'skipped-not-visible';
           else await locator.click({ timeout });
         } else if (action.type === 'reload') {
+          if (hitchStore) await sealHitchDocument(`before-reload-${path}`);
+          beginHitchDocument();
           await page.reload({ waitUntil: 'domcontentloaded', timeout });
+          if (hitchStore) await configureHitchDocument();
           if (
             (fixtureAccess || serverFixtureAccess) &&
             (await page.locator('input[name=password]').isVisible())
@@ -855,10 +928,13 @@ try {
           );
           destination.searchParams.set('performance', '1');
           record.navigation.destination = destination.href;
+          if (hitchStore) await sealHitchDocument(`before-follow-${path}`);
+          beginHitchDocument();
           await page.goto(destination.href, {
             waitUntil: 'domcontentloaded',
             timeout: followRemaining(),
           });
+          if (hitchStore) await configureHitchDocument();
           if (
             (fixtureAccess || serverFixtureAccess) &&
             (await page.locator('input[name=password]').isVisible())
@@ -1256,6 +1332,7 @@ try {
           report.failureCleanupFailure = String(error.stack ?? error);
         }
       }
+      if (hitchStore) await sealHitchDocument('final-existing-public-boundary');
       report.finalState = await page.evaluate(() => ({
         state: document.body?.dataset.flightState,
         boot: document.documentElement.dataset.bootState,
@@ -1335,6 +1412,12 @@ try {
       report.performanceGateFailure = String(error.stack ?? error);
     }
   } else report.performanceGateStatus = 'excluded-synthetic-recovery';
+  if (hitchStore && hitchStore.finish().status !== 'complete') {
+    report.performanceGateStatusBeforeHitchJournal = report.performanceGateStatus;
+    report.performanceGateStatus = 'invalid-evidence';
+    report.hitchJournalFailure =
+      'Complete bounded hitch evidence unavailable; original outcomes retained.';
+  }
   if (nativeReplay) {
     try {
       if (snapshotStore)
