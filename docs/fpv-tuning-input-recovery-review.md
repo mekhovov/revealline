@@ -74,6 +74,12 @@ replay exactly with the earlier input/hash prefix retained. Restart and leaving
 practice dispose both workers. Ordinary desktop/iOS staging passes all 209 source
 pins; this is one desktop fixture, not production authentication or iOS execution.
 
+A separate [public baseline observation](fpv-input-recovery-startup-public-baseline.json)
+used the new diagnostic helper for three independent World password logins.
+All became ready, with no page errors or pending requests at the observation end.
+This does not explain the original timeout or qualify the unpublished correction;
+it is explicitly bound to the existing `fb3caf12b` deployment metadata.
+
 [PR #1565](https://github.com/mekhovov/revealline/pull/1565) contains the correction
 at `af4cd146f`. Ordinary checks/publication and current live acceptance are in
 progress. Earlier delivery reports apply to `fb3caf12b`; they do not automatically

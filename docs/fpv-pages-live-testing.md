@@ -17,6 +17,33 @@ No optional-package selector change or optional-package release/promotion is
 needed for direct-route live testing. The repository's existing main-branch
 review and product-release policies still apply.
 
+## Input recovery correction — 17 October 2026
+
+[PR #1565](https://github.com/mekhovov/revealline/pull/1565) preserves Advanced
+practice when the selected radio is unavailable. Its source commit is
+`af4cd146f4ed05c79a404642978ae682e3486757`. Local acceptance passes 740 practice
+tests, English/Ukrainian real browser-worker checks, actual Electron export and
+resume, and release validation. Ordinary publication is in progress; the public
+site is not yet claimed to contain this correction.
+
+After that publication, the manual check requires no physical radio:
+
+1. Open either SIM route, unlock normally, then open Settings → Controls →
+   Rates & throttle → Advanced reference quad.
+2. Start a short keyboard practice flight and pause. Keep throttle low.
+3. Choose Calibrated radio with no radio connected and press Start practice.
+   The pane should explain that input is unavailable while Export practice
+   recording and Restart practice remain available.
+4. Choose Keyboard / touch. The flight stays paused until Start practice is
+   pressed. It then continues the same recording; Restart practice starts a new
+   flight. Export and return to tuning to finish.
+
+The [review](fpv-tuning-input-recovery-review.md) records exact scope. The new
+public runner captures bounded startup state and request paths if readiness
+fails; the previous startup timeout remains unexplained. Neither simulated input
+loss nor this no-radio check qualifies physical controller hardware. Advanced
+remains optional and unscored.
+
 ## Boundary correction publication — 17 October 2026
 
 [PR #1564](https://github.com/mekhovov/revealline/pull/1564) preserves restored
