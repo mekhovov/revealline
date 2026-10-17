@@ -2,6 +2,7 @@ import { canonicalJSON, required } from '../data-json.mjs';
 import {
   emptyJourneyPerformance,
   inspectJourneyPerformance,
+  snapshotJourneyPerformanceSource,
   verifyPerformanceRecord,
   performanceRecordKey,
   performanceSummary,
@@ -106,12 +107,46 @@ export function createJourneyPerformanceController({
     }
     return row;
   };
-  const inspect = async (input, profile, signal) => {
-    const value =
-      input === undefined ? emptyJourneyPerformance() : inspectJourneyPerformance(input);
+  // Only locally validated envelopes enter this path. Public inspect still
+  // owns and validates every input; observe already performed that boundary.
+  const inspectOwned = async (value, profile, signal) => {
     const rows = [];
     for (const record of value.records) rows.push(await verify(record, profile, signal));
     return { value, rows };
+  };
+  const inspect = async (input, profile, signal) => {
+    signal?.throwIfAborted();
+    if (input === undefined) return inspectOwned(emptyJourneyPerformance(), profile, signal);
+    if (!scheduleChunk) return inspectOwned(inspectJourneyPerformance(input), profile, signal);
+    // Keep a bounded private snapshot before waiting. The ordinary inspector
+    // still validates/copies it inside admission; no public object gains trust.
+    const source = snapshotJourneyPerformanceSource(input);
+    let value,
+      called = false,
+      retired = false,
+      failure;
+    try {
+      await scheduleChunk(
+        () => {
+          try {
+            required(!retired && !called, 'Performance inspection must run exactly once.');
+            called = true;
+            signal?.throwIfAborted();
+            value = inspectJourneyPerformance(source);
+          } catch (error) {
+            failure = error;
+            throw error;
+          }
+        },
+        { signal },
+      );
+      if (failure) throw failure;
+      required(called, 'Performance inspection admission did not run work.');
+      signal?.throwIfAborted();
+    } finally {
+      retired = true;
+    }
+    return inspectOwned(value, profile, signal);
   };
   const adopt = (value, rows) => {
     if (disposed || value.generation < observedGeneration) return;
@@ -125,11 +160,11 @@ export function createJourneyPerformanceController({
   };
   const observe = (state) => {
     if (disposed) return;
-    let identity;
+    let identity, value;
     try {
       // IndexedDB can contain non-JSON or cyclic data. Validate before hashing
       // so optional evidence can never interrupt an ordinary clear transaction.
-      const value =
+      value =
         state.performance === undefined
           ? emptyJourneyPerformance()
           : inspectJourneyPerformance(state.performance);
@@ -151,7 +186,7 @@ export function createJourneyPerformanceController({
     }
     if (!allowed) return;
     const job = lifetime();
-    void inspect(state.performance, state.profile, job.signal)
+    void inspectOwned(value, state.profile, job.signal)
       .then(({ value, rows }) => {
         if (observedIdentity === identity) adopt(value, rows);
       })

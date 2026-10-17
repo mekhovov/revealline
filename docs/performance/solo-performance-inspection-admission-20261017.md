@@ -1,0 +1,13 @@
+# Journey performance inspection admission — 2026-10-17
+
+This source correction reuses the private envelope already validated by `observe`, then admits full async inspection through the existing optional main-work owner. An actual-source import counter demonstrates two external envelope inspections becoming one, with one publication. A repeated unchanged observation still receives synchronous validation and publishes nothing.
+
+Async inspection takes a bounded private source copy before waiting, using the existing 2 MiB envelope, node, depth, array and string limits. The ordinary inspector still validates and copies that input inside the admitted synchronous callback. Cancellation is checked before copying, inside the callback and after settlement; omitted, repeated, suppressed-error and retired callbacks fail. No public input is treated as already validated. Hosts without an admission owner preserve their immediate inspection path.
+
+The actual capture control changes the media phase when `backend.readState` resolves. Inspection waits during play, detects the corrupt replay on Pause, preserves its original durable bytes and retains the new verified win only in the session. Backend transactions, compare-and-swap checks, leases, generation/revision checks, recovery and durable writes are unchanged. No awaited work is introduced inside a backend transaction.
+
+Validation uses current replay initialization from `992335139e1ab850d269f139ef4d0fcfb59321e7`. Five complete files pass 67/67, including seven new controls: `journey-performance-admission`, `journey-performance`, `journey-performance-binding`, `replay` and `data-json`. The existing persistence suite covers corrupt evidence, stale writers, lease loss, quota/save timeout and cancellation. Six exact-before failures remain retained; the input-snapshot control already passed before the change. Scoped lint, explicit formatting and patch checks pass.
+
+Evidence is under `.cache/solo-followup/performance-inspection-admission/`. `tracked-complete.tap` is 16,308 bytes, SHA-256 `46589afb591846639b125f587e7fc7b719c07a26e1bc200d0752b95356e4150d`. `review.json` records exact before/after source identities and the preserved `before-v1.tap` and `before-v2.tap` failures. The reviewed three-path patch is 12,553 bytes, SHA-256 `32a427e507ab0fab042da2ac422de41c18f3ec4fec749f49ef94ae6b1686ea1b`.
+
+Initial synchronous `observe` validation/hashing, per-record verifier prefixes, and later selection/publication/write validation remain outside this narrow correction. No native browser measurement ran, and this change does not attribute a retained frame stall or qualify timing.

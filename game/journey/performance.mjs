@@ -45,8 +45,12 @@ export function inspectPerformanceRecord(input) {
   record.replay = snapshotReplay(record.replay);
   return record;
 }
+// Internal owner boundary: copy caller data under the same envelope budgets before yielding.
+export function snapshotJourneyPerformanceSource(input) {
+  return boundedJSON(input, limits);
+}
 export function inspectJourneyPerformance(input) {
-  const value = boundedJSON(input, limits);
+  const value = snapshotJourneyPerformanceSource(input);
   exactKeys(value, ['format', 'generation', 'records'], 'Journey performance');
   required(
     value.format === JOURNEY_PERFORMANCE_FORMAT &&
