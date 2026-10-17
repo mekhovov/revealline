@@ -91,3 +91,11 @@ verified input/output hashes.
 | `integration-readback-v1.json` | Exact merge/parents, workflow checks and eight unchanged test identities         |  3,483 | `839cbfdb795f2545159f2fe1a9fb4d34d731e76b7ba6d10c825fffc38783df56` |
 | `validate-25898dd0a.log`       | Complete validation passed; navigation warnings retained                         |  3,885 | `b97d746fd9f5dea44a7c923ab8f15c57891e248a46952fc671335655e13ffe50` |
 | `validate-25898dd0a.json`      | Command/bounds, start source, direct input hashes and concurrent-edit limitation |  2,937 | `924bf6afcad66e487a9311410f8c8b642ba0fc4876117dbb180817ee649a4b57` |
+
+## Subsequent frozen implementation checks
+
+After the cue deadline, PCM admission and opt-in hitch journal were committed, exact source `72e6822cd8aad5993f1e7cf42cc40b1631553506` (tree `019f79e5849136b63d6c67b792459cf11968d58a`) received complete checks under Node 22.22.2. The worktree stayed clean and HEAD unchanged throughout. Full lint passed in 16.719 seconds; full content/localization/generated validation passed in 150.879 seconds. Each command had a 300-second deadline and 4 MiB output bound. No browser or package qualification is inferred.
+
+Full formatting failed in 26.082 seconds on nine files, each byte-identical to integrated main `b2f251dac0d762d476f725b1bc601a2d6d5485a5`. Eight also match comparison main `8b019`; the additional `game/test/fpv-world-appearance-ui.test.mjs` came from the later main update. The other files are the classic Snake proof fixture, FPV regional preparation clock/controls tests, journey-performance-host, menu-style-host, team-installed-host and both pages-capacity-report files. The full warning paths, current and both main hashes remain in the receipt. No whole-format pass is claimed.
+
+Retained directory: `.cache/solo-followup/bounded-final-checks-20261017T035955Z-72e6822c/`. Receipt SHA-256: `61183611280799bd93588f66c7e09f7fec0efdf2f2a11dd86a4c4c79a98a95f5`. The 196-byte lint log hashes to `477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c`; the 3,885-byte validation log to `442c0393ba399ea6387fc249aaced09aeccee847ddd66400ff97bd5cff448866`; and the 698-byte format log to `1f32e6a795e3b8b2947bcb523d39266c1e1a873dee9f5baeddb31e41e2d67f3e`. Later source edits require their own affected checks and production artifact.
