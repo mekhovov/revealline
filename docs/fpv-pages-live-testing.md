@@ -30,7 +30,32 @@ node scripts/game-cli.mjs build --out NEW_SITE --publication-profile main-pages
 node scripts/smoke-fpv-pages.mjs NEW_SITE PLAYWRIGHT_MODULE REPORT.json
 ```
 
-The [current seventh-review check](fpv-pages-seventh-review-live-testing-evidence.json)
+The [current delivery check](fpv-pages-delivery-live-testing-evidence.json) passes
+against the normal production build at
+`/private/tmp/fpv-rates-delivery-20261017-pages`, version `0.151.1`. It includes the
+historical camera migration fix and the measured dense Regional collider bound.
+Academy and World pass online and offline with saved rates, Advanced practice,
+export, restart and complete worker disposal. The [inventory check](fpv-pages-delivery-inventory.json)
+verifies all 3,433 manifest entries, the download ZIP checksum and all five changed
+runtime modules against this checkout.
+
+The publication contains 3,435 files / 963,673,325 bytes. Its conservative archive
+forecast is 972,296,192 bytes, leaving 7,703,808 bytes below the unchanged cap.
+The distribution ZIP digest is
+`f790928a38f0cf61c20b49ab3e7b18628180eba7de61a099174046aeeeaff4f4`.
+This local working-tree build has `sourceRevision: null`; the exact committed
+main publication and public upgrade acceptance are still checked separately.
+The [public baseline](fpv-public-delivery-baseline.json) verifies the normal
+password form and visible offline installation on old-main revision `8b0199194`
+for both SIMs. Its disposable saved browser profiles are retained for exact
+post-deployment update acceptance. The initial runner-change failure is retained;
+the frozen final runner passes. No password is included in the evidence.
+
+The [genuine historical upgrade](fpv-historical-update-qualification.md) and
+[current Electron runtime](fpv-native-current-runtime-20261017.json) provide
+additional, explicitly scoped migration and native evidence.
+
+The [historical seventh-review check](fpv-pages-seventh-review-live-testing-evidence.json)
 passes against the normal production build at
 `/private/tmp/fpv-rates-seventh-review-20261017-pages`, version `0.151.1`, after
 rebasing onto `8b0199194` and protecting numeric edits from late import previews.
@@ -48,6 +73,9 @@ reviewed integration process. The separate two-revision update check below cover
 local generated packages. Public HTTPS, the real password form, historical-version
 updates and exact committed publication remain separate gates. No deployment was
 performed.
+
+The seventh temporary build was removed only after matching its recorded manifest
+and ZIP checksums, to make room for the current build. Its receipts are retained.
 
 The [historical sixth-review check](fpv-pages-sixth-review-live-testing-evidence.json)
 passes against the normal production build at

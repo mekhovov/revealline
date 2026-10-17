@@ -6,7 +6,62 @@ are now `fcaa60342`, `01dd80fd1`, `726f39f00`, `518fb541c`, `dbaf4f3f9`,
 `2c36cec96` and `c8eb9ec38`; historical reports retain their original hashes.
 Unrelated local files are preserved. A local commit does not deploy GitHub Pages.
 
-## Seventh review — late imports and existing offline updates
+## Current delivery — historical migration and bounded Urban flight
+
+The actual pre-tuning main → feature [update check](fpv-historical-update-qualification.md)
+passes Academy and World, using historical commit `8b0199194` and each version's
+own package builder. It exposed a real migration-order defect: the new library
+captured default camera values before restoring the saved camera. Both hosts now
+restore that baseline first, while an existing tuning library stays authoritative.
+The 27° tilt / 108° vertical FOV, Legacy response and synthetic radio data survive
+the update; newly saved rates and drone settings survive a second offline process
+restart. The original migration failure and an asynchronous-save probe failure
+remain recorded. This covers that historical version locally, not every release
+or physical radio behavior.
+
+The [moving Urban check](fpv-regional-urban-streaming-qualification.md) closes a
+bounded admission gap: its initial 79-collider window exceeded the former limit
+of 64. The per-frame limit is now 128; the derived recorded-collider definition
+ceiling also rises from 32,768 to 65,536. Geometry, byte, frame-count and event-count
+limits remain unchanged.
+Three 120-second routes reach the 124-collider window, replay exactly and pass the
+2× gate at **15.093–15.740×** on one Apple host. The loop includes streaming,
+worker messages, admission and recording; it excludes GPU rendering and network
+transfer. Complete rejection/adoption rollback and verified recovery pass.
+The earlier rejection and unpaced-probe failures remain available. These results
+do not qualify arbitrary regions, maximum-duration dense performance or other
+devices.
+
+The [current native report](fpv-native-current-runtime-20261017.json) binds **204
+source hashes**. Actual Electron 44.3 preserves the complete library, import
+receipt and 32°/104° drone camera across process reopen. The final Regional worker
+exports a 290-tick recording through the OS Save dialog; replay verifies hash
+`e3aef0ae`, and returning to Legacy/disposal leaves zero workers and no page or
+stderr errors. Ordinary desktop/iOS staging retains the access gate, CSP and
+limits. iOS execution remains unavailable without Xcode/simulator.
+
+The [initial CI failures](fpv-delivery-ci-initial-failure.json) are preserved.
+The optional test job now installs its pinned authoring test dependencies. The
+canonical generated iOS-bridge import is restored, with an exact shared
+builder/publication capability check and its sparse-workflow dependency listed.
+Tests retain their assertions while using the existing 180-file World envelope
+and waiting for actual asynchronous export completion. No production dependency
+collector is bypassed and no test is disabled; hosted reruns remain separate.
+
+All **701 practice tests**, **44 integration tests**, six editor-browser cases and
+release validation pass. The normal [Pages build/checks](fpv-pages-delivery-live-testing-evidence.json)
+also pass within unchanged limits. The [public baseline](fpv-public-delivery-baseline.json)
+accepts the real password through its normal form on both old-main SIM pages and
+prepares preserved offline installations for the coming upgrade. The fresh
+[six-runtime numerical matrix](fpv-advanced-runtime-qualification-2026-10-17-eighth-review.json)
+passes all 250/500/1,000 Hz gates with 20 matching source pins and identical arena
+and Regional hashes. At the frozen 250 Hz, maximum response-metric error is
+1.8814% and minimum capacity is 60× on one Apple M4 Pro; this excludes rendering
+and production streaming. Exact committed CI, main publication and the public
+upgrade remain pending. Physical aircraft, radio/touch, pilot and wider-platform
+gates remain open. Advanced stays optional, unscored and default-ineligible.
+
+## Seventh review — historical late imports and existing offline updates
 
 The [updated plan](fpv-tuning-completion-plan.md#seventh-review--late-imports-and-installed-updates)
 adds concrete examples from Betaflight's preset repository, its prompt-based PWA

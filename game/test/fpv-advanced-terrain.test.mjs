@@ -10,6 +10,7 @@ import {
   unpackTerrainCollider,
   validateTerrainHistory,
   ADVANCED_TERRAIN_FORMAT,
+  ADVANCED_TERRAIN_LIMITS,
 } from '../../optional-practice/civilian-fpv/advanced-terrain.mjs';
 import {
   advancedComparisonEligibility,
@@ -310,5 +311,78 @@ test('Regional comparison binds terrain history and preserves metadata-free reco
   } finally {
     sim.dispose();
     arena.dispose();
+  }
+});
+
+test('128-collider admission retains exact rollback and replay and rejects the 129th atomically', async () => {
+  assert.equal(ADVANCED_TERRAIN_LIMITS.colliders, 128);
+  const colliders = Array.from({ length: 128 }, (_, index) => ({
+    id: `dense-surface-${index}`,
+    vertices: [
+      -5 + index * 20,
+      0,
+      -5,
+      -5 + index * 20,
+      0,
+      5,
+      5 + index * 20,
+      0,
+      5,
+      5 + index * 20,
+      0,
+      -5,
+    ],
+    indices: [0, 1, 2, 0, 2, 3],
+  }));
+  const frame = createAdvancedTerrainFrame({ sourceIdentity: '123456789abcdef0', colliders });
+  const simulation = createAdvancedSimulation({
+    floor: false,
+    terrain: { format: 'AdvancedRegionalTerrain.v1' },
+    spawn: { x: 0, y: 1, z: 0 },
+  });
+  try {
+    const staged = simulation.stageTerrainFrame(frame);
+    simulation.commitTerrainFrame({ transaction: staged.transaction, accepted: true });
+    for (let tick = 0; tick < 20; tick++) {
+      simulation.enqueueInput({
+        sequence: tick,
+        timestampUs: tick * 20000,
+        controls: { roll: 0, pitch: 0, yaw: 0, throttle: tick / 200 },
+      });
+      simulation.stepMission();
+    }
+    const before = simulation.snapshot();
+    const tooMany = {
+      ...frame,
+      colliders: [...frame.colliders, { ...frame.colliders[0], id: 'overflow' }],
+    };
+    assert.throws(() => simulation.stageTerrainFrame(tooMany), /collider count exceeds limit/);
+    assert.deepEqual(simulation.snapshot(), before);
+    const replacement = createAdvancedTerrainFrame({
+      sourceIdentity: '223456789abcdef0',
+      colliders: colliders.map((collider, index) =>
+        index === 127
+          ? {
+              ...collider,
+              vertices: collider.vertices.map((value, i) => (i % 3 === 0 ? value + 1 : value)),
+            }
+          : collider,
+      ),
+    });
+    const candidate = simulation.stageTerrainFrame(replacement);
+    simulation.commitTerrainFrame({ transaction: candidate.transaction, accepted: false });
+    assert.deepEqual(simulation.snapshot(), before);
+    const proposal = simulation.proposeMission();
+    simulation.commitMission({ transaction: proposal.transaction, accepted: false });
+    assert.deepEqual(simulation.snapshot(), before);
+    const recording = simulation.recording();
+    assert.equal(recording.terrainColliders.length, 128);
+    const verified = await replayAdvancedRecording(JSON.stringify(recording));
+    assert.equal(verified.verified, true);
+    assert.deepEqual(verified.telemetry, simulation.telemetry());
+    simulation.restore(JSON.parse(JSON.stringify(before)));
+    assert.deepEqual(simulation.recording(), recording);
+  } finally {
+    simulation.dispose();
   }
 });

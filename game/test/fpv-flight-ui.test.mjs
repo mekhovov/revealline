@@ -58,6 +58,8 @@ async function fixture(
       if (attribute.name === 'hidden') element.hidden = true;
       if (attribute.name === 'class') element.className = attribute.value;
       if (attribute.name === 'value') element.value = attribute.value;
+      if (attribute.name === 'min' || attribute.name === 'max')
+        element[attribute.name] = attribute.value;
     }
     parent.append(element);
     for (const child of source.childNodes ?? []) copy(child, element);
@@ -2067,3 +2069,63 @@ test('Academy tuning keeps its hint through pointer blur and releases it after c
   );
   assert.equal(h.$('academy-shell-settings-dialog').contains(hint), true);
 });
+
+for (const kind of ['legacy camera', 'saved drone camera', 'unreadable camera', 'missing camera']) {
+  test(`Academy captures ${kind} before its first tuning configuration`, async (t) => {
+    const { initialTuningLibrary } = await import(
+      '../../optional-practice/civilian-fpv/tuning-library.mjs'
+    );
+    const response = {
+      format: 'FlightResponseProfile.v1',
+      id: 'historical',
+      name: 'Historical',
+      maxRate: 480,
+      maxTilt: 42,
+      expo: 45,
+      responseTicks: 11,
+    };
+    const cameraKey = 'revealline.fpv.flight-comfort.v1.academy.camera';
+    const data = new Map([
+      [
+        'revealline.flight-profiles.v1',
+        JSON.stringify({ format: 'FlightProfiles.v1', radio: null, response }),
+      ],
+      [cameraKey, JSON.stringify({ fov: 108, tilt: 27 })],
+    ]);
+    if (kind === 'missing camera') data.delete(cameraKey);
+    if (kind === 'saved drone camera')
+      data.set(
+        'revealline.fpv.tuning.v1',
+        JSON.stringify(initialTuningLibrary({ response, camera: { tilt: 49, verticalFov: 121 } })),
+      );
+    const saved = data.get('revealline.fpv.tuning.v1');
+    const h = await fixture(t, {
+      storage: {
+        getItem(key) {
+          if (kind === 'unreadable camera' && key === cameraKey)
+            throw new Error('Camera storage unavailable');
+          return data.get(key) ?? null;
+        },
+        setItem: (key, value) => data.set(key, value),
+      },
+    });
+    const expected =
+      kind === 'saved drone camera'
+        ? { tilt: 49, fov: 121 }
+        : kind === 'legacy camera'
+          ? { tilt: 27, fov: 108 }
+          : { tilt: 10, fov: 82 };
+    assert.equal(Number(h.$('camera-tilt').value), expected.tilt);
+    assert.equal(Number(h.$('camera-fov').value), expected.fov);
+    assert.deepEqual(h.view.exportAttempt().response, response);
+    await openAcademyTuning(h);
+    assert.equal(academyTuningControl(h, 'Camera tilt (degrees)').value, String(expected.tilt));
+    assert.equal(academyTuningControl(h, 'Vertical FOV (degrees)').value, String(expected.fov));
+    assert.equal(
+      data.get('revealline.fpv.tuning.v1'),
+      saved,
+      'Opening must not persist or replace a library',
+    );
+    assert.deepEqual(JSON.parse(data.get('revealline.flight-profiles.v1')).response, response);
+  });
+}

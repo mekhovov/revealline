@@ -57,6 +57,9 @@ jobs:
         id: test_policy
         run: node publishing/test-policy.mjs
       - run: npm ci
+      - name: Install pinned FPV persistence test dependencies
+        if: steps.test_policy.outputs.runTests == 'true'
+        run: npm ci --prefix authoring/fpv-worlds --ignore-scripts --include=dev --prefer-offline
       - name: Verify optional routes, replay, input and installation isolation
         if: steps.test_policy.outputs.runTests == 'true'
         run: |

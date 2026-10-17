@@ -574,3 +574,72 @@ Advanced comparison evidence is reused only after matching every source hash.
 All available software items are complete. The original physical, platform,
 public-rollout and Advanced promotion gates remain open as documented above;
 this local result does not claim completion of those measurements or deployment.
+
+## Delivery continuation — 17 October 2026
+
+The remaining-work audit found no missing core rates, profiles, transfer or
+controller feature. It identified three locally available qualification steps
+and the normal repository delivery path. These extend the evidence rather than
+adding another tuning feature:
+
+1. Run the installed Electron desktop wrapper against current sources, including
+   saved tuning, Advanced practice, native export and process reopen. Keep iOS
+   runtime and the wider physical device matrix open; this machine has no full
+   Xcode installation.
+2. Exercise bounded moving, dense Regional terrain with changing admitted frames
+   and transactional waits. Measure the production worker/host path without
+   competing local qualification workloads. Preserve any failure and retain the
+   fixed simulation frequency; a single-host result cannot qualify other devices.
+3. Check a genuine pre-feature `main` installation updating to this feature, using
+   isolated source exports and browser profiles. Verify legacy settings and saved
+   progress migrate/persist before testing the new tuning offline. Distinguish
+   this from the earlier inert-revision lifecycle fixture and from public HTTPS.
+4. Submit the committed branch through the existing repository checks, retain
+   unchanged publication caps, and use the ordinary main publication workflow
+   for live delivery. Bind any live acceptance to the exact deployed commit.
+
+[PR #1561](https://github.com/mekhovov/revealline/pull/1561) is open as a draft
+while these final checks run. The repository automatically merges eligible
+non-draft PRs and publishes `main`; draft status prevents premature publication.
+Physical radio/pilot work, measured aircraft fitting, wider hardware, validated
+propwash/ground effect and Advanced competition/default promotion retain their
+original prerequisites.
+
+### Delivery qualification completed locally
+
+- **Historical migration:** the authentic old-main browser update exposed camera
+  defaults overriding saved tilt/FOV. Academy and World now restore old camera
+  preferences before constructing their first tuning library. Eight regressions
+  and the genuine update/offline process-restart check pass; original failure
+  receipts remain available.
+- **Dense Regional flight:** the admitted Urban source requires up to 124
+  colliders per frame. The measured bound is now 128; the derived total recorded
+  collider-definition ceiling also rises from 32,768 to 65,536. Geometry, byte,
+  frame-count, event-count and publication limits remain unchanged. Three 120-second moving
+  flights pass at 15.093×–15.740× real time, including complete rejection/wait
+  rollback, replay and recovery. This does not qualify other hardware, graphics
+  throughput or maximum-duration dense flights.
+- **Native:** installed Electron 44.3.0 preserves rates, imported profiles and
+  camera across restart; the final 290-tick Regional export replays exactly.
+  Ordinary locked desktop/iOS resource stages verify. iOS runtime remains open.
+- **Integration:** 701 practice tests, 44 integration tests, six browser editor
+  cases and release validation pass. Initial GitHub failures are preserved and
+  corrected: the optional test job installs its pinned persistence dependency;
+  the shared adapter retains its canonical native bridge import with one strict,
+  declared optional-builder capability; two stale test assumptions are corrected.
+- **Numerical matrix:** the fresh six-runtime check passes all 250/500/1,000 Hz
+  gates with 20 matching source pins and identical arena/Regional hashes. Frozen
+  250 Hz has at most 1.8814% response-metric error and at least 60× capacity on one
+  Apple M4 Pro. Headless timing excludes rendering and production streaming; this
+  does not qualify the wider device matrix or real-aircraft fidelity.
+- **Pages:** the ordinary production build passes online/offline acceptance and
+  all 3,433 manifest hashes. Publication limits are unchanged. The public old-main
+  baseline passes normal password access and preserves offline installations for
+  the upgrade. Exact committed CI, main publication and public upgrade acceptance
+  remain delivery steps, not new feature work.
+
+See the [migration evidence](fpv-historical-update-qualification.md),
+[dense terrain evidence](fpv-regional-urban-streaming-qualification.md),
+[native evidence](fpv-native-current-runtime-20261017.json),
+[numerical matrix](fpv-advanced-runtime-qualification-2026-10-17-eighth-review.json), and
+[Pages evidence](fpv-pages-delivery-live-testing-evidence.json).
