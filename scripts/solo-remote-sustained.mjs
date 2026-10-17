@@ -112,6 +112,16 @@ function validateSetupSuccessor(plan, selected) {
       `Missing verifier dependency ${path}`,
     );
 }
+export const GEOMETRIC_NEXT_SOURCE = Object.freeze({
+  name: 'next-candidatec696-geometric-v1',
+  baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  baselineTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+  candidate: 'c696af41857840359ae473558b90682f3d71f2db',
+  candidateTree: 'b70ce1c4b15023a38628c5e958b166e44898eccf',
+  runtime: 'c696af41857840359ae473558b90682f3d71f2db',
+  recipeHash: '0fd24c7db64be144da0d05b57ae26289b2a676a4f90df547d918c6cc13cef1a8',
+});
+const geometricNextPlan = (plan) => plan.sourceCohort === GEOMETRIC_NEXT_SOURCE.name;
 const finalSoakCohort = 'soak-main8b-candidatea6e';
 const anchoredSoakHash = '079d4dd76fbd914ddd4da7311f8e6cee4a0ff4fc3bc951842b2921c94c53b8ff';
 const finalLifecycle = Object.freeze({
@@ -131,10 +141,14 @@ const finalLifecycle = Object.freeze({
 const finalLifecyclePlan = (plan) =>
   Boolean(finalLifecycle[plan.phase]) && plan.sourceCohort === finalLifecycle[plan.phase].cohort;
 const finalSustainedPlan = (plan) =>
-  plan.sourceCohort === finalSoakCohort || finalLifecyclePlan(plan);
+  plan.sourceCohort === finalSoakCohort || finalLifecyclePlan(plan) || geometricNextPlan(plan);
 
 function selectedSustainedSource(plan) {
   if (plan.sourceCohort === undefined) return null;
+  if (geometricNextPlan(plan)) {
+    assert.equal(plan.phase, 'next');
+    return GEOMETRIC_NEXT_SOURCE;
+  }
   if (plan.sourceCohort === finalSoakCohort) assert.equal(plan.phase, 'soak');
   else assert(finalLifecyclePlan(plan), 'Unreviewed final lifecycle phase/source');
   return finalTimingSource;
@@ -219,7 +233,12 @@ const roleRevision = (plan, role) =>
   timingPlan(plan) || finalSustainedPlan(plan) ? plan[role].revision : source[role];
 const diagnosticComparison = (plan) => plan.release?.status === 'reviewed-diagnostic-only';
 function validateDiagnosticComparison(release, candidate = source.candidate) {
-  assert.equal(release.scope, 'independent-comparison-diagnostics');
+  assert.equal(
+    release.scope,
+    release.sourceCohort === GEOMETRIC_NEXT_SOURCE.name
+      ? 'independent-candidate-transition-diagnostics'
+      : 'independent-comparison-diagnostics',
+  );
   assert.equal(release.predecessorRun, 38985941469);
   assert.equal(release.firstEightAllCorrectnessPassed, false);
   assert.equal(release.performanceQualification, 'not-qualified-diagnostic-only');
@@ -256,6 +275,29 @@ function validateSourceCohort(plan, selected) {
     !plan.baseline.publishVerifiedNormal && !plan.baseline.publisher,
     'Reuse the verified normal baseline',
   );
+  if (geometricNextPlan(plan)) {
+    assert.deepEqual(Object.keys(plan.baseline).sort(), ['revision', 'scope', 'tree']);
+    assert.equal(plan.baseline.scope, 'source-only-no-observation');
+    assert.equal(plan.candidateOnly, true);
+    assert.equal(plan.release.scope, 'independent-candidate-transition-diagnostics');
+    assert.equal(plan.release.onceOnlyBefore, '0febd334619731adc26dfa3df78aab02991563af');
+    assert.equal(plan.nativeRouteProtocol, 'authored-next-geometric-v1');
+    const identity = plan.candidate;
+    assert(Number.isSafeInteger(identity.run) && identity.run > 0);
+    assert(Number.isSafeInteger(identity.artifact) && identity.artifact > 0);
+    assert.match(identity.manifestSHA256, /^[a-f0-9]{64}$/);
+    for (const name of ['outer', 'inner']) {
+      assert(
+        Number.isSafeInteger(identity[name]?.bytes) &&
+          identity[name].bytes > 0 &&
+          identity[name].bytes <= 2 * 1024 ** 3,
+      );
+      assert.match(identity[name].sha256, /^[a-f0-9]{64}$/);
+    }
+    return selected;
+  }
+  assert.equal(plan.candidateOnly, undefined);
+  assert.equal(plan.nativeRouteProtocol, undefined);
   const reuse = plan.baseline.reusableArtifact;
   assert.equal(reuse?.format, 'SoloHostedNormalBaselineReuseV2');
   assert.equal(reuse.sourceRevision, selected.baseline);
@@ -956,7 +998,7 @@ export function validateSustainedPlan(plan) {
     assert.match(ref.sha256, /^[a-f0-9]{64}$/);
   }
   assert.equal(plan.performanceExclusion, diagnosticComparison(plan) || plan.phase === 'retry');
-  const roles = roleOrder(plan.repetition, plan.phase);
+  const roles = geometricNextPlan(plan) ? ['candidate'] : roleOrder(plan.repetition, plan.phase);
   assert.deepEqual(
     plan.rows.map((row) => row.source),
     roles,
@@ -969,13 +1011,30 @@ export function validateSustainedPlan(plan) {
     assert.equal(row.timeoutMs, spec.timeoutMs);
     assert.equal(row.performanceExclusion, plan.performanceExclusion);
   }
+  if (geometricNextPlan(plan)) {
+    assert.equal(
+      plan.recipes.next.path,
+      'docs/performance/fixtures/solo-remote-sustained/next-geometric.qualification.fixture',
+    );
+    assert.equal(plan.recipes.next.bytes, 9086);
+    for (const path of [
+      'scripts/solo-qualification-next-route.mjs',
+      ...COMPARISON_SETUP_DYNAMIC_ROOTS,
+    ]) {
+      const refs = plan.frozenTools.filter((ref) => ref.path === path);
+      assert.equal(refs.length, 1, `Missing exact native route dependency ${path}`);
+      assert(Number.isSafeInteger(refs[0].bytes) && refs[0].bytes > 0 && refs[0].bytes < MiB);
+    }
+  }
   if (spec.recipe)
     assert.equal(
       plan.recipes[spec.recipe].sha256,
       selected
         ? plan.phase === 'soak'
           ? anchoredSoakHash
-          : finalLifecycle[plan.phase].hash
+          : geometricNextPlan(plan)
+            ? GEOMETRIC_NEXT_SOURCE.recipeHash
+            : finalLifecycle[plan.phase].hash
         : spec.hash,
     );
   for (const ref of Object.values(plan.recipes)) {
@@ -1010,14 +1069,16 @@ export function bindSustainedJob(manifest, engine, repetition) {
   assert(spec);
   plan.helperTimeoutMs = spec.helperMinutes * 60000;
   plan.performanceExclusion = diagnosticComparison(plan) || plan.phase === 'retry';
-  plan.rows = roleOrder(repetition, plan.phase).map((role) => ({
-    id: `${plan.phase}-${engine}-r${repetition}-${role}`,
-    kind: plan.phase === 'diagnostics' ? 'diagnostics' : 'lifecycle',
-    engine,
-    source: role,
-    timeoutMs: spec.timeoutMs,
-    performanceExclusion: plan.performanceExclusion,
-  }));
+  plan.rows = (geometricNextPlan(plan) ? ['candidate'] : roleOrder(repetition, plan.phase)).map(
+    (role) => ({
+      id: `${plan.phase}-${engine}-r${repetition}-${role}`,
+      kind: plan.phase === 'diagnostics' ? 'diagnostics' : 'lifecycle',
+      engine,
+      source: role,
+      timeoutMs: spec.timeoutMs,
+      performanceExclusion: plan.performanceExclusion,
+    }),
+  );
   return validateSustainedPlan(plan);
 }
 
@@ -1120,7 +1181,7 @@ export function sustainedSnapshotStorage(plan, recipe) {
 export async function prepareSustainedMode(ctx) {
   validateSustainedPlan(ctx.plan);
   await verifyInputs(ctx);
-  if (ctx.plan.phase !== 'diagnostics') await ctx.ensureBaseline();
+  if (ctx.plan.phase !== 'diagnostics' && !geometricNextPlan(ctx.plan)) await ctx.ensureBaseline();
   assert(ctx.admitted.artifacts.candidate);
   const mode = { cpu: 1, browserVersion: null, calibration: null, recipePath: null };
   if (ctx.plan.phase !== 'diagnostics') {
@@ -1173,8 +1234,9 @@ export async function prepareSustainedMode(ctx) {
       repetition: ctx.plan.repetition,
       cpu: mode.cpu,
       calibration: mode.calibration,
-      scope:
-        'Paired within this hosted runner only. No historical macOS, physical device, GPU, memory-bandwidth or thermal inference.',
+      scope: geometricNextPlan(ctx.plan)
+        ? 'Candidate-only authored transition/resource diagnostic. No baseline observation, timing comparison, later-layout qualification or physical-device inference.'
+        : 'Paired within this hosted runner only. No historical macOS, physical device, GPU, memory-bandwidth or thermal inference.',
     },
   });
   return mode;
@@ -1211,6 +1273,7 @@ export function sustainedArguments(ctx, row, url, dir) {
     join(dir, 'report.json'),
     ...base,
     '--work-probe',
+    ...(geometricNextPlan(ctx.plan) ? ['--authored-next-route=authored-next-geometric-v1'] : []),
     ...(planHasHitchJournal(ctx.plan) ? ['--hitch-journal'] : []),
     ...(planHasHitchJournal(ctx.plan) && ['sentry', 'long-rail'].includes(ctx.plan.phase)
       ? ['--hitch-journal-preparation=timing-heavy-v1']
@@ -1614,6 +1677,98 @@ export function finalLifecycleAssessment(plan, row, raw, command, browserVersion
   };
 }
 
+export async function geometricNextAssessment(plan, row, raw, command, browserVersion, journal) {
+  assert(geometricNextPlan(plan));
+  const inherited = lifecycleAssessment(plan, row, raw, command, browserVersion);
+  let protocolFailure = null;
+  try {
+    assert.equal(row.source, 'candidate');
+    assert.equal(raw.workProbe, true);
+    assert.equal(raw.cadenceProtocol, 'settled120');
+    assert.equal(raw.baselineRuntime, false);
+    assert.equal(raw.cacheMode, 'fresh-context');
+    assert.equal(raw.scenarioKind, 'lifecycle');
+    assert.equal(raw.kind, 'lifecycle');
+    assert.equal(raw.replay.scope, 'completed-scenario');
+    assert(!raw.finalReadFailure && !raw.failureCleanupFailure);
+    if (row.engine === 'webkit') {
+      assert.equal(raw.environment.contextOwner?.cleanup?.status, 'closed');
+      assert.equal(raw.environment.contextOwner.cleanup.profileRemoved, true);
+      assert.equal(raw.environment.contextOwner.cleanup.browserClosed, true);
+    }
+    const { NEXT_ROUTE_IDENTITIES, NEXT_ROUTE_PROTOCOL } = await import(
+      './solo-qualification-next-route.mjs'
+    );
+    assert.equal(raw.actions.length, 60);
+    const routes = raw.actions.filter((action) => action.type === 'authored-next-route');
+    assert.equal(routes.length, 11);
+    for (const [index, action] of raw.actions.entries()) {
+      assert.equal(action.path, String(index));
+      assert.equal(
+        action.status,
+        action.type === 'authored-next-route' ? 'passed-public-route' : 'pass',
+      );
+    }
+    for (const [index, action] of routes.entries()) {
+      assert.equal(action.path, String(6 + 5 * index));
+      assert.equal(action.protocol, NEXT_ROUTE_PROTOCOL);
+      assert.equal(action.mission, NEXT_ROUTE_IDENTITIES[index].id);
+      assert.equal(action.initial.mission, action.mission);
+      assert.equal(action.final.mission, action.mission);
+      assert.equal(action.initial.autoNext, false);
+      assert.equal(action.final.autoNext, false);
+      assert.equal(action.initial.lives, 3);
+      assert.equal(action.final.lives, 3);
+      assert.equal(action.final.status, 'won');
+      assert(
+        Number.isSafeInteger(action.initial.tick) &&
+          action.initial.tick >= 0 &&
+          action.initial.tick <= 12,
+      );
+      assert(Number.isSafeInteger(action.final.tick) && action.final.tick > action.initial.tick);
+      assert(
+        Number.isFinite(action.elapsedMs) && action.elapsedMs >= 0 && action.elapsedMs <= 60000,
+      );
+      assert(Number.isSafeInteger(action.reads) && action.reads > 0 && action.reads <= 1201);
+      assert.equal(action.unsettled, 0);
+      assert.deepEqual(action.heldKeys, []);
+      assert(!action.failure && !action.cleanupFailure);
+      assert(
+        Array.isArray(action.events) && action.events.length > 0 && action.events.length <= 128,
+      );
+      assert(action.events.every((event) => event.status === 'settled'));
+      assert(Array.isArray(action.stages) && action.stages.length <= 32);
+      assert(Buffer.byteLength(JSON.stringify(action)) <= 65536);
+    }
+    assert.equal(raw.actions.filter((action) => action.type === 'result').length, 11);
+    for (let index = 0; index < 10; index++) assert.equal(raw.actions[9 + 5 * index].type, 'click');
+    assert.equal(raw.snapshots.filter((snapshot) => snapshot.group === 'next-result').length, 11);
+  } catch (error) {
+    protocolFailure = String(error.message ?? error).slice(0, 2048);
+  }
+  const complete =
+    journal?.status === 'complete' &&
+    !Object.hasOwn(raw ?? {}, 'performanceGateStatusBeforeHitchJournal') &&
+    !raw?.hitchJournalFailure;
+  return {
+    ...inherited,
+    numericObservationStatus: inherited.status,
+    protocolStatus: protocolFailure ? 'fail' : 'pass',
+    protocolFailure,
+    correctness: protocolFailure ? 'fail' : inherited.correctness,
+    hitchJournalVerification: journal ?? {
+      status: 'invalid-evidence',
+      failure: 'Journal not independently verified',
+    },
+    performanceEvidenceStatus: complete ? 'complete' : 'invalid-evidence',
+    performanceGateStatusBeforeHitchJournal: raw?.performanceGateStatusBeforeHitchJournal ?? null,
+    status: !protocolFailure && complete ? inherited.status : 'failed',
+    candidateOnly: true,
+    scope:
+      'Exactly eleven authored missions and ten manual Next transitions on c696. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, later-layout or native-memory qualification.',
+  };
+}
+
 export function diagnosticsAssessment(raw, manifest, row, command, expectedBrowserVersion) {
   const observations = raw?.observations;
   const versions = Array.isArray(observations)
@@ -1729,13 +1884,15 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
         await (
           ctx.plan.sourceCohort === finalSoakCohort
             ? anchoredSoakAssessment
-            : finalLifecyclePlan(ctx.plan)
-              ? finalLifecycleAssessment
-              : timingPlan(ctx.plan)
-                ? timingAssessment
-                : ctx.plan.phase === 'long29'
-                  ? longRecordingAssessment
-                  : lifecycleAssessment
+            : geometricNextPlan(ctx.plan)
+              ? geometricNextAssessment
+              : finalLifecyclePlan(ctx.plan)
+                ? finalLifecycleAssessment
+                : timingPlan(ctx.plan)
+                  ? timingAssessment
+                  : ctx.plan.phase === 'long29'
+                    ? longRecordingAssessment
+                    : lifecycleAssessment
         )(ctx.plan, row, raw, command, ctx.modeState.browserVersion, journalVerification),
       );
       row.browserVersion = raw.environment?.browserVersion;
