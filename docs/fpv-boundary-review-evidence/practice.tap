@@ -1,0 +1,4406 @@
+
+> revealline@0.151.1 practice:test
+> node --test --test-concurrency=2 game/test/practice-directory.test.mjs game/test/practice-guide-current-copy.test.mjs game/test/civilian-practice.test.mjs game/test/civilian-practice-ui.test.mjs game/test/optional-installation.test.mjs game/test/optional-offline-lifecycle.test.mjs game/test/fpv-offline-controls.test.mjs game/test/optional-practice-panel.test.mjs scripts/test-optional-practice.mjs scripts/test-practice-capacity.mjs scripts/test-audit-practice-png-capacity.mjs scripts/test-optional-installation-observer.mjs scripts/test-frozen-source.mjs scripts/test-bundle-optional-practice.mjs scripts/test-publish-optional-packages.mjs publishing/optional-package-admission.test.mjs publishing/optional-package-promotion.test.mjs publishing/optional-package-delivery.test.mjs game/test/fpv-radio.test.mjs game/test/fpv-rates.test.mjs game/test/fpv-flight-rates-integration.test.mjs game/test/fpv-betaflight-import.test.mjs game/test/fpv-tuning-library.test.mjs game/test/fpv-tuning-ui.test.mjs game/test/fpv-advanced.test.mjs game/test/fpv-advanced-worker.test.mjs game/test/fpv-advanced-practice.test.mjs game/test/fpv-advanced-storage.test.mjs game/test/fpv-flight-model.test.mjs game/test/fpv-flight-boundaries.test.mjs game/test/fpv-cooperative-replay.test.mjs game/test/fpv-notebook.test.mjs game/test/practice-rewards.test.mjs scripts/test-optional-fpv-package.mjs game/test/fpv-flight-ui.test.mjs game/test/fpv-replay-rate.test.mjs game/test/fpv-studio-setup.test.mjs scripts/test-analyze-fpv-heap.mjs game/test/data-json.test.mjs scripts/test-observe-fpv-completion.mjs scripts/test-fpv-observation-artifact.mjs game/test/fpv-advanced-regional.test.mjs game/test/fpv-advanced-qualification.test.mjs game/test/fpv-advanced-terrain.test.mjs game/test/fpv-advanced-terrain-storage.test.mjs game/test/fpv-world-appearance-ui.test.mjs scripts/test-fpv-flight-log-comparison.mjs
+
+TAP version 13
+# Subtest: actual optional page is playable with canvas fallback and verifies a complete keyboard practice transcript
+ok 1 - actual optional page is playable with canvas fallback and verifies a complete keyboard practice transcript
+  ---
+  duration_ms: 101.223459
+  type: 'test'
+  ...
+# Subtest: reading and failed imports pause the gym and cannot grant completions or resume a held control
+ok 2 - reading and failed imports pause the gym and cannot grant completions or resume a held control
+  ---
+  duration_ms: 48.881167
+  type: 'test'
+  ...
+# Subtest: final gym exit retires reparented controls before removing their shell
+ok 3 - final gym exit retires reparented controls before removing their shell
+  ---
+  duration_ms: 37.488834
+  type: 'test'
+  ...
+# Subtest: gym title and settings reuse the accepted drill without starting or resuming it
+ok 4 - gym title and settings reuse the accepted drill without starting or resuming it
+  ---
+  duration_ms: 41.576333
+  type: 'test'
+  ...
+# Subtest: a gym Pause pointer keeps its intent when moving focus first pauses flight input
+ok 5 - a gym Pause pointer keeps its intent when moving focus first pauses flight input
+  ---
+  duration_ms: 35.076708
+  type: 'test'
+  ...
+# Subtest: gym reuses neutral controller menu navigation without arming on device join
+ok 6 - gym reuses neutral controller menu navigation without arming on device join
+  ---
+  duration_ms: 59.553708
+  type: 'test'
+  ...
+# Subtest: gym controller Pause requires a fresh explicit Continue and samples hardware once per frame
+ok 7 - gym controller Pause requires a fresh explicit Continue and samples hardware once per frame
+  ---
+  duration_ms: 35.801417
+  type: 'test'
+  ...
+# Subtest: gym menu keyboard navigation owns arrows and returns from nested help without flight input
+ok 8 - gym menu keyboard navigation owns arrows and returns from nested help without flight input
+  ---
+  duration_ms: 36.762958
+  type: 'test'
+  ...
+# Subtest: Gym native Help retains instructions across blur and focus
+ok 9 - Gym native Help retains instructions across blur and focus
+  ---
+  duration_ms: 31.970459
+  type: 'test'
+  ...
+# Subtest: gym Select Mission starts the selected drill with one action
+ok 10 - gym Select Mission starts the selected drill with one action
+  ---
+  duration_ms: 39.397917
+  type: 'test'
+  ...
+# Subtest: gym shared selector keeps search and pause state, rejects filtered cards and supports controller Back
+ok 11 - gym shared selector keeps search and pause state, rejects filtered cards and supports controller Back
+  ---
+  duration_ms: 37.549708
+  type: 'test'
+  ...
+# Subtest: gym imported catalogue replaces selector authority and exact route without inheriting completion
+ok 12 - gym imported catalogue replaces selector authority and exact route without inheriting completion
+  ---
+  duration_ms: 43.136792
+  type: 'test'
+  ...
+# Subtest: a flight arrow released inside a controller menu is usable on the first press after Resume
+ok 13 - a flight arrow released inside a controller menu is usable on the first press after Resume
+  ---
+  duration_ms: 30.063709
+  type: 'test'
+  ...
+# Subtest: gym adopts the complete common preference inventory and keeps practice tools reachable without changing the drill
+ok 14 - gym adopts the complete common preference inventory and keeps practice tools reachable without changing the drill
+  ---
+  duration_ms: 98.835916
+  type: 'test'
+  ...
+# Subtest: gym shares six ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice
+ok 15 - gym shares six ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice
+  ---
+  duration_ms: 58.658
+  type: 'test'
+  ...
+# Subtest: gym cancels an imminent auto-next before a stalled animation timestamp
+ok 16 - gym cancels an imminent auto-next before a stalled animation timestamp
+  ---
+  duration_ms: 62.72125
+  type: 'test'
+  ...
+# Subtest: gym cancels an imminent auto-next before a stalled callback execution
+ok 17 - gym cancels an imminent auto-next before a stalled callback execution
+  ---
+  duration_ms: 86.773083
+  type: 'test'
+  ...
+# Subtest: all twelve authored civilian routes have ordered deterministic completion proofs
+ok 18 - all twelve authored civilian routes have ordered deterministic completion proofs
+  ---
+  duration_ms: 68.286666
+  type: 'test'
+  ...
+# Subtest: landing alone, partial dwell and claimed completion never skip ordered checkpoints
+ok 19 - landing alone, partial dwell and claimed completion never skip ordered checkpoints
+  ---
+  duration_ms: 5.665291
+  type: 'test'
+  ...
+# Subtest: pause freezes model, reset clears it, and hostile fixtures never enter authoring
+ok 20 - pause freezes model, reset clears it, and hostile fixtures never enter authoring
+  ---
+  duration_ms: 5.207709
+  type: 'test'
+  ...
+# Subtest: keyboard and touch have explicit input ownership and require fresh controls after pause
+ok 21 - keyboard and touch have explicit input ownership and require fresh controls after pause
+  ---
+  duration_ms: 1.105083
+  type: 'test'
+  ...
+# Subtest: standard gamepad is opt-in, neutral-gated, and disconnect/blur always pause with fallback
+ok 22 - standard gamepad is opt-in, neutral-gated, and disconnect/blur always pause with fallback
+  ---
+  duration_ms: 0.567417
+  type: 'test'
+  ...
+# Subtest: optional removal unregisters only exact app scope and deletes only its own path-specific cache
+ok 23 - optional removal unregisters only exact app scope and deletes only its own path-specific cache
+  ---
+  duration_ms: 0.538458
+  type: 'test'
+  ...
+# Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+ok 24 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+  ---
+  duration_ms: 1.56975
+  type: 'test'
+  ...
+# Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+ok 25 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+  ---
+  duration_ms: 0.296666
+  type: 'test'
+  ...
+# Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+ok 26 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+  ---
+  duration_ms: 0.232708
+  type: 'test'
+  ...
+# Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+ok 27 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+  ---
+  duration_ms: 0.085791
+  type: 'test'
+  ...
+# Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+ok 28 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+  ---
+  duration_ms: 0.185833
+  type: 'test'
+  ...
+# Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+ok 29 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+  ---
+  duration_ms: 0.076125
+  type: 'test'
+  ...
+# Subtest: many short array values use their serialized bytes without charging index keys
+ok 30 - many short array values use their serialized bytes without charging index keys
+  ---
+  duration_ms: 1.511833
+  type: 'test'
+  ...
+# Subtest: repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+ok 31 - repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+  ---
+  duration_ms: 13.528792
+  type: 'test'
+  ...
+# Subtest: repeated text never gives mutable or caller-frozen objects validation authority
+ok 32 - repeated text never gives mutable or caller-frozen objects validation authority
+  ---
+  duration_ms: 0.539958
+  type: 'test'
+  ...
+# Subtest: repeated field names do not require per-field UTF-8 encoding
+ok 33 - repeated field names do not require per-field UTF-8 encoding
+  ---
+  duration_ms: 2.439166
+  type: 'test'
+  ...
+# Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+ok 34 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+  ---
+  duration_ms: 75.584875
+  type: 'test'
+  ...
+# Subtest: untrusted getters and toJSON hooks are rejected without invocation
+ok 35 - untrusted getters and toJSON hooks are rejected without invocation
+  ---
+  duration_ms: 0.244834
+  type: 'test'
+  ...
+# Subtest: exact byte accounting retains structural and shape protections
+ok 36 - exact byte accounting retains structural and shape protections
+  ---
+  duration_ms: 2.536708
+  type: 'test'
+  ...
+# Subtest: shared JSON boundary reports owned validation errors in the active locale
+ok 37 - shared JSON boundary reports owned validation errors in the active locale
+  ---
+  duration_ms: 1.430625
+  type: 'test'
+  ...
+# Subtest: graphics loss and pagehide pause Advanced, clear held touch axes, and require explicit resume
+ok 38 - graphics loss and pagehide pause Advanced, clear held touch axes, and require explicit resume
+  ---
+  duration_ms: 83.3965
+  type: 'test'
+  ...
+# Subtest: editing and saving an aircraft leave the active worker frozen until explicit restart
+ok 39 - editing and saving an aircraft leave the active worker frozen until explicit restart
+  ---
+  duration_ms: 16.111041
+  type: 'test'
+  ...
+# Subtest: a pending aircraft save keeps later edits unsaved, ignores duplicate clicks and updates the revert baseline
+ok 40 - a pending aircraft save keeps later edits unsaved, ignores duplicate clicks and updates the revert baseline
+  ---
+  duration_ms: 15.804625
+  type: 'test'
+  ...
+# Subtest: completing an older aircraft save cannot replace a newly selected template
+ok 41 - completing an older aircraft save cannot replace a newly selected template
+  ---
+  duration_ms: 26.070625
+  type: 'test'
+  ...
+# Subtest: an incomplete aircraft edit survives a pending save and can revert to the saved values
+ok 42 - an incomplete aircraft edit survives a pending save and can revert to the saved values
+  ---
+  duration_ms: 12.875541
+  type: 'test'
+  ...
+# Subtest: failed aircraft saves retain edits and the old baseline, then allow a successful retry
+ok 43 - failed aircraft saves retain edits and the old baseline, then allow a successful retry
+  ---
+  duration_ms: 20.297834
+  type: 'test'
+  ...
+# Subtest: closing Advanced while an aircraft save waits ignores its late success
+ok 44 - closing Advanced while an aircraft save waits ignores its late success
+  ---
+  duration_ms: 9.090959
+  type: 'test'
+  ...
+# Subtest: closing Advanced while an aircraft save waits ignores its late failure
+ok 45 - closing Advanced while an aircraft save waits ignores its late failure
+  ---
+  duration_ms: 7.248459
+  type: 'test'
+  ...
+# Subtest: native inactivity pauses and releases the bridge; cancelled/failed shares keep a usable session
+ok 46 - native inactivity pauses and releases the bridge; cancelled/failed shares keep a usable session
+  ---
+  duration_ms: 32.375084
+  type: 'test'
+  ...
+# Subtest: native lifecycle setup fails closed and a late subscription cleans up after disposal
+ok 47 - native lifecycle setup fails closed and a late subscription cleans up after disposal
+  ---
+  duration_ms: 14.359042
+  type: 'test'
+  ...
+# Subtest: configuration export cannot steal initialization while native lifecycle setup is pending
+ok 48 - configuration export cannot steal initialization while native lifecycle setup is pending
+  ---
+  duration_ms: 22.01975
+  type: 'test'
+  ...
+# Subtest: unsupported worker and graphics platforms keep flight disabled and return safely to tuning
+ok 49 - unsupported worker and graphics platforms keep flight disabled and return safely to tuning
+  ---
+  duration_ms: 4.109833
+  type: 'test'
+  ...
+# Subtest: worker initialization failure remains explicit and closes its worker on return
+ok 50 - worker initialization failure remains explicit and closes its worker on return
+  ---
+  duration_ms: 7.900667
+  type: 'test'
+  ...
+# Subtest: uncoded and unknown worker failures do not reopen export or restart based on their text
+ok 51 - uncoded and unknown worker failures do not reopen export or restart based on their text
+  ---
+  duration_ms: 31.443042
+  type: 'test'
+  ...
+# Subtest: the real duration limit preserves an exportable practice and requires explicit restart
+ok 52 - the real duration limit preserves an exportable practice and requires explicit restart
+  ---
+  duration_ms: 21244.791791
+  type: 'test'
+  ...
+# Subtest: the real recording limit preserves an exportable practice and requires explicit restart
+ok 53 - the real recording limit preserves an exportable practice and requires explicit restart
+  ---
+  duration_ms: 6381.151834
+  type: 'test'
+  ...
+# Subtest: practice retains its host-scoped module worker entry through restart
+ok 54 - practice retains its host-scoped module worker entry through restart
+  ---
+  duration_ms: 20.400708
+  type: 'test'
+  ...
+# Subtest: arena imports a different-rate verified ghost, renders its own timeline and hides incompatible restarted setups
+ok 55 - arena imports a different-rate verified ghost, renders its own timeline and hides incompatible restarted setups
+  ---
+  duration_ms: 34.511667
+  type: 'test'
+  ...
+# Subtest: comparison import is bounded and atomic; failed or cancelled files preserve the previous reference
+ok 56 - comparison import is bounded and atomic; failed or cancelled files preserve the previous reference
+  ---
+  duration_ms: 27.815125
+  type: 'test'
+  ...
+# Subtest: cancelling or closing comparison verification terminates its dedicated worker without stopping the flight worker
+ok 57 - cancelling or closing comparison verification terminates its dedicated worker without stopping the flight worker
+  ---
+  duration_ms: 30.102375
+  type: 'test'
+  ...
+# Subtest: repeatable maneuver cues use simulation time and a kept reference survives restart without saving a draft
+ok 58 - repeatable maneuver cues use simulation time and a kept reference survives restart without saving a draft
+  ---
+  duration_ms: 25.143208
+  type: 'test'
+  ...
+# Subtest: cross-runtime fixture covers collisions and restores complete simulation history exactly
+ok 59 - cross-runtime fixture covers collisions and restores complete simulation history exactly
+  ---
+  duration_ms: 687.558708
+  type: 'test'
+  ...
+# Subtest: all three default-template axes pass fixed-frequency numerical gates against coupled 2 kHz
+ok 60 - all three default-template axes pass fixed-frequency numerical gates against coupled 2 kHz
+  ---
+  duration_ms: 612.034417
+  type: 'test'
+  ...
+# Subtest: finite feedforward bandwidth prevents physics-frequency-dependent yaw impulse saturation
+ok 61 - finite feedforward bandwidth prevents physics-frequency-dependent yaw impulse saturation
+  ---
+  duration_ms: 0.443792
+  type: 'test'
+  ...
+# Subtest: old tune migration preserves explicit unfiltered feedforward and rejects ambiguous fields
+ok 62 - old tune migration preserves explicit unfiltered feedforward and rejects ambiguous fields
+  ---
+  duration_ms: 0.322916
+  type: 'test'
+  ...
+# Subtest: qualification pins the real worker and complete shared physics dependency closure
+ok 63 - qualification pins the real worker and complete shared physics dependency closure
+  ---
+  duration_ms: 14.379291
+  type: 'test'
+  ...
+# Subtest: motion coverage preserves collision-query validation without performing collision work
+ok 64 - motion coverage preserves collision-query validation without performing collision work
+  ---
+  duration_ms: 1.385208
+  type: 'test'
+  ...
+# Subtest: verified motion coverage matches complete swept-cell readiness for every geometry profile
+ok 65 - verified motion coverage matches complete swept-cell readiness for every geometry profile
+  ---
+  duration_ms: 53.858167
+  type: 'test'
+  ...
+# Subtest: Advanced admits every substep with coverage only and rolls back coverage failures
+ok 66 - Advanced admits every substep with coverage only and rolls back coverage failures
+  ---
+  duration_ms: 76.158083
+  type: 'test'
+  ...
+# Subtest: Regional Advanced uses verified terrain and frozen portable rates while presenting an unscored 50 Hz flight
+ok 67 - Regional Advanced uses verified terrain and frozen portable rates while presenting an unscored 50 Hz flight
+  ---
+  duration_ms: 36.13825
+  type: 'test'
+  ...
+# Subtest: verified terrain and scenery resolve landings without pausing, and grounded recovery replays exactly
+ok 68 - verified terrain and scenery resolve landings without pausing, and grounded recovery replays exactly
+  ---
+  duration_ms: 843.436875
+  type: 'test'
+  ...
+# Subtest: the verified scenery wall resolves lateral impacts while the flight remains active
+ok 69 - the verified scenery wall resolves lateral impacts while the flight remains active
+  ---
+  duration_ms: 81.837
+  type: 'test'
+  ...
+# Subtest: unknown cells and region boundaries reject the whole trace before they become clear space
+ok 70 - unknown cells and region boundaries reject the whole trace before they become clear space
+  ---
+  duration_ms: 58.587125
+  type: 'test'
+  ...
+# Subtest: pause while worker proposal is in flight rolls it back and never rearms on its late result
+ok 71 - pause while worker proposal is in flight rolls it back and never rearms on its late result
+  ---
+  duration_ms: 24.972959
+  type: 'test'
+  ...
+# Subtest: paused recovery preserves the entire worker state and verifies region/start before restoring
+ok 72 - paused recovery preserves the entire worker state and verifies region/start before restoring
+  ---
+  duration_ms: 173.374084
+  type: 'test'
+  ...
+# Subtest: a failed worker leaves a paused explicit unavailable state, without advancing presentation
+ok 73 - a failed worker leaves a paused explicit unavailable state, without advancing presentation
+  ---
+  duration_ms: 23.457709
+  type: 'test'
+  ...
+# Subtest: Regional duration-limit remains exportable and cannot be erased by preparation or arming
+ok 74 - Regional duration-limit remains exportable and cannot be erased by preparation or arming
+  ---
+  duration_ms: 285.898334
+  type: 'test'
+  ...
+# Subtest: Regional recording-limit remains exportable and cannot be erased by preparation or arming
+ok 75 - Regional recording-limit remains exportable and cannot be erased by preparation or arming
+  ---
+  duration_ms: 295.507958
+  type: 'test'
+  ...
+# Subtest: Regional freeform limit message with no code remains a fatal worker failure
+ok 76 - Regional freeform limit message with no code remains a fatal worker failure
+  ---
+  duration_ms: 23.900416
+  type: 'test'
+  ...
+# Subtest: Regional freeform limit message with ADVANCED_UNKNOWN_LIMIT remains a fatal worker failure
+ok 77 - Regional freeform limit message with ADVANCED_UNKNOWN_LIMIT remains a fatal worker failure
+  ---
+  duration_ms: 22.27225
+  type: 'test'
+  ...
+# Subtest: the real Regional terrain-history frame limit preserves the committed frame and export
+ok 78 - the real Regional terrain-history frame limit preserves the committed frame and export
+  ---
+  duration_ms: 19688.764875
+  type: 'test'
+  ...
+# Subtest: a pending prepare cannot overwrite a late Regional flight-limit stop
+ok 79 - a pending prepare cannot overwrite a late Regional flight-limit stop
+  ---
+  duration_ms: 24.182416
+  type: 'test'
+  ...
+# Subtest: cancelling detached recovery preserves a Regional terminal limit and its recording
+ok 80 - cancelling detached recovery preserves a Regional terminal limit and its recording
+  ---
+  duration_ms: 114.212083
+  type: 'test'
+  ...
+# Subtest: the real Regional twelve-minute boundary preserves exact replay and recovery without rearming
+ok 81 - the real Regional twelve-minute boundary preserves exact replay and recovery without rearming
+  ---
+  duration_ms: 32752.841333
+  type: 'test'
+  ...
+# Subtest: streamed terrain adoption waits for the whole in-flight mission and reads the newly committed pose
+ok 82 - streamed terrain adoption waits for the whole in-flight mission and reads the newly committed pose
+  ---
+  duration_ms: 3.849583
+  type: 'test'
+  ...
+# Subtest: cancelled detached recovery cannot overwrite the newer live session or its recording
+ok 83 - cancelled detached recovery cannot overwrite the newer live session or its recording
+  ---
+  duration_ms: 118.086
+  type: 'test'
+  ...
+# Subtest: cancel preparation terminates pending recovery verification before adopting terrain or flight state
+ok 84 - cancel preparation terminates pending recovery verification before adopting terrain or flight state
+  ---
+  duration_ms: 131.172375
+  type: 'test'
+  ...
+# Subtest: a corrupt recovery remains detached and preserves the current Regional recording
+ok 85 - a corrupt recovery remains detached and preserves the current Regional recording
+  ---
+  duration_ms: 108.590291
+  type: 'test'
+  ...
+# Subtest: verified collider export is detached from mutable renderer geometry and preserves all collision layers
+ok 86 - verified collider export is detached from mutable renderer geometry and preserves all collision layers
+  ---
+  duration_ms: 8.685334
+  type: 'test'
+  ...
+# Subtest: a rejected visible-frame adoption restores the staged worker collision frame and recording
+ok 87 - a rejected visible-frame adoption restores the staged worker collision frame and recording
+  ---
+  duration_ms: 64.585333
+  type: 'test'
+  ...
+# Subtest: cancellation while the worker stages terrain rejects the complete candidate before another prepare
+ok 88 - cancellation while the worker stages terrain rejects the complete candidate before another prepare
+  ---
+  duration_ms: 63.771958
+  type: 'test'
+  ...
+# Subtest: worker failure after source adoption leaves the session paused and unavailable until restart
+ok 89 - worker failure after source adoption leaves the session paused and unavailable until restart
+  ---
+  duration_ms: 41.260292
+  type: 'test'
+  ...
+# Subtest: maximum twelve-minute changing 60 Hz input flight exports, verifies and recovers within quota
+ok 90 - maximum twelve-minute changing 60 Hz input flight exports, verifies and recovers within quota
+  ---
+  duration_ms: 8209.514417
+  type: 'test'
+  ...
+# Subtest: twelve-minute changing input and streamed frames export, replay and recover under shared quotas
+ok 91 - twelve-minute changing input and streamed frames export, replay and recover under shared quotas
+  ---
+  duration_ms: 18101.347375
+  type: 'test'
+  ...
+# {"recordingBytes":4983692,"recoveryBytes":5061598,"colliderDefinitions":65,"frameDefinitions":64,"frameEvents":360,"inputs":43200,"checkpoints":24,"maximumSeconds":720,"recoveryVerificationMs":6462.066375}
+# Subtest: terrain geometry canonicalizes finite Float32 vertices and stable collider order
+ok 92 - terrain geometry canonicalizes finite Float32 vertices and stable collider order
+  ---
+  duration_ms: 2.499209
+  type: 'test'
+  ...
+# Subtest: terrain rejects unsafe paths, accessors, malformed geometry and identity tampering atomically
+ok 93 - terrain rejects unsafe paths, accessors, malformed geometry and identity tampering atomically
+  ---
+  duration_ms: 1.700458
+  type: 'test'
+  ...
+# Subtest: maximum frame history shares each decoded mesh instead of amplifying import memory
+ok 94 - maximum frame history shares each decoded mesh instead of amplifying import memory
+  ---
+  duration_ms: 248.452084
+  type: 'test'
+  ...
+# Subtest: staged frame owns the transaction until acceptance and rejection restores all state
+ok 95 - staged frame owns the transaction until acceptance and rejection restores all state
+  ---
+  duration_ms: 41.385542
+  type: 'test'
+  ...
+# Subtest: Regional restore rejects changed physics properties without changing the live attempt
+ok 96 - Regional restore rejects changed physics properties without changing the live attempt
+  ---
+  duration_ms: 45.4135
+  type: 'test'
+  ...
+# Subtest: streamed collision frames replay, land, take off and recover at frame/hash boundaries
+ok 97 - streamed collision frames replay, land, take off and recover at frame/hash boundaries
+  ---
+  duration_ms: 533.998916
+  type: 'test'
+  ...
+# Subtest: Regional recovery recomputes consumed-input accounting before replacing live state
+ok 98 - Regional recovery recomputes consumed-input accounting before replacing live state
+  ---
+  duration_ms: 2.439667
+  type: 'test'
+  ...
+# Subtest: recording rejects reordered, missing, unused and tampered frame histories
+ok 99 - recording rejects reordered, missing, unused and tampered frame histories
+  ---
+  duration_ms: 3.996416
+  type: 'test'
+  ...
+# Subtest: Regional comparison binds terrain history and preserves metadata-free recovery and replay
+ok 100 - Regional comparison binds terrain history and preserves metadata-free recovery and replay
+  ---
+  duration_ms: 8.0005
+  type: 'test'
+  ...
+# Subtest: 128-collider admission retains exact rollback and replay and rejects the 129th atomically
+ok 101 - 128-collider admission retains exact rollback and replay and rejects the 129th atomically
+  ---
+  duration_ms: 47.403916
+  type: 'test'
+  ...
+# Subtest: worker client ignores stale sessions, rejects requests on close, and owns worker lifetime
+ok 102 - worker client ignores stale sessions, rejects requests on close, and owns worker lifetime
+  ---
+  duration_ms: 1.597125
+  type: 'test'
+  ...
+# Subtest: worker deadline rejects every outstanding request and terminates CPU owner
+ok 103 - worker deadline rejects every outstanding request and terminates CPU owner
+  ---
+  duration_ms: 5.347417
+  type: 'test'
+  ...
+# Subtest: worker client preserves only explicit flight-limit codes, never matching error text
+ok 104 - worker client preserves only explicit flight-limit codes, never matching error text
+  ---
+  duration_ms: 0.212291
+  type: 'test'
+  ...
+# Subtest: complete recording verification has a bounded duration budget without weakening flight deadlines
+ok 105 - complete recording verification has a bounded duration budget without weakening flight deadlines
+  ---
+  duration_ms: 0.470875
+  type: 'test'
+  ...
+# Subtest: cancelling recovery verification terminates its worker and rejects promptly
+ok 106 - cancelling recovery verification terminates its worker and rejects promptly
+  ---
+  duration_ms: 0.105625
+  type: 'test'
+  ...
+# Subtest: worker recovery verifies consumed dynamics before atomic adoption and preserves future input
+ok 107 - worker recovery verifies consumed dynamics before atomic adoption and preserves future input
+  ---
+  duration_ms: 173.674083
+  type: 'test'
+  ...
+# Subtest: worker protocol serializes initialization and supports transactional regional admission
+ok 108 - worker protocol serializes initialization and supports transactional regional admission
+  ---
+  duration_ms: 2.104083
+  type: 'test'
+  ...
+# Subtest: arena comparison verifies its own frozen rates, rejects tampering and class changes, and leaves the reference worker unchanged
+ok 109 - arena comparison verifies its own frozen rates, rejects tampering and class changes, and leaves the reference worker unchanged
+  ---
+  duration_ms: 13.625416
+  type: 'test'
+  ...
+# Subtest: independent controller bounds motors, unwinds saturation and restores all filters
+ok 110 - independent controller bounds motors, unwinds saturation and restores all filters
+  ---
+  duration_ms: 5.485041
+  type: 'test'
+  ...
+# Subtest: coupled Advanced flight follows frozen rate profile at 50 Hz mission intervals
+ok 111 - coupled Advanced flight follows frozen rate profile at 50 Hz mission intervals
+  ---
+  duration_ms: 29.641292
+  type: 'test'
+  ...
+# Subtest: terrain rejection rolls back physics, controller, battery, noise, input and recording
+ok 112 - terrain rejection rolls back physics, controller, battery, noise, input and recording
+  ---
+  duration_ms: 15.432792
+  type: 'test'
+  ...
+# Subtest: compact recording preserves consumed input, replay, reset and partial recovery
+ok 113 - compact recording preserves consumed input, replay, reset and partial recovery
+  ---
+  duration_ms: 99.134167
+  type: 'test'
+  ...
+# Subtest: radio timestamps are consumed once; late samples and stale sequences are explicit
+ok 114 - radio timestamps are consumed once; late samples and stale sequences are explicit
+  ---
+  duration_ms: 1.717875
+  type: 'test'
+  ...
+# Subtest: replay binds exact consumed substeps while preserving late and queued input at every frequency
+ok 115 - replay binds exact consumed substeps while preserving late and queued input at every frequency
+  ---
+  duration_ms: 188.609417
+  type: 'test'
+  ...
+# Subtest: CCD prevents a reference quad crossing a 2 cm wall at 40 m/s at all candidate frequencies
+ok 116 - CCD prevents a reference quad crossing a 2 cm wall at 40 m/s at all candidate frequencies
+  ---
+  duration_ms: 26.069167
+  type: 'test'
+  ...
+# Subtest: templates are independent physical data; comparison permits rates but keeps throttle limits
+ok 117 - templates are independent physical data; comparison permits rates but keeps throttle limits
+  ---
+  duration_ms: 22.481333
+  type: 'test'
+  ...
+# Subtest: emitted comparison classes bind the frozen physical configuration and nested throttle
+ok 118 - emitted comparison classes bind the frozen physical configuration and nested throttle
+  ---
+  duration_ms: 38.629417
+  type: 'test'
+  ...
+# Subtest: comparison requires genuine complete replay and legacy metadata remains optional
+ok 119 - comparison requires genuine complete replay and legacy metadata remains optional
+  ---
+  duration_ms: 17.81475
+  type: 'test'
+  ...
+# Subtest: snapshot restore rejects another configuration without changing live state
+ok 120 - snapshot restore rejects another configuration without changing live state
+  ---
+  duration_ms: 1.425458
+  type: 'test'
+  ...
+# Subtest: aircraft labels do not change physics identity; fastest motor setting remains bounded
+ok 121 - aircraft labels do not change physics identity; fastest motor setting remains bounded
+  ---
+  duration_ms: 9.533417
+  type: 'test'
+  ...
+# Subtest: all advertised versions reconstruct defaults independently captured from tagged source
+ok 122 - all advertised versions reconstruct defaults independently captured from tagged source
+  ---
+  duration_ms: 3.288083
+  type: 'test'
+  ...
+# Subtest: headerless dump rates needs a version, unsupported tags and conflicting headers do not guess
+ok 123 - headerless dump rates needs a version, unsupported tags and conflicting headers do not guess
+  ---
+  duration_ms: 0.46875
+  type: 'test'
+  ...
+# Subtest: explicit unsupported firmware headers never become missing headers or verified release tags
+ok 124 - explicit unsupported firmware headers never become missing headers or verified release tags
+  ---
+  duration_ms: 1.22125
+  type: 'test'
+  ...
+# Subtest: exact release headers retain their source version and genuinely headerless patches remain supported
+ok 125 - exact release headers retain their source version and genuinely headerless patches remain supported
+  ---
+  duration_ms: 0.635084
+  type: 'test'
+  ...
+# Subtest: profiles and assignments are sequential; PID namespace cannot redirect rate settings
+ok 126 - profiles and assignments are sequential; PID namespace cannot redirect rate settings
+  ---
+  duration_ms: 0.513167
+  type: 'test'
+  ...
+# Subtest: ordered defaults resets earlier assignments, selections and untouched profiles
+ok 127 - ordered defaults resets earlier assignments, selections and untouched profiles
+  ---
+  duration_ms: 0.551208
+  type: 'test'
+  ...
+# Subtest: preset patches preserve unspecified axes and throttle and cannot mutate a supplied baseline
+ok 128 - preset patches preserve unspecified axes and throttle and cannot mutate a supplied baseline
+  ---
+  duration_ms: 0.224917
+  type: 'test'
+  ...
+# Subtest: algorithm changes use ordered CLI native units and report firmware clamps
+ok 129 - algorithm changes use ordered CLI native units and report firmware clamps
+  ---
+  duration_ms: 0.243792
+  type: 'test'
+  ...
+# Subtest: malformed supported settings reject the whole preview instead of partially applying
+ok 130 - malformed supported settings reject the whole preview instead of partially applying
+  ---
+  duration_ms: 1.281292
+  type: 'test'
+  ...
+# Subtest: unsupported hardware/controller settings and arbitrary CLI commands remain inert
+ok 131 - unsupported hardware/controller settings and arbitrary CLI commands remain inert
+  ---
+  duration_ms: 0.397167
+  type: 'test'
+  ...
+# Subtest: new throttle schema must be explicit; version-mismatched patches cannot silently change curves
+ok 132 - new throttle schema must be explicit; version-mismatched patches cannot silently change curves
+  ---
+  duration_ms: 0.438916
+  type: 'test'
+  ...
+# Subtest: native transfers and matching target CLI round trip without calibration or aircraft fields
+ok 133 - native transfers and matching target CLI round trip without calibration or aircraft fields
+  ---
+  duration_ms: 1.708709
+  type: 'test'
+  ...
+# Subtest: local bundles resolve ordered includes, options, exclusive groups and inert descriptions
+ok 134 - local bundles resolve ordered includes, options, exclusive groups and inert descriptions
+  ---
+  duration_ms: 1.211625
+  type: 'test'
+  ...
+# Subtest: included options need explicit matching root option; repeated includes retain order
+ok 135 - included options need explicit matching root option; repeated includes retain order
+  ---
+  duration_ms: 0.161625
+  type: 'test'
+  ...
+# Subtest: preset option matching agrees with the tagged App while preserving original labels
+ok 136 - preset option matching agrees with the tagged App while preserving original labels
+  ---
+  duration_ms: 6.697667
+  type: 'test'
+  ...
+# Subtest: explicit preset review flags match tagged App boolean metadata and survive transfer receipts
+ok 137 - explicit preset review flags match tagged App boolean metadata and survive transfer receipts
+  ---
+  duration_ms: 4.076625
+  type: 'test'
+  ...
+# Subtest: case-only duplicate preset options and selections are rejected without mutating inputs
+ok 138 - case-only duplicate preset options and selections are rejected without mutating inputs
+  ---
+  duration_ms: 0.171208
+  type: 'test'
+  ...
+# Subtest: preset includes reject missing, cyclic, escaping and unsupported nested dependencies before apply
+ok 139 - preset includes reject missing, cyclic, escaping and unsupported nested dependencies before apply
+  ---
+  duration_ms: 0.338583
+  type: 'test'
+  ...
+# Subtest: import receipts pin exact UTF-8 source, firmware choice, source profile and interpreted review
+ok 140 - import receipts pin exact UTF-8 source, firmware choice, source profile and interpreted review
+  ---
+  duration_ms: 1.673708
+  type: 'test'
+  ...
+# Subtest: firmware-default patch baselines resolve the same verified header as the import and receipt
+ok 141 - firmware-default patch baselines resolve the same verified header as the import and receipt
+  ---
+  duration_ms: 3.303875
+  type: 'test'
+  ...
+# Subtest: headerless patch receipts retain the exact baseline and do not invent source firmware
+ok 142 - headerless patch receipts retain the exact baseline and do not invent source firmware
+  ---
+  duration_ms: 0.567959
+  type: 'test'
+  ...
+# Subtest: preset receipts pin every original file and preserve ordered inactive includes and option choices
+ok 143 - preset receipts pin every original file and preserve ordered inactive includes and option choices
+  ---
+  duration_ms: 1.12075
+  type: 'test'
+  ...
+# Subtest: large inert import reviews are bounded and disclose shortened metadata without losing exact source identity
+ok 144 - large inert import reviews are bounded and disclose shortened metadata without losing exact source identity
+  ---
+  duration_ms: 6.442583
+  type: 'test'
+  ...
+# Subtest: native imports produce a receipt while portable curve exports remain free of provenance
+ok 145 - native imports produce a receipt while portable curve exports remain free of provenance
+  ---
+  duration_ms: 0.571167
+  type: 'test'
+  ...
+# Subtest: cooperative replay matches every complete synchronous state and sampled path for all24 demonstrations
+ok 146 - cooperative replay matches every complete synchronous state and sampled path for all24 demonstrations
+  ---
+  duration_ms: 712.035
+  type: 'test'
+  ...
+# Subtest: cooperative replay owns its inspected input and stops before the next200-tick batch after cancellation
+ok 147 - cooperative replay owns its inspected input and stops before the next200-tick batch after cancellation
+  ---
+  duration_ms: 15.943709
+  type: 'test'
+  ...
+# Subtest: aborting transfer verification after an earlier valid proof grants and writes nothing, then allows a fresh import
+ok 148 - aborting transfer verification after an earlier valid proof grants and writes nothing, then allows a fresh import
+  ---
+  duration_ms: 20.185458
+  type: 'test'
+  ...
+# Subtest: closing cancels active and queued verification immediately and a late verifier cannot mutate memory or disk
+ok 149 - closing cancels active and queued verification immediately and a late verifier cannot mutate memory or disk
+  ---
+  duration_ms: 10.362916
+  type: 'test'
+  ...
+# Subtest: cancellation reaches the owned IndexedDB write transaction before an attempt can be durable
+ok 150 - cancellation reaches the owned IndexedDB write transaction before an attempt can be durable
+  ---
+  duration_ms: 9.58125
+  type: 'test'
+  ...
+# Subtest: Node exactly matches all24 successful demonstration golden checkpoints without awarding progress
+ok 151 - Node exactly matches all24 successful demonstration golden checkpoints without awarding progress
+  ---
+  duration_ms: 372.178375
+  type: 'test'
+  ...
+# Subtest: portable authority stress pins every250ticks across full acro rotations, yaw quadrants, gravity and bounded contacts
+ok 152 - portable authority stress pins every250ticks across full acro rotations, yaw quadrants, gravity and bounded contacts
+  ---
+  duration_ms: 444.650042
+  type: 'test'
+  ...
+# Subtest: a denied browser Gamepad request remains a diagnosable, unarmed device-selection failure
+ok 153 - a denied browser Gamepad request remains a diagnosable, unarmed device-selection failure
+  ---
+  duration_ms: 0.310083
+  type: 'test'
+  ...
+# Subtest: real Three.js poses agree with model right-roll, forward-pitch and right-yaw controls in both modes
+ok 154 - real Three.js poses agree with model right-roll, forward-pitch and right-yaw controls in both modes
+  ---
+  duration_ms: 5.219917
+  type: 'test'
+  ...
+# Subtest: touchdown preserves impact speed: the exact landing threshold passes and one unit below remains incomplete
+ok 155 - touchdown preserves impact speed: the exact landing threshold passes and one unit below remains incomplete
+  ---
+  duration_ms: 11.798875
+  type: 'test'
+  ...
+# Subtest: swept obstacles stop a real directional flight without tunnelling and ignore author array order
+ok 156 - swept obstacles stop a real directional flight without tunnelling and ignore author array order
+  ---
+  duration_ms: 15.92825
+  type: 'test'
+  ...
+# Subtest: checked-in integer rotation identities and bounded square roots
+ok 157 - checked-in integer rotation identities and bounded square roots
+  ---
+  duration_ms: 0.969708
+  type: 'test'
+  ...
+# Subtest: all twelve bilingual courses and both criteria sets validate; older assisted model remains distinct
+ok 158 - all twelve bilingual courses and both criteria sets validate; older assisted model remains distinct
+  ---
+  duration_ms: 1.635125
+  type: 'test'
+  ...
+# Subtest: manual throttle produces thrust, gravity and momentum; neutral attitude never silently holds position
+ok 159 - manual throttle produces thrust, gravity and momentum; neutral attitude never silently holds position
+  ---
+  duration_ms: 5.789667
+  type: 'test'
+  ...
+# Subtest: Self-level centres attitude while Acro keeps tilt; both retain translation
+ok 160 - Self-level centres attitude while Acro keeps tilt; both retain translation
+  ---
+  duration_ms: 6.285834
+  type: 'test'
+  ...
+# Subtest: swept gate detects directed crossings between steps with inclusive boundaries at ±1 unit
+ok 161 - swept gate detects directed crossings between steps with inclusive boundaries at ±1 unit
+  ---
+  duration_ms: 0.24375
+  type: 'test'
+  ...
+# Subtest: holds require consecutive ticks and pause never integrates or catches up
+ok 162 - holds require consecutive ticks and pause never integrates or catches up
+  ---
+  duration_ms: 1.121584
+  type: 'test'
+  ...
+# Subtest: fixed-width proof round trips exact state and rejects mode/course/response/continuation tampering
+ok 163 - fixed-width proof round trips exact state and rejects mode/course/response/continuation tampering
+  ---
+  duration_ms: 15.942
+  type: 'test'
+  ...
+# Subtest: continuously changing input recording fits the longest attempt with explicit overflow, never truncation
+ok 164 - continuously changing input recording fits the longest attempt with explicit overflow, never truncation
+  ---
+  duration_ms: 28.717083
+  type: 'test'
+  ...
+# Subtest: every published Academy demonstration keeps its exact legacy identity and completion
+ok 165 - every published Academy demonstration keeps its exact legacy identity and completion
+  ---
+  duration_ms: 354.536833
+  type: 'test'
+  ...
+# Subtest: Academy Acro commands full supported rates and records an immutable response for replay
+ok 166 - Academy Acro commands full supported rates and records an immutable response for replay
+  ---
+  duration_ms: 2.90925
+  type: 'test'
+  ...
+# Subtest: maximum coupled rates remain bounded and deterministic through a full-duration changing-input flight
+ok 167 - maximum coupled rates remain bounded and deterministic through a full-duration changing-input flight
+  ---
+  duration_ms: 614.825167
+  type: 'test'
+  ...
+# Subtest: World ghosts compare personal rotation profiles but replay each frozen configuration exactly
+ok 168 - World ghosts compare personal rotation profiles but replay each frozen configuration exactly
+  ---
+  duration_ms: 38.7305
+  type: 'test'
+  ...
+# Subtest: comparison classes keep throttle, assists, physical response, mode, and world constraints
+ok 169 - comparison classes keep throttle, assists, physical response, mode, and world constraints
+  ---
+  duration_ms: 4.952125
+  type: 'test'
+  ...
+# Subtest: legacy comparisons remain exact and cannot be upgraded by an imported metadata field
+ok 170 - legacy comparisons remain exact and cannot be upgraded by an imported metadata field
+  ---
+  duration_ms: 1.48725
+  type: 'test'
+  ...
+# Subtest: forged comparison labels do not let a different throttle configuration enter a class
+ok 171 - forged comparison labels do not let a different throttle configuration enter a class
+  ---
+  duration_ms: 0.608625
+  type: 'test'
+  ...
+# Subtest: SIM world selection freezes on first arm and applies queued preference only on reset
+ok 172 - SIM world selection freezes on first arm and applies queued preference only on reset
+  ---
+  duration_ms: 135.655958
+  type: 'test'
+  ...
+# Subtest: a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+ok 173 - a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+  ---
+  duration_ms: 72.175958
+  type: 'test'
+  ...
+# Subtest: unavailable recorded appearance remains visible after graphics preparation without altering its proof
+ok 174 - unavailable recorded appearance remains visible after graphics preparation without altering its proof
+  ---
+  duration_ms: 87.447334
+  type: 'test'
+  ...
+# Subtest: native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+ok 175 - native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+  ---
+  duration_ms: 282.972
+  type: 'test'
+  ...
+# Subtest: synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+ok 176 - synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+  ---
+  duration_ms: 2143.920917
+  type: 'test'
+  ...
+# Subtest: radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+ok 177 - radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+  ---
+  duration_ms: 145.185
+  type: 'test'
+  ...
+# Subtest: immediate Retry preserves the completed proof while notebook verification yields
+ok 178 - immediate Retry preserves the completed proof while notebook verification yields
+  ---
+  duration_ms: 763.677375
+  type: 'test'
+  ...
+# Subtest: Controls camera chooser and toolbar stay synchronized for the narrow layout
+ok 179 - Controls camera chooser and toolbar stay synchronized for the narrow layout
+  ---
+  duration_ms: 67.479792
+  type: 'test'
+  ...
+# Subtest: Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+ok 180 - Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+  ---
+  duration_ms: 590.519708
+  type: 'test'
+  ...
+# Subtest: radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+ok 181 - radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+  ---
+  duration_ms: 111.020333
+  type: 'test'
+  ...
+# Subtest: graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+ok 182 - graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+  ---
+  duration_ms: 174.669416
+  type: 'test'
+  ...
+# Subtest: replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+ok 183 - replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+  ---
+  duration_ms: 114.947041
+  type: 'test'
+  ...
+# Subtest: Academy shared menu resumes paused playback without restarting or granting practice evidence
+ok 184 - Academy shared menu resumes paused playback without restarting or granting practice evidence
+  ---
+  duration_ms: 153.691667
+  type: 'test'
+  ...
+# Subtest: Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+ok 185 - Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+  ---
+  duration_ms: 140.900958
+  type: 'test'
+  ...
+# Subtest: touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+ok 186 - touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+  ---
+  duration_ms: 0.439667
+  type: 'test'
+  ...
+# Subtest: input diagnostics retain raw touch and controller values separately from shaping and never invent hardware cadence
+ok 187 - input diagnostics retain raw touch and controller values separately from shaping and never invent hardware cadence
+  ---
+  duration_ms: 0.375833
+  type: 'test'
+  ...
+# Subtest: committed diagnostics separate input owners, new attempts and a live radio preview from achieved flight response
+ok 188 - committed diagnostics separate input owners, new attempts and a live radio preview from achieved flight response
+  ---
+  duration_ms: 0.133083
+  type: 'test'
+  ...
+# Subtest: full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+ok 189 - full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+  ---
+  duration_ms: 937.609542
+  type: 'test'
+  ...
+# Subtest: pending review aborts on reset, input change, dialog close and disposal without late playback
+ok 190 - pending review aborts on reset, input change, dialog close and disposal without late playback
+  ---
+  duration_ms: 291.815709
+  type: 'test'
+  ...
+# Subtest: closing a replay import during file reading prevents verification and late playback
+ok 191 - closing a replay import during file reading prevents verification and late playback
+  ---
+  duration_ms: 67.164458
+  type: 'test'
+  ...
+# Subtest: actual renderer detects unavailable WebGL without allocating a running fallback simulation
+ok 192 - actual renderer detects unavailable WebGL without allocating a running fallback simulation
+  ---
+  duration_ms: 0.905417
+  type: 'test'
+  ...
+# Subtest: disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+ok 193 - disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+  ---
+  duration_ms: 65.485334
+  type: 'test'
+  ...
+# Subtest: stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+ok 194 - stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+  ---
+  duration_ms: 432.737542
+  type: 'test'
+  ...
+# Subtest: cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+ok 195 - cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+  ---
+  duration_ms: 79.09275
+  type: 'test'
+  ...
+# Subtest: cached radio restore requires a fresh arm edge and matching control pickup
+ok 196 - cached radio restore requires a fresh arm edge and matching control pickup
+  ---
+  duration_ms: 97.173541
+  type: 'test'
+  ...
+# Subtest: game return keeps scoped offline controls available and serializes preparation/removal
+ok 197 - game return keeps scoped offline controls available and serializes preparation/removal
+  ---
+  duration_ms: 70.703917
+  type: 'test'
+  ...
+# Subtest: disposing Academy cancels an owned offline verification and releases its progress panel
+ok 198 - disposing Academy cancels an owned offline verification and releases its progress panel
+  ---
+  duration_ms: 60.079417
+  type: 'test'
+  ...
+# Subtest: unavailable offline capability stays explanatory and a failed prepare never reports ready
+ok 199 - unavailable offline capability stays explanatory and a failed prepare never reports ready
+  ---
+  duration_ms: 142.253875
+  type: 'test'
+  ...
+# Subtest: ordinary unload disposes permanently and a late pageshow cannot revive it
+ok 200 - ordinary unload disposes permanently and a late pageshow cannot revive it
+  ---
+  duration_ms: 52.151792
+  type: 'test'
+  ...
+# Subtest: selecting USB radio restores saved axis arm and button reset after reload
+ok 201 - selecting USB radio restores saved axis arm and button reset after reload
+  ---
+  duration_ms: 100.02275
+  type: 'test'
+  ...
+# Subtest: tested TX15 default loads without saved calibration and does not auto-arm
+ok 202 - tested TX15 default loads without saved calibration and does not auto-arm
+  ---
+  duration_ms: 77.130417
+  type: 'test'
+  ...
+# Subtest: TX15 default does not match an unrelated joystick
+ok 203 - TX15 default does not match an unrelated joystick
+  ---
+  duration_ms: 70.494917
+  type: 'test'
+  ...
+# Subtest: camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+ok 204 - camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+  ---
+  duration_ms: 570.450292
+  type: 'test'
+  ...
+# Subtest: pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+ok 205 - pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+  ---
+  duration_ms: 0.410542
+  type: 'test'
+  ...
+# Subtest: Academy title focus loss before flight initialization keeps the menu usable and disarmed
+ok 206 - Academy title focus loss before flight initialization keeps the menu usable and disarmed
+  ---
+  duration_ms: 76.358834
+  type: 'test'
+  ...
+# Subtest: Academy shell keeps menu input out of native flight and requires explicit Start
+ok 207 - Academy shell keeps menu input out of native flight and requires explicit Start
+  ---
+  duration_ms: 97.8715
+  type: 'test'
+  ...
+# Subtest: Academy native tool dialogs retain instructions across blur and focus
+    # Subtest: help-dialog
+    ok 1 - help-dialog
+      ---
+      duration_ms: 86.268334
+      type: 'test'
+      ...
+    # Subtest: notebook-dialog
+    ok 2 - notebook-dialog
+      ---
+      duration_ms: 83.39075
+      type: 'test'
+      ...
+    1..2
+ok 208 - Academy native tool dialogs retain instructions across blur and focus
+  ---
+  duration_ms: 169.9115
+  type: 'test'
+  ...
+# Subtest: Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 209 - Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 139.000834
+  type: 'test'
+  ...
+# Subtest: Academy categories retain every authored preference control and restore nested dialog focus
+ok 210 - Academy categories retain every authored preference control and restore nested dialog focus
+  ---
+  duration_ms: 113.215583
+  type: 'test'
+  ...
+# Subtest: Academy global settings bind canonical records without startup writes or duplicate fields
+ok 211 - Academy global settings bind canonical records without startup writes or duplicate fields
+  ---
+  duration_ms: 184.619541
+  type: 'test'
+  ...
+# Subtest: Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+ok 212 - Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+  ---
+  duration_ms: 122.381792
+  type: 'test'
+  ...
+# Subtest: fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+ok 213 - fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+  ---
+  duration_ms: 69.164958
+  type: 'test'
+  ...
+# Subtest: Academy flight feedback and shared menu sound retain separate sliders and preference records
+ok 214 - Academy flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 60.341584
+  type: 'test'
+  ...
+# Subtest: Academy result shortcuts choose once and launch a random prepared lesson directly
+ok 215 - Academy result shortcuts choose once and launch a random prepared lesson directly
+  ---
+  duration_ms: 82.57425
+  type: 'test'
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled animation timestamp
+ok 216 - Academy cancels an imminent auto-next before a stalled animation timestamp
+  ---
+  duration_ms: 1464.126333
+  type: 'test'
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled callback execution
+ok 217 - Academy cancels an imminent auto-next before a stalled callback execution
+  ---
+  duration_ms: 1511.208584
+  type: 'test'
+  ...
+# Subtest: Academy shared library shows every course, previews the selected flight mode, and launches once
+ok 218 - Academy shared library shows every course, previews the selected flight mode, and launches once
+  ---
+  duration_ms: 96.490209
+  type: 'test'
+  ...
+# Subtest: Academy mission library owns controller navigation and isolated pinned goals
+ok 219 - Academy mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 103.40225
+  type: 'test'
+  ...
+# Subtest: Academy tuning diagnostics follow keyboard ownership with a different calibrated radio connected
+ok 220 - Academy tuning diagnostics follow keyboard ownership with a different calibrated radio connected
+  ---
+  duration_ms: 144.878042
+  type: 'test'
+  ...
+# Subtest: Academy tuning diagnostics follow touch ownership with a different calibrated radio connected
+ok 221 - Academy tuning diagnostics follow touch ownership with a different calibrated radio connected
+  ---
+  duration_ms: 156.531708
+  type: 'test'
+  ...
+# Subtest: Academy tuning diagnostics follow controller ownership with a different calibrated radio connected
+ok 222 - Academy tuning diagnostics follow controller ownership with a different calibrated radio connected
+  ---
+  duration_ms: 145.507792
+  type: 'test'
+  ...
+# Subtest: Academy tuning diagnostics follow radio ownership with a different calibrated radio connected
+ok 223 - Academy tuning diagnostics follow radio ownership with a different calibrated radio connected
+  ---
+  duration_ms: 140.961583
+  type: 'test'
+  ...
+# Subtest: Academy tuning saves new rates for reset while the active recording retains its frozen legacy configuration
+ok 224 - Academy tuning saves new rates for reset while the active recording retains its frozen legacy configuration
+  ---
+  duration_ms: 101.985
+  type: 'test'
+  ...
+# Subtest: Academy draft flight is unscored, cannot export a recording, and returns to its unchanged editor draft
+ok 225 - Academy draft flight is unscored, cannot export a recording, and returns to its unchanged editor draft
+  ---
+  duration_ms: 109.786417
+  type: 'test'
+  ...
+# Subtest: Academy tuning owns menu navigation and Back closes it before the underlying settings
+ok 226 - Academy tuning owns menu navigation and Back closes it before the underlying settings
+  ---
+  duration_ms: 108.1515
+  type: 'test'
+  ...
+# Subtest: Academy tuning keeps its hint through pointer blur and releases it after closing
+ok 227 - Academy tuning keeps its hint through pointer blur and releases it after closing
+  ---
+  duration_ms: 75.875875
+  type: 'test'
+  ...
+# Subtest: Academy captures legacy camera before its first tuning configuration
+ok 228 - Academy captures legacy camera before its first tuning configuration
+  ---
+  duration_ms: 69.54025
+  type: 'test'
+  ...
+# Subtest: Academy captures saved drone camera before its first tuning configuration
+ok 229 - Academy captures saved drone camera before its first tuning configuration
+  ---
+  duration_ms: 68.826959
+  type: 'test'
+  ...
+# Subtest: Academy captures unreadable camera before its first tuning configuration
+ok 230 - Academy captures unreadable camera before its first tuning configuration
+  ---
+  duration_ms: 72.013125
+  type: 'test'
+  ...
+# Subtest: Academy captures missing camera before its first tuning configuration
+ok 231 - Academy captures missing camera before its first tuning configuration
+  ---
+  duration_ms: 70.712875
+  type: 'test'
+  ...
+# Subtest: flight attempts reverify before persistence, reject demonstration or completion flags and isolate transcript records
+ok 232 - flight attempts reverify before persistence, reject demonstration or completion flags and isolate transcript records
+  ---
+  duration_ms: 30.905125
+  type: 'test'
+  ...
+# Subtest: completed tuned flights keep comparison metadata in proofs while granting and restoring Academy rewards
+ok 233 - completed tuned flights keep comparison metadata in proofs while granting and restoring Academy rewards
+  ---
+  duration_ms: 61.681125
+  type: 'test'
+  ...
+# Subtest: flight finale remains locked at 11/12 and repeats never substitute; twelve Acro is separate
+ok 234 - flight finale remains locked at 11/12 and repeats never substitute; twelve Acro is separate
+  ---
+  duration_ms: 647.547167
+  type: 'test'
+  ...
+# Subtest: whole transfer verifies before granting any reward and failed saves remain explicitly recoverable
+ok 235 - whole transfer verifies before granting any reward and failed saves remain explicitly recoverable
+  ---
+  duration_ms: 21.590208
+  type: 'test'
+  ...
+# Subtest: studio bundle round trip retains exact criteria, source text, verified demonstration and typed rewards
+ok 236 - studio bundle round trip retains exact criteria, source text, verified demonstration and typed rewards
+  ---
+  duration_ms: 10.15675
+  type: 'test'
+  ...
+# Subtest: changed mode recomputes outcome, response changes require exact identity and proof digest pins every frame
+ok 237 - changed mode recomputes outcome, response changes require exact identity and proof digest pins every frame
+  ---
+  duration_ms: 16.947542
+  type: 'test'
+  ...
+# Subtest: accepted flight return data cannot mutate later proof exports or verified projections
+ok 238 - accepted flight return data cannot mutate later proof exports or verified projections
+  ---
+  duration_ms: 9.457375
+  type: 'test'
+  ...
+# Subtest: flight archive accepts a repeated proof at capacity but rejects a new one before mutation
+ok 239 - flight archive accepts a repeated proof at capacity but rejects a new one before mutation
+  ---
+  duration_ms: 24.980291
+  type: 'test'
+  ...
+# Subtest: explicit retry revalidates a temporarily unreadable index and persists session-only verified work
+ok 240 - explicit retry revalidates a temporarily unreadable index and persists session-only verified work
+  ---
+  duration_ms: 9.799292
+  type: 'test'
+  ...
+# Subtest: missing exact proof keeps a recovery warning while its previously earned discovery is preserved
+ok 241 - missing exact proof keeps a recovery warning while its previously earned discovery is preserved
+  ---
+  duration_ms: 58.083792
+  type: 'test'
+  ...
+# Subtest: notebook close cancels initial hydration before ready and rejects queued or later evidence work
+ok 242 - notebook close cancels initial hydration before ready and rejects queued or later evidence work
+  ---
+  duration_ms: 3.493459
+  type: 'test'
+  ...
+# Subtest: notebook forwards explicit import cancellation without a receipt or proof write
+ok 243 - notebook forwards explicit import cancellation without a receipt or proof write
+  ---
+  duration_ms: 20.155708
+  type: 'test'
+  ...
+# Subtest: offline actions serialize button intent and retain the invoking dialog owner
+ok 244 - offline actions serialize button intent and retain the invoking dialog owner
+  ---
+  duration_ms: 7.386583
+  type: 'test'
+  ...
+# Subtest: native offload uses only the runtime remover and retains world and proof data
+ok 245 - native offload uses only the runtime remover and retains world and proof data
+  ---
+  duration_ms: 7.275166
+  type: 'test'
+  ...
+# Subtest: unavailable workers disable both native controls without invoking operations
+ok 246 - unavailable workers disable both native controls without invoking operations
+  ---
+  duration_ms: 0.40325
+  type: 'test'
+  ...
+# Subtest: disposal aborts the download and a late success cannot repaint the removed host
+ok 247 - disposal aborts the download and a late success cannot repaint the removed host
+  ---
+  duration_ms: 0.154208
+  type: 'test'
+  ...
+# Subtest: pagehide cancels preparation, reports cancellation and releases busy ownership
+ok 248 - pagehide cancels preparation, reports cancellation and releases busy ownership
+  ---
+  duration_ms: 7.024792
+  type: 'test'
+  ...
+# Subtest: failed removal remains retryable and never reports a removed installation
+ok 249 - failed removal remains retryable and never reports a removed installation
+  ---
+  duration_ms: 6.626958
+  type: 'test'
+  ...
+# Subtest: reordered unmapped radio, reversed pitch and full noncentring throttle normalize independently of stick diagram
+ok 250 - reordered unmapped radio, reversed pitch and full noncentring throttle normalize independently of stick diagram
+  ---
+  duration_ms: 1.346875
+  type: 'test'
+  ...
+# Subtest: asymmetric centres and deadzones calibrate without a hidden response curve
+ok 251 - asymmetric centres and deadzones calibrate without a hidden response curve
+  ---
+  duration_ms: 0.339209
+  type: 'test'
+  ...
+# Subtest: bounded imports reject duplicate channels, malformed counts, incomplete calibration, unknown fields and nonfinite input
+ok 252 - bounded imports reject duplicate channels, malformed counts, incomplete calibration, unknown fields and nonfinite input
+  ---
+  duration_ms: 1.445209
+  type: 'test'
+  ...
+# Subtest: response profiles use an explicit bounded integer cubic blend and round trip
+ok 253 - response profiles use an explicit bounded integer cubic blend and round trip
+  ---
+  duration_ms: 0.275666
+  type: 'test'
+  ...
+# Subtest: diagnostics discard invalid samples and cadence restarts after missing input
+ok 254 - diagnostics discard invalid samples and cadence restarts after missing input
+  ---
+  duration_ms: 0.487917
+  type: 'test'
+  ...
+# Subtest: arming explains high throttle and neutral attitude requirements; held timestamps remain valid
+ok 255 - arming explains high throttle and neutral attitude requirements; held timestamps remain valid
+  ---
+  duration_ms: 0.853792
+  type: 'test'
+  ...
+# Subtest: same-slot replacement and disconnect clear input; reappearance requires explicit verification and arm
+ok 256 - same-slot replacement and disconnect clear input; reappearance requires explicit verification and arm
+  ---
+  duration_ms: 0.2795
+  type: 'test'
+  ...
+# Subtest: airborne pause requires pickup at previous controls, not low throttle; reset clears pickup
+ok 257 - airborne pause requires pickup at previous controls, not low throttle; reset clears pickup
+  ---
+  duration_ms: 0.190209
+  type: 'test'
+  ...
+# Subtest: latched arm starts OFF, needs fresh OFF→ON after focus loss and cannot reconnect armed
+ok 258 - latched arm starts OFF, needs fresh OFF→ON after focus loss and cannot reconnect armed
+  ---
+  duration_ms: 0.431708
+  type: 'test'
+  ...
+# Subtest: calibration profile replacement invalidates verification; malformed or throwing browser API is diagnosable
+ok 259 - calibration profile replacement invalidates verification; malformed or throwing browser API is diagnosable
+  ---
+  duration_ms: 0.465833
+  type: 'test'
+  ...
+# Subtest: profiles have validated export/import and failed writes are visible session-only without changing Journey
+ok 260 - profiles have validated export/import and failed writes are visible session-only without changing Journey
+  ---
+  duration_ms: 3.31575
+  type: 'test'
+  ...
+# Subtest: calibration-only imports validate but preserve the legacy response used by future tuning migration
+ok 261 - calibration-only imports validate but preserve the legacy response used by future tuning migration
+  ---
+  duration_ms: 5.285792
+  type: 'test'
+  ...
+# Subtest: a failed calibration-only save retains response and persisted bytes while reporting session-only calibration
+ok 262 - a failed calibration-only save retains response and persisted bytes while reporting session-only calibration
+  ---
+  duration_ms: 1.399167
+  type: 'test'
+  ...
+# Subtest: radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge
+ok 263 - radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge
+  ---
+  duration_ms: 0.408583
+  type: 'test'
+  ...
+# Subtest: v2 axis switches preserve v1 calibration, reject flight-axis overlap and require fresh arming
+ok 264 - v2 axis switches preserve v1 calibration, reject flight-axis overlap and require fresh arming
+  ---
+  duration_ms: 0.569125
+  type: 'test'
+  ...
+# Subtest: all five pinned firmware versions have independently compiled numerical references
+ok 265 - all five pinned firmware versions have independently compiled numerical references
+  ---
+  duration_ms: 0.83125
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 1: actual, Quick expo false
+ok 266 - tagged C reference rate sweep 1: actual, Quick expo false
+  ---
+  duration_ms: 1.122583
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 2: actual, Quick expo false
+ok 267 - tagged C reference rate sweep 2: actual, Quick expo false
+  ---
+  duration_ms: 0.561334
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 3: actual, Quick expo false
+ok 268 - tagged C reference rate sweep 3: actual, Quick expo false
+  ---
+  duration_ms: 0.506084
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 4: actual, Quick expo false
+ok 269 - tagged C reference rate sweep 4: actual, Quick expo false
+  ---
+  duration_ms: 0.3445
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 5: betaflight, Quick expo false
+ok 270 - tagged C reference rate sweep 5: betaflight, Quick expo false
+  ---
+  duration_ms: 0.45225
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 6: betaflight, Quick expo false
+ok 271 - tagged C reference rate sweep 6: betaflight, Quick expo false
+  ---
+  duration_ms: 0.420875
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 7: betaflight, Quick expo false
+ok 272 - tagged C reference rate sweep 7: betaflight, Quick expo false
+  ---
+  duration_ms: 0.428292
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 8: betaflight, Quick expo false
+ok 273 - tagged C reference rate sweep 8: betaflight, Quick expo false
+  ---
+  duration_ms: 0.598209
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 9: quick, Quick expo false
+ok 274 - tagged C reference rate sweep 9: quick, Quick expo false
+  ---
+  duration_ms: 0.65775
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 10: quick, Quick expo true
+ok 275 - tagged C reference rate sweep 10: quick, Quick expo true
+  ---
+  duration_ms: 0.482708
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 11: quick, Quick expo false
+ok 276 - tagged C reference rate sweep 11: quick, Quick expo false
+  ---
+  duration_ms: 0.4515
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 12: quick, Quick expo true
+ok 277 - tagged C reference rate sweep 12: quick, Quick expo true
+  ---
+  duration_ms: 0.510708
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 13: quick, Quick expo false
+ok 278 - tagged C reference rate sweep 13: quick, Quick expo false
+  ---
+  duration_ms: 2.687291
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 14: quick, Quick expo true
+ok 279 - tagged C reference rate sweep 14: quick, Quick expo true
+  ---
+  duration_ms: 0.212333
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 15: quick, Quick expo false
+ok 280 - tagged C reference rate sweep 15: quick, Quick expo false
+  ---
+  duration_ms: 0.413042
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 16: quick, Quick expo true
+ok 281 - tagged C reference rate sweep 16: quick, Quick expo true
+  ---
+  duration_ms: 0.409375
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 17: kiss, Quick expo false
+ok 282 - tagged C reference rate sweep 17: kiss, Quick expo false
+  ---
+  duration_ms: 0.365292
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 18: kiss, Quick expo false
+ok 283 - tagged C reference rate sweep 18: kiss, Quick expo false
+  ---
+  duration_ms: 0.40225
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 19: kiss, Quick expo false
+ok 284 - tagged C reference rate sweep 19: kiss, Quick expo false
+  ---
+  duration_ms: 0.295334
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 20: kiss, Quick expo false
+ok 285 - tagged C reference rate sweep 20: kiss, Quick expo false
+  ---
+  duration_ms: 0.307625
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 21: raceflight, Quick expo false
+ok 286 - tagged C reference rate sweep 21: raceflight, Quick expo false
+  ---
+  duration_ms: 0.315042
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 22: raceflight, Quick expo false
+ok 287 - tagged C reference rate sweep 22: raceflight, Quick expo false
+  ---
+  duration_ms: 0.305333
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 23: raceflight, Quick expo false
+ok 288 - tagged C reference rate sweep 23: raceflight, Quick expo false
+  ---
+  duration_ms: 0.309375
+  type: 'test'
+  ...
+# Subtest: tagged C reference rate sweep 24: raceflight, Quick expo false
+ok 289 - tagged C reference rate sweep 24: raceflight, Quick expo false
+  ---
+  duration_ms: 0.362125
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-4.5, mid 50, expo 0, hover 50
+ok 290 - tagged C reference throttle sweep: betaflight-4.5, mid 50, expo 0, hover 50
+  ---
+  duration_ms: 0.420792
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-4.5, mid 35, expo 65, hover 30
+ok 291 - tagged C reference throttle sweep: betaflight-4.5, mid 35, expo 65, hover 30
+  ---
+  duration_ms: 0.199667
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-4.5, mid 0, expo 100, hover 0
+ok 292 - tagged C reference throttle sweep: betaflight-4.5, mid 0, expo 100, hover 0
+  ---
+  duration_ms: 0.189584
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-4.5, mid 99, expo 80, hover 80
+ok 293 - tagged C reference throttle sweep: betaflight-4.5, mid 99, expo 80, hover 80
+  ---
+  duration_ms: 0.208291
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-4.5, mid 50, expo 100, hover 50
+ok 294 - tagged C reference throttle sweep: betaflight-4.5, mid 50, expo 100, hover 50
+  ---
+  duration_ms: 0.187042
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-2025.12, mid 50, expo 0, hover 50
+ok 295 - tagged C reference throttle sweep: betaflight-2025.12, mid 50, expo 0, hover 50
+  ---
+  duration_ms: 0.187292
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-2025.12, mid 35, expo 65, hover 30
+ok 296 - tagged C reference throttle sweep: betaflight-2025.12, mid 35, expo 65, hover 30
+  ---
+  duration_ms: 0.219917
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-2025.12, mid 0, expo 100, hover 0
+ok 297 - tagged C reference throttle sweep: betaflight-2025.12, mid 0, expo 100, hover 0
+  ---
+  duration_ms: 0.237625
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-2025.12, mid 99, expo 80, hover 80
+ok 298 - tagged C reference throttle sweep: betaflight-2025.12, mid 99, expo 80, hover 80
+  ---
+  duration_ms: 0.186083
+  type: 'test'
+  ...
+# Subtest: tagged C reference throttle sweep: betaflight-2025.12, mid 50, expo 100, hover 50
+ok 299 - tagged C reference throttle sweep: betaflight-2025.12, mid 50, expo 100, hover 50
+  ---
+  duration_ms: 0.204083
+  type: 'test'
+  ...
+# Subtest: defaults are Actual, retain native CLI units, and impose no legacy 720 degrees/s ceiling
+ok 300 - defaults are Actual, retain native CLI units, and impose no legacy 720 degrees/s ceiling
+  ---
+  duration_ms: 0.20675
+  type: 'test'
+  ...
+# Subtest: each axis uses its own parameters and limit; calibrated input receives no hidden deadband
+ok 301 - each axis uses its own parameters and limit; calibrated input receives no hidden deadband
+  ---
+  duration_ms: 0.110958
+  type: 'test'
+  ...
+# Subtest: Quick exposes both distinct expo modes and clamps maximum below center without dividing by zero
+ok 302 - Quick exposes both distinct expo modes and clamps maximum below center without dividing by zero
+  ---
+  duration_ms: 0.17475
+  type: 'test'
+  ...
+# Subtest: throttle limiting follows curve shaping and distinguishes scale, clip and off
+ok 303 - throttle limiting follows curve shaping and distinguishes scale, clip and off
+  ---
+  duration_ms: 0.288542
+  type: 'test'
+  ...
+# Subtest: versioned throttle preserves old midpoint meaning and supports new hover coordinate
+ok 304 - versioned throttle preserves old midpoint meaning and supports new hover coordinate
+  ---
+  duration_ms: 0.412459
+  type: 'test'
+  ...
+# Subtest: compiled evaluators own immutable values, so drafts cannot mutate an in-progress attempt
+ok 305 - compiled evaluators own immutable values, so drafts cannot mutate an in-progress attempt
+  ---
+  duration_ms: 0.415625
+  type: 'test'
+  ...
+# Subtest: validators reject ambiguous units, unsupported data and unsafe boundary values atomically
+ok 306 - validators reject ambiguous units, unsupported data and unsafe boundary values atomically
+  ---
+  duration_ms: 1.802084
+  type: 'test'
+  ...
+# Subtest: 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 307 - 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 1200.787
+  type: 'test'
+  ...
+# Subtest: 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 308 - 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 675.828875
+  type: 'test'
+  ...
+# Subtest: 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 309 - 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 1051.825167
+  type: 'test'
+  ...
+# Subtest: 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 310 - 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 618.215291
+  type: 'test'
+  ...
+# Subtest: changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+ok 311 - changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+  ---
+  duration_ms: 228.511125
+  type: 'test'
+  ...
+# Subtest: replay speed is localized and cannot change practice or start a replay by itself
+ok 312 - replay speed is localized and cannot change practice or start a replay by itself
+  ---
+  duration_ms: 178.061083
+  type: 'test'
+  ...
+# Subtest: Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+ok 313 - Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+  ---
+  duration_ms: 32.8565
+  type: 'test'
+  ...
+# Subtest: practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+ok 314 - practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+  ---
+  duration_ms: 5.860916
+  type: 'test'
+  ...
+# Subtest: Radio setup import, explicit verification and save retain switch threshold and inversion
+ok 315 - Radio setup import, explicit verification and save retain switch threshold and inversion
+  ---
+  duration_ms: 10.727959
+  type: 'test'
+  ...
+# Subtest: the separated radio editor imports RadioProfile.v1 without changing player rates or restarting
+ok 316 - the separated radio editor imports RadioProfile.v1 without changing player rates or restarting
+  ---
+  duration_ms: 4.977917
+  type: 'test'
+  ...
+# Subtest: the separated radio editor imports FlightProfiles.v1 without changing player rates or restarting
+ok 317 - the separated radio editor imports FlightProfiles.v1 without changing player rates or restarting
+  ---
+  duration_ms: 3.830709
+  type: 'test'
+  ...
+# Subtest: the separated radio editor imports FlightProfiles.v2 without changing player rates or restarting
+ok 318 - the separated radio editor imports FlightProfiles.v2 without changing player rates or restarting
+  ---
+  duration_ms: 3.5825
+  type: 'test'
+  ...
+# Subtest: a calibration backup leaves the unsaved tuning migration base unchanged after reload
+ok 319 - a calibration backup leaves the unsaved tuning migration base unchanged after reload
+  ---
+  duration_ms: 2.916583
+  type: 'test'
+  ...
+# Subtest: separated imports reject malformed ignored responses and report failed calibration storage without changing rates
+ok 320 - separated imports reject malformed ignored responses and report failed calibration storage without changing rates
+  ---
+  duration_ms: 4.996542
+  type: 'test'
+  ...
+# Subtest: the standalone legacy radio editor still applies a valid imported response explicitly
+ok 321 - the standalone legacy radio editor still applies a valid imported response explicitly
+  ---
+  duration_ms: 2.957333
+  type: 'test'
+  ...
+# Subtest: Acro notebook review chooses only evidence satisfying its mode rule
+ok 322 - Acro notebook review chooses only evidence satisfying its mode rule
+  ---
+  duration_ms: 29.869042
+  type: 'test'
+  ...
+# Subtest: a custom imported course remains selectable with its exact reward and demonstration slot
+ok 323 - a custom imported course remains selectable with its exact reward and demonstration slot
+  ---
+  duration_ms: 4.391666
+  type: 'test'
+  ...
+# Subtest: notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+ok 324 - notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+  ---
+  duration_ms: 8.819667
+  type: 'test'
+  ...
+# Subtest: migration preserves the existing response and camera without writing or replacing legacy storage
+ok 325 - migration preserves the existing response and camera without writing or replacing legacy storage
+  ---
+  duration_ms: 2.007584
+  type: 'test'
+  ...
+# Subtest: new Actual profiles, player default and complete per-drone overrides resolve independently
+ok 326 - new Actual profiles, player default and complete per-drone overrides resolve independently
+  ---
+  duration_ms: 3.497958
+  type: 'test'
+  ...
+# Subtest: shared edits update future resolutions, while a captured flight configuration remains immutable
+ok 327 - shared edits update future resolutions, while a captured flight configuration remains immutable
+  ---
+  duration_ms: 2.317875
+  type: 'test'
+  ...
+# Subtest: names, duplicate IDs and camera do not change simulation identity; bounded revision history can revert
+ok 328 - names, duplicate IDs and camera do not change simulation identity; bounded revision history can revert
+  ---
+  duration_ms: 34.187875
+  type: 'test'
+  ...
+# Subtest: deletion reassigns explicit users and the default atomically; a valid default always survives
+ok 329 - deletion reassigns explicit users and the default atomically; a valid default always survives
+  ---
+  duration_ms: 0.755167
+  type: 'test'
+  ...
+# Subtest: a single atomic edit saves rates, profile name, drone assignment and camera together
+ok 330 - a single atomic edit saves rates, profile name, drone assignment and camera together
+  ---
+  duration_ms: 0.571667
+  type: 'test'
+  ...
+# Subtest: drone creation and selection commit together and invalid submissions cannot replace an existing setup
+ok 331 - drone creation and selection commit together and invalid submissions cannot replace an existing setup
+  ---
+  duration_ms: 0.335791
+  type: 'test'
+  ...
+# Subtest: failed or stale drone creation preserves both saved setups and their selected identity
+ok 332 - failed or stale drone creation preserves both saved setups and their selected identity
+  ---
+  duration_ms: 0.4325
+  type: 'test'
+  ...
+# Subtest: stale tabs cannot overwrite saved changes and refresh does not resurrect removed entries
+ok 333 - stale tabs cannot overwrite saved changes and refresh does not resurrect removed entries
+  ---
+  duration_ms: 1.298167
+  type: 'test'
+  ...
+# Subtest: Web Locks serialize competing tabs while still rejecting a stale draft
+ok 334 - Web Locks serialize competing tabs while still rejecting a stale draft
+  ---
+  duration_ms: 0.655792
+  type: 'test'
+  ...
+# Subtest: storage read/write failures preserve the previous state and visibly report the failure
+ok 335 - storage read/write failures preserve the previous state and visibly report the failure
+  ---
+  duration_ms: 0.826833
+  type: 'test'
+  ...
+# Subtest: backup restore is validated, atomic, detached and uses a fresh local revision
+ok 336 - backup restore is validated, atomic, detached and uses a fresh local revision
+  ---
+  duration_ms: 1.746709
+  type: 'test'
+  ...
+# Subtest: corrupt saved bytes are retained until an explicit valid backup restore
+ok 337 - corrupt saved bytes are retained until an explicit valid backup restore
+  ---
+  duration_ms: 0.373542
+  type: 'test'
+  ...
+# Subtest: recovery still rejects stale corrupt bytes and preserves data if replacement storage fails
+ok 338 - recovery still rejects stale corrupt bytes and preserves data if replacement storage fails
+  ---
+  duration_ms: 0.509875
+  type: 'test'
+  ...
+# Subtest: profile/setup limits and referenced identities are validated before any write
+ok 339 - profile/setup limits and referenced identities are validated before any write
+  ---
+  duration_ms: 36.144708
+  type: 'test'
+  ...
+# Subtest: saved Advanced aircraft/controller remain detached across rate and camera edits and full backup restore
+ok 340 - saved Advanced aircraft/controller remain detached across rate and camera edits and full backup restore
+  ---
+  duration_ms: 3.301542
+  type: 'test'
+  ...
+# Subtest: invalid or incomplete Advanced backup setup rejects atomically without changing existing rates or camera
+ok 341 - invalid or incomplete Advanced backup setup rejects atomically without changing existing rates or camera
+  ---
+  duration_ms: 1.093958
+  type: 'test'
+  ...
+# Subtest: queued profile creation and updates snapshot caller-owned response objects before waiting for a Web Lock
+ok 342 - queued profile creation and updates snapshot caller-owned response objects before waiting for a Web Lock
+  ---
+  duration_ms: 0.70675
+  type: 'test'
+  ...
+# Subtest: queued drone creation selects the submitted snapshot and rejects a later competing write
+ok 343 - queued drone creation selects the submitted snapshot and rejects a later competing write
+  ---
+  duration_ms: 0.377541
+  type: 'test'
+  ...
+# Subtest: queued setup and combined editing saves retain submitted IDs, camera, assignment and Advanced values
+ok 344 - queued setup and combined editing saves retain submitted IDs, camera, assignment and Advanced values
+  ---
+  duration_ms: 0.933958
+  type: 'test'
+  ...
+# Subtest: queued restore already owns a validated snapshot and a competing revision still rejects
+ok 345 - queued restore already owns a validated snapshot and a competing revision still rejects
+  ---
+  duration_ms: 0.659083
+  type: 'test'
+  ...
+# Subtest: queued public APIs reject accessor-bearing payloads without running caller code or requesting a lock
+ok 346 - queued public APIs reject accessor-bearing payloads without running caller code or requesting a lock
+  ---
+  duration_ms: 0.781417
+  type: 'test'
+  ...
+# Subtest: resetting externally removed storage reuses the original detached migration settings
+ok 347 - resetting externally removed storage reuses the original detached migration settings
+  ---
+  duration_ms: 0.378292
+  type: 'test'
+  ...
+# Subtest: effective configuration fingerprints include Advanced physical tuning and exclude labels and camera
+ok 348 - effective configuration fingerprints include Advanced physical tuning and exclude labels and camera
+  ---
+  duration_ms: 1.014208
+  type: 'test'
+  ...
+# Subtest: import receipts survive rename, duplication, revision restore and backup without changing flight identity
+ok 349 - import receipts survive rename, duplication, revision restore and backup without changing flight identity
+  ---
+  duration_ms: 16.292166
+  type: 'test'
+  ...
+# Subtest: mismatched or future import receipts fail atomically and never enable ignored controller settings
+ok 350 - mismatched or future import receipts fail atomically and never enable ignored controller settings
+  ---
+  duration_ms: 3.206083
+  type: 'test'
+  ...
+# Subtest: queued provenance creation owns its receipt before waiting for a lock
+ok 351 - queued provenance creation owns its receipt before waiting for a lock
+  ---
+  duration_ms: 0.965542
+  type: 'test'
+  ...
+# Subtest: pointer opening restores focus to its trigger even when the browser did not focus it
+ok 352 - pointer opening restores focus to its trigger even when the browser did not focus it
+  ---
+  duration_ms: 10.169084
+  type: 'test'
+  ...
+# Subtest: native tuning downloads use JSON and inert CLI shares and retain text after cancellation
+ok 353 - native tuning downloads use JSON and inert CLI shares and retain text after cancellation
+  ---
+  duration_ms: 18.311166
+  type: 'test'
+  ...
+# Subtest: a pending export cannot duplicate or report its late failure into a reopened editor
+ok 354 - a pending export cannot duplicate or report its late failure into a reopened editor
+  ---
+  duration_ms: 3.445375
+  type: 'test'
+  ...
+# Subtest: algorithm drafts retain native values and linked roll/pitch edits keep yaw independent
+ok 355 - algorithm drafts retain native values and linked roll/pitch edits keep yaw independent
+  ---
+  duration_ms: 20.942583
+  type: 'test'
+  ...
+# Subtest: curve overlays, axis visibility and diagnostics show actual available measurements
+ok 356 - curve overlays, axis visibility and diagnostics show actual available measurements
+  ---
+  duration_ms: 3.110958
+  type: 'test'
+  ...
+# Subtest: save for next flight never invokes restart; apply and restart is a distinct explicit action
+ok 357 - save for next flight never invokes restart; apply and restart is a distinct explicit action
+  ---
+  duration_ms: 13.643167
+  type: 'test'
+  ...
+# Subtest: unscored draft test returns to the same numeric and camera draft, then reverts without saving
+ok 358 - unscored draft test returns to the same numeric and camera draft, then reverts without saving
+  ---
+  duration_ms: 9.690083
+  type: 'test'
+  ...
+# Subtest: drone drafts survive rate-profile changes, reopening and independent setup selection
+ok 359 - drone drafts survive rate-profile changes, reopening and independent setup selection
+  ---
+  duration_ms: 15.186375
+  type: 'test'
+  ...
+# Subtest: a retained drone draft cannot overwrite another tab and explicit refresh discards it
+ok 360 - a retained drone draft cannot overwrite another tab and explicit refresh discards it
+  ---
+  duration_ms: 3.031167
+  type: 'test'
+  ...
+# Subtest: Save drone assignment & camera rejects incomplete or out-of-range camera values before changing a flight or library
+ok 361 - Save drone assignment & camera rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 4.729583
+  type: 'test'
+  ...
+# Subtest: Save for next flight rejects incomplete or out-of-range camera values before changing a flight or library
+ok 362 - Save for next flight rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 18.569542
+  type: 'test'
+  ...
+# Subtest: Apply & restart rejects incomplete or out-of-range camera values before changing a flight or library
+ok 363 - Apply & restart rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 17.470625
+  type: 'test'
+  ...
+# Subtest: Duplicate drone setup rejects incomplete or out-of-range camera values before changing a flight or library
+ok 364 - Duplicate drone setup rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 3.218166
+  type: 'test'
+  ...
+# Subtest: Test draft · unscored rejects incomplete or out-of-range camera values before changing a flight or library
+ok 365 - Test draft · unscored rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 16.578583
+  type: 'test'
+  ...
+# Subtest: Advanced reference quad · experimental rejects incomplete or out-of-range camera values before changing a flight or library
+ok 366 - Advanced reference quad · experimental rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 16.991625
+  type: 'test'
+  ...
+# Subtest: incomplete camera text survives independent draft navigation and leaves rate exports available
+ok 367 - incomplete camera text survives independent draft navigation and leaves rate exports available
+  ---
+  duration_ms: 9.23425
+  type: 'test'
+  ...
+# Subtest: valid fractional camera migration, editing, testing and Advanced preview retain exact degrees
+ok 368 - valid fractional camera migration, editing, testing and Advanced preview retain exact degrees
+  ---
+  duration_ms: 13.643958
+  type: 'test'
+  ...
+# Subtest: actual numeric editing keeps partial text and commits representable units
+ok 369 - actual numeric editing keeps partial text and commits representable units
+  ---
+  duration_ms: 5.842542
+  type: 'test'
+  ...
+# Subtest: quick numeric editing keeps partial text and commits representable units
+ok 370 - quick numeric editing keeps partial text and commits representable units
+  ---
+  duration_ms: 6.19925
+  type: 'test'
+  ...
+# Subtest: betaflight numeric editing keeps partial text and commits representable units
+ok 371 - betaflight numeric editing keeps partial text and commits representable units
+  ---
+  duration_ms: 5.442833
+  type: 'test'
+  ...
+# Subtest: Save and Test commit pending numeric text, while blank values block stale-value saves
+ok 372 - Save and Test commit pending numeric text, while blank values block stale-value saves
+  ---
+  duration_ms: 9.128709
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive algorithm navigation and still block stale-value saves
+ok 373 - unfinished rates survive algorithm navigation and still block stale-value saves
+  ---
+  duration_ms: 11.296458
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive profile navigation and still block stale-value saves
+ok 374 - unfinished rates survive profile navigation and still block stale-value saves
+  ---
+  duration_ms: 7.747875
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive close navigation and still block stale-value saves
+ok 375 - unfinished rates survive close navigation and still block stale-value saves
+  ---
+  duration_ms: 7.885667
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive locale navigation and still block stale-value saves
+ok 376 - unfinished rates survive locale navigation and still block stale-value saves
+  ---
+  duration_ms: 8.657833
+  type: 'test'
+  ...
+# Subtest: unfinished rates survive throttle version navigation and still block stale-value saves
+ok 377 - unfinished rates survive throttle version navigation and still block stale-value saves
+  ---
+  duration_ms: 7.488959
+  type: 'test'
+  ...
+# Subtest: algorithm drafts retain invalid ranges and fractional pending units without crossing algorithms
+ok 378 - algorithm drafts retain invalid ranges and fractional pending units without crossing algorithms
+  ---
+  duration_ms: 5.966375
+  type: 'test'
+  ...
+# Subtest: unfinished throttle and assistance fields survive repaint while linked edits replace their peer text
+ok 379 - unfinished throttle and assistance fields survive repaint while linked edits replace their peer text
+  ---
+  duration_ms: 8.45875
+  type: 'test'
+  ...
+# Subtest: Revert draft explicitly replaces unfinished numeric drafts
+ok 380 - Revert draft explicitly replaces unfinished numeric drafts
+  ---
+  duration_ms: 13.474167
+  type: 'test'
+  ...
+# Subtest: Restore revision to draft explicitly replaces unfinished numeric drafts
+ok 381 - Restore revision to draft explicitly replaces unfinished numeric drafts
+  ---
+  duration_ms: 13.246375
+  type: 'test'
+  ...
+# Subtest: Preview import explicitly replaces unfinished numeric drafts
+ok 382 - Preview import explicitly replaces unfinished numeric drafts
+  ---
+  duration_ms: 22.3655
+  type: 'test'
+  ...
+# Subtest: committing untouched linked axes preserves unequal rates and a pending pitch edit wins
+ok 383 - committing untouched linked axes preserves unequal rates and a pending pitch edit wins
+  ---
+  duration_ms: 15.810458
+  type: 'test'
+  ...
+# Subtest: import preview creates a new profile only on save and assignment remains explicit
+ok 384 - import preview creates a new profile only on save and assignment remains explicit
+  ---
+  duration_ms: 17.436292
+  type: 'test'
+  ...
+# Subtest: malformed import or changed input invalidates an earlier preview and cannot create a profile
+ok 385 - malformed import or changed input invalidates an earlier preview and cannot create a profile
+  ---
+  duration_ms: 9.434708
+  type: 'test'
+  ...
+# Subtest: headerless CLI version selection and firmware-default baseline support deliberate imports
+ok 386 - headerless CLI version selection and firmware-default baseline support deliberate imports
+  ---
+  duration_ms: 22.346292
+  type: 'test'
+  ...
+# Subtest: unsupported firmware headers invalidate a prior preview and cannot save against another version
+ok 387 - unsupported firmware headers invalidate a prior preview and cannot save against another version
+  ---
+  duration_ms: 20.877083
+  type: 'test'
+  ...
+# Subtest: shared profile users, name history and per-drone vertical camera values remain visible
+ok 388 - shared profile users, name history and per-drone vertical camera values remain visible
+  ---
+  duration_ms: 12.374708
+  type: 'test'
+  ...
+# Subtest: stale tab notification preserves the draft and a save cannot overwrite newer stored settings
+ok 389 - stale tab notification preserves the draft and a save cannot overwrite newer stored settings
+  ---
+  duration_ms: 9.310875
+  type: 'test'
+  ...
+# Subtest: Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation
+ok 390 - Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation
+  ---
+  duration_ms: 0.829875
+  type: 'test'
+  ...
+# Subtest: Apply and restart explicitly assigns an otherwise unassigned new profile to the current drone
+ok 391 - Apply and restart explicitly assigns an otherwise unassigned new profile to the current drone
+  ---
+  duration_ms: 6.278667
+  type: 'test'
+  ...
+# Subtest: local preset folder upload resolves official paths from firmware-presets and refreshes selected options
+ok 392 - local preset folder upload resolves official paths from firmware-presets and refreshes selected options
+  ---
+  duration_ms: 23.004333
+  type: 'test'
+  ...
+# Subtest: local preset folder upload resolves official paths from presets and refreshes selected options
+ok 393 - local preset folder upload resolves official paths from presets and refreshes selected options
+  ---
+  duration_ms: 21.445666
+  type: 'test'
+  ...
+# Subtest: changed preset options require resolution before preview/save (resolved text)
+ok 394 - changed preset options require resolution before preview/save (resolved text)
+  ---
+  duration_ms: 13.653875
+  type: 'test'
+  ...
+# Subtest: changed preset options require resolution before preview/save (existing preview)
+ok 395 - changed preset options require resolution before preview/save (existing preview)
+  ---
+  duration_ms: 19.883041
+  type: 'test'
+  ...
+# Subtest: choosing a different preset entry discards old option choices and controls
+ok 396 - choosing a different preset entry discards old option choices and controls
+  ---
+  duration_ms: 13.688791
+  type: 'test'
+  ...
+# Subtest: failed preset resolution cannot preview stale text, while deliberate pasted CLI replaces the preset
+ok 397 - failed preset resolution cannot preview stale text, while deliberate pasted CLI replaces the preset
+  ---
+  duration_ms: 12.327666
+  type: 'test'
+  ...
+# Subtest: failed drone selection restores the visible selection and retains drafts (quota)
+ok 398 - failed drone selection restores the visible selection and retains drafts (quota)
+  ---
+  duration_ms: 3.019583
+  type: 'test'
+  ...
+# Subtest: failed drone selection restores the visible selection and retains drafts (stale tab)
+ok 399 - failed drone selection restores the visible selection and retains drafts (stale tab)
+  ---
+  duration_ms: 2.763
+  type: 'test'
+  ...
+# Subtest: duplicating a drone creates and selects its draft in one storage write
+ok 400 - duplicating a drone creates and selects its draft in one storage write
+  ---
+  duration_ms: 2.097834
+  type: 'test'
+  ...
+# Subtest: failed drone duplication preserves the library and editable draft (quota)
+ok 401 - failed drone duplication preserves the library and editable draft (quota)
+  ---
+  duration_ms: 2.0445
+  type: 'test'
+  ...
+# Subtest: failed drone duplication preserves the library and editable draft (stale tab)
+ok 402 - failed drone duplication preserves the library and editable draft (stale tab)
+  ---
+  duration_ms: 1.512292
+  type: 'test'
+  ...
+# Subtest: failed drone duplication preserves the library and editable draft (invalid camera)
+ok 403 - failed drone duplication preserves the library and editable draft (invalid camera)
+  ---
+  duration_ms: 1.749625
+  type: 'test'
+  ...
+# Subtest: ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller
+ok 404 - ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller
+  ---
+  duration_ms: 8.675125
+  type: 'test'
+  ...
+# Subtest: a retained draft reopened after another tab edits the same profile cannot overwrite the newer revision
+ok 405 - a retained draft reopened after another tab edits the same profile cannot overwrite the newer revision
+  ---
+  duration_ms: 15.64275
+  type: 'test'
+  ...
+# Subtest: a save waiting for a browser lock keeps its click-time values and disables editing until completion
+ok 406 - a save waiting for a browser lock keeps its click-time values and disables editing until completion
+  ---
+  duration_ms: 6.524583
+  type: 'test'
+  ...
+# Subtest: an oversized upload invalidates an earlier successful import preview
+ok 407 - an oversized upload invalidates an earlier successful import preview
+  ---
+  duration_ms: 8.037
+  type: 'test'
+  ...
+# Subtest: an unreadable upload invalidates an earlier successful import preview
+ok 408 - an unreadable upload invalidates an earlier successful import preview
+  ---
+  duration_ms: 7.868834
+  type: 'test'
+  ...
+# Subtest: an earlier upload completing after a newer selection cannot replace its text
+ok 409 - an earlier upload completing after a newer selection cannot replace its text
+  ---
+  duration_ms: 10.945125
+  type: 'test'
+  ...
+# Subtest: an invalid preset folder selection clears an existing import preview immediately
+ok 410 - an invalid preset folder selection clears an existing import preview immediately
+  ---
+  duration_ms: 6.868583
+  type: 'test'
+  ...
+# Subtest: overlapping preset folder reads publish only the newest complete bundle
+ok 411 - overlapping preset folder reads publish only the newest complete bundle
+  ---
+  duration_ms: 11.783458
+  type: 'test'
+  ...
+# Subtest: switching locale updates accessible controls without changing numeric, name, camera or assignment drafts
+ok 412 - switching locale updates accessible controls without changing numeric, name, camera or assignment drafts
+  ---
+  duration_ms: 7.6855
+  type: 'test'
+  ...
+# Subtest: cancel while Apply waits for a browser lock never restarts a flight afterward
+ok 413 - cancel while Apply waits for a browser lock never restarts a flight afterward
+  ---
+  duration_ms: 5.48825
+  type: 'test'
+  ...
+# Subtest: close while Apply waits for a browser lock never restarts a flight afterward
+ok 414 - close while Apply waits for a browser lock never restarts a flight afterward
+  ---
+  duration_ms: 5.830459
+  type: 'test'
+  ...
+# Subtest: close-and-reopen while Apply waits for a browser lock never restarts a flight afterward
+ok 415 - close-and-reopen while Apply waits for a browser lock never restarts a flight afterward
+  ---
+  duration_ms: 6.277167
+  type: 'test'
+  ...
+# Subtest: closing a draft comparison retains the unscored return affordance until a normal flight starts
+ok 416 - closing a draft comparison retains the unscored return affordance until a normal flight starts
+  ---
+  duration_ms: 1.880791
+  type: 'test'
+  ...
+# Subtest: import receipt stays visible through save, duplicate, manual edit and revision restoration
+ok 417 - import receipt stays visible through save, duplicate, manual edit and revision restoration
+  ---
+  duration_ms: 27.433375
+  type: 'test'
+  ...
+# Subtest: restoring same-rate history cancels an earlier pending native import
+ok 418 - restoring same-rate history cancels an earlier pending native import
+  ---
+  duration_ms: 19.866
+  type: 'test'
+  ...
+# Subtest: restoring same-rate history cancels an earlier pending CLI import
+ok 419 - restoring same-rate history cancels an earlier pending CLI import
+  ---
+  duration_ms: 18.350834
+  type: 'test'
+  ...
+# Subtest: restoring history invalidates a completed same-rate preview and retains the restored receipt
+ok 420 - restoring history invalidates a completed same-rate preview and retains the restored receipt
+  ---
+  duration_ms: 29.006666
+  type: 'test'
+  ...
+# Subtest: uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization
+ok 421 - uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization
+  ---
+  duration_ms: 12.514875
+  type: 'test'
+  ...
+# Subtest: a delayed import source hash cannot publish after edit
+ok 422 - a delayed import source hash cannot publish after edit
+  ---
+  duration_ms: 1.9055
+  type: 'test'
+  ...
+# Subtest: a delayed import source hash cannot publish after reopen
+ok 423 - a delayed import source hash cannot publish after reopen
+  ---
+  duration_ms: 1.556
+  type: 'test'
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (blank)
+ok 424 - a pending native import cannot replace a newer numeric draft (blank)
+  ---
+  duration_ms: 12.61575
+  type: 'test'
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (905)
+ok 425 - a pending native import cannot replace a newer numeric draft (905)
+  ---
+  duration_ms: 12.661
+  type: 'test'
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (920)
+ok 426 - a pending native import cannot replace a newer numeric draft (920)
+  ---
+  duration_ms: 13.307709
+  type: 'test'
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (blank)
+ok 427 - a pending CLI import cannot replace a newer numeric draft (blank)
+  ---
+  duration_ms: 13.220625
+  type: 'test'
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (905)
+ok 428 - a pending CLI import cannot replace a newer numeric draft (905)
+  ---
+  duration_ms: 12.927583
+  type: 'test'
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (920)
+ok 429 - a pending CLI import cannot replace a newer numeric draft (920)
+  ---
+  duration_ms: 14.954208
+  type: 'test'
+  ...
+# Subtest: a cancelled pending import stays cancelled after algorithm round trip
+ok 430 - a cancelled pending import stays cancelled after algorithm round trip
+  ---
+  duration_ms: 3.424792
+  type: 'test'
+  ...
+# Subtest: a cancelled pending import stays cancelled after edit back to saved value
+ok 431 - a cancelled pending import stays cancelled after edit back to saved value
+  ---
+  duration_ms: 2.692792
+  type: 'test'
+  ...
+# Subtest: a cancelled pending import stays cancelled after revert
+ok 432 - a cancelled pending import stays cancelled after revert
+  ---
+  duration_ms: 2.781959
+  type: 'test'
+  ...
+# Subtest: saving an import rejects changed preview rates instead of replacing visible edits
+ok 433 - saving an import rejects changed preview rates instead of replacing visible edits
+  ---
+  duration_ms: 12.94925
+  type: 'test'
+  ...
+# Subtest: firmware-default patch preview accepts a verified file header without a manual version
+ok 434 - firmware-default patch preview accepts a verified file header without a manual version
+  ---
+  duration_ms: 11.647125
+  type: 'test'
+  ...
+# Subtest: rotation-only CLI export crosses throttle versions only after an explicit choice
+ok 435 - rotation-only CLI export crosses throttle versions only after an explicit choice
+  ---
+  duration_ms: 13.499375
+  type: 'test'
+  ...
+# Subtest: World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+ok 436 - World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+  ---
+  duration_ms: 3329.2325
+  type: 'test'
+  ...
+# Subtest: World random flight includes the active installed revision and excludes retained archived courses
+ok 437 - World random flight includes the active installed revision and excludes retained archived courses
+  ---
+  duration_ms: 417.174125
+  type: 'test'
+  ...
+# Subtest: World ordinary results offer a filtered random next flight through unarmed preparation
+ok 438 - World ordinary results offer a filtered random next flight through unarmed preparation
+  ---
+  duration_ms: 436.7675
+  type: 'test'
+  ...
+# Subtest: World disposal retires menu and renderer owners before their reparented controls disappear
+ok 439 - World disposal retires menu and renderer owners before their reparented controls disappear
+  ---
+  duration_ms: 244.644959
+  type: 'test'
+  ...
+# Subtest: World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+ok 440 - World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+  ---
+  duration_ms: 298.79825
+  type: 'test'
+  ...
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 441 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 628.952042
+  type: 'test'
+  ...
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 442 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 159.227375
+  type: 'test'
+  ...
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 443 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 233.341084
+  type: 'test'
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 444 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 219.0515
+  type: 'test'
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 445 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 215.77825
+  type: 'test'
+  ...
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 446 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 235.350917
+  type: 'test'
+  ...
+# Subtest: World title retains connected catalogue nodes and transfers the common bar into native flight
+ok 447 - World title retains connected catalogue nodes and transfers the common bar into native flight
+  ---
+  duration_ms: 301.030916
+  type: 'test'
+  ...
+# Subtest: World keyboard and native pause actions open the same shared menu without resuming on Back
+ok 448 - World keyboard and native pause actions open the same shared menu without resuming on Back
+  ---
+  duration_ms: 240.828167
+  type: 'test'
+  ...
+# Subtest: World language refresh preserves native mission ownership and menu phase without another animation frame
+ok 449 - World language refresh preserves native mission ownership and menu phase without another animation frame
+  ---
+  duration_ms: 420.968166
+  type: 'test'
+  ...
+# Subtest: World terminal preview offers Retry and prepares a fresh disarmed attempt
+ok 450 - World terminal preview offers Retry and prepares a fresh disarmed attempt
+  ---
+  duration_ms: 278.899458
+  type: 'test'
+  ...
+# Subtest: World native HUD details retain instructions across blur and focus
+ok 451 - World native HUD details retain instructions across blur and focus
+  ---
+  duration_ms: 240.546834
+  type: 'test'
+  ...
+# Subtest: World menu Back dismisses the visible surface without closing its paused native flight
+ok 452 - World menu Back dismisses the visible surface without closing its paused native flight
+  ---
+  duration_ms: 231.251417
+  type: 'test'
+  ...
+# Subtest: World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+ok 453 - World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+  ---
+  duration_ms: 253.2025
+  type: 'test'
+  ...
+# Subtest: World exhausted unfinished playback keeps native Results reachable without Continue
+ok 454 - World exhausted unfinished playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 290.517333
+  type: 'test'
+  ...
+# Subtest: World exhausted section playback keeps native Results reachable without Continue
+ok 455 - World exhausted section playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 299.990459
+  type: 'test'
+  ...
+# Subtest: native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+ok 456 - native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+  ---
+  duration_ms: 294.740541
+  type: 'test'
+  ...
+# Subtest: native host rejects changed retained source before replacing the active renderer
+ok 457 - native host rejects changed retained source before replacing the active renderer
+  ---
+  duration_ms: 240.309041
+  type: 'test'
+  ...
+# Subtest: Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+ok 458 - Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+  ---
+  duration_ms: 272.863542
+  type: 'test'
+  ...
+# Subtest: an explicit native mode change prepares a new mode pin while Retry keeps that pin
+ok 459 - an explicit native mode change prepares a new mode pin while Retry keeps that pin
+  ---
+  duration_ms: 336.954375
+  type: 'test'
+  ...
+# Subtest: World categories retain every authored preference and restore Home and Pause openers
+ok 460 - World categories retain every authored preference and restore Home and Pause openers
+  ---
+  duration_ms: 287.222291
+  type: 'test'
+  ...
+# Subtest: Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 461 - Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 440.799875
+  type: 'test'
+  ...
+# Subtest: World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+ok 462 - World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+  ---
+  duration_ms: 343.941459
+  type: 'test'
+  ...
+# Subtest: World Library records controller confirmation cannot activate backup or resume its paused flight
+ok 463 - World Library records controller confirmation cannot activate backup or resume its paused flight
+  ---
+  duration_ms: 420.922209
+  type: 'test'
+  ...
+# Subtest: World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+ok 464 - World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+  ---
+  duration_ms: 233.315541
+  type: 'test'
+  ...
+# Subtest: Worlds uses shared display and master settings ahead of old SIM-local preferences
+ok 465 - Worlds uses shared display and master settings ahead of old SIM-local preferences
+  ---
+  duration_ms: 238.511542
+  type: 'test'
+  ...
+# Subtest: World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+ok 466 - World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+  ---
+  duration_ms: 296.634834
+  type: 'test'
+  ...
+# Subtest: fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+ok 467 - fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+  ---
+  duration_ms: 279.244667
+  type: 'test'
+  ...
+# Subtest: World flight feedback and shared menu sound retain separate sliders and preference records
+ok 468 - World flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 236.313334
+  type: 'test'
+  ...
+# Subtest: World result shortcuts are immediately available while the result is being verified
+ok 469 - World result shortcuts are immediately available while the result is being verified
+  ---
+  duration_ms: 339.158125
+  type: 'test'
+  ...
+# Subtest: World defeat focuses Retry and verification preserves the connected action row and chosen focus
+ok 470 - World defeat focuses Retry and verification preserves the connected action row and chosen focus
+  ---
+  duration_ms: 332.008917
+  type: 'test'
+  ...
+# Subtest: World results embed one compact live statistics disclosure without replacing verified actions
+ok 471 - World results embed one compact live statistics disclosure without replacing verified actions
+  ---
+  duration_ms: 536.592875
+  type: 'test'
+  ...
+# Subtest: Worlds and School share one complete scrollable library with direct native launches
+ok 472 - Worlds and School share one complete scrollable library with direct native launches
+  ---
+  duration_ms: 586.042
+  type: 'test'
+  ...
+# Subtest: World route preview uses the selected Acro route and changes no course geometry
+ok 473 - World route preview uses the selected Acro route and changes no course geometry
+  ---
+  duration_ms: 239.721542
+  type: 'test'
+  ...
+# Subtest: World mission library owns controller navigation and isolated pinned goals
+ok 474 - World mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 349.14825
+  type: 'test'
+  ...
+# Subtest: World mission launch cannot steal Home focus after deferred scene preparation
+ok 475 - World mission launch cannot steal Home focus after deferred scene preparation
+  ---
+  duration_ms: 385.91175
+  type: 'test'
+  ...
+# Subtest: World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+ok 476 - World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+  ---
+  duration_ms: 168.808
+  type: 'test'
+  ...
+# Subtest: World shared chooser remains usable when native scene loading fails
+ok 477 - World shared chooser remains usable when native scene loading fails
+  ---
+  duration_ms: 391.644875
+  type: 'test'
+  ...
+# Subtest: World tuning retains the committed keyboard sample and never presents radio data for that owner
+ok 478 - World tuning retains the committed keyboard sample and never presents radio data for that owner
+  ---
+  duration_ms: 468.878375
+  type: 'test'
+  ...
+# Subtest: World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration
+ok 479 - World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration
+  ---
+  duration_ms: 355.2225
+  type: 'test'
+  ...
+# Subtest: World draft testing enters unscored free flight and returns to the unsaved camera and rate draft
+ok 480 - World draft testing enters unscored free flight and returns to the unsaved camera and rate draft
+  ---
+  duration_ms: 333.596708
+  type: 'test'
+  ...
+# Subtest: a normal World launch replaces the prior tuning-test origin
+ok 481 - a normal World launch replaces the prior tuning-test origin
+  ---
+  duration_ms: 359.870834
+  type: 'test'
+  ...
+# Subtest: a normal Regional launch replaces the prior tuning-test origin
+ok 482 - a normal Regional launch replaces the prior tuning-test origin
+  ---
+  duration_ms: 399.069792
+  type: 'test'
+  ...
+# Subtest: Regional host freezes its assigned rates and camera until the next flight
+ok 483 - Regional host freezes its assigned rates and camera until the next flight
+  ---
+  duration_ms: 431.748875
+  type: 'test'
+  ...
+# Subtest: Regional host explicitly switches into the real Advanced worker and preserves pause, export and recovery ownership
+ok 484 - Regional host explicitly switches into the real Advanced worker and preserves pause, export and recovery ownership
+  ---
+  duration_ms: 750.227333
+  type: 'test'
+  ...
+# Subtest: Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+    # Subtest: ADVANCED_DURATION_LIMIT · en
+    ok 1 - ADVANCED_DURATION_LIMIT · en
+      ---
+      duration_ms: 618.049416
+      type: 'test'
+      ...
+    # Subtest: ADVANCED_RECORDING_LIMIT · uk
+    ok 2 - ADVANCED_RECORDING_LIMIT · uk
+      ---
+      duration_ms: 624.936208
+      type: 'test'
+      ...
+    # Subtest: UNKNOWN_LIMIT · en
+    ok 3 - UNKNOWN_LIMIT · en
+      ---
+      duration_ms: 579.818584
+      type: 'test'
+      ...
+    # Subtest: untyped limit text · en
+    ok 4 - untyped limit text · en
+      ---
+      duration_ms: 564.430833
+      type: 'test'
+      ...
+    1..4
+ok 485 - Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+  ---
+  duration_ms: 2415.108791
+  type: 'test'
+  ...
+# Subtest: Regional Advanced is explicitly unavailable when workers cannot run
+ok 486 - Regional Advanced is explicitly unavailable when workers cannot run
+  ---
+  duration_ms: 269.120541
+  type: 'test'
+  ...
+# Subtest: World tuning owns Back without closing the underlying settings dialog
+ok 487 - World tuning owns Back without closing the underlying settings dialog
+  ---
+  duration_ms: 269.16325
+  type: 'test'
+  ...
+# Subtest: World tuning keeps its hint through pointer blur and releases it after closing
+ok 488 - World tuning keeps its hint through pointer blur and releases it after closing
+  ---
+  duration_ms: 327.306208
+  type: 'test'
+  ...
+# Subtest: World captures legacy comfort camera before its first tuning configuration
+ok 489 - World captures legacy comfort camera before its first tuning configuration
+  ---
+  duration_ms: 322.518083
+  type: 'test'
+  ...
+# Subtest: World captures saved drone camera before its first tuning configuration
+ok 490 - World captures saved drone camera before its first tuning configuration
+  ---
+  duration_ms: 318.569833
+  type: 'test'
+  ...
+# Subtest: World captures unreadable comfort camera before its first tuning configuration
+ok 491 - World captures unreadable comfort camera before its first tuning configuration
+  ---
+  duration_ms: 380.663542
+  type: 'test'
+  ...
+# Subtest: World captures World settings camera before its first tuning configuration
+ok 492 - World captures World settings camera before its first tuning configuration
+  ---
+  duration_ms: 542.358292
+  type: 'test'
+  ...
+# Subtest: optional installations preserve previous versions and isolate stable roots without touching Journey
+ok 493 - optional installations preserve previous versions and isolate stable roots without touching Journey
+  ---
+  duration_ms: 1.4405
+  type: 'test'
+  ...
+# Subtest: optional launch references reject foreign origins, roots, entries and versions
+ok 494 - optional launch references reject foreign origins, roots, entries and versions
+  ---
+  duration_ms: 0.378
+  type: 'test'
+  ...
+# Subtest: an installation pointer is recorded only after a verified worker activates
+ok 495 - an installation pointer is recorded only after a verified worker activates
+  ---
+  duration_ms: 22.57225
+  type: 'test'
+  ...
+# Subtest: stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+ok 496 - stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+  ---
+  duration_ms: 5.351833
+  type: 'test'
+  ...
+# Subtest: launcher keeps missing-file repair and removal visible after checking an available release
+ok 497 - launcher keeps missing-file repair and removal visible after checking an available release
+  ---
+  duration_ms: 4.77825
+  type: 'test'
+  ...
+# Subtest: launcher distinguishes unfinished verification from missing files without inventing readiness
+ok 498 - launcher distinguishes unfinished verification from missing files without inventing readiness
+  ---
+  duration_ms: 2.55125
+  type: 'test'
+  ...
+# Subtest: verified app actions do not wait for unrelated retained-version or launcher checks
+ok 499 - verified app actions do not wait for unrelated retained-version or launcher checks
+  ---
+  duration_ms: 1.44625
+  type: 'test'
+  ...
+# Subtest: retained ready copy stays reachable while active verification stalls, including locale changes
+ok 500 - retained ready copy stays reachable while active verification stalls, including locale changes
+  ---
+  duration_ms: 1.0645
+  type: 'test'
+  ...
+# Subtest: invalid retained metadata cannot blank a separately verified active app
+ok 501 - invalid retained metadata cannot blank a separately verified active app
+  ---
+  duration_ms: 0.499583
+  type: 'test'
+  ...
+# Subtest: leaving during readiness checks cancels publication and play intent even after pageshow
+ok 502 - leaving during readiness checks cancels publication and play intent even after pageshow
+  ---
+  duration_ms: 0.775375
+  type: 'test'
+  ...
+# Subtest: abandoned fetch cannot replay play intent after pageshow, but a live timeout can fall back offline
+ok 503 - abandoned fetch cannot replay play intent after pageshow, but a live timeout can fall back offline
+  ---
+  duration_ms: 13.91675
+  type: 'test'
+  ...
+# Subtest: stable launcher keeps locale and appearance on auto-play and verified offline fallback
+ok 504 - stable launcher keeps locale and appearance on auto-play and verified offline fallback
+  ---
+  duration_ms: 1.138958
+  type: 'test'
+  ...
+# Subtest: stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+ok 505 - stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+  ---
+  duration_ms: 7.638042
+  type: 'test'
+  ...
+# Subtest: status cancellation owns lookup and reply lifetime without cancelling a playing worker
+ok 506 - status cancellation owns lookup and reply lifetime without cancelling a playing worker
+  ---
+  duration_ms: 3.735625
+  type: 'test'
+  ...
+# Subtest: detailed readiness distinguishes missing dependencies from an inconclusive worker check
+ok 507 - detailed readiness distinguishes missing dependencies from an inconclusive worker check
+  ---
+  duration_ms: 34.085959
+  type: 'test'
+  ...
+# Subtest: readiness accepts legacy replies but never certifies inconclusive, contradictory or foreign status
+ok 508 - readiness accepts legacy replies but never certifies inconclusive, contradictory or foreign status
+  ---
+  duration_ms: 138.575708
+  type: 'test'
+  ...
+# Subtest: civilian-flight initial inconclusive preparation preserves previous records until a verified retry
+ok 509 - civilian-flight initial inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 12.472333
+  type: 'test'
+  ...
+# Subtest: civilian-flight final inconclusive preparation preserves previous records until a verified retry
+ok 510 - civilian-flight final inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 19.358834
+  type: 'test'
+  ...
+# Subtest: civilian-fpv initial inconclusive preparation preserves previous records until a verified retry
+ok 511 - civilian-fpv initial inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 13.480666
+  type: 'test'
+  ...
+# Subtest: civilian-fpv final inconclusive preparation preserves previous records until a verified retry
+ok 512 - civilian-fpv final inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 19.789291
+  type: 'test'
+  ...
+# Subtest: fpv-worlds initial inconclusive preparation preserves previous records until a verified retry
+ok 513 - fpv-worlds initial inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 12.925542
+  type: 'test'
+  ...
+# Subtest: fpv-worlds final inconclusive preparation preserves previous records until a verified retry
+ok 514 - fpv-worlds final inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 19.948
+  type: 'test'
+  ...
+# Subtest: inconclusive preparation uses the caller locale and does not retry worker registration after lookup failure
+ok 515 - inconclusive preparation uses the caller locale and does not retry worker registration after lookup failure
+  ---
+  duration_ms: 0.634083
+  type: 'test'
+  ...
+# Subtest: cancelling initial verification never records a late successful installation
+ok 516 - cancelling initial verification never records a late successful installation
+  ---
+  duration_ms: 6.632084
+  type: 'test'
+  ...
+# Subtest: cancelling final verification rejects after activation without publishing a receipt
+ok 517 - cancelling final verification rejects after activation without publishing a receipt
+  ---
+  duration_ms: 11.997291
+  type: 'test'
+  ...
+# Subtest: pagehide cancels its package operation and a fresh owner can reinstall
+ok 518 - pagehide cancels its package operation and a fresh owner can reinstall
+  ---
+  duration_ms: 11.5415
+  type: 'test'
+  ...
+# Subtest: default progress belongs to the invoking native modal and Cancel restores its focus
+ok 519 - default progress belongs to the invoking native modal and Cancel restores its focus
+  ---
+  duration_ms: 8.249916
+  type: 'test'
+  ...
+# Subtest: closing a moved settings owner cancels its download without reclaiming focus
+ok 520 - closing a moved settings owner cancels its download without reclaiming focus
+  ---
+  duration_ms: 5.771458
+  type: 'test'
+  ...
+# Subtest: successful preparation removes progress without stealing focus from another control
+ok 521 - successful preparation removes progress without stealing focus from another control
+  ---
+  duration_ms: 5.638417
+  type: 'test'
+  ...
+# Subtest: custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+ok 522 - custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+  ---
+  duration_ms: 7.037125
+  type: 'test'
+  ...
+# Subtest: a closed explicit progress owner cannot start a hidden download
+ok 523 - a closed explicit progress owner cannot start a hidden download
+  ---
+  duration_ms: 0.297208
+  type: 'test'
+  ...
+# Subtest: late registration is cancelled and cannot recreate an installation receipt
+ok 524 - late registration is cancelled and cannot recreate an installation receipt
+  ---
+  duration_ms: 13.314708
+  type: 'test'
+  ...
+# Subtest: removal retains registration ownership after caller cancellation until even a late activated worker is removed
+ok 525 - removal retains registration ownership after caller cancellation until even a late activated worker is removed
+  ---
+  duration_ms: 7.432208
+  type: 'test'
+  ...
+# (node:28968) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a stuck registration bounds removal waiting and a timed-out removal never runs later
+ok 526 - a stuck registration bounds removal waiting and a timed-out removal never runs later
+  ---
+  duration_ms: 7.780375
+  type: 'test'
+  ...
+# Subtest: offload waits for worker write settlement and both game wrappers use scoped removal
+ok 527 - offload waits for worker write settlement and both game wrappers use scoped removal
+  ---
+  duration_ms: 13.610625
+  type: 'test'
+  ...
+# Subtest: offload cancels an old verification before its pointer and exact cache are removed
+ok 528 - offload cancels an old verification before its pointer and exact cache are removed
+  ---
+  duration_ms: 5.705792
+  type: 'test'
+  ...
+# Subtest: missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+ok 529 - missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+  ---
+  duration_ms: 25.669125
+  type: 'test'
+  ...
+# Subtest: civilian-flight announces downloading before awaiting the next dependency
+ok 530 - civilian-flight announces downloading before awaiting the next dependency
+  ---
+  duration_ms: 7.440625
+  type: 'test'
+  ...
+# Subtest: civilian-flight inspection exceptions are inconclusive without changing cached bytes
+ok 531 - civilian-flight inspection exceptions are inconclusive without changing cached bytes
+  ---
+  duration_ms: 3.762875
+  type: 'test'
+  ...
+# Subtest: civilian-flight status distinguishes verified bytes from missing and hash-mismatched files
+ok 532 - civilian-flight status distinguishes verified bytes from missing and hash-mismatched files
+  ---
+  duration_ms: 2.238167
+  type: 'test'
+  ...
+# Subtest: civilian-flight worker keeps cancellation received before its controller exists
+ok 533 - civilian-flight worker keeps cancellation received before its controller exists
+  ---
+  duration_ms: 0.196708
+  type: 'test'
+  ...
+# Subtest: civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+ok 534 - civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+  ---
+  duration_ms: 6.870125
+  type: 'test'
+  ...
+# Subtest: civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+ok 535 - civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+  ---
+  duration_ms: 0.90525
+  type: 'test'
+  ...
+# Subtest: civilian-flight read-only status does not recreate a cache removed after its names were read
+ok 536 - civilian-flight read-only status does not recreate a cache removed after its names were read
+  ---
+  duration_ms: 1.002667
+  type: 'test'
+  ...
+# Subtest: civilian-flight status cannot certify an empty dependency set or a missing package
+ok 537 - civilian-flight status cannot certify an empty dependency set or a missing package
+  ---
+  duration_ms: 0.118958
+  type: 'test'
+  ...
+# Subtest: package announces downloading before awaiting the next dependency
+ok 538 - package announces downloading before awaiting the next dependency
+  ---
+  duration_ms: 7.293167
+  type: 'test'
+  ...
+# Subtest: package inspection exceptions are inconclusive without changing cached bytes
+ok 539 - package inspection exceptions are inconclusive without changing cached bytes
+  ---
+  duration_ms: 1.2985
+  type: 'test'
+  ...
+# Subtest: package status distinguishes verified bytes from missing and hash-mismatched files
+ok 540 - package status distinguishes verified bytes from missing and hash-mismatched files
+  ---
+  duration_ms: 0.943083
+  type: 'test'
+  ...
+# Subtest: package worker keeps cancellation received before its controller exists
+ok 541 - package worker keeps cancellation received before its controller exists
+  ---
+  duration_ms: 0.09425
+  type: 'test'
+  ...
+# Subtest: package worker waits for final writes then rejects cancellation, without announcing ready
+ok 542 - package worker waits for final writes then rejects cancellation, without announcing ready
+  ---
+  duration_ms: 5.542667
+  type: 'test'
+  ...
+# Subtest: package old controlling worker does not recreate an offloaded cache on a later asset read
+ok 543 - package old controlling worker does not recreate an offloaded cache on a later asset read
+  ---
+  duration_ms: 0.532
+  type: 'test'
+  ...
+# Subtest: package read-only status does not recreate a cache removed after its names were read
+ok 544 - package read-only status does not recreate a cache removed after its names were read
+  ---
+  duration_ms: 0.243458
+  type: 'test'
+  ...
+# Subtest: package status cannot certify an empty dependency set or a missing package
+ok 545 - package status cannot certify an empty dependency set or a missing package
+  ---
+  duration_ms: 0.064375
+  type: 'test'
+  ...
+# Subtest: optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+ok 546 - optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+  ---
+  duration_ms: 0.888375
+  type: 'test'
+  ...
+# Subtest: unqualified source previews are limited to the loopback source entry
+ok 547 - unqualified source previews are limited to the loopback source entry
+  ---
+  duration_ms: 0.617625
+  type: 'test'
+  ...
+# Subtest: Snake offers the exact World source preview only at a loopback source root
+ok 548 - Snake offers the exact World source preview only at a loopback source root
+  ---
+  duration_ms: 0.12175
+  type: 'test'
+  ...
+# Subtest: launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+ok 549 - launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+  ---
+  duration_ms: 9.287167
+  type: 'test'
+  ...
+# Subtest: shared practice entry is explicit, pauses once and never prefetches package bytes
+ok 550 - shared practice entry is explicit, pauses once and never prefetches package bytes
+  ---
+  duration_ms: 8.642667
+  type: 'test'
+  ...
+# Subtest: closing an in-flight optional catalog discards late results and restores its opener
+ok 551 - closing an in-flight optional catalog discards late results and restores its opener
+  ---
+  duration_ms: 0.964417
+  type: 'test'
+  ...
+# Subtest: a stalled optional catalog times out and leaves an explicit retry available
+ok 552 - a stalled optional catalog times out and leaves an explicit retry available
+  ---
+  duration_ms: 7.62925
+  type: 'test'
+  ...
+# Subtest: Home and More share one public loader and restore the actual opener without resuming play
+ok 553 - Home and More share one public loader and restore the actual opener without resuming play
+  ---
+  duration_ms: 8.235666
+  type: 'test'
+  ...
+# Subtest: local gym and FPV previews stay separate and usable while the public catalog is unavailable
+ok 554 - local gym and FPV previews stay separate and usable while the public catalog is unavailable
+  ---
+  duration_ms: 7.064125
+  type: 'test'
+  ...
+# Subtest: SIM opens the checked bundled entry directly without an interstitial or package download
+ok 555 - SIM opens the checked bundled entry directly without an interstitial or package download
+  ---
+  duration_ms: 6.23525
+  type: 'test'
+  ...
+# Subtest: unavailable SIM offers recovery without navigating or downloading, and closing cancels late entry checks
+ok 556 - unavailable SIM offers recovery without navigating or downloading, and closing cancels late entry checks
+  ---
+  duration_ms: 6.706583
+  type: 'test'
+  ...
+# Subtest: installed practice links retain launch intent and refresh the appearance pin on activation
+ok 557 - installed practice links retain launch intent and refresh the appearance pin on activation
+  ---
+  duration_ms: 5.731458
+  type: 'test'
+  ...
+# Subtest: standalone directory preserves selected locale for main game, guide and package links
+ok 558 - standalone directory preserves selected locale for main game, guide and package links
+  ---
+  duration_ms: 1.534375
+  type: 'test'
+  ...
+# Subtest: directory introduction stays accurate for empty and extended catalogues
+ok 559 - directory introduction stays accurate for empty and extended catalogues
+  ---
+  duration_ms: 0.17525
+  type: 'test'
+  ...
+# Subtest: standard-controller menu edges move visible focus and activate once, never repeat a held confirm
+ok 560 - standard-controller menu edges move visible focus and activate once, never repeat a held confirm
+  ---
+  duration_ms: 1.0705
+  type: 'test'
+  ...
+# Subtest: bounded metadata binds to the authoritative catalogue and rejects executable redirects
+ok 561 - bounded metadata binds to the authoritative catalogue and rejects executable redirects
+  ---
+  duration_ms: 9.544708
+  type: 'test'
+  ...
+# Subtest: last-known catalogue stays dated on request failure and bad details keep basic v1 cards
+ok 562 - last-known catalogue stays dated on request failure and bad details keep basic v1 cards
+  ---
+  duration_ms: 21.35525
+  type: 'test'
+  ...
+# Subtest: play intent keeps only a validated locale and destination, never forwards arbitrary query routes
+ok 563 - play intent keeps only a validated locale and destination, never forwards arbitrary query routes
+  ---
+  duration_ms: 2.426584
+  type: 'test'
+  ...
+# Subtest: an installation without an exact owning worker is not ready offline
+ok 564 - an installation without an exact owning worker is not ready offline
+  ---
+  duration_ms: 0.290291
+  type: 'test'
+  ...
+# Subtest: an intentionally empty publication emits a catalogue, and a missing public catalogue fails verification
+ok 565 - an intentionally empty publication emits a catalogue, and a missing public catalogue fails verification
+  ---
+  duration_ms: 1.93075
+  type: 'test'
+  ...
+# Subtest: all shipped player guides retain the same bilingual offline and input instructions
+ok 566 - all shipped player guides retain the same bilingual offline and input instructions
+  ---
+  duration_ms: 2.024084
+  type: 'test'
+  ...
+# Subtest: player guide navigation preserves only a supported locale in published and source routes
+ok 567 - player guide navigation preserves only a supported locale in published and source routes
+  ---
+  duration_ms: 1.979459
+  type: 'test'
+  ...
+# Subtest: repository and shipped guides name the current rendered radio setup control in both locales
+ok 568 - repository and shipped guides name the current rendered radio setup control in both locales
+  ---
+  duration_ms: 6.034417
+  type: 'test'
+  ...
+# Subtest: repository and shipped guides document the reachable maintained Detailed HUD in both locales
+ok 569 - repository and shipped guides document the reachable maintained Detailed HUD in both locales
+  ---
+  duration_ms: 1.906291
+  type: 'test'
+  ...
+# Subtest: both guide formats distinguish incomplete verification from confirmed repair
+ok 570 - both guide formats distinguish incomplete verification from confirmed repair
+  ---
+  duration_ms: 2.282209
+  type: 'test'
+  ...
+# Subtest: v1 promise, receipt and state bytes remain v1 with no practice additions
+ok 571 - v1 promise, receipt and state bytes remain v1 with no practice additions
+  ---
+  duration_ms: 4.261125
+  type: 'test'
+  ...
+# Subtest: twelve distinct exact courses are required, independent of arcade clears
+ok 572 - twelve distinct exact courses are required, independent of arcade clears
+  ---
+  duration_ms: 3.447583
+  type: 'test'
+  ...
+# Subtest: main reward accepts either declared mode; Acro distinction requires all twelve Acro attempts
+ok 573 - main reward accepts either declared mode; Acro distinction requires all twelve Acro attempts
+  ---
+  duration_ms: 2.730584
+  type: 'test'
+  ...
+# Subtest: exact model, course, mode and explicit response policy constrain verifier projections
+ok 574 - exact model, course, mode and explicit response policy constrain verifier projections
+  ---
+  duration_ms: 1.459833
+  type: 'test'
+  ...
+# Subtest: v2 requirements are explicit and bounded; practice scope cannot smuggle arcade or other courses
+ok 575 - v2 requirements are explicit and bounded; practice scope cannot smuggle arcade or other courses
+  ---
+  duration_ms: 1.514875
+  type: 'test'
+  ...
+# Subtest: mixed v1/v2 state round-trips with strict container/receipt versions and exact evidence pins
+ok 576 - mixed v1/v2 state round-trips with strict container/receipt versions and exact evidence pins
+  ---
+  duration_ms: 4.095959
+  type: 'test'
+  ...
+# Subtest: practice inputs are copied and deeply frozen; external frozen graphs are still validated
+ok 577 - practice inputs are copied and deeply frozen; external frozen graphs are still validated
+  ---
+  duration_ms: 0.235875
+  type: 'test'
+  ...
+# Subtest: practice promises do not overwrite old promises and explicit conflicting imports fail closed
+ok 578 - practice promises do not overwrite old promises and explicit conflicting imports fail closed
+  ---
+  duration_ms: 0.887
+  type: 'test'
+  ...
+# Subtest: shared store persists/reloads mixed practice and arcade rewards without manufactured Journey clears
+ok 579 - shared store persists/reloads mixed practice and arcade rewards without manufactured Journey clears
+  ---
+  duration_ms: 5.1965
+  type: 'test'
+  ...
+# Subtest: v2 explicit import uses versioned reservation fragments and rejects a conflicting durable promise
+ok 580 - v2 explicit import uses versioned reservation fragments and rejects a conflicting durable promise
+  ---
+  duration_ms: 2.9875
+  type: 'test'
+  ...
+# Subtest: late mixed-version reconciliation releases a practice reservation without changing committed pins
+ok 581 - late mixed-version reconciliation releases a practice reservation without changing committed pins
+  ---
+  duration_ms: 4.069708
+  type: 'test'
+  ...
+# Subtest: archive admission rejects a missing transitive import even when member hashes and counts match
+ok 582 - archive admission rejects a missing transitive import even when member hashes and counts match
+  ---
+  duration_ms: 150.401208
+  type: 'test'
+  ...
+# Subtest: SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+ok 583 - SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+  ---
+  duration_ms: 1205.885042
+  type: 'test'
+  ...
+# Subtest: optional candidate is byte-reproducible and inventories only its selected public dependency closure
+ok 584 - optional candidate is byte-reproducible and inventories only its selected public dependency closure
+  ---
+  duration_ms: 295.743667
+  type: 'test'
+  ...
+# Subtest: tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+ok 585 - tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+  ---
+  duration_ms: 391.91275
+  type: 'test'
+  ...
+# Subtest: source and generated-worker provenance are mandatory and bounded
+ok 586 - source and generated-worker provenance are mandatory and bounded
+  ---
+  duration_ms: 484.260375
+  type: 'test'
+  ...
+# Subtest: pinned generated launcher code still must match its committed template and isolated closure
+ok 587 - pinned generated launcher code still must match its committed template and isolated closure
+  ---
+  duration_ms: 484.625625
+  type: 'test'
+  ...
+# Subtest: pending human/device gates never become promotion approval and reviewed evidence pins are exact
+ok 588 - pending human/device gates never become promotion approval and reviewed evidence pins are exact
+  ---
+  duration_ms: 457.733541
+  type: 'test'
+  ...
+# Subtest: stable delivery pins destination, uploads envelope last and keeps unrelated assets
+ok 589 - stable delivery pins destination, uploads envelope last and keeps unrelated assets
+  ---
+  duration_ms: 2.778125
+  type: 'test'
+  ...
+# Subtest: matching originals are verified without another POST
+ok 590 - matching originals are verified without another POST
+  ---
+  duration_ms: 0.338416
+  type: 'test'
+  ...
+# Subtest: other-envelope originals exceeding the combined budget prevent every optional POST
+ok 591 - other-envelope originals exceeding the combined budget prevent every optional POST
+  ---
+  duration_ms: 0.277375
+  type: 'test'
+  ...
+# Subtest: shared evidence already present in an edition counts once and is still downloaded
+ok 592 - shared evidence already present in an edition counts once and is still downloaded
+  ---
+  duration_ms: 0.437708
+  type: 'test'
+  ...
+# Subtest: every conflicting original is rejected before any upload
+ok 593 - every conflicting original is rejected before any upload
+  ---
+  duration_ms: 0.259416
+  type: 'test'
+  ...
+# Subtest: downloaded original mismatch is rejected before any upload
+ok 594 - downloaded original mismatch is rejected before any upload
+  ---
+  duration_ms: 0.132292
+  type: 'test'
+  ...
+# Subtest: preflight rejects missing-id with zero POSTs
+ok 595 - preflight rejects missing-id with zero POSTs
+  ---
+  duration_ms: 0.135791
+  type: 'test'
+  ...
+# Subtest: preflight rejects wrong-id with zero POSTs
+ok 596 - preflight rejects wrong-id with zero POSTs
+  ---
+  duration_ms: 0.06875
+  type: 'test'
+  ...
+# Subtest: preflight rejects foreign-repository with zero POSTs
+ok 597 - preflight rejects foreign-repository with zero POSTs
+  ---
+  duration_ms: 0.277541
+  type: 'test'
+  ...
+# Subtest: preflight rejects published with zero POSTs
+ok 598 - preflight rejects published with zero POSTs
+  ---
+  duration_ms: 0.267625
+  type: 'test'
+  ...
+# Subtest: preflight rejects prerelease with zero POSTs
+ok 599 - preflight rejects prerelease with zero POSTs
+  ---
+  duration_ms: 0.097
+  type: 'test'
+  ...
+# Subtest: preflight rejects wrong-target with zero POSTs
+ok 600 - preflight rejects wrong-target with zero POSTs
+  ---
+  duration_ms: 0.050417
+  type: 'test'
+  ...
+# Subtest: preflight rejects foreign-endpoint with zero POSTs
+ok 601 - preflight rejects foreign-endpoint with zero POSTs
+  ---
+  duration_ms: 0.085334
+  type: 'test'
+  ...
+# Subtest: preflight rejects duplicate-name with zero POSTs
+ok 602 - preflight rejects duplicate-name with zero POSTs
+  ---
+  duration_ms: 0.059083
+  type: 'test'
+  ...
+# Subtest: preflight rejects duplicate-id with zero POSTs
+ok 603 - preflight rejects duplicate-id with zero POSTs
+  ---
+  duration_ms: 0.074167
+  type: 'test'
+  ...
+# Subtest: preflight rejects missing-digest with zero POSTs
+ok 604 - preflight rejects missing-digest with zero POSTs
+  ---
+  duration_ms: 0.065542
+  type: 'test'
+  ...
+# Subtest: replacement before the first POST fails the explicit draft ID guard
+ok 605 - replacement before the first POST fails the explicit draft ID guard
+  ---
+  duration_ms: 0.097625
+  type: 'test'
+  ...
+# Subtest: replacement between check and upload cannot redirect the ID-specific POST
+ok 606 - replacement between check and upload cannot redirect the ID-specific POST
+  ---
+  duration_ms: 0.267792
+  type: 'test'
+  ...
+# Subtest: replacement between files cannot receive the next asset
+ok 607 - replacement between files cannot receive the next asset
+  ---
+  duration_ms: 0.443041
+  type: 'test'
+  ...
+# Subtest: replacement before final receipt prevents success
+ok 608 - replacement before final receipt prevents success
+  ---
+  duration_ms: 0.347875
+  type: 'test'
+  ...
+# Subtest: publication between assets stops the remaining delivery
+ok 609 - publication between assets stops the remaining delivery
+  ---
+  duration_ms: 0.205417
+  type: 'test'
+  ...
+# Subtest: tag-movement between assets stops the remaining delivery
+ok 610 - tag-movement between assets stops the remaining delivery
+  ---
+  duration_ms: 0.269375
+  type: 'test'
+  ...
+# Subtest: foreign-asset between assets stops the remaining delivery
+ok 611 - foreign-asset between assets stops the remaining delivery
+  ---
+  duration_ms: 0.22675
+  type: 'test'
+  ...
+# Subtest: ambiguous upload failure records unresolved outcome and never retries
+ok 612 - ambiguous upload failure records unresolved outcome and never retries
+  ---
+  duration_ms: 0.166417
+  type: 'test'
+  ...
+# Subtest: attempt journal failure stops before sending a POST
+ok 613 - attempt journal failure stops before sending a POST
+  ---
+  duration_ms: 0.129167
+  type: 'test'
+  ...
+# Subtest: reconciliation keeps all original receipt pins while allowing only the verified status distinction
+ok 614 - reconciliation keeps all original receipt pins while allowing only the verified status distinction
+  ---
+  duration_ms: 0.641083
+  type: 'test'
+  ...
+# Subtest: only reviewed original package bytes enter isolated versioned paths and the stable launcher
+ok 615 - only reviewed original package bytes enter isolated versioned paths and the stable launcher
+  ---
+  duration_ms: 1486.747542
+  type: 'test'
+  ...
+# Subtest: rollback changes only active launcher pointers and retains every frozen release byte
+ok 616 - rollback changes only active launcher pointers and retains every frozen release byte
+  ---
+  duration_ms: 1122.962208
+  type: 'test'
+  ...
+# Subtest: the exact core release contract admits optional additions only with complete review and no unknown extras
+ok 617 - the exact core release contract admits optional additions only with complete review and no unknown extras
+  ---
+  duration_ms: 371.834459
+  type: 'test'
+  ...
+# Subtest: reports shallow population and exact strong paths without traversing weak-only detached node
+ok 618 - reports shallow population and exact strong paths without traversing weak-only detached node
+  ---
+  duration_ms: 6.537791
+  type: 'test'
+  ...
+# Subtest: comparison distinguishes same-sized replacement from surviving object identity
+ok 619 - comparison distinguishes same-sized replacement from surviving object identity
+  ---
+  duration_ms: 0.434959
+  type: 'test'
+  ...
+# Subtest: rejects malformed graph widths, missing fields, dangling edges, duplicate IDs and unknown detachedness
+ok 620 - rejects malformed graph widths, missing fields, dangling edges, duplicate IDs and unknown detachedness
+  ---
+  duration_ms: 0.307083
+  type: 'test'
+  ...
+# Subtest: missing detachedness remains explicitly unavailable rather than zero
+ok 621 - missing detachedness remains explicitly unavailable rather than zero
+  ---
+  duration_ms: 0.135833
+  type: 'test'
+  ...
+# Subtest: file loader binds exact bytes and rejects oversized sparse input before parsing
+ok 622 - file loader binds exact bytes and rejects oversized sparse input before parsing
+  ---
+  duration_ms: 4.855542
+  type: 'test'
+  ...
+# Subtest: RGB decoder reverses all five filters exactly
+ok 623 - RGB decoder reverses all five filters exactly
+  ---
+  duration_ms: 2.215291
+  type: 'test'
+  ...
+# Subtest: RGBA decoder reverses all five filters exactly
+ok 624 - RGBA decoder reverses all five filters exactly
+  ---
+  duration_ms: 1.052958
+  type: 'test'
+  ...
+# Subtest: input bytes remain unchanged and metadata/chunk integrity is verified
+ok 625 - input bytes remain unchanged and metadata/chunk integrity is verified
+  ---
+  duration_ms: 0.495417
+  type: 'test'
+  ...
+# Subtest: unsupported animation, bit depths and row filters fail rather than imply equality
+ok 626 - unsupported animation, bit depths and row filters fail rather than imply equality
+  ---
+  duration_ms: 0.364333
+  type: 'test'
+  ...
+# Subtest: audit bounds are checked before network or output access
+ok 627 - audit bounds are checked before network or output access
+  ---
+  duration_ms: 0.479333
+  type: 'test'
+  ...
+# Subtest: sparse publication checkouts include the full admitted directory import closure
+ok 628 - sparse publication checkouts include the full admitted directory import closure
+  ---
+  duration_ms: 507.04675
+  type: 'test'
+  ...
+# Subtest: maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+ok 629 - maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+  ---
+  duration_ms: 9328.342125
+  type: 'test'
+  ...
+# Subtest: frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+ok 630 - frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+  ---
+  duration_ms: 10453.723625
+  type: 'test'
+  ...
+# Subtest: explicit units, axis signs, clock offsets and unequal cadences preserve a known response
+ok 631 - explicit units, axis signs, clock offsets and unequal cadences preserve a known response
+  ---
+  duration_ms: 2.111583
+  type: 'test'
+  ...
+# Subtest: response error integrates linear interpolation exactly and does not smear command steps
+ok 632 - response error integrates linear interpolation exactly and does not smear command steps
+  ---
+  duration_ms: 0.555
+  type: 'test'
+  ...
+# Subtest: a brief candidate command pulse between reference samples makes response comparison ineligible
+ok 633 - a brief candidate command pulse between reference samples makes response comparison ineligible
+  ---
+  duration_ms: 0.6335
+  type: 'test'
+  ...
+# Subtest: CSV handles quoted fields and BOM but rejects ambiguous headers, malformed rows and expressions
+ok 634 - CSV handles quoted fields and BOM but rejects ambiguous headers, malformed rows and expressions
+  ---
+  duration_ms: 0.843333
+  type: 'test'
+  ...
+# Subtest: CSV capacity accepts the exact row boundary and measures UTF-8 bytes, not characters
+ok 635 - CSV capacity accepts the exact row boundary and measures UTF-8 bytes, not characters
+  ---
+  duration_ms: 60.727583
+  type: 'test'
+  ...
+# Subtest: trace row preflight preserves event rows and rejects overflow before replay or CLI writes
+ok 636 - trace row preflight preserves event rows and rejects overflow before replay or CLI writes
+  ---
+  duration_ms: 762.43525
+  type: 'test'
+  ...
+# Subtest: source mappings require known units, distinct axes and provenance without guessing firmware
+ok 637 - source mappings require known units, distinct axes and provenance without guessing firmware
+  ---
+  duration_ms: 0.460042
+  type: 'test'
+  ...
+# Subtest: comparison refuses clock resets, incomplete windows and missing data instead of fitting them away
+ok 638 - comparison refuses clock resets, incomplete windows and missing data instead of fitting them away
+  ---
+  duration_ms: 0.4535
+  type: 'test'
+  ...
+# Subtest: verified SIM trace freezes input, includes comparison/configuration and declares 50 Hz telemetry
+ok 639 - verified SIM trace freezes input, includes comparison/configuration and declares 50 Hz telemetry
+  ---
+  duration_ms: 88.15725
+  type: 'test'
+  ...
+# Subtest: trace export rejects falsified consumed-input timing before writing either output
+ok 640 - trace export rejects falsified consumed-input timing before writing either output
+  ---
+  duration_ms: 1117.544084
+  type: 'test'
+  ...
+# Subtest: verified trace export requires two completed missions and leaves no short-flight output files
+ok 641 - verified trace export requires two completed missions and leaves no short-flight output files
+  ---
+  duration_ms: 945.241167
+  type: 'test'
+  ...
+# Subtest: export preserves boundary and sub-mission command pulses without fabricating achieved observations
+ok 642 - export preserves boundary and sub-mission command pulses without fabricating achieved observations
+  ---
+  duration_ms: 7.093125
+  type: 'test'
+  ...
+# Subtest: interpolated rows cannot masquerade as achieved-rate samples or conceal a measurement gap
+ok 643 - interpolated rows cannot masquerade as achieved-rate samples or conceal a measurement gap
+  ---
+  duration_ms: 0.257334
+  type: 'test'
+  ...
+# Subtest: opt-in replay telemetry covers only requested prefix while default replay retains compact shape
+ok 644 - opt-in replay telemetry covers only requested prefix while default replay retains compact shape
+  ---
+  duration_ms: 50.449
+  type: 'test'
+  ...
+# Subtest: CLI refuses to overwrite evidence and cleans up an incomplete trace pair
+ok 645 - CLI refuses to overwrite evidence and cleans up an incomplete trace pair
+  ---
+  duration_ms: 915.427458
+  type: 'test'
+  ...
+# Subtest: runtime and retention require distinct bounded procedures with the same exact artifact identity
+ok 646 - runtime and retention require distinct bounded procedures with the same exact artifact identity
+  ---
+  duration_ms: 1.145042
+  type: 'test'
+  ...
+# Subtest: both observer entry points preserve failed admission and refuse to overwrite earlier evidence
+ok 647 - both observer entry points preserve failed admission and refuse to overwrite earlier evidence
+  ---
+  duration_ms: 19.770459
+  type: 'test'
+  ...
+# Subtest: artifact loader rejects a symlink outside the selected bundle before reading envelope content
+ok 648 - artifact loader rejects a symlink outside the selected bundle before reading envelope content
+  ---
+  duration_ms: 2.07775
+  type: 'test'
+  ...
+# Subtest: shared loader admits complete frozen runtime and source bytes and rejects corrupt source even with intact runtime
+ok 649 - shared loader admits complete frozen runtime and source bytes and rejects corrupt source even with intact runtime
+  ---
+  duration_ms: 2500.062042
+  type: 'test'
+  ...
+# Subtest: selected Gym admission pins its own revision; unsupported IDs fail before artifact access
+ok 650 - selected Gym admission pins its own revision; unsupported IDs fail before artifact access
+  ---
+  duration_ms: 562.592917
+  type: 'test'
+  ...
+# Subtest: cleanup records a failure while still closing every other owned resource
+ok 651 - cleanup records a failure while still closing every other owned resource
+  ---
+  duration_ms: 0.4255
+  type: 'test'
+  ...
+# Subtest: a stalled observation wait times out without claiming that its underlying operation stopped
+ok 652 - a stalled observation wait times out without claiming that its underlying operation stopped
+  ---
+  duration_ms: 4.6145
+  type: 'test'
+  ...
+# Subtest: frozen input checking rejects dirty, ignored or assumed-unchanged bytes and symlink objects
+ok 653 - frozen input checking rejects dirty, ignored or assumed-unchanged bytes and symlink objects
+  ---
+  duration_ms: 513.719291
+  type: 'test'
+  ...
+# Subtest: plan fixes the protocol and bounds every external choice instead of accepting arbitrary input scripts
+ok 654 - plan fixes the protocol and bounds every external choice instead of accepting arbitrary input scripts
+  ---
+  duration_ms: 1.065584
+  type: 'test'
+  ...
+# Subtest: artifact source and envelope pins are checked before reading any selected original
+ok 655 - artifact source and envelope pins are checked before reading any selected original
+  ---
+  duration_ms: 4.283917
+  type: 'test'
+  ...
+# Subtest: an existing evidence directory is never overwritten, including a failed prior attempt
+ok 656 - an existing evidence directory is never overwritten, including a failed prior attempt
+  ---
+  duration_ms: 2.27175
+  type: 'test'
+  ...
+# Subtest: failed admission retains exact plan and observer authority pins without launching a browser
+ok 657 - failed admission retains exact plan and observer authority pins without launching a browser
+  ---
+  duration_ms: 4.4065
+  type: 'test'
+  ...
+# Subtest: trace overflow retains exactly the bounded prefix, closes the stream and is visibly nonpassing
+ok 658 - trace overflow retains exactly the bounded prefix, closes the stream and is visibly nonpassing
+  ---
+  duration_ms: 0.55425
+  type: 'test'
+  ...
+# Subtest: complete traces preserve bytes; timeout and close failure stay separate capture failures
+ok 659 - complete traces preserve bytes; timeout and close failure stay separate capture failures
+  ---
+  duration_ms: 22.174334
+  type: 'test'
+  ...
+# Subtest: capture failure never suppresses actual Retry/export/reload, and those follow the passive window
+ok 660 - capture failure never suppresses actual Retry/export/reload, and those follow the passive window
+  ---
+  duration_ms: 0.386833
+  type: 'test'
+  ...
+# Subtest: route failure is retained without Retry or additional attempts; passive failure still allows independent functional check
+ok 661 - route failure is retained without Retry or additional attempts; passive failure still allows independent functional check
+  ---
+  duration_ms: 0.1955
+  type: 'test'
+  ...
+# Subtest: cleanup attempts every owned resource and cannot report completion after one close fails
+ok 662 - cleanup attempts every owned resource and cannot report completion after one close fails
+  ---
+  duration_ms: 0.36375
+  type: 'test'
+  ...
+# Subtest: task analysis retains full slow boundary intervals, accepts both actual Chrome task names and never claims exclusive cost
+ok 663 - task analysis retains full slow boundary intervals, accepts both actual Chrome task names and never claims exclusive cost
+  ---
+  duration_ms: 0.606291
+  type: 'test'
+  ...
+# Subtest: task analysis rejects ambiguous renderers/markers/task families, missing task coverage and malformed intervals
+ok 664 - task analysis rejects ambiguous renderers/markers/task families, missing task coverage and malformed intervals
+  ---
+  duration_ms: 0.5635
+  type: 'test'
+  ...
+# Subtest: frame summary retains slow samples and marks visibility/focus loss rather than filtering them away
+ok 665 - frame summary retains slow samples and marks visibility/focus loss rather than filtering them away
+  ---
+  duration_ms: 0.162458
+  type: 'test'
+  ...
+# Subtest: Academy and World explicitly ship the complete offline tuning and module-worker closure
+ok 666 - Academy and World explicitly ship the complete offline tuning and module-worker closure
+  ---
+  duration_ms: 2065.792875
+  type: 'test'
+  ...
+# Subtest: bundled FPV pins final default bytes and has its own bounded cache outside core
+ok 667 - bundled FPV pins final default bytes and has its own bounded cache outside core
+  ---
+  duration_ms: 2003.175083
+  type: 'test'
+  ...
+# Subtest: bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+ok 668 - bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+  ---
+  duration_ms: 789.782875
+  type: 'test'
+  ...
+# Subtest: actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+ok 669 - actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+  ---
+  duration_ms: 3400.896583
+  type: 'test'
+  ...
+# Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+ok 670 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+  ---
+  duration_ms: 1112.197792
+  type: 'test'
+  ...
+# Subtest: vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+ok 671 - vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+  ---
+  duration_ms: 579.151084
+  type: 'test'
+  ...
+# Subtest: rewritten archive hashes cannot replace a reviewed vendor dependency
+ok 672 - rewritten archive hashes cannot replace a reviewed vendor dependency
+  ---
+  duration_ms: 661.733542
+  type: 'test'
+  ...
+# Subtest: package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+ok 673 - package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+  ---
+  duration_ms: 0.537958
+  type: 'test'
+  ...
+# Subtest: source budget includes the final source-inventory member, not only its listed dependencies
+ok 674 - source budget includes the final source-inventory member, not only its listed dependencies
+  ---
+  duration_ms: 493.939834
+  type: 'test'
+  ...
+# Subtest: generic optional worker cleanup owns only its exact package scope
+ok 675 - generic optional worker cleanup owns only its exact package scope
+  ---
+  duration_ms: 0.512542
+  type: 'test'
+  ...
+# Subtest: browser restart requires all pages closed and a confirmed persistent-context shutdown
+ok 676 - browser restart requires all pages closed and a confirmed persistent-context shutdown
+  ---
+  duration_ms: 4.078875
+  type: 'test'
+  ...
+# Subtest: timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+ok 677 - timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+  ---
+  duration_ms: 1.732958
+  type: 'test'
+  ...
+# Subtest: an expired restart cannot start browser acquisition after cleanup has begun
+ok 678 - an expired restart cannot start browser acquisition after cleanup has begun
+  ---
+  duration_ms: 1.282958
+  type: 'test'
+  ...
+# Subtest: offline action requires fresh observable work, native Enter and a fresh terminal status
+ok 679 - offline action requires fresh observable work, native Enter and a fresh terminal status
+  ---
+  duration_ms: 3.4005
+  type: 'test'
+  ...
+# Subtest: offline actions reject hidden controls before creating a witness or sending a key
+ok 680 - offline actions reject hidden controls before creating a witness or sending a key
+  ---
+  duration_ms: 0.148917
+  type: 'test'
+  ...
+# Subtest: overall observation deadline encloses the journey but preserves report and cleanup
+ok 681 - overall observation deadline encloses the journey but preserves report and cleanup
+  ---
+  duration_ms: 1.443625
+  type: 'test'
+  ...
+# Subtest: installation observer covers all three public app identities and current offline controls
+ok 682 - installation observer covers all three public app identities and current offline controls
+  ---
+  duration_ms: 2.63475
+  type: 'test'
+  ...
+# Subtest: launcher destinations preserve exact app identity and the defined locale query
+ok 683 - launcher destinations preserve exact app identity and the defined locale query
+  ---
+  duration_ms: 0.773709
+  type: 'test'
+  ...
+# Subtest: bounded operation returns results, preserves errors, and rejects stalls
+ok 684 - bounded operation returns results, preserves errors, and rejects stalls
+  ---
+  duration_ms: 6.55525
+  type: 'test'
+  ...
+# Subtest: Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+ok 685 - Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+  ---
+  duration_ms: 1.225375
+  type: 'test'
+  ...
+# Subtest: opt-in quota denial preserves pointers, resets before retry and retains exact helper authority
+ok 686 - opt-in quota denial preserves pointers, resets before retry and retains exact helper authority
+  ---
+  duration_ms: 1.329791
+  type: 'test'
+  ...
+# Subtest: quota selection defaults to Academy and accepts only the explicit all-packages enum
+ok 687 - quota selection defaults to Academy and accepts only the explicit all-packages enum
+  ---
+  duration_ms: 0.832
+  type: 'test'
+  ...
+# Subtest: every quota-denied package preserves all pointers and leaves no package-scoped staging or worker
+ok 688 - every quota-denied package preserves all pointers and leaves no package-scoped staging or worker
+  ---
+  duration_ms: 1.761583
+  type: 'test'
+  ...
+# Subtest: all-package quota orchestration keeps native controls, scoped fixtures and default receipt compatibility
+ok 689 - all-package quota orchestration keeps native controls, scoped fixtures and default receipt compatibility
+  ---
+  duration_ms: 1.409
+  type: 'test'
+  ...
+# Subtest: Worlds removal opens the public Library and requires its actual removal control to be visible
+ok 690 - Worlds removal opens the public Library and requires its actual removal control to be visible
+  ---
+  duration_ms: 1.435625
+  type: 'test'
+  ...
+# Subtest: profile import and every export open the ordinary transfer disclosure without toggling it closed
+ok 691 - profile import and every export open the ordinary transfer disclosure without toggling it closed
+  ---
+  duration_ms: 0.788042
+  type: 'test'
+  ...
+# Subtest: profile export expectations preserve the entire legacy fixture and current radio library
+ok 692 - profile export expectations preserve the entire legacy fixture and current radio library
+  ---
+  duration_ms: 0.20925
+  type: 'test'
+  ...
+# Subtest: offline restart closes every page and rejects surviving windows
+ok 693 - offline restart closes every page and rejects surviving windows
+  ---
+  duration_ms: 0.203459
+  type: 'test'
+  ...
+# Subtest: access-gated candidates require normal-form credentials and never expose them in errors
+ok 694 - access-gated candidates require normal-form credentials and never expose them in errors
+  ---
+  duration_ms: 0.20325
+  type: 'test'
+  ...
+# Subtest: historical UI routing requires explicit mode and exact prior Academy origin/path
+ok 695 - historical UI routing requires explicit mode and exact prior Academy origin/path
+  ---
+  duration_ms: 9.898375
+  type: 'test'
+  ...
+# Subtest: current candidate always uses current admission and historical admission is explicitly prior-only
+ok 696 - current candidate always uses current admission and historical admission is explicitly prior-only
+  ---
+  duration_ms: 1.452959
+  type: 'test'
+  ...
+# Subtest: historical reveal mapping receives exactly one final Enter; current path retains current action
+ok 697 - historical reveal mapping receives exactly one final Enter; current path retains current action
+  ---
+  duration_ms: 1.701334
+  type: 'test'
+  ...
+# Subtest: historical authority pins both helpers and refuses changed authority at completion
+ok 698 - historical authority pins both helpers and refuses changed authority at completion
+  ---
+  duration_ms: 3.496666
+  type: 'test'
+  ...
+# Subtest: download retry restoration rejects changed pointers, missing original workers and temporary resources
+ok 699 - download retry restoration rejects changed pointers, missing original workers and temporary resources
+  ---
+  duration_ms: 9.831209
+  type: 'test'
+  ...
+# Subtest: download restoration freshly exports both Academy records and reads the saved World again
+ok 700 - download restoration freshly exports both Academy records and reads the saved World again
+  ---
+  duration_ms: 2.54025
+  type: 'test'
+  ...
+# Subtest: optional practice archives are reproducible, admitted completely and absent from core build inputs
+ok 701 - optional practice archives are reproducible, admitted completely and absent from core build inputs
+  ---
+  duration_ms: 1430.568042
+  type: 'test'
+  ...
+# Subtest: release-qualified practice retains the full shared menu stylesheet closure within its limit
+ok 702 - release-qualified practice retains the full shared menu stylesheet closure within its limit
+  ---
+  duration_ms: 139.198208
+  type: 'test'
+  ...
+# Subtest: an unexpected runtime import fails closed before a package can be published
+ok 703 - an unexpected runtime import fails closed before a package can be published
+  ---
+  duration_ms: 285.478708
+  type: 'test'
+  ...
+# Subtest: worker reports progress, validates cached dependencies and detects eviction
+ok 704 - worker reports progress, validates cached dependencies and detects eviction
+  ---
+  duration_ms: 4.430125
+  type: 'test'
+  ...
+# Subtest: cancel discards only the incomplete version and keeps previous and foreign caches
+ok 705 - cancel discards only the incomplete version and keeps previous and foreign caches
+  ---
+  duration_ms: 0.491083
+  type: 'test'
+  ...
+# Subtest: optional worker verifies every byte before activation and only replaces its own scope cache
+ok 706 - optional worker verifies every byte before activation and only replaces its own scope cache
+  ---
+  duration_ms: 0.91225
+  type: 'test'
+  ...
+# Subtest: corruption or quota prevents optional activation and preserves previously installed caches
+ok 707 - corruption or quota prevents optional activation and preserves previously installed caches
+  ---
+  duration_ms: 3.453125
+  type: 'test'
+  ...
+# Subtest: counts complete manifest bytes, stable launcher copies and pointer only for active version
+ok 708 - counts complete manifest bytes, stable launcher copies and pointer only for active version
+  ---
+  duration_ms: 1.369542
+  type: 'test'
+  ...
+# Subtest: explicit future reserve is not a fictitious retained release or a capacity pass
+ok 709 - explicit future reserve is not a fictitious retained release or a capacity pass
+  ---
+  duration_ms: 0.119
+  type: 'test'
+  ...
+# Subtest: even an empty selection exactly at the guard still requires complete-site assembly
+ok 710 - even an empty selection exactly at the guard still requires complete-site assembly
+  ---
+  duration_ms: 0.06875
+  type: 'test'
+  ...
+# Subtest: rejects duplicate immutable versions and competing stable launchers
+ok 711 - rejects duplicate immutable versions and competing stable launchers
+  ---
+  duration_ms: 0.364
+  type: 'test'
+  ...
+# Subtest: rejects invalid core claims, counts and overflowing sums
+ok 712 - rejects invalid core claims, counts and overflowing sums
+  ---
+  duration_ms: 0.191542
+  type: 'test'
+  ...
+# Subtest: rejects unsafe and duplicate pins, absent entry and absent active launcher
+ok 713 - rejects unsafe and duplicate pins, absent entry and absent active launcher
+  ---
+  duration_ms: 0.8915
+  type: 'test'
+  ...
+# Subtest: config resolves paths relative to itself and pins candidate manifests without admitting archives
+ok 714 - config resolves paths relative to itself and pins candidate manifests without admitting archives
+  ---
+  duration_ms: 546.732458
+  type: 'test'
+  ...
+# Subtest: the production main workflow stages practice before capacity and verifies the deployed selector
+ok 715 - the production main workflow stages practice before capacity and verifies the deployed selector
+  ---
+  duration_ms: 2.903667
+  type: 'test'
+  ...
+# Subtest: main Pages staging emits an explicit empty catalogue without GitHub and refuses replacement
+ok 716 - main Pages staging emits an explicit empty catalogue without GitHub and refuses replacement
+  ---
+  duration_ms: 489.055584
+  type: 'test'
+  ...
+# Subtest: optional CLI verifies local originals without GitHub and stages only downloaded reviewed selectors
+ok 717 - optional CLI verifies local originals without GitHub and stages only downloaded reviewed selectors
+  ---
+  duration_ms: 3286.166583
+  type: 'test'
+  ...
+# Subtest: main Pages stages reviewed originals and public verification rejects stale versions or changed bytes
+ok 718 - main Pages stages reviewed originals and public verification rejects stale versions or changed bytes
+  ---
+  duration_ms: 2033.557417
+  type: 'test'
+  ...
+# Subtest: optional selector remains unchanged after foreign tags, changed downloads or concurrent edits
+    # Subtest: tag
+    ok 1 - tag
+      ---
+      duration_ms: 1043.550792
+      type: 'test'
+      ...
+    # Subtest: bytes
+    ok 2 - bytes
+      ---
+      duration_ms: 985.279959
+      type: 'test'
+      ...
+    # Subtest: concurrent
+    ok 3 - concurrent
+      ---
+      duration_ms: 1725.533
+      type: 'test'
+      ...
+    1..3
+ok 719 - optional selector remains unchanged after foreign tags, changed downloads or concurrent edits
+  ---
+  duration_ms: 3755.172667
+  type: 'test'
+  ...
+# Subtest: optional upload refuses already published releases without sending any write request
+ok 720 - optional upload refuses already published releases without sending any write request
+  ---
+  duration_ms: 803.738459
+  type: 'test'
+  ...
+# Subtest: draft delivery uploads the envelope last, verifies downloaded originals and resumes without replacement
+ok 721 - draft delivery uploads the envelope last, verifies downloaded originals and resumes without replacement
+  ---
+  duration_ms: 12239.62325
+  type: 'test'
+  ...
+# Subtest: optional delivery requires an explicit canonical positive release ID before any network access
+ok 722 - optional delivery requires an explicit canonical positive release ID before any network access
+  ---
+  duration_ms: 1419.796458
+  type: 'test'
+  ...
+1..722
+# tests 731
+# suites 0
+# pass 731
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 130894.682125

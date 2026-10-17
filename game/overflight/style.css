@@ -794,6 +794,16 @@ button:disabled {
   font: 700 clamp(22px, 3vw, 36px) var(--fk-font-mono, monospace);
   margin-top: 8px !important;
 }
+.overflight-result-detail {
+  grid-column: 1 / -1;
+}
+#result-stats .overflight-result-detail dd {
+  font: 600 clamp(16px, 1.6vw, 20px) / 1.45 var(--fk-font-ui, 'Exo 2', sans-serif);
+  overflow-wrap: anywhere;
+}
+[data-text-size='large'] #result-stats .overflight-result-detail dd {
+  font-size: 22px;
+}
 .overflight-result-milestones {
   display: flex;
   gap: 8px;

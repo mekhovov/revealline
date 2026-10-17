@@ -1,0 +1,95 @@
+- main:
+  - button "Menu"
+  - generic: FPV Survivals
+  - button "Pause" [disabled]
+  - region "Overflight battlefield":
+    - generic: Hull 100 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Plating −10%
+    - generic: Sortie
+    - strong: 00:22
+    - generic: Level 3
+    - generic: 73 Cleared
+    - paragraph: Sector 3 · Finish the hunt · Targets 7/7
+    - generic: Chain 24 · ×4 · 5.5s
+    - generic: Contract 2/5 · At risk 54100
+    - paragraph: Automated review · Objective route
+    - button "Take control"
+    - generic "Diagnostics"
+    - generic: Quick recharge 2
+    - generic: Long pass 2
+    - generic: Connected hunt 2
+    - generic: Disrupt the guard 1
+    - generic: Reactive plating 1
+    - generic: Boost 0.8s
+    - generic: RUSH ACTIVE 2.9s
+    - progressbar "Rush"
+    - generic: FPV Survivals · Raid · Contract Marathon
+    - status: RUSH ACTIVE 5.0s
+  - text: ⌃ ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+  - dialog "Results":
+    - heading "Results" [level=1]
+    - paragraph: FPV Survivals · Raid · Contract Marathon
+    - generic: ✦
+    - paragraph: Contract 2/5
+    - heading "Contract complete" [level=2]
+    - paragraph: Bank your score or risk the next contract.
+    - paragraph: Automated review · Objective route
+    - term: Time
+    - definition: 00:22
+    - term: Score
+    - definition: 28,400
+    - term: Cleared
+    - definition: "73"
+    - term: Best chain
+    - definition: "27"
+    - term: Hull lost
+    - definition: "0"
+    - term: Couriers caught
+    - definition: "2"
+    - term: Couriers escaped
+    - definition: "12"
+    - term: Armor breaks
+    - definition: "7"
+    - term: At risk
+    - definition: "54100"
+    - term: Total flight time
+    - definition: 00:43
+    - term: Contract score multiplier
+    - definition: ×1.25
+    - term: Build ranks
+    - definition: 8/8
+    - term: Next contract
+    - definition: Split Compound · Guarded approaches · attached escorts screen the new layout
+    - generic: ✓ Command tank destroyed
+    - generic: ✓ No hull damage
+    - generic: ✓ No airframes lost
+    - heading "Your build" [level=3]
+    - strong: Quick recharge
+    - generic: Level 2
+    - strong: Long pass
+    - generic: Level 2
+    - strong: Connected hunt
+    - generic: Level 2
+    - strong: Disrupt the guard
+    - generic: Level 1
+    - strong: Reactive plating
+    - generic: Level 1
+    - heading "World mastery" [level=3]
+    - list:
+      - listitem: ○ Complete this sortie
+      - listitem: ○ Complete without losing an airframe
+      - listitem: ○ Complete with a chain of at least ten · 10/10
+    - paragraph: Review run · achievements are not saved
+    - generic: Engineer — A fine route through a complicated place.
+    - status: Bank your score or risk the next contract.
+    - button "Retry same ground"
+    - button "New sortie"
+    - button "Bank and finish"
+    - button "Risk it · next contract"
+    - button "Download measurements"
+    - paragraph: Fastest clear and highest score are separate records. Same ground, a new approach.
+    - button "Back"
+    - button "Retry" [active]
+- text: + + + + + + + + +

@@ -1,0 +1,570 @@
+TAP version 13
+# Subtest: evolved Fan clears late pursuers only inside a deliberately overlapped pass, without pulse
+ok 1 - evolved Fan clears late pursuers only inside a deliberately overlapped pass, without pulse
+  ---
+  duration_ms: 47.632875
+  ...
+# Subtest: no-pulse policies reject pulse and the wrong support, even when no preferred draft remains
+ok 2 - no-pulse policies reject pulse and the wrong support, even when no preferred draft remains
+  ---
+  duration_ms: 10.561708
+  ...
+# Subtest: audit probes wait for two pulse ranks and only return ordinary inputs
+ok 3 - audit probes wait for two pulse ranks and only return ordinary inputs
+  ---
+  duration_ms: 7.236458
+  ...
+# Subtest: both primary branches have an earned no-pulse completion route and retain the intended support
+ok 4 - both primary branches have an earned no-pulse completion route and retain the intended support
+  ---
+  duration_ms: 27979.948083
+  ...
+# Subtest: fixed small-circle and wall input cannot turn early pulse ranks into a free sortie
+ok 5 - fixed small-circle and wall input cannot turn early pulse ranks into a free sortie
+  ---
+  duration_ms: 1097.851083
+  ...
+# Subtest: Overflight copy is registered in shared Voice Studio with exact EN/UK text and truthful recording reuse
+ok 6 - Overflight copy is registered in shared Voice Studio with exact EN/UK text and truthful recording reuse
+  ---
+  duration_ms: 2.288125
+  ...
+# Subtest: accepted milestones are bounded once per run, use same-step danger, and never replay paused facts
+ok 7 - accepted milestones are bounded once per run, use same-step danger, and never replay paused facts
+  ---
+  duration_ms: 1.3415
+  ...
+# Subtest: shared director enforces its existing incident budget and cooldown for Overflight families
+ok 8 - shared director enforces its existing incident budget and cooldown for Overflight families
+  ---
+  duration_ms: 7.670083
+  ...
+# Subtest: visible settings govern the very same shared commentary instance, with no autoplay or late missing voice
+ok 9 - visible settings govern the very same shared commentary instance, with no autoplay or late missing voice
+  ---
+  duration_ms: 13.485667
+  ...
+# Subtest: a ready result recording uses the shared paused-result dialogue path and releases its music duck on hide
+ok 10 - a ready result recording uses the shared paused-result dialogue path and releases its music duck on hide
+  ---
+  duration_ms: 65.398083
+  ...
+# Subtest: bounded defeat facts capture exact identities before slot reuse and never cap death rewards
+ok 11 - bounded defeat facts capture exact identities before slot reuse and never cap death rewards
+  ---
+  duration_ms: 47.047458
+  ...
+# Subtest: fixtures never fabricate deaths and cosmetic consumption leaves gameplay and RNG identical
+ok 12 - fixtures never fabricate deaths and cosmetic consumption leaves gameplay and RNG identical
+  ---
+  duration_ms: 318.176459
+  ...
+# Subtest: every added semantic audio cue resolves to a native recipe and bounded spatial mix
+ok 13 - every added semantic audio cue resolves to a native recipe and bounded spatial mix
+  ---
+  duration_ms: 4.371625
+  ...
+# Subtest: upgrade and result motifs survive gameplay pause but obey gesture unlock, menu and master preferences
+ok 14 - upgrade and result motifs survive gameplay pause but obey gesture unlock, menu and master preferences
+  ---
+  duration_ms: 185.598458
+  ...
+# Subtest: explicit result dialogue bypasses only gameplay pause, retaining gesture, full pause and preference gates
+ok 15 - explicit result dialogue bypasses only gameplay pause, retaining gesture, full pause and preference gates
+  ---
+  duration_ms: 15.066458
+  ...
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 16 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 8.015375
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 17 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 127.189208
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 18 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 188.542208
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 19 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 57.279375
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 20 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 974.521791
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 21 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 1.82875
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 22 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.528125
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 23 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.976916
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 24 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 1.575333
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 25 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 5.088417
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 26 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 5.099959
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 27 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.226042
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 28 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.744458
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 29 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 21.928125
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 30 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 4.102209
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 31 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 2.032875
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 32 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.348
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 33 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 1.367917
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 34 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.583208
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 35 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 1.11075
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 36 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 1.973792
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 37 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.588958
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 38 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 1.524625
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 39 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 6.887958
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 40 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 31.177167
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 41 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.160625
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 42 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.141292
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 43 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 69.330416
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 44 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.511875
+  ...
+# Subtest: audio tap branches after shared master and only disconnects its owned destination
+ok 45 - audio tap branches after shared master and only disconnects its owned destination
+  ---
+  duration_ms: 8.257291
+  ...
+# Subtest: unavailable audio capture releases its destination without touching normal playback
+ok 46 - unavailable audio capture releases its destination without touching normal playback
+  ---
+  duration_ms: 0.167959
+  ...
+# Subtest: review capture clones game audio, keeps its limit and releases clones and tap once on completion
+ok 47 - review capture clones game audio, keeps its limit and releases clones and tap once on completion
+  ---
+  duration_ms: 3.292
+  ...
+# Subtest: review audio is owned and released after cancel
+ok 48 - review audio is owned and released after cancel
+  ---
+  duration_ms: 0.802125
+  ...
+# Subtest: review audio is owned and released after error
+ok 49 - review audio is owned and released after error
+  ---
+  duration_ms: 0.287125
+  ...
+# Subtest: review audio is owned and released after oversize
+ok 50 - review audio is owned and released after oversize
+  ---
+  duration_ms: 15.72525
+  ...
+# Subtest: review audio is owned and released after constructor
+ok 51 - review audio is owned and released after constructor
+  ---
+  duration_ms: 3.302584
+  ...
+# Subtest: review audio is owned and released after start
+ok 52 - review audio is owned and released after start
+  ---
+  duration_ms: 3.733792
+  ...
+# Subtest: review audio is owned and released after attach
+ok 53 - review audio is owned and released after attach
+  ---
+  duration_ms: 1.042083
+  ...
+# Subtest: review steering routes around cover to collect salvage through public movement input
+ok 54 - review steering routes around cover to collect salvage through public movement input
+  ---
+  duration_ms: 75.764375
+  ...
+# Subtest: review avoidance predicts the actual V4 crossing, independently of obsolete pursuit steering
+ok 55 - review avoidance predicts the actual V4 crossing, independently of obsolete pursuit steering
+  ---
+  duration_ms: 15.775083
+  ...
+# Subtest: lure-and-return review route commits to a salvage patch instead of switching every input sample
+ok 56 - lure-and-return review route commits to a salvage patch instead of switching every input sample
+  ---
+  duration_ms: 38.245
+  ...
+# Subtest: lure-and-return review route leaves a rear-weapon pass before making another approach
+ok 57 - lure-and-return review route leaves a rear-weapon pass before making another approach
+  ---
+  duration_ms: 59.545458
+  ...
+# Subtest: Riy V2 round trip preserves directional settings and explicit copies leave V1 immutable
+ok 58 - Riy V2 round trip preserves directional settings and explicit copies leave V1 immutable
+  ---
+  duration_ms: 72.013375
+  ...
+# Subtest: new authoring fields preview the exact per-role range and arc
+ok 59 - new authoring fields preview the exact per-role range and arc
+  ---
+  duration_ms: 16.736042
+  ...
+# Subtest: follow arcs retain flight heading: Sweeper covers rear and Breaker reaches forward at 180
+ok 60 - follow arcs retain flight heading: Sweeper covers rear and Breaker reaches forward at 180
+  ---
+  duration_ms: 20.802916
+  ...
+# Subtest: squad drafting owns both combat slots, locks branches and keeps ten legal choices
+ok 61 - squad drafting owns both combat slots, locks branches and keeps ten legal choices
+  ---
+  duration_ms: 22.96225
+  ...
+# Subtest: chain shares one damage budget among at most three unique overlapping bodies
+ok 62 - chain shares one damage budget among at most three unique overlapping bodies
+  ---
+  duration_ms: 10.087167
+  ...
+# Subtest: burst commits its second hit to the same guarded target, without retargeting a death
+ok 63 - burst commits its second hit to the same guarded target, without retargeting a death
+  ---
+  duration_ms: 13.880083
+  ...
+# Subtest: trail branch reduces impact and leaves harmless bounded slowing fields
+ok 64 - trail branch reduces impact and leaves harmless bounded slowing fields
+  ---
+  duration_ms: 11.685167
+  ...
+# Subtest: Focus begins its three seconds on arrival, never resets fire cadence, and cancels an unreachable approach
+ok 65 - Focus begins its three seconds on arrival, never resets fire cadence, and cancels an unreachable approach
+  ---
+  duration_ms: 33.075
+  ...
+# Subtest: Focus spends nothing without targets, respects death/leash, and freezes with all other gameplay clocks
+ok 66 - Focus spends nothing without targets, respects death/leash, and freezes with all other gameplay clocks
+  ---
+  duration_ms: 20.440333
+  ...
+# Subtest: Focus ends on target death without selecting another priority target or renewing cooldown
+ok 67 - Focus ends on target death without selecting another priority target or renewing cooldown
+  ---
+  duration_ms: 11.752583
+  ...
+# Subtest: rapid authored trail fire stays within its fixed pool and branch upgrades do not reset cooldowns
+ok 68 - rapid authored trail fire stays within its fixed pool and branch upgrades do not reset cooldowns
+  ---
+  duration_ms: 91.552875
+  ...
+# Subtest: a long authored legacy Focus upgrades to a bounded nonoverlapping command without changing the source
+ok 69 - a long authored legacy Focus upgrades to a bounded nonoverlapping command without changing the source
+  ---
+  duration_ms: 8.063875
+  ...
+# Subtest: drafts teach a primary branch before escorts and keep its evolution reachable within five choices
+ok 70 - drafts teach a primary branch before escorts and keep its evolution reachable within five choices
+  ---
+  duration_ms: 11.682917
+  ...
+# Subtest: two authored introduction packs show rear then front arrivals and never refill cleared bodies
+ok 71 - two authored introduction packs show rear then front arrivals and never refill cleared bodies
+  ---
+  duration_ms: 435.931708
+  ...
+# Subtest: blocked V3 priority admissions retry at ten Hz while committed simulation keeps stepping
+ok 72 - blocked V3 priority admissions retry at ten Hz while committed simulation keeps stepping
+  ---
+  duration_ms: 24.865625
+  ...
+# Subtest: V2 squad flight and Focus are deterministic for repeated ordinary inputs
+ok 73 - V2 squad flight and Focus are deterministic for repeated ordinary inputs
+  ---
+  duration_ms: 425.392
+  ...
+# Subtest: V3 review pilot is read-only and deterministic while avoiding a committed lane
+ok 74 - V3 review pilot is read-only and deterministic while avoiding a committed lane
+  ---
+  duration_ms: 122.741667
+  ...
+# Subtest: V3 review pilot is read-only and deterministic while avoiding a committed fan
+ok 75 - V3 review pilot is read-only and deterministic while avoiding a committed fan
+  ---
+  duration_ms: 53.837375
+  ...
+# Subtest: V3 review pilot is read-only and deterministic while avoiding a committed ground
+ok 76 - V3 review pilot is read-only and deterministic while avoiding a committed ground
+  ---
+  duration_ms: 51.010417
+  ...
+# Subtest: squad rerolls replace escort fork cards while preserving the next primary or evolution opportunity
+ok 77 - squad rerolls replace escort fork cards while preserving the next primary or evolution opportunity
+  ---
+  duration_ms: 10.039208
+  ...
+# Subtest: three worlds have quiet, distinct bounded ambience using original shared recipes
+ok 78 - three worlds have quiet, distinct bounded ambience using original shared recipes
+  ---
+  duration_ms: 1.151625
+  ...
+# Subtest: atmosphere advances only on accepted gameplay time and foreground danger removes owned voices
+ok 79 - atmosphere advances only on accepted gameplay time and foreground danger removes owned voices
+  ---
+  duration_ms: 7.624
+  ...
+# Subtest: warning charge follows actual remaining time, ignores active ground patches and cancelled/reused attacks
+ok 80 - warning charge follows actual remaining time, ignores active ground patches and cancelled/reused attacks
+  ---
+  duration_ms: 0.46275
+  ...
+# Subtest: audible warning charge wins over a more advanced distant attack in either pool order
+ok 81 - audible warning charge wins over a more advanced distant attack in either pool order
+  ---
+  duration_ms: 1.925375
+  ...
+# Subtest: two local warning rungs produce only the most urgent cue without delayed backlog
+ok 82 - two local warning rungs produce only the most urgent cue without delayed backlog
+  ---
+  duration_ms: 8.754833
+  ...
+# Subtest: leaving warning range releases local ambience and escort feedback without replay on return
+ok 83 - leaving warning range releases local ambience and escort feedback without replay on return
+  ---
+  duration_ms: 4.465542
+  ...
+# Subtest: inaudible foreground events do not consume nearby charge, escort or ambience opportunities
+ok 84 - inaudible foreground events do not consume nearby charge, escort or ambience opportunities
+  ---
+  duration_ms: 25.859208
+  ...
+# Subtest: local foreground damage suppresses a charge rung without a stale cue after it clears
+ok 85 - local foreground damage suppresses a charge rung without a stale cue after it clears
+  ---
+  duration_ms: 0.934417
+  ...
+# Subtest: squad shots are distinct but share a cadence cap and cannot backlog through warnings
+ok 86 - squad shots are distinct but share a cadence cap and cannot backlog through warnings
+  ---
+  duration_ms: 1.24775
+  ...
+# Subtest: simultaneous squad shots alternate roles without increasing the shared cadence
+ok 87 - simultaneous squad shots alternate roles without increasing the shared cadence
+  ---
+  duration_ms: 0.291708
+  ...
+# Subtest: an inaudible escort cannot spend the local cue slot or replay its shot on return
+ok 88 - an inaudible escort cannot spend the local cue slot or replay its shot on return
+  ---
+  duration_ms: 0.095917
+  ...
+# Subtest: shared mixer suppresses inaudible sources before cooldown admission in every board
+ok 89 - shared mixer suppresses inaudible sources before cooldown admission in every board
+  ---
+  duration_ms: 55.124625
+  ...
+# Subtest: atmosphere uses shared mute/pause/cleanup and yields immediately to warning foreground
+ok 90 - atmosphere uses shared mute/pause/cleanup and yields immediately to warning foreground
+  ---
+  duration_ms: 18.464709
+  ...
+# Subtest: armor changes reserve a short foreground window before later destruction reactions
+ok 91 - armor changes reserve a short foreground window before later destruction reactions
+  ---
+  duration_ms: 13.984208
+  ...
+# Subtest: cross-frame friendly impacts cannot mask player damage and each impact channel remains bounded
+ok 92 - cross-frame friendly impacts cannot mask player damage and each impact channel remains bounded
+  ---
+  duration_ms: 15.221375
+  ...
+# Subtest: native adapter admits damage and armor ahead of ordinary impacts while Classic remains independent of gore
+ok 93 - native adapter admits damage and armor ahead of ordinary impacts while Classic remains independent of gore
+  ---
+  duration_ms: 1.411375
+  ...
+# Subtest: audible charge briefly attenuates shared music once, using the accepted gameplay clock
+ok 94 - audible charge briefly attenuates shared music once, using the accepted gameplay clock
+  ---
+  duration_ms: 0.362292
+  ...
+# Subtest: distant warnings and friendly fire do not attenuate music; pause, fixtures and retry release only the owned lease
+ok 95 - distant warnings and friendly fire do not attenuate music; pause, fixtures and retry release only the owned lease
+  ---
+  duration_ms: 0.500583
+  ...
+# Subtest: native audio forwards music gain ownership and only local priority events request it
+ok 96 - native audio forwards music gain ownership and only local priority events request it
+  ---
+  duration_ms: 0.458958
+  ...
+# Subtest: temporary leases attenuate synth without restarting or changing saved controls
+ok 97 - temporary leases attenuate synth without restarting or changing saved controls
+  ---
+  duration_ms: 44.858375
+  ...
+# Subtest: temporary leases attenuate MP3 without restarting or changing saved controls
+ok 98 - temporary leases attenuate MP3 without restarting or changing saved controls
+  ---
+  duration_ms: 35.5855
+  ...
+# Subtest: volume edits, zero volume and paused listening intent survive lease release
+ok 99 - volume edits, zero volume and paused listening intent survive lease release
+  ---
+  duration_ms: 14.2315
+  ...
+# Subtest: an idle lease neither enables audio nor changes explicit mute/master state
+ok 100 - an idle lease neither enables audio nor changes explicit mute/master state
+  ---
+  duration_ms: 1.169208
+  ...
+# Subtest: lease changes during asynchronous original acquisition use the latest mix once playback begins
+ok 101 - lease changes during asynchronous original acquisition use the latest mix once playback begins
+  ---
+  duration_ms: 11.35275
+  ...
+# Subtest: lease release composes with an in-flight fade and stays correct on the next track
+ok 102 - lease release composes with an in-flight fade and stays correct on the next track
+  ---
+  duration_ms: 65.54975
+  ...
+# Subtest: suspension and lease cleanup never resume playback or lose the surviving owner
+ok 103 - suspension and lease cleanup never resume playback or lose the surviving owner
+  ---
+  duration_ms: 14.874917
+  ...
+# Subtest: player disposal clears only this player’s leases and late releases are terminal no-ops
+ok 104 - player disposal clears only this player’s leases and late releases are terminal no-ops
+  ---
+  duration_ms: 18.083042
+  ...
+# Subtest: invalid factors and failed mixer acquisition do not leave hidden attenuation
+ok 105 - invalid factors and failed mixer acquisition do not leave hidden attenuation
+  ---
+  duration_ms: 3.864542
+  ...
+# Subtest: reentrant disposal during mixer allocation cannot publish a surviving lease
+ok 106 - reentrant disposal during mixer allocation cannot publish a surviving lease
+  ---
+  duration_ms: 1.231208
+  ...
+# Subtest: Overflight priority cues borrow synth gain without overriding commentator or volume intent
+ok 107 - Overflight priority cues borrow synth gain without overriding commentator or volume intent
+  ---
+  duration_ms: 14.31725
+  ...
+# Subtest: Overflight priority cues borrow MP3 gain without overriding commentator or volume intent
+ok 108 - Overflight priority cues borrow MP3 gain without overriding commentator or volume intent
+  ---
+  duration_ms: 10.165083
+  ...
+# Subtest: MP3 master gain composes once with independent music leases without transport or library changes
+ok 109 - MP3 master gain composes once with independent music leases without transport or library changes
+  ---
+  duration_ms: 47.738041
+  ...
+# Subtest: master changes during original acquisition govern eventual playback without overriding desired
+ok 110 - master changes during original acquisition govern eventual playback without overriding desired
+  ---
+  duration_ms: 18.748541
+  ...
+# Subtest: deferred native Play after mute stays silent and cannot restart explicitly paused music
+ok 111 - deferred native Play after mute stays silent and cannot restart explicitly paused music
+  ---
+  duration_ms: 12.339834
+  ...
+# Subtest: master unmute and lease cleanup cannot clear lifecycle suspension or disposed media ownership
+ok 112 - master unmute and lease cleanup cannot clear lifecycle suspension or disposed media ownership
+  ---
+  duration_ms: 14.607834
+  ...
+1..112
+# tests 112
+# suites 0
+# pass 112
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 29815.875542

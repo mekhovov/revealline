@@ -6,6 +6,11 @@ import {
   required,
   stableId,
 } from '../../game/data-json.mjs';
+import {
+  TUNED_RESPONSE_FORMAT,
+  validateTunedResponse,
+  tunedResponseIdentity,
+} from './flight-response.mjs';
 
 export const RADIO_FORMAT = 'RadioProfile.v1';
 export const AXIS_RADIO_FORMAT = 'RadioProfile.v2';
@@ -228,6 +233,7 @@ export const DEFAULT_RESPONSE = Object.freeze({
 });
 export function validateFlightResponse(input) {
   const p = plain(input);
+  if (p.format === TUNED_RESPONSE_FORMAT) return validateTunedResponse(p);
   exactKeys(
     p,
     ['format', 'id', 'name', 'maxRate', 'maxTilt', 'expo', 'responseTicks'],
@@ -261,7 +267,12 @@ export function responseCurve(input, expo) {
     )
   );
 }
-export const responseIdentity = (input) => dataIdentity(validateFlightResponse(input));
+export const responseIdentity = (input) => {
+  const value = validateFlightResponse(input);
+  return value.format === TUNED_RESPONSE_FORMAT
+    ? tunedResponseIdentity(value)
+    : dataIdentity(value);
+};
 export const exportRadioProfile = (input) => canonicalJSON(validateRadioProfile(input));
 export const exportFlightResponse = (input) => canonicalJSON(validateFlightResponse(input));
 
@@ -467,10 +478,16 @@ export function createFlightProfileStore({ storage, key = 'revealline.flight-pro
       })),
     library: () => structuredClone(library()),
     save,
-    import(input) {
+    import(input, { preserveResponse = false } = {}) {
+      // Validate the entire source before dropping an old response field. The
+      // separate tuning editor owns rates, including its unsaved migration base.
       const value = decode(input);
       return commit(
-        { format: 'FlightProfiles.v1', radio: value.radio, response: value.response },
+        {
+          format: 'FlightProfiles.v1',
+          radio: value.radio,
+          response: preserveResponse ? current.response : value.response,
+        },
         [...radios, ...value.radios],
         { importedKeys: value.radios.map(radioProfileKey) },
       );

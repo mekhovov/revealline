@@ -1,0 +1,69 @@
+Results
+
+FPV Survivals · Survival · Riy · Drone Squad
+
+✦
+
+FIELD CLEARED
+
+Sortie complete
+
+Final target down. This battlefield tells your story.
+
+Automated review · Echo build
+
+Cleared
+3,731
+Time
+08:55
+Salvage
+2,553
+Upgrades earned
+10
+Hull damage
+220
+Focus commands
+77
+Escort attacks
+726
+✓ Elite defeated
+✓ Final tank defeated
+✓ Weapon evolved
+Your build
+Echo Cascade
+Level 4
+Recovery shield
+Level 3
+Slowing trail
+Level 3
+Breaker burst
+Level 3
+World mastery
+✓ Complete this sortie
+○ Complete without losing an airframe
+✓ Complete after three Focus engagements reach attack range · 3/3
+
+Review run · achievements are not saved
+
+Damage sources: Contact 220
+
+Final tank
+
+Armor remaining: 0%
+
+Hull remaining: 0%
+
+Progression
+
+Contact 220
+
+Automated review
+
+Retry same seed
+New sortie
+Download measurements
+
+Try another combination on the same battlefield.
+
+Back
+Retry
