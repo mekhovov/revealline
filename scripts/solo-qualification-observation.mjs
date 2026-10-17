@@ -424,9 +424,14 @@ export const COMPACT_QUALITY_COMPARISON_RECIPES = Object.freeze({
   full: 'ed26c97daf58226b48d02eb014cbfa5d9351e686916fd91d41c1741445051ab5',
   reduced: '2e7c56516c53b6fbcb9f63a807662ecc3d9e63d8812f0ef6377ac41c2532bd9d',
 });
+export const DENSITY_COMPARISON_SOURCE = '0febd334619731adc26dfa3df78aab02991563af';
 export function qualificationQualityOptions(flags, scenario, hash) {
   const selected = flags.filter((f) => f.startsWith('--visual-quality-observation'));
-  if (!selected.length) return null;
+  if (!selected.length) {
+    if (flags.some((f) => f.startsWith('--density-comparison')))
+      throw Error('Density requires quality observation');
+    return null;
+  }
   const require = (ok, reason) => {
     if (!ok) throw Error(reason);
   };
@@ -435,10 +440,20 @@ export function qualificationQualityOptions(flags, scenario, hash) {
   require(selected[0] === `--visual-quality-observation=${tier}` &&
     ['full', 'reduced'].includes(tier), 'Exact quality selector');
   const sourceRevision = flags.find((flag) => flag.startsWith('--source-revision='))?.slice(18);
-  require([QUALITY_COMPARISON_SOURCE, COMPACT_QUALITY_COMPARISON_SOURCE].includes(
-    sourceRevision,
-  ), 'Exact public-effects source');
-  const compact = sourceRevision === COMPACT_QUALITY_COMPARISON_SOURCE;
+  const densityFlags = flags.filter((f) => f.startsWith('--density-comparison'));
+  const density = sourceRevision === DENSITY_COMPARISON_SOURCE;
+  require(density
+    ? densityFlags.length === 1 && densityFlags[0] === '--density-comparison=same-viewport-v1'
+    : densityFlags.length === 0, 'Exact density selector');
+  require([
+    QUALITY_COMPARISON_SOURCE,
+    COMPACT_QUALITY_COMPARISON_SOURCE,
+    DENSITY_COMPARISON_SOURCE,
+  ].includes(sourceRevision), 'Exact public-effects source');
+  require(!density || tier === 'full', 'Density comparison retains full effects');
+  const dpr = density ? Number(flags.find((f) => f.startsWith('--dpr='))?.slice(6)) : 3;
+  require(!density || [1, 3].includes(dpr), 'Declared density only');
+  const compact = sourceRevision === COMPACT_QUALITY_COMPARISON_SOURCE || density;
   const recipes = compact ? COMPACT_QUALITY_COMPARISON_RECIPES : QUALITY_COMPARISON_RECIPES;
   require(hash === recipes[tier], 'Exact public-effects recipe bytes');
   require(scenario.id ===
@@ -452,7 +467,7 @@ export function qualificationQualityOptions(flags, scenario, hash) {
     '--hitch-journal',
     '--cadence=settled120',
     '--viewport=400x850',
-    '--dpr=3',
+    `--dpr=${dpr}`,
     '--mobile-context',
     `--source-revision=${sourceRevision}`,
   ])
@@ -477,6 +492,7 @@ export function qualificationQualityOptions(flags, scenario, hash) {
     tier,
     sourceRevision,
     scenarioSHA256: hash,
+    ...(density ? { densityComparison: 'same-viewport-v1', deviceScaleFactor: dpr } : {}),
     performanceQualification: false,
   };
 }

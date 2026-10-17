@@ -36,6 +36,15 @@ export const SELECTED_FONT_PILOT = Object.freeze({
   records: 8,
   bytes: 16384,
 });
+export const SELECTED_FONT_JOINED_PILOT = Object.freeze({
+  protocol: 'selected-font-cancel-joined-v2',
+  sourceRevision: '0febd334619731adc26dfa3df78aab02991563af',
+  scenarioSHA256: 'e46e4f0a75ef5f982373b464a487efe74e63fa7145500e4ff2ac93cb4a3d46d5',
+  requestPolicy: 'same-url-two-v2',
+  documents: 1,
+  records: 8,
+  bytes: 16384,
+});
 export const COMPACT_SAVED_READINESS_PILOT = Object.freeze({
   protocol: 'saved-resume-v1',
   sourceRevision: 'c696af41857840359ae473558b90682f3d71f2db',
@@ -63,8 +72,15 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       ? READINESS_PILOT
       : protocol === SELECTED_FONT_PILOT.protocol
         ? SELECTED_FONT_PILOT
-        : RESUME_READINESS_PILOTS[protocol];
+        : protocol === SELECTED_FONT_JOINED_PILOT.protocol
+          ? SELECTED_FONT_JOINED_PILOT
+          : RESUME_READINESS_PILOTS[protocol];
   assert(pilot, 'Unknown readiness protocol');
+  if (pilot === SELECTED_FONT_JOINED_PILOT)
+    assert(
+      !flags.some((flag) => /^--(?:density-comparison|visual-quality-observation)/.test(flag)),
+      'Font and density are separate observations',
+    );
   assert.deepEqual(selected, [`--readiness-probe=${pilot.protocol}`]);
   assert.deepEqual(
     flags.filter((flag) => flag.startsWith('--source-revision')),
@@ -83,7 +99,7 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
   assert.equal(createHash('sha256').update(bytes).digest('hex'), pilot.scenarioSHA256);
   assert.deepEqual(scenario, JSON.parse(bytes));
   assert.equal(scenario.timeoutMs, 240000);
-  if (pilot === SELECTED_FONT_PILOT) {
+  if ([SELECTED_FONT_PILOT, SELECTED_FONT_JOINED_PILOT].includes(pilot)) {
     assert.equal(scenario.kind, 'lifecycle');
     assert(!scenario.cacheMode, 'Font routing cannot qualify warm HTTP caching');
     assert(flags.includes('--server-fixture-access'));
@@ -107,13 +123,17 @@ export function createBrowserReadinessProbe(
   protocol = 'first-running-v1',
 ) {
   if (
-    !['first-running-v1', 'warm-resume-v1', 'saved-resume-v1', 'selected-font-cancel-v1'].includes(
-      protocol,
-    )
+    ![
+      'first-running-v1',
+      'warm-resume-v1',
+      'saved-resume-v1',
+      'selected-font-cancel-v1',
+      'selected-font-cancel-joined-v2',
+    ].includes(protocol)
   )
     throw new Error('Unknown readiness protocol');
   const resume = protocol.endsWith('-resume-v1'),
-    font = protocol === 'selected-font-cancel-v1';
+    font = ['selected-font-cancel-v1', 'selected-font-cancel-joined-v2'].includes(protocol);
   const documentRef = environment.document,
     records = [],
     runs = new WeakMap();
@@ -678,8 +698,19 @@ export const selectedFont = Object.freeze({
 });
 export function createSelectedFontHold(
   entryURL,
-  { now = () => performance.now(), setTimer = setTimeout, clearTimer = clearTimeout } = {},
+  {
+    now = () => performance.now(),
+    setTimer = setTimeout,
+    clearTimer = clearTimeout,
+    requestPolicy = 'single-v1',
+  } = {},
 ) {
+  assert(['single-v1', 'same-url-two-v2'].includes(requestPolicy));
+  const joined = requestPolicy === 'same-url-two-v2';
+  const requestLimit = joined ? 2 : 1;
+  const routes = [];
+  let forwarding = false,
+    rejectedOwned = 0;
   let lastClock = -Infinity;
   const clock = () => {
     const value = now();
@@ -718,7 +749,8 @@ export function createSelectedFontHold(
     ownedResponses = new Set(),
     disposedResponses = new WeakSet();
   const report = {
-    format: 'SoloSelectedFontHoldV1',
+    format: joined ? 'SoloSelectedFontHoldV2' : 'SoloSelectedFontHoldV1',
+    ...(joined ? { requestPolicy, maximumRequests: 2 } : {}),
     targetPath: target.pathname,
     expected: selectedFont,
     status: 'unobserved',
@@ -829,16 +861,38 @@ export function createSelectedFontHold(
       const request = route.request();
       if (request.url() !== target.href) return false;
       claimed++;
-      if (claimed !== 1 || closing) {
+      if (claimed > requestLimit || closing || (joined && (done || forwarding))) {
+        if (joined) rejectedOwned++;
         fail(new Error('Duplicate or closed selected-font request'));
         cancelWait();
         try {
-          await operation('duplicate-abort', () => route.abort('failed'), beginCleanup(), {
-            cleanup: true,
-          });
+          await operation(
+            'duplicate-abort',
+            async () => {
+              await route.abort('failed');
+              if (joined) rejectedOwned--;
+            },
+            beginCleanup(),
+            { cleanup: true },
+          );
         } catch (error) {
           fail(error);
         }
+        return true;
+      }
+      const entry = { route, fulfillmentSettled: false, abortionSettled: false };
+      routes.push(entry);
+      if (joined && claimed > 1) {
+        try {
+          assert.equal(request.method(), 'GET');
+          assert.equal(request.resourceType(), 'font');
+          assert.equal(request.headers().range, undefined);
+          record('same-original-request-joined');
+        } catch (error) {
+          fail(error);
+          cancelWait();
+        }
+        await task;
         return true;
       }
       deadline = clock() + selectedFont.maximumHoldMs;
@@ -885,7 +939,21 @@ export function createSelectedFontHold(
           validated(true);
           const shouldRelease = await releaseDecision;
           assert(shouldRelease && !closing && !report.failure, 'Font hold was cancelled');
-          await operation('response-fulfill', () => route.fulfill({ response }), deadline);
+          forwarding = true;
+          // The original APIResponse, bytes and headers are shared without a second fetch.
+          // Joining closes when forwarding starts; every admitted route stays owned to settlement.
+          await Promise.all(
+            routes.map((item) =>
+              operation(
+                'response-fulfill',
+                async () => {
+                  await item.route.fulfill({ response });
+                  item.fulfillmentSettled = true;
+                },
+                deadline,
+              ),
+            ),
+          );
           fulfilled = true;
           report.released = true;
           record('original-response-forwarded');
@@ -894,20 +962,29 @@ export function createSelectedFontHold(
         } finally {
           const end = beginCleanup();
           if (!fulfilled)
-            try {
-              await operation(
-                'request-abort',
-                async () => {
-                  await route.abort('failed');
-                  report.abortSettled = true;
-                  record('request-aborted');
-                },
-                end,
-                { cleanup: true },
-              );
-            } catch (error) {
-              fail(error);
-            }
+            await Promise.all(
+              routes
+                .filter((item) => !item.fulfillmentSettled)
+                .map(async (item) => {
+                  try {
+                    await operation(
+                      'request-abort',
+                      async () => {
+                        await item.route.abort('failed');
+                        item.abortionSettled = true;
+                        report.abortSettled = routes.every(
+                          (r) => r.fulfillmentSettled || r.abortionSettled,
+                        );
+                        record('request-aborted');
+                      },
+                      end,
+                      { cleanup: true },
+                    );
+                  } catch (error) {
+                    fail(error);
+                  }
+                }),
+            );
           if (response) await disposeResponse(response);
           clearTimer(timer);
           done = true;
@@ -963,7 +1040,28 @@ export function createSelectedFontHold(
         ...report,
         claimed,
         done,
-        closed: closing && done && pending.size === 0 && ownedResponses.size === 0,
+        closed:
+          closing &&
+          done &&
+          pending.size === 0 &&
+          ownedResponses.size === 0 &&
+          (!joined ||
+            (rejectedOwned === 0 &&
+              routes.every((r) => r.fulfillmentSettled || r.abortionSettled))),
+        ...(joined
+          ? {
+              ownedRouteCount:
+                routes.filter((r) => !r.fulfillmentSettled && !r.abortionSettled).length +
+                rejectedOwned,
+              routes: routes.map((r, index) => ({
+                index,
+                fulfillmentSettled: r.fulfillmentSettled,
+                abortionSettled: r.abortionSettled,
+              })),
+              rejectedOwned,
+              joinsClosed: forwarding || closing || done,
+            }
+          : {}),
         ownedResponseCount: ownedResponses.size,
         pendingOperations: [...pending.values()],
         records: report.records.map((row) => ({ ...row })),
@@ -976,9 +1074,10 @@ export function createSelectedFontHold(
 }
 
 // Public-action boundary only: this is checked before releasing the held response.
-export function assertSelectedFontCancelled(observation) {
+export function assertSelectedFontCancelled(observation, protocol = SELECTED_FONT_PILOT.protocol) {
+  assert([SELECTED_FONT_PILOT.protocol, SELECTED_FONT_JOINED_PILOT.protocol].includes(protocol));
   assert.equal(observation?.format, 'SoloFirstRunningReadinessV1');
-  assert.equal(observation.protocol, SELECTED_FONT_PILOT.protocol);
+  assert.equal(observation.protocol, protocol);
   assert.equal(observation.capacity, 8);
   assert.equal(observation.maximumBytes, 16384);
   assert.equal(observation.dropped, 0);
@@ -1007,12 +1106,22 @@ export function assertSelectedFontCancelled(observation) {
   assert(start.atMs <= back.atMs && back.atMs <= cancelled.atMs);
   return cancelled;
 }
-export function assessSelectedFontReadiness(observation, application, documents, transport) {
+export function assessSelectedFontReadiness(
+  observation,
+  application,
+  documents,
+  transport,
+  requestPolicy = 'single-v1',
+) {
+  const protocol =
+    requestPolicy === 'same-url-two-v2'
+      ? SELECTED_FONT_JOINED_PILOT.protocol
+      : SELECTED_FONT_PILOT.protocol;
   const failures = [];
   try {
     assert.equal(documents, 1);
     assert.equal(observation?.format, 'SoloFirstRunningReadinessV1');
-    assert.equal(observation.protocol, SELECTED_FONT_PILOT.protocol);
+    assert.equal(observation.protocol, protocol);
     assert.equal(observation.capacity, 8);
     assert.equal(observation.maximumBytes, 16384);
     assert.equal(observation.dropped, 0);
@@ -1031,7 +1140,10 @@ export function assessSelectedFontReadiness(observation, application, documents,
         'after-running',
       ],
     );
-    const cancelled = assertSelectedFontCancelled({ ...observation, records: rows.slice(0, 3) });
+    const cancelled = assertSelectedFontCancelled(
+      { ...observation, records: rows.slice(0, 3) },
+      protocol,
+    );
     const released = rows[3],
       start = rows[4],
       active = rows[5];
@@ -1053,33 +1165,7 @@ export function assessSelectedFontReadiness(observation, application, documents,
     assert.notEqual(start.phase, 'running');
     assert.equal(start.trusted, true);
     assert.equal(active.phase, 'running');
-    assert.equal(transport?.format, 'SoloSelectedFontHoldV1');
-    assert.equal(transport.status, 'complete');
-    assert.equal(transport.claimed, 1);
-    assert.equal(transport.released, true);
-    assert.equal(transport.done, true);
-    assert.equal(transport.closed, true);
-    assert.equal(transport.responseDisposed, true);
-    assert.equal(transport.ownedResponseCount, 0);
-    assert.deepEqual(transport.pendingOperations, []);
-    assert.deepEqual(transport.timedOutOperations, []);
-    assert.equal(transport.failure, null);
-    assert.equal(transport.dropped, 0);
-    assert.deepEqual(transport.expected, selectedFont);
-    assert.equal(transport.actualBytes, selectedFont.bytes);
-    assert.equal(transport.actualSHA256, selectedFont.sha256);
-    assert(Array.isArray(transport.records) && transport.records.length <= selectedFont.records);
-    assert.deepEqual(
-      transport.records.map((r) => r.kind),
-      [
-        'request-matched',
-        'original-response-validated',
-        'declared-public-cancel-boundary',
-        'original-response-forwarded',
-        'response-disposed',
-      ],
-    );
-    assert(Buffer.byteLength(JSON.stringify(transport)) <= selectedFont.maximumEvidenceBytes);
+    assertSelectedFontTransport(transport, requestPolicy);
     const ready = assessReadinessPilot(
       { ...observation, protocol: READINESS_PILOT.protocol, records: [start, active, rows[6]] },
       application,
@@ -1095,4 +1181,64 @@ export function assessSelectedFontReadiness(observation, application, documents,
     scope:
       'One exact native shared-font response withheld through trusted public cancellation, then unchanged response and explicit Start; no performance or physical-display qualification.',
   };
+}
+
+// Explicit prospective transport admission; legacy callers retain single-v1.
+export function assertSelectedFontTransport(transport, requestPolicy = 'single-v1') {
+  assert(['single-v1', 'same-url-two-v2'].includes(requestPolicy));
+  const joined = requestPolicy === 'same-url-two-v2';
+  assert.equal(transport?.format, joined ? 'SoloSelectedFontHoldV2' : 'SoloSelectedFontHoldV1');
+  assert.equal(transport.status, 'complete');
+  if (joined) {
+    assert.equal(transport.requestPolicy, requestPolicy);
+    assert.equal(transport.maximumRequests, 2);
+    assert(
+      Number.isSafeInteger(transport.claimed) && transport.claimed >= 1 && transport.claimed <= 2,
+    );
+    assert.equal(transport.routes?.length, transport.claimed);
+    assert.equal(transport.ownedRouteCount, 0);
+    assert.equal(transport.rejectedOwned, 0);
+    assert.equal(transport.joinsClosed, true);
+    transport.routes.forEach((route, index) =>
+      assert.deepEqual(route, {
+        index,
+        fulfillmentSettled: true,
+        abortionSettled: false,
+      }),
+    );
+  } else assert.equal(transport.claimed, 1);
+  assert.equal(transport.released, true);
+  assert.equal(transport.done, true);
+  assert.equal(transport.closed, true);
+  assert.equal(transport.responseDisposed, true);
+  assert.equal(transport.ownedResponseCount, 0);
+  assert.deepEqual(transport.pendingOperations, []);
+  assert.deepEqual(transport.timedOutOperations, []);
+  assert.equal(transport.failure, null);
+  assert.equal(transport.dropped, 0);
+  assert.deepEqual(transport.expected, selectedFont);
+  assert.equal(transport.actualBytes, selectedFont.bytes);
+  assert.equal(transport.actualSHA256, selectedFont.sha256);
+  assert(Array.isArray(transport.records) && transport.records.length <= selectedFont.records);
+  const events = transport.records.map((r) => r.kind);
+  if (joined) {
+    assert.equal(
+      events.filter((kind) => kind === 'same-original-request-joined').length,
+      transport.claimed - 1,
+    );
+    const join = events.indexOf('same-original-request-joined');
+    assert(join < 0 || (join > 0 && join < events.indexOf('original-response-forwarded')));
+  }
+  assert.deepEqual(
+    joined ? events.filter((kind) => kind !== 'same-original-request-joined') : events,
+    [
+      'request-matched',
+      'original-response-validated',
+      'declared-public-cancel-boundary',
+      'original-response-forwarded',
+      'response-disposed',
+    ],
+  );
+  assert(Buffer.byteLength(JSON.stringify(transport)) <= selectedFont.maximumEvidenceBytes);
+  return true;
 }
