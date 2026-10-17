@@ -152,7 +152,9 @@ for (const origin of ['overlay', 'workshop'])
     h.frame(0);
     assert.equal(h.$('restart-dialog').open, false);
     assert.equal(h.$('shell-workshop-dialog').open, false);
+    assert.equal(h.$('settings-dialog').open, false);
     assert.equal(h.$('shell-home').open, false);
+    assert.equal(h.doc.querySelectorAll('dialog[open]').length, 0);
     assert.notEqual(h.rendered.run, old.run);
     assert.equal(h.rendered.run.tick, 0);
     assert.equal(h.rendered.run.levelId, old.run.levelId);
