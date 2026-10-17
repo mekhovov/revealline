@@ -232,6 +232,204 @@ function finalRecoveryManifest() {
   return value;
 }
 
+function finalAudioManifest() {
+  // In-memory admission fixture; actual final artifacts remain undeclared.
+  const value = clone(manifest);
+  value.candidate.revision = 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4';
+  value.candidate.tree = '6b13627e324f695b6ee8d9f2dee2eeeb7217c332';
+  value.baseline.revision = '8b01991942dc764b8aa4726851699ce1985e53ae';
+  value.baseline.tree = '9373b6a74aea8fa1ef47aa17ace140b4cf714609';
+  value.runtimeRevision = '32abd322afd8243e4537ce4784e2f78ee45ecbec';
+  Object.assign(value.release, {
+    format: 'SoloFinalAudioConfirmationReleaseV1',
+    scope: 'independent-final-source-paired-audio-confirmation',
+    predecessorRun: 38992974900,
+    candidateRevision: value.candidate.revision,
+    onceOnlyBefore: value.candidate.revision,
+    selectedJobs: ['speech-chromium', 'music-chromium', 'speech-webkit', 'music-webkit'],
+    musicProofBytes: 32 * 1024 ** 2,
+  });
+  return value;
+}
+
+test('final audio preserves all eight paired arms, exact originals and original native assertions', () => {
+  const value = finalAudioManifest(),
+    previous = clone(manifest);
+  previous.release.musicProofBytes = value.release.musicProofBytes;
+  const rows = auxiliaryMatrix(value).include;
+  assert.equal(rows.length, 4);
+  assert.equal(
+    rows.reduce((n, { job }) => n + bindAuxiliaryJob(value, job).rows.length, 0),
+    8,
+  );
+  for (const { job, jobMinutes, stepMinutes, outerSeconds } of rows) {
+    const current = bindAuxiliaryJob(value, job),
+      old = bindAuxiliaryJob(previous, job);
+    assert.deepEqual(current.rows, old.rows);
+    assert.deepEqual(
+      current.rows.map((r) => r.source),
+      ['baseline', 'candidate'],
+    );
+    for (const key of ['recipes', 'uploads', 'musicBundle'])
+      assert.deepEqual(current[key], old[key]);
+    for (const key of [
+      'setupTimeoutMs',
+      'fixturePreparationTimeoutMs',
+      'helperTimeoutMs',
+      'evidenceBytes',
+      'rowEvidenceBytes',
+      'performanceExclusion',
+      'cpu',
+      'maxParallel',
+    ])
+      assert.equal(current[key], old[key]);
+    assert.deepEqual([jobMinutes, stepMinutes, outerSeconds], [120, 78, 4620]);
+    for (const row of current.rows) {
+      const args = auxiliaryArguments(
+        { here: '/tools', plan: current, modeState: { recipePath: '/recipe' } },
+        row,
+        'http://localhost/game/',
+        '/evidence',
+      );
+      assert(args.includes(`--source-revision=${value[row.source].revision}`));
+      assert(args.includes('--audio-proof'));
+      assert.equal(args.includes('--baseline-runtime'), row.source === 'baseline');
+      assert(!args.includes('--audio-proof-import-events'));
+      const actual = raw(current, row);
+      actual.audioProofOptions = { aggregateEncodedBytes: 32 * 1024 ** 2 };
+      assert.equal(auxiliaryAssessment(current, row, actual, closed, '123.4').status, 'passed');
+      for (const mutate of [
+        (r) => (r.sourceRevision = old[row.source].revision),
+        (r) => (r.buildIdentity.sourceRevision = old[row.source].revision),
+        (r) => (r.scenarioSHA256 = '0'.repeat(64)),
+        (r) => (r.audioIdentity.status = 'failed'),
+        (r) => (r.audioIdentity.capped = 1),
+        (r) => (r.audioIdentity.pending = 1),
+        (r) => (r.audioIdentity.droppedMediaEvents = 1),
+        (r) => (r.replay.nativeVerification.status = 'failed'),
+        (r) => (r.contextCleanupFailure = 'still owned'),
+      ]) {
+        const invalid = clone(actual);
+        mutate(invalid);
+        assert.equal(auxiliaryAssessment(current, row, invalid, closed, '123.4').status, 'failed');
+      }
+      assert.equal(
+        auxiliaryAssessment(current, row, actual, { ...closed, forcedCleanup: true }, '123.4')
+          .status,
+        'failed',
+      );
+    }
+  }
+});
+
+test('final paired audio rejects stale sources, missing arms, altered bounds and qualification claims', () => {
+  for (const mutate of [
+    (p) => (p.candidate.revision = manifest.candidate.revision),
+    (p) => (p.candidate.tree = '0'.repeat(40)),
+    (p) => (p.baseline.revision = manifest.baseline.revision),
+    (p) => (p.baseline.tree = '0'.repeat(40)),
+    (p) => delete p.runtimeRevision,
+    (p) => (p.runtimeRevision = '0'.repeat(40)),
+    (p) => (p.release.format = 'unknown'),
+    (p) => (p.release.candidateRevision = '0'.repeat(40)),
+    (p) => (p.release.onceOnlyBefore = '0'.repeat(40)),
+    (p) => (p.release.predecessorRun = 38985941469),
+    (p) => p.release.selectedJobs.pop(),
+    (p) => (p.release.selectedJobs = ['music-webkit']),
+    (p) => p.release.selectedJobs.push('recovery-webkit'),
+    (p) => (p.release.repetitions = [1]),
+    (p) => (p.release.importProbe = { elements: 8, records: 64 }),
+    (p) => (p.release.musicProofBytes = 64 * 1024 ** 2),
+    (p) => (p.release.firstEightAllCorrectnessPassed = true),
+    (p) => (p.release.performanceQualification = 'passed'),
+    (p) => (p.release.automaticRetries = 1),
+    (p) => (p.recipes.music.sha256 = '0'.repeat(64)),
+    (p) => p.musicBundle.bytes++,
+    (p) => p.setupTimeoutMs++,
+    (p) => p.rowEvidenceBytes++,
+  ]) {
+    const value = finalAudioManifest();
+    mutate(value);
+    assert.throws(() => auxiliaryMatrix(value));
+  }
+  for (const source of ['baseline', 'candidate']) {
+    const p = bindAuxiliaryJob(finalAudioManifest(), 'speech-chromium');
+    p.rows = p.rows.filter((r) => r.source === source);
+    assert.throws(() => validateAuxiliaryPlan(p));
+  }
+});
+
+test('final audio requires admitted candidate and baseline preparation before any public audio arm', async (t) => {
+  const value = finalAudioManifest(),
+    repository = await realpath(new URL('..', import.meta.url));
+  for (const ref of [
+    ...Object.values(value.recipes),
+    ...value.uploads,
+    ...value.frozenTools,
+    ...value.adapterInputs,
+  ]) {
+    const bytes = await readFile(join(repository, ref.path));
+    ref.bytes = bytes.length;
+    ref.sha256 = createHash('sha256').update(bytes).digest('hex');
+  }
+  const p = bindAuxiliaryJob(value, 'speech-chromium');
+  const admitted = {
+    sourceRevision: p.candidate.revision,
+    sourceTree: p.candidate.tree,
+    manifestSHA256: p.candidate.manifestSHA256,
+    archiveIdentity: p.candidate.inner,
+  };
+  for (const mode of [
+    'pass',
+    'candidate-source',
+    'candidate-tree',
+    'candidate-manifest',
+    'candidate-archive',
+    'baseline-rejected',
+  ]) {
+    const work = await realpath(await mkdtemp(join(tmpdir(), 'solo-final-audio-')));
+    t.after(() => rm(work, { recursive: true, force: true }));
+    const candidate = clone(admitted);
+    let baselineCalls = 0;
+    if (mode === 'candidate-source') candidate.sourceRevision = manifest.candidate.revision;
+    if (mode === 'candidate-tree') candidate.sourceTree = '0'.repeat(40);
+    if (mode === 'candidate-manifest') candidate.manifestSHA256 = '0'.repeat(64);
+    if (mode === 'candidate-archive')
+      candidate.archiveIdentity = { bytes: 1, sha256: '0'.repeat(64) };
+    const ctx = {
+      plan: p,
+      repository,
+      work,
+      report: {},
+      admitted: { status: 'passed', artifacts: { candidate } },
+      ensureBaseline: async () => {
+        baselineCalls++;
+        if (mode === 'baseline-rejected') throw Error('Original baseline admission failed');
+      },
+      required: () => assert.fail('Speech must not prepare the optional music fixture'),
+      async digest(path) {
+        const bytes = await readFile(path);
+        return { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
+      },
+    };
+    if (mode === 'pass') {
+      assert.equal((await prepareAuxiliaryMode(ctx)).audioFixture, null);
+      assert.equal(baselineCalls, 1);
+      assert.deepEqual(
+        p.rows.map((row) => row.source),
+        ['baseline', 'candidate'],
+      );
+    } else {
+      await assert.rejects(prepareAuxiliaryMode(ctx));
+      assert.equal(baselineCalls, mode === 'baseline-rejected' ? 1 : 0);
+      await assert.rejects(
+        readFile(join(work, 'auxiliary-inputs', 'scenario.qualification.json')),
+        { code: 'ENOENT' },
+      );
+    }
+  }
+});
+
 test('final-source recovery retains six candidate-only observations, original recipes and exclusion', () => {
   const value = finalRecoveryManifest();
   const old = preparationManifest();

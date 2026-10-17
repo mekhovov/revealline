@@ -1,0 +1,15 @@
+# Final-source paired audio admission
+
+The prospective `SoloFinalAudioConfirmationReleaseV1` retains four jobs: speech and music in Chromium and WebKit, each with the original baseline then candidate arm. It therefore contains eight observations. This is tooling support only; no final package or executable release is declared here.
+
+The source selector requires baseline `8b01991942dc764b8aa4726851699ce1985e53ae` / tree `9373b6a74aea8fa1ef47aa17ace140b4cf714609`, candidate `a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4` / tree `6b13627e324f695b6ee8d9f2dee2eeeb7217c332`, and runtime `32abd322afd8243e4537ce4784e2f78ee45ecbec`. Its predecessor is the retained paired cohort `38992974900`. The one-shot edge is the candidate revision; actual package admission and final release review remain required.
+
+The adapter keeps the original encoded recordings, recipe and upload hashes, ordered music transition, native cue/start/advancement checks, same-engine strict replay, persistent WebKit context and clean owner closure. Baseline preparation remains required before either audio arm. Candidate artifact/source/tree/manifest/archive admission is checked before preparation. The unrelated candidate-only import probe remains a separate historical format.
+
+Each job keeps its 120-minute outer job, 78-minute helper step and 4,620-second outer command. Speech arms retain 540 seconds; music arms retain 600 seconds. The previously reviewed music-only encoded identity observer budget remains 32 MiB, while speech keeps its existing default. Any capped identity evidence still fails. No game audio budget, music duration validation, source recording, gameplay limit or performance threshold changes.
+
+The declaration rejects missing baseline or candidate arms, omitted audio jobs, recovery-job substitution, repeats, stale source/tree/runtime, altered recipe/bundle/budgets and promoted qualification. Historical declarations and raw failures remain unchanged. Performance, full-device audio output and physical-device qualification remain excluded.
+
+The initial control against the previous adapter produced 27 passing and two failing tests, because it did not admit this new final-source format. That result is retained as `.cache/solo-followup/final-wave-a6e/final-audio-before.tap` (9,969 bytes, SHA-256 `16902446ba59694beab2c64bb96f9be375a35fe6b2b3a824199275002b96b63b`).
+
+After the narrow selector/admission change, five complete auxiliary, owner, baseline, qualification and browser-context files passed **103 tests**, with **four Linux-only skips** and no failures. The preparation controls demonstrate that wrong candidate identity prevents baseline preparation and that baseline admission failure prevents audio preparation. The result is `.cache/solo-followup/final-wave-a6e/final-audio-five-files-v2.tap` (26,395 bytes, SHA-256 `fecafe05c89cd78241ae8df5d779201616336175f5f7fcec203c7d336bec726b`). No local browser, server, recording download or production build ran.
