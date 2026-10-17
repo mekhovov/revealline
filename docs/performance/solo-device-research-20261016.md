@@ -115,3 +115,9 @@ The current menu shader's synchronous checks remain a separate preparation
 attribution target. A shader rewrite or a compatibility-dependent startup path
 is not justified by the present traces alone. [WebGL best practices](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices),
 [Parallel shader compilation](https://developer.mozilla.org/en-US/docs/Web/API/KHR_parallel_shader_compile).
+
+## 17 October review: controlled worker diagnosis
+
+The latest WebKit worker smoke validates the MP3 structure but records a visible, focused long-frame pause. A successful worker result alone does not establish uninterrupted gameplay. Compare separately declared fresh worker and idle controls, retain every interruption and the existing bounded application phase/work evidence, and profile attribution separately from qualification. The PROXX example shows why moving work off the main thread can improve responsiveness without reducing total processing cost; it does not explain this particular pause. [Off-main-thread example](https://web.dev/articles/off-main-thread).
+
+The canvas-text GPU-memory report remains NEW on this review, with no upstream resolution. Keep the existing Theme-versus-Plain physical-device comparison; do not attribute the Linux worker interruption to that different engine-specific report. [Current WebKit issue](https://bugs.webkit.org/show_bug.cgi?id=324693).
