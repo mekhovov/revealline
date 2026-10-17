@@ -79,4 +79,20 @@ Panel tests: `node --test game/test/fpv-aircraft-propulsion-evidence-ui.test.mjs
 
 The Advanced practice tuning screen mounts this panel below its aircraft controls. Comparisons read the validated editable draft, refresh after field edits, aircraft selection and revert, and cannot modify the running worker. Incomplete drafts show comparison unavailable. The host uses its selected EN/UK locale at mount; a newly localized host gets a newly localized panel. Disposal removes listeners and ignores outstanding file reads.
 
-Mounted integration checks: `node --test game/test/fpv-advanced-practice.test.mjs`. The evidence suite contains 16 pure evaluator checks and 9 panel checks; two host checks cover live draft comparison, frozen active flight settings, lifecycle cleanup and Ukrainian keyboard-accessible import. No additional third-party data or runtime dependencies are bundled. Package inventory and byte measurements are recorded with the combined optional-feature packaging change.
+Mounted integration checks: `node --test game/test/fpv-advanced-practice.test.mjs`. The evidence suite contains 16 pure evaluator checks and 9 panel checks; two host checks cover live draft comparison, frozen active flight settings, lifecycle cleanup and Ukrainian keyboard-accessible import. No additional third-party data or runtime dependencies are bundled. The combined optional-feature package measurements follow below.
+
+## Combined optional-feature package measurements
+
+Measured on 2026-10-17 after the challenge and evidence source freeze. These builds include the three archive modules, bounded ghost sampling, the two evidence modules and the two optional challenge modules. They retain the existing pinned third-party dependencies.
+
+| Build                   | Runtime files | Runtime bytes | Complete source files | Complete source bytes |
+| ----------------------- | ------------: | ------------: | --------------------: | --------------------: |
+| Academy standalone      |           137 |    11,810,452 |                   139 |            11,851,372 |
+| World standalone        |           196 |    18,300,471 |                   198 |            18,349,243 |
+| Combined native staging |           201 |    18,685,307 |                     — |                     — |
+
+Academy's installed-core cache, which retains the full shared locale catalog, is 126 files / 12,819,118 bytes. Its original source inputs total 12,992,536 bytes. Runtime and source-input caps increase by 64 KiB each to **12 MiB + 256 KiB** and **12 MiB + 448 KiB** respectively. Standalone Academy remains below 12 MiB. World retains its 20 MiB cap; native staging retains its 256-file / 32 MiB cap. Explicit complete source-file limits become 139 for Academy and 198 for World. Negative tests continue to reject omitted dependencies, incorrect source hashes and over-budget inputs.
+
+The ghost display retains at most 8,192 position samples, including endpoints. Display interpolation does not replace complete replay verification; reduced display sampling is labeled approximate. Data imports and optional challenge selection do not change the default twelve-aircraft configurations.
+
+Package checks: `node --test scripts/test-optional-fpv-package.mjs scripts/test-build-fpv-native.mjs scripts/test-world-texture-acceptance.mjs`. These package checks establish offline inclusion and bounded build output, not physical-device qualification.
