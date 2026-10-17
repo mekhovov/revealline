@@ -142,7 +142,12 @@ def verify(mode, archive_path, destination, revision):
 
 
 def verify_baseline_outer(archive_path, destination, revision):
-    assert revision == 'b11745223861c3973ad4bf440cc536198b8e0371'
+    formats = {
+        'b11745223861c3973ad4bf440cc536198b8e0371': ('SoloHostedNormalBaselineReadyV1', '09f68c3691a4ae1013c3073f0ccf301b3355903f'),
+        '8b01991942dc764b8aa4726851699ce1985e53ae': ('SoloHostedNormalBaselineReadyV2', '9373b6a74aea8fa1ef47aa17ace140b4cf714609'),
+    }
+    assert revision in formats
+    ready_format, source_tree = formats[revision]
     archive_path = Path(archive_path).resolve(strict=True)
     assert archive_path.stat().st_size <= MAX_ZIP
     destination = Path(destination).absolute()
@@ -168,7 +173,8 @@ def verify_baseline_outer(archive_path, destination, revision):
     assert set(checksums) == names - {'normal-baseline-proof/SHA256SUMS'}
     assert all(observed[name]['sha256'] == sha for name, sha in checksums.items())
     ready = json.loads((destination / 'normal-baseline-proof/ready.json').read_text())
-    assert ready['format'] == 'SoloHostedNormalBaselineReadyV1' and ready['status'] == 'ready'
+    assert ready['format'] == ready_format and ready['status'] == 'ready'
+    assert ready['sourceTree'] == source_tree
     assert ready['sourceRevision'] == revision and ready['profile'] == 'normal'
     return {'status': 'passed', 'sourceRevision': revision,
             'archive': digest(archive_path), 'members': observed,

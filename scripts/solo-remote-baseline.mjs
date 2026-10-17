@@ -9,10 +9,14 @@ import { pathToFileURL } from 'node:url';
 
 const BASE = 'b11745223861c3973ad4bf440cc536198b8e0371';
 const TREE = '09f68c3691a4ae1013c3073f0ccf301b3355903f';
+const CURRENT_BASE = '8b01991942dc764b8aa4726851699ce1985e53ae';
+const CURRENT_TREE = '9373b6a74aea8fa1ef47aa17ace140b4cf714609';
+const CURRENT_WORKFLOW = '.github/workflows/solo-remote-baseline-temporary.yml';
 const MiB = 1024 ** 2;
 const PRODUCER_WORKFLOWS = {
   'SoloHostedCorrectnessPlan.v1': '.github/workflows/solo-remote-correctness-temporary.yml',
   'SoloHostedOfflinePairPlan.v1': '.github/workflows/solo-remote-offline-temporary.yml',
+  SoloHostedNormalBaselineProducerPlanV2: CURRENT_WORKFLOW,
 };
 export const BASELINE_PROOF = 'normal-baseline-proof';
 export const BASELINE_FILES = [
@@ -79,9 +83,17 @@ export function requireCleanCommand(command) {
   assert.deepEqual(command.ambiguous, []);
 }
 export function validateBaselineReuse(reuse, plan) {
-  assert.equal(reuse.format, 'SoloHostedNormalBaselineReuseV1');
-  assert.equal(plan.baseline.revision, BASE);
-  assert.equal(plan.baseline.tree, TREE);
+  const current = reuse.format === 'SoloHostedNormalBaselineReuseV2';
+  assert(current || reuse.format === 'SoloHostedNormalBaselineReuseV1');
+  const base = current ? CURRENT_BASE : BASE,
+    tree = current ? CURRENT_TREE : TREE;
+  if (current) {
+    assert.equal(reuse.sourceRevision, base);
+    assert.equal(reuse.sourceTree, tree);
+  }
+  assert.equal(reuse.producer.workflow === CURRENT_WORKFLOW, current);
+  assert.equal(plan.baseline.revision, base);
+  assert.equal(plan.baseline.tree, tree);
   assert.equal(plan.repository, reuse.producer.repository);
   assert.equal(reuse.producer.repository, 'mekhovov/revealline');
   assert(Object.values(PRODUCER_WORKFLOWS).includes(reuse.producer.workflow));
@@ -93,7 +105,7 @@ export function validateBaselineReuse(reuse, plan) {
   assert(Number.isSafeInteger(reuse.producer.attempt) && reuse.producer.attempt > 0);
   assert.equal(
     reuse.name,
-    `solo-normal-baseline-${BASE.slice(0, 8)}-${reuse.run}-${reuse.producer.attempt}`,
+    `solo-normal-baseline-${base.slice(0, 8)}-${reuse.run}-${reuse.producer.attempt}`,
   );
   for (const [name, maximum] of [
     ['outer', 2 * 1024 ** 3],
@@ -110,25 +122,36 @@ export function validateBaselineReuse(reuse, plan) {
   assert.match(reuse.manifestSHA256, /^[a-f0-9]{64}$/);
 }
 export function validateBaselineReady(ready, documents, expected = {}) {
-  assert.equal(ready.format, 'SoloHostedNormalBaselineReadyV1');
+  const current = ready.format === 'SoloHostedNormalBaselineReadyV2';
+  assert(current || ready.format === 'SoloHostedNormalBaselineReadyV1');
+  const base = current ? CURRENT_BASE : BASE,
+    tree = current ? CURRENT_TREE : TREE;
+  if (current) {
+    assert.equal(expected.sourceRevision, base, 'Explicit V2 source authority required');
+    assert.equal(expected.sourceTree, tree, 'Explicit V2 tree authority required');
+  } else {
+    if (expected.sourceRevision) assert.equal(expected.sourceRevision, base);
+    if (expected.sourceTree) assert.equal(expected.sourceTree, tree);
+  }
+  assert.equal(ready.producer.workflow === CURRENT_WORKFLOW, current);
   assert.equal(ready.status, 'ready');
   assert.equal(ready.profile, 'normal');
-  assert.equal(ready.sourceRevision, BASE);
-  assert.equal(ready.sourceTree, TREE);
+  assert.equal(ready.sourceRevision, base);
+  assert.equal(ready.sourceTree, tree);
   assert.equal(ready.node, 'v22.13.1');
   assert.equal(ready.platform, 'linux');
   assert.equal(ready.performanceQualification, 'not-provided');
   const { source, archive, commands, environment, manifest } = documents;
   assert.equal(source.status, 'passed');
   assert.deepEqual(source.failures, []);
-  assert.equal(source.source.wholeTreeRevision, BASE);
+  assert.equal(source.source.wholeTreeRevision, base);
   assert.equal(source.source.dirty, false);
-  assert.equal(source.manifest.declaredSourceRevision, BASE);
+  assert.equal(source.manifest.declaredSourceRevision, base);
   assert.equal(source.manifest.sha256, ready.files['manifest.json'].sha256);
   assert.equal(source.verifiedArtifactBytes, manifest.totalBytes);
-  assert.equal(manifest.sourceRevision, BASE);
+  assert.equal(manifest.sourceRevision, base);
   assert.equal(archive.status, 'passed');
-  assert.equal(archive.sourceRevision, BASE);
+  assert.equal(archive.sourceRevision, base);
   assert.equal(archive.manifestSHA256, source.manifest.sha256);
   assert.deepEqual(ready.files['distribution.zip'], {
     bytes: archive.zipBytes,
@@ -141,8 +164,8 @@ export function validateBaselineReady(ready, documents, expected = {}) {
       `${ready.producer.repository}/${ready.producer.workflow}@`,
     ),
   );
-  assert.equal(environment.source.revision, BASE);
-  assert.equal(environment.source.tree, TREE);
+  assert.equal(environment.source.revision, base);
+  assert.equal(environment.source.tree, tree);
   assert.deepEqual(environment.producer, ready.producer);
   assert.equal(environment.tooling.revision, ready.producer.toolingRevision);
   assert.equal(environment.tooling.tree, ready.producer.toolingTree);
@@ -171,7 +194,7 @@ export function validateBaselineReady(ready, documents, expected = {}) {
     '--out',
     buildPath,
     '--revision',
-    BASE,
+    base,
   ]);
   assert.equal(commands.build.cwd, sourcePath);
   assert.equal(commands.build.timeoutMs, 1200000);
@@ -182,7 +205,7 @@ export function validateBaselineReady(ready, documents, expected = {}) {
     'inner',
     join(buildPath, 'distribution.zip'),
     payloadPath,
-    BASE,
+    base,
     join(evidencePath, 'baseline-archive.json'),
   ]);
   assert.equal(commands.inner.timeoutMs, 600000);
@@ -192,7 +215,7 @@ export function validateBaselineReady(ready, documents, expected = {}) {
     payloadPath,
     join(evidencePath, 'baseline-source.json'),
     `--source=${sourcePath}`,
-    `--base=${BASE}`,
+    `--base=${base}`,
     `--archive=${join(buildPath, 'distribution.zip')}`,
     `--archive-receipt=${join(evidencePath, 'baseline-archive.json')}`,
   ]);
@@ -248,6 +271,11 @@ export async function publishBaseline({
   inspect = async () => {},
 }) {
   assert(PRODUCER_WORKFLOWS[plan.format], 'Unknown normal baseline producer mode');
+  const current = plan.format === 'SoloHostedNormalBaselineProducerPlanV2';
+  const base = current ? CURRENT_BASE : BASE,
+    tree = current ? CURRENT_TREE : TREE;
+  assert.equal(plan.baseline.revision, base);
+  assert.equal(plan.baseline.tree, tree);
   assert.equal(plan.baseline.publisher.workflow, PRODUCER_WORKFLOWS[plan.format]);
   assert.equal(plan.baseline.publishVerifiedNormal, true);
   assert(!plan.baseline.reusableArtifact, 'A reused package cannot masquerade as a fresh producer');
@@ -307,11 +335,11 @@ export async function publishBaseline({
     );
   }
   const ready = {
-    format: 'SoloHostedNormalBaselineReadyV1',
+    format: current ? 'SoloHostedNormalBaselineReadyV2' : 'SoloHostedNormalBaselineReadyV1',
     status: 'ready',
     completedAt: new Date().toISOString(),
-    sourceRevision: BASE,
-    sourceTree: TREE,
+    sourceRevision: base,
+    sourceTree: tree,
     profile: 'normal',
     node: 'v22.13.1',
     platform: 'linux',
@@ -320,7 +348,11 @@ export async function publishBaseline({
     files,
   };
   const manifest = await smallJSON(join(buildPath, 'manifest.json'));
-  validateBaselineReady(ready, { source, archive, commands, environment, manifest });
+  validateBaselineReady(
+    ready,
+    { source, archive, commands, environment, manifest },
+    { sourceRevision: base, sourceTree: tree },
+  );
   const readyBytes = encoded(ready);
   const all = { ...files, [`${BASELINE_PROOF}/ready.json`]: identity(readyBytes) };
   await exclusive(
@@ -345,7 +377,10 @@ export async function publishBaseline({
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   assert.equal(process.argv[2], 'admit-upload');
-  const result = await readBaselineBundle(resolve(process.argv[3]));
+  const extra = process.argv.slice(4);
+  assert(extra.length === 0 || extra.length === 2);
+  const expected = extra.length ? { sourceRevision: extra[0], sourceTree: extra[1] } : {};
+  const result = await readBaselineBundle(resolve(process.argv[3]), expected);
   process.stdout.write(
     JSON.stringify({
       status: 'ready',
