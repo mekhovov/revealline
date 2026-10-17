@@ -30,7 +30,7 @@ function fixture(id) {
     ],
     processInventory: {
       platform: 'darwin',
-      format: 'SoloDarwinProcessInventoryV2',
+      format: 'SoloDarwinProcessInventoryV3',
       identityKind: 'private-unique-id-uint64',
     },
     initialLeaderCapture: 'direct-child-birth',
@@ -139,7 +139,7 @@ test('one-shot non-browser workflow declares finite setup, native observation an
   );
   assert.equal(
     workflow.match(/^    if: (.+)$/m)?.[1],
-    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '4bf5e9b3b7f2f06fbe24f50ff9457efb70a7b1a7'",
+    "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'",
   );
   assert.match(workflow, /runs-on: macos-15-intel/);
   assert.match(workflow, /timeout-minutes: 24/);
@@ -233,4 +233,30 @@ test('tools sparse checkout contains complete static owner graph and actual dyna
   assert(visited.size > 100);
   assert(!declared.has('node_modules'));
   assert(listed.length < 200);
+});
+
+test('successor workflow requires every exact one-shot condition before c696', async () => {
+  const text = await readFile(
+    new URL('../.github/workflows/solo-darwin-owner-preflight-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  const expected =
+    "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'";
+  const check = (value) => {
+    assert.deepEqual(
+      value.split('\n').filter((s) => s.startsWith('    if: ')),
+      [expected],
+    );
+    assert(!value.includes('workflow_dispatch'));
+  };
+  check(text);
+  for (const condition of [
+    'github.event.pull_request.number == 1544',
+    'github.event.pull_request.head.repo.full_name == github.repository',
+    "github.event.action == 'synchronize'",
+    "github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'",
+  ])
+    assert.throws(() => check(text.replace(condition, 'true')));
+  assert.throws(() => check(text.replace(expected, '')));
+  assert.throws(() => check(text.replace(expected, '    if: true')));
 });

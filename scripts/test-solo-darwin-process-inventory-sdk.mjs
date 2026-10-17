@@ -52,7 +52,7 @@ int fixture_pidinfo(int pid,int flavor,uint64_t arg,void *buffer,int count) {
  if(flavor==PROC_PIDTASKINFO){if(pid==44||!strcmp(mode,"rss-denied")){errno=EPERM;return 0;}if(!strcmp(mode,"rss-partial")){errno=ESRCH;return sizeof(struct proc_taskinfo)-1;}struct proc_taskinfo *p=buffer;memset(p,0,sizeof(*p));p->pti_resident_size=pid*1024;return sizeof(*p);}
  fprintf(stderr,"UNKNOWN_SELECTOR\n");exit(9);
 }
-int fixture_pidpath(int pid,void *buffer,uint32_t count){if(!strcmp(mode,"path-saturated")){memset(buffer,1,count);return count;}if(pid==44||!strcmp(mode,"path-denied")){errno=EPERM;return 0;}return snprintf(buffer,count,"/owned/NodeWebKit");}
+int fixture_pidpath(int pid,void *buffer,uint32_t count){if(!strcmp(mode,"path-saturated")){memset(buffer,1,count);return count;}if((pid==44 && strcmp(mode,"foreign-ps"))||!strcmp(mode,"path-denied")){errno=EPERM;return 0;}return snprintf(buffer,count,"%s",pid==44?"/bin/ps":"/owned/NodeWebKit");}
 int fixture_listpids(uint32_t type,uint32_t info,void *buffer,int count){(void)info;(void)count;if(type!=PROC_ALL_PIDS)exit(9);pid_t rows[]={0,42,43,44};if(!strcmp(mode,"list-denied")){errno=EPERM;return 0;}if(!strcmp(mode,"list-partial"))return 3;if(!strcmp(mode,"list-saturated"))return MAX_PIDS*sizeof(pid_t);if(!strcmp(mode,"list-negative"))rows[3]=-1;if(!strcmp(mode,"list-duplicate"))rows[3]=42;memcpy(buffer,rows,sizeof(rows));return sizeof(rows);}
 int fixture_sysctl(int *name,u_int n,void *oldp,size_t *len,void *newp,size_t newlen){(void)newp;(void)newlen;
  int maximum=!strcmp(mode,"argmax-one-mib")?1048576:262144;
@@ -108,6 +108,12 @@ nativeTest(
     assert.equal(map.get(44).inspectionIncomplete, true);
     assert.equal(map.get(44).ownerTagged, false);
     assert.equal(map.get(44).euid, 0);
+    assert.equal(map.get(44).pathInspection, 'unavailable');
+    assert.equal(map.get(44).rssInspection, 'unavailable');
+    assert.equal(map.get(44).ownerTagInspection, 'unavailable');
+    assert.equal(map.get(42).pathInspection, 'complete');
+    assert.equal(map.get(42).rssInspection, 'complete');
+    assert.equal(map.get(42).ownerTagInspection, 'present');
     assert.equal(map.get(42).rss, 42 * 1024);
     assert.equal(map.get(42).ownerTagged, true);
   },
@@ -261,3 +267,21 @@ test.after(async () => {
   }
   if (root) await rm(root, { recursive: true, force: true });
 });
+
+nativeTest(
+  'same-bracket exact ps path is distinguished from protected fallback and changed image',
+  () => {
+    const { r, map } = capture('foreign-ps');
+    assert.equal(r.status, 0);
+    const ps = map.get(44);
+    assert.equal(ps.argv, '/bin/ps');
+    assert.equal(ps.pathInspection, 'complete');
+    assert.equal(ps.rssInspection, 'unavailable');
+    assert.equal(ps.ownerTagInspection, 'unavailable');
+    assert.equal(ps.inspectionIncomplete, true);
+    assert.equal(ps.ownerTagged, false);
+    assert.equal(capture('path-denied').map.get(44).pathInspection, 'unavailable');
+    assert.equal(capture('path-saturated').map.get(44).pathInspection, 'unavailable');
+    assert.equal(capture('exec-inside').r.status, 1);
+  },
+);

@@ -98,6 +98,147 @@ export function isOwnedProcess(row, all, owned, leaderPid, tagged) {
   );
 }
 
+// One narrow foreign system observer, only with positive kernel path provenance and
+// an unchanged pre-existing root parent/group. It never grants ownership or signals.
+export function darwinForeignSystemProcessWitness(row, before, all, owned, leaderPid) {
+  const uid = (n) => Number.isInteger(n) && n >= 0 && n <= 0xffffffff;
+  const identity = (r) =>
+    r &&
+    Number.isSafeInteger(r.pid) &&
+    r.pid > 0 &&
+    r.pid <= 0x7fffffff &&
+    Number.isSafeInteger(r.ppid) &&
+    r.ppid >= 0 &&
+    r.ppid <= 0x7fffffff &&
+    Number.isSafeInteger(r.pgid) &&
+    r.pgid >= 0 &&
+    r.pgid <= 0x7fffffff &&
+    /^(?:0|[1-9]\d{0,19})$/.test(r.parentUniqueId ?? '') &&
+    BigInt(r.parentUniqueId) <= (1n << 64n) - 1n &&
+    r.identityKind === 'private-unique-id-uint64' &&
+    /^\d{20}$/.test(r.birth ?? '') &&
+    BigInt(r.birth) > 0n &&
+    BigInt(r.birth) <= (1n << 64n) - 1n &&
+    Number.isInteger(r.version) &&
+    r.version >= 0 &&
+    r.version <= 0x7fffffff &&
+    uid(r.euid) &&
+    uid(r.ruid);
+  const stable = (a, b) =>
+    identity(a) &&
+    identity(b) &&
+    same(a, b) &&
+    a.version === b.version &&
+    a.euid === b.euid &&
+    a.ruid === b.ruid &&
+    a.ppid === b.ppid &&
+    a.pgid === b.pgid &&
+    a.parentUniqueId === b.parentUniqueId;
+  const root = (r) => identity(r) && r.euid === 0 && r.ruid === 0;
+  const leader = owned.get(leaderPid),
+    parent = all.get(row?.ppid),
+    group = all.get(row?.pgid);
+  if (
+    !identity(row) ||
+    row.state !== 'R' ||
+    !root(row) ||
+    row.argv !== '/bin/ps' ||
+    row.pathInspection !== 'complete' ||
+    !['complete', 'unavailable'].includes(row.rssInspection) ||
+    !['absent', 'unavailable'].includes(row.ownerTagInspection) ||
+    row.ownerTagged !== false ||
+    !stable(row, all.get(row.pid)) ||
+    same(before.get(row.pid), row) ||
+    same(owned.get(row.pid), row) ||
+    row.pgid === leaderPid ||
+    isOwnedProcess(row, all, owned, leaderPid, false) ||
+    !identity(leader) ||
+    leader.euid <= 0 ||
+    leader.ruid <= 0 ||
+    row.ppid <= 1 ||
+    !root(parent) ||
+    !root(group) ||
+    parent.state !== 'R' ||
+    group.state !== 'R' ||
+    !stable(before.get(parent.pid), parent) ||
+    !stable(before.get(group.pid), group) ||
+    same(owned.get(parent.pid), parent) ||
+    same(owned.get(group.pid), group) ||
+    parent.ownerTagged !== false ||
+    group.ownerTagged !== false ||
+    parent.pgid !== group.pid ||
+    group.pgid !== group.pid ||
+    !/^\d+$/.test(row.parentUniqueId ?? '') ||
+    BigInt(row.parentUniqueId) !== BigInt(parent.birth)
+  )
+    return null;
+  const selected = (r) => ({
+    pid: r.pid,
+    ppid: r.ppid,
+    pgid: r.pgid,
+    birth: r.birth,
+    identityKind: r.identityKind,
+    version: r.version,
+    euid: r.euid,
+    ruid: r.ruid,
+    parentUniqueId: r.parentUniqueId,
+    state: r.state,
+    ownerTagged: r.ownerTagged,
+  });
+  return {
+    format: 'SoloForeignSystemProcessWitnessV1',
+    scope:
+      'Positive /bin/ps path and unchanged pre-existing root lineage only; no ownership or signal authority.',
+    process: {
+      ...selected(row),
+      executable: row.argv,
+      pathInspection: row.pathInspection,
+      rssInspection: row.rssInspection,
+      ownerTagInspection: row.ownerTagInspection,
+    },
+    leader: selected(leader),
+    parentBefore: selected(before.get(parent.pid)),
+    parent: selected(parent),
+    groupBefore: selected(before.get(group.pid)),
+    group: selected(group),
+  };
+}
+export function collectUnattributedProcesses(
+  all,
+  before,
+  owned,
+  leaderPid,
+  record,
+  darwin = false,
+) {
+  const ambiguous = [];
+  for (const row of all.values()) {
+    if (
+      !live(row) ||
+      !(browserCommand(row) || row.inspectionIncomplete) ||
+      same(before.get(row.pid), row) ||
+      same(owned.get(row.pid), row)
+    )
+      continue;
+    const witness = darwin
+      ? darwinForeignSystemProcessWitness(row, before, all, owned, leaderPid)
+      : null;
+    if (!witness) {
+      ambiguous.push(row);
+      continue;
+    }
+    assert(Array.isArray(record.foreignSystemProcesses), 'Foreign process witness owner');
+    const encoded = JSON.stringify(witness);
+    if (!record.foreignSystemProcesses.some((w) => JSON.stringify(w) === encoded)) {
+      if (record.foreignSystemProcesses.length >= 64 || Buffer.byteLength(encoded) > 2048) {
+        record.foreignSystemProcessOverflow = true;
+        ambiguous.push(row);
+      } else record.foreignSystemProcesses.push(witness);
+    }
+  }
+  return ambiguous;
+}
+
 // Job-local ownership with an explicit pinned Darwin inventory provider.
 // No machine-wide browser kill and no PID-only signalling. A forced cleanup is a failed row even if every process then exits.
 export async function ownedCommand(
@@ -160,7 +301,9 @@ export async function ownedCommand(
     ambiguous: [],
     survivors: [],
     initialLeaderCapture,
-    ...(darwin ? { processInventory: { platform: 'darwin', ...darwin.identity } } : {}),
+    ...(darwin
+      ? { processInventory: { platform: 'darwin', ...darwin.identity }, foreignSystemProcesses: [] }
+      : {}),
   };
   let ended = false,
     drained = false,
@@ -228,12 +371,13 @@ export async function ownedCommand(
       record.peakRSS ?? 0,
       current.reduce((sum, row) => sum + row.rss, 0),
     );
-    record.ambiguous = [...all.values()].filter(
-      (row) =>
-        live(row) &&
-        (browserCommand(row) || row.inspectionIncomplete) &&
-        !same(before.get(row.pid), row) &&
-        !same(owned.get(row.pid), row),
+    record.ambiguous = collectUnattributedProcesses(
+      all,
+      before,
+      owned,
+      child.pid,
+      record,
+      Boolean(darwin),
     );
     return current;
   };

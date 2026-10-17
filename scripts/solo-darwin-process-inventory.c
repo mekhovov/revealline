@@ -109,25 +109,26 @@ static void row(pid_t pid, const char *token, int identity_only) {
       !identity(pid, PROC_PIDT_SHORTBSDINFO, &first, sizeof(first), identity_only)) return;
   char path[PROC_PIDPATHINFO_MAXSIZE] = {0};
   uint64_t rss = 0;
-  int incomplete = 0, owner = 0;
+  int incomplete = 0, owner = 0, path_status = 0, rss_status = 0, tag_status = 0;
   if (!identity_only && first.pbsi_status != SZOMB) {
     errno = 0;
     int path_size = proc_pidpath(pid, path, sizeof(path));
     if (path_size <= 0 || path_size >= (int)sizeof(path) || !memchr(path, 0, sizeof(path))) {
       if (path_size <= 0 && gone()) return;
-      incomplete = 1;
+      incomplete = 1; path_status = 2;
       snprintf(path, sizeof(path), "%.*s", (int)sizeof(first.pbsi_comm), first.pbsi_comm);
-    }
+    } else path_status = 1;
     struct proc_taskinfo task = {0};
     errno = 0;
     int task_size = proc_pidinfo(pid, PROC_PIDTASKINFO, 0, &task, sizeof(task));
     if (task_size != sizeof(task)) {
       if (task_size <= 0 && gone()) return;
-      incomplete = 1;
-    } else rss = task.pti_resident_size;
+      incomplete = 1; rss_status = 2;
+    } else { rss = task.pti_resident_size; rss_status = 1; }
     owner = tagged(pid, token);
     if (owner == -2) return;
-    if (owner == -1) { incomplete = 1; owner = 0; }
+    if (owner == -1) { incomplete = 1; owner = 0; tag_status = 3; }
+    else if (*token) tag_status = owner ? 2 : 1;
   }
   if (!identity(pid, PROC_PIDT_SHORTBSDINFO, &last, sizeof(last), identity_only) ||
       !identity(pid, SOLO_UNIQUE_SELECTOR, &b, sizeof(b), identity_only)) return;
@@ -148,14 +149,15 @@ static void row(pid_t pid, const char *token, int identity_only) {
          last.pbsi_pid,last.pbsi_ppid,last.pbsi_pgid,b.unique_id,
          last.pbsi_status == SZOMB ? 'Z' : 'R',rss,owner,incomplete);
   for (size_t i=0;path[i];i++) printf("%02x",(unsigned char)path[i]);
-  printf("\t%u\t%u\t%" PRIu64 "\t%d\n",last.pbsi_uid,last.pbsi_ruid,b.parent_unique_id,b.version);
+  printf("\t%u\t%u\t%" PRIu64 "\t%d\t%d\t%d\t%d\n",
+         last.pbsi_uid,last.pbsi_ruid,b.parent_unique_id,b.version,path_status,rss_status,tag_status);
 }
 int main(int argc, char **argv) {
   if (argc != 3 || strlen(argv[2]) > 36) fail("usage: inventory all|PID owner-token");
   for (const char *p = argv[2]; *p; p++)
     if (!((*p >= '0' && *p <= '9') || (*p >= 'a' && *p <= 'f') || *p == '-'))
       fail("owner tag syntax");
-  puts("SoloDarwinProcessInventoryV2");
+  puts("SoloDarwinProcessInventoryV3");
   if (strcmp(argv[1], "all")) {
     char *end;
     long pid = strtol(argv[1], &end, 10);
