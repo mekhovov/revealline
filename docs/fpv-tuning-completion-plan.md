@@ -1,5 +1,19 @@
 # FPV tuning: reviewed completion plan
 
+## Latest remaining-scope review
+
+Main was fetched and the branch rebased before this continuation; main remains
+`fb3caf12b`. The [input recovery review](fpv-tuning-input-recovery-review.md)
+adds current Betaflight, Liftoff and VelociDrone examples. It retains the existing
+rates/profile/import scope and identifies one reproduced software defect:
+unavailable input can incorrectly disable a healthy Advanced practice worker.
+
+Finish the recoverable-input correction and bounded startup diagnostics, verify
+them, then publish through ordinary checks. Physical and wider-platform gates
+remain deferred as agreed; no new rate models or unmeasured aircraft effects are
+needed to close the available software scope. The latest review's delivery status
+takes precedence over the historical completion records below.
+
 ## Current completion review
 
 The latest continuation rebased on `1d631986ad73ba1301a151a76b1607cf03dbe97a`
