@@ -183,15 +183,15 @@ export async function playOfflineStarter({
           unlocked: document.documentElement.dataset.accessState === 'unlocked',
           remembered: localStorage.getItem(key) !== null,
           online: navigator.onLine,
-          controller: navigator.serviceWorker.controller?.scriptURL,
+          controller: navigator.serviceWorker.controller?.scriptURL ?? null,
         }),
         accessKey,
       );
       remaining();
+      value.offlineRestart = restart;
       assert(
         restart.unlocked && restart.remembered && restart.online === false && restart.controller,
       );
-      value.offlineRestart = restart;
       await click('#shell-featured');
       await state('running');
       await key('ArrowRight', 1358);
