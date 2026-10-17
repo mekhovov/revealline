@@ -2,11 +2,21 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createAdvancedRegionalSession } from '../../optional-practice/civilian-fpv/advanced-regional.mjs';
 import {
+  ADVANCED_MAX_SECONDS,
+  ADVANCED_MISSION_HZ,
+  AdvancedFlightLimitError,
   createAdvancedSimulation,
   initAdvancedRuntime,
   replayAdvancedRecording,
   verifyAdvancedRecovery,
 } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
+import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
+import { createAdvancedWorkerClient } from '../../optional-practice/civilian-fpv/advanced-worker-client.mjs';
+import { Events } from './helpers/couch-dom.mjs';
+import {
+  ADVANCED_TERRAIN_LIMITS,
+  createAdvancedTerrainFrame,
+} from '../../optional-practice/civilian-fpv/advanced-terrain.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
 import { createEnduranceFixture } from '../../authoring/fpv-worlds/regions/endurance-fixture.mjs';
 import * as THREE from '../../optional-practice/civilian-fpv/vendor/three.module.js';
@@ -116,6 +126,7 @@ async function fixture(
     beforeTerrainStage,
     transformProposal,
     createGeometry,
+    createClient: clientFactory,
     mixed = false,
     ...configuration
   } = {},
@@ -187,7 +198,7 @@ async function fixture(
     },
     {
       createClient: () => {
-        client = makeClient();
+        client = clientFactory ? clientFactory() : makeClient();
         return client;
       },
       ...(createGeometry ? { createGeometry } : {}),
@@ -419,6 +430,198 @@ test('a failed worker leaves a paused explicit unavailable state, without advanc
   assert.equal(h.session.snapshot().ticks, 0);
   assert.equal(h.session.arm(), false);
 });
+
+for (const [code, reason] of [
+  ['ADVANCED_DURATION_LIMIT', 'duration-limit'],
+  ['ADVANCED_RECORDING_LIMIT', 'recording-limit'],
+])
+  test(`Regional ${reason} remains exportable and cannot be erased by preparation or arming`, async (t) => {
+    const h = await fixture(t);
+    h.session.arm();
+    await h.session.step(command);
+    h.session.pause();
+    const saved = await h.session.captureRecovery();
+    const recording = await h.session.recording();
+    const before = h.session.snapshot();
+    const propose = h.client.propose;
+    h.client.propose = async () => {
+      throw new AdvancedFlightLimitError(code, 'A verified recording limit was reached');
+    };
+    h.session.arm();
+    const stopped = await h.session.step(command);
+    assert.equal(stopped.reason, reason);
+    assert.equal(stopped.status, 'paused');
+    assert.deepEqual(stopped.advancedTelemetry, before.advancedTelemetry);
+    assert.deepEqual(await h.session.recording(), recording);
+    assert.equal((await replayAdvancedRecording(recording)).verified, true);
+    assert.deepEqual(await h.session.captureRecovery(), saved);
+    for (const action of [
+      () => h.session.pause(),
+      () => h.session.prepare(),
+      () => h.session.cancelPreparation(),
+      () => h.session.step(command),
+    ]) {
+      await action();
+      assert.equal(h.session.snapshot().reason, reason);
+      assert.equal(h.session.arm(), false);
+      assert.deepEqual(await h.session.recording(), recording);
+    }
+    const corrupt = structuredClone(saved);
+    corrupt.simulation.state.usedAh += 0.001;
+    await assert.rejects(h.session.restoreRecovery(corrupt), /replay verification/);
+    assert.equal(h.session.snapshot().reason, reason);
+    assert.deepEqual(await h.session.recording(), recording);
+    h.client.propose = propose;
+    await h.session.restoreRecovery(saved);
+    assert.equal(h.session.snapshot().reason, 'prepared');
+    assert.equal(h.session.arm(), true);
+    await h.session.step(command);
+    assert.equal(h.session.snapshot().ticks, saved.simulation.state.missionTick + 1);
+  });
+
+for (const code of [undefined, 'ADVANCED_UNKNOWN_LIMIT'])
+  test(`Regional freeform limit message with ${code ?? 'no code'} remains a fatal worker failure`, async (t) => {
+    const h = await fixture(t);
+    h.session.arm();
+    h.client.propose = async () => {
+      throw Object.assign(new Error('Advanced flight duration limit reached'), { code });
+    };
+    await assert.rejects(h.session.step(command), /duration limit/);
+    assert.equal(h.session.snapshot().reason, 'worker-error');
+    assert.equal(h.session.arm(), false);
+  });
+
+test('the real Regional terrain-history frame limit preserves the committed frame and export', async (t) => {
+  const h = await fixture(t);
+  h.session.arm();
+  await h.session.step(command);
+  h.session.pause();
+  const stage = h.client.stageTerrainFrame;
+  let revision = 0;
+  // Repeated verified source revisions share geometry but have distinct history
+  // identities. Exercise the unchanged frame-count quota through real staging.
+  h.client.stageTerrainFrame = (frame) =>
+    stage(
+      createAdvancedTerrainFrame({
+        sourceIdentity: (++revision).toString(16).padStart(16, '0'),
+        colliders: frame.colliders,
+      }),
+    );
+  for (let index = 1; index < ADVANCED_TERRAIN_LIMITS.frames; index++)
+    assert.equal((await h.session.prepare()).reason, 'prepared');
+  const recording = await h.session.recording();
+  const before = h.session.snapshot();
+  const workerBefore = h.simulation().snapshot();
+  assert.equal(recording.terrainFrames.length, ADVANCED_TERRAIN_LIMITS.frames);
+  const stopped = await h.session.prepare();
+  assert.equal(stopped.reason, 'recording-limit');
+  assert.equal(stopped.status, 'paused');
+  assert.deepEqual(stopped.advancedTelemetry, before.advancedTelemetry);
+  assert.deepEqual(
+    h.simulation().snapshot(),
+    workerBefore,
+    'Frame, controller, input and recording roll back together',
+  );
+  assert.deepEqual(await h.session.recording(), recording);
+  assert.equal((await replayAdvancedRecording(recording)).verified, true);
+  assert.equal(h.session.arm(), false);
+});
+
+test('a pending prepare cannot overwrite a late Regional flight-limit stop', async (t) => {
+  const h = await fixture(t);
+  let release;
+  const gate = new Promise((resolve) => (release = resolve));
+  h.client.propose = async () => {
+    await gate;
+    throw new AdvancedFlightLimitError('ADVANCED_RECORDING_LIMIT', 'Recording capacity reached');
+  };
+  h.session.arm();
+  const step = h.session.step(command);
+  const preparing = h.session.prepare();
+  release();
+  assert.equal((await step).reason, 'recording-limit');
+  assert.equal((await preparing).reason, 'recording-limit');
+  assert.equal(h.session.arm(), false);
+});
+
+test('cancelling detached recovery preserves a Regional terminal limit and its recording', async (t) => {
+  let entered, release;
+  const started = new Promise((resolve) => (entered = resolve));
+  const gate = new Promise((resolve) => (release = resolve));
+  t.after(() => release());
+  const h = await fixture(t, {
+    beforeRestore: () => {
+      entered();
+      return gate;
+    },
+  });
+  h.session.arm();
+  await h.session.step(command);
+  h.session.pause();
+  const saved = await h.session.captureRecovery();
+  const recording = await h.session.recording();
+  h.client.propose = async () => {
+    throw new AdvancedFlightLimitError('ADVANCED_RECORDING_LIMIT', 'Recording capacity reached');
+  };
+  h.session.arm();
+  await h.session.step(command);
+  const restoring = h.session.restoreRecovery(saved);
+  const rejected = assert.rejects(restoring, { name: 'AbortError' });
+  await started;
+  h.session.cancelPreparation();
+  await rejected;
+  assert.equal(h.session.snapshot().reason, 'recording-limit');
+  assert.equal(h.session.arm(), false);
+  assert.deepEqual(await h.session.recording(), recording);
+});
+
+test(
+  'the real Regional twelve-minute boundary preserves exact replay and recovery without rearming',
+  { timeout: 120000 },
+  async (t) => {
+    class LocalWorker extends Events {
+      constructor() {
+        super();
+        this.handler = createAdvancedWorkerHandler((data) => this.emit('message', { data }));
+      }
+      postMessage(message) {
+        void this.handler.receive(structuredClone(message));
+      }
+      terminate() {
+        this.handler.dispose();
+      }
+    }
+    const h = await fixture(t, {
+      createClient: () => createAdvancedWorkerClient({ Worker: LocalWorker }),
+    });
+    assert.equal(h.session.arm(), true);
+    const ticks = ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ;
+    for (let tick = 1; tick <= ticks; tick++) {
+      const state = await h.session.step(neutral);
+      assert.equal(state.status, 'active');
+      assert.equal(state.ticks, tick);
+    }
+    const recording = await h.session.recording();
+    const before = h.session.snapshot();
+    const stopped = await h.session.step(neutral);
+    assert.equal(stopped.reason, 'duration-limit');
+    assert.equal(stopped.status, 'paused');
+    assert.deepEqual(stopped.advancedTelemetry, before.advancedTelemetry);
+    assert.deepEqual(await h.session.recording(), recording);
+    assert.equal(recording.missionTicks, ticks);
+    assert.equal((await replayAdvancedRecording(recording)).verified, true);
+    const saved = await h.session.captureRecovery();
+    assert.equal(saved.simulation.state.missionTick, ticks);
+    await h.session.prepare();
+    h.session.cancelPreparation();
+    assert.equal(h.session.snapshot().reason, 'duration-limit');
+    assert.equal(h.session.arm(), false);
+    await h.session.restoreRecovery(saved);
+    assert.equal(h.session.snapshot().reason, 'duration-limit');
+    assert.equal(h.session.arm(), false);
+    assert.deepEqual(await h.session.recording(), recording);
+  },
+);
 
 test('streamed terrain adoption waits for the whole in-flight mission and reads the newly committed pose', async (t) => {
   let releaseFrame, releaseProposal, secondProposal, backgroundPreparing;
