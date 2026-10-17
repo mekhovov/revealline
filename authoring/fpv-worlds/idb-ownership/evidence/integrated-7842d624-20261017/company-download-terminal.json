@@ -1,0 +1,12 @@
+{
+  "UTC": "2026-10-17T16:32:27.703750+00:00",
+  "exitCode": 0,
+  "artifactId": 12106129994,
+  "bytesRead": 78424649,
+  "sha256": "b06a9ec552c2efd14e12be7ea8ab4c6d4c64cd1060ce4b0dba5f49bba9189cca",
+  "expectedBytes": 78424649,
+  "expectedSHA256": "b06a9ec552c2efd14e12be7ea8ab4c6d4c64cd1060ce4b0dba5f49bba9189cca",
+  "overflow": false,
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "pass": true
+}
