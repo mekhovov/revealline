@@ -214,12 +214,30 @@ test('the added finite work cannot change the original diagnostic timeout or exp
   }
 });
 
-test('the prospective job stays disabled and has disjoint fixed setup, observation and upload budgets', async () => {
+test('the independent diagnostic retains its PR guard, qualification exclusions and fixed budgets', async () => {
   const workflow = await readFile(
     new URL('../.github/workflows/solo-remote-offline-temporary.yml', import.meta.url),
     'utf8',
   );
-  assert.match(workflow, /&& false/);
+  assert.match(
+    workflow,
+    /^    if: github\.event\.pull_request\.number == 1544 && github\.event\.pull_request\.head\.repo\.full_name == github\.repository$/m,
+  );
+  const plan = JSON.parse(
+    await readFile(
+      new URL('../docs/performance/solo-remote-offline-plan.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  validateOfflinePlan(plan);
+  assert.equal(plan.diagnosticRelease.format, 'SoloOfflineIndependentDiagnosticReleaseV1');
+  assert.equal(plan.diagnosticRelease.status, 'reviewed-for-cause-analysis');
+  assert.equal(plan.diagnosticRelease.candidateRevision, plan.candidate.revision);
+  assert.equal(plan.diagnosticRelease.baselineRevision, plan.baseline.revision);
+  assert.equal(plan.diagnosticRelease.firstEightAllCorrectnessPassed, false);
+  assert.equal(plan.diagnosticRelease.successorQualificationReleased, false);
+  assert.equal(plan.diagnosticRelease.performanceQualificationReleased, false);
+  assert.equal(plan.diagnosticRelease.priorEvidence.conclusion, 'failure');
   assert.match(workflow, /timeout-minutes: 165/);
   assert.match(workflow, /timeout-minutes: 104/);
   assert.match(workflow, /30s 103m node/);
