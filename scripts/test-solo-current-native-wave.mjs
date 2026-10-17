@@ -127,18 +127,105 @@ test('the two new transition phases retain exactly eight inline native observati
   assert.equal(new Set(inventory).size, 8);
 });
 
-test('new declarations freeze every actual adapter, tool, recipe and upload byte without rewriting old authority', async () => {
-  for (const plan of Object.values(plans)) {
+const executedWitnessBytes = await readFile(
+  new URL('docs/performance/fixtures/solo-remote-correctness/current-native-a6-source.json', root),
+);
+assert.equal(executedWitnessBytes.length, 10942);
+const executedWitnessSHA256 = '447eaeaf96e1116e590b60e944e36589df17826d385713247f4e7bc508ecbb42';
+const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+assert.equal(sha(executedWitnessBytes), executedWitnessSHA256);
+const executedWitness = JSON.parse(executedWitnessBytes);
+function assertExecutedWaveWitness(witness, declarations, workflows) {
+  assert.equal(sha(JSON.stringify(witness, null, 2) + '\n'), executedWitnessSHA256);
+  assert.equal(witness.format, 'SoloExecutedCurrentNativeWaveSourceV1');
+  assert.equal(witness.revision, 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4');
+  assert.equal(witness.tree, '6b13627e324f695b6ee8d9f2dee2eeeb7217c332');
+  assert.deepEqual(witness.runs, { correctness: 39008793892, transitions: 39008793815 });
+  const references = new Map();
+  for (const role of ['correctness', 'retry', 'next']) {
+    const text = declarations[role],
+      ref = witness.declarations[role];
+    assert.equal(ref.path, pathFor(role));
+    assert.equal(Buffer.byteLength(text), ref.bytes);
+    assert.equal(sha(text), ref.sha256);
+    const plan = JSON.parse(text);
     const refs = [...plan.adapterInputs, ...(plan.frozenTools ?? [])];
     if (plan.fixture) refs.push(plan.fixture);
     for (const phase of Object.values(plan.phases ?? {}))
       refs.push(phase.recipe, ...(phase.upload ? [phase.upload] : []));
-    for (const ref of refs) {
-      const bytes = await readFile(new URL(ref.path, root));
-      assert.equal(bytes.length, ref.bytes, ref.path);
-      assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+    for (const { path, bytes, sha256 } of refs) {
+      const record = { path, bytes, sha256 };
+      if (references.has(path)) assert.deepEqual(references.get(path), record);
+      references.set(path, record);
     }
   }
+  assert.deepEqual(
+    [...references.values()].sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0)),
+    witness.files,
+  );
+  for (const role of ['correctness', 'transitions']) {
+    const ref = witness.workflows[role],
+      text = workflows[role];
+    assert.equal(ref.path, `.github/workflows/solo-remote-current-${role}-temporary.yml`);
+    assert.equal(Buffer.byteLength(text), ref.bytes);
+    assert.equal(sha(text), ref.sha256);
+  }
+}
+const executedDeclarations = Object.fromEntries(
+  await Promise.all(
+    ['correctness', 'retry', 'next'].map(async (role) => [role, await read(pathFor(role))]),
+  ),
+);
+const executedWorkflows = Object.fromEntries(
+  await Promise.all(
+    ['correctness', 'transitions'].map(async (role) => [
+      role,
+      await read(`.github/workflows/solo-remote-current-${role}-temporary.yml`),
+    ]),
+  ),
+);
+test('executed native declarations retain actual a6 tool authority independently of later HEAD edits', () => {
+  assertExecutedWaveWitness(executedWitness, executedDeclarations, executedWorkflows);
+});
+test('executed native source witness rejects changed declarations, workflows and witness authority', () => {
+  for (const mutate of [
+    (value) => {
+      value.revision = 'b'.repeat(40);
+    },
+    (value) => {
+      value.files[0].sha256 = '0'.repeat(64);
+    },
+    (value) => {
+      value.runs.transitions++;
+    },
+  ]) {
+    const changed = structuredClone(executedWitness);
+    mutate(changed);
+    assert.throws(() =>
+      assertExecutedWaveWitness(changed, executedDeclarations, executedWorkflows),
+    );
+  }
+  const changedPlan = JSON.parse(executedDeclarations.retry);
+  changedPlan.frozenTools[0].sha256 = '0'.repeat(64);
+  assert.throws(() =>
+    assertExecutedWaveWitness(
+      executedWitness,
+      {
+        ...executedDeclarations,
+        retry: JSON.stringify(changedPlan, null, 2) + '\n',
+      },
+      executedWorkflows,
+    ),
+  );
+  assert.throws(() =>
+    assertExecutedWaveWitness(executedWitness, executedDeclarations, {
+      ...executedWorkflows,
+      correctness: executedWorkflows.correctness.replace(
+        'timeout-minutes: 145',
+        'timeout-minutes: 146',
+      ),
+    }),
+  );
 });
 
 test('new workflows release only the declared same-repository PR edge with separate bounded owners', async () => {
