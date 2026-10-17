@@ -1,0 +1,301 @@
+{
+  "format": "SoloHostedWorkerDiagnosticPlanV1",
+  "status": "reviewed-diagnostic-only",
+  "cohort": "linux-webkit-worker-autopause-a6-diagnostic-v1",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "setupTimeoutMs": 2400000,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 33554432,
+  "windowMs": 12000,
+  "automaticRetries": 0,
+  "rows": [
+    {
+      "id": "candidate-webkit-worker-p1",
+      "kind": "worker-diagnostic",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 1,
+      "arm": "worker",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-webkit-idle-p1",
+      "kind": "worker-diagnostic",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 1,
+      "arm": "idle",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-webkit-idle-p2",
+      "kind": "worker-diagnostic",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 2,
+      "arm": "idle",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-webkit-worker-p2",
+      "kind": "worker-diagnostic",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 2,
+      "arm": "worker",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-webkit-worker-p3",
+      "kind": "worker-diagnostic",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 3,
+      "arm": "worker",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-webkit-idle-p3",
+      "kind": "worker-diagnostic",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 3,
+      "arm": "idle",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    }
+  ],
+  "candidate": {
+    "revision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+    "tree": "6b13627e324f695b6ee8d9f2dee2eeeb7217c332",
+    "run": 39008793814,
+    "artifact": 12092903788,
+    "outer": {
+      "bytes": 1091879339,
+      "sha256": "a61fd756ce362abacf5dd5f329bed1a936db2b888b9f814cf5924a781964e14a"
+    },
+    "inner": {
+      "bytes": 1073755490,
+      "sha256": "52a9f82f48b3e657755f2c5735826b827caa1e866430d30939d05113b1fa67b1"
+    },
+    "manifestSHA256": "b0e56f24e4d49c6c9ee42000f472ca895c883ca02e1063db741e2eddfe428fb7",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609"
+  },
+  "release": {
+    "candidateRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+    "predecessorRun": 39012635540,
+    "historicalPredecessorRun": 38985941469,
+    "firstEightAllCorrectnessPassed": false,
+    "scope": "independent-final-worker-idle-diagnostic",
+    "onceOnlyBefore": "a7e0219818842f02399317ca6d2a14bdd506da3d",
+    "predecessorWorkerReport": {
+      "bytes": 2670,
+      "sha256": "7b5e8cd5251423092ef4ec8e82b629e8186ed480f77080214503fd91a57b55eb"
+    },
+    "purpose": "Independent cause-finding after final-source WebKit inspected all three MP3 cases but was paused by the final active-state check. Current and historical seven-of-eight results remain failed. No timing or correctness promotion.",
+    "dispatch": "One reviewed synchronize edge before a7e; no automatic retry or phase continuation."
+  },
+  "scope": "Six serial fresh-context Linux WebKit windows: worker/control, control/worker, worker/control. Each waits the same12s after ordinary public Start; worker inspection retains complete valid/malformed/truncated assertions and original watchdogs. No rerun-until-green, warm-up or inserted Resume. Active-state failure remains failure. Idle arms make no worker claim. Diagnostics are not performance qualification.",
+  "diagnostics": {
+    "application": "Existing opt-in bounded performance session, exported after window when paused. Successful windows open ordinary public Menu to force Pause without the Pause-button toggle race; auto-paused windows receive no action. No serialization or per-frame object logging during play.",
+    "timeline": "At most8 worker phase timestamps: before/after module imports and start/end of three structural cases. Fixed window start/end recorded in same performance clock.",
+    "ownership": "Existing application resource counters after Pause plus probe-local inspector/admission snapshot; not whole native/GPU memory.",
+    "defaultSmoke": "Existing ordinary mode and eight-row plan unchanged. New opt-in flags affect only separate diagnostic windows.",
+    "attribution": "A coincident worker event is not causal proof. Compare all three idle controls; retain actual app frame work, long intervals, phase transitions, startup and missing evidence separately.",
+    "limits": "Linux WebKit26.5 pinned by Playwright1.62.1 does not qualify Safari/iOS or thermal conditions. No physical guarantee."
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "300s artifact transfer;600s outer/inner verification;480s source proof;40min setup/75min helper. Candidate full package admission required; baseline source checkout retained but no baseline browser/payload is used. Six240s row ceilings; no change to worker10s/12s transport deadlines.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824,
+    "scratch": "Fresh RUNNER_TEMP/sc-<random>/rNN owner, <=52 UTF-8 bytes per row; exact root/row device+inode recorded. Separate from descriptive output paths. No shared temporary profile.",
+    "workflowBudgetMinutes": {
+      "initialize": 1,
+      "threeCheckouts": 8,
+      "node": 3,
+      "sourceDependencies": 10,
+      "browserDependencies": 10,
+      "ownerTests": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "evidenceUpload": 10,
+      "sum": 126,
+      "job": 145
+    }
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-worker-diagnostic.mjs",
+      "bytes": 13978,
+      "sha256": "2145d4ad77471ba1d810562722a5541a7d78e89720fd48569a0930f8f990c4ea"
+    },
+    {
+      "path": "scripts/verify-solo-mp3-worker.mjs",
+      "bytes": 13091,
+      "sha256": "ea9f18d14778fb5e979a1b32282a01dc1580e593a5c27f74f1b5d4a17da55bad"
+    },
+    {
+      "path": "scripts/solo-worker-diagnostics.mjs",
+      "bytes": 2694,
+      "sha256": "b15cba8d17c3dc4b31802ff87ff1cb97c71109991f8d729382e5b5374c9226fe"
+    }
+  ],
+  "sourceCohort": "worker-idle-candidatea6e",
+  "runtimeRevision": "32abd322afd8243e4537ce4784e2f78ee45ecbec",
+  "frozenTools": [
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1815,
+      "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+    },
+    {
+      "path": "scripts/core-soundtrack-publication.mjs",
+      "bytes": 5789,
+      "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+    },
+    {
+      "path": "scripts/external-distribution.mjs",
+      "bytes": 6651,
+      "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10450,
+      "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+    },
+    {
+      "path": "scripts/optional-artwork.mjs",
+      "bytes": 4613,
+      "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+    },
+    {
+      "path": "scripts/optional-distribution.mjs",
+      "bytes": 2584,
+      "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "scripts/reviewed-soundtrack-batches.mjs",
+      "bytes": 16280,
+      "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 57545,
+      "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/soundtrack-archive-admissions.mjs",
+      "bytes": 5614,
+      "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 15378,
+      "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    }
+  ],
+  "toolingClosure": {
+    "dynamicSourceValidation": [
+      "scripts/soundtrack-distribution.mjs",
+      "scripts/optional-distribution.mjs",
+      "scripts/external-distribution.mjs",
+      "scripts/optional-artwork.mjs"
+    ],
+    "smokeTest": "scripts/test-solo-source-verifier-smoke.mjs",
+    "scope": "Full source-verifier smoke and missing-dependency controls run before remote artifact admission."
+  }
+}

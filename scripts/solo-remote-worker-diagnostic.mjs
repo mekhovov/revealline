@@ -5,6 +5,18 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { startProductionPreview } from './serve-production-preview.mjs';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 
+export const FINAL_WORKER_COHORT = 'worker-idle-candidatea6e';
+const finalSource = Object.freeze({
+  revision: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
+  tree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
+  runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
+});
+function finalWorkerPlan(plan) {
+  if (plan?.sourceCohort === undefined) return false;
+  assert.equal(plan.sourceCohort, FINAL_WORKER_COHORT);
+  assert.equal(plan.format, 'SoloHostedWorkerDiagnosticPlanV1');
+  return true;
+}
 export const WORKER_DIAGNOSTIC_ROWS = [
   [1, 'worker'],
   [1, 'idle'],
@@ -33,7 +45,8 @@ export const WORKER_CONFIRMATION_ROWS = [1, 2, 3, 4].map((repetition) => ({
 }));
 const confirmationPlan = (plan) => plan.format === 'SoloHostedWorkerConfirmationPlanV1';
 export function validateWorkerDiagnosticPlan(plan) {
-  const confirmation = confirmationPlan(plan);
+  const confirmation = confirmationPlan(plan),
+    final = finalWorkerPlan(plan);
   assert(confirmation || plan.format === 'SoloHostedWorkerDiagnosticPlanV1');
   assert.equal(plan.status, 'reviewed-diagnostic-only');
   assert.equal(plan.repository, 'mekhovov/revealline');
@@ -41,7 +54,7 @@ export function validateWorkerDiagnosticPlan(plan) {
   assert.equal(plan.playwright, '1.62.1');
   assert.equal(plan.performanceExclusion, true);
   assert.equal(plan.release?.firstEightAllCorrectnessPassed, false);
-  assert.equal(plan.release?.predecessorRun, 38985941469);
+  assert.equal(plan.release?.predecessorRun, final ? 39012635540 : 38985941469);
   assert.equal(plan.release?.candidateRevision, plan.candidate.revision);
   if (confirmation) {
     assert.equal(plan.windowMs, undefined);
@@ -58,8 +71,53 @@ export function validateWorkerDiagnosticPlan(plan) {
   assert.equal(plan.rowEvidenceBytes, 32 * 1024 ** 2);
   assert.equal(plan.evidenceBytes, 256 * 1024 ** 2);
   assert.deepEqual(plan.rows, confirmation ? WORKER_CONFIRMATION_ROWS : WORKER_DIAGNOSTIC_ROWS);
-  assert.equal(plan.candidate.revision, '3adcd53792043ef02459e86168c6b33a66d6ef00');
-  assert.equal(plan.candidate.tree, '48018be714c3965f989c75c9fe18e8da2529eebd');
+  assert.equal(
+    plan.candidate.revision,
+    final ? finalSource.revision : '3adcd53792043ef02459e86168c6b33a66d6ef00',
+  );
+  assert.equal(
+    plan.candidate.tree,
+    final ? finalSource.tree : '48018be714c3965f989c75c9fe18e8da2529eebd',
+  );
+  if (final) {
+    assert.equal(plan.runtimeRevision, finalSource.runtime);
+    assert.deepEqual(plan.baseline, {
+      revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
+      tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+    });
+    assert.equal(plan.release.historicalPredecessorRun, 38985941469);
+    assert.equal(plan.release.scope, 'independent-final-worker-idle-diagnostic');
+    assert.equal(plan.release.onceOnlyBefore, 'a7e0219818842f02399317ca6d2a14bdd506da3d');
+    assert.deepEqual(plan.release.predecessorWorkerReport, {
+      bytes: 2670,
+      sha256: '7b5e8cd5251423092ef4ec8e82b629e8186ed480f77080214503fd91a57b55eb',
+    });
+    assert(
+      Array.isArray(plan.frozenTools) &&
+        plan.frozenTools.length > 0 &&
+        plan.frozenTools.length <= 64,
+    );
+    assert.equal(new Set(plan.frozenTools.map((ref) => ref.path)).size, plan.frozenTools.length);
+    for (const ref of plan.frozenTools) {
+      assert.match(ref.path, /^scripts\/[a-zA-Z0-9/_.-]+$/);
+      assert(!ref.path.split('/').includes('..'));
+      assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < 1024 ** 2);
+      assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+    }
+    for (const path of [
+      'scripts/run-solo-remote-correctness.mjs',
+      'scripts/verify-solo-build.mjs',
+      'scripts/solo-remote-archive.py',
+      'scripts/soundtrack-distribution.mjs',
+      'scripts/optional-distribution.mjs',
+      'scripts/external-distribution.mjs',
+      'scripts/optional-artwork.mjs',
+    ])
+      assert(
+        plan.frozenTools.some((ref) => ref.path === path),
+        `Missing final worker tool: ${path}`,
+      );
+  }
   for (const key of ['run', 'artifact'])
     assert(Number.isSafeInteger(plan.candidate[key]) && plan.candidate[key] > 0);
   for (const key of ['inner', 'outer']) {
@@ -141,7 +199,10 @@ export function workerProbeArguments(plan, row, address, reportPath) {
     ...(!confirmation ? ['--diagnostics', ...(row.arm === 'idle' ? ['--idle-control'] : [])] : []),
   ];
 }
-export function workerDiagnosticAssessment(raw, command, row) {
+export function workerDiagnosticAssessment(raw, command, row, plan = null) {
+  const expectedRevision = finalWorkerPlan(plan)
+    ? finalSource.revision
+    : '3adcd53792043ef02459e86168c6b33a66d6ef00';
   const clean =
     command?.status === 'closed' &&
     !command.forcedCleanup &&
@@ -155,7 +216,7 @@ export function workerDiagnosticAssessment(raw, command, row) {
     raw?.engine === 'webkit' &&
     typeof raw.browser === 'string' &&
     diagnostics?.application &&
-    diagnostics.application.sourceRevision === '3adcd53792043ef02459e86168c6b33a66d6ef00' &&
+    diagnostics.application.sourceRevision === expectedRevision &&
     diagnostics.windowMs === 12000 &&
     diagnostics.windowEndedAtMs - diagnostics.windowStartedAtMs >= 12000 &&
     diagnostics.initialFlightState === 'running' &&
@@ -193,7 +254,10 @@ export function workerDiagnosticAssessment(raw, command, row) {
   };
 }
 async function verifyInputs(ctx) {
-  for (const ref of ctx.plan.adapterInputs)
+  for (const ref of [
+    ...ctx.plan.adapterInputs,
+    ...(finalWorkerPlan(ctx.plan) ? ctx.plan.frozenTools : []),
+  ])
     assert.deepEqual(await ctx.digest(join(ctx.repository, ref.path)), {
       bytes: ref.bytes,
       sha256: ref.sha256,
@@ -204,6 +268,14 @@ export async function prepareWorkerDiagnosticMode(ctx) {
   await verifyInputs(ctx);
   assert.equal(ctx.admitted.status, 'passed');
   assert.equal(ctx.admitted.artifacts.candidate.sourceRevision, ctx.plan.candidate.revision);
+  if (finalWorkerPlan(ctx.plan)) {
+    assert.equal(ctx.admitted.artifacts.candidate.sourceTree, finalSource.tree);
+    assert.equal(
+      ctx.admitted.artifacts.candidate.manifestSHA256,
+      ctx.plan.candidate.manifestSHA256,
+    );
+    assert.deepEqual(ctx.admitted.artifacts.candidate.archiveIdentity, ctx.plan.candidate.inner);
+  }
   return {
     scope: confirmationPlan(ctx.plan)
       ? 'Three serial ordinary WebKit worker probes and one paused-render companion. No diagnostics flag, retries, timing qualification or first-eight promotion.'
@@ -259,6 +331,7 @@ export async function runWorkerDiagnosticRow(ctx, row, dir, tmp) {
         raw,
         row.command,
         row,
+        ctx.plan,
       ),
     );
     row.browserVersion = raw.browser;

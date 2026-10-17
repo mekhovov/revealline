@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
+import { assertHistoricalWorkerBindings } from './solo-worker-source-witness.mjs';
 import {
   validateWorkerDiagnosticPlan,
   workerDiagnosticAssessment,
@@ -16,13 +16,10 @@ const plan = JSON.parse(
 test('prospective diagnostic declares all six balanced windows and retains the failed prerequisite', async () => {
   validateWorkerDiagnosticPlan(plan);
   assert.deepEqual(plan.rows, WORKER_DIAGNOSTIC_ROWS);
-  for (const ref of plan.adapterInputs) {
-    const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
-    assert.deepEqual(
-      { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
-      { bytes: ref.bytes, sha256: ref.sha256 },
-    );
-  }
+  await assertHistoricalWorkerBindings(
+    'docs/performance/solo-remote-worker-diagnostic-plan.json',
+    plan.adapterInputs,
+  );
 });
 test('diagnostic admission rejects promotion, retries, reordered observations and widened deadlines', () => {
   for (const mutate of [
