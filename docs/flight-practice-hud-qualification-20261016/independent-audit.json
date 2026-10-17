@@ -1,0 +1,37 @@
+{
+  "format": "PracticeHUDAndExerciseReadOnlyAudit.v1",
+  "date": "2026-10-16",
+  "reviewer": "/root/final_review",
+  "qualified": false,
+  "releaseApproval": false,
+  "blockingFindings": [],
+  "checks": {
+    "hudNativeCasesPassed": 4,
+    "hudStagedPinsVerified": 283,
+    "hudAuthorityPinsVerified": 8,
+    "hudScreenshotPinsVerified": 8,
+    "hudArchiveMembersMatchedOriginals": 22,
+    "fpvFailedProbeArchiveMembersMatchedOriginals": 15,
+    "fpvFailedProbePinsVerified": 12,
+    "fpvProbeSamples": 844,
+    "fpvProbeHeightRemainedZero": true,
+    "fpvProbeEventualThrottle": 0.546,
+    "fpvProbeKeyActions": 4,
+    "fpvProbeNativeCompletion": false,
+    "fpvProbeActualExport": false,
+    "fpvProbeIndependentReplay": false,
+    "nativeCleanupSucceeded": true,
+    "focusedIntegratedTestsPassed": 49,
+    "affectedCorrectedUIExportGuideTestsPassed": 18,
+    "correctedNativeProbeRerun": false
+  },
+  "receiptPins": {
+    "hud-settings-completed.json": "b6f3b0f04d4d8f720faab1ba2f497f2ed0ad635ba6e21d185a67e56e51a1dbd7",
+    "fpv-probe-failed.json": "f6f5fe1cbce480b846380cf470b7bd19ec6ce5f1668972c0340e8d2b814e4cbe"
+  },
+  "limitations": [
+    "No browser launched or files changed by the reviewer.",
+    "Settings retention and visible stationary HUD do not prove native exercise, moving-flight, hardware, assistive, offline or hosting acceptance.",
+    "Prototype v3 takeoff correction passed synthetic model tests only; native completion remains open."
+  ]
+}

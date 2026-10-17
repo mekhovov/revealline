@@ -1,0 +1,152 @@
+TAP version 13
+# Subtest: Survivor built-in battlefields retain the opening and shorten only the last two choices
+ok 1 - Survivor built-in battlefields retain the opening and shorten only the last two choices
+  ---
+  duration_ms: 784.529042
+  ...
+# Subtest: Survivor legacy and explicit authored progression survive compile/import and upgraded copies
+ok 2 - Survivor legacy and explicit authored progression survive compile/import and upgraded copies
+  ---
+  duration_ms: 48.662083
+  ...
+# Subtest: Survivor revised thresholds partition durable V4 records without changing visual identity
+not ok 3 - Survivor revised thresholds partition durable V4 records without changing visual identity
+  ---
+  duration_ms: 7.994958
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-battlefield-progression.test.mjs:63:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-battlefield-progression.test.mjs:100:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Riy built-in battlefields retain the opening and shorten only the last two choices
+ok 4 - Riy built-in battlefields retain the opening and shorten only the last two choices
+  ---
+  duration_ms: 786.691208
+  ...
+# Subtest: Riy legacy and explicit authored progression survive compile/import and upgraded copies
+ok 5 - Riy legacy and explicit authored progression survive compile/import and upgraded copies
+  ---
+  duration_ms: 116.80175
+  ...
+# Subtest: Riy revised thresholds partition durable V4 records without changing visual identity
+not ok 6 - Riy revised thresholds partition durable V4 records without changing visual identity
+  ---
+  duration_ms: 14.409042
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-battlefield-progression.test.mjs:63:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-battlefield-progression.test.mjs:100:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+ok 7 - survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 631.322792
+  ...
+# Subtest: survivor: previous authored/imported V4 projects retain exact rules and identity
+ok 8 - survivor: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 130.6645
+  ...
+# Subtest: riy: new V4 sorties shorten only the last two choices and identify the balance revision
+ok 9 - riy: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 713.712209
+  ...
+# Subtest: riy: previous authored/imported V4 projects retain exact rules and identity
+ok 10 - riy: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 34.663542
+  ...
+# Subtest: Riy compiles shared Survivor rules and resources with distinct authored identity
+ok 11 - Riy compiles shared Survivor rules and resources with distinct authored identity
+  ---
+  duration_ms: 146.394167
+  ...
+# Subtest: Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters
+ok 12 - Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters
+  ---
+  duration_ms: 27.920042
+  ...
+# Subtest: Riy package fresh-library round trip preserves source and native compiled identity
+ok 13 - Riy package fresh-library round trip preserves source and native compiled identity
+  ---
+  duration_ms: 116.429125
+  ...
+# Subtest: updating a legacy Riy copy preserves escort authoring without rewriting source
+ok 14 - updating a legacy Riy copy preserves escort authoring without rewriting source
+  ---
+  duration_ms: 2.132
+  ...
+# Subtest: shared Studio escort controls edit the same validated config used by native play
+ok 15 - shared Studio escort controls edit the same validated config used by native play
+  ---
+  duration_ms: 32.240375
+  ...
+# Subtest: Riy rules 3 exposes current escort ranges, arcs and introduction controls
+ok 16 - Riy rules 3 exposes current escort ranges, arcs and introduction controls
+  ---
+  duration_ms: 8.570541
+  ...
+# Subtest: Riy rules 4 exposes current escort ranges, arcs and introduction controls
+ok 17 - Riy rules 4 exposes current escort ranges, arcs and introduction controls
+  ---
+  duration_ms: 38.929833
+  ...
+# Subtest: legacy Riy editor retains shared ranges without adding modern fields
+ok 18 - legacy Riy editor retains shared ranges without adding modern fields
+  ---
+  duration_ms: 23.498417
+  ...
+# Subtest: Creator exposes only combat controls used by the selected operation
+ok 19 - Creator exposes only combat controls used by the selected operation
+  ---
+  duration_ms: 4.6115
+  ...
+# Subtest: shared combat admission protects warning/recovery floors and rejects executable or unknown capabilities
+ok 20 - shared combat admission protects warning/recovery floors and rejects executable or unknown capabilities
+  ---
+  duration_ms: 1.891208
+  ...
+# Subtest: Survivor author upgrade preserves legacy source and reproduces revised content in a fresh profile
+ok 21 - Survivor author upgrade preserves legacy source and reproduces revised content in a fresh profile
+  ---
+  duration_ms: 283.153167
+  ...
+# Subtest: Raid author upgrade preserves legacy source and reproduces revised content in a fresh profile
+ok 22 - Raid author upgrade preserves legacy source and reproduces revised content in a fresh profile
+  ---
+  duration_ms: 372.572958
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 20
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2823.822667

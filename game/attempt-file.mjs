@@ -308,7 +308,8 @@ export function createAttemptFilePreparer(config) {
         check(ticket);
       };
       assertCurrent();
-      const campaign = host.resolveCampaign(nativeCaptureSession(session).campaignKey);
+      const nativeSession = nativeCaptureSession(session);
+      const campaign = host.resolveCampaign(nativeSession.campaignKey, nativeSession.pictureSource);
       stateCurrent(ticket, baseline, selected.source);
       // Context resolution is synchronous; missing content is explicit. Any
       // other value is supplied to the strict verifier and must not downgrade.

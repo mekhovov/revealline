@@ -1,0 +1,11 @@
+# Alpine station approach structure — bounded P2 design
+
+The accepted r5 native FPV capture shows a readable, grounded concourse. Its surrounding cable approach and lookout still read as isolated primitive posts. Improve that existing hub with a coherent structural silhouette and ground contact, without expanding the region or changing the routes.
+
+The approved approach adds original CC0 structural members around the existing three cable pylons and lookout: terrain-supported masonry shoes, proportionate steel rakers and ties, small bearing crowns, upper lookout knee braces and a low deck edge with a twelve-metre eastern entry. Preserve every prior terrain asset, surface, binding, texture, spawn and route exactly. The additional geometry is explicitly solid, with matching render/collision source; this is a separate additive collision qualification, not a material-only claim. The low central lookout bay and open station concourse remain clear.
+
+Alternatives considered: broad terrain texture work needs new trusted overlay/depth handling; unstructured scatter increases clutter and collision scope. The bounded existing approach offers a recognizable flight landmark and reviewable contact/clearance while retaining the fixed resource budget. No new global terrain, wires, region, physics behavior or automatic player admission is included.
+
+Prepare a new external source from exact admitted station-r5, refusing existing outputs. Validate all original source properties, deterministic/idempotent transforms, compiled GLB agreement, opaque solid bindings, new collision probes that were previously clear, local authored route sweeps, repeated windows, low passages, safe disarmed preparation, three presentation tiers, existing 64 MiB source / 8 MiB retained-and-staged limits and zero owned disposal. Add two fixed authoring-only cameras for matched before/after reviews. Native source acceptance precedes any distinct immutable delivery or Library increment. Full-region representative art and physical-device acceptance remain open.
+
+Scope was explicitly approved in the parent engineering task after review of the actual r5 captures. The user already authorized parallel P2 implementation and continued independent work without waiting for optional feedback; no additional human approval loop is introduced.

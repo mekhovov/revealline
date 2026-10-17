@@ -5,7 +5,11 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'parse5';
 import { mountFlightApp } from '../../optional-practice/civilian-fpv/app.mjs';
-import { createFlightInput } from '../../optional-practice/civilian-fpv/input.mjs';
+import {
+  createFlightInput,
+  createFlightGamepad,
+  createFlightInputDiagnostics,
+} from '../../optional-practice/civilian-fpv/input.mjs';
 import { createFlightRenderer } from '../../optional-practice/civilian-fpv/renderer.mjs';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from '../../optional-practice/civilian-fpv/demonstrations.mjs';
@@ -54,6 +58,8 @@ async function fixture(
       if (attribute.name === 'hidden') element.hidden = true;
       if (attribute.name === 'class') element.className = attribute.value;
       if (attribute.name === 'value') element.value = attribute.value;
+      if (attribute.name === 'min' || attribute.name === 'max')
+        element[attribute.name] = attribute.value;
     }
     parent.append(element);
     for (const child of source.childNodes ?? []) copy(child, element);
@@ -761,6 +767,82 @@ test('touch release holds throttle, centers yaw, and cancellation clears all inp
   );
 });
 
+test('input diagnostics retain raw touch and controller values separately from shaping and never invent hardware cadence', () => {
+  const doc = new Document(),
+    win = new Events(),
+    node = doc.createElement('div');
+  doc.body.append(node);
+  node._rect = { x: 0, y: 0, width: 100, height: 100 };
+  const input = createFlightInput({ document: doc, window: win });
+  input.bindStick(node, 'right');
+  input.select('touch');
+  input.enable(true);
+  node.emit('pointerdown', { pointerId: 1, clientX: 50, clientY: 50 });
+  node.emit('pointermove', { pointerId: 1, clientX: 67, clientY: 50 });
+  const command = input.sample(0.02);
+  assert.equal(input.diagnostics().raw.roll, 0.5);
+  assert.ok(command.roll < 0.3, 'the legacy touch shaping is visible separately');
+  assert.equal(input.diagnostics().calibrated.roll, command.roll);
+  assert.equal(input.diagnostics().sampleAgeMs, null);
+  assert.equal(input.diagnostics().cadenceHz, null);
+  input.dispose();
+
+  const gamepad = createFlightGamepad({ document: doc, window: win });
+  const pad = {
+    id: 'diagnostic pad',
+    index: 0,
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 16 }, () => ({ value: 0 })),
+    timestamp: 100,
+  };
+  gamepad.poll({ gamepads: [pad], now: 105, scope: 'flight' });
+  pad.axes[2] = 0.56;
+  pad.timestamp = 110;
+  gamepad.poll({ gamepads: [pad], now: 115, scope: 'flight' });
+  assert.ok(Math.abs(gamepad.sample(0.02).roll - 0.5) < 1e-12);
+  assert.equal(gamepad.diagnostics().raw.axes[2], 0.56);
+  assert.equal(gamepad.diagnostics().sampleAgeMs, 5);
+  assert.equal(gamepad.diagnostics().cadenceHz, 100);
+  pad.timestamp = 0;
+  gamepad.poll({ gamepads: [pad], now: 125, scope: 'flight' });
+  assert.equal(gamepad.diagnostics().sampleAgeMs, null);
+  assert.equal(gamepad.diagnostics().cadenceHz, null);
+  gamepad.dispose();
+});
+
+test('committed diagnostics separate input owners, new attempts and a live radio preview from achieved flight response', () => {
+  let now = 100;
+  const diagnostics = createFlightInputDiagnostics({ now: () => now });
+  const flight = {},
+    controls = { roll: 0.5, pitch: 0, yaw: 0, throttle: 0.4 };
+  diagnostics.record(
+    flight,
+    'controller',
+    controls,
+    { raw: { axes: [0, 0, 0.56, 0] }, sampleAgeMs: 10, sampledAtMs: 90, cadenceHz: 100 },
+    { ticks: 3, angular: { roll: 12300, pitch: 0, yaw: 0 } },
+  );
+  now = 150;
+  const captured = diagnostics.read(flight, 'controller');
+  assert.equal(captured.sampleAgeMs, 70);
+  assert.equal(captured.achieved.roll, 123);
+  assert.deepEqual(captured.calibrated, controls);
+  assert.equal(captured.context, 'last-flight-sample');
+  assert.equal(diagnostics.read(flight, 'keyboard').calibrated, null);
+  assert.equal(diagnostics.read({}, 'controller').achieved, null);
+  const preview = diagnostics.read(flight, 'radio', {
+    raw: { roll: -1 },
+    calibrated: { ...controls, roll: -1 },
+    sampleAgeMs: 5,
+    cadenceHz: null,
+  });
+  assert.equal(preview.context, 'live-preview');
+  assert.equal(preview.calibrated.roll, -1);
+  assert.equal(preview.achieved, null, 'a different input owner cannot borrow achieved rotation');
+});
+
 test('full-length replay admission yields through the shared verifier and cannot earn a practice receipt', async (t) => {
   let yields = 0;
   const f = await fixture(t, {
@@ -1394,6 +1476,67 @@ test('Academy shell keeps menu input out of native flight and requires explicit 
   assert.equal(hint.textContent, instructions);
 });
 
+test('Academy native tool dialogs retain instructions across blur and focus', async (t) => {
+  for (const [button, dialog, category] of [
+    ['help', 'help-dialog', 'extras'],
+    ['notebook-button', 'notebook-dialog', 'data'],
+  ]) {
+    await t.test(dialog, async (t) => {
+      const f = await fixture(t, { home: true });
+      f.$('academy-shell-action-settings').click();
+      f.$(`academy-settings-tab-${category}`).click();
+      f.$(button).click();
+      f.tick(2);
+      assert.equal(f.$(dialog).open, true);
+      const hint = f.$(dialog).querySelector('.sim-menu-hint');
+      assert.ok(hint, 'the current dialog owns its navigation instructions');
+      const instructions = hint.textContent;
+      assert.ok(instructions.length > 0);
+      f.doc.focused = false;
+      f.win.emit('blur');
+      f.tick(2);
+      assert.equal(hint.textContent, instructions, 'blur must not resize a native tool dialog');
+      assert.equal(hint.hidden, false);
+      f.doc.focused = true;
+      f.win.emit('focus');
+      f.tick(2);
+      assert.equal(hint.textContent, instructions, 'refocus must not reflow the clicked control');
+      assert.equal(f.view.snapshot().status, 'disarmed');
+    });
+  }
+});
+
+test('Academy existing HUD guidance controls are reachable in Accessibility in EN and UK', async (t) => {
+  for (const locale of ['en', 'uk']) {
+    const f = await fixture(t, {
+      home: true,
+      url: `https://example.test/optional-practice/civilian-fpv/?lang=${locale}`,
+    });
+    f.$('academy-shell-action-settings').click();
+    f.$('academy-settings-tab-accessibility').click();
+    const section = f.doc.querySelector('[data-sim-hud-preferences]');
+    assert.ok(section);
+    assert.equal(section.parentNode, f.$('academy-settings-panel-accessibility'));
+    assert.equal(section.closest('[hidden],[inert]'), null);
+    assert.equal(f.doc.querySelectorAll('[data-sim-hud-preferences]').length, 1);
+    const controls = [...section.querySelectorAll('select')];
+    assert.equal(controls.length, 3);
+    const mode = section.querySelector('[data-hud-preference="mode"]');
+    mode.value = 'detailed';
+    mode.emit('change');
+    assert.equal(f.doc.querySelector('[data-sim-hud="flight"]').dataset.hudMode, 'detailed');
+    assert.equal(
+      f.view.snapshot().status,
+      'disarmed',
+      'Changing guidance must not start a flight.',
+    );
+    assert.equal(
+      f.$('academy-settings-tab-accessibility').textContent,
+      locale === 'uk' ? 'Доступність' : 'Accessibility',
+    );
+  }
+});
+
 test('Academy categories retain every authored preference control and restore nested dialog focus', async (t) => {
   const f = await fixture(t, { home: true });
   f.doc.defaultView.innerWidth = 390;
@@ -1621,7 +1764,8 @@ for (const clock of ['animation timestamp', 'callback execution']) {
       'A stalled frame must not load the next lesson.',
     );
     assert.deepEqual(f.view.exportAttempt(), proof);
-    assert.equal(flow.hidden, true, 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.style.visibility, 'hidden', 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
   });
 }
 
@@ -1681,3 +1825,307 @@ test('Academy mission library owns controller navigation and isolated pinned goa
   assert.equal(h.$('academy-shell-home-dialog').open, true);
   assert.equal(h.view.snapshot().status, 'disarmed');
 });
+
+async function academyTuningClick(h, label) {
+  const root = h.doc.querySelector('.fpv-tuning');
+  const button = root.querySelectorAll('button').find((node) => node.textContent === label);
+  assert.ok(button, `Missing tuning action: ${label}`);
+  button.click();
+  await new Promise((resolve) => setImmediate(resolve));
+}
+function academyTuningControl(h, label, tag = 'input', scope = h.doc.querySelector('.fpv-tuning')) {
+  const control = scope
+    .querySelectorAll('label')
+    .find((node) => node._text === label)
+    ?.querySelectorAll(tag)
+    .find((node) => tag !== 'input' || node.type !== 'range');
+  assert.ok(control, `Missing tuning control: ${label}`);
+  return control;
+}
+async function openAcademyTuning(h) {
+  const button = h.doc
+    .querySelectorAll('button')
+    .find((node) => Object.hasOwn(node.dataset, 'fpvTuning'));
+  assert.ok(button);
+  button.click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
+}
+
+for (const source of ['keyboard', 'touch', 'controller', 'radio'])
+  test(`Academy tuning diagnostics follow ${source} ownership with a different calibrated radio connected`, async (t) => {
+    const h = await fixture(t);
+    const radioPad = {
+      id: 'Diagnostic USB radio',
+      index: 1,
+      connected: true,
+      mapping: '',
+      axes: [0, 0, 0, -1],
+      buttons: [],
+    };
+    const controllerPad = {
+      id: 'Diagnostic controller',
+      index: 0,
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 16 }, () => ({ value: 0 })),
+    };
+    h.setPads([controllerPad, radioPad]);
+    h.view.radio.select(1);
+    h.view.radio.setProfile(radioProfile(radioPad));
+    h.view.radio.verify();
+    h.$('input-source').value = source;
+    h.$('input-source').emit('change');
+    await h.view.settled();
+    assert.equal(h.view.arm(), true);
+    h.tick(2);
+    if (source === 'keyboard') h.key('ArrowRight');
+    else if (source === 'touch') {
+      h.$('touch-throttle').value = '60';
+      h.$('touch-throttle').emit('input');
+    } else if (source === 'controller') controllerPad.axes[2] = 0.56;
+    else radioPad.axes[0] = 0.4;
+    h.tick(4);
+    const committed = h.view.snapshot();
+    assert.ok(committed.ticks > 0);
+    radioPad.axes[0] = -0.9;
+    await openAcademyTuning(h);
+    h.tick(40);
+    const text = h.doc.querySelector('[aria-label="Input diagnostics"]').textContent;
+    assert.match(
+      text,
+      new RegExp(
+        `Input source: ${{ keyboard: 'Keyboard', touch: 'Touch', controller: 'Game controller', radio: 'Calibrated radio' }[source]}`,
+      ),
+    );
+    assert.match(
+      text,
+      source === 'radio'
+        ? /Live input preview; flight is paused/
+        : /Last committed flight input; flight is paused/,
+    );
+    assert.match(text, new RegExp(`Flight tick: ${committed.ticks}`));
+    assert.match(text, /Achieved rotation \(last committed flight °\/s\): \{/);
+    if (source === 'keyboard') assert.match(text, /Raw input: \{"keys":\["ArrowRight"\]\}/);
+    if (source === 'touch')
+      assert.match(text, /Calibrated: \{"roll":0,"pitch":0,"yaw":0,"throttle":0.6\}/);
+    if (source === 'controller') assert.match(text, /Raw input: \{"axes":\[0,0,0.56,0\]/);
+    if (source !== 'radio') assert.doesNotMatch(text, /"roll":-0.9/);
+    else assert.match(text, /"roll":-0.9/);
+    assert.match(text, /Browser sample age \(ms\): unavailable/);
+    assert.match(text, /cadence \(Hz\): unavailable/);
+  });
+
+test('Academy tuning saves new rates for reset while the active recording retains its frozen legacy configuration', async (t) => {
+  const data = new Map();
+  const h = await fixture(t, {
+    storage: {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    },
+  });
+  assert.equal(h.view.arm(), true);
+  h.tick(4);
+  h.view.pause();
+  const original = h.view.exportAttempt();
+  await openAcademyTuning(h);
+  const algorithm = academyTuningControl(h, 'Rate algorithm', 'select');
+  algorithm.value = 'actual';
+  algorithm.emit('change');
+  const roll = h.doc
+    .querySelector('.fpv-tuning')
+    .querySelectorAll('fieldset')
+    .find((node) => node.querySelector('legend')?.textContent === 'Roll');
+  const rate = academyTuningControl(h, 'Maximum rate (°/s)', 'input', roll);
+  rate.value = '950';
+  rate.emit('input');
+  await academyTuningClick(h, 'Save for next flight');
+  assert.deepEqual(h.view.exportAttempt(), original);
+  assert.equal(h.view.snapshot().status, 'paused');
+  await academyTuningClick(h, 'Close');
+  h.view.reset();
+  await h.view.settled();
+  const next = h.view.exportAttempt();
+  assert.equal(next.response.format, 'FlightResponseProfile.v2');
+  assert.equal(next.response.rates.axes.roll.rate, 95);
+  assert.equal(next.frames.length, 0);
+  assert.equal(original.response.format, 'FlightResponseProfile.v1');
+});
+
+test('Academy draft flight is unscored, cannot export a recording, and returns to its unchanged editor draft', async (t) => {
+  const data = new Map();
+  const h = await fixture(t, {
+    storage: {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    },
+  });
+  let downloads = 0;
+  h.win.URL.createObjectURL = () => {
+    downloads++;
+    return 'blob:unexpected-recording';
+  };
+  await openAcademyTuning(h);
+  const algorithm = academyTuningControl(h, 'Rate algorithm', 'select');
+  algorithm.value = 'actual';
+  algorithm.emit('change');
+  const camera = academyTuningControl(h, 'Vertical FOV (degrees)');
+  camera.value = '108';
+  camera.emit('input');
+  await academyTuningClick(h, 'Test draft · unscored');
+  await h.view.settled();
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, false);
+  assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+  assert.equal(h.view.arm(), true);
+  h.tick(6);
+  h.view.pause();
+  h.$('export-attempt').click();
+  assert.equal(downloads, 0);
+  assert.equal(h.deliveries.length, 0);
+  assert.equal(data.has('revealline.fpv.tuning.v1'), false);
+  h.doc.querySelector('.tuning-return').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
+  assert.equal(academyTuningControl(h, 'Rate algorithm', 'select').value, 'actual');
+  assert.equal(academyTuningControl(h, 'Vertical FOV (degrees)').value, '108');
+  await academyTuningClick(h, 'Revert draft');
+  assert.equal(academyTuningControl(h, 'Rate algorithm', 'select').value, 'legacy');
+});
+
+test('Academy tuning owns menu navigation and Back closes it before the underlying settings', async (t) => {
+  const h = await fixture(t, { home: true });
+  h.win.getComputedStyle = h.doc.defaultView.getComputedStyle;
+  h.$('academy-shell-action-settings').click();
+  const settings = h.$('academy-shell-settings-dialog');
+  assert.equal(settings.open, true);
+  await openAcademyTuning(h);
+  const tuning = h.doc.querySelector('.fpv-tuning');
+  h.doc.emit('keydown', { key: 'Escape', code: 'Escape', target: tuning.querySelector('h2') });
+  h.doc.emit('keyup', { key: 'Escape', code: 'Escape', target: h.doc.activeElement });
+  assert.equal(tuning.open, false);
+  assert.equal(settings.open, true);
+  await openAcademyTuning(h);
+  const pad = menuPad();
+  h.setPads([pad]);
+  h.tick(4);
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.tick(4);
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.tick(4);
+  assert.equal(tuning.contains(h.doc.activeElement), true);
+  h.tick(4); // The joined device establishes its neutral baseline before Back.
+  pad.buttons[1] = { pressed: true, value: 1 };
+  h.tick(4);
+  pad.buttons[1] = { pressed: false, value: 0 };
+  h.tick(4);
+  assert.equal(tuning.open, false);
+  assert.equal(settings.open, true);
+});
+
+test('Academy tuning keeps its hint through pointer blur and releases it after closing', async (t) => {
+  const data = new Map();
+  const h = await fixture(t, {
+    home: true,
+    storage: {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    },
+  });
+  h.$('academy-shell-action-settings').click();
+  await openAcademyTuning(h);
+  const tuning = h.doc.querySelector('.fpv-tuning');
+  const name = academyTuningControl(h, 'Profile name');
+  name.value = 'Pointer saved profile';
+  name.focus();
+  h.doc.emit('keydown', { key: 'Shift', code: 'ShiftLeft', target: name });
+  const hint = tuning.querySelector('.sim-menu-hint');
+  const instructions = hint.textContent;
+  assert.ok(instructions.length > 0);
+  const save = tuning
+    .querySelectorAll('button')
+    .find((node) => node.textContent === 'Save for next flight');
+  save.emit('pointerdown');
+  // Native focus changes can reach the window's blur listener during a pointer gesture.
+  h.win.emit('blur', { target: name, bubbles: false });
+  assert.equal(hint.textContent, instructions, 'pointer blur must not shrink the tuning dialog');
+  assert.equal(hint.hidden, false);
+  assert.equal(hint.parentElement, tuning);
+  save.emit('pointerup');
+  await academyTuningClick(h, 'Save for next flight');
+  assert.ok(
+    JSON.parse(data.get('revealline.fpv.tuning.v1')).profiles.some(
+      (profile) => profile.name === 'Pointer saved profile',
+    ),
+  );
+  h.win.emit('focus');
+  await academyTuningClick(h, 'Close');
+  h.doc.emit('keydown', { key: 'Shift', code: 'ShiftLeft', target: h.doc.activeElement });
+  assert.equal(tuning.open, false);
+  assert.equal(
+    tuning.contains(hint),
+    false,
+    'the closed tuning dialog does not retain hint ownership',
+  );
+  assert.equal(h.$('academy-shell-settings-dialog').contains(hint), true);
+});
+
+for (const kind of ['legacy camera', 'saved drone camera', 'unreadable camera', 'missing camera']) {
+  test(`Academy captures ${kind} before its first tuning configuration`, async (t) => {
+    const { initialTuningLibrary } = await import(
+      '../../optional-practice/civilian-fpv/tuning-library.mjs'
+    );
+    const response = {
+      format: 'FlightResponseProfile.v1',
+      id: 'historical',
+      name: 'Historical',
+      maxRate: 480,
+      maxTilt: 42,
+      expo: 45,
+      responseTicks: 11,
+    };
+    const cameraKey = 'revealline.fpv.flight-comfort.v1.academy.camera';
+    const data = new Map([
+      [
+        'revealline.flight-profiles.v1',
+        JSON.stringify({ format: 'FlightProfiles.v1', radio: null, response }),
+      ],
+      [cameraKey, JSON.stringify({ fov: 108, tilt: 27 })],
+    ]);
+    if (kind === 'missing camera') data.delete(cameraKey);
+    if (kind === 'saved drone camera')
+      data.set(
+        'revealline.fpv.tuning.v1',
+        JSON.stringify(initialTuningLibrary({ response, camera: { tilt: 49, verticalFov: 121 } })),
+      );
+    const saved = data.get('revealline.fpv.tuning.v1');
+    const h = await fixture(t, {
+      storage: {
+        getItem(key) {
+          if (kind === 'unreadable camera' && key === cameraKey)
+            throw new Error('Camera storage unavailable');
+          return data.get(key) ?? null;
+        },
+        setItem: (key, value) => data.set(key, value),
+      },
+    });
+    const expected =
+      kind === 'saved drone camera'
+        ? { tilt: 49, fov: 121 }
+        : kind === 'legacy camera'
+          ? { tilt: 27, fov: 108 }
+          : { tilt: 10, fov: 82 };
+    assert.equal(Number(h.$('camera-tilt').value), expected.tilt);
+    assert.equal(Number(h.$('camera-fov').value), expected.fov);
+    assert.deepEqual(h.view.exportAttempt().response, response);
+    await openAcademyTuning(h);
+    assert.equal(academyTuningControl(h, 'Camera tilt (degrees)').value, String(expected.tilt));
+    assert.equal(academyTuningControl(h, 'Vertical FOV (degrees)').value, String(expected.fov));
+    assert.equal(
+      data.get('revealline.fpv.tuning.v1'),
+      saved,
+      'Opening must not persist or replace a library',
+    );
+    assert.deepEqual(JSON.parse(data.get('revealline.flight-profiles.v1')).response, response);
+  });
+}

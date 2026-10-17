@@ -1,0 +1,124 @@
+{
+  "format": "fpv-public-delivery-receipts.v1",
+  "capturedAt": "2026-10-17T03:26:40.180Z",
+  "pullRequest": 1561,
+  "sourceHead": "eaecd60562917b7cf47d4995af00d561b154debd",
+  "mergeRevision": "b2f251dac0d762d476f725b1bc601a2d6d5485a5",
+  "mergedAt": "2026-10-17T03:10:08Z",
+  "publication": {
+    "runId": 38997742653,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/38997742653",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/38997742653/job/117293911323",
+        "startedAt": "2026-10-17T03:10:14Z",
+        "completedAt": "2026-10-17T03:23:48Z"
+      },
+      {
+        "name": "deploy",
+        "conclusion": "success",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/38997742653/job/117296575501",
+        "startedAt": "2026-10-17T03:23:51Z",
+        "completedAt": "2026-10-17T03:24:23Z"
+      },
+      {
+        "name": "verify",
+        "conclusion": "success",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/38997742653/job/117296687733",
+        "startedAt": "2026-10-17T03:24:26Z",
+        "completedAt": "2026-10-17T03:25:03Z"
+      }
+    ]
+  },
+  "publicIdentityVerified": true,
+  "publicIdentity": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "b2f251dac0d762d476f725b1bc601a2d6d5485a5",
+    "sourceCommittedAt": "2026-10-17T03:10:07Z",
+    "buildVersion": "main-b2f251dac0d7",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "capacity": {
+    "files": 3442,
+    "stagedBytes": 963681552,
+    "archiveBytes": 966676480,
+    "maximumBytes": 980000000,
+    "stagedHeadroomBytes": 16318448,
+    "archiveHeadroomBytes": 13323520
+  },
+  "practiceCatalogue": {
+    "indexURL": "https://mekhovov.github.io/revealline/practice/index.json",
+    "checkedCount": 0,
+    "missingCatalogueIsFailure": true,
+    "scope": "Explicit catalogue exists; no separately selected practice releases were checked."
+  },
+  "downloadedArtifactIds": [
+    12088480942,
+    12088356235,
+    12088276382
+  ],
+  "largePagesArtifactDownloaded": false,
+  "files": [
+    {
+      "path": "archive/main-pages-archive-receipt.json",
+      "bytes": 599,
+      "sha256": "1c971393659a152b258aac745bf2fd2f803fae9aa146f3904db72fad6b383c55"
+    },
+    {
+      "path": "artifact-index-build.json",
+      "bytes": 2716,
+      "sha256": "6e46dcf753b9e253d29fe272f4da4204ffb240a763eeac670489c737304d47b3"
+    },
+    {
+      "path": "artifact-index-final.json",
+      "bytes": 3605,
+      "sha256": "8bd39c1eee10d95fa6c3953eac553cb60b0cb636a533069f7bb4e7e1fa6dfd32"
+    },
+    {
+      "path": "capacity-verification.json",
+      "bytes": 866,
+      "sha256": "c3a9106bd1804319f4f08605caf695ba3257476c0eafc0022e179a142701b135"
+    },
+    {
+      "path": "merge.json",
+      "bytes": 343,
+      "sha256": "b6972b194bc1c3bdc5240fad09e770068f33f94f6d1309ecd0683f01c197ee23"
+    },
+    {
+      "path": "practice/practice-site-receipt.json",
+      "bytes": 132,
+      "sha256": "a78f1a58d0a714f920cc9bb88b5bc930b936b0e6bf6cf1a1e9136b8d1c207e14"
+    },
+    {
+      "path": "public-deployment-response.json",
+      "bytes": 1454,
+      "sha256": "3852a93c12a5aee6e3c964b954bc6d1a1ed41978c2ef1f2082e0804cf7d6240e"
+    },
+    {
+      "path": "publication-run-final.json",
+      "bytes": 9506,
+      "sha256": "75aff49d5e474c580736ee28c0bd1fc803fd3d3fe45ae739125215b52c68829f"
+    },
+    {
+      "path": "publication-run-start.json",
+      "bytes": 4995,
+      "sha256": "6d081df662ff2bd642d2b24d0be3f555165703a8e049da0e3d2121758194315b"
+    },
+    {
+      "path": "staged/main-pages-inventory.json",
+      "bytes": 510323,
+      "sha256": "8bf442768aaf87ffab8b68b68eb3cbc514588dca875f4018af0163c6e36c140d"
+    },
+    {
+      "path": "staged/main-pages-receipt.json",
+      "bytes": 4429,
+      "sha256": "885d572fb209f5eb82a60b573db0c0f351c847533832c5f740c764ec2983da2d"
+    }
+  ],
+  "scope": "Read-only delivery evidence. No manual merge, workflow rerun, deployment or gate override. Hosted receipts establish capacity and source identity; browser acceptance is separate."
+}

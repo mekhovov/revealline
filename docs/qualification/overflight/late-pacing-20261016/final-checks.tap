@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: Survivor built-in battlefields retain the opening and shorten only the last two choices
+ok 1 - Survivor built-in battlefields retain the opening and shorten only the last two choices
+  ---
+  duration_ms: 850.322333
+  ...
+# Subtest: Survivor legacy and explicit authored progression survive compile/import and upgraded copies
+ok 2 - Survivor legacy and explicit authored progression survive compile/import and upgraded copies
+  ---
+  duration_ms: 129.303042
+  ...
+# Subtest: Survivor revised thresholds partition durable V4 records without changing visual identity
+ok 3 - Survivor revised thresholds partition durable V4 records without changing visual identity
+  ---
+  duration_ms: 10.904083
+  ...
+# Subtest: Riy built-in battlefields retain the opening and shorten only the last two choices
+ok 4 - Riy built-in battlefields retain the opening and shorten only the last two choices
+  ---
+  duration_ms: 530.953292
+  ...
+# Subtest: Riy legacy and explicit authored progression survive compile/import and upgraded copies
+ok 5 - Riy legacy and explicit authored progression survive compile/import and upgraded copies
+  ---
+  duration_ms: 72.279208
+  ...
+# Subtest: Riy revised thresholds partition durable V4 records without changing visual identity
+ok 6 - Riy revised thresholds partition durable V4 records without changing visual identity
+  ---
+  duration_ms: 24.945
+  ...
+# Subtest: survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+ok 7 - survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 949.649542
+  ...
+# Subtest: survivor: previous authored/imported V4 projects retain exact rules and identity
+ok 8 - survivor: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 15.32975
+  ...
+# Subtest: survivor: old and new balance records survive a mixed-profile reopen
+ok 9 - survivor: old and new balance records survive a mixed-profile reopen
+  ---
+  duration_ms: 73.370833
+  ...
+# Subtest: riy: new V4 sorties shorten only the last two choices and identify the balance revision
+ok 10 - riy: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 568.509584
+  ...
+# Subtest: riy: previous authored/imported V4 projects retain exact rules and identity
+ok 11 - riy: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 40.018542
+  ...
+# Subtest: riy: old and new balance records survive a mixed-profile reopen
+ok 12 - riy: old and new balance records survive a mixed-profile reopen
+  ---
+  duration_ms: 36.440791
+  ...
+# Subtest: Riy compiles shared Survivor rules and resources with distinct authored identity
+ok 13 - Riy compiles shared Survivor rules and resources with distinct authored identity
+  ---
+  duration_ms: 226.610583
+  ...
+# Subtest: Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters
+ok 14 - Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters
+  ---
+  duration_ms: 22.846917
+  ...
+# Subtest: Riy package fresh-library round trip preserves source and native compiled identity
+ok 15 - Riy package fresh-library round trip preserves source and native compiled identity
+  ---
+  duration_ms: 161.664375
+  ...
+# Subtest: updating a legacy Riy copy preserves escort authoring without rewriting source
+ok 16 - updating a legacy Riy copy preserves escort authoring without rewriting source
+  ---
+  duration_ms: 7.484625
+  ...
+# Subtest: shared Studio escort controls edit the same validated config used by native play
+ok 17 - shared Studio escort controls edit the same validated config used by native play
+  ---
+  duration_ms: 4.877333
+  ...
+# Subtest: Riy rules 3 exposes current escort ranges, arcs and introduction controls
+ok 18 - Riy rules 3 exposes current escort ranges, arcs and introduction controls
+  ---
+  duration_ms: 3.307542
+  ...
+# Subtest: Riy rules 4 exposes current escort ranges, arcs and introduction controls
+ok 19 - Riy rules 4 exposes current escort ranges, arcs and introduction controls
+  ---
+  duration_ms: 12.432416
+  ...
+# Subtest: legacy Riy editor retains shared ranges without adding modern fields
+ok 20 - legacy Riy editor retains shared ranges without adding modern fields
+  ---
+  duration_ms: 12.769917
+  ...
+# Subtest: Creator exposes only combat controls used by the selected operation
+ok 21 - Creator exposes only combat controls used by the selected operation
+  ---
+  duration_ms: 2.207
+  ...
+# Subtest: shared combat admission protects warning/recovery floors and rejects executable or unknown capabilities
+ok 22 - shared combat admission protects warning/recovery floors and rejects executable or unknown capabilities
+  ---
+  duration_ms: 4.1235
+  ...
+# Subtest: Survivor author upgrade preserves legacy source and reproduces revised content in a fresh profile
+ok 23 - Survivor author upgrade preserves legacy source and reproduces revised content in a fresh profile
+  ---
+  duration_ms: 279.054292
+  ...
+# Subtest: Raid author upgrade preserves legacy source and reproduces revised content in a fresh profile
+ok 24 - Raid author upgrade preserves legacy source and reproduces revised content in a fresh profile
+  ---
+  duration_ms: 581.983667
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3258.240708

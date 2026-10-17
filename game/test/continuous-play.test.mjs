@@ -149,3 +149,39 @@ test('countdown stays beside its primary action and a lost result never paints v
   controls.dispose();
   celebration.dispose();
 });
+
+test('cancelling on pointer-down preserves the result action layout until its owner retires', () => {
+  const document = new Document();
+  const parent = document.createElement('div');
+  const next = document.createElement('button');
+  const home = document.createElement('button');
+  parent.append(next, home);
+  document.body.append(parent);
+  const state = setup();
+  const controls = mountContinuousPlayControls({
+    document,
+    parent,
+    primaryAction: next,
+    controller: state.controller,
+  });
+  state.controller.begin({ identity: state.owner, outcome: 'won', canAdvance: true });
+  const priorText = controls.status.textContent;
+  home.emit('pointerdown');
+  assert.equal(state.controller.snapshot().phase, 'cancelled');
+  assert.equal(controls.root.hidden, false, 'Removing the flex item moves Home before pointer-up.');
+  assert.equal(controls.root.style.visibility, 'hidden');
+  assert.equal(controls.root.inert, true);
+  assert.equal(controls.status.textContent, priorText, 'Retain exact occupied content dimensions.');
+  assert.equal(controls.cancel.hidden, false);
+  state.advance(20000);
+  assert.deepEqual(state.actions, [], 'Preserving layout must not preserve the countdown.');
+  state.controller.begin({ identity: state.owner, outcome: 'won', canAdvance: true });
+  assert.equal(controls.root.style.visibility, '');
+  assert.equal(controls.root.inert, false);
+  controls.cancel.focus();
+  controls.cancel.emit('click');
+  assert.equal(document.activeElement, next, 'Stay here must not strand focus in an inert slot.');
+  state.controller.activate('retry');
+  assert.equal(controls.root.hidden, true, 'Retired results release their reserved space.');
+  controls.dispose();
+});
