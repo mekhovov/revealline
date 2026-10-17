@@ -32,6 +32,8 @@ on:
       - 'game/ui/published-audio.mjs'
       - 'game/published-cue-inspection.mjs'
       - 'game/ui/media-preparation.mjs'
+      - 'game/ui/feedback-director.mjs'
+      - 'game/journey/reaction-voice-cache.mjs'
       - 'game/mp3-inspection.mjs'
       - 'game/ui/mp3-inspector.mjs'
       - 'game/mp3-inspection-worker.mjs'
@@ -114,6 +116,7 @@ on:
       - 'game/test/published-cue-inspection.test.mjs'
       - 'game/test/published-cue-closure.test.mjs'
       - 'game/test/media-preparation.test.mjs'
+      - 'game/test/feedback-director.test.mjs'
       - 'game/test/destruction-audio.test.mjs'
       - 'game/test/destruction-level.test.mjs'
       - 'game/test/human-reaction-audio.test.mjs'
@@ -258,6 +261,7 @@ jobs:
         game/test/published-cue-inspection.test.mjs
         game/test/published-cue-closure.test.mjs
         game/test/media-preparation.test.mjs
+        game/test/feedback-director.test.mjs
         game/test/destruction-audio.test.mjs
         game/test/destruction-level.test.mjs
         game/test/human-reaction-audio.test.mjs
