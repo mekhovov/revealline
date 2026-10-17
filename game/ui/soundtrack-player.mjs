@@ -132,6 +132,7 @@ export function createSoundtrackPlayer({
     media,
     url: null,
     ownedURL: false,
+    ownedBlobBytes: 0,
     listeners: [],
     resource: 0,
     weight: 0,
@@ -141,6 +142,8 @@ export function createSoundtrackPlayer({
   const preparationQueue = soundscape.mediaPreparation ?? createMediaPreparation();
   const ownsPreparationQueue = !soundscape.mediaPreparation;
   const mp3Inspector = createMP3Inspector({ preparation: preparationQueue });
+  let failedRevocationCount = 0,
+    failedRevocationBytes = 0;
   const remoteDeck = decks[0];
   let activeDeck = decks[0];
   activeDeck.weight = 1;
@@ -418,10 +421,19 @@ export function createSoundtrackPlayer({
     if (deck.url !== null && deck.ownedURL) {
       try {
         URLImpl.revokeObjectURL(deck.url);
-      } catch {}
+      } catch {
+        // Keep the existing cleanup behavior, but do not report a failed
+        // revocation as confirmed browser release. No URL history is retained.
+        failedRevocationCount = Math.min(Number.MAX_SAFE_INTEGER, failedRevocationCount + 1);
+        failedRevocationBytes = Math.min(
+          Number.MAX_SAFE_INTEGER,
+          failedRevocationBytes + deck.ownedBlobBytes,
+        );
+      }
     }
     deck.url = null;
     deck.ownedURL = false;
+    deck.ownedBlobBytes = 0;
   }
   function cancelPreload(keep = null) {
     preloadOperation?.abort();
@@ -551,13 +563,14 @@ export function createSoundtrackPlayer({
     }
     throwIfSoundtrackAborted(signal);
     if (disposed) throw new DOMException(t('interface:musicPlayerDisposed'), 'AbortError');
-    installDeckURL(deck, track, URLImpl.createObjectURL(blob));
+    installDeckURL(deck, track, URLImpl.createObjectURL(blob), { blobBytes: blob.size });
     return true;
   }
-  function installDeckURL(deck, track, ownedURL, { owned = true } = {}) {
+  function installDeckURL(deck, track, ownedURL, { owned = true, blobBytes = 0 } = {}) {
     clearDeck(deck);
     deck.url = ownedURL;
     deck.ownedURL = owned;
+    deck.ownedBlobBytes = owned ? blobBytes : 0;
     const resource = deck.resource,
       expectedURL = deck.url;
     const valid = () =>
@@ -621,13 +634,14 @@ export function createSoundtrackPlayer({
   function transferDeck(from, to, track) {
     const ownedURL = from.url;
     const ownsURL = from.ownedURL;
+    const blobBytes = from.ownedBlobBytes;
     required(ownedURL !== null, t('interface:preparedAudioIsNoLongerAvailable'));
     // Keep the object URL while moving playback to an already permitted element.
     from.url = null;
     from.ownedURL = false;
     clearDeck(from);
     from.weight = 0;
-    installDeckURL(to, track, ownedURL, { owned: ownsURL });
+    installDeckURL(to, track, ownedURL, { owned: ownsURL, blobBytes });
   }
   function prepareNext() {
     if (
@@ -1756,6 +1770,19 @@ export function createSoundtrackPlayer({
     preparationDiagnostics: () => ({
       admission: preparationQueue.snapshot(),
       inspection: mp3Inspector.snapshot(),
+      // Compressed originals held through object URLs, not decoder/PCM memory.
+      // Build these rows only on the existing manual diagnostic export path.
+      playback: {
+        ownedBlobURLCount: decks.reduce((count, deck) => count + Number(deck.ownedURL), 0),
+        ownedBlobBytes: decks.reduce((bytes, deck) => bytes + deck.ownedBlobBytes, 0),
+        failedRevocationCount,
+        failedRevocationBytes,
+        decks: decks.map((deck, index) => ({
+          index,
+          ownedBlobURLCount: Number(deck.ownedURL),
+          ownedBlobBytes: deck.ownedBlobBytes,
+        })),
+      },
     }),
   });
 }

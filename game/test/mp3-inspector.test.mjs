@@ -31,15 +31,48 @@ function realWorker() {
 }
 
 test('static worker returns the same complete MP3 validation and rejects malformed originals', async (t) => {
-  const inspector = createMP3Inspector({ createWorker: realWorker });
+  let creations = 0,
+    terminations = 0;
+  const inspector = createMP3Inspector({
+    createWorker() {
+      creations++;
+      const worker = realWorker();
+      return {
+        ...worker,
+        terminate() {
+          terminations++;
+          return worker.terminate();
+        },
+      };
+    },
+  });
   t.after(() => inspector.close());
   const blob = new Blob([silenceBytes]);
+  assert.deepEqual(inspector.snapshot(), {
+    workerOwned: false,
+    workerActive: false,
+    workerOwnedBytes: 0,
+    pendingRequests: 0,
+  });
   assert.deepEqual(await inspector.inspect(blob), await inspectMP3(blob));
+  assert.deepEqual(inspector.snapshot(), {
+    workerOwned: true,
+    workerActive: false,
+    workerOwnedBytes: 0,
+    pendingRequests: 0,
+  });
   await assert.rejects(
     inspector.inspect(new Blob(['junk', silenceBytes])),
     /malformed|Unsupported/,
   );
   await assert.rejects(inspector.inspect(blob.slice(0, -1)), /Truncated/);
+  assert.equal(creations, 1, 'successful and rejected inspections reuse the same idle worker');
+  assert.equal(inspector.snapshot().workerOwned, true);
+  inspector.close();
+  assert.equal(terminations, 1);
+  assert.equal(inspector.snapshot().workerOwned, false);
+  inspector.close();
+  assert.equal(terminations, 1, 'closing twice does not report or terminate an absent worker');
 });
 
 test('unavailable worker defers fallback until a safe phase and respects cancellation', async (t) => {
@@ -59,6 +92,12 @@ test('unavailable worker defers fallback until a safe phase and respects cancell
   const rejection = assert.rejects(cancelled, { name: 'AbortError' });
   await tick();
   assert.equal(scans, 0);
+  assert.deepEqual(inspector.snapshot(), {
+    workerOwned: false,
+    workerActive: false,
+    workerOwnedBytes: silenceBytes.length,
+    pendingRequests: 1,
+  });
   controller.abort();
   await rejection;
   const waiting = inspector.inspect(new Blob([silenceBytes]));
@@ -66,6 +105,12 @@ test('unavailable worker defers fallback until a safe phase and respects cancell
   assert.equal(scans, 0);
   preparation.setPhase('paused');
   assert.equal(await waiting, 1);
+  assert.deepEqual(inspector.snapshot(), {
+    workerOwned: false,
+    workerActive: false,
+    workerOwnedBytes: 0,
+    pendingRequests: 0,
+  });
 });
 
 test('fallback rechecks its safe phase after Blob materialization and before hashing', async (t) => {
@@ -144,12 +189,53 @@ test('cancelling an active worker terminates its work and a later request create
   const cancelled = inspector.inspect(new Blob([silenceBytes]), { signal: controller.signal });
   const rejection = assert.rejects(cancelled, { name: 'AbortError' });
   await tick();
+  assert.deepEqual(inspector.snapshot(), {
+    workerOwned: true,
+    workerActive: true,
+    workerOwnedBytes: silenceBytes.length,
+    pendingRequests: 1,
+  });
   controller.abort();
   await rejection;
   assert.equal(terminations, 1);
+  assert.deepEqual(inspector.snapshot(), {
+    workerOwned: false,
+    workerActive: false,
+    workerOwnedBytes: 0,
+    pendingRequests: 0,
+  });
   assert.deepEqual(
     await inspector.inspect(new Blob([silenceBytes])),
     await inspectMP3(new Blob([silenceBytes])),
   );
   assert.equal(creations, 2);
+  assert.equal(inspector.snapshot().workerOwned, true);
+});
+
+test('a failed worker is retired before safe fallback and is not reported as idle ownership', async (t) => {
+  let terminations = 0;
+  const inspector = createMP3Inspector({
+    createWorker: () => ({
+      addEventListener() {},
+      removeEventListener() {},
+      postMessage() {
+        throw new Error('Worker transport failed.');
+      },
+      terminate() {
+        terminations++;
+      },
+    }),
+  });
+  t.after(() => inspector.close());
+  const blob = new Blob([silenceBytes]);
+  assert.deepEqual(await inspector.inspect(blob), await inspectMP3(blob));
+  assert.equal(terminations, 1);
+  assert.deepEqual(inspector.snapshot(), {
+    workerOwned: false,
+    workerActive: false,
+    workerOwnedBytes: 0,
+    pendingRequests: 0,
+  });
+  inspector.close();
+  assert.equal(terminations, 1);
 });

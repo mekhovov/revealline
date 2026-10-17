@@ -119,6 +119,7 @@ export function createMP3Inspector({
     },
     snapshot: () =>
       Object.freeze({
+        workerOwned: worker !== null,
         workerActive: pending !== null,
         workerOwnedBytes: ownedBytes,
         pendingRequests,
