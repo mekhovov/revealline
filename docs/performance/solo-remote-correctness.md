@@ -276,7 +276,7 @@ The prospective correction raises only that source witness limit to two MiB,
 retaining the eight-MiB aggregate and 256-source caps. All twelve original
 cases, zero pixel tolerance, capture protocols, browser deadlines and ownership
 checks remain unchanged. Rejected source identities now retain a bounded reason.
-One new observation per affected engine is declared on the next push from
+One new observation per affected engine was declared on the next push from
 `aeadf7f43`; previous failed artifacts remain unchanged. Chromium artifact
 `12085497880` is 422,825 bytes with SHA-256
 `4a0e1ba7b8f70ae988467d5c8cbf628ad6e1f4e16a53ba231d377be0619d24e1`;
@@ -284,6 +284,36 @@ WebKit artifact `12085033070` is 419,435 bytes with SHA-256
 `96ab0343220d6cff4cb362f04224e2b3b4e1569f9b1dbda9f3159556305d8181`.
 Each has 44 independently verified members and a separate analysis under
 `.cache/solo-followup/remote-38991754555/`.
+
+The corrected [run 38992974782](https://github.com/mekhovov/revealline/actions/runs/38992974782)
+used tooling `bffcbd838a7bb925da8aaf030695773f893d8bda` and the same frozen
+`3adcd537` package. **Both Chromium and WebKit passed all twelve strict cases**,
+each retaining 84 captures with zero invariant, source, page or request failures.
+Both admitted the exact localization catalogue and 153 source identities totaling
+3,507,264 bytes; all source, package, process and profile checks completed cleanly.
+The known strict control failure was not reproduced, so the declared conditional
+localization did not run. This does not resolve the historical Mac WebKit failure.
+
+| Retained artifact      |     Bytes | SHA-256                                                            |
+| ---------------------- | --------: | ------------------------------------------------------------------ |
+| Chromium `12085788233` | 2,867,962 | `f0a6c452af7e34716d1d0a7ae9bfe9cde5798143870a4bee7c5df57773bb36a6` |
+| WebKit `12084969769`   | 1,619,940 | `81df8c5505e797018eb2b75fb59160563ab8b8d14ba546990ea9c85ae9ab2b05` |
+
+Each artifact has 128 independently read-back members. Separate analysis files
+under `.cache/solo-followup/remote-38992974782/` have SHA-256
+`34e02233ab0decbc0c57110c3fdcd15d3fc57cbf305a0cb8b9b2d0229575e7d6`
+(Chromium) and `d28395a1e470410387794a9d71cddcac20213f712d1add9a2dccb875b1b1b183`
+(WebKit). A separate direct visual inspection covered 22 original PNGs: every
+WebKit quality/mode representative, four Chromium representatives, and both
+engines' selected same-owner A/B/A picture sequences. Concealment, visible actors,
+warning/active lane boundaries and source restoration showed no visible issue in
+that sample. The exact selected files and hashes are in `visual-review-v1.json`;
+the machine reports remain unchanged with their original visual-review-pending label.
+
+These are synthetic claimed-cell and picture-source controls. They do not establish
+earned-capture or erosion correctness, a timing pass, physical-device qualification,
+or evidence for the later `b5b985f70` startup fix. The failed first-eight gate and
+unattributed 204 ms interval remain unchanged.
 
 ## Other CI evidence
 
