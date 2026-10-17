@@ -11,7 +11,7 @@ test('texture inspection closes over actual bounded optional-package bytes and t
   assert.equal(result.packageQualification, 'development-only');
   assert.ok(result.packageFiles <= result.limits.files);
   assert.ok(result.packageBytes <= result.limits.bytes);
-  assert.equal(result.limits.files, 198);
+  assert.equal(result.limits.files, 200);
   assert.equal(result.limits.bytes, 20 * 1024 * 1024);
   assert.equal(result.limits.files, OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.files);
   assert.equal(result.limits.bytes, OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.bytes);
@@ -36,6 +36,8 @@ test('texture inspection closes over actual bounded optional-package bytes and t
     'optional-practice/civilian-fpv/flight-support.mjs',
     'optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js',
     'optional-practice/civilian-fpv/renderer.mjs',
+    'optional-practice/civilian-fpv/aircraft-appearance.mjs',
+    'optional-practice/civilian-fpv/aircraft-preview.mjs',
     'game/presentation/theme-bootstrap.mjs',
     'game/presentation/industrial-workshop.css',
     'game/ui/field-kit-fonts.css',
