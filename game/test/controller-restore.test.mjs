@@ -211,3 +211,56 @@ test('explicit forgetting recovers malformed setup without overwriting a newer t
   assert.equal(stale.forget(), false);
   assert.equal(store.getItem(COUCH_RESTORE_KEY), newer);
 });
+
+test('absent and already restored physical radios do not clone saved setup every callback', (context) => {
+  const store = storage(),
+    a = pad(),
+    first = session(store);
+  first.sample([a]);
+  first.apply(0, tx15StickProfile(a));
+  first.assign(0, 0);
+  const saved = store.getItem(COUCH_RESTORE_KEY);
+  const restored = session(store, { restoreInFlight: true });
+  const original = globalThis.structuredClone;
+  const clone = context.mock.method(globalThis, 'structuredClone', (...args) => original(...args));
+  for (let i = 0; i < 120; i++) restored.sample([], { active: true });
+  assert.equal(clone.mock.callCount(), 0);
+  a.axes[1] = 1;
+  const connected = restored.sample([a], { active: true });
+  assert.deepEqual(connected.slots, [0, null]);
+  assert.equal(
+    gamepadCommand(connected.pads[0]).direction,
+    null,
+    'Restore retains the neutral gate.',
+  );
+  const afterRestore = clone.mock.callCount();
+  assert(afterRestore > 0, 'A new eligible radio still reads an owned saved copy.');
+  for (let i = 0; i < 120; i++) restored.sample([a], { active: true });
+  assert.equal(clone.mock.callCount(), afterRestore);
+  a.axes[1] = 0;
+  restored.sample([a], { active: true });
+  a.axes[1] = 1;
+  assert.equal(gamepadCommand(restored.sample([a], { active: true }).pads[0]).direction, 'up');
+  restored.sample([], { active: true });
+  for (let i = 0; i < 120; i++) restored.sample([], { active: true });
+  assert.equal(clone.mock.callCount(), afterRestore);
+  assert.equal(gamepadCommand(restored.sample([a], { active: true }).pads[0]).direction, null);
+  assert(
+    clone.mock.callCount() > afterRestore,
+    'Reconnect re-evaluates the original saved identity.',
+  );
+  assert.equal(store.getItem(COUCH_RESTORE_KEY), saved);
+});
+
+test('an already restored radio still participates in duplicate-identity rejection', () => {
+  const store = storage(),
+    a = pad(),
+    first = session(store);
+  first.sample([a]);
+  first.apply(0, tx15StickProfile(a));
+  const restored = session(store, { restoreInFlight: true });
+  restored.sample([a], { active: true });
+  assert(restored.state().devices.find((d) => d.index === 0).profile);
+  restored.sample([a, pad(1)], { active: true });
+  assert.equal(restored.state().devices.find((d) => d.index === 1).profile, null);
+});
