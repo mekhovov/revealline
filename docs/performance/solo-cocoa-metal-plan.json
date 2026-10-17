@@ -1,0 +1,108 @@
+{
+  "format": "SoloNativeCocoaMetalReleaseV1",
+  "scope": "codec-only-original-bossa-fresh-native-owner-required",
+  "release": {
+    "status": "reviewed-one-shot-proposal-awaiting-root-application",
+    "onceOnlyBefore": "e9f5f6548ca7178c67577fcc27ffac5b1d9e0264",
+    "automaticRetries": 0,
+    "automaticPhaseContinuation": false
+  },
+  "productionPackage": null,
+  "performanceQualification": false,
+  "toolingSource": "actual reviewed PR head, checked against SOLO_TOOLING_REVISION and current frozen input bytes before native work",
+  "currentInputs": [
+    {
+      "path": "scripts/solo-native-mp3-control.mjs",
+      "bytes": 46099,
+      "sha256": "28eab7671344e5819f257ef12e3d28f1b9064af96f2f444b8194e5f54ee41da1"
+    },
+    {
+      "path": "scripts/prepare-solo-audio-fixtures.mjs",
+      "bytes": 10676,
+      "sha256": "a8941d708d9b773b3eda1b455f9291ee60f2c8b5846e7501a5a40236478c467e"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 66593,
+      "sha256": "f2c87958bdd0bb95117e7c32453d5f24b2a030c41a90901d50872883e57c0b2f"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.c",
+      "bytes": 7955,
+      "sha256": "72ff466c653ddb987a4e5df5df024aabd952cf45d659e7872809412aa996db9f"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.mjs",
+      "bytes": 13716,
+      "sha256": "bc3c1976364478f8cfb06776c54edb06701b8a43b0526db2c974e38229209783"
+    }
+  ],
+  "priorNonBrowserWitness": {
+    "path": "docs/performance/fixtures/solo-darwin-inventory/397-owner-preflight.json",
+    "bytes": 25733,
+    "sha256": "325d6b84ad298db72a174fac0cd75298c9ff1e5b4756cd567a3823ee00efb3e9"
+  },
+  "previousAttempt": {
+    "revision": "8161953a10b9c37e603d78f236e277da380e57ad",
+    "tree": "3cc69ce4de5367590e9bd11e4eeed38ddd510d9a",
+    "run": 39073210308,
+    "artifact": 12116355923,
+    "archive": {
+      "bytes": 13792,
+      "sha256": "fbc0aff61da82dc0d5a3d1195401df9a22326e2ca89d937fa41997d9e194d900"
+    },
+    "workflow": {
+      "path": ".github/workflows/solo-native-mp3-cocoa-owner397-temporary.yml",
+      "bytes": 11874,
+      "sha256": "f0372262ab134ad5f06b01f1934e11d9d77a52deae0aebf04c86dd5f14a7cc80"
+    },
+    "status": "failed-fresh-owner-media-withheld",
+    "fullBeforeAndAllInventoriesRetained": false,
+    "retrospectiveOwnershipPass": false,
+    "reports": [
+      {
+        "member": "solo-native-mp3-evidence/owner-preflight.json",
+        "bytes": 4038,
+        "sha256": "0317f9030dce46568604a122236ca47b60bd06dc8866f98d2ac53ab9e7b8a702",
+        "utf8": "{\n  \"format\": \"SoloNativeCocoaOwnerPreflightV1\",\n  \"sourceRevision\": \"8161953a10b9c37e603d78f236e277da380e57ad\",\n  \"platform\": \"darwin\",\n  \"architecture\": \"x64\",\n  \"status\": \"failed\",\n  \"qualificationEligible\": false,\n  \"owner\": {\n    \"mode\": \"persistent\",\n    \"engine\": \"webkit\",\n    \"profilePolicy\": \"fresh task-owned profile per observation under the scoped temporary directory\",\n    \"status\": \"launch-failed\",\n    \"profileDirectory\": \"/private/tmp/sm-32SZxE/solo-qualification-webkit-ZhIDTU\",\n    \"cleanup\": {\n      \"status\": \"failed-profile-retained\",\n      \"profileRemoved\": false,\n      \"failure\": \"AssertionError [ERR_ASSERTION]: No completed persistent launch; retain profile\\n    at file:///Users/runner/work/revealline/revealline/scripts/solo-qualification-browser-context.mjs:78:11\\n    at Object.close (file:///Users/runner/work/revealline/revealline/scripts/solo-qualification-browser-context.mjs:99:9)\\n    at cocoaOwnerPreflight (file:///Users/runner/work/revealline/revealline/scripts/solo-native-mp3-control.mjs:1229:28)\\n    at async file:///Users/runner/work/revealline/revealline/scripts/solo-native-mp3-control.mjs:1247:5\",\n      \"completedAt\": \"2026-10-17T22:01:42.319Z\"\n    },\n    \"launchFailure\": \"browserType.launchPersistentContext: Target page, context or browser has been closed\\nBrowser logs:\\n\\n<launching> /Users/runner/work/_temp/solo-native-mp3-browsers/webkit-2336/pw_run.sh --inspector-pipe --headless --user-data-dir=/private/tmp/sm-32SZxE/solo-qualification-webkit-ZhIDTU about:blank\\n<launched> pid=15051\\n[pid=15051] <process did exit: exitCode=null, signal=SIGTERM>\\n[pid=15051] starting temporary directories cleanup\\nCall log:\\n  - <launching> /Users/runner/work/_temp/solo-native-mp3-browsers/webkit-2336/pw_run.sh --inspector-pipe --headless --user-data-dir=/private/tmp/sm-32SZxE/solo-qualification-webkit-ZhIDTU about:blank\\n  - <launched> pid=15051\\n  - [pid=15051] <process did exit: exitCode=null, signal=SIGTERM>\\n  - [pid=15051] starting temporary directories cleanup\\n  - [pid=15051] <gracefully close start>\\n  - [pid=15051] <kill>\\n  - [pid=15051] <skipped force kill spawnedProcess.killed=false processClosed=true>\\n  - [pid=15051] finished temporary directories cleanup\\n  - [pid=15051] <gracefully close end>\\n\\n    at async Object.launch (/Users/runner/work/revealline/revealline/scripts/solo-qualification-browser-context.mjs:59:19)\\n    at async cocoaOwnerPreflight (/Users/runner/work/revealline/revealline/scripts/solo-native-mp3-control.mjs:1213:34)\\n    at async file:///Users/runner/work/revealline/revealline/scripts/solo-native-mp3-control.mjs:1247:5\"\n  },\n  \"failure\": \"browserType.launchPersistentContext: Target page, context or browser has been closed\\nBrowser logs:\\n\\n<launching> /Users/runner/work/_temp/solo-native-mp3-browsers/webkit-2336/pw_run.sh --inspector-pipe --headless --user-data-dir=/private/tmp/sm-32SZxE/solo-qualification-webkit-ZhIDTU about:blank\\n<launched> pid=15051\\n[pid=15051] <process did exit: exitCode=null, signal=SIGTERM>\\n[pid=15051] starting temporary directories cleanup\\nCall log:\\n  - <launching> /Users/runner/work/_temp/solo-native-mp3-browsers/webkit-2336/pw_run.sh --inspector-pipe --headless --user-data-dir=/private/tmp/sm-32SZxE/solo-qualification-webkit-ZhIDTU about:blank\\n  - <launched> pid=15051\\n  - [pid=15051] <process did exit: exitCode=null, signal=SIGTERM>\\n  - [pid=15051] starting temporary directories cleanup\\n  - [pid=15051] <gracefully close start>\\n  - [pid=15051] <kill>\\n  - [pid=15051] <skipped force kill spawnedProcess.killed=false processClosed=true>\\n  - [pid=15051] finished temporary directories cleanup\\n  - [pid=15051] <gracefully close end>\\n\\n    at async Object.launch (/Users/runner/work/revealline/revealline/scripts/solo-qualification-browser-context.mjs:59:19)\\n    at async cocoaOwnerPreflight (/Users/runner/work/revealline/revealline/scripts/solo-native-mp3-control.mjs:1213:34)\\n    at async file:///Users/runner/work/revealline/revealline/scripts/solo-native-mp3-control.mjs:1247:5\"\n}\n"
+      },
+      {
+        "member": "solo-native-mp3-evidence/owner-preflight-command.json",
+        "bytes": 7249,
+        "sha256": "6f625227d3d79e8ff284e8e7ab739a0e6c7481c84ac2819acabc87fd5932013e",
+        "utf8": "{\n  \"argv\": [\n    \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node\",\n    \"/Users/runner/work/revealline/revealline/scripts/solo-native-mp3-control.mjs\",\n    \"child-cocoa-owner\",\n    \"/Users/runner/work/_temp/solo-native-mp3-evidence\",\n    \"/private/tmp/sm-32SZxE\"\n  ],\n  \"cwd\": \"/Users/runner/work/revealline/revealline\",\n  \"startedAt\": \"2026-10-17T22:01:39.457Z\",\n  \"timeoutMs\": 120000,\n  \"rssBytes\": 6442450944,\n  \"outputBytes\": 4194304,\n  \"status\": \"failed\",\n  \"tracked\": [\n    {\n      \"pid\": 14877,\n      \"ppid\": 14859,\n      \"pgid\": 14877,\n      \"birth\": \"00000000000000014877\",\n      \"state\": \"R\",\n      \"rss\": 0,\n      \"argv\": \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node /Users/runner/work/revealline/revealline/scripts/solo-native-mp3-control.mjs child-cocoa-owner /Users/runner/work/_temp/solo-native-mp3-evidence /private/tmp/sm-32SZxE\",\n      \"ownerTagged\": false,\n      \"inspectionIncomplete\": false,\n      \"pathInspection\": \"unobserved\",\n      \"rssInspection\": \"unobserved\",\n      \"ownerTagInspection\": \"unobserved\",\n      \"identityKind\": \"private-unique-id-uint64\",\n      \"euid\": 501,\n      \"ruid\": 501,\n      \"parentUniqueId\": \"14859\",\n      \"version\": 30360\n    },\n    {\n      \"pid\": 15062,\n      \"ppid\": 15051,\n      \"pgid\": 15051,\n      \"birth\": \"00000000000000015062\",\n      \"state\": \"R\",\n      \"rss\": 507904,\n      \"argv\": \"/Users/runner/work/_temp/solo-native-mp3-browsers/webkit-2336/Playwright.app/Contents/MacOS/Playwright\",\n      \"ownerTagged\": true,\n      \"inspectionIncomplete\": false,\n      \"pathInspection\": \"complete\",\n      \"rssInspection\": \"complete\",\n      \"ownerTagInspection\": \"present\",\n      \"identityKind\": \"private-unique-id-uint64\",\n      \"euid\": 501,\n      \"ruid\": 501,\n      \"parentUniqueId\": \"15051\",\n      \"version\": 30730\n    },\n    {\n      \"pid\": 15051,\n      \"ppid\": 14877,\n      \"pgid\": 15051,\n      \"birth\": \"00000000000000015051\",\n      \"state\": \"R\",\n      \"rss\": 1146880,\n      \"argv\": \"/bin/bash\",\n      \"ownerTagged\": true,\n      \"inspectionIncomplete\": false,\n      \"pathInspection\": \"complete\",\n      \"rssInspection\": \"complete\",\n      \"ownerTagInspection\": \"present\",\n      \"identityKind\": \"private-unique-id-uint64\",\n      \"euid\": 501,\n      \"ruid\": 501,\n      \"parentUniqueId\": \"14877\",\n      \"version\": 30713\n    }\n  ],\n  \"forcedCleanup\": true,\n  \"ambiguous\": [\n    {\n      \"pid\": 15107,\n      \"ppid\": 1,\n      \"pgid\": 15107,\n      \"birth\": \"00000000000000015107\",\n      \"state\": \"R\",\n      \"rss\": 0,\n      \"argv\": \"/System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService\",\n      \"ownerTagged\": false,\n      \"inspectionIncomplete\": true,\n      \"pathInspection\": \"complete\",\n      \"rssInspection\": \"unavailable\",\n      \"ownerTagInspection\": \"unavailable\",\n      \"identityKind\": \"private-unique-id-uint64\",\n      \"euid\": 0,\n      \"ruid\": 0,\n      \"parentUniqueId\": \"1\",\n      \"version\": 30818\n    }\n  ],\n  \"survivors\": [],\n  \"initialLeaderCapture\": \"direct-child-birth\",\n  \"processInventory\": {\n    \"platform\": \"darwin\",\n    \"path\": \"/private/tmp/solo-process-owner.1FOUaK/inventory\",\n    \"bytes\": 13896,\n    \"sha256\": \"489e05c3984c34f77e770ceac17e5b05c08b0b2a41266bbae32e5e627b0c1d19\",\n    \"format\": \"SoloDarwinProcessInventoryV3\",\n    \"identityKind\": \"private-unique-id-uint64\"\n  },\n  \"foreignSystemProcesses\": [\n    {\n      \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n      \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n      \"process\": {\n        \"pid\": 14905,\n        \"ppid\": 957,\n        \"pgid\": 948,\n        \"birth\": \"00000000000000014905\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"parentUniqueId\": \"957\",\n        \"version\": 30418,\n        \"euid\": 0,\n        \"ruid\": 0,\n        \"state\": \"R\",\n        \"executable\": \"/bin/ps\",\n        \"pathInspection\": \"complete\",\n        \"rssInspection\": \"unavailable\",\n        \"ownerTagInspection\": \"unavailable\",\n        \"rss\": null,\n        \"ownerTagged\": null\n      }\n    },\n    {\n      \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n      \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n      \"process\": {\n        \"pid\": 14938,\n        \"ppid\": 957,\n        \"pgid\": 948,\n        \"birth\": \"00000000000000014938\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"parentUniqueId\": \"957\",\n        \"version\": 30484,\n        \"euid\": 0,\n        \"ruid\": 0,\n        \"state\": \"R\",\n        \"executable\": \"/bin/ps\",\n        \"pathInspection\": \"complete\",\n        \"rssInspection\": \"unavailable\",\n        \"ownerTagInspection\": \"unavailable\",\n        \"rss\": null,\n        \"ownerTagged\": null\n      }\n    },\n    {\n      \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n      \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n      \"process\": {\n        \"pid\": 15074,\n        \"ppid\": 957,\n        \"pgid\": 948,\n        \"birth\": \"00000000000000015074\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"parentUniqueId\": \"957\",\n        \"version\": 30754,\n        \"euid\": 0,\n        \"ruid\": 0,\n        \"state\": \"R\",\n        \"executable\": \"/bin/ps\",\n        \"pathInspection\": \"complete\",\n        \"rssInspection\": \"unavailable\",\n        \"ownerTagInspection\": \"unavailable\",\n        \"rss\": null,\n        \"ownerTagged\": null\n      }\n    },\n    {\n      \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n      \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n      \"process\": {\n        \"pid\": 15110,\n        \"ppid\": 957,\n        \"pgid\": 948,\n        \"birth\": \"00000000000000015110\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"parentUniqueId\": \"957\",\n        \"version\": 30825,\n        \"euid\": 0,\n        \"ruid\": 0,\n        \"state\": \"R\",\n        \"executable\": \"/bin/ps\",\n        \"pathInspection\": \"complete\",\n        \"rssInspection\": \"unavailable\",\n        \"ownerTagInspection\": \"unavailable\",\n        \"rss\": null,\n        \"ownerTagged\": null\n      }\n    }\n  ],\n  \"peakRSS\": 190259200,\n  \"firstAmbiguousInventory\": {\n    \"format\": \"SoloFirstAmbiguousInventoryV1\",\n    \"ambiguousCount\": 1,\n    \"retainedCount\": 1,\n    \"additionalRowsOmitted\": 0,\n    \"row\": {\n      \"pid\": 15107,\n      \"ppid\": 1,\n      \"pgid\": 15107,\n      \"birth\": \"00000000000000015107\",\n      \"state\": \"R\",\n      \"rss\": 0,\n      \"argv\": \"/System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService\",\n      \"argvCodeUnits\": 122,\n      \"argvTruncated\": false,\n      \"ownerTagged\": false,\n      \"inspectionIncomplete\": true,\n      \"identityKind\": \"private-unique-id-uint64\",\n      \"euid\": 0,\n      \"ruid\": 0,\n      \"parentUniqueId\": \"1\",\n      \"version\": 30818,\n      \"pathInspection\": \"complete\",\n      \"rssInspection\": \"unavailable\",\n      \"ownerTagInspection\": \"unavailable\"\n    }\n  },\n  \"exitCode\": 1,\n  \"signal\": null,\n  \"violation\": \"unattributed-new-browser\",\n  \"outputBytesObserved\": 876,\n  \"completedAt\": \"2026-10-17T22:01:42.755Z\"\n}\n"
+      }
+    ]
+  },
+  "media": {
+    "id": "builtin.catalog.joth.bossa-nova",
+    "bytes": 1196325,
+    "sha256": "0ee835fd279ac5fa15f9346744cbafc2ba800c1c0671b78ca9abe2b4353402f7"
+  },
+  "limits": {
+    "jobMinutes": 28,
+    "playwright": "1.62.1",
+    "webkitRevision": "2336",
+    "browserVersion": "26.5",
+    "ownerPreflightTimeoutMs": 120000,
+    "passiveMs": 5000,
+    "playbackMs": 10000,
+    "sampleMs": 500,
+    "armTimeoutMs": 60000,
+    "commandTimeoutMs": 300000,
+    "preparationTimeoutMs": 180000,
+    "maximumEvidenceBytes": 16777216,
+    "maximumRecords": 128,
+    "maximumSamples": 32
+  }
+}
