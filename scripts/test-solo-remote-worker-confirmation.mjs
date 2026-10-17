@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
+import { assertHistoricalWorkerBindings } from './solo-worker-source-witness.mjs';
 import {
   validateWorkerDiagnosticPlan,
   workerConfirmationAssessment,
@@ -16,13 +16,10 @@ const plan = JSON.parse(
 test('confirmation binds all three ordinary probes and the paused companion without promotion', async () => {
   validateWorkerDiagnosticPlan(plan);
   assert.deepEqual(plan.rows, WORKER_CONFIRMATION_ROWS);
-  for (const ref of plan.adapterInputs) {
-    const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
-    assert.deepEqual(
-      { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
-      { bytes: ref.bytes, sha256: ref.sha256 },
-    );
-  }
+  await assertHistoricalWorkerBindings(
+    'docs/performance/solo-remote-worker-confirmation-plan.json',
+    plan.adapterInputs,
+  );
   for (const mutate of [
     (p) => (p.release.firstEightAllCorrectnessPassed = true),
     (p) => (p.release.predecessorRun = 1),
