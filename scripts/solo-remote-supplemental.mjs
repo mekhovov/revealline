@@ -12,6 +12,80 @@ const SOURCE = {
   baseline: 'b11745223861c3973ad4bf440cc536198b8e0371',
   candidate: '3adcd53792043ef02459e86168c6b33a66d6ef00',
 };
+export const FIRST_RETURN_COHORT = 'first-return-main8b-candidatec9';
+const FIRST_RETURN_SOURCE = {
+  baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  candidate: 'c9e637ad81fadf49caec884155d1bd0c2496c59c',
+};
+export const FIRST_RETURN_PHASES = Object.freeze({
+  'first-return-retry': 'cb575fd56d6ab8ab796ce5924b0154dc8e18aca4b62502b2028e2fd932f63bee',
+  'first-return-next': 'eb859ade98235a43c22858bcf5748daa8d951bd9aa1790f26fc13787c77b8fb5',
+});
+const firstReturn = (plan) => plan?.sourceCohort === FIRST_RETURN_COHORT;
+function sources(plan) {
+  assert(
+    plan?.sourceCohort === undefined || firstReturn(plan),
+    'Unknown supplemental source cohort',
+  );
+  return firstReturn(plan) ? FIRST_RETURN_SOURCE : SOURCE;
+}
+const phases = (plan) => (firstReturn(plan) ? FIRST_RETURN_PHASES : SUPPLEMENTAL_PHASES);
+function firstReturnPhase(name) {
+  const retry = name === 'first-return-retry';
+  assert(retry || name === 'first-return-next');
+  return {
+    recipe: {
+      path: `docs/performance/fixtures/solo-remote-sustained/${retry ? 'retry' : 'next'}-first-return-anchored-preflight.qualification.fixture`,
+      bytes: retry ? 4349 : 3336,
+      sha256: FIRST_RETURN_PHASES[name],
+      stagedName: 'scenario.qualification.json',
+    },
+    upload: retry
+      ? {
+          path: 'docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture',
+          bytes: 2897,
+          sha256: 'd36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e',
+          stagedName: 'first-return.xonix.json',
+        }
+      : null,
+    scenarioTimeoutMs: 240000,
+  };
+}
+function validateFirstReturnSources(plan) {
+  assert.equal(plan.candidate.tree, '4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c');
+  assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
+  assert.equal(plan.runtimeRevision, '87aca909201ae0a2520d5856dbca351b82dd6e2d');
+  assert(!plan.baseline.publishVerifiedNormal && !plan.baseline.publisher);
+  // Keep matrix declaration standalone. The common runner subsequently calls
+  // validateBaselineReuse and fully reads both archives, ready proof and source.
+  const reuse = plan.baseline.reusableArtifact;
+  assert.equal(reuse.format, 'SoloHostedNormalBaselineReuseV2');
+  assert.equal(reuse.sourceRevision, FIRST_RETURN_SOURCE.baseline);
+  assert.equal(reuse.sourceTree, plan.baseline.tree);
+  assert.equal(reuse.producer.repository, plan.repository);
+  assert.equal(reuse.producer.workflow, '.github/workflows/solo-remote-baseline-temporary.yml');
+  assert.equal(reuse.producer.run, reuse.run);
+  assert(Number.isSafeInteger(reuse.producer.attempt) && reuse.producer.attempt > 0);
+  for (const key of ['toolingRevision', 'toolingTree'])
+    assert.match(reuse.producer[key], /^[a-f0-9]{40}$/);
+  assert.equal(reuse.name, `solo-normal-baseline-8b019919-${reuse.run}-${reuse.producer.attempt}`);
+  for (const identity of [plan.candidate, reuse]) {
+    for (const key of ['run', 'artifact'])
+      assert(Number.isSafeInteger(identity[key]) && identity[key] > 0);
+    for (const name of ['outer', 'inner']) {
+      const ref = identity[name];
+      assert(Number.isSafeInteger(ref?.bytes) && ref.bytes > 0 && ref.bytes <= 2 * 1024 ** 3);
+      assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+    }
+    assert.match(identity.manifestSHA256, /^[a-f0-9]{64}$/);
+  }
+  assert(
+    Number.isSafeInteger(reuse.ready?.bytes) &&
+      reuse.ready.bytes > 0 &&
+      reuse.ready.bytes <= 2 * MiB,
+  );
+  assert.match(reuse.ready.sha256, /^[a-f0-9]{64}$/);
+}
 export const SUPPLEMENTAL_PHASES = Object.freeze({
   'latency-long-rail': '6815653eadf5a4e05435be5e87bc933ba5e17b7d10fb51032988c274dd651802',
   'latency-sentry': '225c05486cb28516086acf3bbefb2bd4bcdabe30d5e1a990c7c07137f583a5d9',
@@ -26,20 +100,43 @@ function validateRelease(plan) {
   assert.equal(plan.performanceExclusion, true);
   assert.equal(plan.release?.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release?.performanceQualification, 'excluded');
-  assert.equal(plan.release?.scope, 'supplemental-native-preflight');
+  assert.equal(
+    plan.release?.scope,
+    firstReturn(plan) ? 'first-return-native-preflight' : 'supplemental-native-preflight',
+  );
   assert.equal(plan.release?.predecessorRun, 38985941469);
-  assert.equal(plan.release?.candidateRevision, SOURCE.candidate);
+  assert.equal(plan.release?.candidateRevision, sources(plan).candidate);
   for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
     assert.equal(plan.release[key], true);
   const previous = Object.keys(SUPPLEMENTAL_PHASES).indexOf(plan.phase) - 1;
   assert.equal(
     plan.release.previousPhase,
-    plan.phase === 'latency-long-rail-anchored'
-      ? 'latency-long-rail'
-      : previous < 0
-        ? 'reviewed-first-eight-diagnostic'
-        : Object.keys(SUPPLEMENTAL_PHASES)[previous],
+    firstReturn(plan)
+      ? 'latency-long-rail-anchored'
+      : plan.phase === 'latency-long-rail-anchored'
+        ? 'latency-long-rail'
+        : previous < 0
+          ? 'reviewed-first-eight-diagnostic'
+          : Object.keys(SUPPLEMENTAL_PHASES)[previous],
   );
+  if (firstReturn(plan)) {
+    assert.equal(plan.release.baselineRevision, FIRST_RETURN_SOURCE.baseline);
+    assert.deepEqual(plan.release.diagnosticPredecessor, {
+      run: 38995660502,
+      phase: 'latency-long-rail-anchored',
+      conclusion: 'failure',
+      passedRows: 3,
+      failedRows: 1,
+      allOwnersClosed: true,
+      allFailuresRetained: true,
+    });
+    for (const artifactId of [12086798338, 12087695323])
+      assert(
+        plan.release.evidence.some(
+          (row) => row.runId === 38995660502 && row.artifactId === artifactId,
+        ),
+      );
+  }
   if (plan.phase === 'latency-long-rail-anchored') {
     assert.deepEqual(plan.release.diagnosticPredecessor, {
       run: 38992974770,
@@ -77,12 +174,15 @@ function expectedRows(plan, engine) {
 }
 export function validateSupplementalPlan(plan) {
   assert.equal(plan.format, 'SoloHostedSupplementalPlanV1');
-  assert(Object.hasOwn(SUPPLEMENTAL_PHASES, plan.phase));
+  const source = sources(plan),
+    phaseHashes = phases(plan);
+  assert(Object.hasOwn(phaseHashes, plan.phase));
   validateRelease(plan);
   assert.equal(plan.repository, 'mekhovov/revealline');
-  assert.equal(plan.candidate.revision, SOURCE.candidate);
-  assert.equal(plan.baseline.revision, SOURCE.baseline);
+  assert.equal(plan.candidate.revision, source.candidate);
+  assert.equal(plan.baseline.revision, source.baseline);
   assert(plan.baseline.reusableArtifact);
+  if (firstReturn(plan)) validateFirstReturnSources(plan);
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
   assert.equal(plan.cpu, 1);
@@ -95,11 +195,13 @@ export function validateSupplementalPlan(plan) {
   assert.equal(plan.rowEvidenceBytes, 32 * MiB);
   assert(engines.includes(plan.engine));
   assert.deepEqual(plan.rows, expectedRows(plan, plan.engine));
-  assert.deepEqual(Object.keys(plan.phases), Object.keys(SUPPLEMENTAL_PHASES));
+  assert.deepEqual(Object.keys(plan.phases), Object.keys(phaseHashes));
   for (const [name, phase] of Object.entries(plan.phases)) {
-    assert.equal(phase.recipe.sha256, SUPPLEMENTAL_PHASES[name]);
+    if (firstReturn(plan)) assert.deepEqual(phase, firstReturnPhase(name));
+    assert.equal(phase.recipe.sha256, phaseHashes[name]);
     assert.equal(phase.scenarioTimeoutMs, 240000);
-    assert(/^[a-z0-9-]+\.xonix\.json$/.test(phase.upload.stagedName));
+    if (phase.upload) assert(/^[a-z0-9-]+\.xonix\.json$/.test(phase.upload.stagedName));
+    else assert(firstReturn(plan) && name === 'first-return-next');
   }
   assert.deepEqual(
     plan.adapterInputs.map(({ path }) => path),
@@ -151,7 +253,10 @@ export function supplementalMatrix(manifest) {
 }
 function inputReferences(plan) {
   return [
-    ...Object.values(plan.phases).flatMap(({ recipe, upload }) => [recipe, upload]),
+    ...Object.values(plan.phases).flatMap(({ recipe, upload }) => [
+      recipe,
+      ...(upload ? [upload] : []),
+    ]),
     ...plan.adapterInputs,
     ...plan.frozenTools,
   ];
@@ -199,7 +304,7 @@ export async function prepareSupplementalMode(ctx) {
   const phase = ctx.plan.phases[ctx.plan.phase];
   for (const [ref, name] of [
     [phase.recipe, 'scenario.qualification.json'],
-    [phase.upload, phase.upload.stagedName],
+    ...(phase.upload ? [[phase.upload, phase.upload.stagedName]] : []),
   ]) {
     const target = join(input, name);
     await copyFile(resolve(ctx.repository, ref.path), target);
@@ -207,13 +312,27 @@ export async function prepareSupplementalMode(ctx) {
     await copyFile(target, join(ctx.evidence, name));
   }
   const scenario = await readSupplementalJSON(join(input, 'scenario.qualification.json'), MiB);
-  assert.equal(scenario.timeoutMs, phase.scenarioTimeoutMs);
-  assert.equal(scenario.kind, 'performance');
-  assert(scenario.expectedReplayDefinition && scenario.replayRequirements);
+  validateSupplementalScenario(ctx.plan, scenario);
   ctx.report.performanceExclusion = true;
   ctx.report.firstEightAllCorrectnessPassed = false;
-  ctx.report.releaseScope = 'supplemental-native-preflight';
+  ctx.report.releaseScope = ctx.plan.release.scope;
   return { recipePath: join(input, 'scenario.qualification.json'), browserVersion: null };
+}
+export function validateSupplementalScenario(plan, scenario) {
+  assert.equal(scenario.timeoutMs, plan.phases[plan.phase].scenarioTimeoutMs);
+  assert.equal(scenario.kind, firstReturn(plan) ? 'lifecycle' : 'performance');
+  assert(scenario.expectedReplayDefinition);
+  if (firstReturn(plan)) {
+    assert.equal(scenario.evidenceStorage, undefined, 'Short preflights retain inline evidence');
+    assert.equal(scenario.resourceRules, undefined);
+    assert.deepEqual(
+      scenario.replayRequirements,
+      plan.phase === 'first-return-retry'
+        ? { closures: 1, maximumTrailCells: 30, maximumClaimedCells: 800 }
+        : undefined,
+    );
+  } else assert(scenario.replayRequirements);
+  return scenario;
 }
 export function supplementalArguments(ctx, row, url, dir) {
   return [
@@ -226,7 +345,7 @@ export function supplementalArguments(ctx, row, url, dir) {
     '--cadence=settled120',
     '--cpu=1',
     `--browser=${row.engine}`,
-    `--source-revision=${SOURCE[row.source]}`,
+    `--source-revision=${sources(ctx.plan)[row.source]}`,
     ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
     ...(row.engine === 'webkit'
       ? ['--context=persistent', '--viewport=400x850', '--dpr=3', '--mobile-context']
@@ -272,14 +391,14 @@ export function supplementalAssessment(plan, row, raw, command, browserVersion) 
     numericalRecorded &&
     command.exitCode === expectedExit &&
     raw?.format === 'SoloQualificationReportV1' &&
-    raw.kind === 'performance' &&
+    raw.kind === (firstReturn(plan) ? 'lifecycle' : 'performance') &&
     raw.scenarioStatus === 'pass' &&
     raw.workProbe === true &&
     raw.cadenceProtocol === 'settled120' &&
     raw.baselineRuntime === (row.source === 'baseline') &&
-    raw.scenarioSHA256 === SUPPLEMENTAL_PHASES[plan.phase] &&
-    raw.sourceRevision === SOURCE[row.source] &&
-    raw.buildIdentity?.sourceRevision === SOURCE[row.source] &&
+    raw.scenarioSHA256 === phases(plan)[plan.phase] &&
+    raw.sourceRevision === sources(plan)[row.source] &&
+    raw.buildIdentity?.sourceRevision === sources(plan)[row.source] &&
     raw.environment?.engine === row.engine &&
     raw.environment.cpuThrottle === 1 &&
     raw.environment.contextMode === (mobile ? 'persistent' : 'ephemeral') &&
@@ -310,8 +429,9 @@ export function supplementalAssessment(plan, row, raw, command, browserVersion) 
     rawNumericalStatus: numerical ?? 'unobserved',
     performanceQualification: 'excluded',
     firstEightAllCorrectnessPassed: false,
-    scope:
-      'Single recipe preflight only; all raw gates retained, no timing or prerequisite promotion.',
+    scope: firstReturn(plan)
+      ? 'Single public Retry/Next lifecycle preflight only; no long-run, latency or timing qualification. All raw numerical failures retained.'
+      : 'Single recipe preflight only; all raw gates retained, no timing or prerequisite promotion.',
   };
 }
 export async function runSupplementalRow(ctx, row, dir, tmp) {
@@ -332,7 +452,7 @@ export async function runSupplementalRow(ctx, row, dir, tmp) {
     assert.equal(response.status, 200);
     const bytes = Buffer.from(await response.arrayBuffer()),
       build = JSON.parse(bytes);
-    assert.equal(build.sourceRevision, SOURCE[row.source]);
+    assert.equal(build.sourceRevision, sources(ctx.plan)[row.source]);
     for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS))
       assert.equal(response.headers.get(name), value);
     const url = new URL('game/?journey=opening', server.url).href;
