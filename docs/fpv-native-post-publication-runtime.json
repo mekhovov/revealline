@@ -1,0 +1,305 @@
+{
+  "format": "FpvNativePostPublicationRuntime.v1",
+  "pass": true,
+  "startedAt": "2026-10-17T03:55:28.512Z",
+  "completedAt": "2026-10-17T04:02:34.273Z",
+  "sourceRevision": "2af1ee90673c703d57b43dd6973dbbc377a7c969",
+  "scope": "Actual Electron desktop UI smoke using the separately labelled retained fixture with production World host, rates editor, Advanced worker, renderer, native protocol and OS Save. Two clean processes share one new isolated profile.",
+  "desktopFixtureRuntimeVerified": true,
+  "nativeRuntimeVerified": false,
+  "iosRuntimeVerified": false,
+  "advancedScored": false,
+  "sourceBinding": {
+    "report": "docs/fpv-native-post-publication-staging.json",
+    "sha256": "7584f9db5f2a2cf51edb2dec34593745b6b78920b0263624f2f13f6906ab1eb8",
+    "sourceHashCount": 208,
+    "sourceStable": true,
+    "description": "All 208 recorded source pins rechecked after both runtime processes and before both exported recordings were verified. The staging report remains unchanged; this new report adds only the desktop fixture runtime result."
+  },
+  "environment": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "macOS": "26.7.1 (25G241)",
+    "electron": "44.3.0",
+    "chromium": "152.0.7977.78",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) FPV/LINE/0.21.0 Chrome/152.0.7977.78 Electron/44.3.0 Safari/537.36",
+    "replayNode": "v22.22.2"
+  },
+  "fixture": {
+    "builder": "scripts/build-fpv-native-smoke.mjs",
+    "harness": "platforms/desktop/test/fpv-smoke-harness.mjs",
+    "source": "/private/tmp/fpv-post-publication-native-fixture",
+    "stage": "/private/tmp/fpv-post-publication-native-fixture-desktop",
+    "entry": "revealline://app/optional-practice/fpv-worlds/native-test-fixture.html?lang=en",
+    "profile": "/private/tmp/fpv-post-publication-native-profile",
+    "qualification": "simulators-only-explicit-test-fixture",
+    "files": 187,
+    "bytes": 18347874,
+    "manifestSha256": "0bdfd03652b763ae73523b653698e5b31eeac4282279b2df801fb98461e62552",
+    "productionFilesUnchanged": 182,
+    "productionFilesCompared": 182,
+    "exception": "The fixture launcher adds one visibly labelled test link. Four fixture-only resources are added; all 182 other original inventory files are byte-identical to the ordinary source, including both locked production access pages.",
+    "productionAccessPagesRemainLocked": true,
+    "productionAuthenticationExercised": false,
+    "credentialsUsed": false
+  },
+  "runnerProvenance": {
+    "scripts/build-fpv-native.mjs": "5199fa8260303a58f31c0ce830bfce11cb24ce6d7bbd73036f923221ad15de08",
+    "scripts/build-fpv-native-smoke.mjs": "3f9fe78a92b3ca67933ce12ee3b70cbe1681db03f848fc60319d3feb600fbab2",
+    "scripts/native-cli.mjs": "8f9b830dc30c884f9ed9d9e3ab1903428d4ea24b49118c71d1cbc0a1ee2ab3d1",
+    "platforms/desktop/test/fpv-smoke-harness.mjs": "6d882d572da4ee5941d176033d6bc61d96c1c0f551bac40aedc502729985ce58",
+    "platforms/desktop/main.mjs": "a89a54828ede8dfa2bc32dc60f4aa889eb8bb546bb8bb8451343c59c17750980",
+    "platforms/desktop/policy.mjs": "92ff61da8d8b74700157d9c77d0f179050a9c45ee9446cedfca3f85a6810cc75",
+    "platforms/desktop/resources.mjs": "3de16ace66c1c435e50865314f7b5f7222431e7c174b4b78f7b4eb24366a7cfe",
+    "platforms/desktop/package.json": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8",
+    "platforms/desktop/package-lock.json": "e8add4e03916f8f5ea8fd429bfc84ce7f00126794f0f65cb170078a11ac343a7"
+  },
+  "reproduction": {
+    "prerequisites": [
+      "Node 22.22.2 used for builds and replay; installed Electron 44.3.0 from the existing desktop dependency.",
+      "Use new task-owned output/profile directories; no installation, entitlement, security policy or source changes are required.",
+      "The ordinary source builder enforces the existing simulator-only inventory bounds."
+    ],
+    "commands": [
+      "node scripts/build-fpv-native.mjs --out /private/tmp/fpv-post-publication-native-source --version fpv-post-publication-20261017",
+      "node scripts/build-fpv-native-smoke.mjs --base /private/tmp/fpv-post-publication-native-source --out /private/tmp/fpv-post-publication-native-fixture",
+      "node scripts/native-cli.mjs stage --site /private/tmp/fpv-post-publication-native-fixture --out /private/tmp/fpv-post-publication-native-fixture-desktop --platform desktop",
+      "env -u ELECTRON_RUN_AS_NODE REVEALLINE_SITE_DIR=/private/tmp/fpv-post-publication-native-fixture-desktop REVEALLINE_USER_DATA_DIR=/private/tmp/fpv-post-publication-native-profile platforms/desktop/node_modules/.bin/electron platforms/desktop",
+      "node docs/fpv-native-post-publication-runtime/verify.mjs"
+    ],
+    "interaction": "Actual native UI operated through cua_repl, not a DOM shim or CDP mutation. Repeat the launch after normal Command-Q using the same isolated profile. The saved verifier rechecks exports/source pins only and does not claim to replay UI actions."
+  },
+  "nativePolicy": {
+    "sandbox": true,
+    "contextIsolation": true,
+    "nodeIntegration": false,
+    "nodeIntegrationInWorker": false,
+    "webSecurity": true,
+    "bypassCSP": false,
+    "devTools": false,
+    "network": "Unchanged native same-origin request policy and production CSP; no remote resources or credentials used.",
+    "limitsUnchanged": true
+  },
+  "firstProcess": {
+    "startedAt": "2026-10-17T03:55:28.512Z",
+    "lastExportAt": "2026-10-17T03:57:25.876Z",
+    "capabilities": {
+      "secureContext": true,
+      "webLocks": true,
+      "indexedDB": true
+    },
+    "storageProbe": {
+      "lockAcquired": true,
+      "transactionComplete": true,
+      "previousVisits": 0,
+      "visits": 1
+    },
+    "workers": {
+      "created": 2,
+      "terminated": 2,
+      "live": 0
+    },
+    "errors": [],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "checks": [
+      "Created and saved Actual roll maximum 910 degrees/second; set it as player default, retaining one revision.",
+      "Saved drone Native setup 34 with camera tilt 34 degrees and vertical FOV 106 degrees.",
+      "Duplicated and selected Native setup 34 copy. UI showed Drone setup duplicated and selected.",
+      "Previewed resolved Betaflight CLI patch against the saved 910 draft, preserving pitch/yaw and unspecified throttle. Saved as a new distinct profile; player default remained unchanged.",
+      "Opened Advanced practice using imported 880 degrees/second profile, started explicitly, supplied keyboard throttle/yaw, paused and exported through the actual OS Save dialog.",
+      "Restarted explicitly; ready state reset. Return to tuning terminated both created workers. Exported native evidence and quit normally."
+    ]
+  },
+  "transfer": {
+    "scope": "Resolved CLI snippet/preset patch; raw preset folders/options were not exercised in this actual native UI run.",
+    "text": "# Betaflight 2026.6.2\nset rates_type = ACTUAL\nset roll_srate = 88\nset p_roll = 80\n",
+    "receipt": {
+      "baseline": {
+        "kind": "draft",
+        "profileId": "tuning-cfcf06d9-f45d-49f7-92ba-040fcd8ed7b2",
+        "revision": 1,
+        "sha256": "ad6535ce67d5a8b0b52d680586bed671bc61a5f08f671fa66e3c4ecf2a388bd5"
+      },
+      "firmware": {
+        "origin": "header",
+        "version": "2026.6.2"
+      },
+      "format": "FpvRateImportReceipt.v1",
+      "operation": "patch",
+      "preset": null,
+      "rateIdentity": "7c26b9edc690a45f",
+      "resultSha256": "5ee1f3562869197eaeb1349aae46c25c7e442989fb244bc167494cce1c9a877b",
+      "review": {
+        "applied": {
+          "entries": [
+            "{\"field\":\"rates_type\",\"value\":\"actual\"}",
+            "{\"field\":\"roll_srate\",\"value\":88}"
+          ],
+          "shortened": false,
+          "total": 2
+        },
+        "changed": {
+          "entries": ["{\"after\":88,\"before\":91,\"field\":\"roll_srate\"}"],
+          "shortened": false,
+          "total": 1
+        },
+        "ignored": {
+          "entries": [
+            "{\"key\":\"p_roll\",\"line\":4,\"pidProfile\":0,\"rateProfile\":0,\"reason\":\"No verified SIM adapter; remains unapplied.\",\"value\":\"80\"}"
+          ],
+          "shortened": false,
+          "total": 1
+        },
+        "inferred": {
+          "entries": [],
+          "shortened": false,
+          "total": 0
+        },
+        "normalizations": {
+          "entries": [],
+          "shortened": false,
+          "total": 0
+        },
+        "warnings": {
+          "entries": [
+            "Only supported rates and throttle settings transfer. Aircraft, hardware, PID, filtering and RC smoothing remain unapplied."
+          ],
+          "shortened": false,
+          "total": 1
+        }
+      },
+      "source": {
+        "bytes": 82,
+        "encoding": "utf-8",
+        "kind": "cli",
+        "sha256": "2f387f3fb4ba3a23d7ad09d5e3dcbe03618aacfc48a6b71fe2aa4b34c3d3b3c4"
+      },
+      "sourceProfile": 0
+    },
+    "importedRollDegreesPerSecond": 880,
+    "playerDefaultRollDegreesPerSecond": 910,
+    "unsupportedPidRemainedUnapplied": true
+  },
+  "secondProcess": {
+    "startedAt": "2026-10-17T03:57:50.675Z",
+    "lastExportAt": "2026-10-17T04:00:21.150Z",
+    "capabilities": {
+      "secureContext": true,
+      "webLocks": true,
+      "indexedDB": true
+    },
+    "storageProbe": {
+      "lockAcquired": true,
+      "transactionComplete": true,
+      "previousVisits": 1,
+      "visits": 2
+    },
+    "workers": {
+      "created": 1,
+      "terminated": 1,
+      "live": 0
+    },
+    "errors": [],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "checks": [
+      "Reopened the identical profile in a genuinely new Electron process.",
+      "Observed copied setup selected, player-default roll 910 degrees/second, camera tilt 34 and vertical FOV 106 in the native editor.",
+      "Exported library matched exactly before close, at reopened ready, and after reopened practice; revision 7, three profiles and two setups, including import provenance and saved profile history.",
+      "Started another short Advanced practice with the retained 910 player default, paused and exported with OS Save.",
+      "Returned to tuning, confirmed one worker created/terminated, disposed fixture explicitly, exported native evidence, then quit normally."
+    ]
+  },
+  "persistence": {
+    "libraryExactlyRetained": true,
+    "libraryRevision": 7,
+    "librarySha256": "feea90c27f8440d55a1f0e3f83506ae04dbe4510277e66de7d2fce88819c7514",
+    "profiles": 3,
+    "setups": 2,
+    "selectedSetup": "Native setup 34 copy",
+    "camera": {
+      "tilt": 34,
+      "verticalFov": 106
+    },
+    "webLocksAcquired": true,
+    "indexedDBVisits": [1, 2]
+  },
+  "recordings": [
+    {
+      "file": "docs/fpv-native-post-publication-runtime/first-arena.json",
+      "verified": true,
+      "missionTicks": 56,
+      "finalHash": "fed0ebfa",
+      "frequency": 250,
+      "rollRate": 880,
+      "format": "AdvancedRecording.v1",
+      "nativeOSSaveObserved": true,
+      "nodeReplayComplete": true
+    },
+    {
+      "file": "docs/fpv-native-post-publication-runtime/reopened-arena.json",
+      "verified": true,
+      "missionTicks": 43,
+      "finalHash": "777d6657",
+      "frequency": 250,
+      "rollRate": 910,
+      "format": "AdvancedRecording.v1",
+      "nativeOSSaveObserved": true,
+      "nodeReplayComplete": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/fpv-native-post-publication-runtime/first-session.json",
+      "bytes": 85680,
+      "sha256": "719bafe8b4fc8f5f23ffee561424d8e9d409581aaa4a48dcea6b1bc1722de185"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/second-session.json",
+      "bytes": 82334,
+      "sha256": "90c84e2636be3574c57b96f3bedc3713af25aa0128ac12711e158d86d2511a72"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/first-arena.json",
+      "bytes": 5071,
+      "sha256": "ad34b49c755f95e12e3a9b891e7f0bc60593fcd1a2ed69c987a7b500d15d9ea4"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/reopened-arena.json",
+      "bytes": 4662,
+      "sha256": "9e4a32ef43e9e4e43850233c83ff3f90e50d609246b792ecdc8088132c8cd491"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/fixture-manifest.json",
+      "bytes": 33944,
+      "sha256": "0bdfd03652b763ae73523b653698e5b31eeac4282279b2df801fb98461e62552"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/fixture-metadata.json",
+      "bytes": 448,
+      "sha256": "25c844967802e2c078e6dcb2e30d431320f6f46729119a32c77826c7d7aff30b"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/verification.json",
+      "bytes": 665,
+      "sha256": "5774a90f0640da3699f5dfd26c0947d7398a04d35c368d9cc2abca810b4aa210"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/verify.mjs",
+      "bytes": 3526,
+      "sha256": "59a46322fb67bcb42383102fb6d2c60a5f4460f53582305eaecad8aee128bc02"
+    }
+  ],
+  "failures": [],
+  "limitations": [
+    "One macOS arm64 Electron desktop host and isolated test fixture, not a signed/distributed app or general native platform qualification.",
+    "No iOS runtime, physical radio, physical aircraft measurements, pilot assessment, other desktop OS or wider device/performance matrix.",
+    "Production authentication was preserved but not exercised; no supplied credential was used or saved.",
+    "These short flights verify export/replay and lifecycle across reopen; they do not qualify maximum-duration dense flights, battery realism, physical performance or a new frequency.",
+    "Replay verification used the production Node implementation on the same architecture; this does not claim a new cross-architecture qualification.",
+    "Advanced remains optional and unscored; the native package eligibility markers and all runtime resource limits remain unchanged."
+  ]
+}

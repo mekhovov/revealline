@@ -1,0 +1,28 @@
+{
+  "pass": true,
+  "node": "v22.22.2",
+  "sourceHashCount": 208,
+  "sourceStable": true,
+  "libraryExactlyRetained": true,
+  "librarySha256": "feea90c27f8440d55a1f0e3f83506ae04dbe4510277e66de7d2fce88819c7514",
+  "recordings": [
+    {
+      "file": "first-arena.json",
+      "verified": true,
+      "missionTicks": 56,
+      "finalHash": "fed0ebfa",
+      "frequency": 250,
+      "rollRate": 880,
+      "format": "AdvancedRecording.v1"
+    },
+    {
+      "file": "reopened-arena.json",
+      "verified": true,
+      "missionTicks": 43,
+      "finalHash": "777d6657",
+      "frequency": 250,
+      "rollRate": 910,
+      "format": "AdvancedRecording.v1"
+    }
+  ]
+}

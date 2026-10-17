@@ -1,0 +1,8 @@
+{
+  "format": "FpvNativeSmokeFixture.v1",
+  "testOnly": true,
+  "productionAccessGateModified": false,
+  "originalWorldEntrySha256": "d4bbc350de197693c91b093501b747bc2168e977604696293f36f79d553f9d08",
+  "entry": "optional-practice/fpv-worlds/native-test-fixture.html",
+  "scope": "Full production World host with a deterministic local Regional fixture. This does not qualify production authentication, signed distribution, iOS or other devices."
+}

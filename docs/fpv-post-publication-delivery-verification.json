@@ -1,0 +1,198 @@
+{
+  "format": "FpvPostPublicationDeliveryVerification.v1",
+  "createdAt": "2026-10-17T04:36:05.757277+00:00",
+  "pass": true,
+  "softwareDeliveryComplete": true,
+  "scope": "Available software corrections, ordinary main publication, current desktop fixture and fresh public Chrome installs; deferred physical and wider-platform gates remain open.",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/1562",
+  "implementationHead": "2af1ee90673c703d57b43dd6973dbbc377a7c969",
+  "deployedRevision": "80494f63db57be3e44586d8271c70c3e7a3cb403",
+  "publication": "https://github.com/mekhovov/revealline/actions/runs/39002032297",
+  "integration": {
+    "initialRebaseBase": "63c36670a57b64c2cfd08b8ea1fa02adf9cbaf54",
+    "actualMergeFirstParent": "31c318de7caaad629815c6c502a0cc7e6efa4675",
+    "concurrentMainChange": "PR1428 adds data-theme-density=studio to authoring/fpv-worlds/regions/revision-removal-check.html only.",
+    "qualificationSourcePinsUnchangedAtMerge": true
+  },
+  "checks": {
+    "nonSkippedProductChecks": 12,
+    "skippedGeneralJobs": [
+      "build",
+      "test"
+    ],
+    "publicationJobs": {
+      "build": "success",
+      "deploy": "success",
+      "verify": "success"
+    },
+    "publicPasswordAndOfflinePackages": 2,
+    "publicSourceBindingStable": true,
+    "publicRunnerStable": true,
+    "desktopFixtureProcesses": 2,
+    "desktopSourcePinsMatch": 208,
+    "iosRuntimeVerified": false
+  },
+  "capacity": {
+    "files": 3442,
+    "stagedBytes": 963685141,
+    "actualArchiveBytes": 966676480,
+    "maximumBytes": 980000000,
+    "archiveHeadroomBytes": 13323520
+  },
+  "publicAcceptance": {
+    "browser": {
+      "engine": "chrome",
+      "version": "155.0.8059.85"
+    },
+    "packages": [
+      {
+        "id": "civilian-fpv",
+        "missionTicks": 12,
+        "finalHash": "1d473fbb",
+        "recordingSha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94",
+        "workerCleanup": {
+          "created": 1,
+          "terminated": 1,
+          "tick": 12
+        }
+      },
+      {
+        "id": "fpv-worlds",
+        "missionTicks": 11,
+        "finalHash": "13902221",
+        "recordingSha256": "ed75fdb3f4cafb8a83d87e7bd653d458cb98626227264ad9237baa926295dcb7",
+        "workerCleanup": {
+          "created": 1,
+          "terminated": 1,
+          "tick": 11
+        }
+      }
+    ],
+    "neutralInputLifecycleOnly": true
+  },
+  "limits": [
+    "Advanced remains optional, unscored and default-ineligible.",
+    "Physical radio/touch, pilots, aircraft measurements, iOS execution, broader devices, validated propwash/ground effect and scored/default promotion remain deferred.",
+    "Current public acceptance covers fresh installations, ordinary password UI, offline process reopen, saved rates and short neutral-input export/replay/disposal; it does not requalify every manual flow or an existing-install upgrade. Prior authentic update receipts retain their historical source scope.",
+    "Current native execution uses a labelled Electron fixture on one ARM64 Mac, not production authentication, a signed installer or a wider native platform matrix.",
+    "The optional-release catalogue is present but empty; no separately selected optional release was qualified.",
+    "No manual merge, deployment, forced service-worker activation, publication-limit change or gate bypass was used."
+  ],
+  "evidence": [
+    {
+      "path": "docs/fpv-post-publication-delivery/archive/main-pages-archive-receipt.json",
+      "bytes": 599,
+      "sha256": "2ae758eb966030a56b53cbd22a3cb63fff20c569895e7a7bacd788e0b583b838"
+    },
+    {
+      "path": "docs/fpv-post-publication-delivery/artifact-index-build.json",
+      "bytes": 757,
+      "sha256": "0cb791c0926cd6036cc5524586a2c759038adeb0a77fe9670b0d7bd8210bc358"
+    },
+    {
+      "path": "docs/fpv-post-publication-delivery/artifact-index-final.json",
+      "bytes": 2896,
+      "sha256": "d238f21d8f48f2e84d701da1e05573a5d4a24e63d1e173b0dd50cee4f75a13e4"
+    },
+    {
+      "path": "docs/fpv-post-publication-delivery/merge.json",
+      "bytes": 301,
+      "sha256": "c372309b01a3ed604ccfd55be70ea3de3b0718449659d16acd8305c8fbfa0e20"
+    },
+    {
+      "path": "docs/fpv-post-publication-delivery/practice/practice-site-receipt.json",
+      "bytes": 132,
+      "sha256": "a78f1a58d0a714f920cc9bb88b5bc930b936b0e6bf6cf1a1e9136b8d1c207e14"
+    },
+    {
+      "path": "docs/fpv-post-publication-delivery/publication-final.json",
+      "bytes": 6274,
+      "sha256": "dc0a1502db47c1844e1e947483bef184791b9f4734ccd71fecbc26805275a9ac"
+    },
+    {
+      "path": "docs/fpv-post-publication-delivery/publication-start.json",
+      "bytes": 3185,
+      "sha256": "a1e740c614f55a73d1b5bece4e0b9d0badf10b99cb6b0705e15fefdab2090009"
+    },
+    {
+      "path": "docs/fpv-post-publication-delivery/staged/main-pages-inventory.json",
+      "bytes": 510323,
+      "sha256": "31c96e5bff059aff783f0c33bdfd538f1d438dfe192fa8fc3b3fa7a4afa696a2"
+    },
+    {
+      "path": "docs/fpv-post-publication-delivery/staged/main-pages-receipt.json",
+      "bytes": 4429,
+      "sha256": "de07a8b8aeac0cf7c68f3d1cc01c149d89eb6734fbcb59d8d3a695d8b899eb66"
+    },
+    {
+      "path": "docs/fpv-post-publication-ci.json",
+      "bytes": 6528,
+      "sha256": "6d18bc18daf07bfb8bfc61c572d8c442a97056ef3b22274b9ce2d0840476cea6"
+    },
+    {
+      "path": "docs/fpv-post-publication-verification.json",
+      "bytes": 7491,
+      "sha256": "49cd2b5cc02ddfbeac53501fdd87422b163c5707ffb1adfe0d27b8c2d5a848b9"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime.json",
+      "bytes": 13816,
+      "sha256": "8ddd7dd39fe79c02480ba547317b65274692e148419f5d3723a6677439970846"
+    },
+    {
+      "path": "docs/fpv-post-publication-public-acceptance.json",
+      "bytes": 9525,
+      "sha256": "c3bf2c04bec03ea6a1a6c1e333b7519478fc719876c5c1a7c22d4e8986b4f7eb"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/first-arena.json",
+      "bytes": 5071,
+      "sha256": "ad34b49c755f95e12e3a9b891e7f0bc60593fcd1a2ed69c987a7b500d15d9ea4"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/first-session.json",
+      "bytes": 85680,
+      "sha256": "719bafe8b4fc8f5f23ffee561424d8e9d409581aaa4a48dcea6b1bc1722de185"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/fixture-manifest.json",
+      "bytes": 33944,
+      "sha256": "0bdfd03652b763ae73523b653698e5b31eeac4282279b2df801fb98461e62552"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/fixture-metadata.json",
+      "bytes": 448,
+      "sha256": "25c844967802e2c078e6dcb2e30d431320f6f46729119a32c77826c7d7aff30b"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/reopened-arena.json",
+      "bytes": 4662,
+      "sha256": "9e4a32ef43e9e4e43850233c83ff3f90e50d609246b792ecdc8088132c8cd491"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/second-session.json",
+      "bytes": 82334,
+      "sha256": "90c84e2636be3574c57b96f3bedc3713af25aa0128ac12711e158d86d2511a72"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/verification.json",
+      "bytes": 665,
+      "sha256": "5774a90f0640da3699f5dfd26c0947d7398a04d35c368d9cc2abca810b4aa210"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-runtime/verify.mjs",
+      "bytes": 3526,
+      "sha256": "59a46322fb67bcb42383102fb6d2c60a5f4460f53582305eaecad8aee128bc02"
+    },
+    {
+      "path": "docs/fpv-post-publication-public-acceptance-civilian-fpv-recording.json",
+      "bytes": 3562,
+      "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94"
+    },
+    {
+      "path": "docs/fpv-post-publication-public-acceptance-fpv-worlds-recording.json",
+      "bytes": 3547,
+      "sha256": "ed75fdb3f4cafb8a83d87e7bd653d458cb98626227264ad9237baa926295dcb7"
+    }
+  ]
+}
