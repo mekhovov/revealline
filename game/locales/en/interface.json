@@ -5887,5 +5887,7 @@
   "expeditions.allStages": "Capture {{count}} numbered targets in order",
   "expeditions.relayProgress": "Relays {{done}}/{{total}}",
   "expeditions.stageProgress": "Targets {{done}}/{{total}}",
+  "gettingReadyGameplayIsPaused": "Getting ready. Gameplay is paused.",
+  "gameNotReadyTryStartOrResumeAgain": "The game is not ready yet. Try Start or Resume again.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

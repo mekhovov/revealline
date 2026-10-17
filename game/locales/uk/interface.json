@@ -5997,5 +5997,7 @@
   "expeditions.allStages": "Захопіть пронумеровані цілі по черзі: {{count}}",
   "expeditions.relayProgress": "Реле {{done}}/{{total}}",
   "expeditions.stageProgress": "Цілі {{done}}/{{total}}",
+  "gettingReadyGameplayIsPaused": "Готуємося до гри. Гра на паузі.",
+  "gameNotReadyTryStartOrResumeAgain": "Гра ще не готова. Спробуйте знову натиснути «Старт» або «Продовжити».",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }
