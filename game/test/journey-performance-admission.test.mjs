@@ -344,3 +344,236 @@ test('profile forwards admission and Main Solo bootstrap indirection has no earl
   assert.match(source, /createDemoLibrary\(\{ scheduleChunk: scheduleOptionalReplayChunk \}\)/);
   assert.match(source, /createMasteryAwards\(\{\s*scheduleChunk: scheduleOptionalReplayChunk,/);
 });
+
+function inspectionFixture(t, schedule) {
+  const input = record(),
+    profile = emptyJourneyProfile(),
+    media = createMediaPreparation();
+  profile.clears.solo[input.missionId] = {
+    runId: input.runId,
+    gameplayId: input.gameplayId,
+    difficulty: input.difficulty,
+  };
+  const envelope = { ...emptyJourneyPerformance(), records: [input] };
+  const controller = createJourneyPerformanceController({
+    backend: { commitState: () => assert.fail('inspection must not write durable records') },
+    getProfile: () => profile,
+    flushProfile: async () => true,
+    acceptBinding: () => true,
+    canWrite: () => true,
+    scheduleChunk: schedule ?? ((work, options) => media.run('main', work, options)),
+  });
+  t.after(() => {
+    controller.dispose();
+    media.close();
+  });
+  return { input, profile, envelope, media, controller };
+}
+
+test('async performance inspection defers defensive construction until Pause', async (t) => {
+  const f = inspectionFixture(t);
+  f.input.replay.options.seed = -1;
+  f.media.setPhase('playing');
+  let settled = false;
+  const pending = f.controller.inspect(f.envelope, f.profile).then(
+    () => {
+      settled = true;
+    },
+    (error) => {
+      settled = true;
+      return error;
+    },
+  );
+  await until(() => settled || f.media.snapshot().queued === 1);
+  assert.equal(settled, false, 'envelope validation must not construct a run during play');
+  f.media.setPhase('paused');
+  assert.match((await pending).message, /seed must be a uint32/);
+  assert.equal(f.media.snapshot().queued, 0);
+  assert.equal(f.controller.snapshot().records.length, 0);
+});
+
+test('queued performance inspection owns caller bytes and verifies the original replay', async (t) => {
+  const f = inspectionFixture(t),
+    expected = structuredClone(f.envelope);
+  f.media.setPhase('playing');
+  const pending = f.controller.inspect(f.envelope, f.profile);
+  f.input.replay.options.seed = -1;
+  f.input.replay.segments[0].input.direction = 'up';
+  await until(() => f.media.snapshot().queued === 1);
+  f.media.setPhase('paused');
+  const checked = await pending;
+  assert.deepEqual(checked.value, expected);
+  assert.deepEqual(checked.rows[0].replay, expected.records[0].replay);
+  assert.equal(f.media.snapshot().queued, 0);
+});
+
+test('performance inspection aborts before copying and before queued construction', async (t) => {
+  const f = inspectionFixture(t),
+    abort = new AbortController();
+  f.input.replay.options.seed = -1;
+  f.media.setPhase('playing');
+  let settled = false;
+  const pending = f.controller
+    .inspect(f.envelope, f.profile, { signal: abort.signal })
+    .catch((error) => {
+      settled = true;
+      return error;
+    });
+  await until(() => settled || f.media.snapshot().queued === 1);
+  assert.equal(settled, false);
+  abort.abort();
+  assert.equal((await pending).name, 'AbortError');
+  let reads = 0;
+  const input = new Proxy(
+    {},
+    {
+      ownKeys() {
+        reads++;
+        throw new Error('unexpected copy');
+      },
+    },
+  );
+  await assert.rejects(f.controller.inspect(input, f.profile, { signal: abort.signal }), {
+    name: 'AbortError',
+  });
+  assert.equal(reads, 0);
+  assert.equal(f.media.snapshot().queued, 0);
+});
+
+test('performance inspection admission rejects omitted, duplicate and retired work', async (t) => {
+  let late;
+  const omitted = inspectionFixture(t, (work) => {
+    late = work;
+  });
+  await assert.rejects(
+    omitted.controller.inspect(emptyJourneyPerformance(), omitted.profile),
+    /did not run work/,
+  );
+  assert.throws(() => late(), /exactly once/);
+  const twice = inspectionFixture(t, (work) => {
+    work();
+    try {
+      work();
+    } catch {}
+  });
+  await assert.rejects(
+    twice.controller.inspect(emptyJourneyPerformance(), twice.profile),
+    /exactly once/,
+  );
+  const swallowed = inspectionFixture(t, (work) => {
+    try {
+      work();
+    } catch {}
+  });
+  swallowed.input.replay.options.seed = -1;
+  await assert.rejects(
+    swallowed.controller.inspect(swallowed.envelope, swallowed.profile),
+    /seed must be a uint32/,
+  );
+});
+
+test('observe reuses its actual validated envelope with one inspection and one publication', async (t) => {
+  // Execute the complete source with one import wrapper to count the real
+  // external validation boundary; no controller implementation is reproduced.
+  const performanceURL = import.meta.resolve('../journey/performance.mjs');
+  const encode = (text) => `data:text/javascript;base64,${Buffer.from(text).toString('base64')}`;
+  const wrapper = encode(
+    `export * from ${JSON.stringify(performanceURL)};\nimport {inspectJourneyPerformance as inspect} from ${JSON.stringify(performanceURL)};\nexport let calls=0;\nexport function inspectJourneyPerformance(input){calls++;return inspect(input);}`,
+  );
+  const source = await readFile(
+    new URL(import.meta.resolve('../journey/performance-store.mjs')),
+    'utf8',
+  );
+  const controlled = source
+    .replace("'./performance.mjs'", JSON.stringify(wrapper))
+    .replace("'../data-json.mjs'", JSON.stringify(import.meta.resolve('../data-json.mjs')));
+  assert.notEqual(source, controlled);
+  const { createJourneyPerformanceController: create } = await import(encode(controlled));
+  const counter = await import(wrapper),
+    f = inspectionFixture(t);
+  let publications = 0;
+  const controller = create({
+    backend: { commitState: () => assert.fail('observe cannot write') },
+    getProfile: () => f.profile,
+    flushProfile: async () => true,
+    acceptBinding: () => true,
+    canWrite: () => true,
+    onChange: () => publications++,
+  });
+  t.after(() => controller.dispose());
+  controller.observe({ profile: f.profile, performance: f.envelope });
+  await until(() => controller.snapshot().records.length === 1);
+  assert.equal(counter.calls, 1, 'observe must reuse its first owned validated envelope');
+  assert.equal(publications, 1);
+  assert.equal(controller.snapshot().records[0].runId, f.input.runId);
+  controller.observe({ profile: f.profile, performance: structuredClone(f.envelope) });
+  assert.equal(
+    counter.calls,
+    2,
+    'unchanged caller input still receives synchronous defensive validation',
+  );
+  assert.equal(publications, 1);
+});
+
+test('capture admits post-I/O inspection and never overwrites a corrupted durable envelope', async (t) => {
+  const f = inspectionFixture(t),
+    stored = structuredClone(f.envelope);
+  stored.records[0].replay.options.seed = -1;
+  const original = structuredClone(stored);
+  let reads = 0,
+    writes = 0,
+    settled = false;
+  const controller = createJourneyPerformanceController({
+    backend: {
+      readState: async () => {
+        reads++;
+        f.media.setPhase('playing');
+        return { profile: f.profile, performance: stored };
+      },
+      commitState: () => {
+        writes++;
+        assert.fail('corrupt durable history cannot be replaced');
+      },
+    },
+    getProfile: () => f.profile,
+    flushProfile: async () => true,
+    acceptBinding: () => true,
+    canWrite: () => true,
+    scheduleChunk: (work, options) => f.media.run('main', work, options),
+  });
+  t.after(() => controller.dispose());
+  const pending = controller.capture(f.input).then((value) => {
+    settled = true;
+    return value;
+  });
+  await until(() => settled || (reads === 1 && f.media.snapshot().queued === 1));
+  assert.equal(reads, 1);
+  assert.equal(
+    settled,
+    false,
+    'readState completion must not start defensive construction while playing',
+  );
+  assert.equal(writes, 0);
+  f.media.setPhase('paused');
+  assert.equal((await pending).durable, false);
+  assert.equal(writes, 0);
+  assert.deepEqual(stored, original);
+  assert.equal(controller.snapshot().records.length, 1, 'the actual new win remains session-only');
+  assert.equal(controller.snapshot().records[0].durable, false);
+  assert.match(controller.snapshot().error, /seed must be a uint32/);
+});
+
+test('performance inspection checks cancellation again after the admitted slot', async (t) => {
+  const abort = new AbortController();
+  let slots = 0;
+  const f = inspectionFixture(t, (work) => {
+    slots++;
+    work();
+    abort.abort();
+  });
+  await assert.rejects(
+    f.controller.inspect(emptyJourneyPerformance(), f.profile, { signal: abort.signal }),
+    { name: 'AbortError' },
+  );
+  assert.equal(slots, 1);
+});
