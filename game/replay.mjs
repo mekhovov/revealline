@@ -436,6 +436,74 @@ function checkpointForProjection(projected, versions) {
   return { algorithm: versions.checkpointAlgorithm, hash: checksum(sections), sections };
 }
 
+// Only this module can reach the append-only recording behind these handles.
+// Public/default recorders deliberately remain ordinary, defensively copied data.
+const ownedRecorders = new WeakMap();
+function recorderData(recorder) {
+  return ownedRecorders.get(recorder) ?? recorder;
+}
+function ownedRecorder(data) {
+  const handle = Object.freeze({
+    get ticks() {
+      return data.ticks;
+    },
+    get segmentCount() {
+      return data.segments.length;
+    },
+  });
+  ownedRecorders.set(handle, data);
+  return handle;
+}
+
+/** Create an internal recording whose backing arrays never escape. */
+export function createOwnedRecorder(level, options = {}, build = 'unknown') {
+  return ownedRecorder(createRecorder(level, options, build));
+}
+
+/** Adopt a completed restoration during preparation, never on the first input.
+ * This is ownership, not replay verification; ordinary restore admission still applies.
+ */
+export function adoptOwnedRecorder(recorder) {
+  if (ownedRecorders.has(recorder)) return recorder;
+  const data = boundedCopy(recorder);
+  if (
+    !keysExactly(data, [
+      'version',
+      'build',
+      'ruleset',
+      'level',
+      'options',
+      'segments',
+      'ticks',
+      'releaseAfter',
+      '_identity',
+    ]) ||
+    !Array.isArray(data.segments) ||
+    !Number.isInteger(data.ticks) ||
+    data.ticks < 0 ||
+    data.ticks > MAX_REPLAY_TICKS ||
+    data.segments.length > MAX_REPLAY_TICKS ||
+    typeof data.releaseAfter !== 'boolean'
+  )
+    reject('Invalid owned recorder.');
+  let ticks = 0;
+  for (const segment of data.segments) {
+    if (
+      !keysExactly(segment, ['ticks', 'input', 'releaseBefore']) ||
+      !Number.isInteger(segment.ticks) ||
+      segment.ticks < 1 ||
+      typeof segment.releaseBefore !== 'boolean' ||
+      !keysExactly(segment.input, INPUT_KEYS)
+    )
+      reject('Invalid owned recording segment.');
+    // Validate the explicit scalar command without normalizing restored bytes.
+    inputCopy(segment.input);
+    ticks += segment.ticks;
+  }
+  if (ticks !== data.ticks) reject('Owned recorder tick total differs from its segments.');
+  return ownedRecorder(data);
+}
+
 /** Recorder owns copies; recordInput never steps the simulation itself. */
 export function createRecorder(level, options = {}, build = 'unknown') {
   const copied = boundedCopy({ level, options, build });
@@ -472,6 +540,8 @@ export function createRecorder(level, options = {}, build = 'unknown') {
 }
 
 export function recordInput(recorder, input) {
+  const handle = recorder;
+  recorder = recorderData(recorder);
   if (recorder.ticks >= MAX_REPLAY_TICKS)
     reject('Replay exceeds the 30-minute recording budget.', 'tick-budget');
   const command = inputCopy(input),
@@ -480,16 +550,17 @@ export function recordInput(recorder, input) {
   else recorder.segments.push({ ticks: 1, input: command, releaseBefore: recorder.releaseAfter });
   recorder.ticks++;
   recorder.releaseAfter = false;
-  return recorder;
+  return handle;
 }
 
 /** Mirror each official releaseInputs(state) call, including a trailing pause. */
 export function recordRelease(recorder) {
-  recorder.releaseAfter = true;
+  recorderData(recorder).releaseAfter = true;
   return recorder;
 }
 
 function replayExportSource(recorder, state) {
+  recorder = recorderData(recorder);
   const versions = resolveVersions({
     levelVersion: recorder.level.version,
     replayVersion: recorder.version,
@@ -536,7 +607,12 @@ export async function exportReplayAsync(recorder, state, { signal, scheduleChunk
   if (scheduleChunk === undefined) return exportReplay(recorder, state);
   if (typeof scheduleChunk !== 'function') reject('scheduleChunk must be a function.');
   const source = replayExportSource(recorder, state),
-    record = boundedCopy(source.record),
+    privateSource = ownedRecorders.has(recorder),
+    record = privateSource ? source.record : boundedCopy(source.record),
+    count = privateSource ? record.segments.length : 0,
+    tail = count
+      ? { ...record.segments[count - 1], input: { ...record.segments[count - 1].input } }
+      : null,
     names = sectionNames(source.versions),
     projected = authoritativeSections(state, source.versions),
     owned = boundedCopy(Object.fromEntries(names.map((name) => [name, projected[name]])));
@@ -554,8 +630,15 @@ export async function exportReplayAsync(recorder, state, { signal, scheduleChunk
           if (called || retired) reject('Replay export admission must invoke work exactly once.');
           called = true;
           checkAbort(signal);
+          // The prefix before the captured tail can never change: recordInput
+          // only appends or extends the current tail. Capture owns that tail,
+          // so neither later input nor multiple pending captures need array COW.
+          const segments = privateSource
+            ? [...record.segments.slice(0, Math.max(0, count - 1)), ...(tail ? [tail] : [])]
+            : record.segments;
           result = boundedCopy({
             ...record,
+            segments,
             checkpoint: checkpointForProjection(owned, source.versions),
           });
         } catch (error) {

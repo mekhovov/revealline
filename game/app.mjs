@@ -398,7 +398,8 @@ import {
 } from './content.mjs';
 import { prepareScenario } from './imports.mjs';
 import {
-  createRecorder,
+  createOwnedRecorder,
+  adoptOwnedRecorder,
   recordInput,
   exportReplay,
   exportReplayAsync,
@@ -1281,7 +1282,13 @@ try {
   let playedLevelLinkGeneration = 0;
   let playedLevelLinkController = null;
   let demoHost = null;
-  const demoLibrary = createDemoLibrary({ scheduleChunk: scheduleOptionalReplayChunk });
+  const demoLibrary = createDemoLibrary({
+    scheduleChunk: scheduleOptionalReplayChunk,
+    canRunOptionalWork: () =>
+      !['playing', 'suspended'].includes(optionalVerificationPreparation?.snapshot().phase),
+    ownsEntry: (entry) =>
+      candidateHost?.owns(entry) === true || executionCatalog.find(entry?.executionKey) === entry,
+  });
   const courseVisit = Object.create(null);
   const masteryAwards = createMasteryAwards({
     scheduleChunk: scheduleOptionalReplayChunk,
@@ -5069,7 +5076,7 @@ try {
         options,
       );
       const nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
-      const nextRecorder = createRecorder(nextRun.level, options, buildVersion);
+      const nextRecorder = createOwnedRecorder(nextRun.level, options, buildVersion);
       ticket.pictures = newFlightPictures({
         nextRun,
         nextRunId,
@@ -7455,7 +7462,7 @@ try {
       run = restored.run;
       clearPlayedLevelLink();
       restoredSignalRuns.add(run);
-      recorder = restored.recorder;
+      recorder = adoptOwnedRecorder(restored.recorder);
       runId = restored.session.runId;
       const informationOwner = flightInformation.adopt(run, runId);
       performanceRunGeneration = informationOwner?.generation ?? 0;
@@ -9978,9 +9985,10 @@ try {
               options,
             )),
         nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`,
-        nextRecorder = retainHunt
-          ? createRecorder(nextRun.level, options, buildVersion)
-          : (candidateAttempt?.recorder ?? createRecorder(nextRun.level, options, buildVersion));
+        nextRecorder =
+          candidateAttempt?.recorder && !retainHunt
+            ? adoptOwnedRecorder(candidateAttempt.recorder)
+            : createOwnedRecorder(nextRun.level, options, buildVersion);
       const pins =
         kind === 'retry' && !candidateAttempt && !ticket.owner.legacy
           ? retryFlightPresentationPins(ticket.owner.pins(), {
@@ -10442,7 +10450,7 @@ try {
     recordingStopped = false;
     recorder =
       preparedAttempt?.recorder ||
-      createRecorder(
+      createOwnedRecorder(
         run.level,
         {
           seed: run.seed,
@@ -11829,7 +11837,7 @@ try {
                 // This is the existing downstream JSON array budget, not a
                 // reduced replay limit. Such evidence can never be retained.
                 const optionalReplay =
-                  recorder.segments.length > JOURNEY_PERFORMANCE_LIMITS.arrayItems
+                  recorder.segmentCount > JOURNEY_PERFORMANCE_LIMITS.arrayItems
                     ? Promise.reject(new RangeError('Journey performance array budget exceeded.'))
                     : exportReplayAsync(recorder, acceptedRun, {
                         scheduleChunk: scheduleOptionalReplayChunk,
@@ -14802,7 +14810,7 @@ try {
     }
     try {
       if (!manual && !demoLibrary.enabled) return;
-      const result = await demoLibrary.keep(exportReplay(recorder, run), {
+      const result = await demoLibrary.keepRecording(recorder, run, {
         entry: activeEntry,
         practice: false,
         manual,

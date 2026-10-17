@@ -267,9 +267,10 @@ test('mounted ordinary restored win is retained automatically only after the rea
     'Enabling collection does not create a cache before an eligible win.',
   );
   const { checkpoint, earned } = await completeOrdinary(f);
-  assert.ok(
-    winningSerializations() > 0,
-    'Enabled collection still serializes the real winning replay',
+  assert.equal(
+    winningSerializations(),
+    0,
+    'Enabled collection defers replay serialization until after the winning host frame.',
   );
   await settle(() => database.allPuts.length === 1);
   assertRetained(await readCache(database), checkpoint);

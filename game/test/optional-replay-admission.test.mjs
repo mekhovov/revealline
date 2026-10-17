@@ -1,12 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { getEventListeners } from 'node:events';
 import { createMediaPreparation } from '../ui/media-preparation.mjs';
 import { createDemoLibrary } from '../demo-library.mjs';
 import { createMasteryAwards } from '../mastery-awards.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
-import { createRecorder, recordInput, exportReplay } from '../replay.mjs';
+import {
+  createRecorder,
+  createOwnedRecorder,
+  recordInput,
+  recordRelease,
+  exportReplay,
+} from '../replay.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { createJourneyMasteryProofStore } from '../mastery-journey-proofs.mjs';
 import { STEADY_SIGNAL } from '../mastery.mjs';
 import { verifyMasteryRun, verifiedMasteryRecord } from '../mastery-verification.mjs';
@@ -276,3 +284,206 @@ for (const mode of ['prove', 'hydrate', 'cancel'])
     }
     assert.equal(f.media.snapshot().queued, 0);
   });
+
+const demoEntryCatalog = createExecutionCatalog([{ campaign }]);
+const ownedDemoEntry = demoEntryCatalog.entries.find((entry) => entry.difficulty === 'standard');
+const ownsDemoEntry = (entry) => demoEntryCatalog.find(entry?.executionKey) === entry;
+function ownedDemo() {
+  const run = createRun(demo.level, demo.options),
+    recorder = createOwnedRecorder(demo.level, demo.options, demo.build);
+  for (const segment of demo.segments) {
+    assert.equal(segment.releaseBefore, false, 'Fixture needs no release boundary.');
+    for (let i = 0; i < segment.ticks; i++) {
+      stepRun(run, segment.input, FIXED_DT);
+      recordInput(recorder, segment.input);
+    }
+  }
+  if (demo.releaseAfter) recordRelease(recorder);
+  assert.deepEqual(exportReplay(recorder, run), demo);
+  return { run, recorder };
+}
+test('owned Demo retention admits the complete optional pipeline and keeps exact bytes', async (t) => {
+  const f = ownedDemo(),
+    media = createMediaPreparation(),
+    store = storage();
+  t.after(() => media.close());
+  media.setPhase('playing');
+  let stages = 0,
+    hashesWhilePlaying = 0,
+    serializationsWhilePlaying = 0;
+  const asUintN = BigInt.asUintN,
+    stringify = JSON.stringify;
+  t.mock.method(BigInt, 'asUintN', (...args) => {
+    if (media.snapshot().phase === 'playing') hashesWhilePlaying++;
+    return asUintN(...args);
+  });
+  t.mock.method(JSON, 'stringify', (...args) => {
+    if (
+      media.snapshot().phase === 'playing' &&
+      (args[0]?.segments || args[0]?.format === 'revealline-local-demos.v1')
+    )
+      serializationsWhilePlaying++;
+    return stringify(...args);
+  });
+  const library = createDemoLibrary({
+    ownsEntry: ownsDemoEntry,
+    storage: store,
+    enabled: true,
+    canRunOptionalWork: () => !['playing', 'suspended'].includes(media.snapshot().phase),
+    scheduleChunk: (work, options) =>
+      media.run(
+        'main',
+        () => {
+          stages++;
+          return work();
+        },
+        options,
+      ),
+  });
+  t.after(() => library.dispose());
+  const pending = library.keepRecording(f.recorder, f.run, {
+    entry: ownedDemoEntry,
+    practice: false,
+  });
+  await until(() => media.snapshot().queued === 1);
+  assert.equal(stages, 0);
+  assert.equal(hashesWhilePlaying, 0);
+  assert.equal(serializationsWhilePlaying, 0);
+  assert.equal(store.writes, 0);
+  media.setPhase('paused');
+  assert.equal((await pending).saved, true);
+  assert(stages > 3, 'export, prefix, verification and serialization all use the existing owner');
+  assert.deepEqual(JSON.parse((await store.read()).items[0].replayText), demo);
+});
+for (const stop of ['disable', 'clear', 'dispose', 'abort'])
+  test(`owned Demo ${stop} retires a queued export before verification or publication`, async (t) => {
+    const f = ownedDemo(),
+      media = createMediaPreparation(),
+      store = storage(),
+      controller = new AbortController();
+    t.after(() => media.close());
+    media.setPhase('playing');
+    const library = createDemoLibrary({
+      ownsEntry: ownsDemoEntry,
+      storage: store,
+      enabled: true,
+      scheduleChunk: (work, options) => media.run('main', work, options),
+    });
+    t.after(() => library.dispose());
+    const pending = library.keepRecording(f.recorder, f.run, {
+      entry: ownedDemoEntry,
+      practice: false,
+      signal: controller.signal,
+    });
+    const rejected = assert.rejects(pending, { name: 'AbortError' });
+    await until(() => media.snapshot().queued === 1);
+    if (stop === 'disable') library.setEnabled(false);
+    else if (stop === 'clear') await library.clear();
+    else if (stop === 'dispose') library.dispose();
+    else controller.abort();
+    const writes = store.writes;
+    await rejected;
+    assert.equal(media.snapshot().phase, 'playing');
+    assert.equal(
+      media.snapshot().queued,
+      0,
+      'generation cancellation releases queued snapshots immediately',
+    );
+    assert.equal(getEventListeners(controller.signal, 'abort').length, 0);
+    media.setPhase('paused');
+    assert.equal(store.writes, writes);
+  });
+test('owned Demo disabled/practice admission never reads the supplied recording; manual stays opt-in independent', async () => {
+  const store = storage(),
+    library = createDemoLibrary({ ownsEntry: ownsDemoEntry, storage: store });
+  const unusable = new Proxy(
+    {},
+    {
+      get() {
+        throw new Error('must not read disabled source');
+      },
+    },
+  );
+  assert.equal(
+    (await library.keepRecording(unusable, unusable, { practice: false })).reason,
+    'disabled',
+  );
+  assert.equal(
+    (await library.keepRecording(unusable, unusable, { manual: true, practice: true })).reason,
+    'practice',
+  );
+  const f = ownedDemo();
+  assert.equal(
+    (
+      await library.keepRecording(f.recorder, f.run, {
+        manual: true,
+        practice: false,
+        entry: ownedDemoEntry,
+      })
+    ).saved,
+    true,
+  );
+  assert.equal(library.enabled, false);
+  library.dispose();
+});
+
+test('owned Demo captures entry, manual and signal options before its queued export', async (t) => {
+  const f = ownedDemo(),
+    media = createMediaPreparation(),
+    store = storage(),
+    controller = new AbortController();
+  t.after(() => media.close());
+  media.setPhase('playing');
+  const library = createDemoLibrary({
+    storage: store,
+    ownsEntry: ownsDemoEntry,
+    scheduleChunk: (work, options) => media.run('main', work, options),
+  });
+  t.after(() => library.dispose());
+  const options = {
+    entry: ownedDemoEntry,
+    practice: false,
+    manual: true,
+    signal: controller.signal,
+  };
+  const pending = library.keepRecording(f.recorder, f.run, options);
+  await until(() => media.snapshot().queued === 1);
+  options.entry = { campaign: { ...campaign, id: 'replacement-owner' } };
+  options.manual = false;
+  options.signal = AbortSignal.abort();
+  options.practice = true;
+  media.setPhase('paused');
+  assert.equal(
+    (await pending).saved,
+    true,
+    'captured manual permission and original signal survive options mutation',
+  );
+  assert.equal((await store.read()).items[0].descriptor.campaignKey, ownedDemoEntry.executionKey);
+  assert.equal(library.enabled, false);
+});
+test('public and unowned Demo keep retain invocation descriptor despite in-place entry mutation', async (t) => {
+  for (const mode of ['public', 'unowned']) {
+    const f = ownedDemo(),
+      media = createMediaPreparation(),
+      store = storage(),
+      entry = structuredClone(ownedDemoEntry);
+    t.after(() => media.close());
+    media.setPhase('playing');
+    const library = createDemoLibrary({
+      storage: store,
+      enabled: true,
+      ownsEntry: ownsDemoEntry,
+      scheduleChunk: (work, options) => media.run('main', work, options),
+    });
+    t.after(() => library.dispose());
+    const pending =
+      mode === 'public'
+        ? library.keep(demo, { entry, practice: false })
+        : library.keepRecording(f.recorder, f.run, { entry, practice: false });
+    await until(() => media.snapshot().queued === 1);
+    entry.campaign.id = 'late-compatible-owner';
+    media.setPhase('paused');
+    assert.deepEqual(await pending, { saved: false, reason: 'incompatible' });
+    assert.equal(store.writes, 0);
+  }
+});
