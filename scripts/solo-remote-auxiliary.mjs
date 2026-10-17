@@ -292,7 +292,8 @@ export function auxiliaryMatrix(manifest) {
           job,
           observation: plan.observationId ?? job,
           repetition,
-          jobMinutes: spec.jobMinutes,
+          // Final lanes reserve one extra minute for each complete source checkout.
+          jobMinutes: spec.jobMinutes + (finalSource(plan) ? 2 : 0),
           stepMinutes: spec.helperMinutes + 3,
           outerSeconds: (spec.helperMinutes + 2) * 60,
         };
