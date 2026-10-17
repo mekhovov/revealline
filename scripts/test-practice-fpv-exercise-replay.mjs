@@ -16,6 +16,7 @@ const { createFlight, createFlightRecorder } = await load(
   'optional-practice/civilian-fpv/model.mjs',
 );
 const { dataIdentity } = await load('game/data-json.mjs');
+const { createTunedResponse } = await load('optional-practice/civilian-fpv/flight-response.mjs');
 const { academyRecording } = await load('optional-practice/civilian-fpv/world-themes.mjs');
 const { exportProofParts } = await load('optional-practice/civilian-fpv/world-records.mjs');
 const course = FLIGHT_COURSES.find((row) => row.id === 'flight-01');
@@ -33,8 +34,8 @@ const sources = new Map(
   ),
 );
 
-function syntheticProof(mode = 'self-level') {
-  const flight = createFlight({ course, mode });
+function syntheticProof(mode = 'self-level', response) {
+  const flight = createFlight({ course, mode, ...(response ? { response } : {}) });
   const recorder = createFlightRecorder(flight);
   flight.arm();
   for (let tick = 0; tick < 5000 && flight.snapshot().status === 'active'; tick++) {
@@ -95,7 +96,7 @@ for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
         result.sectors.map((row) => row.index),
         [0, 1],
       );
-      assert.equal(result.inputs.length, packageId === 'civilian-fpv' ? 24 : 25);
+      assert.equal(result.inputs.length, packageId === 'civilian-fpv' ? 26 : 27);
     });
   }
 }
@@ -106,10 +107,27 @@ test('production appearance wrappers and v3 archive checks are supported', async
     'FPVProofArchive.v3',
   );
 });
+for (const packageId of ['civilian-fpv', 'fpv-worlds'])
+  test(`synthetic-only ${packageId} tuned rates replay with the complete frozen dependency closure`, async () => {
+    const response = createTunedResponse(),
+      proof = syntheticProof('acro', response),
+      value = packageId === 'civilian-fpv' ? academy(proof) : await worlds(proof),
+      result = await verify(value, packageId, 'acro');
+    assert.equal(result.verified, true);
+    assert.equal(result.qualified, false);
+    assert.equal(result.state.status, 'complete');
+    assert.equal(result.identity.responseIdentity, proof.responseIdentity);
+    for (const name of ['flight-response.mjs', 'rates.mjs'])
+      assert(
+        result.inputs.some((input) => input.path === `optional-practice/civilian-fpv/${name}`),
+      );
+  });
 test('fixed executable bytes and complete dependency closure are mandatory', async () => {
-  const missing = new Map(sources);
-  missing.delete('optional-practice/civilian-fpv/radio-profile.mjs');
-  await assert.rejects(verify(academy(), 'civilian-fpv', 'self-level', missing), /Missing/);
+  for (const module of ['radio-profile.mjs', 'flight-response.mjs', 'rates.mjs']) {
+    const missing = new Map(sources);
+    missing.delete(`optional-practice/civilian-fpv/${module}`);
+    await assert.rejects(verify(academy(), 'civilian-fpv', 'self-level', missing), /Missing/);
+  }
   const altered = new Map(sources);
   altered.set('optional-practice/civilian-fpv/model.mjs', Buffer.from('export const forged=true;'));
   await assert.rejects(verify(academy(), 'civilian-fpv', 'self-level', altered), /differs/);

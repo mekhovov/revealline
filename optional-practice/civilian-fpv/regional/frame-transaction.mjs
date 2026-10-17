@@ -1,3 +1,4 @@
+import { dataIdentity } from '../../../game/data-json.mjs';
 /** Trusted host presentation transaction; never supplied by imported region data. */
 export function validateFrameTransaction(value) {
   if (value === null) return null;
@@ -30,9 +31,9 @@ export function validateFrameTransaction(value) {
 }
 
 /** Detached presentation preparation may await; source ownership has not committed yet. */
-export async function prepareVerifiedFrame(transaction, group, current) {
+export async function prepareVerifiedFrame(transaction, group, current, collisionFrame = null) {
   current();
-  if ((await transaction.prepare({ group })) !== undefined)
+  if ((await transaction.prepare({ group, ...(collisionFrame ? { collisionFrame } : {}) })) !== undefined)
     throw new TypeError(
       "Frame preparation must not replace the verified candidate",
     );
@@ -83,4 +84,14 @@ export function adoptVerifiedFrame(transaction, candidate, current) {
     }
     throw error;
   }
+}
+
+/** Copy verified collision data on explicit demand, independently of mutable render meshes. */
+export function verifiedCollisionFrame(provenance, colliders) {
+  const { regionId, revision, compiler, chunks } = provenance;
+  return {
+    originMm: { ...provenance.originMm },
+    sourceIdentity: dataIdentity({ regionId, revision, compiler, chunks }),
+    colliders,
+  };
 }

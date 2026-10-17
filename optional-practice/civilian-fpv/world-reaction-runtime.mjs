@@ -20,7 +20,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-enemy-guide.mjs':
 '6320d09d4488e8c2b51a3f4ab7324d1e40d620d8917dbd59fa6f5969d7765bf7',
 'optional-practice/civilian-fpv/world-progress.mjs':
-'f3e8dd54fa7dd4d4ad6d66d07fcdbda2604b50694a808310d6351c3a51a075cd',
+'570a2c47960b032590819f683f45ee31ebd00c03ea4ed1e9dc949b4fae6911c3',
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
@@ -131,9 +131,12 @@ import*as external10 from'./snake-hunt.mjs';
 import*as external11 from'../../game/data-json.mjs';
 import*as external12 from'../../game/hunt/actor-art.mjs';
 import*as external13 from'../../game/hunt/preferences.mjs';
-import*as external14 from'./world-model.mjs';
-import*as external15 from'./flight-sectors.mjs';
-import*as external16 from'./world-content.mjs';
+import*as external14 from'./model.mjs';
+import*as external15 from'./flight-response.mjs';
+import*as external16 from'./radio-profile.mjs';
+import*as external17 from'./world-model.mjs';
+import*as external18 from'./flight-sectors.mjs';
+import*as external19 from'./world-content.mjs';
 const modules=Object.create(null);
 modules['game/audio/dialogue-mix.mjs']=(()=>{
 /** Decorative spoken reactions sit behind music and gameplay warnings.
@@ -3868,11 +3871,14 @@ return{mountActorEditor:mountActorEditor};
 })();
 modules['optional-practice/civilian-fpv/world-progress.mjs']=(()=>{
 const boundedJSON=external11['boundedJSON'];
-const createWorldFlight=external14['createWorldFlight'];
-const initWorldRuntime=external14['initWorldRuntime'];
-const replayWorldFlight=external14['replayWorldFlight'];
-const validateWorldCourse=external14['validateWorldCourse'];
-const WORLD_MAX_TICKS=external14['WORLD_MAX_TICKS'];
+const flightComparisonIdentity=external14['flightComparisonIdentity'];
+const TUNED_RESPONSE_FORMAT=external15['TUNED_RESPONSE_FORMAT'];
+const responseIdentity=external16['responseIdentity'];
+const createWorldFlight=external17['createWorldFlight'];
+const initWorldRuntime=external17['initWorldRuntime'];
+const replayWorldFlight=external17['replayWorldFlight'];
+const validateWorldCourse=external17['validateWorldCourse'];
+const WORLD_MAX_TICKS=external17['WORLD_MAX_TICKS'];
 
 const centre=(step)=>
 step.min
@@ -3958,27 +3964,49 @@ weakest:sectors.length
 :Math.min(state.step,course.steps[proof.mode].length-1),
 };
 }
-function compatibleGhost(record,flightIdentity){
-const a=record?.proof,
-b=flightIdentity;
-if(
-record?.status!=='verified'||
-record.diagnostic!=='complete'||
-a?.session!=='practice'||
-!a||
-!b
-)
-return false;
-return[
+/** A shortlist only: selected ghosts and sector references still replay their own proof. */
+function compatibleFlightComparison(a,b){
+if(!a|| !b)return false;
+const contextKeys=[
 'model',
 'backend',
 'courseIdentity',
 'worldIdentity',
 'mode',
-'responseIdentity',
 'rulesIdentity',
 'conditionsIdentity',
-].every((key)=>a[key]===b[key]);
+];
+if(!contextKeys.every((key)=>a[key]===b[key]))return false;
+const hasComparison=
+Object.hasOwn(a,'comparisonIdentity')||Object.hasOwn(b,'comparisonIdentity');
+if(!hasComparison)return a.responseIdentity===b.responseIdentity;
+if(typeof a.comparisonIdentity!=='string'||a.comparisonIdentity!==b.comparisonIdentity)
+return false;
+// Imported status labels cannot grant a different response access to a class.
+// Recompute from recorded values wherever this is a proof rather than a runtime identity.
+try{
+for(const value of[a,b]){
+if(Object.hasOwn(value,'frames')&& !value.response)return false;
+if(
+value.response&&
+(value.response.format!==TUNED_RESPONSE_FORMAT||
+responseIdentity(value.response)!==value.responseIdentity||
+flightComparisonIdentity(value,value.response)!==value.comparisonIdentity)
+)
+return false;
+}
+}catch{
+return false;
+}
+return true;
+}
+function compatibleGhost(record,flightIdentity){
+return(
+record?.status==='verified'&&
+record.diagnostic==='complete'&&
+record.proof?.session==='practice'&&
+compatibleFlightComparison(record.proof,flightIdentity)
+);
 }
 
 /** Legacy callers receive the safe, complete original course. A geometric
@@ -4111,9 +4139,10 @@ throw error;
 }
 
 return{
-createSectorTracker:external15['createSectorTracker'],
+createSectorTracker:external18['createSectorTracker'],
 medalTargets:medalTargets,
 evaluateWorldResult:evaluateWorldResult,
+compatibleFlightComparison:compatibleFlightComparison,
 compatibleGhost:compatibleGhost,
 checkpointPractice:checkpointPractice,
 prepareCheckpointPractice:prepareCheckpointPractice,
@@ -8188,8 +8217,8 @@ modules['optional-practice/civilian-fpv/world-library.mjs']=(()=>{
 const boundedJSON=external11['boundedJSON'];
 const exactKeys=external11['exactKeys'];
 const stableId=external11['stableId'];
-const WORLD_LIMITS=external16['WORLD_LIMITS'];
-const worldSHA256=external16['worldSHA256'];
+const WORLD_LIMITS=external19['WORLD_LIMITS'];
+const worldSHA256=external19['worldSHA256'];
 
 const origin='https://raw.githubusercontent.com/mekhovov/revealline/';
 // Expanded bounded catalogue with authored collision-visual support.
@@ -8611,6 +8640,8 @@ export const medalTargets=
 modules['optional-practice/civilian-fpv/world-progress.mjs'].medalTargets;
 export const evaluateWorldResult=
 modules['optional-practice/civilian-fpv/world-progress.mjs'].evaluateWorldResult;
+export const compatibleFlightComparison=
+modules['optional-practice/civilian-fpv/world-progress.mjs'].compatibleFlightComparison;
 export const compatibleGhost=
 modules['optional-practice/civilian-fpv/world-progress.mjs'].compatibleGhost;
 export const checkpointPractice=

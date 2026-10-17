@@ -29,10 +29,12 @@ export const FPV_REPLAY_COMMON_INPUTS = Object.freeze([
   'game/vendor/i18next-26.4.2.min.js',
   'optional-practice/civilian-fpv/battlefield-ground.mjs',
   'optional-practice/civilian-fpv/catalogue.mjs',
+  'optional-practice/civilian-fpv/flight-response.mjs',
   'optional-practice/civilian-fpv/flight-sectors.mjs',
   'optional-practice/civilian-fpv/math.mjs',
   'optional-practice/civilian-fpv/model.mjs',
   'optional-practice/civilian-fpv/radio-profile.mjs',
+  'optional-practice/civilian-fpv/rates.mjs',
   'optional-practice/civilian-fpv/rotation-table.mjs',
   'optional-practice/civilian-fpv/world-themes.mjs',
 ]);
