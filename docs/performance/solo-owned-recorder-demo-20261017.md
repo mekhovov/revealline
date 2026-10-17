@@ -18,6 +18,8 @@ The initial integrated six-file Main Solo host group passes 55 of 59 controls wi
 
 The corrected complete Demo retention file passes all three controls, now requiring zero serialization inside the winning frame while preserving eventual storage, exact winning replay/checkpoint and award assertions. Its unchanged-runtime before control reproduces the old assertion failure. The packet is `.cache/solo-followup/demo-retention-deferred-serialization/`; `after.tap` is 1,256 bytes, SHA-256 `3fb750da95dc2a993390c758e7339bf7e4542657f5f44b4edec17d7c2f79b84a`. Both runs loaded the same pre-hoist Demo source; the separate identity hoist applied during testing is recorded as live-tree drift. This is an isolated correction proof, not a final-source integration claim.
 
+The final integrated Demo, continuous-control and installed-World group passes **19/19** with stable listed text sources, including both turn policies, restored movement, explicit Resume, retained Demo ownership and already-installed Play. Receipt: `.cache/solo-followup/final-runtime-checks/integrated-demo-world-continuous-v1.json`; log SHA-256 `51b503ca1334808a2b9745967d0807a8cf2e462d9222e850a1b4766217df1778` (4,630 bytes). This is a complete three-file source-model check; native performance and resource retention remain separate.
+
 Cache evidence under `.cache/solo-followup/owned-recorder-demo/`:
 
 - `proposal.patch`: 40,983 bytes, SHA-256 `59164e9c113b571c5f43699874d71c1572d32657debd7ecef66f22a689df0e76`.
@@ -27,3 +29,5 @@ Cache evidence under `.cache/solo-followup/owned-recorder-demo/`:
 - `prefix.cpuprofile`: 67,725 bytes, SHA-256 `2407deb60fdfc75386a3f54268291af7f6e0130d5f7b2c17a1db57f13dcf5bc5`.
 
 The separately verified bab3 production package predates this change. Final-source production checks and native qualification remain required. The required export, full final validation and browser serialization costs remain measurable work; this change removes redundant initial copies without changing saves or replay formats.
+
+The corrected complete candidate host file now passes **18/18** on the integrated required-progress boundary, with all 24,617 listed text-source hashes stable. Original envelope/readiness failures remain retained. The checks validate the capture envelope before reading its inner native session and await actual mission/Library actions; exact replay, checkpoint, artwork, Skip/no-clear and restored-input assertions remain. Receipt: `.cache/solo-followup/final-runtime-checks/candidate-complete-barrier-v1.json`; log SHA-256 `01bb37ecd2a9a7ceb56f437eec65f0893ab9232e44028df9397f649c705ef47f`.
