@@ -210,6 +210,11 @@ function directionalPilot(run, route) {
     goalX = final.x + Math.cos(angle) * radius;
     goalY = final.y + Math.sin(angle) * radius;
   }
+  if (route === 'lure-and-return') {
+    const goal = lureGoal(run, final);
+    goalX = goal.x;
+    goalY = goal.y;
+  }
   if (run.terrain) {
     const goal = overflightTerrainOpenPoint(run.terrain, goalX, goalY, p.radius, arena);
     const waypoint = overflightTerrainWaypoint(run.terrain, p, goal, arena);
@@ -322,4 +327,90 @@ function directionalPilot(run, route) {
         }
       }
   return chosen;
+}
+
+// Explicit review policy only. Its private state cannot grant power, move an
+// actor, alter a clock or affect a normal playthrough. All avoidance/terrain
+// decisions still pass through directionalPilot's ordinary input candidates.
+const lureRoutes = new WeakMap();
+function lureGoal(run, final) {
+  const p = run.player,
+    arena = run.compiled.arena;
+  let state = lureRoutes.get(run);
+  if (!state || state.lost !== run.stats.airframesLost || state.final !== final?.id) {
+    state = {
+      until: 0,
+      goal: null,
+      lost: run.stats.airframesLost,
+      final: final?.id,
+      phase: 'approach',
+    };
+    lureRoutes.set(run, state);
+  }
+  if (final) {
+    const dx = p.x - final.x,
+      dy = p.y - final.y,
+      length = Math.hypot(dx, dy) || 1;
+    if (state.phase === 'approach' && length < 175) {
+      state.phase = 'exit';
+      state.until = run.time + 1.5;
+      state.goal = { x: p.x + (dx / length) * 300, y: p.y + (dy / length) * 300 };
+    }
+    if (state.phase === 'exit' && run.time >= state.until) state.phase = 'approach';
+    if (state.phase === 'approach') {
+      const angle = Math.atan2(dy, dx) + 0.35;
+      state.goal = { x: final.x + Math.cos(angle) * 130, y: final.y + Math.sin(angle) * 130 };
+    }
+  } else if (
+    run.time >= state.until ||
+    !state.goal ||
+    Math.hypot(p.x - state.goal.x, p.y - state.goal.y) < 50
+  ) {
+    // Score whole salvage patches, then commit long enough to collect them.
+    // A local grid retains exact values without an all-pairs pickup scan.
+    const candidates = [],
+      cells = new Map(),
+      cellSize = 110;
+    for (const pickup of run.pickups) {
+      if (!pickup.active) continue;
+      const separation = Math.hypot(pickup.x - p.x, pickup.y - p.y);
+      if (separation <= 65 || separation >= 700) continue;
+      candidates.push(pickup);
+      const key = `${Math.floor(pickup.x / cellSize)}:${Math.floor(pickup.y / cellSize)}`;
+      if (!cells.has(key)) cells.set(key, []);
+      cells.get(key).push(pickup);
+    }
+    let best = null,
+      bestScore = 0;
+    for (const candidate of candidates) {
+      let value = 0;
+      const cx = Math.floor(candidate.x / cellSize),
+        cy = Math.floor(candidate.y / cellSize);
+      for (let y = cy - 1; y <= cy + 1; y++)
+        for (let x = cx - 1; x <= cx + 1; x++) {
+          for (const other of cells.get(`${x}:${y}`) ?? []) {
+            if (Math.hypot(candidate.x - other.x, candidate.y - other.y) < cellSize)
+              value += other.value;
+          }
+        }
+      const score = value / (Math.hypot(candidate.x - p.x, candidate.y - p.y) + 80);
+      if (score > bestScore) {
+        bestScore = score;
+        best = candidate;
+      }
+    }
+    if (best) state.goal = { x: best.x, y: best.y };
+    else {
+      const angle = run.time * 0.2;
+      state.goal = {
+        x: arena.width / 2 + Math.cos(angle) * 320,
+        y: arena.height / 2 + Math.sin(angle) * 250,
+      };
+    }
+    state.until = run.time + 2.4;
+  }
+  return {
+    x: Math.max(70, Math.min(arena.width - 70, state.goal.x)),
+    y: Math.max(70, Math.min(arena.height - 70, state.goal.y)),
+  };
 }

@@ -1,0 +1,129 @@
+TAP version 13
+# Subtest: survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+not ok 1 - survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 13.392
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-late-pacing.test.mjs:23:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected ... Lines skipped
+    
+      [
+        12,
+    ...
+        700,
+        1000,
+    +   1400,
+    +   1900
+    -   1250,
+    -   1550
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 12
+    1: 45
+    2: 100
+    3: 180
+    4: 300
+    5: 480
+    6: 700
+    7: 1000
+    8: 1250
+    9: 1550
+  actual:
+    0: 12
+    1: 45
+    2: 100
+    3: 180
+    4: 300
+    5: 480
+    6: 700
+    7: 1000
+    8: 1400
+    9: 1900
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-late-pacing.test.mjs:28:16)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: survivor: previous authored/imported V4 projects retain exact rules and identity
+ok 2 - survivor: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 31.111167
+  ...
+# Subtest: riy: new V4 sorties shorten only the last two choices and identify the balance revision
+not ok 3 - riy: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 13.255042
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-late-pacing.test.mjs:23:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected ... Lines skipped
+    
+      [
+        12,
+    ...
+        700,
+        1000,
+    +   1400,
+    +   1900
+    -   1250,
+    -   1550
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 12
+    1: 45
+    2: 100
+    3: 180
+    4: 300
+    5: 480
+    6: 700
+    7: 1000
+    8: 1250
+    9: 1550
+  actual:
+    0: 12
+    1: 45
+    2: 100
+    3: 180
+    4: 300
+    5: 480
+    6: 700
+    7: 1000
+    8: 1400
+    9: 1900
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/game/test/overflight-late-pacing.test.mjs:28:16)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: riy: previous authored/imported V4 projects retain exact rules and identity
+ok 4 - riy: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 31.134
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 2
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1326.357791

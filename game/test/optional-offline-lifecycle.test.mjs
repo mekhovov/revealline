@@ -161,6 +161,111 @@ test('detailed readiness distinguishes missing dependencies from an inconclusive
   assert.equal(f.values.size, 0);
 });
 
+test('readiness accepts legacy replies but never certifies inconclusive, contradictory or foreign status', async () => {
+  const f = fixture();
+  f.activate();
+  const rows = [
+    [{ ready: true }, 'ready'],
+    [{ ready: false }, 'unavailable'],
+    [{ ready: true, status: 'ready' }, 'ready'],
+    [{ ready: false, status: 'unavailable' }, 'unavailable'],
+    [{ ready: false, status: 'unknown' }, 'unknown'],
+    [{ ready: true, status: 'unknown' }, 'unknown'],
+    [{ ready: false, status: 'ready' }, 'unknown'],
+    [{ ready: true, status: 'unavailable' }, 'unknown'],
+    [{ ready: false, status: null }, 'unknown'],
+    [{ ready: true, status: 'invented' }, 'unknown'],
+    [{ ready: true, status: 'ready', scope: 'https://other.test/' }, 'unknown'],
+  ];
+  for (const [reply, status] of rows) {
+    for (const detailed of [true, false]) {
+      const pending = inspectOptionalOffline(f.base, { navigator: f.navigator, detailed });
+      await waitFor(() => f.ports.length === 1);
+      f.ports.shift().postMessage({ type: 'practice-status', scope: f.base.href, ...reply });
+      assert.deepEqual(await pending, detailed ? { status } : status === 'ready');
+    }
+  }
+  assert.equal(f.registrations(), 0);
+  assert.equal(f.unregisters(), 0);
+  assert.equal(f.values.size, 0, 'Inspection never rewrites installation records');
+});
+
+for (const packageId of ['civilian-flight', 'civilian-fpv', 'fpv-worlds']) {
+  for (const stage of ['initial', 'final']) {
+    test(`${packageId} ${stage} inconclusive preparation preserves previous records until a verified retry`, async () => {
+      const f = fixture(packageId);
+      recordOptionalInstallation({
+        ...f.options,
+        location: { href: f.location.href.replace('/v1.2.3/', '/v1.2.2/') },
+      });
+      f.storage.setItem('practice-records', 'retained personal progress');
+      const before = [...f.values.entries()];
+      if (stage === 'initial') f.activate();
+      const pending = prepareOptionalOffline(f.options);
+      const rejected = assert.rejects(pending, (error) => {
+        assert.match(error.message, /Offline verification could not finish/);
+        assert.match(error.message, /Retry without removing your saved copy/);
+        assert.doesNotMatch(error.message, /Needs repair|files are missing|download again/);
+        return true;
+      });
+      if (stage === 'final') {
+        await waitFor(() => f.messages.includes('practice-progress'));
+        f.activate();
+      }
+      await waitFor(() => f.ports.length === 1);
+      f.ports.shift().postMessage({
+        type: 'practice-status',
+        scope: f.base.href,
+        ready: false,
+        status: 'unknown',
+      });
+      await rejected;
+      assert.deepEqual(
+        [...f.values.entries()],
+        before,
+        'Unknown cannot advance or delete saved installation/records',
+      );
+      assert.equal(f.registrations(), stage === 'initial' ? 0 : 1);
+      assert.equal(f.unregisters(), 0);
+      assert.equal(
+        f.messages.includes('practice-cancel'),
+        false,
+        'Keep the owning worker and downloaded copy',
+      );
+      const retry = prepareOptionalOffline(f.options);
+      await waitFor(() => f.ports.length === 1);
+      f.reply();
+      assert.equal(await retry, true);
+      const installation = JSON.parse(
+        f.storage.getItem(optionalInstallationKey(packageId, f.root)),
+      );
+      assert.equal(installation.active.version, 'v1.2.3');
+      assert.equal(installation.previous.version, 'v1.2.2');
+      assert.equal(f.storage.getItem('practice-records'), 'retained personal progress');
+      assert.equal(
+        f.registrations(),
+        stage === 'initial' ? 0 : 1,
+        'Retry verifies the existing worker instead of replacing it',
+      );
+      assert.equal(f.unregisters(), 0);
+    });
+  }
+}
+
+test('inconclusive preparation uses the caller locale and does not retry worker registration after lookup failure', async () => {
+  const f = fixture();
+  f.navigator.serviceWorker.getRegistration = async () => {
+    throw new Error('Temporary storage service failure');
+  };
+  await assert.rejects(
+    prepareOptionalOffline({ ...f.options, document: { documentElement: { lang: 'uk' } } }),
+    /Не вдалося завершити офлайн-перевірку.*не видаляючи збережену копію/,
+  );
+  assert.equal(f.registrations(), 0);
+  assert.equal(f.unregisters(), 0);
+  assert.equal(f.values.size, 0);
+});
+
 test('cancelling initial verification never records a late successful installation', async () => {
   const f = fixture(),
     abort = new AbortController();
@@ -520,20 +625,22 @@ test('missing dependencies require repair, then exact offload and a fresh instal
   assert.equal(f.storage.getItem(optionalInstallationKey(f.packageId, f.root)), original);
 });
 
-function workerFixture(install, family, { initialRead, finalWrite, empty = false } = {}) {
+function workerFixture(
+  install,
+  family,
+  { initialRead, finalWrite, empty = false, dependencies = 1 } = {},
+) {
   const base = 'https://example.test/review/optional-practice/civilian-flight/';
   const owner = `revealline.optional.${family}.v1:${new URL(base).pathname}:`;
   const name = owner + 'revision';
   const body = Buffer.from('pinned asset');
   const pins = empty
     ? []
-    : [
-        {
-          path: 'image.png',
-          bytes: body.length,
-          sha256: createHash('sha256').update(body).digest('hex'),
-        },
-      ];
+    : Array.from({ length: dependencies }, (_, index) => ({
+        path: index === 0 ? 'image.png' : `image-${index}.png`,
+        bytes: body.length,
+        sha256: createHash('sha256').update(body).digest('hex'),
+      }));
   const listeners = new Map(),
     stores = new Map(),
     progress = [];
@@ -584,6 +691,7 @@ function workerFixture(install, family, { initialRead, finalWrite, empty = false
   };
   return {
     base,
+    scope,
     name,
     stores,
     progress,
@@ -601,6 +709,113 @@ for (const [family, install] of [
   ['civilian-flight', installFlight],
   ['package', installFPV],
 ]) {
+  test(`${family} announces downloading before awaiting the next dependency`, async () => {
+    const f = workerFixture(install, family, { dependencies: 2 }),
+      body = Buffer.from('pinned asset'),
+      nextResponse = deferred(),
+      phasesAtFetch = [];
+    // A held response must not leave the previous local hashing phase visible.
+    let calls = 0;
+    f.scope.fetch = async () => {
+      phasesAtFetch.push(f.progress.at(-1));
+      if (++calls === 2) await nextResponse.promise;
+      return new Response(body);
+    };
+    const pending = f.start();
+    try {
+      await waitFor(() => calls === 2);
+      assert.deepEqual(phasesAtFetch, ['downloading', 'downloading']);
+      assert.equal(f.progress.at(-1), 'downloading');
+      assert(f.progress.includes('verifying'));
+    } finally {
+      nextResponse.resolve();
+      await pending;
+    }
+    assert.equal(f.progress.at(-1), 'ready');
+  });
+  test(`${family} inspection exceptions are inconclusive without changing cached bytes`, async () => {
+    for (const stage of ['keys', 'match', 'body', 'digest']) {
+      const f = workerFixture(install, family);
+      await f.start();
+      const stored = [...f.stores.get(f.name).entries()];
+      const before = await Promise.all(
+        stored.map(async ([url, response]) => [url, await response.clone().text()]),
+      );
+      const opens = f.opens(),
+        fetches = f.fetches(),
+        writes = f.writes();
+      const fail = async () => {
+        throw new Error(`Transient ${stage} failure`);
+      };
+      if (stage === 'keys' || stage === 'match') f.caches[stage] = fail;
+      else if (stage === 'body') f.caches.match = async () => ({ arrayBuffer: fail });
+      else f.scope.crypto = { subtle: { digest: fail } };
+      let pending, reply;
+      f.listeners.get('message')({
+        data: { type: 'practice-status' },
+        ports: [
+          {
+            postMessage: (value) => {
+              reply = value;
+            },
+          },
+        ],
+        waitUntil: (value) => {
+          pending = value;
+        },
+      });
+      await pending;
+      assert.equal(reply.ready, false, 'Old boolean consumers remain fail-closed');
+      assert.equal(reply.status, 'unknown');
+      assert.equal(reply.scope, f.base);
+      assert.equal(
+        JSON.stringify(reply).includes('Transient'),
+        false,
+        'No internal exception details cross the status port',
+      );
+      assert.equal(f.opens(), opens);
+      assert.equal(f.fetches(), fetches);
+      assert.equal(f.writes(), writes);
+      assert.deepEqual(
+        await Promise.all(
+          [...f.stores.get(f.name).entries()].map(async ([url, response]) => [
+            url,
+            await response.clone().text(),
+          ]),
+        ),
+        before,
+      );
+    }
+  });
+  test(`${family} status distinguishes verified bytes from missing and hash-mismatched files`, async () => {
+    for (const kind of ['ready', 'missing', 'size', 'hash']) {
+      const f = workerFixture(install, family);
+      await f.start();
+      const stored = f.stores.get(f.name),
+        url = f.base + 'image.png';
+      if (kind === 'missing') stored.delete(url);
+      if (kind === 'size') stored.set(url, new Response('short'));
+      if (kind === 'hash') stored.set(url, new Response('pinned asseu'));
+      let pending, reply;
+      f.listeners.get('message')({
+        data: { type: 'practice-status' },
+        ports: [
+          {
+            postMessage: (value) => {
+              reply = value;
+            },
+          },
+        ],
+        waitUntil: (value) => {
+          pending = value;
+        },
+      });
+      await pending;
+      assert.equal(reply.ready, kind === 'ready');
+      assert.equal(reply.status, kind === 'ready' ? 'ready' : 'unavailable');
+      assert.equal(reply.scope, f.base);
+    }
+  });
   test(`${family} worker keeps cancellation received before its controller exists`, async () => {
     const initialRead = deferred(),
       f = workerFixture(install, family, { initialRead });

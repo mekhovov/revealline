@@ -1,0 +1,137 @@
+{
+  "format": "AlpineR6NativeSourceReview.v1",
+  "observedAt": "2026-10-15T23:05:00.818983+00:00",
+  "sourceHead": "b6cc53c8808a172f19e1f382944b90bf7d4c9d1f",
+  "geometrySource": "808a03d906cadb6778b5ac684d005e542ea37bfa",
+  "frozenHost": "http://127.0.0.1:9204",
+  "frozenViewer": "939df428",
+  "result": "accepted-bounded-source-appearance",
+  "beforeAfter": {
+    "tier": "balanced",
+    "views": [
+      "summit-cable-approach",
+      "summit-lookout-approach",
+      "summit-station"
+    ],
+    "observations": [
+      "Cable pylons now have readable bracing and feet at the snow surface.",
+      "Lookout under-deck diagonal supports are visible in the matched close view.",
+      "Concourse opening stays visually clear at its separate pilot-height view."
+    ]
+  },
+  "additionalTierViews": {
+    "performance": [
+      "summit-cable-approach"
+    ],
+    "quality": [
+      "summit-cable-approach",
+      "summit-concourse-pilot-height"
+    ]
+  },
+  "limits": [
+    "Source authoring viewer, not actual player admission or public launch.",
+    "No all-view/all-tier visual matrix or physical-device/FPS/endurance acceptance.",
+    "Lookout close view crops the lower feet; exact ground attachment comes from separate automated90sample/8attachment source gate, not visual assertion.",
+    "Initial after-lookout text captured Preparing and was replaced only after actual completed status; no loading frame counted as accepted.",
+    "Source accepted for protected publication; immutable delivery, Library/package/native/public gates remain separate."
+  ],
+  "warningErrorConsoleEntries": 0,
+  "releaseStatus": "Resources released; no live scenery or collision.",
+  "files": [
+    {
+      "file": "after-balanced-cable.png",
+      "bytes": 80262,
+      "sha256": "38dfcde1767902b5bffc2ce548c6e3795a8c9432d68675fa14d02748647651f8"
+    },
+    {
+      "file": "after-balanced-cable.txt",
+      "bytes": 995,
+      "sha256": "ccb1f61d86db500b43046c31e1f817668d564745c0987d1afabcc2eca69d36ae"
+    },
+    {
+      "file": "after-balanced-lookout.png",
+      "bytes": 81350,
+      "sha256": "184663c91f1e6752624c5fce98a185911fbe468785732373d01ce349854945e3"
+    },
+    {
+      "file": "after-balanced-lookout.txt",
+      "bytes": 997,
+      "sha256": "8a1db077c4b2c5f9b968c24508957bd0a5e657580cdeb15db254216d0ceecc3b"
+    },
+    {
+      "file": "after-balanced-station.png",
+      "bytes": 78951,
+      "sha256": "bdd2fdd5aa97751a294e7588fb377021d20bfa5da762e19181b1866a4f4f69ca"
+    },
+    {
+      "file": "after-balanced-station.txt",
+      "bytes": 988,
+      "sha256": "b08adc3e392dceb0a6e633044a2cf101422223ce53e02456d8fbeb9bfd8a2a1b"
+    },
+    {
+      "file": "after-performance-cable.png",
+      "bytes": 79249,
+      "sha256": "c66fd3ac215cc87a091dc2118c08f640f043437bda958c15a3ac3ac83aabbe0e"
+    },
+    {
+      "file": "after-performance-cable.txt",
+      "bytes": 995,
+      "sha256": "ccb1f61d86db500b43046c31e1f817668d564745c0987d1afabcc2eca69d36ae"
+    },
+    {
+      "file": "after-quality-cable.png",
+      "bytes": 79249,
+      "sha256": "c66fd3ac215cc87a091dc2118c08f640f043437bda958c15a3ac3ac83aabbe0e"
+    },
+    {
+      "file": "after-quality-cable.txt",
+      "bytes": 995,
+      "sha256": "ccb1f61d86db500b43046c31e1f817668d564745c0987d1afabcc2eca69d36ae"
+    },
+    {
+      "file": "after-quality-concourse.png",
+      "bytes": 98755,
+      "sha256": "f54636640ce93643e9fca2ba0d726360420a82c0f35f769a7b76779bd56e7c2e"
+    },
+    {
+      "file": "after-quality-concourse.txt",
+      "bytes": 1003,
+      "sha256": "66ad19b7f85e5fe1cda3c918c2b2b0091af9984f4321bbd113c2b1fd20de0561"
+    },
+    {
+      "file": "before-balanced-cable.png",
+      "bytes": 78311,
+      "sha256": "0dfb7c4829ac0311a0fb07519d9b3594cf7ab1453902e64e9573ba1c05b57b1c"
+    },
+    {
+      "file": "before-balanced-cable.txt",
+      "bytes": 996,
+      "sha256": "46d1b4809c4e2ced95b42d09ba2ecf42f6354e186f074087de2ff8b72f480bed"
+    },
+    {
+      "file": "before-balanced-lookout.png",
+      "bytes": 79573,
+      "sha256": "d2e3eb2cb61e5b965c1c789b27af51f5fb033f2261d755fe95acbee0254e14d0"
+    },
+    {
+      "file": "before-balanced-lookout.txt",
+      "bytes": 998,
+      "sha256": "e2286e784e9774b1629bba32f41c6839bb7cffd25cb2bf49b9b349646a267d5d"
+    },
+    {
+      "file": "before-balanced-station.png",
+      "bytes": 78744,
+      "sha256": "292675aa2f5a924e3d076a86ed3c8b11697907f74ebe5194c59958bef0c8f3f4"
+    },
+    {
+      "file": "before-balanced-station.txt",
+      "bytes": 989,
+      "sha256": "dd8b653ca4c39273b3b6b00f319808105f5e7a7039446a12ad6ed13e1eefd636"
+    },
+    {
+      "file": "released.txt",
+      "bytes": 921,
+      "sha256": "0e4bad141799b85954d8d69afba6417d80720204094c6c1b04c047a480dcc60f"
+    }
+  ]
+}

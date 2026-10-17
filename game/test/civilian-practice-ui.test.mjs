@@ -387,6 +387,31 @@ test('gym menu keyboard navigation owns arrows and returns from nested help with
   assert.equal(f.view.snapshot().ticks, 0);
 });
 
+test('Gym native Help retains instructions across blur and focus', async (t) => {
+  const f = await fixture(t),
+    $ = (id) => f.doc.getElementById(id);
+  $('gym-shell-action-settings').click();
+  $('gym-shell-action-help').click();
+  f.tick(2);
+  const dialog = $('help-dialog'),
+    hint = dialog.querySelector('.gym-menu-hint');
+  assert.equal(dialog.open, true);
+  assert.ok(hint, 'the native dialog owns its navigation instructions');
+  const instructions = hint.textContent,
+    state = f.view.snapshot();
+  assert.ok(instructions.length > 0);
+  f.doc.focused = false;
+  f.win.emit('blur');
+  f.tick(2);
+  assert.equal(hint.textContent, instructions, 'blur must not resize the native dialog');
+  assert.equal(hint.hidden, false);
+  f.doc.focused = true;
+  f.win.emit('focus');
+  f.tick(2);
+  assert.equal(hint.textContent, instructions, 'refocus must not reflow the clicked control');
+  assert.deepEqual(f.view.snapshot(), state, 'suspension and refocus cannot start a flight');
+});
+
 test('gym Select Mission starts the selected drill with one action', async (t) => {
   const previews = [],
     f = await fixture(t, { previews }),
@@ -668,6 +693,7 @@ for (const clock of ['animation timestamp', 'callback execution']) {
     f.tick(4);
     assert.deepEqual(f.view.snapshot(), completed, 'A stalled frame must not change drills.');
     assert.deepEqual(f.view.trace(), trace);
-    assert.equal(flow.hidden, true, 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.style.visibility, 'hidden', 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
   });
 }
