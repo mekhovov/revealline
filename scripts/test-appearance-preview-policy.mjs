@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
 import { bindAppearanceMetadata } from './prepare-appearance-preview-metadata.mjs';
 import { parseTestPolicy, policyDecision } from '../publishing/test-policy.mjs';
 
@@ -26,6 +27,7 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     ?.trim()
     .split(/\s+/);
   for (const path of [
+    'game/test/solo-performance-host.test.mjs',
     'game/test/solo-preparation-invalidation-host.test.mjs',
     'game/test/solo-soundtrack-context-host.test.mjs',
     'game/test/flight-information-source.test.mjs',
@@ -116,6 +118,76 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
     'Bind checksums and policy-qualified evidence to the exact source',
   ])
     assert.doesNotMatch(step(name), /\n\s+if:/);
+});
+
+test('packaging reserves bounded evidence closure without changing test or gameplay deadlines', () => {
+  assert.match(workflow, /preview:\s+runs-on: ubuntu-latest\s+timeout-minutes: 70/);
+  for (const [name, minutes] of [
+    ['Run focused appearance, SIM and curated-community checks', 45],
+    ['Build the full game and separate Worlds playtest', 12],
+    ['Bind checksums and policy-qualified evidence to the exact source', 1],
+    ['Upload playable preview archives and receipts', 2],
+    ['Bind small metadata to the successfully uploaded exact package', 2],
+    ['Upload compact package identity for remote verification', 3],
+    ['Retain focused diagnostics when packaging does not finish', 2],
+    ['Report preview scope', 1],
+  ])
+    assert.ok(step(name).includes(`timeout-minutes: ${minutes}\n`), name);
+  assert.match(
+    step('Run focused appearance, SIM and curated-community checks'),
+    /node --test --test-concurrency=1/,
+  );
+  assert.doesNotMatch(workflow, /--test-timeout|continue-on-error/);
+  const focusedTests = workflow
+    .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
+    .trim()
+    .split(/\s+/);
+  assert.equal(focusedTests.length, 98);
+  assert.equal(new Set(focusedTests).size, 98);
+  const startup = step('Record the bounded packaging start');
+  assert.match(startup, /PREVIEW_STARTED_AT=\$\(date \+%s\)/);
+  assert.ok(workflow.indexOf(startup) < workflow.indexOf('- uses: actions/checkout'));
+  const retain = step('Retain focused diagnostics when packaging does not finish');
+  assert.match(retain, /always\(\) && \(failure\(\) \|\| cancelled\(\)\)/);
+  for (const outcome of ['success', 'failure', 'cancelled']) {
+    assert.ok(retain.includes(`steps.focused.outcome == '${outcome}'`));
+  }
+  assert.match(retain, /path: \.cache\/appearance-preview\/focused-tests\.tap/);
+  assert.doesNotMatch(retain, /distribution\.zip|appearance-preview\/\s/);
+});
+
+test('actual build admission fails closed before spawning a build when closure time is unavailable', () => {
+  const guard = step('Build the full game and separate Worlds playtest')
+    .split('        run: |\n')[1]
+    .split('          node scripts/game-cli.mjs build')[0]
+    .replace(/^ {10}/gm, '');
+  const now = 1_800_000_000;
+  const check = (start) =>
+    spawnSync('bash', ['-c', `date() { echo ${now}; }\n${guard}`], {
+      encoding: 'utf8',
+      timeout: 5_000,
+      env: { ...process.env, PREVIEW_STARTED_AT: start },
+    });
+  for (const remaining of [1_380, 1_381, 4_080]) {
+    const result = check(String(now - (4_080 - remaining)));
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, new RegExp(`remaining=${remaining}s required=1380s`));
+  }
+  for (const start of [
+    String(now - 2_701),
+    String(now - 4_081),
+    String(now + 1),
+    '',
+    'not-a-clock',
+  ]) {
+    const result = check(start);
+    assert.equal(
+      result.status,
+      1,
+      `A missing, reversed or exhausted clock must not admit a build: ${start}`,
+    );
+    assert.equal(result.error, undefined);
+  }
 });
 
 async function bindEvidence(mode, outcome) {
