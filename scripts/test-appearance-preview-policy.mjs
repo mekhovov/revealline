@@ -481,6 +481,7 @@ const admissionFiles = [
   'game/test/solo-dense-replay-persistence.test.mjs',
   'game/test/library-entry.test.mjs',
   'game/test/solo-lazy-library-host.test.mjs',
+  'game/test/solo-transition-performance-host.test.mjs',
 ];
 async function prepareAdmission(
   mode,
@@ -562,7 +563,7 @@ async function prepareAdmission(
   return { proof, files, reads, root };
 }
 
-test('separate predecessor gates ten complete regression files without extending the existing preview clock', async () => {
+test('separate predecessor gates eleven complete regression files without extending the existing preview clock', async () => {
   const prefix = workflow.split('  preview:\n')[0];
   assert.match(prefix, /admission:\s+runs-on: ubuntu-latest\s+timeout-minutes: 19/);
   assert.doesNotMatch(prefix, /PREVIEW_STARTED_AT|game-cli.mjs build/);
@@ -583,7 +584,7 @@ test('separate predecessor gates ten complete regression files without extending
     .trim()
     .split(/\s+/);
   assert.deepEqual(declared, admissionFiles);
-  assert.equal(new Set(declared).size, 10);
+  assert.equal(new Set(declared).size, 11);
   const existing = workflow
     .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
     .trim()
