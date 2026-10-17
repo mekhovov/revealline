@@ -667,6 +667,52 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
   );
   if (!omittedGroups.length || !omittedPaths.size)
     fail('Main Pages profile found no exclusive archive or unused artwork to omit.');
+  // These reviewed contributor originals are redundant in the rolling site:
+  // both browser catalogues have already been generated from the retained Git
+  // sources. Ordinary complete releases return above and keep every original.
+  // Keep this list finite: a new namespace is not permission to omit its body.
+  const canonicalLocalePaths = new Set(
+    ['en', 'uk'].flatMap((language) =>
+      [
+        'common',
+        'content',
+        'controllerEditor',
+        'demo',
+        'errors',
+        'gameplay',
+        'interface',
+        'tools',
+        'website',
+      ].map((namespace) => `game/locales/${language}/${namespace}.json`),
+    ),
+  );
+  const canonicalEntries = entries.filter((entry) => canonicalLocalePaths.has(entry.name));
+  if (canonicalEntries.length) {
+    if (
+      canonicalEntries.length !== canonicalLocalePaths.size ||
+      new Set(canonicalEntries.map((entry) => entry.name)).size !== canonicalLocalePaths.size
+    )
+      fail('Main Pages canonical locale originals are incomplete or duplicated.');
+    for (const name of ['game/i18n/catalogs.mjs', 'app/i18n/catalogs.mjs']) {
+      const compiled = entries.filter((entry) => entry.name === name);
+      if (compiled.length !== 1 || !compiled[0].bytes.length)
+        fail(`Main Pages canonical locale projection needs its compiled catalogue: ${name}`);
+    }
+    if (
+      catalogue.files.some((file) => canonicalLocalePaths.has(file.path)) ||
+      catalogue.groups.some((group) => group.files.some((name) => canonicalLocalePaths.has(name)))
+    )
+      fail('Main Pages canonical locale original is a declared download dependency.');
+    // An extra fail-closed signal for newly authored raw URL/import consumers.
+    // This does not replace the source-bound consumer audit and browser checks.
+    for (const entry of entries)
+      if (
+        /\.(?:m?js|html|css)$/.test(entry.name) &&
+        /\/locales(?:\/|["'`])|["'`]locales\//u.test(entry.bytes.toString('utf8'))
+      )
+        fail(`Main Pages canonical locale original has a browser consumer: ${entry.name}`);
+    for (const name of canonicalLocalePaths) omittedPaths.add(name);
+  }
   const retainedGroupIDs = new Set(retainedGroups.map((group) => group.id));
   const groupsRetained = (record) =>
     [...(record.groups || []), ...(record.runtimeGroups || [])].every((id) =>

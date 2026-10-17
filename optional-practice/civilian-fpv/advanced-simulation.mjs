@@ -34,6 +34,18 @@ export const ADVANCED_MAX_SECONDS = 12 * 60;
 export const ADVANCED_RECORDING_BYTES = 8 * 1024 * 1024;
 export const ADVANCED_REGIONAL_SNAPSHOT_BYTES = 24 * 1024 * 1024;
 export const ADVANCED_REGIONAL_RECOVERY_BYTES = ADVANCED_REGIONAL_SNAPSHOT_BYTES + 65536;
+// These stops preserve the last accepted flight. Transactional callers restore
+// a rejected mission/frame before the error reaches the worker boundary.
+export class AdvancedFlightLimitError extends Error {
+  constructor(code, message) {
+    super(message);
+    this.name = 'AdvancedFlightLimitError';
+    this.code = code;
+  }
+}
+const flightLimit = (condition, code, message) => {
+  if (!condition) throw new AdvancedFlightLimitError(code, message);
+};
 export const ADVANCED_QUALIFICATION = Object.freeze({
   status: 'experimental',
   scored: false,
@@ -665,16 +677,18 @@ export function createAdvancedSimulation(options = {}) {
           colliders: packed.map((collider) => collider.key),
         });
       }
-      required(
+      flightLimit(
         record.terrainFrames.length <= ADVANCED_TERRAIN_LIMITS.frames &&
           record.terrainEvents.length < ADVANCED_TERRAIN_LIMITS.events,
+        'ADVANCED_RECORDING_LIMIT',
         'Regional terrain history capacity reached',
       );
       record.terrainEvents.push([state.substep, frameIndex]);
       const historyBytes = terrainHistoryBytes(record);
-      required(
+      flightLimit(
         historyBytes + state.inputBytes + state.checkpointBytes + recordingOverheadBytes <=
           ADVANCED_RECORDING_BYTES,
+        'ADVANCED_RECORDING_LIMIT',
         'Advanced recording capacity reached while adopting terrain',
       );
       const retained = new Map(terrainState.handles.map((entry) => [entry.key, entry.handle]));
@@ -1112,7 +1126,7 @@ export function createAdvancedSimulation(options = {}) {
           ]
         : [state.substep, sample.sequence, sample.timestampUs];
       state.inputBytes += JSON.stringify(event).length + 1;
-      required(
+      flightLimit(
         state.inputBytes <= 6 * 1024 * 1024 &&
           state.inputBytes +
             state.checkpointBytes +
@@ -1120,6 +1134,7 @@ export function createAdvancedSimulation(options = {}) {
             recordingOverheadBytes <=
             ADVANCED_RECORDING_BYTES &&
           record.inputs.length < 300000,
+        'ADVANCED_RECORDING_LIMIT',
         'Advanced recording capacity reached; export the flight before continuing',
       );
       record.inputs.push(event);
@@ -1224,13 +1239,14 @@ export function createAdvancedSimulation(options = {}) {
       checkpoint.state.acceptedSequence = checkpoint.state.consumedSequence;
       checkpoint.state.acceptedTimestampUs = checkpoint.state.consumedTimestampUs;
       const checkpointBytes = JSON.stringify(checkpoint).length + 1;
-      required(
+      flightLimit(
         state.inputBytes +
           state.checkpointBytes +
           checkpointBytes +
           (terrainState?.historyBytes ?? 0) +
           recordingOverheadBytes <=
           ADVANCED_RECORDING_BYTES,
+        'ADVANCED_RECORDING_LIMIT',
         'Advanced recording capacity reached; export the flight before continuing',
       );
       state.checkpointBytes += checkpointBytes;
@@ -1254,8 +1270,9 @@ export function createAdvancedSimulation(options = {}) {
   function stepMission({ admitMotion } = {}) {
     assertLive();
     required(!proposal && !terrainProposal, 'A mission transaction is pending');
-    required(
+    flightLimit(
       state.missionTick < ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ,
+      'ADVANCED_DURATION_LIMIT',
       'Advanced flight duration limit reached',
     );
     const before = capture();
@@ -1428,8 +1445,9 @@ export function createAdvancedSimulation(options = {}) {
     proposeMission() {
       assertLive();
       required(!proposal && !terrainProposal, 'A mission transaction is already pending');
-      required(
+      flightLimit(
         state.missionTick < ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ,
+        'ADVANCED_DURATION_LIMIT',
         'Advanced flight duration limit reached',
       );
       const before = capture();

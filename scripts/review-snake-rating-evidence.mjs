@@ -15,6 +15,7 @@ import {
 import { classicSnakeRatingForRecord } from '../game/snake/classic-ratings.mjs';
 import { proveClassicSnakeV4 } from '../game/test/helpers/classic-snake-v4-playthrough.mjs';
 import { visibleSnakeRouteTurn } from './lib/snake-visible-route-pilot.mjs';
+import { clearanceSnakeRouteTurn } from './lib/snake-clearance-route-pilot.mjs';
 
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 const directory = new URL('../docs/verification/snake-remaster/', import.meta.url);
@@ -31,27 +32,31 @@ for (const suffix of [
   assert.equal(level.version, 'classic-snake-level.v1');
   assert.equal(level.targetMovement, 'still');
   assert.equal(level.wrap, false);
-  const run = createClassicSnake(level, { seed: 17, mode: 'solo' });
-  let stop = 'finished';
-  while (run.status === 'running' && run.tick < 1024) {
-    const snake = run.snakes[0];
-    const turn = visibleSnakeRouteTurn({
-      width: level.width,
-      height: level.height,
-      walls: level.walls,
-      body: snake.body,
-      direction: snake.direction,
-      target: run.target,
-    });
-    if (!turn) {
-      stop = 'no-current-path';
-      break;
+  const playVisible = (pilot) => {
+    const run = createClassicSnake(level, { seed: 17, mode: 'solo' });
+    let stop = 'finished';
+    while (run.status === 'running' && run.tick < 1024) {
+      const snake = run.snakes[0];
+      const turn = pilot({
+        width: level.width,
+        height: level.height,
+        walls: level.walls,
+        body: snake.body,
+        direction: snake.direction,
+        target: run.target,
+      });
+      if (!turn) {
+        stop = 'no-current-path';
+        break;
+      }
+      queueClassicSnakeTurn(run, 0, turn);
+      stepClassicSnake(run);
     }
-    queueClassicSnakeTurn(run, 0, turn);
-    stepClassicSnake(run);
-  }
-  if (run.tick === 1024 && run.status === 'running') stop = 'bounded-step-limit';
-  const visibleReplay = exportClassicSnakeReplay(run);
+    if (run.tick === 1024 && run.status === 'running') stop = 'bounded-step-limit';
+    return { replay: exportClassicSnakeReplay(run), stop };
+  };
+  const { replay: visibleReplay, stop } = playVisible(visibleSnakeRouteTurn);
+  const { replay: clearanceReplay, stop: clearanceStop } = playVisible(clearanceSnakeRouteTurn);
   const generalReplay = proveClassicSnakeV4(level, {
     seed: 17,
     mode: 'solo',
@@ -70,7 +75,8 @@ for (const suffix of [
     };
   };
   const visible = summarize(visibleReplay),
-    general = summarize(generalReplay);
+    general = summarize(generalReplay),
+    clearance = summarize(clearanceReplay);
   assert.equal(general.status, 'won');
   const rating = classicSnakeRatingForRecord({
     clear: true,
@@ -91,25 +97,33 @@ for (const suffix of [
     eligibility: rating.calibrated ? 'existing-fixed-budget' : 'completion-only',
     visiblePilot: { ...visible, stop },
     generalPilot: general,
+    clearancePilot: { ...clearance, stop: clearanceStop },
+    distinctClearanceWin:
+      clearance.status === 'won' && clearance.routeIdentity !== general.routeIdentity,
     differentInputRoutes: visible.routeIdentity !== general.routeIdentity,
     proposedBudget: null,
     visibleReplay,
     generalReplay,
+    clearanceReplay,
   });
 }
 const report = {
-  format: 'classic-snake-rating-evidence.v1',
+  format: 'classic-snake-rating-evidence.v2',
   scope:
     'Five exact normal-pace Solo seed-17 setups. Separate steering implementations, not independent players or repeated human observations. No pace copies count as additional evidence.',
   methods: {
     visible:
       'Shortest path on currently visible stationary-target board; conservative occupied tail; no future simulation, hidden RNG, retry, backtracking or fallback strategy.',
+    clearance:
+      'Visible-state weighted path: one cost per move plus two per adjacent wall, cable or boundary cell; replans each move, retains the tail, and never reads future state. Trades route length for current clearance; not guaranteed safer.',
     general:
       'Existing scored qualification search with simulated candidate moves, escape-space ranking and bounded backtracking. This remains solvability evidence, not human difficulty.',
   },
   sources: await Promise.all(
     [
+      'scripts/review-snake-rating-evidence.mjs',
       'scripts/lib/snake-visible-route-pilot.mjs',
+      'scripts/lib/snake-clearance-route-pilot.mjs',
       'game/test/helpers/classic-snake-v4-playthrough.mjs',
       'game/snake/classic-core.mjs',
     ].map(async (path) => ({
@@ -122,6 +136,9 @@ const report = {
     completionOnlyCandidates: rows.filter((r) => r.role === 'completion-only-candidate').length,
     bothStrategiesClear: rows.filter((r) => r.visiblePilot.status === 'won').length,
     differentInputRoutes: rows.filter((r) => r.differentInputRoutes).length,
+    clearanceWins: rows.filter((r) => r.clearancePilot.status === 'won').length,
+    distinctClearanceWins: rows.filter((r) => r.distinctClearanceWin).length,
+    clearanceStopped: rows.filter((r) => r.clearancePilot.status !== 'won').length,
     proposedNewBudgets: 0,
     humanObservations: 0,
   },

@@ -878,6 +878,20 @@ export function resolveBetaflightPresetBundle({ files, entry, options = {} }) {
     'invalid-options',
     'Preset option selections must be true or false.',
   );
+  // The tagged Betaflight App matches checked option names case-insensitively,
+  // including dummy root options exposing an included option. Keep the original
+  // labels in the review and provenance; only lookup keys are normalized.
+  const optionKey = (name) => name.toLowerCase();
+  const requested = new Map();
+  for (const [name, checked] of Object.entries(options)) {
+    const key = optionKey(name);
+    need(
+      !requested.has(key),
+      'duplicate-option',
+      `Ambiguous option selections differ only by case: ${name}.`,
+    );
+    requested.set(key, checked);
+  }
   const bundle = new Map();
   let totalBytes = 0;
   for (const [path, text] of Object.entries(files)) {
@@ -936,8 +950,13 @@ export function resolveBetaflightPresetBundle({ files, entry, options = {} }) {
         (match = text.match(/^#\$\s+OPTION BEGIN(?:\s+\((CHECKED|UNCHECKED)\))?:\s*(.+)$/u))
       ) {
         need(!option, 'unsupported-nesting', 'Nested options are not supported.', line);
-        need(!names.has(match[2]), 'duplicate-option', `Duplicate option: ${match[2]}.`, line);
-        names.add(match[2]);
+        need(
+          !names.has(optionKey(match[2])),
+          'duplicate-option',
+          `Duplicate option: ${match[2]}.`,
+          line,
+        );
+        names.add(optionKey(match[2]));
         option = {
           name: match[2],
           defaultChecked: match[1] === 'CHECKED',
@@ -993,12 +1012,14 @@ export function resolveBetaflightPresetBundle({ files, entry, options = {} }) {
   parse(root);
   const selected = new Map(
     visibleOptions.map((option) => [
-      option.name,
-      Object.hasOwn(options, option.name) ? options[option.name] : option.defaultChecked,
+      optionKey(option.name),
+      requested.has(optionKey(option.name))
+        ? requested.get(optionKey(option.name))
+        : option.defaultChecked,
     ]),
   );
   for (const name of Object.keys(options))
-    need(selected.has(name), 'unknown-option', `Unknown preset option: ${name}.`);
+    need(selected.has(optionKey(name)), 'unknown-option', `Unknown preset option: ${name}.`);
   const dependencies = [],
     warnings = [],
     output = [];
@@ -1015,8 +1036,13 @@ export function resolveBetaflightPresetBundle({ files, entry, options = {} }) {
     dependencies.push({ path, active });
     for (const node of nodes) {
       need(++expandedLines <= 20000, 'bundle-size', 'Expanded preset has too many lines.');
-      const enabled = active && (node.option === null || selected.get(node.option) === true);
-      if (node.option !== null && !selected.has(node.option) && !warnings.includes(node.option))
+      const enabled =
+        active && (node.option === null || selected.get(optionKey(node.option)) === true);
+      if (
+        node.option !== null &&
+        !selected.has(optionKey(node.option)) &&
+        !warnings.includes(node.option)
+      )
         warnings.push(node.option);
       if (node.type === 'INCLUDE') visit(node.path, [...stack, path], enabled);
       else if (node.type === 'INCLUDE_WARNING' || node.type === 'INCLUDE_DISCLAIMER') {
@@ -1039,7 +1065,9 @@ export function resolveBetaflightPresetBundle({ files, entry, options = {} }) {
       need(
         allOptions.filter(
           (option) =>
-            option.path === group.path && option.group === group.name && selected.get(option.name),
+            option.path === group.path &&
+            option.group === group.name &&
+            selected.get(optionKey(option.name)),
         ).length <= 1,
         'exclusive-options',
         `Choose at most one option in ${group.name}.`,
@@ -1051,7 +1079,10 @@ export function resolveBetaflightPresetBundle({ files, entry, options = {} }) {
     format: 'BetaflightPresetResolution.v1',
     entry: root,
     text,
-    options: visibleOptions.map((option) => ({ ...option, checked: selected.get(option.name) })),
+    options: visibleOptions.map((option) => ({
+      ...option,
+      checked: selected.get(optionKey(option.name)),
+    })),
     groups,
     dependencies,
     metadata,
@@ -1060,6 +1091,10 @@ export function resolveBetaflightPresetBundle({ files, entry, options = {} }) {
       (name) =>
         `Included option “${name}” is inactive because the entry preset does not expose it.`,
     ),
-    identity: canonicalJSON({ entry: root, text, options: [...selected] }),
+    identity: canonicalJSON({
+      entry: root,
+      text,
+      options: visibleOptions.map((option) => [option.name, selected.get(optionKey(option.name))]),
+    }),
   };
 }
