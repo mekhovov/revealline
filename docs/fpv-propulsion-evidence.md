@@ -83,15 +83,15 @@ Mounted integration checks: `node --test game/test/fpv-advanced-practice.test.mj
 
 ## Combined optional-feature package measurements
 
-Measured on 2026-10-17 after the challenge and evidence source freeze. These builds include the three archive modules, bounded ghost sampling, the two evidence modules and the two optional challenge modules. They retain the existing pinned third-party dependencies.
+Measured on 2026-10-17 from `8e682b929`, including the final challenge checkpoint-resume and archive-host naming fixes. These builds include the three archive modules, bounded ghost sampling, the two evidence modules and the two optional challenge modules. They retain the existing pinned third-party dependencies.
 
 | Build                   | Runtime files | Runtime bytes | Complete source files | Complete source bytes |
 | ----------------------- | ------------: | ------------: | --------------------: | --------------------: |
-| Academy standalone      |           137 |    11,810,452 |                   139 |            11,851,372 |
-| World standalone        |           196 |    18,300,471 |                   198 |            18,349,243 |
-| Combined native staging |           201 |    18,685,307 |                     — |                     — |
+| Academy standalone      |           137 |    11,810,740 |                   139 |            11,851,660 |
+| World standalone        |           196 |    18,300,759 |                   198 |            18,349,531 |
+| Combined native staging |           201 |    18,685,595 |                     — |                     — |
 
-Academy's installed-core cache, which retains the full shared locale catalog, is 126 files / 12,819,118 bytes. Its original source inputs total 12,992,536 bytes. Runtime and source-input caps increase by 64 KiB each to **12 MiB + 256 KiB** and **12 MiB + 448 KiB** respectively. Standalone Academy remains below 12 MiB. World retains its 20 MiB cap; native staging retains its 256-file / 32 MiB cap. Explicit complete source-file limits become 139 for Academy and 198 for World. Negative tests continue to reject omitted dependencies, incorrect source hashes and over-budget inputs.
+Academy's installed-core cache, which retains the full shared locale catalog, is 126 files / 12,819,406 bytes. Its original source inputs total 12,992,824 bytes. Runtime and source-input caps increase by 64 KiB each to **12 MiB + 256 KiB** and **12 MiB + 448 KiB** respectively. Standalone Academy remains below 12 MiB. World retains its 20 MiB cap; native staging retains its 256-file / 32 MiB cap. Explicit complete source-file limits become 139 for Academy and 198 for World. The final fixes retain all caps, leaving 25,650 bytes of installed-core headroom and 48,840 bytes of original-input headroom in Academy. Negative tests continue to reject omitted dependencies, incorrect source hashes and over-budget inputs.
 
 The ghost display retains at most 8,192 position samples, including endpoints. Display interpolation does not replace complete replay verification; reduced display sampling is labeled approximate. Data imports and optional challenge selection do not change the default twelve-aircraft configurations.
 
