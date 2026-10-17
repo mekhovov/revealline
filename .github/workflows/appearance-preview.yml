@@ -6,6 +6,29 @@ on:
       - '.github/workflows/appearance-preview.yml'
       - 'docs/appearance-preview-testing.md'
       - 'game/app.mjs'
+      - 'game/replay.mjs'
+      - 'game/demo-library.mjs'
+      - 'game/journey/performance-store.mjs'
+      - 'game/journey/performance.mjs'
+      - 'game/journey/profile.mjs'
+      - 'game/mastery-awards.mjs'
+      - 'game/mastery-verification.mjs'
+      - 'game/mastery-journey.mjs'
+      - 'game/mastery-journey-proofs.mjs'
+      - 'game/company-campaigns/evidence.mjs'
+      - 'game/company-campaigns/learning-proofs.mjs'
+      - 'game/ui/edition-lessons.mjs'
+      - 'game/ui/edition-mastery.mjs'
+      - 'game/ui/edition-solo.mjs'
+      - 'game/capture-presentation-session.mjs'
+      - 'game/test/journey-performance-admission.test.mjs'
+      - 'game/test/optional-learning-admission.test.mjs'
+      - 'game/test/optional-replay-admission.test.mjs'
+      - 'game/test/solo-pending-verification-gameplay-host.test.mjs'
+      - 'game/test/edition-mastery-host.test.mjs'
+      - 'game/test/edition-lessons.test.mjs'
+      - 'game/test/capture-presentation-session.test.mjs'
+      - 'game/test/solo-dense-replay-persistence.test.mjs'
       - 'game/presentation/**'
       - 'game/ui/theme-*'
       - 'game/ui/menu-controls.css'
@@ -201,8 +224,128 @@ concurrency:
   group: appearance-preview-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
+env:
+  APPEARANCE_ADMISSION_TEST_FILES: >-
+    game/test/journey-performance-admission.test.mjs
+    game/test/optional-learning-admission.test.mjs
+    game/test/optional-replay-admission.test.mjs
+    game/test/solo-pending-verification-gameplay-host.test.mjs
+    game/test/edition-mastery-host.test.mjs
+    game/test/edition-lessons.test.mjs
+    game/test/capture-presentation-session.test.mjs
+    game/test/solo-dense-replay-persistence.test.mjs
+
 jobs:
+  admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 19
+    env:
+      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    outputs:
+      proof: ${{ steps.admission_receipt.outputs.proof }}
+      artifactId: ${{ steps.admission_artifact.outputs.artifact-id }}
+      artifactURL: ${{ steps.admission_artifact.outputs.artifact-url }}
+      artifactDigest: ${{ steps.admission_artifact.outputs.artifact-digest }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 2
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Read exact-source admission policy
+        timeout-minutes: 1
+        id: test_policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          mkdir -p .cache/appearance-admission
+          node publishing/test-policy.mjs
+      - name: Install admission test dependencies
+        timeout-minutes: 3
+        if: steps.test_policy.outputs.runTests == 'true'
+        run: npm ci
+      - name: Run complete optional-proof and saved-flight regressions
+        timeout-minutes: 5
+        id: admission_tests
+        if: steps.test_policy.outputs.runTests == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r -a test_files <<< "$APPEARANCE_ADMISSION_TEST_FILES"
+          node --test --test-concurrency=1 "${test_files[@]}" | tee .cache/appearance-admission/admission-tests.tap
+      - name: Bind exact-source admission proof
+        timeout-minutes: 1
+        id: admission_receipt
+        env:
+          TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
+          TEST_POLICY_SHA256: ${{ steps.test_policy.outputs.policySha256 }}
+          ADMISSION_RESULT: ${{ steps.admission_tests.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, appendFile, lstat } from 'node:fs/promises';
+          import { createHash } from 'node:crypto';
+          import { execFileSync } from 'node:child_process';
+          import { parseTestPolicy, policyDecision } from './publishing/test-policy.mjs';
+          const root = '.cache/appearance-admission/';
+          const head = process.env.PREVIEW_HEAD_SHA;
+          if (!/^[a-f0-9]{40}$/.test(head)) throw new Error('Exact admission source required.');
+          const policyBytes = await readFile('publishing/test-policy.json');
+          const policy = parseTestPolicy(policyBytes.toString('utf8'));
+          const decision = policyDecision(policy);
+          const policySha256 = createHash('sha256').update(policyBytes).digest('hex');
+          if (decision.mode !== process.env.TEST_POLICY_MODE || policySha256 !== process.env.TEST_POLICY_SHA256)
+            throw new Error('Admission policy changed after the decision.');
+          const waived = decision.mode === 'waived';
+          if (process.env.ADMISSION_RESULT !== (waived ? 'skipped' : 'success'))
+            throw new Error('Admission outcome does not match the explicit test policy.');
+          const testPolicy = { ...decision, policySha256, policy };
+          const output = waived ? 'admission-tests-waived.json' : 'admission-tests.tap';
+          if (waived) await writeFile(root + output, JSON.stringify({
+            result: 'waived', executed: false, testPolicy,
+            statement: 'Explicit user waiver; automated tests were not executed and no passing verdict is claimed.',
+          }, null, 2) + '\n');
+          const info = await lstat(root + output);
+          if (!info.isFile() || info.isSymbolicLink() || info.size <= 0 || info.size > 8 * 1024 ** 2)
+            throw new Error('Bounded admission output required.');
+          const bytes = await readFile(root + output);
+          if (bytes.length !== info.size) throw new Error('Admission output changed during readback.');
+          const proof = {
+            format: 'AppearanceAdmissionProofV1', sourceRevision: head,
+            sourceTree: execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim(),
+            workflowRun: process.env.PREVIEW_RUN_URL, node: process.version, testPolicy,
+            result: waived ? 'waived' : 'passed', executed: !waived,
+            command: waived ? null : 'node --test --test-concurrency=1',
+            files: process.env.APPEARANCE_ADMISSION_TEST_FILES.trim().split(/\s+/),
+            output: { path: output, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
+          };
+          const serialized = JSON.stringify(proof);
+          if (Buffer.byteLength(serialized) > 16 * 1024) throw new Error('Admission proof exceeds output bound.');
+          await writeFile(root + 'admission-proof.json', JSON.stringify(proof, null, 2) + '\n');
+          await appendFile(process.env.GITHUB_OUTPUT, `proof=${serialized}\n`);
+          NODE
+      - name: Retain admission proof and partial diagnostics
+        timeout-minutes: 2
+        id: admission_artifact
+        if: ${{ always() && (steps.admission_receipt.outcome == 'success' || steps.admission_tests.outcome == 'success' || steps.admission_tests.outcome == 'failure' || steps.admission_tests.outcome == 'cancelled') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: appearance-admission-${{ github.event.pull_request.head.sha }}-${{ github.run_attempt }}
+          path: .cache/appearance-admission/
+          if-no-files-found: error
+          retention-days: 7
   preview:
+    needs: admission
     runs-on: ubuntu-latest
     timeout-minutes: 70
     env:
@@ -408,6 +551,10 @@ jobs:
           TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
           TEST_POLICY_SHA256: ${{ steps.test_policy.outputs.policySha256 }}
           FOCUSED_RESULT: ${{ steps.focused.outcome }}
+          ADMISSION_PROOF: ${{ needs.admission.outputs.proof }}
+          ADMISSION_ARTIFACT_ID: ${{ needs.admission.outputs.artifactId }}
+          ADMISSION_ARTIFACT_URL: ${{ needs.admission.outputs.artifactURL }}
+          ADMISSION_ARTIFACT_DIGEST: ${{ needs.admission.outputs.artifactDigest }}
         shell: bash
         run: |
           set -euo pipefail
@@ -432,6 +579,34 @@ jobs:
             throw new Error('Focused-check outcome does not match the explicit test policy.');
           const testOutput = waived ? 'focused-tests-waived.json' : 'focused-tests.tap';
           const testPolicy = { ...decision, policySha256, policy };
+          const admissionText = process.env.ADMISSION_PROOF || '';
+          if (!admissionText || Buffer.byteLength(admissionText) > 16 * 1024)
+            throw new Error('Bounded predecessor admission proof required.');
+          const admission = JSON.parse(admissionText);
+          const sourceTree = execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim();
+          const expectedFiles = process.env.APPEARANCE_ADMISSION_TEST_FILES.trim().split(/\s+/);
+          if (admission.format !== 'AppearanceAdmissionProofV1' || admission.sourceRevision !== head ||
+              admission.sourceTree !== sourceTree || admission.workflowRun !== process.env.PREVIEW_RUN_URL ||
+              admission.node !== process.version || JSON.stringify(admission.testPolicy) !== JSON.stringify(testPolicy) ||
+              admission.result !== (waived ? 'waived' : 'passed') || admission.executed !== !waived ||
+              admission.command !== (waived ? null : 'node --test --test-concurrency=1') ||
+              JSON.stringify(admission.files) !== JSON.stringify(expectedFiles) ||
+              admission.output?.path !== (waived ? 'admission-tests-waived.json' : 'admission-tests.tap') ||
+              !Number.isSafeInteger(admission.output?.bytes) || admission.output.bytes <= 0 || admission.output.bytes > 8 * 1024 ** 2 ||
+              !/^[a-f0-9]{64}$/.test(admission.output?.sha256 || ''))
+            throw new Error('Predecessor admission source, policy, outcome or output mismatch.');
+          const artifactID = process.env.ADMISSION_ARTIFACT_ID;
+          if (!/^[1-9][0-9]*$/.test(artifactID || '') || !Number.isSafeInteger(Number(artifactID)) ||
+              process.env.ADMISSION_ARTIFACT_URL !== `${process.env.PREVIEW_RUN_URL}/artifacts/${artifactID}` ||
+              !/^[a-f0-9]{64}$/.test(process.env.ADMISSION_ARTIFACT_DIGEST || ''))
+            throw new Error('Successfully uploaded admission artifact identity required.');
+          const admissionReceipt = Buffer.from(JSON.stringify(admission, null, 2) + '\n');
+          const additionalCohorts = [{ ...admission,
+            receipt: { path: 'admission-proof.json', bytes: admissionReceipt.length,
+              sha256: createHash('sha256').update(admissionReceipt).digest('hex') },
+            artifact: { id: Number(artifactID), url: process.env.ADMISSION_ARTIFACT_URL,
+              sha256: process.env.ADMISSION_ARTIFACT_DIGEST },
+          }];
           if (waived) await writeFile(root + testOutput, JSON.stringify({
             result: 'waived',
             executed: false,
@@ -454,7 +629,7 @@ jobs:
           await writeFile(root + 'preview-identity.json', JSON.stringify({
             format: 'AppearancePreview.v1',
             sourceRevision: head,
-            sourceTree: execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim(),
+            sourceTree,
             pullRequest: Number(process.env.PREVIEW_PR),
             workflowRun: process.env.PREVIEW_RUN_URL,
             node: process.version,
@@ -465,6 +640,7 @@ jobs:
               command: waived ? null : 'node --test --test-concurrency=1',
               files: process.env.APPEARANCE_TEST_FILES.trim().split(/\s+/),
               output: testOutput,
+              additionalCohorts,
             },
             artifacts: rows,
             qualification: 'development-preview',
@@ -531,5 +707,6 @@ jobs:
               echo "Focused appearance checks: $FOCUSED_RESULT. Policy: ${TEST_POLICY_MODE:-unavailable}; missing or malformed policy never authorizes a waiver."
             fi
             echo 'Successful runs attach two playable ZIPs, SHA256SUMS, source identity, policy evidence and a local testing guide. Required tests include TAP output; waived tests include a waiver receipt instead. Failed runs are not qualified previews.'
+            echo 'A separate exact-source predecessor runs the complete optional-proof and saved-flight regressions. Its result, complete files, output checksum and separate evidence artifact are bound into preview identity; an explicit waiver remains unexecuted.'
             echo 'Nothing is deployed. This does not claim full-suite, production artwork, password-gated browser, offline-installation or physical-device acceptance.'
           } >> "$GITHUB_STEP_SUMMARY"

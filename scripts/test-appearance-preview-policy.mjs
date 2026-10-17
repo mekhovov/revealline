@@ -162,7 +162,10 @@ test('appearance preview gates tests and test fixtures while retaining mandatory
 });
 
 test('packaging reserves bounded evidence closure without changing test or gameplay deadlines', () => {
-  assert.match(workflow, /preview:\s+runs-on: ubuntu-latest\s+timeout-minutes: 70/);
+  assert.match(
+    workflow,
+    /preview:\s+needs: admission\s+runs-on: ubuntu-latest\s+timeout-minutes: 70/,
+  );
   for (const [name, minutes] of [
     ['Run focused appearance, SIM and curated-community checks', 45],
     ['Build the full game and separate Worlds playtest', 12],
@@ -187,7 +190,8 @@ test('packaging reserves bounded evidence closure without changing test or gamep
   assert.equal(new Set(focusedTests).size, 118);
   const startup = step('Record the bounded packaging start');
   assert.match(startup, /PREVIEW_STARTED_AT=\$\(date \+%s\)/);
-  assert.ok(workflow.indexOf(startup) < workflow.indexOf('- uses: actions/checkout'));
+  const preview = workflow.slice(workflow.indexOf('  preview:\n'));
+  assert.ok(preview.indexOf(startup) < preview.indexOf('- uses: actions/checkout'));
   const retain = step('Retain focused diagnostics when packaging does not finish');
   assert.match(retain, /always\(\) && \(failure\(\) \|\| cancelled\(\)\)/);
   for (const outcome of ['success', 'failure', 'cancelled']) {
@@ -231,7 +235,7 @@ test('actual build admission fails closed before spawning a build when closure t
   }
 });
 
-async function bindEvidence(mode, outcome) {
+async function bindEvidence(mode, outcome, { mutateProof, omitProof = false, artifact = {} } = {}) {
   const root = '.cache/appearance-preview/';
   const files = new Map([
     [
@@ -265,7 +269,10 @@ async function bindEvidence(mode, outcome) {
   );
   if (mode === 'required') files.set(root + 'focused-tests.tap', Buffer.from('TAP version 13\n'));
   const reads = [];
-  const source = workflow
+  const proofResult = await prepareAdmission(mode, mode === 'waived' ? 'skipped' : 'success');
+  const proof = structuredClone(proofResult.proof);
+  mutateProof?.(proof);
+  const source = step('Bind checksums and policy-qualified evidence to the exact source')
     .match(/node --input-type=module <<'NODE'\n([\s\S]*?)\n          NODE/)[1]
     .replace(/^ {10}/gm, '')
     .replace(/^import .*;\n/gm, '');
@@ -300,6 +307,12 @@ async function bindEvidence(mode, outcome) {
         TEST_POLICY_SHA256: digest(files.get('publishing/test-policy.json')),
         FOCUSED_RESULT: outcome,
         APPEARANCE_TEST_FILES: 'game/test/example.test.mjs',
+        APPEARANCE_ADMISSION_TEST_FILES: admissionFiles.join(' '),
+        ADMISSION_PROOF: omitProof ? '' : JSON.stringify(proof),
+        ADMISSION_ARTIFACT_ID: '345',
+        ADMISSION_ARTIFACT_URL: 'https://example.test/run/1/artifacts/345',
+        ADMISSION_ARTIFACT_DIGEST: 'c'.repeat(64),
+        ...artifact,
       },
     },
   );
@@ -455,4 +468,283 @@ test('compact upload follows the successful full archive and preserves the origi
     /path: \.cache\/appearance-preview-metadata\//,
   );
   assert.match(full, /path: \.cache\/appearance-preview\//);
+});
+
+const admissionFiles = [
+  'game/test/journey-performance-admission.test.mjs',
+  'game/test/optional-learning-admission.test.mjs',
+  'game/test/optional-replay-admission.test.mjs',
+  'game/test/solo-pending-verification-gameplay-host.test.mjs',
+  'game/test/edition-mastery-host.test.mjs',
+  'game/test/edition-lessons.test.mjs',
+  'game/test/capture-presentation-session.test.mjs',
+  'game/test/solo-dense-replay-persistence.test.mjs',
+];
+async function prepareAdmission(
+  mode,
+  outcome,
+  { missing = false, oversize = false, symlink = false } = {},
+) {
+  const root = '.cache/appearance-admission/';
+  const policyBytes = Buffer.from(
+    JSON.stringify({
+      ...acceptedPolicy,
+      mode,
+      authorization:
+        mode === 'waived' ? 'explicit-user-request-20260922' : acceptedPolicy.authorization,
+    }),
+  );
+  const files = new Map([['publishing/test-policy.json', policyBytes]]);
+  if (mode === 'required' && !missing)
+    files.set(
+      root + 'admission-tests.tap',
+      Buffer.from('TAP version 13\n1..1\nok 1 - complete regression\n'),
+    );
+  const source = step('Bind exact-source admission proof')
+    .match(/node --input-type=module <<'NODE'\n([\s\S]*?)\n          NODE/)[1]
+    .replace(/^ {10}/gm, '')
+    .replace(/^import .*;\n/gm, '');
+  const reads = [];
+  let output = '';
+  const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+  await new AsyncFunction(
+    'readFile',
+    'writeFile',
+    'appendFile',
+    'lstat',
+    'createHash',
+    'execFileSync',
+    'parseTestPolicy',
+    'policyDecision',
+    'process',
+    source,
+  )(
+    async (name) => {
+      reads.push(name);
+      assert(files.has(name), `Missing proof input: ${name}`);
+      return files.get(name);
+    },
+    async (name, value) => files.set(name, Buffer.from(value)),
+    async (name, value) => {
+      assert.equal(name, 'outputs');
+      output += value;
+    },
+    async (name) => {
+      assert(files.has(name), `Missing proof input: ${name}`);
+      return {
+        isFile: () => true,
+        isSymbolicLink: () => symlink,
+        size: oversize ? 8 * 1024 ** 2 + 1 : files.get(name).length,
+      };
+    },
+    createHash,
+    () => 'b'.repeat(40),
+    parseTestPolicy,
+    policyDecision,
+    {
+      version: 'v22.13.1',
+      env: {
+        PREVIEW_HEAD_SHA: 'a'.repeat(40),
+        PREVIEW_RUN_URL: 'https://example.test/run/1',
+        TEST_POLICY_MODE: mode,
+        TEST_POLICY_SHA256: digest(policyBytes),
+        ADMISSION_RESULT: outcome,
+        APPEARANCE_ADMISSION_TEST_FILES: admissionFiles.join(' '),
+        GITHUB_OUTPUT: 'outputs',
+      },
+    },
+  );
+  assert.match(output, /^proof=.+\n$/);
+  const proof = JSON.parse(output.slice('proof='.length));
+  assert.deepEqual(JSON.parse(files.get(root + 'admission-proof.json')), proof);
+  return { proof, files, reads, root };
+}
+
+test('separate predecessor gates eight complete regression files without extending the existing preview clock', async () => {
+  const prefix = workflow.split('  preview:\n')[0];
+  assert.match(prefix, /admission:\s+runs-on: ubuntu-latest\s+timeout-minutes: 19/);
+  assert.doesNotMatch(prefix, /PREVIEW_STARTED_AT|game-cli.mjs build/);
+  const stepMinutes = [...prefix.matchAll(/        timeout-minutes: ([0-9]+)/g)].map((match) =>
+    Number(match[1]),
+  );
+  assert.deepEqual(stepMinutes, [3, 2, 1, 3, 5, 1, 2]);
+  assert.equal(
+    stepMinutes.reduce((sum, value) => sum + value, 0),
+    17,
+  ); // two-minute outer reserve
+  for (const output of ['proof', 'artifactId', 'artifactURL', 'artifactDigest']) {
+    assert(prefix.includes(`      ${output}:`));
+    assert(workflow.includes(`needs.admission.outputs.${output}`));
+  }
+  const declared = workflow
+    .match(/APPEARANCE_ADMISSION_TEST_FILES: >-\n([\s\S]*?)\n\njobs:/)[1]
+    .trim()
+    .split(/\s+/);
+  assert.deepEqual(declared, admissionFiles);
+  assert.equal(new Set(declared).size, 8);
+  const existing = workflow
+    .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
+    .trim()
+    .split(/\s+/);
+  assert.equal(existing.length, 118);
+  for (const file of declared) {
+    await access(new URL(`../${file}`, import.meta.url));
+    assert(workflow.includes(`      - '${file}'`));
+    assert(
+      !existing.includes(file),
+      'Separate complete file must not silently duplicate original 118',
+    );
+  }
+  for (const path of [
+    'game/replay.mjs',
+    'game/demo-library.mjs',
+    'game/journey/performance-store.mjs',
+    'game/journey/performance.mjs',
+    'game/journey/profile.mjs',
+    'game/mastery-awards.mjs',
+    'game/mastery-verification.mjs',
+    'game/mastery-journey.mjs',
+    'game/mastery-journey-proofs.mjs',
+    'game/company-campaigns/evidence.mjs',
+    'game/company-campaigns/learning-proofs.mjs',
+    'game/ui/edition-lessons.mjs',
+    'game/ui/edition-mastery.mjs',
+    'game/ui/edition-solo.mjs',
+    'game/capture-presentation-session.mjs',
+  ])
+    assert(workflow.includes(`      - '${path}'`));
+  const run = step('Run complete optional-proof and saved-flight regressions');
+  assert.match(run, /timeout-minutes: 5/);
+  assert.match(run, /if: steps\.test_policy\.outputs\.runTests == 'true'/);
+  assert.match(run, /node --test --test-concurrency=1 "\$\{test_files\[@\]\}"/);
+  assert.match(
+    step('Install admission test dependencies'),
+    /if: steps\.test_policy\.outputs\.runTests == 'true'/,
+  );
+  const retain = step('Retain admission proof and partial diagnostics');
+  assert.match(retain, /always\(\)/);
+  for (const value of ['success', 'failure', 'cancelled'])
+    assert(retain.includes(`steps.admission_tests.outcome == '${value}'`));
+  assert.match(retain, /path: \.cache\/appearance-admission\//);
+  assert.match(retain, /if-no-files-found: error/);
+  const preview = workflow.slice(workflow.indexOf('  preview:\n'));
+  assert.match(preview, /^  preview:\s+needs: admission/);
+  assert.doesNotMatch(preview.slice(0, preview.indexOf('    env:')), /if:.*always/);
+});
+
+test('actual predecessor proof binds complete output bytes and preserves explicit waiver semantics', async () => {
+  const passed = await prepareAdmission('required', 'success');
+  assert.equal(passed.proof.result, 'passed');
+  assert.equal(passed.proof.executed, true);
+  assert.deepEqual(passed.proof.files, admissionFiles);
+  const bytes = passed.files.get(passed.root + passed.proof.output.path);
+  assert.equal(passed.proof.output.bytes, bytes.length);
+  assert.equal(passed.proof.output.sha256, digest(bytes));
+  const waived = await prepareAdmission('waived', 'skipped');
+  assert.equal(waived.proof.result, 'waived');
+  assert.equal(waived.proof.executed, false);
+  assert.equal(waived.proof.command, null);
+  assert(!waived.reads.some((path) => path.endsWith('.tap')));
+  for (const outcome of ['failure', 'cancelled', 'skipped', ''])
+    await assert.rejects(prepareAdmission('required', outcome), /outcome does not match/);
+  await assert.rejects(prepareAdmission('waived', 'success'), /outcome does not match/);
+  await assert.rejects(
+    prepareAdmission('required', 'success', { missing: true }),
+    /Missing proof input/,
+  );
+  for (const option of [{ oversize: true }, { symlink: true }])
+    await assert.rejects(
+      prepareAdmission('required', 'success', option),
+      /Bounded admission output required/,
+    );
+});
+
+test('preview and compact identity retain the exact predecessor evidence and reject mismatched source, policy, result or artifact', async () => {
+  for (const mode of ['required', 'waived']) {
+    const { identity } = await bindEvidence(mode, mode === 'required' ? 'success' : 'skipped');
+    const [proof] = identity.focusedTests.additionalCohorts;
+    assert.equal(proof.sourceRevision, identity.sourceRevision);
+    assert.equal(proof.sourceTree, identity.sourceTree);
+    assert.equal(proof.result, mode === 'required' ? 'passed' : 'waived');
+    assert.equal(proof.executed, mode === 'required');
+    assert.deepEqual(proof.files, admissionFiles);
+    assert.equal(proof.artifact.id, 345);
+    assert.equal(proof.artifact.sha256, 'c'.repeat(64));
+    const prepared = await prepareAdmission(mode, mode === 'required' ? 'success' : 'skipped');
+    assert.equal(
+      proof.receipt.sha256,
+      digest(prepared.files.get(prepared.root + 'admission-proof.json')),
+    );
+    const input = compactMetadataFixture(mode);
+    const compactIdentity = JSON.parse(input.identityBytes);
+    compactIdentity.focusedTests.additionalCohorts = identity.focusedTests.additionalCohorts;
+    input.identityBytes = Buffer.from(JSON.stringify(compactIdentity));
+    input.checksumBytes = Buffer.from(
+      `${'b'.repeat(64)}  distribution.zip\n${digest(input.mainBytes)}  main-build.json\n${digest(input.identityBytes)}  preview-identity.json\n`,
+    );
+    const binding = JSON.parse(bindAppearanceMetadata(input)['package-binding.json']);
+    assert.deepEqual(
+      binding.focusedTests.additionalCohorts,
+      identity.focusedTests.additionalCohorts,
+    );
+  }
+  for (const mutateProof of [
+    (x) => {
+      x.sourceRevision = 'f'.repeat(40);
+    },
+    (x) => {
+      x.sourceTree = 'f'.repeat(40);
+    },
+    (x) => {
+      x.workflowRun += '/other';
+    },
+    (x) => {
+      x.node = 'v20';
+    },
+    (x) => {
+      x.testPolicy.policySha256 = 'f'.repeat(64);
+    },
+    (x) => {
+      x.result = 'failed';
+    },
+    (x) => {
+      x.executed = false;
+    },
+    (x) => {
+      x.command = null;
+    },
+    (x) => {
+      x.files.pop();
+    },
+    (x) => {
+      x.output.path = 'other.tap';
+    },
+    (x) => {
+      x.output.bytes = 0;
+    },
+    (x) => {
+      x.output.bytes = 8 * 1024 ** 2 + 1;
+    },
+    (x) => {
+      x.output.sha256 = '';
+    },
+  ])
+    await assert.rejects(
+      bindEvidence('required', 'success', { mutateProof }),
+      /Predecessor admission/,
+    );
+  await assert.rejects(
+    bindEvidence('required', 'success', { omitProof: true }),
+    /predecessor admission proof/,
+  );
+  for (const artifact of [
+    { ADMISSION_ARTIFACT_ID: '' },
+    { ADMISSION_ARTIFACT_URL: 'https://example.test/other' },
+    { ADMISSION_ARTIFACT_DIGEST: '' },
+    { ADMISSION_ARTIFACT_ID: '9007199254740992' },
+  ])
+    await assert.rejects(
+      bindEvidence('required', 'success', { artifact }),
+      /artifact identity required/,
+    );
 });
