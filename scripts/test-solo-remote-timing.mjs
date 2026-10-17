@@ -1241,7 +1241,13 @@ test('journal verification cannot erase original numeric/replay failures or turn
 test('final source admits all four original timing phases with unchanged12-observation cohorts', () => {
   for (const phase of Object.keys(TIMING_PHASES)) {
     const manifest = finalTiming(phase);
-    assert.equal(timingMatrix(manifest).include.length, 6);
+    const matrix = timingMatrix(manifest).include;
+    assert.equal(matrix.length, 6);
+    assert(
+      matrix.every(
+        (job) => job.jobMinutes === 122 && job.stepMinutes === 78 && job.outerSeconds === 77 * 60,
+      ),
+    );
     for (const engine of ['chromium', 'webkit'])
       for (const repetition of [1, 2, 3]) {
         const p = bindTimingJob(manifest, engine, repetition);

@@ -108,7 +108,13 @@ async function temporary(t) {
 
 test('final anchored soak binds exact source and original finite observation bounds without changing legacy admission', async () => {
   const m = await manifest();
-  assert.equal(sustainedMatrix(m).include.length, 6);
+  const matrix = sustainedMatrix(m).include;
+  assert.equal(matrix.length, 6);
+  assert(
+    matrix.every(
+      (job) => job.jobMinutes === 192 && job.stepMinutes === 148 && job.outerSeconds === 147 * 60,
+    ),
+  );
   let observations = 0;
   for (const engine of ['chromium', 'webkit'])
     for (const repetition of [1, 2, 3]) {
