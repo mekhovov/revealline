@@ -72,8 +72,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 50313,
-      "sha256": "e118b8fbf1f86a56a1d6aa472e808fcd77ddbaa699611c6c6b874b497e4f8037"
+      "bytes": 50572,
+      "sha256": "9a2c0b4c865c7655b9f101494964efb3ab0d423405545bf7a8253fa2af958e04"
     },
     {
       "path": "scripts/solo-qualification-browser-context.mjs",

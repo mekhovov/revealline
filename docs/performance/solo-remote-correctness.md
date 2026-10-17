@@ -235,6 +235,18 @@ it retains raw phase transitions, worker-stage timestamps, interval endpoints,
 application work and preparation/resource snapshots. Evidence remains under
 `.cache/solo-followup/remote-worker-diagnostic-38990108478/`.
 
+A separately declared confirmation now fixes three fresh WebKit calls to the
+ordinary worker probe, followed by one existing paused-render companion. Worker
+calls retain the original inputs, assertions and deadlines without the
+diagnostics flag, an added observation window or automatic Resume. The companion
+retains its existing canvas instrumentation. Full package admission precedes
+all four rows; every outcome is retained with zero retries. This confirmation
+cannot promote the failed first-eight gate or waive the 204 ms diagnostic gap.
+Its one-shot workflow is bound to the next push from `69fdc854e`; execution
+results remain pending. The earlier cohort's actual plan and helper bytes remain
+immutable in its artifact even though the shared adapter now supports both
+explicit formats.
+
 ## Other CI evidence
 
 The optional-practice integration job in
