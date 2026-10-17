@@ -5,10 +5,7 @@
   "cohort": "linux-earned-raster-a6e-final-source-v1",
   "node": "22.13.1",
   "playwright": "1.62.1",
-  "jobs": [
-    "raster-chromium",
-    "raster-webkit"
-  ],
+  "jobs": ["raster-chromium", "raster-webkit"],
   "maxParallel": 2,
   "performanceExclusion": true,
   "helperTimeoutMs": 4500000,
