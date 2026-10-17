@@ -1,9 +1,10 @@
-name: Temporary Solo final a6 Linux correctness
+name: Temporary Solo c696 Linux correctness
 
 on:
   pull_request:
     paths:
       - 'scripts/test-solo-final-correctness.mjs'
+      - 'scripts/test-solo-c696-correctness.mjs'
       - '.github/workflows/solo-remote-final-correctness-temporary.yml'
       - 'scripts/run-solo-remote-correctness.mjs'
       - 'scripts/test-solo-current-native-wave.mjs'
@@ -14,7 +15,7 @@ on:
       - 'scripts/test-solo-remote-correctness.mjs'
       - 'scripts/solo-remote-baseline.mjs'
       - 'scripts/test-solo-remote-baseline.mjs'
-      - 'docs/performance/solo-remote-final-correctness-plan.json'
+      - 'docs/performance/solo-remote-c696-correctness-plan.json'
       - 'docs/performance/fixtures/solo-remote-correctness/**'
 
 permissions:
@@ -22,13 +23,13 @@ permissions:
   actions: read
 
 concurrency:
-  group: solo-linux-final-correctness-${{ github.event.pull_request.number }}
+  group: solo-linux-c696-correctness-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 
 jobs:
   correctness:
-    # One reviewed current-source correctness wave; later pushes cannot rerun it.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4'
+    # One reviewed package-bound successor; later pushes cannot repeat it.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c696af41857840359ae473558b90682f3d71f2db'
     runs-on: ubuntu-24.04
     timeout-minutes: 145
     env:
@@ -44,7 +45,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-final-correctness" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-c696-correctness" >> "$GITHUB_ENV"
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         timeout-minutes: 3
         with:
@@ -54,57 +55,20 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
-            /.github/workflows/solo-remote-current-correctness-temporary.yml
-            /.github/workflows/solo-remote-current-transitions-temporary.yml
             /.github/workflows/solo-remote-final-correctness-temporary.yml
-            /docs/performance/fixtures/solo-remote-correctness/current-native-a6-source.json
+            /docs/performance/fixtures/solo-final-wave/a7e-correctness-workflow.yml
+            /docs/performance/fixtures/solo-final-wave/a7e-execution-source.json
             /docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture
-            /docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture
-            /docs/performance/fixtures/solo-remote-sustained/next-first-return-anchored-preflight.qualification.fixture
-            /docs/performance/fixtures/solo-remote-sustained/retry-first-return-anchored-preflight.qualification.fixture
+            /docs/performance/solo-remote-c696-correctness-plan.json
             /docs/performance/solo-remote-correctness-plan.json
-            /docs/performance/solo-remote-current-correctness-plan.json
-            /docs/performance/solo-remote-current-next-plan.json
-            /docs/performance/solo-remote-current-retry-plan.json
             /docs/performance/solo-remote-final-correctness-plan.json
+            /game/build-config.json
             /game/campaign-contexts.mjs
             /game/campaign-difficulty.mjs
-            /game/community-routes.mjs
-            /game/content-design/actor-marker.mjs
             /game/content-design/assets.mjs
             /game/content-design/catalogs.mjs
-            /game/content-design/content-lifecycle.mjs
-            /game/content-design/default-entry.mjs
-            /game/content-design/diagnostics.mjs
-            /game/content-design/discovery-schema.mjs
-            /game/content-design/execution.mjs
-            /game/content-design/journey.mjs
             /game/content-design/limits.mjs
             /game/content-design/map.mjs
-            /game/content-design/material-markers.mjs
-            /game/content-design/mission-card.mjs
-            /game/content-design/mode-href.mjs
-            /game/content-design/offline-packages.mjs
-            /game/content-design/pressure-candidates.mjs
-            /game/content-design/project.mjs
-            /game/content-design/published-journey.mjs
-            /game/content-design/route-loader.mjs
-            /game/content-design/route-snapshot.mjs
-            /game/content-design/signal-art.mjs
-            /game/content-design/team-art.mjs
-            /game/content-design/team-candidates.mjs
-            /game/content-design/team-impact-originals.mjs
-            /game/content-design/team-journey-candidates.mjs
-            /game/content-design/team-material-candidates.mjs
-            /game/content-design/team-pressure-originals.mjs
-            /game/content-design/team-qualification.mjs
-            /game/content-design/team-roamer-candidates.mjs
-            /game/content-design/team-roamer-spatial-candidates.mjs
-            /game/content-design/team-runtime.mjs
-            /game/content-design/team-signal-candidates.mjs
-            /game/content-design/team-spatial-originals.mjs
-            /game/content-design/ukrainian-ornament-atlas-registry.mjs
-            /game/content-design/whole-journey-order.mjs
             /game/content-launch.mjs
             /game/content.mjs
             /game/content/soundtrack-catalogue.mjs
@@ -159,86 +123,46 @@ jobs:
             /game/core/versions.mjs
             /game/data-json.mjs
             /game/download-catalogue.mjs
-            /game/edition-context.mjs
-            /game/editions/model.mjs
-            /game/editions/offline-package-id.mjs
-            /game/editions/package-budget.mjs
-            /game/editions/retained-presentation.mjs
-            /game/editions/selected-presentation.mjs
             /game/enemy-catalog.mjs
-            /game/external-chapter-catalog.mjs
             /game/external-chapter-source.mjs
             /game/external-chapter.mjs
             /game/first-flight.mjs
             /game/flight-media-pins.mjs
-            /game/gameplay-tuning-v1.mjs
-            /game/gameplay-tuning-v2.mjs
-            /game/gameplay-tuning-v3.mjs
-            /game/gameplay-tuning.mjs
             /game/hunt/actor-facing.mjs
-            /game/hunt/level.mjs
             /game/hunt/pursuit-goals-v2.mjs
             /game/hunt/pursuit-goals.mjs
             /game/hunt/pursuit-specialists.mjs
             /game/hunt/rules.mjs
-            /game/hunt/running-enemies.mjs
             /game/hunt/running-enemy-definition.mjs
             /game/hunt/running-enemy-placement.mjs
-            /game/hunt/team-running-enemies.mjs
             /game/i18n/bootstrap.mjs
             /game/i18n/catalogs.mjs
-            /game/i18n/content-registry.mjs
-            /game/i18n/content.mjs
             /game/i18n/index.mjs
             /game/imports.mjs
             /game/input-presentation.mjs
-            /game/installed-app.mjs
-            /game/journey/campaign-feedback.mjs
-            /game/journey/catalog.mjs
-            /game/journey/pictures.mjs
             /game/key-bindings.mjs
-            /game/level-numbering.mjs
             /game/library.mjs
             /game/managed-media-store.mjs
             /game/mastery-catalog.mjs
             /game/mastery-equipment.mjs
             /game/mastery-records.mjs
             /game/mastery.mjs
-            /game/media-audio.mjs
             /game/media-bundle.mjs
             /game/media-library.mjs
             /game/media-presentation.mjs
             /game/media-still.mjs
             /game/media-storage-record.mjs
-            /game/mission-library/classic-current-rules.mjs
-            /game/mission-library/classic-presentation.mjs
-            /game/mission-library/classic-source.mjs
-            /game/mission-library/cross-mode-journey.mjs
             /game/mission-library/included-bundled-pack.mjs
-            /game/mission-library/journey-presentation.mjs
-            /game/mission-library/journey-source.mjs
-            /game/mission-library/library.mjs
-            /game/mission-library/spatial-next-editions.mjs
-            /game/mission-library/team-source.mjs
             /game/mp3-inspection.mjs
             /game/mp3.mjs
-            /game/multiplayer.mjs
             /game/official-downloads.mjs
             /game/online-soundtrack-catalogue.mjs
             /game/online-soundtrack-sources.mjs
             /game/optional-chapters.mjs
-            /game/optional-practice-details.mjs
             /game/packs.mjs
             /game/picture-receipts.mjs
             /game/platform.mjs
             /game/presentation-pins.mjs
-            /game/presentation/actor-animation.mjs
-            /game/presentation/bundle.mjs
-            /game/presentation/document-codec.mjs
-            /game/presentation/journey-actor-materials.mjs
-            /game/presentation/model.mjs
-            /game/presentation/theme-system.mjs
-            /game/profile-writer.mjs
             /game/progress.mjs
             /game/replay.mjs
             /game/snake/rules.mjs
@@ -246,7 +170,6 @@ jobs:
             /game/soundtrack-albums.mjs
             /game/soundtrack-archive.mjs
             /game/soundtrack-bundle.mjs
-            /game/soundtrack-download-volumes.mjs
             /game/soundtrack-portable.mjs
             /game/soundtrack-rights.mjs
             /game/soundtrack-style-selection.mjs
@@ -270,20 +193,11 @@ jobs:
             /game/vendor/lz-string-1.5.0.min.js
             /game/victory-story.mjs
             /game/video-poster.mjs
-            /optional-practice/civilian-flight/worker-template.mjs
-            /optional-practice/launcher-template.mjs
-            /optional-practice/worker-template.mjs
             /package-lock.json
             /package.json
-            /publishing/optional-import-capabilities.mjs
-            /publishing/optional-package-policy.mjs
             /publishing/vendor/acorn-8.18.0.mjs
-            /scripts/access-pages.mjs
-            /scripts/authored-runtime-snapshots.mjs
             /scripts/brand-icons.mjs
             /scripts/build-entry-writer.mjs
-            /scripts/build-optional-practice.mjs
-            /scripts/company-offline-packages.mjs
             /scripts/core-soundtrack-publication.mjs
             /scripts/default-runtime-metadata.mjs
             /scripts/edition-code-indentation.mjs
@@ -293,24 +207,17 @@ jobs:
             /scripts/localization-audit.mjs
             /scripts/localization-content.mjs
             /scripts/localization.mjs
-            /scripts/mission-library-index.mjs
-            /scripts/offline-content.mjs
             /scripts/offline-core-closure.mjs
-            /scripts/offline-destinations.mjs
-            /scripts/offline-experiences.mjs
-            /scripts/offline-finalize.mjs
-            /scripts/offline-launcher.mjs
             /scripts/optional-artwork.mjs
             /scripts/optional-distribution.mjs
-            /scripts/optional-launcher.mjs
             /scripts/pack-indexes.mjs
-            /scripts/published-navigation.mjs
             /scripts/qualify-solo-runtime.mjs
             /scripts/reviewed-soundtrack-batches.mjs
             /scripts/run-solo-remote-correctness.mjs
             /scripts/serve-production-preview.mjs
             /scripts/solo-build-archive.mjs
             /scripts/solo-build-worker-closure.mjs
+            /scripts/solo-final-wave-witness.mjs
             /scripts/solo-qualification-audio.mjs
             /scripts/solo-qualification-browser-context.mjs
             /scripts/solo-qualification-cadence.mjs
@@ -324,15 +231,16 @@ jobs:
             /scripts/solo-qualification.mjs
             /scripts/solo-remote-archive.py
             /scripts/solo-remote-baseline.mjs
-            /scripts/solo-remote-supplemental.mjs
+            /scripts/solo-source-verifier-smoke.mjs
             /scripts/solo-worker-diagnostics.mjs
             /scripts/soundtrack-archive-admissions.mjs
             /scripts/soundtrack-distribution.mjs
             /scripts/test-solo-build-worker-closure.mjs
-            /scripts/test-solo-current-native-wave.mjs
+            /scripts/test-solo-c696-correctness.mjs
             /scripts/test-solo-final-correctness.mjs
             /scripts/test-solo-remote-baseline.mjs
             /scripts/test-solo-remote-correctness.mjs
+            /scripts/test-solo-source-verifier-smoke.mjs
             /scripts/verify-solo-build.mjs
             /scripts/verify-solo-mp3-worker.mjs
             /scripts/verify-solo-paused-render.mjs
@@ -346,7 +254,7 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         timeout-minutes: 3
         with:
-          ref: a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4
+          ref: c696af41857840359ae473558b90682f3d71f2db
           path: candidate
           persist-credentials: false
           fetch-depth: 1
@@ -379,13 +287,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test scripts/test-solo-final-correctness.mjs scripts/test-solo-current-native-wave.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test scripts/test-solo-c696-correctness.mjs scripts/test-solo-final-correctness.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
       - name: Run the eight fixed serial correctness rows
         timeout-minutes: 79
         working-directory: tools
         env:
           GH_TOKEN: ${{ github.token }}
-        run: timeout --signal=TERM --kill-after=30s 78m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-final-correctness-plan.json "$OUTPUT"
+        run: timeout --signal=TERM --kill-after=30s 78m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-c696-correctness-plan.json "$OUTPUT"
       - name: Describe bounded setup evidence without claiming truncated output complete
         if: ${{ always() }}
         timeout-minutes: 2
@@ -415,9 +323,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-final-correctness-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-c696-correctness-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-final-correctness/evidence/
+            ${{ runner.temp }}/solo-linux-c696-correctness/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6

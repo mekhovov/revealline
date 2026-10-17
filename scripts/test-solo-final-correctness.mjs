@@ -1,4 +1,5 @@
-import { assertFinalWaveBindings } from './solo-final-wave-witness.mjs';
+import { validateFinalWaveWitness, FINAL_WAVE_WITNESS_PATH } from './solo-final-wave-witness.mjs';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
@@ -9,6 +10,21 @@ const read = (path) => readFile(new URL(path, root));
 const json = async (path) => JSON.parse(await read(path));
 const plan = await json('docs/performance/solo-remote-final-correctness-plan.json');
 const source = 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4';
+// The execution workflow is archived from actual a7e Git bytes; future edits to
+// its reusable path cannot redefine this historical source or its failed result.
+const historicalWorkflow = 'docs/performance/fixtures/solo-final-wave/a7e-correctness-workflow.yml';
+const workflowPath = '.github/workflows/solo-remote-final-correctness-temporary.yml';
+const witness = validateFinalWaveWitness(await read(FINAL_WAVE_WITNESS_PATH));
+const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+function assertHistoricalBytes(path, bytes) {
+  const ref = witness.files.find((row) => row.path === path);
+  assert(ref, path);
+  assert.equal(bytes.length, ref.bytes, path);
+  assert.equal(digest(bytes), ref.sha256, path);
+}
+const historicalWorkflowBytes = await read(historicalWorkflow);
+assertHistoricalBytes(workflowPath, historicalWorkflowBytes);
+
 const guard =
   "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '" +
   source +
@@ -100,18 +116,21 @@ test('final correctness preserves all eight original rows, recipe, limits and fa
 test('final correctness preserves exact dispatched tools and scenario bytes', async () => {
   const refs = [...plan.adapterInputs, ...plan.frozenTools, plan.fixture];
   assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
-  await assertFinalWaveBindings(
-    'docs/performance/solo-remote-final-correctness-plan.json',
-    refs,
-    '.github/workflows/solo-remote-final-correctness-temporary.yml',
-  );
+  const manifestPath = 'docs/performance/solo-remote-final-correctness-plan.json';
+  assertHistoricalBytes(manifestPath, await read(manifestPath));
+  const release = witness.releases.find((row) => row.workflow === workflowPath);
+  assert(release && Object.hasOwn(release.manifests, manifestPath));
+  for (const ref of refs) {
+    assert(release.manifests[manifestPath].includes(ref.path), ref.path);
+    const original = witness.files.find((row) => row.path === ref.path);
+    assert.equal(ref.bytes, original?.bytes, ref.path);
+    assert.equal(ref.sha256, original?.sha256, ref.path);
+  }
   assert.equal(plan.adapterInputs.length + plan.frozenTools.length, 32);
 });
 
 test('final correctness has one source-bound release edge and only the tools checkout is sparse', async () => {
-  const text = (
-    await read('.github/workflows/solo-remote-final-correctness-temporary.yml')
-  ).toString();
+  const text = historicalWorkflowBytes.toString();
   assert.equal(text.match(/^    if: (.+)$/m)?.[1], guard);
   assert(!text.includes('workflow_dispatch') && !text.includes('workflow_run:'));
   assert.match(text, /timeout-minutes: 145/);
@@ -139,4 +158,19 @@ test('final correctness has one source-bound release edge and only the tools che
       );
     }
   }
+});
+
+test('historical correctness rejects changed archived workflow, declaration and source witness', async () => {
+  const changed = Buffer.from(historicalWorkflowBytes);
+  changed[0] ^= 1;
+  assert.throws(() => assertHistoricalBytes(workflowPath, changed));
+  const manifest = await read('docs/performance/solo-remote-final-correctness-plan.json');
+  assert.throws(() =>
+    assertHistoricalBytes(
+      'docs/performance/solo-remote-final-correctness-plan.json',
+      Buffer.concat([manifest, Buffer.from(' ')]),
+    ),
+  );
+  const originalWitness = await read(FINAL_WAVE_WITNESS_PATH);
+  assert.throws(() => validateFinalWaveWitness(Buffer.concat([originalWitness, Buffer.from(' ')])));
 });
