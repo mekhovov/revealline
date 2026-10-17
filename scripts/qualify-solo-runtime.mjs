@@ -61,7 +61,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--hitch-journal [--hitch-journal-preparation=first-return-anchored-v1]] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--hitch-journal [--hitch-journal-preparation=first-return-anchored-v1]] [--journal-cost-probe (exact 30-second border recipe only)] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -98,6 +98,14 @@ const hitchModule = flags.some((flag) => flag.startsWith('--hitch-journal'))
   ? await import('./solo-qualification-hitch-journal.mjs')
   : null;
 const hitchOptions = hitchModule?.qualificationHitchJournalOptions(flags, scenario, bytes);
+const journalCostModule = flags.some((flag) => flag.startsWith('--journal-cost-probe'))
+  ? await import('./solo-qualification-journal-cost.mjs')
+  : null;
+const journalCostOptions = journalCostModule?.qualificationJournalCostOptions(
+  flags,
+  scenario,
+  bytes,
+);
 assert(cadenceProtocol === 'blank30' || workProbe, 'Settled cadence requires the work probe');
 assert(
   !baselineRuntime || (workProbe && /^[0-9a-f]{40}$/.test(option('source-revision', ''))),
@@ -273,6 +281,7 @@ let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder
 let activeAction = null;
 let partialReplay = false;
 let memorySnapshots = 0;
+let journalCostDocuments = 0;
 function beginHitchDocument(address, action) {
   if (!hitchStore) return;
   try {
@@ -445,19 +454,26 @@ try {
   const observationInitScript = `window.soloQualificationReadiness = ${readPrePlayReadiness.toString()};
      window.soloQualificationIntervalClock = ${createRafIntervalClock.toString()};
      window.soloQualificationFrozenCadence = ${frozenExternalCadence.toString()};`;
-  if (!hitchStore) await page.addInitScript(observationInitScript);
+  if (journalCostOptions)
+    page.on('framenavigated', (frame) => {
+      if (frame === page.mainFrame()) journalCostDocuments++;
+    });
+  if (!hitchStore && !journalCostOptions) await page.addInitScript(observationInitScript);
   function addQualificationProbe(install, options) {
-    if (!hitchStore) return page.addInitScript(install, options);
+    const cost = options.journalCost === true;
+    if (!hitchStore && !cost) return page.addInitScript(install, options);
     // Ordering across separate addInitScript calls is unspecified. Construct all
     // opted-in dependencies and the probe in one synchronous installation.
     return page.addInitScript(`if (window.top === window) {
 ${observationInitScript}
-${hitchModule.hitchJournalInitScript()}
+${cost ? journalCostModule.journalCostInitScript() : ''}
+${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
 (${install.toString()})(${JSON.stringify(options)});
 }`);
   }
   await addQualificationProbe(
-    ({ bounds, workProbe, externalCadenceCalibration, hitchJournal }) => {
+    ({ bounds, workProbe, externalCadenceCalibration, hitchJournal, journalCost }) => {
+      const cost = journalCost ? window.soloQualificationJournalCost : null;
       const phases = ['boot', 'briefing', 'running', 'paused', 'result', 'picture', 'other'];
       const counts = phases.map(() => new Float64Array(bounds.length));
       const totals = new Float64Array(phases.length * 5),
@@ -563,7 +579,12 @@ ${hitchModule.hitchJournalInitScript()}
           const update = () => {
             const n = phases.indexOf(document.body.dataset.flightState);
             phase = n < 0 ? 6 : n;
+            if (cost) {
+              cost.begin(2);
+              cost.phase(phase);
+            }
             if (hitchJournal) window.soloQualificationHitchJournal.phase(phase);
+            if (cost) cost.end();
           };
           update();
           new MutationObserver(update).observe(document.body, {
@@ -576,20 +597,24 @@ ${hitchModule.hitchJournalInitScript()}
       function frame(now) {
         const dt = intervalClock.observe(now);
         if (dt === null) {
+          if (cost) cost.begin(0);
           if (hitchJournal) {
             window.soloQualificationHitchJournal.first(now, performance.now());
             journalPrevious = now;
           }
+          if (cost) cost.end();
           previousPhase = phase;
           requestAnimationFrame(frame);
           return;
         }
         const previous = now - dt,
           offset = previousPhase * 5;
+        if (cost) cost.begin(1);
         if (hitchJournal) {
           window.soloQualificationHitchJournal.frame(journalPrevious, now, previousPhase, phase);
           journalPrevious = now;
         }
+        if (cost) cost.end();
         let bucket = 0;
         while (bounds[bucket] !== null && dt > bounds[bucket]) bucket++;
         counts[previousPhase][bucket]++;
@@ -623,16 +648,28 @@ ${hitchModule.hitchJournalInitScript()}
           if (!observedGame)
             throw new Error('Phaser owner unavailable for independent observation');
           workSubscribed = true;
+          if (cost) cost.begin(7);
           if (hitchJournal) window.soloQualificationHitchJournal.subscribe(performance.now());
+          if (cost) cost.end();
           observedGame.events.on(window.Phaser.Core.Events.PRE_STEP, () => {
             workStarted = performance.now();
+            if (cost) {
+              cost.beginWork(workStarted);
+              cost.begin(3);
+            }
             if (hitchJournal) window.soloQualificationHitchJournal.beginWork(workStarted, phase);
+            if (cost) cost.end();
           });
           observedGame.events.on(window.Phaser.Core.Events.POST_RENDER, () => {
             if (workStarted === undefined) return;
             const workEnded = performance.now(),
               elapsed = workEnded - workStarted;
+            if (cost) {
+              cost.endWork(workEnded);
+              cost.begin(4);
+            }
             if (hitchJournal) window.soloQualificationHitchJournal.endWork(workEnded, phase);
+            if (cost) cost.end();
             workStarted = undefined;
             const offset = phase * workWidth;
             workTotals[offset]++;
@@ -691,6 +728,7 @@ ${hitchModule.hitchJournalInitScript()}
               }
             : null,
           ...(hitchJournal ? { hitchJournal: window.soloQualificationHitchJournal.state() } : {}),
+          ...(cost ? { journalCost: cost.state() } : {}),
           now: performance.now(),
         }),
       };
@@ -700,6 +738,7 @@ ${hitchModule.hitchJournalInitScript()}
       workProbe,
       externalCadenceCalibration: report.externalCadenceCalibration,
       hitchJournal: Boolean(hitchStore),
+      journalCost: Boolean(journalCostOptions),
     },
   );
   if (cpuProfile) {
@@ -1351,6 +1390,14 @@ ${hitchModule.hitchJournalInitScript()}
         probe: window.soloQualificationProbe?.export(),
         audioProof: window.soloAudioProof?.export() ?? null,
       }));
+      if (journalCostOptions) {
+        report.journalCost = await page.evaluate(() =>
+          window.soloQualificationJournalCost.export(),
+        );
+        report.journalCost.journalEnabled = Boolean(hitchStore);
+        report.journalCost.documents = journalCostDocuments;
+        if (journalCostDocuments !== 1) report.journalCost.status = 'incomplete';
+      }
       const probe = report.finalState.probe;
       if (probe)
         report.cadence = probe.phases.map((phase, index) => ({
@@ -1422,6 +1469,12 @@ ${hitchModule.hitchJournalInitScript()}
     report.performanceGateStatus = 'invalid-evidence';
     report.hitchJournalFailure =
       'Complete bounded hitch evidence unavailable; original outcomes retained.';
+  }
+  if (journalCostOptions && report.journalCost?.status !== 'complete') {
+    report.performanceGateStatusBeforeJournalCost = report.performanceGateStatus;
+    report.performanceGateStatus = 'invalid-evidence';
+    report.journalCostFailure =
+      'Complete single-document bounded synchronous-hook cost unavailable.';
   }
   if (nativeReplay) {
     try {
