@@ -4,12 +4,15 @@ import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
 import {
   RESUME_READINESS_PILOTS,
+  COMPACT_WARM_READINESS_PILOT,
   qualificationReadinessOptions,
   createBrowserReadinessProbe,
   createResumeReplayEvidence,
   assessResumeReadiness,
 } from './solo-qualification-readiness.mjs';
 import { validateQualification } from './solo-qualification.mjs';
+import { Document } from '../game/test/helpers/couch-dom.mjs';
+import { attachSettingsPanels } from '../game/ui/settings-panels.mjs';
 const clone = (value) => JSON.parse(JSON.stringify(value));
 function harness(protocol, serialized = false) {
   let time = 0;
@@ -451,4 +454,222 @@ test('actual qualifier forwards Resume mode and captures second running boundary
     'The body MutationObserver runs before the modeled next simulation callback',
   );
   assert.equal(readiness.protocol, 'warm-resume-v1');
+});
+
+// Native dialog defaults/Escape stack are modeled; the actual compact Settings
+// capture owner is used. This proves the route fix, not native actionability.
+const warmClosureRows = [];
+const original = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-readiness-resume/warm.qualification.fixture',
+      import.meta.url,
+    ),
+  ),
+);
+const compactWarmBytes = await readFile(
+  new URL(
+    '../docs/performance/fixtures/solo-readiness-resume/warm-compact-v2.qualification.fixture',
+    import.meta.url,
+  ),
+);
+const candidate = JSON.parse(compactWarmBytes);
+function fixture(width) {
+  const doc = new Document();
+  doc.defaultView.innerWidth = width;
+  const home = doc.createElement('dialog');
+  home.id = 'shell-home';
+  doc.body.append(home);
+  home.showModal();
+  const settings = doc.createElement('dialog');
+  settings.id = 'settings-dialog';
+  settings.classList.add('native-settings');
+  const close = doc.createElement('button');
+  close.setAttribute('data-close', 'settings-dialog');
+  close.onclick = () => settings.close();
+  const list = doc.createElement('div');
+  list.className = 'field-kit-settings-tabs';
+  const tab = doc.createElement('button'),
+    panel = doc.createElement('section');
+  tab.id = 'settings-tab-extras';
+  panel.id = 'settings-panel-extras';
+  tab.setAttribute('role', 'tab');
+  tab.setAttribute('aria-controls', panel.id);
+  list.append(tab);
+  settings.append(close, list, panel);
+  doc.body.append(settings);
+  const owner = attachSettingsPanels({ root: settings, document: doc });
+  settings.showModal();
+  tab.click();
+  const workshop = doc.createElement('dialog'),
+    replay = doc.createElement('dialog');
+  workshop.id = 'shell-workshop-dialog';
+  replay.id = 'replay-dialog';
+  doc.body.append(workshop, replay);
+  workshop.showModal();
+  replay.showModal();
+  return { doc, home, settings, close, workshop, replay, owner };
+}
+function route(f, recipe) {
+  const observed = [];
+  for (const action of recipe.actions.slice(
+    7,
+    recipe.actions.findIndex(
+      (a, i) => i > 7 && a.type === 'click' && a.selector === '#start-button',
+    ),
+  )) {
+    if (action.type === 'click') {
+      if (action.selector === '#replay-dialog .dialog-close[data-close="replay-dialog"]')
+        f.replay.close();
+      else if (action.selector === '[data-close="shell-workshop-dialog"]') f.workshop.close();
+      else if (action.selector === '[data-close="settings-dialog"]') f.close.click();
+      else {
+        assert.equal(
+          action.selector,
+          '#settings-dialog[open][data-settings-view="categories"] button[data-close="settings-dialog"]',
+        );
+        assert.equal(action.optional, true);
+        if (f.settings.open && f.settings.dataset.settingsView === 'categories') f.close.click();
+      }
+    } else if (action.type === 'key') {
+      assert.equal(action.key, 'Escape');
+      const top = [f.replay, f.workshop, f.settings, f.home].find((d) => d.open);
+      assert(top);
+      const e = top.emit('cancel', { bubbles: false });
+      if (!e.defaultPrevented) top.close();
+    } else if (action.type === 'expect') {
+      if (action.selector === 'body:not(:has(#settings-dialog[open])) #shell-home[open]')
+        assert(
+          !f.settings.open && f.home.open,
+          'Settings closed and Home open before existing Escape',
+        );
+      else {
+        assert.equal(action.selector, 'body:not(:has(dialog[open])) #start-button:not(:disabled)');
+        assert(
+          ![f.home, f.settings, f.workshop, f.replay].some((d) => d.open),
+          'No dialog may block resumed Start',
+        );
+      }
+    } else throw Error('Unexpected closure action');
+    observed.push({
+      type: action.type,
+      selector: action.selector ?? null,
+      home: f.home.open,
+      settings: f.settings.open,
+      view: f.settings.dataset.settingsView,
+      workshop: f.workshop.open,
+      replay: f.replay.open,
+    });
+  }
+  return observed;
+}
+test('only the existing compact public closure is inserted; entire active/replay/deadline workload is identical', () => {
+  validateQualification(original);
+  validateQualification(candidate);
+  const restored = structuredClone(candidate);
+  const inserted = restored.actions.splice(10, 2);
+  assert.deepEqual(restored, original);
+  assert.deepEqual(inserted, [
+    {
+      type: 'click',
+      selector:
+        '#settings-dialog[open][data-settings-view="categories"] button[data-close="settings-dialog"]',
+      optional: true,
+    },
+    {
+      type: 'expect',
+      selector: 'body:not(:has(#settings-dialog[open])) #shell-home[open]',
+      timeoutMs: 15000,
+    },
+  ]);
+  assert.equal(candidate.timeoutMs, 240000);
+  assert.equal(candidate.replayRequirements.movingTicks, 120);
+  assert.equal(candidate.actions.find((a) => a.label === 'safe-border-before-pause').ms, 1200);
+});
+test('actual compact owner reproduces the retained warm route incomplete closure at400', () => {
+  const f = fixture(400);
+  try {
+    assert.throws(() => route(f, original), /No dialog/);
+    assert(f.home.open);
+    assert.equal(f.settings.open, false);
+    warmClosureRows.push({
+      width: 400,
+      recipe: 'original',
+      result: 'failed-no-dialog-boundary',
+      homeOpen: f.home.open,
+    });
+  } finally {
+    f.owner.destroy();
+  }
+});
+for (const width of [400, 1024])
+  test(`corrected warm closure reaches the same paused Start boundary at${width}`, () => {
+    const f = fixture(width);
+    try {
+      const actions = route(f, candidate);
+      assert.equal(f.home.open, false);
+      assert.equal(f.settings.open, false);
+      warmClosureRows.push({
+        width,
+        recipe: 'corrected',
+        result: 'passed-modeled-closure',
+        actions,
+      });
+    } finally {
+      f.owner.destroy();
+    }
+  });
+test('original wide route stays valid; corrected conditional close does not add another close when Settings already closed', () => {
+  const f = fixture(1024);
+  try {
+    route(f, original);
+    assert(!f.home.open && !f.settings.open);
+  } finally {
+    f.owner.destroy();
+  }
+  const broken = structuredClone(candidate);
+  broken.actions.splice(10, 1);
+  const bad = fixture(400);
+  try {
+    assert.throws(() => route(bad, broken), /Settings closed/);
+  } finally {
+    bad.owner.destroy();
+  }
+});
+
+test('compact warm239 requires the exact source, recipe and geometry opt-in; historical warm remains separate', () => {
+  const flags = [
+    '--readiness-probe=warm-resume-v1',
+    '--source-revision=' + COMPACT_WARM_READINESS_PILOT.sourceRevision,
+    '--readiness-geometry=phase-boundary-v1',
+    '--work-probe',
+    '--hitch-journal',
+    '--cadence=settled120',
+  ];
+  assert.equal(
+    qualificationReadinessOptions(flags, candidate, compactWarmBytes),
+    COMPACT_WARM_READINESS_PILOT,
+  );
+  for (const changed of [
+    flags.filter((x) => !x.startsWith('--readiness-geometry')),
+    flags.concat('--readiness-geometry=phase-boundary-v1'),
+    flags.map((x) =>
+      x.startsWith('--source-revision')
+        ? '--source-revision=e1cc5dd7656bab349715cd1c3ce6e9f783508c17'
+        : x,
+    ),
+    flags.concat('--readiness-required-start=trusted-initial-start-v1'),
+    flags.concat('--readiness-cancel-boundary=post-command-v3'),
+  ])
+    assert.throws(() => qualificationReadinessOptions(changed, candidate, compactWarmBytes));
+  assert.throws(() =>
+    qualificationReadinessOptions(flags, original, Buffer.from(JSON.stringify(original))),
+  );
+  assert.throws(() =>
+    qualificationReadinessOptions(
+      flags,
+      candidate,
+      Buffer.concat([compactWarmBytes, Buffer.from(' ')]),
+    ),
+  );
 });

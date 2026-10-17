@@ -97,11 +97,61 @@ export const PREPARATION_READINESS_PROTOCOL = Object.freeze({
   numericalGates: 'unchanged-raw',
   performanceQualification: false,
 });
-const preparationPlan = (plan) => plan?.sourceCohort === PREPARATION_READINESS_COHORT;
+export const DIAGNOSED_READINESS_SOURCE = Object.freeze({
+  revision: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
+  tree: '1ac7f17971498d2a8be19085f00a9f732db42798',
+});
+export const DIAGNOSED_READINESS_COHORT = 'readiness-diagnosed-candidate239';
+export const DIAGNOSED_READINESS_PHASES = Object.freeze([
+  'warm-resume',
+  'required-original-cancel',
+]);
+export const DIAGNOSED_READINESS_FIXTURES = Object.freeze({
+  'warm-resume': Object.freeze({
+    path: 'docs/performance/fixtures/solo-readiness-resume/warm-compact-v2.qualification.fixture',
+    bytes: 4165,
+    sha256: 'bc65978e26f21507b84d8c999928c069478b0ac1d91fc4866a2c2a7616314829',
+  }),
+  'required-original-cancel': Object.freeze({
+    path: 'docs/performance/fixtures/solo-readiness-media/required-original-cancel-start-v2.qualification.fixture',
+    bytes: 4546,
+    sha256: '2c4186d9748ffd173ef478f5412b3542f05c06651cd2a15e03342322d181460f',
+  }),
+});
+export const DIAGNOSED_READINESS_PROTOCOL = Object.freeze({
+  name: 'warm-compact-and-required-initial-start-v1',
+  phases: DIAGNOSED_READINESS_PHASES,
+  geometry: ['warm-resume'],
+  requiredStartRetention: 'trusted-initial-start-v1',
+  externalCadence: 'settled120',
+  numericalGates: 'unchanged-raw',
+  performanceQualification: false,
+});
+const diagnosedPlan = (plan) => plan?.sourceCohort === DIAGNOSED_READINESS_COHORT;
+const preparationPlan = (plan) =>
+  plan?.sourceCohort === PREPARATION_READINESS_COHORT || diagnosedPlan(plan);
+export function diagnosedReadinessRows(engine) {
+  assert.equal(engine, 'webkit');
+  return DIAGNOSED_READINESS_PHASES.map((phase) => ({ ...readinessRow(engine, phase), phase }));
+}
 export function preparationReadinessRows(engine) {
   return PREPARATION_READINESS_PHASES.map((phase) => ({ ...readinessRow(engine, phase), phase }));
 }
 export function preparationReadinessSelection(plan) {
+  if (plan.sourceCohort === 'readiness-diagnosed-row-candidate239') {
+    assert.equal(plan.engine, 'webkit');
+    assert(DIAGNOSED_READINESS_PHASES.includes(plan.phase));
+    return {
+      source: DIAGNOSED_READINESS_SOURCE,
+      fixture: DIAGNOSED_READINESS_FIXTURES[plan.phase],
+      protocol: plan.phase + '-v1',
+      ...(plan.phase === 'warm-resume'
+        ? { geometry: true, resume: true }
+        : { mediaFault: true, requiredStartRetention: 'trusted-initial-start-v1' }),
+      documents: 1,
+      diagnosed: true,
+    };
+  }
   assert.equal(plan.sourceCohort, 'readiness-preparation-row-candidatee1cc');
   assert(PREPARATION_READINESS_PHASES.includes(plan.phase));
   const geometry = geometryReadinessSelection({
@@ -132,7 +182,11 @@ export function preparationReadinessSelection(plan) {
   };
 }
 function preparationRowPlan(plan, row) {
-  const expected = preparationReadinessRows(plan.engine).find((item) => item.id === row.id);
+  const expected = (
+    diagnosedPlan(plan)
+      ? diagnosedReadinessRows(plan.engine)
+      : preparationReadinessRows(plan.engine)
+  ).find((item) => item.id === row.id);
   assert(expected, 'Undeclared preparation row');
   // The common runner adds these report fields before adapter dispatch. They
   // carry no scenario authority; all declared fields remain exact below.
@@ -145,7 +199,9 @@ function preparationRowPlan(plan, row) {
   for (const [key, value] of Object.entries(expected)) assert.deepEqual(row[key], value, key);
   const scoped = {
     ...plan,
-    sourceCohort: 'readiness-preparation-row-candidatee1cc',
+    sourceCohort: diagnosedPlan(plan)
+      ? 'readiness-diagnosed-row-candidate239'
+      : 'readiness-preparation-row-candidatee1cc',
     phase: expected.phase,
   };
   const selected = preparationReadinessSelection(scoped);
@@ -156,6 +212,9 @@ function preparationRowPlan(plan, row) {
     protocol: {
       name: selected.protocol,
       ...(selected.geometry ? { geometryObservation: 'phase-boundary-v1' } : {}),
+      ...(selected.requiredStartRetention
+        ? { requiredStartRetention: selected.requiredStartRetention }
+        : {}),
       ...(selected.cancelBoundary ? { cancelBoundaryObservation: 'post-command-v3' } : {}),
       startupWait: 'immediate-partial',
       externalCadence: 'settled120',
@@ -329,10 +388,16 @@ function selection(plan) {
   if (preparationPlan(plan))
     return preparationReadinessSelection({
       ...plan,
-      sourceCohort: 'readiness-preparation-row-candidatee1cc',
-      phase: 'cold-first30',
+      sourceCohort: diagnosedPlan(plan)
+        ? 'readiness-diagnosed-row-candidate239'
+        : 'readiness-preparation-row-candidatee1cc',
+      phase: diagnosedPlan(plan) ? 'warm-resume' : 'cold-first30',
     });
-  if (plan.sourceCohort === 'readiness-preparation-row-candidatee1cc')
+  if (
+    ['readiness-preparation-row-candidatee1cc', 'readiness-diagnosed-row-candidate239'].includes(
+      plan.sourceCohort,
+    )
+  )
     return preparationReadinessSelection(plan);
   if (plan.sourceCohort === GEOMETRY_READINESS_COHORT) return geometryReadinessSelection(plan);
   if (
@@ -550,7 +615,12 @@ function densityPlan(plan) {
   );
 }
 function comparisonSchedule(plan) {
-  if (preparationPlan(plan) || plan?.sourceCohort === 'readiness-preparation-row-candidatee1cc')
+  if (
+    preparationPlan(plan) ||
+    ['readiness-preparation-row-candidatee1cc', 'readiness-diagnosed-row-candidate239'].includes(
+      plan?.sourceCohort,
+    )
+  )
     return [];
   return densityPlan(plan) ? densityComparisonSchedule() : qualityComparisonSchedule();
 }
@@ -578,6 +648,21 @@ export function readinessRow(engine, phase = 'cold-first30') {
   };
 }
 export function validateReadinessPlan(plan) {
+  if (diagnosedPlan(plan)) {
+    assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
+    assert.equal(plan.phase, 'warm-and-required-original-corrections');
+    assert.deepEqual(plan.protocol, DIAGNOSED_READINESS_PROTOCOL);
+    assert.deepEqual(plan.rows, diagnosedReadinessRows(plan.engine));
+    assert.deepEqual(plan.fixture, DIAGNOSED_READINESS_FIXTURES['warm-resume']);
+    assert.deepEqual(plan.additionalFixtures, [
+      DIAGNOSED_READINESS_FIXTURES['required-original-cancel'],
+    ]);
+    assert.equal(plan.release.comparisonScope, 'diagnosed-webkit-readiness-only');
+    for (const row of plan.rows) validateReadinessPlan(preparationRowPlan(plan, row));
+    const refs = combinedFixtureInputs(plan);
+    assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
+    return plan;
+  }
   if (preparationPlan(plan)) {
     assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
     assert.equal(plan.phase, 'geometry-and-preparation-faults');
@@ -676,7 +761,30 @@ export function validateReadinessPlan(plan) {
       plan.candidate.manifestSHA256,
       '23f555db20036838cc1601f2cebf8f1a75eb62fb0c6cf36f1e1988035b3e1b64',
     );
-    assert.equal(plan.release.onceOnlyBefore, '7c7cc2648331870683ac7b76850bbeff859f802e');
+    if (plan.release.setupCorrection !== undefined) {
+      assert.deepEqual(plan.release.setupCorrection, {
+        format: 'SoloOptionalAudioBrowserInventorySuccessorV1',
+        priorRun: 39049195073,
+        priorJob: 117444131256,
+        priorTooling: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
+        priorConclusion: 'failure',
+        priorNativeObservations: 0,
+        priorRowsNotRun: 1,
+        originalDeclaration: {
+          path: 'docs/performance/solo-optional-start-audio-e1cc-plan.json',
+          bytes: 12462,
+          sha256: '2e8b670c1d34a491e0c9ad74e6c326609fa8884ee500046262b9ef4b899a59fc',
+        },
+        reason: 'shared-readiness-engine-inventory-requires-installed-WebKit',
+        runtimeChanged: false,
+        scenarioChanged: false,
+        gateChanged: false,
+        automaticRetries: 0,
+      });
+      assert.equal(plan.release.onceOnlyBefore, '239c574ecddd5bb6d5896e621d9edc53e7f6a313');
+    } else {
+      assert.equal(plan.release.onceOnlyBefore, '7c7cc2648331870683ac7b76850bbeff859f802e');
+    }
   }
   assert.deepEqual(plan.baseline, {
     revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
@@ -696,6 +804,9 @@ export function validateReadinessPlan(plan) {
   assert.deepEqual(plan.protocol, {
     name: selected.protocol,
     ...(selected.geometry ? { geometryObservation: 'phase-boundary-v1' } : {}),
+    ...(selected.requiredStartRetention
+      ? { requiredStartRetention: selected.requiredStartRetention }
+      : {}),
     ...(selected.cancelBoundary ? { cancelBoundaryObservation: 'post-command-v3' } : {}),
     startupWait: 'immediate-partial',
     externalCadence: 'settled120',
@@ -711,7 +822,7 @@ export function validateReadinessPlan(plan) {
     'diagnosticStatus-passed-and-readinessCorrectness-pass',
   );
   assert.equal(plan.release.candidateRevision, selected.source.revision);
-  if (selected.audioFault) {
+  if (selected.audioFault || selected.diagnosed) {
     assert.equal(plan.release.firstEightRequired, false);
     assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
   } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
@@ -778,7 +889,11 @@ export function bindReadinessJob(manifest, engine) {
   assert.equal(manifest.format, 'SoloHostedReadinessManifestV1');
   assert.deepEqual(
     manifest.engines,
-    optionalAudioPlan(manifest) ? ['chromium'] : READINESS_ENGINES,
+    optionalAudioPlan(manifest)
+      ? ['chromium']
+      : diagnosedPlan(manifest)
+        ? ['webkit']
+        : READINESS_ENGINES,
   );
   assert(manifest.engines.includes(engine));
   const plan = structuredClone(manifest);
@@ -786,7 +901,9 @@ export function bindReadinessJob(manifest, engine) {
   plan.format = 'SoloHostedReadinessPlanV1';
   plan.engine = engine;
   plan.rows = preparationPlan(plan)
-    ? preparationReadinessRows(engine)
+    ? diagnosedPlan(plan)
+      ? diagnosedReadinessRows(engine)
+      : preparationReadinessRows(engine)
     : combinedPlan(plan)
       ? fontDprPlan(plan)
         ? fontDprRows(engine)
@@ -798,7 +915,12 @@ export function bindReadinessJob(manifest, engine) {
 }
 export function readinessMatrix(manifest) {
   return {
-    include: (optionalAudioPlan(manifest) ? ['chromium'] : READINESS_ENGINES).map((engine) => {
+    include: (optionalAudioPlan(manifest)
+      ? ['chromium']
+      : diagnosedPlan(manifest)
+        ? ['webkit']
+        : READINESS_ENGINES
+    ).map((engine) => {
       bindReadinessJob(manifest, engine);
       return { engine, jobMinutes: 130, stepMinutes: 78, outerSeconds: 4620 };
     }),
@@ -824,20 +946,22 @@ export async function prepareReadinessMode(ctx) {
   assert.equal(a.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(a.archiveIdentity, ctx.plan.candidate.inner);
   ctx.report.performanceExclusion = true;
-  if (selected.audioFault) ctx.report.firstEightRequired = false;
+  if (selected.audioFault || selected.diagnosed) ctx.report.firstEightRequired = false;
   else ctx.report.firstEightAllCorrectnessPassed = false;
   return {
-    scope: selected.audioFault
-      ? 'One Chromium candidate-only missing start.wav correctness observation: public unmute and Start, movement, paused owner settlement and strict native replay. No audibility, specific replacement tone, timing or physical qualification.'
-      : preparationPlan(ctx.plan)
-        ? 'Six serial candidate-only preparation observations per engine: geometry cold/warm/saved, joined-font Cancel boundary, required-original Cancel and optional icon 404. All original numerical failures and prior native failures remain; no display-completion, timing or physical-device qualification.'
-        : combinedPlan(ctx.plan)
-          ? fontDprPlan(ctx.plan)
-            ? 'One joined selected-font correctness observation per engine; WebKit additionally has two counterbalanced Full-effects DPR pairs at the same viewport. All original failures and numeric verdicts retained; no automatic retry or physical qualification.'
-            : fontCompactPlan(ctx.plan)
-              ? 'One exact selected-font cancellation per engine; WebKit additionally observes the compact saved Resume route and two muted public-effects pairs. Old failed routes remain failed; all numerical verdicts retained.'
-              : 'Fixed serial warm/saved readiness observations; WebKit additionally has two muted public-effects pairs. All numerical failures retained; no physical qualification or automatic retry.'
-          : 'One candidate correctness pilot per engine; no timing comparison, forced calibration delay, automatic retry or physical-device qualification.',
+    scope: selected.diagnosed
+      ? 'Two serial WebKit-only diagnosed correctness observations: corrected compact warm Resume and required-original cancellation with trusted initial Start retention. Historical failures and raw numerical verdicts remain unchanged; no timing or physical qualification.'
+      : selected.audioFault
+        ? 'One Chromium candidate-only missing start.wav correctness observation: public unmute and Start, movement, paused owner settlement and strict native replay. No audibility, specific replacement tone, timing or physical qualification.'
+        : preparationPlan(ctx.plan)
+          ? 'Six serial candidate-only preparation observations per engine: geometry cold/warm/saved, joined-font Cancel boundary, required-original Cancel and optional icon 404. All original numerical failures and prior native failures remain; no display-completion, timing or physical-device qualification.'
+          : combinedPlan(ctx.plan)
+            ? fontDprPlan(ctx.plan)
+              ? 'One joined selected-font correctness observation per engine; WebKit additionally has two counterbalanced Full-effects DPR pairs at the same viewport. All original failures and numeric verdicts retained; no automatic retry or physical qualification.'
+              : fontCompactPlan(ctx.plan)
+                ? 'One exact selected-font cancellation per engine; WebKit additionally observes the compact saved Resume route and two muted public-effects pairs. Old failed routes remain failed; all numerical verdicts retained.'
+                : 'Fixed serial warm/saved readiness observations; WebKit additionally has two muted public-effects pairs. All numerical failures retained; no physical qualification or automatic retry.'
+            : 'One candidate correctness pilot per engine; no timing comparison, forced calibration delay, automatic retry or physical-device qualification.',
   };
 }
 export function readinessArguments(ctx, row, url, dir) {
@@ -861,6 +985,9 @@ export function readinessArguments(ctx, row, url, dir) {
     '--cadence=settled120',
     `--readiness-probe=${selected.protocol}`,
     ...(selected.geometry ? ['--readiness-geometry=phase-boundary-v1'] : []),
+    ...(selected.requiredStartRetention
+      ? ['--readiness-required-start=' + selected.requiredStartRetention]
+      : []),
     ...(selected.cancelBoundary ? ['--readiness-cancel-boundary=post-command-v3'] : []),
     ...(row.engine === 'webkit'
       ? ['--context=persistent', '--viewport=400x850', '--dpr=3', '--mobile-context']
@@ -927,6 +1054,7 @@ export async function readinessAssessment(
         witness: raw?.requiredOriginalWitness,
         fallback: raw?.optionalIconFallback,
         cleanupFailure: raw?.mediaFaultCleanupFailure,
+        startRetention: selected.requiredStartRetention ?? null,
         ...(selected.audioFault ? { audioCheck: raw?.audioCheck } : {}),
       })
     : selected.font
@@ -1016,6 +1144,8 @@ export async function readinessAssessment(
     assert.equal(raw.baselineRuntime, false);
     assert.equal(raw.readinessPilot.protocol, selected.protocol);
     assert.equal(raw.readinessPilot.performanceQualification, false);
+    if (selected.requiredStartRetention)
+      assert.equal(raw.readinessPilot.requiredStartRetention, selected.requiredStartRetention);
     assert.equal(raw.startupCadenceObservations.length, selected.documents);
     for (const observation of raw.startupCadenceObservations)
       assert.equal(observation.pilotStartupWait, 'omitted; immediate partial samples retained');
@@ -1094,7 +1224,7 @@ export async function readinessAssessment(
     rawPerformanceGateStatus: numeric,
     numericObservationStatus: numeric,
     hitchJournalVerification: journal,
-    ...(selected.audioFault
+    ...(selected.audioFault || selected.diagnosed
       ? { firstEightRequired: false }
       : { firstEightAllCorrectnessPassed: false }),
     performanceQualification: 'excluded',

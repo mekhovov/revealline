@@ -10,6 +10,7 @@ import {
   readinessArguments,
   readinessMatrix,
   PREPARATION_READINESS_PHASES,
+  preparationReadinessSelection,
 } from './solo-remote-readiness.mjs';
 import { qualificationReadinessOptions } from './solo-qualification-readiness.mjs';
 import {
@@ -243,8 +244,8 @@ const releaseConditions = [
   "github.event.action == 'synchronize'",
   "github.event.before == 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17'",
 ];
-function assertReleaseGuard(workflow) {
-  assert(workflow.includes('    if: ' + releaseConditions.join(' && ') + '\n'));
+function assertReleaseGuard(workflow, conditions = releaseConditions) {
+  assert(workflow.includes('    if: ' + conditions.join(' && ') + '\n'));
   assert(!workflow.includes('workflow_dispatch'));
   assert(!workflow.includes('continue-on-error'));
   assert(!workflow.includes('if: ${{ false }}'));
@@ -268,4 +269,189 @@ test('mutated executed witness, declaration or original workflow cannot acquire 
     [executedWitnessBytes, declaration, Buffer.concat([workflow, Buffer.from(' ')])],
   ])
     assert.throws(() => executedBindings(...args));
+});
+
+const diagnosedManifest = JSON.parse(
+  await read('docs/performance/solo-readiness-diagnosed-239-plan.json'),
+);
+function boundDiagnosedPlan() {
+  return bindReadinessJob(diagnosedManifest, 'webkit');
+}
+test('actual239 successor admits only the two diagnosed WebKit recipes and preserves actual runner enrichment', async () => {
+  assert.deepEqual(diagnosedManifest.engines, ['webkit']);
+  assert.deepEqual(diagnosedManifest.candidate, {
+    revision: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
+    tree: '1ac7f17971498d2a8be19085f00a9f732db42798',
+    run: 39049194998,
+    artifact: 12107584924,
+    outer: {
+      bytes: 1091981388,
+      sha256: 'de57853058db05207dd93f0fd2cb38dd57589485dc0a5cfcc81221d1d1710aec',
+    },
+    inner: {
+      bytes: 1073799309,
+      sha256: '0a0f4273b3ac6cc906b6625063d52229a39c92b108d1dba296b7bd5628028f17',
+    },
+    manifestSHA256: 'abe173d91aece2ba590c0c2442d48f151b13e23a88fa0ead7b6690f4f95b9d36',
+    producer:
+      'Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row.',
+  });
+  assert.equal(diagnosedManifest.release.onceOnlyBefore, diagnosedManifest.candidate.revision);
+  for (const key of ['run', 'artifact', 'outer', 'inner', 'manifestSHA256']) {
+    const unbound = structuredClone(diagnosedManifest);
+    unbound.candidate[key] = null;
+    assert.throws(() => bindReadinessJob(unbound, 'webkit'));
+  }
+  assert.throws(() => bindReadinessJob(diagnosedManifest, 'chromium'));
+  const p = boundDiagnosedPlan();
+  assert.deepEqual(
+    p.rows.map((r) => r.phase),
+    ['warm-resume', 'required-original-cancel'],
+  );
+  for (const row of p.rows) {
+    const enriched = { ...row, storage: '/bounded/row', startedAt: 'fixture', status: 'running' };
+    const single = readinessRowPlan(p, enriched);
+    assert.equal(single.phase, row.phase);
+    assert.equal(
+      single.protocol.requiredStartRetention,
+      row.phase === 'required-original-cancel' ? 'trusted-initial-start-v1' : undefined,
+    );
+    const bytes = await read(single.fixture.path);
+    assert.equal(bytes.length, single.fixture.bytes);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), single.fixture.sha256);
+    const args = readinessArguments(
+      { plan: p, here: '/tools/scripts', repository: '/tools' },
+      enriched,
+      'http://127.0.0.1:1/game/',
+      '/bounded',
+    );
+    const selected = qualificationReadinessOptions(args, JSON.parse(bytes), bytes);
+    assert.equal(selected.sourceRevision, p.candidate.revision);
+    assert.equal(selected.protocol, single.protocol.name);
+    assert.equal(
+      args.includes('--readiness-geometry=phase-boundary-v1'),
+      row.phase === 'warm-resume',
+    );
+    assert.equal(
+      args.includes('--readiness-required-start=trusted-initial-start-v1'),
+      row.phase === 'required-original-cancel',
+    );
+    assert(
+      args.includes('--viewport=400x850') &&
+        args.includes('--dpr=3') &&
+        args.includes('--mobile-context'),
+    );
+    assert.equal(row.timeoutMs, 480000);
+    assert.equal(JSON.parse(bytes).timeoutMs, 240000);
+    for (const altered of [
+      { ...enriched, phase: 'selected-font-cancel' },
+      { ...enriched, timeoutMs: 480001 },
+      { ...enriched, unrecognized: true },
+    ])
+      assert.throws(() => readinessRowPlan(p, altered));
+    for (const altered of [
+      { ...single, engine: 'chromium' },
+      { ...single, phase: 'saved-resume' },
+      { ...single, sourceCohort: 'readiness-diagnosed-row-candidatec696' },
+    ])
+      assert.throws(() => preparationReadinessSelection(altered));
+  }
+  const workflow = (
+    await read('.github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml')
+  ).toString();
+  const conditions = [
+    ...releaseConditions.slice(0, 3),
+    "github.event.before == '239c574ecddd5bb6d5896e621d9edc53e7f6a313'",
+  ];
+  assertReleaseGuard(workflow, conditions);
+  for (const condition of conditions)
+    assert.throws(() => assertReleaseGuard(workflow.replace(condition, 'true'), conditions));
+  const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((match) => match[1]);
+  assert.equal(new Set(sparse).size, sparse.length);
+  for (const ref of [
+    ...diagnosedManifest.adapterInputs,
+    ...diagnosedManifest.frozenTools,
+    diagnosedManifest.fixture,
+    ...diagnosedManifest.additionalFixtures,
+  ]) {
+    const bytes = await read(ref.path);
+    assert.deepEqual(
+      { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
+      { bytes: ref.bytes, sha256: ref.sha256 },
+      ref.path,
+    );
+    assert(sparse.includes(ref.path), ref.path);
+  }
+  assert.match(workflow, /engine: \[webkit\]/);
+  assert(workflow.includes('playwright" install --with-deps chromium webkit'));
+  assert(workflow.includes('timeout-minutes: 130') && workflow.includes('timeout-minutes: 78'));
+  assert(workflow.includes('4620s node scripts/run-solo-remote-correctness.mjs'));
+});
+test('actual239 row policies retain positive binary journal proof and reject missing trusted-Start metadata', async (t) => {
+  const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-diagnosed-journal-')));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const url = 'http://127.0.0.1:4321/game/?journey=opening',
+    plan = boundDiagnosedPlan();
+  for (const row of plan.rows) {
+    const p = readinessRowPlan(plan, row),
+      output = join(dir, row.phase + '.json');
+    const store = createHitchJournalStore(output, () => 0, { soloURL: url });
+    const allocation = store.beginDocument({ url, action: 'initial' });
+    let now = 0;
+    const journal = createBrowserHitchJournal(
+      {},
+      {
+        performance: { now: () => now, timeOrigin: 1700000000000 },
+        location: { origin: 'http://127.0.0.1:4321', pathname: '/game/' },
+        document: { hidden: false, hasFocus: () => true, addEventListener() {} },
+        addEventListener() {},
+        btoa: (s) => Buffer.from(s, 'binary').toString('base64'),
+      },
+    );
+    journal.configure(allocation);
+    journal.first(0, 0);
+    journal.subscribe(0);
+    journal.phase(2, 0);
+    journal.frame(0, 40, 2, 2);
+    journal.beginWork(1, 2);
+    journal.endWork(55, 2);
+    journal.phase(3, 60);
+    now = 100;
+    await store.retain(journal.seal('paused'), 'final-existing-public-boundary');
+    const raw = {
+      hitchJournal: store.finish(),
+      readinessPilot: {
+        protocol: p.protocol.name,
+        ...(p.protocol.geometryObservation
+          ? { geometryObservation: p.protocol.geometryObservation }
+          : {}),
+        ...(p.protocol.requiredStartRetention
+          ? { requiredStartRetention: p.protocol.requiredStartRetention }
+          : {}),
+      },
+    };
+    const checked = await verifyTimingHitchJournal(p, raw, output, url);
+    assert.equal(checked.status, 'complete', JSON.stringify(checked));
+    for (const change of [
+      (q) => (q.candidate.tree = '0'.repeat(40)),
+      (q) => (q.runtimeRevision = '0'.repeat(40)),
+      (q) => (q.fixture.sha256 = '0'.repeat(64)),
+      (q) => (q.protocol.name = 'other'),
+    ]) {
+      const q = structuredClone(p);
+      change(q);
+      assert.equal(
+        (await verifyTimingHitchJournal(q, raw, output, url)).status,
+        'invalid-evidence',
+      );
+    }
+    const missing = structuredClone(raw);
+    delete missing.readinessPilot[
+      p.protocol.requiredStartRetention ? 'requiredStartRetention' : 'geometryObservation'
+    ];
+    assert.equal(
+      (await verifyTimingHitchJournal(p, missing, output, url)).status,
+      'invalid-evidence',
+    );
+  }
 });

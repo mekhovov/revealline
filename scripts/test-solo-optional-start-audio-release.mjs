@@ -259,6 +259,43 @@ async function fullRaw() {
   }));
   return { p, r };
 }
+
+// These manifests were dispatched at239. Their exact source is independently Git-derived.
+const historicalBytes = await readFile(
+  new URL(
+    '../docs/performance/fixtures/solo-optional-start-audio/239-execution-source.json',
+    import.meta.url,
+  ),
+);
+function executed239(bytes, declaration, workflowBytes) {
+  assert.equal(hash(bytes), '842dbb4a020b5df5ae02b0ff9ca7aa6e751f86aae60e85c3ed091d5b79452ba0');
+  const proof = JSON.parse(bytes);
+  assert.equal(proof.head, '239c574ecddd5bb6d5896e621d9edc53e7f6a313');
+  assert.equal(proof.tree, '1ac7f17971498d2a8be19085f00a9f732db42798');
+  for (const [path, input] of [
+    ['docs/performance/solo-optional-start-audio-e1cc-plan.json', declaration],
+    ['.github/workflows/solo-remote-optional-start-audio-e1cc-temporary.yml', workflowBytes],
+  ]) {
+    const record = proof.records.find((r) => r.path === path);
+    assert(record, path);
+    assert.equal(input.length, record.bytes, path);
+    assert.equal(hash(input), record.sha256, path);
+  }
+  return proof;
+}
+const executionDeclaration239 = await readFile(new URL(path, root));
+const execution239 = executed239(historicalBytes, executionDeclaration239, Buffer.from(workflow));
+test('immutable239 source rejects altered witness, declaration and workflow', () => {
+  const raw = Buffer.from(historicalBytes);
+  raw[0] ^= 1;
+  assert.throws(() =>
+    executed239(raw, Buffer.from(JSON.stringify(manifest)), Buffer.from(workflow)),
+  );
+  assert.throws(() => executed239(historicalBytes, Buffer.from('{}'), Buffer.from(workflow)));
+  assert.throws(() =>
+    executed239(historicalBytes, executionDeclaration239, Buffer.from(workflow + ' ')),
+  );
+});
 test('one actual e1cc Chromium row preserves public route, setup/owner bounds and excludes performance', async () => {
   assert.deepEqual(readinessMatrix(manifest), {
     include: [{ engine: 'chromium', jobMinutes: 130, stepMinutes: 78, outerSeconds: 4620 }],
@@ -444,7 +481,7 @@ test('real binary journal verifies the new exact source/fixture and rejects inco
     'invalid-evidence',
   );
 });
-test('one-shot workflow and all current frozen refs retain exact source admission and bounded sparse closure', async () => {
+test('one-shot workflow and all executed239 frozen refs retain exact source admission and bounded sparse closure', async () => {
   assert.equal(manifest.releaseTrigger.status, 'reviewed-one-shot');
   assert.equal(manifest.releaseTrigger.onceOnlyBefore, '7c7cc2648331870683ac7b76850bbeff859f802e');
   const terms = [
@@ -466,9 +503,10 @@ test('one-shot workflow and all current frozen refs retain exact source admissio
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(new Set(sparse).size, sparse.length);
   for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools, manifest.fixture]) {
-    const bytes = await readFile(new URL(ref.path, root));
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(hash(bytes), ref.sha256, ref.path);
+    const record = execution239.records.find((r) => r.path === ref.path);
+    assert(record, ref.path);
+    assert.equal(record.bytes, ref.bytes, ref.path);
+    assert.equal(record.sha256, ref.sha256, ref.path);
     assert(sparse.includes(ref.path), ref.path);
   }
   for (const p of [

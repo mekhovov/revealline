@@ -121,8 +121,25 @@ export const MEDIA_FAULT_PILOTS = Object.freeze({
     bytes: 16384,
   }),
 });
+export const REQUIRED_ORIGINAL_START_PILOT = Object.freeze({
+  ...MEDIA_FAULT_PILOTS['required-original-cancel-v1'],
+  sourceRevision: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
+  scenarioSHA256: '2c4186d9748ffd173ef478f5412b3542f05c06651cd2a15e03342322d181460f',
+  requiredStartRetention: 'trusted-initial-start-v1',
+});
+export const COMPACT_WARM_READINESS_PILOT = Object.freeze({
+  ...RESUME_READINESS_PILOTS['warm-resume-v1'],
+  sourceRevision: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
+  scenarioSHA256: 'bc65978e26f21507b84d8c999928c069478b0ac1d91fc4866a2c2a7616314829',
+  geometryObservation: 'phase-boundary-v1',
+});
 export function qualificationReadinessOptions(flags, scenario, bytes) {
   const selected = flags.filter((flag) => flag.startsWith('--readiness-probe'));
+  const requiredStart = flags.filter((flag) => flag.startsWith('--readiness-required-start'));
+  if (requiredStart.length) {
+    assert.deepEqual(requiredStart, ['--readiness-required-start=trusted-initial-start-v1']);
+    assert.deepEqual(selected, ['--readiness-probe=required-original-cancel-v1']);
+  }
   const geometry = flags.filter((flag) => flag.startsWith('--readiness-geometry'));
   const cancel = flags.filter((flag) => flag.startsWith('--readiness-cancel-boundary'));
   if (cancel.length) {
@@ -151,26 +168,32 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
   const successorSaved =
     protocol === 'saved-resume-v1' &&
     flags.includes('--source-revision=c696af41857840359ae473558b90682f3d71f2db');
-  const pilot = geometry.length
-    ? geometryReadinessPilot(protocol)
-    : successorSaved
-      ? COMPACT_SAVED_READINESS_PILOT
-      : protocol === READINESS_PILOT.protocol
-        ? READINESS_PILOT
-        : protocol === SELECTED_FONT_PILOT.protocol
-          ? SELECTED_FONT_PILOT
-          : protocol === SELECTED_FONT_JOINED_PILOT.protocol
-            ? flags.includes('--source-revision=' + SELECTED_FONT_PILOT.sourceRevision)
-              ? SELECTED_FONT_JOINED_C696_PILOT
-              : SELECTED_FONT_JOINED_PILOT
-            : protocol === SELECTED_FONT_POST_COMMAND_PILOT.protocol
-              ? SELECTED_FONT_POST_COMMAND_PILOT
-              : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
+  const pilot = requiredStart.length
+    ? REQUIRED_ORIGINAL_START_PILOT
+    : geometry.length
+      ? protocol === 'warm-resume-v1' &&
+        flags.includes('--source-revision=' + COMPACT_WARM_READINESS_PILOT.sourceRevision)
+        ? COMPACT_WARM_READINESS_PILOT
+        : geometryReadinessPilot(protocol)
+      : successorSaved
+        ? COMPACT_SAVED_READINESS_PILOT
+        : protocol === READINESS_PILOT.protocol
+          ? READINESS_PILOT
+          : protocol === SELECTED_FONT_PILOT.protocol
+            ? SELECTED_FONT_PILOT
+            : protocol === SELECTED_FONT_JOINED_PILOT.protocol
+              ? flags.includes('--source-revision=' + SELECTED_FONT_PILOT.sourceRevision)
+                ? SELECTED_FONT_JOINED_C696_PILOT
+                : SELECTED_FONT_JOINED_PILOT
+              : protocol === SELECTED_FONT_POST_COMMAND_PILOT.protocol
+                ? SELECTED_FONT_POST_COMMAND_PILOT
+                : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
   assert(pilot, 'Unknown readiness protocol');
   if (MEDIA_FAULT_PILOTS[protocol]) {
     assert.deepEqual(scenario.mediaReadinessFault, {
       protocol,
       sourceRevision: pilot.sourceRevision,
+      ...(pilot.requiredStartRetention ? { startRetention: pilot.requiredStartRetention } : {}),
     });
     assert.equal(scenario.kind, 'lifecycle');
     assert(!scenario.cacheMode);
@@ -248,6 +271,7 @@ export function createBrowserReadinessProbe(
   protocol = 'first-running-v1',
   geometryObservation = false,
   cancelBoundaryObservation = false,
+  initialRequiredStart = null,
 ) {
   if (
     ![
@@ -269,6 +293,12 @@ export function createBrowserReadinessProbe(
     !['first-running-v1', 'warm-resume-v1', 'saved-resume-v1'].includes(protocol)
   )
     throw new Error('Geometry is a separate readiness diagnostic');
+  if (
+    initialRequiredStart !== null &&
+    (protocol !== 'required-original-cancel-v1' || typeof initialRequiredStart !== 'function')
+  )
+    throw new Error('Required-original Start callback requires its explicit protocol');
+  let initialRequiredStartSeen = false;
   const resume = protocol.endsWith('-resume-v1'),
     postCommand = protocol === 'selected-font-cancel-post-command-v3',
     font = [
@@ -557,7 +587,22 @@ export function createBrowserReadinessProbe(
   function click(event) {
     if (event.isTrusted !== true) return;
     const button = event.target?.closest?.('#shell-featured, #start-button');
-    if (button) record('start-click', event);
+    if (button) {
+      record('start-click', event);
+      if (
+        initialRequiredStart &&
+        !initialRequiredStartSeen &&
+        event.target?.closest?.('#start-button')?.id === 'start-button'
+      ) {
+        initialRequiredStartSeen = true;
+        try {
+          if (initialRequiredStart(event) !== true)
+            throw new Error('Initial required Start was not retained');
+        } catch {
+          errors = Math.min(65535, errors + 1);
+        }
+      }
+    }
   }
   function back(event) {
     if (
@@ -1090,8 +1135,12 @@ export function installRequiredOriginalRequestWitness(
   checkpoint,
   entryURL,
   environment = globalThis,
+  { startRetention = null } = {},
 ) {
   if (environment.top !== environment) return null;
+  if (startRetention !== null && startRetention !== 'trusted-initial-start-v1')
+    throw Error('Unknown required-original Start retention');
+  const retainStart = startRetention === 'trusted-initial-start-v1';
   const target = new URL('content-design/assets/horizon-r1/first-return.png', entryURL).href;
   const documentRef = environment.document,
     originalFetch = environment.fetch;
@@ -1101,6 +1150,7 @@ export function installRequiredOriginalRequestWitness(
     failure = null,
     closed = false,
     retained = null,
+    initialStart = null,
     afterCancel = null,
     capturedCancelEvent = null,
     lastClock = -Infinity;
@@ -1245,6 +1295,7 @@ export function installRequiredOriginalRequestWitness(
     if (documentRef.getElementById('flight-preparation-status')?.dataset.state !== 'busy') return;
     try {
       if (boundaries.length) throw Error('Repeated public cancellation');
+      if (retainStart && !initialStart) throw Error('Missing trusted submitted Start boundary');
       boundaries.push(state('cancel-back', event));
     } catch (error) {
       fail(error.message);
@@ -1269,6 +1320,32 @@ export function installRequiredOriginalRequestWitness(
   environment.addEventListener('pagehide', close, { once: true });
   return {
     close,
+    captureStart(event) {
+      if (!retainStart || closed) return false;
+      try {
+        if (initialStart) throw Error('Repeated initial Start boundary');
+        if (
+          event?.isTrusted !== true ||
+          event.target?.closest?.('#start-button')?.id !== 'start-button'
+        )
+          throw Error('Required-original Start must be the trusted direct public control');
+        const row = state('initial-start', event);
+        if (
+          !row.visible ||
+          !row.focused ||
+          row.openDialogs !== 0 ||
+          row.tick !== 0 ||
+          row.levelId !== 'first-return' ||
+          row.runEvidence !== 'submitted-board'
+        )
+          throw Error('Invalid submitted initial Start boundary');
+        initialStart = row;
+        return true;
+      } catch (error) {
+        fail(error.message);
+        return false;
+      }
+    },
     completeCancellation() {
       if (closed || !capturedCancelEvent || boundaries.length !== 1)
         throw Error('Invalid native cancellation completion boundary');
@@ -1283,7 +1360,12 @@ export function installRequiredOriginalRequestWitness(
     },
     snapshot() {
       const result = {
-        format: 'SoloRequiredOriginalCancellationWitnessV1',
+        format: retainStart
+          ? 'SoloRequiredOriginalCancellationWitnessV2'
+          : 'SoloRequiredOriginalCancellationWitnessV1',
+        ...(retainStart
+          ? { startRetention, initialStart: initialStart && structuredClone(initialStart) }
+          : {}),
         targetPath: new URL(target).pathname,
         failure,
         closed,
@@ -1309,7 +1391,8 @@ export function installRequiredOriginalRequestWitness(
 }
 
 export function assertRequiredOriginalCancellation(witness, claimed) {
-  assert.equal(witness?.format, 'SoloRequiredOriginalCancellationWitnessV1');
+  const retainedStart = witness?.format === 'SoloRequiredOriginalCancellationWitnessV2';
+  assert(retainedStart || witness?.format === 'SoloRequiredOriginalCancellationWitnessV1');
   assert.equal(witness.failure, null);
   assert(Buffer.byteLength(JSON.stringify(witness)) <= 8192);
   assert(Number.isSafeInteger(claimed) && claimed >= 1 && claimed <= 2);
@@ -1328,7 +1411,21 @@ export function assertRequiredOriginalCancellation(witness, claimed) {
     assert(Number.isFinite(row.atMs) && row.atMs >= 0);
     assert.equal(row.requests.length, claimed);
   }
-  assert.equal(before.runEvidence, 'submitted-board');
+  if (retainedStart) {
+    assert.equal(witness.startRetention, 'trusted-initial-start-v1');
+    const initial = witness.initialStart;
+    assert.equal(initial?.kind, 'initial-start');
+    assert(initial.trusted && initial.visible && initial.focused);
+    assert(['briefing', 'paused'].includes(initial.phase));
+    assert.equal(initial.openDialogs, 0);
+    assert.equal(initial.tick, 0);
+    assert.equal(initial.levelId, 'first-return');
+    assert.equal(initial.runEvidence, 'submitted-board');
+    assert(Number.isFinite(initial.atMs) && initial.atMs >= 0 && initial.atMs <= before.atMs);
+    assert(before.atMs - initial.atMs <= 10000, 'No renewed initial Start observation deadline');
+    assert.deepEqual(initial.checkpoint, before.checkpoint);
+    assert(['submitted-board', 'retained-inactive-reference'].includes(before.runEvidence));
+  } else assert.equal(before.runEvidence, 'submitted-board');
   assert(['submitted-board', 'retained-inactive-reference'].includes(after.runEvidence));
   assert.equal(before.preparation, 'busy');
   assert.equal(after.preparation, 'cancelled');
@@ -2595,6 +2692,7 @@ export function assessReadinessMediaFault({
   fallback,
   cleanupFailure,
   audioCheck,
+  startRetention = null,
 }) {
   const failures = [];
   let projected;
@@ -2604,6 +2702,14 @@ export function assessReadinessMediaFault({
     assert(!cleanupFailure, 'Media cleanup failed');
     assertReadinessMediaTransport(transport, protocol);
     const required = protocol === 'required-original-cancel-v1';
+    if (startRetention !== null) assert(required && startRetention === 'trusted-initial-start-v1');
+    if (required)
+      assert.equal(
+        witness?.format,
+        startRetention
+          ? 'SoloRequiredOriginalCancellationWitnessV2'
+          : 'SoloRequiredOriginalCancellationWitnessV1',
+      );
     const records = observation.records;
     assert.deepEqual(
       records.map((row) => row.kind),
@@ -2623,6 +2729,16 @@ export function assessReadinessMediaFault({
       assert(fresh.trusted && fresh.atMs >= after.atMs);
       assert(['briefing', 'paused'].includes(fresh.phase));
       assert(fresh.visible && fresh.focused);
+      if (witness.format === 'SoloRequiredOriginalCancellationWitnessV2') {
+        assert.equal(first.submittedRunMatches, true);
+        assert(
+          witness.initialStart.atMs >= first.atMs && witness.initialStart.atMs - first.atMs <= 1000,
+        );
+        for (const row of records.slice(1)) {
+          assert.equal(row.run, first.run, 'Fresh Start must rejoin the initially submitted run');
+          assert.equal(row.submittedRunMatches, true, 'Rejoin requires current submitted board');
+        }
+      }
     } else if (protocol === 'optional-audio-start-missing-v1') {
       assertOptionalAudioFallback(application, audioCheck);
       assert.equal(

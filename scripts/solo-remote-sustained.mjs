@@ -373,6 +373,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
         ([
           'readiness-geometry-corrected-package',
           'readiness-preparation-row-candidatee1cc',
+          'readiness-diagnosed-row-candidate239',
         ].includes(plan.sourceCohort) &&
           ['warm-resume', 'saved-resume'].includes(plan.phase)));
     const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
@@ -387,7 +388,12 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
         assert.deepEqual(plan.fixture, selected.fixture);
         assert.equal(plan.protocol.name, selected.protocol);
         assert.equal(raw.readinessPilot.protocol, selected.protocol);
-      } else if (plan.sourceCohort === 'readiness-preparation-row-candidatee1cc') {
+      } else if (
+        [
+          'readiness-preparation-row-candidatee1cc',
+          'readiness-diagnosed-row-candidate239',
+        ].includes(plan.sourceCohort)
+      ) {
         const { preparationReadinessSelection } = await import('./solo-remote-readiness.mjs');
         const selected = preparationReadinessSelection(plan);
         assert.equal(plan.candidate.revision, selected.source.revision);
@@ -396,6 +402,10 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
         assert.deepEqual(plan.fixture, selected.fixture);
         assert.equal(plan.protocol.name, selected.protocol);
         assert.equal(raw.readinessPilot.protocol, selected.protocol);
+        if (selected.requiredStartRetention) {
+          assert.equal(plan.protocol.requiredStartRetention, selected.requiredStartRetention);
+          assert.equal(raw.readinessPilot.requiredStartRetention, selected.requiredStartRetention);
+        }
         if (selected.geometry) {
           assert.equal(plan.protocol.geometryObservation, 'phase-boundary-v1');
           assert.equal(raw.readinessPilot.geometryObservation, 'phase-boundary-v1');
