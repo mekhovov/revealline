@@ -26,6 +26,8 @@ import {
   dispatchTouchDirection,
   writeTouchReport,
   closeTouchOwner,
+  observeTouchCadenceAfterStart,
+  readPartialTouchReplay,
 } from './observe-solo-native-touch.mjs';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import { quantileBound } from './solo-qualification.mjs';
@@ -513,4 +515,122 @@ test('headed touch uses the same owned display wrapper for preflight and each ro
   ]);
   assert.throws(() => touchDisplayCommand({ 'xvfb-run': { path: '/tmp/replacement' } }, ['node']));
   assert.equal(TOUCH_PROTOCOL.headed, true);
+});
+
+function publicReplayPage({
+  open = true,
+  text = '{"version":"retained"}',
+  phases = ['paused'],
+} = {}) {
+  const calls = [];
+  let reads = 0;
+  return {
+    calls,
+    locator(selector) {
+      return {
+        async getAttribute(name) {
+          assert.equal(selector, 'body');
+          assert.equal(name, 'data-flight-state');
+          return phases[Math.min(reads++, phases.length - 1)];
+        },
+        async isVisible() {
+          return selector === '#replay-dialog' ? open : true;
+        },
+        async inputValue(options) {
+          assert.equal(selector, '#replay-json');
+          if (options) assert(options.timeout > 0 && options.timeout <= 10000);
+          return text;
+        },
+        async waitFor() {},
+        async isEnabled() {
+          return true;
+        },
+        async click() {
+          calls.push(selector);
+          assert(!open, 'The exact failed WebKit retry clicks behind its already-open modal');
+          if (selector === '#export-replay') open = true;
+        },
+      };
+    },
+  };
+}
+
+test('partial touch readback preserves an already-open public replay after the native click timed out', async () => {
+  const page = publicReplayPage();
+  assert.deepEqual(await readPartialTouchReplay(page), {
+    recording: '{"version":"retained"}',
+    source: 'already-open-public-replay-dialog',
+  });
+  assert.deepEqual(page.calls, [], 'No second menu/export click through the public modal');
+  const raw = rawTouch();
+  raw.status = 'fail';
+  raw.failure = 'locator.click: Timeout; performing click action';
+  raw.partialReplay = true;
+  raw.partialReplayReadback = { source: 'already-open-public-replay-dialog' };
+  const plan = bindTouchJob(manifest(), 'chromium-dpad');
+  assert.equal((await touchAssessment(plan, plan.rows[0], raw, command)).status, 'failed');
+  assert.match(raw.failure, /performing click action/);
+  assert.equal(raw.nativeReplay.status, 'pass', 'Internally valid replay cannot erase the failure');
+});
+
+test('partial touch readback keeps the ordinary public export path when no replay dialog exists', async () => {
+  const page = publicReplayPage({ open: false });
+  assert.equal((await readPartialTouchReplay(page)).source, 'public-export-controls');
+  assert.deepEqual(page.calls, [
+    '#shell-menu',
+    '#shell-options',
+    '#settings-tab-extras',
+    '#shell-workshop',
+    '#export-replay',
+  ]);
+});
+
+test('partial touch readback rejects running, changed phase, malformed, empty and oversized public text', async () => {
+  for (const options of [
+    { phases: ['running'] },
+    { phases: ['paused', 'running'] },
+    { text: '' },
+    { text: '   ' },
+    { text: '{' },
+    { text: 'null' },
+    { text: '[]' },
+    { text: '"not a replay object"' },
+    { text: 'x'.repeat(TOUCH_PROTOCOL.replayBytes + 1) },
+  ])
+    await assert.rejects(readPartialTouchReplay(publicReplayPage(options)));
+  for (const timeout of [0, -1, NaN, Infinity, 10001])
+    await assert.rejects(readPartialTouchReplay(publicReplayPage(), timeout));
+});
+
+test('internal touch cadence observation follows owned public Start and never replaces settled120 authority', async () => {
+  const report = { externalCadence: { baselineMs: 16.7, authority: 'retained' } };
+  const external = structuredClone(report.externalCadence);
+  let calls = 0;
+  await observeTouchCadenceAfterStart(
+    {
+      async waitForFunction(predicate, argument, options) {
+        calls++;
+        assert.match(String(predicate), /readyCount === 30/);
+        assert.equal(argument, null);
+        assert.equal(options.timeout, 5000);
+        throw Error('Optional internal readiness unavailable');
+      },
+    },
+    report,
+  );
+  assert.equal(calls, 1);
+  assert.equal(report.internalCadenceBoundary, 'after-public-start-before-native-input');
+  assert.match(report.internalCadenceWait, /unavailable/);
+  assert.deepEqual(report.externalCadence, external);
+  const source = await readFile(
+    new URL('./observe-solo-native-touch.mjs', import.meta.url),
+    'utf8',
+  );
+  const body = source.slice(source.indexOf('export async function observeTouch('));
+  const check = body.indexOf('await observeTouchCadenceAfterStart(page, report)');
+  assert(check > body.indexOf("await requirePhase('running', 60000)"));
+  assert(check > body.indexOf("action('first-active-retained-paint-observed')"));
+  assert(check < body.indexOf('const initial = await page.evaluate'));
+  assert.equal(body.match(/observeTouchCadenceAfterStart\(page, report\)/g)?.length, 1);
+  assert(!body.includes('readyCount === 30'), 'No title-stage internal wait remains');
 });

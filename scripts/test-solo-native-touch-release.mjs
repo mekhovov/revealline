@@ -8,6 +8,23 @@ const root = new URL('../', import.meta.url);
 const planPath = 'docs/performance/solo-native-touch-plan.json';
 const workflowPath = '.github/workflows/solo-remote-native-touch-temporary.yml';
 const read = (path) => readFile(new URL(path, root));
+const historicalBytes = await read(
+  'docs/performance/fixtures/solo-native-touch/696-execution-source.json',
+);
+function assertRecordedTouchReference(ref, bytes = historicalBytes) {
+  assert.equal(bytes.length, 1706);
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '1cc44ad15a0b453c35007a062a17fa72e53ec9251ce096fa88ab581c73cd8ff4',
+  );
+  const source = JSON.parse(bytes);
+  assert.equal(source.format, 'SoloTouchHistoricalObserverWitnessV1');
+  assert.equal(source.sourceRevision, '69639b30d985ffa723a4d0c11756b632fc2da5c1');
+  assert.equal(source.run, 39017369097);
+  const original = source.refs.find((entry) => entry.path === ref.path);
+  assert(original, 'Only an independently recorded Git source reference is accepted');
+  assert.deepEqual(ref, { path: original.path, bytes: original.bytes, sha256: original.sha256 });
+}
 const plan = JSON.parse(await read(planPath));
 const workflow = (await read(workflowPath)).toString();
 const edge = 'a7e0219818842f02399317ca6d2a14bdd506da3d';
@@ -98,6 +115,10 @@ function check(value, text) {
 test('actual native touch release retains twelve fixed observations, exact failed predecessor and bounded owned workflow', async () => {
   check(plan, workflow);
   for (const ref of [...plan.adapterInputs, ...plan.frozenTools, plan.fixture]) {
+    if (ref.path === 'scripts/observe-solo-native-touch.mjs') {
+      assertRecordedTouchReference(ref);
+      continue;
+    }
     const bytes = await read(ref.path);
     assert.equal(bytes.length, ref.bytes, ref.path);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
@@ -131,4 +152,32 @@ test('touch release rejects source, protocol, evidence, scope, one-shot and dyna
     (s) => s.replace('path: candidate', 'path: candidate\n          sparse-checkout: game'),
   ])
     assert.throws(() => check(plan, alter(workflow)));
+});
+
+test('historical touch observer witness rejects altered dispatch source and mismatched references', () => {
+  const original = JSON.parse(historicalBytes).refs.find((entry) =>
+    entry.path.endsWith('/observe-solo-native-touch.mjs'),
+  );
+  const ref = { path: original.path, bytes: original.bytes, sha256: original.sha256 };
+  assertRecordedTouchReference(ref);
+  for (const change of [
+    (value) => (value.path = 'scripts/other-observer.mjs'),
+    (value) => value.bytes++,
+    (value) => (value.sha256 = '0'.repeat(64)),
+  ]) {
+    const modified = structuredClone(ref);
+    change(modified);
+    assert.throws(() => assertRecordedTouchReference(modified));
+  }
+  for (const change of [
+    (value) => (value.sourceRevision = '0'.repeat(40)),
+    (value) => (value.sourceTree = '1'.repeat(40)),
+    (value) => value.run++,
+    (value) => (value.refs[0].blob = 'f'.repeat(40)),
+    (value) => value.refs[0].bytes++,
+  ]) {
+    const modified = JSON.parse(historicalBytes);
+    change(modified);
+    assert.throws(() => assertRecordedTouchReference(ref, Buffer.from(JSON.stringify(modified))));
+  }
 });
