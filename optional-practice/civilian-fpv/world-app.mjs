@@ -4921,6 +4921,10 @@ export function mountWorldApp({
     const flightState = state ?? flight?.snapshot();
     if (advanced && flightState?.reason === 'worker-error')
       paintText('flight-status', txt('Advanced worker interrupted. Restart to fly again.', 'Потік Advanced перервано. Перезапустіть політ.'));
+    if (advanced && flightState?.reason === 'duration-limit')
+      paintText('flight-status', txt('Flight duration limit reached. Export your recording, then restart for a new flight.', 'Досягнуто межі тривалості польоту. Експортуйте запис і перезапустіть для нового польоту.'));
+    if (advanced && flightState?.reason === 'recording-limit')
+      paintText('flight-status', txt('Recording capacity reached. Export your recording, then restart for a new flight.', 'Досягнуто межі обсягу запису. Експортуйте запис і перезапустіть для нового польоту.'));
     if (advanced && flightState?.reason === 'region-edge')
       paintText('flight-status', txt('Region boundary reached. Restart to return to the launch point.', 'Межу регіону досягнуто. Перезапустіть, щоб повернутися до старту.'));
   }
@@ -5137,7 +5141,8 @@ export function mountWorldApp({
       pauseOpensMenu: Boolean(current?.regional),
       missionName: $('flight-title').textContent,
       summary: $('flight-menu-brief').textContent,
-      canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status),
+      canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status) &&
+        (!current.regional || state.reason === 'prepared'),
       muted: !audio.enabled(),
     });
     updateSectorHUD();
@@ -6002,7 +6007,7 @@ export function mountWorldApp({
               renderer?.observePresentation?.(state);
             }
             if (state.reason === 'terrain-required') void prepareRegionalFlight().catch(reportError);
-            else if (['region-edge', 'worker-error'].includes(state.reason)) pauseFlight();
+            else if (['region-edge', 'worker-error', 'duration-limit', 'recording-limit'].includes(state.reason)) pauseFlight();
             updateHUD(state);
           }).catch((error) => {
             if (disposed || flight !== selectedFlight) return;
@@ -6204,6 +6209,7 @@ export function mountWorldApp({
       try {
         await wait(selected.prepare());
         if (!owns()) return;
+        if (['duration-limit', 'recording-limit'].includes(selected.snapshot().reason)) return;
         regionalPreparationStage = 'graphics';
         const graphicsReady = await wait(renderer.prepare({ signal: preparationDeadline.signal }));
         if (!owns()) return;
@@ -7522,6 +7528,7 @@ export function mountWorldApp({
       (current?.regionalAdvanced && regionalAdvancedControls?.busy) ||
       ghostLookup ||
       !flight ||
+      (current?.regional && flight.snapshot().reason !== 'prepared' && flight.snapshot().status !== 'active') ||
       terminal(flight.snapshot()) ||
       (replayProof && finished)
     )
@@ -8748,7 +8755,9 @@ export function mountWorldApp({
       if (disposed || flight !== selected) return;
       sceneReady = false;
       await prepareRegionalFlight();
-      regionalAdvancedMessage.textContent = txt('Recovery restored. Flight stays paused; arm when ready.', 'Політ відновлено на паузі; увімкніть, коли будете готові.');
+      regionalAdvancedMessage.textContent = ['duration-limit', 'recording-limit'].includes(selected.snapshot().reason)
+        ? txt('Recovery restored at the flight limit. Export your recording or restart.', 'Політ відновлено на межі запису. Експортуйте запис або перезапустіть.')
+        : txt('Recovery restored. Flight stays paused; arm when ready.', 'Політ відновлено на паузі; увімкніть, коли будете готові.');
     } catch (error) {
       if (!disposed && flight === selected) regionalAdvancedMessage.textContent = error.name === 'AbortError'
         ? txt('Recovery verification cancelled. The current flight is unchanged.', 'Перевірку відновлення скасовано. Поточний політ не змінено.')

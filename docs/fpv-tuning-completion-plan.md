@@ -1,5 +1,30 @@
 # FPV tuning: reviewed completion plan
 
+## Current completion review
+
+The latest continuation rebased on `1d631986ad73ba1301a151a76b1607cf03dbe97a`
+before edits. The [boundary review](fpv-tuning-boundary-review.md) records fresh
+primary-source examples and three concrete corrections: history restoration
+supersedes pending imports, preset review metadata matches the tagged parser,
+and Regional flight limits retain recording export and explicit restart.
+Its verification and delivery status takes precedence over the historical reviews
+below. Earlier receipts keep their original source and deployment scope.
+
+| Original phase | Current disposition |
+| --- | --- |
+| 0 — Base and compatibility | Rebased; legacy identities, migration and historical recordings retained. |
+| 1 — Rates and throttle | Five models and exact verified-version throttle behavior implemented. |
+| 2 — Profiles, setups and tuning | Implemented; latest history/import transition receives additional regression coverage. |
+| 3 — Configuration and preset transfer | Implemented for the five explicitly verified releases; latest metadata parity correction is bounded to the tagged parser. |
+| 4 — Advanced backend | Optional unscored backend implemented with fixed timing, recording, recovery and transactional Regional admission; latest Regional limit handling closes an export lifecycle gap. |
+| 5 — Aircraft and comparison | Editable templates, controller tunes and frozen comparison identities implemented. Measured aircraft fitting, propwash/ground effect and scored comparison remain qualification-dependent. |
+| 6 — Delivery and rollout | Existing features published; new corrections follow ordinary CI/publication. Physical-device, pilot, iOS and wider-platform qualification remain deferred. Advanced is not promoted to scored/default use. |
+
+No additional algorithm, online catalog, automatic PID conversion or physics
+slider is added merely because another simulator advertises one. Complete the
+bounded corrections and their verification, then stop software expansion. The
+user's unavailable measurements remain explicit future acceptance work.
+
 Reviewed 17 October 2026 against the original phased plan and current upstream
 documentation. The first review used implementation `8202201b7` on `741948b14`;
 the second review rebased the accumulated work onto `3585f2c32` before edits.

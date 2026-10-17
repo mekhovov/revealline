@@ -8,6 +8,23 @@ all succeeded. Historical reports retain their original source hashes and scope;
 the post-deployment evidence is recorded separately below. Those public receipts
 qualify the original deployed merge, not the later corrections.
 
+
+## Boundary completion review
+
+Rebased on main `1d631986a` before this continuation. The
+[updated boundary review](fpv-tuning-boundary-review.md) adds primary-source
+examples and closes three reproduced gaps: history restoration invalidates stale
+import intent; preset `FORCE_OPTIONS_REVIEW: yes` metadata matches the tagged
+parser; Regional duration/recording stops retain export, recovery and explicit
+restart without misclassifying them as broken workers. Unknown worker failures
+remain unavailable and Advanced remains unscored.
+
+All **731 practice tests** and release validation pass. Six editor-browser cases
+pass, including delayed import completion after restoring same-rate history.
+All 20 pins in the existing numerical matrix still match; no physics, timing or
+quota change was made. Final browser/native receipts and ordinary delivery are
+recorded in the boundary review. Earlier reports below keep their original scope.
+
 ## Post-publication corrections
 
 The refreshed-main review found and fixed three concrete issues:

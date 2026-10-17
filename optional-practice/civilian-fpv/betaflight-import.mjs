@@ -992,7 +992,8 @@ export function resolveBetaflightPresetBundle({ files, entry, options = {} }) {
         );
         if (path === root) {
           if (match[1] === 'FORCE_OPTIONS_REVIEW')
-            forceOptionsReview = match[2] === undefined || match[2].trim().toUpperCase() === 'TRUE';
+            forceOptionsReview =
+              match[2] === undefined || ['true', 'yes'].includes(match[2].trim().toLowerCase());
           else metadata.push({ field: match[1], text: match[2] ?? '' });
         }
       } else {
