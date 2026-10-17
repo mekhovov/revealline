@@ -287,8 +287,8 @@
     },
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 73993,
-      "sha256": "b795e0c0d86c1f53253fe2e0b67d5a95371111351a6f579352fd8825879a9199"
+      "bytes": 81686,
+      "sha256": "fd24902fd2bebd78249951f2b64bfaabd1c0e2499c217c8551820bc8fb2a7b03"
     },
     {
       "path": "scripts/soundtrack-archive-admissions.mjs",
