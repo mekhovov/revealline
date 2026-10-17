@@ -1,0 +1,50 @@
+{
+  "head": "7842d6249217eade6d4ea5f7220b6dd8d4ff01af",
+  "files": [
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/transactions.mjs",
+      "bytes": 12852,
+      "SHA256": "d611006d8a3018043faca7246224578467a827608dfb74349ebc43aa1d54839a"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/observe.mjs",
+      "bytes": 11901,
+      "SHA256": "7d83d64aaad96f00b9d53287090394bc6c6b2c6c32830c6fed645d5f8fc88721"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/verify-transactions.mjs",
+      "bytes": 15964,
+      "SHA256": "871eff67450fcb0ae9d74a4a4b8ec5ce79703a591475bc566987de589f0f1b5b"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/verify.mjs",
+      "bytes": 18030,
+      "SHA256": "f3e98f7346c24bbf8f768c223fa972ae62698c449a1a05273fc874268078a564"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/host.mjs",
+      "bytes": 4895,
+      "SHA256": "cd8ce972275d6e4a9af26429edac44eabcc242ea18633506290122b3bf402a36"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/prepare.mjs",
+      "bytes": 3202,
+      "SHA256": "fc9bdbb4e8cd1cc729efd3e24caee054bc75cbee62a41e5f22572bc139862fd0"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/access.mjs",
+      "bytes": 2664,
+      "SHA256": "addae5fb9d3458611e560ac65ec496db31a441b445f451a15f4f2acc55b2e30b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "bytes": 17516,
+      "SHA256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "bytes": 18572,
+      "SHA256": "145f0d3010e26c3cc4be105050c8e344808983907d3121741c9ae6a8bc382001"
+    }
+  ]
+}

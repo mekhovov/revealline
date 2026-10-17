@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: transaction capture is opt-in; mount/snapshot issue no operation and native methods stay unchanged by default
+ok 1 - transaction capture is opt-in; mount/snapshot issue no operation and native methods stay unchanged by default
+  ---
+  duration_ms: 4.538709
+  ...
+# Subtest: actual main741 WorldStore listing distinguishes successful empty, active-only and retained metadata without exporting content
+ok 2 - actual main741 WorldStore listing distinguishes successful empty, active-only and retained metadata without exporting content
+  ---
+  duration_ms: 7.285834
+  ...
+# Subtest: pending, caller-aborted, filtered and stopped reads never establish empty
+ok 3 - pending, caller-aborted, filtered and stopped reads never establish empty
+  ---
+  duration_ms: 2.627875
+  ...
+# Subtest: a real caller close and later failed start share connection identity and sanitized caller evidence
+ok 4 - a real caller close and later failed start share connection identity and sanitized caller evidence
+  ---
+  duration_ms: 1.202625
+  ...
+# Subtest: record listing scope and versionchange-triggered close stay distinct from an unobserved original cause
+ok 5 - record listing scope and versionchange-triggered close stay distinct from an unobserved original cause
+  ---
+  duration_ms: 1.222959
+  ...
+# Subtest: foreign receivers, thrown identity and option coercions retain caller contracts
+ok 6 - foreign receivers, thrown identity and option coercions retain caller contracts
+  ---
+  duration_ms: 0.958417
+  ...
+# Subtest: a partially visited cursor stays unknown; a mid-read caller abort stays failed
+ok 7 - a partially visited cursor stays unknown; a mid-read caller abort stays failed
+  ---
+  duration_ms: 1.408625
+  ...
+# Subtest: active capture cap and refused interception remain explicit and do not block application transactions
+ok 8 - active capture cap and refused interception remain explicit and do not block application transactions
+  ---
+  duration_ms: 4.811083
+  ...
+# Subtest: unknown databases remain outside transaction capture; restoration keeps a later owner
+ok 9 - unknown databases remain outside transaction capture; restoration keeps a later owner
+  ---
+  duration_ms: 0.948083
+  ...
+# Subtest: bounded history and read cap disclose incomplete coverage instead of empty
+ok 10 - bounded history and read cap disclose incomplete coverage instead of empty
+  ---
+  duration_ms: 17.633667
+  ...
+# Subtest: cursor deliveries are a lower bound even when a caller skips to exhaustion
+ok 11 - cursor deliveries are a lower bound even when a caller skips to exhaustion
+  ---
+  duration_ms: 2.017917
+  ...
+# Subtest: normal owner keeps request/database identity, one argument coercion and schema/data ownership
+ok 12 - normal owner keeps request/database identity, one argument coercion and schema/data ownership
+  ---
+  duration_ms: 4.916667
+  ...
+# Subtest: passive versionchange/blocked/forced-close events do not replace application handlers or solve cause
+ok 13 - passive versionchange/blocked/forced-close events do not replace application handlers or solve cause
+  ---
+  duration_ms: 1.432292
+  ...
+# Subtest: explicit opt-in preserves native close receiver/return/exception and restores its owned instance descriptor
+ok 14 - explicit opt-in preserves native close receiver/return/exception and restores its owned instance descriptor
+  ---
+  duration_ms: 1.21625
+  ...
+# Subtest: connection and event overflow stay bounded and detached snapshots cannot edit retained facts
+ok 15 - connection and event overflow stay bounded and detached snapshots cannot edit retained facts
+  ---
+  duration_ms: 3.5285
+  ...
+# Subtest: pending cap and stop leave caller requests/upgrade intact and never close their resulting connections
+ok 16 - pending cap and stop leave caller requests/upgrade intact and never close their resulting connections
+  ---
+  duration_ms: 2.79925
+  ...
+# Subtest: names, errors, caller paths and interception failures cannot export raw player strings
+ok 17 - names, errors, caller paths and interception failures cannot export raw player strings
+  ---
+  duration_ms: 0.977
+  ...
+# Subtest: stop respects a later close owner, and explicit interception refusal does not break ordinary opens
+ok 18 - stop respects a later close owner, and explicit interception refusal does not break ordinary opens
+  ---
+  duration_ms: 0.671459
+  ...
+# Subtest: factory/window facades preserve native receiver checks, constructors and ordinary non-open calls
+ok 19 - factory/window facades preserve native receiver checks, constructors and ordinary non-open calls
+  ---
+  duration_ms: 0.389166
+  ...
+# Subtest: separate host preparation preserves original bytes and refuses overwrite, alternate entry and path escapes
+ok 20 - separate host preparation preserves original bytes and refuses overwrite, alternate entry and path escapes
+  ---
+  duration_ms: 6.026209
+  ...
+# Subtest: diagnostic access belongs to the current native modal, preserves player focus and refuses active or unknown ownership
+ok 21 - diagnostic access belongs to the current native modal, preserves player focus and refuses active or unknown ownership
+  ---
+  duration_ms: 2.06575
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 100.982208
