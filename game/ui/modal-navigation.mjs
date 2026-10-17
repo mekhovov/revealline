@@ -84,6 +84,13 @@ export function attachModalNavigation({
     }
     return stack.at(-1)?.dialog ?? null;
   }
+  function hasOpenDialog() {
+    if (destroyed) return false;
+    const top = topDialog();
+    // Multiple pre-existing dialogs have no known top-layer order. Their
+    // presence still blocks gameplay even when topDialog deliberately returns null.
+    return Boolean(top) || !emptyKnown;
+  }
   const beforeToggle = (event) => {
     if (isDialog(event.target) && event.newState === 'open' && !event.defaultPrevented)
       opened(event.target, doc.activeElement);
@@ -154,6 +161,7 @@ export function attachModalNavigation({
   doc.addEventListener('close', close, true);
   return {
     topDialog,
+    hasOpenDialog,
     destroy() {
       if (destroyed) return;
       destroyed = true;

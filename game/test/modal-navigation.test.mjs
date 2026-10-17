@@ -417,6 +417,76 @@ test('modal empty discovery retains polling when observation is unavailable', ()
   assert.equal(scans, 4);
 });
 
+test('modal presence and top lookup share one empty discovery across unchanged frame polls', () => {
+  const h = observedSurface();
+  for (let i = 0; i < 120; i++) {
+    assert.equal(h.stack.hasOpenDialog(), false);
+    assert.equal(h.stack.topDialog(), null);
+  }
+  assert.equal(h.scans(), 1);
+  h.stack.destroy();
+  assert.equal(h.stack.hasOpenDialog(), false);
+  assert.equal(h.scans(), 1);
+});
+
+test('modal presence reports ambiguous pre-existing opens without inventing their order', () => {
+  const h = observedSurface(({ dialogs }) => dialogs.forEach(openWithoutEvents));
+  assert.equal(h.stack.hasOpenDialog(), true);
+  assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.stack.hasOpenDialog(), true);
+  for (const dialog of h.dialogs) {
+    dialog.open = false;
+    dialog.removeAttribute('open');
+    h.observer.pending.push({ target: dialog, attributeName: 'open', oldValue: '' });
+  }
+  assert.equal(h.stack.hasOpenDialog(), false);
+  const emptyScans = h.scans();
+  for (let i = 0; i < 120; i++) assert.equal(h.stack.hasOpenDialog(), false);
+  assert.equal(h.scans(), emptyScans);
+  h.stack.destroy();
+});
+
+test('modal presence drains queued open and subtree changes before observer delivery', () => {
+  const h = observedSurface();
+  assert.equal(h.stack.hasOpenDialog(), false);
+  const dialog = h.dialogs[0];
+  openWithoutEvents(dialog);
+  h.observer.pending.push({ target: dialog, attributeName: 'open', oldValue: null });
+  assert.equal(h.stack.hasOpenDialog(), true);
+  dialog.open = false;
+  dialog.removeAttribute('open');
+  h.observer.pending.push({ target: dialog, attributeName: 'open', oldValue: '' });
+  assert.equal(h.stack.hasOpenDialog(), false);
+  const subtree = h.doc.createElement('section'),
+    inserted = h.doc.createElement('dialog');
+  openWithoutEvents(inserted);
+  subtree.append(inserted);
+  h.doc.body.append(subtree);
+  h.observer.pending.push({ type: 'childList', addedNodes: [subtree], removedNodes: [] });
+  assert.equal(h.stack.hasOpenDialog(), true);
+  subtree.remove();
+  h.observer.pending.push({ type: 'childList', addedNodes: [], removedNodes: [subtree] });
+  assert.equal(h.stack.hasOpenDialog(), false);
+  h.stack.destroy();
+});
+
+test('modal presence retains polling without an observer and after a dialog closes', () => {
+  const h = surface(),
+    stack = attachModalNavigation({ document: h.doc });
+  assert.equal(stack.hasOpenDialog(), false);
+  for (const dialog of h.dialogs) openWithoutEvents(dialog);
+  assert.equal(stack.hasOpenDialog(), true);
+  assert.equal(stack.topDialog(), null);
+  h.dialogs[0].open = false;
+  h.dialogs[0].removeAttribute('open');
+  assert.equal(stack.hasOpenDialog(), true);
+  assert.equal(stack.topDialog(), h.dialogs[1]);
+  h.dialogs[1].open = false;
+  h.dialogs[1].removeAttribute('open');
+  assert.equal(stack.hasOpenDialog(), false);
+  stack.destroy();
+});
+
 for (const inactive of ['hidden', 'blur'])
   for (const when of ['at-close', 'after-close'])
     test(`modal close keeps stack cleanup but does not restore focus ${inactive}/${when}`, async () => {
