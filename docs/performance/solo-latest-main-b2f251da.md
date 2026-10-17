@@ -123,3 +123,29 @@ Receipt SHA-256:
 The separately retained changed-host comparison preserves all 19 baseline-matched
 failures; the complete seven-test performance host gate passes. See
 [the ownership change and exact comparison](solo-chooser-startup-20261017.md).
+
+## Frozen final startup batch checks
+
+Exact source `5218a66d684c75a7cbbad6787f06bca7ce415cd4`, tree
+`6c68ba40917e71fa14b4e3c47e7b07f8e577ac1c`, includes the shared scenario
+projection extraction, demand-created Optional Worlds owner, 105-file package
+gate, journal-hook comparison and held Cocoa media control. All three complete
+checks ran under Node 22.22.2 with a clean worktree and unchanged HEAD. Full
+lint passed in 14.587 seconds; content/localization/generated validation passed
+in 150.307 seconds. The existing 300-second and 4 MiB per-command limits stayed
+unchanged.
+
+Full formatting failed in 27.068 seconds on the same nine files. Every warning
+file is byte-identical to integrated main `b2f251da`; the receipt preserves both
+comparison-main hashes, including the FPV appearance file introduced by that
+main update. No whole-format or production-build pass is claimed. The two new
+runtime improvements still require their own packaged native confirmation.
+
+Retained directory:
+`.cache/solo-followup/bounded-final-checks-20261017T053056Z-5218a66d/`.
+Receipt SHA-256: `514fe55ad7ccffb5f9d0b891498e4a5f524ac815da41eec5970267c8601e7706`.
+The lint, validation and formatting logs contain 196, 3,885 and 698 bytes. Their
+SHA-256 values are respectively
+`477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c`,
+`f87d3e679daecd8aabb9d7ce6c3da117c8c8d12775ca44b935605e416d3d25a8`
+and `1f32e6a795e3b8b2947bcb523d39266c1e1a873dee9f5baeddb31e41e2d67f3e`.
