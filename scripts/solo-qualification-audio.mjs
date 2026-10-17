@@ -21,7 +21,7 @@ export function installAudioProof() {
       !Number.isSafeInteger(bytes) ||
       bytes < 1 ||
       bytes > 2 * 1024 * 1024 ||
-      sources.length >= 64 ||
+      sources.length >= 128 ||
       copiedBytes + bytes > 16 * 1024 * 1024
     ) {
       capped++;
@@ -186,7 +186,7 @@ export function installAudioProof() {
         limits: {
           encodedBytesPerSource: 2 * 1024 * 1024,
           aggregateEncodedBytes: 16 * 1024 * 1024,
-          sources: 64,
+          sources: 128,
           starts: 128,
           mediaEvents: 512,
           retainedElements: 8,

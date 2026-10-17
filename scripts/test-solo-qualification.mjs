@@ -1161,6 +1161,66 @@ test('explicit audio probe preserves native promises and links decoded buffers a
   );
 });
 
+test('audio identity keeps the baseline bank observable without exceeding source or byte bounds', async () => {
+  function probe() {
+    let nativeCalls = 0;
+    class Context {
+      decodeAudioData() {
+        nativeCalls++;
+        return Promise.resolve({ duration: 1 });
+      }
+    }
+    class Media {
+      play() {
+        return Promise.resolve();
+      }
+    }
+    const sandbox = {
+      window: { AudioContext: Context },
+      document: { body: { dataset: { flightState: 'briefing' } } },
+      HTMLMediaElement: Media,
+      URL: { createObjectURL: () => 'blob:bounded-test' },
+      crypto: webcrypto,
+      performance: { now: () => 1 },
+      Uint8Array,
+    };
+    vm.runInNewContext(`(${installAudioProof.toString()})()`, sandbox);
+    return {
+      context: new Context(),
+      proof: sandbox.window.soloAudioProof,
+      calls: () => nativeCalls,
+    };
+  }
+  const bank = probe();
+  for (let i = 0; i < 129; i++) await bank.context.decodeAudioData(new Uint8Array([i]).buffer);
+  let report;
+  for (let i = 0; i < 100; i++) {
+    report = bank.proof.export();
+    if (report.sources.every((row) => row.status === 'resolved')) break;
+    await new Promise((done) => setTimeout(done, 1));
+  }
+  assert.equal(bank.calls(), 129, 'Instrumentation never suppresses the native decoder');
+  assert.equal(report.sources.length, 128);
+  assert.equal(report.capped, 1);
+  assert.equal(report.copiedBytes, 128);
+  assert.equal(report.sources[94].decoded, true);
+  assert.equal(bank.proof.recordingsReady([report.sources[94].sha256]), true);
+  assert.equal(report.limits.sources, 128);
+  const bytes = probe();
+  await bytes.context.decodeAudioData(new ArrayBuffer(2 * 1024 ** 2 + 1));
+  assert.equal(bytes.proof.export().copiedBytes, 0, 'Per-source bound rejects before copying');
+  for (let i = 0; i < 8; i++) await bytes.context.decodeAudioData(new ArrayBuffer(2 * 1024 ** 2));
+  await bytes.context.decodeAudioData(new ArrayBuffer(1));
+  assert.equal(bytes.calls(), 10);
+  assert.equal(bytes.proof.export().copiedBytes, 16 * 1024 ** 2);
+  assert.equal(bytes.proof.export().sources.length, 8);
+  assert.equal(
+    bytes.proof.export().capped,
+    2,
+    'Aggregate byte limit remains independent of source capacity',
+  );
+});
+
 test('display arguments preserve defaults and label bounded desktop mobile-layout stress', () => {
   assert.deepEqual(qualificationDisplayOptions([]), {
     viewport: { width: 1280, height: 800 },
