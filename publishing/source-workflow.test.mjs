@@ -12,6 +12,26 @@ test('pull-request admission workflows do not require GitHub Pages', async () =>
     // pull requests, but it is not itself a pull-request workflow.
     if (name === 'publish-main-pages.yml') continue;
     const source = await fs.readFile(new URL(name, workflows), 'utf8');
+    if (name === 'measure-pages-candidate.yml' || name === 'measure-pages-stack.yml') {
+      // Manual measurement has no admission/deployment authority. Its archive
+      // uses the same pinned uploader but a non-deployment artifact name.
+      assert.match(source, /workflow_dispatch:/u);
+      assert.match(source, /github.ref == 'refs\/heads\/main'/u);
+      assert.doesNotMatch(source, /^\s+(?:pull_request|pull_request_target|workflow_run|push):/mu);
+      assert.doesNotMatch(
+        source,
+        /(?:contents|actions|pages|id-token):\s*write|environment:|actions\/deploy-pages@|pages-production/u,
+      );
+      if (name === 'measure-pages-candidate.yml') assert.match(source, /name: candidate-pages/u);
+      else
+        assert.match(
+          source,
+          /name: stack-pages-\$\{\{ github.run_id \}\}-\$\{\{ github.run_attempt \}\}/u,
+        );
+      assert.match(source, /MAX_PUBLISHED_BYTES: 980000000/u);
+      assert.match(source, /group: pages-candidate-diagnostic/u);
+      continue;
+    }
     if (name === 'preserve-pages-recovery.yml') {
       // This manually dispatched post-deployment recovery operation is not PR
       // admission. Assert its separation instead of mistaking receipt names

@@ -13,9 +13,9 @@ revisions require their own measurements; this is not a capacity reservation.
 
 The historical checkpoint sections below retain their original verification
 boundaries. Their then-pending production execution is now complete; durable
-recovery and capacity reduction are not.
+recovery was subsequently verified as recorded below; capacity reduction is not.
 
-The next isolated branch starts from refreshed main
+The recovery checkpoint's isolated branch started from refreshed main
 `d452bda9e22acf705751f11584cdcd5b0a0d4640`. It adds a manual, main-only recovery
 workflow, separate from production deployment and Flight package publication.
 It requires a successful source-bound main publication with successful build,
@@ -29,8 +29,8 @@ the latest game release. Existing releases are never overwritten.
 This checkpoint does not change repository-wide release immutability. A
 checksum-verified durable release is not a claim of GitHub-enforced immutability,
 browser gameplay qualification or an executed production rollback. The latter
-boundaries remain explicit. Actual runner execution and a representative startup
-rehearsal must be recorded before any Pages removal.
+boundaries remain explicit. Actual runner execution and representative startup
+are recorded below. Production rollback execution remains separate.
 
 After recovery acceptance, add a parent-first pending-PR capacity forecast and
 review consumer-proven download-only reductions. First reach a measured 950 MB
@@ -165,5 +165,296 @@ size, rollback readiness or capacity savings are claimed.
 5. Only then review a separately gated production rollback procedure and the
    first consumer-proven download-only reduction batch.
 
-Until these steps are verified, recovery remains pending. A checksum receipt is
-not a durable backup, and a source rebuild is not an exact-artifact restoration.
+A checksum receipt alone is not a durable backup, and a source rebuild is not an
+exact-artifact restoration. See the subsequent execution record below.
+
+## Recovery execution record — 2026-10-16
+
+PR #1522 merged as `4bb1cde4028509ff3c084a7306f9a383d674cb27`.
+Recovery workflow run `38815404958` successfully preserved publication run
+`38809373274`, source `836263fa3926bd23a68d67892829203f9931935c`.
+The separate, published, non-latest recovery release is:
+<https://github.com/mekhovov/revealline/releases/tag/pages-recovery-836263fa3926bd23a68d67892829203f9931935c>.
+Its tag was independently resolved to that source. This is checksum-verified
+durable preservation, not GitHub-enforced release immutability.
+
+- Runner restoration verified all 3,423 files byte-for-byte in a fresh directory;
+  the workflow redownloaded and verified all published assets before acceptance.
+- A separate public download of the complete 966,225,920-byte archive matched
+  SHA-256 `76fc76b57176395791a86dbe794f879ef15cff939f25b6bc0fec4025cf1c2ad1`.
+- Representative browser startup used a read-only localhost server serving the
+  exact verified archive. Every response was checked against its inventoried
+  size/hash. Normal authentication, main menu, 240-mission chooser, settings,
+  return navigation and reload passed. No warnings/errors were logged. The
+  network-idle wait timed out; the subsequent ready main-menu state was observed
+  directly, so that wait is not recorded as a passing test.
+- No flight, full gameplay, offline/device qualification, production rollback,
+  cache clearing, save migration or user-settings change is claimed. The second,
+  supplemental external-drive restoration subsequently completed: all 3,423
+  restored files and 963,249,020 bytes matched the preserved inventory. Browser
+  startup above still refers to the verified archive server, not that directory.
+
+## Capacity comparison checkpoint and remaining gates
+
+The read-only `scripts/pages-capacity-report.mjs` compares two complete publisher
+inventory/staging/archive receipt packets. It checks their internal identity,
+checksum and arithmetic consistency and reports file-level raw deltas separately
+from measured archive deltas and target headroom. It does not fetch archives,
+reverify archive bodies or GitHub provenance, isolate a PR's contribution, forecast
+a combined queue, qualify gameplay, or authorize a merge/removal/deployment.
+No workflow or capacity limit is changed by this diagnostic foundation.
+
+Production run `38817575550`, source
+`b11745223861c3973ad4bf440cc536198b8e0371`, reports 963,255,988 raw bytes and
+966,236,160 actual archive bytes. Comparison with the preserved source above
+reconciles 55 changed files and +6,968 raw bytes, while archive growth is +10,240
+bytes. Archive headroom is 13,763,840 bytes under 980 MB. The measured gaps are
+16,236,160 bytes to 950 MB and 66,236,160 bytes to 900 MB. This is a dated
+measurement, not a reservation for pending merges or a claim of savings.
+
+Proceed in this order, verifying each checkpoint before advancing:
+
+1. Verify the comparison foundation with malformed-input tests, real receipts,
+   focused-test routing and independent review. Keep its non-admission boundary.
+2. Add exact candidate and parent-first combined-queue archive measurements;
+   record source/base identities and invalidate stale results. Receipt deltas
+   alone cannot prove combined capacity. Existing qualification holds remain.
+3. Produce the consumer/ownership allowlist for each download-only candidate.
+   Reject runtime, editable-copy and offline dependencies. Verify pinned public
+   GitHub downloads and hashes before changing links; preserve Git originals,
+   full self-contained releases and existing application/storage boundaries.
+4. Apply only a small proven batch, verify every affected link/dependency and
+   complete final archive, then deploy and check live behavior before the next.
+   No deletions or savings have yet been made by this plan.
+5. Reach measured 950 MB, then pursue 900 MB operating headroom; only then consider
+   tightening guards. If safe candidates are insufficient, report the gap for a
+   human decision rather than removing shared gameplay or changing origins.
+
+## Shared evidence extraction — production verified
+
+The comparison foundation merged in #1529 as
+`0f0d4e152195901e59f211f3294203aff0b8e192`; publication `38825001991`
+passed build, deploy and public verification. Its archive remained 966,236,160
+bytes, with 3,424 inventoried files and 963,255,988 raw bytes. No savings occurred.
+
+The next isolated branch starts from refreshed main
+`2490636aca847ce3891b2260925f8b07dbcd0cee`. This small sub-checkpoint extracts
+only the two production Python evidence blocks into shared files. Their exact
+pre-extraction body hashes are frozen in regression tests; existing tiny positive
+and negative fixtures now execute those files. Workflow environment, step order,
+permissions, action pins, receipts, success dependencies and the 980 MB guard are
+unchanged. Rolling metadata extraction and the manual independent candidate
+measurement remain subsequent work, not completed by this change.
+
+Local extraction, workflow-policy and focused-routing tests passed 73 cases,
+zero failures or skips. Scoped lint and whitespace checks passed. Independent
+read-only review confirmed both frozen-base bodies are byte-identical and found
+no concrete blocker. PR #1536 merged as
+`9ce5d517b1cd9524284d313e23dce61e333f322f` after all applicable exact-head checks
+passed at `25cfa3408d2a5b8e163b1bab9ae59a4f3faa737d`; only test/build were
+policy-selected skips. Hosted focused verification passed all 211 tests.
+The external SMB volume does not support the hard-link fixture, so the unchanged
+tiny fixtures were rerun on the local filesystem without skipping that safeguard.
+Production run `38832146563` passed build, deploy and public verification for the
+merge source. The actual archive remained 966,236,160 bytes with 3,424 files and
+963,262,271 raw bytes. Its SHA-256 was
+`d641e6a0fdeca8f64d7990b7ffce2ff62a56f145291c1339dfd097dbbc40ed6a`;
+artifact ID `12017618388` was independently bound to the same run and source.
+Receipt consistency and source identity were independently checked, then public
+`main-deployment.json`, `release.json`, `releases/index.html`, `game/index.html`
+and `optional-practice/civilian-fpv/regional-library.mjs` were hash-matched to the
+accepted inventory. This supplemental check is not a second download of the full
+archive or full gameplay qualification. No savings, content removal or candidate
+forecast occurred.
+
+## Rolling metadata extraction — production verified
+
+The next isolated branch starts from refreshed main
+`428329745c3078941338ae6157e2ae1a55c28462`. Extract only the existing Node metadata
+block to `scripts/write-main-pages-metadata.mjs`, adjusting one relative import.
+Do not change identity fields, JSON order/newlines, exclusive writes, partial-write
+failure behavior, the shared access-gate helper, source date binding or step order.
+The pre-extraction block is frozen by SHA-256
+`e859bca5b49c90d92ea23d0fdd2de06a0f0f7420dc1053b675ff5244d88cbf55`.
+
+Eleven new metadata cases plus focused-routing and workflow-policy coverage pass
+61 tests without failures or skips, using tiny fixtures on the external drive.
+They assert exact JSON and complete protected HTML bytes with fake gate metadata,
+all three output collisions, missing/incomplete gate configuration, existing or
+absent release directories, paths with spaces and unchanged workflow inputs/order.
+Scoped lint, new-test formatting and whitespace checks pass. Independent review
+confirmed literal-body parity, the frozen protected HTML digest, unchanged helper
+and workflow bindings/gates, and found no concrete blocker. Exact-head hosted CI
+passed all 223 focused tests. PR #1539 merged as
+`9cd97a220e5337367afbdb9bd1affb6fde9b6363`; publication `38837441435` passed
+build, deploy and public verification. Independently checked receipt consistency,
+artifact `12020475380` run/source provenance and five representative live file
+hashes. The archive remained 966,236,160 bytes, raw 963,262,271 bytes, 3,424 files,
+SHA-256 `28e6a6930b613049ed521000f5f1d7c675acd47c53b72b2791404efcfe03fe14`.
+This is not a second full archive download or gameplay qualification. No capacity
+guard, permission, application storage, runtime content or publication origin is
+changed by this extraction.
+
+## Manual exact candidate measurement — implementation under verification
+
+This isolated unit starts from refreshed main
+`741948b14a09a816e49054c443511186bb99eb41`. Its publication `38838919718`
+subsequently passed all three jobs and matched public source. Receipt consistency
+and artifact `12020866255` provenance were independently checked: 966,236,160
+archive bytes, SHA-256
+`918755ed737f934f0831e36d561463e0873961ee5e1f2c4b13ad334567e6a5bd`.
+No new savings or capacity reservation follows from that dated baseline.
+
+The proposed manual-only workflow measures one same-repository, open PR based
+directly on an exact current main. Draft status is captured, not changed. A
+trusted preflight composes a clean synthetic merge without pushing it, freezes
+the candidate selector as data, downloads selected public stable package bytes,
+and records tag commit/tree, release/asset IDs, sizes, checksums and complete
+overlay closure. It freezes evidence by artifact ID plus preflight checksum.
+
+The candidate job reconstructs the exact synthetic commit/tree, runs the complete
+production main-pages profile without API credentials or persisted checkout
+credentials, adds the frozen overlay and byte-identical rolling metadata, and
+uses the unchanged 980 MB raw/archive guards and pinned Pages archive action.
+Its artifact has a diagnostic-only name and never enters a deployment job.
+
+A fresh trusted final job never checks out or executes candidate code. It checks
+GitHub run/artifact provenance against the controller main SHA separately from
+the synthetic source SHA in receipts. It streams the actual archive without
+extracting its paths, derives every member's count/size/hash, cross-checks receipts
+and the complete owned overlay closure, and regenerates rolling JSON/protected
+HTML using the trusted literal writer. It redownloads external inputs and rereads
+current main and PR head/base/draft/state before any current-queue conclusion.
+Changed or unverifiable inputs leave diagnostics historical/ineligible. Missing
+or over-budget evidence never becomes an accepted archive measurement.
+
+For this first unit, changes to scripts, publishing code, workflows, root package
+contracts, game build configuration, or the complete parsed transitive import
+closure of the frozen overlay renderer are unsupported and rejected. Selector
+data is independently validated. Renames include both source and destination
+paths. This conservative boundary prevents frozen tooling from measuring a
+different production payload; broader build-contract support needs later review.
+
+The synthetic source date is deterministic diagnostic metadata, not a prediction
+of a future GitHub merge identity. Explicit merge, deployment and qualification
+flags remain false. Complete archive bytes do not prove source-content, gameplay,
+native or offline correctness; no per-PR attribution or capacity reservation is
+granted. Parent-first composition is subsequent work, not implemented here.
+Hosted exact-head checks and actual diagnostic execution remain required before
+this checkpoint can be called verified. No content removal, public URL, storage, Studio/SIM,
+offline dependency, full release, production permission or guard is changed.
+
+Local scoped verification passed 118 tests with zero failures or skips, including
+real shallow synthetic-merge reconstruction, complete protected metadata bytes,
+adversarial actual-archive fixtures, release identity/byte rechecks and focused
+routing/workflow separation. Scoped lint and whitespace checks passed. Tiny Git
+fixtures passed both on the external volume and, to avoid its slow metadata
+operations, in a small local temporary directory; no full local build/download
+was run. Independent review reproduced the 18-file trusted renderer closure and
+33 contract/overlay tests, and found no remaining concrete integration blocker.
+Actual hosted diagnostic execution remains pending and is not claimed here.
+
+## Reported PR base versus current main — correction under verification
+
+PR #1542 merged as `2169552a0571b9d62bce116054f1e21aabd10fa1` after every
+applicable exact-head check passed at `e0910ed913c3882505ee5d792543e400be557ee7`;
+only test/build were policy-selected skips. Hosted focused verification passed
+291 tests with no failures/skips. MERGED, main reachability and preserved branch
+were verified. Production `38843253681` passed build, deploy and verification.
+Independent receipt consistency, artifact `12022447052` run/source provenance and
+five representative live inventory hashes passed. Its accepted archive remains
+966,236,160 bytes, raw 963,262,721 bytes, 3,424 files, SHA-256
+`1a188c8affbd93830309493556e832329d0c1380b6ea619c7dcc911582628d07`.
+No capacity savings or completed candidate measurement follows from this.
+
+Before dispatch, read-only REST and GraphQL inspection of draft #1541 revealed
+that its reported PR base snapshot remained
+`741948b14a09a816e49054c443511186bb99eb41` while the actual main branch ref was
+`2169552a0571b9d62bce116054f1e21aabd10fa1`. GitHub compare independently showed
+the reported base is an ancestor of main (ahead two, behind zero). The existing
+validator reproduced an overly strict stale-base rejection. Rebinding someone
+else's PR or manufacturing a fresh PR would avoid, not fix, this queue limitation.
+
+The narrow correction freezes current main and reported PR base independently.
+Current main must still equal the workflow/controller SHA and the explicit
+`refs/heads/main` lookup. A reported older base is accepted only after a real
+fetched-Git ancestry proof; malformed, missing, unrelated or newer bases fail.
+Synthetic composition still uses frozen current main plus exact head, never the
+older base. Final freshness separately pins reported base, actual main, head,
+draft, state, repository and target; movement remains historical/ineligible.
+No permission, guard, origin, application or qualification boundary changes.
+
+The initial validator rejection was reproduced against the actual PR snapshot.
+The corrected path accepted that exact snapshot only with a real local Git
+ancestry proof. All 120 scoped tests pass with zero failures/skips, including
+real older/equal/diverged/newer/missing/malformed base fixtures and unchanged
+source composition. Scoped lint and formatting pass. Independent review found
+no concrete blocker. Exact-head CI and actual runner acceptance remain required;
+#1541 remains draft with its native-art and other qualification holds intact.
+
+## Single-candidate runner acceptance — independently verified
+
+PR #1546 merged as `3585f2c321e5a1031dadcb82454a09bf68ce604c`. All applicable
+checks passed at exact head `589694dac2da95420788634c1a31018963e08d11`, with only
+existing test/build policy skips. Focused CI passed 293 tests without failures or
+skips. A creator startup test initially remained at picture pending; its unchanged
+failed-job rerun passed 255/255. Original failure evidence is preserved, and no
+root-cause certainty, timeout change or waiver is claimed. Production publication
+`38848215722` passed build/deploy/verify; receipts, artifact provenance and five
+live hashes passed independent checks. Archive remained 966,236,160 bytes.
+
+Main subsequently advanced to `20768f599e052a63b92324ce784f7c066b9b91b9`; its
+publication `38849572972` also passed those production evidence/live checks.
+The first manual diagnostic, `38850049796`, froze that controller main and draft
+#1541 head `a206d87ce9fa9ff07d587d4ddd47b536580a4add`. All three jobs passed.
+Synthetic source `7a2dbfff88ccf97cd379db193cf7d23503195e4a` is deliberately distinct
+from controller/run identity. An independent complete artifact download matched
+GitHub's ZIP digest, then every actual tar member path/type/size/hash passed.
+Preflight artifact ID/checksum, all artifact run/controller identities, trusted
+metadata, 18-file renderer closure, four overlay files and final PR/main freshness
+were independently checked. No candidate code or HTML was executed by the audit.
+
+Verified candidate archive: 966,266,880 bytes, raw 963,286,378 bytes, 3,426 files,
+SHA-256 `c41c73ad8559d20e5495b05f201f818e1372b717bf0bd868e4bad11de8552448`.
+Its complete raw/archive totals equal the pinned main publication, not isolated
+PR attribution or savings. The measurement was current at the recorded refresh;
+later input changes invalidate current eligibility. Merge, deployment and
+qualification flags stay false. #1541 remains draft with all qualification holds.
+Remaining dated gaps are 16,266,880 bytes to 950 MB and 66,266,880 bytes to 900 MB.
+
+## Tiny parent-first composition — under verification
+
+The next isolated branch starts at the verified main above. This unit adds only
+an object-composition foundation and tiny real-Git fixtures, not a stack workflow
+or a real combined measurement. It composes two or three ordered exact heads on
+frozen main, requires actual parent-head ancestry, records deterministic trees
+and commits, and refuses conflicts. It never fetches, checks out, updates refs or
+changes index/worktree; only unreferenced diagnostic objects may be written.
+It does not validate a PR graph, grant qualification, or change the existing
+single-candidate workflow. Frozen PR graph/freshness, unsupported-path checks,
+external overlay binding and independent complete archive verification remain
+mandatory for the subsequent bounded real-stack measurement.
+
+Independent review reproduced ambient Git attribute/config/ancestry overrides
+against the initial scratch implementation. The corrected foundation pins tracked
+attributes to each current synthetic parent, disables external attributes,
+rejects private/common info overrides and ambient merge configuration, disables
+replacement objects, rejects grafts and fixes UTF-8 commit encoding. It does not
+change user settings. Ten expanded real-Git tests passed independently with zero
+skips, preserving HEAD, refs, index, configuration and worktree. Focused-routing
+regression first failed before the test was registered, then passed all 45 cases.
+Git's
+[attribute precedence](https://git-scm.com/docs/gitattributes) and
+[object attribute source](https://git-scm.com/docs/git#Documentation/git.txt---attr-sourcetree-ish)
+are implementation references, not substitutes for executable regression tests.
+No hosted verification, merged helper, combined measurement or capacity reduction
+is claimed by this work-in-progress record.
+
+Local integrated verification passed 141 scoped tests with zero failures/skips;
+ESLint, scoped formatting and independent integration review passed. The initial
+external-fixture run stalled at tiny Git initialization and was interrupted, not
+accepted. The identical suites passed with only tiny synthetic fixtures in a local
+temporary directory; the source checkout and large artifacts remained external.
+The routing regression first failed without registration, then passed 45/45.
+Hosted exact-head checks and source-bound production remain required before this
+foundation may advance to the separate combined-measurement implementation.

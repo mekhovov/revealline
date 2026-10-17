@@ -67,7 +67,7 @@ const sourceHashes={
 'game/audio/reactions/actors.mjs':
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
-'945812ac21d3883f90deb5ac33448bce9c514bb9afb4607318f1ba74c0900055',
+'9dde09850e6467820951af1795e69f39814b3c287822ff438c0d1663a3daefdd',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -8200,6 +8200,11 @@ if(!condition)throw new Error('Invalid world download.');
 };
 
 function worldImportErrorCopy(error){
+if(error?.code==='world-library-full')
+return[
+'The installed world library is full. Existing worlds and recorded flights are kept. Export any edited world you want to keep, then review Remove for a world you choose to replace and retry. You can keep flying installed worlds.',
+'Бібліотеку встановлених світів заповнено. Наявні світи та записи польотів залишаться. Експортуйте змінений світ, який хочете зберегти, потім перегляньте «Вилучити» для світу, який вирішите замінити, і повторіть спробу. У встановлених світах можна й далі літати.',
+];
 if(!['unsupported-world-extension','unsupported-ground-motion'].includes(error?.code))
 return null;
 return[

@@ -579,6 +579,26 @@ $('download-game').onclick = () => {
   resumeApprovedGame = () => downloadApprovedGame(approval);
   return resumeApprovedGame();
 };
+async function prepareRuntime(signal) {
+  operation(() => t('interface:downloads.preparingRuntime'));
+  const report = await prepareOffline({
+    signal,
+    cancelPreparation: true,
+    onStatus: (state) => operation(() => offlineMessage(state, t)),
+  });
+  if (report.status !== 'ready')
+    throw report.message
+      ? Object.assign(new Error(report.message), { offlineCode: report.messageCode })
+      : localError('interface:downloads.closeOtherWindows');
+}
+async function prepareUpdatedRuntime(signal) {
+  signal.throwIfAborted();
+  await prepareRuntime(signal);
+  launcherHealth = await checkInstalledLauncher({ signal });
+  await health({ verify: true, signal });
+  signal.throwIfAborted();
+  if (!ready) throw localError('interface:downloads.preparationIncomplete');
+}
 function downloadApprovedGame(approval) {
   return run(async (signal) => {
     // Reject an unusable installation before transferring bytes, not after a
@@ -603,18 +623,6 @@ function downloadApprovedGame(approval) {
       signal,
       onProgress: progress,
     };
-    const prepareRuntime = async () => {
-      operation(() => t('interface:downloads.preparingRuntime'));
-      const report = await prepareOffline({
-        signal,
-        cancelPreparation: true,
-        onStatus: (state) => operation(() => offlineMessage(state, t)),
-      });
-      if (report.status !== 'ready')
-        throw report.message
-          ? Object.assign(new Error(report.message), { offlineCode: report.messageCode })
-          : localError('interface:downloads.closeOtherWindows');
-    };
     if (updateContext) {
       // Verified content can be retained before activation. Replacement core
       // preparation must wait for migration checks and hold both profile locks.
@@ -623,20 +631,13 @@ function downloadApprovedGame(approval) {
         ids: approval.ids,
         all: approval.all,
         signal,
-        prepare: async () => {
-          signal.throwIfAborted();
-          await prepareRuntime();
-          launcherHealth = await checkInstalledLauncher({ signal });
-          await health({ verify: true, signal });
-          signal.throwIfAborted();
-          if (!ready) throw localError('interface:downloads.preparationIncomplete');
-        },
+        prepare: () => prepareUpdatedRuntime(signal),
       });
       resumeApprovedGame = null;
       yieldedToPlay = false;
       return () => installedResultMessage(result, t);
     }
-    await prepareRuntime();
+    await prepareRuntime(signal);
     if (navigationRequest)
       await downloadOfflineDestination(store, { request: navigationRequest, ...download });
     else await store.download(download);
@@ -807,6 +808,26 @@ async function selectEdition({
 }
 $('activate').onclick = () =>
   run(async (signal) => {
+    if (updateContext) {
+      const ids = gameIDs(),
+        all = $('all-game').checked;
+      const gameplay = await store.inspect(downloadFiles(catalogue, ids), {
+        verify: true,
+        signal,
+      });
+      signal.throwIfAborted();
+      if (!gameplay.ready) throw localError('interface:downloads.repairBeforeSelecting');
+      // Progress review intentionally precedes replacement runtime preparation.
+      // Resume that preparation under the same migration/profile locks as the
+      // original update action, without approving any missing chapter downloads.
+      const result = await selectEdition({
+        ids,
+        all,
+        signal,
+        prepare: () => prepareUpdatedRuntime(signal),
+      });
+      return () => installedResultMessage(result, t);
+    }
     await health({ verify: true, signal });
     signal.throwIfAborted();
     if (!ready) throw localError('interface:downloads.repairBeforeSelecting');
