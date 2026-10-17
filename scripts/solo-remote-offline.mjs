@@ -16,7 +16,7 @@ const PAIR_SOURCES = Object.freeze({
   'SoloHostedOfflinePairPlan.v1': Object.freeze({ baseline: BASE, candidate: CANDIDATE }),
   [CURRENT_FORMAT]: Object.freeze({
     baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
-    candidate: 'cce49c81d82b79aefc24898f32eeebc609e569fb',
+    candidate: 'adb1c0c7b7dd1a526a0693917f2012d1dbc08b22',
   }),
 });
 export function offlinePairSources(format = 'SoloHostedOfflinePairPlan.v1') {
@@ -61,7 +61,7 @@ export function validateOfflinePlan(plan) {
   if (plan.format === CURRENT_FORMAT) {
     assert(plan.offline.gameplay, 'Current pair requires the unchanged installed Starter recipe');
     assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
-    assert.equal(plan.candidate.tree, '71f7e4cb3b0a39c1d281635774371a693794dd22');
+    assert.equal(plan.candidate.tree, 'fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508');
     assert.equal(plan.baseline.reusableArtifact.format, 'SoloHostedNormalBaselineReuseV2');
     assert.equal(plan.baseline.reusableArtifact.sourceRevision, sources.baseline);
     assert.equal(plan.baseline.reusableArtifact.sourceTree, plan.baseline.tree);
@@ -78,7 +78,11 @@ export function validateOfflinePlan(plan) {
     assert.equal(release.performanceQualificationReleased, false);
     assert.equal(release.onceOnlyBefore, sources.candidate);
     assert.equal(release.nativeStateEvidence.run, 39001646012);
-    assert.equal(release.nativeStateEvidence.sourceRevision, sources.candidate);
+    assert.equal(
+      release.nativeStateEvidence.sourceRevision,
+      'cce49c81d82b79aefc24898f32eeebc609e569fb',
+      'Historical native probe source is independent of the candidate package',
+    );
     assert.equal(release.nativeStateEvidence.browserVersion, plan.offline.expectedBrowserVersion);
     assert.equal(release.nativeStateEvidence.conclusion, 'failure');
     assert.equal(release.nativeStateEvidence.qualificationEligible, false);
