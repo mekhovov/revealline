@@ -17,7 +17,33 @@ assert.equal(
 const lifecycleWitness = JSON.parse(lifecycleWitnessBytes);
 assert.equal(lifecycleWitness.sourceRevision, '69639b30d985ffa723a4d0c11756b632fc2da5c1');
 assert.equal(lifecycleWitness.sourceTree, 'd022c57efa75dbe7b7aeeca00a1950f61426595b');
+// The actual696 runner is historical too; its receipt does not authorize current helpers.
+const historicalRunnerBytes = await readFile(
+  new URL('docs/performance/fixtures/solo-native-lifecycle/696-runner-source.json', root),
+);
+assert.equal(
+  createHash('sha256').update(historicalRunnerBytes).digest('hex'),
+  '98b44d2a23cee5e124504cb2e3d4f97f2024846771d920e6e22ec61746f0dfbc',
+);
+const historicalRunner = JSON.parse(historicalRunnerBytes);
+const assertHistoricalRunnerRef = (ref, witness = historicalRunner) => {
+  assert.deepEqual(witness, {
+    format: 'SoloLifecycleHistoricalRunnerV1',
+    sourceRevision: '69639b30d985ffa723a4d0c11756b632fc2da5c1',
+    sourceTree: 'd022c57efa75dbe7b7aeeca00a1950f61426595b',
+    path: 'scripts/run-solo-remote-correctness.mjs',
+    gitBlob: 'b3a8d041cdb70697183f1b3562a5f852f70c26fd',
+    bytes: 57545,
+    sha256: 'cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7',
+    scope:
+      'Exact actual696 source runner for already executed a6 lifecycle and offline declarations; no authority for a new source release.',
+  });
+  if (ref.path !== witness.path) return false;
+  assert.deepEqual(ref, { path: witness.path, bytes: witness.bytes, sha256: witness.sha256 });
+  return true;
+};
 const recordedLifecycleRef = (ref) => {
+  if (assertHistoricalRunnerRef(ref)) return true;
   if (
     !['scripts/solo-remote-lifecycle.mjs', 'scripts/observe-solo-native-lifecycle.mjs'].includes(
       ref.path,
@@ -133,4 +159,20 @@ test('lifecycle release rejects changed helper/source, wrong activation, missing
     workflow.replaceAll('/scripts/optional-artwork.mjs', '/omitted'),
   ])
     await assert.rejects(assertLifecycleRelease(original, changed));
+});
+
+test('historical runner source witness rejects changed manifest references and witness identity', () => {
+  const ref = {
+    path: historicalRunner.path,
+    bytes: historicalRunner.bytes,
+    sha256: historicalRunner.sha256,
+  };
+  assert.equal(assertHistoricalRunnerRef(ref), true);
+  assert.throws(() => assertHistoricalRunnerRef({ ...ref, bytes: ref.bytes + 1 }));
+  assert.throws(() => assertHistoricalRunnerRef({ ...ref, sha256: '0'.repeat(64) }));
+  for (const field of ['sourceRevision', 'sourceTree', 'gitBlob', 'sha256']) {
+    const changed = structuredClone(historicalRunner);
+    changed[field] = '0'.repeat(changed[field].length);
+    assert.throws(() => assertHistoricalRunnerRef(ref, changed));
+  }
 });
