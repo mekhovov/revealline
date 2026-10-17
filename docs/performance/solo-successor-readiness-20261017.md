@@ -54,6 +54,37 @@ browser was started and no native pass is claimed here.
 | Retry preflight | 4,349 | `cb575fd56d6ab8ab796ce5924b0154dc8e18aca4b62502b2028e2fd932f63bee` |
 | Next preflight  | 3,336 | `eb859ade98235a43c22858bcf5748daa8d951bd9aa1790f26fc13787c77b8fb5` |
 
+### Held exact-source admission
+
+The existing supplemental adapter now supports the explicit
+`sourceCohort: first-return-main8b-candidatec9` subtype. It admits only candidate
+`c9e637ad81fadf49caec884155d1bd0c2496c59c`, tree
+`4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c`, with runtime boundary
+`87aca909201ae0a2520d5856dbca351b82dd6e2d`, and the exact 8b019 baseline above.
+The existing V1 manifest/plan envelope lets this reuse the unchanged shared
+runner. An absent subtype retains the strict historical 3ad/b117 behavior.
+
+Select `first-return-retry` or `first-return-next` explicitly. Each phase keeps
+one baseline/candidate pair per engine and the same job, setup, command and
+evidence limits. Release both phase declarations separately to obtain the eight
+planned observations; no automatic next-phase dispatch is added. Retry stages
+the exact 2,897-byte First Return pack (`d36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e`).
+Next stages no upload and uses the authored route. Both remain lifecycle recipes,
+retain inline snapshots and full native replay, and collect ordinary raw work
+and cadence observations without the twenty-sample latency admission used by
+the historical steering probes. A numerical failure remains recorded separately
+from recipe correctness; invalid numerical evidence still fails admission.
+
+This support is held. No candidate or baseline artifact identity is invented and
+no workflow is released. A future declaration must provide the successful actual
+candidate run, full outer/inner identities and manifest proof, plus a complete V2
+normal-baseline reuse record. Both still undergo the common runner's independent
+archive, source, CSP and owner checks. Release review must retain the original
+failed first-eight prerequisite and the inspected Long Rail run `38995660502`
+(three preflights passed, one failed), with both retained engine receipts and
+closed-owner evidence. Passing either new short recipe cannot promote those
+historical failures or establish sustained performance.
+
 ## Cold comparison requirements
 
 The successor cold cohort should keep the existing `cold-first30` fixture
