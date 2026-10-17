@@ -58,6 +58,180 @@ export const SUSTAINED_PHASES = Object.freeze({
   },
 });
 
+// Separate, explicitly released timing cohort. The five lifecycle phases above
+// keep their original source contract, recipes, deadlines and default behavior.
+export const TIMING_PHASES = Object.freeze({
+  'cold-first30': {
+    previous: 'latest-first8',
+    hash: 'aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5',
+  },
+  'warm-first30': {
+    previous: 'cold-first30',
+    hash: '6da01ca449068ca6705012f3d6604362c581fe52c4583407797c0961acf3156d',
+  },
+  sentry: {
+    previous: 'warm-first30',
+    hash: '86cc1eea19e1d229dae865b368a94238de900ad83be5d9a4ee469b2e4dc3c0fd',
+  },
+  'long-rail': {
+    previous: 'sentry',
+    hash: 'b9afaecaadcbd0f657dd8064b9f7932c0c7ec12d6433f7d2b76f60de7ef19528',
+  },
+});
+const timingPlan = (plan) => plan.format === 'SoloHostedTimingPlanV1';
+const roleRevision = (plan, role) => (timingPlan(plan) ? plan[role].revision : source[role]);
+
+export function validateTimingPlan(plan) {
+  assert.equal(plan.format, 'SoloHostedTimingPlanV1');
+  const spec = TIMING_PHASES[plan.phase];
+  assert(spec, 'Unknown timing phase');
+  assert.equal(plan.repository, 'mekhovov/revealline');
+  assert.equal(plan.node, '22.13.1');
+  assert.equal(plan.playwright, '1.62.1');
+  assert.equal(plan.baseline.revision, source.baseline);
+  assert.match(plan.candidate.revision, /^[a-f0-9]{40}$/);
+  assert.notEqual(plan.candidate.revision, source.baseline);
+  assert.equal(plan.candidate.revision, plan.latestSourceRevision);
+  assert.match(plan.latestRuntimeRevision, /^[a-f0-9]{40}$/);
+  assert(['chromium', 'webkit'].includes(plan.engine));
+  assert([1, 2, 3].includes(plan.repetition));
+  const release = plan.release;
+  assert.equal(release.format, 'SoloHostedTimingReleaseV1');
+  assert.equal(
+    release.status,
+    'reviewed-and-released',
+    'Explicit latest-source timing release required',
+  );
+  assert.equal(release.phase, plan.phase);
+  assert.equal(release.previousPhase, spec.previous);
+  assert.equal(release.candidateRevision, plan.candidate.revision);
+  assert.equal(release.baselineRevision, source.baseline);
+  assert.equal(release.latestRuntimeRevision, plan.latestRuntimeRevision);
+  for (const field of [
+    'noUnclosedOwners',
+    'allPriorPlannedJobsClosed',
+    'priorProofInspected',
+    'firstEightAllCorrectnessPassed',
+    'latestProductionPackageVerified',
+  ])
+    assert.equal(release[field], true);
+  assert(
+    Array.isArray(release.evidence) && release.evidence.length > 0 && release.evidence.length <= 32,
+  );
+  for (const ref of release.evidence) {
+    assert(Number.isSafeInteger(ref.runId) && ref.runId > 0);
+    assert(Number.isSafeInteger(ref.artifactId) && ref.artifactId > 0);
+    assert.match(ref.artifactSHA256, /^[a-f0-9]{64}$/);
+    assert.match(ref.summarySHA256, /^[a-f0-9]{64}$/);
+    assert(['passed', 'failed-reviewed'].includes(ref.disposition));
+  }
+  assert.equal(plan.helperTimeoutMs, 75 * 60000);
+  assert.equal(plan.setupTimeoutMs, 40 * 60000);
+  assert.equal(plan.calibrationTimeoutMs, 5 * 60000);
+  assert.equal(plan.calibrationPreset, 'mid');
+  assert.equal(plan.evidenceBytes, 512 * MiB);
+  assert.equal(plan.rowEvidenceBytes, 128 * MiB);
+  assert.equal(plan.performanceExclusion, false);
+  assert.deepEqual(
+    plan.adapterInputs.map((ref) => ref.path),
+    ['scripts/solo-remote-sustained.mjs', 'scripts/solo-remote-baseline.mjs'],
+  );
+  assert(plan.baseline.reusableArtifact, 'The existing pinned normal baseline must be reused');
+  for (const ref of plan.adapterInputs) {
+    assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < MiB);
+    assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+  }
+  const roles = roleOrder(plan.repetition, plan.phase);
+  assert.deepEqual(
+    plan.rows.map((row) => row.source),
+    roles,
+  );
+  assert.equal(new Set(plan.rows.map((row) => row.id)).size, 2);
+  for (const row of plan.rows) {
+    assert.equal(row.id, `timing-${plan.phase}-${plan.engine}-r${plan.repetition}-${row.source}`);
+    assert.equal(row.kind, 'timing');
+    assert.equal(row.engine, plan.engine);
+    assert.equal(row.timeoutMs, 480000);
+    assert.equal(row.performanceExclusion, false);
+  }
+  assert.deepEqual(
+    Object.keys(plan.recipes).sort(),
+    [
+      'cold-first30',
+      'warm-first30',
+      'sentry',
+      'long-rail',
+      'sentry-level',
+      'long-rail-level',
+    ].sort(),
+  );
+  for (const [phase, value] of Object.entries(TIMING_PHASES))
+    assert.equal(plan.recipes[phase].sha256, value.hash);
+  assert.equal(
+    plan.recipes['sentry-level'].sha256,
+    'caad15d6f4770bc5e48935db1655e2892cfb5bd9093a72d0d7795125e8d2d3fa',
+  );
+  assert.equal(
+    plan.recipes['long-rail-level'].sha256,
+    '821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c',
+  );
+  for (const ref of Object.values(plan.recipes)) {
+    assert.match(ref.path, /^docs\/performance\/fixtures\/solo-remote-timing\/[a-z0-9.-]+$/);
+    assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes <= 16384);
+    assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+  }
+  assert(
+    Array.isArray(plan.frozenTools) && plan.frozenTools.length > 0 && plan.frozenTools.length <= 64,
+  );
+  assert.equal(new Set(plan.frozenTools.map((ref) => ref.path)).size, plan.frozenTools.length);
+  for (const ref of plan.frozenTools) {
+    assert.match(ref.path, /^scripts\/[a-zA-Z0-9/_.-]+$/);
+    assert(!ref.path.split('/').includes('..'));
+    assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+  }
+  return plan;
+}
+
+export function bindTimingJob(manifest, engine, repetition) {
+  assert.equal(manifest.format, 'SoloHostedTimingManifestV1');
+  const plan = structuredClone(manifest);
+  delete plan.jobs;
+  plan.format = 'SoloHostedTimingPlanV1';
+  plan.engine = engine;
+  plan.repetition = repetition;
+  plan.helperTimeoutMs = 75 * 60000;
+  plan.performanceExclusion = false;
+  plan.rows = roleOrder(repetition, plan.phase).map((role) => ({
+    id: `timing-${plan.phase}-${engine}-r${repetition}-${role}`,
+    kind: 'timing',
+    engine,
+    source: role,
+    timeoutMs: 480000,
+    performanceExclusion: false,
+  }));
+  return validateTimingPlan(plan);
+}
+
+export function timingMatrix(manifest) {
+  const expected = ['chromium', 'webkit'].flatMap((engine) =>
+    [1, 2, 3].map((repetition) => ({ engine, repetition })),
+  );
+  assert.deepEqual(manifest.jobs, expected, 'Exactly six declared timing jobs');
+  return {
+    include: expected.map(({ engine, repetition }) => {
+      const plan = bindTimingJob(manifest, engine, repetition);
+      return {
+        phase: plan.phase,
+        engine,
+        repetition,
+        jobMinutes: 120,
+        stepMinutes: 78,
+        outerSeconds: 77 * 60,
+      };
+    }),
+  };
+}
+
 function roleOrder(repetition, phase) {
   return phase === 'diagnostics'
     ? ['candidate']
@@ -96,6 +270,7 @@ export function validateRelease(release, phase) {
 }
 
 export function validateSustainedPlan(plan) {
+  if (timingPlan(plan)) return validateTimingPlan(plan);
   assert.equal(plan.format, 'SoloHostedSustainedPlanV1');
   const spec = SUSTAINED_PHASES[plan.phase];
   assert(spec);
@@ -272,10 +447,16 @@ export async function prepareSustainedMode(ctx) {
   if (ctx.plan.phase !== 'diagnostics') {
     const inputs = join(ctx.work, 'sustained-inputs');
     await mkdir(inputs);
-    for (const [key, name] of [
-      [ctx.plan.phase, 'scenario.qualification.json'],
-      ['opening', 'first-return.xonix.json'],
-    ]) {
+    for (const [key, name] of timingPlan(ctx.plan)
+      ? [
+          [ctx.plan.phase, 'scenario.qualification.json'],
+          ...(ctx.plan.phase === 'sentry' ? [['sentry-level', 'sentry-detour.xonix.json']] : []),
+          ...(ctx.plan.phase === 'long-rail' ? [['long-rail-level', 'long-rail.xonix.json']] : []),
+        ]
+      : [
+          [ctx.plan.phase, 'scenario.qualification.json'],
+          ['opening', 'first-return.xonix.json'],
+        ]) {
       const ref = ctx.plan.recipes[key],
         target = join(inputs, name);
       await writeFile(target, await readFile(resolve(ctx.repository, ref.path)), { flag: 'wx' });
@@ -346,6 +527,9 @@ export function sustainedArguments(ctx, row, url, dir) {
     '--cadence=settled120',
     ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
     ...(row.engine === 'webkit' ? ['--context=persistent'] : []),
+    ...(timingPlan(ctx.plan) && row.engine === 'webkit'
+      ? ['--viewport=400x850', '--dpr=3', '--mobile-context']
+      : []),
     ...(ctx.plan.phase === 'retry' && row.engine === 'chromium' ? ['--memory-profile'] : []),
   ];
 }
@@ -357,8 +541,8 @@ export function lifecycleAssessment(plan, row, raw, command, browserVersion) {
     [0, 2].includes(command.exitCode) &&
     raw?.scenarioStatus === 'pass' &&
     raw.scenarioSHA256 === plan.recipes[plan.phase].sha256 &&
-    raw.sourceRevision === source[row.source] &&
-    raw.buildIdentity?.sourceRevision === source[row.source] &&
+    raw.sourceRevision === roleRevision(plan, row.source) &&
+    raw.buildIdentity?.sourceRevision === roleRevision(plan, row.source) &&
     raw.environment?.engine === row.engine &&
     raw.environment?.contextMode === (row.engine === 'webkit' ? 'persistent' : 'ephemeral') &&
     (!browserVersion || raw.environment.browserVersion === browserVersion) &&
@@ -371,7 +555,7 @@ export function lifecycleAssessment(plan, row, raw, command, browserVersion) {
     !raw.replayFailure &&
     !raw.failure;
   const rules = raw?.resources;
-  const expectedRules = ['next', 'long29'].includes(plan.phase) ? 0 : 3;
+  const expectedRules = timingPlan(plan) || ['next', 'long29'].includes(plan.phase) ? 0 : 3;
   const resources =
     expectedRules === 0 && Array.isArray(rules) && rules.length === 0
       ? 'not-requested-by-frozen-recipe'
@@ -401,6 +585,55 @@ export function lifecycleAssessment(plan, row, raw, command, browserVersion) {
       (eligible ? performance === 'pass-observed-window' && command.exitCode === 0 : retained)
         ? 'passed'
         : 'failed',
+  };
+}
+
+export function timingAssessment(plan, row, raw, command, browserVersion) {
+  const inherited = lifecycleAssessment(plan, row, raw, command, browserVersion);
+  const display =
+    row.engine === 'webkit'
+      ? {
+          viewport: { width: 400, height: 850 },
+          deviceScaleFactor: 3,
+          isMobile: true,
+          hasTouch: true,
+        }
+      : {
+          viewport: { width: 1280, height: 800 },
+          deviceScaleFactor: 1,
+          isMobile: false,
+          hasTouch: false,
+        };
+  let valid = false;
+  try {
+    assert.equal(raw.workProbe, true);
+    assert.equal(raw.kind, 'performance');
+    assert.equal(raw.scenarioKind, 'performance');
+    assert.equal(raw.cadenceProtocol, 'settled120');
+    assert.equal(raw.baselineRuntime, row.source === 'baseline');
+    assert.equal(
+      raw.cacheMode,
+      plan.phase === 'warm-first30' ? 'warm-http-reload' : 'fresh-context',
+    );
+    assert.deepEqual(raw.environment.requestedDisplay, display);
+    assert.equal(raw.replay.scope, 'completed-scenario');
+    assert(!raw.finalReadFailure && !raw.failureCleanupFailure);
+    if (row.engine === 'webkit') {
+      assert.equal(raw.environment.contextOwner?.cleanup?.status, 'closed');
+      assert.equal(raw.environment.contextOwner.cleanup.profileRemoved, true);
+      assert.equal(raw.environment.contextOwner.cleanup.browserClosed, true);
+    }
+    valid = true;
+  } catch {
+    /* Raw gates and failures remain in the retained report. */
+  }
+  return {
+    ...inherited,
+    protocolStatus: valid ? 'pass' : 'fail',
+    correctness: valid ? inherited.correctness : 'fail',
+    status: valid ? inherited.status : 'failed',
+    scope:
+      'Latest-source hosted timing only; neither physical-device evidence nor replacement credit for historical macOS observations.',
   };
 }
 
@@ -559,7 +792,7 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
       assert.equal(identity.headers.get(key), value);
     const identityBytes = Buffer.from(await identity.arrayBuffer());
     const build = JSON.parse(identityBytes);
-    assert.equal(build.sourceRevision, source[row.source]);
+    assert.equal(build.sourceRevision, roleRevision(ctx.plan, row.source));
     const url = new URL('game/?journey=opening', server.url).href;
     row.served = {
       url,
@@ -605,13 +838,11 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
       assert.equal(raw.environment?.cpuThrottle, ctx.modeState.cpu);
       Object.assign(
         row,
-        (ctx.plan.phase === 'long29' ? longRecordingAssessment : lifecycleAssessment)(
-          ctx.plan,
-          row,
-          raw,
-          command,
-          ctx.modeState.browserVersion,
-        ),
+        (timingPlan(ctx.plan)
+          ? timingAssessment
+          : ctx.plan.phase === 'long29'
+            ? longRecordingAssessment
+            : lifecycleAssessment)(ctx.plan, row, raw, command, ctx.modeState.browserVersion),
       );
       row.browserVersion = raw.environment?.browserVersion;
       assert.equal(typeof row.browserVersion, 'string');
@@ -642,7 +873,13 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const [mode, input, output, engine, repetition] = process.argv.slice(2);
   const bytes = await readFile(input);
-  if (mode === 'matrix-plan')
+  if (mode === 'timing-matrix-plan')
+    process.stdout.write(`matrix=${JSON.stringify(timingMatrix(JSON.parse(bytes)))}\n`);
+  else if (mode === 'bind-timing-plan') {
+    const plan = bindTimingJob(JSON.parse(bytes), engine, Number(repetition));
+    plan.manifestInput = { path: resolve(input), bytes: bytes.length, sha256: sha(bytes) };
+    await writeFile(output, JSON.stringify(plan, null, 2) + '\n', { flag: 'wx' });
+  } else if (mode === 'matrix-plan')
     process.stdout.write(`matrix=${JSON.stringify(sustainedMatrix(JSON.parse(bytes)))}\n`);
   else {
     assert.equal(mode, 'bind-plan');
