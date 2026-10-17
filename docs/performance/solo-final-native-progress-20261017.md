@@ -7,6 +7,74 @@ source/CSP checks are admitted before the native scenarios. Historical failures
 remain failures. The snapshot below was reviewed on 17 October 2026 while
 sibling jobs were still running or queued.
 
+## Latest review and remaining implementation
+
+The earlier snapshot below is preserved. The four timing cohorts are now complete:
+48 declared arms produced 46 native reports; two stopped at external CPU
+calibration. All 23 observed candidate timing rows fail their unchanged gates.
+Twenty-one match their native replay checkpoints, but five Sentry recordings
+lack the required projectile mechanics. Eight starts retain incomplete internal
+cadence calibration. Thirteen candidate foreground intervals of at least 100 ms
+are retained, all in the first 30 seconds, including interruptions well after the
+first frame. The complete analysis and binary journals remain in
+`.cache/solo-followup/final-wave-v2/timing-results/`; the summary identity is
+3,903 bytes, SHA-256 `b41644b0a4f4b3148a574816bfd7c8d0efd7718539b53c2d9fc09d8af173b359`.
+
+The separate [Long Rail CPU diagnostic](https://github.com/mekhovov/revealline/actions/runs/39017369089)
+completed the route and strict native replay but did not reproduce the 384 ms
+pause. Its profile records 799 samples in feedback-panel geometry reads and
+8,180 samples in Phaser's final sprite `drawImage`, versus 136 under the board
+painter's layer compositing. These sample counts identify investigation targets;
+they are not per-frame durations. The profile and navigation clocks lack an
+exact bridge, and one negative sampling delta is retained. This diagnostic
+contributes no timing-pass credit.
+
+The feedback-panel change in `e0da148d6` uses ResizeObserver's delivered border
+box instead of remeasuring on every text/style mutation. It coalesces writes,
+keeps a legacy fallback and releases observers when the panel closes. Six
+focused controls and scoped lint pass. Native layout/performance qualification
+of this new source remains pending. The selected-theme owner also now exposes
+bounded readiness; public Start/Resume integration is being checked alongside
+the cadence fix. A reproduced delayed-font case previously accepted a new theme
+while the run was already active. It does not establish the cause of the 384 ms
+pause. Optional page presentation loading is under a separate resource-owner audit.
+
+The [offline successor](https://github.com/mekhovov/revealline/actions/runs/39017369019)
+passes installed-game capture and Next, strict native replays, exact 47-key
+worker snapshots and owner closure with the origin stopped. Independent local
+readback covers 48 selected evidence members (663,741 transported bytes), not
+the complete archive or saved browser profile. This is scoped offline correctness.
+The [native lifecycle successor](https://github.com/mekhovov/revealline/actions/runs/39017369090)
+reaches trusted hidden/paused tick 25, then its observer loses a cleared paint
+reference. The partial native replay matches the initial hidden checkpoint;
+return and Resume are unobserved. An observer correction must preserve strict
+run identity and later visible-submission/replay binding before any new credit.
+
+All three Chromium recovery repetitions and the first WebKit repetition pass
+29 actions and strict native replay. The WebKit artifact is `12094978498`,
+313,820 bytes, SHA-256
+`8e34de95e453817577027ab0e63e26f98be2a0eca7e58b16015831031219465e`;
+all 32 members were read back. Context loss/blur remain injected, viewport
+resizing is native, and these are not real GPU-loss or physical-background tests.
+
+Research supports the narrow layout fix: the [Resize Observer specification](https://www.w3.org/TR/resize-observer/)
+delivers border-box dimensions after layout, including padding/borders; Google's
+[layout-thrashing example](https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing)
+shows why geometry reads after style changes can force additional layout.
+The rail uses horizontal writing, so its block size is its reserved height.
+Selected font readiness should use the existing owner's selective requests, as
+specified by [CSS Font Loading](https://www.w3.org/TR/css-font-loading/), rather
+than wait for unrelated fonts in the entire document.
+
+The renderer audit checks the installed Phaser 4.2.1 source as well as its
+[current CanvasRenderer documentation](https://docs.phaser.io/api-documentation/class/renderer-canvas-canvasrenderer).
+The displayed canvas already requests an opaque context with
+`willReadFrequently: false`, and pixel-art smoothing is disabled. The large
+profile sample population in the final `drawImage` therefore does not justify
+blindly toggling those settings. Keep final canvas submission in measured
+application work, compare its native cost after the preparation/layout fixes,
+and preserve artwork dimensions, camera fades and input callback cadence.
+
 ## What the current results establish
 
 | Area               | Retained observation                                                                                                                                                                                                                                                 | Remaining limit                                                                                                                                                                                              |
@@ -82,6 +150,19 @@ The terminal compact receipt is
 60,848 bytes, SHA-256
 `bb56a3449f756a1d79df07dd91e8ff108da086eedf5740d6ab8085aa30cde131`.
 
+### Three completed Chromium recovery repetitions
+
+All three declared Chromium repetitions now pass all 29 actions and strict
+same-engine replay, with no page errors, failed responses or unclosed owners.
+The scope remains synthetic Canvas loss/blur handlers, native resize and explicit
+Resume; real GPU loss and operating-system backgrounding are separate checks.
+All three small archives and replay exports were independently read back. The
+combined receipt is
+`.cache/solo-followup/final-wave-v2/root-retention/recovery-chromium-complete-analysis.json`,
+127,042 bytes, SHA-256
+`1b537709c1f32c21857ffaf5ccff9409d4ce6dac43ac7a35694ff83bf809f2ab`.
+The three WebKit observations remain outstanding at this checkpoint.
+
 ## Application diagnostics overhead
 
 The Chromium arm of [run 39015298491](https://github.com/mekhovov/revealline/actions/runs/39015298491)
@@ -105,6 +186,25 @@ every computed field of the hosted result exactly. The compact analysis is
 The separate journal-hook comparison has a narrower scope and cannot be used
 to pass this application-diagnostics gate. Neither comparison qualifies the
 complete external observer's overhead.
+
+### Completed WebKit application-diagnostics arm
+
+All twenty WebKit arms of the same run are retained, with clean command closure.
+The comparison remains unresolved with zero admissible matched pairs. The first
+enabled arm automatically pauses after 912 ms of observed active play; the other
+nineteen complete their requested active workloads. Those nineteen already
+show reduced decoration at the first active quality sample, including disabled
+arms. This does not establish that diagnostics caused the reduction. The
+observed timer step is 1 ms, and neither the quality prerequisites nor the
+unchanged 5% overhead gate is established.
+
+Artifact `12094923018` is 698,682 bytes, SHA-256
+`d64bb1181fdcf2e4d384f95dd605658b486a8e4eb565ce83e1966c67d0664eef`;
+all 92 members pass complete readback. The independent twenty-report reanalysis
+matches every hosted computed field. Its receipt is
+`.cache/solo-followup/final-wave-v2/root-retention/app-diagnostics-webkit-reanalysis.json`,
+10,931 bytes, SHA-256
+`4c5dc656e9f9b5058b88461e07de829f623382a2759016b640e4fb405082d2a5`.
 
 ### Separate journal-hook cost
 
