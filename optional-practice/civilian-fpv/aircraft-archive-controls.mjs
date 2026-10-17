@@ -181,7 +181,7 @@ export function mountAircraftArchiveControls({
             identity: envelope.identity,
             config: envelope.config,
             origin: envelope.origin,
-            name: `${key === 'academy' ? 'Academy' : 'World'} · ${new Date().toISOString()}`,
+            name: `${key === 'academy' ? t('Academy', 'Академія') : key === 'arena' ? t('Advanced practice', 'Розширена практика') : t('World', 'Світ')} · ${new Date().toISOString()}`,
           },
           { signal },
         );
