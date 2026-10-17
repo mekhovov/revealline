@@ -22,6 +22,18 @@ statically include the soundtrack panel (150,675), library panel (78,515), missi
 browser (50,153) and optional-chapter panel (46,070). These byte counts identify
 further inspection targets, not measured causes of the reported device stalls.
 
+A separate local kernel executes only the frozen generated translation bundle
+in three fresh Node VM contexts within one process. Evaluation takes 133.39,
+120.82 and 132.93 ms; first compilation takes 1.62 ms and subsequent compilations
+reuse process-level engine state. The generated module synchronously decompresses
+and parses the complete translation resources before bootstrap. This identifies
+a startup computation worth native profiling, not a reproduced gameplay hitch:
+eager evaluation precedes application setup, and the probe includes neither
+browser scheduling nor transport. Do not shift deferred translation work into
+the first active frame or change required localization/recovery behavior on
+this local evidence alone. The raw kernel output and source/helper hashes are
+retained separately in the same receipt.
+
 Any later deferral must preserve trusted audio activation, shared owners,
 controller/menu access and error recovery. A dynamic import started during
 preparation can finish during play; moving an import alone is insufficient.
