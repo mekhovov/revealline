@@ -667,10 +667,8 @@ export async function soloPage(
       throw error;
     }
   }
-  await initialReady(
-    () => !!doc.body.dataset.editionId || $('builtin-packs').children.length > 0,
-    'Bundled pack index must finish loading.',
-  );
+  // Optional Library examples load only when that public surface is requested.
+  // Flight readiness is owned by the actual selected picture below.
   function submitRender() {
     // Model Phaser.Game.step's clear/camera draw before the final event.
     if (scene.game.renderer.config.clearBeforeRender) displayClears++;
