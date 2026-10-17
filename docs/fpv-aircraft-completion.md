@@ -31,6 +31,16 @@ fully toward the total retained-memory limit. Saved formats, physical state hash
 and historical playback identities are unchanged; restore reconstructs the same
 stream counter from the saved events and hashes.
 
+The source-pinned [Canyon recording check](fpv-regional-aircraft-recording-qualification.json)
+ran the production Regional session for 65 simulated seconds with recording enabled
+and disabled. The 1,794,160-byte loaded terrain checkpoint produced exactly two
+segments, retaining 0–65 seconds in 2,276,715 bytes. All 65 per-second physical
+hashes matched between runs. Recording-enabled execution took 24.443 seconds
+(2.659 times real time), compared with 24.132 seconds without recording. This
+single-machine check includes preparation, terrain admission, physics and recording
+through an in-process client. It excludes browser rendering, worker transport,
+IndexedDB and travel across the full region; it is not wider-platform qualification.
+
 ## Public first-release acceptance
 
 The GitHub Pages deployment of `20459d449713ffc4d20143e39a8ea0cd0be90bb2`
