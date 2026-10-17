@@ -327,8 +327,8 @@
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
-      "bytes": 13941,
-      "sha256": "b7bd4c75ce4ff04e26545aee7d488d8d674173379d372bb815b47a7935567887"
+      "bytes": 15700,
+      "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
     }
   ],
   "bindingScope": {

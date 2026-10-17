@@ -5,6 +5,14 @@ unavailable package, or promote any prior failure. The original cold, sustained,
 first-eight and Long Rail observations remain unchanged. The new runtime needs
 its own successful Appearance package and exact source/archive/CSP admission.
 
+The prospective matched cohorts use the exact main commit integrated into this
+candidate, `8b01991942dc764b8aa4726851699ce1985e53ae` (tree
+`9373b6a74aea8fa1ef47aa17ace140b4cf714609`), through the separate normal-baseline
+producer. Its verified package is still pending. The b117 package and all previous
+comparisons remain historical diagnostics. `origin/main` advanced to `b2f251da`
+with FPV work after this freeze; keep 8b019 fixed for equivalent observations and
+reconcile later main changes separately before final delivery.
+
 ## Short First Return preflight
 
 Two new inline fixtures in `fixtures/solo-remote-sustained/` exercise the
@@ -55,8 +63,10 @@ controls, public Pause and strict replay, with moving ticks ≥3,300 and moving
 direction changes ≥20. The new capture route is not a substitute for this workload.
 
 - Bind the new final package revision/tree, actual runtime boundary, producer
-  run/artifact, full archive/member digests, manifest and source proof. Keep the
-  exact b117 baseline package. No fallback rebuild or old candidate substitution.
+  run/artifact, full archive/member digests, manifest and source proof. Bind the
+  separately produced exact 8b019 normal baseline with its V2 publication and
+  independent source/archive/CSP proof. Do not invent unavailable artifact pins,
+  substitute the historical b117 baseline or silently rebuild either role.
 - Declare three fresh baseline/candidate pairs per engine in the existing
   counterbalanced order. Keep all twelve results, including calibration rejection
   and partial observations; never fill a missing row with a retry until green.
