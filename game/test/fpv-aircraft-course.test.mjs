@@ -86,6 +86,51 @@ function createClient() {
   };
 }
 
+test('optional course challenges freeze separate worker and recovery identities without changing ordinary practice', async (t) => {
+  await initAdvancedRuntime();
+  const challenge = {
+    format: 'AircraftChallengeRules.v1',
+    kind: 'timed-practice',
+    durationTicks: 1500,
+  };
+  const build = (rules) =>
+    createAircraftCourseSession(
+      {
+        course: FLIGHT_COURSES[0],
+        mode: 'acro',
+        legacy: true,
+        configuration: { ...configuration(), ...(rules ? { challenge: rules } : {}) },
+      },
+      { createClient },
+    );
+  const ordinary = build(),
+    timed = build(challenge);
+  t.after(() => Promise.all([ordinary.dispose(), timed.dispose()]));
+  await ordinary.prepare();
+  await timed.prepare();
+  assert.equal(
+    Object.hasOwn((await ordinary.readSealedSegment()).config.configuration, 'challenge'),
+    false,
+  );
+  assert.deepEqual((await timed.readSealedSegment()).config.configuration.challenge, challenge);
+  assert.notEqual(ordinary.identity.configuration, timed.identity.configuration);
+  const saved = await timed.exportRecovery();
+  await assert.rejects(ordinary.restoreRecovery(saved), /configuration/);
+  assert.equal(ordinary.snapshot().ticks, 0);
+  const invalid = { ...challenge, durationTicks: 1 };
+  assert.throws(() => build(invalid), /duration/);
+  assert.throws(
+    () =>
+      build({
+        format: 'AircraftChallengeRules.v1',
+        kind: 'battery-endurance',
+        takeoffHoldTicks: 25,
+        landingHoldTicks: 50,
+      }),
+    /requires battery depletion/,
+  );
+});
+
 test('every preset flies Academy and World in both modes with its real geometry and portable response', async () => {
   await initAdvancedRuntime();
   await initWorldRuntime();

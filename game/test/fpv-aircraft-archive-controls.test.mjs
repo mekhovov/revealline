@@ -1,9 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { mountAircraftArchiveControls } from '../../optional-practice/civilian-fpv/aircraft-archive-controls.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
+
+test('shared archive file chooser stays visible when mounted directly in the Advanced arena', async () => {
+  const css = await readFile(
+    new URL('../../optional-practice/civilian-fpv/tuning.css', import.meta.url),
+    'utf8',
+  );
+  assert.match(
+    css,
+    /\.aircraft-archive-controls input\[type=['"]file['"]\]\s*\{[^}]*display:\s*block/,
+  );
+});
 function fixture(t, { verify, append } = {}) {
   const document = new Document(),
     window = new Events(),
@@ -158,6 +170,36 @@ test('archive capture waits for prepared worker telemetry before requesting a se
   await settle();
   assert.equal(f.ui.root.hidden, false);
   assert.ok(f.reads > 0);
+});
+
+test('archive verification distinguishes challenge outcomes from physics-only clip verification', async (t) => {
+  for (const [challenge, expected] of [
+    [{ verified: true, scored: false }, /Challenge outcome independently verified/],
+    [
+      { verified: false, reason: 'incomplete-challenge', scored: false },
+      /not completed in this archive/,
+    ],
+    [
+      { verified: false, reason: 'checkpoint-origin', scored: false },
+      /cannot be verified from this clip/,
+    ],
+  ]) {
+    const f = fixture(t, {
+      verify: async () => ({ verificationScope: 'checkpoint-clip', challenge }),
+    });
+    f.update();
+    await settle();
+    f.setSealed(0);
+    f.update();
+    await settle();
+    f.button('Finish current archive').click();
+    await settle();
+    f.button('Verify selected archive').click();
+    await settle();
+    assert.match(f.ui.root.textContent, /Clip physics verified/);
+    assert.match(f.ui.root.textContent, expected);
+    assert.match(f.ui.root.textContent, /Unscored/);
+  }
 });
 
 test('archive controls save closed segments, capture the paused final tail and verify complete physics explicitly', async (t) => {

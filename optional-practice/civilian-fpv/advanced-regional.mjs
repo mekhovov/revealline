@@ -21,6 +21,7 @@ import { createTunedResponse } from './flight-response.mjs';
 import { validateRegionManifest, createRegionPlanner } from './regional/region-manifest.mjs';
 import { createVerifiedFlightGeometry } from './regional/verified-flight-geometry.mjs';
 import { validateRegionalLocationStart } from './regional-locations.mjs';
+import { validateAircraftChallengeRules } from './aircraft-challenge.mjs';
 
 const axes = ['x', 'y', 'z'];
 // Match the verified support-pose tolerance while retaining Rapier's actual pose.
@@ -78,9 +79,21 @@ export function createAdvancedRegionalSession(
     return Object.fromEntries(axes.map((key) => [key, frame[key] + point[key] * 1000]));
   };
   const aircraftPhysics = configuration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
+  const challenge =
+    configuration.challenge === undefined
+      ? null
+      : validateAircraftChallengeRules(configuration.challenge);
+  requireValue(
+    !challenge || aircraftPhysics,
+    'Aircraft challenges require a physical aircraft setup',
+  );
   const airframe = aircraftPhysics
     ? validateAircraftPhysics(configuration.advanced.aircraft)
     : validateAdvancedAircraft(configuration.advanced?.aircraft ?? 'freestyle');
+  requireValue(
+    challenge?.kind !== 'battery-endurance' || airframe.battery.depletion,
+    'Battery endurance requires battery depletion',
+  );
   const controller = aircraftPhysics
     ? validateAircraftControllerTune(
         configuration.advanced.controller ?? createAircraftControllerTune(airframe),
@@ -114,7 +127,7 @@ export function createAdvancedRegionalSession(
     spawn: { x: 0, y: 2, z: 0 },
     floor: false,
     terrain: { format: 'AdvancedRegionalTerrain.v1' },
-    configuration: { environment },
+    configuration: { environment, ...(challenge ? { challenge } : {}) },
   };
   const terrain = createGeometry(manifest, {
     profile: environment.geometryProfile,

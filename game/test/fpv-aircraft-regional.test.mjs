@@ -20,7 +20,15 @@ const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
 async function sessionFixture(
   t,
   id,
-  { mode = 'acro', response, mixed = false, transformProposal, beforeProposal, coverage } = {},
+  {
+    mode = 'acro',
+    response,
+    mixed = false,
+    transformProposal,
+    beforeProposal,
+    coverage,
+    challenge,
+  } = {},
 ) {
   let simulation, options;
   const preset = createPresetConfiguration(id);
@@ -32,6 +40,7 @@ async function sessionFixture(
       advanced: { aircraft: preset.aircraft, controller: preset.controller },
       response: response ?? preset.response,
       mode,
+      ...(challenge ? { challenge } : {}),
     },
     {
       createClient() {
@@ -97,6 +106,40 @@ async function sessionFixture(
   await session.prepare();
   return { session, simulation: () => simulation, options: () => options };
 }
+
+test('Regional optional challenge rules remain frozen in worker identity and reject cross-rule recovery', async (t) => {
+  const challenge = {
+    format: 'AircraftChallengeRules.v1',
+    kind: 'timed-practice',
+    durationTicks: 1500,
+  };
+  const ordinary = await sessionFixture(t, 'meteor75-analog-2022');
+  const timed = await sessionFixture(t, 'meteor75-analog-2022', { challenge });
+  assert.equal(Object.hasOwn(ordinary.options().configuration, 'challenge'), false);
+  assert.deepEqual(timed.options().configuration.challenge, challenge);
+  assert.notEqual(ordinary.simulation().identity, timed.simulation().identity);
+  assert.notDeepEqual(ordinary.simulation().comparison(), timed.simulation().comparison());
+  const saved = await timed.session.captureRecovery();
+  await assert.rejects(ordinary.session.restoreRecovery(saved), /configuration/);
+  assert.equal(ordinary.session.snapshot().ticks, 0);
+  await assert.rejects(
+    sessionFixture(t, 'meteor75-analog-2022', {
+      challenge: { ...challenge, durationTicks: 1 },
+    }),
+    /duration/,
+  );
+  await assert.rejects(
+    sessionFixture(t, 'meteor75-analog-2022', {
+      challenge: {
+        format: 'AircraftChallengeRules.v1',
+        kind: 'battery-endurance',
+        takeoffHoldTicks: 25,
+        landingHoldTicks: 50,
+      },
+    }),
+    /requires battery depletion/,
+  );
+});
 
 test('every aircraft enters Regional practice in Acro and self-level with frozen rates and real dimensions', async (t) => {
   for (const preset of listAircraftPresets())

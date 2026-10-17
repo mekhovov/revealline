@@ -310,6 +310,23 @@ export function mountAircraftArchiveControls({
               'Clip physics verified from its starting checkpoint. This does not verify an earlier flight. Unscored.',
               'Фізику фрагмента перевірено від початкової точки. Це не перевіряє попередній політ. Без заліку.',
             );
+      if (verified.challenge)
+        result.textContent += ` ${
+          verified.challenge.verified
+            ? t(
+                'Challenge outcome independently verified. Unscored.',
+                'Результат випробування незалежно перевірено. Без заліку.',
+              )
+            : verified.challenge.reason === 'checkpoint-origin'
+              ? t(
+                  'Earlier challenge progress cannot be verified from this clip.',
+                  'Попередній прогрес випробування неможливо перевірити за цим фрагментом.',
+                )
+              : t(
+                  'The challenge was not completed in this archive.',
+                  'Випробування не було завершено в цьому архіві.',
+                )
+        }`;
     }),
   );
   const remove = button(() =>

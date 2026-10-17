@@ -263,6 +263,36 @@ test('Academy prepares a saved aircraft with exact geometry, course advice and c
   }
   assert.ok(h.view.snapshot().ticks > 0);
   assert.equal(h.view.snapshot().advancedTelemetry.usedAh, 0);
+  const challengeKind = h.doc.querySelector('[data-aircraft-challenge="kind"]'),
+    challengeDuration = h.doc.querySelector('[data-aircraft-challenge="duration"]'),
+    challengeRestart = h.doc.querySelector('[data-aircraft-challenge="restart"]');
+  assert.equal(h.view.snapshot().challenge, undefined);
+  for (const kind of ['timed-practice', 'battery-endurance', 'none']) {
+    h.view.pause();
+    challengeKind.value = kind;
+    challengeKind.emit('change');
+    challengeDuration.value = '30';
+    challengeDuration.emit('input');
+    challengeRestart.click();
+    await new Promise((resolve) => setImmediate(resolve));
+    await h.view.settled();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(challengeRestart.disabled, false);
+    assert.equal(h.view.snapshot().ticks, 0);
+    assert.equal(shownAircraft.battery.depletion, kind === 'battery-endurance');
+    assert.equal(h.view.snapshot().advancedTelemetry.usedAh, 0);
+    assert.equal(h.view.snapshot().challenge?.missionTick, kind === 'none' ? undefined : 0);
+    h.$('arm').click();
+    for (let tick = 0; tick < 8; tick++) {
+      h.tick();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.ok(h.view.snapshot().ticks > 0);
+    assert.equal(h.view.snapshot().advancedTelemetry.usedAh > 0, kind === 'battery-endurance');
+    const recorded = await h.view.exportRecording();
+    assert.equal(recorded.config.configuration.challenge?.kind, kind === 'none' ? undefined : kind);
+  }
+  assert.equal(library.effective().advanced.aircraft.battery.depletion, false);
   for (const [action, fov] of [
     ['Apply & restart', '106'],
     ['Test draft · unscored', '108'],

@@ -54,8 +54,12 @@ function archive(envelope, segments, { state = 'ended', kind = envelope.origin.k
     segments,
   };
 }
-function recorded(t, { ticks = 12, segmentBytes = 1, checkpoint = false } = {}) {
-  const simulation = createAdvancedSimulation({ ...options(), recordingOptions: { segmentBytes } });
+function recorded(t, { ticks = 12, segmentBytes = 1, checkpoint = false, configuration } = {}) {
+  const simulation = createAdvancedSimulation({
+    ...options(),
+    ...(configuration ? { configuration } : {}),
+    recordingOptions: { segmentBytes },
+  });
   t.after(() => simulation.dispose());
   if (checkpoint) {
     const saved = simulation.checkpoint();
@@ -98,6 +102,72 @@ test('sealed segment reads are immutable, accepted-boundary only and do not chan
   assert.equal(simulation.readSealedSegment().segment.events.length, 1);
   assert.equal(simulation.stateHash(), hash);
   assert.equal(simulation.telemetry().archiveStatus.lastSealedIndex, 0);
+});
+
+test('archive verification derives optional challenge outcomes only from canonical fresh input history', async (t) => {
+  const challenge = {
+    format: 'AircraftChallengeRules.v1',
+    kind: 'timed-practice',
+    durationTicks: 1500,
+  };
+  const { packet } = recorded(t, {
+    ticks: 1500,
+    segmentBytes: 4 * 1024 * 1024,
+    configuration: { challenge },
+  });
+  const complete = await verifyAircraftArchive(packet);
+  assert.equal(complete.challenge.verified, true);
+  assert.equal(complete.challenge.scored, false);
+  assert.equal(complete.challenge.progress.result.reason, 'time-elapsed');
+  assert.equal(complete.challenge.progress.result.missionTick, 1500);
+  const interrupted = structuredClone(packet);
+  interrupted.manifest.state = 'interrupted';
+  assert.equal(
+    (await verifyAircraftArchive(interrupted)).challenge.verified,
+    true,
+    'a fresh contiguous prefix independently proves its already reached result',
+  );
+  const checkpoint = structuredClone(packet);
+  checkpoint.manifest.origin.kind = 'checkpoint';
+  assert.deepEqual((await verifyAircraftArchive(checkpoint)).challenge, {
+    verified: false,
+    reason: 'checkpoint-origin',
+    scored: false,
+  });
+  const incomplete = recorded(t, {
+    ticks: 10,
+    configuration: { challenge },
+  });
+  const pending = (await verifyAircraftArchive(incomplete.packet)).challenge;
+  assert.equal(pending.verified, false);
+  assert.equal(pending.reason, 'incomplete-challenge');
+  assert.equal(pending.progress.missionTick, 10);
+  const forged = recorded(t, {
+    ticks: 10,
+    checkpoint: true,
+    configuration: { challenge },
+  });
+  forged.packet.manifest.origin.kind = 'fresh';
+  assert.deepEqual((await verifyAircraftArchive(forged.packet)).challenge, {
+    verified: false,
+    reason: 'checkpoint-origin',
+    scored: false,
+  });
+  const invalidEndurance = recorded(t, {
+    ticks: 1,
+    configuration: {
+      challenge: {
+        format: 'AircraftChallengeRules.v1',
+        kind: 'battery-endurance',
+        takeoffHoldTicks: 25,
+        landingHoldTicks: 50,
+      },
+    },
+  });
+  await assert.rejects(
+    verifyAircraftArchive(invalidEndurance.packet),
+    /requires battery depletion/,
+  );
 });
 
 test('finalizing an archive seals its current tail and flying continues on the identical trajectory', (t) => {
