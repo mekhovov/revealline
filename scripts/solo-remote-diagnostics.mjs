@@ -268,17 +268,14 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
   };
   const command = async (id, argv, timeoutMs, log, receipt) => {
     await inspect();
-    return ctx.run(
-      id,
-      [process.execPath, ...argv],
-      Math.min(timeoutMs, Math.floor(deadline - now())),
-      {
-        env: { ...ctx.cleanEnv, TMPDIR: tmp },
-        log: join(dir, log),
-        receipt: join(dir, receipt),
-        inspect,
-      },
-    );
+    const remaining = Math.floor(deadline - now());
+    assert(remaining > 0, 'Diagnostics cohort deadline before child admission');
+    return ctx.run(id, [process.execPath, ...argv], Math.min(timeoutMs, remaining), {
+      env: { ...ctx.cleanEnv, TMPDIR: tmp },
+      log: join(dir, log),
+      receipt: join(dir, receipt),
+      inspect,
+    });
   };
   await persist();
   try {

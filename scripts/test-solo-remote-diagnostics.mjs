@@ -344,7 +344,9 @@ async function cohort(t, change = {}) {
     cleanEnv: {},
     modeState: {},
     report: {},
-    inspect: async () => {},
+    inspect: async () => {
+      elapsed += change.elapsedPerInspect ?? 0;
+    },
     evidenceSize: async () => 0,
     digest: async (path) => {
       const bytes = await readFile(path);
@@ -448,6 +450,14 @@ test('cohort deadline cannot become20 independent360s allowances', async (t) => 
   assert.match(result.row.cohortFailure, /cohort deadline/);
   assert(result.manifest.executions.slice(5).every((x) => x.status === 'not-observed'));
   assert.equal(result.analysis.plannedPairs, 10);
+});
+
+test('deadline crossed during async inspection does not admit a zero-budget native child', async (t) => {
+  const result = await cohort(t, { elapsedPerInspect: 1800000 });
+  assert.equal(result.calls.length, 0);
+  assert.match(result.row.cohortFailure, /deadline before child admission/);
+  assert(result.manifest.executions.every((x) => x.status === 'not-observed'));
+  assert.equal(result.analysis.status, 'unresolved');
 });
 
 test('normal coarse timer uncertainty stays unresolved at the original5% limit', async (t) => {
