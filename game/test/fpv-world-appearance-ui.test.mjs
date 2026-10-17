@@ -2255,6 +2255,93 @@ test('Regional host explicitly switches into the real Advanced worker and preser
   assert.equal(h.$('flight-mode').disabled, false);
 });
 
+test('Regional limit stops retain exports and restart while fatal worker failures remain unavailable', async (t) => {
+  const priorLocale = getLocale();
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const [{ createEnduranceFixture }, { regionalReviewEntry }, { replayAdvancedRecording }] = await Promise.all([
+    import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+    import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+    import('../../optional-practice/civilian-fpv/advanced-simulation.mjs'),
+  ]);
+  const { terrain } = await createEnduranceFixture();
+  for (const [code, reason, locale, expectedMessage] of [
+    ['ADVANCED_DURATION_LIMIT', 'duration-limit', 'en', /Flight duration limit reached/],
+    ['ADVANCED_RECORDING_LIMIT', 'recording-limit', 'uk', /Досягнуто межі обсягу запису/],
+    ['UNKNOWN_LIMIT', 'worker-error', 'en', /Advanced worker interrupted/],
+    [null, 'worker-error', 'en', /Advanced worker interrupted/],
+  ]) await t.test(`${code ?? 'untyped limit text'} · ${locale}`, async (t) => {
+    setLocale(locale, { persist: false });
+    const exports = [];
+    const h = fixture(t, {
+      rendererFactory: () => ({
+        available: true, setPresentation() {}, setCourse() {}, setQuality() {},
+        setDrone() {}, setGhost() {}, setPath() {}, draw() {}, dispose() {},
+        setRegional() {}, async prepareRegionalFrame() {}, async prepare() { return true; },
+      }),
+    });
+    h.win.Worker = class extends RegionalWorker {
+      postMessage(message) {
+        if (this.stop && message.type === 'propose') {
+          // Protocol boundary injection: the real simulation already contains a
+          // valid flight. Actual duration/quota generation is covered separately.
+          queueMicrotask(() => this.emit('message', { data: {
+            id: message.id, session: message.session, error: 'Advanced flight duration limit reached',
+            ...(code ? { code } : {}),
+          } }));
+        } else super.postMessage(message);
+      }
+    };
+    h.win.URL = { createObjectURL(blob) { exports.push(blob); return 'blob:limit-export'; }, revokeObjectURL() {} };
+    h.win.setTimeout = (callback, delay) => {
+      const timer = setTimeout(callback, delay);
+      if (delay === 60000) timer.unref();
+      return timer;
+    };
+    await h.app.ready;
+    await h.app.startFlight(regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source }));
+    const toggle = h.doc.querySelector('[data-regional-advanced="toggle"]');
+    toggle.click();
+    await settleUntil(() => h.app.snapshot().state?.advanced && h.app.snapshot().state.reason === 'prepared' && !toggle.disabled, 'Advanced prepared');
+    const worker = RegionalWorker.instances.at(-1);
+    h.$('world-arm').click();
+    for (let tick = 0; tick < 8; tick++) { h.tick(); await new Promise((resolve) => setImmediate(resolve)); }
+    assert.ok(h.app.snapshot().state.ticks > 0);
+    worker.stop = true;
+    for (let tick = 0; tick < 4; tick++) { h.tick(); await new Promise((resolve) => setImmediate(resolve)); }
+    assert.equal(h.app.snapshot().state.reason, reason);
+    const stoppedTick = h.app.snapshot().state.ticks;
+    assert.equal(h.app.snapshot().state.status, 'paused');
+    assert.match(h.$('flight-status').textContent, expectedMessage);
+    assert.equal(h.$('world-arm').disabled, true);
+    assert.equal(h.$('world-flight-resume').disabled, true);
+    const recordingButton = h.doc.querySelectorAll('button').find((row) => row.textContent === (locale === 'uk' ? 'Експорт запису Advanced' : 'Export Advanced recording'));
+    const recoveryButton = h.doc.querySelectorAll('button').find((row) => row.textContent === (locale === 'uk' ? 'Експорт відновлення' : 'Export recovery'));
+    const fatal = reason === 'worker-error';
+    assert.equal(recordingButton.disabled, fatal);
+    assert.equal(recoveryButton.disabled, fatal);
+    h.win.emit('blur');
+    h.doc.emit('visibilitychange');
+    h.tick(3);
+    assert.equal(h.app.snapshot().state.reason, reason);
+    assert.equal(h.app.snapshot().state.ticks, stoppedTick);
+    if (!fatal) {
+      recordingButton.click();
+      await settleUntil(() => exports.length === 1 && !recordingButton.disabled, 'Stopped recording exports');
+      const recording = JSON.parse(await exports[0].text());
+      assert.equal(recording.missionTicks, stoppedTick);
+      assert.equal((await replayAdvancedRecording(recording)).verified, true);
+      recoveryButton.click();
+      await settleUntil(() => exports.length === 2 && !recoveryButton.disabled, 'Stopped recovery exports');
+      assert.equal(JSON.parse(await exports[1].text()).simulation.state.missionTick, stoppedTick);
+    }
+    h.$('world-retry').click();
+    await settleUntil(() => h.app.snapshot().state?.reason === 'prepared' && h.app.snapshot().state.ticks === 0 && !toggle.disabled, 'Explicit retry starts new flight');
+    assert.equal(worker.terminated, true);
+    assert.equal(h.$('world-arm').disabled, false);
+    assert.equal(RegionalWorker.instances.at(-1).terminated, false);
+  });
+});
+
 test('Regional Advanced is explicitly unavailable when workers cannot run', async (t) => {
   const [{ createEnduranceFixture }, { regionalReviewEntry }] = await Promise.all([
     import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),

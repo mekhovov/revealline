@@ -251,6 +251,9 @@ export function mountFlightTuning({
         .find((p) => p.id === selected)
         .history.find((p) => p.revision === Number(history.value));
       if (!previous) throw new Error(t('Choose a saved revision', 'Виберіть збережену версію'));
+      // Restoring history replaces import intent even when its rates equal the
+      // current draft. An earlier digest or receipt must not supersede it.
+      clearImportPreview();
       draft = clone(previous.response);
       draftProvenance = clone(previous.provenance ?? null);
       profileName.value = previous.name;
