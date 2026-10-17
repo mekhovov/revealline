@@ -41,6 +41,12 @@ single-machine check includes preparation, terrain admission, physics and record
 through an in-process client. It excludes browser rendering, worker transport,
 IndexedDB and travel across the full region; it is not wider-platform qualification.
 
+The corrected local browser build subsequently retained the complete 0–87.90-second
+Canyon clip, saved a recovery point at 85 seconds, and durably archived the first
+60-second segment. Finishing saved the remaining segment; independent worker replay
+reported complete-session physics verified from reset. This exercises the player UI,
+worker transport and local archive storage, without claiming a browser timing result.
+
 ## Public first-release acceptance
 
 The GitHub Pages deployment of `20459d449713ffc4d20143e39a8ea0cd0be90bb2`
