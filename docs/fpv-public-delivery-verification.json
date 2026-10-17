@@ -1,0 +1,284 @@
+{
+  "format": "fpv-public-delivery-verification.v1",
+  "generatedAt": "2026-10-17T03:38:51.361Z",
+  "passed": true,
+  "scope": "Available software delivery and explicitly scoped public Chrome acceptance; no Advanced promotion.",
+  "implementationRevision": "eaecd60562917b7cf47d4995af00d561b154debd",
+  "deployedRevision": "b2f251dac0d762d476f725b1bc601a2d6d5485a5",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/1561",
+  "publication": "https://github.com/mekhovov/revealline/actions/runs/38997742653",
+  "checks": {
+    "nonSkippedProductChecks": 12,
+    "skippedGeneralJobs": [
+      "test",
+      "build"
+    ],
+    "publicationJobs": [
+      "build",
+      "deploy",
+      "verify"
+    ],
+    "freshPasswordPackages": 2,
+    "freshOfflineInstallPackages": 2,
+    "existingOfflineUpdatePackages": 2,
+    "runnerSourceHashesMatch": true,
+    "recordingHashesMatch": true,
+    "publicationReceiptHashesMatch": true,
+    "updateInputStateHashMatches": true
+  },
+  "capacity": {
+    "files": 3442,
+    "stagedBytes": 963681552,
+    "archiveBytes": 966676480,
+    "maximumBytes": 980000000,
+    "stagedHeadroomBytes": 16318448,
+    "archiveHeadroomBytes": 13323520
+  },
+  "acceptance": {
+    "browser": {
+      "engine": "chrome",
+      "version": "155.0.8059.85"
+    },
+    "oldRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "existingUpdateResumedPackages": [
+      "civilian-fpv"
+    ],
+    "shortFlightMissionTicks": 12,
+    "shortFlightSeconds": 0.24,
+    "finalHash": "1d473fbb",
+    "lifecycleOnly": true,
+    "advanced": {
+      "optional": true,
+      "scored": false,
+      "defaultEligible": false
+    }
+  },
+  "preservedFailedReports": [
+    "docs/fpv-public-delivery-baseline-runner-change-failure.json",
+    "docs/fpv-public-delivery-waiting-worker-failure.json",
+    "docs/fpv-public-delivery-legacy-order-failure.json",
+    "docs/fpv-public-delivery-draft-preview-failure.json",
+    "docs/fpv-public-delivery-profile-selector-failure.json"
+  ],
+  "limits": [
+    "Single desktop Chrome for public acceptance; other runtime/platform evidence remains separately scoped.",
+    "First pre-deployment baseline completed per-package access/installation but failed whole-run runner stability; original authentic profiles were retained, and final report explicitly resumes the observed Academy activation checkpoint.",
+    "Fresh public flights and updated-install flights use neutral inputs for loading/export/replay/lifecycle checks, not aircraft fidelity or performance.",
+    "Radio data is synthetic and unverified; no physical radio, touch, pilot or identified-aircraft measurement is claimed.",
+    "OS-installed PWAs, eviction, iOS execution, broader hardware, validated propwash/ground effect and Advanced competition/default promotion remain unqualified.",
+    "Public acceptance does not exercise every manual checklist flow or the recording import UI; library backup uses production APIs and CLI import uses visible controls.",
+    "The optional-release catalogue is present but empty; no separately selected optional release was qualified."
+  ],
+  "files": [
+    {
+      "path": "docs/fpv-public-delivery-acceptance-civilian-fpv-recording.json",
+      "bytes": 3562,
+      "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94"
+    },
+    {
+      "path": "docs/fpv-public-delivery-acceptance-fpv-worlds-recording.json",
+      "bytes": 3562,
+      "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94"
+    },
+    {
+      "path": "docs/fpv-public-delivery-acceptance.json",
+      "bytes": 8805,
+      "sha256": "340a9588d41e3038fbdb7319b5fd698726cb6f0c13fcfa9054c11ce8d82ab1ff"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/archive/main-pages-archive-receipt.json",
+      "bytes": 599,
+      "sha256": "1c971393659a152b258aac745bf2fd2f803fae9aa146f3904db72fad6b383c55"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/artifact-index-build.json",
+      "bytes": 2716,
+      "sha256": "6e46dcf753b9e253d29fe272f4da4204ffb240a763eeac670489c737304d47b3"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/artifact-index-final.json",
+      "bytes": 3605,
+      "sha256": "8bd39c1eee10d95fa6c3953eac553cb60b0cb636a533069f7bb4e7e1fa6dfd32"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/capacity-verification.json",
+      "bytes": 866,
+      "sha256": "c3a9106bd1804319f4f08605caf695ba3257476c0eafc0022e179a142701b135"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/delivery-summary.json",
+      "bytes": 4220,
+      "sha256": "ed887fdbf6cab9621fc90b2926c18288bd3772ee868fc9a93adf08d36d861116"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/fresh-password-provenance.json",
+      "bytes": 752,
+      "sha256": "c01fe7923e92ff79e8e9b4bfbd5ed604f3395b9f56bab983e1967f642bbc8403"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/fresh-password-runner.mjs.txt",
+      "bytes": 3025,
+      "sha256": "a4715276ab57e832aa4f3f58fbc3b06668af3efb35cef382c55712bf074809d9"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/merge.json",
+      "bytes": 343,
+      "sha256": "b6972b194bc1c3bdc5240fad09e770068f33f94f6d1309ecd0683f01c197ee23"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/practice/practice-site-receipt.json",
+      "bytes": 132,
+      "sha256": "a78f1a58d0a714f920cc9bb88b5bc930b936b0e6bf6cf1a1e9136b8d1c207e14"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/public-deployment-response.json",
+      "bytes": 1454,
+      "sha256": "3852a93c12a5aee6e3c964b954bc6d1a1ed41978c2ef1f2082e0804cf7d6240e"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/publication-run-final.json",
+      "bytes": 9506,
+      "sha256": "75aff49d5e474c580736ee28c0bd1fc803fd3d3fe45ae739125215b52c68829f"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/publication-run-start.json",
+      "bytes": 4995,
+      "sha256": "6d081df662ff2bd642d2b24d0be3f555165703a8e049da0e3d2121758194315b"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/staged/main-pages-inventory.json",
+      "bytes": 510323,
+      "sha256": "8bf442768aaf87ffab8b68b68eb3cbc514588dca875f4018af0163c6e36c140d"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/staged/main-pages-receipt.json",
+      "bytes": 4429,
+      "sha256": "885d572fb209f5eb82a60b573db0c0f351c847533832c5f740c764ec2983da2d"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/update-state-after-acceptance.json",
+      "bytes": 17732,
+      "sha256": "93814c067bc77ef2816283c22386109c6e5861f6de309088d9768c7741056d94"
+    },
+    {
+      "path": "docs/fpv-public-delivery-artifacts/update-state-before-acceptance.json",
+      "bytes": 16647,
+      "sha256": "f84aa876f5df6a34cbac2b9077b4952856cd9ef31b2bee38aa332516877d7e50"
+    },
+    {
+      "path": "docs/fpv-public-delivery-baseline-runner-change-failure.json",
+      "bytes": 5308,
+      "sha256": "c1286fef42d014f8edaa89a7f70929ce520eededbcbbb01e9862b711be1a802f"
+    },
+    {
+      "path": "docs/fpv-public-delivery-baseline.json",
+      "bytes": 5306,
+      "sha256": "68ea44f45088e420bc260f7a9ee4afb17bb7204658affadff91df523b612fe0c"
+    },
+    {
+      "path": "docs/fpv-public-delivery-ci.json",
+      "bytes": 7215,
+      "sha256": "5b7b14c0e29199d8e6325678976a13590636c42aa328affc6fb3b3bbe4342f23"
+    },
+    {
+      "path": "docs/fpv-public-delivery-draft-preview-diagnostic.json",
+      "bytes": 5162,
+      "sha256": "90332867467c73dd035eacbe2bc2d5d41b81005e9a44155ac097c44946003832"
+    },
+    {
+      "path": "docs/fpv-public-delivery-draft-preview-failure.json",
+      "bytes": 5294,
+      "sha256": "abce46939c0ae1951d5b52733612e91707d1bc6f891382ffff999dad44739899"
+    },
+    {
+      "path": "docs/fpv-public-delivery-draft-preview-recording.json",
+      "bytes": 3562,
+      "sha256": "1c688f40ca248db57d04bb0766dca5cd80eefa2bbb60eebc4c3aca03d37ffead"
+    },
+    {
+      "path": "docs/fpv-public-delivery-legacy-comparison-diagnostic.json",
+      "bytes": 6287,
+      "sha256": "51b5993443526cf18406d2882f2aa5264d4bb19cac3b9b823b0eeeb9eb6e8a94"
+    },
+    {
+      "path": "docs/fpv-public-delivery-legacy-order-failure.json",
+      "bytes": 5348,
+      "sha256": "ae2ecb2a4d0ef2823f14803b5d3b8f0f52e9b72f90fc22ac58a9c68e8e77ce6e"
+    },
+    {
+      "path": "docs/fpv-public-delivery-profile-selector-failure.json",
+      "bytes": 5656,
+      "sha256": "46dd1ce8a7e9d1b29415874d1eea9b710d84f9cb1824252ca5ca8d9d4eacdea9"
+    },
+    {
+      "path": "docs/fpv-public-delivery-registration-diagnostic.json",
+      "bytes": 2512,
+      "sha256": "a657e78f50f1b12107bc4e368974c1151f1739a07cd395221b4d4b0de8eedba6"
+    },
+    {
+      "path": "docs/fpv-public-delivery-wait-harness-diagnostic.json",
+      "bytes": 386,
+      "sha256": "6038a3094447ebc5c165f2a0f71acbe5715fce2a57480092f11c2d67bd45f491"
+    },
+    {
+      "path": "docs/fpv-public-delivery-waiting-worker-failure.json",
+      "bytes": 5272,
+      "sha256": "f03cbd9349013d23dd28c2a73a8cae815a9b08f9035c46c4991ecd6dbd375eaf"
+    },
+    {
+      "path": "docs/fpv-public-fresh-install-acceptance-civilian-fpv-recording.json",
+      "bytes": 3562,
+      "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94"
+    },
+    {
+      "path": "docs/fpv-public-fresh-install-acceptance-fpv-worlds-recording.json",
+      "bytes": 3562,
+      "sha256": "9e01c4e72d4b8d1dfc042569e1809935de85c63539a5b5e47a7676a14dc3dd94"
+    },
+    {
+      "path": "docs/fpv-public-fresh-install-acceptance.json",
+      "bytes": 9519,
+      "sha256": "5d48a35ccd243fd8eeba6aa3f52669635d4e18d927e78ad54139f704c64f47ce"
+    },
+    {
+      "path": "docs/fpv-public-fresh-password-acceptance.json",
+      "bytes": 1065,
+      "sha256": "e076feafa31fe911f32b7fc5d228c687ffb23c419a12c15a02162a3691b80a97"
+    },
+    {
+      "path": "docs/fpv-public-library-visibility-negative-20261016.json",
+      "bytes": 1726,
+      "sha256": "7e62f8122351990443fd0097861345aa3d09c3cbbd82877b35477dcbf5d928f6"
+    },
+    {
+      "path": "docs/fpv-public-map-availability-20261016.json",
+      "bytes": 167206,
+      "sha256": "4c1f31064351a6840a746b634f3741477092b241e2f95753dc965bcdd8ace4fc"
+    },
+    {
+      "path": "docs/fpv-public-school-replay-20261016.json",
+      "bytes": 11287,
+      "sha256": "244f0a521fa00f938b377e0860ca1d3fb5fb9cc50e7bc40a60044abe4488fac0"
+    },
+    {
+      "path": "docs/fpv-public-school-storage-negative-20261016.json",
+      "bytes": 2906,
+      "sha256": "acd2ef780dadab9b295fa2f7aeb066fa53f36e29b3701a33f1bbef2aed2151b7"
+    },
+    {
+      "path": "docs/fpv-public-source-integrity-20261016.json",
+      "bytes": 16147,
+      "sha256": "18f5f5ae09d15e3e2fa17ae794482da7341eb8a0b8aa5d02339ebc9bbb9b42a5"
+    },
+    {
+      "path": "scripts/smoke-fpv-public-fresh-install.mjs",
+      "bytes": 18441,
+      "sha256": "0cb167dd6dec287f79bdbd8a8c2c82f92f3315d582fa0ec69c00a7dfc6b5dfce"
+    },
+    {
+      "path": "scripts/smoke-fpv-public-update.mjs",
+      "bytes": 29787,
+      "sha256": "ded3cf59fa8abdc5d4010786df18df578bd7f3436f88f4d15432bcf7c0adac9e"
+    }
+  ]
+}
