@@ -11,7 +11,11 @@ import {
 } from '../replay.mjs';
 import { createJourneyPerformanceController } from '../journey/performance-store.mjs';
 import { createJourneyProfileStore, emptyJourneyProfile } from '../journey/profile.mjs';
-import { emptyJourneyPerformance } from '../journey/performance.mjs';
+import {
+  emptyJourneyPerformance,
+  verifyPerformanceRecord,
+  performanceSummary,
+} from '../journey/performance.mjs';
 import { emptyJourneyPictures } from '../journey/pictures.mjs';
 import { createMediaPreparation } from '../ui/media-preparation.mjs';
 import { readFile } from 'node:fs/promises';
@@ -576,4 +580,281 @@ test('performance inspection checks cancellation again after the admitted slot',
     { name: 'AbortError' },
   );
   assert.equal(slots, 1);
+});
+
+test('public performance record verification admits construction and keeps exact caller bytes', async (t) => {
+  const f = inspectionFixture(t),
+    original = structuredClone(f.input);
+  f.media.setPhase('playing');
+  const options = {
+    profile: f.profile,
+    acceptBinding: () => true,
+    scheduleChunk: (work, request) => f.media.run('main', work, request),
+  };
+  const pending = verifyPerformanceRecord(f.input, options);
+  f.input.replay.options.seed = -1;
+  await until(() => f.media.snapshot().queued === 1);
+  f.media.setPhase('paused');
+  assert.deepEqual((await pending).replay, original.replay);
+  f.media.setPhase('playing');
+  let settled = false;
+  const bad = verifyPerformanceRecord(f.input, options).catch((error) => {
+    settled = true;
+    return error;
+  });
+  await until(() => settled || f.media.snapshot().queued === 1);
+  assert.equal(settled, false, 'public record constructor must wait during play');
+  f.media.setPhase('paused');
+  assert.match((await bad).message, /seed must be a uint32/);
+  await assert.rejects(
+    verifyPerformanceRecord(f.input, { profile: f.profile, acceptBinding: () => true }),
+    /seed must be a uint32/,
+  );
+});
+
+test('public performance record cancellation owns no late constructor or binding work', async (t) => {
+  const f = inspectionFixture(t),
+    abort = new AbortController();
+  f.input.replay.options.seed = -1;
+  f.media.setPhase('playing');
+  let bindings = 0,
+    settled = false;
+  const options = {
+    profile: f.profile,
+    acceptBinding: () => {
+      bindings++;
+      return true;
+    },
+    scheduleChunk: (work, request) => f.media.run('main', work, request),
+    signal: abort.signal,
+  };
+  const pending = verifyPerformanceRecord(f.input, options).catch((error) => {
+    settled = true;
+    return error;
+  });
+  await until(() => settled || f.media.snapshot().queued === 1);
+  assert.equal(settled, false);
+  abort.abort();
+  assert.equal((await pending).name, 'AbortError');
+  assert.equal(bindings, 0);
+  f.media.setPhase('paused');
+  await delay();
+  assert.equal(bindings, 0);
+  let reads = 0;
+  const hostile = new Proxy(
+    {},
+    {
+      ownKeys() {
+        reads++;
+        throw Error('unexpected copy');
+      },
+    },
+  );
+  await assert.rejects(verifyPerformanceRecord(hostile, options), { name: 'AbortError' });
+  assert.equal(reads, 0);
+});
+
+test('public performance record admission rejects skipped, repeated, late and suppressed work', async (t) => {
+  const f = inspectionFixture(t),
+    options = { profile: f.profile, acceptBinding: () => true };
+  let late;
+  await assert.rejects(
+    verifyPerformanceRecord(f.input, {
+      ...options,
+      scheduleChunk: (work) => {
+        late = work;
+      },
+    }),
+    /did not run work/,
+  );
+  assert.throws(() => late(), /exactly once/);
+  await assert.rejects(
+    verifyPerformanceRecord(f.input, {
+      ...options,
+      scheduleChunk: (work) => {
+        work();
+        try {
+          work();
+        } catch {}
+      },
+    }),
+    /exactly once/,
+  );
+  f.input.replay.options.seed = -1;
+  await assert.rejects(
+    verifyPerformanceRecord(f.input, {
+      ...options,
+      scheduleChunk: (work) => {
+        try {
+          work();
+        } catch {}
+      },
+    }),
+    /seed must be a uint32/,
+  );
+});
+
+test('actual next-record identity and constructor wait when prior binding resumes during play', async (t) => {
+  const encode = (text) => `data:text/javascript;base64,${Buffer.from(text).toString('base64')}`;
+  // Wrap only the imported synchronous boundaries. Complete controller and
+  // performance sources still execute their actual validation/verification.
+  const trackerURL = encode(
+    "export const marks=[];export let phase='paused';export function setPhase(value){phase=value;}",
+  );
+  const dataURL = import.meta.resolve('../data-json.mjs'),
+    replayURL = import.meta.resolve('../replay.mjs');
+  const dataWrapper = encode(
+    `export * from ${JSON.stringify(dataURL)};import {canonicalJSON as actual} from ${JSON.stringify(dataURL)};import {marks,phase} from ${JSON.stringify(trackerURL)};export function canonicalJSON(value){marks.push({kind:'identity',phase});return actual(value);}`,
+  );
+  const replayWrapper = encode(
+    `export * from ${JSON.stringify(replayURL)};import {snapshotReplay as actual} from ${JSON.stringify(replayURL)};import {marks,phase} from ${JSON.stringify(trackerURL)};export function snapshotReplay(value){marks.push({kind:'constructor',phase});return actual(value);}`,
+  );
+  const performanceSource = await readFile(
+    new URL(import.meta.resolve('../journey/performance.mjs')),
+    'utf8',
+  );
+  const performanceURL = encode(
+    performanceSource
+      .replace("'../data-json.mjs'", JSON.stringify(dataWrapper))
+      .replace("'../replay.mjs'", JSON.stringify(replayWrapper))
+      .replace(
+        "'../content-design/catalogs.mjs'",
+        JSON.stringify(import.meta.resolve('../content-design/catalogs.mjs')),
+      ),
+  );
+  const storeSource = await readFile(
+    new URL(import.meta.resolve('../journey/performance-store.mjs')),
+    'utf8',
+  );
+  const storeURL = encode(
+    storeSource
+      .replace("'../data-json.mjs'", JSON.stringify(dataWrapper))
+      .replace("'./performance.mjs'", JSON.stringify(performanceURL)),
+  );
+  const { createJourneyPerformanceController: create } = await import(storeURL),
+    tracker = await import(trackerURL),
+    f = inspectionFixture(t);
+  const second = structuredClone(f.input);
+  second.runId = 'second-accepted-history';
+  const envelope = { ...emptyJourneyPerformance(), records: [f.input, second] };
+  let bindings = 0,
+    settled = false;
+  const controller = create({
+    backend: { commitState: () => assert.fail('inspection cannot write') },
+    getProfile: () => f.profile,
+    flushProfile: async () => true,
+    canWrite: () => true,
+    scheduleChunk: (work, request) => f.media.run('main', work, request),
+    acceptBinding: async () => {
+      if (++bindings === 1) {
+        f.media.setPhase('playing');
+        tracker.setPhase('playing');
+        await delay();
+      }
+      return true;
+    },
+  });
+  t.after(() => controller.dispose());
+  const pending = controller.inspect(envelope, f.profile).then((value) => {
+    settled = true;
+    return value;
+  });
+  void pending.catch(() => {}); // A failed before-control still owns cancellation settlement.
+  await until(() => bindings === 1 && f.media.snapshot().queued === 1);
+  assert.equal(settled, false);
+  assert.deepEqual(
+    tracker.marks.filter((row) => row.phase === 'playing'),
+    [],
+    'next record prefix must be admitted after a real binding yield',
+  );
+  tracker.setPhase('paused');
+  f.media.setPhase('paused');
+  const result = await pending;
+  assert.equal(bindings, 2);
+  assert.equal(result.rows.length, 2);
+  assert.deepEqual(result.value, envelope);
+  assert(tracker.marks.some((row) => row.kind === 'identity'));
+  assert(tracker.marks.some((row) => row.kind === 'constructor'));
+});
+
+for (const action of ['pause', 'cancel'])
+  test(`performance final comparison and publication waits after async binding until ${action}`, async (t) => {
+    const f = inspectionFixture(t),
+      abort = new AbortController();
+    const expected = await verifyPerformanceRecord(f.input, {
+      profile: f.profile,
+      acceptBinding: () => true,
+    });
+    let bound = null,
+      settled = false;
+    const pending = verifyPerformanceRecord(f.input, {
+      profile: f.profile,
+      signal: abort.signal,
+      scheduleChunk: (work, options) => f.media.run('main', work, options),
+      acceptBinding: async (record) => {
+        bound = record;
+        f.media.setPhase('playing');
+        await delay();
+        return true;
+      },
+    }).then(
+      (value) => {
+        settled = true;
+        return value;
+      },
+      (error) => {
+        settled = true;
+        return error;
+      },
+    );
+    await until(() => settled || (bound && f.media.snapshot().queued === 1));
+    assert.equal(settled, false, 'post-binding comparison and deep-freeze must also wait');
+    assert.equal(
+      Object.isFrozen(bound.replay),
+      false,
+      'binding reference has not been deeply frozen during play',
+    );
+    // Simulate a validator retaining its input. The pending owner must publish
+    // the private bytes it captured before waiting, not these later edits.
+    bound.missionId = 'late-callback-mutation';
+    bound.replay.level.name = 'late-callback-mutation';
+    if (action === 'cancel') abort.abort();
+    else f.media.setPhase('paused');
+    const result = await pending;
+    if (action === 'cancel') {
+      assert.equal(result.name, 'AbortError');
+      f.media.setPhase('paused');
+      await delay();
+      assert.equal(Object.isFrozen(bound.replay), false);
+    } else {
+      assert.deepEqual(result, expected);
+      assert.deepEqual(performanceSummary(result), performanceSummary(expected));
+      assert(Object.isFrozen(result) && Object.isFrozen(result.replay.level));
+    }
+    assert.equal(f.media.snapshot().queued, 0);
+  });
+
+test('final record publication still requires its own admitted synchronous work', async (t) => {
+  const f = inspectionFixture(t);
+  let bound = false,
+    late;
+  await assert.rejects(
+    verifyPerformanceRecord(f.input, {
+      profile: f.profile,
+      acceptBinding: async () => {
+        await delay();
+        bound = true;
+        return true;
+      },
+      scheduleChunk: (work, request) => {
+        if (bound) {
+          late = work;
+          return;
+        }
+        return f.media.run('main', work, request);
+      },
+    }),
+    /did not run work/,
+  );
+  assert.throws(() => late(), /exactly once/);
 });

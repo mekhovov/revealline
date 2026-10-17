@@ -3,6 +3,7 @@ import {
   emptyJourneyPerformance,
   inspectJourneyPerformance,
   snapshotJourneyPerformanceSource,
+  snapshotPerformanceRecordSource,
   verifyPerformanceRecord,
   performanceRecordKey,
   performanceSummary,
@@ -84,11 +85,48 @@ export function createJourneyPerformanceController({
       },
     };
   };
+  const admittedInspection = async (work, signal) => {
+    let value,
+      called = false,
+      retired = false,
+      failure;
+    try {
+      await scheduleChunk(
+        () => {
+          try {
+            required(!retired && !called, 'Performance inspection must run exactly once.');
+            called = true;
+            signal?.throwIfAborted();
+            value = work();
+          } catch (error) {
+            failure = error;
+            throw error;
+          }
+        },
+        { signal },
+      );
+      if (failure) throw failure;
+      required(called, 'Performance inspection admission did not run work.');
+      signal?.throwIfAborted();
+    } finally {
+      retired = true;
+    }
+    return value;
+  };
   const verify = async (input, profile, signal) => {
-    const identity = canonicalJSON(input);
+    signal?.throwIfAborted();
+    const source = scheduleChunk ? snapshotPerformanceRecordSource(input) : input;
+    const identity = scheduleChunk
+      ? await admittedInspection(() => canonicalJSON(source), signal)
+      : canonicalJSON(source);
     let row = cache.get(identity)?.row;
     if (!row) {
-      row = await verifyPerformanceRecord(input, { profile, acceptBinding, signal, scheduleChunk });
+      row = await verifyPerformanceRecord(source, {
+        profile,
+        acceptBinding,
+        signal,
+        scheduleChunk,
+      });
       const bytes = new TextEncoder().encode(identity).byteLength;
       const previous = cache.get(identity);
       cachedBytes += bytes - (previous?.bytes ?? 0);
@@ -121,31 +159,7 @@ export function createJourneyPerformanceController({
     // Keep a bounded private snapshot before waiting. The ordinary inspector
     // still validates/copies it inside admission; no public object gains trust.
     const source = snapshotJourneyPerformanceSource(input);
-    let value,
-      called = false,
-      retired = false,
-      failure;
-    try {
-      await scheduleChunk(
-        () => {
-          try {
-            required(!retired && !called, 'Performance inspection must run exactly once.');
-            called = true;
-            signal?.throwIfAborted();
-            value = inspectJourneyPerformance(source);
-          } catch (error) {
-            failure = error;
-            throw error;
-          }
-        },
-        { signal },
-      );
-      if (failure) throw failure;
-      required(called, 'Performance inspection admission did not run work.');
-      signal?.throwIfAborted();
-    } finally {
-      retired = true;
-    }
+    const value = await admittedInspection(() => inspectJourneyPerformance(source), signal);
     return inspectOwned(value, profile, signal);
   };
   const adopt = (value, rows) => {
