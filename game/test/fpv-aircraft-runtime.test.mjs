@@ -424,6 +424,95 @@ test('high-cadence clips rotate before the import event limit even with a larger
   assert.equal(recorder.status().state, 'recording');
 });
 
+test('large terrain checkpoints do not consume the stream budget and restored streams rotate identically', () => {
+  const identity = '0123456789abcdef',
+    hash = '00000000';
+  const checkpoint = (tick) => ({
+    identity,
+    state: { missionTick: tick },
+    world: 'x'.repeat(1200 * 1024),
+  });
+  const options = { identity, config: {}, checkpoint: checkpoint(0), hash };
+  const recorder = createAircraftRecorder(options);
+  const append = (owner, tick, events = []) =>
+    owner.append({
+      tick,
+      events,
+      stateHash: hash,
+      checkpoint: () => checkpoint(tick),
+    });
+  for (let tick = 1; tick <= 3000; tick++) append(recorder, tick);
+  let saved = recorder.recording();
+  assert.deepEqual(
+    saved.segments.map(({ startTick, endTick }) => [startTick, endTick]),
+    [
+      [0, 3000],
+      [3000, 3000],
+    ],
+  );
+  assert.ok(recorder.status().retainedBytes > 2 * 1200 * 1024);
+  for (let tick = 3001; tick <= 6000; tick++) append(recorder, tick);
+  saved = recorder.recording();
+  assert.deepEqual(
+    saved.segments.map(({ startTick, endTick }) => [startTick, endTick]),
+    [
+      [0, 3000],
+      [3000, 6000],
+      [6000, 6000],
+    ],
+  );
+  const restored = createAircraftRecorder(options);
+  restored.restore(saved);
+  for (let tick = 6001; tick <= 9000; tick++) {
+    append(recorder, tick);
+    append(restored, tick);
+  }
+  assert.deepEqual(restored.recording(), recorder.recording());
+  assert.equal(recorder.recording().segments[0].startTick, 3000);
+
+  const smallStream = createAircraftRecorder({ ...options, segmentBytes: 100 });
+  append(smallStream, 1, [['input', 0, 0, 0, 0, 0, 0, 0]]);
+  const partial = smallStream.recording();
+  assert.equal(partial.segments.length, 1);
+  const resumed = createAircraftRecorder({ ...options, segmentBytes: 100 });
+  resumed.restore(partial);
+  for (let tick = 2; tick <= 8; tick++) {
+    const events = [['input', tick * 10, tick, tick * 20000, 0, 0, 0, 0]];
+    append(smallStream, tick, events);
+    append(resumed, tick, events);
+    assert.deepEqual(resumed.recording(), smallStream.recording());
+  }
+  assert.ok(smallStream.recording().segments.length > 1, 'event growth still rotates early');
+
+  const hashes = createAircraftRecorder({ ...options, segmentBytes: 50 });
+  for (let tick = 1; tick <= 75; tick++) append(hashes, tick);
+  const resumedHashes = createAircraftRecorder({ ...options, segmentBytes: 50 });
+  resumedHashes.restore(hashes.recording());
+  for (let tick = 76; tick <= 200; tick++) {
+    append(hashes, tick);
+    append(resumedHashes, tick);
+  }
+  assert.equal(hashes.recording().segments[0].endTick, 150);
+  assert.deepEqual(resumedHashes.recording(), hashes.recording());
+
+  const limited = createAircraftRecorder({
+    ...options,
+    segmentBytes: 100,
+    maxBytes: 1250 * 1024,
+  });
+  append(limited, 1, [['terrain', 0, 'y'.repeat(60 * 1024)]]);
+  assert.ok(limited.status().retainedBytes <= 1250 * 1024);
+  const oversized = createAircraftRecorder({
+    ...options,
+    segmentBytes: 100,
+    maxBytes: 1000 * 1024,
+  });
+  assert.equal(oversized.status().state, 'unavailable');
+  assert.equal(oversized.status().error, 'recording-capacity');
+  assert.doesNotThrow(() => append(oversized, 1));
+  assert.equal(oversized.status().currentSeconds, 0.02);
+});
+
 test('worker transports aircraft descriptors, actor motion and recording persistence without function callbacks', async () => {
   const replies = [],
     handler = createAdvancedWorkerHandler((value) => replies.push(value));
