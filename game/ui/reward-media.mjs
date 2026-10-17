@@ -205,7 +205,14 @@ export function mountRewardMedia({
             onVerifiedAsset({ asset: verified, bytes }) {
               if (verified.id !== asset.id) return;
               const facts = inspectRewardMediaBytes(verified, role, bytes);
-              result = { ...facts, blob: new Blob([bytes], { type: facts.mime }) };
+              // Keep the verified bytes for the primary path, while retaining the
+              // original same-origin URL for browsers whose native decoder cannot
+              // attach an MP4 from an in-memory Blob (notably some iOS WebKit builds).
+              result = {
+                ...facts,
+                blob: new Blob([bytes], { type: facts.mime }),
+                directURL: new URL(asset.path, provider.rootURL).href,
+              };
             },
           });
           deadline.signal.throwIfAborted();
@@ -279,9 +286,10 @@ export function mountRewardMedia({
     clearMedia();
     media = createMedia(payload.type);
     const currentMedia = media;
-    let rejectMetadata = null;
+    let rejectMetadata = null,
+      loadingMetadata = false;
     const failCurrent = () => {
-      if (media !== currentMedia) return;
+      if (media !== currentMedia || loadingMetadata) return;
       fail();
       // A track error does not bubble to its video. Reject a pending decode
       // before clearing it so later metadata cannot revive failed captions.
@@ -299,7 +307,10 @@ export function mountRewardMedia({
     media.setAttribute('aria-label', payload.locales[locale].title);
     media.style.width = '100%';
     media.style.maxHeight = cinematic ? '100%' : '60vh';
-    media.hidden = true;
+    // Keep the native element laid out behind its poster while metadata loads.
+    // WebKit can refuse to decode a video kept at display:none, which made an
+    // otherwise valid reward look unavailable on iPhone.
+    media.hidden = false;
     binding = bindAudioMasterMedia({ audioMaster, element: media, muted: true });
     if (poster?.src) media.poster = poster.src;
     if (captions) {
@@ -310,7 +321,10 @@ export function mountRewardMedia({
       track.default = true;
       track.src = objectURL(new Blob([captions.text], { type: 'text/vtt' }));
       mediaURLs.add(track.src);
-      listenMedia(track, 'error', failCurrent);
+      listenMedia(track, 'error', () => {
+        if (!prepared) rejectMetadata?.(new Error('Reward captions are unavailable.'));
+        else failCurrent();
+      });
       media.append(track);
     }
     root.append(media);
@@ -347,49 +361,74 @@ export function mountRewardMedia({
         }
       }
     });
-    await new Promise((resolve, reject) => {
-      let timer;
-      const cleanup = () => {
-        clearTimeout(timer);
-        currentMedia.removeEventListener('loadedmetadata', ready);
-        currentMedia.removeEventListener('error', error);
-        controller.signal.removeEventListener('abort', cancel);
-        rejectMetadata = null;
-      };
-      const ready = () => {
-        try {
-          metadata(currentMedia);
-          cleanup();
-          resolve();
-        } catch (reason) {
+    const loadMetadata = (url) =>
+      new Promise((resolve, reject) => {
+        let timer, unavailable;
+        const cleanup = () => {
+          loadingMetadata = false;
+          clearTimeout(timer);
+          currentMedia.removeEventListener('loadedmetadata', ready);
+          currentMedia.removeEventListener('error', unavailable);
+          controller.signal.removeEventListener('abort', cancel);
+          rejectMetadata = null;
+        };
+        const ready = () => {
+          try {
+            metadata(currentMedia);
+            cleanup();
+            resolve();
+          } catch (reason) {
+            cleanup();
+            reject(reason);
+          }
+        };
+        const error = (reason = new Error('Native media decoder is unavailable.')) => {
           cleanup();
           reject(reason);
-        }
-      };
-      const error = () => {
-        cleanup();
-        reject(new Error('Native media decoder is unavailable.'));
-      };
-      const cancel = () => {
-        cleanup();
-        reject(new DOMException('Reward media cancelled.', 'AbortError'));
-      };
-      rejectMetadata = error;
-      currentMedia.addEventListener('loadedmetadata', ready);
-      currentMedia.addEventListener('error', error);
-      controller.signal.addEventListener('abort', cancel, { once: true });
-      timer = setTimeout(error, timeoutMs);
-      sourceURL = objectURL(source.blob);
-      media.src = sourceURL;
-      media.load();
-    }).catch((error) => {
-      if (media === currentMedia) clearMedia();
-      throw error;
-    });
+        };
+        const cancel = () => {
+          cleanup();
+          reject(new DOMException('Reward media cancelled.', 'AbortError'));
+        };
+        loadingMetadata = true;
+        rejectMetadata = error;
+        unavailable = () => error();
+        currentMedia.addEventListener('loadedmetadata', ready);
+        currentMedia.addEventListener('error', unavailable);
+        controller.signal.addEventListener('abort', cancel, { once: true });
+        timer = setTimeout(error, timeoutMs);
+        sourceURL = url;
+        media.src = sourceURL;
+        media.load();
+      });
+    try {
+      await loadMetadata(objectURL(source.blob));
+    } catch (error) {
+      // The exact bytes have already passed the asset verifier. Retry only videos
+      // from their registered same-origin path so iPhone can use its own range
+      // loader and hardware decoder without weakening the authored asset binding.
+      if (
+        payload.type !== 'video' ||
+        !source.directURL ||
+        !alive() ||
+        error?.message !== 'Native media decoder is unavailable.'
+      ) {
+        if (media === currentMedia) clearMedia();
+        throw error;
+      }
+      revoke(sourceURL);
+      sourceURL = null;
+      try {
+        await loadMetadata(source.directURL);
+      } catch (reason) {
+        if (media === currentMedia) clearMedia();
+        throw reason;
+      }
+    }
     if (!alive() || media !== currentMedia) return;
     prepared = true;
     media.controls = true;
-    media.hidden = cinematic;
+    media.hidden = false;
   }
   async function start({ allowMutedFallback = false } = {}) {
     if (!available() || (desired && preparation)) return;

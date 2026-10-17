@@ -23,7 +23,7 @@
       "id": "social-drone-sky-watch",
       "missionIds": ["social-drone-sky-watch-01"],
       "name": "Sky Watch",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "difficultyCatalogId": "journey-difficulty-v2",
@@ -40,7 +40,7 @@
       "height": 36,
       "id": "social-drone-sky-watch-01-map",
       "name": "Watch corridors",
-      "revision": "2",
+      "revision": "3",
       "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
       "terrain": [],
       "walls": [
@@ -87,36 +87,52 @@
           "tier": "measured",
           "x": 1.5,
           "y": 35.5
+        },
+        {
+          "heading": [1, 0],
+          "id": "north-keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 37.5,
+          "y": 7.5
+        },
+        {
+          "heading": [-1, 0],
+          "id": "central-keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 36.5,
+          "y": 29.5
         }
       ],
       "bonuses": [],
-      "coverage": 0.45,
+      "coverage": 0.64,
       "design": {
-        "captureConsequence": "The first closure reveals most of the scene. A second safe return completes the picture and unlocks the video.",
+        "captureConsequence": "The watch needs several safe closures. Use the side corridors and the central refuge instead of one long, exposed cut.",
         "combines": ["field-keeper", "perimeter-patrol", "foundations"],
-        "counterplay": "Read both field keepers and the border patrol before leaving safety; the walls create protected pauses and narrow turns.",
+        "counterplay": "Watch four keepers and the perimeter patrol before leaving safety; walls and the central refuge create narrow, useful pauses.",
         "difficulty": {
           "band": 3,
           "coordination": 0,
-          "execution": 3,
-          "mechanicLoad": 3,
-          "planning": 3,
-          "threatDensity": 3,
+          "execution": 5,
+          "mechanicLoad": 4,
+          "planning": 5,
+          "threatDensity": 6,
           "timePressure": 0
         },
-        "durationSeconds": [25, 75],
+        "durationSeconds": [55, 130],
         "introduces": ["perimeter-patrol"],
-        "lesson": "Build two deliberate captures through the watch corridors, then enjoy the original video.",
-        "mastery": "Complete two captures through different corridors without losing a life.",
+        "lesson": "Read the overlapping patrols, use the refuges, and make several deliberate captures to complete the picture.",
+        "mastery": "Complete three captures through different corridors without losing a life.",
         "memorableMoment": "The final corridor closes, the completed picture settles, and the aerial clip begins.",
         "pacingBeat": "discover",
         "practices": ["closure", "enemy-seeded-closure", "foundations"],
-        "rewardRef": { "id": "social-drone-sky-watch-01-discovery", "revision": "2" },
-        "routeDecision": "Use the center refuge for a shorter second cut, or circle a side corridor away from the keepers."
+        "rewardRef": { "id": "social-drone-sky-watch-01-discovery", "revision": "3" },
+        "routeDecision": "Choose a side corridor to avoid a keeper, then use the central refuge to reset before the final capture."
       },
       "format": "MissionDesignV1",
       "id": "social-drone-sky-watch-01",
-      "map": { "id": "social-drone-sky-watch-01-map", "revision": "2" },
+      "map": { "id": "social-drone-sky-watch-01-map", "revision": "3" },
       "modes": ["solo"],
       "name": "Sky Watch",
       "objectives": [],
@@ -124,7 +140,7 @@
         "backgroundAssetId": "social-drone-sky-watch-picture",
         "themeId": "social-drone-people-workshop-theme"
       },
-      "revision": "2",
+      "revision": "3",
       "spawnId": "home",
       "timeLimitSeconds": 0
     }
@@ -136,9 +152,9 @@
       "format": "PackDesignV1",
       "id": "social-drone-sky-watch-pack",
       "name": "Sky Watch",
-      "revision": "2"
+      "revision": "3"
     }
   ],
   "policyId": "journey-trail-impact-v3",
-  "revision": "2"
+  "revision": "3"
 }
