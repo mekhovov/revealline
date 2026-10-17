@@ -786,3 +786,190 @@ test('retention policy is exact in declaration, execution report and assessment 
     'passed',
   );
 });
+
+function preparingSetup() {
+  const e = environment();
+  const status = {
+    dataset: { state: 'busy' },
+    querySelector: () => ({ textContent: 'Getting ready' }),
+  };
+  e.env.RevealLineI18n = { t: () => 'Getting ready' };
+  e.env.document.documentElement = { dataset: { interfaceTheme: 'default' } };
+  e.env.document.fonts = [{ family: 'Field Kit Display', weight: '600', status: 'loading' }];
+  e.env.document.getElementById = (id) =>
+    id === 'flight-preparation-status'
+      ? status
+      : id === 'theme-card-dnipro-porcelain'
+        ? { getAttribute: () => 'true' }
+        : null;
+  e.env.document.querySelectorAll = (selector) => {
+    assert.equal(selector, 'dialog[open]');
+    return [];
+  };
+  installLifecycleProbe(
+    {
+      runRetentionPolicy: LIFECYCLE_RUN_RETENTION_POLICY,
+      preparationRetention: 'visible-busy-shared-font-v1',
+    },
+    e.env,
+  );
+  e.env.Phaser = e.Phaser;
+  const game = new e.env.Phaser.Game();
+  const probe = e.env.soloLifecycleProbe;
+  probe.installCheckpoint((run) => ({ hash: String(run.tick).padStart(16, '0'), x: run.player.x }));
+  e.run.tick = 0;
+  e.env.document.body.dataset.flightState = 'briefing';
+  e.env.document.visibilityState = 'visible';
+  e.env.document.hasFocus = () => true;
+  return { ...e, game, probe, status };
+}
+test('preparation retention is explicit and cannot reuse the running boundary', () => {
+  const legacy = setup();
+  assert.equal(legacy.probe.retainPreparingRun, undefined);
+  const e = preparingSetup();
+  assert.throws(() => e.probe.retainObservedRun(), /Preparation boundary/);
+  assert.throws(
+    () =>
+      installLifecycleProbe(
+        { preparationRetention: 'visible-busy-shared-font-v1' },
+        environment().env,
+      ),
+    /Unknown/,
+  );
+  assert.throws(
+    () =>
+      installLifecycleProbe(
+        { runRetentionPolicy: LIFECYCLE_RUN_RETENTION_POLICY, preparationRetention: 'typo' },
+        environment().env,
+      ),
+    /Unknown/,
+  );
+});
+test('busy cold run retains live checkpoint through hidden briefing without claiming submitted paint', () => {
+  const e = preparingSetup();
+  const initial = e.probe.retainPreparingRun();
+  assert.equal(initial.label, 'retained-initial-preparation');
+  assert.equal(initial.phase, 'briefing');
+  assert.equal(initial.preparation, 'busy');
+  const scene = e.game.scene.scenes[0];
+  scene.lastPaint = null;
+  e.env.document.visibilityState = 'hidden';
+  e.env.document.hasFocus = () => false;
+  e.status.dataset.state = 'cancelled';
+  e.setNow(10000);
+  const held = e.probe.snapshot('hidden-completed', true);
+  assert.equal(held.runId, initial.runId);
+  assert.equal(held.runEvidence, 'retained-paused-reference');
+  assert.equal(held.submittedPaintTick, null);
+  assert.equal(held.retainedIdentityMatched, false);
+  assert.deepEqual(held.checkpoint, initial.checkpoint);
+  e.run.tick = 1;
+  assert.notDeepEqual(e.probe.snapshot('unexpected-advance', true).checkpoint, initial.checkpoint);
+  e.run.tick = 0;
+  e.env.document.visibilityState = 'visible';
+  e.env.document.hasFocus = () => true;
+  scene.lastPaint = { run: e.run, tick: 0 };
+  assert.equal(e.probe.snapshot('visible-rejoin', true).retainedIdentityMatched, true);
+  assert.equal(e.probe.export().preparationRetention, 'visible-busy-shared-font-v1');
+});
+for (const [name, mutate] of [
+  ['running', (e) => (e.env.document.body.dataset.flightState = 'running')],
+  ['result', (e) => (e.env.document.body.dataset.flightState = 'result')],
+  ['hidden', (e) => (e.env.document.visibilityState = 'hidden')],
+  ['unfocused', (e) => (e.env.document.hasFocus = () => false)],
+  ['open-dialog', (e) => (e.env.document.querySelectorAll = () => [{}])],
+  ['not-busy', (e) => (e.status.dataset.state = 'ready')],
+  ['already-advanced', (e) => (e.run.tick = 1)],
+  ['missing-tick', (e) => delete e.run.tick],
+  ['other-level', (e) => (e.run.level.id = 'other')],
+  ['no-submission', (e) => (e.game.scene.scenes[0].lastPaint = null)],
+  [
+    'ambiguous-scenes',
+    (e) => e.game.scene.scenes.push({ lastPaint: { run: structuredClone(e.run) } }),
+  ],
+  ['excess-scenes', (e) => e.game.scene.scenes.push(...Array.from({ length: 64 }, () => ({})))],
+])
+  test('reject preparation boundary: ' + name, () => {
+    const e = preparingSetup();
+    mutate(e);
+    assert.throws(() => e.probe.retainPreparingRun(), /visible busy initial/);
+  });
+test('preparation identity cannot survive replacement or multiple latches', () => {
+  for (const kind of ['run', 'scene', 'game']) {
+    const e = preparingSetup();
+    e.probe.retainPreparingRun();
+    assert.throws(() => e.probe.retainPreparingRun(), /one lifecycle/);
+    if (kind === 'run') e.game.scene.scenes[0].lastPaint.run = structuredClone(e.run);
+    if (kind === 'scene') e.game.scene.scenes = [];
+    if (kind === 'game') e.game = new e.env.Phaser.Game();
+    const changed = e.probe.snapshot('changed');
+    assert.equal(changed.identityFailure, true);
+    e.game.scene.scenes[0] && (e.game.scene.scenes[0].lastPaint = null);
+    assert.throws(() => e.probe.snapshot('without-paint', true), /unavailable/);
+  }
+});
+test('briefing reference never supplies a running frame and legacy briefing behavior stays strict', () => {
+  const e = preparingSetup();
+  e.probe.retainPreparingRun();
+  e.game.scene.scenes[0].lastPaint = null;
+  e.env.document.body.dataset.flightState = 'running';
+  assert.equal(e.probe.snapshot('running').runEvidence, 'unavailable');
+  assert.throws(() => e.probe.snapshot('running-checkpoint', true), /pause-only/);
+  const old = setup();
+  latch(old);
+  old.game.scene.scenes[0].lastPaint = null;
+  old.env.document.body.dataset.flightState = 'briefing';
+  assert.throws(() => old.probe.snapshot('briefing', true), /unavailable/);
+});
+
+for (const [name, mutate] of [
+  ['absent native face', (e) => (e.env.document.fonts = [])],
+  ['loaded native face', (e) => (e.env.document.fonts[0].status = 'loaded')],
+  ['wrong weight', (e) => (e.env.document.fonts[0].weight = '400')],
+  ['wrong family', (e) => (e.env.document.fonts[0].family = 'Other')],
+  [
+    'unaccepted label',
+    (e) => (e.status.querySelector = () => ({ textContent: 'Other preparation' })),
+  ],
+  [
+    'accepted theme',
+    (e) => (e.env.document.documentElement.dataset.interfaceTheme = 'dnipro-porcelain'),
+  ],
+  [
+    'font inventory overflow',
+    (e) => (e.env.document.fonts = Array.from({ length: 65 }, () => ({ family: 'Other' }))),
+  ],
+  [
+    'matching face overflow',
+    (e) =>
+      (e.env.document.fonts = Array.from({ length: 3 }, () => ({
+        family: 'Field Kit Display',
+        weight: '600',
+        status: 'loading',
+      }))),
+  ],
+])
+  test('selected preparation association rejects ' + name, () => {
+    const e = preparingSetup();
+    mutate(e);
+    assert.throws(() => e.probe.retainPreparingRun());
+  });
+test('preparation checkpoints copy reused producer objects at capture', () => {
+  const e = preparingSetup(),
+    checkpoint = { hash: '0000000000000000', fields: { tick: 0 } };
+  e.probe.installCheckpoint(() => checkpoint);
+  const before = e.probe.retainPreparingRun();
+  checkpoint.fields.tick = 1;
+  assert.equal(before.checkpoint.fields.tick, 0);
+  assert.equal(e.probe.snapshot('later', true).checkpoint.fields.tick, 1);
+});
+
+test('preboot unavailable font and locale observations stay bounded without throwing into the page', () => {
+  const e = preparingSetup();
+  delete e.env.RevealLineI18n;
+  const early = e.probe.snapshot('before-localization');
+  assert.equal(early.preparationDetails.status, 'unavailable');
+  assert.throws(() => e.probe.retainPreparingRun(), /selected-font wait/);
+  e.env.RevealLineI18n = { t: () => 'Getting ready' };
+  assert.equal(e.probe.retainPreparingRun().preparationDetails.status, 'observed');
+});

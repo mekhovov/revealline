@@ -25,6 +25,36 @@ const manifest = JSON.parse(
   await readFile(join(root, 'docs/performance/solo-next-geometric-c696-plan.json')),
 );
 const fixture = JSON.parse(await readFile(join(root, manifest.recipes.next.path)));
+const historicalChangedPaths = new Set([
+  'scripts/run-solo-remote-correctness.mjs',
+  'scripts/solo-remote-sustained.mjs',
+  'scripts/solo-qualification-next-route.mjs',
+  'scripts/qualify-solo-runtime.mjs',
+]);
+const witnessPath = 'docs/performance/fixtures/solo-next-geometric/e1cc-execution-source.json';
+const validateExecutionWitness = (bytes, manifestBytes, workflowBytes) => {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '6254aab39555fe2a6f6eb6c8808dac80c2e5cb49925b0cbfd1b98b652aed7728',
+  );
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.source, 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17');
+  assert.equal(witness.tree, '58f19392e25384620d896098fce8616b538e318d');
+  assert.equal(witness.run, 39037875135);
+  assert.equal(witness.status, 'failed-setup-zero-native-observations');
+  for (const [path, content] of [
+    [witness.manifest, manifestBytes],
+    [witness.workflow, workflowBytes],
+  ]) {
+    const ref = witness.refs.find((r) => r.path === path);
+    assert.equal(content.length, ref?.bytes);
+    assert.equal(createHash('sha256').update(content).digest('hex'), ref?.sha256);
+  }
+  return new Map(
+    witness.refs.filter((r) => historicalChangedPaths.has(r.path)).map((r) => [r.path, r]),
+  );
+};
+
 const digest = async (p) => {
   const bytes = await readFile(p);
   return { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
@@ -214,20 +244,24 @@ test('candidate-only WebKit preparation never builds or downloads a baseline', a
   t.after(() => rm(dir, { recursive: true, force: true }));
   await mkdir(join(dir, 'evidence'));
   let baselineCalls = 0;
-  const plan = bindSustainedJob(manifest, 'webkit', 1),
-    mode = await prepareSustainedMode({
-      plan,
-      repository: root,
-      work: dir,
-      evidence: join(dir, 'evidence'),
-      report: {},
-      admitted: { artifacts: { candidate: {} } },
-      digest,
-      ensureBaseline: async () => {
-        baselineCalls++;
-        throw Error('baseline forbidden');
-      },
-    });
+  const plan = bindSustainedJob(manifest, 'webkit', 1);
+  // Behavior control uses current test tooling; the executed declaration is
+  // separately checked byte-for-byte against its immutable e1cc Git witness.
+  for (const ref of [...plan.frozenTools, ...plan.adapterInputs])
+    Object.assign(ref, await digest(join(root, ref.path)));
+  const mode = await prepareSustainedMode({
+    plan,
+    repository: root,
+    work: dir,
+    evidence: join(dir, 'evidence'),
+    report: {},
+    admitted: { artifacts: { candidate: {} } },
+    digest,
+    ensureBaseline: async () => {
+      baselineCalls++;
+      throw Error('baseline forbidden');
+    },
+  });
   assert.equal(baselineCalls, 0);
   assert.equal(mode.cpu, 1);
   assert.deepEqual(JSON.parse(await readFile(mode.recipePath)), fixture);
@@ -326,12 +360,50 @@ test('concrete package, tools and one-shot workflow retain exact independent ide
     ...Object.values(manifest.recipes),
   ];
   assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
-  for (const ref of refs)
+  const manifestBytes = await readFile(
+    join(root, 'docs/performance/solo-next-geometric-c696-plan.json'),
+  );
+  const workflowBytes = await readFile(
+    join(root, '.github/workflows/solo-remote-next-geometric-c696-temporary.yml'),
+  );
+  const witnessBytes = await readFile(join(root, witnessPath));
+  const witnessed = validateExecutionWitness(witnessBytes, manifestBytes, workflowBytes);
+  assert.equal(witnessed.size, 4);
+  for (const ref of refs) {
+    const prior = witnessed.get(ref.path);
     assert.deepEqual(
-      await digest(join(root, ref.path)),
+      prior ? { bytes: prior.bytes, sha256: prior.sha256 } : await digest(join(root, ref.path)),
       { bytes: ref.bytes, sha256: ref.sha256 },
       ref.path,
     );
+  }
+  assert.throws(() =>
+    validateExecutionWitness(
+      Buffer.concat([witnessBytes, Buffer.from(' ')]),
+      manifestBytes,
+      workflowBytes,
+    ),
+  );
+  assert.throws(() =>
+    validateExecutionWitness(
+      witnessBytes,
+      Buffer.concat([manifestBytes, Buffer.from(' ')]),
+      workflowBytes,
+    ),
+  );
+  assert.throws(() =>
+    validateExecutionWitness(
+      witnessBytes,
+      manifestBytes,
+      Buffer.concat([workflowBytes, Buffer.from(' ')]),
+    ),
+  );
+  const wrong = structuredClone(manifest);
+  wrong.frozenTools.find((r) => r.path === 'scripts/run-solo-remote-correctness.mjs').sha256 =
+    'f'.repeat(64);
+  assert.throws(() =>
+    validateExecutionWitness(witnessBytes, Buffer.from(JSON.stringify(wrong)), workflowBytes),
+  );
   const workflow = await readFile(
     join(root, '.github/workflows/solo-remote-next-geometric-c696-temporary.yml'),
     'utf8',

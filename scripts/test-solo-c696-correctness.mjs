@@ -21,6 +21,30 @@ const conditions = [
   "github.event.before == '" + source + "'",
 ];
 const guard = conditions.join(' && ');
+// Historical execution uses exact 0feb source evidence, never evolving HEAD.
+const archive = 'docs/performance/fixtures/solo-remote-correctness/0feb-c696-workflow.yml';
+const witnessPath = 'docs/performance/fixtures/solo-remote-correctness/0feb-c696-source.json';
+const witnessSHA256 = '121b05ca08c376c9b0c3d3154da2ac518315d9e334045da4d0d66b127546a8f8';
+function historicalWitness(bytes) {
+  assert.equal(hash(bytes), witnessSHA256);
+  const value = JSON.parse(bytes);
+  assert.equal(value.revision, '0febd334619731adc26dfa3df78aab02991563af');
+  assert.equal(value.tree, '692135315b5a4d0dcb98bc24314c644d37cec1ed');
+  assert.equal(value.files.length, 44);
+  return value;
+}
+const witnessBytes = await read(witnessPath);
+const witness = historicalWitness(witnessBytes);
+function historicalBytes(file, bytes) {
+  const ref = witness.files.find((row) => row.path === file);
+  assert(ref, file);
+  assert.equal(bytes.length, ref.bytes, file);
+  assert.equal(hash(bytes), ref.sha256, file);
+}
+const historicalWorkflow = await read(archive);
+historicalBytes(workflowPath, historicalWorkflow);
+historicalBytes(path, await read(path));
+
 function bound(value) {
   assert.equal(value.format, 'SoloHostedCorrectnessPlan.v1');
   assert.equal(value.status, 'reviewed-correctness-only');
@@ -104,16 +128,17 @@ test('all original rows, fixed recipe, defaults, source guards and limits remain
   for (const key of ['hitchJournal', 'probe', 'readinessProbe', 'profile', 'cpu'])
     assert.equal(plan[key], undefined, key);
 });
-test('prospective tooling uses current exact hashes and audited dynamic verifier roots without historical fallback', async () => {
+test('executed c696 tooling retains exact 0feb Git identities and audited verifier roots', async () => {
   const refs = [...plan.adapterInputs, ...plan.frozenTools, plan.fixture];
   assert.equal(new Set(refs.map((ref) => ref.path)).size, refs.length);
   assert.equal(plan.adapterInputs.length, 1);
   assert.equal(plan.adapterInputs[0].path, 'scripts/solo-remote-baseline.mjs');
   assert.equal(refs.length, 41);
   for (const ref of refs) {
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(hash(bytes), ref.sha256, ref.path);
+    const original = witness.files.find((row) => row.path === ref.path);
+    assert(original, ref.path);
+    assert.equal(original.bytes, ref.bytes, ref.path);
+    assert.equal(original.sha256, ref.sha256, ref.path);
   }
   for (const name of [
     'soundtrack-distribution',
@@ -127,7 +152,7 @@ test('prospective tooling uses current exact hashes and audited dynamic verifier
     );
 });
 test('actual reusable workflow uses one exact push edge with sparse tools and full exact source checkouts', async () => {
-  const text = (await read(workflowPath)).toString();
+  const text = historicalWorkflow.toString();
   assert.equal(text.match(/^    if: (.+)$/m)?.[1], guard);
   assert(!text.includes('workflow_dispatch') && !text.includes('workflow_run:'));
   assert.match(text, /timeout-minutes: 145/);
@@ -186,4 +211,13 @@ test('future activation requires exactly all four conditions; missing or broader
     '    if: ' + guard.replace(source, prior.candidate.revision),
   ])
     assert.throws(() => verify(text));
+});
+
+const awaitBytes = await read(path);
+test('historical c696 rejects altered source witness, archived workflow and declaration', async () => {
+  assert.throws(() => historicalWitness(Buffer.concat([witnessBytes, Buffer.from(' ')])));
+  assert.throws(() =>
+    historicalBytes(workflowPath, Buffer.concat([historicalWorkflow, Buffer.from(' ')])),
+  );
+  assert.throws(() => historicalBytes(path, Buffer.concat([awaitBytes, Buffer.from(' ')])));
 });

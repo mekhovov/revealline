@@ -62,13 +62,113 @@ export const COMBINED_READINESS_PROTOCOL = Object.freeze({
   numericalGates: 'unchanged-raw',
   performanceQualification: false,
 });
+export const SELECTED_FONT_POST_COMMAND_FIXTURE = Object.freeze({
+  path: 'docs/performance/fixtures/solo-readiness-font/selected-font-cancel-post-command-v3.qualification.fixture',
+  bytes: 6005,
+  sha256: '55b0f0dcc10163d4192e71fe5cb323d6bd6101f68087f1e4defc58cd546072ba',
+});
+export const PREPARATION_READINESS_COHORT = 'readiness-preparation-candidatee1cc';
+export const PREPARATION_READINESS_PHASES = Object.freeze([
+  'cold-first30',
+  'warm-resume',
+  'saved-resume',
+  'selected-font-cancel',
+  'required-original-cancel',
+  'optional-icon-missing',
+]);
+export const MEDIA_READINESS_FIXTURES = Object.freeze({
+  'required-original-cancel': Object.freeze({
+    path: 'docs/performance/fixtures/solo-readiness-media/required-original-cancel-v1.qualification.fixture',
+    bytes: 4526,
+    sha256: '411c385f4c31ab2308c78d326a028a743ab47e79a4edfbcb2a9a1835b9d86b39',
+  }),
+  'optional-icon-missing': Object.freeze({
+    path: 'docs/performance/fixtures/solo-readiness-media/optional-icon-missing-v1.qualification.fixture',
+    bytes: 3233,
+    sha256: '80ec6fe25c99330a3d3ae787eeb8d95bfbde4f051b0e7ee4c29c87f06232fd1f',
+  }),
+});
+export const PREPARATION_READINESS_PROTOCOL = Object.freeze({
+  name: 'geometry-and-preparation-faults-v1',
+  phases: PREPARATION_READINESS_PHASES,
+  geometry: ['cold-first30', 'warm-resume', 'saved-resume'],
+  cancelBoundaryObservation: 'post-command-v3',
+  externalCadence: 'settled120',
+  numericalGates: 'unchanged-raw',
+  performanceQualification: false,
+});
+const preparationPlan = (plan) => plan?.sourceCohort === PREPARATION_READINESS_COHORT;
+export function preparationReadinessRows(engine) {
+  return PREPARATION_READINESS_PHASES.map((phase) => ({ ...readinessRow(engine, phase), phase }));
+}
+export function preparationReadinessSelection(plan) {
+  assert.equal(plan.sourceCohort, 'readiness-preparation-row-candidatee1cc');
+  assert(PREPARATION_READINESS_PHASES.includes(plan.phase));
+  const geometry = geometryReadinessSelection({
+    sourceCohort: GEOMETRY_READINESS_COHORT,
+    phase: 'cold-first30',
+  });
+  if (['cold-first30', 'warm-resume', 'saved-resume'].includes(plan.phase))
+    return geometryReadinessSelection({
+      sourceCohort: GEOMETRY_READINESS_COHORT,
+      phase: plan.phase,
+    });
+  if (plan.phase === 'selected-font-cancel')
+    return {
+      source: geometry.source,
+      fixture: SELECTED_FONT_POST_COMMAND_FIXTURE,
+      protocol: 'selected-font-cancel-post-command-v3',
+      font: true,
+      cancelBoundary: true,
+      requestPolicy: 'same-url-two-v2',
+      documents: 1,
+    };
+  return {
+    source: geometry.source,
+    fixture: MEDIA_READINESS_FIXTURES[plan.phase],
+    protocol: plan.phase + '-v1',
+    mediaFault: true,
+    documents: 1,
+  };
+}
+function preparationRowPlan(plan, row) {
+  const expected = preparationReadinessRows(plan.engine).find((item) => item.id === row.id);
+  assert.deepEqual(row, expected, 'Exact preparation row');
+  const scoped = {
+    ...plan,
+    sourceCohort: 'readiness-preparation-row-candidatee1cc',
+    phase: row.phase,
+  };
+  const selected = preparationReadinessSelection(scoped);
+  return {
+    ...scoped,
+    fixture: selected.fixture,
+    rows: [readinessRow(plan.engine, row.phase)],
+    protocol: {
+      name: selected.protocol,
+      ...(selected.geometry ? { geometryObservation: 'phase-boundary-v1' } : {}),
+      ...(selected.cancelBoundary ? { cancelBoundaryObservation: 'post-command-v3' } : {}),
+      startupWait: 'immediate-partial',
+      externalCadence: 'settled120',
+      observationTimeoutMs: 240000,
+      records: 8,
+      bytes: 16384,
+      numericalGates: 'unchanged-raw',
+      performanceQualification: false,
+    },
+  };
+}
 function combinedPlan(plan) {
   return (
-    plan.sourceCohort === COMBINED_READINESS_COHORT || fontCompactPlan(plan) || fontDprPlan(plan)
+    preparationPlan(plan) ||
+    plan.sourceCohort === COMBINED_READINESS_COHORT ||
+    fontCompactPlan(plan) ||
+    fontDprPlan(plan)
   );
 }
 export function readinessRowPlan(plan, row) {
   if (!combinedPlan(plan)) return plan;
+  if (preparationPlan(plan)) return preparationRowPlan(plan, row);
   if (fontDprPlan(plan)) {
     const expected = fontDprRows(plan.engine).find((item) => item.id === row.id);
     assert(expected, 'Undeclared font/DPR row');
@@ -165,7 +265,46 @@ function combinedFixtureInputs(plan) {
   ];
 }
 
+// Exact verified corrected-layout source. Declarations still require full remote package admission.
+export const GEOMETRY_READINESS_SOURCE = Object.freeze({
+  revision: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+  tree: '58f19392e25384620d896098fce8616b538e318d',
+});
+export const GEOMETRY_READINESS_COHORT = 'readiness-geometry-corrected-package';
+export function geometryReadinessSelection(plan) {
+  assert.equal(plan.sourceCohort, GEOMETRY_READINESS_COHORT);
+  assert.match(
+    GEOMETRY_READINESS_SOURCE.revision ?? '',
+    /^[a-f0-9]{40}$/,
+    'Geometry source is held',
+  );
+  assert.match(GEOMETRY_READINESS_SOURCE.tree ?? '', /^[a-f0-9]{40}$/, 'Geometry tree is held');
+  assert(['cold-first30', 'warm-resume', 'saved-resume'].includes(plan.phase));
+  return {
+    source: GEOMETRY_READINESS_SOURCE,
+    fixture:
+      plan.phase === 'cold-first30'
+        ? READINESS_FIXTURE
+        : plan.phase === 'saved-resume'
+          ? COMPACT_READINESS_FIXTURES.saved
+          : RESUME_READINESS_FIXTURES['warm-resume'],
+    protocol: plan.phase === 'cold-first30' ? 'first-running-v1' : plan.phase + '-v1',
+    geometry: true,
+    resume: plan.phase !== 'cold-first30',
+    compact: plan.phase === 'saved-resume',
+    documents: plan.phase === 'saved-resume' ? 2 : 1,
+  };
+}
 function selection(plan) {
+  if (preparationPlan(plan))
+    return preparationReadinessSelection({
+      ...plan,
+      sourceCohort: 'readiness-preparation-row-candidatee1cc',
+      phase: 'cold-first30',
+    });
+  if (plan.sourceCohort === 'readiness-preparation-row-candidatee1cc')
+    return preparationReadinessSelection(plan);
+  if (plan.sourceCohort === GEOMETRY_READINESS_COHORT) return geometryReadinessSelection(plan);
   if (
     [
       'readiness-selected-font-candidate0feb',
@@ -381,11 +520,22 @@ function densityPlan(plan) {
   );
 }
 function comparisonSchedule(plan) {
+  if (preparationPlan(plan) || plan?.sourceCohort === 'readiness-preparation-row-candidatee1cc')
+    return [];
   return densityPlan(plan) ? densityComparisonSchedule() : qualityComparisonSchedule();
 }
 export const READINESS_ENGINES = ['chromium', 'webkit'];
 export function readinessRow(engine, phase = 'cold-first30') {
-  assert(['cold-first30', 'warm-resume', 'saved-resume', 'selected-font-cancel'].includes(phase));
+  assert(
+    [
+      'cold-first30',
+      'warm-resume',
+      'saved-resume',
+      'selected-font-cancel',
+      'required-original-cancel',
+      'optional-icon-missing',
+    ].includes(phase),
+  );
   assert(READINESS_ENGINES.includes(engine));
   return {
     id: phase === 'cold-first30' ? `readiness-${engine}` : `readiness-${phase}-${engine}`,
@@ -397,6 +547,25 @@ export function readinessRow(engine, phase = 'cold-first30') {
   };
 }
 export function validateReadinessPlan(plan) {
+  if (preparationPlan(plan)) {
+    assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
+    assert.equal(plan.phase, 'geometry-and-preparation-faults');
+    assert.deepEqual(plan.protocol, PREPARATION_READINESS_PROTOCOL);
+    assert.deepEqual(plan.rows, preparationReadinessRows(plan.engine));
+    assert.deepEqual(plan.fixture, READINESS_FIXTURE);
+    assert.deepEqual(plan.additionalFixtures, [
+      RESUME_READINESS_FIXTURES['warm-resume'],
+      COMPACT_READINESS_FIXTURES.saved,
+      SELECTED_FONT_POST_COMMAND_FIXTURE,
+      MEDIA_READINESS_FIXTURES['required-original-cancel'],
+      MEDIA_READINESS_FIXTURES['optional-icon-missing'],
+    ]);
+    assert.equal(plan.release.comparisonScope, 'candidate-preparation-correctness-only');
+    for (const row of plan.rows) validateReadinessPlan(preparationRowPlan(plan, row));
+    const refs = combinedFixtureInputs(plan);
+    assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
+    return plan;
+  }
   if (fontDprPlan(plan)) {
     assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
     assert.equal(plan.phase, 'joined-selected-font-and-same-viewport-dpr');
@@ -478,6 +647,8 @@ export function validateReadinessPlan(plan) {
   assert.deepEqual(plan.rows, [readinessRow(plan.engine, plan.phase)]);
   assert.deepEqual(plan.protocol, {
     name: selected.protocol,
+    ...(selected.geometry ? { geometryObservation: 'phase-boundary-v1' } : {}),
+    ...(selected.cancelBoundary ? { cancelBoundaryObservation: 'post-command-v3' } : {}),
     startupWait: 'immediate-partial',
     externalCadence: 'settled120',
     observationTimeoutMs: 240000,
@@ -559,13 +730,15 @@ export function bindReadinessJob(manifest, engine) {
   delete plan.engines;
   plan.format = 'SoloHostedReadinessPlanV1';
   plan.engine = engine;
-  plan.rows = combinedPlan(plan)
-    ? fontDprPlan(plan)
-      ? fontDprRows(engine)
-      : fontCompactPlan(plan)
-        ? fontCompactRows(engine)
-        : combinedReadinessRows(engine)
-    : [readinessRow(engine, plan.phase)];
+  plan.rows = preparationPlan(plan)
+    ? preparationReadinessRows(engine)
+    : combinedPlan(plan)
+      ? fontDprPlan(plan)
+        ? fontDprRows(engine)
+        : fontCompactPlan(plan)
+          ? fontCompactRows(engine)
+          : combinedReadinessRows(engine)
+      : [readinessRow(engine, plan.phase)];
   return validateReadinessPlan(plan);
 }
 export function readinessMatrix(manifest) {
@@ -598,13 +771,15 @@ export async function prepareReadinessMode(ctx) {
   ctx.report.performanceExclusion = true;
   ctx.report.firstEightAllCorrectnessPassed = false;
   return {
-    scope: combinedPlan(ctx.plan)
-      ? fontDprPlan(ctx.plan)
-        ? 'One joined selected-font correctness observation per engine; WebKit additionally has two counterbalanced Full-effects DPR pairs at the same viewport. All original failures and numeric verdicts retained; no automatic retry or physical qualification.'
-        : fontCompactPlan(ctx.plan)
-          ? 'One exact selected-font cancellation per engine; WebKit additionally observes the compact saved Resume route and two muted public-effects pairs. Old failed routes remain failed; all numerical verdicts retained.'
-          : 'Fixed serial warm/saved readiness observations; WebKit additionally has two muted public-effects pairs. All numerical failures retained; no physical qualification or automatic retry.'
-      : 'One candidate correctness pilot per engine; no timing comparison, forced calibration delay, automatic retry or physical-device qualification.',
+    scope: preparationPlan(ctx.plan)
+      ? 'Six serial candidate-only preparation observations per engine: geometry cold/warm/saved, joined-font Cancel boundary, required-original Cancel and optional icon 404. All original numerical failures and prior native failures remain; no display-completion, timing or physical-device qualification.'
+      : combinedPlan(ctx.plan)
+        ? fontDprPlan(ctx.plan)
+          ? 'One joined selected-font correctness observation per engine; WebKit additionally has two counterbalanced Full-effects DPR pairs at the same viewport. All original failures and numeric verdicts retained; no automatic retry or physical qualification.'
+          : fontCompactPlan(ctx.plan)
+            ? 'One exact selected-font cancellation per engine; WebKit additionally observes the compact saved Resume route and two muted public-effects pairs. Old failed routes remain failed; all numerical verdicts retained.'
+            : 'Fixed serial warm/saved readiness observations; WebKit additionally has two muted public-effects pairs. All numerical failures retained; no physical qualification or automatic retry.'
+        : 'One candidate correctness pilot per engine; no timing comparison, forced calibration delay, automatic retry or physical-device qualification.',
   };
 }
 export function readinessArguments(ctx, row, url, dir) {
@@ -627,6 +802,8 @@ export function readinessArguments(ctx, row, url, dir) {
     '--hitch-journal',
     '--cadence=settled120',
     `--readiness-probe=${selected.protocol}`,
+    ...(selected.geometry ? ['--readiness-geometry=phase-boundary-v1'] : []),
+    ...(selected.cancelBoundary ? ['--readiness-cancel-boundary=post-command-v3'] : []),
     ...(row.engine === 'webkit'
       ? ['--context=persistent', '--viewport=400x850', '--dpr=3', '--mobile-context']
       : []),
@@ -670,37 +847,61 @@ export async function readinessAssessment(
   finalReplayText = null,
 ) {
   const selected = selection(plan);
-  const { assessReadinessPilot, assessResumeReadiness, assessSelectedFontReadiness } = await import(
-    './solo-qualification-readiness.mjs'
-  );
+  const {
+    assessReadinessPilot,
+    assessResumeReadiness,
+    assessSelectedFontReadiness,
+    assessSelectedFontPostCommandReadiness,
+    assessReadinessGeometry,
+    assessReadinessMediaFault,
+  } = await import('./solo-qualification-readiness.mjs');
   const groups =
     selected.documents === 2
       ? ['before-resume', 'saved-restored-before-resume', 'after-resume']
       : ['before-resume', 'after-resume'];
-  const readiness = selected.font
-    ? assessSelectedFontReadiness(
-        raw?.readinessObservation,
-        raw?.snapshots?.at(-1)?.application,
-        raw?.readinessDocuments,
-        raw?.selectedFontTransport,
-        selected.requestPolicy ?? 'single-v1',
-      )
-    : selected.resume
-      ? assessResumeReadiness({
-          protocol: selected.protocol,
-          documents: raw?.readinessDocuments,
-          observations: raw?.readinessObservations,
-          applications: groups.map(
-            (group) => raw?.snapshots?.find((s) => s.group === group)?.application,
-          ),
-          replayEvidence: raw?.readinessReplayEvidence,
-          finalReplayText,
-        })
-      : assessReadinessPilot(
+  const readiness = selected.mediaFault
+    ? assessReadinessMediaFault({
+        protocol: selected.protocol,
+        observation: raw?.readinessObservation,
+        application: raw?.snapshots?.at(-1)?.application,
+        documents: raw?.readinessDocuments,
+        transport: raw?.mediaFaultTransport,
+        witness: raw?.requiredOriginalWitness,
+        fallback: raw?.optionalIconFallback,
+        cleanupFailure: raw?.mediaFaultCleanupFailure,
+      })
+    : selected.font
+      ? (selected.cancelBoundary
+          ? assessSelectedFontPostCommandReadiness
+          : assessSelectedFontReadiness)(
           raw?.readinessObservation,
           raw?.snapshots?.at(-1)?.application,
           raw?.readinessDocuments,
-        );
+          raw?.selectedFontTransport,
+          selected.requestPolicy ?? 'single-v1',
+        )
+      : selected.resume
+        ? assessResumeReadiness({
+            protocol: selected.protocol,
+            documents: raw?.readinessDocuments,
+            observations: raw?.readinessObservations,
+            applications: groups.map(
+              (group) => raw?.snapshots?.find((s) => s.group === group)?.application,
+            ),
+            replayEvidence: raw?.readinessReplayEvidence,
+            finalReplayText,
+          })
+        : assessReadinessPilot(
+            raw?.readinessObservation,
+            raw?.snapshots?.at(-1)?.application,
+            raw?.readinessDocuments,
+          );
+  const geometry = selected.geometry
+    ? assessReadinessGeometry(
+        selected.resume ? raw?.readinessObservations : [raw?.readinessObservation],
+        selected.protocol,
+      )
+    : null;
   let failure = null;
   try {
     assert.equal(command.status, 'closed');
@@ -710,7 +911,10 @@ export async function readinessAssessment(
     assert.deepEqual(command.ambiguous, []);
     assert.equal(raw.format, 'SoloQualificationReportV1');
     assert.equal(raw.kind, 'readiness-diagnostic');
-    assert.equal(raw.scenarioKind, selected.resume || selected.font ? 'lifecycle' : 'performance');
+    assert.equal(
+      raw.scenarioKind,
+      selected.resume || selected.font || selected.mediaFault ? 'lifecycle' : 'performance',
+    );
     assert.equal(raw.scenarioStatus, 'pass');
     assert.equal(raw.scenarioSHA256, plan.fixture.sha256);
     assert.equal(raw.sourceRevision, selected.source.revision);
@@ -758,6 +962,11 @@ export async function readinessAssessment(
       assert.equal(observation.pilotStartupWait, 'omitted; immediate partial samples retained');
     assert.deepEqual(raw.readinessAssessment, readiness);
     assert.equal(readiness.status, 'passed');
+    if (selected.geometry) {
+      assert.equal(raw.readinessPilot.geometryObservation, 'phase-boundary-v1');
+      assert.deepEqual(raw.readinessGeometryAssessment, geometry);
+      assert.equal(geometry.status, 'passed');
+    }
     assert.equal(journal?.status, 'complete');
     assert(
       !raw.hitchJournalFailure && !Object.hasOwn(raw, 'performanceGateStatusBeforeHitchJournal'),
@@ -772,6 +981,7 @@ export async function readinessAssessment(
       'finalReadFailure',
       'failureCleanupFailure',
       ...(selected.font ? ['selectedFontFailure'] : []),
+      ...(selected.mediaFault ? ['mediaFaultFailure', 'mediaFaultCleanupFailure'] : []),
     ])
       assert(!raw[key], key);
     assert.equal(raw.replay.scope, 'completed-scenario');
@@ -780,7 +990,7 @@ export async function readinessAssessment(
     assert.equal(native.engine, row.engine);
     assert.equal(native.browserVersion, raw.environment.browserVersion);
     assert.equal(native.observation?.match, true);
-    if (selected.font || selected.compact) {
+    if (selected.font || selected.compact || selected.mediaFault) {
       const fixture = JSON.parse(
         await readFile(new URL('../' + selected.fixture.path, import.meta.url)),
       );
@@ -815,6 +1025,12 @@ export async function readinessAssessment(
     readinessCorrectness: failure ? 'fail' : 'pass',
     diagnosticStatus: failure ? 'failed' : 'passed',
     readinessAssessment: readiness,
+    ...(selected.geometry
+      ? {
+          readinessGeometryAssessment: geometry,
+          geometryCorrectness: geometry.status === 'passed' ? 'pass' : 'fail',
+        }
+      : {}),
     readinessFailure: failure,
     rawPerformanceGateStatus: numeric,
     numericObservationStatus: numeric,

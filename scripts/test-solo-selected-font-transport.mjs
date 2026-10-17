@@ -65,6 +65,7 @@ function fixture(options = {}) {
   };
   const owner = createSelectedFontHold(entry, {
     requestPolicy: options.requestPolicy ?? 'single-v1',
+    releaseBoundary: options.releaseBoundary ?? 'public-cancellation',
     now: () => now,
     setTimer: (callback, ms) => {
       const n = ++id;
@@ -644,4 +645,59 @@ test('second request between public cancellation and forwarding is accepted at t
   assert(assertSelectedFontTransport(r, 'same-url-two-v2'));
   assert.equal(r.status, 'complete');
   assert.equal(r.ownedRouteCount, 0);
+});
+
+test('hidden completion is explicit and cannot borrow cancellation release or assessment', async () => {
+  const legacy = fixture();
+  assert.equal(legacy.owner.releaseAfterNativeHidden, undefined);
+  assert.throws(() => fixture({ releaseBoundary: 'native-hidden' }), /joined ownership/);
+  assert.throws(() => fixture({ releaseBoundary: 'invented' }));
+  const f = fixture({ requestPolicy: 'same-url-two-v2', releaseBoundary: 'native-hidden' });
+  assert.equal(f.owner.releaseAfterPublicCancellation, undefined);
+  assert.throws(() => f.owner.releaseAfterNativeHidden(), /validated pending/);
+  const first = f.owner.handle(f.route);
+  await flush();
+  const second = f.owner.handle({ ...f.route });
+  await flush();
+  await f.owner.waitUntilHeld();
+  f.owner.releaseAfterNativeHidden();
+  assert.throws(() => f.owner.releaseAfterNativeHidden(), /repeated release/);
+  await Promise.all([first, second]);
+  await f.owner.close();
+  const r = f.owner.snapshot();
+  assert.equal(r.releaseBoundary, 'native-hidden');
+  assert(assertSelectedFontTransport(r, 'same-url-two-v2', 'native-hidden'));
+  assert.throws(() => assertSelectedFontTransport(r, 'same-url-two-v2'));
+  assert.deepEqual(
+    f.calls.map((v) => v[0]),
+    ['fetch', 'fulfill', 'fulfill', 'dispose'],
+  );
+  assert.equal(f.timers.size, 0);
+  for (const mutate of [
+    (v) => delete v.releaseBoundary,
+    (v) =>
+      (v.records.find((x) => x.kind === 'declared-native-hidden-boundary').kind =
+        'declared-public-cancel-boundary'),
+    (v) => (v.closed = false),
+    (v) => v.pendingOperations.push('response-body'),
+  ]) {
+    const bad = structuredClone(r);
+    mutate(bad);
+    assert.throws(() => assertSelectedFontTransport(bad, 'same-url-two-v2', 'native-hidden'));
+  }
+});
+test('hidden release retains the original deadline and prevents late delivery', async () => {
+  const f = fixture({ requestPolicy: 'same-url-two-v2', releaseBoundary: 'native-hidden' });
+  const first = f.owner.handle(f.route);
+  await flush();
+  await f.advance(selectedFont.maximumHoldMs);
+  assert.throws(() => f.owner.releaseAfterNativeHidden(), /validated pending/);
+  await first;
+  await f.owner.close();
+  assert.equal(f.owner.snapshot().status, 'failed');
+  assert.equal(
+    f.calls.some((v) => v[0] === 'fulfill'),
+    false,
+  );
+  assert.equal(f.owner.snapshot().closed, true);
 });

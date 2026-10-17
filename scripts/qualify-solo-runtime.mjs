@@ -109,16 +109,29 @@ const hitchModule = flags.some((flag) => flag.startsWith('--hitch-journal'))
   : null;
 const hitchOptions = hitchModule?.qualificationHitchJournalOptions(flags, scenario, bytes);
 const readinessModule =
-  scenario.selectedFontCancellation || flags.some((flag) => flag.startsWith('--readiness-probe'))
+  scenario.selectedFontCancellation ||
+  scenario.mediaReadinessFault ||
+  flags.some(
+    (flag) => flag.startsWith('--readiness-probe') || flag.startsWith('--readiness-geometry'),
+  )
     ? await import('./solo-qualification-readiness.mjs')
     : null;
 const readinessOptions = readinessModule?.qualificationReadinessOptions(flags, scenario, bytes);
 let readinessDocuments = 0,
-  selectedFontHold = null;
+  selectedFontHold = null,
+  mediaFaultOwner = null,
+  mediaFaultInterception = true;
 const selectedFontReadiness = [
   'selected-font-cancel-v1',
   'selected-font-cancel-joined-v2',
+  'selected-font-cancel-post-command-v3',
 ].includes(readinessOptions?.protocol);
+const selectedFontPostCommand =
+  readinessOptions?.protocol === 'selected-font-cancel-post-command-v3';
+const mediaFaultReadiness = Boolean(
+  readinessModule?.MEDIA_FAULT_PILOTS[readinessOptions?.protocol],
+);
+const requiredOriginalReadiness = readinessOptions?.protocol === 'required-original-cancel-v1';
 const qualityOptions = qualificationQualityOptions(
   flags,
   scenario,
@@ -279,6 +292,9 @@ const report = {
 if (readinessOptions) {
   report.readinessPilot = {
     protocol: readinessOptions.protocol,
+    ...(readinessOptions.geometryObservation
+      ? { geometryObservation: readinessOptions.geometryObservation }
+      : {}),
     performanceQualification: false,
     startupObservation:
       'Immediate partial observation; the optional startup-sample wait is omitted only for this correctness pilot.',
@@ -443,9 +459,17 @@ try {
     selectedFontHold = readinessModule.createSelectedFontHold(url.href, {
       requestPolicy: readinessOptions.requestPolicy ?? 'single-v1',
     });
-  if (mirrored || fixtureAccess || selectedFontReadiness)
+  if (mediaFaultReadiness)
+    mediaFaultOwner = (
+      requiredOriginalReadiness
+        ? readinessModule.createRequiredOriginalHold
+        : readinessModule.createOptionalIcon404
+    )(url.href);
+  if (mirrored || fixtureAccess || selectedFontReadiness || mediaFaultReadiness)
     await page.route('**/*', async (route) => {
       if (selectedFontHold && (await selectedFontHold.handle(route))) return;
+      if (mediaFaultInterception && mediaFaultOwner && (await mediaFaultOwner.handle(route)))
+        return;
       const requested = new URL(route.request().url());
       const decision = mirror?.(requested.href);
       if (decision?.kind === 'blocked') {
@@ -542,6 +566,7 @@ try {
 ${observationInitScript}
 ${quality ? `window.soloQualificationCreateSubmittedTierObservation = ${createSubmittedTierObservation.toString()};` : ''}
 ${readiness ? `window.soloQualificationCreateReadinessProbe = ${readinessModule.createBrowserReadinessProbe.toString()};` : ''}
+${options.requiredOriginal ? `window.soloQualificationInstallRequiredOriginalWitness = ${readinessModule.installRequiredOriginalRequestWitness.toString()};` : ''}
 ${nextRoute ? `window.soloQualificationCreateNextRouteReader = ${nextRouteModule.createNextRouteReader.toString()};` : ''}
 ${cost ? journalCostModule.journalCostInitScript() : ''}
 ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
@@ -557,6 +582,10 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       journalCost,
       readinessProbe,
       readinessProtocol,
+      readinessCancelBoundary,
+      readinessGeometry,
+      requiredOriginal,
+      faultEntryURL,
       qualityObservation,
       nextRoute,
     }) => {
@@ -629,6 +658,20 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             },
             window,
             readinessProtocol,
+            readinessGeometry,
+            readinessCancelBoundary === true,
+          )
+        : null;
+      let requiredCheckpoint = null;
+      const requiredWitness = requiredOriginal
+        ? window.soloQualificationInstallRequiredOriginalWitness(
+            () => observedGame?.scene?.scenes ?? [],
+            (run) => {
+              if (!requiredCheckpoint) throw Error('Source-native checkpoint unavailable');
+              return requiredCheckpoint(run);
+            },
+            faultEntryURL,
+            window,
           )
         : null;
       const nextRouteRead = nextRoute
@@ -827,6 +870,22 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         }),
         ...(nextRouteRead ? { nextRouteRead } : {}),
         readinessBoundary: (label) => readiness?.boundary(label),
+        ...(readinessCancelBoundary
+          ? { completeSelectedFontCancellation: () => readiness.cancelCommandComplete() }
+          : {}),
+        ...(requiredWitness
+          ? {
+              installRequiredCheckpoint(fn) {
+                if (requiredCheckpoint || typeof fn !== 'function')
+                  throw Error('Invalid source checkpoint installation');
+                requiredCheckpoint = fn;
+              },
+              requiredOriginalWitness: () => requiredWitness.snapshot(),
+              completeRequiredOriginalCancellation: () => requiredWitness.completeCancellation(),
+              requiredOriginalAfterCancel: () => requiredWitness.captureAfterCancel(),
+              closeRequiredOriginalWitness: () => requiredWitness.close(),
+            }
+          : {}),
         export: () => ({
           ...(readiness ? { readiness: readiness.export() } : {}),
           ...(quality ? { submittedTiers: quality.export() } : {}),
@@ -866,6 +925,10 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       journalCost: Boolean(journalCostOptions),
       readinessProbe: Boolean(readinessOptions),
       readinessProtocol: readinessOptions?.protocol,
+      ...(selectedFontPostCommand ? { readinessCancelBoundary: true } : {}),
+      requiredOriginal: requiredOriginalReadiness,
+      ...(requiredOriginalReadiness ? { faultEntryURL: url.href } : {}),
+      ...(readinessOptions?.geometryObservation ? { readinessGeometry: true } : {}),
       qualityObservation: Boolean(qualityOptions),
       nextRoute: Boolean(nextRouteOptions),
     },
@@ -953,6 +1016,12 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         'Generated build identity does not match requested revision',
       );
   }
+  if (requiredOriginalReadiness)
+    await page.evaluate(async (address) => {
+      window.soloQualificationProbe.installRequiredCheckpoint(
+        (await import(new URL('replay.mjs', address).href)).authoritativeCheckpoint,
+      );
+    }, url.href);
   async function prepareObservation(label) {
     if (!workProbe) return;
     try {
@@ -1037,6 +1106,14 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       const timeout = remaining(action),
         locator = action.selector ? page.locator(action.selector) : null;
       try {
+        if (requiredOriginalReadiness && action.label === 'required-original-fresh-start') {
+          readinessModule.assertRequiredOriginalAfterCancel(report.requiredOriginalWitness);
+          readinessModule.assertReadinessMediaTransport(
+            report.mediaFaultTransport,
+            readinessOptions.protocol,
+          );
+          mediaFaultInterception = false;
+        }
         if (action.type === 'repeat') {
           const started = Date.now();
           let completed = 0;
@@ -1406,17 +1483,72 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         }
         if (selectedFontHold) {
           if (action.label === 'selected-theme') await selectedFontHold.waitUntilHeld();
+          if (selectedFontPostCommand && action.label === 'public-cancel-back') {
+            await page.evaluate(() =>
+              window.soloQualificationProbe.completeSelectedFontCancellation(),
+            );
+            report.selectedFontPostCommandObservation = await page.evaluate(
+              () => window.soloQualificationProbe.export().readiness,
+            );
+            await save();
+          }
           if (action.label === 'public-cancelled') {
             const witness = await page.evaluate(
               () => window.soloQualificationProbe.export().readiness,
             );
-            readinessModule.assertSelectedFontCancelled(witness, readinessOptions.protocol);
+            if (selectedFontPostCommand)
+              readinessModule.assertSelectedFontPostCommandCancelled(witness);
+            else readinessModule.assertSelectedFontCancelled(witness, readinessOptions.protocol);
             selectedFontHold.releaseAfterPublicCancellation();
           }
           if (action.label === 'no-automatic-start-after-release')
             await page.evaluate(() =>
               window.soloQualificationProbe.readinessBoundary('font-release-no-start'),
             );
+        }
+        if (mediaFaultOwner) {
+          if (action.label === 'required-original-blocks-start')
+            await mediaFaultOwner.waitUntilHeld();
+          if (action.label === 'required-original-public-back')
+            await page.evaluate(() =>
+              window.soloQualificationProbe.completeRequiredOriginalCancellation(),
+            );
+          if (action.label === 'required-original-public-cancelled') {
+            report.requiredOriginalWitness = await page.evaluate(() =>
+              window.soloQualificationProbe.requiredOriginalWitness(),
+            );
+            await save();
+            await mediaFaultOwner.cancelRequiredOriginal(report.requiredOriginalWitness);
+            await mediaFaultOwner.close();
+            report.mediaFaultTransport = mediaFaultOwner.snapshot();
+            readinessModule.assertReadinessMediaTransport(
+              report.mediaFaultTransport,
+              readinessOptions.protocol,
+            );
+          }
+          if (action.label === 'required-original-no-automatic-start') {
+            await page.evaluate(() => {
+              window.soloQualificationProbe.requiredOriginalAfterCancel();
+              window.soloQualificationProbe.closeRequiredOriginalWitness();
+            });
+            report.requiredOriginalWitness = await page.evaluate(() =>
+              window.soloQualificationProbe.requiredOriginalWitness(),
+            );
+            readinessModule.assertRequiredOriginalAfterCancel(report.requiredOriginalWitness);
+          }
+          if (action.label === 'optional-icon-fallback') {
+            await mediaFaultOwner.close();
+            report.mediaFaultTransport = mediaFaultOwner.snapshot();
+            report.optionalIconFallback = await page.evaluate(
+              readinessModule.captureOptionalIconFallback,
+            );
+            await save();
+            readinessModule.assertReadinessMediaTransport(
+              report.mediaFaultTransport,
+              readinessOptions.protocol,
+            );
+            readinessModule.assertOptionalIconFallback(report.optionalIconFallback);
+          }
         }
         if (record.status === 'running') record.status = 'pass';
       } catch (error) {
@@ -1474,6 +1606,32 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   report.failure = String(error.stack ?? error);
   process.exitCode = 1;
 } finally {
+  if (mediaFaultOwner) {
+    try {
+      await mediaFaultOwner.close();
+      report.mediaFaultTransport = mediaFaultOwner.snapshot();
+      readinessModule.assertReadinessMediaTransport(
+        report.mediaFaultTransport,
+        readinessOptions.protocol,
+      );
+    } catch (error) {
+      report.mediaFaultCleanupFailure = String(error.stack ?? error);
+      report.scenarioStatus = 'fail';
+      process.exitCode = 1;
+    }
+    if (requiredOriginalReadiness && page && !page.isClosed()) {
+      try {
+        await page.evaluate(() => window.soloQualificationProbe.closeRequiredOriginalWitness());
+        report.requiredOriginalWitness = await page.evaluate(() =>
+          window.soloQualificationProbe.requiredOriginalWitness(),
+        );
+      } catch (error) {
+        report.mediaFaultCleanupFailure ??= String(error.stack ?? error);
+        report.scenarioStatus = 'fail';
+        process.exitCode = 1;
+      }
+    }
+  }
   if (selectedFontHold) {
     await selectedFontHold.close();
     report.selectedFontTransport = selectedFontHold.snapshot();
@@ -1671,14 +1829,32 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   if (readinessOptions) {
     report.readinessDocuments = readinessDocuments;
     report.readinessObservation = report.finalState?.probe?.readiness ?? null;
-    if (selectedFontReadiness) {
-      report.readinessAssessment = readinessModule.assessSelectedFontReadiness(
-        report.readinessObservation,
-        report.snapshots.at(-1)?.application,
-        readinessDocuments,
-        report.selectedFontTransport,
-        readinessOptions.requestPolicy ?? 'single-v1',
-      );
+    if (mediaFaultReadiness) {
+      report.readinessAssessment = readinessModule.assessReadinessMediaFault({
+        protocol: readinessOptions.protocol,
+        observation: report.readinessObservation,
+        application: report.snapshots.at(-1)?.application,
+        documents: readinessDocuments,
+        transport: report.mediaFaultTransport,
+        witness: report.requiredOriginalWitness,
+        fallback: report.optionalIconFallback,
+        cleanupFailure: report.mediaFaultCleanupFailure,
+      });
+    } else if (selectedFontReadiness) {
+      report.readinessAssessment = selectedFontPostCommand
+        ? readinessModule.assessSelectedFontPostCommandReadiness(
+            report.readinessObservation,
+            report.snapshots.at(-1)?.application,
+            readinessDocuments,
+            report.selectedFontTransport,
+          )
+        : readinessModule.assessSelectedFontReadiness(
+            report.readinessObservation,
+            report.snapshots.at(-1)?.application,
+            readinessDocuments,
+            report.selectedFontTransport,
+            readinessOptions.requestPolicy ?? 'single-v1',
+          );
     } else if (resumeReadiness) {
       const before = report.snapshots.find((row) => row.group === 'before-resume');
       const restored = report.snapshots.find((row) => row.group === 'saved-restored-before-resume');
@@ -1703,7 +1879,17 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         report.snapshots.at(-1)?.application,
         readinessDocuments,
       );
-    if (report.readinessAssessment.status !== 'passed') {
+    if (readinessOptions.geometryObservation) {
+      report.readinessGeometryAssessment = readinessModule.assessReadinessGeometry(
+        resumeReadiness ? report.readinessObservations : [report.readinessObservation],
+        readinessOptions.protocol,
+      );
+    }
+    if (
+      report.readinessAssessment.status !== 'passed' ||
+      (readinessOptions.geometryObservation &&
+        report.readinessGeometryAssessment.status !== 'passed')
+    ) {
       report.scenarioStatus = 'fail';
       report.readinessFailure =
         'Complete pre-play readiness was not observed; all original numeric and replay evidence is retained.';
