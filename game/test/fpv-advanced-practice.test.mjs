@@ -368,6 +368,11 @@ test('mounted bench comparison follows valid aircraft drafts and never replaces 
   panel.querySelector('[data-action="synthetic-demo"]').click();
   const output = panel.querySelector('[data-role="comparison"]');
   const source = JSON.parse(panel.querySelector('[data-action="paste-data"]').value);
+  assert.match(output.textContent, /outside.*battery range/);
+  for (const sample of source.samples)
+    sample.values.voltage = preset.aircraft.battery.nominalVoltage;
+  panel.querySelector('[data-action="paste-data"]').value = JSON.stringify(source);
+  panel.querySelector('[data-action="import-paste"]').click();
   const { thrust, voltage } = source.samples[0].values;
   const expectedCurrent = (aircraft) => {
     const speed = aircraftMotorSpeedForThrust(aircraft, thrust, voltage);

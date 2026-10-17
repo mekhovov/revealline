@@ -139,7 +139,7 @@ test('equivalent-thrust comparison uses the measured voltage and does not treat 
   const f = fixture(t),
     source = createSyntheticPropulsionEvidence();
   const atSpeed = 0.35,
-    voltage = 18;
+    voltage = 22;
   const expected = aircraftMotorPoint(f.aircraft, atSpeed, voltage);
   for (const sample of source.samples) {
     sample.values.thrust = expected.thrust;
@@ -154,7 +154,7 @@ test('equivalent-thrust comparison uses the measured voltage and does not treat 
   assert.ok(text.includes(`estimated current ${Number(expected.current.toPrecision(7))} A`), text);
   assert.ok(text.includes(`estimated torque ${Number(expected.torque.toPrecision(7))} N·m`), text);
   assert.match(text, /data: 42/);
-  assert.match(text, /18 V per motor/);
+  assert.match(text, /22 V per motor/);
   const wrong = aircraftMotorPoint(f.aircraft, 0.5, voltage);
   assert.notEqual(Number(expected.current.toPrecision(7)), Number(wrong.current.toPrecision(7)));
   assert.equal(JSON.stringify(f.aircraft), before);
@@ -188,6 +188,7 @@ test('comparison rejects unsupported conditions, unknown voltage, unattainable t
   ];
   for (const change of changes) {
     const source = createSyntheticPropulsionEvidence();
+    for (const sample of source.samples) sample.values.voltage = f.aircraft.battery.nominalVoltage;
     change(source);
     assert.equal(f.ui.importEvidence(source), true);
     assert.match(f.role('comparison').textContent, /Comparison unavailable/);
@@ -195,6 +196,33 @@ test('comparison rejects unsupported conditions, unknown voltage, unattainable t
   f.ui.importEvidence(createSyntheticPropulsionEvidence());
   f.setAircraft({ format: 'AdvancedAircraft.v1' });
   assert.match(f.role('comparison').textContent, /no compatible active aircraft/);
+});
+
+test('comparison stays inside the aircraft voltage range without concealing out-of-range bench data', (t) => {
+  const f = fixture(t);
+  f.setAircraft(createPresetConfiguration('meteor75-analog-2022').aircraft);
+  f.action('synthetic-demo').click();
+  assert.match(f.role('comparison').textContent, /12 V is outside.*battery range/);
+  assert.match(f.role('point-status').textContent, /Original source sample/);
+  assert.equal(f.ui.root.querySelector('tbody').children.length, 7);
+  const evidence = createSyntheticPropulsionEvidence();
+  for (const voltage of [
+    f.aircraft.battery.emptyVoltage - 0.001,
+    f.aircraft.battery.emptyVoltage,
+    f.aircraft.battery.fullVoltage,
+    f.aircraft.battery.fullVoltage + 0.001,
+  ]) {
+    for (const sample of evidence.samples) {
+      sample.values.voltage = voltage;
+      sample.values.thrust = 0.01;
+    }
+    assert.equal(f.ui.importEvidence(evidence), true);
+    if (voltage < f.aircraft.battery.emptyVoltage || voltage > f.aircraft.battery.fullVoltage)
+      assert.match(f.role('comparison').textContent, /outside.*battery range/);
+    else assert.match(f.role('comparison').textContent, /estimated current/);
+  }
+  f.locale('uk');
+  assert.match(f.role('comparison').textContent, /поза налаштованим діапазоном/);
 });
 
 test('invalid and oversized files retain the previously opened dataset and do not read oversized content', async (t) => {
