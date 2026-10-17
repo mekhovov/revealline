@@ -532,11 +532,13 @@ async function main() {
                       ? 'diagnostics'
                       : plan.format === 'SoloHostedCpuProfilePlanV1'
                         ? 'cpu-profile'
-                        : plan.format === 'SoloHostedTouchPlanV1'
-                          ? 'touch'
-                          : plan.format === 'SoloHostedLifecyclePlanV1'
-                            ? 'lifecycle'
-                            : null;
+                        : plan.format === 'SoloHostedReadinessPlanV1'
+                          ? 'readiness'
+                          : plan.format === 'SoloHostedTouchPlanV1'
+                            ? 'touch'
+                            : plan.format === 'SoloHostedLifecyclePlanV1'
+                              ? 'lifecycle'
+                              : null;
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
@@ -552,6 +554,7 @@ async function main() {
         'cpu-profile',
         'diagnostics',
         'touch',
+        'readiness',
         'lifecycle',
       ].includes(extension) ||
       (extension === 'offline' && Boolean(plan.offline.gameplay));
@@ -570,6 +573,7 @@ async function main() {
         'cpu-profile': 'validateCpuProfilePlan',
         diagnostics: 'validateDiagnosticsPlan',
         touch: 'validateTouchPlan',
+        readiness: 'validateReadinessPlan',
         lifecycle: 'validateLifecyclePlan',
       }[extension]
     ](plan);
@@ -604,11 +608,13 @@ async function main() {
                         ? 'SoloHostedDiagnosticsCohortV1'
                         : extension === 'cpu-profile'
                           ? 'SoloHostedCpuProfileCohortV1'
-                          : extension === 'touch'
-                            ? 'SoloHostedTouchCohortV1'
-                            : extension === 'lifecycle'
-                              ? 'SoloHostedNativeLifecycleCohortV1'
-                              : 'SoloHostedCorrectness.v1',
+                          : extension === 'readiness'
+                            ? 'SoloHostedReadinessCohortV1'
+                            : extension === 'touch'
+                              ? 'SoloHostedTouchCohortV1'
+                              : extension === 'lifecycle'
+                                ? 'SoloHostedNativeLifecycleCohortV1'
+                                : 'SoloHostedCorrectness.v1',
     status: 'failed',
     performanceExclusion: ['sustained', 'demo-active'].includes(extension)
       ? plan.performanceExclusion
@@ -1113,6 +1119,7 @@ async function main() {
           'cpu-profile',
           'diagnostics',
           'touch',
+          'readiness',
           'lifecycle',
         ].includes(extension) ||
         (extension === 'offline' && Boolean(plan.offline.gameplay))
@@ -1135,6 +1142,7 @@ async function main() {
             'cpu-profile': 'prepareCpuProfileMode',
             diagnostics: 'prepareDiagnosticsMode',
             touch: 'prepareTouchMode',
+            readiness: 'prepareReadinessMode',
             lifecycle: 'prepareLifecycleMode',
           }[extension]
         ](context);
@@ -1206,6 +1214,7 @@ async function main() {
               'cpu-profile': 'runCpuProfileRow',
               diagnostics: 'runDiagnosticsRow',
               touch: 'runTouchRow',
+              readiness: 'runReadinessRow',
               lifecycle: 'runLifecycleRow',
             }[extension]
           ](context, row, dir, tmp);

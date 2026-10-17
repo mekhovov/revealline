@@ -305,10 +305,22 @@ function validateTimingHitchJournalAdmission(plan, selected) {
 export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
   try {
     assert(planHasHitchJournal(plan), 'Journal was not declared');
-    assert(
-      finalSustainedPlan(plan) ? selectedSustainedSource(plan) : selectedTimingSource(plan),
-      'Journal requires a declared source cohort',
-    );
+    if (plan.format === 'SoloHostedReadinessPlanV1') {
+      assert.equal(plan.sourceCohort, 'readiness-candidateab45');
+      assert.equal(plan.phase, 'cold-first30');
+      assert.equal(plan.performanceExclusion, true);
+      assert.equal(plan.candidate.revision, 'ab45bfde5d54d612cbba9b038a46f13d13f417ec');
+      assert.equal(plan.candidate.tree, '0d8238992621613883efcf0c73a9f4d88f3fcb10');
+      assert.deepEqual(plan.fixture, {
+        path: 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
+        bytes: 6387,
+        sha256: 'aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5',
+      });
+    } else
+      assert(
+        finalSustainedPlan(plan) ? selectedSustainedSource(plan) : selectedTimingSource(plan),
+        'Journal requires a declared source cohort',
+      );
     const { HITCH_LIMITS, decodeHitchJournal } = await import(
       './solo-qualification-hitch-journal.mjs'
     );
