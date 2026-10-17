@@ -1314,6 +1314,79 @@ test('import receipt stays visible through save, duplicate, manual edit and revi
   );
 });
 
+for (const source of ['native', 'CLI'])
+  test(`restoring same-rate history cancels an earlier pending ${source} import`, async (t) => {
+    const f = fixture(t);
+    await f.click('New Actual profile');
+    f.edit('Profile name', 'Renamed profile');
+    await f.click('Save for next flight');
+    const before = f.store.export(),
+      realDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
+    let release,
+      first = true;
+    t.mock.method(globalThis.crypto.subtle, 'digest', (...args) => {
+      if (!first) return realDigest(...args);
+      first = false;
+      return new Promise((resolve, reject) => {
+        release = () => realDigest(...args).then(resolve, reject);
+      });
+    });
+    f.edit(
+      'Paste CLI or a SIM rate profile',
+      source === 'native'
+        ? exportNativeRateProfile(createRateProfile({ axes: { roll: { rate: 88 } } }))
+        : 'set roll_srate = 88',
+      { tag: 'textarea' },
+    );
+    f.ui.root
+      .querySelectorAll('button')
+      .find((node) => node.textContent === 'Preview import')
+      .emit('click');
+    await settle();
+    assert.equal(typeof release, 'function');
+    await f.click('Restore revision to draft');
+    assert.equal(f.find('Profile name').value, 'New profile');
+    await release();
+    for (let turn = 0; turn < 8; turn++) await settle();
+    assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number').value, '670');
+    await f.click('Save import as new profile');
+    assert.equal(f.store.export(), before);
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      /Preview the import first/,
+    );
+    await f.click('Preview import');
+    assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number').value, '880');
+    await f.click('Save import as new profile');
+    assert.equal(f.store.snapshot().profiles.at(-1).response.rates.axes.roll.rate, 88);
+  });
+
+test('restoring history invalidates a completed same-rate preview and retains the restored receipt', async (t) => {
+  const f = fixture(t),
+    source = exportNativeRateProfile(createRateProfile({ axes: { roll: { rate: 83 } } }));
+  f.edit('Paste CLI or a SIM rate profile', source, { tag: 'textarea' });
+  await f.click('Preview import');
+  f.edit('Profile name', 'Original receipt');
+  await f.click('Save import as new profile');
+  const original = f.store.snapshot().profiles.at(-1);
+  f.edit('Profile name', 'Renamed receipt');
+  await f.click('Save for next flight');
+  const before = f.store.export();
+  f.edit('Paste CLI or a SIM rate profile', `${source}\n`, { tag: 'textarea' });
+  await f.click('Preview import');
+  assert.doesNotMatch(f.ui.root.textContent, new RegExp(original.provenance.source.sha256));
+  await f.click('Restore revision to draft');
+  assert.equal(f.find('Profile name').value, 'Original receipt');
+  assert.match(f.ui.root.textContent, new RegExp(original.provenance.source.sha256));
+  await f.click('Save import as new profile');
+  assert.equal(f.store.export(), before);
+  assert.match(f.ui.root.querySelector('[role="status"]').textContent, /Preview the import first/);
+  await f.click('Save for next flight');
+  const saved = f.store.snapshot().profiles.find((profile) => profile.id === original.id);
+  assert.equal(saved.name, 'Original receipt');
+  assert.deepEqual(saved.provenance, original.provenance);
+});
+
 test('uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization', async (t) => {
   const { createHash } = await import('node:crypto');
   const f = fixture(t),

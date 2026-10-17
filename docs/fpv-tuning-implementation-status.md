@@ -8,6 +8,23 @@ all succeeded. Historical reports retain their original source hashes and scope;
 the post-deployment evidence is recorded separately below. Those public receipts
 qualify the original deployed merge, not the later corrections.
 
+
+## Boundary completion review
+
+Rebased on main `1d631986a` before this continuation. The
+[updated boundary review](fpv-tuning-boundary-review.md) adds primary-source
+examples and closes three reproduced gaps: history restoration invalidates stale
+import intent; preset `FORCE_OPTIONS_REVIEW: yes` metadata matches the tagged
+parser; Regional duration/recording stops retain export, recovery and explicit
+restart without misclassifying them as broken workers. Unknown worker failures
+remain unavailable and Advanced remains unscored.
+
+All **731 practice tests** and release validation pass. Six editor-browser cases
+pass, including delayed import completion after restoring same-rate history.
+All 20 pins in the existing numerical matrix still match; no physics, timing or
+quota change was made. Final browser/native receipts and ordinary delivery are
+recorded in the boundary review. Earlier reports below keep their original scope.
+
 ## Post-publication corrections
 
 The refreshed-main review found and fixed three concrete issues:
@@ -31,8 +48,21 @@ The [new verification receipt](fpv-post-publication-verification.json) pins the
 final sources: 714 practice tests, 108 final library/UI tests, six browser editor
 cases, renderer/worker smoke, six numerical runtimes and ordinary native staging
 pass. The numerical 250 Hz result stays within 1.8814% of the 2 kHz reference and
-measures at least 81.08× capacity on one host. Publication is the remaining
-delivery step; the prior public reports below remain historical.
+measures at least 81.08× capacity on one host. The later
+[actual Electron fixture check](fpv-native-post-publication-runtime.json)
+retains the full library across process reopen, verifies both native recording
+exports and disposes every worker. It adds desktop fixture evidence without
+claiming iOS or a distributed installer.
+
+[PR #1562](https://github.com/mekhovov/revealline/pull/1562) subsequently merged
+as `80494f63d` after all 12 non-skipped product checks passed. Normal Pages
+publication passed build, deploy and verification. Both fresh public installations
+pass normal password access, saved 900°/s rates, offline process restart and short
+unscored recording export/exact replay/disposal. The
+[final delivery receipt](fpv-post-publication-delivery-verification.json) binds
+those checks to the deployed source and the unchanged archive capacity limit.
+All available software work in this review is complete; prior public reports
+below remain historical and do not become evidence for this later source.
 Advanced remains optional and unscored. Physical radio/touch, pilot feedback,
 identified-aircraft measurements, iOS runtime and wider-device qualification are
 deferred; propwash/ground effect and scored/default promotion remain gated.
