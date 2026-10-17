@@ -22,6 +22,7 @@ import { validateBaselineReuse } from './solo-remote-baseline.mjs';
 import {
   createBrowserHitchJournal,
   createHitchJournalStore,
+  qualificationHitchJournalOptions,
 } from './solo-qualification-hitch-journal.mjs';
 
 const draft = JSON.parse(
@@ -84,6 +85,28 @@ function currentCold() {
     candidateRevision: current.candidate,
     baselineRevision: current.baseline,
     latestRuntimeRevision: current.runtime,
+  });
+  return manifest;
+}
+function finalTiming(phase = 'cold-first30') {
+  const manifest = currentCold();
+  const revision = 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4';
+  const tree = '6b13627e324f695b6ee8d9f2dee2eeeb7217c332';
+  const runtime = '32abd322afd8243e4537ce4784e2f78ee45ecbec';
+  Object.assign(manifest, {
+    phase,
+    sourceCohort:
+      phase === 'cold-first30' ? 'cold-main8b-candidatea6e' : 'timing-main8b-candidatea6e',
+    latestSourceRevision: revision,
+    latestRuntimeRevision: runtime,
+  });
+  Object.assign(manifest.candidate, { revision, tree });
+  Object.assign(manifest.release, {
+    sourceCohort: manifest.sourceCohort,
+    phase,
+    previousPhase: TIMING_PHASES[phase].previous,
+    candidateRevision: revision,
+    latestRuntimeRevision: runtime,
   });
   return manifest;
 }
@@ -545,11 +568,55 @@ test('diagnostic admission preserves cold/warm/combat recipe commands and every 
 
 test('cold diagnostic release freezes tools and runs only the declared event edge', async () => {
   assert(draft.frozenTools.some((ref) => ref.path === 'scripts/solo-qualification-audio.mjs'));
-  for (const ref of [...draft.adapterInputs, ...draft.frozenTools]) {
+  // These declarations are historical source records. Their two older tool
+  // refs already differed from a6 and are not authority to execute evolving HEAD.
+  const witnessBytes = await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-final-timing/historical-a6-source.json',
+      import.meta.url,
+    ),
+  );
+  const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const verifyHistorical = (bytes, value) => {
+    assert.equal(digest(bytes), 'b68fddaca8d7548202790479dc5803270ef7df2b64d57b659770401131311f49');
+    const witness = JSON.parse(bytes);
+    assert.equal(witness.sourceRevision, 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4');
+    assert.equal(witness.sourceTree, '6b13627e324f695b6ee8d9f2dee2eeeb7217c332');
+    assert.equal(witness.status, 'historical-held-declarations-not-executable-at-a6');
+    const declaration = witness.declarations.timing;
+    assert.deepEqual(
+      [...value.adapterInputs, ...value.frozenTools].map(({ path, bytes, sha256 }) => ({
+        path,
+        bytes,
+        sha256,
+      })),
+      declaration.refs.map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 })),
+    );
+    for (const ref of declaration.refs) {
+      assert.match(ref.gitBlob, /^[a-f0-9]{40}$/);
+      assert.equal(
+        ref.sourceRevision,
+        {
+          'scripts/game-cli.mjs': '49b777477d572f0cff6fa4a6f0a332e55af03b12',
+          'scripts/run-solo-remote-correctness.mjs': '9f81414ff28fa21db8d68af2b7b4a06c9343eb21',
+        }[ref.path] ?? witness.sourceRevision,
+      );
+      assert.match(ref.sourceTree, /^[a-f0-9]{40}$/);
+    }
+    return declaration;
+  };
+  const historical = verifyHistorical(witnessBytes, draft);
+  for (const ref of [historical.manifest, historical.workflow]) {
     const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+    assert.equal(bytes.length, ref.bytes);
+    assert.equal(digest(bytes), ref.sha256, 'Historical declaration/workflow must stay immutable');
   }
+  const changed = structuredClone(draft);
+  changed.adapterInputs[0].sha256 = 'f'.repeat(64);
+  assert.throws(() => verifyHistorical(witnessBytes, changed));
+  const changedWitness = JSON.parse(witnessBytes);
+  changedWitness.declarations.timing.refs[0].bytes++;
+  assert.throws(() => verifyHistorical(Buffer.from(JSON.stringify(changedWitness)), draft));
   const workflow = await readFile(
     new URL('../.github/workflows/solo-remote-timing-temporary.yml', import.meta.url),
     'utf8',
@@ -930,7 +997,7 @@ test('cold journal opt-in is explicit, source-limited and freezes its dynamic he
   assert.throws(() => bindSustainedJob(lifecycle, 'chromium', 1));
 });
 
-test('opted-in cold matrix still runs from the original three-module sparse declaration without the journal helper', async (t) => {
+test('historical cold and four final-source matrices retain the isolated three-module declaration closure', async (t) => {
   const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-cold-declare-')));
   t.after(() => rm(dir, { recursive: true, force: true }));
   await mkdir(join(dir, 'scripts'));
@@ -940,15 +1007,19 @@ test('opted-in cold matrix still runs from the original three-module sparse decl
     'solo-qualification-observation.mjs',
   ])
     await writeFile(join(dir, 'scripts', file), await readFile(new URL(file, import.meta.url)));
-  const manifest = await journalManifest(),
-    input = join(dir, 'manifest.json');
-  await writeFile(input, JSON.stringify(manifest));
-  const actual = execFileSync(
-    process.execPath,
-    [join(dir, 'scripts/solo-remote-sustained.mjs'), 'timing-matrix-plan', input],
-    { encoding: 'utf8', timeout: 10000, maxBuffer: 1024 * 1024, cwd: dir },
-  );
-  assert.equal(actual, `matrix=${JSON.stringify(timingMatrix(manifest))}\n`);
+  const input = join(dir, 'manifest.json');
+  for (const manifest of [
+    await journalManifest(),
+    ...Object.keys(TIMING_PHASES).map(finalTiming),
+  ]) {
+    await writeFile(input, JSON.stringify(manifest));
+    const actual = execFileSync(
+      process.execPath,
+      [join(dir, 'scripts/solo-remote-sustained.mjs'), 'timing-matrix-plan', input],
+      { encoding: 'utf8', timeout: 10000, maxBuffer: 1024 * 1024, cwd: dir },
+    );
+    assert.equal(actual, `matrix=${JSON.stringify(timingMatrix(manifest))}\n`);
+  }
 });
 
 test('post-row journal readback accepts exact fractional binary records and preserves native unsupported/drop-count unknown', async (t) => {
@@ -1165,4 +1236,238 @@ test('journal verification cannot erase original numeric/replay failures or turn
     historical = timingAssessment(legacy, legacy.rows[1], report(legacy), closed, '123.4');
   assert(!Object.hasOwn(historical, 'hitchJournalVerification'));
   assert(!Object.hasOwn(historical, 'performanceEvidenceStatus'));
+});
+
+test('final source admits all four original timing phases with unchanged12-observation cohorts', () => {
+  for (const phase of Object.keys(TIMING_PHASES)) {
+    const manifest = finalTiming(phase);
+    assert.equal(timingMatrix(manifest).include.length, 6);
+    for (const engine of ['chromium', 'webkit'])
+      for (const repetition of [1, 2, 3]) {
+        const p = bindTimingJob(manifest, engine, repetition);
+        assert.equal(p.rows.length, 2);
+        assert(p.rows.every((row) => row.timeoutMs === 480000 && row.performanceExclusion));
+        assert.equal(p.performanceExclusion, true);
+        assert.equal(p.release.firstEightAllCorrectnessPassed, false);
+        assert.equal(p.release.predecessorRun, 38985941469);
+        assert.equal(p.calibrationTimeoutMs, 300000);
+        assert.equal(p.calibrationPreset, 'mid');
+        assert.equal(p.helperTimeoutMs, 75 * 60000);
+        assert.equal(p.rowEvidenceBytes, 128 * 1024 ** 2);
+        assert.equal(p.recipes[phase].sha256, TIMING_PHASES[phase].hash);
+      }
+    for (const change of [
+      (p) => {
+        p.candidate.revision = current.candidate;
+      },
+      (p) => {
+        p.candidate.tree = current.candidateTree;
+      },
+      (p) => {
+        p.latestRuntimeRevision = current.runtime;
+      },
+      (p) => {
+        delete p.sourceCohort;
+      },
+      (p) => {
+        p.sourceCohort =
+          phase === 'cold-first30' ? 'timing-main8b-candidatea6e' : 'cold-main8b-candidatea6e';
+      },
+      (p) => {
+        p.release.firstEightAllCorrectnessPassed = true;
+      },
+      (p) => {
+        p.release.status = 'reviewed-and-released';
+      },
+      (p) => {
+        p.baseline.publisher = {};
+      },
+      (p) => {
+        p.recipes[phase].sha256 = '0'.repeat(64);
+      },
+    ]) {
+      const changed = bindTimingJob(manifest, 'chromium', 1);
+      change(changed);
+      assert.throws(() => validateTimingPlan(changed));
+    }
+  }
+  assert.equal(bindTimingJob(currentCold(), 'chromium', 1).candidate.revision, current.candidate);
+});
+
+async function finalJournalManifest(phase) {
+  const m = finalTiming(phase);
+  m.hitchJournal = 'bounded-v1';
+  const path = 'scripts/solo-qualification-hitch-journal.mjs';
+  const bytes = await readFile(new URL('../' + path, import.meta.url));
+  m.frozenTools.push({
+    path,
+    bytes: bytes.length,
+    sha256: createHash('sha256').update(bytes).digest('hex'),
+  });
+  return m;
+}
+async function finalJournalFixture(t, phase) {
+  const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-final-hitch-')));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const output = join(dir, 'report.json'),
+    url = 'http://127.0.0.1:4321/game/?journey=opening';
+  const heavy = ['sentry', 'long-rail'].includes(phase),
+    warm = phase === 'warm-first30';
+  const policy = heavy ? 'timing-heavy-v1' : undefined;
+  const store = createHitchJournalStore(output, () => 100, {
+    soloURL: url,
+    preparationPolicy: policy,
+  });
+  const specs = heavy
+    ? [
+        {
+          url: new URL('playground/', url).href,
+          action: 'initial',
+          preparation: true,
+          boundary: 'before-follow-4',
+        },
+        { url, action: 'follow-4', active: true, boundary: 'final-existing-public-boundary' },
+      ]
+    : warm
+      ? [
+          { url, action: 'initial', boundary: 'before-reload-1' },
+          { url, action: 'reload-1', active: true, boundary: 'final-existing-public-boundary' },
+        ]
+      : [{ url, action: 'initial', active: true, boundary: 'final-existing-public-boundary' }];
+  for (const [i, spec] of specs.entries()) {
+    const allocation = store.beginDocument(spec);
+    let now = 0;
+    const location = new URL(spec.url);
+    const environment = {
+      performance: { now: () => now, timeOrigin: 1700000000000 + i * 1000 },
+      location: { origin: location.origin, pathname: location.pathname },
+      document: { hidden: false, hasFocus: () => true, addEventListener() {} },
+      addEventListener() {},
+      btoa: (value) => Buffer.from(value, 'binary').toString('base64'),
+    };
+    const journal = createBrowserHitchJournal({}, environment);
+    journal.configure(allocation);
+    if (!spec.preparation) journal.subscribe(0);
+    journal.first(0, 0);
+    const currentPhase = spec.active ? 2 : spec.preparation ? 6 : 1;
+    journal.phase(currentPhase, 0);
+    journal.frame(0, 40.125, currentPhase, currentPhase);
+    if (!spec.preparation) {
+      journal.beginWork(1, currentPhase);
+      journal.endWork(55.25, currentPhase);
+    }
+    if (spec.active) journal.phase(3, 60);
+    now = 100;
+    await store.retain(
+      journal.seal(spec.active ? 'paused' : spec.preparation ? undefined : 'briefing'),
+      spec.boundary,
+    );
+  }
+  const p = bindTimingJob(await finalJournalManifest(phase), 'chromium', 1);
+  const raw = report(p);
+  raw.hitchJournal = store.finish();
+  return { p, raw, output, url };
+}
+
+test('final cold and warm/heavy journals retain exact source-specific document coverage', async (t) => {
+  for (const phase of Object.keys(TIMING_PHASES)) {
+    const f = await finalJournalFixture(t, phase);
+    const readback = await verifyTimingHitchJournal(f.p, f.raw, f.output, f.url);
+    assert.equal(readback.status, 'complete', readback.failure);
+    assert.equal(readback.documents, phase === 'cold-first30' ? 1 : 2);
+    assert.equal(readback.records, f.raw.hitchJournal.records);
+    assert.equal(readback.bytes, f.raw.hitchJournal.bytes);
+    assert(readback.activeFrames > 0 && readback.activeWorkWindows > 0);
+    if (phase !== 'cold-first30') {
+      assert.equal(readback.documentCoverage[0].activeFrames, 0);
+      assert.equal(readback.documentCoverage[1].role, 'solo');
+    }
+    const args = sustainedArguments(
+      { plan: f.p, here: '/tools', modeState: { cpu: 1, recipePath: '/recipe' } },
+      f.p.rows[0],
+      f.url,
+      '/report',
+    );
+    const bytes = await readFile(new URL('../' + f.p.recipes[phase].path, import.meta.url));
+    const options = qualificationHitchJournalOptions(args, JSON.parse(bytes), bytes);
+    assert.equal(
+      options.preparationPolicy,
+      ['sentry', 'long-rail'].includes(phase) ? 'timing-heavy-v1' : undefined,
+    );
+    assert.equal(f.p.release.firstEightAllCorrectnessPassed, false);
+  }
+});
+
+test('two-document journal rejects missing/extra identities, active preparation and renewed budgets', async (t) => {
+  for (const phase of ['warm-first30', 'sentry', 'long-rail']) {
+    const f = await finalJournalFixture(t, phase);
+    for (const mutate of [
+      (r) => {
+        r.hitchJournal.documents.pop();
+      },
+      (r) => {
+        r.hitchJournal.documents.push(r.hitchJournal.documents[0]);
+      },
+      (r) => {
+        r.hitchJournal.documents[0].identity.path = '/other/';
+      },
+      (r) => {
+        r.hitchJournal.documents[0].boundary = 'final-existing-public-boundary';
+      },
+      (r) => {
+        r.hitchJournal.documents[0].header.runningSeen = true;
+      },
+      (r) => {
+        r.hitchJournal.documents[0].header.activeFrames = 1;
+      },
+      (r) => {
+        r.hitchJournal.documents[1].header.capacity = 174000;
+      },
+      (r) => {
+        r.hitchJournal.documents[1].path = r.hitchJournal.documents[0].path;
+      },
+      (r) => {
+        r.hitchJournal.documents[1].header.activeWorkWindows = 0;
+      },
+      (r) => {
+        r.hitchJournal.records++;
+      },
+      (r) => {
+        r.performanceGateStatusBeforeHitchJournal = 'fail';
+      },
+    ]) {
+      const raw = structuredClone(f.raw);
+      mutate(raw);
+      const result = await verifyTimingHitchJournal(f.p, raw, f.output, f.url);
+      assert.equal(result.status, 'invalid-evidence', JSON.stringify(raw.hitchJournal.documents));
+    }
+  }
+});
+
+test('heavy preparation policy cannot be applied to altered or unrelated recipe bytes', async () => {
+  const flags = ['--work-probe', '--hitch-journal', '--hitch-journal-preparation=timing-heavy-v1'];
+  for (const phase of ['sentry', 'long-rail']) {
+    const file = new URL(
+      `../docs/performance/fixtures/solo-remote-timing/${phase}.qualification.fixture`,
+      import.meta.url,
+    );
+    const bytes = await readFile(file),
+      recipe = JSON.parse(bytes);
+    assert.equal(
+      qualificationHitchJournalOptions(flags, recipe, bytes).preparationPolicy,
+      'timing-heavy-v1',
+    );
+    assert.throws(() =>
+      qualificationHitchJournalOptions(flags, recipe, Buffer.concat([bytes, Buffer.from(' ')])),
+    );
+    assert.throws(() => qualificationHitchJournalOptions([...flags, flags[2]], recipe, bytes));
+    assert.throws(() => qualificationHitchJournalOptions(flags, { ...recipe, id: 'other' }, bytes));
+  }
+  const bytes = await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
+      import.meta.url,
+    ),
+  );
+  assert.throws(() => qualificationHitchJournalOptions(flags, JSON.parse(bytes), bytes));
 });
