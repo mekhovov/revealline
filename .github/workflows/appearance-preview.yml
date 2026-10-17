@@ -65,6 +65,7 @@ on:
       - 'game/test/field-kit-surfaces.test.mjs'
       - 'game/test/menu-scene-motion.test.mjs'
       - 'game/test/solo-render-submission.test.mjs'
+      - 'game/test/solo-preparation-invalidation-host.test.mjs'
       - 'game/test/demo-audio.test.mjs'
       - 'game/test/demo-audio-host.test.mjs'
       - 'game/test/demo-context-recovery-host.test.mjs'
@@ -167,6 +168,7 @@ jobs:
         game/test/field-kit-surfaces.test.mjs
         game/test/menu-scene-motion.test.mjs
         game/test/solo-render-submission.test.mjs
+        game/test/solo-preparation-invalidation-host.test.mjs
         game/test/demo-audio.test.mjs
         game/test/demo-audio-host.test.mjs
         game/test/demo-context-recovery-host.test.mjs
