@@ -258,7 +258,21 @@ int main(int argc, char **argv) {
     for (const mode of ['gone-first', 'gone-second', 'recycled-second'])
       assert.equal(capture(mode).size, 0);
     for (const mode of ['permission', 'zero-no-errno', 'partial-esrch'])
-      assert.throws(() => capture(mode));
+      assert.throws(
+        () => capture(mode),
+        (error) => {
+          assert.equal(error.status, 1, 'Uncertain identity still aborts the inventory');
+          const diagnostic = error.stderr.toString('utf8');
+          assert.match(
+            diagnostic,
+            /process identity inspection \(\d+\) pid=42 selector=all result=\d+ expected=\d+/,
+          );
+          assert(!diagnostic.includes('SOLO_REMOTE_OWNER'));
+          assert(!diagnostic.includes('01234567-89ab-cdef-0123-456789abcdef'));
+          assert(diagnostic.length < 512);
+          return true;
+        },
+      );
     for (const mode of ['tag-denied', 'tag-truncated', 'partial-task'])
       assert.equal(capture(mode).get(42).inspectionIncomplete, true);
     assert.equal(capture('tag-absent').get(42).ownerTagged, false);
