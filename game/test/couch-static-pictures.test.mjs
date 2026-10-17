@@ -739,3 +739,77 @@ test('static disposal also retires a committed prior lease if its host handoff i
   assert.equal(stage.picture.image.closed, 1);
   assert.equal(f.revoked.length, 2);
 });
+
+test('registered base original is owned and decoded when optional release is unavailable', async (t) => {
+  const f = fixture(t, { snapshot: false }),
+    source = f.row.authoredBackground;
+  const header = inspectImageDataUrl(source.dataUrl);
+  f.state.dimensions = [header.width, header.height];
+  const result = await f.select(f.row);
+  assert.equal(result.choice.kind, 'authored');
+  assert.equal(result.image === f.images[0], true);
+  assert.equal(result.image.source, source.dataUrl);
+  assert.equal(result.fit, source.fit);
+  assert.equal(result.choice.original.width, header.width);
+  assert.equal(f.reads(), 0);
+  assert.equal(f.pictures.confirm(f.row, { raceId: 1 }) === result, true);
+  f.pictures.dispose();
+  f.pictures.dispose();
+  assert.equal(f.images[0].closed, 1);
+  assert.deepEqual(f.created, []);
+});
+
+test('unborrowed authored decoding rejects unregistered source and wrong decoded dimensions', async (t) => {
+  const f = fixture(t, { snapshot: false });
+  f.row.authoredBackground = {
+    dataUrl: `data:image/png;base64,${original.toString('base64')}`,
+    fit: 'contain',
+  };
+  await assert.rejects(f.select(f.row), /authored original is unavailable/i);
+  assert.equal(f.images.length, 0);
+  const exact = rowFor();
+  await assert.rejects(
+    f.select(exact, { raceId: 2 }),
+    /decoded release picture dimensions differ/i,
+  );
+  assert.equal(f.images[0].closed, 1);
+  assert.equal(f.pictures.current(), null);
+});
+
+test('cancelled authored decoder cannot publish late and a fresh exact selection can recover', async (t) => {
+  const f = fixture(t, { snapshot: false }),
+    gate = deferred(),
+    entered = deferred();
+  const header = inspectImageDataUrl(f.row.authoredBackground.dataUrl);
+  f.state.dimensions = [header.width, header.height];
+  f.state.onDecode = () => entered.resolve();
+  f.state.gate = gate.promise;
+  const controller = new AbortController();
+  const pending = f.select(f.row, { signal: controller.signal });
+  const rejected = assert.rejects(pending, { name: 'AbortError' });
+  await entered.promise;
+  controller.abort();
+  await rejected;
+  assert.equal(f.pictures.current(), null);
+  assert.equal(f.images[0].closed, 1);
+  gate.resolve();
+  f.state.gate = null;
+  await tick();
+  assert.equal(f.pictures.current(), null);
+  const result = await f.select(f.row);
+  assert.equal(result.image === f.images[1], true);
+  assert.equal(f.images[0].closed, 1);
+});
+
+test('unborrowed authored source mutation during decode cannot replace the captured original', async (t) => {
+  const f = fixture(t, { snapshot: false }),
+    source = f.row.authoredBackground;
+  const header = inspectImageDataUrl(source.dataUrl);
+  f.state.dimensions = [header.width, header.height];
+  f.state.onDecode = () => {
+    f.row.authoredBackground = { ...source, fit: source.fit === 'contain' ? 'cover' : 'contain' };
+  };
+  await assert.rejects(f.select(f.row), /authored picture changed/i);
+  assert.equal(f.images[0].closed, 1);
+  assert.equal(f.pictures.current(), null);
+});
