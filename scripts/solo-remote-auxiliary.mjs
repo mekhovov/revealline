@@ -88,7 +88,57 @@ const HASHES = {
   music: 'dd68efc71bb3b75ad8fa28817dd7d99630e312300286d142b24b6fab9990c493',
   recovery: '907929279c5231edb727cad3ff42e45ddf146129215fc27a9a6b809e0cd227d2',
 };
+export function auxiliarySetupSuccessor(kind) {
+  assert(['audio', 'recovery'].includes(kind));
+  const audio = kind === 'audio';
+  return {
+    format: 'SoloVerifierClosureSuccessorV1',
+    priorRun: audio ? 39012635482 : 39012635592,
+    priorConclusion: 'cancelled',
+    priorNativeObservations: 0,
+    priorManifest: audio
+      ? {
+          path: 'docs/performance/solo-final-audio-plan.json',
+          bytes: 15873,
+          sha256: '31c48be93315fe51fae58ed6ddf5f49fbbf742c63d7cb313164c168bdd5296ae',
+        }
+      : {
+          path: 'docs/performance/solo-final-recovery-plan.json',
+          bytes: 16179,
+          sha256: '0211984a6f305a19f2c85d11a7b7af1d926b20ed08596bebe9f9ec7a75554812',
+        },
+    dynamicRoots: [
+      'scripts/soundtrack-distribution.mjs',
+      'scripts/optional-distribution.mjs',
+      'scripts/external-distribution.mjs',
+      'scripts/optional-artwork.mjs',
+    ],
+    smokeTest: 'scripts/test-solo-source-verifier-smoke.mjs',
+    runtimeChanged: false,
+    scenarioChanged: false,
+    gateChanged: false,
+    automaticRetries: 0,
+    reason:
+      'Sparse tooling omitted selected source-verifier validators. Original cancellation is retained; complete verifier smoke is required before new artifact admission.',
+  };
+}
 function validateRelease(plan) {
+  const successor = plan.setupSuccessor !== undefined;
+  if (successor) {
+    assert(
+      finalAudio(plan) || finalRecovery(plan),
+      'Setup successor only for final paired audio or recovery',
+    );
+    assert.deepEqual(
+      plan.setupSuccessor,
+      auxiliarySetupSuccessor(finalAudio(plan) ? 'audio' : 'recovery'),
+    );
+    for (const path of plan.setupSuccessor.dynamicRoots)
+      assert(
+        plan.frozenTools.some((ref) => ref.path === path),
+        'Missing source-verifier dependency',
+      );
+  }
   const diagnostic = plan.status === 'reviewed-diagnostic-only';
   assert(diagnostic || plan.status === 'reviewed-and-released');
   assert.equal(plan.release.firstEightAllCorrectnessPassed, !diagnostic);
@@ -120,7 +170,10 @@ function validateRelease(plan) {
     assert(diagnostic, 'Final audio remains paired diagnostic evidence');
     assert.equal(plan.runtimeRevision, FINAL_RECOVERY.runtime);
     assert.equal(plan.release.candidateRevision, FINAL_RECOVERY.candidate);
-    assert.equal(plan.release.onceOnlyBefore, FINAL_RECOVERY.candidate);
+    assert.equal(
+      plan.release.onceOnlyBefore,
+      successor ? 'a7e0219818842f02399317ca6d2a14bdd506da3d' : FINAL_RECOVERY.candidate,
+    );
     assert.deepEqual(plan.release.selectedJobs, [
       'speech-chromium',
       'music-chromium',
@@ -141,7 +194,10 @@ function validateRelease(plan) {
     if (finalRecovery(plan)) {
       assert.equal(plan.runtimeRevision, FINAL_RECOVERY.runtime);
       assert.equal(plan.release.runtimeFix, undefined);
-      assert.equal(plan.release.onceOnlyBefore, FINAL_RECOVERY.candidate);
+      assert.equal(
+        plan.release.onceOnlyBefore,
+        successor ? 'a7e0219818842f02399317ca6d2a14bdd506da3d' : FINAL_RECOVERY.candidate,
+      );
     } else assert.equal(plan.release.runtimeFix, PREPARATION_FIX);
     assert.equal(plan.release.candidateRevision, sourceRevision(plan, 'candidate'));
     assert.deepEqual(plan.release.selectedJobs, ['recovery-chromium', 'recovery-webkit']);

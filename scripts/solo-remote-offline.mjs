@@ -83,7 +83,43 @@ export async function readBoundedJSON(path, maximumBytes = 2 * MiB) {
   }
 }
 
+export function offlineSetupSuccessor() {
+  return {
+    format: 'SoloVerifierClosureSuccessorV1',
+    priorRun: 39012635518,
+    priorConclusion: 'failure',
+    priorNativeObservations: 0,
+    priorManifest: {
+      path: 'docs/performance/solo-remote-offline-candidate-plan.json',
+      bytes: 11859,
+      sha256: '071508d3f743b73eab7fcf5e1fe26b33a5a3692f09934da4b2dc09448f4f1605',
+    },
+    dynamicRoots: [
+      'scripts/soundtrack-distribution.mjs',
+      'scripts/optional-distribution.mjs',
+      'scripts/external-distribution.mjs',
+      'scripts/optional-artwork.mjs',
+    ],
+    smokeTest: 'scripts/test-solo-source-verifier-smoke.mjs',
+    runtimeChanged: false,
+    scenarioChanged: false,
+    gateChanged: false,
+    automaticRetries: 0,
+    reason:
+      'Sparse tooling omitted selected source-verifier validators. Original failed admission and not-run row are retained; complete verifier smoke is required before new artifact admission.',
+  };
+}
 export function validateOfflinePlan(plan) {
+  const successor = plan.setupSuccessor !== undefined;
+  if (successor) {
+    assert.equal(plan.format, INDEPENDENT_OFFLINE_FORMAT);
+    assert.deepEqual(plan.setupSuccessor, offlineSetupSuccessor());
+    for (const path of plan.setupSuccessor.dynamicRoots)
+      assert(
+        plan.adapterInputs.some((ref) => ref.path === path),
+        'Missing source-verifier dependency',
+      );
+  }
   assert(Object.hasOwn(PAIR_SOURCES, plan.format), 'Unknown offline pair format');
   const sources = offlinePairSources(plan.format);
   assert.equal(plan.status, 'pinned-for-execution');
@@ -116,7 +152,10 @@ export function validateOfflinePlan(plan) {
     assert.equal(release.firstEightAllCorrectnessPassed, false);
     assert.equal(release.successorQualificationReleased, false);
     assert.equal(release.performanceQualificationReleased, false);
-    assert.equal(release.onceOnlyBefore, sources.candidate);
+    assert.equal(
+      release.onceOnlyBefore,
+      successor ? 'a7e0219818842f02399317ca6d2a14bdd506da3d' : sources.candidate,
+    );
     assert.equal(release.nativeStateEvidence.run, 39001646012);
     assert.equal(
       release.nativeStateEvidence.sourceRevision,
