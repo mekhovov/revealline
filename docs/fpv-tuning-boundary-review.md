@@ -61,8 +61,19 @@ browser attempts targeted hidden menu controls after automatic stopping/restart.
 Corrected harnesses use the ordinary pause shortcut; their failed outputs remain
 in the evidence directory. Neither correction changes deployed access controls.
 Independent reviews found no further actionable issue in the bounded changes.
-Actual desktop fixture evidence and normal reviewed publication are recorded
-separately when complete. See the [implementation status](fpv-tuning-implementation-status.md).
+The [actual Electron fixture](fpv-native-boundary-review-runtime.json) preserves
+the exact saved library across two clean processes, rejects the earlier completed
+preview after history restoration, and retains a later explicitly imported
+profile's receipt. Its 26-tick Regional recording and recovery both verify hash
+`0b26acd5`; the worker is disposed and both app processes exit successfully.
+All 209 source pins still match. This is one desktop fixture and a short flight,
+not production authentication, iOS or native maximum-duration qualification.
+
+[PR #1564](https://github.com/mekhovov/revealline/pull/1564) holds the committed
+corrections for ordinary release checks. Normal publication and live acceptance
+remain pending. The [local verification receipt](fpv-boundary-review-verification.json)
+and [implementation status](fpv-tuning-implementation-status.md) retain the exact
+scope and evidence.
 Advanced remains optional, unscored and default-ineligible. Physical controls,
 pilots, aircraft identification, iOS execution and wider devices remain deferred;
 validated propwash/ground effect and scored/default promotion depend on those gates.
