@@ -5,6 +5,7 @@ import { campaignKey } from '../library.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 test('Solo samples input without rebuilding the unchanged music identity and refreshes accepted mission contexts', async (t) => {
   const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
@@ -69,8 +70,8 @@ test('Solo samples input without rebuilding the unchanged music identity and ref
   page.$('pause-button').click();
   // A real dated practice activity makes the authored campaign selection a
   // genuine replacement, without bypassing locked-level or saved-run gates.
-  page.$('library-button').click();
-  page.doc.querySelector('[data-library-panel="challenges"]').click();
+  await activateHostAction(page.$('library-button'));
+  await activateHostAction(page.doc.querySelector('[data-library-panel="challenges"]'));
   page.$('challenge-date').value = '2026-09-12';
   page.change('challenge-kind', 'calm');
   page.$('launch-challenge').click();

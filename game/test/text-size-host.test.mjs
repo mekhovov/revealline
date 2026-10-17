@@ -8,6 +8,7 @@ import { BACKUP_FORMAT } from '../backup.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
 const profileKey = 'revealline.library.dev.v1';
@@ -229,7 +230,7 @@ test('an unrelated host preference change applies the actual merged stored size 
 test('actual complete-backup import and Undo adopt text size while preserving the verified suspended flight', async (t) => {
   const page = await soloPage(t, { campaign, storage: initialStorage() });
   await startCut(page);
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   page.frame(0);
   assert.equal(page.$('library-dialog').open, true);
   assert.equal(page.rendered.paused, true);

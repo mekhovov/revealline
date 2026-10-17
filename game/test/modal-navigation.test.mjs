@@ -13,6 +13,7 @@ import { BoardPainter } from '../ui/render.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import { createImmutablePresentationFixture } from './helpers/immutable-presentation-fixture.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 function surface() {
   const doc = new Document();
@@ -1217,6 +1218,10 @@ function openTitleCollection(h) {
   assert.equal(collectionBack(h).textContent, 'Back to Settings');
 }
 async function openFirstPicture(h) {
+  await settle(() => {
+    const card = h.$('gallery-grid').querySelector('button');
+    return card && !card.disabled && h.$('collection-dialog-entry-status')?.hidden;
+  }, 'The public Collection visit must finish preparing its earned picture.');
   const card = h.$('gallery-grid').querySelector('button');
   assert.ok(card && !card.disabled, 'The actual earned picture must be available.');
   card.focus();
@@ -1609,7 +1614,7 @@ for (const origin of ['title', 'paused flight'])
     h.$('shell-workshop').click();
     h.$('shell-library').focus();
     h.$('shell-library').click();
-    h.doc.querySelector('[data-library-panel="challenges"]').click();
+    await activateHostAction(h.doc.querySelector('[data-library-panel="challenges"]'));
     h.$('challenge-date').value = '2026-09-15';
     h.$('challenge-kind').value = 'daily';
     assert.equal(h.$('shell-workshop-dialog').open, true);
@@ -1652,7 +1657,7 @@ for (const action of ['resume-save', 'import-save'])
     h.$('shell-workshop').click();
     h.$('shell-library').focus();
     h.$('shell-library').click();
-    h.doc.querySelector('[data-library-panel="saves"]').click();
+    await activateHostAction(h.doc.querySelector('[data-library-panel="saves"]'));
     const saved = h.storage.getItem('revealline.suspended.dev.v1');
     assert.ok(saved);
     if (action === 'import-save') {
