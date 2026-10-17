@@ -40,7 +40,7 @@ const ground = (shift = 0) =>
     ],
   });
 
-test('all twelve aircraft run physical self-level and Acro sessions with independent mass and geometry', () => {
+test('all catalog aircraft run physical self-level and Acro sessions with independent mass and geometry', () => {
   for (const item of listAircraftPresets())
     for (const mode of ['acro', 'self-level']) {
       const config = createPresetConfiguration(item.id),

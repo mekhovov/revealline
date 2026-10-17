@@ -31,7 +31,7 @@ function visual(configuration, kind = 'racer') {
 const close = (actual, expected, label) =>
   assert.ok(Math.abs(actual - expected) < 1e-8, `${label}: ${actual} != ${expected}`);
 
-test('all twelve aircraft render their physical rotor positions and dimensions after legacy scale normalization', () => {
+test('all catalog aircraft render their physical rotor positions and dimensions after legacy scale normalization', () => {
   const bounds = new Set();
   for (const preset of listAircraftPresets()) {
     const { aircraft } = createPresetConfiguration(preset.id),
@@ -55,17 +55,22 @@ test('all twelve aircraft render their physical rotor positions and dimensions a
     assert.ok(body && battery);
     const bodyBounds = new THREE.Box3().setFromObject(body),
       batteryBounds = new THREE.Box3().setFromObject(battery);
-    close(bodyBounds.min.y, -aircraft.geometry.bodyHalfExtents.y, 'body support height');
+    const underslung = preset.id === 'mobula8-analog-2023';
+    close(
+      (underslung ? batteryBounds : bodyBounds).min.y,
+      -aircraft.geometry.bodyHalfExtents.y,
+      'aircraft support height',
+    );
     close(
       batteryBounds.max.y,
-      aircraft.geometry.bodyHalfExtents.y,
+      aircraft.geometry.bodyHalfExtents.y * (underslung ? -0.4 : 1),
       'battery top fits physical envelope',
     );
     bounds.add(
       new THREE.Box3().setFromObject(parent).getSize(new THREE.Vector3()).toArray().join(','),
     );
   }
-  assert.equal(bounds.size, 12);
+  assert.equal(bounds.size, listAircraftPresets().length);
 });
 
 test('skins retain physical size and rotor geometry while changing cosmetic color', () => {
@@ -81,6 +86,37 @@ test('skins retain physical size and rotor geometry while changing cosmetic colo
     original.result.rotors.map((r) => r.position.toArray()),
     pixel.result.rotors.map((r) => r.position.toArray()),
   );
+});
+
+test('civilian Mobula8 appearance uses guarded three-blade props and an orange canopy without changing physics', () => {
+  const configuration = createPresetConfiguration('mobula8-analog-2023').aircraft;
+  const before = JSON.stringify(configuration);
+  const { parent, result } = visual(configuration);
+  assert.equal(JSON.stringify(configuration), before);
+  assert.equal(result.tint.color.getHex(), 0xf06632);
+  assert.ok(parent.getObjectByName('aircraft-canopy'));
+  const canopyBounds = new THREE.Box3().setFromObject(parent.getObjectByName('aircraft-canopy'));
+  const batteryBounds = new THREE.Box3().setFromObject(parent.getObjectByName('aircraft-battery'));
+  assert.ok(
+    canopyBounds.min.y > batteryBounds.max.y,
+    'canopy remains visible above underslung battery',
+  );
+  for (const [index, rotor] of result.rotors.entries()) {
+    assert.equal(rotor.children.filter((part) => part.name === 'propeller-blade').length, 3);
+    assert.equal(
+      parent.getObjectByName(`aircraft-duct-${index}`).material.color.getHex(),
+      0x30343b,
+    );
+    assert.equal(parent.getObjectByName(`aircraft-duct-${index}`).material.side, THREE.DoubleSide);
+  }
+});
+
+test('two-blade reference aircraft retain their actual blade count in the visual model', () => {
+  for (const id of ['meteor75-analog-2022', 'meteor85-analog', 'holybro-x650-v2']) {
+    const { result } = visual(createPresetConfiguration(id).aircraft);
+    for (const rotor of result.rotors)
+      assert.equal(rotor.children.filter((part) => part.name === 'propeller-blade').length, 2, id);
+  }
 });
 
 test('rendered fuselage and rotors use the same center-of-mass coordinate convention', () => {
