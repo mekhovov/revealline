@@ -109,6 +109,7 @@
         "game/test/coop-view-presentation.test.mjs",
         "game/test/fpv-world-textures.test.mjs",
         "game/test/fpv-objective-labels.test.mjs",
+        "game/test/fpv-regional-library-families.test.mjs",
         "game/test/fpv-regional-library-labels.test.mjs",
         "game/test/industrial-environments.test.mjs",
         "game/test/attempt-appearance.test.mjs",

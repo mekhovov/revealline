@@ -4763,6 +4763,28 @@
 .world-catalogue-card button {
   width: 100%;
 }
+.regional-primary {
+  min-width: 0;
+}
+.world-catalogue-card[data-region-family] > h3 {
+  margin-block: 0 8px;
+}
+.regional-versions {
+  margin-top: 12px;
+}
+.regional-versions > summary {
+  min-height: 44px;
+  padding: 10px 4px;
+  cursor: pointer;
+}
+.regional-version-list {
+  min-width: 0;
+}
+.regional-version {
+  min-width: 0;
+  padding-block: 12px;
+  border-top: 1px solid var(--fk-line, #536570);
+}
 .world-catalogue-host {
   grid-column: 1 / -1;
   min-width: 0;
