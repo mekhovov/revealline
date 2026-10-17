@@ -23,6 +23,7 @@ export async function mountEditionSoloUI({
   getJourneyProfile,
   getJourneyRevision,
   getJourneyDurable,
+  scheduleReplayChunk,
   getReducedMotion,
   audioMaster,
   musicDucker,
@@ -337,6 +338,7 @@ export async function mountEditionSoloUI({
   }
   const layout = mountEditionPlayLayout({ document: doc, window: win });
   const lessons = await mountEditionLessons({
+    scheduleReplayChunk,
     provider,
     document: doc,
     window: win,
@@ -348,6 +350,7 @@ export async function mountEditionSoloUI({
     previewSession,
   });
   const mastery = await mountEditionMastery({
+    scheduleReplayChunk,
     provider,
     document: doc,
     window: win,

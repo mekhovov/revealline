@@ -229,6 +229,7 @@ test(
 
     let writes = 0,
       readbacks = 0,
+      parsedImmediateReadback = 0,
       latestWrite = null;
     const setItem = storage.setItem.bind(storage),
       getItem = storage.getItem.bind(storage);
@@ -244,6 +245,16 @@ test(
       if (name === slot && latestWrite !== null && value === latestWrite) readbacks++;
       return value;
     });
+    const parseJSON = JSON.parse;
+    t.mock.method(JSON, 'parse', (text, ...args) => {
+      if (
+        latestWrite !== null &&
+        text === latestWrite &&
+        new Error().stack.includes('at attemptReadbackMatches (')
+      )
+        parsedImmediateReadback++;
+      return Reflect.apply(parseJSON, JSON, [text, ...args]);
+    });
     const started = performance.now();
     await activateHostAction(page.$('save-attempt-button'));
     page.frame(0);
@@ -251,6 +262,11 @@ test(
     assert(
       readbacks >= writes,
       'Successful app writes must be read back, not inferred from setItem alone.',
+    );
+    assert.equal(
+      parsedImmediateReadback,
+      0,
+      'Immediate validated readback must not parse the dense recording again; saved-menu metadata remains independent.',
     );
     assert.equal(page.rendered.paused, true);
     const raw = getItem(slot);

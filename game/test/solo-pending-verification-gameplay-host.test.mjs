@@ -161,7 +161,7 @@ function finishLegalRoute(page, savedTicks) {
 
 for (const action of ['next', 'retry']) {
   test(
-    `a real pending earned verifier crosses public ${action} and commits only its original reward during new gameplay`,
+    `a real pending earned verifier crosses public ${action} and defers optional work during gameplay and commits its original reward on Pause`,
     { timeout: 180000 },
     async (t) => {
       const show = SoloElement.prototype.showModal;
@@ -246,21 +246,38 @@ for (const action of ['next', 'retry']) {
       assert.equal(active.tick, 60);
       const priorAdmitted = verifier.admitted;
       verifier.step();
-      await settle(() => verifier.admitted > priorAdmitted && verifier.pending === 1);
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      assert.equal(
+        verifier.admitted,
+        priorAdmitted,
+        'Active play withholds the next verification chunk.',
+      );
+      assert.equal(
+        verifier.pending,
+        0,
+        'The optional main-thread admission owns the pending work.',
+      );
       assert.equal(
         importLibrary(storage.getItem(PROFILE)).masteries.length,
         0,
-        'A real verification chunk ran after new gameplay began, and still has work left.',
+        'No optional verification result may commit during active play.',
       );
       for (let n = 0; n < 15; n++) advance();
       assert.equal(active.tick, 120);
       assert.deepEqual(authoritativeCheckpoint(completedRun), completedCheckpoint);
 
       verifier.release();
-      await settle(() => {
-        advance();
-        return importLibrary(storage.getItem(PROFILE)).masteries.length === 1;
-      }, 'The original earned seal must finish and persist while the next flight can step.');
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      assert.equal(importLibrary(storage.getItem(PROFILE)).masteries.length, 0);
+      page.key('ArrowRight', false);
+      await activateHostAction(page.$('pause-button'));
+      assert.equal(page.doc.body.dataset.flightState, 'paused');
+      page.frame(0);
+      const pausedCheckpoint = authoritativeCheckpoint(active);
+      await settle(
+        () => importLibrary(storage.getItem(PROFILE)).masteries.length === 1,
+        'The original earned seal finishes only after public Pause admits optional work.',
+      );
       const committed = importLibrary(storage.getItem(PROFILE));
       assert.equal(committed.masteries[0].runId, RUN_ID);
       assert.equal(committed.masteries[0].levelId, completedRun.levelId);
@@ -270,17 +287,17 @@ for (const action of ['next', 'retry']) {
         'No second completion or reward may be fabricated.',
       );
       assert.equal(page.rendered.run === active, true);
-      assert.equal(page.doc.body.dataset.flightState, 'running');
-      assert.equal(page.$('game-overlay').hidden, true);
+      assert.equal(page.doc.body.dataset.flightState, 'paused');
+      assert.equal(page.$('game-overlay').dataset.kind, 'pause');
       assert.equal(page.$('journey-best').hidden, true);
       assert.doesNotMatch(
         page.$('mastery-announcement').textContent,
         /earned and saved/,
         "The old result must not announce itself as the new attempt's award.",
       );
-      assert.deepEqual(authoritativeCheckpoint(active), authoritativeCheckpoint(reference));
+      assert.deepEqual(authoritativeCheckpoint(active), pausedCheckpoint);
+      assert.equal(active.tick, reference.tick);
       assert.deepEqual(authoritativeCheckpoint(completedRun), completedCheckpoint);
-      page.key('ArrowRight', false);
       assert.equal(
         page.errors.length,
         0,

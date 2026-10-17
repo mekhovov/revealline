@@ -724,12 +724,14 @@ function checkAbort(signal) {
 /** Browser verification yields before work and every bounded simulation chunk. */
 export async function verifyReplayAsync(
   data,
-  { chunkTicks = 600, onProgress, signal, mastery } = {},
+  { chunkTicks = 600, onProgress, signal, mastery, scheduleChunk } = {},
 ) {
   if (!Number.isInteger(chunkTicks) || chunkTicks < 1 || chunkTicks > 1200)
     reject('chunkTicks must be an integer in 1..1200.');
   if (onProgress !== undefined && typeof onProgress !== 'function')
     reject('onProgress must be a function.');
+  if (scheduleChunk !== undefined && typeof scheduleChunk !== 'function')
+    reject('scheduleChunk must be a function.');
   // Snapshot optional data before yielding. No caller callback receives core
   // state, and the ordinary verifier path retains its exact result contract.
   const requestedMastery = masteryRequest(mastery);
@@ -738,37 +740,74 @@ export async function verifyReplayAsync(
   await yieldToHost();
   checkAbort(signal);
   if (requestedMastery) {
-    if (prepared.versions.ruleset !== LEGACY_VERSIONS.ruleset)
-      reject('Optional mastery observation is supported only for legacy core v2 maps.');
-    const { definition, ...identity } = requestedMastery;
-    prepared.mastery = {
-      runId: identity.runId,
-      definition,
-      observer: createMasteryObserver({
+    const setup = () => {
+      if (prepared.versions.ruleset !== LEGACY_VERSIONS.ruleset)
+        reject('Optional mastery observation is supported only for legacy core v2 maps.');
+      const { definition, ...identity } = requestedMastery;
+      prepared.mastery = {
+        runId: identity.runId,
         definition,
-        setup: captureMasterySetup(prepared.state, { ...identity, definition }),
-        initial: captureMasteryFacts(prepared.state, { ...identity, definition }),
-      }),
+        observer: createMasteryObserver({
+          definition,
+          setup: captureMasterySetup(prepared.state, { ...identity, definition }),
+          initial: captureMasteryFacts(prepared.state, { ...identity, definition }),
+        }),
+      };
     };
+    if (scheduleChunk) await admittedChunk(setup);
+    else setup();
   }
   const iterator = replaySteps(prepared),
     total = prepared.data.ticks;
   const now = () => globalThis.performance?.now?.() ?? Date.now();
+  // The owner admits a synchronous closure, never core state. Once its promise
+  // settles, a delayed/double invocation cannot continue this verifier.
+  async function admittedChunk(work) {
+    let called = false,
+      retired = false,
+      failure;
+    try {
+      await scheduleChunk(
+        () => {
+          try {
+            if (retired || called) reject('Replay chunk admission must invoke work exactly once.');
+            called = true;
+            checkAbort(signal);
+            work();
+          } catch (error) {
+            failure = error;
+            throw error;
+          }
+        },
+        { signal },
+      );
+      if (failure) throw failure;
+      if (!called) reject('Replay chunk admission did not run work.');
+      checkAbort(signal);
+    } finally {
+      retired = true;
+    }
+  }
   let processed = 0,
     done = false;
   onProgress?.({ ticks: 0, total, fraction: total ? 0 : 1 });
   while (!done) {
     checkAbort(signal);
-    const started = now();
-    for (let count = 0; count < chunkTicks; count++) {
-      const next = iterator.next();
-      if (next.done) {
-        done = true;
-        break;
+    const work = () => {
+      checkAbort(signal);
+      const started = now();
+      for (let count = 0; count < chunkTicks; count++) {
+        const next = iterator.next();
+        if (next.done) {
+          done = true;
+          break;
+        }
+        processed = next.value;
+        if (count % 8 === 7 && now() - started >= 8) break;
       }
-      processed = next.value;
-      if (count % 8 === 7 && now() - started >= 8) break;
-    }
+    };
+    if (scheduleChunk) await admittedChunk(work);
+    else work();
     onProgress?.({ ticks: processed, total, fraction: total ? processed / total : 1 });
     if (!done) {
       await yieldToHost();
@@ -776,5 +815,10 @@ export async function verifyReplayAsync(
     }
   }
   checkAbort(signal);
-  return finishVerification(prepared);
+  if (!scheduleChunk) return finishVerification(prepared);
+  let result;
+  await admittedChunk(() => {
+    result = finishVerification(prepared);
+  });
+  return result;
 }

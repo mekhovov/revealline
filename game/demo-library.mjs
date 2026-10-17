@@ -81,6 +81,7 @@ export function demoRecordingQuality(replay) {
 export function createDemoLibrary({
   storage,
   enabled = false,
+  scheduleChunk,
   now = () => new Date().toISOString(),
 } = {}) {
   let active = enabled === true,
@@ -152,7 +153,18 @@ export function createDemoLibrary({
       const quality = demoRecordingQuality(replay);
       if (!quality.eligible) return { saved: false, reason: quality.reason };
       const descriptor = demoDescriptor(replay, entry),
-        verified = await verifyReplayAsync(replay, { signal });
+        verified = await verifyReplayAsync(replay, {
+          signal,
+          ...(scheduleChunk
+            ? {
+                scheduleChunk: (work, options) =>
+                  scheduleChunk(() => {
+                    current(ticket, signal, !manual);
+                    work();
+                  }, options),
+              }
+            : {}),
+        });
       current(ticket, signal, !manual);
       if (!verified.match) return { saved: false, reason: 'verification' };
       if (

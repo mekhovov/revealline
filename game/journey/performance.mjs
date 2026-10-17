@@ -72,7 +72,10 @@ export function inspectJourneyPerformance(input) {
   });
   return value;
 }
-export async function verifyPerformanceRecord(input, { acceptBinding, signal, profile } = {}) {
+export async function verifyPerformanceRecord(
+  input,
+  { acceptBinding, signal, profile, scheduleChunk } = {},
+) {
   required(
     typeof acceptBinding === 'function',
     'Solo Journey performance verification is unavailable.',
@@ -83,7 +86,7 @@ export async function verifyPerformanceRecord(input, { acceptBinding, signal, pr
     profile?.clears?.solo?.[record.missionId],
     'Performance evidence needs an accepted Journey mission.',
   );
-  const result = await verifyReplayAsync(record.replay, { signal });
+  const result = await verifyReplayAsync(record.replay, { signal, scheduleChunk });
   signal?.throwIfAborted();
   required(
     result.match && result.state.status === 'won' && result.actual.summary.won === true,

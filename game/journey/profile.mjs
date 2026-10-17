@@ -428,6 +428,7 @@ export function createJourneyProfileStore({
   operationTimeoutMs = 1500,
   canWrite = () => true,
   acceptPerformanceBinding,
+  schedulePerformanceChunk,
 } = {}) {
   validateProfileKey(profileKey);
   if (typeof canWrite !== 'function') throw new TypeError('A profile write guard is required.');
@@ -648,6 +649,7 @@ export function createJourneyProfileStore({
     getProfile: snapshot,
     flushProfile: flush,
     acceptBinding: acceptPerformanceBinding,
+    scheduleChunk: schedulePerformanceChunk,
     canWrite,
   });
   const inspectAsync = async (source, { signal } = {}) => {
