@@ -67,6 +67,14 @@ all ten workers. A separate local browser with a deliberately stalled script and
 All 20 existing numerical qualification sources are unchanged; no new benchmark
 is claimed. Two independent reviews found no further actionable issue.
 
-Desktop follow-up and ordinary publication/live acceptance are in progress.
-Earlier delivery reports apply to `fb3caf12b`; they do not automatically qualify
-this correction.
+The [actual Electron fixture](fpv-input-recovery-native-runtime.json) also passes:
+unavailable-radio Start preserves export/restart at 220 mission ticks, and explicit
+keyboard resume continues the same flight to 478 ticks. Both OS-saved recordings
+replay exactly with the earlier input/hash prefix retained. Restart and leaving
+practice dispose both workers. Ordinary desktop/iOS staging passes all 209 source
+pins; this is one desktop fixture, not production authentication or iOS execution.
+
+[PR #1565](https://github.com/mekhovov/revealline/pull/1565) contains the correction
+at `af4cd146f`. Ordinary checks/publication and current live acceptance are in
+progress. Earlier delivery reports apply to `fb3caf12b`; they do not automatically
+qualify this correction.

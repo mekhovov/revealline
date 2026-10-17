@@ -1,0 +1,198 @@
+import * as fs from 'node:fs/promises';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import {
+  writeFPVNative,
+  FPV_NATIVE_LIMITS,
+} from '/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/build-fpv-native.mjs';
+import {
+  stageNative,
+  verifySite,
+  IOS_CSP,
+} from '/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/native-cli.mjs';
+import {
+  loadNativeSite,
+  MAX_SITE_BYTES,
+  MAX_RESOURCE_BYTES,
+} from '/Users/oleksandr.mekhovov/work/my_projects/go_test/platforms/desktop/resources.mjs';
+const root = '/Users/oleksandr.mekhovov/work/my_projects/go_test';
+const base = '/private/tmp/fpv-input-recovery-native';
+const hash = (b) => createHash('sha256').update(b).digest('hex');
+const prior = JSON.parse(
+  await fs.readFile(path.join(root, 'docs/fpv-native-post-publication-staging.json'), 'utf8'),
+);
+const inputNames = [
+  ...new Set([
+    ...Object.keys(prior.sourceHashes),
+    ...Object.keys(prior.extraHashes ?? {}),
+    ...Object.keys(prior.testInputHashes ?? {}),
+    'platforms/ios/package.json',
+    'platforms/ios/package-lock.json',
+    'platforms/ios/scripts/build-bridge.mjs',
+    'scripts/build-fpv-native-smoke.mjs',
+    'platforms/desktop/test/fpv-smoke-harness.mjs',
+    'authoring/fpv-worlds/regions/endurance-fixture.mjs',
+    'scripts/build-optional-practice.mjs',
+    'scripts/game-cli.mjs',
+    'publishing/optional-import-capabilities.mjs',
+    'publishing/optional-module-closure.mjs',
+    'platforms/ios/diagnostics/index.html',
+    'platforms/ios/diagnostics/page.js',
+    'platforms/ios/diagnostics/probe.mjs',
+    'platforms/ios/diagnostics/style.css',
+  ]),
+].sort();
+const sourceHashes = Object.fromEntries(
+  await Promise.all(
+    inputNames.map(async (name) => [name, hash(await fs.readFile(path.join(root, name)))]),
+  ),
+);
+const startedAt = new Date().toISOString();
+const built = await writeFPVNative({
+  root,
+  out: base + '-source',
+  version: 'fpv-input-recovery-20261017',
+});
+const stages = {};
+stages.desktop = await stageNative({
+  site: built.out,
+  out: base + '-desktop',
+  platform: 'desktop',
+});
+stages.ios = await stageNative({
+  site: built.out,
+  out: base + '-ios',
+  platform: 'ios',
+  bridge: path.join(root, 'platforms/ios/bridge/dist/bridge.mjs'),
+  diagnostics: path.join(root, 'platforms/ios/diagnostics'),
+});
+const source = await verifySite(built.out);
+const desktop = await verifySite(stages.desktop.out, { native: true });
+const ios = await verifySite(stages.ios.out, { native: true });
+assert.equal(desktop.manifestSha256, source.manifestSha256);
+assert.notEqual(ios.manifestSha256, source.manifestSha256);
+const runtime = await loadNativeSite(stages.desktop.out);
+const resourceChecks = [];
+for (const name of [
+  'game/index.html',
+  'optional-practice/civilian-fpv/index.html',
+  'optional-practice/fpv-worlds/index.html',
+  'optional-practice/civilian-fpv/tuning-ui.mjs',
+  'optional-practice/civilian-fpv/betaflight-import.mjs',
+  'optional-practice/civilian-fpv/advanced-practice.mjs',
+  'optional-practice/civilian-fpv/advanced-regional.mjs',
+  'optional-practice/civilian-fpv/world-app.mjs',
+  'optional-practice/civilian-fpv/advanced-worker.mjs',
+  'optional-practice/civilian-fpv/vendor/rapier/rapier.mjs',
+]) {
+  const response = await runtime.handle(new Request('revealline://app/' + name));
+  assert.equal(response.status, 200, name);
+  assert.match(
+    response.headers.get('Content-Security-Policy'),
+    /script-src 'self' 'wasm-unsafe-eval';/,
+  );
+  assert.match(response.headers.get('Content-Security-Policy'), /connect-src 'self';/);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  assert.deepEqual(bytes, await fs.readFile(path.join(built.out, name)));
+  resourceChecks.push({
+    path: name,
+    status: response.status,
+    bytes: bytes.length,
+    sha256: hash(bytes),
+  });
+}
+for (const name of [
+  'optional-practice/civilian-fpv/index.html',
+  'optional-practice/fpv-worlds/index.html',
+]) {
+  const sourcePage = await fs.readFile(path.join(built.out, name), 'utf8');
+  assert.match(sourcePage, /data-access-state="locked"/);
+  assert.match(sourcePage, /revealline-access-verifier/);
+  const iosPage = await fs.readFile(path.join(stages.ios.out, name), 'utf8');
+  assert.ok(iosPage.includes(IOS_CSP));
+  assert.match(iosPage, /data-access-state="locked"/);
+  assert.match(iosPage, /revealline-access-verifier/);
+}
+const diagnosticPage = await fs.readFile(
+  path.join(stages.ios.out, 'diagnostics/index.html'),
+  'utf8',
+);
+assert.match(diagnosticPage, /script-src 'self';/);
+assert.doesNotMatch(diagnosticPage, /wasm-unsafe-eval|unsafe-inline|unsafe-eval/);
+for (const stage of Object.values(stages)) {
+  const qualification = JSON.parse(
+    await fs.readFile(path.join(stage.out, 'native/fpv-qualification.json'), 'utf8'),
+  );
+  assert.equal(qualification.nativeRuntimeVerified, false);
+  assert.equal(qualification.advancedScored, false);
+}
+for (const [name, digest] of Object.entries(sourceHashes))
+  assert.equal(hash(await fs.readFile(path.join(root, name))), digest, name);
+const result = {
+  runner: {
+    path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/docs/fpv-input-recovery-native/staging.mjs',
+    sha256: hash(
+      await fs.readFile(
+        '/Users/oleksandr.mekhovov/work/my_projects/go_test/docs/fpv-input-recovery-native/staging.mjs',
+      ),
+    ),
+  },
+  environment: { node: process.version, platform: process.platform, architecture: process.arch },
+  sourceRevisionBeforeChanges: '6018a0f5d113759ad7a13ad06208366cbd5d652e',
+  historicalRuntime: {
+    report: 'docs/fpv-native-post-publication-runtime.json',
+    appliesToCurrentSource: false,
+    description:
+      'Earlier Electron flight/export/process-reopen evidence remains bound to its recorded source hashes. No current-source native runtime launch occurred in this staging check.',
+  },
+  limitations: [
+    'Ordinary simulator-only package and resource-policy verification; no desktop or iOS runtime flight claim.',
+    'No full-game native build, signing/notarization, app installation, physical radio, hardware performance or broader device qualification.',
+    'iOS bridge uses the existing pinned local bundle; iOS execution remains unmeasured.',
+    'Advanced remains optional, unscored and ineligible as the default.',
+  ],
+  format: 'FpvInputRecoveryNativeStaging.v1',
+  startedAt,
+  completedAt: new Date().toISOString(),
+  pass: true,
+  scope:
+    'Simulator-only ordinary desktop/iOS staging and resource-policy checks; no Electron or iOS runtime launch.',
+  nativeRuntimeVerified: false,
+  desktopFixtureRuntimeVerified: false,
+  iosRuntimeVerified: false,
+  source: built.out,
+  build: built,
+  stages,
+  sourceHashes,
+  sourceStable: true,
+  resourceChecks,
+  accessPagesRemainLocked: true,
+  iosCSPVerified: true,
+  iosDiagnosticsCSPVerified: true,
+  limits: {
+    simulatorInput: FPV_NATIVE_LIMITS,
+    nativeSiteBytes: MAX_SITE_BYTES,
+    nativeResourceBytes: MAX_RESOURCE_BYTES,
+    unchanged: true,
+  },
+  manifests: {
+    source: source.manifestSha256,
+    desktop: desktop.manifestSha256,
+    ios: ios.manifestSha256,
+  },
+  tests: null,
+};
+await fs.writeFile(
+  path.join(root, 'docs/fpv-input-recovery-native-staging.json'),
+  JSON.stringify(result, null, 2) + '\n',
+);
+console.log(
+  JSON.stringify({
+    pass: true,
+    stages,
+    sourceStable: true,
+    sourceHashCount: inputNames.length,
+    nativeRuntimeVerified: false,
+  }),
+);
