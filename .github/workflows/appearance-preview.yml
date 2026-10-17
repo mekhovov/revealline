@@ -80,6 +80,7 @@ on:
       - 'game/test/field-kit-surfaces.test.mjs'
       - 'game/test/menu-scene-motion.test.mjs'
       - 'game/test/solo-render-submission.test.mjs'
+      - 'game/test/solo-performance-host.test.mjs'
       - 'game/test/solo-preparation-invalidation-host.test.mjs'
       - 'game/test/solo-soundtrack-context-host.test.mjs'
       - 'game/test/flight-information-source.test.mjs'
@@ -165,7 +166,7 @@ concurrency:
 jobs:
   preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 70
     env:
       PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       PREVIEW_PR: ${{ github.event.pull_request.number }}
@@ -209,6 +210,7 @@ jobs:
         game/test/field-kit-surfaces.test.mjs
         game/test/menu-scene-motion.test.mjs
         game/test/solo-render-submission.test.mjs
+        game/test/solo-performance-host.test.mjs
         game/test/solo-preparation-invalidation-host.test.mjs
         game/test/solo-soundtrack-context-host.test.mjs
         game/test/flight-information-source.test.mjs
@@ -270,30 +272,42 @@ jobs:
         scripts/test-optional-fpv-package.mjs
         scripts/test-sparse-publisher-imports.mjs
     steps:
+      - name: Record the bounded packaging start
+        timeout-minutes: 1
+        shell: bash
+        run: echo "PREVIEW_STARTED_AT=$(date +%s)" >> "$GITHUB_ENV"
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 2
         with:
           node-version: '22.13.1'
           package-manager-cache: false
       - name: Verify the exact PR head
+        timeout-minutes: 1
         shell: bash
         run: |
           test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
           mkdir -p .cache/appearance-preview
       - name: Read explicit automated-suite policy
+        timeout-minutes: 1
         id: test_policy
         run: node publishing/test-policy.mjs
       - run: npm ci
+        timeout-minutes: 3
       - name: Install pinned SIM source-validation dependencies without test fixtures
+        timeout-minutes: 3
         if: steps.test_policy.outputs.mode == 'waived'
         run: npm ci --prefix authoring/fpv-worlds --ignore-scripts --omit=dev
       - name: Install pinned SIM test dependencies
+        timeout-minutes: 3
         if: steps.test_policy.outputs.runTests == 'true'
         run: npm ci --prefix authoring/fpv-worlds --ignore-scripts
       - name: Verify generated presentation and marking sources
+        timeout-minutes: 2
         shell: bash
         run: |
           set -euo pipefail
@@ -302,6 +316,7 @@ jobs:
           node scripts/refresh-fpv-presentation-assets.mjs --check
           node authoring/fpv-worlds/industrial-markings/generate.mjs --check
       - name: Run focused appearance, SIM and curated-community checks
+        timeout-minutes: 45
         id: focused
         if: steps.test_policy.outputs.runTests == 'true'
         shell: bash
@@ -310,15 +325,27 @@ jobs:
           read -r -a test_files <<< "$APPEARANCE_TEST_FILES"
           node --test --test-concurrency=1 "${test_files[@]}" | tee .cache/appearance-preview/focused-tests.tap
       - name: Build the full game and separate Worlds playtest
+        timeout-minutes: 12
         shell: bash
         run: |
           set -euo pipefail
+          # The job has 70 minutes; reserve two for job startup and final runner cleanup.
+          # Admit the 12-minute build only with 11 more minutes for evidence and closure.
+          [[ "${PREVIEW_STARTED_AT:-}" =~ ^[1-9][0-9]{8,11}$ ]] || { echo 'Missing packaging start clock.'; exit 1; }
+          elapsed=$(( $(date +%s) - PREVIEW_STARTED_AT ))
+          remaining=$(( 68 * 60 - elapsed ))
+          echo "Packaging admission: elapsed=${elapsed}s remaining=${remaining}s required=1380s."
+          if (( elapsed < 0 || remaining < 23 * 60 )); then
+            echo 'Insufficient time remains for bounded build and evidence retention.'
+            exit 1
+          fi
           node scripts/game-cli.mjs build --out .cache/appearance-game --revision "$PREVIEW_HEAD_SHA" > .cache/appearance-preview/main-build.json
           node scripts/build-fpv-worlds-playtest.mjs --out .cache/appearance-worlds > .cache/appearance-preview/world-build.json
           cp .cache/appearance-game/distribution.zip .cache/appearance-preview/distribution.zip
           cp .cache/appearance-worlds/fpv-worlds-playtest.zip .cache/appearance-preview/fpv-worlds-playtest.zip
           cp docs/appearance-preview-testing.md .cache/appearance-preview/README.md
       - name: Bind checksums and policy-qualified evidence to the exact source
+        timeout-minutes: 1
         env:
           TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
           TEST_POLICY_SHA256: ${{ steps.test_policy.outputs.policySha256 }}
@@ -396,6 +423,7 @@ jobs:
           await writeFile(root + 'SHA256SUMS', checksums.join('\n') + '\n');
           NODE
       - name: Upload playable preview archives and receipts
+        timeout-minutes: 2
         id: playable_archive
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
@@ -420,8 +448,9 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 7
-      - name: Retain failed focused-check diagnostics
-        if: ${{ failure() && steps.test_policy.outputs.runTests == 'true' && steps.focused.outcome == 'failure' }}
+      - name: Retain focused diagnostics when packaging does not finish
+        timeout-minutes: 2
+        if: ${{ always() && (failure() || cancelled()) && steps.test_policy.outputs.runTests == 'true' && (steps.focused.outcome == 'success' || steps.focused.outcome == 'failure' || steps.focused.outcome == 'cancelled') }}
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: appearance-preview-failed-tests-${{ github.event.pull_request.head.sha }}
@@ -429,6 +458,7 @@ jobs:
           if-no-files-found: error
           retention-days: 7
       - name: Report preview scope
+        timeout-minutes: 1
         env:
           FOCUSED_RESULT: ${{ steps.focused.outcome }}
           TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
