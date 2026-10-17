@@ -444,6 +444,15 @@ try {
         );
       await route.fulfill({ response, body });
     });
+  if (readinessOptions) {
+    const { observeReadinessGpu } = await import('./solo-readiness-gpu.mjs');
+    report.environment.graphicsCapability = await observeReadinessGpu(browser, engine);
+    await save();
+    assert(
+      report.environment.graphicsCapability.canProceed,
+      'Readiness graphics setup failed or its session did not settle; calibration not started',
+    );
+  }
   if (cpu !== 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
   if (workProbe) {
     assert.equal(page.url(), 'about:blank', 'Cadence must precede every game request');
@@ -1529,6 +1538,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       'Complete single-document bounded synchronous-hook cost unavailable.';
   }
   if (readinessOptions) {
+    report.readinessDocuments = readinessDocuments;
     report.readinessObservation = report.finalState?.probe?.readiness ?? null;
     report.readinessAssessment = readinessModule.assessReadinessPilot(
       report.readinessObservation,
