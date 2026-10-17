@@ -260,14 +260,6 @@ async function toolClosure(entry) {
     if (!/\.(?:mjs|js)$/.test(name)) continue;
     const visit = (node) => {
       if (!node || typeof node !== 'object') return;
-      // The verified iOS stage generates this capability; web/frozen-source
-      // fixtures must not invent a native bridge or follow an absent file.
-      if (
-        name === 'game/platform.mjs' &&
-        node.type === 'ImportExpression' &&
-        node.source?.value === '../native/bridge.mjs'
-      )
-        return;
       if (
         [
           'ImportDeclaration',

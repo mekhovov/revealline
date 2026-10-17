@@ -4,6 +4,48 @@ Advanced reference practice is explicitly unscored and does not become the defau
 
 The Academy and World hosts can open the reference arena from tuning. Regional also offers an explicit **Try Advanced here · restart** action using the real streaming host, renderer and verified terrain. It starts two metres above the selected point in Acro mode and remains unscored. Its worker resolves ground/roof landings, takeoff and wall collisions against exact verified meshes. Missing terrain and region boundaries still roll back the complete mission interval. Advanced does not replace Academy lessons or scored World missions, and contact behavior is not yet calibrated against real aircraft.
 
+## Current delivery evidence — 2026-10-17
+
+The [moving Urban qualification](fpv-regional-urban-streaming-qualification.md)
+raises the collider admission ceiling from 64 to 128 so the unchanged authored
+region can start and stream its 27–124-collider windows. The derived total recorded
+collider-definition ceiling also rises from 32,768 to 65,536. Geometry, byte,
+frame-count and event-count limits, backend identities and 250 Hz timing remain
+unchanged; no geometry is discarded. Three
+120-second routes reach the largest window and pass the 2× gate at
+**15.093–15.740×**, with exact replay of each recording. Separate injections verify
+complete rejection/adoption rollback and recovery. These measurements include
+the real host/worker loop, automatic streaming, admission and recording on one
+Apple host; they exclude rendering, network transfer and hardware input. They
+do not establish arbitrary-region or maximum-duration dense performance. Earlier
+64-collider rejection and unpaced-probe failures remain preserved.
+
+The [historical update check](fpv-historical-update-qualification.md) found that
+both hosts captured default camera values before restoring older preferences.
+Migration now restores the saved camera first and preserves an existing tuning
+library's authority. Academy and World pass the actual pre-tuning-main update
+and subsequent offline process restarts. The [current native report](fpv-native-current-runtime-20261017.json)
+separately verifies final-source Electron library/camera persistence, a 290-tick
+Regional recording with exact replay, native export and complete worker cleanup.
+Its 204 source pins and ordinary desktop/iOS staging pass; iOS execution and the
+wider physical-device matrix remain open.
+
+All 701 practice tests, 44 integration tests and release validation pass. The
+[preserved CI failures](fpv-delivery-ci-initial-failure.json) led to narrow fixes
+for missing pinned test dependencies, canonical native-bridge import admission,
+the sparse publisher dependency list and stale test timing/envelope assumptions.
+No test or source-closure check is disabled. Current [Pages validation](fpv-pages-delivery-live-testing-evidence.json)
+passes; the [public baseline](fpv-public-delivery-baseline.json) verifies normal
+password access to the old-main SIM pages and retains offline installations for
+the upgrade. The fresh [six-runtime numerical matrix](fpv-advanced-runtime-qualification-2026-10-17-eighth-review.json)
+passes all 250/500/1,000 Hz gates with 20 matching source pins and identical arena
+and Regional hashes. Frozen 250 Hz has a maximum response-metric error of 1.8814%
+and minimum capacity of 60× on one Apple M4 Pro; headless timing excludes
+rendering and production streaming. Exact committed CI, main publication and
+public upgrade acceptance remain pending.
+Earlier timing reports below remain historical evidence for their pinned sources;
+Advanced remains optional, unscored and ineligible as the default.
+
 ## Implemented boundary
 
 - `advanced-controller.mjs`: replaceable independent PID/feedforward controller; capabilities, initialization, reset, stepping, telemetry and complete snapshot/restore. It consumes calibrated controls, externally evaluated rate targets and the current body sensor sample. The mixer desaturates all four motors and applies back-calculation anti-windup. Its SI gains are not Betaflight PID values.
@@ -15,7 +57,7 @@ The Academy and World hosts can open the reference arena from tuning. Regional a
 
 The rate evaluator is supplied by the portable rate-profile engine. It is applied once. Controller capabilities distinguish curve compatibility, input-response compatibility and controller compatibility so a future firmware-owned RC implementation can replace this controller without double shaping.
 
-## Timing evidence
+## Historical timing evidence
 
 `node scripts/qualify-fpv-advanced.mjs` compares coupled 250, 500 and 1,000 Hz runs to a 2,000 Hz numerical reference on all three axes. `docs/fpv-advanced-runtime-qualification.json` records source hashes, runtime versions, timing results and untested engines. That report, `docs/fpv-advanced-benchmark.json` and the [earlier continuation report](fpv-advanced-runtime-qualification-2026-10-16-continuation.json) are retained evidence for their pinned earlier sources. The [final dated report](fpv-advanced-runtime-qualification-2026-10-16-final.json) refreshes the source checks after the comparison protocol, terrain-admission and verification-deadline changes. The final repeat was needed to bind the evidence to the changed worker client; it does not establish a causal performance improvement. The benchmark uses the all-axis v2 timing fixture and three warmed repetitions, superseding the original roll-only evidence. Scenarios include a 100°/s step, steady rate, rise time, peak response, integrated absolute error and a 40 m/s collision with a 2 cm wall.
 

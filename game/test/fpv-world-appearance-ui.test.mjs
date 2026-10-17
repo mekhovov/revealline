@@ -185,11 +185,7 @@ function fixture(t, options = {}) {
 }
 
 async function settleUntil(predicate, message) {
-  for (let i = 0; i < 100; i++) {
-    if (predicate()) return;
-    await new Promise((resolve) => setImmediate(resolve));
-  }
-  assert.ok(predicate(), message);
+  await waitFor(predicate, { message });
 }
 
 test('World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats', async (t) => {
@@ -2350,3 +2346,79 @@ test('World tuning keeps its hint through pointer blur and releases it after clo
   );
   assert.equal(h.$('sim-settings').contains(hint), true);
 });
+
+for (const kind of [
+  'legacy comfort camera',
+  'saved drone camera',
+  'unreadable comfort camera',
+  'World settings camera',
+]) {
+  test(`World captures ${kind} before its first tuning configuration`, async (t) => {
+    const priorLocale = getLocale();
+    setLocale('en', { persist: false });
+    t.after(() => setLocale(priorLocale, { persist: false }));
+    const { initialTuningLibrary } = await import(
+      '../../optional-practice/civilian-fpv/tuning-library.mjs'
+    );
+    const response = {
+      format: 'FlightResponseProfile.v1',
+      id: 'historical',
+      name: 'Historical',
+      maxRate: 480,
+      maxTilt: 42,
+      expo: 45,
+      responseTicks: 11,
+    };
+    const cameraKey = 'revealline.fpv.flight-comfort.v1.worlds.camera';
+    const data = new Map([
+      [
+        'revealline.flight-profiles.v1',
+        JSON.stringify({ format: 'FlightProfiles.v1', radio: null, response }),
+      ],
+      [
+        'revealline.fpv.world-settings.v1',
+        JSON.stringify({ 'world-tilt': '18', 'world-fov': '96' }),
+      ],
+      [cameraKey, JSON.stringify({ fov: 108, tilt: 27 })],
+    ]);
+    if (kind === 'World settings camera') data.delete(cameraKey);
+    if (kind === 'saved drone camera')
+      data.set(
+        'revealline.fpv.tuning.v1',
+        JSON.stringify(initialTuningLibrary({ response, camera: { tilt: 49, verticalFov: 121 } })),
+      );
+    const saved = data.get('revealline.fpv.tuning.v1');
+    const h = fixture(t, {
+      storage: {
+        get(key) {
+          if (kind === 'unreadable comfort camera' && key === cameraKey)
+            throw new Error('Camera storage unavailable');
+          return data.get(key);
+        },
+        set: (key, value) => data.set(key, value),
+      },
+    });
+    await h.app.ready;
+    const entry = WORLD_CATALOGUE.find(
+      (item) => !item.legacy && !item.beginner && item.activity !== 'hunt',
+    );
+    await h.app.startFlight(entry);
+    const expected =
+      kind === 'saved drone camera'
+        ? { tilt: 49, fov: 121 }
+        : kind === 'legacy comfort camera'
+          ? { tilt: 27, fov: 108 }
+          : { tilt: 18, fov: 96 };
+    assert.equal(Number(h.$('world-tilt').value), expected.tilt);
+    assert.equal(Number(h.$('world-fov').value), expected.fov);
+    await openWorldTuning(h);
+    assert.equal(worldTuningControl(h, 'Camera tilt (degrees)').value, String(expected.tilt));
+    assert.equal(worldTuningControl(h, 'Vertical FOV (degrees)').value, String(expected.fov));
+    assert.equal(
+      data.get('revealline.fpv.tuning.v1'),
+      saved,
+      'Opening must not persist or replace a library',
+    );
+    assert.deepEqual(JSON.parse(data.get('revealline.flight-profiles.v1')).response, response);
+  });
+}

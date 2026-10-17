@@ -60,6 +60,7 @@ import {
   mountFlightCameraControls,
   mountFlightSetup,
   mountFlightComfort,
+  restoreFlightComfortCamera,
   mountFlightPractice,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
@@ -1238,6 +1239,12 @@ export function mountWorldApp({
     /* Embedded previews without a normal URL retain their saved locale. */
   }
   setLocale(locale, { persist: false });
+  restoreFlightComfortCamera({
+    window: win,
+    host: 'worlds',
+    fov: $('world-fov'),
+    tilt: $('world-tilt'),
+  });
   const tuningStore = createTuningLibraryStore({
     storage,
     locks: win.navigator?.locks,

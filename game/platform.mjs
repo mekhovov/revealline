@@ -16,7 +16,7 @@ let bridgePromise;
 export const MAX_TEXT_EXPORT_BYTES = 1024 * 1024;
 function iosBridge() {
   // This module exists only in a verified iOS stage, bundled from pinned official plugins.
-  return (bridgePromise ??= import('../native/bridge.mjs'));
+  return (bridgePromise ??= import(new URL('../native/bridge.mjs', import.meta.url).href));
 }
 export async function exportJSONFile(
   value,

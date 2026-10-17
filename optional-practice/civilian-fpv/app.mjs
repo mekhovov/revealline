@@ -28,6 +28,7 @@ import {
   mountFlightCameraControls,
   mountFlightSetup,
   mountFlightComfort,
+  restoreFlightComfortCamera,
   mountFlightPractice,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
@@ -157,6 +158,12 @@ export function mountFlightApp({
   } catch {
     /* The editor reports unavailable storage. */
   }
+  restoreFlightComfortCamera({
+    window: win,
+    host: 'academy',
+    fov: $('camera-fov'),
+    tilt: $('camera-tilt'),
+  });
   const tuningStore = createTuningLibraryStore({
     storage: tuningStorage,
     locks: win.navigator?.locks,
