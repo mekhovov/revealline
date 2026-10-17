@@ -13,6 +13,10 @@ This document supplements the original plan; the
 [implementation status](fpv-tuning-implementation-status.md) retains earlier
 results and limitations.
 
+The post-publication review below starts from refreshed main `63c36670a` and
+reopens three specific failure boundaries. Earlier passing reports remain bound
+to their original sources; they are not rewritten as evidence for later fixes.
+
 On 16 October the user confirmed that radio and real-pilot feedback are unavailable
 and directed continuation without them. No identified-aircraft measurements were
 provided, and physical-touch qualification remains unmeasured. These open
@@ -111,7 +115,7 @@ this completion scope.
 | Propwash and ground effect                       | Depends on measured base aircraft           | A validated base model and dedicated measurements; no arbitrary realism sliders.                                                                                                       |
 | Verified Advanced records and default promotion  | Gated on the above                          | Qualified platform matrix, comparison integration and reviewed promotion decision. No automatic promotion from a local benchmark.                                                      |
 | Full-game native distribution                    | Separate product packaging constraint       | A reviewed distribution that fits the existing site budget. The simulator-only stage remains the feature qualification artifact.                                                       |
-| Public Pages HTTPS and installed-update behavior | Requires publication                        | Exact deployed commit, real access form, fresh and existing installs, offline update retention and final archive/inventory gates. Local fixture tests remain separately labeled.       |
+| Public Pages HTTPS and installed-update behavior | Passed on one Chrome desktop                | Exact deployed merge, ordinary password access, fresh and authentic old-main installs, offline restart/retention and final archive/inventory gates pass. OS-installed PWAs, eviction and other devices remain outside this check. |
 
 Software completion means all six work items above have implementation and
 verification evidence. It does not relabel deferred physical gates as passed.
@@ -598,9 +602,10 @@ adding another tuning feature:
    unchanged publication caps, and use the ordinary main publication workflow
    for live delivery. Bind any live acceptance to the exact deployed commit.
 
-[PR #1561](https://github.com/mekhovov/revealline/pull/1561) is open as a draft
-while these final checks run. The repository automatically merges eligible
-non-draft PRs and publishes `main`; draft status prevents premature publication.
+[PR #1561](https://github.com/mekhovov/revealline/pull/1561) remained a draft
+until the final implementation's 12 non-skipped product checks passed. It then
+became ready and the normal repository controller merged it as `b2f251dac`.
+The ordinary main publication's build, deploy and verification all succeeded.
 Physical radio/pilot work, measured aircraft fitting, wider hardware, validated
 propwash/ground effect and Advanced competition/default promotion retain their
 original prerequisites.
@@ -635,11 +640,92 @@ original prerequisites.
 - **Pages:** the ordinary production build passes online/offline acceptance and
   all 3,433 manifest hashes. Publication limits are unchanged. The public old-main
   baseline passes normal password access and preserves offline installations for
-  the upgrade. Exact committed CI, main publication and public upgrade acceptance
-  remain delivery steps, not new feature work.
+  the upgrade. Exact committed CI and main publication subsequently passed; the
+  [public delivery receipts](fpv-public-delivery-artifacts/delivery-summary.json)
+  and [fresh password check](fpv-public-fresh-password-acceptance.json) bind those
+  results to the deployed merge. Public installed-update acceptance is recorded
+  separately in the [Pages testing guide](fpv-pages-live-testing.md).
 
 See the [migration evidence](fpv-historical-update-qualification.md),
 [dense terrain evidence](fpv-regional-urban-streaming-qualification.md),
 [native evidence](fpv-native-current-runtime-20261017.json),
 [numerical matrix](fpv-advanced-runtime-qualification-2026-10-17-eighth-review.json), and
 [Pages evidence](fpv-pages-delivery-live-testing-evidence.json).
+
+### Public delivery completed
+
+The [public delivery verification](fpv-public-delivery-verification.json) binds
+the deployed merge, all 12 non-skipped product checks, successful main publication
+and the retained actual archive/inventory receipts. Both Academy and World pass
+[fresh installation](fpv-public-fresh-install-acceptance.json) and the
+[authentic old-main update](fpv-public-delivery-acceptance.json) on public HTTPS.
+The checks use ordinary password access, visible installers and new browser
+processes reopened offline. Saved settings/cameras, rates, CLI patches, backup
+restore, draft revert and short Advanced export/replay/disposal are verified
+within the scopes recorded in each receipt.
+
+The [Pages guide](fpv-pages-live-testing.md) preserves baseline provenance,
+resumed activation checkpoints and all failed harness attempts. Four test-harness
+corrections required no deployed-runtime changes. Short neutral-input flights
+establish lifecycle behavior; they do not qualify physical fidelity or performance.
+All available software and this public delivery scope are complete. The deferred
+physical, wider-platform and Advanced promotion gates above remain open.
+
+## Post-publication review — atomic setup changes, preset options and flight limits
+
+Reviewed again on 17 October 2026. The delivery-evidence commit was rebased onto
+`63c36670a` before new edits; that main update contains only unrelated Snake
+evidence/tests. The user again requested completion and supplied the live test
+credential. Credentials remain transient and are excluded from project files.
+
+Fresh primary-source examples refine the existing acceptance work:
+
+| Source reviewed | Observation | Decision for this SIM |
+| --- | --- | --- |
+| [WebFPV patch notes](https://webfpv.org/notes/) | Separate aircraft tunes/cameras and saved edits prevent one aircraft from replacing another's settings; reported headless checks are distinguished from pilot testing. | Exercise setup creation/selection and storage failure as one user operation. Keep physical qualification separate from browser regressions. |
+| [FPV Tools](https://github.com/FPVibe/fpv-tools#-rate-profile-comparison) | Browser-local profile history, overlay comparison and CLI transfer; its merge tool explicitly identifies base/import and target firmware. | Retain per-profile drafts, explicit patch baselines and versioned transfer receipts. Verify failures preserve the active library and draft. |
+| [QuadMath browser SIM](https://quadmath.com/sim.html) | Aircraft build estimates feed mass, inertia, thrust, motor response and battery sag; the page labels them approximate and separates CLI settings. | Continue to distinguish rate/throttle compatibility from measured aircraft replication. Do not introduce unvalidated effect sliders to close a qualification gate. |
+| [SimITL](https://github.com/AJ92/SimITL) and [pr0p](https://pr0p.dev/) | Actual Betaflight execution is a distinct architecture; the published SimITL README identifies its firmware basis and native build targets. | Preserve the controller interface and explicit RC-processing ownership. Actual firmware integration remains a separately scoped future decision with its own timing, replay, delivery and licensing review. |
+
+These are documented product features and implementation descriptions, not
+independently verified flight fidelity. They do not add an online preset catalog,
+another firmware family or automatic PID conversion to this release.
+
+### Software corrections completed in this review
+
+1. **Atomic drone duplication.** Creation and selection now commit in one write,
+   retaining immutable submitted values, revision checks and validation. A quota
+   or stale-write failure leaves the saved library, displayed selection and draft
+   unchanged. A successful retry replaces the previous error with an EN/UK
+   confirmation. Unit and real-browser failure/retry checks pass.
+2. **Export at a flight limit.** Typed duration/capacity errors pause the arena
+   attempt and preserve export, reference capture and explicit restart. Resume
+   remains disabled until successful restart; lost workers and invalid sessions
+   remain fatal. Actual 720-second and capacity-boundary regressions use the
+   production worker handler and mounted host, export retained recordings and
+   replay exactly. The capacity fixture queues high-cadence input through the
+   supported input API; it does not claim that the browser host polls at 250 Hz.
+   Timing, duration, recording and recovery limits are unchanged.
+3. **Case-insensitive preset options.** The exact tagged [Betaflight App parser](https://github.com/betaflight/betaflight-configurator/blob/2026.6.2/src/components/tabs/presets/PresetsRepoIndexed/PresetParser.js)
+   matches option names case-insensitively. A root option labelled `Race rates`
+   now controls an included `RACE RATES` option. Visible labels and ordering are
+   preserved, ambiguous case-only duplicates are rejected, and default, explicit
+   and disabled selections match independently executed upstream fixtures.
+   This correction adds no firmware-version compatibility claim.
+4. **Verification.** All 714 practice tests pass, followed by 108 final library/UI
+   tests after the retry-message correction. All six final browser editor cases,
+   production renderer/worker comparison smoke, lint, formatting and release
+   validation pass. The refreshed six-runtime numerical matrix retains exact
+   arena/Regional replay agreement and selects 250 Hz; maximum response-metric
+   error is 1.8814%, minimum measured capacity 81.08× on one M4 Pro. This remains
+   a headless numerical reference, not physical-flight qualification. Ordinary
+   desktop/iOS package staging passes with 208 stable source pins; current-source
+   native execution is not claimed. See the [verification receipt](fpv-post-publication-verification.json).
+5. **Delivery.** Submit these exact fixes and retained evidence through the normal
+   reviewed main publication process, then verify both public routes through the
+   ordinary password form, offline installation and recording export/replay.
+   Earlier public receipts remain historical until that new deployment passes.
+
+Physical radio/touch hardware, pilot feedback, identified-aircraft measurements,
+iOS execution and broader hardware remain unavailable. Those dependencies do not
+block these software corrections or justify enabling scored/default Advanced.

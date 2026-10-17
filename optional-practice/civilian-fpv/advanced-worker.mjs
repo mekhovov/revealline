@@ -2,6 +2,7 @@ import { boundedJSON } from '../../game/data-json.mjs';
 import {
   ADVANCED_BACKEND,
   ADVANCED_RECORDING_BYTES,
+  AdvancedFlightLimitError,
   createAdvancedSimulation,
   initAdvancedRuntime,
   replayAdvancedRecording,
@@ -149,6 +150,10 @@ export function createAdvancedWorkerHandler(postMessage) {
         id,
         session: requestSession,
         error: error instanceof Error ? error.message : 'Advanced worker failed',
+        ...(error instanceof AdvancedFlightLimitError &&
+        ['ADVANCED_DURATION_LIMIT', 'ADVANCED_RECORDING_LIMIT'].includes(error.code)
+          ? { code: error.code }
+          : {}),
       });
     }
   }

@@ -4,7 +4,13 @@ import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { mountAdvancedPractice } from '../../optional-practice/civilian-fpv/advanced-practice.mjs';
 import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
-import { createAdvancedSimulation } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
+import {
+  ADVANCED_MAX_SECONDS,
+  ADVANCED_MISSION_HZ,
+  ADVANCED_RECORDING_BYTES,
+  createAdvancedSimulation,
+  replayAdvancedRecording,
+} from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
 
 class LocalWorker extends Events {
@@ -511,6 +517,181 @@ test('worker initialization failure remains explicit and closes its worker on re
   assert.equal(f.frames.size, 0);
   assert.equal(f.timers.size, 0);
 });
+
+test('uncoded and unknown worker failures do not reopen export or restart based on their text', async (t) => {
+  for (const code of [undefined, 'UNRECOGNIZED_LIMIT']) {
+    class FailedFlightWorker extends LocalWorker {
+      postMessage(message) {
+        if (message.type !== 'step') return super.postMessage(message);
+        queueMicrotask(() =>
+          this.emit('message', {
+            data: {
+              id: message.id,
+              session: message.session,
+              error: 'Advanced flight duration limit reached',
+              code,
+            },
+          }),
+        );
+      }
+    }
+    const f = await fixture(t, { Worker: FailedFlightWorker });
+    f.button('Start practice').emit('click');
+    await waitFor(() => f.container.textContent.includes('Practice stopped:'));
+    for (const label of ['Start practice', 'Restart practice', 'Export practice recording'])
+      assert.equal(f.button(label).disabled, true);
+    assert.equal(f.timers.size, 0);
+    f.session.dispose();
+  }
+});
+
+for (const limit of ['duration', 'recording'])
+  test(
+    `the real ${limit} limit preserves an exportable practice and requires explicit restart`,
+    { timeout: 120000 },
+    async (t) => {
+      const exports = [];
+      class PrimedWorker extends LocalWorker {
+        postMessage(message) {
+          // The rejected capacity mission retains its queued samples. Retry
+          // that exact mission through the host, without replacing its last
+          // high-cadence input with this fixture's neutral browser sample.
+          if (message.type === 'step' && this.retryQueuedMission) {
+            message = { ...message };
+            delete message.sample;
+          }
+          super.postMessage(message);
+        }
+      }
+      const f = await fixture(t, {
+        Worker: PrimedWorker,
+        platformOptions: {
+          locationRef: { href: 'capacitor://localhost/optional-practice/civilian-fpv/' },
+          loadBridge: async () => ({
+            onInactive: () => () => {},
+            exportJSON(value) {
+              exports.push(value);
+              return { status: 'shared' };
+            },
+          }),
+        },
+      });
+      const worker = LocalWorker.instances.at(-1);
+      f.button('Start practice').emit('click');
+      await waitFor(() => f.session.getTelemetry()?.missionTick === 1);
+      f.session.pause();
+      let id = 1000000;
+      const request = async (type, fields = {}) => {
+        const requestId = ++id;
+        let response;
+        const listener = ({ data }) => {
+          if (data.id === requestId) response = data;
+        };
+        worker.addEventListener('message', listener);
+        try {
+          await worker.handler.receive({
+            id: requestId,
+            session: worker.messages[0].session,
+            type,
+            ...fields,
+          });
+          return response;
+        } finally {
+          worker.removeEventListener('message', listener);
+        }
+      };
+      let stopped;
+      if (limit === 'duration') {
+        for (let tick = 1; tick < ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ - 1; tick++)
+          assert.equal((await request('step')).error, undefined);
+        f.button('Start practice').emit('click');
+        await waitFor(
+          () =>
+            f.session.getTelemetry()?.missionTick === ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ,
+        );
+        const [timer, callback] = f.timers.entries().next().value;
+        f.timers.delete(timer);
+        callback();
+      } else {
+        let sequence = 0,
+          timestampUs = 0,
+          seed = 123;
+        const random = () => {
+          seed ^= seed << 13;
+          seed ^= seed >>> 17;
+          seed ^= seed << 5;
+          return (seed >>> 0) / 4294967296;
+        };
+        for (let tick = 1; tick < ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ; tick++) {
+          for (let substep = 0; substep < 5; substep++) {
+            timestampUs = (tick * 5 + substep) * 4000;
+            assert.equal(
+              (
+                await request('input', {
+                  sample: {
+                    sequence: ++sequence,
+                    timestampUs,
+                    controls: {
+                      roll: random() * 2 - 1,
+                      pitch: random() * 2 - 1,
+                      yaw: random() * 2 - 1,
+                      throttle: random(),
+                    },
+                  },
+                })
+              ).error,
+              undefined,
+            );
+          }
+          stopped = await request('step');
+          if (stopped.error) break;
+        }
+        assert.equal(stopped.code, 'ADVANCED_RECORDING_LIMIT');
+        worker.retryQueuedMission = true;
+        f.button('Start practice').emit('click');
+      }
+      await waitFor(() =>
+        f.container.textContent.includes(
+          limit === 'duration'
+            ? 'flight reached its duration limit'
+            : 'recording reached its capacity limit',
+        ),
+      );
+      const before = f.session.getTelemetry();
+      assert.equal(f.button('Start practice').disabled, true);
+      assert.equal(f.button('Pause').disabled, true);
+      assert.equal(f.button('Restart practice').disabled, false);
+      assert.equal(f.button('Export practice recording').disabled, false);
+      assert.equal(f.button('Keep this practice as reference').disabled, false);
+      assert.equal(worker.terminated, false);
+      assert.equal(f.timers.size, 0);
+      f.win.emit('blur');
+      f.container.querySelector('canvas').emit('webglcontextrestored');
+      assert.equal(f.button('Start practice').disabled, true);
+      const steps = worker.messages.filter((message) => message.type === 'step').length;
+      f.button('Start practice').emit('click');
+      assert.equal(worker.messages.filter((message) => message.type === 'step').length, steps);
+      f.button('Export practice recording').emit('click');
+      await waitFor(() => exports.length === 1 && !f.button('Export practice recording').disabled);
+      const recording = JSON.parse(exports[0].text);
+      assert.ok(recording.missionTicks > 0);
+      assert.ok(new TextEncoder().encode(exports[0].text).byteLength < ADVANCED_RECORDING_BYTES);
+      assert.equal((await replayAdvancedRecording(recording)).verified, true);
+      assert.deepEqual(f.session.getTelemetry(), before);
+      assert.equal(f.button('Start practice').disabled, true);
+      if (limit === 'duration') {
+        f.button('Keep this practice as reference').emit('click');
+        await waitFor(() => f.session.getComparison()?.verified, { timeoutMs: 60000 });
+        assert.equal(f.button('Start practice').disabled, true);
+      }
+      f.button('Restart practice').emit('click');
+      await waitFor(() => !f.button('Start practice').disabled);
+      assert.equal(worker.terminated, true);
+      assert.equal(f.session.getTelemetry().missionTick, 0);
+      f.button('Start practice').emit('click');
+      await waitFor(() => f.session.getTelemetry()?.missionTick === 1);
+    },
+  );
 
 test('practice retains its host-scoped module worker entry through restart', async (t) => {
   const workerURL = new URL(
