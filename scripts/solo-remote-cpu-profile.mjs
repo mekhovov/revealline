@@ -10,27 +10,96 @@ const MiB = 1024 ** 2;
 export const CPU_PROFILE_SOURCE = '3adcd53792043ef02459e86168c6b33a66d6ef00';
 export const CPU_PROFILE_RECIPE =
   'aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5';
-const rowDefinition = () => ({
-  id: 'cold-cpu-profile-chromium-candidate',
+export const LONG_RAIL_CPU_SOURCE = 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4';
+export const LONG_RAIL_CPU_RECIPE =
+  'b9afaecaadcbd0f657dd8064b9f7932c0c7ec12d6433f7d2b76f60de7ef19528';
+const longRail = (plan) => plan?.phase === 'long-rail-cpu-profile';
+const source = (plan) => (longRail(plan) ? LONG_RAIL_CPU_SOURCE : CPU_PROFILE_SOURCE);
+const recipeHash = (plan) => (longRail(plan) ? LONG_RAIL_CPU_RECIPE : CPU_PROFILE_RECIPE);
+const rowDefinition = (plan) => ({
+  id: longRail(plan)
+    ? 'long-rail-cpu-profile-chromium-candidate'
+    : 'cold-cpu-profile-chromium-candidate',
   kind: 'cpu-profile',
   source: 'candidate',
   engine: 'chromium',
   timeoutMs: 480000,
   performanceExclusion: true,
 });
-const references = (plan) => [plan.recipe, ...plan.adapterInputs, ...plan.frozenTools];
+const references = (plan) => [
+  plan.recipe,
+  ...(longRail(plan) ? [plan.upload] : []),
+  ...plan.adapterInputs,
+  ...plan.frozenTools,
+];
+
+export function longRailProfileOrigin() {
+  return {
+    run: 39015298582,
+    job: 117346097375,
+    artifact: 12094722207,
+    artifactBytes: 771453,
+    artifactSHA256: 'f6aeb2f30c77beeb53e367fb2a50bf570dc46299974f820a750d72ee61334953',
+    calibrationSHA256: 'd8969abe0039b2ba6b40202a6e9eb6f07832bd0cc05ac341af9c3ce2c038b9f2',
+    reportSHA256: '6b9fc01476295961c91ea9ca263df4dd083e5342ad85fa789185162a17b6597f',
+    commandSHA256: 'c4a0fc245cd19724b3006c1e49d4500c57497bea9801cd2155b1af21dc699519',
+    rate: 4.19,
+    originalTarget: 1000,
+    originalVerification: [956, 1000.5, 1011.5],
+    newHostCalibration: false,
+    scope: 'fixed-diagnostic-factor-only',
+    predecessorScenarioStatus: 'fail',
+    predecessorCommandStatus: 'closed',
+    predecessorExitCode: 1,
+    predecessorForcedCleanup: false,
+    predecessorSurvivors: 0,
+    predecessorAmbiguous: 0,
+  };
+}
 
 export function validateCpuProfilePlan(plan) {
   assert.equal(plan.format, 'SoloHostedCpuProfilePlanV1');
   assert.equal(plan.status, 'reviewed-diagnostic-only');
-  assert.equal(plan.phase, 'cold-cpu-profile');
+  assert(['cold-cpu-profile', 'long-rail-cpu-profile'].includes(plan.phase));
+  const current = longRail(plan);
   assert.equal(plan.repository, 'mekhovov/revealline');
-  assert.equal(plan.candidate.revision, CPU_PROFILE_SOURCE);
-  assert.equal(plan.baseline.revision, 'b11745223861c3973ad4bf440cc536198b8e0371');
-  assert(plan.baseline.reusableArtifact);
+  assert.equal(plan.candidate.revision, source(plan));
+  if (current) {
+    assert.equal(plan.sourceCohort, 'long-rail-a6-main8b-v1');
+    assert.equal(plan.candidate.tree, '6b13627e324f695b6ee8d9f2dee2eeeb7217c332');
+    assert.equal(plan.runtimeRevision, '32abd322afd8243e4537ce4784e2f78ee45ecbec');
+    assert.equal(plan.candidate.run, 39008793814);
+    assert.equal(plan.candidate.artifact, 12092903788);
+    assert.deepEqual(plan.candidate.outer, {
+      bytes: 1091879339,
+      sha256: 'a61fd756ce362abacf5dd5f329bed1a936db2b888b9f814cf5924a781964e14a',
+    });
+    assert.deepEqual(plan.candidate.inner, {
+      bytes: 1073755490,
+      sha256: '52a9f82f48b3e657755f2c5735826b827caa1e866430d30939d05113b1fa67b1',
+    });
+    assert.equal(
+      plan.candidate.manifestSHA256,
+      'b0e56f24e4d49c6c9ee42000f472ca895c883ca02e1063db741e2eddfe428fb7',
+    );
+    assert.equal(plan.baseline.revision, '8b01991942dc764b8aa4726851699ce1985e53ae');
+    assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
+    for (const key of ['artifact', 'reusableArtifact', 'publisher', 'buildCommand'])
+      assert.equal(plan.baseline[key], undefined);
+    assert.deepEqual(plan.upload, {
+      path: 'docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture',
+      bytes: 3563,
+      sha256: '821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c',
+    });
+  } else {
+    assert.equal(plan.sourceCohort, undefined);
+    assert.equal(plan.upload, undefined);
+    assert.equal(plan.baseline.revision, 'b11745223861c3973ad4bf440cc536198b8e0371');
+    assert(plan.baseline.reusableArtifact);
+  }
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
-  assert.equal(plan.cpu, 2.46);
+  assert.equal(plan.cpu, current ? 4.19 : 2.46);
   assert.equal(plan.performanceExclusion, true);
   assert.equal(plan.automaticRetries, 0);
   assert.equal(plan.automaticPhaseContinuation, false);
@@ -39,11 +108,14 @@ export function validateCpuProfilePlan(plan) {
   assert.equal(plan.helperTimeoutMs, 75 * 60000);
   assert.equal(plan.evidenceBytes, 256 * MiB);
   assert.equal(plan.rowEvidenceBytes, 128 * MiB);
-  assert.deepEqual(plan.rows, [rowDefinition()]);
-  assert.equal(plan.recipe.sha256, CPU_PROFILE_RECIPE);
+  assert.deepEqual(plan.rows, [rowDefinition(plan)]);
+  assert.equal(plan.recipe.sha256, recipeHash(plan));
+  if (current) assert.equal(plan.recipe.bytes, 4562);
   assert.equal(
     plan.recipe.path,
-    'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
+    current
+      ? 'docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture'
+      : 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
   );
   assert.deepEqual(plan.profile, {
     maximumMs: 240000,
@@ -56,14 +128,25 @@ export function validateCpuProfilePlan(plan) {
   assert.equal(plan.release.scope, 'single-causal-cpu-profile');
   assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.performanceQualification, 'excluded-cpu-profiling');
-  assert.equal(plan.release.predecessorRun, 38991754594);
-  for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
-    assert.equal(plan.release[key], true);
-  assert.equal(plan.stressOrigin.run, 38991754594);
-  assert.equal(plan.stressOrigin.artifact, 12085597903);
-  assert.equal(plan.stressOrigin.rate, 2.46);
-  assert.equal(plan.stressOrigin.newHostCalibration, false);
-  assert.equal(plan.stressOrigin.scope, 'fixed-diagnostic-factor-only');
+  if (current) {
+    assert.equal(plan.release.predecessorRun, 39015298582);
+    assert.equal(plan.release.priorProofInspected, true);
+    assert.equal(plan.release.noUnclosedOwners, true);
+    assert.equal(plan.release.ownerClosureScope, 'specific-long-rail-chromium-r1-command-only');
+    assert.equal(plan.release.allPriorPlannedJobsClosed, undefined);
+    assert.equal(plan.release.siblingQualificationJobsMayRemainActive, true);
+    assert.equal(plan.release.onceOnlyBefore, 'c41a02216c0811952232a387fd1743e09452c269');
+    assert.deepEqual(plan.stressOrigin, longRailProfileOrigin());
+  } else {
+    assert.equal(plan.release.predecessorRun, 38991754594);
+    for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
+      assert.equal(plan.release[key], true);
+    assert.equal(plan.stressOrigin.run, 38991754594);
+    assert.equal(plan.stressOrigin.artifact, 12085597903);
+    assert.equal(plan.stressOrigin.rate, 2.46);
+    assert.equal(plan.stressOrigin.newHostCalibration, false);
+    assert.equal(plan.stressOrigin.scope, 'fixed-diagnostic-factor-only');
+  }
   assert.deepEqual(
     plan.adapterInputs.map(({ path }) => path),
     ['scripts/solo-remote-cpu-profile.mjs', 'scripts/solo-remote-baseline.mjs'],
@@ -75,6 +158,15 @@ export function validateCpuProfilePlan(plan) {
     'scripts/solo-remote-supplemental.mjs',
     'scripts/qualify-solo-runtime.mjs',
     'scripts/run-solo-remote-correctness.mjs',
+    ...(current
+      ? [
+          'scripts/soundtrack-distribution.mjs',
+          'scripts/optional-distribution.mjs',
+          'scripts/external-distribution.mjs',
+          'scripts/optional-artwork.mjs',
+          'scripts/verify-solo-build.mjs',
+        ]
+      : []),
   ])
     assert(plan.frozenTools.some((ref) => ref.path === path));
   for (const ref of references(plan)) {
@@ -89,7 +181,7 @@ export function bindCpuProfileJob(manifest) {
   return validateCpuProfilePlan({
     ...structuredClone(manifest),
     format: 'SoloHostedCpuProfilePlanV1',
-    rows: [rowDefinition()],
+    rows: [rowDefinition(manifest)],
   });
 }
 export function cpuProfileMatrix(manifest) {
@@ -129,6 +221,15 @@ export async function prepareCpuProfileMode(ctx) {
     sha256: ctx.plan.recipe.sha256,
   });
   await copyFile(recipePath, join(ctx.evidence, 'scenario.qualification.json'));
+  if (longRail(ctx.plan)) {
+    const upload = join(input, 'long-rail.xonix.json');
+    await copyFile(resolve(ctx.repository, ctx.plan.upload.path), upload);
+    assert.deepEqual(await ctx.digest(upload), {
+      bytes: ctx.plan.upload.bytes,
+      sha256: ctx.plan.upload.sha256,
+    });
+    await copyFile(upload, join(ctx.evidence, 'long-rail.xonix.json'));
+  }
   const scenario = await readSupplementalJSON(recipePath, MiB);
   assert.equal(scenario.timeoutMs, ctx.plan.profile.maximumMs);
   assert.equal(scenario.kind, 'performance');
@@ -151,9 +252,9 @@ export function cpuProfileArguments(ctx, url, dir) {
     '--server-fixture-access',
     '--work-probe',
     '--cadence=settled120',
-    '--cpu=2.46',
+    `--cpu=${longRail(ctx.plan) ? 4.19 : 2.46}`,
     '--browser=chromium',
-    `--source-revision=${CPU_PROFILE_SOURCE}`,
+    `--source-revision=${source(ctx.plan)}`,
     '--cpu-profile',
   ];
 }
@@ -173,9 +274,9 @@ export function cpuProfileAssessment(plan, raw, command, profileReadback) {
     raw.scenarioKind === 'performance' &&
     raw.audioProof === false &&
     raw.scenarioStatus === 'pass' &&
-    raw.scenarioSHA256 === CPU_PROFILE_RECIPE &&
-    raw.sourceRevision === CPU_PROFILE_SOURCE &&
-    raw.buildIdentity?.sourceRevision === CPU_PROFILE_SOURCE &&
+    raw.scenarioSHA256 === recipeHash(plan) &&
+    raw.sourceRevision === source(plan) &&
+    raw.buildIdentity?.sourceRevision === source(plan) &&
     raw.environment?.engine === 'chromium' &&
     raw.environment.cpuThrottle === plan.cpu &&
     raw.environment.contextMode === 'ephemeral' &&
@@ -247,7 +348,7 @@ export async function runCpuProfileRow(ctx, row, dir, tmp) {
     assert.equal(response.status, 200);
     const bytes = Buffer.from(await response.arrayBuffer()),
       build = JSON.parse(bytes);
-    assert.equal(build.sourceRevision, CPU_PROFILE_SOURCE);
+    assert.equal(build.sourceRevision, source(ctx.plan));
     for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS))
       assert.equal(response.headers.get(name), value);
     const url = new URL('game/?journey=opening', server.url).href;
