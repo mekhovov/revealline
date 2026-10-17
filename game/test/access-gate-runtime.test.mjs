@@ -358,3 +358,61 @@ test('a rejected crypto operation stays locked and restores an editable field fo
     'Не вдалося розблокувати застосунок. Спробуйте ще раз.',
   );
 });
+
+test('a community document replacement initializes its own gate in the same window', async () => {
+  const f = await fixture({ remembered: verifier });
+  const previous = f.host.RevealLineAccess;
+  await previous.scriptsReady;
+  const before = f.started.length;
+  // document.open/write retain the Window and Document but replace the root.
+  f.document.documentElement = { dataset: { accessState: 'locked' } };
+  await runInNewContext(source, f.host);
+  await f.flush();
+  assert.equal(f.document.documentElement.dataset.accessState, 'unlocked');
+  assert.notEqual(f.host.RevealLineAccess, previous);
+  assert.equal(await f.host.RevealLineAccess.scriptsReady, true);
+  assert.equal(f.started.length, before + 3);
+});
+
+test('loading the gate twice for the same document root starts application scripts once', async () => {
+  const f = await fixture({ remembered: verifier });
+  const previous = f.host.RevealLineAccess;
+  await previous.scriptsReady;
+  await runInNewContext(source, f.host);
+  await f.flush();
+  assert.equal(f.host.RevealLineAccess, previous);
+  assert.equal(f.started.length, 3);
+});
+
+test('a replaced document rechecks access instead of trusting a previous unlocked page', async () => {
+  const f = await fixture({ remembered: verifier });
+  await f.host.RevealLineAccess.scriptsReady;
+  const before = f.started.length;
+  f.host.localStorage.getItem = () => 'invalid-token';
+  f.document.documentElement = { dataset: { accessState: 'locked' } };
+  await runInNewContext(source, f.host);
+  await f.flush();
+  assert.equal(f.document.documentElement.dataset.accessState, 'locked');
+  assert.equal(f.started.length, before);
+  assert.ok(f.all.some((e) => e.tagName === 'form'));
+});
+
+test('a replacement root keeps Ukrainian entry choice without inheriting prior authorization', async () => {
+  const f = await fixture({ locale: 'uk', remembered: verifier });
+  const previous = f.host.RevealLineAccess;
+  await previous.scriptsReady;
+  const before = f.started.length;
+  f.host.localStorage.getItem = (key) => (key === 'revealline.locale.v1' ? 'uk' : 'invalid-token');
+  f.document.documentElement = { dataset: { accessState: 'locked' } };
+  await runInNewContext(source, f.host);
+  await f.flush();
+  assert.notEqual(f.host.RevealLineAccess, previous);
+  assert.equal(f.document.documentElement.dataset.accessState, 'locked');
+  assert.equal(f.started.length, before);
+  assert.equal(
+    f.all.filter((e) => e.id === 'access-gate-title').at(-1).textContent,
+    'Потрібен пароль',
+  );
+  assert.equal(f.all.filter((e) => e.tagName === 'select').at(-1).value, 'uk');
+  assert.deepEqual(f.saved, []);
+});

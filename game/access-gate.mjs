@@ -1,7 +1,9 @@
 (async () => {
   const host = globalThis;
   const doc = host.document;
-  if (!doc || host.RevealLineAccess) return;
+  // Community entries replace the document with the shared game host. The
+  // Window and Document survive document.write(), but their root is new.
+  if (!doc || host.RevealLineAccess?.documentElement === doc.documentElement) return;
 
   // This entry runs before the protected localization/application scripts. Keep
   // its small vocabulary self-contained and use the ordinary locale preference.
@@ -76,7 +78,12 @@
   const scriptsReady = new Promise((resolve) => {
     resolveScriptsReady = resolve;
   });
-  host.RevealLineAccess = Object.freeze({ ready, scriptsReady, storageKey });
+  host.RevealLineAccess = Object.freeze({
+    ready,
+    scriptsReady,
+    storageKey,
+    documentElement: doc.documentElement,
+  });
 
   const storage = {
     read() {
