@@ -7,6 +7,7 @@ import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const MiB = 1024 ** 2;
+export const LIFECYCLE_RUN_RETENTION_POLICY = 'retained-paused-run-with-visible-rejoin-v1';
 export const LIFECYCLE_SOURCE = Object.freeze({
   revision: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
   tree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
@@ -93,6 +94,8 @@ export function validateLifecyclePlan(plan) {
   assert.equal(plan.rowEvidenceBytes, 16 * MiB);
   assert.equal(plan.evidenceBytes, 128 * MiB);
   assert.deepEqual(plan.protocol, LIFECYCLE_PROTOCOL);
+  if (plan.runRetentionPolicy !== undefined)
+    assert.equal(plan.runRetentionPolicy, LIFECYCLE_RUN_RETENTION_POLICY);
   assert.deepEqual(plan.fixture, LIFECYCLE_FIXTURE);
   assert.deepEqual(plan.predecessor, LIFECYCLE_PREDECESSOR);
   assert.equal(plan.job, 'chromium-background');
@@ -192,7 +195,14 @@ export function resumeBounds(before, probe) {
   assert.equal(probe.resumeGesture?.type, 'click');
   assert.equal(probe.resumeGesture?.trusted, true);
   const first = probe.frames[0];
-  const usePhase = probe.resumePhase?.atMs <= first.atMs;
+  const retained = probe.runRetentionPolicy !== undefined;
+  if (retained) assert.equal(probe.runRetentionPolicy, LIFECYCLE_RUN_RETENTION_POLICY);
+  const usePhase =
+    probe.resumePhase?.atMs <= first.atMs &&
+    (!retained ||
+      (probe.resumePhase.runId === before.runId &&
+        probe.resumePhase.runEvidence === 'submitted-board' &&
+        probe.resumePhase.retainedIdentityMatched));
   const anchor = usePhase ? probe.resumePhase : probe.resumeGesture;
   assert(anchor && Number.isFinite(anchor.atMs) && anchor.atMs <= first.atMs);
   assert.equal(anchor.runId, before.runId);
@@ -200,6 +210,12 @@ export function resumeBounds(before, probe) {
   const bounds = probe.frames.map((frame) => {
     assert.equal(frame.phase, 'running');
     assert.equal(frame.runId, before.runId);
+    if (retained) {
+      assert.equal(frame.visibility, 'visible');
+      assert.equal(frame.runEvidence, 'submitted-board');
+      assert.equal(frame.retainedIdentityMatched, true);
+      assert.equal(frame.identityFailure, false);
+    }
     assert(Number.isFinite(frame.atMs) && frame.atMs >= previous);
     previous = frame.atMs;
     assert(Number.isSafeInteger(frame.runTick));
@@ -299,6 +315,39 @@ export function assertLifecycleProof(raw) {
   assert.equal(state('final-paused').phase, 'paused');
   assert.equal(state('final-paused').runId, before.runId);
   assertSamePaused(state('final-paused'), state('after-public-export'));
+  if (raw.runRetentionPolicy !== undefined) {
+    assert.equal(raw.runRetentionPolicy, LIFECYCLE_RUN_RETENTION_POLICY);
+    for (const probe of [raw.lifecycle, raw.resumeProbe]) {
+      assert.equal(probe.runRetentionPolicy, raw.runRetentionPolicy);
+      assert.equal(probe.identityFailure, false);
+    }
+    const latched = state('retained-initial-running');
+    assert.equal(latched.runId, initial.runId);
+    assert.equal(latched.phase, 'running');
+    for (const value of [
+      latched,
+      moving,
+      resumed,
+      fresh,
+      state('final-paused'),
+      state('after-public-export'),
+      raw.lifecycle.current,
+      ...frames,
+    ]) {
+      assert.equal(value.runId, initial.runId);
+      assert.equal(value.runEvidence, 'submitted-board');
+      assert.equal(value.retainedIdentityMatched, true);
+      assert.equal(value.identityFailure, false);
+      assert.equal(value.visibility, 'visible');
+    }
+    for (const value of [hidden, held, returned, waiting, before]) {
+      assert.equal(value.identityFailure, false);
+      assert(['submitted-board', 'retained-paused-reference'].includes(value.runEvidence));
+      if (value.runEvidence === 'retained-paused-reference')
+        assert.equal(value.submittedPaintTick, null);
+      else assert.equal(value.retainedIdentityMatched, true);
+    }
+  }
 }
 export function assertLifecycleReplay(raw) {
   const final = raw.snapshots.find((value) => value.label === 'final-paused');
@@ -331,6 +380,7 @@ export async function lifecycleAssessment(plan, row, raw, command) {
     assert.equal(row.id, lifecycleCase().id);
     assert.equal(raw.runtimeRevision, LIFECYCLE_SOURCE.runtime);
     assert.deepEqual(raw.protocol, LIFECYCLE_PROTOCOL);
+    assert.equal(raw.runRetentionPolicy, plan.runRetentionPolicy);
     assert.equal(raw.observedBrowserClosed, true);
     assert.deepEqual(raw.connection, {
       method: 'connectOverCDP',
@@ -508,6 +558,7 @@ export async function runLifecycleRow(ctx, row, dir, tmp) {
       job: lifecycleCase(),
       runtimeRevision: LIFECYCLE_SOURCE.runtime,
       protocol: LIFECYCLE_PROTOCOL,
+      ...(ctx.plan.runRetentionPolicy ? { runRetentionPolicy: ctx.plan.runRetentionPolicy } : {}),
       artifact: {
         ...ctx.admitted.artifacts.candidate,
         buildInfoSHA256: createHash('sha256').update(bytes).digest('hex'),

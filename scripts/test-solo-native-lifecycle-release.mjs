@@ -6,6 +6,33 @@ import { bindLifecycleJob, lifecycleMatrix, LIFECYCLE_SOURCE } from './solo-remo
 const manifestPath = 'docs/performance/solo-native-lifecycle-plan.json';
 const workflowPath = '.github/workflows/solo-remote-native-lifecycle-temporary.yml';
 const root = new URL('../', import.meta.url);
+// Actual executed helper identities are historical; they must not follow HEAD.
+const lifecycleWitnessBytes = await readFile(
+  new URL('docs/performance/fixtures/solo-native-lifecycle/696-execution-source.json', root),
+);
+assert.equal(
+  createHash('sha256').update(lifecycleWitnessBytes).digest('hex'),
+  'd7eeda3b2500754e80a870904deb77508006c21f9076a525a8c9b31ad070b27b',
+);
+const lifecycleWitness = JSON.parse(lifecycleWitnessBytes);
+assert.equal(lifecycleWitness.sourceRevision, '69639b30d985ffa723a4d0c11756b632fc2da5c1');
+assert.equal(lifecycleWitness.sourceTree, 'd022c57efa75dbe7b7aeeca00a1950f61426595b');
+const recordedLifecycleRef = (ref) => {
+  if (
+    !['scripts/solo-remote-lifecycle.mjs', 'scripts/observe-solo-native-lifecycle.mjs'].includes(
+      ref.path,
+    )
+  )
+    return false;
+  const recorded = lifecycleWitness.files.find((file) => file.path === ref.path);
+  assert.deepEqual(ref, { path: recorded.path, bytes: recorded.bytes, sha256: recorded.sha256 });
+  return true;
+};
+for (const recorded of lifecycleWitness.files.filter((file) => !file.path.startsWith('scripts/'))) {
+  const bytes = await readFile(new URL(recorded.path, root));
+  assert.equal(bytes.length, recorded.bytes);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), recorded.sha256);
+}
 export async function assertLifecycleRelease(manifest, workflow) {
   const plan = bindLifecycleJob(manifest, 'chromium-background');
   assert.deepEqual(lifecycleMatrix(manifest).include[0], {
@@ -65,6 +92,10 @@ export async function assertLifecycleRelease(manifest, workflow) {
   assert.equal(manifest.resources.jobDisjointMinutes.total, 98);
   assert.equal(manifest.resources.jobDisjointMinutes.jobCap, 100);
   for (const ref of [...plan.adapterInputs, ...plan.frozenTools, plan.fixture]) {
+    if (recordedLifecycleRef(ref)) {
+      assert(workflow.includes('            /' + ref.path + '\n'), ref.path);
+      continue;
+    }
     const bytes = await readFile(new URL(ref.path, root));
     assert.equal(bytes.length, ref.bytes, ref.path);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
@@ -82,6 +113,9 @@ test('lifecycle release rejects changed helper/source, wrong activation, missing
     workflow = await readFile(new URL(workflowPath, root), 'utf8');
   for (const mutate of [
     (m) => m.candidate.artifact++,
+    (m) => (m.adapterInputs[0].sha256 = '0'.repeat(64)),
+    (m) =>
+      m.frozenTools.find((r) => r.path === 'scripts/observe-solo-native-lifecycle.mjs').bytes++,
     (m) => (m.runtimeRevision = '0'.repeat(40)),
     (m) => (m.frozenTools[0].sha256 = '0'.repeat(64)),
     (m) => (m.protocol.hiddenMs = 100),

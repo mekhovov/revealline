@@ -26,6 +26,33 @@ const paths = {
     '.github/workflows/solo-remote-native-lifecycle-v2-temporary.yml',
   ],
 };
+// Actual executed helper identities are historical; they must not follow HEAD.
+const lifecycleWitnessBytes = await readFile(
+  new URL('docs/performance/fixtures/solo-native-lifecycle/696-execution-source.json', root),
+);
+assert.equal(
+  createHash('sha256').update(lifecycleWitnessBytes).digest('hex'),
+  'd7eeda3b2500754e80a870904deb77508006c21f9076a525a8c9b31ad070b27b',
+);
+const lifecycleWitness = JSON.parse(lifecycleWitnessBytes);
+assert.equal(lifecycleWitness.sourceRevision, '69639b30d985ffa723a4d0c11756b632fc2da5c1');
+assert.equal(lifecycleWitness.sourceTree, 'd022c57efa75dbe7b7aeeca00a1950f61426595b');
+const recordedLifecycleRef = (ref) => {
+  if (
+    !['scripts/solo-remote-lifecycle.mjs', 'scripts/observe-solo-native-lifecycle.mjs'].includes(
+      ref.path,
+    )
+  )
+    return false;
+  const recorded = lifecycleWitness.files.find((file) => file.path === ref.path);
+  assert.deepEqual(ref, { path: recorded.path, bytes: recorded.bytes, sha256: recorded.sha256 });
+  return true;
+};
+for (const recorded of lifecycleWitness.files.filter((file) => !file.path.startsWith('scripts/'))) {
+  const bytes = await readFile(new URL(recorded.path, root));
+  assert.equal(bytes.length, recorded.bytes);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), recorded.sha256);
+}
 async function check(kind, plan, workflow) {
   const [oldPath, path, workflowPath] = paths[kind];
   const oldBytes = await readFile(new URL(oldPath, root)),
@@ -143,6 +170,10 @@ async function check(kind, plan, workflow) {
   }
   assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
   for (const ref of refs) {
+    if (kind === 'lifecycle' && recordedLifecycleRef(ref)) {
+      assert(workflow.includes('            /' + ref.path + '\n'), ref.path);
+      continue;
+    }
     const bytes = await readFile(new URL(ref.path, root));
     assert.equal(bytes.length, ref.bytes, ref.path);
     assert.equal(sha(bytes), ref.sha256, ref.path);
@@ -163,6 +194,7 @@ for (const [kind, [, path, wf]] of Object.entries(paths)) {
   test(`${kind} successor rejects changed source, bounds, failed predecessor or setup proof`, async () => {
     for (const mutate of [
       (p) => p.candidate.artifact++,
+      (p) => (p.adapterInputs[0].sha256 = '0'.repeat(64)),
       (p) => p.helperTimeoutMs++,
       (p) => {
         (kind === 'offline' ? p.evidenceCopySuccessor : p.setupSuccessor).priorRun++;
