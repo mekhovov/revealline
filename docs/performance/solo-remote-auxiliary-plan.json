@@ -81,7 +81,17 @@
         "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
         "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929"
       }
-    ]
+    ],
+    "selectedJobs": ["speech-chromium", "music-chromium", "speech-webkit", "music-webkit"],
+    "correction": {
+      "previousRun": 38990616921,
+      "sourceRecords": 128,
+      "previousSourceRecords": 64,
+      "unchangedByteLimits": true,
+      "unchangedScenarioDeadlines": true,
+      "reason": "Both baseline speech probes exhausted64 source records after95 requests; Chromium music never reached a browser after checkout timeout; WebKit music never reached a browser because archived original URL returned404. Finite successor preserves sources, inputs, deadlines and numerical gates; uses128 diagnostic source records, shallowtools checkout and existing explicit creator-download intake verified against unchanged original hashes. WebKit candidate309ms interruption remains unattributed; recovery is not repeated.",
+      "creatorFixtureSHA256": "0534575a1604bf9f228fffe31e5e21370324fe1a80bf4e1d6006a59e72e0b265"
+    }
   },
   "recipes": {
     "speech": {
@@ -128,8 +138,8 @@
     },
     {
       "path": "scripts/solo-qualification-audio.mjs",
-      "bytes": 12873,
-      "sha256": "a516127f0068bf05ce3a2f828f6d793844ddb6f214a0b5623ee13e1d6f91e28c"
+      "bytes": 12875,
+      "sha256": "3bfdf145d2ea6eb4e81eb2394c9ac79ec56b201ab8b24d2bfd6345142af569d1"
     },
     {
       "path": "scripts/prepare-solo-audio-fixtures.mjs",
@@ -334,8 +344,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-auxiliary.mjs",
-      "bytes": 16993,
-      "sha256": "a58154fe20086c7de9b8aec4cbee674a426cc221ea5975c38ca43a9bf92a56b7"
+      "bytes": 17808,
+      "sha256": "a0243cdb2816d0d8ca8983c36fb36168c788e7912351f161f80259536e900b9a"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -351,5 +361,6 @@
     "firstEight": "Exact3ad seven of eight passed; worker WebKit remains failed. This independent audio/fault diagnostic never grants first-eight or timing credit.",
     "sourceAssets": "Full source/archive/static-worker/CSP admission passed in38985941469 and must be repeated in each consumer.",
     "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
-  }
+  },
+  "cohort": "linux-audio-identity-capacity-3ad-v2"
 }

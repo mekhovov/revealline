@@ -14,9 +14,11 @@ import {
   validateAuxiliaryPlan,
 } from './solo-remote-auxiliary.mjs';
 
-const manifest = JSON.parse(
+const dispatchedManifest = JSON.parse(
   await readFile(new URL('../docs/performance/solo-remote-auxiliary-plan.json', import.meta.url)),
 );
+const manifest = structuredClone(dispatchedManifest);
+delete manifest.release.selectedJobs; // Exercise every supported arm independently of this release subset.
 const clone = (x) => structuredClone(x);
 function admitted() {
   const m = clone(manifest);
@@ -145,6 +147,7 @@ test('parallel auxiliary jobs retain separate job-named evidence artifacts', asy
     'utf8',
   );
   assert.match(workflow, /max-parallel: 2/);
+  assert(!workflow.includes('fetch-depth: 0'));
   assert.match(
     workflow,
     /name: solo-linux-auxiliary-\$\{\{ matrix\.job \}\}-\$\{\{ github\.run_id \}\}/,
@@ -153,8 +156,36 @@ test('parallel auxiliary jobs retain separate job-named evidence artifacts', asy
   assert.match(workflow, /cancel-in-progress: false/);
   assert.match(
     workflow,
-    /github\.event\.action == 'synchronize' && github\.event\.before == '74959676f2fc3de8039cebc30fb86905c562d661'/,
+    /github\.event\.action == 'synchronize' && github\.event\.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'/,
   );
+});
+test('a reviewed subset cannot repeat completed unrelated observations', () => {
+  assert.deepEqual(
+    auxiliaryMatrix(dispatchedManifest).include.map((row) => row.job),
+    dispatchedManifest.release.selectedJobs,
+  );
+  assert(
+    !auxiliaryMatrix(dispatchedManifest).include.some((row) => row.job.startsWith('recovery')),
+  );
+  const selected = clone(manifest);
+  selected.release.selectedJobs = ['music-chromium', 'speech-webkit'];
+  assert.deepEqual(
+    auxiliaryMatrix(selected).include.map((row) => row.job),
+    selected.release.selectedJobs,
+  );
+  assert.throws(() => bindAuxiliaryJob(selected, 'recovery-chromium'));
+  for (const jobs of [
+    [],
+    ['unknown'],
+    ['music-chromium', 'music-chromium'],
+    ['speech-webkit', 'music-chromium'],
+  ]) {
+    selected.release.selectedJobs = jobs;
+    assert.throws(() => auxiliaryMatrix(selected));
+  }
+  const qualified = admitted();
+  qualified.release.selectedJobs = ['music-chromium'];
+  assert.throws(() => auxiliaryMatrix(qualified));
 });
 test('verified baseline reuse requires its separately pinned verifier without permitting arbitrary helpers', () => {
   const p = plan();

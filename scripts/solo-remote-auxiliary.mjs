@@ -76,6 +76,16 @@ function validateRelease(plan) {
     assert.equal(plan.release.automaticRetries, 0);
     assert.equal(plan.release.performanceQualification, 'excluded');
   }
+  if (plan.release.selectedJobs !== undefined) {
+    const selected = plan.release.selectedJobs;
+    assert(diagnostic, 'Subset observations require an independent diagnostic release');
+    assert(Array.isArray(selected) && selected.length > 0);
+    assert.deepEqual(
+      selected,
+      Object.keys(AUXILIARY_JOBS).filter((job) => selected.includes(job)),
+      'Selected jobs must be unique known jobs in declared order',
+    );
+  }
 }
 export function validateAuxiliaryPlan(plan) {
   assert.equal(plan.format, 'SoloHostedAuxiliaryPlanV1');
@@ -97,6 +107,8 @@ export function validateAuxiliaryPlan(plan) {
   }
   const spec = AUXILIARY_JOBS[plan.job];
   assert(spec);
+  if (plan.release.selectedJobs)
+    assert(plan.release.selectedJobs.includes(plan.job), 'Job is outside this reviewed release');
   assert.equal(plan.candidate.revision, SOURCE.candidate);
   assert.equal(plan.baseline.revision, SOURCE.baseline);
   assert.equal(plan.node, '22.13.1');
@@ -165,6 +177,8 @@ export function bindAuxiliaryJob(manifest, job) {
   );
   const spec = AUXILIARY_JOBS[job];
   assert(spec);
+  if (manifest.release.selectedJobs)
+    assert(manifest.release.selectedJobs.includes(job), 'Job is outside this reviewed release');
   const plan = structuredClone(manifest);
   delete plan.jobs;
   plan.format = 'SoloHostedAuxiliaryPlanV1';
@@ -181,8 +195,9 @@ export function bindAuxiliaryJob(manifest, job) {
   return validateAuxiliaryPlan(plan);
 }
 export function auxiliaryMatrix(manifest) {
+  validateRelease(manifest);
   return {
-    include: Object.keys(AUXILIARY_JOBS).map((job) => {
+    include: (manifest.release.selectedJobs ?? Object.keys(AUXILIARY_JOBS)).map((job) => {
       const plan = bindAuxiliaryJob(manifest, job);
       const spec = AUXILIARY_JOBS[plan.job];
       return {
@@ -253,7 +268,12 @@ export async function prepareAuxiliaryMode(ctx) {
     const output = join(ctx.work, 'exact-audio-fixtures');
     await ctx.required(
       'exact-audio-fixtures',
-      [process.execPath, join(ctx.here, 'prepare-solo-audio-fixtures.mjs'), output, '--download'],
+      [
+        process.execPath,
+        join(ctx.here, 'prepare-solo-audio-fixtures.mjs'),
+        output,
+        '--creator-download',
+      ],
       ctx.plan.fixturePreparationTimeoutMs,
     );
     const provenance = await readAuxiliaryJSON(join(output, 'provenance.json'), MiB);
