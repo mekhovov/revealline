@@ -243,3 +243,62 @@ Actual iPhone 17 Pro Safari remains authoritative for the reported device issue;
 macOS WebKit is useful supporting evidence. Successive WPE probes must not be
 treated as evidence of an application failure without a causal application
 regression. This step does not itself authorize another browser dispatch.
+
+## Retained Linux backend outcome
+
+The declared backend control ran once as
+[39004951647](https://github.com/mekhovov/revealline/actions/runs/39004951647),
+attempt 1, exact source `adb1c0c7b7dd1a526a0693917f2012d1dbc08b22`. It remains
+**failed**. Both preparation and browser commands closed without forced cleanup,
+ambiguous processes, survivors or resource violations; the persistent profile and
+loopback server also closed. The browser command returned exit one to preserve
+the native/completeness failure, not because of a process-owner leak.
+
+The actual launcher is pinned Playwright 1.62.1 WebKit revision 2336, version 26.5,
+**Linux WPE/headless**, with its launcher bytes retained. The original Bossa Blob
+was 1,196,325 bytes, SHA-256
+`0ee835fd279ac5fa15f9346744cbafc2ba800c1c0671b78ca9abe2b4353402f7`,
+with structurally validated duration 59.61142857142857 seconds. Transport completed
+with the same byte identity, no page errors, no source changes and no seeks.
+
+The two observation channels have different completeness:
+
+- All **30 independent 500 ms samples** were retained, with zero dropped samples.
+  Five seconds of passive metadata reported duration zero. Trusted playback then
+  advanced continuously for 9.576013384 seconds, with no discontinuity. The final
+  observed duration was 9.995923815 seconds, far from the structural duration.
+- The **64-record event/lifecycle channel saturated**, dropping 23 further
+  records. This remains an incomplete channel and prevents diagnostic completion.
+  Independent samples establish observed progression; they do not reconstruct
+  dropped events, prove full recording playback or promote the run to a pass.
+
+The complete 160,933-byte browser log contains 600 `webkitmediaplayer` category
+lines. At 72 points (first raw line 89, last line 652), the backend reports its
+native duration-cache adjustment to current playback position. This corresponds
+to `MediaPlayerPrivateGStreamer::recalculateDurationIfNeeded()`: the primary
+implementation covers both non-finite cached duration **and a finite duration
+already behind currentTime**. Thus the log plus samples supports native duration
+chasing playback position; it does **not** establish that each upstream duration
+query failed, nor the exact reason the initial duration was zero. The backend
+summary's `durationQueryLines: 0` is its narrower query-pattern count and does not
+contradict these separate cache-adjustment lines. [Primary WebKit implementation](https://github.com/WebKit/WebKit/blob/main/Source/WebCore/platform/graphics/gstreamer/MediaPlayerPrivateGStreamer.cpp).
+
+This independent native page contains no game code. The evidence narrows the
+Linux result to its media backend rather than proving an application source-
+lifetime defect. It does not establish behavior in macOS WebKit or iPhone Safari.
+The application still requires finite positive native duration agreeing with
+validated structure; that guard, media bytes, import timeout and failure status
+remain unchanged. No further Linux rerun is released by this observation.
+
+Artifact `12090587461` is 26,928 bytes, SHA-256
+`1cc0d7034bb88722293e8919f2313c768ba1b653f8f81b784dec9c8c270743ee`.
+All ten members (285,383 bytes) passed authenticated API identity, full archive
+hash, ZIP CRC and full local readback. All five admitted tool hashes match their
+exact committed adb1 blobs. Retained root:
+`.cache/solo-followup/remote-39004951647/small-retained/`; its `analysis.json`
+records original failed status, source proof, closed-owner receipts and the
+separate complete-sample/incomplete-event interpretation (4,335 bytes, SHA-256
+`b17e37d333d9a11826215d0594d01dde36a44cbfebfa4b6a45301931bfd4c2a0`).
+`browser.log` SHA-256
+is `3c87eb9f029cc0c9c1109abe024cf7b50b27d8ce693713f7c3d9417683cf7ffc`.
+No audio or full game archive was downloaded locally.

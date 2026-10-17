@@ -75,3 +75,40 @@ The older v1 pair remains fixed to 3ad/b117. Its historical manifest is unchange
 This is format support only. No executable current-pair manifest, candidate package identity, workflow release or dispatch is created until the actual cce Appearance package succeeds and its metadata is retained and verified. The format explicitly preserves the failed V2 native result and grants no first-eight waiver or performance qualification.
 
 The v2 execution gate distinguishes a real negative navigation from a failed observer correction: a document never reached may have no native witness, but any attempted correction, or any publicly ready document, requires the applied witness. Failed or incomplete native commands cannot become a valid negative game result permitting the next arm. The complete five-file format/ownership/baseline/regression group passed 47 tests with five existing Linux-only skips and no failures; scoped lint and formatting passed. The initial new unit fixture omitted the existing 40-minute setup bound and failed that assertion; the complete fixture was corrected without changing the bound, and that original output remains retained. Final output `current-pair-support-v4.tap` is 12906 bytes, SHA256 `ad3e06c04781db8c5db36176e6fc6fb6df20059148643e8108c930d554493623`, with exact source and unchanged historical-manifest hashes in `current-pair-support-receipt.json`.
+
+## Successful scratch-cleanup recheck
+
+[Run 39004951685](https://github.com/mekhovov/revealline/actions/runs/39004951685),
+attempt 1 at exact `adb1c0c7b7dd1a526a0693917f2012d1dbc08b22` (tree
+`fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508`), completed successfully. It used the
+same Playwright 1.62.1 / Chromium 151.0.7922.34, three independent branches and
+unchanged native/operation/resource limits. All **19 native state observations**
+matched the previous table; all **three contexts closed** in 5.417 seconds.
+The common command closed with exit zero, no forced cleanup, ambiguity, survivors
+or inspection violation; peak recorded process RSS was 1,075,806,208 bytes.
+
+This closes the narrow disappearing-child-directory inspection defect. The
+scratch fix tolerates only a vanished child during traversal, retaining root
+identity and budgets. It does not change any browser state command. The original
+cce run remains failed and its raw observations are not replaced. The new success
+is a native data-page diagnostic: no game package, network server, cached profile
+or gameplay was exercised, and `qualificationEligible` remains false.
+
+Artifact `12090446791` is 6,111 bytes, SHA-256
+`b13ffb02a6d361db1ca35ab0083b5952f79b41597a993c8341f447b325413116`.
+All five members (34,639 bytes) passed authenticated API identity, full archive
+hash, ZIP CRC and full local readback checks. The admitted self-test and common
+runner hashes match their exact adb1 source blobs. Retained root:
+`.cache/solo-followup/remote-39004951685/small-retained/`; `analysis.json` records
+both source hashes, all state sequences and closed-owner facts (1,533 bytes,
+SHA-256 `3e40c7f0e56c65d03b69b37bc308164312deb711b8f1cf218b47ba70a8f9547e`).
+
+The successful cce-independent cleanup proof supplements the fixed historical
+cce native-state evidence. The prospective offline V2 format still has no
+executable manifest or dispatched game cohort: its intended cce Appearance
+producer exhausted its job limit and produced no package. Only a future verified
+successful package can supply a new exact candidate source/tree. That candidate
+identity must remain separate from the old cce proof's source and failed status.
+The installed Starter recipe, browser stratum, real transport-offline setting,
+stopped server, worker responses, cache/source/CSP identity, both retained CDP
+navigation witnesses, strict native replay and owned-profile closure stay required.
