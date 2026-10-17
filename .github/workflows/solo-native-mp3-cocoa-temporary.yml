@@ -1,0 +1,76 @@
+name: Temporary native macOS MP3 control
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/solo-native-mp3-cocoa-temporary.yml'
+      - 'scripts/solo-native-mp3-control.mjs'
+      - 'scripts/test-solo-native-mp3-control.mjs'
+      - 'scripts/solo-darwin-process-inventory.*'
+      - 'scripts/test-solo-darwin-process-inventory.mjs'
+      - 'scripts/run-solo-remote-correctness.mjs'
+      - 'docs/performance/solo-native-mp3-control-20261017.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: solo-native-mp3-cocoa-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  diagnostic:
+    # Held prospective one-shot. Root review must bind the exact next push edge.
+    # Native macOS codec observation only; no game or timing qualification.
+    if: ${{ false }}
+    runs-on: macos-15-intel
+    timeout-minutes: 28
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Compile the exact read-only SDK inventory and pin its owned binary
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          owner_dir=$(mktemp -d /tmp/solo-process-owner.XXXXXX)
+          owner_dir=$(cd "$owner_dir" && pwd -P)
+          node scripts/solo-darwin-process-inventory.mjs build "$owner_dir" "$RUNNER_TEMP/solo-native-mp3-owner-build.json"
+      - name: Verify native inventory and existing process/media ownership contracts
+        timeout-minutes: 2
+        env:
+          SOLO_RUN_DARWIN_OWNER_TESTS: '1'
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          node --test --test-concurrency=2 scripts/test-solo-darwin-process-inventory.mjs scripts/test-solo-native-mp3-control.mjs scripts/test-solo-qualification-browser-context.mjs scripts/test-solo-remote-correctness.mjs
+      - name: Install exact Cocoa WebKit without changing the declared browser version
+        timeout-minutes: 5
+        run: |
+          npm install --prefix "$RUNNER_TEMP/solo-native-mp3-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1
+          echo "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-native-mp3-tools/node_modules/playwright/index.mjs" >> "$GITHUB_ENV"
+          echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-native-mp3-browsers" >> "$GITHUB_ENV"
+          PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/solo-native-mp3-browsers" node "$RUNNER_TEMP/solo-native-mp3-tools/node_modules/playwright/cli.js" install webkit
+      - name: Require clean blank-context ownership then observe the original Bossa Blob
+        timeout-minutes: 12
+        run: node scripts/solo-native-mp3-control.mjs run-cocoa "$RUNNER_TEMP/solo-native-mp3-evidence"
+      - name: Retain all original values, failures and process/context closure receipts
+        if: always()
+        timeout-minutes: 1
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-native-mp3-cocoa-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-native-mp3-evidence
+            ${{ runner.temp }}/solo-native-mp3-owner-build.json
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,208 @@
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import {
+  appendFileSync,
+  chmodSync,
+  existsSync,
+  lstatSync,
+  readFileSync,
+  realpathSync,
+  writeFileSync,
+} from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+export const DARWIN_INVENTORY_LIMITS = Object.freeze({
+  maximumProcesses: 16384,
+  maximumOutputBytes: 8 * 1024 ** 2,
+  maximumBinaryBytes: 1024 ** 2,
+  timeoutMs: 3000,
+});
+export function parseDarwinInventory(bytes) {
+  assert(Buffer.isBuffer(bytes) && bytes.length <= DARWIN_INVENTORY_LIMITS.maximumOutputBytes);
+  const lines = bytes.toString('utf8').split('\n');
+  assert.equal(lines.shift(), 'SoloDarwinProcessInventoryV1', 'Darwin inventory format');
+  assert.equal(lines.pop(), '', 'Incomplete Darwin inventory output');
+  assert(lines.length < DARWIN_INVENTORY_LIMITS.maximumProcesses, 'Darwin process cap');
+  const result = new Map();
+  for (const line of lines) {
+    const fields = line.split('\t');
+    assert.equal(fields.length, 9, 'Darwin inventory row fields');
+    const [pid, ppid, pgid, birth, state, rss, tagged, incomplete, path] = fields;
+    for (const number of [pid, ppid, pgid, rss])
+      assert(/^\d+$/.test(number) && Number.isSafeInteger(Number(number)), 'Darwin numeric field');
+    assert(Number(pid) > 0 && !result.has(Number(pid)), 'Darwin PID identity');
+    assert(/^\d{7,24}$/.test(birth), 'Darwin birth identity');
+    assert(['R', 'Z'].includes(state), 'Darwin live state');
+    assert(['0', '1'].includes(tagged) && ['0', '1'].includes(incomplete));
+    assert(/^(?:[0-9a-f]{2}){0,4096}$/.test(path), 'Darwin executable path bound');
+    const argv = Buffer.from(path, 'hex').toString('utf8');
+    assert(!argv.includes('\0'), 'Darwin executable path');
+    result.set(Number(pid), {
+      pid: Number(pid),
+      ppid: Number(ppid),
+      pgid: Number(pgid),
+      birth,
+      state,
+      rss: Number(rss),
+      argv,
+      ownerTagged: tagged === '1',
+      inspectionIncomplete: incomplete === '1',
+    });
+  }
+  return result;
+}
+// Only the explicit hosted macOS mode supplies this separately built, pinned
+// read-only helper. The common process owner retains all admission/signalling.
+export function createDarwinProcessInventory(environment = process.env) {
+  const binary = environment.SOLO_DARWIN_PROCESS_HELPER;
+  const expected = environment.SOLO_DARWIN_PROCESS_HELPER_SHA256;
+  assert(binary && resolve(binary) === binary && realpathSync(binary) === binary);
+  assert(/^[a-f0-9]{64}$/.test(expected ?? ''), 'Darwin helper hash required');
+  const initial = lstatSync(binary);
+  assert(initial.isFile() && !initial.isSymbolicLink() && initial.mode & 0o111);
+  assert(initial.size <= DARWIN_INVENTORY_LIMITS.maximumBinaryBytes, 'Darwin helper binary cap');
+  assert.equal(createHash('sha256').update(readFileSync(binary)).digest('hex'), expected);
+  const snapshot = (selector, token = '') => {
+    assert(token === '' || /^[a-f0-9-]{36}$/.test(token), 'Darwin owner token');
+    const current = lstatSync(binary);
+    assert(
+      current.isFile() &&
+        current.dev === initial.dev &&
+        current.ino === initial.ino &&
+        current.size === initial.size &&
+        current.mtimeMs === initial.mtimeMs &&
+        current.ctimeMs === initial.ctimeMs,
+      'Darwin helper identity changed',
+    );
+    return parseDarwinInventory(
+      execFileSync(binary, [selector, token], {
+        timeout: DARWIN_INVENTORY_LIMITS.timeoutMs,
+        maxBuffer: DARWIN_INVENTORY_LIMITS.maximumOutputBytes,
+        stdio: ['ignore', 'pipe', 'pipe'],
+      }),
+    );
+  };
+  return {
+    identity: { path: binary, bytes: initial.size, sha256: expected },
+    all: (token) => snapshot('all', token),
+    oneSync: (pid) => {
+      assert(Number.isSafeInteger(pid) && pid > 0);
+      const rows = snapshot(String(pid));
+      assert(rows.size <= 1 && (!rows.size || rows.has(pid)), 'Unexpected Darwin leader identity');
+      return rows.get(pid);
+    },
+  };
+}
+
+const here = dirname(fileURLToPath(import.meta.url));
+const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const sourceIdentity = (file) => {
+  const bytes = readFileSync(join(here, file));
+  return { bytes: bytes.length, sha256: sha256(bytes) };
+};
+export function admitDarwinBuildReceipt(environment = process.env, sourceRevision) {
+  const path = environment.SOLO_DARWIN_PROCESS_BUILD;
+  assert(path && realpathSync(path) === path, 'Canonical Darwin build receipt required');
+  const info = lstatSync(path);
+  assert(
+    info.isFile() && !info.isSymbolicLink() && info.size <= 128 * 1024,
+    'Darwin build receipt cap',
+  );
+  const bytes = readFileSync(path);
+  const receipt = JSON.parse(bytes);
+  assert.equal(receipt.format, 'SoloDarwinInventoryBuildV1');
+  assert.equal(receipt.sourceRevision, sourceRevision);
+  assert.equal(receipt.platform, 'darwin');
+  for (const file of ['solo-darwin-process-inventory.c', 'solo-darwin-process-inventory.mjs'])
+    assert.deepEqual(receipt.sources[file], sourceIdentity(file), 'Darwin source build identity');
+  const inventory = createDarwinProcessInventory(environment);
+  assert.deepEqual(receipt.binary, inventory.identity, 'Darwin compiled binary identity');
+  assert(typeof receipt.compiler.path === 'string' && receipt.compiler.path.startsWith('/'));
+  assert(typeof receipt.compiler.version === 'string' && receipt.compiler.version.length <= 65536);
+  assert(typeof receipt.sdk.path === 'string' && receipt.sdk.path.startsWith('/'));
+  assert(typeof receipt.sdk.version === 'string' && /^\d+(?:\.\d+)*$/.test(receipt.sdk.version));
+  assert.deepEqual(receipt.arguments, [
+    '-Wall',
+    '-Wextra',
+    '-Werror',
+    '-O2',
+    '-isysroot',
+    receipt.sdk.path,
+    join(here, 'solo-darwin-process-inventory.c'),
+    '-o',
+    inventory.identity.path,
+  ]);
+  return { bytes, receipt };
+}
+function build(directory, receiptPath) {
+  assert.equal(process.platform, 'darwin');
+  assert.equal(realpathSync(directory), directory);
+  assert.equal(lstatSync(directory).isDirectory(), true);
+  const binary = join(directory, 'inventory');
+  assert(!existsSync(binary) && !existsSync(receiptPath), 'Fresh owned build paths required');
+  const capture = (command, args) =>
+    execFileSync(command, args, {
+      encoding: 'utf8',
+      timeout: 5000,
+      maxBuffer: 65536,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    }).trim();
+  const sourceRevision = capture('git', ['-C', resolve(here, '..'), 'rev-parse', 'HEAD']);
+  assert.equal(sourceRevision, process.env.SOLO_TOOLING_REVISION);
+  const compiler = { path: capture('xcrun', ['--find', 'clang']) };
+  compiler.version = capture(compiler.path, ['--version']);
+  const sdk = {
+    path: capture('xcrun', ['--show-sdk-path']),
+    version: capture('xcrun', ['--show-sdk-version']),
+  };
+  const args = [
+    '-Wall',
+    '-Wextra',
+    '-Werror',
+    '-O2',
+    '-isysroot',
+    sdk.path,
+    join(here, 'solo-darwin-process-inventory.c'),
+    '-o',
+    binary,
+  ];
+  const sources = Object.fromEntries(
+    ['solo-darwin-process-inventory.c', 'solo-darwin-process-inventory.mjs'].map((file) => [
+      file,
+      sourceIdentity(file),
+    ]),
+  );
+  execFileSync(compiler.path, args, {
+    timeout: 30000,
+    maxBuffer: 65536,
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  chmodSync(binary, 0o500);
+  const bytes = readFileSync(binary);
+  assert(bytes.length <= DARWIN_INVENTORY_LIMITS.maximumBinaryBytes);
+  const receipt = {
+    format: 'SoloDarwinInventoryBuildV1',
+    sourceRevision,
+    platform: process.platform,
+    compiler,
+    sdk,
+    arguments: args,
+    sources,
+    binary: { path: binary, bytes: bytes.length, sha256: sha256(bytes) },
+  };
+  const encoded = JSON.stringify(receipt, null, 2) + '\n';
+  assert(Buffer.byteLength(encoded) <= 128 * 1024);
+  writeFileSync(receiptPath, encoded, { flag: 'wx' });
+  assert(process.env.GITHUB_ENV, 'Hosted environment output required');
+  appendFileSync(
+    process.env.GITHUB_ENV,
+    `SOLO_DARWIN_PROCESS_HELPER=${binary}\nSOLO_DARWIN_PROCESS_HELPER_SHA256=${receipt.binary.sha256}\nSOLO_DARWIN_PROCESS_BUILD=${receiptPath}\n`,
+  );
+}
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  assert.equal(process.argv[2], 'build');
+  assert.equal(process.argv.length, 5);
+  build(...process.argv.slice(3).map((path) => resolve(path)));
+}

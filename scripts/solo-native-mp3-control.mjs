@@ -8,6 +8,7 @@ import {
   mkdtemp,
   readFile,
   readdir,
+  realpath,
   rename,
   statfs,
   writeFile,
@@ -58,8 +59,58 @@ export const MP3_BACKEND_CONTROL = Object.freeze({
     DEBUG: 'pw:browser',
   }),
 });
+// Native Cocoa counterpart only: same original bytes and passive/trusted-play
+// protocol, with an independent fail-closed process-owner preflight.
+export const MP3_COCOA_CONTROL = Object.freeze({
+  ...MP3_CONTROL,
+  format: 'SoloNativeMP3CocoaControlV1',
+  predecessorTools: 'adb1c0c7b7dd1a526a0693917f2012d1dbc08b22',
+  predecessorRun: 39004951647,
+  predecessorSource: 'adb1c0c7b7dd1a526a0693917f2012d1dbc08b22',
+  arms: Object.freeze(['bossa-blob']),
+  captureMode: 'independent-events-samples-v1',
+  maximumSamples: 32,
+  ownerPreflightTimeoutMs: 120000,
+  hostPlatform: 'darwin',
+  hostArchitecture: 'x64',
+  hostDarwinMajor: '24',
+  runner: 'macos-15-intel',
+});
+export function nativeCocoaEnvironment(environment) {
+  const result = { ...environment, DEBUG: 'pw:browser' };
+  for (const key of ['GST_DEBUG', 'GST_DEBUG_NO_COLOR', 'GST_DEBUG_FILE', 'GST_DEBUG_DUMP_DOT_DIR'])
+    delete result[key];
+  return result;
+}
+export function nativeOwnerPreflightComplete(report, command) {
+  return Boolean(
+    report?.format === 'SoloNativeCocoaOwnerPreflightV1' &&
+      report.status === 'closed' &&
+      report.browserVersion === MP3_CONTROL.browserVersion &&
+      report.platform === 'darwin' &&
+      report.architecture === 'x64' &&
+      report.documentURL === 'about:blank' &&
+      report.mediaElements === 0 &&
+      report.owner?.cleanup?.status === 'closed' &&
+      report.owner.cleanup.browserClosed &&
+      report.owner.cleanup.profileRemoved &&
+      command?.status === 'closed' &&
+      command.exitCode === 0 &&
+      command.processInventory?.platform === 'darwin' &&
+      !command.violation &&
+      !command.forcedCleanup &&
+      !command.cleanupUnconfirmed &&
+      command.ambiguous?.length === 0 &&
+      command.survivors?.length === 0 &&
+      command.tracked?.some((row) => /(?:MiniBrowser|Playwright)\.app\//.test(row.argv)) &&
+      command.tracked.some((row) => /(?:WebKit.*WebContent|WebProcess)/.test(row.argv)),
+  );
+}
 function requirePlan(plan) {
-  assert(plan === MP3_CONTROL || plan === MP3_BACKEND_CONTROL, 'Unknown native control plan');
+  assert(
+    [MP3_CONTROL, MP3_BACKEND_CONTROL, MP3_COCOA_CONTROL].includes(plan),
+    'Unknown native control plan',
+  );
 }
 export function nativeBackendEnvironment(environment) {
   const result = { ...environment, ...MP3_BACKEND_CONTROL.backendEnvironment };
@@ -561,10 +612,15 @@ export function nativeControlComplete(report, command, plan = MP3_CONTROL) {
     report.status === 'completed-diagnostic' &&
     report.qualificationEligible === false &&
     report.firstEightAllCorrectnessPassed === false &&
-    (plan === MP3_CONTROL ||
+    (plan !== MP3_BACKEND_CONTROL ||
       Object.entries(plan.backendEnvironment).every(
         ([key, value]) => report.backendEnvironment?.[key] === value,
       )) &&
+    (plan !== MP3_COCOA_CONTROL ||
+      (report.host?.platform === 'darwin' &&
+        report.host.architecture === 'x64' &&
+        report.host.release?.split('.')[0] === MP3_COCOA_CONTROL.hostDarwinMajor &&
+        report.backendEnvironment?.DEBUG === 'pw:browser')) &&
     report.playwrightVersion === MP3_CONTROL.playwright &&
     report.serverClosed === true &&
     report.rows?.length === plan.arms.length &&
@@ -609,6 +665,19 @@ export function nativeControlComplete(report, command, plan = MP3_CONTROL) {
 
 async function child(output, scratch, previewRoot, plan = MP3_CONTROL) {
   requirePlan(plan);
+  if (plan === MP3_COCOA_CONTROL) {
+    assert.equal(process.platform, plan.hostPlatform);
+    assert.equal(arch(), plan.hostArchitecture);
+    assert.equal(release().split('.')[0], plan.hostDarwinMajor);
+    assert.equal(process.env.DEBUG, 'pw:browser');
+    for (const key of [
+      'GST_DEBUG',
+      'GST_DEBUG_NO_COLOR',
+      'GST_DEBUG_FILE',
+      'GST_DEBUG_DUMP_DOT_DIR',
+    ])
+      assert.equal(process.env[key], undefined, 'Unexpected Linux backend environment');
+  }
   if (plan === MP3_BACKEND_CONTROL)
     for (const [key, value] of Object.entries(plan.backendEnvironment))
       assert.equal(process.env[key], value, 'Backend logging declaration differs');
@@ -634,16 +703,17 @@ async function child(output, scratch, previewRoot, plan = MP3_CONTROL) {
   const registryWebKit = JSON.parse(registry).browsers.find((item) => item.name === 'webkit');
   assert.equal(registryWebKit.revision, MP3_CONTROL.webkitRevision);
   assert.equal(registryWebKit.browserVersion, MP3_CONTROL.browserVersion);
-  if (plan === MP3_BACKEND_CONTROL)
+  if (plan !== MP3_CONTROL)
     assert((await lstat(webkit.executablePath())).size <= 65536, 'Launcher source bound');
   const launcher = await readFile(webkit.executablePath());
-  if (plan === MP3_BACKEND_CONTROL) {
+  if (plan !== MP3_CONTROL) {
     assert(launcher.length <= 65536, 'Launcher source bound');
     await writeFile(join(output, 'webkit-launcher.txt'), launcher);
   }
   const report = {
     format: plan.format,
     ...(plan === MP3_BACKEND_CONTROL ? { backendEnvironment: plan.backendEnvironment } : {}),
+    ...(plan === MP3_COCOA_CONTROL ? { backendEnvironment: { DEBUG: 'pw:browser' } } : {}),
     sourceRevision: process.env.SOLO_TOOLING_REVISION,
     status: 'running',
     qualificationEligible: false,
@@ -657,7 +727,7 @@ async function child(output, scratch, previewRoot, plan = MP3_CONTROL) {
     },
     executable: webkit.executablePath(),
     executableSha256: sha256(launcher),
-    ...(plan === MP3_BACKEND_CONTROL
+    ...(plan !== MP3_CONTROL
       ? {
           launcherSource: {
             file: 'webkit-launcher.txt',
@@ -679,13 +749,18 @@ async function child(output, scratch, previewRoot, plan = MP3_CONTROL) {
     serverClosed: false,
   };
   report.hostPackageInventory = [];
-  for (const [command, args] of [
-    [
-      'dpkg-query',
-      ['-W', '-f=${binary:Package}\t${Version}\n', '*gstreamer*', '*wpe*', '*webkit*'],
-    ],
-    ['gst-inspect-1.0', ['--version']],
-  ]) {
+  for (const [command, args] of plan === MP3_COCOA_CONTROL
+    ? [
+        ['sw_vers', []],
+        ['sysctl', ['-n', 'machdep.cpu.brand_string']],
+      ]
+    : [
+        [
+          'dpkg-query',
+          ['-W', '-f=${binary:Package}\t${Version}\n', '*gstreamer*', '*wpe*', '*webkit*'],
+        ],
+        ['gst-inspect-1.0', ['--version']],
+      ]) {
     try {
       report.hostPackageInventory.push({
         command,
@@ -820,7 +895,11 @@ export function backendLogObservation(bytes) {
 }
 async function parent(output, plan = MP3_CONTROL) {
   requirePlan(plan);
-  assert.equal(process.platform, 'linux');
+  assert.equal(process.platform, plan === MP3_COCOA_CONTROL ? 'darwin' : 'linux');
+  if (plan === MP3_COCOA_CONTROL) {
+    assert.equal(arch(), plan.hostArchitecture);
+    assert.equal(release().split('.')[0], plan.hostDarwinMajor);
+  }
   const source = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
   assert.equal(source, process.env.SOLO_TOOLING_REVISION);
   assert(/^[a-f0-9]{40}$/.test(source));
@@ -829,7 +908,9 @@ async function parent(output, plan = MP3_CONTROL) {
     '',
   );
   await mkdir(output);
-  const scratch = await mkdtemp(join(tmpdir(), 'sm-'));
+  const scratch = await mkdtemp(
+    join(plan === MP3_COCOA_CONTROL ? await realpath('/tmp') : tmpdir(), 'sm-'),
+  );
   assert(Buffer.byteLength(scratch) <= 34, 'Short owned root required for WebKit sockets');
   const identity = await lstat(scratch);
   const inspect = async () => {
@@ -850,6 +931,9 @@ async function parent(output, plan = MP3_CONTROL) {
     'solo-qualification-browser-context.mjs',
     'serve-production-preview.mjs',
     'run-solo-remote-correctness.mjs',
+    ...(plan === MP3_COCOA_CONTROL
+      ? ['solo-darwin-process-inventory.c', 'solo-darwin-process-inventory.mjs']
+      : []),
   ]) {
     const bytes = await readFile(join(here, file));
     sources[file] = { bytes: bytes.length, sha256: sha256(bytes) };
@@ -869,7 +953,8 @@ async function parent(output, plan = MP3_CONTROL) {
     outputBytes: MP3_CONTROL.maximumLogBytes,
     inspect,
   };
-  let preparation, command, report;
+  let preparation, command, report, preflight;
+  const cocoaEnvironment = plan === MP3_COCOA_CONTROL ? nativeCocoaEnvironment(options.env) : null;
   const summary = {
     format: plan.format,
     sourceRevision: source,
@@ -880,6 +965,29 @@ async function parent(output, plan = MP3_CONTROL) {
   };
   try {
     await inspect();
+    if (plan === MP3_COCOA_CONTROL) {
+      const { admitDarwinBuildReceipt } = await import('./solo-darwin-process-inventory.mjs');
+      const build = admitDarwinBuildReceipt(process.env, source);
+      await writeFile(join(output, 'process-inventory-build.json'), build.bytes, { flag: 'wx' });
+      const ownerCommand = await ownedCommand(
+        [process.execPath, fileURLToPath(import.meta.url), 'child-cocoa-owner', output, scratch],
+        {
+          ...options,
+          env: cocoaEnvironment,
+          timeoutMs: plan.ownerPreflightTimeoutMs,
+          log: join(output, 'owner-preflight.log'),
+          receipt: join(output, 'owner-preflight-command.json'),
+        },
+      );
+      const bytes = await readFile(join(output, 'owner-preflight.json'));
+      assert(bytes.length <= plan.maximumReportBytes, 'Owner preflight report cap');
+      preflight = JSON.parse(bytes);
+      assert.equal(preflight.sourceRevision, source);
+      assert(
+        nativeOwnerPreflightComplete(preflight, ownerCommand),
+        'Cocoa process ownership is uncertain; media observation withheld',
+      );
+    }
     const fixtures = join(scratch, 'originals');
     preparation = await ownedCommand(
       [
@@ -924,14 +1032,20 @@ async function parent(output, plan = MP3_CONTROL) {
       [
         process.execPath,
         fileURLToPath(import.meta.url),
-        plan === MP3_BACKEND_CONTROL ? 'child-backend' : 'child',
+        plan === MP3_COCOA_CONTROL
+          ? 'child-cocoa'
+          : plan === MP3_BACKEND_CONTROL
+            ? 'child-backend'
+            : 'child',
         output,
         scratch,
         previewRoot,
       ],
       {
         ...options,
-        env: plan === MP3_BACKEND_CONTROL ? nativeBackendEnvironment(options.env) : options.env,
+        env:
+          cocoaEnvironment ??
+          (plan === MP3_BACKEND_CONTROL ? nativeBackendEnvironment(options.env) : options.env),
         timeoutMs: MP3_CONTROL.commandTimeoutMs,
         log: join(output, 'browser.log'),
         receipt: join(output, 'browser-command.json'),
@@ -949,12 +1063,13 @@ async function parent(output, plan = MP3_CONTROL) {
     }
     summary.status =
       nativeControlComplete(report, command, plan) &&
-      (plan === MP3_CONTROL || summary.backendLog.status === 'observed-category')
+      (plan !== MP3_BACKEND_CONTROL || summary.backendLog.status === 'observed-category')
         ? 'completed-diagnostic'
         : 'failed';
   } catch (error) {
     summary.failure = failure(error);
   } finally {
+    if (plan === MP3_COCOA_CONTROL) summary.ownerPreflightStatus = preflight?.status ?? 'not-run';
     summary.preparationStatus = preparation?.status ?? 'not-run';
     summary.commandStatus = command?.status ?? 'not-run';
     summary.observations =
@@ -971,19 +1086,82 @@ async function parent(output, plan = MP3_CONTROL) {
     if (summary.status !== 'completed-diagnostic') process.exitCode = 1;
   }
 }
+async function cocoaOwnerPreflight(output, scratch) {
+  const report = {
+    format: 'SoloNativeCocoaOwnerPreflightV1',
+    sourceRevision: process.env.SOLO_TOOLING_REVISION,
+    platform: process.platform,
+    architecture: arch(),
+    status: 'failed',
+    qualificationEligible: false,
+  };
+  let owner;
+  try {
+    assert.equal(process.platform, 'darwin');
+    assert.equal(arch(), 'x64');
+    assert.equal(release().split('.')[0], MP3_COCOA_CONTROL.hostDarwinMajor);
+    const modulePath = process.env.SOLO_PLAYWRIGHT_MODULE;
+    assert(modulePath && resolve(modulePath) === modulePath);
+    const info = JSON.parse(await readFile(join(dirname(modulePath), 'package.json'), 'utf8'));
+    assert.equal(info.version, MP3_CONTROL.playwright);
+    const { webkit } = await import(pathToFileURL(modulePath).href);
+    assert(webkit.executablePath().includes(`/webkit-${MP3_CONTROL.webkitRevision}/`));
+    const { createPersistentQualificationOwner } = await import(
+      './solo-qualification-browser-context.mjs'
+    );
+    owner = createPersistentQualificationOwner({
+      browserType: webkit,
+      temporaryRoot: scratch,
+      launchOptions: { headless: true },
+      contextOptions: {
+        viewport: { width: 1280, height: 800 },
+        locale: 'en-US',
+        serviceWorkers: 'block',
+      },
+    });
+    report.owner = owner.report;
+    const { context, browser } = await owner.launch();
+    report.browserVersion = browser.version();
+    assert.equal(report.browserVersion, MP3_CONTROL.browserVersion);
+    const page = context.pages()[0] ?? (await context.newPage());
+    await page.setContent('<!doctype html><title>Owned blank context</title>', { timeout: 5000 });
+    const state = await bounded('owner-blank-page', () =>
+      page.evaluate(() => ({
+        documentURL: globalThis.location.href,
+        mediaElements: globalThis.document.querySelectorAll('audio,video').length,
+      })),
+    );
+    Object.assign(report, state);
+    await sleep(1000);
+  } catch (error) {
+    report.failure = failure(error);
+  } finally {
+    if (owner) await owner.close();
+    if (!report.failure && owner?.report.cleanup?.status === 'closed') report.status = 'closed';
+    await save(join(output, 'owner-preflight.json'), report);
+    if (report.status !== 'closed') process.exitCode = 1;
+  }
+}
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  if (['run', 'run-backend'].includes(process.argv[2])) {
+  const plans = {
+    run: MP3_CONTROL,
+    'run-backend': MP3_BACKEND_CONTROL,
+    'run-cocoa': MP3_COCOA_CONTROL,
+    child: MP3_CONTROL,
+    'child-backend': MP3_BACKEND_CONTROL,
+    'child-cocoa': MP3_COCOA_CONTROL,
+  };
+  const mode = process.argv[2];
+  if (mode === 'child-cocoa-owner') {
+    assert.equal(process.argv.length, 5);
+    await cocoaOwnerPreflight(...process.argv.slice(3).map((path) => resolve(path)));
+  } else if (mode?.startsWith('run')) {
     assert.equal(process.argv.length, 4);
-    await parent(
-      resolve(process.argv[3]),
-      process.argv[2] === 'run-backend' ? MP3_BACKEND_CONTROL : MP3_CONTROL,
-    );
+    requirePlan(plans[mode]);
+    await parent(resolve(process.argv[3]), plans[mode]);
   } else {
-    assert(['child', 'child-backend'].includes(process.argv[2]));
     assert.equal(process.argv.length, 6);
-    await child(
-      ...process.argv.slice(3).map((path) => resolve(path)),
-      process.argv[2] === 'child-backend' ? MP3_BACKEND_CONTROL : MP3_CONTROL,
-    );
+    requirePlan(plans[mode]);
+    await child(...process.argv.slice(3).map((path) => resolve(path)), plans[mode]);
   }
 }
