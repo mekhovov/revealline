@@ -254,6 +254,83 @@ test('aircraft selection reports storage failure without changing the active set
   assert.match(f.ui.root.querySelector('[role="status"]').textContent, /quota full/);
 });
 
+test('optional depletion stays in the draft until saved and reaches Test and Advanced without changing the current flight', async (t) => {
+  const opened = [],
+    f = fixture(t, { onAdvanced: (configuration) => opened.push(configuration) });
+  assert.equal(f.axis('Optional battery endurance').hidden, true);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  const currentFlight = f.store.effective();
+  assert.equal(f.axis('Optional battery endurance').hidden, false);
+  assert.equal(f.find('Battery depletion (optional)').checked, false);
+  f.find('Battery depletion (optional)').checked = true;
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.aircraft.battery.depletion, true);
+  assert.equal(f.store.effective().advanced.aircraft.battery.depletion, false);
+  f.ui.open({ keepDraft: true });
+  await f.click('Advanced reference quad · experimental');
+  assert.equal(opened[0].advanced.aircraft.battery.depletion, true);
+  f.ui.open({ keepDraft: true });
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().advanced.aircraft.battery.depletion, true);
+  assert.equal(currentFlight.advanced.aircraft.battery.depletion, false);
+  assert.equal(f.applied.length, 0);
+  f.find('Battery depletion (optional)').checked = false;
+  await f.click('Revert draft');
+  assert.equal(f.find('Battery depletion (optional)').checked, true);
+});
+
+test('fresh-battery restart saves the complete draft and invokes a new flight only after successful validation', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  f.find('Battery depletion (optional)').checked = true;
+  f.edit('Physical camera payload', 'custom', { tag: 'select', event: 'change' });
+  f.edit('Additional camera mass (g)', '4');
+  f.edit('Camera tilt (degrees)', '');
+  const before = f.store.export();
+  await f.click('Fresh battery & restart flight');
+  assert.equal(f.applied.length, 0);
+  assert.equal(f.store.export(), before);
+  assert.equal(f.ui.root.open, true);
+  f.edit('Camera tilt (degrees)', '30');
+  await f.click('Fresh battery & restart flight');
+  assert.equal(f.applied.length, 1);
+  assert.equal(f.applied[0].advanced.aircraft.battery.depletion, true);
+  assert.ok(Math.abs(f.applied[0].advanced.aircraft.mass - 0.04168) < 1e-15);
+  assert.equal(f.applied[0].camera.tilt, 30);
+  assert.equal(f.ui.root.open, false);
+  f.ui.open();
+  assert.equal(f.find('Battery depletion (optional)').checked, true);
+  assert.match(f.ui.root.textContent, /Pause, resume and checkpoint recovery preserve/);
+});
+
+test('depletion drafts survive locale and setup navigation; preset reset restores its explicitly off default', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  const selected = f.store.snapshot().selectedSetupId;
+  f.find('Battery depletion (optional)').checked = true;
+  f.edit('Drone setup', 'my-drone', { tag: 'select', event: 'change' });
+  await settle();
+  f.edit('Drone setup', selected, { tag: 'select', event: 'change' });
+  await settle();
+  assert.equal(f.find('Battery depletion (optional)').checked, true);
+  f.setLocale('uk');
+  assert.equal(f.find('Розряджання батареї (необов’язково)').checked, true);
+  assert.ok(
+    f.ui.root
+      .querySelectorAll('button')
+      .some((node) => node.textContent === 'Свіжа батарея й перезапуск польоту'),
+  );
+  await f.click('Зберегти для наступного польоту');
+  assert.equal(f.store.effective().advanced.aircraft.battery.depletion, true);
+  f.setLocale('en');
+  await f.click('Reset saved aircraft to its preset');
+  assert.equal(f.find('Battery depletion (optional)').checked, false);
+  assert.equal(f.store.effective().advanced.aircraft.battery.depletion, false);
+});
+
 test('aircraft controls and evidence refresh in Ukrainian without changing the selected preset', async (t) => {
   const f = fixture(t);
   f.edit('Aircraft preset', 'meteor75-pro-matrix', { tag: 'select', event: 'change' });

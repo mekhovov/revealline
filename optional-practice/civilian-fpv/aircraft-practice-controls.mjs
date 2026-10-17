@@ -1,5 +1,6 @@
 import { boundedJSON, exactKeys, required } from '../../game/data-json.mjs';
 import { exportJSONFile } from '../../game/platform.mjs';
+import { mountAircraftArchiveControls } from './aircraft-archive-controls.mjs';
 
 export const AIRCRAFT_RECOVERY_BYTES = 44 * 1024 * 1024;
 const DATABASE = 'revealline.fpv.aircraft-recovery.v1';
@@ -14,6 +15,18 @@ const bounds = {
 const abortError = () => new DOMException('Recovery operation cancelled', 'AbortError');
 const tickValid = (tick) => Number.isSafeInteger(tick) && tick >= 0;
 export function aircraftRecoveryTick(data) {
+  if (data?.format === 'AircraftChallengeRecovery.v1') {
+    required(
+      data.session?.format !== 'AircraftChallengeRecovery.v1',
+      'Nested challenge recovery is unsupported',
+    );
+    const missionTick = aircraftRecoveryTick(data.session);
+    required(
+      data.progress?.missionTick === missionTick,
+      'Challenge and physics recovery clocks do not match',
+    );
+    return missionTick;
+  }
   const tick =
     data?.physical?.checkpoint?.state?.missionTick ??
     data?.simulation?.checkpoint?.state?.missionTick;
@@ -175,6 +188,7 @@ export function mountAircraftPracticeControls({
   onPause = () => {},
   key = 'academy',
   platformOptions = {},
+  workerURL,
   store: suppliedStore,
   exportFile = exportJSONFile,
 } = {}) {
@@ -411,6 +425,17 @@ export function mountAircraftPracticeControls({
       if (!disposed) paint();
     }
   }
+  const archives = mountAircraftArchiveControls({
+    parent: root,
+    window: win,
+    locale,
+    getSession,
+    onPause,
+    key,
+    platformOptions,
+    workerURL,
+    exportFile,
+  });
   paint();
   return {
     root,
@@ -427,6 +452,7 @@ export function mountAircraftPracticeControls({
         operationStatus.textContent = '';
       }
       state = next;
+      archives.update(next);
       root.hidden = !(
         session &&
         (typeof session.aircraft === 'function' || Number.isFinite(next?.aircraftRadiusMm))
@@ -452,6 +478,7 @@ export function mountAircraftPracticeControls({
       cancelOperation();
       for (const remove of removers) remove();
       store.close?.();
+      archives.dispose();
       root.remove();
     },
   };

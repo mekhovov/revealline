@@ -15,7 +15,10 @@ import {
   createAircraftRecorder,
   validateAircraftRecording,
 } from '../../optional-practice/civilian-fpv/aircraft-recording.mjs';
-import { aircraftPerformance } from '../../optional-practice/civilian-fpv/aircraft-physics.mjs';
+import {
+  aircraftPerformance,
+  stepAircraftPropulsion,
+} from '../../optional-practice/civilian-fpv/aircraft-physics.mjs';
 import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
 
 await initAdvancedRuntime();
@@ -58,6 +61,77 @@ test('all twelve aircraft run physical self-level and Acro sessions with indepen
         sim.dispose();
       }
     }
+});
+
+test('optional depletion consumes real amp-hours, survives recovery, and resets only with a fresh flight', async (t) => {
+  const selected = preset();
+  selected.aircraft.battery.depletion = true;
+  const simulation = createAdvancedSimulation(selected),
+    frequentClips = createAdvancedSimulation({
+      ...selected,
+      recordingOptions: { segmentBytes: 1 },
+    }),
+    unlimited = createAdvancedSimulation(preset());
+  t.after(() => {
+    simulation.dispose();
+    frequentClips.dispose();
+    unlimited.dispose();
+  });
+  const freshHash = simulation.stateHash();
+  assert.notEqual(simulation.identity, unlimited.identity);
+  assert.notEqual(simulation.comparison().comparisonClass, unlimited.comparison().comparisonClass);
+  for (let tick = 0; tick < 250; tick++) {
+    for (const item of [simulation, frequentClips, unlimited]) {
+      item.enqueueInput(sample(tick, 0.6));
+      item.stepMission();
+    }
+    if (tick % 13 === 0)
+      frequentClips.finalizeArchive(frequentClips.telemetry().archiveStatus.lastSealedIndex);
+  }
+  const consumed = simulation.telemetry();
+  assert.ok(consumed.usedAh > 0);
+  assert.ok(consumed.usedAh <= (selected.aircraft.battery.currentLimit * consumed.seconds) / 3600);
+  assert.equal(
+    frequentClips.stateHash(),
+    simulation.stateHash(),
+    'Recording windows cannot accelerate battery depletion',
+  );
+  assert.equal(unlimited.telemetry().usedAh, 0);
+  assert.ok(
+    unlimited.telemetry().voltage < selected.aircraft.battery.fullVoltage,
+    'Instantaneous sag remains active without depletion',
+  );
+  assert.equal(unlimited.configuration().aircraft.mass, selected.aircraft.mass);
+  assert.equal(
+    unlimited.configuration().aircraft.motorOutputLimit,
+    selected.aircraft.motorOutputLimit,
+  );
+  const physical = stepAircraftPropulsion(selected.aircraft, {
+    motorSpeeds: [0.5, 0.5, 0.5, 0.5],
+    commands: [0.5, 0.5, 0.5, 0.5],
+    usedAh: 0.001,
+    dt: 0.002,
+  });
+  assert.equal(physical.usedAh, 0.001 + (physical.current * 0.002) / 3600);
+  const saved = await verifyAdvancedRecovery(simulation.snapshot());
+  const restored = createAdvancedSimulation(selected);
+  t.after(() => restored.dispose());
+  restored.restore(saved);
+  assert.equal(restored.telemetry().usedAh, consumed.usedAh);
+  assert.equal(restored.telemetry().voltage, consumed.voltage);
+  for (const item of [simulation, restored]) {
+    item.enqueueInput(sample(250, 0.6));
+    item.stepMission();
+  }
+  assert.equal(
+    restored.stateHash(),
+    simulation.stateHash(),
+    'Resume continues the previous charge state',
+  );
+  restored.reset();
+  assert.equal(restored.telemetry().usedAh, 0);
+  assert.equal(restored.telemetry().voltage, selected.aircraft.battery.fullVoltage);
+  assert.equal(restored.stateHash(), freshHash);
 });
 
 test('unrestricted practice passes twelve minutes with bounded clips and unchanged depleted-off battery', async () => {
@@ -348,6 +422,95 @@ test('high-cadence clips rotate before the import event limit even with a larger
   assert.equal(record.segments[1].startTick, 2400);
   assert.equal(record.missionTicks, 2600);
   assert.equal(recorder.status().state, 'recording');
+});
+
+test('large terrain checkpoints do not consume the stream budget and restored streams rotate identically', () => {
+  const identity = '0123456789abcdef',
+    hash = '00000000';
+  const checkpoint = (tick) => ({
+    identity,
+    state: { missionTick: tick },
+    world: 'x'.repeat(1200 * 1024),
+  });
+  const options = { identity, config: {}, checkpoint: checkpoint(0), hash };
+  const recorder = createAircraftRecorder(options);
+  const append = (owner, tick, events = []) =>
+    owner.append({
+      tick,
+      events,
+      stateHash: hash,
+      checkpoint: () => checkpoint(tick),
+    });
+  for (let tick = 1; tick <= 3000; tick++) append(recorder, tick);
+  let saved = recorder.recording();
+  assert.deepEqual(
+    saved.segments.map(({ startTick, endTick }) => [startTick, endTick]),
+    [
+      [0, 3000],
+      [3000, 3000],
+    ],
+  );
+  assert.ok(recorder.status().retainedBytes > 2 * 1200 * 1024);
+  for (let tick = 3001; tick <= 6000; tick++) append(recorder, tick);
+  saved = recorder.recording();
+  assert.deepEqual(
+    saved.segments.map(({ startTick, endTick }) => [startTick, endTick]),
+    [
+      [0, 3000],
+      [3000, 6000],
+      [6000, 6000],
+    ],
+  );
+  const restored = createAircraftRecorder(options);
+  restored.restore(saved);
+  for (let tick = 6001; tick <= 9000; tick++) {
+    append(recorder, tick);
+    append(restored, tick);
+  }
+  assert.deepEqual(restored.recording(), recorder.recording());
+  assert.equal(recorder.recording().segments[0].startTick, 3000);
+
+  const smallStream = createAircraftRecorder({ ...options, segmentBytes: 100 });
+  append(smallStream, 1, [['input', 0, 0, 0, 0, 0, 0, 0]]);
+  const partial = smallStream.recording();
+  assert.equal(partial.segments.length, 1);
+  const resumed = createAircraftRecorder({ ...options, segmentBytes: 100 });
+  resumed.restore(partial);
+  for (let tick = 2; tick <= 8; tick++) {
+    const events = [['input', tick * 10, tick, tick * 20000, 0, 0, 0, 0]];
+    append(smallStream, tick, events);
+    append(resumed, tick, events);
+    assert.deepEqual(resumed.recording(), smallStream.recording());
+  }
+  assert.ok(smallStream.recording().segments.length > 1, 'event growth still rotates early');
+
+  const hashes = createAircraftRecorder({ ...options, segmentBytes: 50 });
+  for (let tick = 1; tick <= 75; tick++) append(hashes, tick);
+  const resumedHashes = createAircraftRecorder({ ...options, segmentBytes: 50 });
+  resumedHashes.restore(hashes.recording());
+  for (let tick = 76; tick <= 200; tick++) {
+    append(hashes, tick);
+    append(resumedHashes, tick);
+  }
+  assert.equal(hashes.recording().segments[0].endTick, 150);
+  assert.deepEqual(resumedHashes.recording(), hashes.recording());
+
+  const limited = createAircraftRecorder({
+    ...options,
+    segmentBytes: 100,
+    maxBytes: 1250 * 1024,
+  });
+  append(limited, 1, [['terrain', 0, 'y'.repeat(60 * 1024)]]);
+  assert.ok(limited.status().retainedBytes <= 1250 * 1024);
+  const oversized = createAircraftRecorder({
+    ...options,
+    segmentBytes: 100,
+    maxBytes: 1000 * 1024,
+  });
+  assert.equal(oversized.status().state, 'unavailable');
+  assert.equal(oversized.status().error, 'recording-capacity');
+  assert.doesNotThrow(() => append(oversized, 1));
+  assert.equal(oversized.status().currentSeconds, 0.02);
 });
 
 test('worker transports aircraft descriptors, actor motion and recording persistence without function callbacks', async () => {
