@@ -1,5 +1,8 @@
 # FPV Survivals — distinct battlefields and coordinated enemy movement
 
+**Current continuation, 16 October:** [researched remaining delivery plan](fpv-survivals-completion-plan-2026-10-16.md) and [source/evidence report](qualification/overflight/review-completion-20261016/README.md). Historical checkpoints below retain their tested-source boundaries.
+
+
 **Review correction, 14 October:** PR1248 is merged. The next bounded priority is correcting information and cover handling before changing damage: persistent final-target navigation, explicit collected-salvage progress, native card sprites, clear Riy firing/chain paths, and audible local warning admission. These are implemented at `60b0c25ab`; the [continuation report](qualification/overflight/maps-movement-20261014/CONTINUATION-FIXES.md) records new checks and separates them from historical performance/balance evidence. No additional maps, power growth or difficulty inflation are added by this correction.
 
 Research and implementation-plan revision, 14 October 2026. The design below defines the delivery and review gates. Implemented work and its remaining qualification are recorded separately in the status report; the plan alone is not completion evidence.

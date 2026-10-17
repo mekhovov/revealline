@@ -1,11 +1,11 @@
 {
   "format": "revealline-neon-build-audit.v1",
   "scope": "Distribution files, exact links and offline descriptors; not browser installation or public deployment acceptance.",
-  "version": "0.151.1",
-  "buildSourceRevision": "cb663b0a42acaf36e7a17b2b40b9bdb6c1e08d05",
-  "distributionSHA256": "dfdafbb37cd3d183196380e46c5bf7614ef20bc9634a59f48f16dcc14a6e7bbe",
-  "distributionFiles": 3484,
-  "coreBytes": 71896225,
+  "version": "0.151.5",
+  "buildSourceRevision": null,
+  "distributionSHA256": "9b65671f7d176e5d71e38c6a5f4979a10b244f2fb978441b77e78e6700d7c5d0",
+  "distributionFiles": 3496,
+  "coreBytes": 71924391,
   "reviewFilesOutsideCore": 141,
   "reviewBytesOutsideCore": 33042827,
   "galleries": [

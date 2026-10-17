@@ -8,7 +8,6 @@ import {
   desktopDirectories,
   isAllowedRequestURL,
   downloadDecision,
-  MAX_DOWNLOAD_BYTES,
 } from './policy.mjs';
 import { loadNativeSite } from './resources.mjs';
 
@@ -136,13 +135,18 @@ else {
           defaultPath: decision.filename,
           filters: [
             {
-              name: decision.extension === 'json' ? 'FPV / LINE JSON export' : 'ZIP archive',
+              name:
+                decision.extension === 'json'
+                  ? 'FPV / LINE JSON export'
+                  : decision.extension === 'txt'
+                    ? 'Plain-text settings'
+                    : 'ZIP archive',
               extensions: [decision.extension],
             },
           ],
         });
         item.on('updated', () => {
-          if (item.getReceivedBytes() > MAX_DOWNLOAD_BYTES) item.cancel();
+          if (item.getReceivedBytes() > decision.maxBytes) item.cancel();
         });
         item.once('done', (_event, state) => {
           activeDownload = null;
