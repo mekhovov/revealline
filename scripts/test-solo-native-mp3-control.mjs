@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createHash, webcrypto } from 'node:crypto';
 import { EventEmitter } from 'node:events';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { runInNewContext } from 'node:vm';
@@ -12,6 +12,7 @@ import {
   MP3_COCOA_CONTROL as cocoaPlan,
   nativeCocoaEnvironment,
   nativeOwnerPreflightComplete,
+  retainCocoaPreparationProvenance,
   attachRequestReceipts,
   backendLogObservation,
   createNativeControlRoot,
@@ -35,6 +36,7 @@ function nativePage({
   type = 'audio/mpeg',
   ranges = 0,
   captureMode = null,
+  eventCapacityMode = null,
 } = {}) {
   const bytes = Buffer.from('exact test bytes'),
     calls = [],
@@ -141,7 +143,7 @@ function nativePage({
     }),
   };
   runInNewContext(
-    `(${installNativeMP3Control.toString()})(${JSON.stringify(captureMode)});`,
+    `(${installNativeMP3Control.toString()})(${JSON.stringify(captureMode)},${JSON.stringify(eventCapacityMode)});`,
     sandbox,
   );
   return {
@@ -733,7 +735,6 @@ test('Cocoa counterpart preserves original protocol and withholds media for unce
     'passiveMs',
     'playbackMs',
     'sampleMs',
-    'maximumRecords',
     'maximumLogBytes',
     'armTimeoutMs',
     'commandTimeoutMs',
@@ -743,6 +744,8 @@ test('Cocoa counterpart preserves original protocol and withholds media for unce
     assert.equal(cocoaPlan[key], backendPlan[key]);
   assert.deepEqual(cocoaPlan.arms, ['bossa-blob']);
   assert.equal(cocoaPlan.maximumSamples, 32);
+  assert.equal(cocoaPlan.maximumRecords, 128);
+  assert.equal(backendPlan.maximumRecords, 64);
 });
 
 test('Cocoa is a distinct diagnostic format and cannot inherit a Linux backend result', () => {
@@ -753,11 +756,15 @@ test('Cocoa is a distinct diagnostic format and cannot inherit a Linux backend r
   result.backendEnvironment = { DEBUG: 'pw:browser' };
   Object.assign(result.rows[0].data, {
     captureMode: cocoaPlan.captureMode,
+    eventCapacityMode: cocoaPlan.eventCapacityMode,
     droppedSamples: 0,
     samples: [{ phase: 'passive' }, { phase: 'playback' }, { phase: 'playback' }],
   });
   const command = { status: 'closed', exitCode: 0, ambiguous: [], survivors: [] };
   assert.equal(nativeControlComplete(result, command, cocoaPlan), true);
+  const missingCapacity = structuredClone(result);
+  delete missingCapacity.rows[0].data.eventCapacityMode;
+  assert.equal(nativeControlComplete(missingCapacity, command, cocoaPlan), false);
   assert.equal(nativeControlComplete(result, command, backendPlan), false);
   assert.equal(nativeControlComplete(result, command), false);
   for (const patch of [{ platform: 'linux' }, { release: '23.6.0' }, { architecture: 'arm64' }])
@@ -792,4 +799,102 @@ test('macOS control remains held with finite resource bounds, retained failures 
   assert.match(workflow, /solo-native-mp3-control\.mjs run-cocoa/);
   assert.match(workflow, /if: always\(\)/);
   assert.doesNotMatch(workflow, /--with-deps|game-cli\.mjs build|qualify-solo\.mjs/);
+});
+
+test('Cocoa preparation retains bounded original failure and partial provenance without admitting media', async (t) => {
+  const directory = await mkdtemp(join(tmpdir(), 'cocoa-failed-fixture-test-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const source = join(directory, 'source.json');
+  const failed = {
+    status: 'failed',
+    recordings: [
+      {
+        status: 'failed',
+        requestedURL: 'https://creator.example/original.mp3',
+        responseURL: 'https://cdn.example/original.mp3',
+        httpStatus: 503,
+      },
+    ],
+    failure: 'HTTP 503',
+  };
+  for (const [name, bytes, expectedJSON] of [
+    ['failed', Buffer.from(JSON.stringify(failed)), 'parsed'],
+    ['partial', Buffer.from('{"status":"preparing","recordings":['), 'partial-or-invalid'],
+  ]) {
+    await writeFile(source, bytes);
+    const destination = join(directory, `${name}.json`);
+    const result = await retainCocoaPreparationProvenance(source, destination);
+    assert.equal(result.status, 'retained-original');
+    assert.equal(result.jsonStatus, expectedJSON);
+    assert.equal(result.sha256, hash(bytes));
+    assert.deepEqual(await readFile(destination), bytes);
+    assert.equal(result.sourceStatus, name === 'failed' ? 'failed' : null);
+    assert.equal(
+      nativeControlComplete(
+        { status: 'failed', fixtureProvenance: result },
+        { status: 'closed', exitCode: 1 },
+        cocoaPlan,
+      ),
+      false,
+    );
+  }
+  assert.equal(
+    (
+      await retainCocoaPreparationProvenance(
+        join(directory, 'missing.json'),
+        join(directory, 'missing-copy.json'),
+      )
+    ).status,
+    'unavailable',
+  );
+  await writeFile(source, Buffer.alloc(plan.maximumReportBytes + 1));
+  assert.equal(
+    (await retainCocoaPreparationProvenance(source, join(directory, 'oversized.json'))).status,
+    'retention-failed',
+  );
+  const alias = join(directory, 'alias.json');
+  await symlink(source, alias);
+  assert.equal(
+    (await retainCocoaPreparationProvenance(alias, join(directory, 'alias-copy.json'))).status,
+    'retention-failed',
+  );
+  await writeFile(source, '{}');
+  assert.equal(
+    (await retainCocoaPreparationProvenance(source, join(directory, 'failed.json'))).status,
+    'retention-failed',
+  );
+  assert.deepEqual(JSON.parse(await readFile(join(directory, 'failed.json'))), failed);
+});
+
+test('declared Cocoa128 retention keeps the observed87 attempts while legacy64 still truncates', async () => {
+  for (const expanded of [false, true]) {
+    const host = nativePage({
+      captureMode: backendPlan.captureMode,
+      eventCapacityMode: expanded ? cocoaPlan.eventCapacityMode : null,
+    });
+    await host.api.prepare(host.pin);
+    // Two setup records +83 injected native events +two cleanup records =87.
+    for (let i = 0; i < 83; i++) host.event('durationchange');
+    const result = normalize(host.api.cleanup());
+    assert.equal(result.records.length, expanded ? 87 : 64);
+    assert.equal(result.droppedRecords, expanded ? 0 : 23);
+    assert.equal(result.eventCapacityMode, expanded ? 'cocoa-128-v1' : undefined);
+  }
+  const host = nativePage({
+    captureMode: cocoaPlan.captureMode,
+    eventCapacityMode: cocoaPlan.eventCapacityMode,
+  });
+  await host.api.prepare(host.pin);
+  for (let i = 0; i < 140; i++) host.event('durationchange');
+  const result = normalize(host.api.cleanup());
+  assert.equal(result.records.length, 128);
+  assert(result.droppedRecords > 0);
+  assert.throws(
+    () => nativePage({ eventCapacityMode: cocoaPlan.eventCapacityMode }),
+    /Unknown native event capacity/,
+  );
+  assert.throws(
+    () => nativePage({ captureMode: cocoaPlan.captureMode, eventCapacityMode: 'arbitrary-256' }),
+    /Unknown native event capacity/,
+  );
 });
