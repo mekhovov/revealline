@@ -137,7 +137,7 @@ function workflow(text, old) {
       'github.event.pull_request.number == 1544',
       'github.event.pull_request.head.repo.full_name == github.repository',
       "github.event.action == 'synchronize'",
-      "github.event.before == '39774cce8697d412d138ef4da11ac547a5f8e535'",
+      "github.event.before == '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0'",
     ].join(' && '),
   );
   assert(!text.includes('workflow_dispatch') && !text.includes('needs: preflight'));
@@ -171,7 +171,7 @@ test('one-shot separate workflow preserves all native commands, fresh owner gate
     ['github.event.pull_request.number == 1544', 'true'],
     ['github.event.pull_request.head.repo.full_name == github.repository', 'true'],
     ["github.event.action == 'synchronize'", 'true'],
-    ["github.event.before == '39774cce8697d412d138ef4da11ac547a5f8e535'", 'true'],
+    ["github.event.before == '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0'", 'true'],
     ['timeout-minutes: 28', 'timeout-minutes: 29'],
     ['run-cocoa', 'child-cocoa'],
     ['install webkit', 'install chromium'],

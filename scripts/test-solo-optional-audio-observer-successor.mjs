@@ -26,12 +26,26 @@ const executedBytes = await read(
   'docs/performance/fixtures/solo-optional-start-audio/bab3-execution-source.json',
 );
 function executedV4(bytes, declaration, workflowBytes) {
-  assert.equal(hash(bytes), '8a1be51e842c364e616939097096971f71b6ed9629aecb38b4cf65a3f3d62162');
+  assert.equal(hash(bytes), '3e8c221d3c3eda5449bf29ede69e056b4b62175ac8effec4b65391ca44baf3a3');
   const witness = JSON.parse(bytes);
   assert.equal(witness.revision, 'bab3b2790944c6257f9c1f9b346839996bbefebb');
   assert.equal(witness.tree, '4bdfc784e14b41ed5d32895b4fa139920f494a63');
   assert.equal(witness.run, 39059454404);
-  assert.equal(witness.records.length, 6);
+  assert.equal(witness.records.length, 7);
+  assert.equal(witness.postHocReadback.format, 'SoloAdditiveExecutedSourceReadbackV1');
+  assert.deepEqual(witness.postHocReadback.addedPaths, [
+    'scripts/solo-qualification-next-route.mjs',
+  ]);
+  const original = structuredClone(witness);
+  delete original.postHocReadback;
+  original.records = original.records.slice(0, 6);
+  const originalBytes = Buffer.from(JSON.stringify(original, null, 2) + '\n');
+  assert.deepEqual(witness.postHocReadback.originalWitness, {
+    bytes: originalBytes.length,
+    sha256: '8a1be51e842c364e616939097096971f71b6ed9629aecb38b4cf65a3f3d62162',
+    recordCount: 6,
+  });
+  assert.equal(hash(originalBytes), witness.postHocReadback.originalWitness.sha256);
   for (const [p, input] of [
     [path, declaration],
     [workflowPath, workflowBytes],

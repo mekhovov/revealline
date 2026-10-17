@@ -900,7 +900,7 @@ export function validateReadinessPlan(plan) {
     );
     if (selected.settlement) {
       if (plan.sourceCohort === SELECTED_FONT_DIRECT_COHORT) {
-        assert.equal(plan.release.onceOnlyBefore, '39774cce8697d412d138ef4da11ac547a5f8e535');
+        assert.equal(plan.release.onceOnlyBefore, '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0');
         assert.deepEqual(plan.release.observationCorrection, SELECTED_FONT_DIRECT_CORRECTION);
       } else {
         assert.equal(plan.release.onceOnlyBefore, 'bab3b2790944c6257f9c1f9b346839996bbefebb');

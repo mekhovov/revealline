@@ -306,7 +306,9 @@ function validateSourceCohort(plan, selected) {
       plan.release.onceOnlyBefore,
       geometricNextSource(plan) === GEOMETRIC_NEXT_SOURCE
         ? '0febd334619731adc26dfa3df78aab02991563af'
-        : geometricNextSource(plan).candidate,
+        : geometricNextSource(plan) === GEOMETRIC_NEXT_39774_SOURCE
+          ? '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0'
+          : geometricNextSource(plan).candidate,
     );
     assert.equal(plan.nativeRouteProtocol, 'authored-next-geometric-v1');
     const identity = plan.candidate;

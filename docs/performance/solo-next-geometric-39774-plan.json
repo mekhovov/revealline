@@ -456,7 +456,7 @@
     "automaticPhaseContinuation": false,
     "performanceQualification": "not-qualified-diagnostic-only",
     "sourceCohort": "next-candidate39774-geometric-v1",
-    "onceOnlyBefore": "39774cce8697d412d138ef4da11ac547a5f8e535",
+    "onceOnlyBefore": "5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0",
     "ownerScope": "Only the eight explicitly listed prior Linux cohorts /78 independently reread command receipts in priorLinuxOwners. No global or unrelated-process clearance. Fresh source-bound native owner checks remain mandatory.",
     "firstEightRequired": false
   },
@@ -533,8 +533,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 87426,
-      "sha256": "9ed82517010604ad23f9d98732e0cb001f550949401a8cdff009d81010ac5417"
+      "bytes": 87551,
+      "sha256": "54993cfbb3392bf087d4304a53b2f55c1b043807954311b74ee85d3cc6920030"
     }
   ],
   "performanceExclusion": true,
@@ -542,7 +542,7 @@
   "latestSourceRevision": "39774cce8697d412d138ef4da11ac547a5f8e535",
   "latestRuntimeRevision": "39774cce8697d412d138ef4da11ac547a5f8e535",
   "hitchJournal": "bounded-v1",
-  "executionAdmission": "Reviewed exact397 package metadata and scoped prior-owner readback; one before397 push edge. Each hosted row still requires full archive/source/CSP checks and its own fresh native owner gate. No automatic retry or phase continuation.",
+  "executionAdmission": "Reviewed exact397 package metadata and scoped prior-owner readback; one before5e9 push edge after the confirmed zero-dispatch conflict. Each hosted row still requires full archive/source/CSP checks and its own fresh native owner gate. No automatic retry or phase continuation.",
   "packageMetadataProof": {
     "path": ".cache/solo-followup/397-package/appearance-analysis.json",
     "bytes": 14638,
@@ -562,7 +562,7 @@
   },
   "releaseTrigger": {
     "status": "reviewed-one-shot",
-    "onceOnlyBefore": "39774cce8697d412d138ef4da11ac547a5f8e535",
+    "onceOnlyBefore": "5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0",
     "automaticRetries": 0
   },
   "priorLinuxOwners": {
@@ -581,5 +581,17 @@
     "nativeRun": 39044567236,
     "status": "failed-retained"
   },
-  "toolingClosureStatus": "current-runtime-refs-and-exact-sparse-contract-checked"
+  "toolingClosureStatus": "current-runtime-refs-and-exact-sparse-contract-checked",
+  "dispatchSupersession": {
+    "toolingRevision": "5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0",
+    "observedAt": "2026-10-17T21:40:58.671026+00:00",
+    "runCount": 0,
+    "pullRequestMergeable": "CONFLICTING",
+    "receipt": {
+      "path": ".cache/solo-followup/integration-397-batch/no-dispatch-5e9/receipt.json",
+      "bytes": 621,
+      "sha256": "07ca45eba16843a6b3e37080d28fbb4d21ddcee2f30671120a2d1942fc902595"
+    },
+    "scope": "No workflow/native observation existed for this head at the retained API readback. This edge replacement is not a native retry; fresh owners and original runtime/package/source gates remain required."
+  }
 }

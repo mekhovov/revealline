@@ -35,7 +35,7 @@ test('direct-sheet successor changes only declared observer attribution and pres
     old = bindReadinessJob(prior, 'webkit');
   assert.equal(p.sourceCohort, SELECTED_FONT_DIRECT_COHORT);
   assert.deepEqual(p.release.observationCorrection, SELECTED_FONT_DIRECT_CORRECTION);
-  assert.equal(p.release.onceOnlyBefore, '39774cce8697d412d138ef4da11ac547a5f8e535');
+  assert.equal(p.release.onceOnlyBefore, '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0');
   for (const k of [
     'candidate',
     'runtimeRevision',
@@ -59,6 +59,19 @@ test('direct-sheet successor changes only declared observer attribution and pres
   assert.equal(p.priorResults.status, 'failed');
   assert.equal(p.priorResults.selectedThemeActivated, false);
   assert.equal(p.release.firstEightRequired, false);
+  assert.deepEqual(manifest.dispatchSupersession, {
+    toolingRevision: '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0',
+    observedAt: '2026-10-17T21:40:58.671026+00:00',
+    runCount: 0,
+    pullRequestMergeable: 'CONFLICTING',
+    receipt: {
+      path: '.cache/solo-followup/integration-397-batch/no-dispatch-5e9/receipt.json',
+      bytes: 621,
+      sha256: '07ca45eba16843a6b3e37080d28fbb4d21ddcee2f30671120a2d1942fc902595',
+    },
+    scope:
+      'No workflow/native observation existed for this head at the retained API readback. This edge replacement is not a native retry; fresh owners and original runtime/package/source gates remain required.',
+  });
   assert.throws(() => bindReadinessJob(manifest, 'chromium'));
 });
 test('substituted correction, prior outcome, source, runtime, action identity and owner limits reject', () => {
@@ -92,6 +105,9 @@ test('substituted correction, prior outcome, source, runtime, action identity an
     },
     (p) => {
       p.release.onceOnlyBefore = prior.release.onceOnlyBefore;
+    },
+    (p) => {
+      p.release.onceOnlyBefore = '39774cce8697d412d138ef4da11ac547a5f8e535';
     },
     (p) => {
       p.sourceCohort = prior.sourceCohort;
@@ -155,7 +171,7 @@ test('one-shot workflow and all current helper references are exact; historical 
     'github.event.pull_request.number == 1544',
     'github.event.pull_request.head.repo.full_name == github.repository',
     "github.event.action == 'synchronize'",
-    "github.event.before == '39774cce8697d412d138ef4da11ac547a5f8e535'",
+    "github.event.before == '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0'",
   ];
   const activated = (s) => {
     assert.equal(s.match(/^    if: (.+)$/m)?.[1], terms.join(' && '));
@@ -168,11 +184,11 @@ test('one-shot workflow and all current helper references are exact; historical 
   }
   assert.throws(() => activated(w.replace(terms.join(' && '), 'false')));
   assert.deepEqual(manifest.releaseTrigger, {
-    status: 'activated-once-before-397',
+    status: 'activated-once-before-5e9',
     pullRequest: 1544,
     sameRepositoryRequired: true,
     action: 'synchronize',
-    onceOnlyBefore: '39774cce8697d412d138ef4da11ac547a5f8e535',
+    onceOnlyBefore: '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0',
   });
   for (const text of [
     'engine: [webkit]',
