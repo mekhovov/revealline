@@ -12,6 +12,8 @@ import {
   strictControlReproduced,
   readRasterJSON,
   primitiveInputPremises,
+  RASTER_SOURCE_LIMITS,
+  assertRasterSourceBody,
 } from './solo-remote-raster.mjs';
 import {
   fullProtocol,
@@ -83,6 +85,7 @@ test('independent raster diagnostic retains the failed predecessor and all stric
   assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.candidate.revision, '3adcd53792043ef02459e86168c6b33a66d6ef00');
   assert.equal(plan.performanceExclusion, true);
+  assert.deepEqual(plan.raster.sourceObservation, RASTER_SOURCE_LIMITS);
   for (const change of [
     (p) => (p.release.firstEightAllCorrectnessPassed = true),
     (p) => (p.release.predecessorRun = 1),
@@ -95,6 +98,8 @@ test('independent raster diagnostic retains the failed predecessor and all stric
     (p) => (p.raster.pixelTolerance = 1),
     (p) => p.raster.cases.pop(),
     (p) => (p.raster.retryCount = 1),
+    (p) => p.raster.sourceObservation.aggregateBytes++,
+    (p) => p.raster.sourceObservation.records++,
   ]) {
     const changed = structuredClone(plan);
     change(changed);
@@ -112,9 +117,50 @@ test('raster release is limited to one exact push edge and shallow pinned source
     /github\.event\.pull_request\.head\.repo\.full_name == github\.repository/,
   );
   assert.match(workflow, /github\.event\.action == 'synchronize'/);
-  assert.match(workflow, /github\.event\.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'/);
+  assert.match(workflow, /github\.event\.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'/);
   assert.equal((workflow.match(/fetch-depth: 1/g) ?? []).length, 3);
   assert.doesNotMatch(workflow, /fetch-depth: 0/);
+});
+test('source witness admits the exact large required modules while all other bounds stay strict', async () => {
+  assert.deepEqual(RASTER_SOURCE_LIMITS, {
+    perSourceBytes: 2 * 1024 ** 2,
+    aggregateBytes: 8 * 1024 ** 2,
+    records: 256,
+  });
+  const refs = [
+    [
+      'game/i18n/catalogs.mjs',
+      1265063,
+      'a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816',
+    ],
+  ];
+  let total = 2242201;
+  for (const [path, size, sha256] of refs) {
+    const bytes = await readFile(new URL('../' + path, import.meta.url));
+    assert.equal(bytes.length, size);
+    assert(size > 1024 ** 2, 'The old one MiB source witness cap rejected this required input');
+    const identity = { bytes: size, sha256 };
+    total += size;
+    assert.doesNotThrow(() => assertRasterSourceBody(bytes, identity, 200, total));
+    assert.throws(() =>
+      assertRasterSourceBody(bytes, { ...identity, sha256: '0'.repeat(64) }, 200, total),
+    );
+    assert.throws(() => assertRasterSourceBody(bytes, identity, 404, total));
+    assert.throws(() => assertRasterSourceBody(bytes, identity, 200, 8 * 1024 ** 2 + 1));
+  }
+  assert.equal(total, 3507264);
+  const oversized = Buffer.alloc(2 * 1024 ** 2 + 1);
+  assert.throws(() =>
+    assertRasterSourceBody(
+      oversized,
+      {
+        bytes: oversized.length,
+        sha256: createHash('sha256').update(oversized).digest('hex'),
+      },
+      200,
+      oversized.length,
+    ),
+  );
 });
 test('conditional localization requires complete clean exact control-failure class', () => {
   for (const count of [2, 12]) {

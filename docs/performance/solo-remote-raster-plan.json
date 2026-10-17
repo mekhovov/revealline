@@ -2,7 +2,7 @@
   "format": "SoloHostedRasterManifestV1",
   "status": "reviewed-diagnostic-only",
   "repository": "mekhovov/revealline",
-  "cohort": "linux-raster-3adcd537-independent-diagnostic",
+  "cohort": "linux-raster-3adcd537-source-witness-correction-v2",
   "node": "22.13.1",
   "playwright": "1.62.1",
   "jobs": ["raster-chromium", "raster-webkit"],
@@ -50,20 +50,42 @@
         "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
         "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929"
       }
-    ]
+    ],
+    "sourceWitnessCorrection": {
+      "predecessorRun": 38991754555,
+      "disposition": "Both engines stopped with source overflow before retaining any cases or captures. No pixel pass/failure conclusion; original failed evidence remains unchanged.",
+      "originalPerSourceBytes": 1048576,
+      "correctedPerSourceBytes": 2097152,
+      "aggregateBytesUnchanged": 8388608,
+      "sourceRecordsUnchanged": 256,
+      "artifacts": [
+        {
+          "engine": "chromium",
+          "id": 12085497880,
+          "bytes": 422825,
+          "sha256": "4a0e1ba7b8f70ae988467d5c8cbf628ad6e1f4e16a53ba231d377be0619d24e1"
+        },
+        {
+          "engine": "webkit",
+          "id": 12085033070,
+          "bytes": 419435,
+          "sha256": "96ab0343220d6cff4cb362f04224e2b3b4e1569f9b1dbda9f3159556305d8181"
+        }
+      ]
+    }
   },
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-raster.mjs",
-      "bytes": 14522,
-      "sha256": "43ca618ca3261f962e9fbd888c8095239d6b6e1638caefe289bb268a942c431f"
+      "bytes": 15221,
+      "sha256": "011aceb355e684e1efeada084877b7a102329336bd37fb6eace23afa093e057f"
     }
   ],
   "frozenTools": [
     {
       "path": "scripts/observe-solo-native-raster.mjs",
-      "bytes": 19372,
-      "sha256": "fce811b820a76c296c5012b6929534f35cc413a9c44dc2066d4a92f585040ce1"
+      "bytes": 19689,
+      "sha256": "d625a8d0471d66e80fd24ccb156370609bd201cf435df2fa0bccda28e66fbade"
     },
     {
       "path": "scripts/solo-raster-protocols.mjs",
@@ -72,8 +94,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 50572,
-      "sha256": "9a2c0b4c865c7655b9f101494964efb3ab0d423405545bf7a8253fa2af958e04"
+      "bytes": 51780,
+      "sha256": "ea1400a0d1f3bd8b2072e4304bdcb4b451b29acb24d691509a453197a413157a"
     },
     {
       "path": "scripts/solo-qualification-browser-context.mjs",
@@ -283,9 +305,14 @@
         }
       ]
     },
-    "attributeWitness": "Only conditional fresh prefix uses a declared forwarding getContext wrapper, collecting <=512 unique actual contexts and reading attributes once after all fixed draws. Full12 primary is exact-original/unwrapped. Conditional prefix PNGs must match all corresponding primary captures exactly before deeper localization."
+    "attributeWitness": "Only conditional fresh prefix uses a declared forwarding getContext wrapper, collecting <=512 unique actual contexts and reading attributes once after all fixed draws. Full12 primary is exact-original/unwrapped. Conditional prefix PNGs must match all corresponding primary captures exactly before deeper localization.",
+    "sourceObservation": {
+      "perSourceBytes": 2097152,
+      "aggregateBytes": 8388608,
+      "records": 256
+    }
   },
-  "scope": "All12 unchanged synthetic presentation cases per Linux engine using default native Canvas APIs. New Linux browser/backend stratum, no software-force or GPU/physical-device claim. Original Mac strict failure retained. Public production payload/CSP; no live gameplay or authentication claim. Default backend unknown; actual context attributes recorded only where the conditional diagnostic is admitted. Independent diagnostic only: the original seven-of-eight correctness failure remains unresolved; this observation cannot release timing or resolve the historical strict raster failure.",
+  "scope": "All12 unchanged synthetic presentation cases per Linux engine using default native Canvas APIs. New Linux browser/backend stratum, no software-force or GPU/physical-device claim. Original Mac strict failure retained. Public production payload/CSP; no live gameplay or authentication claim. Default backend unknown; actual context attributes recorded only where the conditional diagnostic is admitted. Independent diagnostic only: the original seven-of-eight correctness failure remains unresolved; this observation cannot release timing or resolve the historical strict raster failure. This once-only successor corrects only the per-module source witness limit to admit the pinned1,265,063-byte localization catalogue required by the observed i18n/index.mjs import; aggregate8MiB and256source limits, all original browser protocols/captures/pixels/deadlines remain fixed.",
   "acceptance": {
     "primary": "All12 strict original invariants including identical-input, concealment, exposed positive controls, actor/lane visibility, animation, zero-dt stability and same-owner source replacement/restoration. Visual review remains pending separately.",
     "conditional": "Only a clean full12 exact known control-failure class admits a fresh two-case prefix. All retained prefix PNGs must equal the same new cohort primary prefix; then14 compositor captures and6 fixed historical-input primitive draws. No automatic retry or relaxed threshold.",

@@ -68,6 +68,8 @@ const raw = {
   mode: 'worker',
   validationPassed: true,
   active: { flightBefore: 'running', flightAfter: 'running' },
+  expectedWorkerURL: 'http://localhost/game/mp3-inspection-worker.mjs',
+  workerURLs: ['http://localhost/game/mp3-inspection-worker.mjs'],
   pageErrors: [],
   policyErrors: [],
 };
@@ -83,7 +85,7 @@ test('confirmation preserves failed active state, validation and cleanup evidenc
     (r) => (r.mode = 'paused-fallback'),
     (r) => (r.diagnostics = {}),
     (r) => r.pageErrors.push('error'),
-    (r) => r.policyErrors.push('error'),
+    (r) => (r.workerURLs = []),
   ]) {
     const changed = structuredClone(raw);
     mutate(changed);
@@ -101,6 +103,26 @@ test('confirmation preserves failed active state, validation and cleanup evidenc
       workerConfirmationAssessment(raw, { ...command, ...mutation }, row).status,
       'failed',
     );
+});
+test('ordinary worker contract retains an unrelated CSP warning without declaring worker failure', () => {
+  const warning =
+    'Refused to connect to https://mekhovov.github.io/revealline-soundtracks/catalogue.json because it does not appear in the connect-src directive of the Content Security Policy.';
+  const result = workerConfirmationAssessment(
+    { ...raw, policyErrors: [warning] },
+    command,
+    plan.rows[0],
+  );
+  assert.equal(result.status, 'passed');
+  assert.deepEqual(result.policyWarnings, [warning]);
+  assert.equal(result.firstEightAllCorrectnessPassed, false);
+  assert.equal(
+    workerConfirmationAssessment(
+      { ...raw, workerURLs: [], policyErrors: [warning] },
+      command,
+      plan.rows[0],
+    ).status,
+    'failed',
+  );
 });
 test('paused companion requires all original observations and actual running return', () => {
   const paused = {

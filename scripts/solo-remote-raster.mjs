@@ -5,6 +5,21 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 const MiB = 1024 ** 2;
+export const RASTER_SOURCE_LIMITS = Object.freeze({
+  perSourceBytes: 2 * MiB,
+  aggregateBytes: 8 * MiB,
+  records: 256,
+});
+export function assertRasterSourceBody(bytes, identity, status, bytesObserved) {
+  assert(identity.bytes <= RASTER_SOURCE_LIMITS.perSourceBytes);
+  assert(bytes.length <= RASTER_SOURCE_LIMITS.perSourceBytes);
+  assert(bytesObserved <= RASTER_SOURCE_LIMITS.aggregateBytes);
+  assert.equal(status, 200);
+  assert.equal(bytes.length, identity.bytes);
+  const sha256 = createHash('sha256').update(bytes).digest('hex');
+  assert.equal(sha256, identity.sha256);
+  return { bytes: bytes.length, sha256 };
+}
 export const RASTER_CASES = ['full', 'reduced', 'minimal'].flatMap((quality) =>
   ['settled', 'acquire', 'warning', 'active'].map((mode) => ({ quality, mode })),
 );
@@ -67,6 +82,7 @@ export function validateRasterPlan(plan) {
   assert.equal(plan.raster.pixelTolerance, 0);
   assert.deepEqual(plan.raster.cases, RASTER_CASES);
   assert.equal(plan.raster.conditionalLocalization, true);
+  assert.deepEqual(plan.raster.sourceObservation, RASTER_SOURCE_LIMITS);
   assert.deepEqual(
     plan.adapterInputs.map((r) => r.path),
     ['scripts/solo-remote-raster.mjs'],

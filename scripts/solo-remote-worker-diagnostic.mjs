@@ -104,7 +104,8 @@ export function workerConfirmationAssessment(raw, command, row) {
         raw.validationPassed === true &&
         raw.active?.flightBefore === 'running' &&
         raw.active?.flightAfter === 'running' &&
-        raw.policyErrors?.length === 0
+        typeof raw.expectedWorkerURL === 'string' &&
+        raw.workerURLs?.includes(raw.expectedWorkerURL)
       : row.kind === 'paused' &&
         JSON.stringify(raw?.observation?.cases?.map(({ name }) => name)) ===
           JSON.stringify([
@@ -122,6 +123,9 @@ export function workerConfirmationAssessment(raw, command, row) {
     performanceQualification: 'excluded',
     firstEightAllCorrectnessPassed: false,
     diagnostic204msInterval: 'retained-unattributed',
+    // The unchanged smoke records optional-resource CSP messages. Its worker
+    // assertions require the exact static worker URL, not a silent console.
+    policyWarnings: raw?.policyErrors ?? [],
   };
 }
 export function workerProbeArguments(plan, row, address, reportPath) {

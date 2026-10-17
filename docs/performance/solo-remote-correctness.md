@@ -235,17 +235,55 @@ it retains raw phase transitions, worker-stage timestamps, interval endpoints,
 application work and preparation/resource snapshots. Evidence remains under
 `.cache/solo-followup/remote-worker-diagnostic-38990108478/`.
 
-A separately declared confirmation now fixes three fresh WebKit calls to the
+A separately declared confirmation fixed three fresh WebKit calls to the
 ordinary worker probe, followed by one existing paused-render companion. Worker
 calls retain the original inputs, assertions and deadlines without the
 diagnostics flag, an added observation window or automatic Resume. The companion
 retains its existing canvas instrumentation. Full package admission precedes
 all four rows; every outcome is retained with zero retries. This confirmation
 cannot promote the failed first-eight gate or waive the 204 ms diagnostic gap.
-Its one-shot workflow is bound to the next push from `69fdc854e`; execution
-results remain pending. The earlier cohort's actual plan and helper bytes remain
-immutable in its artifact even though the shared adapter now supports both
-explicit formats.
+[Run 38991754609](https://github.com/mekhovov/revealline/actions/runs/38991754609)
+used tooling `aeadf7f43a8c1aba3af78d6cc8713666b4af49f1`. **All three original
+worker reports passed**, with running gameplay before/after inspection and the
+correct static worker; the paused-render companion also passed. All owners
+closed cleanly and exact package/source/CSP admission passed. The hosted wrapper
+nevertheless failed because its added blanket check rejected a console warning
+about an optional external soundtrack catalogue blocked by the existing CSP.
+The unchanged worker smoke records that warning without rejecting it. The
+wrapper is corrected to enforce the original static-worker proof and retain
+warnings. Its historical failed classification is unchanged; the separate
+post-hoc assessment of the original contract grants no performance credit.
+No repeat of this confirmation is needed. The earlier cohort's actual plan and
+helper bytes remain immutable in its artifact.
+
+Artifact `12085418081` has 43 independently read-back members, 264,159 bytes,
+and SHA-256 `266278098b7601eede714250250c4586d5017b363ea1971e42bfce6a021006cc`.
+The independent analysis is
+`.cache/solo-followup/remote-38991754609/confirmation/analysis-v1.json`, SHA-256
+`1c432a22e0721a439fdd6620f237195161c6b94f318578095706cd1afa29bd10`.
+
+### Native raster source-observation correction
+
+[Run 38991754555](https://github.com/mekhovov/revealline/actions/runs/38991754555)
+used the same tooling and exact package. Both engines stopped with source
+observation overflow before retaining any cases or captures. They produced
+**no pixel pass or pixel failure conclusion**. Package/source/CSP verification
+and owner cleanup passed. Each retained 152 source identities totaling
+2,242,201 bytes. The observed `i18n/index.mjs` imports the 1,265,063-byte
+localization catalogue, exceeding the observer's one-MiB per-source limit.
+
+The prospective correction raises only that source witness limit to two MiB,
+retaining the eight-MiB aggregate and 256-source caps. All twelve original
+cases, zero pixel tolerance, capture protocols, browser deadlines and ownership
+checks remain unchanged. Rejected source identities now retain a bounded reason.
+One new observation per affected engine is declared on the next push from
+`aeadf7f43`; previous failed artifacts remain unchanged. Chromium artifact
+`12085497880` is 422,825 bytes with SHA-256
+`4a0e1ba7b8f70ae988467d5c8cbf628ad6e1f4e16a53ba231d377be0619d24e1`;
+WebKit artifact `12085033070` is 419,435 bytes with SHA-256
+`96ab0343220d6cff4cb362f04224e2b3b4e1569f9b1dbda9f3159556305d8181`.
+Each has 44 independently verified members and a separate analysis under
+`.cache/solo-followup/remote-38991754555/`.
 
 ## Other CI evidence
 
