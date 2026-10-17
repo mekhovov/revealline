@@ -62,6 +62,75 @@ async function until(condition) {
   while (!condition() && Date.now() < end) await delay();
   assert(condition(), 'bounded state did not arrive');
 }
+
+test('optional initial replay construction waits for Pause and keeps its defensive validation', async (t) => {
+  const replay = record().replay,
+    media = createMediaPreparation();
+  t.after(() => media.close());
+  media.setPhase('playing');
+  replay.options.seed = -1; // Only the real core constructor rejects this value.
+  let settled = false;
+  const pending = verifyReplayAsync(replay, {
+    scheduleChunk: (work, options) => media.run('main', work, options),
+  });
+  const result = pending.then(
+    () => {
+      settled = true;
+    },
+    (error) => {
+      settled = true;
+      return error;
+    },
+  );
+  await until(() => settled || media.snapshot().queued === 1);
+  assert.equal(settled, false, 'constructing the initial replay must also wait during play');
+  media.setPhase('paused');
+  assert.match((await result).message, /seed must be a uint32/);
+  assert.equal(media.snapshot().queued, 0);
+  await assert.rejects(verifyReplayAsync(replay), /seed must be a uint32/);
+});
+
+test('initial replay admission owns its input before yielding and aborts without constructing it', async (t) => {
+  const replay = record().replay,
+    expected = verifyReplay(replay),
+    media = createMediaPreparation();
+  t.after(() => media.close());
+  media.setPhase('playing');
+  const options = { scheduleChunk: (work, request) => media.run('main', work, request) };
+  const pending = verifyReplayAsync(replay, options);
+  replay.options.seed = -1;
+  replay.segments[0].input.direction = 'up';
+  await until(() => media.snapshot().queued === 1);
+  media.setPhase('paused');
+  const result = await pending;
+  assert.equal(result.match, true);
+  assert.deepEqual(result.actual, expected.actual);
+  media.setPhase('playing');
+  const controller = new AbortController();
+  const cancelled = verifyReplayAsync(replay, { ...options, signal: controller.signal });
+  const rejected = assert.rejects(cancelled, { name: 'AbortError' });
+  await until(() => media.snapshot().queued === 1);
+  controller.abort();
+  await rejected;
+  assert.equal(media.snapshot().queued, 0);
+});
+
+test('admitted replay strings keep the original document byte and field limits', async (t) => {
+  const replay = record().replay,
+    media = createMediaPreparation();
+  t.after(() => media.close());
+  // The document can exceed the individual-string budget; its fields cannot.
+  replay.summary.extra = Array.from({ length: 140 }, () => 'x'.repeat(2048));
+  const text = JSON.stringify(replay),
+    expected = verifyReplay(text);
+  assert(text.length > 262144);
+  const result = await verifyReplayAsync(text, {
+    scheduleChunk: (work, options) => media.run('main', work, options),
+  });
+  assert.equal(result.match, false);
+  assert.deepEqual(result.diagnostics, expected.diagnostics);
+  assert.deepEqual(result.actual, expected.actual);
+});
 function fixture(t, { route = 'capture', gate = true } = {}) {
   const input = record(),
     profile = emptyJourneyProfile();
