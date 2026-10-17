@@ -363,6 +363,13 @@ export function createTuningLibraryStore({
         else value.setups[index] = drone;
       });
     },
+    createAndSelectSetup: async (setup, expected = current.revision) => {
+      const drone = submitted(setup);
+      return transaction(expected, (value) => {
+        value.setups.push(drone);
+        value.selectedSetupId = drone.id;
+      });
+    },
     selectSetup: (id, expected = current.revision) =>
       transaction(expected, (value) => {
         value.selectedSetupId = id;

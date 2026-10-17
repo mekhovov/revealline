@@ -45,6 +45,10 @@ const COPY = {
     unknown: 'Device hardware cadence: unavailable',
     slow: 'The simulation is running slowly. Practice is paused; rendering quality does not change the physics frequency.',
     failure: 'Practice stopped:',
+    durationLimit:
+      'The flight reached its duration limit. Export or keep this practice as a reference, then restart for a new flight.',
+    recordingLimit:
+      'The recording reached its capacity limit. Export or keep this practice as a reference, then restart for a new flight.',
     low: 'Lower throttle before starting.',
     vertical: 'Camera FOV is vertical.',
     record: 'Export practice recording',
@@ -129,6 +133,10 @@ const COPY = {
     unknown: 'Апаратна частота пульта: недоступна',
     slow: 'Симуляція працює повільно. Практику призупинено; якість зображення не змінює частоту фізики.',
     failure: 'Практику зупинено:',
+    durationLimit:
+      'Досягнуто обмеження тривалості польоту. Експортуйте або збережіть цю практику як орієнтир, потім почніть новий політ.',
+    recordingLimit:
+      'Досягнуто обмеження обсягу запису. Експортуйте або збережіть цю практику як орієнтир, потім почніть новий політ.',
     low: 'Знизьте газ перед стартом.',
     vertical: 'Кут огляду камери — вертикальний.',
     record: 'Експортувати запис практики',
@@ -223,6 +231,7 @@ export function mountAdvancedPractice({
     running = false,
     busy = false,
     initialized = false,
+    flightStopCode = null,
     graphicsLost = false,
     telemetry = null,
     sequence = 0,
@@ -792,7 +801,7 @@ export function mountAdvancedPractice({
     cancelComparison.hidden = true;
     comparisonFile.disabled = !initialized;
     keepComparison.disabled = !initialized || !telemetry?.missionTick;
-    start.disabled = !initialized || graphicsLost;
+    start.disabled = !initialized || graphicsLost || Boolean(flightStopCode);
   }
   async function verifyReference(load) {
     if (disposed || !initialized || exporting) return;
@@ -869,9 +878,12 @@ export function mountAdvancedPractice({
     lastPollAt = null;
     observedPollHz = null;
     pauseButton.disabled = true;
-    start.disabled = !initialized || graphicsLost || verifying;
+    start.disabled = !initialized || graphicsLost || verifying || Boolean(flightStopCode);
     aircraft.disabled = false;
-    status.textContent = message;
+    status.textContent =
+      flightStopCode && initialized
+        ? copy[flightStopCode === 'ADVANCED_DURATION_LIMIT' ? 'durationLimit' : 'recordingLimit']
+        : message;
     onPause();
   }
   function failed(error) {
@@ -944,7 +956,12 @@ export function mountAdvancedPractice({
       if (elapsed > 250) pause(copy.slow);
       else if (running) timer = win.setTimeout(tick, Math.max(0, 20 - elapsed));
     } catch (error) {
-      if (!disposed && owner === generation) failed(error);
+      if (!disposed && owner === generation) {
+        if (['ADVANCED_DURATION_LIMIT', 'ADVANCED_RECORDING_LIMIT'].includes(error.code)) {
+          flightStopCode = error.code;
+          pause();
+        } else failed(error);
+      }
     } finally {
       busy = false;
     }
@@ -958,8 +975,8 @@ export function mountAdvancedPractice({
       return;
     }
     cancelVerification();
-    pause(copy.loading);
     initialized = false;
+    pause(copy.loading);
     start.disabled = true;
     reset.disabled = true;
     download.disabled = true;
@@ -992,6 +1009,7 @@ export function mountAdvancedPractice({
       activeOptions = structuredClone(options);
       activeComparison = result.comparison;
       initialized = true;
+      flightStopCode = null;
       status.textContent = copy.ready;
       start.disabled = graphicsLost;
       reset.disabled = false;
@@ -1036,7 +1054,8 @@ export function mountAdvancedPractice({
     frame = win.requestAnimationFrame(draw);
   }
   listen(start, 'click', () => {
-    if (!initialized || graphicsLost || disposed || exporting || verifying) return;
+    if (!initialized || graphicsLost || disposed || exporting || verifying || flightStopCode)
+      return;
     try {
       if (sampleControls().throttle > 0.1 && (telemetry?.missionTick ?? 0) === 0) {
         status.textContent = copy.low;

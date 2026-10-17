@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { finalizeOfflineContent } from './offline-finalize.mjs';
-import { addOfflineEntries } from './game-cli.mjs';
+import { addOfflineEntries, applyPublicationProfile } from './game-cli.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -105,3 +105,110 @@ test('finalization preserves ownership and soundtrack pins and rejects incomplet
   );
   assert.equal(stale.sha256, 'old');
 });
+
+// This suite is explicitly selected by offline-final-bytes for game-cli changes.
+// These main-only projections must never change complete release distributions.
+const canonicalPaths = ['en', 'uk'].flatMap((language) =>
+  [
+    'common',
+    'content',
+    'controllerEditor',
+    'demo',
+    'errors',
+    'gameplay',
+    'interface',
+    'tools',
+    'website',
+  ].map((namespace) => `game/locales/${language}/${namespace}.json`),
+);
+const canonicalFixture = () => ({
+  entries: [
+    ...[
+      'game/live.json',
+      'game/archive.json',
+      'game/i18n/catalogs.mjs',
+      'app/i18n/catalogs.mjs',
+      'game/locales/en/future.json',
+    ].map((name) => ({ name, bytes: Buffer.from(name) })),
+    ...canonicalPaths.map((name) => ({ name, bytes: Buffer.from('{}') })),
+  ],
+  catalogue: {
+    files: [
+      { path: 'game/live.json', sha256: 'live' },
+      { path: 'game/archive.json', sha256: 'archive' },
+    ],
+    groups: [
+      { id: 'shared', category: 'shared', requires: [], files: ['game/live.json'] },
+      { id: 'archive:old', category: 'archive', requires: [], files: ['game/archive.json'] },
+    ],
+    missions: [],
+    originals: [],
+  },
+});
+
+test('main-only canonical projection preserves runtime and unknown original bytes', () => {
+  const { entries, catalogue } = canonicalFixture();
+  const retained = entries.filter(
+    (entry) => !canonicalPaths.includes(entry.name) && entry.name !== 'game/archive.json',
+  );
+  applyPublicationProfile(entries, catalogue, 'main-pages', null);
+  assert.deepEqual(entries, retained);
+  assert(!entries.some((entry) => canonicalPaths.includes(entry.name)));
+});
+
+test('complete release profile preserves every canonical original and all catalogue data', () => {
+  const { entries, catalogue } = canonicalFixture();
+  const before = JSON.stringify({ entries, catalogue });
+  applyPublicationProfile(entries, catalogue, null, null);
+  assert.equal(JSON.stringify({ entries, catalogue }), before);
+});
+
+for (const owner of ['file', 'group'])
+  test(`canonical ${owner} dependency rejects main-only removal atomically`, () => {
+    const { entries, catalogue } = canonicalFixture();
+    if (owner === 'file') catalogue.files.push({ path: canonicalPaths[0], sha256: 'raw' });
+    else catalogue.groups[0].files.push(canonicalPaths[0]);
+    const before = JSON.stringify({ entries, catalogue });
+    assert.throws(
+      () => applyPublicationProfile(entries, catalogue, 'main-pages', null),
+      /canonical.*dependency/i,
+    );
+    assert.equal(JSON.stringify({ entries, catalogue }), before);
+  });
+
+for (const absent of ['game/i18n/catalogs.mjs', 'app/i18n/catalogs.mjs', canonicalPaths[0]])
+  test(`incomplete canonical projection rejects ${absent}`, () => {
+    const { entries, catalogue } = canonicalFixture();
+    entries.splice(
+      entries.findIndex((entry) => entry.name === absent),
+      1,
+    );
+    assert.throws(
+      () => applyPublicationProfile(entries, catalogue, 'main-pages', null),
+      /canonical.*(?:incomplete|catalogue)/i,
+    );
+  });
+
+test('new browser canonical original consumer blocks the main-only projection', () => {
+  const { entries, catalogue } = canonicalFixture();
+  entries.push({
+    name: 'game/new-consumer.mjs',
+    bytes: Buffer.from("fetch('./locales/' + language + '/content.json')"),
+  });
+  assert.throws(
+    () => applyPublicationProfile(entries, catalogue, 'main-pages', null),
+    /canonical.*consumer/i,
+  );
+});
+
+for (const name of ['game/i18n/catalogs.mjs', 'app/i18n/catalogs.mjs'])
+  test(`empty duplicate compiled catalogue rejects atomically: ${name}`, () => {
+    const { entries, catalogue } = canonicalFixture();
+    entries.push({ name, bytes: Buffer.alloc(0) });
+    const before = JSON.stringify({ entries, catalogue });
+    assert.throws(
+      () => applyPublicationProfile(entries, catalogue, 'main-pages', null),
+      /canonical.*catalogue/i,
+    );
+    assert.equal(JSON.stringify({ entries, catalogue }), before);
+  });

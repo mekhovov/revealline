@@ -1,4 +1,4 @@
-/* global window, document, navigator */
+/* global window, document, navigator, Storage, localStorage, DOMException */
 import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
@@ -93,7 +93,11 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
   try {
     await writeFile(
       path.join(presetFolder, 'main.txt'),
-      'set yaw_srate = 80\n#$ OPTION BEGIN (CHECKED): Fast yaw\nset yaw_srate = 90\n#$ OPTION END\n',
+      'set yaw_srate = 80\n#$ OPTION BEGIN (CHECKED): Fast yaw\n#$ OPTION END\n#$ INCLUDE: included.txt\n',
+    );
+    await writeFile(
+      path.join(presetFolder, 'included.txt'),
+      '#$ OPTION BEGIN (UNCHECKED): FAST YAW\nset yaw_srate = 90\n#$ OPTION END\n',
     );
     await writeFile(path.join(presetFolder, 'other.txt'), 'set roll_srate = 72\n');
     for (const engine of ['chromium', 'firefox', 'webkit']) {
@@ -587,6 +591,11 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await button('Resolve preset and review options').click();
             const fastYaw = page.getByLabel('Fast yaw', { exact: true });
             await fastYaw.waitFor();
+            check(
+              (await transfer.inputValue()).includes('set yaw_srate = 90'),
+              'Checked root option did not select a differently cased included option',
+            );
+            evidence.checks.presetIncludeOptionCaseCompatibility = true;
             await button('Preview import').click();
             await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
             await fastYaw.uncheck();
@@ -656,11 +665,66 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             evidence.checks.presetEntryClearsPriorOptions = true;
 
             const firstSetup = await page.getByLabel('Drone setup', { exact: true }).inputValue();
+            const beforeDuplicate = await page.evaluate(() => {
+              const select = document.querySelector('[aria-label="Drone setup"]');
+              window.qualificationSetupWrites = { calls: 0, reject: true };
+              window.qualificationSetItem = Storage.prototype.setItem;
+              Storage.prototype.setItem = function (key, value) {
+                if (this === localStorage && key === 'revealline.fpv.tuning.v1') {
+                  const probe = window.qualificationSetupWrites;
+                  probe.calls++;
+                  if (probe.reject || probe.calls > 1)
+                    throw new DOMException('Injected setup quota failure', 'QuotaExceededError');
+                }
+                return window.qualificationSetItem.call(this, key, value);
+              };
+              return {
+                saved: localStorage.getItem('revealline.fpv.tuning.v1'),
+                library: window.qualificationStore.export(),
+                selected: select.value,
+                options: Array.from(select.options, (option) => option.value),
+                draftName: document.querySelector('[aria-label="Drone name"]').value,
+              };
+            });
+            await button('Duplicate drone setup').click();
+            await page
+              .getByRole('status')
+              .filter({ hasText: 'Injected setup quota failure' })
+              .waitFor();
+            check(
+              await page.evaluate((before) => {
+                const select = document.querySelector('[aria-label="Drone setup"]');
+                return (
+                  localStorage.getItem('revealline.fpv.tuning.v1') === before.saved &&
+                  window.qualificationStore.export() === before.library &&
+                  select.value === before.selected &&
+                  JSON.stringify(Array.from(select.options, (option) => option.value)) ===
+                    JSON.stringify(before.options) &&
+                  document.querySelector('[aria-label="Drone name"]').value === before.draftName
+                );
+              }, beforeDuplicate),
+              'Rejected duplicate changed saved setups, visible selection or the draft',
+            );
+            await page.evaluate(() => {
+              window.qualificationSetupWrites = { calls: 0, reject: false };
+            });
             await button('Duplicate drone setup').click();
             await page.waitForFunction(
               (id) => window.qualificationStore.snapshot().selectedSetupId !== id,
               firstSetup,
             );
+            const duplicateWrites = await page.evaluate(() => {
+              Storage.prototype.setItem = window.qualificationSetItem;
+              return window.qualificationSetupWrites.calls;
+            });
+            check(duplicateWrites === 1, 'Duplicate creation and selection used multiple writes');
+            await page
+              .getByRole('status')
+              .filter({ hasText: 'Drone setup duplicated and selected.' })
+              .waitFor();
+            evidence.checks.failedDuplicatePreservesSavedAndVisibleSetup = true;
+            evidence.checks.duplicateCreationAndSelectionUseOneWrite = true;
+            evidence.checks.successfulDuplicateRetryClearsFailure = true;
             const secondSetup = await page.getByLabel('Drone setup', { exact: true }).inputValue();
             await page.getByLabel('Drone setup', { exact: true }).selectOption(firstSetup);
             await page.waitForFunction(

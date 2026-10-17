@@ -956,6 +956,72 @@ for (const failure of ['quota', 'stale tab'])
     assert.equal(f.find('Drone name').value, 'Second drone');
   });
 
+test('duplicating a drone creates and selects its draft in one storage write', async (t) => {
+  const f = fixture(t);
+  await f.click('Save drone assignment & camera');
+  const original = f.store.snapshot().setups[0];
+  f.edit('Drone name', 'Draft drone');
+  f.edit('Camera tilt (degrees)', 31);
+  const write = f.storage.setItem;
+  let writes = 0;
+  f.storage.setItem = (key, value) => {
+    if (++writes > 1) throw new Error('Unexpected second write');
+    write(key, value);
+  };
+  await f.click('Duplicate drone setup');
+  assert.equal(writes, 1);
+  const library = f.store.snapshot();
+  assert.equal(library.setups.length, 2);
+  assert.deepEqual(library.setups[0], original);
+  assert.equal(library.selectedSetupId, library.setups[1].id);
+  assert.equal(f.find('Drone setup', 'select').value, library.setups[1].id);
+  assert.equal(f.find('Drone setup', 'select').options.length, 2);
+  assert.equal(library.setups[1].name, 'Draft drone copy');
+  assert.equal(library.setups[1].camera.tilt, 31);
+  assert.doesNotMatch(f.ui.root.querySelector('[role="status"]').textContent, /Could not apply/);
+});
+
+for (const failure of ['quota', 'stale tab', 'invalid camera'])
+  test(`failed drone duplication preserves the library and editable draft (${failure})`, async (t) => {
+    const f = fixture(t);
+    await f.click('Save drone assignment & camera');
+    f.edit('Drone name', 'Unsaved drone');
+    f.edit('Camera tilt (degrees)', failure === 'invalid camera' ? '' : '31');
+    const write = f.storage.setItem;
+    if (failure === 'quota')
+      f.storage.setItem = () => {
+        throw new Error('Quota exceeded');
+      };
+    else if (failure === 'stale tab') {
+      const other = createTuningLibraryStore({ storage: f.storage });
+      await other.saveProfile('legacy-feel', { name: 'Other tab saved' });
+    }
+    const stored = f.storage.getItem(TUNING_LIBRARY_KEY),
+      before = f.store.export();
+    await f.click('Duplicate drone setup');
+    assert.equal(f.store.export(), before);
+    assert.equal(f.storage.getItem(TUNING_LIBRARY_KEY), stored);
+    assert.equal(f.find('Drone setup', 'select').value, 'my-drone');
+    assert.equal(f.find('Drone name').value, 'Unsaved drone');
+    assert.equal(f.find('Camera tilt (degrees)').value, failure === 'invalid camera' ? '' : '31');
+    assert.match(f.ui.root.querySelector('[role="status"]').textContent, /Could not apply/);
+    if (failure === 'quota') {
+      f.storage.setItem = write;
+      await f.click('Duplicate drone setup');
+      assert.equal(f.store.snapshot().setups.length, 2);
+      assert.notEqual(f.store.snapshot().selectedSetupId, 'my-drone');
+      assert.equal(
+        f.ui.root.querySelector('[role="status"]').textContent,
+        'Drone setup duplicated and selected.',
+      );
+      f.setLocale('uk');
+      assert.equal(
+        f.ui.root.querySelector('[role="status"]').textContent,
+        'Налаштування дрона продубльовано й вибрано.',
+      );
+    }
+  });
+
 test('ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller', async (t) => {
   const { validateAdvancedAircraft, createAdvancedAircraftTune } = await import(
     '../../optional-practice/civilian-fpv/advanced-simulation.mjs'

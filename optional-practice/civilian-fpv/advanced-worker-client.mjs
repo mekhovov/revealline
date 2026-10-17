@@ -49,8 +49,12 @@ export function createAdvancedWorkerClient({
     if (!pending) return;
     clearTimeout(pending.timer);
     waiting.delete(data.id);
-    if (data.error) pending.reject(new Error(data.error));
-    else pending.resolve(data.result);
+    if (data.error) {
+      const error = new Error(data.error);
+      if (['ADVANCED_DURATION_LIMIT', 'ADVANCED_RECORDING_LIMIT'].includes(data.code))
+        error.code = data.code;
+      pending.reject(error);
+    } else pending.resolve(data.result);
   };
   const fail = (event) => dispose(new Error(event.message || 'Advanced worker is unavailable.'));
   worker.addEventListener('message', receive);
