@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-17T21:59:20.272152+00:00",
+  "status": "PASS_VISIBLE_ABSENT_CORE_FALLBACK_SCOPED_ONLY",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "mainObservedBeforeSession": "fe1bb1cecbfcead7edaad24e802242d62b4e3b99",
+  "prObservedBeforeSession": "OPEN/Draft/CLEAN",
+  "classifiesPreviousReceipt": "ROOT-NATIVE-OBSERVATION-RECEIPT-v2.json SHA1532c062c8c025633031c62899464c486f81fc20f5873c57d0d692a160100e51; preserve original failed requests and prior uncertainty",
+  "sourceFinding": "Installed-core global-settings-tools.mjs is deliberately excluded from optional SIM archives; exact literal lazy import is explicitly permitted. Settings calls ensure; catch sets failed and renders fallback in Extras. No Library delta or package defect established from this expected absent-core request.",
+  "uiFinding": "Through normal Settings > Help & Extras, both Ukrainian and English showed the known-core-return fallback and the Open shared game tools link. The link was not followed; installed core destination/integration is not qualified.",
+  "englishText": "Shared tools are unavailable here. Open the game in a new tab. SIM tools remain available.",
+  "ukrainianText": "Спільні інструменти недоступні тут. Відкрийте гру в новій вкладці. Інструменти SIM залишаються доступними.",
+  "method": "One CUA renderer; reused preserved loopback origin and same qualified stage; no prior map/flight test repeated; no download/reset/storage inspection",
+  "viewport": "1280x720",
+  "theme": "Signal Blue",
+  "sourceRefs": {
+    "packagePolicy": {
+      "file": "source-optional-package-policy.mjs",
+      "bytes": 31364,
+      "sha256": "aa37d204f94c2592967c64813864647b5b84d65979d50c3abbf90314146ab6bc"
+    },
+    "simPresentation": {
+      "file": "sim-presentation.mjs",
+      "bytes": 650712,
+      "sha256": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05"
+    },
+    "worldApp": {
+      "file": "world-app.mjs",
+      "bytes": 412091,
+      "sha256": "9e4374bc374e39d1b6e36726a1e24ef231165492adae3fefe5d6c161b742e6c2"
+    }
+  },
+  "httpRequestStatusCounts": {
+    "304": 160,
+    "404": 1
+  },
+  "http404Requests": [
+    {
+      "at": "2026-10-17T21:58:01.519302+00:00",
+      "message": "\"GET /revealline/game/ui/global-settings-tools.mjs HTTP/1.1\" 404 -"
+    }
+  ],
+  "limits": [
+    "Known-core-return fallback branch observed; branch without known return not separately tested",
+    "Installed-core tools availability, target link, full-player, responsive and physical acceptance remain open",
+    "Original affected public context untouched; prior two Lunar observations remain bounded",
+    "No source fix, new build, artifact GET, product Git change, cleanup or endurance performed"
+  ],
+  "ownedTabClosed": true,
+  "rendererOrServerActive": false,
+  "serverSession": 19413,
+  "serverActualExit": 130,
+  "internalAvailableBytesAtEnd": 3821850624
+}

@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-17T21:51:26.628901+00:00",
+  "session": 42233,
+  "pid": 5266,
+  "toolExitCode": 130,
+  "intentionalStop": true,
+  "action": "SIGINT after both owned tabs closed",
+  "negative": "KeyboardInterrupt traceback preserved; not a successful test exit",
+  "serverClosed": {
+    "UTC": "2026-10-17T21:50:36.406044+00:00",
+    "serverClosed": true
+  }
+}

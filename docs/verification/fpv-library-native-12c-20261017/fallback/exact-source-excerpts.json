@@ -1,0 +1,49 @@
+{
+  "sourceHead": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "files": {
+    "packagePolicy": {
+      "file": "source-optional-package-policy.mjs",
+      "bytes": 31364,
+      "sha256": "aa37d204f94c2592967c64813864647b5b84d65979d50c3abbf90314146ab6bc"
+    },
+    "simPresentation": {
+      "file": "sim-presentation.mjs",
+      "bytes": 650712,
+      "sha256": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05"
+    },
+    "worldApp": {
+      "file": "world-app.mjs",
+      "bytes": 412091,
+      "sha256": "9e4374bc374e39d1b6e36726a1e24ef231165492adae3fefe5d6c161b742e6c2"
+    }
+  },
+  "excerpts": {
+    "packagePolicy": [
+      {
+        "firstLine": 658,
+        "lastLine": 668,
+        "text": "        // These optional tools belong to the installed core game, not the SIM\n        // archive. Only this literal lazy import may cross that boundary. The\n        // SIM keeps its own preferences/backup tools and a visible fallback\n        // when the core game is absent or offline. Never admit arbitrary URLs.\n        coreOnlyImports: Object.freeze(\n          ['civilian-flight', 'civilian-fpv', 'fpv-worlds'].includes(id)\n            ? [\n                Object.freeze({\n                  from: 'optional-practice/civilian-fpv/sim-presentation.mjs',\n                  source: '../../game/ui/global-settings-tools.mjs',\n                }),"
+      }
+    ],
+    "simPresentation": [
+      {
+        "firstLine": 5170,
+        "lastLine": 5260,
+        "text": "export function mountSimGlobalTools({\n  document: doc,\n  window: win,\n  gameReturn,\n  settingsRoot,\n  panels,\n  locale = () => 'en',\n  onOpen = () => {},\n  onControls = () => {},\n  loadProvider = () => import('../../game/ui/global-settings-tools.mjs'),\n  moduleURL = import.meta.url,\n} = {}) {\n  let coreURL;\n  const knownReturn = typeof gameReturn === 'string' && gameReturn.length > 0;\n  try {\n    coreURL = new URL('../../game/', moduleURL);\n    if (coreURL.origin !== new URL(win.location.href).origin)\n      throw new Error('Core origin mismatch');\n    if (knownReturn) {\n      const target = new URL(gameReturn, win.location.href);\n      if (target.origin !== coreURL.origin || !target.pathname.startsWith(coreURL.pathname))\n        throw new Error('Core return does not match this application');\n    }\n  } catch {\n    return {\n      ensure: async () => false,\n      refresh() {},\n      dispose() {},\n      root: () => null,\n      back: () => false,\n    };\n  }\n  const fallback = doc.createElement('section'),\n    link = doc.createElement('a'),\n    status = doc.createElement('p');\n  fallback.dataset.simGlobalToolsFallback = '';\n  link.href = coreURL.href;\n  link.target = '_blank';\n  link.rel = 'noopener';\n  status.setAttribute('role', 'status');\n  fallback.append(link, status);\n  panels.extras.append(fallback);\n  let provider,\n    pending,\n    disposed = false,\n    failed = false;\n  const refresh = () => {\n    provider?.refresh?.();\n    const uk = locale() === 'uk';\n    link.textContent = uk ? 'Відкрити спільні інструменти гри' : 'Open shared game tools';\n    link.hidden = !knownReturn;\n    status.textContent = failed\n      ? uk\n        ? knownReturn\n          ? 'Спільні інструменти недоступні тут. Відкрийте гру в новій вкладці. Інструменти SIM залишаються доступними.'\n          : 'Цей пакет не містить спільних інструментів основної гри. Інструменти SIM залишаються доступними.'\n        : knownReturn\n          ? 'Shared tools are unavailable here. Open the game in a new tab. SIM tools remain available.'\n          : 'This package does not include the main game tools. SIM tools remain available.'\n      : uk\n        ? 'Спільні інструменти завантажуються з основної гри.'\n        : 'Shared tools load from the main game.';\n  };\n  refresh();\n  const ensure = () => {\n    if (disposed) return Promise.resolve(false);\n    if (pending) return pending;\n    pending = Promise.resolve()\n      .then(() => loadProvider(new URL('ui/global-settings-tools.mjs', coreURL).href))\n      .then((module) => {\n        if (disposed) return false;\n        if (typeof module?.mountGlobalSettingsTools !== 'function')\n          throw new Error('Shared tools are unavailable');\n        provider = module.mountGlobalSettingsTools({\n          document: doc,\n          window: win,\n          settingsRoot,\n          panels,\n          prefix: 'sim-global-tools',\n          coreURL,\n          onOpen,\n        });\n        fallback.hidden = true;\n        onControls(provider.controls);\n        return true;\n      })\n      .catch(() => {\n        failed = true;\n        refresh();\n        return false;\n      });"
+      }
+    ],
+    "worldApp": [
+      {
+        "firstLine": 7291,
+        "lastLine": 7298,
+        "text": "  on($('flight-options'), 'click', () => openSettings());\n  let settingsReturnFocus = null;\n  function openSettings({ category } = {}) {\n    void globalTools?.ensure();\n    if (!$('sim-settings').open) settingsReturnFocus = doc.activeElement;\n    pauseFlight();\n    if (!$('sim-settings').open) $('sim-settings').showModal();\n    const view = modeSettingsView,"
+      },
+      {
+        "firstLine": 9269,
+        "lastLine": 9278,
+        "text": "  globalTools = globalToolsFactory({\n    document: doc,\n    window: win,\n    gameReturn: gameReturn,\n    settingsRoot: $('sim-settings'),\n    panels: modeSettingsView.panels,\n    locale: () => locale,\n    onOpen: () => pauseFlight(),\n    onControls: (controls) => globalSettingsView.update({ controls }),\n  });"
+      }
+    ]
+  },
+  "method": "Read only exact existing owned policy and two qualified staged modules; no artifact GET/build or broad scan"
+}

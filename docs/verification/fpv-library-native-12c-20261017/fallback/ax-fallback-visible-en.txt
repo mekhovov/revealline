@@ -1,0 +1,27 @@
+Browser tab: 4, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en
+	1 container sim-settings
+		2 container
+			3 heading Settings, Value: 2
+				214 text Settings
+			5 button Back, ID: close-sim-settings
+		6 tab group Settings categories
+			7 tab (selectable, settable, boolean) Gameplay, Value: 0, ID: worlds-settings-tab-gameplay
+			8 tab (selectable, settable, boolean) Controls, Value: 0, ID: worlds-settings-tab-controls
+			9 tab (selectable, settable, boolean) Audio, Value: 0, ID: worlds-settings-tab-audio
+			10 tab (selectable, settable, boolean) Display & Language, Value: 0, ID: worlds-settings-tab-display
+			11 tab (selectable, settable, boolean) Accessibility, Value: 0, ID: worlds-settings-tab-accessibility
+			12 tab (selectable, settable, boolean) Progress & Collection, Value: 0, ID: worlds-settings-tab-data
+			13 tab (selectable, settable, boolean) Content & Offline, Value: 0, ID: worlds-settings-tab-content
+			14 tab (selected, settable, boolean) Help & Extras, Value: 1, ID: worlds-settings-tab-extras
+		215 container Description: Help & Extras, ID: worlds-settings-panel-extras
+			216 heading Help & Extras, Value: 3
+				217 text Help & Extras
+			218 button Learn to fly
+				219 text Learn to fly
+			220 container
+				221 link Description: Open shared game tools, Value: 127.0.0.1:57145/revealline/game/
+				222 text Shared tools are unavailable here. Open the game in a new tab. SIM tools remain available.
+			223 text Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.
+
+The focused UI element is 14 tab (selected, settable, boolean) Help & Extras, Value: 1, ID: worlds-settings-tab-extras

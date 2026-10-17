@@ -1,0 +1,21 @@
+Browser tab: 2, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en
+	1 container flight-dialog
+		15 container
+			16 button Description: Change camera · V / R3 · FPV, Help: Change camera · V / R3
+			17 button Pause, ID: worlds-shell-action-pause
+				18 text Pause
+		4 container ID: world-viewport, Yaw 0%, Throttle 0% Roll 0%, Pitch 0% Drone response. descending. 25.6 m · -2.1 m/s vertical · 0.0 m/s drift Regional review · unscored
+			5 image world-canvas
+			7 container world-touch
+				8 container Description: Yaw 0%, Throttle 0%, ID: world-left-stick
+				9 container Description: Roll 0%, Pitch 0%, ID: world-right-stick
+			10 container Description: Drone response. descending. 25.6 m · -2.1 m/s vertical · 0.0 m/s drift, ID: flight-drone-response
+				11 button Hide drone response
+				19 text Drone upright
+			13 container
+				14 container Regional review · unscored
+					20 text Regional review · unscored
+				21 text Regional review · unscored
+
+The focused UI element is 4 container ID: world-viewport, Yaw 0%, Throttle 0% Roll 0%, Pitch 0% Drone response. descending. 25.6 m · -2.1 m/s vertical · 0.0 m/s drift Regional review · unscored

@@ -1,0 +1,86 @@
+Browser tab: 2, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en
+	1 container Pause, ID: worlds-shell-pause-dialog
+		2 heading Pause, Value: 1, ID: worlds-shell-pause-title
+			3 text Pause
+		4 container
+			5 button Resume, ID: worlds-shell-action-pause-resume
+			6 heading Flight setup, Value: 2
+				7 text Flight setup
+			8 container
+				9 text Flight mode
+				10 pop up button (collapsed, settable) Flight mode, Value: Self-level, Secondary Actions: Expand
+					11 menu
+						12 (selected) Self-level
+						13 Acro
+			14 container
+				15 text Controls
+				16 pop up button (collapsed, settable) Controls, Value: Keyboard, Secondary Actions: Expand
+					17 menu
+						18 (selected) Keyboard
+						19 Touch
+						20 Controller / Steam Deck
+						21 USB radio
+			22 button Set up radio
+			23 text Changing mode starts a new paused attempt. Changing input keeps flight paused.
+			24 container Camera view
+				25 text Camera view
+				26 checkbox FPV, Value: 1
+				27 checkbox Chase, Value: 0
+				28 checkbox Overview, Value: 0
+				29 text V · R3: click the right stick. Radio: choose a view in this menu.
+			30 button (collapsed) Your device controls, Secondary Actions: Expand
+				31 text Your device controls
+			32 heading Regional free flight, Value: 2
+				33 text Regional free flight
+			34 text Lunar Basin — flight study
+			35 button Retry
+			36 text Retry an unavailable area or return to launch. Flight stays paused until you arm.
+			37 container
+				38 text Starting point
+				39 pop up button (collapsed, settable) Starting point, Value: 1 · Survey shelter, ID: regional-starting-point, Secondary Actions: Expand
+					40 menu
+						41 (selected) 1 · Survey shelter
+						42 2 · Split rocks
+						43 3 · Winding channel
+						44 4 · Crater rim
+						45 5 · Fractured highland
+						46 6 · Survey dish
+				47 button Guide me there
+				48 button Restart here
+				49 button (disabled) Turn guidance off
+				50 text Direction guidance is off.
+				51 text Restart moves to the selected start and stays disarmed. Guide me there only shows direction from the drone nose; obstacles and a safe route are not checked. Resume flight explicitly when ready.
+			52 container
+				53 heading Saved places, Value: 3
+					54 text Saved places
+				55 text Name this place
+				56 text field (settable) Name this place, Value: Place 1, ID: regional-place-name
+				57 button Save current place
+				58 text Choose a saved place
+				59 pop up button (disabled, collapsed, settable) Choose a saved place, ID: regional-saved-place, Secondary Actions: Expand
+				60 button (disabled) Guide me there
+				61 button (disabled) Restore here
+				62 button (disabled) Remove…
+				63 button Refresh places
+				64 text Places belong to this world version. Restore levelled and disarmed; mode and view stay the same.
+			65 container
+				66 button Try Advanced here · restart
+				67 text Experimental Acro · unscored · air start 2 m above the selected point. Landings and collisions use the verified terrain. Uses portable rates, or Actual defaults for Legacy feel.
+			68 heading MISSIONS, Value: 3
+				69 text MISSIONS
+			70 button Skip, ID: worlds-shell-action-pause-skip
+			71 button Random, ID: worlds-shell-action-pause-random
+			72 button Choose, ID: worlds-shell-action-pause-choose
+			73 heading SOUND, Value: 3
+				74 text SOUND
+			75 checkbox Sound: off, Value: 0, ID: worlds-shell-action-pause-sound
+			76 heading SETTINGS, Value: 3
+				77 text SETTINGS
+			78 button Settings, ID: worlds-shell-action-pause-settings
+			79 button Full screen, ID: worlds-shell-action-pause-fullscreen
+			80 button Home, ID: worlds-shell-action-pause-home
+			81 button Aircraft, rates & throttle
+		82 text Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.
+
+The focused UI element is 5 button Resume, ID: worlds-shell-action-pause-resume

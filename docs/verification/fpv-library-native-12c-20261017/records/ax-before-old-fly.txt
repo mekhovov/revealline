@@ -1,0 +1,1714 @@
+Browser tab: 2, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en
+	1 container Find your next line, ID: journey-chooser
+		2 heading Find your next line, Value: 2, ID: journey-chooser-title
+			3 text Find your next line
+		4 container
+			5 text Search all missions
+			6 search text field (settable) Search all missions, ID: journey-search
+		7 container journey-filter-details
+			8 button (collapsed) Filters +, ID: journey-filter-summary, Secondary Actions: Expand
+				9 text Filters
+				1705 text +
+		11 text 204 missions · Solo
+		12 container Description: Campaign, ID: journey-campaign-rail
+			13 checkbox Circuit stadium · 30 missions, Help: FPV SIM · Worlds, Value: 1
+			14 checkbox Pixel warehouse · 27 missions, Help: FPV SIM · Worlds, Value: 0
+			15 checkbox Parking garage · 17 missions, Help: FPV SIM · Worlds, Value: 0
+			16 checkbox Container yard · 14 missions, Help: FPV SIM · Worlds, Value: 0
+			17 checkbox Coastal airfield · 5 missions, Help: FPV SIM · Worlds, Value: 0
+			18 checkbox Amber quarry · 5 missions, Help: FPV SIM · Worlds, Value: 0
+			19 checkbox Skyline campus · 5 missions, Help: FPV SIM · Worlds, Value: 0
+			20 checkbox Harvest orchard · 5 missions, Help: FPV SIM · Worlds, Value: 0
+			21 checkbox Solar research park · 5 missions, Help: FPV SIM · Worlds, Value: 0
+			22 checkbox Railworks · 5 missions, Help: FPV SIM · Worlds, Value: 0
+			23 checkbox Training hangar · 4 missions, Help: FPV SIM · Worlds, Value: 0
+			24 checkbox Open meadow · 8 missions, Help: FPV SIM · Worlds, Value: 0
+			25 checkbox Woodland park · 8 missions, Help: FPV SIM · Worlds, Value: 0
+			26 checkbox Ukrainian courtyard · 8 missions, Help: FPV SIM · Worlds, Value: 0
+			27 checkbox Flight School · Optional self-level · 12 missions, Help: FPV SIM · Worlds, Value: 0
+			28 checkbox Flight School · Beginner · 14 missions, Help: FPV SIM · Worlds, Value: 0
+			29 checkbox Flight School · Experienced · 8 missions, Help: FPV SIM · Worlds, Value: 0
+			30 checkbox Flight School · Advanced · 8 missions, Help: FPV SIM · Worlds, Value: 0
+			31 checkbox Flight School · Pro · 8 missions, Help: FPV SIM · Worlds, Value: 0
+			32 checkbox Flight School · Master · 8 missions, Help: FPV SIM · Worlds, Value: 0
+		33 container
+			34 container More worlds to fly, ID: optional-world-library
+				35 heading More worlds to fly, Value: 2, ID: world-catalogue-title
+					1642 text More worlds to fly
+				1643 text Choose Play to download a world once and prepare a disarmed flight. Installed worlds stay on this device. Prepare the simulator offline separately.
+				38 search text field (settable) Find a world
+				39 button Refresh worlds
+				1644 text Choose a world and Play.
+				1645 container
+					1646 text Mountain Reservoir 8 challenges · Download 1.3 MiB
+					1647 button Play: Mountain Reservoir
+				1648 container
+					1649 text Festival Grounds 8 challenges · Download 1.2 MiB
+					1650 button Play: Festival Grounds
+				1651 container
+					1652 text Harbor Docks 8 challenges · Download 859 KiB
+					1653 button Play: Harbor Docks
+				1654 container
+					1655 text Castle Courtyard 1 challenge · Download 157 KiB
+					1656 button Play: Castle Courtyard
+				1657 container
+					1658 text City Plaza 1 challenge · Download 1.2 MiB
+					1659 button Play: City Plaza
+				1660 container
+					1661 text House Construction Site 1 challenge · Download 2.3 MiB
+					1662 button Play: House Construction Site
+				1663 container
+					1664 text Frontier Camp 1 challenge · Download 169 KiB
+					1665 button Play: Frontier Camp
+				1666 container
+					1667 text Industrial Service Yard 1 challenge · Download 1.0 MiB
+					1668 button Play: Industrial Service Yard
+				1669 container
+					1670 text Orbital Workshop 1 challenge · Download 153 KiB
+					1671 button Play: Orbital Workshop
+				1672 container
+					1673 text Pine Clearing 1 challenge · Download 129 KiB
+					1674 button Play: Pine Clearing
+				1675 container
+					1676 text Platform Garden 1 challenge · Download 156 KiB
+					1677 button Play: Platform Garden
+				1678 container
+					1679 text Race Paddock 1 challenge · Download 386 KiB
+					1680 button Play: Race Paddock
+				1681 container
+					1682 text Roadworks Practice Park 1 challenge · Download 63 KiB
+					1683 button Play: Roadworks Practice Park
+				1684 container
+					1685 text Rock Grotto 1 challenge · Download 1.4 MiB
+					1686 button Play: Rock Grotto
+				1687 container
+					1688 text Ruined Halls 1 challenge · Download 1.7 MiB
+					1689 button Play: Ruined Halls
+				1690 container
+					1691 text Dry-dock Shipyard 1 challenge · Download 594 KiB
+					1692 button Play: Dry-dock Shipyard
+				1693 container
+					1694 text Skate Plaza 1 challenge · Download 210 KiB
+					1695 button Play: Skate Plaza
+				1696 container
+					1697 text Village Green 1 challenge · Download 606 KiB
+					1698 button Play: Village Green
+				1699 container
+					1700 text Woodland Camp 1 challenge · Download 304 KiB
+					1701 button Play: Woodland Camp
+				1702 container
+					1703 text Coaster Practice Park 1 challenge · Download 1.1 MiB
+					1704 button Play: Coaster Practice Park
+			42 container Regional free flight, ID: regional-world-library
+				43 heading Regional free flight, Value: 2, ID: regional-world-library-title
+					1706 text Regional free flight
+				1707 text Choose a region. Versions keeps every offered and saved edition available. Fly uses the shown saved version; downloads and removals always need your action. Prepare the simulator offline separately.
+				46 button Refresh saved regions
+				1708 text Region saved. Choose Fly when you are ready.
+				1709 container
+					1710 heading Alpine Highlands, Value: 3
+						1711 text Alpine Highlands
+					1712 text Recommended version · Alpine Highlands — connected mountain study · Station approach 4.096 × 4.096 km · six starting points · unscored free flight. Braced cable towers and a supported lookout make the station approach easier to read. Keep exploring the open concourse and connected snow and scree routes. Earlier Alpine editions remain available. Wider scenery and route detail are still being refined. Optional scenery download · 21.8 MiB · unscored
+					1713 button Download: Alpine Highlands — connected mountain study · Station approach
+					1714 button (collapsed) Description: Versions for Alpine Highlands (6), Help: Versions (6), Secondary Actions: Expand
+						1715 text Versions (6)
+				1716 container
+					1717 heading Lunar Basin, Value: 3
+						1718 text Lunar Basin
+					1719 text Current saved version · Lunar Basin — flight study · Shelter detail · Version composition-r3 768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity. Saved for offline flight · 2 MiB · composition-r3
+					1720 button Fly: Lunar Basin — flight study · Shelter detail · Version composition-r3
+					1721 button (expanded) Description: Versions for Lunar Basin (2), Help: Versions (2), Secondary Actions: Collapse
+						1722 text Versions (2)
+					1723 container
+						1724 text Lunar Basin — flight study Shelter detail 768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity. Saved for offline flight · 2 MiB · composition-r3
+						1725 button Fly: Lunar Basin — flight study · Shelter detail · Version composition-r3
+						1726 button Remove this version: Lunar Basin — flight study · Shelter detail · Version composition-r3
+						1727 button Remove all versions
+					1728 container
+						1729 text Lunar Basin — flight study Version composition-r2 768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity. Saved for offline flight · 1.9 MiB · composition-r2
+						1730 button Fly: Lunar Basin — flight study · Version composition-r2
+						1731 button Remove this version: Lunar Basin — flight study · Version composition-r2
+						1732 button Remove all versions
+				1733 container
+					1734 heading Canal City, Value: 3
+						1735 text Canal City
+					1736 text Recommended version · Canal City — bridges and courtyards 384 × 384 m · six starting points · unscored free flight. Follow the canals beneath a masonry arch and high walkway, pass through warehouses and courtyards, or weave around basin moorings. Early composition study; surrounding banks remain sparse. Water is visual only. Optional scenery download · 6.5 MiB · unscored
+					1737 button Download: Canal City — bridges and courtyards
+					1738 button (collapsed) Description: Versions for Canal City (1), Help: Versions (1), Secondary Actions: Expand
+						1739 text Versions (1)
+				1740 container
+					1741 heading Desert Expedition, Value: 3
+						1742 text Desert Expedition
+					1743 text Recommended version · Desert Expedition — rock routes · Rock practice routes 16.384 × 16.384 km · six close-range rock practice areas · unscored free flight. Weave between windstones, pass through a natural arch, climb the escarpment ribs and orbit the mesa crown. Early composition study; the wider terrain remains sparse. Optional scenery download · 45.9 MiB · unscored
+					1744 button Download: Desert Expedition — rock routes · Rock practice routes
+					1745 button (collapsed) Description: Versions for Desert Expedition (2), Help: Versions (2), Secondary Actions: Expand
+						1746 text Versions (2)
+				1747 container
+					1748 heading Tropical coast, Value: 3
+						1749 text Tropical coast
+					1750 text Recommended version · Tropical coast — connected harbour · Connected harbour 768 × 768 m · connected wooden harbour decks and shore approach · six starting areas, unscored free flight. Separate harbour-r3 revision; the earlier coastal settlement remains available. Early coastal study; visual water only. Optional scenery download · 7.6 MiB · unscored
+					1751 button Download: Tropical coast — connected harbour · Connected harbour
+					1752 button (collapsed) Description: Versions for Tropical coast (3), Help: Versions (3), Secondary Actions: Expand
+						1753 text Versions (3)
+				1754 container
+					1755 heading Railway Valley, Value: 3
+						1756 text Railway Valley
+					1757 text Recommended version · Railway Valley — six districts 4.096 × 4.096 km · six starting areas · unscored free flight. Explore a freight hall, viaduct, quarry conveyor, station canopy, foundry and timber yard. Early landscape study with static trains and sparse scenery between districts. Optional scenery download · 17.1 MiB · unscored
+					1758 button Download: Railway Valley — six districts
+					1759 button (collapsed) Description: Versions for Railway Valley (2), Help: Versions (2), Secondary Actions: Expand
+						1760 text Versions (2)
+				1761 container
+					1762 heading Coaster Gardens, Value: 3
+						1763 text Coaster Gardens
+					1764 text Recommended version · Coaster Gardens — connected park study · Connected park routes 2.048 × 2.048 km · six starting points · unscored free flight. Explore the supported loop, linked approach paths, station courts and woodland routes. Early static park study; district scenery is still being refined and rides do not move. Optional scenery download · 32.6 MiB · unscored
+					1765 button Download: Coaster Gardens — connected park study · Connected park routes
+					1766 button (collapsed) Description: Versions for Coaster Gardens (2), Help: Versions (2), Secondary Actions: Expand
+						1767 text Versions (2)
+				1768 container
+					1769 heading Hillside Town, Value: 3
+						1770 text Hillside Town
+					1771 text Recommended version · Hillside Town — civic court materials · Civic courtyard materials 384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available. Optional scenery download · 8.3 MiB · unscored
+					1772 button Download: Hillside Town — civic court materials · Civic courtyard materials
+					1773 button (collapsed) Description: Versions for Hillside Town (2), Help: Versions (2), Secondary Actions: Expand
+						1774 text Versions (2)
+				1775 container
+					1776 heading Canyon worlds, Value: 3
+						1777 text Canyon worlds
+					1778 text Recommended version · Canyon Expanse — broad relief study 8.192 × 8.192 km · six starting areas · unscored free flight. Broad terrain-only relief with basins, mesas and ridges; an early landscape study with sparse detail. Optional scenery download · 45.8 MiB · unscored
+					1779 button Download: Canyon Expanse — broad relief study
+					1780 button (collapsed) Description: Versions for Canyon worlds (3), Help: Versions (3), Secondary Actions: Expand
+						1781 text Versions (3)
+				1782 container
+					1783 heading Urban earthworks, Value: 3
+						1784 text Urban earthworks
+					1785 text Recommended version · Urban earthworks — regional preview 384 × 384 m · loading court, open workshop and connected parking ramps · unscored free flight. A regional preview with marked roads, building openings and rooftop passages. Optional scenery download · 2.2 MiB · unscored
+					1786 button Download: Urban earthworks — regional preview
+					1787 button (collapsed) Description: Versions for Urban earthworks (1), Help: Versions (1), Secondary Actions: Expand
+						1788 text Versions (1)
+			117 container journey-cards
+				118 button Level #1 · First three · Circuit stadium · 1/30 · Not completed
+					119 heading CIRCUIT STADIUM, Value: 3
+						120 text CIRCUIT STADIUM
+					121 text LEVEL #1
+					122 text 1/30
+					123 text First three
+					124 text Circuit stadium
+					125 container Not completed
+						126 text ☆☆☆
+				127 button Level #2 · Clockwise catch · Circuit stadium · 2/30 · Not completed
+					128 text LEVEL #2
+					129 text 2/30
+					130 text Clockwise catch
+					131 text Circuit stadium
+					132 container Not completed
+						133 text ☆☆☆
+				134 button Level #3 · Wide figure eight · Circuit stadium · 3/30 · Not completed
+					135 text LEVEL #3
+					136 text 3/30
+					137 text Wide figure eight
+					138 text Circuit stadium
+					139 container Not completed
+						140 text ☆☆☆
+				141 button Level #4 · Choose your loop · Circuit stadium · 4/30 · Not completed
+					142 text LEVEL #4
+					143 text 4/30
+					144 text Choose your loop
+					145 text Circuit stadium
+					146 container Not completed
+						147 text ☆☆☆
+				148 button Level #5 · Spiral inward · Circuit stadium · 5/30 · Not completed
+					149 text LEVEL #5
+					150 text 5/30
+					151 text Spiral inward
+					152 text Circuit stadium
+					153 container Not completed
+						154 text ☆☆☆
+				155 button Level #6 · Double circuit · Circuit stadium · 6/30 · Not completed
+					156 text LEVEL #6
+					157 text 6/30
+					158 text Double circuit
+					159 text Circuit stadium
+					160 container Not completed
+						161 text ☆☆☆
+				162 button Level #7 · Three aisles · Pixel warehouse · 1/27 · Not completed
+					163 heading PIXEL WAREHOUSE, Value: 3
+						164 text PIXEL WAREHOUSE
+					165 text LEVEL #7
+					166 text 1/27
+					167 text Three aisles
+					168 text Pixel warehouse
+					169 container Not completed
+						170 text ☆☆☆
+				171 button Level #8 · Alternating doors · Pixel warehouse · 2/27 · Not completed
+					172 text LEVEL #8
+					173 text 2/27
+					174 text Alternating doors
+					175 text Pixel warehouse
+					176 container Not completed
+						177 text ☆☆☆
+				178 button Level #9 · Outside the pillars · Pixel warehouse · 3/27 · Not completed
+					179 text LEVEL #9
+					180 text 3/27
+					181 text Outside the pillars
+					182 text Pixel warehouse
+					183 container Not completed
+						184 text ☆☆☆
+				185 button Level #10 · Long switchback · Pixel warehouse · 4/27 · Not completed
+					186 text LEVEL #10
+					187 text 4/27
+					188 text Long switchback
+					189 text Pixel warehouse
+					190 container Not completed
+						191 text ☆☆☆
+				192 button Level #11 · Diagonal threading · Pixel warehouse · 5/27 · Not completed
+					193 text LEVEL #11
+					194 text 5/27
+					195 text Diagonal threading
+					196 text Pixel warehouse
+					197 container Not completed
+						198 text ☆☆☆
+				199 button Level #12 · Exit the coil · Pixel warehouse · 6/27 · Not completed
+					200 text LEVEL #12
+					201 text 6/27
+					202 text Exit the coil
+					203 text Pixel warehouse
+					204 container Not completed
+						205 text ☆☆☆
+				206 button Level #13 · Low, high, low · Parking garage · 1/17 · Not completed
+					207 heading PARKING GARAGE, Value: 3
+						208 text PARKING GARAGE
+					209 text LEVEL #13
+					210 text 1/17
+					211 text Low, high, low
+					212 text Parking garage
+					213 container Not completed
+						214 text ☆☆☆
+				215 button Level #14 · Ascending arc · Parking garage · 2/17 · Not completed
+					216 text LEVEL #14
+					217 text 2/17
+					218 text Ascending arc
+					219 text Parking garage
+					220 container Not completed
+						221 text ☆☆☆
+				222 button Level #15 · Roof islands · Parking garage · 3/17 · Not completed
+					223 text LEVEL #15
+					224 text 3/17
+					225 text Roof islands
+					226 text Parking garage
+					227 container Not completed
+						228 text ☆☆☆
+				229 button Level #16 · Over your echo · Parking garage · 4/17 · Not completed
+					230 text LEVEL #16
+					231 text 4/17
+					232 text Over your echo
+					233 text Parking garage
+					234 container Not completed
+						235 text ☆☆☆
+				236 button Level #17 · Descending staircase · Parking garage · 5/17 · Not completed
+					237 text LEVEL #17
+					238 text 5/17
+					239 text Descending staircase
+					240 text Parking garage
+					241 container Not completed
+						242 text ☆☆☆
+				243 button Level #18 · Stacked figure eight · Parking garage · 6/17 · Not completed
+					244 text LEVEL #18
+					245 text 6/17
+					246 text Stacked figure eight
+					247 text Parking garage
+					248 container Not completed
+						249 text ☆☆☆
+				250 button Level #19 · Meet the walkers · Container yard · 1/14 · Not completed
+					251 heading CONTAINER YARD, Value: 3
+						252 text CONTAINER YARD
+					253 text LEVEL #19
+					254 text 1/14
+					255 text Meet the walkers
+					256 text Container yard
+					257 container Not completed
+						258 text ☆☆☆
+				259 button Level #20 · Crossing patrols · Container yard · 2/14 · Not completed
+					260 text LEVEL #20
+					261 text 2/14
+					262 text Crossing patrols
+					263 text Container yard
+					264 container Not completed
+						265 text ☆☆☆
+				266 button Level #21 · Chase the corners · Container yard · 3/14 · Not completed
+					267 text LEVEL #21
+					268 text 3/14
+					269 text Chase the corners
+					270 text Container yard
+					271 container Not completed
+						272 text ☆☆☆
+				273 button Level #22 · Moving slalom · Container yard · 4/14 · Not completed
+					274 text LEVEL #22
+					275 text 4/14
+					276 text Moving slalom
+					277 text Container yard
+					278 container Not completed
+						279 text ☆☆☆
+				280 button Level #23 · One-way collection · Container yard · 5/14 · Not completed
+					281 text LEVEL #23
+					282 text 5/14
+					283 text One-way collection
+					284 text Container yard
+					285 container Not completed
+						286 text ☆☆☆
+				287 button Level #24 · The long hunt · Container yard · 6/14 · Not completed
+					288 text LEVEL #24
+					289 text 6/14
+					290 text The long hunt
+					291 text Container yard
+					292 container Not completed
+						293 text ☆☆☆
+				294 button Level #25 · Loop intercept · Circuit stadium · 7/30 · Not completed
+					295 heading CIRCUIT STADIUM, Value: 3
+						296 text CIRCUIT STADIUM
+					297 text LEVEL #25
+					298 text 7/30
+					299 text Loop intercept
+					300 text Circuit stadium
+					301 container Not completed
+						302 text ☆☆☆
+				303 button Level #26 · Two return lanes · Pixel warehouse · 7/27 · Not completed
+					304 heading PIXEL WAREHOUSE, Value: 3
+						305 text PIXEL WAREHOUSE
+					306 text LEVEL #26
+					307 text 7/27
+					308 text Two return lanes
+					309 text Pixel warehouse
+					310 container Not completed
+						311 text ☆☆☆
+				312 button Level #27 · Corner approach · Pixel warehouse · 8/27 · Not completed
+					313 text LEVEL #27
+					314 text 8/27
+					315 text Corner approach
+					316 text Pixel warehouse
+					317 container Not completed
+						318 text ☆☆☆
+				319 button Level #28 · Crossing patrols · Circuit stadium · 8/30 · Not completed
+					320 heading CIRCUIT STADIUM, Value: 3
+						321 text CIRCUIT STADIUM
+					322 text LEVEL #28
+					323 text 8/30
+					324 text Crossing patrols
+					325 text Circuit stadium
+					326 container Not completed
+						327 text ☆☆☆
+				328 button Level #29 · Island bypass · Parking garage · 7/17 · Not completed
+					329 heading PARKING GARAGE, Value: 3
+						330 text PARKING GARAGE
+					331 text LEVEL #29
+					332 text 7/17
+					333 text Island bypass
+					334 text Parking garage
+					335 container Not completed
+						336 text ☆☆☆
+				337 button Level #30 · Staggered interception · Pixel warehouse · 9/27 · Not completed
+					338 heading PIXEL WAREHOUSE, Value: 3
+						339 text PIXEL WAREHOUSE
+					340 text LEVEL #30
+					341 text 9/27
+					342 text Staggered interception
+					343 text Pixel warehouse
+					344 container Not completed
+						345 text ☆☆☆
+				346 button Level #31 · Warehouse return · Pixel warehouse · 10/27 · Not completed
+					347 text LEVEL #31
+					348 text 10/27
+					349 text Warehouse return
+					350 text Pixel warehouse
+					351 container Not completed
+						352 text ☆☆☆
+				353 button Level #32 · Courtyard approaches · Circuit stadium · 9/30 · Not completed
+					354 heading CIRCUIT STADIUM, Value: 3
+						355 text CIRCUIT STADIUM
+					356 text LEVEL #32
+					357 text 9/30
+					358 text Courtyard approaches
+					359 text Circuit stadium
+					360 container Not completed
+						361 text ☆☆☆
+				362 button Level #33 · Platform perimeter · Parking garage · 8/17 · Not completed
+					363 heading PARKING GARAGE, Value: 3
+						364 text PARKING GARAGE
+					365 text LEVEL #33
+					366 text 8/17
+					367 text Platform perimeter
+					368 text Parking garage
+					369 container Not completed
+						370 text ☆☆☆
+				371 button Level #34 · Boundary cutback · Pixel warehouse · 11/27 · Not completed
+					372 heading PIXEL WAREHOUSE, Value: 3
+						373 text PIXEL WAREHOUSE
+					374 text LEVEL #34
+					375 text 11/27
+					376 text Boundary cutback
+					377 text Pixel warehouse
+					378 container Not completed
+						379 text ☆☆☆
+				380 button Level #35 · Cross-route choice · Circuit stadium · 10/30 · Not completed
+					381 heading CIRCUIT STADIUM, Value: 3
+						382 text CIRCUIT STADIUM
+					383 text LEVEL #35
+					384 text 10/30
+					385 text Cross-route choice
+					386 text Circuit stadium
+					387 container Not completed
+						388 text ☆☆☆
+				389 button Level #36 · Airfield circuit · Parking garage · 9/17 · Not completed
+					390 heading PARKING GARAGE, Value: 3
+						391 text PARKING GARAGE
+					392 text LEVEL #36
+					393 text 9/17
+					394 text Airfield circuit
+					395 text Parking garage
+					396 container Not completed
+						397 text ☆☆☆
+				398 button Level #37 · Low Pass Depot · Pixel warehouse · 12/27 · Not completed
+					399 heading PIXEL WAREHOUSE, Value: 3
+						400 text PIXEL WAREHOUSE
+					401 text LEVEL #37
+					402 text 12/27
+					403 text Low Pass Depot
+					404 text Pixel warehouse
+					405 container Not completed
+						406 text ☆☆☆
+				407 button Level #38 · Split Yard Return · Pixel warehouse · 13/27 · Not completed
+					408 text LEVEL #38
+					409 text 13/27
+					410 text Split Yard Return
+					411 text Pixel warehouse
+					412 container Not completed
+						413 text ☆☆☆
+				414 button Level #39 · Crossing Arrivals · Circuit stadium · 11/30 · Not completed
+					415 heading CIRCUIT STADIUM, Value: 3
+						416 text CIRCUIT STADIUM
+					417 text LEVEL #39
+					418 text 11/30
+					419 text Crossing Arrivals
+					420 text Circuit stadium
+					421 container Not completed
+						422 text ☆☆☆
+				423 button Level #40 · Shelter Arc · Pixel warehouse · 14/27 · Not completed
+					424 heading PIXEL WAREHOUSE, Value: 3
+						425 text PIXEL WAREHOUSE
+					426 text LEVEL #40
+					427 text 14/27
+					428 text Shelter Arc
+					429 text Pixel warehouse
+					430 container Not completed
+						431 text ☆☆☆
+				432 button Level #41 · Freight Slalom · Pixel warehouse · 15/27 · Not completed
+					433 text LEVEL #41
+					434 text 15/27
+					435 text Freight Slalom
+					436 text Pixel warehouse
+					437 container Not completed
+						438 text ☆☆☆
+				439 button Level #42 · Forked Depot · Circuit stadium · 12/30 · Not completed
+					440 heading CIRCUIT STADIUM, Value: 3
+						441 text CIRCUIT STADIUM
+					442 text LEVEL #42
+					443 text 12/30
+					444 text Forked Depot
+					445 text Circuit stadium
+					446 container Not completed
+						447 text ☆☆☆
+				448 button Level #43 · Low Roof Window · Pixel warehouse · 16/27 · Not completed
+					449 heading PIXEL WAREHOUSE, Value: 3
+						450 text PIXEL WAREHOUSE
+					451 text LEVEL #43
+					452 text 16/27
+					453 text Low Roof Window
+					454 text Pixel warehouse
+					455 container Not completed
+						456 text ☆☆☆
+				457 button Level #44 · Roofline Exchange · Pixel warehouse · 17/27 · Not completed
+					458 text LEVEL #44
+					459 text 17/27
+					460 text Roofline Exchange
+					461 text Pixel warehouse
+					462 container Not completed
+						463 text ☆☆☆
+				464 button Level #45 · Return Slot · Circuit stadium · 13/30 · Not completed
+					465 heading CIRCUIT STADIUM, Value: 3
+						466 text CIRCUIT STADIUM
+					467 text LEVEL #45
+					468 text 13/30
+					469 text Return Slot
+					470 text Circuit stadium
+					471 container Not completed
+						472 text ☆☆☆
+				473 button Level #46 · Staggered Roofs · Pixel warehouse · 18/27 · Not completed
+					474 heading PIXEL WAREHOUSE, Value: 3
+						475 text PIXEL WAREHOUSE
+					476 text LEVEL #46
+					477 text 18/27
+					478 text Staggered Roofs
+					479 text Pixel warehouse
+					480 container Not completed
+						481 text ☆☆☆
+				482 button Level #47 · Window Chain · Pixel warehouse · 19/27 · Not completed
+					483 text LEVEL #47
+					484 text 19/27
+					485 text Window Chain
+					486 text Pixel warehouse
+					487 container Not completed
+						488 text ☆☆☆
+				489 button Level #48 · Three-yard Finale · Circuit stadium · 14/30 · Not completed
+					490 heading CIRCUIT STADIUM, Value: 3
+						491 text CIRCUIT STADIUM
+					492 text LEVEL #48
+					493 text 14/30
+					494 text Three-yard Finale
+					495 text Circuit stadium
+					496 container Not completed
+						497 text ☆☆☆
+				498 button Level #49 · Refuge Return · Committed routes · Circuit stadium · 15/30 · Not completed
+					499 text LEVEL #49
+					500 text 15/30
+					501 text Refuge Return · Committed routes
+					502 text Circuit stadium
+					503 container Not completed
+						504 text ☆☆☆
+				505 button Level #50 · Meeting Yard · Committed routes · Circuit stadium · 16/30 · Not completed
+					506 text LEVEL #50
+					507 text 16/30
+					508 text Meeting Yard · Committed routes
+					509 text Circuit stadium
+					510 container Not completed
+						511 text ☆☆☆
+				512 button Level #51 · Runner Court · Circuit stadium · 17/30 · Not completed
+					513 text LEVEL #51
+					514 text 17/30
+					515 text Runner Court
+					516 text Circuit stadium
+					517 container Not completed
+						518 text ☆☆☆
+				519 button Level #52 · Burst Lanes · Circuit stadium · 18/30 · Not completed
+					520 text LEVEL #52
+					521 text 18/30
+					522 text Burst Lanes
+					523 text Circuit stadium
+					524 container Not completed
+						525 text ☆☆☆
+				526 button Level #53 · Refuge Return · Circuit stadium · 19/30 · Not completed
+					527 text LEVEL #53
+					528 text 19/30
+					529 text Refuge Return
+					530 text Circuit stadium
+					531 container Not completed
+						532 text ☆☆☆
+				533 button Level #54 · Switchback Crossing · Circuit stadium · 20/30 · Not completed
+					534 text LEVEL #54
+					535 text 20/30
+					536 text Switchback Crossing
+					537 text Circuit stadium
+					538 container Not completed
+						539 text ☆☆☆
+				540 button Level #55 · Meeting Yard · Circuit stadium · 21/30 · Not completed
+					541 text LEVEL #55
+					542 text 21/30
+					543 text Meeting Yard
+					544 text Circuit stadium
+					545 container Not completed
+						546 text ☆☆☆
+				547 button Level #56 · Armor Windows · Circuit stadium · 22/30 · Not completed
+					548 text LEVEL #56
+					549 text 22/30
+					550 text Armor Windows
+					551 text Circuit stadium
+					552 container Not completed
+						553 text ☆☆☆
+				554 button Level #57 · Lighthouse approach · Coastal airfield · 1/5 · Not completed
+					555 heading COASTAL AIRFIELD, Value: 3
+						556 text COASTAL AIRFIELD
+					557 text LEVEL #57
+					558 text 1/5
+					559 text Lighthouse approach
+					560 text Coastal airfield
+					561 container Not completed
+						562 text ☆☆☆
+				563 button Level #58 · Under the harbour bridge · Coastal airfield · 2/5 · Not completed
+					564 text LEVEL #58
+					565 text 2/5
+					566 text Under the harbour bridge
+					567 text Coastal airfield
+					568 container Not completed
+						569 text ☆☆☆
+				570 button Level #59 · Coastal courier · Coastal airfield · 3/5 · Not completed
+					571 text LEVEL #59
+					572 text 3/5
+					573 text Coastal courier
+					574 text Coastal airfield
+					575 container Not completed
+						576 text ☆☆☆
+				577 button Level #60 · Harbour observer · Coastal airfield · 4/5 · Not completed
+					578 text LEVEL #60
+					579 text 4/5
+					580 text Harbour observer
+					581 text Coastal airfield
+					582 container Not completed
+						583 text ☆☆☆
+				584 button Level #61 · Three pier landings · Coastal airfield · 5/5 · Not completed
+					585 text LEVEL #61
+					586 text 5/5
+					587 text Three pier landings
+					588 text Coastal airfield
+					589 container Not completed
+						590 text ☆☆☆
+				591 button Level #62 · Read the rock bowl · Amber quarry · 1/5 · Not completed
+					592 heading AMBER QUARRY, Value: 3
+						593 text AMBER QUARRY
+					594 text LEVEL #62
+					595 text 1/5
+					596 text Read the rock bowl
+					597 text Amber quarry
+					598 container Not completed
+						599 text ☆☆☆
+				600 button Level #63 · Conveyor crossings · Amber quarry · 2/5 · Not completed
+					601 text LEVEL #63
+					602 text 2/5
+					603 text Conveyor crossings
+					604 text Amber quarry
+					605 container Not completed
+						606 text ☆☆☆
+				607 button Level #64 · Haul-rover escort · Amber quarry · 3/5 · Not completed
+					608 text LEVEL #64
+					609 text 3/5
+					610 text Haul-rover escort
+					611 text Amber quarry
+					612 container Not completed
+						613 text ☆☆☆
+				614 button Level #65 · Quarry pulse arena · Amber quarry · 4/5 · Not completed
+					615 text LEVEL #65
+					616 text 4/5
+					617 text Quarry pulse arena
+					618 text Amber quarry
+					619 container Not completed
+						620 text ☆☆☆
+				621 button Level #66 · Spire and ledge · Amber quarry · 5/5 · Not completed
+					622 text LEVEL #66
+					623 text 5/5
+					624 text Spire and ledge
+					625 text Amber quarry
+					626 container Not completed
+						627 text ☆☆☆
+				628 button Level #67 · Campus skylines · Skyline campus · 1/5 · Not completed
+					629 heading SKYLINE CAMPUS, Value: 3
+						630 text SKYLINE CAMPUS
+					631 text LEVEL #67
+					632 text 1/5
+					633 text Campus skylines
+					634 text Skyline campus
+					635 container Not completed
+						636 text ☆☆☆
+				637 button Level #68 · Over and under · Skyline campus · 2/5 · Not completed
+					638 text LEVEL #68
+					639 text 2/5
+					640 text Over and under
+					641 text Skyline campus
+					642 container Not completed
+						643 text ☆☆☆
+				644 button Level #69 · Rooftop courier trail · Skyline campus · 3/5 · Not completed
+					645 text LEVEL #69
+					646 text 3/5
+					647 text Rooftop courier trail
+					648 text Skyline campus
+					649 container Not completed
+						650 text ☆☆☆
+				651 button Level #70 · Roof-to-roof landings · Skyline campus · 4/5 · Not completed
+					652 text LEVEL #70
+					653 text 4/5
+					654 text Roof-to-roof landings
+					655 text Skyline campus
+					656 container Not completed
+						657 text ☆☆☆
+				658 button Level #71 · Skybridge traffic · Skyline campus · 5/5 · Not completed
+					659 text LEVEL #71
+					660 text 5/5
+					661 text Skybridge traffic
+					662 text Skyline campus
+					663 container Not completed
+						664 text ☆☆☆
+				665 button Level #72 · Meet the orchard guide · Harvest orchard · 1/5 · Not completed
+					666 heading HARVEST ORCHARD, Value: 3
+						667 text HARVEST ORCHARD
+					668 text LEVEL #72
+					669 text 1/5
+					670 text Meet the orchard guide
+					671 text Harvest orchard
+					672 container Not completed
+						673 text ☆☆☆
+				674 button Level #73 · Between the rows · Harvest orchard · 2/5 · Not completed
+					675 text LEVEL #73
+					676 text 2/5
+					677 text Between the rows
+					678 text Harvest orchard
+					679 container Not completed
+						680 text ☆☆☆
+				681 button Level #74 · Watch the harvest cart · Harvest orchard · 3/5 · Not completed
+					682 text LEVEL #74
+					683 text 3/5
+					684 text Watch the harvest cart
+					685 text Harvest orchard
+					686 container Not completed
+						687 text ☆☆☆
+				688 button Level #75 · A walk through the orchard · Harvest orchard · 4/5 · Not completed
+					689 text LEVEL #75
+					690 text 4/5
+					691 text A walk through the orchard
+					692 text Harvest orchard
+					693 container Not completed
+						694 text ☆☆☆
+				695 button Level #76 · Barn beacon and garden pad · Harvest orchard · 5/5 · Not completed
+					696 text LEVEL #76
+					697 text 5/5
+					698 text Barn beacon and garden pad
+					699 text Harvest orchard
+					700 container Not completed
+						701 text ☆☆☆
+				702 button Level #77 · Read the solar lanes · Solar research park · 1/5 · Not completed
+					703 heading SOLAR RESEARCH PARK, Value: 3
+						704 text SOLAR RESEARCH PARK
+					705 text LEVEL #77
+					706 text 1/5
+					707 text Read the solar lanes
+					708 text Solar research park
+					709 container Not completed
+						710 text ☆☆☆
+				711 button Level #78 · Panel-edge precision · Solar research park · 2/5 · Not completed
+					712 text LEVEL #78
+					713 text 2/5
+					714 text Panel-edge precision
+					715 text Solar research park
+					716 container Not completed
+						717 text ☆☆☆
+				718 button Level #79 · Rover inspection · Solar research park · 3/5 · Not completed
+					719 text LEVEL #79
+					720 text 3/5
+					721 text Rover inspection
+					722 text Solar research park
+					723 container Not completed
+						724 text ☆☆☆
+				725 button Level #80 · Service-lane timing · Solar research park · 4/5 · Not completed
+					726 text LEVEL #80
+					727 text 4/5
+					728 text Service-lane timing
+					729 text Solar research park
+					730 container Not completed
+						731 text ☆☆☆
+				732 button Level #81 · Solar pulse trial · Solar research park · 5/5 · Not completed
+					733 text LEVEL #81
+					734 text 5/5
+					735 text Solar pulse trial
+					736 text Solar research park
+					737 container Not completed
+						738 text ☆☆☆
+				739 button Level #82 · Signals and platforms · Railworks · 1/5 · Not completed
+					740 heading RAILWORKS, Value: 3
+						741 text RAILWORKS
+					742 text LEVEL #82
+					743 text 1/5
+					744 text Signals and platforms
+					745 text Railworks
+					746 container Not completed
+						747 text ☆☆☆
+				748 button Level #83 · Gantry express · Railworks · 2/5 · Not completed
+					749 text LEVEL #83
+					750 text 2/5
+					751 text Gantry express
+					752 text Railworks
+					753 container Not completed
+						754 text ☆☆☆
+				755 button Level #84 · Inspection run · Railworks · 3/5 · Not completed
+					756 text LEVEL #84
+					757 text 3/5
+					758 text Inspection run
+					759 text Railworks
+					760 container Not completed
+						761 text ☆☆☆
+				762 button Level #85 · Depot crossing windows · Railworks · 4/5 · Not completed
+					763 text LEVEL #85
+					764 text 4/5
+					765 text Depot crossing windows
+					766 text Railworks
+					767 container Not completed
+						768 text ☆☆☆
+				769 button Level #86 · Depot drone duel · Railworks · 5/5 · Not completed
+					770 text LEVEL #86
+					771 text 5/5
+					772 text Depot drone duel
+					773 text Railworks
+					774 container Not completed
+						775 text ☆☆☆
+				776 button Level #87 · Lift and land · Training hangar · 1/4 · Not completed
+					777 heading TRAINING HANGAR, Value: 3
+						778 text TRAINING HANGAR
+					779 text LEVEL #87
+					780 text 1/4
+					781 text Lift and land
+					782 text Training hangar
+					783 container Not completed
+						784 text ☆☆☆
+				785 button Level #88 · Hold a volume · Training hangar · 2/4 · Not completed
+					786 text LEVEL #88
+					787 text 2/4
+					788 text Hold a volume
+					789 text Training hangar
+					790 container Not completed
+						791 text ☆☆☆
+				792 button Level #89 · Forward and brake · Training hangar · 3/4 · Not completed
+					793 text LEVEL #89
+					794 text 3/4
+					795 text Forward and brake
+					796 text Training hangar
+					797 container Not completed
+						798 text ☆☆☆
+				799 button Level #90 · Sideways and brake · Training hangar · 4/4 · Not completed
+					800 text LEVEL #90
+					801 text 4/4
+					802 text Sideways and brake
+					803 text Training hangar
+					804 container Not completed
+						805 text ☆☆☆
+				806 button Level #91 · Turn and travel · Open meadow · 1/8 · Not completed
+					807 heading OPEN MEADOW, Value: 3
+						808 text OPEN MEADOW
+					809 text LEVEL #91
+					810 text 1/8
+					811 text Turn and travel
+					812 text Open meadow
+					813 container Not completed
+						814 text ☆☆☆
+				815 button Level #92 · Fly a square · Open meadow · 2/8 · Not completed
+					816 text LEVEL #92
+					817 text 2/8
+					818 text Fly a square
+					819 text Open meadow
+					820 container Not completed
+						821 text ☆☆☆
+				822 button Level #93 · Tilt, centre and drift · Open meadow · 3/8 · Not completed
+					823 text LEVEL #93
+					824 text 3/8
+					825 text Tilt, centre and drift
+					826 text Open meadow
+					827 container Not completed
+						828 text ☆☆☆
+				829 button Level #94 · Approach a gate · Open meadow · 4/8 · Not completed
+					830 text LEVEL #94
+					831 text 4/8
+					832 text Approach a gate
+					833 text Open meadow
+					834 container Not completed
+						835 text ☆☆☆
+				836 button Level #95 · Linked turns · Open meadow · 5/8 · Not completed
+					837 text LEVEL #95
+					838 text 5/8
+					839 text Linked turns
+					840 text Open meadow
+					841 container Not completed
+						842 text ☆☆☆
+				843 button Level #96 · Slalom · Open meadow · 6/8 · Not completed
+					844 text LEVEL #96
+					845 text 6/8
+					846 text Slalom
+					847 text Open meadow
+					848 container Not completed
+						849 text ☆☆☆
+				850 button Level #97 · Figure eight · Open meadow · 7/8 · Not completed
+					851 text LEVEL #97
+					852 text 7/8
+					853 text Figure eight
+					854 text Open meadow
+					855 container Not completed
+						856 text ☆☆☆
+				857 button Level #98 · Final circuit · Open meadow · 8/8 · Not completed
+					858 text LEVEL #98
+					859 text 8/8
+					860 text Final circuit
+					861 text Open meadow
+					862 container Not completed
+						863 text ☆☆☆
+				864 button Level #99 · Clearing check-in · Woodland park · 1/8 · Not completed
+					865 heading WOODLAND PARK, Value: 3
+						866 text WOODLAND PARK
+					867 text LEVEL #99
+					868 text 1/8
+					869 text Clearing check-in
+					870 text Woodland park
+					871 container Not completed
+						872 text ☆☆☆
+				873 button Level #100 · Three clearings · Woodland park · 2/8 · Not completed
+					874 text LEVEL #100
+					875 text 2/8
+					876 text Three clearings
+					877 text Woodland park
+					878 container Not completed
+						879 text ☆☆☆
+				880 button Level #101 · Trail beacons · Woodland park · 3/8 · Not completed
+					881 text LEVEL #101
+					882 text 3/8
+					883 text Trail beacons
+					884 text Woodland park
+					885 container Not completed
+						886 text ☆☆☆
+				887 button Level #102 · Quiet hover · Woodland park · 4/8 · Not completed
+					888 text LEVEL #102
+					889 text 4/8
+					890 text Quiet hover
+					891 text Woodland park
+					892 container Not completed
+						893 text ☆☆☆
+				894 button Level #103 · Canopy windows · Woodland park · 5/8 · Not completed
+					895 text LEVEL #103
+					896 text 5/8
+					897 text Canopy windows
+					898 text Woodland park
+					899 container Not completed
+						900 text ☆☆☆
+				901 button Level #104 · Crossing trail · Woodland park · 6/8 · Not completed
+					902 text LEVEL #104
+					903 text 6/8
+					904 text Crossing trail
+					905 text Woodland park
+					906 container Not completed
+						907 text ☆☆☆
+				908 button Level #105 · Low branch line · Woodland park · 7/8 · Not completed
+					909 text LEVEL #105
+					910 text 7/8
+					911 text Low branch line
+					912 text Woodland park
+					913 container Not completed
+						914 text ☆☆☆
+				915 button Level #106 · Woodland survey · Woodland park · 8/8 · Not completed
+					916 text LEVEL #106
+					917 text 8/8
+					918 text Woodland survey
+					919 text Woodland park
+					920 container Not completed
+						921 text ☆☆☆
+				922 button Level #107 · Courtyard welcome · Ukrainian courtyard · 1/8 · Not completed
+					923 heading UKRAINIAN COURTYARD, Value: 3
+						924 text UKRAINIAN COURTYARD
+					925 text LEVEL #107
+					926 text 1/8
+					927 text Courtyard welcome
+					928 text Ukrainian courtyard
+					929 container Not completed
+						930 text ☆☆☆
+				931 button Level #108 · Garden markers · Ukrainian courtyard · 2/8 · Not completed
+					932 text LEVEL #108
+					933 text 2/8
+					934 text Garden markers
+					935 text Ukrainian courtyard
+					936 container Not completed
+						937 text ☆☆☆
+				938 button Level #109 · Roofline survey · Ukrainian courtyard · 3/8 · Not completed
+					939 text LEVEL #109
+					940 text 3/8
+					941 text Roofline survey
+					942 text Ukrainian courtyard
+					943 container Not completed
+						944 text ☆☆☆
+				945 button Level #110 · Well-side landing · Ukrainian courtyard · 4/8 · Not completed
+					946 text LEVEL #110
+					947 text 4/8
+					948 text Well-side landing
+					949 text Ukrainian courtyard
+					950 container Not completed
+						951 text ☆☆☆
+				952 button Level #111 · Window alignment · Ukrainian courtyard · 5/8 · Not completed
+					953 text LEVEL #111
+					954 text 5/8
+					955 text Window alignment
+					956 text Ukrainian courtyard
+					957 container Not completed
+						958 text ☆☆☆
+				959 button Level #112 · Delivery crossing · Ukrainian courtyard · 6/8 · Not completed
+					960 text LEVEL #112
+					961 text 6/8
+					962 text Delivery crossing
+					963 text Ukrainian courtyard
+					964 container Not completed
+						965 text ☆☆☆
+				966 button Level #113 · Laneway traffic · Ukrainian courtyard · 7/8 · Not completed
+					967 text LEVEL #113
+					968 text 7/8
+					969 text Laneway traffic
+					970 text Ukrainian courtyard
+					971 container Not completed
+						972 text ☆☆☆
+				973 button Level #114 · Courtyard collection · Ukrainian courtyard · 8/8 · Not completed
+					974 text LEVEL #114
+					975 text 8/8
+					976 text Courtyard collection
+					977 text Ukrainian courtyard
+					978 container Not completed
+						979 text ☆☆☆
+				980 button Level #115 · Loading bay · Pixel warehouse · 20/27 · Not completed
+					981 heading PIXEL WAREHOUSE, Value: 3
+						982 text PIXEL WAREHOUSE
+					983 text LEVEL #115
+					984 text 20/27
+					985 text Loading bay
+					986 text Pixel warehouse
+					987 container Not completed
+						988 text ☆☆☆
+				989 button Level #116 · Central aisle · Pixel warehouse · 21/27 · Not completed
+					990 text LEVEL #116
+					991 text 21/27
+					992 text Central aisle
+					993 text Pixel warehouse
+					994 container Not completed
+						995 text ☆☆☆
+				996 button Level #117 · Pallet switchback · Pixel warehouse · 22/27 · Not completed
+					997 text LEVEL #117
+					998 text 22/27
+					999 text Pallet switchback
+					1000 text Pixel warehouse
+					1001 container Not completed
+						1002 text ☆☆☆
+				1003 button Level #118 · Beam circuit · Pixel warehouse · 23/27 · Not completed
+					1004 text LEVEL #118
+					1005 text 23/27
+					1006 text Beam circuit
+					1007 text Pixel warehouse
+					1008 container Not completed
+						1009 text ☆☆☆
+				1010 button Level #119 · High-low sprint · Pixel warehouse · 24/27 · Not completed
+					1011 text LEVEL #119
+					1012 text 24/27
+					1013 text High-low sprint
+					1014 text Pixel warehouse
+					1015 container Not completed
+						1016 text ☆☆☆
+				1017 button Level #120 · Shelf clearance · Pixel warehouse · 25/27 · Not completed
+					1018 text LEVEL #120
+					1019 text 25/27
+					1020 text Shelf clearance
+					1021 text Pixel warehouse
+					1022 container Not completed
+						1023 text ☆☆☆
+				1024 button Level #121 · Moving freight · Pixel warehouse · 26/27 · Not completed
+					1025 text LEVEL #121
+					1026 text 26/27
+					1027 text Moving freight
+					1028 text Pixel warehouse
+					1029 container Not completed
+						1030 text ☆☆☆
+				1031 button Level #122 · Warehouse circuit · Pixel warehouse · 27/27 · Not completed
+					1032 text LEVEL #122
+					1033 text 27/27
+					1034 text Warehouse circuit
+					1035 text Pixel warehouse
+					1036 container Not completed
+						1037 text ☆☆☆
+				1038 button Level #123 · Starting grid · Circuit stadium · 23/30 · Not completed
+					1039 heading CIRCUIT STADIUM, Value: 3
+						1040 text CIRCUIT STADIUM
+					1041 text LEVEL #123
+					1042 text 23/30
+					1043 text Starting grid
+					1044 text Circuit stadium
+					1045 container Not completed
+						1046 text ☆☆☆
+				1047 button Level #124 · Wide oval · Circuit stadium · 24/30 · Not completed
+					1048 text LEVEL #124
+					1049 text 24/30
+					1050 text Wide oval
+					1051 text Circuit stadium
+					1052 container Not completed
+						1053 text ☆☆☆
+				1054 button Level #125 · Neon chicane · Circuit stadium · 25/30 · Not completed
+					1055 text LEVEL #125
+					1056 text 25/30
+					1057 text Neon chicane
+					1058 text Circuit stadium
+					1059 container Not completed
+						1060 text ☆☆☆
+				1061 button Level #126 · Altitude ladder · Circuit stadium · 26/30 · Not completed
+					1062 text LEVEL #126
+					1063 text 26/30
+					1064 text Altitude ladder
+					1065 text Circuit stadium
+					1066 container Not completed
+						1067 text ☆☆☆
+				1068 button Level #127 · Double hairpin · Circuit stadium · 27/30 · Not completed
+					1069 text LEVEL #127
+					1070 text 27/30
+					1071 text Double hairpin
+					1072 text Circuit stadium
+					1073 container Not completed
+						1074 text ☆☆☆
+				1075 button Level #128 · Podium approach · Circuit stadium · 28/30 · Not completed
+					1076 text LEVEL #128
+					1077 text 28/30
+					1078 text Podium approach
+					1079 text Circuit stadium
+					1080 container Not completed
+						1081 text ☆☆☆
+				1082 button Level #129 · Crossing lights · Circuit stadium · 29/30 · Not completed
+					1083 text LEVEL #129
+					1084 text 29/30
+					1085 text Crossing lights
+					1086 text Circuit stadium
+					1087 container Not completed
+						1088 text ☆☆☆
+				1089 button Level #130 · Stadium final · Circuit stadium · 30/30 · Not completed
+					1090 text LEVEL #130
+					1091 text 30/30
+					1092 text Stadium final
+					1093 text Circuit stadium
+					1094 container Not completed
+						1095 text ☆☆☆
+				1096 button Level #131 · Yard check-in · Container yard · 7/14 · Not completed
+					1097 heading CONTAINER YARD, Value: 3
+						1098 text CONTAINER YARD
+					1099 text LEVEL #131
+					1100 text 7/14
+					1101 text Yard check-in
+					1102 text Container yard
+					1103 container Not completed
+						1104 text ☆☆☆
+				1105 button Level #132 · Container survey · Container yard · 8/14 · Not completed
+					1106 text LEVEL #132
+					1107 text 8/14
+					1108 text Container survey
+					1109 text Container yard
+					1110 container Not completed
+						1111 text ☆☆☆
+				1112 button Level #133 · Crossing crane · Container yard · 9/14 · Not completed
+					1113 text LEVEL #133
+					1114 text 9/14
+					1115 text Crossing crane
+					1116 text Container yard
+					1117 container Not completed
+						1118 text ☆☆☆
+				1119 button Level #134 · Target lane · Container yard · 10/14 · Not completed
+					1120 text LEVEL #134
+					1121 text 10/14
+					1122 text Target lane
+					1123 text Container yard
+					1124 container Not completed
+						1125 text ☆☆☆
+				1126 button Level #135 · Patrol interruption · Container yard · 11/14 · Not completed
+					1127 text LEVEL #135
+					1128 text 11/14
+					1129 text Patrol interruption
+					1130 text Container yard
+					1131 container Not completed
+						1132 text ☆☆☆
+				1133 button Level #136 · Drone interception · Container yard · 12/14 · Not completed
+					1134 text LEVEL #136
+					1135 text 12/14
+					1136 text Drone interception
+					1137 text Container yard
+					1138 container Not completed
+						1139 text ☆☆☆
+				1140 button Level #137 · Convoy challenge · Container yard · 13/14 · Not completed
+					1141 text LEVEL #137
+					1142 text 13/14
+					1143 text Convoy challenge
+					1144 text Container yard
+					1145 container Not completed
+						1146 text ☆☆☆
+				1147 button Level #138 · Yard extraction · Container yard · 14/14 · Not completed
+					1148 text LEVEL #138
+					1149 text 14/14
+					1150 text Yard extraction
+					1151 text Container yard
+					1152 container Not completed
+						1153 text ☆☆☆
+				1154 button Level #139 · Parking approach · Parking garage · 10/17 · Not completed
+					1155 heading PARKING GARAGE, Value: 3
+						1156 text PARKING GARAGE
+					1157 text LEVEL #139
+					1158 text 10/17
+					1159 text Parking approach
+					1160 text Parking garage
+					1161 container Not completed
+						1162 text ☆☆☆
+				1163 button Level #140 · Upper deck survey · Parking garage · 11/17 · Not completed
+					1164 text LEVEL #140
+					1165 text 11/17
+					1166 text Upper deck survey
+					1167 text Parking garage
+					1168 container Not completed
+						1169 text ☆☆☆
+				1170 button Level #141 · Barrier timing · Parking garage · 12/17 · Not completed
+					1171 text LEVEL #141
+					1172 text 12/17
+					1173 text Barrier timing
+					1174 text Parking garage
+					1175 container Not completed
+						1176 text ☆☆☆
+				1177 button Level #142 · Sentry aisle · Parking garage · 13/17 · Not completed
+					1178 text LEVEL #142
+					1179 text 13/17
+					1180 text Sentry aisle
+					1181 text Parking garage
+					1182 container Not completed
+						1183 text ☆☆☆
+				1184 button Level #143 · Ground patrol · Parking garage · 14/17 · Not completed
+					1185 text LEVEL #143
+					1186 text 14/17
+					1187 text Ground patrol
+					1188 text Parking garage
+					1189 container Not completed
+						1190 text ☆☆☆
+				1191 button Level #144 · Garage intercept · Parking garage · 15/17 · Not completed
+					1192 text LEVEL #144
+					1193 text 15/17
+					1194 text Garage intercept
+					1195 text Parking garage
+					1196 container Not completed
+						1197 text ☆☆☆
+				1198 button Level #145 · Vehicle watch · Parking garage · 16/17 · Not completed
+					1199 text LEVEL #145
+					1200 text 16/17
+					1201 text Vehicle watch
+					1202 text Parking garage
+					1203 container Not completed
+						1204 text ☆☆☆
+				1205 button Level #146 · Garage extraction · Parking garage · 17/17 · Not completed
+					1206 text LEVEL #146
+					1207 text 17/17
+					1208 text Garage extraction
+					1209 text Parking garage
+					1210 container Not completed
+						1211 text ☆☆☆
+				1212 button Level #147 · Meet your drone · Flight School · Optional self-level · 1/12 · Not completed
+					1213 heading FLIGHT SCHOOL · OPTIONAL SELF-LEVEL, Value: 3
+						1214 text FLIGHT SCHOOL · OPTIONAL SELF-LEVEL
+					1215 text LEVEL #147
+					1216 text 1/12
+					1217 text Meet your drone
+					1218 text Flight School · Optional self-level
+					1219 container Not completed
+						1220 text ☆☆☆
+				1221 button Level #148 · Up, down, under control · Flight School · Optional self-level · 2/12 · Not completed
+					1222 text LEVEL #148
+					1223 text 2/12
+					1224 text Up, down, under control
+					1225 text Flight School · Optional self-level
+					1226 container Not completed
+						1227 text ☆☆☆
+				1228 button Level #149 · Find your hover · Flight School · Optional self-level · 3/12 · Not completed
+					1229 text LEVEL #149
+					1230 text 3/12
+					1231 text Find your hover
+					1232 text Flight School · Optional self-level
+					1233 container Not completed
+						1234 text ☆☆☆
+				1235 button Level #150 · Turn the nose: yaw · Flight School · Optional self-level · 4/12 · Not completed
+					1236 text LEVEL #150
+					1237 text 4/12
+					1238 text Turn the nose: yaw
+					1239 text Flight School · Optional self-level
+					1240 container Not completed
+						1241 text ☆☆☆
+				1242 button Level #151 · Forward with pitch · Flight School · Optional self-level · 5/12 · Not completed
+					1243 text LEVEL #151
+					1244 text 5/12
+					1245 text Forward with pitch
+					1246 text Flight School · Optional self-level
+					1247 container Not completed
+						1248 text ☆☆☆
+				1249 button Level #152 · Slide with roll · Flight School · Optional self-level · 6/12 · Not completed
+					1250 text LEVEL #152
+					1251 text 6/12
+					1252 text Slide with roll
+					1253 text Flight School · Optional self-level
+					1254 container Not completed
+						1255 text ☆☆☆
+				1256 button Level #153 · Brake, do not chase · Flight School · Optional self-level · 7/12 · Not completed
+					1257 text LEVEL #153
+					1258 text 7/12
+					1259 text Brake, do not chase
+					1260 text Flight School · Optional self-level
+					1261 container Not completed
+						1262 text ☆☆☆
+				1263 button Level #154 · Keep height while moving · Flight School · Optional self-level · 8/12 · Not completed
+					1264 text LEVEL #154
+					1265 text 8/12
+					1266 text Keep height while moving
+					1267 text Flight School · Optional self-level
+					1268 container Not completed
+						1269 text ☆☆☆
+				1270 button Level #155 · Your first corner · Flight School · Optional self-level · 9/12 · Not completed
+					1271 text LEVEL #155
+					1272 text 9/12
+					1273 text Your first corner
+					1274 text Flight School · Optional self-level
+					1275 container Not completed
+						1276 text ☆☆☆
+				1277 button Level #156 · See through the goggles · Flight School · Optional self-level · 10/12 · Not completed
+					1278 text LEVEL #156
+					1279 text 10/12
+					1280 text See through the goggles
+					1281 text Flight School · Optional self-level
+					1282 container Not completed
+						1283 text ☆☆☆
+				1284 button Level #157 · Three friendly gates · Flight School · Optional self-level · 11/12 · Not completed
+					1285 text LEVEL #157
+					1286 text 11/12
+					1287 text Three friendly gates
+					1288 text Flight School · Optional self-level
+					1289 container Not completed
+						1290 text ☆☆☆
+				1291 button Level #158 · Your first solo route · Flight School · Optional self-level · 12/12 · Not completed
+					1292 text LEVEL #158
+					1293 text 12/12
+					1294 text Your first solo route
+					1295 text Flight School · Optional self-level
+					1296 container Not completed
+						1297 text ☆☆☆
+				1298 button Level #159 · Acro: the tilt stays · Flight School · Beginner · 1/14 · Not completed
+					1299 heading FLIGHT SCHOOL · BEGINNER, Value: 3
+						1300 text FLIGHT SCHOOL · BEGINNER
+					1301 text LEVEL #159
+					1302 text 1/14
+					1303 text Acro: the tilt stays
+					1304 text Flight School · Beginner
+					1305 container Not completed
+						1306 text ☆☆☆
+				1307 button Level #160 · Acro: your first line · Flight School · Beginner · 2/14 · Not completed
+					1308 text LEVEL #160
+					1309 text 2/14
+					1310 text Acro: your first line
+					1311 text Flight School · Beginner
+					1312 container Not completed
+						1313 text ☆☆☆
+				1314 button Level #161 · Your first Acro takeoff · Flight School · Beginner · 3/14 · Not completed
+					1315 text LEVEL #161
+					1316 text 3/14
+					1317 text Your first Acro takeoff
+					1318 text Flight School · Beginner
+					1319 container Not completed
+						1320 text ☆☆☆
+				1321 button Level #162 · Thrust, climb and descent · Flight School · Beginner · 4/14 · Not completed
+					1322 text LEVEL #162
+					1323 text 4/14
+					1324 text Thrust, climb and descent
+					1325 text Flight School · Beginner
+					1326 container Not completed
+						1327 text ☆☆☆
+				1328 button Level #163 · Level, then find your hover · Flight School · Beginner · 5/14 · Not completed
+					1329 text LEVEL #163
+					1330 text 5/14
+					1331 text Level, then find your hover
+					1332 text Flight School · Beginner
+					1333 container Not completed
+						1334 text ☆☆☆
+				1335 button Level #164 · Roll and lateral braking · Flight School · Beginner · 6/14 · Not completed
+					1336 text LEVEL #164
+					1337 text 6/14
+					1338 text Roll and lateral braking
+					1339 text Flight School · Beginner
+					1340 container Not completed
+						1341 text ☆☆☆
+				1342 button Level #165 · Yaw: heading is not travel · Flight School · Beginner · 7/14 · Not completed
+					1343 text LEVEL #165
+					1344 text 7/14
+					1345 text Yaw: heading is not travel
+					1346 text Flight School · Beginner
+					1347 container Not completed
+						1348 text ☆☆☆
+				1349 button Level #166 · Keep height while tilted · Flight School · Beginner · 8/14 · Not completed
+					1350 text LEVEL #166
+					1351 text 8/14
+					1352 text Keep height while tilted
+					1353 text Flight School · Beginner
+					1354 container Not completed
+						1355 text ☆☆☆
+				1356 button Level #167 · Coordinated left and right turns · Flight School · Beginner · 9/14 · Not completed
+					1357 text LEVEL #167
+					1358 text 9/14
+					1359 text Coordinated left and right turns
+					1360 text Flight School · Beginner
+					1361 container Not completed
+						1362 text ☆☆☆
+				1363 button Level #168 · A gentle figure eight · Flight School · Beginner · 10/14 · Not completed
+					1364 text LEVEL #168
+					1365 text 10/14
+					1366 text A gentle figure eight
+					1367 text Flight School · Beginner
+					1368 container Not completed
+						1369 text ☆☆☆
+				1370 button Level #169 · Read the FPV horizon · Flight School · Beginner · 11/14 · Not completed
+					1371 text LEVEL #169
+					1372 text 11/14
+					1373 text Read the FPV horizon
+					1374 text Flight School · Beginner
+					1375 container Not completed
+						1376 text ☆☆☆
+				1377 button Level #170 · Three gates, one smooth line · Flight School · Beginner · 12/14 · Not completed
+					1378 text LEVEL #170
+					1379 text 12/14
+					1380 text Three gates, one smooth line
+					1381 text Flight School · Beginner
+					1382 container Not completed
+						1383 text ☆☆☆
+				1384 button Level #171 · Recover and land precisely · Flight School · Beginner · 13/14 · Not completed
+					1385 text LEVEL #171
+					1386 text 13/14
+					1387 text Recover and land precisely
+					1388 text Flight School · Beginner
+					1389 container Not completed
+						1390 text ☆☆☆
+				1391 button Level #172 · Your first solo Acro route · Flight School · Beginner · 14/14 · Not completed
+					1392 text LEVEL #172
+					1393 text 14/14
+					1394 text Your first solo Acro route
+					1395 text Flight School · Beginner
+					1396 container Not completed
+						1397 text ☆☆☆
+				1398 button Level #173 · Braking marks · Flight School · Experienced · 1/8 · Not completed
+					1399 heading FLIGHT SCHOOL · EXPERIENCED, Value: 3
+						1400 text FLIGHT SCHOOL · EXPERIENCED
+					1401 text LEVEL #173
+					1402 text 1/8
+					1403 text Braking marks
+					1404 text Flight School · Experienced
+					1405 container Not completed
+						1406 text ☆☆☆
+				1407 button Level #174 · Altitude staircase · Flight School · Experienced · 2/8 · Not completed
+					1408 text LEVEL #174
+					1409 text 2/8
+					1410 text Altitude staircase
+					1411 text Flight School · Experienced
+					1412 container Not completed
+						1413 text ☆☆☆
+				1414 button Level #175 · Compass cross · Flight School · Experienced · 3/8 · Not completed
+					1415 text LEVEL #175
+					1416 text 3/8
+					1417 text Compass cross
+					1418 text Flight School · Experienced
+					1419 container Not completed
+						1420 text ☆☆☆
+				1421 button Level #176 · Backward return · Flight School · Experienced · 4/8 · Not completed
+					1422 text LEVEL #176
+					1423 text 4/8
+					1424 text Backward return
+					1425 text Flight School · Experienced
+					1426 container Not completed
+						1427 text ☆☆☆
+				1428 button Level #177 · S-turn handover · Flight School · Experienced · 5/8 · Not completed
+					1429 text LEVEL #177
+					1430 text 5/8
+					1431 text S-turn handover
+					1432 text Flight School · Experienced
+					1433 container Not completed
+						1434 text ☆☆☆
+				1435 button Level #178 · Wide corner, tight exit · Flight School · Experienced · 6/8 · Not completed
+					1436 text LEVEL #178
+					1437 text 6/8
+					1438 text Wide corner, tight exit
+					1439 text Flight School · Experienced
+					1440 container Not completed
+						1441 text ☆☆☆
+				1442 button Level #179 · Three landing approaches · Flight School · Experienced · 7/8 · Not completed
+					1443 text LEVEL #179
+					1444 text 7/8
+					1445 text Three landing approaches
+					1446 text Flight School · Experienced
+					1447 container Not completed
+						1448 text ☆☆☆
+				1449 button Level #180 · Landmark rally · Flight School · Experienced · 8/8 · Not completed
+					1450 text LEVEL #180
+					1451 text 8/8
+					1452 text Landmark rally
+					1453 text Flight School · Experienced
+					1454 container Not completed
+						1455 text ☆☆☆
+				1456 button Level #181 · Slalom rhythm · Flight School · Advanced · 1/8 · Not completed
+					1457 heading FLIGHT SCHOOL · ADVANCED, Value: 3
+						1458 text FLIGHT SCHOOL · ADVANCED
+					1459 text LEVEL #181
+					1460 text 1/8
+					1461 text Slalom rhythm
+					1462 text Flight School · Advanced
+					1463 container Not completed
+						1464 text ☆☆☆
+				1465 button Level #182 · High–low ribbon · Flight School · Advanced · 2/8 · Not completed
+					1466 text LEVEL #182
+					1467 text 2/8
+					1468 text High–low ribbon
+					1469 text Flight School · Advanced
+					1470 container Not completed
+						1471 text ☆☆☆
+				1472 button Level #183 · Platform approach · Flight School · Advanced · 3/8 · Not completed
+					1473 text LEVEL #183
+					1474 text 3/8
+					1475 text Platform approach
+					1476 text Flight School · Advanced
+					1477 container Not completed
+						1478 text ☆☆☆
+				1479 button Level #184 · Corridor turnaround · Flight School · Advanced · 4/8 · Not completed
+					1480 text LEVEL #184
+					1481 text 4/8
+					1482 text Corridor turnaround
+					1483 text Flight School · Advanced
+					1484 container Not completed
+						1485 text ☆☆☆
+				1486 button Level #185 · Over, around, under · Flight School · Advanced · 5/8 · Not completed
+					1487 text LEVEL #185
+					1488 text 5/8
+					1489 text Over, around, under
+					1490 text Flight School · Advanced
+					1491 container Not completed
+						1492 text ☆☆☆
+				1493 button Level #186 · Read the landmarks · Flight School · Advanced · 6/8 · Not completed
+					1494 text LEVEL #186
+					1495 text 6/8
+					1496 text Read the landmarks
+					1497 text Flight School · Advanced
+					1498 container Not completed
+						1499 text ☆☆☆
+				1500 button Level #187 · Between floors · Flight School · Advanced · 7/8 · Not completed
+					1501 text LEVEL #187
+					1502 text 7/8
+					1503 text Between floors
+					1504 text Flight School · Advanced
+					1505 container Not completed
+						1506 text ☆☆☆
+				1507 button Level #188 · Precision pilot route · Flight School · Advanced · 8/8 · Not completed
+					1508 text LEVEL #188
+					1509 text 8/8
+					1510 text Precision pilot route
+					1511 text Flight School · Advanced
+					1512 container Not completed
+						1513 text ☆☆☆
+				1514 button Level #189 · Roll and recover · Flight School · Pro · 1/8 · Not completed
+					1515 heading FLIGHT SCHOOL · PRO, Value: 3
+						1516 text FLIGHT SCHOOL · PRO
+					1517 text LEVEL #189
+					1518 text 1/8
+					1519 text Roll and recover
+					1520 text Flight School · Pro
+					1521 container Not completed
+						1522 text ☆☆☆
+				1523 button Level #190 · Forward and backward flip · Flight School · Pro · 2/8 · Not completed
+					1524 text LEVEL #190
+					1525 text 2/8
+					1526 text Forward and backward flip
+					1527 text Flight School · Pro
+					1528 container Not completed
+						1529 text ☆☆☆
+				1530 button Level #191 · Yaw through 360 degrees · Flight School · Pro · 3/8 · Not completed
+					1531 text LEVEL #191
+					1532 text 3/8
+					1533 text Yaw through 360 degrees
+					1534 text Flight School · Pro
+					1535 container Not completed
+						1536 text ☆☆☆
+				1537 button Level #192 · Recognize inverted, recover · Flight School · Pro · 4/8 · Not completed
+					1538 text LEVEL #192
+					1539 text 4/8
+					1540 text Recognize inverted, recover
+					1541 text Flight School · Pro
+					1542 container Not completed
+						1543 text ☆☆☆
+				1544 button Level #193 · Split-S return · Flight School · Pro · 5/8 · Not completed
+					1545 text LEVEL #193
+					1546 text 5/8
+					1547 text Split-S return
+					1548 text Flight School · Pro
+					1549 container Not completed
+						1550 text ☆☆☆
+				1551 button Level #194 · Immelmann climb-out · Flight School · Pro · 6/8 · Not completed
+					1552 text LEVEL #194
+					1553 text 6/8
+					1554 text Immelmann climb-out
+					1555 text Flight School · Pro
+					1556 container Not completed
+						1557 text ☆☆☆
+				1558 button Level #195 · Dive, judge, pull out · Flight School · Pro · 7/8 · Not completed
+					1559 text LEVEL #195
+					1560 text 7/8
+					1561 text Dive, judge, pull out
+					1562 text Flight School · Pro
+					1563 container Not completed
+						1564 text ☆☆☆
+				1565 button Level #196 · First power loop · Flight School · Pro · 8/8 · Not completed
+					1566 text LEVEL #196
+					1567 text 8/8
+					1568 text First power loop
+					1569 text Flight School · Pro
+					1570 container Not completed
+						1571 text ☆☆☆
+				1572 button Level #197 · Barrel path · Flight School · Master · 1/8 · Not completed
+					1573 heading FLIGHT SCHOOL · MASTER, Value: 3
+						1574 text FLIGHT SCHOOL · MASTER
+					1575 text LEVEL #197
+					1576 text 1/8
+					1577 text Barrel path
+					1578 text Flight School · Master
+					1579 container Not completed
+						1580 text ☆☆☆
+				1581 button Level #198 · Orbit the landmark · Flight School · Master · 2/8 · Not completed
+					1582 text LEVEL #198
+					1583 text 2/8
+					1584 text Orbit the landmark
+					1585 text Flight School · Master
+					1586 container Not completed
+						1587 text ☆☆☆
+				1588 button Level #199 · Climbing corkscrew · Flight School · Master · 3/8 · Not completed
+					1589 text LEVEL #199
+					1590 text 3/8
+					1591 text Climbing corkscrew
+					1592 text Flight School · Master
+					1593 container Not completed
+						1594 text ☆☆☆
+				1595 button Level #200 · Inverted turn and exit · Flight School · Master · 4/8 · Not completed
+					1596 text LEVEL #200
+					1597 text 4/8
+					1598 text Inverted turn and exit
+					1599 text Flight School · Master
+					1600 container Not completed
+						1601 text ☆☆☆
+				1602 button Level #201 · Loop into a roll · Flight School · Master · 5/8 · Not completed
+					1603 text LEVEL #201
+					1604 text 5/8
+					1605 text Loop into a roll
+					1606 text Flight School · Master
+					1607 container Not completed
+						1608 text ☆☆☆
+				1609 button Level #202 · Split-S into an orbit · Flight School · Master · 6/8 · Not completed
+					1610 text LEVEL #202
+					1611 text 6/8
+					1612 text Split-S into an orbit
+					1613 text Flight School · Master
+					1614 container Not completed
+						1615 text ☆☆☆
+				1616 button Level #203 · Race line with trick zones · Flight School · Master · 7/8 · Not completed
+					1617 text LEVEL #203
+					1618 text 7/8
+					1619 text Race line with trick zones
+					1620 text Flight School · Master
+					1621 container Not completed
+						1622 text ☆☆☆
+				1623 button Level #204 · Master flight · Flight School · Master · 8/8 · Not completed
+					1624 text LEVEL #204
+					1625 text 8/8
+					1626 text Master flight
+					1627 text Flight School · Master
+					1628 container Not completed
+						1629 text ☆☆☆
+		1630 container
+			1631 button Random level, Help: Play a random level from these results, ID: journey-random-level
+			1632 button Back to game, ID: journey-back
+			1633 container journey-goal
+				1634 container journey-goal-status
+					1635 text No mission pinned.
+				1636 button Pin focused mission, ID: journey-goal-pin
+				1637 button (disabled) Find goal, ID: journey-goal-find
+				1638 button (disabled) Clear goal, ID: journey-goal-clear
+			1639 button (collapsed) SIM tools, Secondary Actions: Expand
+				1640 text SIM tools
+
+The focused UI element is 1725 button Fly: Lunar Basin — flight study · Shelter detail · Version composition-r3

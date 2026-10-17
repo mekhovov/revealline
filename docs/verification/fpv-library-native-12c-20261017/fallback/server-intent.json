@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-17T21:57:32.739195+00:00",
+  "pid": 18921,
+  "port": 57145,
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "stage": "<external-native-stage>",
+  "availableBytes": 3832131584,
+  "scope": "Only visible standalone Settings Extras fallback gate; reuse existing staged build and same preserved test origin. No repetition of accepted downloads or flight checks."
+}

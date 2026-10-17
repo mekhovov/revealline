@@ -1,0 +1,569 @@
+{
+  "format": "fpv-native-public-projection.v2",
+  "rawRecords": 57,
+  "byteIdenticalRecords": 55,
+  "privatePathRedactedRecords": 2,
+  "unchangedByteImageRenames": 4,
+  "images": 6,
+  "rawOriginalsRetained": true,
+  "scope": "Bounded native records plus separately classified expected absent-core fallback; prior v1/v2 uncertainty and all failed requests retained. No broad player/public acceptance.",
+  "files": [
+    {
+      "publicPath": "records/INDEPENDENT-NATIVE-RECEIPT-REVIEW.json",
+      "rawFileName": "INDEPENDENT-NATIVE-RECEIPT-REVIEW.json",
+      "rawBytes": 6485,
+      "rawSHA256": "901ca0159509087686bc02a7bc209a3bd4d4fcdc40365d63576914b45f23a627",
+      "publicBytes": 6485,
+      "publicSHA256": "901ca0159509087686bc02a7bc209a3bd4d4fcdc40365d63576914b45f23a627",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/RAW-EVIDENCE-MANIFEST.json",
+      "rawFileName": "RAW-EVIDENCE-MANIFEST.json",
+      "rawBytes": 6419,
+      "rawSHA256": "859447550c19c54b73b68dfcf340db9df63629ece85b8079dae077a0188ce853",
+      "publicBytes": 6419,
+      "publicSHA256": "859447550c19c54b73b68dfcf340db9df63629ece85b8079dae077a0188ce853",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ROOT-NATIVE-OBSERVATION-RECEIPT-v2.json",
+      "rawFileName": "ROOT-NATIVE-OBSERVATION-RECEIPT-v2.json",
+      "rawBytes": 4631,
+      "rawSHA256": "1532c062c8c025633031c62899464c486f81fc20f5873c57d0d692a160100e51",
+      "publicBytes": 4631,
+      "publicSHA256": "1532c062c8c025633031c62899464c486f81fc20f5873c57d0d692a160100e51",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ROOT-NATIVE-OBSERVATION-RECEIPT.json",
+      "rawFileName": "ROOT-NATIVE-OBSERVATION-RECEIPT.json",
+      "rawBytes": 3352,
+      "rawSHA256": "ec01a5596d0577f914f760f356e61d3b5d9da6e35c361cab65f094bc16aa2e8b",
+      "publicBytes": 3352,
+      "publicSHA256": "ec01a5596d0577f914f760f356e61d3b5d9da6e35c361cab65f094bc16aa2e8b",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-acro-change.txt",
+      "rawFileName": "ax-acro-change.txt",
+      "rawBytes": 1695,
+      "rawSHA256": "226679b4cc7534b9f654696147c3c3b14f58e54014fd10ca39b6727ad3acd0ad",
+      "publicBytes": 1695,
+      "publicSHA256": "226679b4cc7534b9f654696147c3c3b14f58e54014fd10ca39b6727ad3acd0ad",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-acro-menu.txt",
+      "rawFileName": "ax-acro-menu.txt",
+      "rawBytes": 4186,
+      "rawSHA256": "6485be99f40244bb828914b801bf9a1d60867cdd9f102c879ba858f90517709b",
+      "publicBytes": 4186,
+      "publicSHA256": "6485be99f40244bb828914b801bf9a1d60867cdd9f102c879ba858f90517709b",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-acro-ready.txt",
+      "rawFileName": "ax-acro-ready.txt",
+      "rawBytes": 1576,
+      "rawSHA256": "3c4ad33f2c5d2a160da0fd75203476e9e77aeb3fd979bd761d188d859ad39895",
+      "publicBytes": 1576,
+      "publicSHA256": "3c4ad33f2c5d2a160da0fd75203476e9e77aeb3fd979bd761d188d859ad39895",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-all-versions-expanded.txt",
+      "rawFileName": "ax-all-versions-expanded.txt",
+      "rawBytes": 11874,
+      "rawSHA256": "39e893766d1a8fa4f07b32f56c8674dcd3f4b2b51ac02adfec639ed443785135",
+      "publicBytes": 11874,
+      "publicSHA256": "39e893766d1a8fa4f07b32f56c8674dcd3f4b2b51ac02adfec639ed443785135",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-before-expanding.txt",
+      "rawFileName": "ax-before-expanding.txt",
+      "rawBytes": 71297,
+      "rawSHA256": "b3c801652559ffa30d6207eb75df8c6831ee3ce0dff3b1880dcc43e827188224",
+      "publicBytes": 71297,
+      "publicSHA256": "b3c801652559ffa30d6207eb75df8c6831ee3ce0dff3b1880dcc43e827188224",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-before-old-fly.txt",
+      "rawFileName": "ax-before-old-fly.txt",
+      "rawBytes": 71829,
+      "rawSHA256": "a554e3b36ec58af3e8a4d948b45c10defef4aa13cf244c4a7dd83a854e09c09d",
+      "publicBytes": 71829,
+      "publicSHA256": "a554e3b36ec58af3e8a4d948b45c10defef4aa13cf244c4a7dd83a854e09c09d",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-chase-setup.txt",
+      "rawFileName": "ax-chase-setup.txt",
+      "rawBytes": 761,
+      "rawSHA256": "8fadbd4ca82ce9b0f3dc335261b1682a39a2db200b850afb329118f0bb15da25",
+      "publicBytes": 761,
+      "publicSHA256": "8fadbd4ca82ce9b0f3dc335261b1682a39a2db200b850afb329118f0bb15da25",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-keyboard-collapse.txt",
+      "rawFileName": "ax-keyboard-collapse.txt",
+      "rawBytes": 602,
+      "rawSHA256": "6e5ad32a0e91693d2ebde598e6dc0dc6d5485e1c85684af8b2537b2aeb782c05",
+      "publicBytes": 602,
+      "publicSHA256": "6e5ad32a0e91693d2ebde598e6dc0dc6d5485e1c85684af8b2537b2aeb782c05",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-keyboard-expand.txt",
+      "rawFileName": "ax-keyboard-expand.txt",
+      "rawBytes": 1737,
+      "rawSHA256": "f07707e7d6e7cfccb8123f0fce0d1bc3a274d97a88a36179b03923614f37c1f9",
+      "publicBytes": 1737,
+      "publicSHA256": "f07707e7d6e7cfccb8123f0fce0d1bc3a274d97a88a36179b03923614f37c1f9",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-keyboard-tab.txt",
+      "rawFileName": "ax-keyboard-tab.txt",
+      "rawBytes": 470,
+      "rawSHA256": "7585ad0bfd7d28c4b4c15a453085c0b2a6c2e4421bb910d43d50c4b28e1489e5",
+      "publicBytes": 470,
+      "publicSHA256": "7585ad0bfd7d28c4b4c15a453085c0b2a6c2e4421bb910d43d50c4b28e1489e5",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-lunar-both-saved.txt",
+      "rawFileName": "ax-lunar-both-saved.txt",
+      "rawBytes": 9151,
+      "rawSHA256": "331a1b33d05ac67aaf24c5e455fdeb1ea62b05adddbfd9a82c3010f45b063020",
+      "publicBytes": 9151,
+      "publicSHA256": "331a1b33d05ac67aaf24c5e455fdeb1ea62b05adddbfd9a82c3010f45b063020",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-lunar-new-download.txt",
+      "rawFileName": "ax-lunar-new-download.txt",
+      "rawBytes": 9063,
+      "rawSHA256": "6e7d222d9944749ba3b750c063690d36f5b11ccc7faf21700e1e6b45374be592",
+      "publicBytes": 9063,
+      "publicSHA256": "6e7d222d9944749ba3b750c063690d36f5b11ccc7faf21700e1e6b45374be592",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-lunar-old-after-download.txt",
+      "rawFileName": "ax-lunar-old-after-download.txt",
+      "rawBytes": 556,
+      "rawSHA256": "da11d24af7bdce8dcdf1c2f8f880fc96ad292527ff6bff1f865dea02e0c0d1ed",
+      "publicBytes": 556,
+      "publicSHA256": "da11d24af7bdce8dcdf1c2f8f880fc96ad292527ff6bff1f865dea02e0c0d1ed",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-lunar-old-download.txt",
+      "rawFileName": "ax-lunar-old-download.txt",
+      "rawBytes": 9241,
+      "rawSHA256": "b459988b8fec1a050862955af0d20543c2fc6cf4754da46cf2f80fcf3a1edc51",
+      "publicBytes": 9241,
+      "publicSHA256": "b459988b8fec1a050862955af0d20543c2fc6cf4754da46cf2f80fcf3a1edc51",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-lunar-old-terminal.txt",
+      "rawFileName": "ax-lunar-old-terminal.txt",
+      "rawBytes": 3938,
+      "rawSHA256": "fd20b28980d538c01b025a9c7d777e6c3da25ee015b981312d8bc089da164dd2",
+      "publicBytes": 3938,
+      "publicSHA256": "fd20b28980d538c01b025a9c7d777e6c3da25ee015b981312d8bc089da164dd2",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-menu-escape.txt",
+      "rawFileName": "ax-menu-escape.txt",
+      "rawBytes": 1624,
+      "rawSHA256": "22e218228da32fe5cdee415ae2d40ea7ad89b8bfa03df1f6a8406ff43b546627",
+      "publicBytes": 1624,
+      "publicSHA256": "22e218228da32fe5cdee415ae2d40ea7ad89b8bfa03df1f6a8406ff43b546627",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-old-explicit-arm.txt",
+      "rawFileName": "ax-old-explicit-arm.txt",
+      "rawBytes": 1348,
+      "rawSHA256": "e8d21b50a2619be3930a40369829780d3c97f192d789925ac3465e5235e56ecd",
+      "publicBytes": 1348,
+      "publicSHA256": "e8d21b50a2619be3930a40369829780d3c97f192d789925ac3465e5235e56ecd",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-old-fly-action.txt",
+      "rawFileName": "ax-old-fly-action.txt",
+      "rawBytes": 1301,
+      "rawSHA256": "49275e2704bfaf31aa0fe6e32d3c2d7c80d64180fd5ef5201327e236d83ae098",
+      "publicBytes": 1301,
+      "publicSHA256": "49275e2704bfaf31aa0fe6e32d3c2d7c80d64180fd5ef5201327e236d83ae098",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-old-fly-ready.txt",
+      "rawFileName": "ax-old-fly-ready.txt",
+      "rawBytes": 1576,
+      "rawSHA256": "3c4ad33f2c5d2a160da0fd75203476e9e77aeb3fd979bd761d188d859ad39895",
+      "publicBytes": 1576,
+      "publicSHA256": "3c4ad33f2c5d2a160da0fd75203476e9e77aeb3fd979bd761d188d859ad39895",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-old-paused.txt",
+      "rawFileName": "ax-old-paused.txt",
+      "rawBytes": 4192,
+      "rawSHA256": "a618bf240e4cb60a0874756b773b25aff4a7705f82843faefc2b9ed138374537",
+      "publicBytes": 4192,
+      "publicSHA256": "a618bf240e4cb60a0874756b773b25aff4a7705f82843faefc2b9ed138374537",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-reopened-both-editions-uk.txt",
+      "rawFileName": "ax-reopened-both-editions-uk.txt",
+      "rawBytes": 6377,
+      "rawSHA256": "daf67dfbf3556e2e038e24eb1eb860ff1b4032ad8666cef1de13e7c17eb8b952",
+      "publicBytes": 6377,
+      "publicSHA256": "daf67dfbf3556e2e038e24eb1eb860ff1b4032ad8666cef1de13e7c17eb8b952",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-reopened-home.txt",
+      "rawFileName": "ax-reopened-home.txt",
+      "rawBytes": 2479,
+      "rawSHA256": "fc0d80b51e895a011eb34d2886b71a18e8b317acb935449f566cea4a7329c539",
+      "publicBytes": 2479,
+      "publicSHA256": "fc0d80b51e895a011eb34d2886b71a18e8b317acb935449f566cea4a7329c539",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-reopened-library-uk.txt",
+      "rawFileName": "ax-reopened-library-uk.txt",
+      "rawBytes": 97944,
+      "rawSHA256": "bd48172e7849f94d9e4413f6a142a3d26a69b68fb2b57b7ee28ff5854982e0d6",
+      "publicBytes": 97944,
+      "publicSHA256": "bd48172e7849f94d9e4413f6a142a3d26a69b68fb2b57b7ee28ff5854982e0d6",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-touch-setup.txt",
+      "rawFileName": "ax-touch-setup.txt",
+      "rawBytes": 750,
+      "rawSHA256": "c89309a229c0261adf453029300575f59b022593fce8a3a901dd8798da92393f",
+      "publicBytes": 750,
+      "publicSHA256": "c89309a229c0261adf453029300575f59b022593fce8a3a901dd8798da92393f",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/ax-uk-signal-blue-settings.txt",
+      "rawFileName": "ax-uk-signal-blue-settings.txt",
+      "rawBytes": 17316,
+      "rawSHA256": "dfa39beb60f011a706b062577fe38bd57bc846f0db7dea75188692f48a34c5bc",
+      "publicBytes": 17316,
+      "publicSHA256": "dfa39beb60f011a706b062577fe38bd57bc846f0db7dea75188692f48a34c5bc",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/browser-warnings-first-tab.json",
+      "rawFileName": "browser-warnings-first-tab.json",
+      "rawBytes": 2,
+      "rawSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "publicBytes": 2,
+      "publicSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/browser-warnings-reopened-tab.json",
+      "rawFileName": "browser-warnings-reopened-tab.json",
+      "rawBytes": 2,
+      "rawSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "publicBytes": 2,
+      "publicSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/headroom-samples.jsonl",
+      "rawFileName": "headroom-samples.jsonl",
+      "rawBytes": 99,
+      "rawSHA256": "41d57932da0078408ff9c2fd142eebd83917f63a691178db3906aa1dfd19f761",
+      "publicBytes": 99,
+      "publicSHA256": "41d57932da0078408ff9c2fd142eebd83917f63a691178db3906aa1dfd19f761",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/http.jsonl",
+      "rawFileName": "http.jsonl",
+      "rawBytes": 45461,
+      "rawSHA256": "5f6054e4eae2c0ef390853b748f0771cf1cfafa58941b443731ccd5810a2e1a8",
+      "publicBytes": 45461,
+      "publicSHA256": "5f6054e4eae2c0ef390853b748f0771cf1cfafa58941b443731ccd5810a2e1a8",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/lunar-both-saved.jpg",
+      "rawFileName": "lunar-both-saved.png",
+      "rawBytes": 85666,
+      "rawSHA256": "487138a3f0f91ce75c570ce4adc9e0d0ed3cdb9033919b0153b1d36e450abe13",
+      "publicBytes": 85666,
+      "publicSHA256": "487138a3f0f91ce75c570ce4adc9e0d0ed3cdb9033919b0153b1d36e450abe13",
+      "transformations": [
+        {
+          "kind": "filenameExtensionOnly",
+          "from": "lunar-both-saved.png",
+          "to": "lunar-both-saved.jpg",
+          "actualMediaType": "image/jpeg",
+          "bytesUnchanged": true
+        }
+      ]
+    },
+    {
+      "publicPath": "records/native-evidence-preparation-negative.json",
+      "rawFileName": "native-evidence-preparation-negative.json",
+      "rawBytes": 742,
+      "rawSHA256": "e24e0560f7077022b0d61ac2921918f86e036c6134a82257c53e5dbe4bf4f75f",
+      "publicBytes": 742,
+      "publicSHA256": "e24e0560f7077022b0d61ac2921918f86e036c6134a82257c53e5dbe4bf4f75f",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/normal-reopen-intent.json",
+      "rawFileName": "normal-reopen-intent.json",
+      "rawBytes": 218,
+      "rawSHA256": "5845cefbc086de3df13d6f456fa6abe8683d95d12dfec823637b857f008b1fa4",
+      "publicBytes": 218,
+      "publicSHA256": "5845cefbc086de3df13d6f456fa6abe8683d95d12dfec823637b857f008b1fa4",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/older-lunar-paused-touch-chase.jpg",
+      "rawFileName": "older-lunar-paused-touch-chase.png",
+      "rawBytes": 35596,
+      "rawSHA256": "03abb47c7701500136c4fe49a1943228d7fd4cf2332d3f3a2c1e6cc228461ff2",
+      "publicBytes": 35596,
+      "publicSHA256": "03abb47c7701500136c4fe49a1943228d7fd4cf2332d3f3a2c1e6cc228461ff2",
+      "transformations": [
+        {
+          "kind": "filenameExtensionOnly",
+          "from": "older-lunar-paused-touch-chase.png",
+          "to": "older-lunar-paused-touch-chase.jpg",
+          "actualMediaType": "image/jpeg",
+          "bytesUnchanged": true
+        }
+      ]
+    },
+    {
+      "publicPath": "records/older-lunar-ready-to-arm.jpg",
+      "rawFileName": "older-lunar-ready-to-arm.png",
+      "rawBytes": 29604,
+      "rawSHA256": "7f9f26a47ef639265beb1b17fb4e1dc344b26412ce452d250f8aebf8c2eb2a08",
+      "publicBytes": 29604,
+      "publicSHA256": "7f9f26a47ef639265beb1b17fb4e1dc344b26412ce452d250f8aebf8c2eb2a08",
+      "transformations": [
+        {
+          "kind": "filenameExtensionOnly",
+          "from": "older-lunar-ready-to-arm.png",
+          "to": "older-lunar-ready-to-arm.jpg",
+          "actualMediaType": "image/jpeg",
+          "bytesUnchanged": true
+        }
+      ]
+    },
+    {
+      "publicPath": "records/reopened-library-uk.jpg",
+      "rawFileName": "reopened-library-uk.png",
+      "rawBytes": 119093,
+      "rawSHA256": "4f86528a7dfb6f8506453a93fd7498812651fe938411ed97c0698a6d28c9f88b",
+      "publicBytes": 119093,
+      "publicSHA256": "4f86528a7dfb6f8506453a93fd7498812651fe938411ed97c0698a6d28c9f88b",
+      "transformations": [
+        {
+          "kind": "filenameExtensionOnly",
+          "from": "reopened-library-uk.png",
+          "to": "reopened-library-uk.jpg",
+          "actualMediaType": "image/jpeg",
+          "bytesUnchanged": true
+        }
+      ]
+    },
+    {
+      "publicPath": "records/selector-mapping-negative.json",
+      "rawFileName": "selector-mapping-negative.json",
+      "rawBytes": 294,
+      "rawSHA256": "58647bbb2dd42fbb977174f7d2cd5f1eed6f214e026e4623e1a7187907ef6ac2",
+      "publicBytes": 294,
+      "publicSHA256": "58647bbb2dd42fbb977174f7d2cd5f1eed6f214e026e4623e1a7187907ef6ac2",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/server-actual-terminal.json",
+      "rawFileName": "server-actual-terminal.json",
+      "rawBytes": 363,
+      "rawSHA256": "663062e0a7a8528e09973a6f756b959981eca85a11cf1e18a1b6c989cea19aed",
+      "publicBytes": 363,
+      "publicSHA256": "663062e0a7a8528e09973a6f756b959981eca85a11cf1e18a1b6c989cea19aed",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/server-closed.json",
+      "rawFileName": "server-closed.json",
+      "rawBytes": 72,
+      "rawSHA256": "0c2c717ea928100ea6a1b758d0bc234f2c59e976ea1c54118e438ad0bbd0c894",
+      "publicBytes": 72,
+      "publicSHA256": "0c2c717ea928100ea6a1b758d0bc234f2c59e976ea1c54118e438ad0bbd0c894",
+      "transformations": []
+    },
+    {
+      "publicPath": "records/server-intent.json",
+      "rawFileName": "server-intent.json",
+      "rawBytes": 685,
+      "rawSHA256": "c5a71a02c45cc8e080fa52652b4375f48295993d02bfab85334fb7fd330af3a8",
+      "publicBytes": 559,
+      "publicSHA256": "e46851fdccabc5383cc57b574d4d8716a4a75d3707a73fe3bcde56d526c4aafb",
+      "transformations": [
+        {
+          "kind": "literalPrivatePathReplacement",
+          "replacementToken": "<external-native-stage>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/tabs-closed.json",
+      "rawFileName": "tabs-closed.json",
+      "rawBytes": 136,
+      "rawSHA256": "f1ca3e11bbc63f40602b2f6f222a9d2545439de94ef08e5d5471f38728f2bdf6",
+      "publicBytes": 136,
+      "publicSHA256": "f1ca3e11bbc63f40602b2f6f222a9d2545439de94ef08e5d5471f38728f2bdf6",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/FALLBACK-INDEPENDENT-REVIEW.json",
+      "rawFileName": "FALLBACK-INDEPENDENT-REVIEW.json",
+      "rawBytes": 3664,
+      "rawSHA256": "f45643a24efe649707bcf3b8c6a21024995e25cb49aad03305e0f7855d020916",
+      "publicBytes": 3664,
+      "publicSHA256": "f45643a24efe649707bcf3b8c6a21024995e25cb49aad03305e0f7855d020916",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/RAW-EVIDENCE-MANIFEST.json",
+      "rawFileName": "RAW-EVIDENCE-MANIFEST.json",
+      "rawBytes": 1800,
+      "rawSHA256": "8f5b435531d3c6d6343af0da2f3f7965be1e1bd55eecc8b002cc17b1c7eb377c",
+      "publicBytes": 1800,
+      "publicSHA256": "8f5b435531d3c6d6343af0da2f3f7965be1e1bd55eecc8b002cc17b1c7eb377c",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/ROOT-FALLBACK-CLASSIFICATION-RECEIPT.json",
+      "rawFileName": "ROOT-FALLBACK-CLASSIFICATION-RECEIPT.json",
+      "rawBytes": 2975,
+      "rawSHA256": "6113b57ec3e6c758e41ac5d21379aa2de5574d20d24c9558ed3cd39e75de70dc",
+      "publicBytes": 2975,
+      "publicSHA256": "6113b57ec3e6c758e41ac5d21379aa2de5574d20d24c9558ed3cd39e75de70dc",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/ax-fallback-visible-en.txt",
+      "rawFileName": "ax-fallback-visible-en.txt",
+      "rawBytes": 1990,
+      "rawSHA256": "bc57d02357d87cd376fce903a61cd5db4d6ab455c572900efb490bfdaa7803b5",
+      "publicBytes": 1990,
+      "publicSHA256": "bc57d02357d87cd376fce903a61cd5db4d6ab455c572900efb490bfdaa7803b5",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/ax-fallback-visible-uk.txt",
+      "rawFileName": "ax-fallback-visible-uk.txt",
+      "rawBytes": 2610,
+      "rawSHA256": "e7e7d0c04d54ae65c98045dce4fea17d22522e477acded74e94715369a10e381",
+      "publicBytes": 2610,
+      "publicSHA256": "e7e7d0c04d54ae65c98045dce4fea17d22522e477acded74e94715369a10e381",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/exact-source-excerpts.json",
+      "rawFileName": "exact-source-excerpts.json",
+      "rawBytes": 5960,
+      "rawSHA256": "bab5bad42bc40f27ebdba5dbde92d09a7c91b71c19eb72802d352206be26e8de",
+      "publicBytes": 5960,
+      "publicSHA256": "bab5bad42bc40f27ebdba5dbde92d09a7c91b71c19eb72802d352206be26e8de",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/fallback-visible-en.jpg",
+      "rawFileName": "fallback-visible-en.jpg",
+      "rawBytes": 52554,
+      "rawSHA256": "4efc2b6140dbcdabb764047f2b034b4a9ae6fe2e5762453b6bf789ec93bb98c8",
+      "publicBytes": 52554,
+      "publicSHA256": "4efc2b6140dbcdabb764047f2b034b4a9ae6fe2e5762453b6bf789ec93bb98c8",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/fallback-visible-uk.jpg",
+      "rawFileName": "fallback-visible-uk.jpg",
+      "rawBytes": 58269,
+      "rawSHA256": "aed808a2b8e4287c16cf0fa0e66080d9b0b6cd815d357298e32f7a7220475e04",
+      "publicBytes": 58269,
+      "publicSHA256": "aed808a2b8e4287c16cf0fa0e66080d9b0b6cd815d357298e32f7a7220475e04",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/http.jsonl",
+      "rawFileName": "http.jsonl",
+      "rawBytes": 22453,
+      "rawSHA256": "780befd1e839b5b38b42f6fa374fd10d46b64f21a08250b92bf3dc430e4ed7e4",
+      "publicBytes": 22453,
+      "publicSHA256": "780befd1e839b5b38b42f6fa374fd10d46b64f21a08250b92bf3dc430e4ed7e4",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/server-actual-terminal.json",
+      "rawFileName": "server-actual-terminal.json",
+      "rawBytes": 299,
+      "rawSHA256": "939bfce38c63bbebd9a5a77f38520c881103c8b7a172e63b8111a8d81e561607",
+      "publicBytes": 299,
+      "publicSHA256": "939bfce38c63bbebd9a5a77f38520c881103c8b7a172e63b8111a8d81e561607",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/server-closed.json",
+      "rawFileName": "server-closed.json",
+      "rawBytes": 65,
+      "rawSHA256": "3ddacffffffba2b3ae9609db6aac8b563f5b0c202360d6501409475503dab8b2",
+      "publicBytes": 65,
+      "publicSHA256": "3ddacffffffba2b3ae9609db6aac8b563f5b0c202360d6501409475503dab8b2",
+      "transformations": []
+    },
+    {
+      "publicPath": "fallback/server-intent.json",
+      "rawFileName": "server-intent.json",
+      "rawBytes": 513,
+      "rawSHA256": "a59f4bf7b743defde78f092deb11ce856008f95ca9b72df2b07ba7f6206060ef",
+      "publicBytes": 387,
+      "publicSHA256": "79730599b8adb704f12a5f045b737f318501099af2ddf9361ed6a08303d54df4",
+      "transformations": [
+        {
+          "kind": "literalPrivatePathReplacement",
+          "replacementToken": "<external-native-stage>",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "fallback/tab-closed.json",
+      "rawFileName": "tab-closed.json",
+      "rawBytes": 118,
+      "rawSHA256": "4557879aa2def11495b042e127fc7becf395230317c1ad52b9e4a070a0658af4",
+      "publicBytes": 118,
+      "publicSHA256": "4557879aa2def11495b042e127fc7becf395230317c1ad52b9e4a070a0658af4",
+      "transformations": []
+    }
+  ]
+}

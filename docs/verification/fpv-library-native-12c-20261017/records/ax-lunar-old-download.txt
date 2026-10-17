@@ -1,0 +1,86 @@
+Browser tab: 2, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 44-45, 47-116, 1705-1777
++				1705 text +
++					1706 text Regional free flight
++				1707 text Choose a region. Versions keeps every offered and saved edition available. Fly uses the shown saved version; downloads and removals always need your action. Prepare the simulator offline separately.
+~				46 button (disabled) Refresh saved regions
++				1708 button Cancel
++				1709 text Checking regional download…
++				1710 container
++					1711 heading Alpine Highlands, Value: 3
++						1712 text Alpine Highlands
++					1713 text Recommended version · Alpine Highlands — connected mountain study · Station approach 4.096 × 4.096 km · six starting points · unscored free flight. Braced cable towers and a supported lookout make the station approach easier to read. Keep exploring the open concourse and connected snow and scree routes. Earlier Alpine editions remain available. Wider scenery and route detail are still being refined. Optional scenery download · 21.8 MiB · unscored
++					1714 button (disabled) Download: Alpine Highlands — connected mountain study · Station approach
++					1715 button (collapsed) Description: Versions for Alpine Highlands (6), Help: Versions (6), Secondary Actions: Expand
++						1716 text Versions (6)
++				1717 container
++					1718 heading Lunar Basin, Value: 3
++						1719 text Lunar Basin
++					1720 text Recommended version · Lunar Basin — flight study · Shelter detail 768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity. Optional scenery download · 2 MiB · unscored
++					1721 button (disabled) Download: Lunar Basin — flight study · Shelter detail
++					1722 button (expanded) Description: Versions for Lunar Basin (2), Help: Versions (2), Secondary Actions: Collapse
++						1723 text Versions (2)
++					1724 container
++						1725 text Lunar Basin — flight study Shelter detail 768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity. Optional scenery download · 2 MiB · unscored
++						1726 button (disabled) Download: Lunar Basin — flight study · Shelter detail
++					1727 container
++						1728 text Lunar Basin — flight study Edition · 1ec74a07 768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity. Optional scenery download · 1.9 MiB · unscored
++						1729 button (disabled) Download: Lunar Basin — flight study · Edition · 1ec74a07
++				1730 container
++					1731 heading Canal City, Value: 3
++						1732 text Canal City
++					1733 text Recommended version · Canal City — bridges and courtyards 384 × 384 m · six starting points · unscored free flight. Follow the canals beneath a masonry arch and high walkway, pass through warehouses and courtyards, or weave around basin moorings. Early composition study; surrounding banks remain sparse. Water is visual only. Optional scenery download · 6.5 MiB · unscored
++					1734 button (disabled) Download: Canal City — bridges and courtyards
++					1735 button (collapsed) Description: Versions for Canal City (1), Help: Versions (1), Secondary Actions: Expand
++						1736 text Versions (1)
++				1737 container
++					1738 heading Desert Expedition, Value: 3
++						1739 text Desert Expedition
++					1740 text Recommended version · Desert Expedition — rock routes · Rock practice routes 16.384 × 16.384 km · six close-range rock practice areas · unscored free flight. Weave between windstones, pass through a natural arch, climb the escarpment ribs and orbit the mesa crown. Early composition study; the wider terrain remains sparse. Optional scenery download · 45.9 MiB · unscored
++					1741 button (disabled) Download: Desert Expedition — rock routes · Rock practice routes
++					1742 button (collapsed) Description: Versions for Desert Expedition (2), Help: Versions (2), Secondary Actions: Expand
++						1743 text Versions (2)
++				1744 container
++					1745 heading Tropical coast, Value: 3
++						1746 text Tropical coast
++					1747 text Recommended version · Tropical coast — connected harbour · Connected harbour 768 × 768 m · connected wooden harbour decks and shore approach · six starting areas, unscored free flight. Separate harbour-r3 revision; the earlier coastal settlement remains available. Early coastal study; visual water only. Optional scenery download · 7.6 MiB · unscored
++					1748 button (disabled) Download: Tropical coast — connected harbour · Connected harbour
++					1749 button (collapsed) Description: Versions for Tropical coast (3), Help: Versions (3), Secondary Actions: Expand
++						1750 text Versions (3)
++				1751 container
++					1752 heading Railway Valley, Value: 3
++						1753 text Railway Valley
++					1754 text Recommended version · Railway Valley — six districts 4.096 × 4.096 km · six starting areas · unscored free flight. Explore a freight hall, viaduct, quarry conveyor, station canopy, foundry and timber yard. Early landscape study with static trains and sparse scenery between districts. Optional scenery download · 17.1 MiB · unscored
++					1755 button (disabled) Download: Railway Valley — six districts
++					1756 button (collapsed) Description: Versions for Railway Valley (2), Help: Versions (2), Secondary Actions: Expand
++						1757 text Versions (2)
++				1758 container
++					1759 heading Coaster Gardens, Value: 3
++						1760 text Coaster Gardens
++					1761 text Recommended version · Coaster Gardens — connected park study · Connected park routes 2.048 × 2.048 km · six starting points · unscored free flight. Explore the supported loop, linked approach paths, station courts and woodland routes. Early static park study; district scenery is still being refined and rides do not move. Optional scenery download · 32.6 MiB · unscored
++					1762 button (disabled) Download: Coaster Gardens — connected park study · Connected park routes
++					1763 button (collapsed) Description: Versions for Coaster Gardens (2), Help: Versions (2), Secondary Actions: Expand
++						1764 text Versions (2)
++				1765 container
++					1766 heading Hillside Town, Value: 3
++						1767 text Hillside Town
++					1768 text Recommended version · Hillside Town — civic court materials · Civic courtyard materials 384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available. Optional scenery download · 8.3 MiB · unscored
++					1769 button (disabled) Download: Hillside Town — civic court materials · Civic courtyard materials
++					1770 button (collapsed) Description: Versions for Hillside Town (2), Help: Versions (2), Secondary Actions: Expand
++						1771 text Versions (2)
++				1772 container
++					1773 heading Canyon worlds, Value: 3
++						1774 text Canyon worlds
++					1775 text Recommended version · Canyon Expanse — broad relief study 8.192 × 8.192 km · six starting areas · unscored free flight. Broad terrain-only relief with basins, mesas and ridges; an early landscape study with sparse detail. Optional scenery download · 45.8 MiB · unscored
++					1776 button (disabled) Download: Canyon Expanse — broad relief study
++					1777 button (collapsed) Description: Versions for Canyon worlds (3), Help: Versions (3), Secondary Actions: Expand
++						1778 text Versions (3)
++				1779 container
++					1780 heading Urban earthworks, Value: 3
++						1781 text Urban earthworks
++					1782 text Recommended version · Urban earthworks — regional preview 384 × 384 m · loading court, open workshop and connected parking ramps · unscored free flight. A regional preview with marked roads, building openings and rooftop passages. Optional scenery download · 2.2 MiB · unscored
++					1783 button (disabled) Download: Urban earthworks — regional preview
++					1784 button (collapsed) Description: Versions for Urban earthworks (1), Help: Versions (1), Secondary Actions: Expand
++						1785 text Versions (1)
+The focused UI element is 0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en

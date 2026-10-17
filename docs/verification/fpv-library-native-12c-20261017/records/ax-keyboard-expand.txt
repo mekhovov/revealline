@@ -1,0 +1,11 @@
+Browser tab: 2, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~					1721 button (expanded) Description: Versions for Lunar Basin (2), Help: Versions (2), Secondary Actions: Collapse
++					1787 container
++						1788 text Lunar Basin — flight study Shelter detail 768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity. Optional scenery download · 2 MiB · unscored
++						1789 button Download: Lunar Basin — flight study · Shelter detail
++					1790 container
++						1791 text Lunar Basin — flight study Version composition-r2 768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity. Saved for offline flight · 1.9 MiB · composition-r2
++						1792 button Fly: Lunar Basin — flight study · Version composition-r2
++						1793 button Remove this version: Lunar Basin — flight study · Version composition-r2
+The focused UI element is 1721 button (expanded) Description: Versions for Lunar Basin (2), Help: Versions (2), Secondary Actions: Collapse

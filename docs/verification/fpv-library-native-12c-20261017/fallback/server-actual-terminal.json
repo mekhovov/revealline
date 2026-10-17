@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-17T21:59:20.272152+00:00",
+  "session": 19413,
+  "pid": 18921,
+  "toolExitCode": 130,
+  "intentionalSIGINTAfterTabClosed": true,
+  "negative": "KeyboardInterrupt; not a test exit0",
+  "closedReceipt": {
+    "at": "2026-10-17T21:58:38.416457+00:00",
+    "serverClosed": true
+  }
+}

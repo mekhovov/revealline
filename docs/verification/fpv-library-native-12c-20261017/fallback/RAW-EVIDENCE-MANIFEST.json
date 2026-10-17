@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-17T21:59:20.272152+00:00",
+  "files": [
+    {
+      "path": "ROOT-FALLBACK-CLASSIFICATION-RECEIPT.json",
+      "bytes": 2975,
+      "sha256": "6113b57ec3e6c758e41ac5d21379aa2de5574d20d24c9558ed3cd39e75de70dc"
+    },
+    {
+      "path": "ax-fallback-visible-en.txt",
+      "bytes": 1990,
+      "sha256": "bc57d02357d87cd376fce903a61cd5db4d6ab455c572900efb490bfdaa7803b5"
+    },
+    {
+      "path": "ax-fallback-visible-uk.txt",
+      "bytes": 2610,
+      "sha256": "e7e7d0c04d54ae65c98045dce4fea17d22522e477acded74e94715369a10e381"
+    },
+    {
+      "path": "exact-source-excerpts.json",
+      "bytes": 5960,
+      "sha256": "bab5bad42bc40f27ebdba5dbde92d09a7c91b71c19eb72802d352206be26e8de"
+    },
+    {
+      "path": "fallback-visible-en.jpg",
+      "bytes": 52554,
+      "sha256": "4efc2b6140dbcdabb764047f2b034b4a9ae6fe2e5762453b6bf789ec93bb98c8"
+    },
+    {
+      "path": "fallback-visible-uk.jpg",
+      "bytes": 58269,
+      "sha256": "aed808a2b8e4287c16cf0fa0e66080d9b0b6cd815d357298e32f7a7220475e04"
+    },
+    {
+      "path": "http.jsonl",
+      "bytes": 22453,
+      "sha256": "780befd1e839b5b38b42f6fa374fd10d46b64f21a08250b92bf3dc430e4ed7e4"
+    },
+    {
+      "path": "server-actual-terminal.json",
+      "bytes": 299,
+      "sha256": "939bfce38c63bbebd9a5a77f38520c881103c8b7a172e63b8111a8d81e561607"
+    },
+    {
+      "path": "server-closed.json",
+      "bytes": 65,
+      "sha256": "3ddacffffffba2b3ae9609db6aac8b563f5b0c202360d6501409475503dab8b2"
+    },
+    {
+      "path": "server-intent.json",
+      "bytes": 513,
+      "sha256": "a59f4bf7b743defde78f092deb11ce856008f95ca9b72df2b07ba7f6206060ef"
+    },
+    {
+      "path": "tab-closed.json",
+      "bytes": 118,
+      "sha256": "4557879aa2def11495b042e127fc7becf395230317c1ad52b9e4a070a0658af4"
+    }
+  ]
+}

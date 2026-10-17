@@ -1,0 +1,5 @@
+{
+  "scope": "test automation selector only",
+  "action": "getByRole(button, Versions for Alpine Highlands (6))",
+  "outcome": "No match; deadline exceeded before any click. Native summary is exposed as AX button, but this Playwright role selector did not match. No product failure inferred."
+}

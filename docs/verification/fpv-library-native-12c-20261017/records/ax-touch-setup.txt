@@ -1,0 +1,8 @@
+Browser tab: 2, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 67
+~				16 pop up button (collapsed, settable) Controls, Value: Touch, Secondary Actions: Expand
+~						18 Keyboard
+~						19 (selected) Touch
++				83 text Experimental Acro · unscored · air start 2 m above the selected point. Landings and collisions use the verified terrain. Uses portable rates, or Actual defaults for Legacy feel.
+The focused UI element is 5 button Resume, ID: worlds-shell-action-pause-resume

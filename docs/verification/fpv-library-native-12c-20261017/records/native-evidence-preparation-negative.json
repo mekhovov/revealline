@@ -1,0 +1,9 @@
+{
+  "UTC": "2026-10-17T21:54:25.107705+00:00",
+  "status": "PREPARATION_STOPPED_BEFORE_COPY_OR_PUBLICATION",
+  "actualToolExitCode": 1,
+  "stage": "native-evidence-publication",
+  "cause": "Exact source-directory membership guard failed while root added a corrected v2 observation receipt. The original41-file membership assumption is stale.",
+  "details": "Only empty staging root/records were created. No Git API or publication; no originals changed. Root additionally corrected screenshot MIME and requested explicit settings-resource-failure status.",
+  "next": "Prepare separate v2 from the exact original manifest entries plus named v2 receipt and final guard review, preserving v1/negative and mapping unchanged JPEG bytes to .jpg."
+}

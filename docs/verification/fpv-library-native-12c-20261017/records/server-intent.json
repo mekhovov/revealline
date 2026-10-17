@@ -1,0 +1,11 @@
+{
+  "UTC": "2026-10-17T21:41:58.799835+00:00",
+  "pid": 5266,
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "stage": "<external-native-stage>",
+  "stageIdentitySHA256": "e0d6b6e898c5de6545191b484dab55956ed375002471d52a9de7a0cb32ed5017",
+  "url": "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en",
+  "internalAvailableBytes": 4080263168,
+  "scope": "One current12c full-player native Library check, fresh loopback storage, one CUA renderer; original public context untouched",
+  "newBuildOrPackageDownload": false
+}

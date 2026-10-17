@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T21:55:18.927404+00:00",
+  "reviewer": "fpv_library_guard_review",
+  "status": "PASS_BOUNDED_OBSERVATIONS_WITH_REQUIRED_HTTP_LIMITATIONS",
+  "scope": "Independent review of existing native evidence only; no new UI, server, test, download, source scan, Git or public mutation.",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "rootReceipt": {
+    "file": "ROOT-NATIVE-OBSERVATION-RECEIPT.json",
+    "bytes": 3352,
+    "sha256": "ec01a5596d0577f914f760f356e61d3b5d9da6e35c361cab65f094bc16aa2e8b"
+  },
+  "rawManifest": {
+    "file": "RAW-EVIDENCE-MANIFEST.json",
+    "bytes": 6419,
+    "sha256": "859447550c19c54b73b68dfcf340db9df63629ece85b8079dae077a0188ce853",
+    "matchedRows": 40,
+    "rawEvidenceFiles": 39,
+    "matchedBytes": 653526,
+    "mismatches": 0
+  },
+  "supportedClaimJoins": [
+    {
+      "claim": "Ten family rows and 24 offered editions",
+      "files": [
+        "ax-before-expanding.txt",
+        "ax-all-versions-expanded.txt"
+      ],
+      "limit": "Reconstructed from initial full AX and subsequent expansion diff, not from one screenshot."
+    },
+    {
+      "claim": "Older Lunar composition-r2 and newer composition-r3 separately saved and actionable; final focus on the corresponding Fly control",
+      "files": [
+        "ax-lunar-old-download.txt",
+        "ax-lunar-old-after-download.txt",
+        "ax-lunar-old-terminal.txt",
+        "ax-lunar-new-download.txt",
+        "ax-lunar-both-saved.txt",
+        "lunar-both-saved.png"
+      ],
+      "limit": "Busy AXWebArea focus is preserved. Edition identity is UI label binding, not hidden stored payload verification."
+    },
+    {
+      "claim": "Adjacent Remove control focused without an observed removal, Versions collapse and re-expansion",
+      "files": [
+        "ax-keyboard-tab.txt",
+        "ax-keyboard-collapse.txt",
+        "ax-keyboard-expand.txt"
+      ],
+      "limit": "AX establishes resulting states; exact keystroke/click sequence relies on root action provenance."
+    },
+    {
+      "claim": "Older Lunar launch reached Ready to arm, brief explicit Arm yielded active state, then pause",
+      "files": [
+        "ax-before-old-fly.txt",
+        "ax-old-fly-action.txt",
+        "ax-old-fly-ready.txt",
+        "ax-old-explicit-arm.txt",
+        "ax-old-paused.txt",
+        "older-lunar-ready-to-arm.png"
+      ],
+      "limit": "No duration, course completion, public flight or endurance acceptance."
+    },
+    {
+      "claim": "Self-level to Acro selection and a new Ready to arm state; Touch and Chase selected while paused, followed by paused viewport",
+      "files": [
+        "ax-old-paused.txt",
+        "ax-acro-change.txt",
+        "ax-acro-ready.txt",
+        "ax-acro-menu.txt",
+        "ax-touch-setup.txt",
+        "ax-chase-setup.txt",
+        "ax-menu-escape.txt",
+        "older-lunar-paused-touch-chase.png"
+      ],
+      "limit": "No comprehensive input/camera/physical-device matrix; exact Escape action relies on root action provenance."
+    },
+    {
+      "claim": "English UI and Ukrainian Signal Blue settings observed; both Lunar editions present after normal same-origin tab reopen",
+      "files": [
+        "ax-uk-signal-blue-settings.txt",
+        "normal-reopen-intent.json",
+        "ax-reopened-home.txt",
+        "ax-reopened-library-uk.txt",
+        "ax-reopened-both-editions-uk.txt",
+        "reopened-library-uk.png"
+      ],
+      "limit": "Signal Blue global theme has Value 1; the separate SIM appearance select follows the game. Tab reopen is not process restart or offline retention."
+    },
+    {
+      "claim": "Owned tabs reported closed and server intentionally terminated",
+      "files": [
+        "tabs-closed.json",
+        "server-actual-terminal.json",
+        "server-closed.json"
+      ],
+      "limit": "Terminal is EXIT130, not a passing test exit. Empty tab inventory is root observation; packet contains a closure receipt rather than a separate final inventory snapshot."
+    }
+  ],
+  "requiredReceiptAddendum": {
+    "reason": "Two observed HTTP 404s were omitted from root receipt v1 negatives. Preserve them explicitly before any publication or broader qualification claim.",
+    "httpLog": "http.jsonl",
+    "logRows": 326,
+    "requestRows": 324,
+    "statusCounts": {
+      "200": 162,
+      "304": 160,
+      "404": 2
+    },
+    "additionalErrorMessageRows": 2,
+    "negatives": [
+      {
+        "at": "2026-10-17T21:42:09.350592+00:00",
+        "method": "GET",
+        "path": "/favicon.ico",
+        "status": 404
+      },
+      {
+        "at": "2026-10-17T21:49:18.393120+00:00",
+        "method": "GET",
+        "path": "/revealline/game/ui/global-settings-tools.mjs",
+        "status": 404
+      }
+    ],
+    "interpretation": "The second failure is an application module request. This packet does not establish its intended optional boundary, successful fallback or affected feature availability. Empty browser-warning arrays do not mean all HTTP requests succeeded. Neither negative invalidates the narrowly observed Library UI states, but full-player acceptance remains open."
+  },
+  "imageInspection": {
+    "count": 4,
+    "actualFormat": "JPEG/JFIF despite .png filenames",
+    "dimensions": "1280 x 720 for each image",
+    "handling": "Preserve original bytes and identify actual media format on publication. No responsive or physical-device acceptance."
+  },
+  "retainedNegatives": [
+    "selector-mapping-negative.json: role selector mismatch before action; no product failure inference",
+    "Temporary AXWebArea focus while busy, followed by exact-row final focus",
+    "server-actual-terminal.json: intentional SIGINT, EXIT130 and KeyboardInterrupt preserved",
+    "Both HTTP 404s above"
+  ],
+  "remainingLimits": [
+    "Fresh loopback context only; original affected public storage and its cause remain unresolved",
+    "Only two saved Lunar editions; no all-24 coexistence, quota, eviction or retention proof",
+    "No browser/process restart, offline, complete full-player, public delivery/play, physical input or two-hour endurance pass",
+    "Only 1280 x 720; responsive portrait/landscape and prescribed 1280 x 800/44px checks remain open",
+    "No School/HUD or comprehensive input, starting-point and camera matrix acceptance",
+    "Root source/package identity pins are recorded but not independently revalidated from source in this evidence-only review"
+  ],
+  "originalEvidenceModified": false,
+  "publicationPerformed": false
+}

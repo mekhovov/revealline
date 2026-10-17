@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-17T22:00:31.256313+00:00",
+  "reviewer": "fpv_library_guard_review",
+  "status": "PASS_VISIBLE_KNOWN_RETURN_ABSENT_CORE_FALLBACK_SCOPED_ONLY",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "reviewedPacket": "FPV-LIBRARY-FALLBACK-12C-20261017T2157Z",
+  "rootReceipt": {
+    "file": "ROOT-FALLBACK-CLASSIFICATION-RECEIPT.json",
+    "bytes": 2975,
+    "sha256": "6113b57ec3e6c758e41ac5d21379aa2de5574d20d24c9558ed3cd39e75de70dc"
+  },
+  "manifest": {
+    "file": "RAW-EVIDENCE-MANIFEST.json",
+    "bytes": 1800,
+    "sha256": "8f5b435531d3c6d6343af0da2f3f7965be1e1bd55eecc8b002cc17b1c7eb377c",
+    "matchedFiles": 11,
+    "matchedBytes": 147806,
+    "mismatches": 0,
+    "countIncludesRootReceipt": true
+  },
+  "findings": [
+    "Both AX captures and both visually inspected 1280x720 screenshots show the selected Extras tab, visible unavailable-core fallback text and the shared game tools link in English and Ukrainian.",
+    "Exact visible text matches the knownReturn=true failure branch in the supplied sim-presentation excerpt; the link target in AX is the same-origin /revealline/game/.",
+    "The supplied package-policy excerpt expressly places this literal lazy import across the installed-core boundary and excludes the tool from optional SIM archives. The caller invokes ensure when Settings opens, and the catch renders the failed-state fallback.",
+    "The source excerpts and visible fallback support classifying this request as the expected absent-core case in this standalone stage. They establish no Library-source or optional-package defect.",
+    "HTTP log independently contains 161 requests: 160 status 304 and one status 404, plus one separate 404 error-message row. The failed module request is preserved, not relabeled successful.",
+    "Tab closure receipt records tab 4 closed, no final tabs and core link not opened. Server terminal records session 19413 intentionally interrupted after tab closure with EXIT130; this is not test EXIT0."
+  ],
+  "http": {
+    "logRows": 162,
+    "requestRows": 161,
+    "statusCounts": {
+      "304": 160,
+      "404": 1
+    },
+    "errorMessageRows": 1,
+    "negative": {
+      "at": "2026-10-17T21:58:01.519302+00:00",
+      "path": "/revealline/game/ui/global-settings-tools.mjs",
+      "status": 404
+    }
+  },
+  "englishText": "Shared tools are unavailable here. Open the game in a new tab. SIM tools remain available.",
+  "ukrainianText": "Спільні інструменти недоступні тут. Відкрийте гру в новій вкладці. Інструменти SIM залишаються доступними.",
+  "limits": [
+    "Only the known-return failure branch is observed. The no-known-return branch and successful installed-core integration are not qualified.",
+    "The link was not followed; destination availability, navigation outcome and installed-core functions remain open.",
+    "This is a finite fallback observation at 1280x720. Responsive, physical, comprehensive full-player, public-context and endurance gates remain open.",
+    "Same-origin/storage preservation and exact action sequence rely on root method/closure records; no hidden storage inspection or independent replay was performed.",
+    "Full source hashes are recorded in the packet and agree with the prior bounded source review; this supplement review read the supplied excerpts and did not rehash prior native evidence or reread source."
+  ],
+  "blockingIssues": [],
+  "previousNegativesSuperseded": false,
+  "rawPacketModified": false,
+  "priorNativePacketRehashedOrReviewedAgain": false,
+  "newUIOrNetworkOrTestOrGitOperation": false
+}

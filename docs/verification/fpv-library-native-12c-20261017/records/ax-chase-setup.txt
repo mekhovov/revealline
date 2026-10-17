@@ -1,0 +1,9 @@
+Browser tab: 2, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 25, 29, 83
++				83 text Camera view
+~				26 checkbox FPV, Value: 0
+~				27 checkbox Chase, Value: 1
++				84 text V · R3: click the right stick. Radio: choose a view in this menu.
++				85 text Experimental Acro · unscored · air start 2 m above the selected point. Landings and collisions use the verified terrain. Uses portable rates, or Actual defaults for Legacy feel.
+The focused UI element is 27 checkbox Chase, Value: 1

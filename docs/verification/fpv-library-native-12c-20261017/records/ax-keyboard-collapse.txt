@@ -1,0 +1,5 @@
+Browser tab: 2, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 1723-1729
+~					1721 button (collapsed) Description: Versions for Lunar Basin (2), Help: Versions (2), Secondary Actions: Expand
+The focused UI element is 1721 button (collapsed) Description: Versions for Lunar Basin (2), Help: Versions (2), Secondary Actions: Expand

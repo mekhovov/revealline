@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-17T21:51:26.628901+00:00",
+  "status": "PASS_BOUNDED_NATIVE_LIBRARY_CHECK_WITH_REMAINING_GATES",
+  "head": "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+  "stageIdentitySHA256": "e0d6b6e898c5de6545191b484dab55956ed375002471d52a9de7a0cb32ed5017",
+  "packageRevision": "b6d25d6cc980a6b84b17d97dfd9740948edd860ea23bcc531f414962a0e34953",
+  "method": "CUA native IAB interactions, fresh loopback origin; maximum one renderer; ordinary user controls and DOM/AX observations only",
+  "viewportObserved": "1280 x 720 screenshots; no resize or physical-device qualification",
+  "passedObservations": [
+    "10 regional family rows; actual expansion exposes 24 offered edition entries",
+    "Lunar older Edition 1ec74a07 downloaded normally and became saved composition-r2",
+    "Lunar newer Shelter detail downloaded normally and became saved composition-r3; both retained and separately actionable",
+    "After each download, final AX focus returned to Fly for the corresponding exact row; temporary busy page focus retained as observation",
+    "Tab reached adjacent Remove-this-version control without invoking removal; Enter collapsed and reopened native Versions summary",
+    "Older composition-r2 Fly action entered loading then Ready to arm with paused pose; explicit Arm activated flight; Pause opened the paused menu",
+    "Mode changed Self-level to Acro: new attempt loaded and remained Ready to arm; Touch selection and Chase camera stayed paused; Escape returned to paused viewport",
+    "English Flight Deck and Ukrainian Signal Blue controls observed; Ukrainian region and version labels rendered",
+    "Closed first tab and reopened same loopback origin normally: both composition-r2 and composition-r3 remained visible with separate Fly actions; no reset/import/removal",
+    "Both owned tabs closed, tab inventory empty, owned server stopped intentionally"
+  ],
+  "scopeLimits": [
+    "Fresh loopback storage only; original affected public storage untouched and original cause unresolved",
+    "One brief explicit-arm observation is not endurance or a regional public flight",
+    "Only two Lunar saved editions tested; no all-24 coexistence/quota/eviction/retention claim",
+    "1280x720 only; 390x844, 844x390 and prescribed1280x800 layout/44px checks remain open",
+    "No physical touch/controller/radio, native School/HUD or comprehensive input/starting-point/camera matrix acceptance",
+    "Normal tab reopen only; no browser/process restart or offline qualification",
+    "Older edition selection is bound by actual clicked UI label and saved version display; no hidden payload/storage inspection",
+    "All native/public/full-player gates are not closed; PR1540 remains Draft"
+  ],
+  "negatives": [
+    "Playwright button-role selector did not match native summary before any action; AX control used after fresh observation; preserved selector-mapping-negative.json",
+    "Busy download temporarily focused AXWebArea; final exact-row Fly focus observed, no final focus failure",
+    "Server intentionally stopped with SIGINT; actual tool EXIT130 and KeyboardInterrupt preserved"
+  ],
+  "browserWarningLogEntries": [
+    0,
+    0
+  ],
+  "internalAvailableBytesAtEnd": 3857821696,
+  "originalPublicContextModified": false,
+  "unknownPatchTouched": false,
+  "storageDeleted": false,
+  "rendererOrServerActive": false
+}

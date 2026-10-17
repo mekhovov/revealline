@@ -1,0 +1,206 @@
+{
+  "at": "2026-10-17T21:51:26.628901+00:00",
+  "files": [
+    {
+      "path": "ROOT-NATIVE-OBSERVATION-RECEIPT.json",
+      "bytes": 3352,
+      "sha256": "ec01a5596d0577f914f760f356e61d3b5d9da6e35c361cab65f094bc16aa2e8b"
+    },
+    {
+      "path": "ax-acro-change.txt",
+      "bytes": 1695,
+      "sha256": "226679b4cc7534b9f654696147c3c3b14f58e54014fd10ca39b6727ad3acd0ad"
+    },
+    {
+      "path": "ax-acro-menu.txt",
+      "bytes": 4186,
+      "sha256": "6485be99f40244bb828914b801bf9a1d60867cdd9f102c879ba858f90517709b"
+    },
+    {
+      "path": "ax-acro-ready.txt",
+      "bytes": 1576,
+      "sha256": "3c4ad33f2c5d2a160da0fd75203476e9e77aeb3fd979bd761d188d859ad39895"
+    },
+    {
+      "path": "ax-all-versions-expanded.txt",
+      "bytes": 11874,
+      "sha256": "39e893766d1a8fa4f07b32f56c8674dcd3f4b2b51ac02adfec639ed443785135"
+    },
+    {
+      "path": "ax-before-expanding.txt",
+      "bytes": 71297,
+      "sha256": "b3c801652559ffa30d6207eb75df8c6831ee3ce0dff3b1880dcc43e827188224"
+    },
+    {
+      "path": "ax-before-old-fly.txt",
+      "bytes": 71829,
+      "sha256": "a554e3b36ec58af3e8a4d948b45c10defef4aa13cf244c4a7dd83a854e09c09d"
+    },
+    {
+      "path": "ax-chase-setup.txt",
+      "bytes": 761,
+      "sha256": "8fadbd4ca82ce9b0f3dc335261b1682a39a2db200b850afb329118f0bb15da25"
+    },
+    {
+      "path": "ax-keyboard-collapse.txt",
+      "bytes": 602,
+      "sha256": "6e5ad32a0e91693d2ebde598e6dc0dc6d5485e1c85684af8b2537b2aeb782c05"
+    },
+    {
+      "path": "ax-keyboard-expand.txt",
+      "bytes": 1737,
+      "sha256": "f07707e7d6e7cfccb8123f0fce0d1bc3a274d97a88a36179b03923614f37c1f9"
+    },
+    {
+      "path": "ax-keyboard-tab.txt",
+      "bytes": 470,
+      "sha256": "7585ad0bfd7d28c4b4c15a453085c0b2a6c2e4421bb910d43d50c4b28e1489e5"
+    },
+    {
+      "path": "ax-lunar-both-saved.txt",
+      "bytes": 9151,
+      "sha256": "331a1b33d05ac67aaf24c5e455fdeb1ea62b05adddbfd9a82c3010f45b063020"
+    },
+    {
+      "path": "ax-lunar-new-download.txt",
+      "bytes": 9063,
+      "sha256": "6e7d222d9944749ba3b750c063690d36f5b11ccc7faf21700e1e6b45374be592"
+    },
+    {
+      "path": "ax-lunar-old-after-download.txt",
+      "bytes": 556,
+      "sha256": "da11d24af7bdce8dcdf1c2f8f880fc96ad292527ff6bff1f865dea02e0c0d1ed"
+    },
+    {
+      "path": "ax-lunar-old-download.txt",
+      "bytes": 9241,
+      "sha256": "b459988b8fec1a050862955af0d20543c2fc6cf4754da46cf2f80fcf3a1edc51"
+    },
+    {
+      "path": "ax-lunar-old-terminal.txt",
+      "bytes": 3938,
+      "sha256": "fd20b28980d538c01b025a9c7d777e6c3da25ee015b981312d8bc089da164dd2"
+    },
+    {
+      "path": "ax-menu-escape.txt",
+      "bytes": 1624,
+      "sha256": "22e218228da32fe5cdee415ae2d40ea7ad89b8bfa03df1f6a8406ff43b546627"
+    },
+    {
+      "path": "ax-old-explicit-arm.txt",
+      "bytes": 1348,
+      "sha256": "e8d21b50a2619be3930a40369829780d3c97f192d789925ac3465e5235e56ecd"
+    },
+    {
+      "path": "ax-old-fly-action.txt",
+      "bytes": 1301,
+      "sha256": "49275e2704bfaf31aa0fe6e32d3c2d7c80d64180fd5ef5201327e236d83ae098"
+    },
+    {
+      "path": "ax-old-fly-ready.txt",
+      "bytes": 1576,
+      "sha256": "3c4ad33f2c5d2a160da0fd75203476e9e77aeb3fd979bd761d188d859ad39895"
+    },
+    {
+      "path": "ax-old-paused.txt",
+      "bytes": 4192,
+      "sha256": "a618bf240e4cb60a0874756b773b25aff4a7705f82843faefc2b9ed138374537"
+    },
+    {
+      "path": "ax-reopened-both-editions-uk.txt",
+      "bytes": 6377,
+      "sha256": "daf67dfbf3556e2e038e24eb1eb860ff1b4032ad8666cef1de13e7c17eb8b952"
+    },
+    {
+      "path": "ax-reopened-home.txt",
+      "bytes": 2479,
+      "sha256": "fc0d80b51e895a011eb34d2886b71a18e8b317acb935449f566cea4a7329c539"
+    },
+    {
+      "path": "ax-reopened-library-uk.txt",
+      "bytes": 97944,
+      "sha256": "bd48172e7849f94d9e4413f6a142a3d26a69b68fb2b57b7ee28ff5854982e0d6"
+    },
+    {
+      "path": "ax-touch-setup.txt",
+      "bytes": 750,
+      "sha256": "c89309a229c0261adf453029300575f59b022593fce8a3a901dd8798da92393f"
+    },
+    {
+      "path": "ax-uk-signal-blue-settings.txt",
+      "bytes": 17316,
+      "sha256": "dfa39beb60f011a706b062577fe38bd57bc846f0db7dea75188692f48a34c5bc"
+    },
+    {
+      "path": "browser-warnings-first-tab.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "browser-warnings-reopened-tab.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "headroom-samples.jsonl",
+      "bytes": 99,
+      "sha256": "41d57932da0078408ff9c2fd142eebd83917f63a691178db3906aa1dfd19f761"
+    },
+    {
+      "path": "http.jsonl",
+      "bytes": 45461,
+      "sha256": "5f6054e4eae2c0ef390853b748f0771cf1cfafa58941b443731ccd5810a2e1a8"
+    },
+    {
+      "path": "lunar-both-saved.png",
+      "bytes": 85666,
+      "sha256": "487138a3f0f91ce75c570ce4adc9e0d0ed3cdb9033919b0153b1d36e450abe13"
+    },
+    {
+      "path": "normal-reopen-intent.json",
+      "bytes": 218,
+      "sha256": "5845cefbc086de3df13d6f456fa6abe8683d95d12dfec823637b857f008b1fa4"
+    },
+    {
+      "path": "older-lunar-paused-touch-chase.png",
+      "bytes": 35596,
+      "sha256": "03abb47c7701500136c4fe49a1943228d7fd4cf2332d3f3a2c1e6cc228461ff2"
+    },
+    {
+      "path": "older-lunar-ready-to-arm.png",
+      "bytes": 29604,
+      "sha256": "7f9f26a47ef639265beb1b17fb4e1dc344b26412ce452d250f8aebf8c2eb2a08"
+    },
+    {
+      "path": "reopened-library-uk.png",
+      "bytes": 119093,
+      "sha256": "4f86528a7dfb6f8506453a93fd7498812651fe938411ed97c0698a6d28c9f88b"
+    },
+    {
+      "path": "selector-mapping-negative.json",
+      "bytes": 294,
+      "sha256": "58647bbb2dd42fbb977174f7d2cd5f1eed6f214e026e4623e1a7187907ef6ac2"
+    },
+    {
+      "path": "server-actual-terminal.json",
+      "bytes": 363,
+      "sha256": "663062e0a7a8528e09973a6f756b959981eca85a11cf1e18a1b6c989cea19aed"
+    },
+    {
+      "path": "server-closed.json",
+      "bytes": 72,
+      "sha256": "0c2c717ea928100ea6a1b758d0bc234f2c59e976ea1c54118e438ad0bbd0c894"
+    },
+    {
+      "path": "server-intent.json",
+      "bytes": 685,
+      "sha256": "c5a71a02c45cc8e080fa52652b4375f48295993d02bfab85334fb7fd330af3a8"
+    },
+    {
+      "path": "tabs-closed.json",
+      "bytes": 136,
+      "sha256": "f1ca3e11bbc63f40602b2f6f222a9d2545439de94ef08e5d5471f38728f2bdf6"
+    }
+  ],
+  "rawOriginalsRetained": true
+}

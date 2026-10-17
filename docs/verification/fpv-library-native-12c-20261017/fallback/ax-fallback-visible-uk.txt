@@ -1,0 +1,27 @@
+Browser tab: 4, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=uk".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=uk
+	1 container sim-settings
+		2 container
+			3 heading Налаштування, Value: 2
+				4 text Налаштування
+			5 button Назад, ID: close-sim-settings
+		6 tab group Розділи налаштувань
+			7 tab (selectable, settable, boolean) Гра, Value: 0, ID: worlds-settings-tab-gameplay
+			8 tab (selectable, settable, boolean) Керування, Value: 0, ID: worlds-settings-tab-controls
+			9 tab (selectable, settable, boolean) Звук, Value: 0, ID: worlds-settings-tab-audio
+			10 tab (selectable, settable, boolean) Екран і мова, Value: 0, ID: worlds-settings-tab-display
+			11 tab (selectable, settable, boolean) Доступність, Value: 0, ID: worlds-settings-tab-accessibility
+			12 tab (selectable, settable, boolean) Прогрес і колекція, Value: 0, ID: worlds-settings-tab-data
+			13 tab (selectable, settable, boolean) Вміст і офлайн, Value: 0, ID: worlds-settings-tab-content
+			14 tab (selected, settable, boolean) Довідка й додаткове, Value: 1, ID: worlds-settings-tab-extras
+		15 container Description: Довідка й додаткове, ID: worlds-settings-panel-extras
+			16 heading Довідка й додаткове, Value: 3
+				17 text Довідка й додаткове
+			18 button Навчитися літати
+				19 text Навчитися літати
+			20 container
+				21 link Description: Відкрити спільні інструменти гри, Value: 127.0.0.1:57145/revealline/game/
+				22 text Спільні інструменти недоступні тут. Відкрийте гру в новій вкладці. Інструменти SIM залишаються доступними.
+			23 text Tab/стрілки — вибір; Enter — підтвердити; Esc — назад. Геймпад: відпустіть, натисніть і відпустіть A. Пульт: утримайте рискання праворуч 0,7 с й поверніть у центр для підключення; крен/тангаж — вибір, утримання рискання праворуч/ліворуч і центр — підтвердити/назад.
+
+The focused UI element is 14 tab (selected, settable, boolean) Довідка й додаткове, Value: 1, ID: worlds-settings-tab-extras

@@ -1,0 +1,30 @@
+Browser tab: 3, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=uk".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=uk
+	1 container FPV / LINE, ID: worlds-shell-home-dialog
+		2 container
+			3 heading FPV / LINE, Value: 1, ID: worlds-shell-home-title
+				4 image FPV / LINE
+			5 container Вибрати режим гри
+				6 container Режим гри
+					7 link Description: 1P Соло, Value: 127.0.0.1:57145/revealline/game/?lang=uk, ID: game-mode-solo
+					8 link Description: 2P Разом, Value: 127.0.0.1:57145/revealline/game/couch/relay-rescue.html?lang=uk, ID: game-mode-team
+					9 link Description: 2P Дуель, Value: 127.0.0.1:57145/revealline/game/couch/?lang=uk, ID: game-mode-versus
+					10 link Description: Змійка, Value: 127.0.0.1:57145/revealline/game/snake/play.html?lang=uk, ID: game-mode-snake
+					11 link Description: FPV Survivals beta, Value: 127.0.0.1:57145/revealline/game/overflight/play.html?lang=uk, ID: game-mode-overflight
+					12 button Description: SIM beta, ID: game-mode-simulator
+						13 text SIM
+					14 button (expanded) Згорнути ⌃, ID: simulator-modes-more, Secondary Actions: Collapse
+						15 text Згорнути
+						16 text ⌃
+			17 text Підйом і посадка
+			18 container Головне меню
+				19 button Летіти, ID: worlds-shell-action-primary
+				20 button Навчитися літати, ID: worlds-shell-action-home-extra
+				21 button Дослідити світи, ID: worlds-shell-action-missions
+				22 button Налаштування, ID: worlds-shell-action-settings
+			23 container Налаштування
+				24 checkbox Звук: вимкнено, Value: 0, ID: worlds-shell-action-sound
+				25 button На весь екран, ID: worlds-shell-action-fullscreen
+		26 text Tab/стрілки — вибір; Enter — підтвердити; Esc — назад. Геймпад: відпустіть, натисніть і відпустіть A. Пульт: утримайте рискання праворуч 0,7 с й поверніть у центр для підключення; крен/тангаж — вибір, утримання рискання праворуч/ліворуч і центр — підтвердити/назад.
+
+The focused UI element is 19 button Летіти, ID: worlds-shell-action-primary

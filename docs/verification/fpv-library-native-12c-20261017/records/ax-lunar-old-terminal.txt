@@ -1,0 +1,36 @@
+Browser tab: 2, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:57145/revealline/optional-practice/fpv-worlds/index.html?lang=en".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 1710-1729, 1786-1787
++				1705 text +
+~				46 button Refresh saved regions
+~				1708 text Region saved. Choose Fly when you are ready.
++				1709 container
++					1710 heading Alpine Highlands, Value: 3
++						1711 text Alpine Highlands
++					1712 text Recommended version · Alpine Highlands — connected mountain study · Station approach 4.096 × 4.096 km · six starting points · unscored free flight. Braced cable towers and a supported lookout make the station approach easier to read. Keep exploring the open concourse and connected snow and scree routes. Earlier Alpine editions remain available. Wider scenery and route detail are still being refined. Optional scenery download · 21.8 MiB · unscored
++					1713 button Download: Alpine Highlands — connected mountain study · Station approach
++					1714 button (collapsed) Description: Versions for Alpine Highlands (6), Help: Versions (6), Secondary Actions: Expand
++						1715 text Versions (6)
++				1716 container
++					1717 heading Lunar Basin, Value: 3
++						1718 text Lunar Basin
++					1719 text Current saved version · Lunar Basin — flight study · Version composition-r2 768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity. Saved for offline flight · 1.9 MiB · composition-r2
++					1720 button Fly: Lunar Basin — flight study · Version composition-r2
++					1721 button (expanded) Description: Versions for Lunar Basin (2), Help: Versions (2), Secondary Actions: Collapse
++						1722 text Versions (2)
++					1723 container
++						1724 text Lunar Basin — flight study Shelter detail 768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity. Optional scenery download · 2 MiB · unscored
++						1725 button Download: Lunar Basin — flight study · Shelter detail
++					1726 container
++						1727 text Lunar Basin — flight study Version composition-r2 768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity. Saved for offline flight · 1.9 MiB · composition-r2
++						1728 button Fly: Lunar Basin — flight study · Version composition-r2
++						1729 button Remove this version: Lunar Basin — flight study · Version composition-r2
+~					1734 button Download: Canal City — bridges and courtyards
+~					1741 button Download: Desert Expedition — rock routes · Rock practice routes
+~					1748 button Download: Tropical coast — connected harbour · Connected harbour
+~					1755 button Download: Railway Valley — six districts
+~					1762 button Download: Coaster Gardens — connected park study · Connected park routes
+~					1769 button Download: Hillside Town — civic court materials · Civic courtyard materials
+~					1776 button Download: Canyon Expanse — broad relief study
+~					1783 button Download: Urban earthworks — regional preview
+The focused UI element is 1728 button Fly: Lunar Basin — flight study · Version composition-r2

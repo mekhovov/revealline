@@ -1,0 +1,6 @@
+{
+  "at": "2026-10-17T21:49:47.410Z",
+  "oldTabClosed": true,
+  "origin": "http://127.0.0.1:57145",
+  "action": "Close tab and reopen the same origin/entry through normal navigation; no storage reset or hidden reads"
+}
