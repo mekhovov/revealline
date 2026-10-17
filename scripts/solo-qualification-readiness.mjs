@@ -121,6 +121,11 @@ export const MEDIA_FAULT_PILOTS = Object.freeze({
     bytes: 16384,
   }),
 });
+export const OPTIONAL_AUDIO_SETTINGS_PILOT = Object.freeze({
+  ...MEDIA_FAULT_PILOTS['optional-audio-start-missing-v1'],
+  scenarioSHA256: '307f46d055838f1b76fc8e825b22317a0fb85231a8ca3a7cfd43de92f7109e11',
+  publicRoute: 'settings-gameplay-v2',
+});
 export const REQUIRED_ORIGINAL_START_PILOT = Object.freeze({
   ...MEDIA_FAULT_PILOTS['required-original-cancel-v1'],
   sourceRevision: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
@@ -168,31 +173,36 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
   const successorSaved =
     protocol === 'saved-resume-v1' &&
     flags.includes('--source-revision=c696af41857840359ae473558b90682f3d71f2db');
-  const pilot = requiredStart.length
-    ? REQUIRED_ORIGINAL_START_PILOT
-    : geometry.length
-      ? protocol === 'warm-resume-v1' &&
-        flags.includes('--source-revision=' + COMPACT_WARM_READINESS_PILOT.sourceRevision)
-        ? COMPACT_WARM_READINESS_PILOT
-        : geometryReadinessPilot(protocol)
-      : successorSaved
-        ? COMPACT_SAVED_READINESS_PILOT
-        : protocol === READINESS_PILOT.protocol
-          ? READINESS_PILOT
-          : protocol === SELECTED_FONT_PILOT.protocol
-            ? SELECTED_FONT_PILOT
-            : protocol === SELECTED_FONT_JOINED_PILOT.protocol
-              ? flags.includes('--source-revision=' + SELECTED_FONT_PILOT.sourceRevision)
-                ? SELECTED_FONT_JOINED_C696_PILOT
-                : SELECTED_FONT_JOINED_PILOT
-              : protocol === SELECTED_FONT_POST_COMMAND_PILOT.protocol
-                ? SELECTED_FONT_POST_COMMAND_PILOT
-                : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
+  const pilot =
+    protocol === 'optional-audio-start-missing-v1' &&
+    scenario.mediaReadinessFault?.route === 'settings-gameplay-v2'
+      ? OPTIONAL_AUDIO_SETTINGS_PILOT
+      : requiredStart.length
+        ? REQUIRED_ORIGINAL_START_PILOT
+        : geometry.length
+          ? protocol === 'warm-resume-v1' &&
+            flags.includes('--source-revision=' + COMPACT_WARM_READINESS_PILOT.sourceRevision)
+            ? COMPACT_WARM_READINESS_PILOT
+            : geometryReadinessPilot(protocol)
+          : successorSaved
+            ? COMPACT_SAVED_READINESS_PILOT
+            : protocol === READINESS_PILOT.protocol
+              ? READINESS_PILOT
+              : protocol === SELECTED_FONT_PILOT.protocol
+                ? SELECTED_FONT_PILOT
+                : protocol === SELECTED_FONT_JOINED_PILOT.protocol
+                  ? flags.includes('--source-revision=' + SELECTED_FONT_PILOT.sourceRevision)
+                    ? SELECTED_FONT_JOINED_C696_PILOT
+                    : SELECTED_FONT_JOINED_PILOT
+                  : protocol === SELECTED_FONT_POST_COMMAND_PILOT.protocol
+                    ? SELECTED_FONT_POST_COMMAND_PILOT
+                    : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
   assert(pilot, 'Unknown readiness protocol');
   if (MEDIA_FAULT_PILOTS[protocol]) {
     assert.deepEqual(scenario.mediaReadinessFault, {
       protocol,
       sourceRevision: pilot.sourceRevision,
+      ...(pilot.publicRoute ? { route: pilot.publicRoute } : {}),
       ...(pilot.requiredStartRetention ? { startRetention: pilot.requiredStartRetention } : {}),
     });
     assert.equal(scenario.kind, 'lifecycle');
