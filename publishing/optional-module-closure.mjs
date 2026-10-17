@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { isOptionalNativeBridgeImport } from './optional-import-capabilities.mjs';
 // Publishing-only copy of the package-lock pinned Acorn 8.18.0 (MIT).
 // This keeps the trusted sparse publisher independent of npm installation.
 import { parse } from './vendor/acorn-8.18.0.mjs';
@@ -29,6 +30,11 @@ export function validateOptionalModuleClosure(files, policy) {
         ].includes(node.type) &&
         node.source
       ) {
+        if (node.type === 'ImportExpression' && (node.options != null || node.phase != null))
+          throw new Error(
+            `Optional archive module does not admit import options or phases: ${owner}`,
+          );
+        if (isOptionalNativeBridgeImport(owner, node, policy)) continue;
         const source = node.source.value;
         if (typeof source !== 'string' || !/^\.\.?\//.test(source) || /[?#\\]/.test(source))
           throw new Error(`Optional archive module requires an explicit relative import: ${owner}`);

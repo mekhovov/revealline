@@ -1,0 +1,193 @@
+{
+  "format": "FpvPostPublicationVerification.v1",
+  "createdAt": "2026-10-17T03:52:18.417235+00:00",
+  "pass": true,
+  "scope": "Three bounded software corrections on refreshed main; local qualification only. Publication and public acceptance are recorded separately.",
+  "baseRevision": "63c36670a57b64c2cfd08b8ea1fa02adf9cbaf54",
+  "checks": {
+    "practiceTests": 714,
+    "finalLibraryAndUITests": 108,
+    "presetFixtureTests": 23,
+    "browserEditorCases": 6,
+    "actualRendererWorkerSmoke": true,
+    "numericalRuntimes": 6,
+    "numericalSourcePins": 20,
+    "allCurrentReportSourcePinsMatch": true,
+    "nativeStagingSourcePins": 208,
+    "lint": true,
+    "format": true,
+    "releaseValidation": true,
+    "independentReview": true
+  },
+  "numerical": {
+    "fixedHz": 250,
+    "maximumMetricErrorPercent": 1.8813946460595508,
+    "minimumCapacityTimesRealtime": 81.08108108108108,
+    "physicalHosts": 1,
+    "cpu": "Apple M4 Pro",
+    "realAircraftMeasured": false
+  },
+  "limitations": [
+    "Advanced remains optional, unscored and default-ineligible.",
+    "No physical radio/touch, pilot, aircraft measurements, iOS execution or broader device matrix.",
+    "Native evidence verifies ordinary packages/resources only; previous Electron runtime receipts remain historical.",
+    "Browser component touch is emulated; capacity regression uses the supported high-cadence input API, not a claim of 250 Hz browser polling.",
+    "The 714-test run preceded the final successful-retry status message; all 108 library/UI tests and all six browser cases were rerun on the final sources.",
+    "Public b2f251dac receipts and the pre-retry-message browser report retain their original source scope. New public acceptance is pending normal publication."
+  ],
+  "sources": [
+    {
+      "path": "game/test/fpv-advanced-practice.test.mjs",
+      "bytes": 32680,
+      "sha256": "25f5fb20edce5a8fe812ece3e4ccb6481dfcf837a5e71f320cc7196aa2b1e563"
+    },
+    {
+      "path": "game/test/fpv-advanced-storage.test.mjs",
+      "bytes": 2497,
+      "sha256": "f170647b401788cc5d0fd90e9fea39a57b79f9382504470cba3d12dcb881d794"
+    },
+    {
+      "path": "game/test/fpv-advanced-worker.test.mjs",
+      "bytes": 12945,
+      "sha256": "4391f20e7715c36c0190c947eeb05a9941289613e2ced82134c3c1c9d16493ef"
+    },
+    {
+      "path": "game/test/fpv-betaflight-import.test.mjs",
+      "bytes": 26575,
+      "sha256": "0430f359f82e5b95fd6f3075cffa9495c53035c3bed621a30c8dc7ba7bd85faa"
+    },
+    {
+      "path": "game/test/fpv-tuning-library.test.mjs",
+      "bytes": 31640,
+      "sha256": "88edbcc611c4f2297d4b3c7b92a9bc3913a9af5f1c8cac43184701a34b0afc33"
+    },
+    {
+      "path": "game/test/fpv-tuning-ui.test.mjs",
+      "bytes": 68204,
+      "sha256": "d4707c3f2a72e1371d5753fbbf4d39f4ed4be9cba4ea80d34aa248b1c965647b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "bytes": 49148,
+      "sha256": "c1d7bc0f03b9e7fec3a9a2d8f58b8980326724423f330ef104fbf8f18ecfd100"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "bytes": 64132,
+      "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "bytes": 4156,
+      "sha256": "6f3aea322fbffaac5addca8d6817eeced332fe58d182a5708a56e3dc2f99379f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "bytes": 6436,
+      "sha256": "cd1a15105af58561e67dd05b38c99f42207452f92be4046737cb853f8009c9d8"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/betaflight-import.mjs",
+      "bytes": 38721,
+      "sha256": "42268567d3eade468b7995bbe3208a96f3e6f4e13fef070a32b47ca50cdc3bcc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-library.mjs",
+      "bytes": 14905,
+      "sha256": "30bb77df5b1b66d56a02f213b755ad727d332fe25390912b0e061f37d1a60122"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "bytes": 61859,
+      "sha256": "57c852280dbd74cc571f8c9e48f8359f67d7fb364fe585bf92deb36e0a2490d9"
+    },
+    {
+      "path": "scripts/smoke-fpv-tuning.mjs",
+      "bytes": 43588,
+      "sha256": "cb7429511d7a2d65f540005dfa8b7b3d1eb4b807c6e5f310023536b950a2e797"
+    },
+    {
+      "path": "game/test/fixtures/fpv/betaflight-preset-option-case.json",
+      "bytes": 2493,
+      "sha256": "ab53eafb9a44dfbffe97c36266e8cca3786c3152db4c9f7f5750a2aaadfb96f3"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "docs/fpv-tuning-browser-post-publication-qualification.json",
+      "bytes": 14844,
+      "sha256": "eea4555d50cef2bd7d2a5b581e907ae69b768a01b731077bc57e74a7ba02f459"
+    },
+    {
+      "path": "docs/fpv-advanced-comparison-post-publication-browser.json",
+      "bytes": 5667,
+      "sha256": "c5247e9149f21c2c162959b9c4a176000db5398d0914aeb091b24d8e5830a609"
+    },
+    {
+      "path": "docs/fpv-advanced-runtime-post-publication-qualification.json",
+      "bytes": 585777,
+      "sha256": "fddb2cc4a0bb37162ccc71c36d3ffaa8d5b1322fb4f63b0f24e0f03070538017"
+    },
+    {
+      "path": "docs/fpv-native-post-publication-staging.json",
+      "bytes": 31507,
+      "sha256": "7584f9db5f2a2cf51edb2dec34593745b6b78920b0263624f2f13f6906ab1eb8"
+    },
+    {
+      "path": "docs/fpv-post-publication-evidence/duplicate-before-fix.tap",
+      "bytes": 919,
+      "sha256": "ca4771da0469a70f4547fc11d762633e83e01adaad2e2e3d8a86d4fe54b97bb5"
+    },
+    {
+      "path": "docs/fpv-post-publication-evidence/format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "docs/fpv-post-publication-evidence/lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/fpv-post-publication-evidence/native-staging-runner.mjs.txt",
+      "bytes": 6546,
+      "sha256": "c3089e09a32e22b6fc07fc5fb5e630c55d3fbaaec40b5dc826c4b1f7d9aebfb2"
+    },
+    {
+      "path": "docs/fpv-post-publication-evidence/practice.tap",
+      "bytes": 176208,
+      "sha256": "9405259d85134aabb10a184f3e18c20e9e0e9205f083805338e68809c6736a78"
+    },
+    {
+      "path": "docs/fpv-post-publication-evidence/preset-case-after-fix.tap",
+      "bytes": 5491,
+      "sha256": "4acdf8d3642de386a954f350b34c905fb584a6fc96c1d1c271923b6bbb993052"
+    },
+    {
+      "path": "docs/fpv-post-publication-evidence/preset-case-before-fix.tap",
+      "bytes": 7423,
+      "sha256": "ea6dbfeaa5f5a8d994a96ee6e9a087806487b0e06adf9f94ec64b9c03a0f4e7e"
+    },
+    {
+      "path": "docs/fpv-post-publication-evidence/tuning-final.tap",
+      "bytes": 26268,
+      "sha256": "3ff4cba31edaf6c6090d87fe849b15cd39483be74eae130c5d67377edc9fbc66"
+    },
+    {
+      "path": "docs/fpv-post-publication-evidence/validation.log",
+      "bytes": 3885,
+      "sha256": "36d238cbb0540dc114673559b00bd2a6afbf9f9accdc359064790efbc7d267f5"
+    },
+    {
+      "path": "docs/fpv-post-publication-temp-cleanup.json",
+      "bytes": 591,
+      "sha256": "50ca5a08232f40794ee496a091edee01e800834985c80e979b76065a9a1bf500"
+    },
+    {
+      "path": "docs/fpv-tuning-browser-post-publication-before-retry-message.json",
+      "bytes": 14514,
+      "sha256": "9d7fc9d3c828bbaaa16a75f9d60491994157db85f725ebb192e118f811e9b0da"
+    }
+  ],
+  "retainedLogNormalization": "Trailing whitespace removed from the two failing-before TAP copies; original temporary logs remain unchanged."
+}

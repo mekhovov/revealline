@@ -72,7 +72,16 @@ export async function verifyFlightAttempt(
   return {
     hash,
     proof,
-    record: { ...result.identity, attemptId: `fpv-${hash}` },
+    // Reward evidence has its own stable schema. Replay/comparison metadata
+    // remains in the verified proof rather than widening that projection.
+    record: {
+      model: result.identity.model,
+      course: result.identity.course,
+      courseIdentity: result.identity.courseIdentity,
+      mode: result.identity.mode,
+      responseIdentity: result.identity.responseIdentity,
+      attemptId: `fpv-${hash}`,
+    },
     summary: {
       ticks: result.state.ticks,
       contacts: result.state.contacts,

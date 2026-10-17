@@ -1,0 +1,723 @@
+{
+  "format": "FpvPublicSourceReconciliation.v1",
+  "observedAt": "2026-10-17T15:27:29.748591+00:00",
+  "expectedRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+  "publicRoot": "https://mekhovov.github.io/revealline/",
+  "marker": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+    "sourceCommittedAt": "2026-10-17T13:58:53Z",
+    "buildVersion": "main-fb3caf12bd43",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "manifestSourceRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+  "modules": [
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "bytes": 63555,
+      "sha256": "02e95765c68d7aeb809d5cc49f441e0247064e198dca3b04d79eac3bc2bfc199",
+      "manifestEntry": {
+        "path": "optional-practice/civilian-fpv/regional-library.mjs",
+        "bytes": 63555,
+        "sha256": "02e95765c68d7aeb809d5cc49f441e0247064e198dca3b04d79eac3bc2bfc199"
+      },
+      "manifestExact": true,
+      "sourceByteExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/region-manifest.mjs",
+      "bytes": 12708,
+      "sha256": "c07631c6661450b7a59e1ce069e2ce100064327c1e76c2e422f3ff29eea1cc68",
+      "manifestEntry": {
+        "path": "optional-practice/civilian-fpv/regional/region-manifest.mjs",
+        "bytes": 12708,
+        "sha256": "c07631c6661450b7a59e1ce069e2ce100064327c1e76c2e422f3ff29eea1cc68"
+      },
+      "manifestExact": true,
+      "sourceByteExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+      "bytes": 17560,
+      "sha256": "7276ecdcf7798741bda92c361da8e417bbff1fa0fbf7885f8e9005f78a0b5997",
+      "manifestEntry": {
+        "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+        "bytes": 17560,
+        "sha256": "7276ecdcf7798741bda92c361da8e417bbff1fa0fbf7885f8e9005f78a0b5997"
+      },
+      "manifestExact": true,
+      "sourceByteExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "bytes": 17516,
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+      "manifestEntry": {
+        "path": "optional-practice/civilian-fpv/world-store.mjs",
+        "bytes": 17516,
+        "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+      },
+      "manifestExact": true,
+      "sourceByteExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 403835,
+      "sha256": "3bfc52f4ab54e9505e21e3f95b684c259300502e9520cc705e6771aa4fb2e944",
+      "manifestEntry": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "bytes": 403835,
+        "sha256": "3bfc52f4ab54e9505e21e3f95b684c259300502e9520cc705e6771aa4fb2e944"
+      },
+      "manifestExact": true,
+      "sourceByteExact": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "bytes": 914137,
+      "sha256": "50244c9b2d469be8cb68dcd50b1b6b5bc9b6b25c5a72f3db087dc99aab9aabdd",
+      "manifestEntry": {
+        "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "bytes": 914137,
+        "sha256": "50244c9b2d469be8cb68dcd50b1b6b5bc9b6b25c5a72f3db087dc99aab9aabdd"
+      },
+      "manifestExact": true,
+      "sourceByteExact": null,
+      "generatedBundleLimit": "Generated runtime compared with public manifest; no direct source-byte equivalence claim."
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "bytes": 241971,
+      "sha256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "manifestEntry": {
+        "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+        "bytes": 241971,
+        "sha256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611"
+      },
+      "manifestExact": true,
+      "sourceByteExact": true
+    }
+  ],
+  "initialPathNegative": {
+    "type": "audit-path-preparation-negative",
+    "path": "optional-practice/civilian-fpv/world-library.mjs",
+    "observedStatus": 404,
+    "explanation": "Source module is absent from the emitted manifest. Actual world-app imports generated world-reaction-runtime.mjs; no assertion that this is a player loading failure. First check stopped after four successful source pairs; earlier bytes retained."
+  },
+  "pagesRun": 39038793037,
+  "pagesConclusion": "success",
+  "scope": "Bounded public HTTP and source/module comparison only; no browser, renderer, player storage, map payload, installation or flight check.",
+  "worldpackFeed": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/free-worlds-v2/index.json",
+    "bytes": 9295,
+    "sha256": "1e32c1fc5476d83bf67355efdfdd55959c56170c79420b4ec03d60ada57c31ea",
+    "sourceByteExact": true,
+    "worlds": 20,
+    "courses": 41
+  },
+  "markerStableAfter": true,
+  "manifestSHA256": "10f078eaa95537231faf71d73c62a42b418b724b85d6ed0459de42b79c06b7a9",
+  "markerSHA256": "61fdbd8351fec8a151b9a7fe875415eae90e8f1bbb9ce70d5fdf4d08dfb02037",
+  "finishedAt": "2026-10-17T15:27:33.753070+00:00",
+  "assembledAt": "2026-10-17T15:30:42.014803+00:00",
+  "historicalLaunchReceipt": {
+    "path": "fpv-public-map-availability-20261016.json",
+    "sha256": "4c1f31064351a6840a746b634f3741477092b241e2f95753dc965bcdd8ace4fc",
+    "capturedAt": "2026-10-15T22:52:30.380255+00:00",
+    "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371"
+  },
+  "catalogueAnalysis": {
+    "method": "Acorn static initializer extraction: literal/object/array/spread/freeze/includes/conditional only; no production code execution",
+    "capability": [
+      128000,
+      256000,
+      512000
+    ],
+    "regionalOffers": 24,
+    "previous23CompleteIdentityJoins": 23,
+    "previous23IdentityFields": [
+      "id",
+      "title",
+      "edition",
+      "pin",
+      "advertisedDownloadBytes"
+    ],
+    "worldpacksExactOriginalRows": 20,
+    "worldpackCourseDefinitions": 41,
+    "builtinModuleMatchesHistoricalSHA256": true,
+    "builtinEnvironments": 14
+  },
+  "regional": [
+    {
+      "id": "alpine-highlands-study",
+      "title": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "edition": {
+        "en": "Station approach",
+        "uk": "Підхід до станції"
+      },
+      "revision": "station-r6",
+      "extent": "4.096 × 4.096 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/ca76af991b127f6ed81434162832a79518add9a8/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r6/delivery.json",
+        "bytes": 115316,
+        "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 22814245,
+      "historicalPublicNativeStatus": "public-native-flight-unchecked",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "https://github.com/mekhovov/revealline/pull/1535#issuecomment-6205549263"
+    },
+    {
+      "id": "alpine-highlands-study",
+      "title": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "edition": {
+        "en": "Station concourse",
+        "uk": "Майданчик між корпусами"
+      },
+      "revision": "station-r5",
+      "extent": "4.096 × 4.096 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json",
+        "bytes": 115316,
+        "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 22699845,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "lunar-basin-study",
+      "title": {
+        "en": "Lunar Basin — flight study",
+        "uk": "Місячна улоговина — тренувальна зона"
+      },
+      "edition": {
+        "en": "Shelter detail",
+        "uk": "Деталізовані укриття"
+      },
+      "revision": "composition-r3",
+      "extent": "768 × 768 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/f58a1b5197a78243e30e42858d45ded1f55baa31/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r3/delivery.json",
+        "bytes": 14759,
+        "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 2093869,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "alpine-highlands-study",
+      "title": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "edition": {
+        "en": "Quieter station surfaces",
+        "uk": "Стриманіші поверхні станції"
+      },
+      "revision": "station-r4",
+      "extent": "4.096 × 4.096 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/02f2b140d06cc930d8d4dd6b01abcd860db75436/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/delivery.json",
+        "bytes": 115316,
+        "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 22694120,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "alpine-highlands-study",
+      "title": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "edition": {
+        "en": "Station surface details",
+        "uk": "Деталі поверхонь станції"
+      },
+      "revision": "station-r3",
+      "extent": "4.096 × 4.096 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/ffb79b67479f9ed5c8104610695ac8b5cb04edc7/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r3/delivery.json",
+        "bytes": 115316,
+        "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 22694130,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "lunar-basin-study",
+      "title": {
+        "en": "Lunar Basin — flight study",
+        "uk": "Місячна улоговина — тренувальна зона"
+      },
+      "edition": null,
+      "revision": "composition-r2",
+      "extent": "768 × 768 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/423f60966ec5dd4946a05ae1ea3c59f4910216ef/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r2/delivery.json",
+        "bytes": 18790,
+        "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 1981832,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "alpine-highlands-study",
+      "title": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "edition": {
+        "en": "Refined contours",
+        "uk": "Уточнені контури"
+      },
+      "revision": "review-r2",
+      "extent": "4.096 × 4.096 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2/delivery.json",
+        "bytes": 115311,
+        "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 21759827,
+      "historicalPublicNativeStatus": "normal-install-failed-in-current-retained-profile",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "alpine-highlands-study",
+      "title": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "edition": {
+        "en": "Original study",
+        "uk": "Початковий варіант"
+      },
+      "revision": "review-r1",
+      "extent": "4.096 × 4.096 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/07be16fe40ade4c398299c4e64cb542b7523856c/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r1/delivery.json",
+        "bytes": 114992,
+        "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 21066886,
+      "historicalPublicNativeStatus": "offered-and-all-http-verified-native-not-attempted",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "canal-city-study",
+      "title": {
+        "en": "Canal City — bridges and courtyards",
+        "uk": "Місто каналів — мости й подвір’я"
+      },
+      "edition": null,
+      "revision": "district-r2",
+      "extent": "384 × 384 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/04b0d9c5db0687d8df2ea9a3ea07b9ca9ddcaa5a/authoring/fpv-worlds/regions/canal-city/delivery-district-r2/delivery.json",
+        "bytes": 6580,
+        "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 6771851,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "desert-expedition-study",
+      "title": {
+        "en": "Desert Expedition — rock routes",
+        "uk": "Пустельна експедиція — маршрути серед скель"
+      },
+      "edition": {
+        "en": "Rock practice routes",
+        "uk": "Маршрути серед скель"
+      },
+      "revision": "landmarks-r1",
+      "extent": "16.384 × 16.384 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json",
+        "bytes": 329271,
+        "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 48164518,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "desert-expedition-study",
+      "title": {
+        "en": "Desert Expedition — 16 km relief study",
+        "uk": "Пустельна експедиція — дослідження рельєфу 16 км"
+      },
+      "edition": {
+        "en": "Open desert terrain",
+        "uk": "Відкритий пустельний рельєф"
+      },
+      "revision": "natural-r1",
+      "extent": "16.384 × 16.384 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/2ccdf059d9d0d55c6eb7e668da6cee9496288255/authoring/fpv-worlds/regions/desert-expedition/delivery-natural-r1/delivery.json",
+        "bytes": 327361,
+        "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 47883876,
+      "historicalPublicNativeStatus": "offered-and-all-http-verified-native-not-attempted",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "tropical-coastal-districts",
+      "title": {
+        "en": "Tropical coast — connected harbour",
+        "uk": "Тропічне узбережжя — сполучені пірси гавані"
+      },
+      "edition": {
+        "en": "Connected harbour",
+        "uk": "Сполучена гавань"
+      },
+      "revision": "harbour-r3",
+      "extent": "768 × 768 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json",
+        "bytes": 6617,
+        "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 7958922,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "railway-valley-expanse",
+      "title": {
+        "en": "Railway Valley — six districts",
+        "uk": "Залізнична долина — шість районів"
+      },
+      "edition": null,
+      "revision": "review-r1",
+      "extent": "4.096 × 4.096 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/53c3c5dc25ac0639c93ec663a10beb492844032b/authoring/fpv-worlds/regions/railway-valley/delivery-expanse-r1/delivery.json",
+        "bytes": 98773,
+        "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 17943638,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "coaster-gardens-study",
+      "title": {
+        "en": "Coaster Gardens — connected park study",
+        "uk": "Сади атракціонів — дослідження парку зі сполученими доріжками"
+      },
+      "edition": {
+        "en": "Connected park routes",
+        "uk": "Сполучені паркові маршрути"
+      },
+      "revision": "review-r2",
+      "extent": "2.048 × 2.048 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json",
+        "bytes": 32824,
+        "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 34214390,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "coaster-gardens-study",
+      "title": {
+        "en": "Coaster Gardens — 2 km study",
+        "uk": "Сади атракціонів — пробний світ 2 км"
+      },
+      "edition": {
+        "en": "Original park study",
+        "uk": "Початкове дослідження парку"
+      },
+      "revision": "review-r1",
+      "extent": "2.048 × 2.048 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json",
+        "bytes": 29654,
+        "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 33908597,
+      "historicalPublicNativeStatus": "offered-and-all-http-verified-native-not-attempted",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "hillside-town-study",
+      "title": {
+        "en": "Hillside Town — civic court materials",
+        "uk": "Містечко на схилі — матеріали міського подвір’я"
+      },
+      "edition": {
+        "en": "Civic courtyard materials",
+        "uk": "Матеріали міського подвір’я"
+      },
+      "revision": "courtyard-r5",
+      "extent": "384 × 384 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json",
+        "bytes": 6579,
+        "sha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 8667066,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "hillside-town-study",
+      "title": {
+        "en": "Hillside Town — terraces and courtyards",
+        "uk": "Містечко на схилі — тераси та подвір’я"
+      },
+      "edition": {
+        "en": "Terraces and courtyards",
+        "uk": "Тераси та подвір’я"
+      },
+      "revision": "town-r2",
+      "extent": "384 × 384 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json",
+        "bytes": 6558,
+        "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 8359044,
+      "historicalPublicNativeStatus": "offered-and-all-http-verified-native-not-attempted",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "tropical-coastal-districts",
+      "title": {
+        "en": "Tropical coast — six flight districts",
+        "uk": "Тропічне узбережжя — шість районів польоту"
+      },
+      "edition": {
+        "en": "Six coastal districts",
+        "uk": "Шість прибережних районів"
+      },
+      "revision": "review-r2",
+      "extent": "768 × 768 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json",
+        "bytes": 6609,
+        "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 7863766,
+      "historicalPublicNativeStatus": "offered-and-all-http-verified-native-not-attempted",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "canyon-expanse-study",
+      "title": {
+        "en": "Canyon Expanse — broad relief study",
+        "uk": "Простори каньйону — дослідження рельєфу"
+      },
+      "edition": null,
+      "revision": "relief-r1",
+      "extent": "8.192 × 8.192 km",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/e561b41bb06d39775bf1bc5f9e078cabeeb84fef/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json",
+        "bytes": 329372,
+        "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 47975524,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "tropical-coastal-study",
+      "title": {
+        "en": "Tropical coast — bounded flight study",
+        "uk": "Тропічне узбережжя — дослідження польоту"
+      },
+      "edition": null,
+      "revision": "review-r1",
+      "extent": "384 × 384 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json",
+        "bytes": 6602,
+        "sha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 5989243,
+      "historicalPublicNativeStatus": "offered-and-all-http-verified-native-not-attempted",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "canyon-arrival-landmarks-study",
+      "title": {
+        "en": "Canyon Badlands — six districts",
+        "uk": "Каньйон — шість районів"
+      },
+      "edition": null,
+      "revision": "districts-r1",
+      "extent": "768 × 768 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/dbfa4cef92866938ce05815ee9beb4830d935647/authoring/fpv-worlds/regions/canyon-badlands/delivery-districts-r1/delivery.json",
+        "bytes": 24279,
+        "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 3404577,
+      "historicalPublicNativeStatus": "offered-and-all-http-verified-native-not-attempted",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "canyon-arrival-landmarks-study",
+      "title": {
+        "en": "Canyon Badlands — regional preview",
+        "uk": "Каньйон — огляд регіону"
+      },
+      "edition": null,
+      "revision": "rounded-r1",
+      "extent": "384 × 384 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/5591a1ccbc9302665cc2e97c0cc13f96affae4e8/authoring/fpv-worlds/regions/canyon-badlands/delivery-rounded-r1/delivery.json",
+        "bytes": 6790,
+        "sha256": "5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 1180140,
+      "historicalPublicNativeStatus": "offered-and-all-http-verified-native-not-attempted",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "railway-valley-study",
+      "title": {
+        "en": "Railway Valley — regional preview",
+        "uk": "Залізнична долина — огляд регіону"
+      },
+      "edition": null,
+      "revision": "structure-r1",
+      "extent": "384 × 384 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/31c0b54b668fa004be03f46f7ddcfa195ee734b3/authoring/fpv-worlds/regions/railway-valley/delivery-structure-r1/delivery.json",
+        "bytes": 6661,
+        "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 5691267,
+      "historicalPublicNativeStatus": "offered-and-all-http-verified-native-not-attempted",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    },
+    {
+      "id": "urban-earthworks-study",
+      "title": {
+        "en": "Urban earthworks — regional preview",
+        "uk": "Міські земляні споруди — огляд регіону"
+      },
+      "edition": null,
+      "revision": "review-r2",
+      "extent": "384 × 384 m",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json",
+        "bytes": 6603,
+        "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+      },
+      "offeredInCurrentPublicSource": true,
+      "downloadBytesAdvertised": 2275449,
+      "historicalPublicNativeStatus": "bounded-native-launch-passed",
+      "newNativeTestPerformed": false,
+      "historicalIntegrityEvidence": "fpv-public-source-integrity-20261016.json"
+    }
+  ],
+  "launchCoverage": {
+    "historicalBuiltinLaunches": 14,
+    "historicalWorldpackOneCourseLaunches": 20,
+    "historicalRegionalEditionLaunches": 13,
+    "currentRegionalOffers": 24,
+    "remainingRegionalPublicLaunches": 11,
+    "newNativeLaunches": 0
+  },
+  "retention": {
+    "regionalLimitMiB": 512,
+    "worldpackLimitMiB": 256,
+    "all24NativeCoexistenceVerified": false,
+    "originalPublicClosingDatabaseFailureResolved": false,
+    "originalPublicSavedMapVisibilityFailureResolved": false
+  },
+  "laterIndependentEvidence": {
+    "pullRequest": 1564,
+    "deployedRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+    "sourceCommit": "6018a0f5d113759ad7a13ad06208366cbd5d652e",
+    "report": "docs/fpv-boundary-delivery-verification.json",
+    "reportSHA256": "8aaf1bf426471736479ca4034d8bc31a3a064f981787e563cc552832b1e3c7c8",
+    "scope": "Existing reported fresh isolated Chrome Academy/World installs, saved rates, offline process reopen and short unscored export/replay/disposal; labelled Electron fixture is separate. Reviewed reports only; not repeated here.",
+    "initialWorldStartupTimeoutRetained": true,
+    "originalAffectedMapStorageContextRepaired": false,
+    "regionalMapLaunchCoverageAdded": 0
+  },
+  "limits": [
+    "No renderer or browser, player database reads or writes, map installation, retained-content removal or map asset payload download in this check.",
+    "Current source availability is not a new current native launch or retention pass.",
+    "The earlier 23-descriptor/11492-file and 20-pack payload integrity results retain their historical pin-bound scope; not repeated.",
+    "R6 descriptor and local package/native gates are from PR1535; actual public R6 installation/flight remains unchecked.",
+    "Ten older regional editions remain unflown publicly; the original Alpine refined-contour install negative stays open.",
+    "Original closing-database and later zero-visible-saved-map failures remain unresolved. Fresh-context rate persistence cannot establish their cause or repair.",
+    "All-24 retention, full per-map starts/courses, physical devices, representative final art, two-hour authored endurance and broader reliability remain unqualified."
+  ],
+  "publicationPreparation": {
+    "baseRevision": "3e744a5ef7bede48eafcb79a8377bb46fb37d76f",
+    "pullRequest": 1565,
+    "pendingPagesRun": 39045107325,
+    "statusObserved": "in_progress",
+    "catalogueModulesAndReportPathsUnchangedByCompare": true,
+    "notPromotedToPublicCheck": true,
+    "initialPublicationPreflight": "Expected fb3caf12 main guard stopped before remote mutations after observing the newer main head; based report branch on that current head."
+  }
+}

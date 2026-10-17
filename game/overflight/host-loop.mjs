@@ -13,6 +13,9 @@ export function overflightSortieProject(mode, project, { seed, difficulty, autho
     return mode.createProject({
       layout: project.battlefield.id,
       world: project.battlefield.world,
+      ...(project.combat?.crowdSeparation
+        ? { crowdSeparation: project.combat.crowdSeparation }
+        : {}),
       seed,
       difficulty,
     });
@@ -274,13 +277,88 @@ export function overflightReviewStopAt(value, { build, diagnostics = false } = {
     : null;
 }
 
+/** Keep the native tight-route default and allow explicit matched controls.
+ * Raid's pilot argument selects its hunting build instead of a flight route. */
+export function overflightReviewControls({ mode, build, route } = {}) {
+  if (!build) return { route: null, pilotArgument: null };
+  if (mode === 'overflight-hunt')
+    return { route: build === 'objectives' ? 'objectives' : 'packs', pilotArgument: build };
+  const selected = ['tight', 'figure-eight', 'lure-and-return'].includes(route) ? route : 'tight';
+  return { route: selected, pilotArgument: selected };
+}
+
+// Compact diagnostic fingerprint, not a gameplay identity or a replay checksum.
+// Quantization suppresses insignificant cross-engine float noise; exact player
+// coordinates and returned inputs are also retained for the first-divergence check.
+function reviewTraceSample(run, input) {
+  const player = run.player;
+  let enemyDigest = 2166136261;
+  for (const enemy of run.enemies) {
+    if (!enemy.active) continue;
+    for (const value of [
+      enemy.id,
+      enemy.x,
+      enemy.y,
+      enemy.hp,
+      enemy.armor,
+      enemy.attackWarning,
+      enemy._motionVX,
+      enemy._motionVY,
+    ])
+      enemyDigest = Math.imul(enemyDigest ^ Math.round((value ?? 0) * 100000), 16777619) >>> 0;
+  }
+  return {
+    tick: run.tick,
+    input: { x: input.x, y: input.y, boost: input.boost === true, focus: input.focus === true },
+    player: {
+      x: player.x,
+      y: player.y,
+      vx: player.vx,
+      vy: player.vy,
+      heading: player.heading,
+      hull: player.hull,
+      shield: player.shield,
+      boostRemaining: player.boostRemaining,
+      boostCooldown: player.boostCooldown,
+    },
+    kills: run.stats.kills,
+    damageTaken: run.stats.damageTaken,
+    xp: run.progression.xp,
+    choices: run.progression.choices,
+    airframes: run.airframesRemaining,
+    random: run._randomState,
+    draftRandom: run._draftRandomState,
+    enemyDigest,
+    focus: run.riy
+      ? { phase: run.riy.phase, targetId: run.riy.targetId, cooldown: run.riy.cooldown }
+      : null,
+    escorts:
+      run.riy?.escorts.map((escort) => ({
+        role: escort.role,
+        x: escort.x,
+        y: escort.y,
+        shots: escort.shots,
+        cooldown: escort.cooldown,
+      })) ?? [],
+  };
+}
+
 export function createOverflightReviewPlayback({
   build,
   pilot,
   selectCard,
+  route = 'tight',
   stopAt = null,
   enabled = true,
+  trace = false,
+  detailTick = null,
 }) {
+  const traceSamples = [],
+    traceCapacity = 7200;
+  const traceDetails = [];
+  const detailAt =
+    Number.isSafeInteger(detailTick) && detailTick >= 0 && detailTick <= 43200 ? detailTick : null;
+  let traceDropped = 0;
   const stopSeconds = overflightReviewStopAt(stopAt, { build, diagnostics: true });
   let automatic = !!build && enabled;
   let stopped = false;
@@ -290,6 +368,16 @@ export function createOverflightReviewPlayback({
   const offerIdentity = (run) =>
     `${run.progression.choices}:${run.progression.rerolls}:${run.offers.map((offer) => offer.id).join('|')}`;
   return {
+    traceSnapshot: () =>
+      trace
+        ? {
+            format: 'OverflightReviewTraceV1',
+            capacity: traceCapacity,
+            dropped: traceDropped,
+            samples: structuredClone(traceSamples),
+            details: structuredClone(traceDetails),
+          }
+        : null,
     active: () => automatic,
     setEnabled(value) {
       automatic = !!build && value === true;
@@ -298,6 +386,9 @@ export function createOverflightReviewPlayback({
       input = { x: 0, y: 0, boost: false };
     },
     reset() {
+      traceSamples.length = 0;
+      traceDetails.length = 0;
+      traceDropped = 0;
       lastTick = null;
       input = { x: 0, y: 0, boost: false };
       pending = null;
@@ -309,8 +400,49 @@ export function createOverflightReviewPlayback({
       if (stopSeconds !== null && run.time >= stopSeconds) stopped = true;
       if (stopped) return { x: 0, y: 0, boost: false, focus: false };
       if (lastTick === null || run.tick < lastTick || run.tick - lastTick >= 6) {
-        input = pilot(run, 'tight');
+        input = pilot(run, route);
         lastTick = run.tick;
+        if (trace) {
+          if (traceSamples.length < traceCapacity) traceSamples.push(reviewTraceSample(run, input));
+          else traceDropped++;
+          if (detailAt !== null && run.tick >= detailAt && traceDetails.length < 2) {
+            const keys = [
+              'id',
+              'family',
+              'role',
+              'x',
+              'y',
+              'hp',
+              'armor',
+              'radius',
+              'speed',
+              'heading',
+              'warning',
+              'attackWarning',
+              'exposureRemaining',
+              'steeringX',
+              'steeringY',
+              '_motionVX',
+              '_motionVY',
+              '_motionSeconds',
+              'movementPreset',
+              'movementPhase',
+              'movementRemaining',
+              'movementFacing',
+              'pattern',
+              'behaviorPhase',
+              'phaseRemaining',
+              'slowUntil',
+              'slowMultiplier',
+            ];
+            traceDetails.push({
+              tick: run.tick,
+              enemies: run.enemies
+                .filter((enemy) => enemy.active)
+                .map((enemy) => Object.fromEntries(keys.map((key) => [key, enemy[key] ?? null]))),
+            });
+          }
+        }
       }
       return input;
     },
@@ -347,4 +479,13 @@ export function createOverflightReviewPlayback({
       return result;
     },
   };
+}
+
+/** An explicit diagnostic-only override; authored play continues using project rules. */
+export function overflightReviewCrowdSeparation(params, { mode, build = null, fixture = null }) {
+  return ['overflight', 'overflight-riy'].includes(mode) &&
+    (build || ['reference', 'stress'].includes(fixture)) &&
+    params.get('reviewCrowd') === 'local'
+    ? 'local-v1'
+    : null;
 }

@@ -24,27 +24,12 @@
     <link rel="manifest" href="./app.webmanifest" />
     <title>FPV / LINE · Simulator</title>
     <link rel="stylesheet" href="../civilian-fpv/world-style.css" />
-    <script type="application/x-revealline-locked" data-access-type="">
-      document.documentElement.dataset.modeShellPending = 'true';
-      const simLoadMessage = (message) => {
-        const status = document.getElementById('sim-menu-boot-message');
-        if (status && document.documentElement.dataset.modeShellPending)
-          status.textContent = message;
-      };
-      const simLoadFailed = () =>
-        simLoadMessage(
-          'Could not start. Reload to retry. / Не вдалося запустити. Оновіть сторінку.',
-        );
-      window.addEventListener('error', simLoadFailed, { once: true });
-      window.addEventListener('unhandledrejection', simLoadFailed, { once: true });
-      window.setTimeout(
-        () =>
-          simLoadMessage(
-            'Still loading… You can reload or go back. / Ще завантажується… Можна оновити сторінку або повернутися назад.',
-          ),
-        15000,
-      );
-    </script>
+    <link rel="stylesheet" href="../civilian-fpv/tuning.css" />
+    <script
+      src="../civilian-fpv/sim-boot.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <script
       src="../civilian-fpv/world-app.mjs"
       type="application/x-revealline-locked"
@@ -55,10 +40,8 @@
     <section class="sim-menu-boot" role="status">
       <strong>FPV / LINE</strong>
       <p id="sim-menu-boot-message">Preparing game… / Підготовка гри…</p>
-      <a href="./index.html" onclick="event.preventDefault(); location.reload()"
-        >Reload / Оновити</a
-      >
-      <button type="button" onclick="history.back()">Back / Назад</button>
+      <a href="./index.html" data-sim-reload>Reload / Оновити</a>
+      <button type="button" data-sim-back>Back / Назад</button>
     </section>
     <a class="sim-skip" href="#explore">Skip to flight selection</a>
     <header class="studio-header">
@@ -774,6 +757,15 @@
         <h1 data-i18n="packs">World packs</h1>
         <p data-i18n="packsHelp">Install portable worlds and back up your recorded flights.</p>
         <div class="button-row">
+          <button
+            id="library-flight-records"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="sim-settings"
+            data-i18n="recordedFlights"
+          >
+            Recorded flights &amp; recovery
+          </button>
           <label class="file-button"
             ><span data-i18n="importPack">Import .rlpack / editable project</span
             ><input id="import-pack" type="file" accept=".rlpack,.zip" /></label
@@ -935,10 +927,12 @@
           </select></label
         >
         <div class="camera-settings">
-          <label>FOV<input id="world-fov" type="range" min="60" max="110" value="82" /></label
+          <label
+            ><span data-i18n="verticalFov">Vertical FOV (°)</span
+            ><input id="world-fov" type="range" min="40" max="140" value="82" /></label
           ><label
             ><span data-i18n="tilt">Camera tilt</span
-            ><input id="world-tilt" type="range" min="0" max="35" value="10"
+            ><input id="world-tilt" type="range" min="0" max="60" value="10"
           /></label>
         </div>
       </div>

@@ -17,8 +17,10 @@ import { createRadioRuntime } from '../../optional-practice/civilian-fpv/radio-r
 import {
   DEFAULT_RESPONSE,
   RADIO_FORMAT,
+  createFlightProfileStore,
   radioDeviceIdentity,
 } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
+import { createTuningLibraryStore } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 function dom(t) {
@@ -257,6 +259,194 @@ test('Radio setup import, explicit verification and save retain switch threshold
   f.click('Record full travel');
   f.click('I checked the animated sticks and their direction');
   assert.match(f.container.querySelector('.radio-feedback').textContent, /incomplete/);
+});
+
+async function calibrationImportFixture(
+  t,
+  { separated = true, saveTuning = true, locale = 'en' } = {},
+) {
+  const f = dom(t),
+    values = new Map(),
+    storage = {
+      getItem: (key) => values.get(key) ?? null,
+      setItem: (key, value) => values.set(key, value),
+    },
+    response = { ...DEFAULT_RESPONSE, maxRate: 420, expo: 35 },
+    legacy = createFlightProfileStore({ storage });
+  legacy.save({ ...legacy.snapshot(), response });
+  const tuning = createTuningLibraryStore({ storage, response });
+  if (saveTuning) {
+    await tuning.createProfile({ id: 'pilot-actual', name: 'Pilot Actual' });
+    await tuning.setDefault('pilot-actual');
+  }
+  const pad = {
+    id: 'Import test USB radio',
+    index: 0,
+    mapping: '',
+    connected: true,
+    axes: [0, 0, 0, -1],
+    buttons: [],
+  };
+  const profile = {
+    format: RADIO_FORMAT,
+    id: 'import-radio',
+    name: pad.id,
+    device: radioDeviceIdentity(pad),
+    stickMode: 2,
+    throttleStyle: 'full-travel',
+    verified: true,
+    channels: Object.fromEntries(
+      ['roll', 'pitch', 'yaw', 'throttle'].map((control, axis) => [
+        control,
+        {
+          axis,
+          min: -1,
+          max: 1,
+          center: control === 'throttle' ? null : 0,
+          invert: false,
+          deadZone: control === 'throttle' ? 0 : 0.02,
+        },
+      ]),
+    ),
+    switches: { arm: null, pause: null, reset: null },
+  };
+  const frames = new Map(),
+    callbacks = [],
+    pending = [];
+  let next = 0;
+  const view = mountRadioSetup({
+    container: f.container,
+    window: Object.assign(new Events(), {
+      Event,
+      localStorage: storage,
+      requestAnimationFrame: (fn) => {
+        frames.set(++next, fn);
+        return next;
+      },
+      cancelAnimationFrame: (key) => frames.delete(key),
+    }),
+    runtime: createRadioRuntime({ getGamepads: () => [pad] }),
+    locale,
+    ...(separated ? { onOpenRates() {} } : {}),
+    onResponse(value) {
+      callbacks.push(value);
+      // Match both production hosts: applying a response saves the player
+      // default and starts a fresh attempt after the asynchronous save.
+      pending.push(tuning.saveProfile(tuning.snapshot().defaultProfileId, { response: value }));
+    },
+  });
+  t.after(() => view.dispose());
+  const importSource = async (source) => {
+    f.input(locale === 'uk' ? 'JSON профілів' : 'Profile JSON', 'textarea').value =
+      JSON.stringify(source);
+    f.click(locale === 'uk' ? 'Імпорт профілів' : 'Import profiles');
+    await Promise.all(pending);
+  };
+  return { ...f, storage, values, response, tuning, profile, view, callbacks, importSource };
+}
+
+for (const format of [RADIO_FORMAT, 'FlightProfiles.v1', 'FlightProfiles.v2'])
+  test(`the separated radio editor imports ${format} without changing player rates or restarting`, async (t) => {
+    const f = await calibrationImportFixture(t),
+      before = f.tuning.export(),
+      active = f.tuning.effective(),
+      source =
+        format === RADIO_FORMAT
+          ? f.profile
+          : {
+              format,
+              radio: f.profile,
+              response: { ...DEFAULT_RESPONSE, maxRate: 680, expo: 5 },
+              ...(format === 'FlightProfiles.v2' ? { radios: [f.profile] } : {}),
+            };
+    await f.importSource(source);
+    assert.equal(f.callbacks.length, 0);
+    assert.equal(f.tuning.export(), before);
+    assert.deepEqual(f.tuning.effective(), active);
+    assert.equal(f.view.store.snapshot().radio.verified, false);
+    assert.equal(f.view.store.radios().length, 1);
+    assert.deepEqual(f.view.store.snapshot().response, f.response);
+    assert.deepEqual(
+      createFlightProfileStore({ storage: f.storage }).snapshot().response,
+      f.response,
+    );
+    assert.match(
+      f.container.querySelector('.radio-feedback').textContent,
+      /Rates & throttle profiles remain unchanged/,
+    );
+    if (format !== RADIO_FORMAT)
+      assert.match(
+        f.container.querySelector('.radio-feedback').textContent,
+        /Included flight response settings were not applied/,
+      );
+  });
+
+test('a calibration backup leaves the unsaved tuning migration base unchanged after reload', async (t) => {
+  const f = await calibrationImportFixture(t, { saveTuning: false, locale: 'uk' }),
+    before = f.tuning.effective();
+  await f.importSource({
+    format: 'FlightProfiles.v2',
+    radio: f.profile,
+    radios: [f.profile],
+    response: { ...DEFAULT_RESPONSE, maxRate: 680, expo: 5 },
+  });
+  assert.equal(f.callbacks.length, 0);
+  assert.equal(f.tuning.status().saved, false);
+  assert.equal(f.values.has('revealline.fpv.tuning.v1'), false);
+  const reloadedResponse = createFlightProfileStore({ storage: f.storage }).snapshot().response,
+    reloaded = createTuningLibraryStore({ storage: f.storage, response: reloadedResponse });
+  assert.deepEqual(reloaded.effective(), before);
+  assert.match(
+    f.container.querySelector('.radio-feedback').textContent,
+    /Параметри реакції польоту з файлу не застосовано/,
+  );
+});
+
+test('separated imports reject malformed ignored responses and report failed calibration storage without changing rates', async (t) => {
+  const f = await calibrationImportFixture(t),
+    source = {
+      format: 'FlightProfiles.v1',
+      radio: f.profile,
+      response: { ...DEFAULT_RESPONSE, maxRate: 680 },
+    },
+    beforeRates = f.tuning.export(),
+    beforeRadio = f.view.store.exportLibrary(),
+    disk = [...f.values.entries()];
+  await f.importSource({ ...source, response: { ...source.response, unexpected: true } });
+  assert.equal(f.callbacks.length, 0);
+  assert.equal(f.view.store.exportLibrary(), beforeRadio);
+  assert.equal(f.tuning.export(), beforeRates);
+  assert.deepEqual([...f.values.entries()], disk);
+  assert.match(
+    f.container.querySelector('.radio-feedback').textContent,
+    /unexpected|Unsupported|Unknown/i,
+  );
+  f.storage.setItem = () => {
+    throw new Error('Quota exceeded');
+  };
+  await f.importSource(source);
+  assert.equal(f.callbacks.length, 0);
+  assert.equal(f.tuning.export(), beforeRates);
+  assert.deepEqual([...f.values.entries()], disk);
+  assert.deepEqual(f.view.store.snapshot().response, f.response);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /Session only/);
+  assert.match(
+    f.container.querySelector('.radio-feedback').textContent,
+    /Included flight response settings were not applied/,
+  );
+});
+
+test('the standalone legacy radio editor still applies a valid imported response explicitly', async (t) => {
+  const f = await calibrationImportFixture(t, { separated: false }),
+    imported = { ...DEFAULT_RESPONSE, maxRate: 680, expo: 5 };
+  await f.importSource({ format: 'FlightProfiles.v1', radio: f.profile, response: imported });
+  assert.deepEqual(f.callbacks, [imported]);
+  assert.deepEqual(f.view.store.snapshot().response, imported);
+  assert.deepEqual(f.tuning.effective().response, imported);
+  assert.doesNotMatch(
+    f.container.querySelector('.radio-feedback').textContent,
+    /remain unchanged|not applied/,
+  );
 });
 
 test('Acro notebook review chooses only evidence satisfying its mode rule', async (t) => {

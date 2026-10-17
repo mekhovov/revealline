@@ -93,6 +93,9 @@ const COPY = {
       'Share the downloaded setup file with your radio model, firmware, USB mode and computer/browser. Shared mappings need a local direction and switch check. Files are never uploaded automatically.',
     imported:
       'Imported as a draft. Check directions and Arm/Reset, then verify and save before flying.',
+    responseUnchanged: 'Rates & throttle profiles remain unchanged.',
+    responseIgnored:
+      'Included flight response settings were not applied. Rates & throttle profiles remain unchanged.',
     threshold: 'Activation threshold',
     buttons: 'Buttons',
     arm: 'Arm/disarm — switch ON enables flight; OFF stops motors',
@@ -180,6 +183,9 @@ const COPY = {
       'Поділіться файлом, указавши модель пульта, прошивку, режим USB та комп’ютер/браузер. Чужі призначення потребують місцевої перевірки напрямків і перемикачів. Файли не надсилаються автоматично.',
     imported:
       'Імпортовано як чернетку. Перевірте напрямки, мотори й скидання, підтвердьте та збережіть перед польотом.',
+    responseUnchanged: 'Профілі рейтів і газу залишилися без змін.',
+    responseIgnored:
+      'Параметри реакції польоту з файлу не застосовано. Профілі рейтів і газу залишилися без змін.',
     threshold: 'Поріг спрацьовування',
     buttons: 'Кнопки',
     arm: 'Мотори — увімкнений перемикач дозволяє політ, вимкнений зупиняє мотори',
@@ -207,6 +213,7 @@ export function mountRadioSetup({
   onProfile = () => {},
   onResponse = () => {},
   onDone = () => {},
+  onOpenRates = null,
 }) {
   const doc = container.ownerDocument,
     copy = COPY[locale] ?? COPY.en;
@@ -846,16 +853,20 @@ export function mountRadioSetup({
       if (Array.isArray(parsed.radios)) value.radios = parsed.radios.map(draft);
     }
     // An imported verified flag is not evidence of verification on this computer.
-    const result = store.import(value);
+    const result = store.import(value, { preserveResponse: Boolean(onOpenRates) });
     guide?.reset();
     stopCaptures();
     const imported = value.radio;
     if (imported) loadProfile(imported);
     loadResponse(store.snapshot().response);
     runtime.editProfile();
-    onResponse(store.snapshot().response);
+    if (!onOpenRates) onResponse(store.snapshot().response);
     refreshLibrary();
-    status.textContent = `${copy.imported} ${result.saved ? copy.saved : copy.session}`;
+    status.textContent = `${copy.imported} ${result.saved ? copy.saved : copy.session}${
+      onOpenRates
+        ? ` ${Object.hasOwn(parsed, 'response') ? copy.responseIgnored : copy.responseUnchanged}`
+        : ''
+    }`;
   }
   const importButton = button(copy.import, () => {
     try {
@@ -1102,12 +1113,14 @@ export function mountRadioSetup({
     groups: {
       manual: [sign, channels, travelButton, centreButton, verifyButton, saveButton],
       switches: [switchIntro, ...switchFields],
-      response: [
-        ...Object.values(responseNodes).map((node) => node.parentNode),
-        curve,
-        resetResponse,
-        applyResponse,
-      ],
+      response: onOpenRates
+        ? [button(locale === 'uk' ? 'Рейти й газ' : 'Rates & throttle', onOpenRates)]
+        : [
+            ...Object.values(responseNodes).map((node) => node.parentNode),
+            curve,
+            resetResponse,
+            applyResponse,
+          ],
       transfer: [
         libraryLabel,
         sharing,
@@ -1128,6 +1141,12 @@ export function mountRadioSetup({
   intro.remove();
   switchHeading.remove();
   responseHeading.remove();
+  if (onOpenRates) {
+    for (const node of Object.values(responseNodes)) node.parentNode.remove();
+    curve.remove();
+    resetResponse.remove();
+    applyResponse.remove();
+  }
   frame = win.requestAnimationFrame(paint);
   return {
     store,
