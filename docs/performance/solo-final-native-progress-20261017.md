@@ -165,3 +165,28 @@ warns that recording additional timelines affects the inspected page. Keep
 CPU, layout, canvas and screenshot investigations separate from low-overhead
 qualification. A trace helps identify the responsible work; it does not itself
 demonstrate that an optimization meets the timing gate.
+
+## Additional device-context and scheduling review
+
+The [WebKit iOS 27 report](https://bugs.webkit.org/show_bug.cgi?id=324968)
+provides a concrete new qualification condition. Its reporter compares local
+HTTP and HTTPS on the same phone; maintainers confirm that Enhanced Security
+intentionally hardens plaintext HTTP navigation. Record the scheme and
+`isSecureContext` with every physical observation. Prefer a published HTTPS
+origin or a locally trusted HTTPS development origin. This is not evidence that
+this game encountered that policy, and no browser security setting is changed.
+
+WebKit's [animation-rate explainer](https://webkit.github.io/explainers/animation-frame-rate/)
+also explains why high-refresh hardware does not establish the cadence made
+available to web content. It is a proposal, not a shipped API guarantee. Keep
+the measured quiet-preparation cadence, native callbacks and power-state
+recording; do not infer 120 Hz solely from the iPhone model or 90 Hz solely from
+the Deck OLED display.
+
+Google's [long-task guide](https://web.dev/articles/optimize-long-tasks)
+shows that splitting functions alone does not create separate browser tasks.
+If the targeted profile identifies a remaining preparation loop, use bounded
+chunks or the existing worker owner. Feature-detect any task-yield API and keep
+a compatible fallback; do not introduce yielding into the authoritative
+simulation or assume a microtask creates a render opportunity. Any such change
+still needs measured attribution and unchanged replay outcomes.
