@@ -59,6 +59,29 @@ The first recovery analysis is retained at
 3,288 bytes, SHA-256
 `45a4a773dfd18c07c744dd574b354c6588cd834b1d74a7d07e69ca9c39d174c4`.
 
+### Completed Long Rail cohort
+
+[Run 39015298582](https://github.com/mekhovov/revealline/actions/runs/39015298582)
+has now finished all six jobs and twelve baseline/candidate observations.
+All six artifacts have complete ZIP/member readback; all command owners close
+without forced cleanup, ambiguous identities or survivors. All numerical
+performance verdicts remain failed.
+
+Chromium candidate repetitions 2 and 3 complete with work p95 12.7 and 12.9 ms,
+against baseline 33.6 and 36.1 ms, at calibrated factors 2.26 and 2.30. Repetition
+1 retains the partial overload pause described above. WebKit candidate
+repetitions 1 and 3 complete with work p95 6 and 3 ms but miss 53.96% and 47.59%
+of callback opportunities; repetition 2 retains the initial 577 ms pause.
+The baseline WebKit repetition 1 replay matches its recording, but the required
+closure is absent, so the mechanic gate fails. Repetition 2 retains a blank
+page-error entry. Neither failure is erased by a candidate improvement or by
+the completed-cohort status.
+
+The terminal compact receipt is
+`.cache/solo-followup/final-wave-v2/timing-results/longrail-terminal-compact.json`,
+60,848 bytes, SHA-256
+`bb56a3449f756a1d79df07dd91e8ff108da086eedf5740d6ab8085aa30cde131`.
+
 ## Application diagnostics overhead
 
 The Chromium arm of [run 39015298491](https://github.com/mekhovov/revealline/actions/runs/39015298491)
@@ -82,6 +105,26 @@ every computed field of the hosted result exactly. The compact analysis is
 The separate journal-hook comparison has a narrower scope and cannot be used
 to pass this application-diagnostics gate. Neither comparison qualifies the
 complete external observer's overhead.
+
+### Separate journal-hook cost
+
+The Chromium arm of [run 39015298574](https://github.com/mekhovov/revealline/actions/runs/39015298574)
+completes all twenty scenarios and same-engine native replays, with all owners
+closed normally. All ten binary journals are complete and independently read
+back. Its overhead verdict remains unresolved: none of the ten pairs meets
+all unchanged raw-performance comparison prerequisites, and the conservative
+endpoint uncertainty cannot resolve a 5% difference. Observed work p95 is
+approximately 2.9–3.3 ms; the observed 0.1 ms timer step and counted endpoints
+produce uncertainty up to 1.2 ms. This cannot establish the overhead of either
+the application diagnostics or the complete external observer.
+
+Artifact `12095192232` is 1,749,576 bytes, SHA-256
+`d03b93206a2bc63d8db46dd8a73d25d46d56f0913b1a6df5f79de0cac00420d8`.
+All 122 members have complete readback. Local reanalysis of all twenty verified
+reports and ten journals reproduces every hosted computed field; the receipt is
+`.cache/solo-followup/final-wave-v2/root-retention/journal-cost-chromium-reanalysis.json`,
+10,016 bytes, SHA-256
+`cbcdd5bf744f689b08aca85fcdb33ab67f8221cbaa1478cc20ddb395b7be525c`.
 
 ## Updated order of work and research conclusions
 
