@@ -18,8 +18,8 @@ concurrency:
 
 jobs:
   preflight:
-    # Held for concrete source/ownership review. No browser or media is launched.
-    if: false
+    # One source-bound non-browser ownership observation; no browser or media follows.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'ab45bfde5d54d612cbba9b038a46f13d13f417ec'
     runs-on: macos-15-intel
     timeout-minutes: 24
     env:
