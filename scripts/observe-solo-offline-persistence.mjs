@@ -31,6 +31,8 @@ import {
   offlineLaunchAllowsGameplay,
   offlineGameplayAssessment,
   playOfflineStarter,
+  NATIVE_OFFLINE_STATE_POLICY,
+  restoreNativeOfflineState,
   validateOfflineGameplayPlan,
 } from './solo-offline-gameplay.mjs';
 
@@ -248,6 +250,7 @@ const report = {
   workerEventOverflow: false,
   replays: [],
   gameplayRequested: Boolean(plan.gameplay),
+  nativeOfflineStatePolicy: NATIVE_OFFLINE_STATE_POLICY,
 };
 const gameplayPending = [];
 let diagnosticWatchdog,
@@ -450,6 +453,24 @@ const click = async (selector, timeout = 60000) => {
   step('public-click', { selector });
 };
 const ensureOwner = () => assert(!stopped && !report.deadlineReached, 'Diagnostic owner stopped');
+const restoreNativeState = async (witness, expectedURL, remaining) => {
+  const ownedPage = page,
+    ownedCDP = cdp;
+  assert(ownedPage && ownedCDP, 'Native offline correction requires the existing observer owner');
+  return restoreNativeOfflineState({
+    page: ownedPage,
+    cdp: ownedCDP,
+    expectedURL,
+    witness,
+    ensureOwner: () => {
+      ensureOwner();
+      assert(page === ownedPage && cdp === ownedCDP, 'Offline observer owner changed');
+    },
+    isServerStopped: () => served === null,
+    bounded: boundedOperation,
+    remaining,
+  });
+};
 let expectedLauncher;
 const workerSnapshot = async (stage) => {
   ensureOwner();
@@ -913,6 +934,8 @@ const observation = (async () => {
     assert.equal(sha(gameHTML), plan.artifact.entryHTMLSha256);
     assert.equal(automaticResponse.headers()['content-security-policy'], expected.csp);
     await page.waitForURL(selectedGameEntry, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    navigation.nativeState = {};
+    await restoreNativeState(navigation.nativeState, selectedGameEntry);
     await page.waitForFunction(() => document.documentElement.dataset.bootState === 'ready', null, {
       timeout: 60000,
     });
@@ -963,6 +986,7 @@ const observation = (async () => {
         isServerStopped: () => served === null,
         step,
         pending: gameplayPending,
+        restoreNativeState,
       });
       for (const item of gameplayExports) {
         const path = join(output, `${item.entry.label}.replay.json`);

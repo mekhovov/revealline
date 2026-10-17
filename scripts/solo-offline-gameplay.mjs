@@ -22,12 +22,96 @@ export function validateOfflineGameplayPlan(value) {
   return value;
 }
 
+export const NATIVE_OFFLINE_STATE_POLICY = 'owned-cdp-after-navigation-v1';
+const nativeOfflineParameters = Object.freeze({
+  offline: true,
+  latency: 0,
+  downloadThroughput: -1,
+  uploadThroughput: -1,
+});
+
+export function nativeOfflineStateApplied(value, expectedURL) {
+  return Boolean(
+    expectedURL &&
+      value?.status === 'applied' &&
+      value.session === 'existing-worker-observer' &&
+      value.commandCompleted === true &&
+      typeof value.before?.online === 'boolean' &&
+      value.before.url === expectedURL &&
+      value.after?.online === false &&
+      value.after.url === expectedURL,
+  );
+}
+
+// Chromium 151 loses native navigator state on document navigation. Reapply it
+// on the already-owned observer session; Playwright's transport remains offline.
+// The mutable witness retains a failed stage before rejection, without retries.
+export async function restoreNativeOfflineState({
+  page,
+  cdp,
+  expectedURL,
+  witness,
+  ensureOwner,
+  isServerStopped,
+  bounded,
+  remaining = () => 5000,
+}) {
+  assert.equal(witness.status, undefined, 'Native offline witness cannot be reused');
+  witness.status = 'running';
+  witness.session = 'existing-worker-observer';
+  const check = () => {
+    ensureOwner();
+    assert(isServerStopped(), 'Offline origin restarted during native-state correction');
+  };
+  const operation = async (label, run) => {
+    check();
+    const timeout = Math.min(5000, remaining(5000));
+    assert(Number.isFinite(timeout) && timeout > 0, 'Native offline operation deadline exhausted');
+    const result = await bounded(label, run, timeout);
+    check();
+    return result;
+  };
+  const snapshot = (label) =>
+    operation(label, () =>
+      page.evaluate(() => ({ online: navigator.onLine, url: globalThis.location.href })),
+    );
+  try {
+    witness.before = await snapshot('Read native state before offline correction');
+    assert.equal(typeof witness.before.online, 'boolean');
+    assert.equal(witness.before.url, expectedURL, 'Unexpected offline document before correction');
+    await operation('Restore owned native offline state', () =>
+      cdp.send('Network.overrideNetworkState', nativeOfflineParameters),
+    );
+    witness.commandCompleted = true;
+    witness.after = await snapshot('Read native state after offline correction');
+    assert.equal(witness.after.url, expectedURL, 'Unexpected offline document after correction');
+    assert.equal(witness.after.online, false, 'Native offline state was not restored');
+    witness.status = 'applied';
+    assert(nativeOfflineStateApplied(witness, expectedURL));
+    return witness;
+  } catch (error) {
+    witness.status = 'failed';
+    witness.failure = String(error.message ?? error).slice(0, 2048);
+    throw error;
+  }
+}
+
+const nativePolicyAllows = (report, witness, expectedURL) =>
+  report.nativeOfflineStatePolicy === undefined ||
+  (report.nativeOfflineStatePolicy === NATIVE_OFFLINE_STATE_POLICY &&
+    nativeOfflineStateApplied(witness, expectedURL));
+
 export function offlineLaunchAllowsGameplay(report) {
   const after = report.workerSnapshots?.find((row) => row.stage === 'after-restart-navigation');
   return Boolean(
     report.offlineNavigation?.publicBootReady === true &&
       report.offlineNavigation.serverStopped === true &&
       report.offlineNavigation.offlineEmulation === true &&
+      nativePolicyAllows(
+        report,
+        report.offlineNavigation.nativeState,
+        report.offlineNavigation.selectedGame?.url,
+      ) &&
       after?.identityMatches === true &&
       after.keysMatch === true &&
       after.indexMatches === true &&
@@ -55,7 +139,8 @@ export function offlineGameplayAssessment(report) {
     value.exportCount !== 2 ||
     report.replays?.length !== 2 ||
     value.failure ||
-    value.deadlineReached
+    value.deadlineReached ||
+    !nativePolicyAllows(report, value.nativeState, value.address)
   )
     return 'failed';
   for (const [index, entry] of report.replays.entries()) {
@@ -92,6 +177,7 @@ export async function playOfflineStarter({
   isServerStopped,
   step,
   pending,
+  restoreNativeState,
   now = Date.now,
 }) {
   assert(offlineLaunchAllowsGameplay(report), 'No gameplay after unqualified offline launch');
@@ -138,6 +224,7 @@ export async function playOfflineStarter({
   const value = (report.gameplay = {
     status: 'running',
     route: 'explicit-installed-starter-url',
+    address,
     startedAt: new Date().toISOString(),
     exports: [],
     scope:
@@ -169,6 +256,13 @@ export async function playOfflineStarter({
       remaining();
       assert.equal(sha(html), entryHTMLSha256);
       assert.equal(response.headers()['content-security-policy'], csp);
+      if (report.nativeOfflineStatePolicy !== undefined) {
+        assert.equal(report.nativeOfflineStatePolicy, NATIVE_OFFLINE_STATE_POLICY);
+        value.nativeState = {};
+        await restoreNativeState(value.nativeState, address, remaining);
+        remaining();
+        assert(nativeOfflineStateApplied(value.nativeState, address));
+      }
       await page.waitForFunction(
         () => document.documentElement.dataset.bootState === 'ready',
         null,
