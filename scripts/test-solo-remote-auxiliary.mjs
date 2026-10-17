@@ -283,7 +283,8 @@ test('final audio preserves all eight paired arms, exact originals and original 
       'maxParallel',
     ])
       assert.equal(current[key], old[key]);
-    assert.deepEqual([jobMinutes, stepMinutes, outerSeconds], [120, 78, 4620]);
+    assert.deepEqual([jobMinutes, stepMinutes, outerSeconds], [122, 78, 4620]);
+    assert.equal(auxiliaryMatrix(previous).include.find((row) => row.job === job).jobMinutes, 120);
     for (const row of current.rows) {
       const args = auxiliaryArguments(
         { here: '/tools', plan: current, modeState: { recipePath: '/recipe' } },
@@ -433,7 +434,12 @@ test('final audio requires admitted candidate and baseline preparation before an
 test('final-source recovery retains six candidate-only observations, original recipes and exclusion', () => {
   const value = finalRecoveryManifest();
   const old = preparationManifest();
-  assert.deepEqual(auxiliaryMatrix(value), auxiliaryMatrix(old));
+  assert.deepEqual(
+    auxiliaryMatrix(value).include,
+    auxiliaryMatrix(old).include.map((row) => ({ ...row, jobMinutes: row.jobMinutes + 2 })),
+  );
+  assert(auxiliaryMatrix(old).include.every((row) => row.jobMinutes === 105));
+  assert(auxiliaryMatrix(value).include.every((row) => row.jobMinutes === 107));
   for (const { job, repetition } of auxiliaryMatrix(value).include) {
     const current = bindAuxiliaryJob(value, job, repetition);
     const previous = bindAuxiliaryJob(old, job, repetition);
