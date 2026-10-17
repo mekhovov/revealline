@@ -22,6 +22,28 @@ background boundary reads preserve the player's Arm request, while restoration a
 final-tail sealing retain their stronger guards. The World host's file-input styling
 also covers archive imports mounted directly in Advanced practice.
 
+Live Regional testing found a second recording issue: the Canyon Badlands checkpoint
+was about 1.8 MB, exceeding the 1 MiB segment threshold before new inputs were added.
+After the first timed rotation this caused a new checkpoint every mission interval
+and retained only 0.04 seconds. Segment rotation now counts appended inputs and
+verification hashes separately from checkpoint overhead. Checkpoints still count
+fully toward the total retained-memory limit. Saved formats, physical state hashes
+and historical playback identities are unchanged; restore reconstructs the same
+stream counter from the saved events and hashes.
+
+## Public first-release acceptance
+
+The GitHub Pages deployment of `20459d449713ffc4d20143e39a8ea0cd0be90bb2`
+passed its build, deployment and exact-source verification on 17 October 2026.
+The public browser checks confirmed all twelve picker entries, a new Meteor75 setup
+with Actual starter rates and touch-controlled takeoff in World, an X650 setup with
+300 degrees/second starter rates in Academy's Lift and land practice, and X650
+Regional practice in the downloaded Canyon Badlands preview. Shared setups were
+retained between hosts; Academy and Regional both saved durable recovery points.
+These checks used an existing authenticated browser session, not a new password entry.
+The recording correction above and the archive/challenge additions are a separate
+follow-up release; this first-release receipt does not establish their publication.
+
 ## What numerical qualification establishes
 
 The source-pinned [numerical](fpv-aircraft-numerical-qualification.json) and
