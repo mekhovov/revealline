@@ -143,6 +143,7 @@ export function installPracticeWorker(scope, pins, revision) {
             if (controller.signal.aborted) throw new Error('Optional download cancelled');
             activity();
             phase = 'downloading';
+            announce();
           }
           phase = 'ready';
           announce();

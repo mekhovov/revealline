@@ -1,0 +1,95 @@
+TAP version 13
+# Subtest: native Raid uses current rules at every difficulty without changing legacy authoring defaults
+ok 1 - native Raid uses current rules at every difficulty without changing legacy authoring defaults
+  ---
+  duration_ms: 23.687167
+  ...
+# Subtest: pre-run variant record lookup uses the same revision as its completed run
+ok 2 - pre-run variant record lookup uses the same revision as its completed run
+  ---
+  duration_ms: 23.774875
+  ...
+# Subtest: Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages
+ok 3 - Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages
+  ---
+  duration_ms: 14.161333
+  ...
+# Subtest: custom V4 Marathon previews preserve optional battlefield and movement authoring
+ok 4 - custom V4 Marathon previews preserve optional battlefield and movement authoring
+  ---
+  duration_ms: 11.405833
+  ...
+# Subtest: Time Attack and Marathon reject experimental terrain rather than silently changing routes
+ok 5 - Time Attack and Marathon reject experimental terrain rather than silently changing routes
+  ---
+  duration_ms: 1.6865
+  ...
+# Subtest: Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+ok 6 - Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+  ---
+  duration_ms: 2.263584
+  ...
+# Subtest: bank/continue transactions settle once and preserve resources without free repairs
+ok 7 - bank/continue transactions settle once and preserve resources without free repairs
+  ---
+  duration_ms: 4.508458
+  ...
+# Subtest: losing the last airframe forfeits the entire unbanked chain, retry restarts it
+ok 8 - losing the last airframe forfeits the entire unbanked chain, retry restarts it
+  ---
+  duration_ms: 4.567709
+  ...
+# Subtest: five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+ok 9 - five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+  ---
+  duration_ms: 44.628167
+  ...
+# Subtest: variant records have independent contexts and shared durable/session storage semantics
+ok 10 - variant records have independent contexts and shared durable/session storage semantics
+  ---
+  duration_ms: 4.731583
+  ...
+# Subtest: pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+ok 11 - pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+  ---
+  duration_ms: 6.086208
+  ...
+# Subtest: an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+ok 12 - an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+  ---
+  duration_ms: 853.412708
+  ...
+# Subtest: Marathon next-contract prose has its own result panel while numeric scores remain compact
+ok 13 - Marathon next-contract prose has its own result panel while numeric scores remain compact
+  ---
+  duration_ms: 14.979208
+  ...
+# Subtest: Marathon buttons bank once, refresh results and continue only with the host guard
+ok 14 - Marathon buttons bank once, refresh results and continue only with the host guard
+  ---
+  duration_ms: 9.492209
+  ...
+# Subtest: Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+ok 15 - Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+  ---
+  duration_ms: 7.217041
+  ...
+# Subtest: medal formatting carries rounded hundredths across minute boundaries
+ok 16 - medal formatting carries rounded hundredths across minute boundaries
+  ---
+  duration_ms: 0.148375
+  ...
+# Subtest: the last legal three-card choice cannot immediately open an exhausted queued draft
+ok 17 - the last legal three-card choice cannot immediately open an exhausted queued draft
+  ---
+  duration_ms: 2.871667
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1250.013125

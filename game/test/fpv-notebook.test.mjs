@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from '../../optional-practice/civilian-fpv/demonstrations.mjs';
+import { createFlight, createFlightRecorder } from '../../optional-practice/civilian-fpv/model.mjs';
+import { createTunedResponse } from '../../optional-practice/civilian-fpv/flight-response.mjs';
+import { FLIGHT_CONTROLS } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 import {
   createFlightAttemptStore,
   verifyFlightAttempt,
@@ -33,6 +36,46 @@ test('flight attempts reverify before persistence, reject demonstration or compl
   await restored.load();
   assert.deepEqual(restored.records(), [accepted.record]);
   await restored.close();
+});
+
+test('completed tuned flights keep comparison metadata in proofs while granting and restoring Academy rewards', async (t) => {
+  const demonstration = FLIGHT_DEMONSTRATIONS[0],
+    course = FLIGHT_COURSES.find((item) => item.id === demonstration.course),
+    flight = createFlight({ course, mode: demonstration.mode, response: createTunedResponse() }),
+    recorder = createFlightRecorder(flight);
+  flight.arm();
+  for (const frame of demonstration.frames) {
+    const command = Object.fromEntries(
+      FLIGHT_CONTROLS.map((axis, index) => [axis, frame[index] / 1000]),
+    );
+    recorder.record(command);
+    flight.step(command);
+  }
+  assert.equal(flight.snapshot().status, 'complete');
+  const completed = recorder.export(),
+    checked = await verifyFlightAttempt(FLIGHT_COURSES, completed),
+    evidenceKeys = ['model', 'course', 'courseIdentity', 'mode', 'responseIdentity', 'attemptId'];
+  assert.ok(completed.comparisonIdentity);
+  assert.deepEqual(Object.keys(checked.record), evidenceKeys);
+  const db = managedIndexedDB(),
+    book = createFlightNotebook({ courses: FLIGHT_COURSES, indexedDB: db.indexedDB });
+  t.after(() => book.close());
+  await book.ready;
+  const accepted = await book.accept(completed);
+  assert.equal(accepted.saved, true);
+  assert.equal(book.snapshot().rewards.receipts.length, 1);
+  assert.deepEqual(
+    Object.keys(book.snapshot().rewards.receipts[0].evidence.practice[0]),
+    evidenceKeys,
+  );
+  assert.equal(book.export().attempts[0].comparisonIdentity, completed.comparisonIdentity);
+  assert.deepEqual(book.export().attempts[0].response, completed.response);
+  await book.close();
+  const restored = createFlightNotebook({ courses: FLIGHT_COURSES, indexedDB: db.indexedDB });
+  t.after(() => restored.close());
+  await restored.ready;
+  assert.equal(restored.snapshot().rewards.receipts.length, 1);
+  assert.equal(restored.export().attempts[0].comparisonIdentity, completed.comparisonIdentity);
 });
 test('flight finale remains locked at 11/12 and repeats never substitute; twelve Acro is separate', async () => {
   const db = managedIndexedDB(),

@@ -125,6 +125,40 @@ function runtime(p, config = profile(p)) {
   radio.poll();
   return { radio, freezes, replace: (value) => (devices = value) };
 }
+
+test('diagnostics discard invalid samples and cadence restarts after missing input', () => {
+  const p = pad();
+  let connected = true;
+  const radio = createRadioRuntime({ getGamepads: () => (connected ? [p] : []), now: () => 150 });
+  radio.select(p.index);
+  radio.setProfile(profile(p));
+  p.timestamp = 100;
+  assert.equal(radio.diagnostics().sampleAgeMs, 50);
+  p.timestamp = 110;
+  assert.equal(radio.diagnostics().cadenceHz, 100);
+  p.axes[6] = Number.NaN;
+  const unavailable = { raw: null, calibrated: null, sampleAgeMs: null, cadenceHz: null };
+  assert.deepEqual(radio.diagnostics(), unavailable);
+  assert.equal(radio.status().verified, false);
+  p.axes[6] = 0.25;
+  p.timestamp = 120;
+  let fresh = radio.diagnostics();
+  assert.equal(fresh.raw.roll, 0.25);
+  assert.equal(fresh.sampleAgeMs, 30);
+  assert.equal(fresh.cadenceHz, null);
+  p.timestamp = 130;
+  assert.equal(radio.diagnostics().cadenceHz, 100);
+  p.timestamp = 0;
+  assert.equal(radio.diagnostics().sampleAgeMs, null);
+  assert.equal(radio.diagnostics().cadenceHz, null);
+  connected = false;
+  assert.deepEqual(radio.diagnostics(), unavailable);
+  connected = true;
+  p.timestamp = 150;
+  fresh = radio.diagnostics();
+  assert.equal(fresh.sampleAgeMs, 0);
+  assert.equal(fresh.cadenceHz, null);
+});
 test('arming explains high throttle and neutral attitude requirements; held timestamps remain valid', () => {
   const p = pad(),
     { radio } = runtime(p);
@@ -243,6 +277,71 @@ test('profiles have validated export/import and failed writes are visible sessio
   assert.equal(failed.snapshot().radio.name, 'My radio');
   assert.throws(() => failed.import('{"format":"FlightProfiles.v1"}'));
   assert.equal(failed.snapshot().radio.name, 'My radio');
+});
+
+test('calibration-only imports validate but preserve the legacy response used by future tuning migration', () => {
+  const data = new Map(),
+    writes = [],
+    storage = {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => {
+        writes.push(value);
+        data.set(key, value);
+      },
+    },
+    store = createFlightProfileStore({ storage }),
+    response = { ...DEFAULT_RESPONSE, maxRate: 420, expo: 35 };
+  store.save({ ...store.snapshot(), response });
+  const incoming = {
+    format: 'FlightProfiles.v2',
+    radio: profile(),
+    radios: [profile()],
+    response: { ...DEFAULT_RESPONSE, maxRate: 680, expo: 5 },
+  };
+  assert.equal(store.import(incoming, { preserveResponse: true }).saved, true);
+  assert.deepEqual(store.snapshot().response, response);
+  assert.deepEqual(createFlightProfileStore({ storage }).snapshot().response, response);
+  assert.equal(store.radios().length, 1);
+  const before = store.exportLibrary(),
+    count = writes.length;
+  for (const invalid of [
+    { ...incoming, response: { ...incoming.response, maxRate: 900 } },
+    { ...incoming, response: { ...incoming.response, unexpected: true } },
+    { ...incoming, radios: [{ ...profile(), channels: {} }] },
+  ]) {
+    assert.throws(() => store.import(invalid, { preserveResponse: true }));
+    assert.equal(store.exportLibrary(), before);
+    assert.equal(writes.length, count);
+  }
+  store.import(incoming);
+  assert.deepEqual(store.snapshot().response, incoming.response);
+});
+
+test('a failed calibration-only save retains response and persisted bytes while reporting session-only calibration', () => {
+  const data = new Map(),
+    storage = {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    },
+    store = createFlightProfileStore({ storage }),
+    response = { ...DEFAULT_RESPONSE, maxRate: 430 };
+  store.save({ ...store.snapshot(), response });
+  const before = [...data.entries()];
+  storage.setItem = () => {
+    throw new Error('Quota exceeded');
+  };
+  const result = store.import(
+    { format: 'FlightProfiles.v1', radio: profile(), response: DEFAULT_RESPONSE },
+    { preserveResponse: true },
+  );
+  assert.equal(result.saved, false);
+  assert.equal(result.error, 'Quota exceeded');
+  assert.deepEqual(store.snapshot().response, response);
+  assert.equal(store.snapshot().radio.name, 'My radio');
+  assert.deepEqual([...data.entries()], before);
+  const reloaded = createFlightProfileStore({ storage }).snapshot();
+  assert.deepEqual(reloaded.response, response);
+  assert.equal(reloaded.radio, null);
 });
 
 test('radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge', () => {

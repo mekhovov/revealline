@@ -1,0 +1,9 @@
+{
+  "format": "fpv-owned-build-cleanup.v1",
+  "createdAt": "2026-10-17T03:44:30.613Z",
+  "removed": "/private/tmp/fpv-rates-delivery-20261017-pages",
+  "manifestSha256": "b0a180c6d5aea1cf8a56f2b117e52c1804af2027565d54b45163a1c21d320616",
+  "zipSha256": "f790928a38f0cf61c20b49ab3e7b18628180eba7de61a099174046aeeeaff4f4",
+  "verifiedBeforeRemoval": true,
+  "reason": "Reclaim space occupied by this task's reproducible historical local build before new qualification. Historical receipts and the completed public deployment remain retained; no unrelated files or browser profiles removed."
+}
