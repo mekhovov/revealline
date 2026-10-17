@@ -119,6 +119,96 @@ test('fallback failure, hidden targets and reentrant modal opening never steal f
   }
 });
 
+function queueNativeClose(h, dialog, origin = h.doc.body) {
+  dialog.open = false;
+  dialog.hidden = true;
+  dialog.removeAttribute('open');
+  origin.focus();
+  queueMicrotask(() => dialog.emit('close', { bubbles: false }));
+}
+
+test('scope polling before a queued native close preserves the hidden opener fallback', async () => {
+  const h = surface(),
+    dialog = h.dialogs[0],
+    fallback = h.add('button', 'fallback'),
+    stack = attachModalNavigation({ document: h.doc, getFallbackFocus: () => fallback });
+  h.open(dialog);
+  h.opener.style.display = 'none';
+  queueNativeClose(h, dialog, h.opener);
+  for (let i = 0; i < 3; i++) assert.equal(stack.topDialog(), null);
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(h.doc.activeElement, fallback);
+  stack.destroy();
+});
+
+test('scope polling before queued nested closes preserves each opening order and origin', async () => {
+  for (const closeBoth of [false, true]) {
+    const h = surface(),
+      [earlier, later] = h.dialogs,
+      stack = attachModalNavigation({ document: h.doc });
+    h.open(earlier);
+    earlier.children[1].focus();
+    h.open(later);
+    queueNativeClose(h, later);
+    assert.equal(stack.topDialog(), earlier);
+    if (closeBoth) {
+      queueNativeClose(h, earlier);
+      assert.equal(stack.topDialog(), null);
+    }
+    await Promise.resolve();
+    await Promise.resolve();
+    assert.equal(h.doc.activeElement, closeBoth ? h.opener : earlier.children[1]);
+    stack.destroy();
+  }
+});
+
+test('a queued closed origin cannot override a newer dialog, deliberate focus, reopen or destruction', async () => {
+  for (const replacement of ['dialog', 'focus', 'reopen', 'destroy']) {
+    const h = surface(),
+      [earlier, later] = h.dialogs,
+      replacementOpener = h.add('button', 'replacement-opener'),
+      stack = attachModalNavigation({ document: h.doc });
+    h.open(earlier);
+    queueNativeClose(h, earlier);
+    assert.equal(stack.topDialog(), null);
+    if (replacement === 'dialog') h.open(later);
+    else if (replacement === 'focus') replacementOpener.focus();
+    else if (replacement === 'reopen') {
+      replacementOpener.focus();
+      h.open(earlier);
+    } else stack.destroy();
+    const expected = h.doc.activeElement;
+    await Promise.resolve();
+    await Promise.resolve();
+    assert.equal(h.doc.activeElement, expected, replacement);
+    if (replacement === 'reopen') {
+      queueNativeClose(h, earlier);
+      assert.equal(stack.topDialog(), null);
+      await Promise.resolve();
+      await Promise.resolve();
+      assert.equal(h.doc.activeElement, replacementOpener, 'A fresh opening owns its new origin');
+    }
+    stack.destroy();
+  }
+});
+
+test('an older queued close cannot replace focus inside a newer active dialog', async () => {
+  const h = surface(),
+    [earlier, later] = h.dialogs,
+    stack = attachModalNavigation({ document: h.doc });
+  h.open(earlier);
+  h.open(later);
+  queueNativeClose(h, earlier);
+  assert.equal(stack.topDialog(), later);
+  later.children[1].focus();
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(h.doc.activeElement, later.children[1]);
+  assert.equal(stack.topDialog(), later);
+  stack.destroy();
+});
+
 test('opening order owns controller scope across reversed DOM order, Back and fresh reopen', async () => {
   const h = surface(),
     [earlier, later] = h.dialogs;

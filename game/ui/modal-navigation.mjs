@@ -4,6 +4,8 @@ export function attachModalNavigation({
   getFallbackFocus = () => null,
 } = {}) {
   let stack = [],
+    closing = new WeakMap(),
+    openingSequence = 0,
     destroyed = false,
     emptyKnown = false,
     previousFocus = doc.activeElement;
@@ -21,9 +23,11 @@ export function attachModalNavigation({
   };
   const opened = (dialog, origin = previousFocus, keepOrigin = false) => {
     emptyKnown = false;
+    closing.delete(dialog);
     const old = remove(dialog);
     stack.push({
       dialog,
+      opening: ++openingSequence,
       origin: keepOrigin && old ? old.origin : dialog.contains(origin) ? null : origin,
     });
   };
@@ -61,7 +65,13 @@ export function attachModalNavigation({
   function topDialog() {
     if (destroyed) return null;
     if (observer) records(observer.takeRecords());
-    stack = stack.filter((entry) => isOpen(entry.dialog));
+    stack = stack.filter((entry) => {
+      if (isOpen(entry.dialog)) return true;
+      // Native close events are queued. Scope can change before that event,
+      // but its opener must survive until focus restoration gets a turn.
+      if (entry.dialog.isConnected) closing.set(entry.dialog, entry);
+      return false;
+    });
     const focused = focusedDialog();
     if (isOpen(focused) && !stack.some((entry) => entry.dialog === focused)) opened(focused, null);
     if (!stack.length && (!emptyKnown || !observer)) {
@@ -100,8 +110,10 @@ export function attachModalNavigation({
   const close = (event) => {
     if (!isDialog(event.target) || event.target.open) return;
     emptyKnown = false;
-    const wasTop = stack.at(-1)?.dialog === event.target;
-    const entry = remove(event.target);
+    const entry = remove(event.target) ?? closing.get(event.target);
+    closing.delete(event.target);
+    const wasTop =
+      entry && !stack.some((item) => isOpen(item.dialog) && item.opening > entry.opening);
     if (!wasTop || !entry?.origin || doc.hidden || doc.hasFocus?.() === false) return;
     queueMicrotask(() => {
       if (destroyed || event.target.open || doc.hidden || doc.hasFocus?.() === false) return;
@@ -150,6 +162,7 @@ export function attachModalNavigation({
       doc.removeEventListener('focusin', focus, true);
       doc.removeEventListener('close', close, true);
       stack = [];
+      closing = new WeakMap();
     },
   };
 }
