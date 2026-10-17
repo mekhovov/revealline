@@ -1,0 +1,396 @@
+{
+  "format": "FpvRegionalRendererQualification.v1",
+  "date": "2026-10-16",
+  "passed": true,
+  "cause": "Regional hidden upload cloned a shadow-casting light before its first depth map existed, then disabled shadow rendering. PCF received the fallback colour texture instead of a depth texture and WebGL rejected the indexed draw. Shadow-map resizing exposed the same path.",
+  "fix": "Only upload-scene light clones suppress shadow sampling when no map exists; their asynchronous compilation uses the exact upload scene. The visible scene keeps its normal shadow settings, and its normal shader variant is still compiled first.",
+  "scope": "Renderer-only correction. No controller, simulation, collision, rate, recording or access policy changes.",
+  "browserBaseline": {
+    "format": "FpvRegionalRendererSmoke.v1",
+    "browser": "155.0.8059.80",
+    "passed": false,
+    "errors": [],
+    "missing": [],
+    "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "drawCalls": 261,
+    "drawErrors": [
+      {
+        "phase": "cold-balanced",
+        "error": 1282
+      },
+      {
+        "phase": "resize-high",
+        "error": 1282
+      },
+      {
+        "phase": "restore-balanced",
+        "error": 1282
+      }
+    ],
+    "cases": [
+      {
+        "phase": "cold-balanced",
+        "receipt": {
+          "sequence": 1,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 25.200000002980232,
+          "uploadCpuMs": 5.600000008940697,
+          "elapsedMs": 32.3999999910593,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "cold-balanced:visible",
+        "differentPixels": 16587
+      },
+      {
+        "phase": "warm-balanced",
+        "receipt": {
+          "sequence": 2,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 0.09999999403953552,
+          "uploadCpuMs": 25.400000005960464,
+          "elapsedMs": 26.69999998807907,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "warm-balanced:visible",
+        "differentPixels": 16587
+      },
+      {
+        "phase": "resize-high",
+        "receipt": {
+          "sequence": 3,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 0.29999999701976776,
+          "uploadCpuMs": 0.699999988079071,
+          "elapsedMs": 2.8999999910593033,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "resize-high:visible",
+        "differentPixels": 16587
+      },
+      {
+        "phase": "no-shadows-low",
+        "receipt": {
+          "sequence": 4,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 286.79999999701977,
+          "uploadCpuMs": 25.799999997019768,
+          "elapsedMs": 313.5,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "no-shadows-low:visible",
+        "differentPixels": 16587
+      },
+      {
+        "phase": "restore-balanced",
+        "receipt": {
+          "sequence": 5,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 0.19999998807907104,
+          "uploadCpuMs": 0.5,
+          "elapsedMs": 1.2000000029802322,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "restore-balanced:visible",
+        "differentPixels": 16587
+      }
+    ],
+    "sources": {
+      "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "optional-practice/civilian-fpv/renderer.mjs": "f6e6fd9eaeb094e1bd2544dda9b15abc3ebee384cc9192fa2e9062d9dac0acba",
+      "game/presentation/industrial-environments.mjs": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87",
+      "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "game/hunt/actor-catalog.mjs": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d",
+      "game/hunt/preferences.mjs": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a",
+      "optional-practice/civilian-fpv/industrial-vehicles.mjs": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46",
+      "optional-practice/civilian-fpv/industrial-soldiers.mjs": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b",
+      "optional-practice/civilian-fpv/world-visuals.mjs": "7bbf3b12ba925f72209a3a2f6022e732545b5100e1b28718777d18fb78cef2aa",
+      "optional-practice/civilian-fpv/world-themes.mjs": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597",
+      "optional-practice/civilian-fpv/battlefield-ground.mjs": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993",
+      "game/presentation/industrial-environments-data.mjs": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8",
+      "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "game/ui/art-review-navigation.mjs": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2",
+      "game/hunt/industrial-soldier-kit.mjs": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524",
+      "game/overflight/worlds.mjs": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c",
+      "game/presentation/overflight-world-art.mjs": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a",
+      "game/presentation/theme-system.mjs": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0",
+      "game/presentation/industrial-materials.mjs": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd",
+      "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "game/overflight/terrain.mjs": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+      "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "game/i18n/catalogs.mjs": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816",
+      "game/overflight/world-layout-presentation.mjs": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3",
+      "game/presentation/overflight-world-slots.mjs": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94",
+      "game/presentation/overflight-world-art-v2.mjs": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83",
+      "game/snake/classic-structure-art.mjs": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5"
+    }
+  },
+  "browserFixed": {
+    "format": "FpvRegionalRendererSmoke.v1",
+    "browser": "155.0.8059.80",
+    "passed": true,
+    "errors": [],
+    "missing": [],
+    "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "drawCalls": 261,
+    "drawErrors": [],
+    "cases": [
+      {
+        "phase": "cold-balanced",
+        "receipt": {
+          "sequence": 1,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 305.1000000089407,
+          "uploadCpuMs": 32.099999994039536,
+          "elapsedMs": 339.20000000298023,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "cold-balanced:visible",
+        "differentPixels": 16587
+      },
+      {
+        "phase": "warm-balanced",
+        "receipt": {
+          "sequence": 2,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 175.1000000089407,
+          "uploadCpuMs": 23.399999991059303,
+          "elapsedMs": 199.30000001192093,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "warm-balanced:visible",
+        "differentPixels": 16587
+      },
+      {
+        "phase": "resize-high",
+        "receipt": {
+          "sequence": 3,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 0.20000000298023224,
+          "uploadCpuMs": 0.5999999940395355,
+          "elapsedMs": 1.199999988079071,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "resize-high:visible",
+        "differentPixels": 16587
+      },
+      {
+        "phase": "no-shadows-low",
+        "receipt": {
+          "sequence": 4,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 118.40000000596046,
+          "uploadCpuMs": 1.2999999970197678,
+          "elapsedMs": 120.20000000298023,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "no-shadows-low:visible",
+        "differentPixels": 16587
+      },
+      {
+        "phase": "restore-balanced",
+        "receipt": {
+          "sequence": 5,
+          "status": "prepared",
+          "objects": 1,
+          "batches": 1,
+          "submittedBytes": 840,
+          "maxBatchBytes": 840,
+          "compileWaitMs": 0.20000000298023224,
+          "uploadCpuMs": 0.5999999940395355,
+          "elapsedMs": 1.2999999970197678,
+          "gpuCompletionMeasured": false
+        },
+        "drawCalls": 1
+      },
+      {
+        "phase": "restore-balanced:visible",
+        "differentPixels": 16587
+      }
+    ],
+    "sources": {
+      "scripts/smoke-fpv-regional-renderer.mjs": "94447133d31702db72c4b23d0184480cfd1c7c10d46c00714c6757c7569b60f0",
+      "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+      "game/presentation/industrial-environments.mjs": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87",
+      "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "game/hunt/actor-catalog.mjs": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d",
+      "game/hunt/preferences.mjs": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a",
+      "optional-practice/civilian-fpv/industrial-vehicles.mjs": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46",
+      "optional-practice/civilian-fpv/industrial-soldiers.mjs": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b",
+      "optional-practice/civilian-fpv/world-visuals.mjs": "7bbf3b12ba925f72209a3a2f6022e732545b5100e1b28718777d18fb78cef2aa",
+      "optional-practice/civilian-fpv/world-themes.mjs": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597",
+      "optional-practice/civilian-fpv/battlefield-ground.mjs": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993",
+      "game/presentation/industrial-environments-data.mjs": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8",
+      "game/ui/art-review-navigation.mjs": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2",
+      "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "game/hunt/industrial-soldier-kit.mjs": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524",
+      "game/presentation/theme-system.mjs": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0",
+      "game/overflight/worlds.mjs": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c",
+      "game/presentation/overflight-world-art.mjs": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a",
+      "game/presentation/industrial-materials.mjs": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd",
+      "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "game/overflight/terrain.mjs": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+      "game/overflight/world-layout-presentation.mjs": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3",
+      "game/i18n/catalogs.mjs": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816",
+      "game/presentation/overflight-world-art-v2.mjs": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83",
+      "game/presentation/overflight-world-slots.mjs": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94",
+      "game/snake/classic-structure-art.mjs": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5"
+    },
+    "finalSources": {
+      "scripts/smoke-fpv-regional-renderer.mjs": "94447133d31702db72c4b23d0184480cfd1c7c10d46c00714c6757c7569b60f0",
+      "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+      "game/presentation/industrial-environments.mjs": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87",
+      "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "game/hunt/actor-catalog.mjs": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d",
+      "game/hunt/preferences.mjs": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a",
+      "optional-practice/civilian-fpv/industrial-vehicles.mjs": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46",
+      "optional-practice/civilian-fpv/industrial-soldiers.mjs": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b",
+      "optional-practice/civilian-fpv/world-visuals.mjs": "7bbf3b12ba925f72209a3a2f6022e732545b5100e1b28718777d18fb78cef2aa",
+      "optional-practice/civilian-fpv/world-themes.mjs": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597",
+      "optional-practice/civilian-fpv/battlefield-ground.mjs": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993",
+      "game/presentation/industrial-environments-data.mjs": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8",
+      "game/ui/art-review-navigation.mjs": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2",
+      "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "game/hunt/industrial-soldier-kit.mjs": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524",
+      "game/presentation/theme-system.mjs": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0",
+      "game/overflight/worlds.mjs": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c",
+      "game/presentation/overflight-world-art.mjs": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a",
+      "game/presentation/industrial-materials.mjs": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd",
+      "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "game/overflight/terrain.mjs": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+      "game/overflight/world-layout-presentation.mjs": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3",
+      "game/i18n/catalogs.mjs": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816",
+      "game/presentation/overflight-world-art-v2.mjs": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83",
+      "game/presentation/overflight-world-slots.mjs": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94",
+      "game/snake/classic-structure-art.mjs": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5"
+    },
+    "changedDuringRun": []
+  },
+  "native": {
+    "out": "/private/tmp/fpv-native-smoke-20261016-desktop",
+    "files": 186,
+    "bytes": 18266281,
+    "manifestSha256": "eee5f8b1e0982371178a8be1d14e8caa712672f181815b729ef03d57e4eb15b9",
+    "resourceReaderVerified": true,
+    "rendererSha256": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+    "productionPagesUnchanged": true,
+    "strictNativePolicy": true,
+    "legacyColdPreparationPassed": true,
+    "advancedRestartPreparationPassed": true,
+    "advancedVisibleFlightTicks": 28,
+    "returnToLegacyPassed": true,
+    "workers": {
+      "created": 1,
+      "terminated": 1,
+      "live": 0
+    },
+    "pageErrors": [],
+    "stderrBytes": 0,
+    "glWarnings": 0,
+    "closed": true,
+    "receipt": {
+      "path": "/private/tmp/fpv-native-final-20261016-r6-runtime.json",
+      "bytes": 56105,
+      "sha256": "921c61bcb7aa8bedef02cc27ee6d9502925920625e1abd007445983547f1fb88"
+    },
+    "stderr": {
+      "path": "/private/tmp/fpv-native-final-20261016-r6-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "verification": {
+    "targetedNodeTests": 14,
+    "lintPassed": true,
+    "sourceMatches": {
+      "checked": 171,
+      "mismatches": [],
+      "generatedExclusions": [
+        "game/i18n/catalogs.mjs",
+        "game/index.html",
+        "native/fpv-qualification.json",
+        "native/source-packages/civilian-fpv.json",
+        "native/source-packages/fpv-worlds.json",
+        "optional-practice/civilian-fpv/icons/icon-192.png",
+        "optional-practice/civilian-fpv/icons/icon-512.png",
+        "optional-practice/civilian-fpv/worker.js",
+        "optional-practice/fpv-worlds/icons/icon-192.png",
+        "optional-practice/fpv-worlds/icons/icon-512.png",
+        "optional-practice/fpv-worlds/worker.js"
+      ]
+    }
+  },
+  "limitations": [
+    "WebGL checks cover installed Chrome 155 and Electron 44.3 on one ARM64 Mac; not a full GPU/device matrix.",
+    "iOS runtime, signing, installers and physical controllers are separate native qualification and do not block browser-only Pages testing."
+  ]
+}

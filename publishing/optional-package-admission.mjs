@@ -45,7 +45,7 @@ function descriptor(value, byteLimit = 9 * 1024 * 1024) {
     fail('Invalid optional artifact descriptor.');
   return value;
 }
-function rows(value, expected, limits) {
+function rows(value, expected, limits, label = 'Optional package') {
   if (!Array.isArray(value) || value.length !== expected.length || value.length > limits.files)
     fail('Optional dependency inventory is incomplete.');
   const found = new Set();
@@ -57,7 +57,7 @@ function rows(value, expected, limits) {
     found.add(row.path);
     total += row.bytes;
   }
-  if (total > limits.bytes) fail('Optional package exceeds its byte budget.');
+  if (total > limits.bytes) fail(`${label} exceeds its byte budget.`);
 }
 function matches(pin, bytes, byteLimit) {
   descriptor(pin, byteLimit);
@@ -260,7 +260,15 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       policy.launcherTemplate,
       ...policy.localeInputs,
     ];
-    rows(inventory.inputs, inputPaths, policy.limits);
+    rows(
+      inventory.inputs,
+      inputPaths,
+      {
+        ...policy.limits,
+        bytes: policy.sourceInputBytes ?? policy.limits.bytes,
+      },
+      'Optional source input inventory',
+    );
     rows(
       inventory.files,
       [

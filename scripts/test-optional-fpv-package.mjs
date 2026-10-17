@@ -34,9 +34,11 @@ const candidate = (built) => {
 // Shared theme logic is explicit; token and fullscreen sheets are embedded with SIM presentation.
 // Shared menus add two image assets and hash-bound locale inputs.
 // Shared battlefield art extends the runtime/source closures to 96/98.
-// Keep those exact closures inside the separately reviewed 101-file envelope.
+// Keep those exact closures inside the separately reviewed 121-file envelope.
 const assertSharedRadioClosure = (built, source) => {
   for (const name of [
+    'optional-practice/civilian-fpv/rates.mjs',
+    'optional-practice/civilian-fpv/flight-response.mjs',
     'optional-practice/civilian-fpv/radio-controls.mjs',
     'game/fpv-entry.mjs',
     'game/hunt/actor-catalog.mjs',
@@ -61,6 +63,71 @@ const assertSharedRadioClosure = (built, source) => {
     assert.deepEqual(source.get(name), runtime.bytes, name);
   }
 };
+
+test('Academy and World explicitly ship the complete offline tuning and module-worker closure', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
+    const built = await buildOptionalPractice(root, { ...options, packageId });
+    const packaged = new Map(built.entries.map((entry) => [entry.name, entry.bytes]));
+    const policy = OPTIONAL_PACKAGE_POLICIES[packageId];
+    const serviceWorker = packaged.get(`${policy.root}worker.js`).toString();
+    for (const module of [
+      'rates.mjs',
+      'flight-response.mjs',
+      'tuning-library.mjs',
+      'tuning-ui.mjs',
+      'tuning.css',
+      'betaflight-import.mjs',
+      'advanced-controller.mjs',
+      'advanced-terrain.mjs',
+      'advanced-simulation.mjs',
+      'advanced-worker.mjs',
+      'advanced-worker-client.mjs',
+      'advanced-practice.mjs',
+      'sim-boot.mjs',
+      'world-collision.mjs',
+      'vendor/rapier/rapier.mjs',
+      'vendor/rapier/LICENSE',
+      'vendor/rapier/provenance.json',
+    ]) {
+      const name = `optional-practice/civilian-fpv/${module}`;
+      assert.ok(packaged.has(name), `${packageId}: ${name}`);
+      const pin = built.manifest.files.find((entry) => entry.path === name);
+      assert.ok(pin, `${packageId}: offline pin ${name}`);
+      assert.ok(serviceWorker.includes(pin.sha256), `${packageId}: cached ${name}`);
+    }
+    assert.ok(packaged.has('game/platform.mjs'));
+    const scopedWorker = 'optional-practice/fpv-worlds/advanced-worker.mjs';
+    assert.equal(packaged.has(scopedWorker), packageId === 'fpv-worlds');
+    if (packageId === 'fpv-worlds') {
+      assert.match(
+        packaged.get(scopedWorker).toString(),
+        /import '\.\.\/civilian-fpv\/advanced-worker\.mjs'/,
+      );
+      const pin = built.manifest.files.find((entry) => entry.path === scopedWorker);
+      assert.ok(pin);
+      assert.ok(serviceWorker.includes(pin.sha256));
+    }
+    assert.equal(
+      packaged.has('optional-practice/civilian-fpv/advanced-regional.mjs'),
+      packageId === 'fpv-worlds',
+    );
+    assert.match(
+      packaged.get('optional-practice/civilian-fpv/advanced-worker-client.mjs').toString(),
+      /new URL\(['"]\.\/advanced-worker\.mjs['"], import\.meta\.url\)/,
+    );
+    assert.ok(
+      built.entries.every(
+        ({ name }) => !/game\/test|generate-fpv-rate-fixtures|firmware-presets/.test(name),
+      ),
+    );
+    assert.equal(
+      policy.vendorPins.find((entry) => entry.path.endsWith('/rapier/rapier.mjs')).sha256,
+      '02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0',
+    );
+    assert.ok(policy.licenses.some((entry) => entry.dependency === '@dimforge/rapier3d-compat'));
+  }
+});
 
 async function bundledFPVEntries() {
   const root = fileURLToPath(new URL('../', import.meta.url)),
@@ -222,13 +289,13 @@ test('actual FPV application, native notebook and installation launcher close in
     admission = await validateOptionalPackageAdmission(f.envelope, f);
   assert.deepEqual(first.zip, second.zip);
   assert.equal(admission.publicEligible, false);
-  assert.equal(admission.packages[0].files, 101);
+  assert.equal(admission.packages[0].files, 119);
   for (const entry of first.entries.filter((entry) => entry.name.endsWith('.html'))) {
     assert.match(entry.bytes.toString(), /access-gate:start/, entry.name);
     assert.match(entry.bytes.toString(), /data-access-state="locked"/, entry.name);
   }
-  assert.equal(OPTIONAL_PACKAGE_POLICIES['civilian-fpv'].limits.files, 104);
-  assert.ok(admission.packages[0].bytes <= 8 * 1024 * 1024);
+  assert.equal(OPTIONAL_PACKAGE_POLICIES['civilian-fpv'].limits.files, 121);
+  assert.ok(admission.packages[0].bytes <= 12 * 1024 * 1024);
   for (const name of [
     'notebook.mjs',
     'studio.mjs',
@@ -246,10 +313,111 @@ test('actual FPV application, native notebook and installation launcher close in
   assert.equal(manifest.icons.length, 2);
   assert.equal(manifest.id, '/revealline/practice/civilian-fpv/');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 103);
+  assert.equal(source.size, 121);
   assertSharedRadioClosure(first, source);
   assert.ok(
-    [...source.values()].reduce((total, bytes) => total + bytes.length, 0) <= 8 * 1024 * 1024,
+    [...source.values()].reduce((total, bytes) => total + bytes.length, 0) <= 12 * 1024 * 1024,
+  );
+  const policy = OPTIONAL_PACKAGE_POLICIES['civilian-fpv'];
+  const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
+  const sum = (rows) => rows.reduce((total, row) => total + row.bytes, 0);
+  assert.equal(policy.limits.bytes, 12 * 1024 * 1024);
+  assert.equal(policy.sourceInputBytes, policy.limits.bytes + 128 * 1024);
+  assert.ok(sum(inventory.inputs) <= policy.sourceInputBytes);
+  assert.equal(OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.bytes, 20 * 1024 * 1024);
+  assert.equal(OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sourceInputBytes, undefined);
+  assert.equal(OPTIONAL_PACKAGE_POLICIES['civilian-flight'].sourceInputBytes, undefined);
+
+  const replace = (target, role, bytes) => {
+    const name = target.package[role].path;
+    target.files.set(name, bytes);
+    target.package[role] = editionDescriptor(name, bytes);
+    target.envelope.packages[0] = target.package;
+  };
+  const changeInventory = (target, edit) => {
+    const next = JSON.parse(target.files.get(target.package.sourceInventory.path));
+    edit(next);
+    const bytes = editionJSON(next);
+    replace(target, 'sourceInventory', bytes);
+    const archive = readEditionZip(target.files.get(target.package.sourceArchive.path));
+    archive.set('source-inventory.json', bytes);
+    replace(target, 'sourceArchive', createEditionZip(archive));
+  };
+  const tooManyInputs = candidate(first);
+  changeInventory(tooManyInputs, (next) => {
+    next.inputs.find((row) => row.path === 'game/locales/uk/interface.json').bytes +=
+      policy.sourceInputBytes - sum(next.inputs) + 1;
+  });
+  await assert.rejects(
+    validateOptionalPackageAdmission(tooManyInputs.envelope, tooManyInputs),
+    /Optional source input inventory exceeds its byte budget/,
+  );
+  const oversizedBuildInputs = new Map(first.inputs);
+  const localePath = 'game/locales/uk/interface.json';
+  oversizedBuildInputs.set(
+    localePath,
+    Buffer.alloc(
+      first.inputs.get(localePath).length + policy.sourceInputBytes - sum(inventory.inputs) + 1,
+    ),
+  );
+  assert.throws(
+    () => candidate({ ...first, inputs: oversizedBuildInputs }),
+    /Optional source input inventory exceeds its byte budget/,
+  );
+
+  const oversizedRuntime = candidate(first);
+  const runtimeManifest = JSON.parse(
+    oversizedRuntime.files.get(oversizedRuntime.package.manifest.path),
+  );
+  runtimeManifest.files[0].bytes += policy.limits.bytes - sum(runtimeManifest.files) + 1;
+  replace(oversizedRuntime, 'manifest', editionJSON(runtimeManifest));
+  await assert.rejects(
+    validateOptionalPackageAdmission(oversizedRuntime.envelope, oversizedRuntime),
+    /Optional package exceeds its byte budget/,
+  );
+
+  const changedInputHash = candidate(first);
+  changeInventory(changedInputHash, (next) => {
+    next.inputs.find((row) => row.path.endsWith('/app.mjs')).sha256 = '0'.repeat(64);
+  });
+  await assert.rejects(
+    validateOptionalPackageAdmission(changedInputHash.envelope, changedInputHash),
+    /artifact bytes differ/,
+  );
+  const changedInputClosure = candidate(first);
+  changeInventory(changedInputClosure, (next) => {
+    next.inputs[0].path = 'game/not-admitted.mjs';
+  });
+  await assert.rejects(
+    validateOptionalPackageAdmission(changedInputClosure.envelope, changedInputClosure),
+    /undeclared dependency/,
+  );
+
+  const oversizedSource = candidate(first);
+  const oversizedArchive = readEditionZip(
+    oversizedSource.files.get(oversizedSource.package.sourceArchive.path),
+  );
+  const sourceTotal = [...oversizedArchive.values()].reduce(
+    (total, bytes) => total + bytes.length,
+    0,
+  );
+  const sourcePath = 'optional-practice/civilian-fpv/README.md';
+  const paddedSource = Buffer.concat([
+    oversizedArchive.get(sourcePath),
+    Buffer.alloc(policy.limits.bytes - sourceTotal + 1, 32),
+  ]);
+  oversizedArchive.set(sourcePath, paddedSource);
+  const sourceInventory = JSON.parse(oversizedArchive.get('source-inventory.json'));
+  sourceInventory.files = sourceInventory.files.map((row) =>
+    row.path === sourcePath ? editionDescriptor(sourcePath, paddedSource) : row,
+  );
+  const sourceInventoryBytes = editionJSON(sourceInventory);
+  oversizedArchive.set('source-inventory.json', sourceInventoryBytes);
+  replace(oversizedSource, 'sourceInventory', sourceInventoryBytes);
+  replace(oversizedSource, 'sourceArchive', createEditionZip(oversizedArchive));
+  await assert.rejects(
+    validateOptionalPackageAdmission(oversizedSource.envelope, oversizedSource),
+    /Complete optional source output exceeds package limits/,
   );
 });
 
@@ -260,13 +428,13 @@ test('explicit FPV package remains independently reproducible with complete pinn
   assert.deepEqual(first.zip, second.zip);
   assert.equal(first.manifest.id, 'civilian-fpv');
   assert.equal(first.manifest.installation.id, '/revealline/practice/civilian-fpv/');
-  assert.equal(first.entries.length, 101);
-  assert.ok(first.entries.reduce((sum, item) => sum + item.bytes.length, 0) < 8 * 1024 * 1024);
+  assert.equal(first.entries.length, 119);
+  assert.ok(first.entries.reduce((sum, item) => sum + item.bytes.length, 0) < 12 * 1024 * 1024);
   assert.ok(first.entries.every(({ name }) => !name.includes('civilian-flight')));
   const f = candidate(first);
   const admitted = await validateOptionalPackageAdmission(f.envelope, f);
   assert.equal(admitted.publicEligible, false);
-  assert.equal(admitted.packages[0].files, 101);
+  assert.equal(admitted.packages[0].files, 119);
   const localeProjection = first.entries
     .find((entry) => entry.name === 'game/i18n/catalogs.mjs')
     .bytes.toString();
@@ -275,7 +443,7 @@ test('explicit FPV package remains independently reproducible with complete pinn
   const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
   assert.equal(inventory.licenses.find((item) => item.dependency === 'three').version, '0.186.1');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 103);
+  assert.equal(source.size, 121);
   for (const locale of ['en', 'uk'])
     assert.ok(inventory.inputs.some((row) => row.path === `game/locales/${locale}/common.json`));
   for (const asset of [
@@ -284,9 +452,9 @@ test('explicit FPV package remains independently reproducible with complete pinn
   ])
     assert.ok(source.has(asset), 'The shared menu artwork is also present offline.');
   assertSharedRadioClosure(first, source);
-  assert.equal(fixture.policy.limits.files, 104);
+  assert.equal(fixture.policy.limits.files, 121);
   assert.ok(source.size <= fixture.policy.limits.files);
-  assert.ok([...source.values()].reduce((sum, bytes) => sum + bytes.length, 0) <= 8 * 1024 * 1024);
+  assert.ok([...source.values()].reduce((sum, bytes) => sum + bytes.length, 0) <= 12 * 1024 * 1024);
   assert.ok(source.has(fixture.policy.template));
   for (const pin of fixture.policy.vendorPins)
     assert.deepEqual(

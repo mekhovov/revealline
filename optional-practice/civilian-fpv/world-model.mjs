@@ -31,7 +31,14 @@ import {
   rotate,
   roundDiv,
 } from './math.mjs';
-import { advanceFlightAir, FLIGHT_HZ, crossesGate, quantizeFlightInput } from './model.mjs';
+import {
+  advanceFlightAir,
+  FLIGHT_HZ,
+  crossesGate,
+  quantizeFlightInput,
+  flightComparisonIdentity,
+} from './model.mjs';
+import { TUNED_RESPONSE_FORMAT } from './flight-response.mjs';
 import { createSectorTracker } from './flight-sectors.mjs';
 import { validateThemeProfile } from './world-themes.mjs';
 import {
@@ -874,7 +881,7 @@ function identityForWorldCourse(source, mode, rates) {
   delete gameplay.locales;
   delete gameplay.environment;
   delete gameplay.world;
-  return Object.freeze({
+  const identity = {
     model:
       source.format === PURSUIT_COURSE
         ? pursuitModel(source.pursuit)
@@ -895,7 +902,10 @@ function identityForWorldCourse(source, mode, rates) {
     responseIdentity: responseIdentity(rates),
     rulesIdentity: dataIdentity(source.rules),
     conditionsIdentity: dataIdentity(source.conditions),
-  });
+  };
+  if (rates.format === TUNED_RESPONSE_FORMAT)
+    identity.comparisonIdentity = flightComparisonIdentity(identity, rates);
+  return Object.freeze(identity);
 }
 
 /** Exact portable identity without initializing physics or creating a flight. */
@@ -1432,7 +1442,7 @@ export function createWorldFlight({
   const flight = {
     identity,
     course: () => clone(source),
-    response: () => ({ ...rates }),
+    response: () => structuredClone(rates),
     snapshot,
     step,
     reset,
@@ -1545,6 +1555,7 @@ async function replayInternal(
       'worldIdentity',
       'mode',
       'responseIdentity',
+      'comparisonIdentity',
       'rulesIdentity',
       'conditionsIdentity',
       'response',
@@ -1571,7 +1582,9 @@ async function replayInternal(
   let keep = false;
   try {
     required(
-      Object.entries(flight.identity).every(([k, v]) => proof[k] === v),
+      Object.hasOwn(proof, 'comparisonIdentity') ===
+        Object.hasOwn(flight.identity, 'comparisonIdentity') &&
+        Object.entries(flight.identity).every(([k, v]) => proof[k] === v),
       'Exact world, runtime, mode, response, rules and conditions required',
     );
     flight.arm();
