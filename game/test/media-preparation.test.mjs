@@ -433,3 +433,135 @@ test('effects and reactions share one native decoder; active play rejects bulk w
   assert.equal(decodes.length, 0);
   assert.equal(director.buffers.size, 0);
 });
+
+test('published PCM distinguishes never-created, retired and disposed without initializing audio', async (t) => {
+  const h = audioHarness();
+  t.after(() => h.soundscape.dispose());
+  h.soundscape.contextFactory = () => assert.fail('No diagnostic AudioContext');
+  const shared = h.soundscape.mediaPreparation.snapshot();
+  const fresh = h.soundscape.resourceSnapshot();
+  assert.deepEqual(fresh.publishedOwner, {
+    format: 'SoloOptionalOwnerStateV1',
+    state: 'never-created',
+  });
+  assert.deepEqual(fresh.published, {
+    decodedBytes: 0,
+    decodedBytesLimit: 32 * 1024 ** 2,
+    cacheEntries: 0,
+    loading: 0,
+  });
+  h.soundscape.setPublishedAudio(null);
+  assert.equal(h.soundscape.resourceSnapshot().publishedOwner.state, 'never-created');
+  h.soundscape.setPublishedAudio(() => assert.fail('No diagnostic cue fetch'));
+  assert.equal(h.soundscape.resourceSnapshot().publishedOwner.state, 'active');
+  h.soundscape.setPublishedAudio(null);
+  assert.equal(h.soundscape.resourceSnapshot().publishedOwner.state, 'retired');
+  assert.equal(h.soundscape.resourceSnapshot().published, null);
+  assert.deepEqual(h.soundscape.mediaPreparation.snapshot(), shared);
+  await h.soundscape.dispose();
+  assert.equal(h.soundscape.resourceSnapshot().publishedOwner.state, 'disposed');
+  assert.equal(h.soundscape.resourceSnapshot().published, null);
+  assert.equal(h.soundscape.context, null);
+});
+
+test('published construction failure is observed before assignment and retains the original error', async (t) => {
+  const h = audioHarness(),
+    preparation = h.soundscape.mediaPreparation;
+  t.after(() => h.soundscape.dispose());
+  const failure = new Error('Injected constructor dependency failure');
+  let stateDuringConstruction;
+  Object.defineProperty(h.soundscape, 'mediaPreparation', {
+    configurable: true,
+    get() {
+      stateDuringConstruction = h.soundscape.publishedOwnerState;
+      throw failure;
+    },
+  });
+  assert.throws(
+    () => h.soundscape.setPublishedAudio(() => null),
+    (error) => error === failure,
+  );
+  Object.defineProperty(h.soundscape, 'mediaPreparation', {
+    configurable: true,
+    writable: true,
+    value: preparation,
+  });
+  assert.equal(stateDuringConstruction, 'creating');
+  assert.equal(h.soundscape.resourceSnapshot().publishedOwner.state, 'failed');
+  assert.equal(h.soundscape.resourceSnapshot().published, null);
+  h.soundscape.setPublishedAudio(null);
+  assert.equal(h.soundscape.resourceSnapshot().publishedOwner.state, 'failed');
+  h.soundscape.setPublishedAudio(() => null);
+  assert.equal(h.soundscape.resourceSnapshot().publishedOwner.state, 'active');
+});
+
+test('missing published reference and unsettled shared decode cannot become never-created zeros', async (t) => {
+  const h = audioHarness();
+  t.after(() => h.soundscape.dispose());
+  h.soundscape.setPublishedAudio(() => null);
+  const owner = h.soundscape.publishedAudio;
+  h.soundscape.publishedAudio = null;
+  assert.equal(h.soundscape.resourceSnapshot().publishedOwner.state, 'unavailable');
+  assert.equal(h.soundscape.resourceSnapshot().published, null);
+  h.soundscape.publishedAudio = owner;
+  let finish,
+    began = false;
+  const signal = new AbortController();
+  const pending = h.soundscape.mediaPreparation.run(
+    'decode',
+    () => {
+      began = true;
+      return new Promise((resolve) => {
+        finish = resolve;
+      });
+    },
+    { bytes: 4096, signal: signal.signal },
+  );
+  const rejected = assert.rejects(pending, { name: 'AbortError' });
+  await tick();
+  assert.equal(began, true);
+  signal.abort();
+  h.soundscape.setPublishedAudio(null);
+  const held = h.soundscape.mediaPreparation.snapshot();
+  assert.equal(held.active.decode, 1);
+  assert.equal(held.reservedDecodeBytes, 4096);
+  assert.equal(h.soundscape.resourceSnapshot().publishedOwner.state, 'retired');
+  assert.equal(h.soundscape.resourceSnapshot().published, null);
+  finish();
+  await rejected;
+  await tick();
+  assert.equal(h.soundscape.mediaPreparation.snapshot().active.decode, 0);
+  assert.equal(h.soundscape.mediaPreparation.snapshot().reservedDecodeBytes, 0);
+});
+
+test('a failed replacement retains its actual closed owner without claiming it was never created', async (t) => {
+  const h = audioHarness(),
+    preparation = h.soundscape.mediaPreparation;
+  t.after(() => h.soundscape.dispose());
+  h.soundscape.setPublishedAudio(() => null);
+  const previous = h.soundscape.publishedAudio;
+  const error = new Error('Replacement constructor fails');
+  Object.defineProperty(h.soundscape, 'mediaPreparation', {
+    configurable: true,
+    get() {
+      throw error;
+    },
+  });
+  assert.throws(
+    () => h.soundscape.setPublishedAudio(() => null),
+    (value) => value === error,
+  );
+  Object.defineProperty(h.soundscape, 'mediaPreparation', {
+    configurable: true,
+    writable: true,
+    value: preparation,
+  });
+  assert.equal(h.soundscape.publishedAudio, previous);
+  const snapshot = h.soundscape.resourceSnapshot();
+  assert.equal(snapshot.publishedOwner.state, 'failed');
+  assert.equal(
+    snapshot.published.decodedBytes,
+    0,
+    'This is the actual closed owner, not an inferred fresh owner',
+  );
+});

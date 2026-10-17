@@ -1531,6 +1531,8 @@ try {
   };
   let guideMusicWasPlaying = false;
   let soundtrackPlayer = null,
+    soundtrackOwnerState = 'never-created',
+    soundtrackBootstrapMediaElementCreated = false,
     quickMusicControls = null,
     soundtrackPanel = null,
     soundtrackStore = null;
@@ -2154,6 +2156,7 @@ try {
         installedOnly: () => soundtrackLibrary?.listening?.installedOnly ?? false,
       });
       const audioElement = document.createElement('audio');
+      soundtrackBootstrapMediaElementCreated = true;
       if (typeof audioElement.play !== 'function')
         throw new Error(t('interface:thisBrowserDoesNotProvideFileAudioPlaybackBuiltIn'));
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
@@ -2161,6 +2164,7 @@ try {
       await sound.mediaPreparation.run(
         'main',
         () => {
+          soundtrackOwnerState = 'creating';
           soundtrackPlayer = createSoundtrackPlayer({
             localPlayback: installedPresentation(),
             localRecordingIds,
@@ -2190,6 +2194,7 @@ try {
               );
             },
           });
+          soundtrackOwnerState = 'active';
           quickMusicControls = attachQuickMusicControls({
             document,
             prefix: 'solo',
@@ -2339,6 +2344,7 @@ try {
       }
     } catch (error) {
       if (soundtrackDisposed || soundtrackLoad.signal.aborted) return;
+      soundtrackOwnerState = 'failed';
       soundtrackLoading = false;
       quickMusicControls?.dispose();
       quickMusicControls = null;
@@ -3247,10 +3253,18 @@ try {
     }
     window.RevealLineSoloPerformance = Object.freeze({
       export() {
+        const session = performanceSession.export({
+          paused: paused || !started || ['won', 'lost'].includes(run?.status),
+        });
+        const ownedSoundtrack = soundtrackPlayer?.preparationDiagnostics();
+        const mediaAdmission = ownedSoundtrack?.admission ?? sound.mediaPreparation.snapshot();
+        const soundtrackState =
+          (soundtrackOwnerState === 'active' && !soundtrackPlayer) ||
+          (soundtrackOwnerState === 'never-created' && soundtrackPlayer)
+            ? 'unavailable'
+            : soundtrackOwnerState;
         return {
-          ...performanceSession.export({
-            paused: paused || !started || ['won', 'lost'].includes(run?.status),
-          }),
+          ...session,
           droppedInputObservations,
           buildVersion,
           sourceRevision: buildSourceRevision,
@@ -3278,11 +3292,36 @@ try {
               reactions: contextualReactions?.diagnostics().cache ?? null,
             },
             media: {
-              ...sound.mediaPreparation.snapshot(),
+              ...mediaAdmission,
               reservationAccounting:
                 'reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory.',
             },
-            soundtrack: soundtrackPlayer?.preparationDiagnostics(),
+            soundtrackOwner: {
+              format: 'SoloOptionalOwnerStateV1',
+              state: soundtrackState,
+              // This monotonic fact is not a native media-memory or live-element count.
+              bootstrapMediaElementCreated: soundtrackBootstrapMediaElementCreated,
+            },
+            soundtrack:
+              ownedSoundtrack ??
+              (soundtrackState === 'never-created'
+                ? {
+                    admission: mediaAdmission,
+                    inspection: {
+                      workerOwned: false,
+                      workerActive: false,
+                      workerOwnedBytes: 0,
+                      pendingRequests: 0,
+                    },
+                    playback: {
+                      ownedBlobURLCount: 0,
+                      ownedBlobBytes: 0,
+                      failedRevocationCount: 0,
+                      failedRevocationBytes: 0,
+                      decks: [],
+                    },
+                  }
+                : { admission: mediaAdmission, inspection: null, playback: null }),
           },
           canvas: fieldScene?.boardTexture.context.getContextAttributes?.() ?? null,
         };
@@ -3609,6 +3648,7 @@ try {
       document.removeEventListener('keydown', startRememberedMenuMusic);
       journeyReactions.dispose();
       soundtrackDisposed = true;
+      soundtrackOwnerState = 'disposed';
       soundtrackLoad.abort();
       quickMusicControls?.dispose();
       enemyGuide.dispose();

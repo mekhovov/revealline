@@ -15,7 +15,7 @@ const cueNames = new Set([
   ...DESTRUCTION_CUES,
   ...HUMAN_REACTION_CUES,
 ]);
-const CUE_CACHE_BYTES = 32 * 1024 * 1024;
+export const CUE_CACHE_BYTES = 32 * 1024 * 1024;
 // Match optional effect/reaction reads; queue wait and native decoding are separate.
 const CUE_READ_TIMEOUT_MS = 10000;
 

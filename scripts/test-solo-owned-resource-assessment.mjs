@@ -307,3 +307,204 @@ test('hard input bounds reject excess snapshots and retain all bounded malformed
   assert(result.rows.every((row) => row.unknown.length > 0));
   assert(Buffer.byteLength(JSON.stringify(result)) < 16 * 1024 ** 2);
 });
+
+function neverCreated(input) {
+  for (const snapshot of input.snapshots) {
+    const r = snapshot.application.resources;
+    r.pcm.publishedOwner = { format: 'SoloOptionalOwnerStateV1', state: 'never-created' };
+    r.soundtrackOwner = {
+      format: 'SoloOptionalOwnerStateV1',
+      state: 'never-created',
+      bootstrapMediaElementCreated: true,
+    };
+    const { reservationAccounting, ...shared } = r.media;
+    r.soundtrack = {
+      admission: clone(shared),
+      inspection: {
+        workerOwned: false,
+        workerActive: false,
+        workerOwnedBytes: 0,
+        pendingRequests: 0,
+      },
+      playback: {
+        ownedBlobURLCount: 0,
+        ownedBlobBytes: 0,
+        failedRevocationCount: 0,
+        failedRevocationBytes: 0,
+        decks: [],
+      },
+    };
+  }
+  return input;
+}
+
+test('explicit never-created owners admit only observed zero counters and a shared busy queue', () => {
+  const input = neverCreated(report());
+  for (const snapshot of input.snapshots) {
+    const r = snapshot.application.resources;
+    for (const queue of [r.media, r.soundtrack.admission]) {
+      queue.active.decode = 1;
+      queue.reservedDecodeBytes = 4096;
+    }
+  }
+  const result = assessSoloOwnedResources(input);
+  assert.equal(result.bounds.status, 'pass');
+  assert.equal(result.rows[0].ownership.soundtrackOwner.bootstrapMediaElementCreated, true);
+  assert.equal(series(result, 'soundtrack.inspection.workerOwned').maximum, 0);
+  assert.equal(series(result, 'soundtrack.admission.reservedDecodeBytes').maximum, 4096);
+  assert.equal(result.rawPerformanceGateStatus, 'fail');
+  assert.equal(result.gameplayQualification, false);
+  assert.equal(result.nativeMemoryQualification, false);
+});
+
+test('every contradictory never-created counter, missing zero and malformed owner remains rejected', () => {
+  const changes = [
+    (r) => {
+      r.pcm.published.decodedBytes = 1;
+    },
+    (r) => {
+      r.pcm.published.cacheEntries = 1;
+    },
+    (r) => {
+      r.pcm.published.loading = 1;
+    },
+    (r) => {
+      delete r.pcm.published.loading;
+    },
+    (r) => {
+      r.soundtrack.inspection.workerOwned = true;
+    },
+    (r) => {
+      r.soundtrack.inspection.workerActive = true;
+    },
+    (r) => {
+      r.soundtrack.inspection.workerOwnedBytes = 1;
+    },
+    (r) => {
+      r.soundtrack.inspection.pendingRequests = 1;
+    },
+    (r) => {
+      r.soundtrack.playback.ownedBlobURLCount = 1;
+    },
+    (r) => {
+      r.soundtrack.playback.ownedBlobBytes = 1;
+    },
+    (r) => {
+      r.soundtrack.playback.failedRevocationCount = 1;
+    },
+    (r) => {
+      r.soundtrack.playback.failedRevocationBytes = 1;
+    },
+    (r) => {
+      r.soundtrack.playback.decks = [{ index: 0, ownedBlobURLCount: 0, ownedBlobBytes: 0 }];
+    },
+    (r) => {
+      r.pcm.publishedOwner.format = 'unknown';
+    },
+    (r) => {
+      r.pcm.publishedOwner.state = 'missing';
+    },
+    (r) => {
+      r.soundtrackOwner.extra = true;
+    },
+    (r) => {
+      r.soundtrackOwner.bootstrapMediaElementCreated = null;
+    },
+    (r) => {
+      r.soundtrack.admission.active.fetch = 1;
+    },
+    (r) => {
+      r.soundtrack.admission.phase = r.media.phase === 'paused' ? 'menu' : 'paused';
+    },
+  ];
+  for (const change of changes) {
+    const input = neverCreated(report());
+    change(input.snapshots[0].application.resources);
+    assert.equal(assessSoloOwnedResources(input).bounds.status, 'fail', String(change));
+  }
+});
+
+test('retired, failed, disposed and lost ownership never derive zeros', () => {
+  for (const state of ['creating', 'retired', 'failed', 'disposed', 'unavailable']) {
+    const input = neverCreated(report());
+    for (const snapshot of input.snapshots) {
+      const r = snapshot.application.resources;
+      r.pcm.publishedOwner.state = state;
+      r.pcm.published = null;
+      r.soundtrackOwner.state = state;
+      r.soundtrack.inspection = null;
+      r.soundtrack.playback = null;
+    }
+    const result = assessSoloOwnedResources(input);
+    assert.equal(result.bounds.status, 'inconclusive', state);
+    assert(result.rows.every((row) => row.unknown.length > 0));
+  }
+});
+
+test('active ownership requires bootstrap, while a new document may begin with no owner', () => {
+  const active = report();
+  active.snapshots[0].application.resources.soundtrackOwner = {
+    format: 'SoloOptionalOwnerStateV1',
+    state: 'active',
+    bootstrapMediaElementCreated: false,
+  };
+  assert(
+    assessSoloOwnedResources(active).rows[0].failures.some(
+      (item) => item.code === 'player-without-bootstrap',
+    ),
+  );
+  const freshDocument = neverCreated(report());
+  freshDocument.snapshots[0].application.resources.pcm.publishedOwner.state = 'active';
+  freshDocument.snapshots[1].application.resources.soundtrackOwner.bootstrapMediaElementCreated = false;
+  assert.equal(assessSoloOwnedResources(freshDocument).bounds.status, 'pass');
+  assert.equal(
+    assessSoloOwnedResources(freshDocument).retention.status,
+    'requires-owner-trend-review',
+  );
+});
+
+test('bounded chunk storage preserves new lifecycle facts and exact original assessment', async (t) => {
+  const { mkdtemp, realpath, rm } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const { createQualificationSnapshotStore, readQualificationSnapshotReport } = await import(
+    './solo-qualification-snapshot-store.mjs'
+  );
+  const directory = await realpath(await mkdtemp(join(tmpdir(), 'solo-owner-proposal-')));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const path = join(directory, 'report.json');
+  const input = neverCreated(report(3));
+  const options = {
+    maximumBytes: 1024 * 1024,
+    maximumIndexBytes: 16384,
+    maximumSnapshotBytes: 65536,
+    maximumSnapshots: 3,
+  };
+  const writer = await createQualificationSnapshotStore(path, options);
+  await writer.save(input);
+  const output = await readQualificationSnapshotReport(path, options);
+  assert.deepEqual(output, input);
+  assert.deepEqual(
+    assessSoloOwnedResources(output, { last: 3 }),
+    assessSoloOwnedResources(input, { last: 3 }),
+  );
+  assert(writer.metrics().peakLogicalBytes <= options.maximumBytes);
+  assert.equal(writer.metrics().snapshotWrites, 3);
+});
+
+test('a failed owner with readable zero counters is still explicitly uncertain', () => {
+  const input = report();
+  input.snapshots[0].application.resources.pcm.publishedOwner = {
+    format: 'SoloOptionalOwnerStateV1',
+    state: 'failed',
+  };
+  const result = assessSoloOwnedResources(input);
+  assert.equal(result.bounds.status, 'inconclusive');
+  assert.equal(result.rows[0].values['pcm.published.decodedBytes'], 0);
+  assert(
+    result.rows[0].unknown.some(
+      (item) => item.path === 'pcm.publishedOwner' && item.code === 'owner-not-active',
+    ),
+  );
+  assert.equal(result.rawPerformanceGateStatus, 'fail');
+});
