@@ -18,6 +18,13 @@ static void fail(const char *message) {
   fprintf(stderr, "Darwin inventory: %s (%d)\n", message, errno);
   exit(1);
 }
+static void fail_identity(const char *message, pid_t pid, int result, size_t expected,
+                          int identity_only) {
+  int error = errno;
+  fprintf(stderr, "Darwin inventory: %s (%d) pid=%d selector=%s result=%d expected=%zu\n",
+          message, error, pid, identity_only ? "one" : "all", result, expected);
+  exit(1);
+}
 static int tagged(pid_t pid, const char *token) {
   if (!*token) return 0;
   int mib[] = {CTL_KERN, KERN_PROCARGS2, pid};
@@ -66,7 +73,7 @@ static void row(pid_t pid, const char *token, int identity_only) {
   int size = proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, &first, sizeof(first));
   if (size != sizeof(first)) {
     if (size <= 0 && gone()) return;
-    fail("process identity inspection");
+    fail_identity("process identity inspection", pid, size, sizeof(first), identity_only);
   }
   char path[PROC_PIDPATHINFO_MAXSIZE] = {0};
   uint64_t rss = 0;
@@ -93,7 +100,7 @@ static void row(pid_t pid, const char *token, int identity_only) {
   size = proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, &last, sizeof(last));
   if (size != sizeof(last)) {
     if (size <= 0 && gone()) return;
-    fail("fresh identity inspection");
+    fail_identity("fresh identity inspection", pid, size, sizeof(last), identity_only);
   }
   if (first.pbi_pid != last.pbi_pid || first.pbi_start_tvsec != last.pbi_start_tvsec ||
       first.pbi_start_tvusec != last.pbi_start_tvusec) return;
