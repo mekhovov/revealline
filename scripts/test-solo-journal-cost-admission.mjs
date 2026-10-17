@@ -11,6 +11,7 @@ import {
   diagnosticsMatrix,
   journalCostArguments,
   runDiagnosticsCohort,
+  FINAL_DIAGNOSTICS_COHORT,
 } from './solo-remote-diagnostics.mjs';
 import { JOURNAL_COST_RECIPE } from './solo-journal-cost-analysis.mjs';
 const MiB = 1024 ** 2;
@@ -110,6 +111,38 @@ test('held journal subtype fixes source, unchanged10pairs, recipe, envelopes and
     assert.equal(plan.rows[0].kind, 'journal-hook-cost-overhead');
     assert.equal(plan.rows[0].timeoutMs, 1800000);
     assert.equal(plan.observation.pairs, 10);
+  }
+});
+test('successor journal admission keeps the full original recipe, pairs and limited scope', () => {
+  const legacy = manifest();
+  const current = manifest();
+  current.sourceCohort = FINAL_DIAGNOSTICS_COHORT;
+  current.runtimeRevision = '32abd322afd8243e4537ce4784e2f78ee45ecbec';
+  current.candidate.revision = 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4';
+  current.candidate.tree = '6b13627e324f695b6ee8d9f2dee2eeeb7217c332';
+  Object.assign(current.release, {
+    sourceCohort: current.sourceCohort,
+    candidateRevision: current.candidate.revision,
+    onceOnlyBefore: current.candidate.revision,
+  });
+  assert.deepEqual(diagnosticsMatrix(current), diagnosticsMatrix(legacy));
+  for (const engine of ['chromium', 'webkit']) {
+    const plan = bindDiagnosticsJob(current, engine);
+    assert.deepEqual(plan.observation, legacy.observation);
+    assert.deepEqual(plan.recipe, legacy.recipe);
+    assert.equal(plan.release.fullJournalOverheadQualification, false);
+    assert.equal(plan.release.measurementScope, 'synchronous-hook-envelope-only');
+    for (const mutate of [
+      (p) => (p.release.fullJournalOverheadQualification = true),
+      (p) => (p.release.measurementScope = 'all-browser-work'),
+      (p) => (p.observation.hitchJournal = false),
+      (p) => (p.observation.overheadLimit = 0.1),
+      (p) => (p.recipe.bytes += 1),
+    ]) {
+      const changed = structuredClone(plan);
+      mutate(changed);
+      assert.throws(() => validateDiagnosticsPlan(changed));
+    }
   }
 });
 test('journal subtype rejects widened sources, budgets, recipe, flags and missing helper closure', () => {

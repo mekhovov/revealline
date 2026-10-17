@@ -15,7 +15,25 @@ import { diagnosticsArguments, observerArguments } from './qualify-solo-diagnost
 const MiB = 1024 ** 2;
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export const DIAGNOSTICS_SOURCE = 'cce49c81d82b79aefc24898f32eeebc609e569fb';
-const SOURCE_TREE = '71f7e4cb3b0a39c1d281635774371a693794dd22';
+const legacySource = Object.freeze({
+  revision: DIAGNOSTICS_SOURCE,
+  tree: '71f7e4cb3b0a39c1d281635774371a693794dd22',
+  journalCohort: 'cold-main8b-candidatecce',
+});
+export const FINAL_DIAGNOSTICS_COHORT = 'diagnostics-main8b-candidatea6e';
+const finalSource = Object.freeze({
+  revision: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
+  tree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
+  runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
+  journalCohort: 'cold-main8b-candidatea6e',
+});
+// Admission is source-specific. Actual archive and producer identity still need
+// the common full readback; a pending producer never supplies those bytes.
+function diagnosticsSource(plan) {
+  if (plan.sourceCohort === undefined) return legacySource;
+  assert.equal(plan.sourceCohort, FINAL_DIAGNOSTICS_COHORT);
+  return finalSource;
+}
 const FORMAT = 'SoloHostedDiagnosticsPlanV1';
 const engines = ['chromium', 'webkit'];
 const requiredTools = [
@@ -64,14 +82,17 @@ const rowDefinition = (engine, journal = false) => ({
 export function validateDiagnosticsPlan(plan) {
   assert.equal(plan.format, FORMAT);
   const journal = journalCostMode(plan);
+  const source = diagnosticsSource(plan);
+  assert.equal(plan.release.sourceCohort, plan.sourceCohort);
+  if (source === finalSource) assert.equal(plan.runtimeRevision, source.runtime);
   assert(journal || plan.probe === undefined, 'Unknown diagnostics subtype');
   assert.equal(
     plan.status,
     journal ? 'reviewed-journal-hook-cost-only' : 'reviewed-app-diagnostics-only',
   );
   assert.equal(plan.repository, 'mekhovov/revealline');
-  assert.equal(plan.candidate.revision, DIAGNOSTICS_SOURCE);
-  assert.equal(plan.candidate.tree, SOURCE_TREE);
+  assert.equal(plan.candidate.revision, source.revision);
+  assert.equal(plan.candidate.tree, source.tree);
   assert.equal(plan.baseline.revision, '8b01991942dc764b8aa4726851699ce1985e53ae');
   assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
   assert.equal(plan.node, '22.13.1');
@@ -114,8 +135,8 @@ export function validateDiagnosticsPlan(plan) {
     plan.release.scope,
     journal ? 'journal-hook-cost-only' : 'app-diagnostics-overhead-only',
   );
-  assert.equal(plan.release.candidateRevision, DIAGNOSTICS_SOURCE);
-  assert.equal(plan.release.onceOnlyBefore, DIAGNOSTICS_SOURCE);
+  assert.equal(plan.release.candidateRevision, source.revision);
+  assert.equal(plan.release.onceOnlyBefore, source.revision);
   assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.gameplayPerformanceQualification, false);
   assert.equal(plan.release.hitchJournalOverheadQualification, false);
@@ -237,8 +258,8 @@ export async function prepareDiagnosticsMode(ctx) {
   await verifyInputs(ctx);
   assert.equal(ctx.admitted.status, 'passed');
   const admitted = ctx.admitted.artifacts.candidate;
-  assert.equal(admitted.sourceRevision, DIAGNOSTICS_SOURCE);
-  assert.equal(admitted.sourceTree, SOURCE_TREE);
+  assert.equal(admitted.sourceRevision, diagnosticsSource(ctx.plan).revision);
+  assert.equal(admitted.sourceTree, diagnosticsSource(ctx.plan).tree);
   assert.equal(admitted.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(admitted.archiveIdentity, ctx.plan.candidate.inner);
   Object.assign(ctx.report, {
@@ -267,7 +288,7 @@ export async function prepareDiagnosticsMode(ctx) {
 export function diagnosticsConfiguration(ctx, url, dir) {
   if (journalCostMode(ctx.plan))
     return {
-      sourceRevision: DIAGNOSTICS_SOURCE,
+      sourceRevision: diagnosticsSource(ctx.plan).revision,
       engine: ctx.plan.engine,
       browserVersion: null,
       pairs: 10,
@@ -282,7 +303,7 @@ export function diagnosticsConfiguration(ctx, url, dir) {
         'Synchronous invoked-hook/application envelopes only; no full journal, browser or GPU overhead claim.',
     };
   return diagnosticsArguments(url, dir, [
-    `--source-revision=${DIAGNOSTICS_SOURCE}`,
+    `--source-revision=${diagnosticsSource(ctx.plan).revision}`,
     `--artifact-sha256=${ctx.plan.candidate.inner.sha256}`,
     `--browser=${ctx.plan.engine}`,
     '--pairs=10',
@@ -303,7 +324,7 @@ export function journalCostArguments(ctx, execution, url, output) {
     ctx.modeState.recipePath,
     output,
     `--browser=${ctx.plan.engine}`,
-    `--source-revision=${DIAGNOSTICS_SOURCE}`,
+    `--source-revision=${diagnosticsSource(ctx.plan).revision}`,
     '--server-fixture-access',
     '--work-probe',
     '--journal-cost-probe',
@@ -390,7 +411,7 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
         'timer-probe',
         url,
         join(dir, 'timer.json'),
-        `--source-revision=${DIAGNOSTICS_SOURCE}`,
+        `--source-revision=${diagnosticsSource(ctx.plan).revision}`,
         `--browser=${row.engine}`,
       ],
       ctx.plan.observation.timerTimeoutMs,
@@ -459,7 +480,7 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
           const { verifyTimingHitchJournal } = await import('./solo-remote-sustained.mjs');
           execution.journalReadback = await verifyTimingHitchJournal(
             {
-              sourceCohort: 'cold-main8b-candidatecce',
+              sourceCohort: diagnosticsSource(ctx.plan).journalCohort,
               phase: 'cold-first30',
               hitchJournal: 'bounded-v1',
             },
@@ -497,7 +518,7 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
     const analysis = {
       ...measured,
       provenance: {
-        sourceRevision: DIAGNOSTICS_SOURCE,
+        sourceRevision: diagnosticsSource(ctx.plan).revision,
         artifactAdmission: row.artifactAdmission,
         served: row.served,
         frozenTools: ctx.plan.frozenTools,
@@ -556,7 +577,7 @@ export async function runDiagnosticsRow(ctx, row, dir, tmp) {
     const bytes = Buffer.from(await response.arrayBuffer());
     assert(bytes.length < MiB);
     const build = JSON.parse(bytes);
-    assert.equal(build.sourceRevision, DIAGNOSTICS_SOURCE);
+    assert.equal(build.sourceRevision, diagnosticsSource(ctx.plan).revision);
     const url = new URL('game/?journey=opening', server.url).href;
     row.served = {
       url,
