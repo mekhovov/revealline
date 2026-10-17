@@ -96,10 +96,10 @@
   },
   "format": "SoloHostedOfflinePairPlan.v1",
   "status": "pinned-for-execution",
-  "cohort": "linux-offline-3adcd537-causal-pair01",
+  "cohort": "linux-offline-3adcd537-installed-starter-pair02",
   "profileEvidenceBytes": 1082130432,
   "rowEvidenceBytes": 33554432,
-  "scope": "Linux instrumented offline persistence diagnostic, with explicit public Opening capture/Next and two same-engine strict replay checks ONLY after exact successful offline launch. Failed launch remains original negative diagnostic; no gameplay/default-mission/physical-PWA/thermal credit.",
+  "scope": "Independent Linux offline persistence diagnostic, then public installed current Starter capture/Next and two same-engine strict replay checks ONLY after exact successful offline launch. Successor corrects the uninstalled historical Opening recipe; original failed pair remains retained. No default-mission, physical-PWA, thermal or performance credit.",
   "rows": [
     {
       "id": "offline-baseline-p1",
@@ -130,8 +130,8 @@
     "retirementTimeoutMs": 180000,
     "driver": {
       "path": "scripts/observe-solo-offline-persistence.mjs",
-      "bytes": 44220,
-      "sha256": "eca92648f8b894249ad688ca32253446fc2f5a604673722e8dd6d193ad701495"
+      "bytes": 44868,
+      "sha256": "17383db87c3d35648bad1c20f3879b414da017e49b5fdf53aec0f39d4953d1fa"
     },
     "gameplay": {
       "format": "SoloOfflinePublicGameplayV1",
@@ -142,21 +142,21 @@
       "maximumExportBytes": 262144
     },
     "openingRecipe": {
-      "path": "docs/performance/fixtures/solo-remote-offline/original-art-opening.qualification.fixture",
-      "bytes": 2707,
-      "sha256": "f5459da998a91a3e401bf69306d08e7fd2dd3850058d4580dae6f042dce090d8"
+      "path": "docs/performance/fixtures/solo-remote-offline/installed-starter.qualification.fixture",
+      "bytes": 5811,
+      "sha256": "21b2d99269a7a21cc1ac7c6e960f17531c5d2cfd1ec7ac4d4b523520b25e0cb5"
     }
   },
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-offline.mjs",
-      "bytes": 19252,
-      "sha256": "59241da8bfa58d4c3d66d7b249545e95e1f01f26e1fd15dceee96832aa2d8965"
+      "bytes": 23546,
+      "sha256": "711fac1c8dc7ef04c6181447d340aeaa4fe7ea6b31d54097bd8db55d428e4c47"
     },
     {
       "path": "scripts/observe-solo-offline-persistence.mjs",
-      "bytes": 44220,
-      "sha256": "eca92648f8b894249ad688ca32253446fc2f5a604673722e8dd6d193ad701495"
+      "bytes": 44868,
+      "sha256": "17383db87c3d35648bad1c20f3879b414da017e49b5fdf53aec0f39d4953d1fa"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -165,8 +165,8 @@
     },
     {
       "path": "scripts/solo-offline-gameplay.mjs",
-      "bytes": 9933,
-      "sha256": "83a4abafe3a686cf850a4b66aa6ccb3258d3ebc0b58a8fc242580dedb0b0e13b"
+      "bytes": 10290,
+      "sha256": "b257eb60c503278394994334bdd83017e909c7a986b8009b1212fb1bbf879f87"
     }
   ],
   "acceptance": {
@@ -183,7 +183,7 @@
     "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
     "candidateArtifact": 12082915872,
     "firstEight": "Exact3ad first-eight run38985941469 retained: seven rows passed; WebKit worker gameplay remained paused after a long frame. This independent Chromium offline diagnostic does not waive that failure or release successor timing qualification.",
-    "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
+    "sourceAssets": "Actual b117 retained profile response bodies recover exact pinned artifact catalogue/core/chapter/navigation bytes. Both b117 and3ad artifact manifests pin identical Starter chapter/navigation bodies. Each remote arm must independently bind its full admitted actual catalogue, prepared groups, route, pack, campaign, mission IDs and required file identities before browser launch.",
     "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
   },
   "diagnosticRelease": {
@@ -195,7 +195,7 @@
     "firstEightAllCorrectnessPassed": false,
     "successorQualificationReleased": false,
     "performanceQualificationReleased": false,
-    "reason": "The unresolved launcher-cache disappearance needs a direct before/after restart comparison. A WebKit active-play worker interruption does not determine Chromium launcher persistence. Execute the existing two-arm diagnostic with all original artifact, CSP, ownership, preservation, readiness and success-only gameplay gates intact.",
+    "reason": "Run38989601110 proved exact baseline launcher/cache restart, then failed before Start because the prior public play recipe requested uninstalled archive:journey:opening. This separately declared comparison uses the selected installed Starter route and binds its exact pack, campaign, mission and bootstrap identities before either browser. All original restart, artifact, CSP, resource, ownership, closure, preservation, timeout and candidate admission gates remain unchanged.",
     "priorEvidence": {
       "run": 38985941469,
       "url": "https://github.com/mekhovov/revealline/actions/runs/38985941469",
@@ -209,6 +209,31 @@
       "allObservedCommandOwnersClosed": true,
       "fullArtifactProofMustRepeatInThisJob": true
     },
-    "outcomePolicy": "Keep both observed negative and positive restart results as diagnostics. An original failed/partial run stays unchanged. No retry, repair, cache write by the observer, arbitrary flush delay, first-eight waiver, physical-PWA claim or aggregate offline qualification pass."
+    "outcomePolicy": "Preserve the original failed macOS attempt and failed Linux Opening recipe. This is a new declared installed-Starter comparison, not a retry or repair of either. Positive restart is distinct from gameplay success. No cache writes by observer, arbitrary flush delay, gate or timeout relaxation, first-eight waiver, physical-PWA claim or aggregate offline qualification pass.",
+    "priorOfflineEvidence": {
+      "run": 38989601110,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38989601110",
+      "conclusion": "failure",
+      "toolingRevision": "c0ab548e50c00ba30cc7e188df64fb135ff8cf99",
+      "artifact": 12083839782,
+      "outer": {
+        "bytes": 122500474,
+        "sha256": "908ac61d8458d55481244d68b16d0229946b334b0ed7b9039c8cebdfc785df73"
+      },
+      "baselineLauncher": "observed-launcher-and-cache-retained",
+      "baselineGameplay": "failed-before-Start-uninstalled-historical-Opening",
+      "candidate": "not-observed-baseline-success-only-gate-retained",
+      "profile": {
+        "bytes": 240680960,
+        "sha256": "81ca9ec2ced1964f4afbf8966135eaf33a03b302ea997304137a8d458516ad9d",
+        "members": 4502,
+        "sourceBytes": 234513423,
+        "fullReadback": "passed"
+      },
+      "interpretation": {
+        "bytes": 14291,
+        "sha256": "81f419f85423e160da04495ce35bd6b8d73a2918dc00ca9bd9298ab68bf1ea87"
+      }
+    }
   }
 }

@@ -48,13 +48,13 @@ export function validateOfflinePlan(plan) {
     assert.equal(plan.setupTimeoutMs, 2400000);
     assert.equal(
       plan.offline.openingRecipe.path,
-      'docs/performance/fixtures/solo-remote-offline/original-art-opening.qualification.fixture',
+      'docs/performance/fixtures/solo-remote-offline/installed-starter.qualification.fixture',
     );
     assert.equal(
       plan.offline.openingRecipe.sha256,
-      'f5459da998a91a3e401bf69306d08e7fd2dd3850058d4580dae6f042dce090d8',
+      '21b2d99269a7a21cc1ac7c6e960f17531c5d2cfd1ec7ac4d4b523520b25e0cb5',
     );
-    assert.equal(plan.offline.openingRecipe.bytes, 2707);
+    assert.equal(plan.offline.openingRecipe.bytes, 5811);
   }
   assert.equal(plan.baseline.revision, BASE);
   assert.equal(plan.candidate.revision, CANDIDATE);
@@ -192,6 +192,82 @@ export function starterSelection(core, catalogue) {
   };
 }
 
+// Bind public play to the actual admitted artifact's installed selection. A
+// similarly named historical mission is not proof that its route was downloaded.
+export function assertStarterGameplaySelection(core, catalogue, navigation, chapter, recipe) {
+  const expected = recipe.offlinePreparation;
+  assert.equal(expected?.format, 'SoloInstalledStarterRecipeV1');
+  assert.deepEqual(recipe.query, { journey: expected.routeId });
+  assert.equal(expected.routeId, 'whole-spatial-v25');
+  assert.equal(expected.packId, 'journey-opening');
+  assert.equal(expected.campaignId, 'prologue');
+  assert.equal(expected.groupId, 'solo:horizon-starter');
+  assert.deepEqual(expected.missionIds, ['first-return', 'choose-your-share']);
+  const selection = starterSelection(core, catalogue);
+  const installed = new Set(selection.groups);
+  const destinations = catalogue.destinations.filter(
+    (item) =>
+      item.path === 'game/' &&
+      item.mode === 'solo' &&
+      item.routeId === expected.routeId &&
+      !item.libraryId,
+  );
+  assert.equal(destinations.length, 1, 'Exactly one declared Solo destination');
+  for (const group of [...destinations[0].runtimeGroups, ...destinations[0].groups])
+    assert(installed.has(group), `Gameplay destination is not installed: ${group}`);
+  const selectedPaths = new Set([
+    ...core.files.map((item) => item.path),
+    ...catalogue.groups.filter((item) => installed.has(item.id)).flatMap((item) => item.files),
+  ]);
+  for (const item of catalogue.navigationBootstraps.filter(
+    (item) => item.path === 'game/index.html' && item.routeId === expected.routeId,
+  ))
+    for (const path of item.files)
+      assert(selectedPaths.has(path), `Gameplay bootstrap is not installed: ${path}`);
+  for (const required of expected.requiredFiles) {
+    assert(selectedPaths.has(required.path), `Prepared file is not installed: ${required.path}`);
+    assert.deepEqual(
+      [...core.files, ...catalogue.files].find((item) => item.path === required.path),
+      required,
+    );
+  }
+  assert.equal(navigation.id, expected.routeId);
+  assert.equal(navigation.navigation.starterPackId, expected.packId);
+  const campaign = navigation.navigation.views.solo.campaigns.find(
+    (item) => item.id === expected.campaignId && item.packId === expected.packId,
+  );
+  assert.deepEqual(
+    campaign?.levels.slice(0, 2).map((item) => item.id),
+    expected.missionIds,
+  );
+  assert(
+    chapter.packs.some(
+      (item) => item.id === expected.packId && item.campaignIds.includes(expected.campaignId),
+    ),
+  );
+  assert.deepEqual(
+    chapter.campaigns.find((item) => item.id === expected.campaignId)?.missionIds.slice(0, 2),
+    expected.missionIds,
+  );
+  const missions = expected.missionIds.map((id) => {
+    const matches = catalogue.missions.filter(
+      (item) =>
+        item.routeId === expected.routeId && item.missionId === id && item.modes.includes('solo'),
+    );
+    assert.equal(matches.length, 1, 'Unambiguous prepared mission identity required');
+    assert.equal(matches[0].current, true);
+    assert.deepEqual(matches[0].groups, [expected.groupId]);
+    assert(matches[0].groups.every((group) => installed.has(group)));
+    return matches[0].id;
+  });
+  assert.deepEqual(missions, expected.catalogueMissionIds);
+  assert.deepEqual(
+    [recipe.expectedReplayDefinition.level.id, recipe.expectedNextReplayDefinition.level.id],
+    expected.missionIds,
+  );
+  return { ...expected, installedGroups: selection.groups, destination: destinations[0] };
+}
+
 export async function prepareOfflineMode(ctx) {
   const { plan, here, repository, evidence, admitted, required, digest } = ctx;
   assert(admitted.artifacts.baseline && admitted.artifacts.candidate);
@@ -288,6 +364,8 @@ export async function bindOfflineCase(ctx, row, dir, tmp) {
     'game/installed-app.mjs',
     'game/offline-download-session.mjs',
     'game/locales/en/interface.json',
+    'game/content-design/runtime/navigation-whole-spatial-v25.json',
+    'game/content-design/runtime/chapter-journey-opening.json',
   ];
   const metadata = [];
   for (const name of names) {
@@ -305,10 +383,24 @@ export async function bindOfflineCase(ctx, row, dir, tmp) {
   assert(index);
   assert.equal(index.sha256, rows.get('app/index.html').sha256);
   assert.equal(index.bytes, rows.get('app/index.html').bytes);
-  const selection = starterSelection(
-    await read(join(root, 'offline-cache.json')),
-    await read(join(root, 'offline-content.json')),
-  );
+  const core = await read(join(root, 'offline-cache.json')),
+    catalogue = await read(join(root, 'offline-content.json')),
+    selection = starterSelection(core, catalogue);
+  let preparedGameplay = null;
+  if (plan.offline.gameplay) {
+    const recipePath = join(ctx.repository, plan.offline.openingRecipe.path);
+    assert.deepEqual(await digest(recipePath), {
+      bytes: plan.offline.openingRecipe.bytes,
+      sha256: plan.offline.openingRecipe.sha256,
+    });
+    preparedGameplay = assertStarterGameplaySelection(
+      core,
+      catalogue,
+      await read(join(root, 'game/content-design/runtime/navigation-whole-spatial-v25.json')),
+      await read(join(root, 'game/content-design/runtime/chapter-journey-opening.json')),
+      await read(recipePath),
+    );
+  }
   const activation = (await read(join(root, 'game/locales/en/interface.json')))[
     'downloads.activationReady'
   ];
@@ -338,6 +430,7 @@ export async function bindOfflineCase(ctx, row, dir, tmp) {
     },
     storage: { scratch: tmp, outputRoot: dir },
     selection,
+    preparedGameplay,
     launcherBuildId: config.id,
     activationReadyPattern: '^' + activation.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$',
     serverPort: plan.offline.serverPort,
@@ -370,7 +463,7 @@ export async function bindOfflineCase(ctx, row, dir, tmp) {
       sameActualBrowserVersionRequired: true,
     },
     scope:
-      'Distinct Linux passive offline-persistence diagnostic; authentication access fixture only. No repair/retry/cache or readiness injection. Prior Mac failures unchanged. Restart diagnostic alone gives no gameplay qualification; optional public Opening play/replay is separately labeled. No physical PWA or performance qualification.',
+      'Distinct Linux passive offline-persistence diagnostic; authentication access fixture only. No repair/retry/cache or readiness injection. Prior Mac failures unchanged. Restart diagnostic alone gives no gameplay qualification; optional installed Starter play/replay is separately labeled. No physical PWA or performance qualification.',
     gameplay: plan.offline.gameplay ?? null,
     openingRecipe: plan.offline.openingRecipe ?? null,
     firstArmReport: null,
@@ -428,7 +521,7 @@ export async function runOfflineRow(ctx, row, dir, tmp) {
   row.gameplayAssessment = offlineGameplayAssessment(raw);
   row.offlineGameplayQualification =
     row.gameplayAssessment === 'passed'
-      ? 'public-opening-capture-next-strict-replay-only'
+      ? 'public-installed-starter-capture-next-strict-replay-only'
       : row.gameplayAssessment;
   assert.equal(raw.plan.path, bound.ref.path);
   assert.equal(raw.plan.sha256, bound.ref.sha256);
