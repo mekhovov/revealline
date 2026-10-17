@@ -745,6 +745,17 @@ test('combined effects subplans preserve real bounded binary journal verificatio
       performanceExclusion: true,
     },
   ];
+  successorPlans.push(
+    ...successorPlans.map((p) => ({
+      ...p,
+      candidate: a.SELECTED_FONT_SOURCE,
+      runtimeRevision: a.SELECTED_FONT_SOURCE.revision,
+      sourceCohort:
+        p.sourceCohort === 'readiness-selected-font-candidate0feb'
+          ? 'readiness-selected-font-joined-candidatec696'
+          : 'readiness-public-dpr-candidatec696',
+    })),
+  );
   for (const plan of [
     readinessRowPlan(combined, combined.rows[2]),
     readinessRowPlan(combined, combined.rows[3]),
@@ -847,24 +858,27 @@ test('compact c696 comparison admits exact new source/recipes and preserves all 
 });
 
 // Same-viewport density successor. All records below are synthetic contract data.
-async function densityModel(arm) {
+async function densityModel(arm, c696 = false) {
   const a = await import('./solo-remote-readiness.mjs');
+  const selectedSource = c696 ? a.SELECTED_FONT_SOURCE : a.FONT_DPR_SOURCE;
   const item = model(arm),
     r = item.raw,
     ref = a.COMPACT_READINESS_FIXTURES.full;
   const scenario = JSON.parse(await readFile(new URL('../' + ref.path, import.meta.url)));
   const plan = {
-    sourceCohort: 'readiness-public-dpr-candidate0feb',
+    sourceCohort: c696
+      ? 'readiness-public-dpr-candidatec696'
+      : 'readiness-public-dpr-candidate0feb',
     phase: `public-dpr-${arm.dpr}`,
-    candidate: a.FONT_DPR_SOURCE,
-    runtimeRevision: a.FONT_DPR_SOURCE.revision,
+    candidate: selectedSource,
+    runtimeRevision: selectedSource.revision,
     engine: 'webkit',
     fixture: ref,
   };
   r.sourceRevision =
     r.buildIdentity.sourceRevision =
     r.qualityComparison.sourceRevision =
-      a.FONT_DPR_SOURCE.revision;
+      selectedSource.revision;
   r.scenarioSHA256 = r.qualityComparison.scenarioSHA256 = ref.sha256;
   Object.assign(r.qualityComparison, {
     densityComparison: 'same-viewport-v1',
@@ -882,7 +896,7 @@ async function densityModel(arm) {
     ...(i === 2 ? { publicEffects: settings } : {}),
   }));
   for (const snapshot of r.snapshots) {
-    snapshot.application.sourceRevision = a.FONT_DPR_SOURCE.revision;
+    snapshot.application.sourceRevision = selectedSource.revision;
     snapshot.application.resources = {
       phaser: {
         displayed: { canvases: 1, width: 1152, height: 576, pixels: 663552 },
@@ -892,8 +906,8 @@ async function densityModel(arm) {
     snapshot.application.canvas = { desynchronized: false, willReadFrequently: false };
   }
   const admission = structuredClone(admitted);
-  admission.artifacts.candidate.sourceRevision = a.FONT_DPR_SOURCE.revision;
-  admission.artifacts.candidate.sourceTree = a.FONT_DPR_SOURCE.tree;
+  admission.artifacts.candidate.sourceRevision = selectedSource.revision;
+  admission.artifacts.candidate.sourceTree = selectedSource.tree;
   return { ...item, plan, admission, scenario };
 }
 test('density successor accepts only exact full route/source with DPR1 or3 and preserves old option output', async () => {
@@ -987,7 +1001,7 @@ test('density successor accepts only exact full route/source with DPR1 or3 and p
 test('density cohort changes only DPR across fixed counterbalanced pairs and retains every raw failure', async () => {
   const a = await import('./solo-remote-readiness.mjs'),
     schedule = a.densityComparisonSchedule(),
-    items = await Promise.all(schedule.map(densityModel));
+    items = await Promise.all(schedule.map((arm) => densityModel(arm)));
   const plan = { ...items[0].plan, sourceCohort: a.FONT_DPR_COHORT, engine: 'webkit' };
   const result = await assessQualityComparisonCohort(items, items[0].admission, plan);
   assert.equal(result.status, 'complete-diagnostic-comparison', JSON.stringify(result));
@@ -1006,4 +1020,52 @@ test('density cohort changes only DPR across fixed counterbalanced pairs and ret
       'complete-diagnostic-comparison',
     );
   }
+});
+
+test('c696 density opt-in keeps native-completed compact controls and permits only exact Full density pairs', async () => {
+  const a = await import('./solo-remote-readiness.mjs'),
+    items = await Promise.all(a.densityComparisonSchedule().map((arm) => densityModel(arm, true)));
+  const plan = { ...items[0].plan, sourceCohort: a.FONT_DPR_C696_COHORT, engine: 'webkit' };
+  for (const item of items) {
+    const args = qualityComparisonArguments(
+      { plan: item.plan, here: '/tools/scripts', repository: '/tools' },
+      item.arm,
+      'http://localhost/game/',
+      '/out',
+    ).slice(4);
+    const opt = qualificationQualityOptions(args, item.scenario, item.plan.fixture.sha256);
+    assert.equal(opt.sourceRevision, a.SELECTED_FONT_SOURCE.revision);
+    assert.equal(opt.deviceScaleFactor, item.arm.dpr);
+    assert.equal(opt.tier, 'full');
+    for (const mutate of [
+      (r) => (r.sourceRevision = a.FONT_DPR_SOURCE.revision),
+      (r) => (r.qualityComparison.densityComparison = 'other'),
+      (r) => (r.environment.requestedDisplay.deviceScaleFactor = 2),
+    ]) {
+      const raw = structuredClone(item.raw);
+      mutate(raw);
+      assert.equal(
+        (
+          await assessQualityComparisonArm(
+            raw,
+            item.command,
+            item.journal,
+            item.arm,
+            item.admission,
+            item.plan,
+          )
+        ).status,
+        'invalid-comparison',
+      );
+    }
+  }
+  const result = await assessQualityComparisonCohort(items, items[0].admission, plan);
+  assert.equal(result.status, 'complete-diagnostic-comparison', JSON.stringify(result));
+  assert(result.results.every((r) => r.rawPerformanceGateStatus === 'fail'));
+  const mixed = structuredClone(items);
+  mixed[2] = await densityModel(mixed[2].arm, false);
+  assert.equal(
+    (await assessQualityComparisonCohort(mixed, items[0].admission, plan)).status,
+    'invalid-comparison',
+  );
 });

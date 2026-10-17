@@ -331,6 +331,25 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
           assert(['public-dpr-1', 'public-dpr-3'].includes(plan.phase));
           assert.deepEqual(plan.fixture, COMPACT_READINESS_FIXTURES.full);
         }
+      } else if (
+        [
+          'readiness-selected-font-joined-candidatec696',
+          'readiness-public-dpr-candidatec696',
+        ].includes(plan.sourceCohort)
+      ) {
+        assert.equal(plan.candidate.revision, 'c696af41857840359ae473558b90682f3d71f2db');
+        assert.equal(plan.runtimeRevision, 'c696af41857840359ae473558b90682f3d71f2db');
+        assert.equal(plan.candidate.tree, 'b70ce1c4b15023a38628c5e958b166e44898eccf');
+        const { SELECTED_FONT_JOINED_FIXTURE, COMPACT_READINESS_FIXTURES } = await import(
+          './solo-remote-readiness.mjs'
+        );
+        if (plan.sourceCohort === 'readiness-selected-font-joined-candidatec696') {
+          assert.equal(plan.phase, 'selected-font-cancel');
+          assert.deepEqual(plan.fixture, SELECTED_FONT_JOINED_FIXTURE);
+        } else {
+          assert(['public-dpr-1', 'public-dpr-3'].includes(plan.phase));
+          assert.deepEqual(plan.fixture, COMPACT_READINESS_FIXTURES.full);
+        }
       } else if (plan.sourceCohort === 'readiness-selected-font-candidatec696') {
         assert.equal(plan.phase, 'selected-font-cancel');
         assert.equal(plan.candidate.revision, 'c696af41857840359ae473558b90682f3d71f2db');
