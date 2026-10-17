@@ -59,7 +59,7 @@
   "node": "22.13.1",
   "playwright": "1.62.1",
   "format": "SoloHostedSupplementalManifestV1",
-  "status": "held-diagnostic-only",
+  "status": "reviewed-diagnostic-only",
   "cohort": "linux-supplemental-native-preflight-3ad-v1",
   "phase": "latency-long-rail",
   "engines": ["chromium", "webkit"],
@@ -156,10 +156,17 @@
     "previousPhase": "reviewed-first-eight-diagnostic",
     "firstEightAllCorrectnessPassed": false,
     "performanceQualification": "excluded",
-    "priorProofInspected": false,
-    "allPriorPlannedJobsClosed": false,
-    "noUnclosedOwners": false,
-    "evidence": []
+    "priorProofInspected": true,
+    "allPriorPlannedJobsClosed": true,
+    "noUnclosedOwners": true,
+    "evidence": [
+      {
+        "runId": 38985941469,
+        "artifactId": 12083397932,
+        "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+        "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929"
+      }
+    ]
   },
   "scope": "One explicitly released diagnostic phase, four observations in two engine jobs with serial baseline/candidate pairs. All numerical results retained but excluded from performance qualification. Same-engine replay validates exact accepted mission and actual mechanics. No retries, auto Resume or automatic next phase. Original48 timing observations and failed prerequisite remain unchanged.",
   "acceptance": {
@@ -367,8 +374,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 50313,
-      "sha256": "e118b8fbf1f86a56a1d6aa472e808fcd77ddbaa699611c6c6b874b497e4f8037"
+      "bytes": 50572,
+      "sha256": "9a2c0b4c865c7655b9f101494964efb3ab0d423405545bf7a8253fa2af958e04"
     },
     {
       "path": "scripts/serve-production-preview.mjs",
