@@ -254,6 +254,7 @@ export function withAircraftChallenge(session, { rules: sourceRules, capacityAh 
   );
   let stepping = null,
     checkpointing = null,
+    checkpointKind = null,
     disposed = false;
   const wrapped = Object.fromEntries(
     Object.entries(session).map(([key, value]) => [
@@ -270,7 +271,7 @@ export function withAircraftChallenge(session, { rules: sourceRules, capacityAh 
       return snapshot();
     },
     arm(...args) {
-      if (!disposed && !checkpointing) return session.arm(...args);
+      if (!disposed && checkpointKind !== 'restore') return session.arm(...args);
     },
     step(...args) {
       if (stepping) return stepping;
@@ -291,6 +292,7 @@ export function withAircraftChallenge(session, { rules: sourceRules, capacityAh 
     exportRecovery() {
       if (checkpointing) return checkpointing.then(() => wrapped.exportRecovery());
       const pendingStep = stepping;
+      checkpointKind = 'save';
       checkpointing = (async () => {
         await pendingStep;
         required(!disposed, 'Aircraft challenge was closed');
@@ -311,12 +313,14 @@ export function withAircraftChallenge(session, { rules: sourceRules, capacityAh 
         return { ...packet, checksum: recoveryChecksum(packet) };
       })().finally(() => {
         checkpointing = null;
+        checkpointKind = null;
       });
       return checkpointing;
     },
     restoreRecovery(source, { signal } = {}) {
       required(!checkpointing && !disposed, 'An aircraft challenge checkpoint is already pending');
       const pendingStep = stepping;
+      checkpointKind = 'restore';
       checkpointing = (async () => {
         await pendingStep;
         signal?.throwIfAborted();
@@ -353,6 +357,7 @@ export function withAircraftChallenge(session, { rules: sourceRules, capacityAh 
         return snapshot();
       })().finally(() => {
         checkpointing = null;
+        checkpointKind = null;
       });
       return checkpointing;
     },

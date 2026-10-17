@@ -352,6 +352,44 @@ test('course and Regional recovery retain charge and progress; only a fresh sess
   }
 });
 
+test('pausing during autosave preserves Resume while restoration still requires a fresh Arm', async () => {
+  const rules = timed(),
+    base = fakeSession(rules),
+    flight = withAircraftChallenge(base, { rules }),
+    saving = deferred();
+  await flight.prepare();
+  flight.arm();
+  for (let i = 0; i < 250; i++) await flight.step();
+  base.setSaveWait(saving.promise);
+  const captured = flight.exportRecovery(); // the exact periodic-autosave boundary
+  await Promise.resolve();
+  flight.pause();
+  assert.equal(flight.snapshot().status, 'paused');
+  flight.arm();
+  assert.equal(flight.snapshot().status, 'active', 'saving must not swallow Resume');
+  await flight.step();
+  assert.equal(flight.snapshot().challenge.missionTick, 250, 'snapshot owns the boundary only');
+  saving.resolve();
+  const packet = await captured;
+  await flight.step();
+  assert.equal(flight.snapshot().challenge.missionTick, 251);
+  flight.pause();
+  const restoring = deferred();
+  base.setRestoreWait(restoring.promise);
+  const restored = flight.restoreRecovery(packet);
+  await Promise.resolve();
+  flight.arm();
+  assert.equal(flight.snapshot().status, 'paused', 'restore must not arm the replacement flight');
+  restoring.resolve();
+  await restored;
+  assert.equal(flight.snapshot().status, 'prepared');
+  assert.equal(flight.snapshot().challenge.missionTick, 250);
+  flight.arm();
+  await flight.step();
+  assert.equal(flight.snapshot().challenge.missionTick, 251);
+  await flight.dispose();
+});
+
 test('mismatched recovery and failed detached verification leave both active progress and charge unchanged', async () => {
   const rules = endurance(),
     base = fakeSession(rules, { sample: (i) => telemetry(i, false, i * 0.001) }),
