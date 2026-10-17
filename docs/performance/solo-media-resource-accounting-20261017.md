@@ -22,6 +22,8 @@ The ownership assertions compare diagnostics with the harness's actual created/r
 
 The earlier eight-file run including `soundtrack-preparation-policy` remains **154/159**, not an all-green result. An exact-before module-loader control using source `e6dceb4169945fc33b6786680c97e3aa4275f962` reproduced the same five failures in that unchanged policy file (**3/8 passed**): silent context preparation, unmuted network opt-in, local gesture preparation, and the two late local-miss status cases. Neither policy assertions nor deadlines were changed. The control substitutes only the exact previous two owner modules at their original module URLs; it does not restore or mutate tracked files. These failures remain separate unresolved evidence and do not validate those behaviors.
 
+A subsequent bounded readback also verifies these same five failures against the retained original-main `b11745223861c3973ad4bf440cc536198b8e0371` control. Names, failure types, messages, codes and available expected/actual/operator fields match across all four observations; the test bytes are identical. This strengthens the pre-existing classification without passing the behaviors or claiming a new later-main `8b` control. No tests were rerun or historical evidence rewritten. The comparison is `.cache/solo-followup/resource-accounting-baseline-comparison/comparison.json` (4,824 bytes, SHA-256 `e26588c1c8d479ba3ecd3c2235703e6755222ec8365aca1d185ae1c114e54969`), linked to the original inventory's fully verified raw records.
+
 Evidence is retained under `.cache/solo-followup/resource-accounting-ca59/`:
 
 | Artifact                                                 |  Bytes | SHA-256                                                            |

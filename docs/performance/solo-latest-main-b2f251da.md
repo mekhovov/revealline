@@ -149,3 +149,26 @@ SHA-256 values are respectively
 `477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c`,
 `f87d3e679daecd8aabb9d7ce6c3da117c8c8d12775ca44b935605e416d3d25a8`
 and `1f32e6a795e3b8b2947bcb523d39266c1e1a873dee9f5baeddb31e41e2d67f3e`.
+
+## Frozen resource-accounting completion checks
+
+Exact source `8d6b4fd90fba7197b8074c7d555a0a6e27f018f0`, tree
+`18831bf06659a00e65a73f6b9120455623e66501`, adds retained soundtrack-source and
+idle-worker accounting and the reviewed prospective Cocoa control. The clean
+worktree and HEAD remained unchanged throughout all three complete checks under
+Node 22.22.2. Full lint passed in 14.376 seconds and full
+content/localization/generated validation passed in 147.816 seconds. Each
+command retained the 300-second deadline and 4 MiB output limit.
+
+Full formatting failed in 27.828 seconds on the same nine files, all
+byte-identical to integrated main `b2f251da`. The three logs are byte-identical
+to their counterparts in the frozen `5218a66d6` checks above. This adds no
+whole-format, production-package or native-performance pass. The new accounting
+fields' complete direct dependency group separately passes 151/151; the five
+broader policy failures retain their original-main classification.
+[Resource accounting and comparison](solo-media-resource-accounting-20261017.md).
+
+Retained directory:
+`.cache/solo-followup/bounded-final-checks-20261017T054652Z-8d6b4fd9/`.
+The 8,444-byte receipt has SHA-256
+`eedb434710435e247fdf5028097cf70c586f76a3ff1a09c0a932fdc702b5a9c3`.
