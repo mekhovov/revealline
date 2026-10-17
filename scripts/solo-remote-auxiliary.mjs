@@ -16,6 +16,8 @@ const PREPARATION_FIX = 'b5b985f7049537a278632ba82228bb671f7f135a';
 const preparationConfirmation = (plan) =>
   plan.release?.format === 'SoloStartPreparationConfirmationReleaseV1';
 const finalRecovery = (plan) => plan.release?.format === 'SoloFinalRecoveryConfirmationReleaseV1';
+const finalAudio = (plan) => plan.release?.format === 'SoloFinalAudioConfirmationReleaseV1';
+const finalSource = (plan) => finalRecovery(plan) || finalAudio(plan);
 const repeatedRecovery = (plan) => preparationConfirmation(plan) || finalRecovery(plan);
 const FINAL_RECOVERY = Object.freeze({
   candidate: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
@@ -28,7 +30,7 @@ const importDiagnostic = (plan) => plan.release?.format === 'SoloMusicImportDiag
 const rolesFor = (plan, spec) => (importDiagnostic(plan) ? ['candidate'] : spec.roles);
 function sourceRevision(plan, role) {
   assert(['baseline', 'candidate'].includes(role));
-  if (finalRecovery(plan)) return FINAL_RECOVERY[role];
+  if (finalSource(plan)) return FINAL_RECOVERY[role];
   return role === 'candidate' && preparationConfirmation(plan) ? PREPARATION_SOURCE : SOURCE[role];
 }
 export const AUXILIARY_JOBS = Object.freeze({
@@ -97,17 +99,35 @@ function validateRelease(plan) {
   if (diagnostic) {
     assert.equal(
       plan.release.scope,
-      finalRecovery(plan)
-        ? 'independent-final-source-recovery-confirmation'
-        : preparationConfirmation(plan)
-          ? 'independent-start-preparation-confirmation'
-          : importDiagnostic(plan)
-            ? 'independent-audio-import-duration-diagnostic'
-            : 'independent-audio-and-synthetic-recovery',
+      finalAudio(plan)
+        ? 'independent-final-source-paired-audio-confirmation'
+        : finalRecovery(plan)
+          ? 'independent-final-source-recovery-confirmation'
+          : preparationConfirmation(plan)
+            ? 'independent-start-preparation-confirmation'
+            : importDiagnostic(plan)
+              ? 'independent-audio-import-duration-diagnostic'
+              : 'independent-audio-and-synthetic-recovery',
     );
-    assert.equal(plan.release.predecessorRun, finalRecovery(plan) ? 38995660472 : 38985941469);
+    assert.equal(
+      plan.release.predecessorRun,
+      finalAudio(plan) ? 38992974900 : finalRecovery(plan) ? 38995660472 : 38985941469,
+    );
     assert.equal(plan.release.automaticRetries, 0);
     assert.equal(plan.release.performanceQualification, 'excluded');
+  }
+  if (finalAudio(plan)) {
+    assert(diagnostic, 'Final audio remains paired diagnostic evidence');
+    assert.equal(plan.runtimeRevision, FINAL_RECOVERY.runtime);
+    assert.equal(plan.release.candidateRevision, FINAL_RECOVERY.candidate);
+    assert.equal(plan.release.onceOnlyBefore, FINAL_RECOVERY.candidate);
+    assert.deepEqual(plan.release.selectedJobs, [
+      'speech-chromium',
+      'music-chromium',
+      'speech-webkit',
+      'music-webkit',
+    ]);
+    assert.equal(plan.release.musicProofBytes, 32 * MiB);
   }
   if (importDiagnostic(plan)) {
     assert(diagnostic);
@@ -169,7 +189,7 @@ export function validateAuxiliaryPlan(plan) {
     assert.equal(plan.observationId, undefined);
   }
   assert.equal(plan.baseline.revision, sourceRevision(plan, 'baseline'));
-  if (finalRecovery(plan)) {
+  if (finalSource(plan)) {
     assert.equal(plan.candidate.tree, FINAL_RECOVERY.candidateTree);
     assert.equal(plan.baseline.tree, FINAL_RECOVERY.baselineTree);
   }
@@ -320,7 +340,7 @@ async function verifyInputs(ctx) {
 export async function prepareAuxiliaryMode(ctx) {
   validateAuxiliaryPlan(ctx.plan);
   await verifyInputs(ctx);
-  if (finalRecovery(ctx.plan)) {
+  if (finalSource(ctx.plan)) {
     assert.equal(ctx.admitted.status, 'passed');
     const admitted = ctx.admitted.artifacts.candidate;
     assert.equal(admitted.sourceRevision, FINAL_RECOVERY.candidate);
