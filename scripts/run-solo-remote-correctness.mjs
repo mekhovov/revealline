@@ -445,12 +445,16 @@ async function main() {
               ? 'demo'
               : plan.format === 'SoloHostedRasterPlanV1'
                 ? 'raster'
-                : null;
+                : plan.format === 'SoloHostedWorkerDiagnosticPlanV1'
+                  ? 'worker-diagnostic'
+                  : null;
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
     setupActive =
-      ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster'].includes(extension) ||
+      ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster', 'worker-diagnostic'].includes(
+        extension,
+      ) ||
       (extension === 'offline' && Boolean(plan.offline.gameplay));
   if (extension) {
     adapter = await import(`./solo-remote-${extension}.mjs`);
@@ -462,6 +466,7 @@ async function main() {
         demo: 'validateDemoPlan',
         'demo-active': 'validateDemoActivePlan',
         raster: 'validateRasterPlan',
+        'worker-diagnostic': 'validateWorkerDiagnosticPlan',
       }[extension]
     ](plan);
   }
@@ -481,7 +486,9 @@ async function main() {
                 ? 'SoloHostedDemoRecoveryCohortV1'
                 : extension === 'raster'
                   ? 'SoloHostedNativeRasterCohortV1'
-                  : 'SoloHostedCorrectness.v1',
+                  : extension === 'worker-diagnostic'
+                    ? 'SoloHostedWorkerDiagnosticCohortV1'
+                    : 'SoloHostedCorrectness.v1',
     status: 'failed',
     performanceExclusion: ['sustained', 'demo-active'].includes(extension)
       ? plan.performanceExclusion
@@ -966,7 +973,9 @@ async function main() {
       )
         await ensureBaseline();
       if (
-        ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster'].includes(extension) ||
+        ['sustained', 'auxiliary', 'demo', 'demo-active', 'raster', 'worker-diagnostic'].includes(
+          extension,
+        ) ||
         (extension === 'offline' && Boolean(plan.offline.gameplay))
       )
         await inspect();
@@ -982,6 +991,7 @@ async function main() {
             demo: 'prepareDemoMode',
             'demo-active': 'prepareDemoActiveMode',
             raster: 'prepareRasterMode',
+            'worker-diagnostic': 'prepareWorkerDiagnosticMode',
           }[extension]
         ](context);
       context.modeState = modeState;
@@ -1047,6 +1057,7 @@ async function main() {
               demo: 'runDemoRow',
               'demo-active': 'runDemoActiveRow',
               raster: 'runRasterRow',
+              'worker-diagnostic': 'runWorkerDiagnosticRow',
             }[extension]
           ](context, row, dir, tmp);
         } else {
