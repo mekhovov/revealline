@@ -91,8 +91,8 @@ Use Node 22.13.1 and the PR head. First read the accepted policy with
 The workflow first runs a separate 23-file prerequisite for optional replay,
 save readback, deferred Library ownership and Demo resource observations. Its
 five-minute test bound is separate from the existing 118-file preview gate.
-A second prerequisite runs four complete Team/Versus artwork and preparation
-files, with a ten-minute test bound in a separate 24-minute job. Both prerequisite
+A second prerequisite runs six complete Team/Versus artwork, preparation and
+controller files, with a ten-minute test bound in a separate 24-minute job. Both prerequisite
 proofs and uploaded artifacts must match the package source, source tree, Node
 version and accepted test policy before packaging can proceed. Failure or
 cancellation retains available output and blocks packaging. The original

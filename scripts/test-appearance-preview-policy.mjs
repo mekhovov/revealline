@@ -514,6 +514,8 @@ const teamFiles = [
   'game/test/couch-static-picture-host.test.mjs',
   'game/test/couch-shell.test.mjs',
   'game/test/couch-installed-chapters.test.mjs',
+  'game/test/controller-navigation.test.mjs',
+  'game/test/controller-reading.test.mjs',
 ];
 
 async function prepareAdmission(
@@ -791,7 +793,7 @@ test('preview and compact identity retain the exact predecessor evidence and rej
     );
 });
 
-test('Team proof has a separate finite envelope, seven triggers and four complete regression files', async () => {
+test('Team/shared proof has a separate finite envelope, ten triggers and six complete regression files', async () => {
   const job = workflow.split('  team_admission:\n')[1]?.split('  preview:\n')[0];
   assert(job, 'The separate Team predecessor must exist.');
   assert.match(job, /runs-on: ubuntu-latest\s+timeout-minutes: 24/);
@@ -809,7 +811,7 @@ test('Team proof has a separate finite envelope, seven triggers and four complet
     .trim()
     .split(/\s+/);
   assert.deepEqual(declared, teamFiles);
-  assert.equal(new Set(declared).size, 4);
+  assert.equal(new Set(declared).size, 6);
   const original = workflow
     .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
     .trim()
@@ -819,6 +821,7 @@ test('Team proof has a separate finite envelope, seven triggers and four complet
     'game/couch/couch.mjs',
     'game/couch/couch-shell.mjs',
     'game/couch/couch-static-pictures.mjs',
+    'game/ui/controller-navigation.mjs',
   ]) {
     await access(new URL(`../${path}`, import.meta.url));
     assert(workflow.includes(`      - '${path}'`));
@@ -828,7 +831,7 @@ test('Team proof has a separate finite envelope, seven triggers and four complet
     assert(job.includes(`      ${output}:`));
     assert(workflow.includes(`needs.team_admission.outputs.${output}`));
   }
-  const run = step('Run complete Team artwork and preparation regressions');
+  const run = step('Run complete Team artwork, preparation and controller regressions');
   assert.match(run, /timeout-minutes: 10/);
   assert.match(run, /if: steps\.test_policy\.outputs\.runTests == 'true'/);
   assert.match(run, /read -r -a test_files <<< "\$APPEARANCE_TEAM_TEST_FILES"/);
