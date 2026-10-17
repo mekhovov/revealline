@@ -221,3 +221,133 @@ test('Sky Watch briefing starts a guarded challenge instead of an automatic clea
   assert(page.rendered.run.lives < 3);
   assert.deepEqual(page.errors, []);
 });
+
+// Additive positive coverage: the former direct-sweep rejection remains above.
+const SKY_WATCH_LEGAL_INPUTS = [
+  { direction: 'right', ticks: 240 },
+  { direction: 'down', ticks: 102 },
+  { direction: 'down', ticks: 367 },
+  { direction: 'up', ticks: 240 },
+  { direction: 'left', ticks: 722 },
+  { direction: 'up', ticks: 30 },
+  { direction: 'down', ticks: 270 },
+  { direction: 'right', ticks: 60 },
+  { direction: 'up', ticks: 231 },
+];
+
+test('a legal revised Sky Watch win verifies its replay and earns the bound video with no earlier clears', async () => {
+  const p = await provider();
+  const project = compileContentProject(p.route.source);
+  const { level: authoredLevel } = resolveMission(project, 'social-drone-sky-watch-01', {
+    mode: 'solo',
+    difficulty: 'standard',
+  });
+  const level = applyGameplayTuning(authoredLevel, resolveGameplayTuning('standard'));
+  const options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
+  const run = createRun(level, options);
+  const recorder = createRecorder(level, options);
+  for (const { direction, ticks } of SKY_WATCH_LEGAL_INPUTS) {
+    for (let tick = 0; tick < ticks && run.status === 'running'; tick++) {
+      recordInput(recorder, { direction });
+      stepRun(run, { direction }, FIXED_DT);
+    }
+  }
+  assert.equal(run.status, 'won');
+  assert.equal(run.lives, 3);
+  assert(run.coverage >= level.goal.coverage);
+  const replay = exportReplay(recorder, run);
+  assert.equal(verifyReplay(replay).match, true);
+  const context = {
+    editionId: p.editionId,
+    brandId: 'social-drone-ua',
+    campaignIds: p.selection.edition.campaignIds,
+    clears: {
+      [level.id]: {
+        runId: `verified-sky-watch-${dataIdentity(replay)}`,
+        gameplayId: dataIdentity({
+          ruleset: run.ruleset,
+          level: run.level,
+          classes: run.classRecipes,
+        }),
+        difficulty: 'standard',
+      },
+    },
+    learning: [],
+    mastery: [],
+  };
+  const update = reconcileEarnedRewards(p.rewards, context);
+  assert.equal(update.granted.length, 1);
+  assert.equal(update.granted[0].definition.scope.id, level.id);
+  const video = update.granted[0].definition.payloads.find((payload) => payload.type === 'video');
+  assert(video);
+  assert.equal(
+    video.asset.sha256,
+    '919fa23b4427b313e19e88784599455feaad022afc128dc93024acdeb988cc21',
+  );
+});
+
+test('public Sky Watch legal win holds the finished board, presents its earned video and returns to results', async (t) => {
+  const page = await soloPage(t, {
+    search: '?edition=social-drone-ua',
+    titleScreen: true,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    pictures: { Image: RasterImage },
+    fetchResponse: async (value) => {
+      const request = new URL(String(value), 'http://localhost/game/');
+      const pathname =
+        request.protocol === 'file:'
+          ? request.pathname.slice(root.pathname.length)
+          : request.pathname.slice(1);
+      if (!/^game\/(?:editions\/|content\/company-)/.test(pathname)) return undefined;
+      return new Response(await readFile(new URL(pathname, root)));
+    },
+  });
+  await openMissionLibrary(page, 'shell-play');
+  const card = [...page.$('journey-cards').children].find((row) =>
+    row.textContent.includes('Sky Watch'),
+  );
+  assert(card, 'Public mission menu contains Sky Watch');
+  await activateMissionCard(card);
+  page.frame(0);
+  assert.equal(page.rendered.run.levelId, 'social-drone-sky-watch-01');
+  assert.equal(page.rendered.run.tick, 0);
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.doc.body.dataset.flightState, 'briefing');
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  page.frame(0);
+  assert.equal(page.doc.body.dataset.flightState, 'running');
+  assert.equal(page.rendered.run.seed, 1);
+  assert.equal(page.rendered.run.classId, 'scout');
+  const keys = { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' };
+  for (const { direction, ticks } of SKY_WATCH_LEGAL_INPUTS) {
+    page.key(keys[direction]);
+    for (let tick = 0; tick < ticks && page.rendered.run.status === 'running'; tick++)
+      page.frame(FIXED_DT * 1000);
+    page.key(keys[direction], false);
+  }
+  assert.equal(page.rendered.run.status, 'won');
+  assert.equal(page.rendered.run.lives, 3);
+  assert.equal(page.$('game-overlay').hidden, true);
+  assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
+  for (let frame = 0; frame < 18; frame++) page.frame(100);
+  assert.equal(page.doc.body.dataset.winPicture, 'revealing');
+  assert.equal(
+    page.doc.querySelector('.earned-video-dialog'),
+    null,
+    'Finished board holds before the video',
+  );
+  for (let frame = 0; frame < 60; frame++) page.frame(100);
+  const dialog = page.doc.querySelector('.earned-video-dialog');
+  assert(dialog?.open, 'A real public-host win earns and opens its video after celebration');
+  for (let frame = 0; frame < 50; frame++) page.frame(100);
+  assert.equal(page.$('game-overlay').hidden, false);
+  assert.equal(page.rendered.run.status, 'won');
+  dialog.querySelector('button').click();
+  assert.equal(page.doc.querySelector('.earned-video-dialog'), null);
+  for (let frame = 0; frame < 15 && page.$('game-overlay').hidden; frame++) page.frame(100);
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('game-overlay').hidden, false);
+  assert.equal(page.$('result-random-level').hidden, false);
+  assert.deepEqual(page.errors, []);
+});
