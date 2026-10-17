@@ -16,10 +16,12 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import { parse } from 'acorn';
 import {
   admitDefaultBaselineReuse,
   digest,
   evidenceSize,
+  liveEvidenceSize,
   functionalResult,
   isOwnedProcess,
   ownedCommand,
@@ -365,7 +367,7 @@ test('live evidence sizing preserves atomic partial-report rename without waivin
       return lstat(path);
     },
   };
-  assert.equal(await evidenceSize(dir, { transient: true, filesystem }), 0);
+  assert.equal(await liveEvidenceSize(dir, filesystem), 0);
   assert.equal(await evidenceSize(dir), Buffer.byteLength('retained report'));
   assert.equal(await readFile(final, 'utf8'), 'retained report');
   await rename(final, partial);
@@ -438,5 +440,57 @@ test('disappearing evidence names still consume the existing file-count cap', as
   await assert.rejects(
     evidenceSize(dir, { transient: true, filesystem }),
     /Evidence file-count cap/,
+  );
+});
+
+test('common live callbacks and adapter context use the rename-safe wrapper while settled checks stay strict', async () => {
+  const source = await readFile(
+    new URL('./run-solo-remote-correctness.mjs', import.meta.url),
+    'utf8',
+  );
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const calls = [],
+    mappings = [];
+  const visit = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (
+      node.type === 'CallExpression' &&
+      ['evidenceSize', 'liveEvidenceSize'].includes(node.callee.name)
+    )
+      calls.push(node);
+    if (node.type === 'Property' && node.key.name === 'evidenceSize') mappings.push(node);
+    for (const value of Object.values(node)) {
+      if (Array.isArray(value)) value.forEach(visit);
+      else if (value && typeof value === 'object') visit(value);
+    }
+  };
+  visit(tree);
+  assert.deepEqual(
+    mappings.map((node) => node.value.name),
+    ['liveEvidenceSize'],
+  );
+  // Aggregate/profile admission and the default row's owned callback are live.
+  assert.deepEqual(
+    calls
+      .filter((node) => node.callee.name === 'liveEvidenceSize')
+      .map((node) => node.arguments[0].name),
+    ['evidence', 'profileEvidence', 'dir'],
+  );
+  const strict = calls.filter((node) => node.callee.name === 'evidenceSize');
+  assert.equal(strict.length, 4);
+  assert.equal(strict[0].arguments[0].name, 'root');
+  assert(
+    strict[0].arguments[1].properties.some(
+      (node) => node.key.name === 'transient' && node.value.value === true,
+    ),
+  );
+  // The only other calls are settled row size, aggregate and profile finalization.
+  assert.deepEqual(
+    strict.slice(1).map((node) => [node.arguments.length, node.arguments[0].name]),
+    [
+      [1, 'dir'],
+      [1, 'evidence'],
+      [1, 'profileEvidence'],
+    ],
   );
 });
