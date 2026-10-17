@@ -34,6 +34,14 @@ const finalTimingSource = {
   candidateTree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
   runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
 };
+const finalSoakCohort = 'soak-main8b-candidatea6e';
+const anchoredSoakHash = '079d4dd76fbd914ddd4da7311f8e6cee4a0ff4fc3bc951842b2921c94c53b8ff';
+function selectedSustainedSource(plan) {
+  if (plan.sourceCohort === undefined) return null;
+  assert.equal(plan.sourceCohort, finalSoakCohort);
+  assert.equal(plan.phase, 'soak');
+  return finalTimingSource;
+}
 function selectedTimingSource(plan) {
   if (plan.sourceCohort === undefined) return null;
   if (plan.sourceCohort === coldSourceCohort.name) {
@@ -110,7 +118,8 @@ export const TIMING_PHASES = Object.freeze({
   },
 });
 const timingPlan = (plan) => plan.format === 'SoloHostedTimingPlanV1';
-const roleRevision = (plan, role) => (timingPlan(plan) ? plan[role].revision : source[role]);
+const roleRevision = (plan, role) =>
+  timingPlan(plan) || plan.sourceCohort === finalSoakCohort ? plan[role].revision : source[role];
 const diagnosticComparison = (plan) => plan.release?.status === 'reviewed-diagnostic-only';
 function validateDiagnosticComparison(release, candidate = source.candidate) {
   assert.equal(release.scope, 'independent-comparison-diagnostics');
@@ -134,8 +143,7 @@ function comparisonLabels(plan) {
 
 // Declaration checks only. The common runner must still verify each complete
 // package, V2 ready proof, source tree and CSP before admitting either role.
-function validateTimingSourceCohort(plan) {
-  const selected = selectedTimingSource(plan);
+function validateSourceCohort(plan, selected) {
   if (plan.sourceCohort === undefined) {
     assert.equal(plan.release.sourceCohort, undefined);
     return null;
@@ -200,7 +208,12 @@ function validateTimingHitchJournalAdmission(plan, selected) {
 export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
   try {
     assert(planHasHitchJournal(plan), 'Journal was not declared');
-    assert(selectedTimingSource(plan), 'Journal requires a declared source cohort');
+    assert(
+      plan.sourceCohort === finalSoakCohort
+        ? selectedSustainedSource(plan)
+        : selectedTimingSource(plan),
+      'Journal requires a declared source cohort',
+    );
     const { HITCH_LIMITS, decodeHitchJournal } = await import(
       './solo-qualification-hitch-journal.mjs'
     );
@@ -218,43 +231,48 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     assert.deepEqual(report.limits, HITCH_LIMITS);
     assert.deepEqual(report.failures, []);
     assert.equal(report.activePlayCoverage, 'observed-final-solo');
-    const heavy = ['sentry', 'long-rail'].includes(plan.phase),
+    const anchored = plan.sourceCohort === finalSoakCohort,
+      heavy = ['sentry', 'long-rail'].includes(plan.phase),
       warm = plan.phase === 'warm-first30';
-    assert.equal(report.preparationPolicy, heavy ? 'timing-heavy-v1' : null);
+    assert.equal(
+      report.preparationPolicy,
+      anchored ? 'first-return-anchored-v1' : heavy ? 'timing-heavy-v1' : null,
+    );
     const url = new URL(soloURL);
-    const specs = heavy
-      ? [
-          {
-            role: 'preparation',
-            path: new URL('playground/', url).pathname,
-            action: 'initial',
-            boundary: 'before-follow-4',
-          },
-          {
-            role: 'solo',
-            path: url.pathname,
-            action: 'follow-4',
-            boundary: 'final-existing-public-boundary',
-          },
-        ]
-      : warm
+    const specs =
+      heavy || anchored
         ? [
-            { role: 'solo', path: url.pathname, action: 'initial', boundary: 'before-reload-1' },
+            {
+              role: 'preparation',
+              path: new URL('playground/', url).pathname,
+              action: 'initial',
+              boundary: 'before-follow-4',
+            },
             {
               role: 'solo',
               path: url.pathname,
-              action: 'reload-1',
+              action: 'follow-4',
               boundary: 'final-existing-public-boundary',
             },
           ]
-        : [
-            {
-              role: 'solo',
-              path: url.pathname,
-              action: 'initial',
-              boundary: 'final-existing-public-boundary',
-            },
-          ];
+        : warm
+          ? [
+              { role: 'solo', path: url.pathname, action: 'initial', boundary: 'before-reload-1' },
+              {
+                role: 'solo',
+                path: url.pathname,
+                action: 'reload-1',
+                boundary: 'final-existing-public-boundary',
+              },
+            ]
+          : [
+              {
+                role: 'solo',
+                path: url.pathname,
+                action: 'initial',
+                boundary: 'final-existing-public-boundary',
+              },
+            ];
     assert.equal(report.documents?.length, specs.length, 'Exact declared document count');
     let totalBytes = 0,
       totalRecords = 0;
@@ -450,7 +468,7 @@ export function validateTimingPlan(plan) {
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
-  const selected = validateTimingSourceCohort(plan);
+  const selected = validateSourceCohort(plan, selectedTimingSource(plan));
   const expectedSource = selected ?? source;
   validateTimingHitchJournalAdmission(plan, selected);
   assert.equal(plan.baseline.revision, expectedSource.baseline);
@@ -612,7 +630,7 @@ function roleOrder(repetition, phase) {
       ? ['candidate', 'baseline']
       : ['baseline', 'candidate'];
 }
-export function validateRelease(release, phase) {
+export function validateRelease(release, phase, selected = null) {
   assert(SUSTAINED_PHASES[phase], 'Unknown phase');
   assert.equal(release.format, 'SoloHostedPhaseReleaseV1');
   const diagnostic = release.status === 'reviewed-diagnostic-only';
@@ -620,11 +638,11 @@ export function validateRelease(release, phase) {
     diagnostic || release.status === 'reviewed-and-released',
     'An explicit reviewed phase release is required',
   );
-  if (diagnostic) validateDiagnosticComparison(release);
+  if (diagnostic) validateDiagnosticComparison(release, selected?.candidate);
   assert.equal(release.phase, phase);
   assert.equal(release.previousPhase, SUSTAINED_PHASES[phase].previous);
-  assert.equal(release.candidateRevision, source.candidate);
-  assert.equal(release.baselineRevision, source.baseline);
+  assert.equal(release.candidateRevision, selected?.candidate ?? source.candidate);
+  assert.equal(release.baselineRevision, selected?.baseline ?? source.baseline);
   assert.equal(release.noUnclosedOwners, true);
   assert.equal(release.allPriorPlannedJobsClosed, true);
   assert.equal(release.priorProofInspected, true);
@@ -646,21 +664,43 @@ export function validateRelease(release, phase) {
 export function validateSustainedPlan(plan) {
   if (timingPlan(plan)) return validateTimingPlan(plan);
   assert.equal(plan.format, 'SoloHostedSustainedPlanV1');
-  assert.equal(
-    plan.hitchJournal,
-    undefined,
-    'Lifecycle journal requires a separate reviewed admission',
-  );
+  const selected = validateSourceCohort(plan, selectedSustainedSource(plan));
+  if (selected) {
+    assert.equal(plan.latestSourceRevision, selected.candidate);
+    assert.equal(plan.hitchJournal, 'bounded-v1');
+    assert.equal(plan.ownedResources, 'source-bounds-v1');
+    validateTimingHitchJournalAdmission(plan, selected);
+    for (const path of [
+      'scripts/solo-qualification-snapshot-store.mjs',
+      'scripts/solo-owned-resource-assessment.mjs',
+    ]) {
+      const refs = plan.frozenTools?.filter((ref) => ref.path === path);
+      assert.equal(refs?.length, 1, `Anchored soak requires one frozen ${path}`);
+      assert(Number.isSafeInteger(refs[0].bytes) && refs[0].bytes > 0 && refs[0].bytes < MiB);
+      assert.match(refs[0].sha256, /^[a-f0-9]{64}$/);
+    }
+  } else {
+    assert.equal(
+      plan.hitchJournal,
+      undefined,
+      'Lifecycle journal requires a separate reviewed admission',
+    );
+    assert.equal(
+      plan.ownedResources,
+      undefined,
+      'Owner analysis requires a separate reviewed admission',
+    );
+  }
   const spec = SUSTAINED_PHASES[plan.phase];
   assert(spec);
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
   assert.equal(plan.repository, 'mekhovov/revealline');
-  assert.equal(plan.baseline.revision, source.baseline);
-  assert.equal(plan.candidate.revision, source.candidate);
+  assert.equal(plan.baseline.revision, selected?.baseline ?? source.baseline);
+  assert.equal(plan.candidate.revision, selected?.candidate ?? source.candidate);
   assert(['chromium', 'webkit'].includes(plan.engine));
   assert([1, 2, 3].includes(plan.repetition));
-  validateRelease(plan.release, plan.phase);
+  validateRelease(plan.release, plan.phase, selected);
   assert.equal(plan.helperTimeoutMs, spec.helperMinutes * 60000);
   assert.equal(plan.evidenceBytes, 512 * MiB);
   assert.equal(plan.rowEvidenceBytes, 128 * MiB);
@@ -692,7 +732,8 @@ export function validateSustainedPlan(plan) {
     assert.equal(row.timeoutMs, spec.timeoutMs);
     assert.equal(row.performanceExclusion, plan.performanceExclusion);
   }
-  if (spec.recipe) assert.equal(plan.recipes[spec.recipe].sha256, spec.hash);
+  if (spec.recipe)
+    assert.equal(plan.recipes[spec.recipe].sha256, selected ? anchoredSoakHash : spec.hash);
   for (const ref of Object.values(plan.recipes)) {
     assert.match(ref.path, /^docs\/performance\/fixtures\/solo-remote-sustained\/[a-z0-9.-]+$/);
     assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes <= 16384);
@@ -859,6 +900,8 @@ export async function prepareSustainedMode(ctx) {
     mode.recipePath = join(inputs, 'scenario.qualification.json');
     const recipe = await checkedJSON(mode.recipePath, MiB);
     mode.snapshotStorage = sustainedSnapshotStorage(ctx.plan, recipe);
+    if (ctx.plan.sourceCohort === finalSoakCohort)
+      assert(mode.snapshotStorage, 'Anchored soak requires chunked evidence');
   }
   if (ctx.plan.engine === 'chromium') {
     const path = join(ctx.evidence, 'fresh-mid-calibration.json');
@@ -928,6 +971,9 @@ export function sustainedArguments(ctx, row, url, dir) {
     ...(planHasHitchJournal(ctx.plan) && ['sentry', 'long-rail'].includes(ctx.plan.phase)
       ? ['--hitch-journal-preparation=timing-heavy-v1']
       : []),
+    ...(ctx.plan.sourceCohort === finalSoakCohort
+      ? ['--hitch-journal-preparation=first-return-anchored-v1']
+      : []),
     '--cadence=settled120',
     ...(ctx.modeState.snapshotStorage ? ['--snapshot-chunks'] : []),
     ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
@@ -991,6 +1037,80 @@ export function lifecycleAssessment(plan, row, raw, command, browserVersion) {
         ? 'passed'
         : 'failed',
     ...comparisonLabels(plan),
+  };
+}
+
+// Post-child, post-hydration analysis only. Original numeric/resource-rule
+// statuses remain visible; finite owner bounds do not prove retention stability.
+export async function anchoredSoakAssessment(
+  plan,
+  row,
+  raw,
+  command,
+  browserVersion,
+  journalVerification,
+) {
+  assert.equal(plan.sourceCohort, finalSoakCohort);
+  const inherited = lifecycleAssessment(plan, row, raw, command, browserVersion);
+  const { assessSoloOwnedResources } = await import('./solo-owned-resource-assessment.mjs');
+  let owned;
+  try {
+    owned = assessSoloOwnedResources(raw);
+  } catch (error) {
+    owned = {
+      format: 'SoloOwnedResourceAssessmentV1',
+      bounds: { status: 'invalid-evidence' },
+      retention: { status: 'inconclusive' },
+      failure: String(error.message ?? error).slice(0, 2048),
+      gameplayQualification: false,
+      nativeMemoryQualification: false,
+    };
+  }
+  const repeats = raw?.actions?.filter((action) => action.type === 'repeat') ?? [];
+  const protocol =
+    raw?.kind === 'lifecycle' &&
+    raw.scenarioKind === 'lifecycle' &&
+    raw.workProbe === true &&
+    raw.cadenceProtocol === 'settled120' &&
+    raw.cacheMode === 'fresh-context' &&
+    raw.baselineRuntime === (row.source === 'baseline') &&
+    raw.replay?.scope === 'completed-scenario' &&
+    !raw.finalReadFailure &&
+    !raw.failureCleanupFailure &&
+    repeats.length === 1 &&
+    repeats[0].status === 'pass' &&
+    Number.isSafeInteger(repeats[0].iterations) &&
+    repeats[0].iterations > 0 &&
+    repeats[0].iterations <= 360 &&
+    repeats[0].elapsedMs >= 1800000;
+  const journalComplete =
+    journalVerification?.status === 'complete' &&
+    !Object.hasOwn(raw ?? {}, 'performanceGateStatusBeforeHitchJournal') &&
+    !raw?.hitchJournalFailure;
+  return {
+    ...inherited,
+    numericObservationStatus: inherited.status,
+    protocolStatus: protocol ? 'pass' : 'fail',
+    correctness: protocol ? inherited.correctness : 'fail',
+    ownedResourceAssessment: owned,
+    ownedResourceBoundsStatus: owned.bounds.status,
+    retentionQualification: 'review-required',
+    hitchJournalVerification: journalVerification ?? {
+      status: 'invalid-evidence',
+      failure: 'Journal not independently verified',
+    },
+    performanceEvidenceStatus: journalComplete ? 'complete' : 'invalid-evidence',
+    performanceGateStatusBeforeHitchJournal: raw?.performanceGateStatusBeforeHitchJournal ?? null,
+    status:
+      inherited.status === 'passed' && protocol && journalComplete
+        ? owned.bounds.status === 'pass'
+          ? 'review-required'
+          : owned.bounds.status === 'inconclusive'
+            ? 'inconclusive'
+            : 'failed'
+        : 'failed',
+    scope:
+      'Exact anchored 34.29% First Return route only. Original numeric and three canvas-rule results are separate from all-owner bounds and manual retention review. No historical 51.43% route substitution, physical qualification, native-memory qualification or automatic resume.',
   };
 }
 
@@ -1278,18 +1398,15 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
         : undefined;
       Object.assign(
         row,
-        (timingPlan(ctx.plan)
-          ? timingAssessment
-          : ctx.plan.phase === 'long29'
-            ? longRecordingAssessment
-            : lifecycleAssessment)(
-          ctx.plan,
-          row,
-          raw,
-          command,
-          ctx.modeState.browserVersion,
-          journalVerification,
-        ),
+        await (
+          ctx.plan.sourceCohort === finalSoakCohort
+            ? anchoredSoakAssessment
+            : timingPlan(ctx.plan)
+              ? timingAssessment
+              : ctx.plan.phase === 'long29'
+                ? longRecordingAssessment
+                : lifecycleAssessment
+        )(ctx.plan, row, raw, command, ctx.modeState.browserVersion, journalVerification),
       );
       row.browserVersion = raw.environment?.browserVersion;
       assert.equal(typeof row.browserVersion, 'string');
