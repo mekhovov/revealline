@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn, execFileSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
-import { createReadStream } from 'node:fs';
+import { createReadStream, readFileSync } from 'node:fs';
 import {
   lstat,
   mkdir,
@@ -77,6 +77,17 @@ async function processes() {
 const live = (row) => row && !['Z', 'X'].includes(row.state);
 const same = (a, b) => a && b && a.pid === b.pid && a.birth === b.birth;
 const browserCommand = (row) => /(?:chrome|chromium|WebKit|MiniBrowser|crashpad)/i.test(row.argv);
+export function spawnedLeaderIdentity(row, leaderPid, parentPid, before) {
+  return Boolean(
+    row &&
+      row.pid === leaderPid &&
+      row.ppid === parentPid &&
+      row.pgid === leaderPid &&
+      typeof row.birth === 'string' &&
+      /^\d+$/.test(row.birth) &&
+      !same(before.get(row.pid), row),
+  );
+}
 export function isOwnedProcess(row, all, owned, leaderPid, tagged) {
   const parent = all.get(row.ppid);
   return Boolean(
@@ -111,6 +122,24 @@ export async function ownedCommand(
     detached: true,
     stdio: ['ignore', 'pipe', 'pipe'],
   });
+  // Capture the direct child's birth before yielding to the event loop that
+  // reaps it. Short --version commands can exit between a later process scan
+  // and environ read. Parent + detached group bind this initial stat to spawn;
+  // subsequent ownership and signalling still require the same recorded birth.
+  const owned = new Map();
+  let initialLeaderCapture = 'not-observed',
+    initialLeaderFailure = null;
+  try {
+    const row = parseProcStat(readFileSync(`/proc/${child.pid}/stat`, 'utf8'));
+    if (spawnedLeaderIdentity(row, child.pid, process.pid, before)) {
+      row.argv = argv.join(' ');
+      owned.set(row.pid, row);
+      initialLeaderCapture = 'direct-child-birth';
+    }
+  } catch (error) {
+    if (!['ENOENT', 'ESRCH', 'EACCES'].includes(error.code))
+      initialLeaderFailure = `leader-capture:${error.code ?? error.message}`;
+  }
   const record = {
     argv,
     cwd,
@@ -123,14 +152,14 @@ export async function ownedCommand(
     forcedCleanup: false,
     ambiguous: [],
     survivors: [],
+    initialLeaderCapture,
   };
-  const owned = new Map();
   let ended = false,
     drained = false,
     exitCode = null,
     signal = null,
     bytes = 0,
-    violation = null;
+    violation = initialLeaderFailure;
   let writes = Promise.resolve();
   const consume = (data) => {
     bytes += data.length;

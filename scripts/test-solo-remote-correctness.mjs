@@ -13,6 +13,7 @@ import {
   ownedCommand,
   parseProcStat,
   scratchRowPath,
+  spawnedLeaderIdentity,
 } from './run-solo-remote-correctness.mjs';
 
 const archive = fileURLToPath(new URL('./solo-remote-archive.py', import.meta.url));
@@ -142,6 +143,61 @@ test('a reused leader or parent PID does not grant process ownership', () => {
   all.set(42, old);
   assert.equal(isOwnedProcess(child, all, owned, 42, false), true);
 });
+
+test('a spawned leader needs direct-parent, detached-group and fresh birth evidence', () => {
+  const leader = { pid: 42, ppid: 12, pgid: 42, birth: '200' };
+  const before = new Map();
+  assert.equal(spawnedLeaderIdentity(leader, 42, 12, before), true);
+  for (const changed of [
+    { pid: 43 },
+    { ppid: 13 },
+    { pgid: 41 },
+    { birth: undefined },
+    { birth: 'invalid' },
+  ])
+    assert.equal(spawnedLeaderIdentity({ ...leader, ...changed }, 42, 12, before), false);
+  before.set(42, leader);
+  assert.equal(spawnedLeaderIdentity(leader, 42, 12, before), false);
+  // Once captured, a reused leader PID cannot transfer ownership of its group.
+  const reused = { ...leader, birth: '201' };
+  assert.equal(
+    isOwnedProcess(reused, new Map([[42, reused]]), new Map([[42, leader]]), 42, false),
+    false,
+  );
+});
+
+test(
+  'short Linux browser-named leaders retain their birth even after environment retirement',
+  { skip: process.platform !== 'linux' },
+  async (t) => {
+    const dir = await temporary(t);
+    for (let i = 0; i < 3; i++) {
+      const result = await ownedCommand(
+        [
+          process.execPath,
+          '-e',
+          'process.title="chromium-version-control"; console.log("version-control")',
+        ],
+        {
+          cwd: dir,
+          env: process.env,
+          log: join(dir, `version-${i}.log`),
+          timeoutMs: 10000,
+        },
+      );
+      assert.equal(result.status, 'closed');
+      assert.equal(result.initialLeaderCapture, 'direct-child-birth');
+      assert(
+        result.tracked.some(
+          (row) => row.ppid === process.pid && row.pgid === row.pid && /^\d+$/.test(row.birth),
+        ),
+      );
+      assert.deepEqual(result.ambiguous, []);
+      assert.deepEqual(result.survivors, []);
+      assert.equal(result.forcedCleanup, false);
+    }
+  },
+);
 
 test(
   'real Linux deadline drains owned child and cannot report a passing cleanup',
