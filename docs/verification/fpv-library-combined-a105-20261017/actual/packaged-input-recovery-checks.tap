@@ -1,0 +1,140 @@
+TAP version 13
+# Subtest: graphics loss and pagehide pause Advanced, clear held touch axes, and require explicit resume
+ok 1 - graphics loss and pagehide pause Advanced, clear held touch axes, and require explicit resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.511583
+  ...
+# Subtest: editing and saving an aircraft leave the active worker frozen until explicit restart
+ok 2 - editing and saving an aircraft leave the active worker frozen until explicit restart # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045625
+  ...
+# Subtest: a pending aircraft save keeps later edits unsaved, ignores duplicate clicks and updates the revert baseline
+ok 3 - a pending aircraft save keeps later edits unsaved, ignores duplicate clicks and updates the revert baseline # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033375
+  ...
+# Subtest: completing an older aircraft save cannot replace a newly selected template
+ok 4 - completing an older aircraft save cannot replace a newly selected template # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033875
+  ...
+# Subtest: an incomplete aircraft edit survives a pending save and can revert to the saved values
+ok 5 - an incomplete aircraft edit survives a pending save and can revert to the saved values # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.078917
+  ...
+# Subtest: failed aircraft saves retain edits and the old baseline, then allow a successful retry
+ok 6 - failed aircraft saves retain edits and the old baseline, then allow a successful retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030042
+  ...
+# Subtest: closing Advanced while an aircraft save waits ignores its late success
+ok 7 - closing Advanced while an aircraft save waits ignores its late success # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028125
+  ...
+# Subtest: closing Advanced while an aircraft save waits ignores its late failure
+ok 8 - closing Advanced while an aircraft save waits ignores its late failure # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038375
+  ...
+# Subtest: native inactivity pauses and releases the bridge; cancelled/failed shares keep a usable session
+ok 9 - native inactivity pauses and releases the bridge; cancelled/failed shares keep a usable session # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0835
+  ...
+# Subtest: native lifecycle setup fails closed and a late subscription cleans up after disposal
+ok 10 - native lifecycle setup fails closed and a late subscription cleans up after disposal # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.103875
+  ...
+# Subtest: configuration export cannot steal initialization while native lifecycle setup is pending
+ok 11 - configuration export cannot steal initialization while native lifecycle setup is pending # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038875
+  ...
+# Subtest: unsupported worker and graphics platforms keep flight disabled and return safely to tuning
+ok 12 - unsupported worker and graphics platforms keep flight disabled and return safely to tuning # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033333
+  ...
+# Subtest: worker initialization failure remains explicit and closes its worker on return
+ok 13 - worker initialization failure remains explicit and closes its worker on return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02775
+  ...
+# Subtest: uncoded and unknown worker failures do not reopen export or restart based on their text
+ok 14 - uncoded and unknown worker failures do not reopen export or restart based on their text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0685
+  ...
+# Subtest: an unavailable radio before start preserves the healthy session and keyboard restart (en)
+ok 15 - an unavailable radio before start preserves the healthy session and keyboard restart (en)
+  ---
+  duration_ms: 95.967916
+  ...
+# Subtest: an unavailable radio before start preserves the healthy session and keyboard restart (uk)
+ok 16 - an unavailable radio before start preserves the healthy session and keyboard restart (uk)
+  ---
+  duration_ms: 20.844333
+  ...
+# Subtest: radio input becoming missing pauses before dispatch and preserves export and explicit resume
+ok 17 - radio input becoming missing pauses before dispatch and preserves export and explicit resume
+  ---
+  duration_ms: 30.444709
+  ...
+# Subtest: radio input becoming malformed pauses before dispatch and preserves export and explicit resume
+ok 18 - radio input becoming malformed pauses before dispatch and preserves export and explicit resume
+  ---
+  duration_ms: 28.412333
+  ...
+# Subtest: radio input becoming throws pauses before dispatch and preserves export and explicit resume
+ok 19 - radio input becoming throws pauses before dispatch and preserves export and explicit resume
+  ---
+  duration_ms: 25.899084
+  ...
+# Subtest: the real duration limit preserves an exportable practice and requires explicit restart
+ok 20 - the real duration limit preserves an exportable practice and requires explicit restart # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.140583
+  ...
+# Subtest: the real recording limit preserves an exportable practice and requires explicit restart
+ok 21 - the real recording limit preserves an exportable practice and requires explicit restart # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033041
+  ...
+# Subtest: practice retains its host-scoped module worker entry through restart
+ok 22 - practice retains its host-scoped module worker entry through restart # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023667
+  ...
+# Subtest: arena imports a different-rate verified ghost, renders its own timeline and hides incompatible restarted setups
+ok 23 - arena imports a different-rate verified ghost, renders its own timeline and hides incompatible restarted setups # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022583
+  ...
+# Subtest: comparison import is bounded and atomic; failed or cancelled files preserve the previous reference
+ok 24 - comparison import is bounded and atomic; failed or cancelled files preserve the previous reference # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02025
+  ...
+# Subtest: cancelling or closing comparison verification terminates its dedicated worker without stopping the flight worker
+ok 25 - cancelling or closing comparison verification terminates its dedicated worker without stopping the flight worker # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019375
+  ...
+# Subtest: repeatable maneuver cues use simulation time and a kept reference survives restart without saving a draft
+ok 26 - repeatable maneuver cues use simulation time and a kept reference survives restart without saving a draft # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017125
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 21
+# todo 0
+# duration_ms 1400.73625

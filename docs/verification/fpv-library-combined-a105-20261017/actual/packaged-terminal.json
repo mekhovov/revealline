@@ -1,0 +1,19 @@
+{
+  "UTC": "2026-10-17T16:17:19.555370+00:00",
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "run": 39048156331,
+  "helper": {
+    "path": "/tmp/fpv-library-resume-20261017/combined-main-20261017/qualify-combined-family-labels.py",
+    "bytes": 3448,
+    "SHA256": "e61c26f4f4ff7e822a4df366827f0132083f7b4d7e44ed82b91a04a48f945da1"
+  },
+  "actualExitCode": 0,
+  "stdoutSHA256": "eebf1d09caf289e1caa342b24eef93a4159733434aa11ab4740ea37a86969ccb",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receipt": {
+    "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-a105e0fa-combined-20261017/packaged-family-label-receipt.json",
+    "internalCopy": "/tmp/fpv-library-resume-20261017/combined-main-20261017/actual-once/packaged-family-label-receipt.json",
+    "bytes": 2271,
+    "SHA256": "eebf1d09caf289e1caa342b24eef93a4159733434aa11ab4740ea37a86969ccb"
+  }
+}

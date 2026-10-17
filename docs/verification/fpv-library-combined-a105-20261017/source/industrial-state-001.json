@@ -1,0 +1,45 @@
+{
+  "UTC": "2026-10-17T16:18:10.988356+00:00",
+  "run": 39048107120,
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "status": "in_progress",
+  "conclusion": null,
+  "jobs": [
+    {
+      "id": 117440834815,
+      "name": "feature (rooms)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117440835007,
+      "name": "feature (presentation)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117440835012,
+      "name": "feature (gameplay)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117440835029,
+      "name": "feature (recordings)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117440835030,
+      "name": "feature (creator)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117440835082,
+      "name": "feature (local-ux)",
+      "status": "in_progress",
+      "conclusion": null
+    }
+  ]
+}

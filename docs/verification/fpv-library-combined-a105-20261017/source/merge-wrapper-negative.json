@@ -1,0 +1,7 @@
+{
+  "session": 82976,
+  "actualExitCode": 1,
+  "failure": "KeyError: tree after merge response recorded and parents validated",
+  "mergeResponseSHA256": "1fa21e09868964a74829b2f1904817b3a8c9dd2733760e0f83ccb66e99c584fc",
+  "mergeInvocations": 1
+}

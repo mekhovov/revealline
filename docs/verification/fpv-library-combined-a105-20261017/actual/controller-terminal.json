@@ -1,0 +1,11 @@
+{
+  "UTC": "2026-10-17T16:23:22.297377+00:00",
+  "session": 39576,
+  "actualExitCode": 0,
+  "resultSHA256": "8c5874c0c3584c8a625a322df704666b58a4e7164586e433edf2f2e586fbeb0d",
+  "stageTerminals": [
+    "optional-terminal.json",
+    "packaged-terminal.json",
+    "company-terminal.json"
+  ]
+}

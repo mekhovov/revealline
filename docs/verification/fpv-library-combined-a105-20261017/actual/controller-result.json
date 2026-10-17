@@ -1,0 +1,7 @@
+{
+  "UTC": "2026-10-17T16:22:40.511240+00:00",
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "run": 39048156331,
+  "allThreeStagesPassed": true,
+  "scope": "Exact source artifact/software gates only; no native/player/public or future-main acceptance"
+}

@@ -1,0 +1,19 @@
+{
+  "UTC": "2026-10-17T16:16:24.536261+00:00",
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "run": 39048156331,
+  "helper": {
+    "path": "/tmp/fpv-library-resume-20261017/combined-main-20261017/qualify-combined-optional.py",
+    "bytes": 7454,
+    "SHA256": "0717d0027ad31341880b4b81d10da91f8ced7e0026b9834e63b51faadc0cdca0"
+  },
+  "actualExitCode": 0,
+  "stdoutSHA256": "4e621628af06367c0ade391225d32cbd0d66f02cb74c9d0cbc928d219b94a6b6",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receipt": {
+    "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-a105e0fa-combined-20261017/qualification-original-members-and-closure.json",
+    "internalCopy": "/tmp/fpv-library-resume-20261017/combined-main-20261017/actual-once/qualification-original-members-and-closure.json",
+    "bytes": 3144,
+    "SHA256": "fb1d7c085331096dd479561bc0b64d9382ca93c19554087ff9ec45f349e8aad8"
+  }
+}

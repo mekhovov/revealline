@@ -1,0 +1,28 @@
+{
+  "UTC": "2026-10-17T16:19:25.319490+00:00",
+  "sourceRevision": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "runtimeArchiveSHA256": "4c4dde854f25b37974eb3f436efb9449f7f094fd5a8a5da3d0fcd83e0f850947",
+  "originalReceiptSHA256": "5961261b051a6f34956cb6d08761ece2d1c4908c080c36f12a2bb85d3603d1b7",
+  "originalTAPSHA256": "f9718e4a7f122a4d871384614e5229f3a1b88e7c52e2f5062e0bfaa34ab539be",
+  "actualNodeExitCode": 0,
+  "actualWrapperSession": 45106,
+  "actualWrapperExitCode": 1,
+  "actualSummary": {
+    "tests": 26,
+    "pass": 5,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 21,
+    "todo": 0
+  },
+  "actualFivePassedNames": [
+    "ok 15 - an unavailable radio before start preserves the healthy session and keyboard restart (en)",
+    "ok 16 - an unavailable radio before start preserves the healthy session and keyboard restart (uk)",
+    "ok 17 - radio input becoming missing pauses before dispatch and preserves export and explicit resume",
+    "ok 18 - radio input becoming malformed pauses before dispatch and preserves export and explicit resume",
+    "ok 19 - radio input becoming throws pauses before dispatch and preserves export and explicit resume"
+  ],
+  "runtimeBytesUnchanged": true,
+  "interpretation": "Five intended existing packaged input-recovery cases passed;21 unrelated groups intentionally skipped. Wrapper expected24 registered/19 skipped but actual26 includes two generated late-save cases. Original erroneous scope text and final count AssertionError are preserved, not rewritten. No test retry, no full Advanced-suite/native/public/endurance acceptance.",
+  "scope": "Content interpretation of already captured original child/TAP evidence only; does not convert wrapper into EXIT0."
+}

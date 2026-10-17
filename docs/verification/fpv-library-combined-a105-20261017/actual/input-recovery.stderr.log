@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/fpv-library-resume-20261017/combined-main-20261017/qualify-combined-input-recovery.py", line 32, in <module>
+    put(ROOT/'packaged-input-recovery-receipt.json',(json.dumps(receipt,indent=2)+'\n').encode());print(json.dumps(receipt,indent=2));assert r.returncode==0 and summary=={'tests':24,'pass':5,'fail':0,'cancelled':0,'skipped':19,'todo':0}
+                                                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

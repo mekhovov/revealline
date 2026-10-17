@@ -1,0 +1,14 @@
+{
+  "UTC": "2026-10-17T16:08:42.622653+00:00",
+  "head": "a105e0fa4697930030fbb3afce3d6c0771d02d54",
+  "tree": "19395b9bc3a874d0916890e1e3d3d67be87395a9",
+  "parents": [
+    "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+    "3c5011f1908bc1fb5d322e07e445373e4cb59321"
+  ],
+  "branch": "codex/fpv-regional-family-library-20261016",
+  "draft": true,
+  "normalMerge": true,
+  "readback": true,
+  "wrapperNegative": "Session82976 EXIT1 after successful single GitHub merge, while reading REST merge response at wrong top-level tree key. No repeated merge. Actual Git commit/ref/PR identity read back separately."
+}
