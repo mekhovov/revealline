@@ -23,6 +23,7 @@ const types = new Set([
   'reload',
   'audio-ready',
   'result',
+  'authored-next-route',
 ]);
 function integer(value, minimum, maximum, name) {
   assert(Number.isInteger(value) && value >= minimum && value <= maximum, `Invalid ${name}`);
@@ -131,6 +132,8 @@ export function qualificationSnapshotStorage(flags, scenario) {
 export function validateQualification(scenario) {
   assert.equal(scenario.format, QUALIFICATION_FORMAT);
   string(scenario.id, 'scenario id');
+  if (scenario.nativeRouteProtocol !== undefined)
+    assert.equal(scenario.nativeRouteProtocol, 'authored-next-geometric-v1');
   if (scenario.cacheMode !== undefined) assert.equal(scenario.cacheMode, 'warm-http-reload');
   assert(['performance', 'lifecycle', 'recovery'].includes(scenario.kind), 'Invalid evidence kind');
   if (scenario.evidenceStorage !== undefined)
@@ -263,6 +266,27 @@ export function validateQualification(scenario) {
         string(action.file, 'fixture file');
         if (action.acceptedLevelSelector !== undefined)
           string(action.acceptedLevelSelector, 'public accepted level selector');
+      }
+      if (action.type === 'authored-next-route') {
+        assert.deepEqual(Object.keys(action).sort(), ['mission', 'protocol', 'timeoutMs', 'type']);
+        assert.equal(scenario.nativeRouteProtocol, 'authored-next-geometric-v1');
+        assert.equal(action.protocol, scenario.nativeRouteProtocol);
+        assert.equal(action.timeoutMs, 60000);
+        assert(
+          [
+            'first-return',
+            'choose-your-share',
+            'two-keepers',
+            'nearby-shore',
+            'island-outpost',
+            'stepping-stones',
+            'two-bays',
+            'courtyard-return',
+            'long-way-home',
+            'behind-the-patrol',
+            'second-landing',
+          ].includes(action.mission),
+        );
       }
       if (action.type === 'key') {
         assert(keys.includes(action.key), 'Only gameplay keys are admitted');
