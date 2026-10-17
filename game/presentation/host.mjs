@@ -159,7 +159,12 @@ async function cropBitmap(image, frame) {
   return globalThis.createImageBitmap(image, frame.x, frame.y, frame.width, frame.height);
 }
 let cropExportSequence = 0;
-async function cropBlob(image, frame, document, { actorPool, signal } = {}) {
+async function cropBlob(
+  image,
+  frame,
+  document,
+  { actorPool, signal, main = (work) => work() } = {},
+) {
   let lease;
   const createCanvas = () => {
     const canvas = document.createElement('canvas');
@@ -177,18 +182,20 @@ async function cropBlob(image, frame, document, { actorPool, signal } = {}) {
       key: `presentation-crop-export:${++cropExportSequence}`,
       width: frame.width,
       height: frame.height,
-      load: createCanvas,
+      load: () => main(createCanvas),
     });
-  const canvas = lease?.image ?? createCanvas();
+  const canvas = lease?.image ?? (await main(createCanvas));
   try {
     cancelled(signal);
-    canvas.getContext('2d').drawImage(image, 0, 0);
-    return await new Promise((resolve, reject) =>
-      canvas.toBlob(
-        (blob) => (blob ? resolve(blob) : reject(new Error('Frame export failed.'))),
-        'image/png',
-      ),
-    );
+    return await main(() => {
+      canvas.getContext('2d').drawImage(image, 0, 0);
+      return new Promise((resolve, reject) =>
+        canvas.toBlob(
+          (blob) => (blob ? resolve(blob) : reject(new Error('Frame export failed.'))),
+          'image/png',
+        ),
+      );
+    });
   } finally {
     if (lease) lease.release();
     else canvas.close();
@@ -266,6 +273,7 @@ export function createPresentationHost({
   cropImage = cropBitmap,
   document = globalThis.document,
   skipTitleArtwork = false,
+  preparation = null,
   createObjectURL = (blob) => URL.createObjectURL(blob),
   revokeObjectURL = (url) => URL.revokeObjectURL(url),
   fontFactory = (name, bytes, descriptors) => new FontFace(name, bytes, descriptors),
@@ -273,6 +281,10 @@ export function createPresentationHost({
   required(
     ['full', 'actors', 'board'].includes(profile),
     'Use a registered presentation host profile.',
+  );
+  required(
+    preparation === null || (profile === 'full' && typeof preparation.run === 'function'),
+    'Optional page preparation needs the existing full-host admission owner.',
   );
   // Actor-only leases deliberately omit DOM authority, but still share their
   // page's image ownership and budget with the ordinary presentation host.
@@ -308,7 +320,7 @@ export function createPresentationHost({
     pictureReads = new Set(),
     audioReads = new Set(),
     audioBlobs = new Map();
-  async function bytesAt(relative, max, signal, expected = null) {
+  async function bytesAt(relative, max, signal, expected = null, main = null) {
     cancelled(signal);
     const url = new URL(relative, base);
     required(
@@ -369,13 +381,16 @@ export function createPresentationHost({
         size > 0 && (expected === null || size === expected),
         'Truncated presentation file.',
       );
-      const bytes = new Uint8Array(size);
-      let offset = 0;
-      for (const chunk of chunks) {
-        bytes.set(chunk, offset);
-        offset += chunk.byteLength;
-      }
-      return bytes;
+      const combine = () => {
+        const bytes = new Uint8Array(size);
+        let offset = 0;
+        for (const chunk of chunks) {
+          bytes.set(chunk, offset);
+          offset += chunk.byteLength;
+        }
+        return bytes;
+      };
+      return main ? await main(combine) : combine();
     } catch (error) {
       cancel();
       throw error;
@@ -550,6 +565,43 @@ export function createPresentationHost({
       pending = controller;
       const externalAbort = () => controller.abort();
       signal?.addEventListener('abort', externalAbort, { once: true });
+      const admission = { priority: 'background', signal: controller.signal };
+      // Gate each actual JS/codec submission, rather than the whole async load.
+      // Native work may finish after play begins; it still belongs to this load
+      // and is released before another optional stage can start. Do not hold the
+      // shared main-work slot while a non-cancellable native codec is pending.
+      const main = (work) => {
+        if (!preparation) return work();
+        let result,
+          submitted = false;
+        return preparation
+          .run(
+            'main',
+            () => {
+              result = work();
+              submitted = true;
+            },
+            admission,
+          )
+          .then(
+            () => result,
+            (error) => {
+              // Once submitted, return the native result to its existing owner
+              // even when cancellation races this admission's completion. The
+              // owner then releases it before its cancellation check propagates.
+              if (submitted) return result;
+              throw error;
+            },
+          );
+      };
+      const fetchBytes = (relative, max, signal, expected = null) =>
+        preparation
+          ? preparation.run(
+              'fetch',
+              () => bytesAt(relative, max, signal, expected, main),
+              admission,
+            )
+          : bytesAt(relative, max, signal, expected);
       const releases = [],
         images = {},
         cssImages = {},
@@ -574,41 +626,39 @@ export function createPresentationHost({
       controller.signal.addEventListener('abort', dispose, { once: true });
       try {
         report('reading', localizedMessage('interface:presentation.loadingRelease'));
-        const bytes = await bytesAt(manifestPath, LIMITS.manifestBytes, controller.signal);
+        const bytes = await fetchBytes(manifestPath, LIMITS.manifestBytes, controller.signal);
         report('verifying', localizedMessage('interface:presentation.checkingManifest'));
-        const manifestSha256 = await hashPresentationBytes(bytes);
+        const manifestSha256 = await main(() => hashPresentationBytes(bytes));
         cancelled(controller.signal);
         required(
           expectedManifestSha256 === null || manifestSha256 === expectedManifestSha256,
           'Presentation manifest differs from its pinned release.',
         );
-        const manifest = validateCompiledPresentation(
-          new TextDecoder('utf-8', { fatal: true }).decode(bytes),
-        );
-        const fullImages = new Map(),
-          frames = new Map();
-        for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
-          if (!loadsSlot(slot, asset) || asset.kind !== 'image') continue;
-          fullImages.set(asset.file.sha256, asset.file.width * asset.file.height);
-          const frame = asset.geometry.frame;
-          if (
-            !asset.animation &&
-            (frame.x ||
-              frame.y ||
-              frame.width !== asset.file.width ||
-              frame.height !== asset.file.height)
-          )
-            frames.set(slot, frame.width * frame.height);
-        }
-        required(
-          [...fullImages.values(), ...frames.values()].reduce((sum, n) => sum + n, 0) <=
-            PRESENTATION_DECODE_PIXELS,
-          'Presentation exceeds the decoded pixel budget.',
-        );
-        const sourceBlobs = new Map(),
-          decoded = new Map(),
-          actorLeases = new Map(),
-          actorHashes = new Set(
+        const { manifest, actorHashes } = await main(() => {
+          const manifest = validateCompiledPresentation(
+            new TextDecoder('utf-8', { fatal: true }).decode(bytes),
+          );
+          const fullImages = new Map(),
+            frames = new Map();
+          for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
+            if (!loadsSlot(slot, asset) || asset.kind !== 'image') continue;
+            fullImages.set(asset.file.sha256, asset.file.width * asset.file.height);
+            const frame = asset.geometry.frame;
+            if (
+              !asset.animation &&
+              (frame.x ||
+                frame.y ||
+                frame.width !== asset.file.width ||
+                frame.height !== asset.file.height)
+            )
+              frames.set(slot, frame.width * frame.height);
+          }
+          required(
+            [...fullImages.values(), ...frames.values()].reduce((sum, n) => sum + n, 0) <=
+              PRESENTATION_DECODE_PIXELS,
+            'Presentation exceeds the decoded pixel budget.',
+          );
+          const actorHashes = new Set(
             Object.entries(manifest.resolved.assets)
               .filter(
                 ([slot, asset]) =>
@@ -616,6 +666,12 @@ export function createPresentationHost({
               )
               .map(([, asset]) => asset.file.sha256),
           );
+          return { manifest, actorHashes };
+        });
+        cancelled(controller.signal);
+        const sourceBlobs = new Map(),
+          decoded = new Map(),
+          actorLeases = new Map();
         for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
           if (!loadsSlot(slot, asset)) continue;
           cancelled(controller.signal);
@@ -626,7 +682,7 @@ export function createPresentationHost({
           let blob = sourceBlobs.get(hash);
           if (!blob) {
             report('downloading', localizedMessage('interface:presentation.loadingRelease'));
-            const content = await bytesAt(
+            const content = await fetchBytes(
               manifest.urls[hash],
               file.bytes,
               controller.signal,
@@ -634,7 +690,7 @@ export function createPresentationHost({
             );
             report('verifying', localizedMessage('interface:presentation.verifyingRelease'));
             required(
-              (await hashPresentationBytes(content)) === hash,
+              (await main(() => hashPresentationBytes(content))) === hash,
               'Presentation asset hash mismatch.',
             );
             cancelled(controller.signal);
@@ -644,22 +700,27 @@ export function createPresentationHost({
             if (asset.kind === 'font') {
               report('decoding', localizedMessage('interface:presentation.openingFonts'));
               cancelled(controller.signal);
-              const face = fontFactory(
-                `RLAsset-${hash}`,
-                content.buffer,
-                presentationFontDescriptors(manifest.resolved, hash),
-              );
-              await face.load();
+              let face;
+              await main(() => {
+                face = fontFactory(
+                  `RLAsset-${hash}`,
+                  content.buffer,
+                  presentationFontDescriptors(manifest.resolved, hash),
+                );
+                return face.load();
+              });
               cancelled(controller.signal);
               fonts.push(face);
               continue;
             }
-            const header = inspectImageBytes(content, file.mime);
-            required(
-              header.valid && header.width === file.width && header.height === file.height,
-              'Presentation image header disagrees with its dimensions.',
-            );
-            blob = new Blob([content], { type: file.mime });
+            blob = await main(() => {
+              const header = inspectImageBytes(content, file.mime);
+              required(
+                header.valid && header.width === file.width && header.height === file.height,
+                'Presentation image header disagrees with its dimensions.',
+              );
+              return new Blob([content], { type: file.mime });
+            });
             sourceBlobs.set(hash, blob);
           }
           let original = decoded.get(hash);
@@ -672,13 +733,13 @@ export function createPresentationHost({
                 width: file.width,
                 height: file.height,
                 signal: controller.signal,
-                load: (signal) => decodeImage(blob, { signal }),
+                load: (signal) => main(() => decodeImage(blob, { signal })),
               });
               original = lease.image;
               actorLeases.set(hash, lease);
               own(lease.release);
             } else {
-              original = await decodeImage(blob, { signal: controller.signal });
+              original = await main(() => decodeImage(blob, { signal: controller.signal }));
               own(() => original.close?.());
             }
             cancelled(controller.signal);
@@ -711,7 +772,7 @@ export function createPresentationHost({
                     // would race a cancelled caller before this microtask starts.
                     cropStarted = true;
                     try {
-                      return await cropImage(original, frame, { signal });
+                      return await main(() => cropImage(original, frame, { signal }));
                     } finally {
                       keepOriginal();
                     }
@@ -723,7 +784,7 @@ export function createPresentationHost({
                 if (!cropStarted) keepOriginal();
               }
             } else {
-              image = await cropImage(original, frame, { signal: controller.signal });
+              image = await main(() => cropImage(original, frame, { signal: controller.signal }));
               own(() => image.close?.());
             }
             cancelled(controller.signal);
@@ -732,45 +793,52 @@ export function createPresentationHost({
               'Decoded presentation frame disagrees.',
             );
             if (profile === 'full')
-              visualBlob = await cropBlob(image, frame, document, {
-                actorPool: actorHashes.has(hash) ? actorPool : null,
-                signal: controller.signal,
-              });
+              visualBlob = await main(() =>
+                cropBlob(image, frame, document, {
+                  actorPool: actorHashes.has(hash) ? actorPool : null,
+                  signal: controller.signal,
+                  main,
+                }),
+              );
             cancelled(controller.signal);
           }
           images[slot] = Object.freeze({ image, asset, geometry: imagePresentation(asset) });
           if (profile === 'full') {
-            const url = createObjectURL(visualBlob);
-            own(() => revokeObjectURL(url));
-            cssImages[slot] = url;
+            await main(() => {
+              const url = createObjectURL(visualBlob);
+              own(() => revokeObjectURL(url));
+              cssImages[slot] = url;
+            });
           }
         }
         cancelled(controller.signal);
         required(!closed && pending === controller, 'Obsolete presentation load.');
-        for (const face of fonts) {
-          document?.fonts?.add(face);
-          own(() => document?.fonts?.delete(face));
-        }
-        const css = presentationCSSVariables(manifest.resolved);
-        const snapshot = Object.freeze({
-          manifestSha256,
-          actorArtBudget: actorPool.stats,
-          source: manifest.source,
-          resolved: manifest.resolved,
-          canvas: canvasPresentation(manifest.resolved),
-          fonts: Object.freeze({ ui: css['--fk-font-ui'], numeric: css['--fk-font-mono'] }),
-          image: (slot) => images[slot] ?? null,
-          cssImage: (slot) => cssImages[slot] ?? null,
-          // Pictures intentionally stay with the exact flight/collection media host.
-          picturePolicy: 'durable-defaults-for-new-attempts',
+        return await main(() => {
+          for (const face of fonts) {
+            document?.fonts?.add(face);
+            own(() => document?.fonts?.delete(face));
+          }
+          const css = presentationCSSVariables(manifest.resolved);
+          const snapshot = Object.freeze({
+            manifestSha256,
+            actorArtBudget: actorPool.stats,
+            source: manifest.source,
+            resolved: manifest.resolved,
+            canvas: canvasPresentation(manifest.resolved),
+            fonts: Object.freeze({ ui: css['--fk-font-ui'], numeric: css['--fk-font-mono'] }),
+            image: (slot) => images[slot] ?? null,
+            cssImage: (slot) => cssImages[slot] ?? null,
+            // Pictures intentionally stay with the exact flight/collection media host.
+            picturePolicy: 'durable-defaults-for-new-attempts',
+          });
+          clearApplications();
+          const prior = current;
+          audioBlobs.clear();
+          current = { snapshot, dispose, images, cssImages };
+          prior?.dispose();
+          report('ready', localizedMessage('interface:presentation.releaseReady'), 'ready');
+          return snapshot;
         });
-        clearApplications();
-        const prior = current;
-        audioBlobs.clear();
-        current = { snapshot, dispose, images, cssImages };
-        prior?.dispose();
-        report('ready', localizedMessage('interface:presentation.releaseReady'), 'ready');
-        return snapshot;
       } catch (error) {
         if (error.name !== 'AbortError')
           report(
