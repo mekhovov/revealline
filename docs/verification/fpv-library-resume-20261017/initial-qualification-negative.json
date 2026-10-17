@@ -1,0 +1,10 @@
+{
+  "UTC": "2026-10-17T15:41:26.807325+00:00",
+  "session": 62065,
+  "actualExitCode": 1,
+  "helperSHA256": "5e69001432645529f3bf9980a5f8c52ff5c47cceeb8f8fd4cff9dfb46fecc456",
+  "logSHA256": "49a5668e6e2cbcf908af4d61b59217f16bcaab0a77e1a5a7ba3c1dfcb1c1a231",
+  "failure": "Validator bootstrap ERR_MODULE_NOT_FOUND for exact-head optional-import-capabilities.mjs. No finished closure result produced. Original download and archives retained.",
+  "remainingVerificationUsesSameDownloadedOriginal": true,
+  "newGET": false
+}

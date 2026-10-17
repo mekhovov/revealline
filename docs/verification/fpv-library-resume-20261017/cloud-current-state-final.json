@@ -1,0 +1,79 @@
+{
+  "UTC": "2026-10-17T15:50:34.040859+00:00",
+  "pull": {
+    "number": 1540,
+    "state": "open",
+    "draft": true,
+    "mergeable": true,
+    "mergeable_state": "unstable",
+    "html_url": "https://github.com/mekhovov/revealline/pull/1540"
+  },
+  "head": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+  "base": "fb3caf12bd43743670f47c42dc21f7a406223379",
+  "main": "3c5011f1908bc1fb5d322e07e445373e4cb59321",
+  "runs": [
+    {
+      "id": 39045234940,
+      "name": "Fastline exact-head auto-merge",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "pull_request",
+      "head_sha": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39045234940"
+    },
+    {
+      "id": 39045136739,
+      "name": "Company edition candidates",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "workflow_dispatch",
+      "head_sha": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39045136739"
+    },
+    {
+      "id": 39045120378,
+      "name": "Fastline exact-head auto-merge",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "pull_request",
+      "head_sha": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39045120378"
+    },
+    {
+      "id": 39045120276,
+      "name": "Appearance preview",
+      "status": "in_progress",
+      "conclusion": null,
+      "event": "pull_request",
+      "head_sha": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39045120276"
+    },
+    {
+      "id": 39045120263,
+      "name": "Company edition candidates",
+      "status": "in_progress",
+      "conclusion": null,
+      "event": "pull_request",
+      "head_sha": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39045120263"
+    },
+    {
+      "id": 39045120280,
+      "name": "Validate source for continuous main",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "pull_request",
+      "head_sha": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39045120280"
+    },
+    {
+      "id": 39045120366,
+      "name": "Industrial feature verification",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "pull_request",
+      "head_sha": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39045120366"
+    }
+  ]
+}

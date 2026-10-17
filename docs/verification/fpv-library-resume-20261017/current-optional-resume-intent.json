@@ -1,0 +1,14 @@
+{
+  "recordedUTC": "2026-10-17T15:41:41.445723+00:00",
+  "actualToolSession": 82930,
+  "helper": "/tmp/fpv-library-resume-20261017/finish-current-optional-from-original.py",
+  "helperBytes": 4836,
+  "helperSHA256": "5f2cc54ec4728031f67c2ed9c080cd7e507ce0d0e94c093fb64d5a18d58e2afc",
+  "priorSession": 62065,
+  "priorExitCode": 1,
+  "head": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+  "artifactId": 12105567729,
+  "root": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-9e97eeb7-resume-20261017",
+  "operation": "One validator dependency addition and resumed full member/closure checks on the same already-downloaded original. No GET/build/native/browser.",
+  "currentResult": "pending"
+}

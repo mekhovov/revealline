@@ -1,0 +1,50 @@
+{
+  "UTC": "2026-10-17T15:28:31.109550+00:00",
+  "currentHead": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+  "normalMerge": "dec8cd4d5840f8b9376e2442aafe9bb4cf73e219",
+  "normalMergeParents": [
+    "b65d80f716b8db646bfdf5f714892f1c0f6409b0",
+    "fb3caf12bd43743670f47c42dc21f7a406223379"
+  ],
+  "sameFourFeatureFiles": [
+    {
+      "path": "docs/fpv-regional-family-library-20261016.md",
+      "blob": "bbccbe8547901435b0b27cc2774dfd54a1279d0a",
+      "bytes": 5441,
+      "sameAsAcceptedComponentSource": true
+    },
+    {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "blob": "5d32059b6ef03211d4998b0e83112be30614c018",
+      "bytes": 30924,
+      "sameAsAcceptedComponentSource": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "blob": "74100dd421dfe7d23d4c80c1b748552c330b7902",
+      "bytes": 74392,
+      "sameAsAcceptedComponentSource": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "blob": "320028f3c02d16f36a644c18525995faa5cd7102",
+      "bytes": 119168,
+      "sameAsAcceptedComponentSource": true
+    }
+  ],
+  "onlyPostMergeChange": {
+    "sha": "37c8269b0cefb7db383c35b9032ccf9e3453f5c7",
+    "filename": "publishing/industrial-feature-tests.json",
+    "status": "modified",
+    "additions": 1,
+    "deletions": 0,
+    "changes": 1,
+    "blob_url": "https://github.com/mekhovov/revealline/blob/9e97eeb7c192f6d6252b99dcd83e1718e1c78d35/publishing%2Findustrial-feature-tests.json",
+    "raw_url": "https://github.com/mekhovov/revealline/raw/9e97eeb7c192f6d6252b99dcd83e1718e1c78d35/publishing%2Findustrial-feature-tests.json",
+    "contents_url": "https://api.github.com/repos/mekhovov/revealline/contents/publishing%2Findustrial-feature-tests.json?ref=9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+    "patch": "@@ -109,6 +109,7 @@\n         \"game/test/coop-view-presentation.test.mjs\",\n         \"game/test/fpv-world-textures.test.mjs\",\n         \"game/test/fpv-objective-labels.test.mjs\",\n+        \"game/test/fpv-regional-library-families.test.mjs\",\n         \"game/test/fpv-regional-library-labels.test.mjs\",\n         \"game/test/industrial-environments.test.mjs\",\n         \"game/test/attempt-appearance.test.mjs\","
+  },
+  "nativeAcceptanceInherited": false,
+  "packageAcceptanceInherited": false,
+  "browserOrBuildRun": false
+}

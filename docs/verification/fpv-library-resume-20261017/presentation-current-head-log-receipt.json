@@ -1,0 +1,14 @@
+{
+  "UTC": "2026-10-17T15:34:53.482785+00:00",
+  "run": 39045120366,
+  "job": 117432417650,
+  "head": "9e97eeb7c192f6d6252b99dcd83e1718e1c78d35",
+  "bytes": 30031,
+  "SHA256": "cfd8a8d1617e59273a128a02780ea2b8a00f101f8647c42ca3379e97935659f8",
+  "actualJobConclusion": "success",
+  "initialReadNegative": "gh refused terminal escape sequences; no log output accepted. Exact same endpoint read with explicit --allow-escape-sequences; stored original bytes unchanged, terminal display sanitized only.",
+  "matches": [
+    "2026-10-17T15:29:50.1982483Z HEAD is now at 9e97eeb7 test(fpv): run family Library regressions in presentation CI",
+    "2026-10-17T15:33:19.4859309Z {\"phase\":\"presentation\",\"tests\":405,\"pass\":405,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/9e97eeb7c192-1W9jwo/presentation.tap\"}"
+  ]
+}
