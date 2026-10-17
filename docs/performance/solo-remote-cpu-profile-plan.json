@@ -214,8 +214,8 @@
     },
     {
       "path": "scripts/solo-remote-supplemental.mjs",
-      "bytes": 16612,
-      "sha256": "1b6bf962595e663b1fa606657444e30e6c03f5e254e65783d9333bb08771b3fa"
+      "bytes": 21973,
+      "sha256": "b4e37dd970cd161613b03d88aece23588048d1297f8a09a37e4cc997662e5549"
     },
     {
       "path": "scripts/solo-remote-archive.py",
