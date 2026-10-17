@@ -315,7 +315,9 @@ test('newer focus during pending Cancel remains authoritative even after returni
       $('coop-picture-cancel').addEventListener('focusin', () => {
         if (moved) return;
         moved = true;
-        $('coop-level').focus();
+        assert.equal($('coop-settings-open').closest('[hidden],[inert]'), null);
+        $('coop-settings-open').focus();
+        assert.equal(doc.activeElement.id, 'coop-settings-open');
         doc.body.focus();
       });
     },

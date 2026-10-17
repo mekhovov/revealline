@@ -105,7 +105,7 @@ function assertMysteryPreview(f) {
   );
   assert.match(
     f.$('coop-preview-caption').textContent,
-    /optional full preview; viewing earns no progress/i,
+    /teaser · preview only · scenery is not collision geometry\./,
   );
 }
 
@@ -123,19 +123,13 @@ function assertLobbyOwned(f) {
   assert.equal(f.$('coop-overlay').contains(preview), false);
   const actions = f.$('coop-start').parentNode;
   const launch = preview.parentNode;
-  assertSameReference(
-    actions.parentNode,
-    launch,
-    'Preview and launch actions share the lobby group.',
-  );
-  assert.equal(launch.parentNode.classList.contains('menu-copy'), true);
   assert.equal(launch.classList.contains('coop-launch-grid'), true);
   assert.equal(actions.classList.contains('coop-launch-actions'), true);
-  const children = [...launch.children];
-  assert.ok(
-    children.indexOf(preview) < children.indexOf(actions),
-    'Authored DOM order places the preview before Start; this is not a native CSS/layout claim.',
-  );
+  assert.equal(actions.parentNode.classList.contains('landing-commands'), true);
+  assertSameReference(actions.closest('#coop-menu'), preview.closest('#coop-menu'));
+  assertSameReference(actions.closest('.landing-layout').parentNode, f.$('coop-menu'));
+  assert.equal(launch.parentNode.classList.contains('menu-copy'), true);
+  assert.equal(f.$('coop-menu').contains(actions), true);
 }
 function start(f) {
   f.$('coop-start').focus();
@@ -262,6 +256,7 @@ test('held artwork completes behind Settings without reclaiming its selector or 
   f.$('coop-settings-open').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-options').open, true);
+  f.$('coop-settings-tab-accessibility').click();
   f.$('coop-settings-tab-accessibility').click();
   const selector = f.$('coop-text-size');
   selector.focus();
@@ -575,11 +570,17 @@ test('preview-only failure does not move Retry into play or Pause, and focused k
   f.$('coop-discard-confirm').click();
   assertHiddenPreview(f, 'unavailable');
   assert.equal(f.$('coop-start').disabled, false);
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-extras').click();
+  assert.equal(!!f.$('coop-picture-retry').closest('[hidden],[inert]'), false);
   f.$('coop-picture-retry').focus();
   f.tap('Enter');
   assert.equal(previewState(f), 'ready');
   assertSameReference(lastPreview(f), image);
-  assert.equal(f.doc.activeElement.id, 'coop-start');
+  assert.equal(f.$('coop-options').contains(f.doc.activeElement), true);
+  f.$('coop-settings-close').click();
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+  f.$('coop-start').focus();
   assert.equal(f.$('coop-start').disabled, false);
   assert.equal(f.$('coop-menu').hidden, false, 'Retry preview cannot also start the arena.');
   assert.equal(f.$('coop-picture-retry').hidden, true);
@@ -626,6 +627,11 @@ test('required read failure clears preview while a rejected starter import prese
     acceptedLevel = f.$('coop-level').value;
   const changed = structuredClone(COOP_STARTER_PACK);
   changed.name += ' changed';
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-gameplay').click();
+  f.$('coop-pack-file').closest('details').open = true;
+  assert.equal(!!f.$('coop-pack-file').closest('[hidden],[inert]'), false);
+  f.$('coop-pack-file').focus();
   await f.selectFile(JSON.stringify(changed));
   // Import is transactional: rejected content reports its own error without replacing ready art.
   assert.equal(f.$('coop-pack-status').dataset.state, 'error');
@@ -717,6 +723,7 @@ test('Settings close and queued older close cannot enable Browse over pending ar
   assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   f.tap('Enter');
   assert.equal(f.$('coop-options').open, true);
+  f.$('coop-settings-tab-accessibility').click();
   const selector = f.$('coop-text-size');
   selector.focus();
   f.$('coop-options').emit('close'); // Queued native close belonging to the old visit.
