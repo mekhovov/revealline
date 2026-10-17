@@ -8,6 +8,7 @@ import {
 } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
 import { exportNativeRateProfile } from '../../optional-practice/civilian-fpv/betaflight-import.mjs';
+import { createPresetConfiguration } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
 function fixture(
@@ -130,6 +131,274 @@ function fixture(
     },
   };
 }
+
+test('aircraft picker creates an independent editable setup with starter rates and applies it only on restart', async (t) => {
+  const f = fixture(t);
+  const original = f.store.snapshot();
+  assert.equal(f.find('Aircraft preset', 'select').options.length, 12);
+  assert.equal(f.find('Rates when selecting an aircraft', 'select').value, 'defaults');
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  assert.match(f.ui.root.textContent, /37.68/);
+  assert.match(f.ui.root.textContent, /Specification-based estimate/);
+  await f.click('Use this aircraft');
+  assert.equal(f.store.snapshot().setups.length, 2);
+  assert.equal(f.store.effective().advanced.aircraft.id, 'meteor75-analog-2022');
+  assert.equal(f.store.effective().response.rates.axes.yaw.rate, 60);
+  assert.deepEqual(f.store.snapshot().setups[0], original.setups[0]);
+  assert.deepEqual(f.store.snapshot().profiles[0], original.profiles[0]);
+  assert.equal(f.applied.length, 0);
+  await f.click('Apply & restart');
+  assert.equal(f.applied.length, 1);
+  assert.equal(f.applied[0].advanced.aircraft.id, 'meteor75-analog-2022');
+});
+
+test('aircraft picker keeps complete current Legacy rates and restores saved custom aircraft after navigation', async (t) => {
+  const f = fixture(t),
+    legacy = f.store.effective().response;
+  f.edit('Rates when selecting an aircraft', 'keep', { tag: 'select', event: 'change' });
+  f.edit('Aircraft preset', 'holybro-x650-v2', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  const selected = f.store.snapshot().selectedSetupId;
+  assert.deepEqual(f.store.effective().response, legacy);
+  f.edit('Camera tilt (degrees)', '41', { event: 'change' });
+  await f.click('Save drone assignment & camera');
+  f.edit('Drone setup', 'my-drone', { tag: 'select', event: 'change' });
+  await settle();
+  f.edit('Drone setup', selected, { tag: 'select', event: 'change' });
+  await settle();
+  assert.equal(f.find('Camera tilt (degrees)').value, '41');
+  assert.equal(f.store.effective().advanced.aircraft.mass, 3.2);
+  f.edit('Rates when selecting an aircraft', 'defaults', { tag: 'select', event: 'change' });
+  await f.click('Reset saved aircraft to its preset');
+  assert.equal(f.find('Camera tilt (degrees)').value, '10');
+  assert.equal(f.store.effective().response.rates.axes.roll.rate, 30);
+});
+
+test('physical aircraft with retained Legacy feel can open Advanced without converting its response', async (t) => {
+  const opened = [],
+    f = fixture(t, { onAdvanced: (configuration) => opened.push(configuration) });
+  const legacy = f.store.effective().response;
+  f.edit('Rates when selecting an aircraft', 'keep', { tag: 'select', event: 'change' });
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  f.edit('Physical camera payload', 'custom', { tag: 'select', event: 'change' });
+  f.edit('Additional camera mass (g)', '4');
+  await f.click('Advanced reference quad · experimental');
+  assert.equal(opened.length, 1);
+  assert.deepEqual(opened[0].response, legacy);
+  assert.equal(opened[0].advanced.aircraft.format, 'AdvancedAircraft.v2');
+  assert.ok(Math.abs(opened[0].advanced.aircraft.mass - 0.04168) < 1e-15);
+  assert.deepEqual(f.store.effective().response, legacy);
+  assert.equal(f.store.effective().advanced.aircraft.mass, 0.03768);
+  assert.equal(opened[0].components.cameraPayload.massGrams, 4);
+});
+
+test('returning from an Advanced save reloads the saved component inventory without adding an unsaved payload twice', async (t) => {
+  const opened = [],
+    f = fixture(t, { onAdvanced: (configuration) => opened.push(configuration) });
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  f.edit('Drone name', 'Pending custom name');
+  f.edit('Physical camera payload', 'custom', { tag: 'select', event: 'change' });
+  f.edit('Additional camera mass (g)', '4');
+  await f.click('Advanced reference quad · experimental');
+  const previous = f.store.snapshot();
+  await f.store.saveAircraftConfiguration({
+    setupId: previous.selectedSetupId,
+    advanced: opened[0].advanced,
+    response: opened[0].response,
+    camera: opened[0].camera,
+    components: opened[0].components,
+  });
+  f.ui.acceptOwnSave(previous.revision, { reloadAircraft: true });
+  f.ui.open({ keepDraft: true });
+  assert.equal(f.find('Drone name').value, 'Pending custom name');
+  assert.equal(f.find('Additional camera mass (g)').value, '4');
+  await f.click('Test draft · unscored');
+  assert.ok(Math.abs(f.tested[0].advanced.aircraft.mass - 0.04168) < 1e-15);
+  f.ui.open({ keepDraft: true });
+  f.edit('Additional camera mass (g)', '5');
+  await f.click('Save battery & physical camera');
+  assert.ok(Math.abs(f.store.effective().advanced.aircraft.mass - 0.04268) < 1e-15);
+  await f.click('Advanced reference quad · experimental');
+  const preset = createPresetConfiguration('holybro-x650-v2'),
+    beforeSelection = f.store.snapshot();
+  await f.store.saveAircraftConfiguration({
+    setupId: beforeSelection.selectedSetupId,
+    newProfileId: 'x650-from-advanced',
+    advanced: { aircraft: preset.aircraft, controller: preset.controller },
+    response: preset.response,
+    camera: preset.camera,
+    preset: preset.preset,
+    components: preset.components,
+  });
+  f.ui.acceptOwnSave(beforeSelection.revision, { reloadAircraft: true });
+  f.ui.open({ keepDraft: true });
+  assert.equal(f.find('Aircraft preset', 'select').value, 'holybro-x650-v2');
+  assert.equal(f.find('Additional camera mass (g)').value, '0');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[1].advanced.aircraft.mass, 3.2);
+  assert.deepEqual(f.tested[1].response, preset.response);
+  assert.deepEqual(f.tested[1].camera, preset.camera);
+});
+
+test('aircraft selection reports storage failure without changing the active setup or draft', async (t) => {
+  const f = fixture(t),
+    before = f.store.export();
+  f.storage.setItem = () => {
+    throw new Error('quota full');
+  };
+  await f.click('Use this aircraft');
+  assert.equal(f.store.export(), before);
+  assert.equal(f.applied.length, 0);
+  assert.match(f.ui.root.querySelector('[role="status"]').textContent, /quota full/);
+});
+
+test('optional depletion stays in the draft until saved and reaches Test and Advanced without changing the current flight', async (t) => {
+  const opened = [],
+    f = fixture(t, { onAdvanced: (configuration) => opened.push(configuration) });
+  assert.equal(f.axis('Optional battery endurance').hidden, true);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  const currentFlight = f.store.effective();
+  assert.equal(f.axis('Optional battery endurance').hidden, false);
+  assert.equal(f.find('Battery depletion (optional)').checked, false);
+  f.find('Battery depletion (optional)').checked = true;
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.aircraft.battery.depletion, true);
+  assert.equal(f.store.effective().advanced.aircraft.battery.depletion, false);
+  f.ui.open({ keepDraft: true });
+  await f.click('Advanced reference quad · experimental');
+  assert.equal(opened[0].advanced.aircraft.battery.depletion, true);
+  f.ui.open({ keepDraft: true });
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().advanced.aircraft.battery.depletion, true);
+  assert.equal(currentFlight.advanced.aircraft.battery.depletion, false);
+  assert.equal(f.applied.length, 0);
+  f.find('Battery depletion (optional)').checked = false;
+  await f.click('Revert draft');
+  assert.equal(f.find('Battery depletion (optional)').checked, true);
+});
+
+test('fresh-battery restart saves the complete draft and invokes a new flight only after successful validation', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  f.find('Battery depletion (optional)').checked = true;
+  f.edit('Physical camera payload', 'custom', { tag: 'select', event: 'change' });
+  f.edit('Additional camera mass (g)', '4');
+  f.edit('Camera tilt (degrees)', '');
+  const before = f.store.export();
+  await f.click('Fresh battery & restart flight');
+  assert.equal(f.applied.length, 0);
+  assert.equal(f.store.export(), before);
+  assert.equal(f.ui.root.open, true);
+  f.edit('Camera tilt (degrees)', '30');
+  await f.click('Fresh battery & restart flight');
+  assert.equal(f.applied.length, 1);
+  assert.equal(f.applied[0].advanced.aircraft.battery.depletion, true);
+  assert.ok(Math.abs(f.applied[0].advanced.aircraft.mass - 0.04168) < 1e-15);
+  assert.equal(f.applied[0].camera.tilt, 30);
+  assert.equal(f.ui.root.open, false);
+  f.ui.open();
+  assert.equal(f.find('Battery depletion (optional)').checked, true);
+  assert.match(f.ui.root.textContent, /Pause, resume and checkpoint recovery preserve/);
+});
+
+test('depletion drafts survive locale and setup navigation; preset reset restores its explicitly off default', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  const selected = f.store.snapshot().selectedSetupId;
+  f.find('Battery depletion (optional)').checked = true;
+  f.edit('Drone setup', 'my-drone', { tag: 'select', event: 'change' });
+  await settle();
+  f.edit('Drone setup', selected, { tag: 'select', event: 'change' });
+  await settle();
+  assert.equal(f.find('Battery depletion (optional)').checked, true);
+  f.setLocale('uk');
+  assert.equal(f.find('Розряджання батареї (необов’язково)').checked, true);
+  assert.ok(
+    f.ui.root
+      .querySelectorAll('button')
+      .some((node) => node.textContent === 'Свіжа батарея й перезапуск польоту'),
+  );
+  await f.click('Зберегти для наступного польоту');
+  assert.equal(f.store.effective().advanced.aircraft.battery.depletion, true);
+  f.setLocale('en');
+  await f.click('Reset saved aircraft to its preset');
+  assert.equal(f.find('Battery depletion (optional)').checked, false);
+  assert.equal(f.store.effective().advanced.aircraft.battery.depletion, false);
+});
+
+test('aircraft controls and evidence refresh in Ukrainian without changing the selected preset', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-pro-matrix', { tag: 'select', event: 'change' });
+  f.setLocale('uk');
+  assert.equal(f.find('Пресет дрона', 'select').value, 'meteor75-pro-matrix');
+  assert.equal(f.find('Рейти під час вибору дрона', 'select').value, 'defaults');
+  assert.match(f.ui.root.textContent, /Оцінка за характеристиками/);
+  await f.click('Використати цей дрон');
+  assert.equal(f.store.effective().advanced.aircraft.id, 'meteor75-pro-matrix');
+});
+
+test('battery and physical-camera drafts change the tested physics without changing a saved or current flight', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use this aircraft');
+  const original = f.store.effective();
+  f.edit('Battery', 'custom', { tag: 'select', event: 'change' });
+  f.edit('Battery capacity (mAh)', '600');
+  f.edit('Battery mass (g)', '16');
+  f.edit('Physical camera payload', 'custom', { tag: 'select', event: 'change' });
+  f.edit('Additional camera mass (g)', '4');
+  assert.match(f.ui.root.textContent, /44.98 g/);
+  assert.equal(f.store.effective().advanced.aircraft.mass, original.advanced.aircraft.mass);
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested.length, 1);
+  assert.ok(Math.abs(f.tested[0].advanced.aircraft.mass - 0.04498) < 1e-15);
+  assert.equal(f.tested[0].advanced.aircraft.battery.capacityAh, 0.6);
+  assert.deepEqual(f.tested[0].advanced.controller, original.advanced.controller);
+  assert.equal(f.store.effective().advanced.aircraft.mass, original.advanced.aircraft.mass);
+  await f.click('Return to tuning', f.document.body);
+  await f.click('Save battery & physical camera');
+  const saved = f.store.effective();
+  assert.ok(Math.abs(saved.advanced.aircraft.mass - 0.04498) < 1e-15);
+  assert.equal(f.applied.length, 0);
+  f.edit('Camera tilt (degrees)', '37');
+  f.edit('Vertical FOV (degrees)', '110');
+  await f.click('Save drone assignment & camera');
+  assert.deepEqual(
+    f.store.effective().advanced,
+    saved.advanced,
+    'View settings must not change physical payload',
+  );
+  f.edit('Battery', 'reference', { tag: 'select', event: 'change' });
+  f.edit('Physical camera payload', 'none', { tag: 'select', event: 'change' });
+  await f.click('Apply & restart');
+  assert.equal(f.applied.length, 1);
+  assert.deepEqual(f.applied[0].advanced, original.advanced);
+});
+
+test('incomplete component drafts survive navigation, reject saves and refresh their labels in Ukrainian', async (t) => {
+  const f = fixture(t);
+  await f.click('Use this aircraft');
+  const selected = f.store.snapshot().selectedSetupId;
+  f.edit('Battery', 'custom', { tag: 'select', event: 'change' });
+  f.edit('Battery mass (g)', '');
+  f.edit('Drone setup', 'my-drone', { tag: 'select', event: 'change' });
+  await settle();
+  f.edit('Drone setup', selected, { tag: 'select', event: 'change' });
+  await settle();
+  assert.equal(f.find('Battery mass (g)').value, '');
+  const before = f.store.export();
+  await f.click('Save battery & physical camera');
+  assert.equal(f.store.export(), before);
+  assert.equal(f.find('Battery mass (g)').getAttribute('aria-invalid'), 'true');
+  f.setLocale('uk');
+  assert.equal(f.find('Маса акумулятора (г)').value, '');
+  assert.match(f.ui.root.textContent, /Оцінена|коректні значення/);
+});
 
 test('pointer opening restores focus to its trigger even when the browser did not focus it', async (t) => {
   const f = fixture(t);
@@ -764,7 +1033,7 @@ test('stale tab notification preserves the draft and a save cannot overwrite new
 
 test('Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation', async (t) => {
   const f = fixture(t, { locale: 'uk' });
-  assert.equal(f.ui.root.getAttribute('aria-label'), 'Рейти й газ');
+  assert.equal(f.ui.root.getAttribute('aria-label'), 'Дрон, рейти й газ');
   assert.ok(f.find('Вертикальне поле зору (градуси)'));
   assert.ok(f.ui.root.querySelector('[role="status"]'));
   assert.equal(f.frames.size, 1);
@@ -1212,8 +1481,8 @@ test('switching locale updates accessible controls without changing numeric, nam
   f.edit('Rates used by this drone', selected, { tag: 'select', event: 'change' });
   const saved = f.store.export();
   f.setLocale('uk');
-  assert.equal(f.ui.root.getAttribute('aria-label'), 'Рейти й газ');
-  assert.equal(f.ui.root.querySelector('h2').textContent, 'Рейти й газ');
+  assert.equal(f.ui.root.getAttribute('aria-label'), 'Дрон, рейти й газ');
+  assert.equal(f.ui.root.querySelector('h2').textContent, 'Дрон, рейти й газ');
   assert.equal(f.find('Назва профілю').value, 'Мої рейти');
   assert.equal(f.find('Назва дрона').value, 'Локальний дрон');
   assert.equal(f.find('Нахил камери (градуси)').value, '60');
