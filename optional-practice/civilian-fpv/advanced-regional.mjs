@@ -11,9 +11,17 @@ import {
   createAdvancedAircraftTune,
 } from './advanced-simulation.mjs';
 import { validateAdvancedTune } from './advanced-controller.mjs';
+import {
+  validateAircraftPhysics,
+  createAircraftControllerTune,
+  validateAircraftControllerTune,
+} from './aircraft-physics.mjs';
+import { createAircraftResponseDescriptor } from './aircraft-response.mjs';
+import { createTunedResponse } from './flight-response.mjs';
 import { validateRegionManifest, createRegionPlanner } from './regional/region-manifest.mjs';
 import { createVerifiedFlightGeometry } from './regional/verified-flight-geometry.mjs';
 import { validateRegionalLocationStart } from './regional-locations.mjs';
+import { validateAircraftChallengeRules } from './aircraft-challenge.mjs';
 
 const axes = ['x', 'y', 'z'];
 // Match the verified support-pose tolerance while retaining Rapier's actual pose.
@@ -70,14 +78,40 @@ export function createAdvancedRegionalSession(
     const point = rotate(value);
     return Object.fromEntries(axes.map((key) => [key, frame[key] + point[key] * 1000]));
   };
-  const airframe = validateAdvancedAircraft(configuration.advanced?.aircraft ?? 'freestyle');
-  const controller = validateAdvancedTune(
-    configuration.advanced?.controller ?? createAdvancedAircraftTune(airframe),
+  const aircraftPhysics = configuration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
+  const challenge =
+    configuration.challenge === undefined
+      ? null
+      : validateAircraftChallengeRules(configuration.challenge);
+  requireValue(
+    !challenge || aircraftPhysics,
+    'Aircraft challenges require a physical aircraft setup',
   );
+  const airframe = aircraftPhysics
+    ? validateAircraftPhysics(configuration.advanced.aircraft)
+    : validateAdvancedAircraft(configuration.advanced?.aircraft ?? 'freestyle');
+  requireValue(
+    challenge?.kind !== 'battery-endurance' || airframe.battery.depletion,
+    'Battery endurance requires battery depletion',
+  );
+  const controller = aircraftPhysics
+    ? validateAircraftControllerTune(
+        configuration.advanced.controller ?? createAircraftControllerTune(airframe),
+      )
+    : validateAdvancedTune(
+        configuration.advanced?.controller ?? createAdvancedAircraftTune(airframe),
+      );
+  const mode = aircraftPhysics ? (configuration.mode ?? 'acro') : 'acro';
+  requireValue(['acro', 'self-level'].includes(mode), 'Invalid Regional aircraft flight mode');
   const radius = Math.ceil(airframe.radius * 1000);
   const profile = validateRateProfile(configuration.rateProfile ?? createRateProfile());
+  const response = aircraftPhysics
+    ? createAircraftResponseDescriptor(configuration.response ?? createTunedResponse(profile), {
+        mode,
+      })
+    : null;
   const environment = {
-    model: 'regional-advanced-contact.v1',
+    model: aircraftPhysics ? 'regional-aircraft-contact.v1' : 'regional-advanced-contact.v1',
     terrain: dataIdentity(manifest),
     scenery: configuration.scenery ? dataIdentity(configuration.scenery.manifest) : null,
     geometryProfile: configuration.geometryProfile ?? 'terrain-v1',
@@ -88,12 +122,12 @@ export function createAdvancedRegionalSession(
   const options = {
     aircraft: airframe,
     controller,
-    rateProfile: profile,
+    ...(aircraftPhysics ? { response } : { rateProfile: profile }),
     // Explicit air start gives motor spin-up time without an invented ground plane.
     spawn: { x: 0, y: 2, z: 0 },
     floor: false,
     terrain: { format: 'AdvancedRegionalTerrain.v1' },
-    configuration: { environment },
+    configuration: { environment, ...(challenge ? { challenge } : {}) },
   };
   const terrain = createGeometry(manifest, {
     profile: environment.geometryProfile,
@@ -126,7 +160,14 @@ export function createAdvancedRegionalSession(
     frameCommitOwner = null,
     recoveryJob = null,
     recoveryClient = null,
-    recoveryVerification = null;
+    recoveryVerification = null,
+    checkpointJob = null,
+    checkpointKind = null,
+    archiveGeneration = 0;
+  const archiveEnvelope = (value) => ({
+    ...value,
+    generation: `${archiveGeneration}:${value.generation}`,
+  });
   let telemetry = {
     missionTick: 0,
     seconds: 0,
@@ -139,6 +180,10 @@ export function createAdvancedRegionalSession(
   const live = () => requireValue(!disposed, 'Regional Advanced session is disposed');
   const centre = () => globalPoint(telemetry.position);
   const supportPose = (currentTelemetry = telemetry) => {
+    // The new worker validates the complete collider hull before a terrain
+    // transaction can commit. The historical sphere-only restore proof would
+    // reject a flat aircraft resting on the ground and is not its geometry.
+    if (aircraftPhysics) return null;
     const point = globalPoint(currentTelemetry.position);
     return {
       positionMm: { ...point, y: point.y - radius },
@@ -149,17 +194,22 @@ export function createAdvancedRegionalSession(
   function snapshot() {
     const point = centre(),
       velocity = rotate(telemetry.velocity);
-    // Existing Regional renderer expects its historical 220 mm camera offset.
-    const position = { ...point, y: point.y - 220 };
+    // Legacy renderers use their historical 220 mm offset. Aircraft snapshots
+    // carry the actual support height so body and camera stay at the COM pose.
+    const supportHeightMm = aircraftPhysics
+      ? (telemetry.supportHeight ?? airframe.geometry.bodyHalfExtents.y) * 1000
+      : 220;
+    const position = { ...point, y: point.y - supportHeightMm };
     const quaternion = headingRotation
       .clone()
       .multiply(new THREE.Quaternion().copy(telemetry.orientation));
     const orientation = quaternion.toArray().map((value) => Math.round(value * Q));
+    const angles = attitude(orientation);
     return {
       position,
       velocity: Object.fromEntries(axes.map((key) => [key, Math.round(velocity[key] * 1000)])),
       orientation,
-      attitude: attitude(orientation),
+      attitude: angles,
       angular: Object.fromEntries(
         ['roll', 'pitch', 'yaw'].map((key) => [
           key,
@@ -167,7 +217,7 @@ export function createAdvancedRegionalSession(
         ]),
       ),
       ticks: telemetry.missionTick,
-      mode: 'acro',
+      mode,
       status,
       reason,
       failure,
@@ -180,7 +230,7 @@ export function createAdvancedRegionalSession(
           }
         : null,
       landingSpeed: Math.round((telemetry.terrain?.impactSpeed ?? 0) * 1000),
-      landingTilt: 0,
+      landingTilt: aircraftPhysics ? atan2(Math.hypot(angles.up.x, angles.up.z), angles.up.y) : 0,
       lastInput: Object.fromEntries(
         Object.entries(telemetry.calibratedInput).map(([key, value]) => [
           key,
@@ -197,7 +247,19 @@ export function createAdvancedRegionalSession(
       unscored: true,
       playerReady: false,
       advanced: true,
-      advancedTelemetry: clone(telemetry),
+      advancedTelemetry: {
+        ...clone(telemetry),
+        ...(telemetry.archiveStatus
+          ? { archiveStatus: archiveEnvelope(telemetry.archiveStatus) }
+          : {}),
+      },
+      ...(aircraftPhysics
+        ? {
+            aircraftRadiusMm: radius,
+            aircraftSupportHeightMm: supportHeightMm,
+            recordingStatus: clone(telemetry.recordingStatus ?? null),
+          }
+        : {}),
       step: 0,
       total: 0,
       hold: 0,
@@ -214,6 +276,7 @@ export function createAdvancedRegionalSession(
     terrain.cancel();
   }
   function stopAtFlightLimit(error) {
+    if (aircraftPhysics) return false;
     // Only the worker's explicit rolled-back quota contract is recoverable.
     // Similar-looking freeform messages and unknown codes remain failures.
     const limitReason =
@@ -252,11 +315,13 @@ export function createAdvancedRegionalSession(
     });
   }
   function transition(target, parameters) {
-    const preceding = frameJob;
+    const preceding = frameJob,
+      checkpointAtDispatch = checkpointJob;
     const operation = (async () => {
       // A cancelled preparation must roll back its staged worker frame before a
       // newer prepare/recovery may acquire the shared source and worker owners.
       await preceding?.catch(() => {});
+      await checkpointAtDispatch;
       parameters.current();
       return transitionFrame(target, parameters);
     })();
@@ -294,11 +359,15 @@ export function createAdvancedRegionalSession(
           staged = await targetClient.stageTerrainFrame(workerFrame(collisionFrame()));
           current();
         },
-        readPose() {
-          current();
-          const { positionMm, radiusMm } = pose();
-          return { positionMm, radiusMm };
-        },
+        ...(!aircraftPhysics
+          ? {
+              readPose() {
+                current();
+                const { positionMm, radiusMm } = pose();
+                return { positionMm, radiusMm };
+              },
+            }
+          : {}),
         commit({ group, provenance }) {
           current();
           origin = { ...provenance.originMm };
@@ -447,13 +516,22 @@ export function createAdvancedRegionalSession(
         'Invalid Regional Advanced trace',
       );
       const point = globalPoint(local);
+      const lowerExtent = aircraftPhysics ? local.supportHeight * 1000 : radius;
+      const upperExtent = aircraftPhysics ? local.topHeight * 1000 : radius;
+      requireValue(
+        Number.isFinite(lowerExtent) &&
+          Number.isFinite(upperExtent) &&
+          lowerExtent >= 0 &&
+          upperExtent >= 0,
+        'Incomplete aircraft hull bounds',
+      );
       if (
         point.x - radius < grid.minX * grid.cellSizeMm ||
         point.x + radius > (grid.minX + grid.width) * grid.cellSizeMm ||
         point.z - radius < grid.minZ * grid.cellSizeMm ||
         point.z + radius > (grid.minZ + grid.depth) * grid.cellSizeMm ||
-        point.y - radius < grid.floorMm - verticalContactToleranceMm ||
-        point.y + radius > grid.ceilingMm + verticalContactToleranceMm
+        point.y - lowerExtent < grid.floorMm - verticalContactToleranceMm ||
+        point.y + upperExtent > grid.ceilingMm + verticalContactToleranceMm
       )
         return { accepted: false, reason: 'region-edge' };
       if (from) {
@@ -472,7 +550,8 @@ export function createAdvancedRegionalSession(
   function step(input) {
     live();
     if (stepJob) return stepJob;
-    if (status !== 'active' || frameCommitOwner || recoveryJob) return Promise.resolve(snapshot());
+    if (status !== 'active' || frameCommitOwner || recoveryJob || checkpointJob)
+      return Promise.resolve(snapshot());
     const controls = Object.fromEntries(
       ['roll', 'pitch', 'yaw', 'throttle'].map((key) => [key, input[key]]),
     );
@@ -534,13 +613,49 @@ export function createAdvancedRegionalSession(
     stepJob = job;
     return job;
   }
+  function readArchive(afterIndex = -1, finalize = false) {
+    live();
+    requireValue(aircraftPhysics && initialized && !recoveryJob, 'Aircraft archive is not ready');
+    requireValue(!finalize || status !== 'active', 'Pause before ending the session archive');
+    if (checkpointJob) return checkpointJob.then(() => readArchive(afterIndex, finalize));
+    const pendingStep = stepJob,
+      pendingFrame = frameJob;
+    checkpointKind = finalize ? 'archive-finalize' : 'archive';
+    const operation = (async () => {
+      await pendingStep;
+      await pendingFrame;
+      live();
+      requireValue(!finalize || status !== 'active', 'Pause before ending the session archive');
+      const result = await (finalize
+        ? client.finalizeArchive(afterIndex)
+        : client.readSealedSegment(afterIndex));
+      telemetry.archiveStatus = {
+        generation: result.generation,
+        origin: result.origin,
+        earliestIndex: result.earliestIndex,
+        lastSealedIndex: result.lastSealedIndex,
+        latestTick: result.latestTick,
+      };
+      return archiveEnvelope(result);
+    })();
+    checkpointJob = operation;
+    void operation
+      .finally(() => {
+        if (checkpointJob === operation) {
+          checkpointJob = null;
+          checkpointKind = null;
+        }
+      })
+      .catch(() => {});
+    return operation;
+  }
   return Object.freeze({
     root,
     snapshot,
     prepare,
     pause,
     step,
-    stepPending: () => Boolean(stepJob),
+    stepPending: () => Boolean(stepJob || checkpointJob),
     arm(input = neutral()) {
       live();
       if (
@@ -552,6 +667,7 @@ export function createAdvancedRegionalSession(
         frameCommitOwner ||
         frameJob ||
         recoveryJob ||
+        checkpointKind === 'archive-finalize' ||
         !terrain.snapshot().terrainReady ||
         !Number.isFinite(input?.throttle) ||
         input.throttle < 0 ||
@@ -587,6 +703,51 @@ export function createAdvancedRegionalSession(
       live();
       return client.recording();
     },
+    readSealedSegment: (afterIndex) => readArchive(afterIndex),
+    finalizeArchive: (afterIndex) => readArchive(afterIndex, true),
+    exportRecovery() {
+      live();
+      requireValue(aircraftPhysics, 'Continuous recovery requires the aircraft backend');
+      requireValue(initialized && !recoveryJob, 'Aircraft recovery is not ready');
+      if (checkpointJob)
+        return checkpointKind === 'save'
+          ? checkpointJob
+          : checkpointJob.then(() => this.exportRecovery());
+      // Lock new missions and terrain transitions until the already accepted
+      // interval has drained and its complete worker checkpoint is captured.
+      // Capture owners before yielding so later transitions cannot create a
+      // checkpoint/frame wait cycle.
+      const pendingStep = stepJob,
+        pendingFrame = frameJob;
+      const operation = (async () => {
+        await pendingStep;
+        await pendingFrame;
+        live();
+        return {
+          format: 'AdvancedRegionalRecovery.v2',
+          environment: clone(environment),
+          simulation: await client.snapshot(),
+        };
+      })();
+      checkpointJob = operation;
+      checkpointKind = 'save';
+      void operation
+        .finally(() => {
+          if (checkpointJob === operation) {
+            checkpointJob = null;
+            checkpointKind = null;
+          }
+        })
+        .catch(() => {});
+      return operation;
+    },
+    async reportPersistence(report) {
+      live();
+      if (!aircraftPhysics || !client?.reportPersistence) return null;
+      const next = await client.reportPersistence(report);
+      if (!disposed && next) telemetry.recordingStatus = clone(next);
+      return next;
+    },
     async captureRecovery() {
       live();
       requireValue(status !== 'active', 'Pause before capturing Regional Advanced recovery');
@@ -594,17 +755,21 @@ export function createAdvancedRegionalSession(
       await frameJob;
       live();
       return {
-        format: 'AdvancedRegionalRecovery.v1',
+        format: aircraftPhysics ? 'AdvancedRegionalRecovery.v2' : 'AdvancedRegionalRecovery.v1',
         environment: clone(environment),
         simulation: await client.snapshot(),
       };
     },
-    async restoreRecovery(savedState) {
+    async restoreRecovery(savedState, { signal } = {}) {
       live();
+      await checkpointJob;
+      live();
+      if (signal?.aborted) throw abort();
       requireValue(!recoveryJob, 'Regional Advanced recovery is already pending');
       const saved = clone(savedState);
       requireValue(
-        saved?.format === 'AdvancedRegionalRecovery.v1' &&
+        saved?.format ===
+          (aircraftPhysics ? 'AdvancedRegionalRecovery.v2' : 'AdvancedRegionalRecovery.v1') &&
           dataIdentity(saved.environment) === dataIdentity(environment),
         'Regional Advanced recovery belongs to another region or start',
       );
@@ -615,6 +780,9 @@ export function createAdvancedRegionalSession(
       const current = () => {
         if (disposed || token !== generation || controller.signal.aborted) throw abort();
       };
+      const cancelRestore = () => controller.abort();
+      signal?.addEventListener('abort', cancelRestore, { once: true });
+      if (signal?.aborted) cancelRestore();
       preparingController = controller;
       recoveryVerification = controller;
       const operation = (async () => {
@@ -646,12 +814,16 @@ export function createAdvancedRegionalSession(
           current();
           const previous = client;
           client = candidate;
+          archiveGeneration++;
           candidate = null;
           telemetry = adopted ?? restored;
-          sequence = saved.simulation.state.acceptedSequence + 1;
+          sequence =
+            (aircraftPhysics
+              ? saved.simulation.checkpoint.state.acceptedSequence
+              : saved.simulation.state.acceptedSequence) + 1;
           pendingTarget = null;
           flightStopReason =
-            telemetry.missionTick >= ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ
+            !aircraftPhysics && telemetry.missionTick >= ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ
               ? 'duration-limit'
               : null;
           reason = flightStopReason ?? 'prepared';
@@ -659,6 +831,7 @@ export function createAdvancedRegionalSession(
           previous.dispose();
           return snapshot();
         } finally {
+          signal?.removeEventListener('abort', cancelRestore);
           controller.signal.removeEventListener('abort', cancelVerification);
           if (recoveryVerification === controller) recoveryVerification = null;
           candidate?.dispose();
@@ -691,7 +864,7 @@ export function createAdvancedRegionalSession(
       terrain.cancel();
       client?.dispose();
       recoveryClient?.dispose();
-      await Promise.allSettled([stepJob, preparation, recoveryJob, frameJob]);
+      await Promise.allSettled([stepJob, preparation, recoveryJob, frameJob, checkpointJob]);
       root.clear();
       root.removeFromParent();
       await terrain.dispose();

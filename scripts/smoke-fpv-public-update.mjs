@@ -143,10 +143,10 @@ async function openTuning(page) {
   await page.locator('[data-mode-action="settings"]:visible').click();
   await page.getByRole('tab', { name: 'Controls', exact: true }).click();
   await page
-    .getByRole('button', { name: 'Rates & throttle', exact: true })
+    .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
     .filter({ visible: true })
     .click();
-  await page.getByRole('dialog', { name: 'Rates & throttle', exact: true }).waitFor();
+  await page.getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true }).waitFor();
 }
 async function launch(chromium, profile, offline = false) {
   const context = await chromium.launchPersistentContext(profile, {

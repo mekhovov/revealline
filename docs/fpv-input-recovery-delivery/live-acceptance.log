@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "phase": "complete",
+  "packages": [
+    {
+      "id": "civilian-fpv",
+      "passed": true,
+      "checks": {
+        "unavailableRadioRetainsFlight": {
+          "message": "Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained.",
+          "missionTick": 62
+        },
+        "recordingUnchangedAfterInputFailure": true,
+        "keyboardSelectionDoesNotResume": true,
+        "exactPrefixAndContinuousSequences": {
+          "inputs": 62,
+          "hashes": 1,
+          "totalInputs": 123
+        },
+        "explicitRestartCreatesNewFlight": true
+      }
+    },
+    {
+      "id": "fpv-worlds",
+      "passed": true,
+      "checks": {
+        "unavailableRadioRetainsFlight": {
+          "message": "Input unavailable. Practice is paused. Reconnect the radio or choose Keyboard / touch, then start explicitly. Your recording is retained.",
+          "missionTick": 62
+        },
+        "recordingUnchangedAfterInputFailure": true,
+        "keyboardSelectionDoesNotResume": true,
+        "exactPrefixAndContinuousSequences": {
+          "inputs": 62,
+          "hashes": 1,
+          "totalInputs": 123
+        },
+        "explicitRestartCreatesNewFlight": true
+      }
+    }
+  ]
+}
