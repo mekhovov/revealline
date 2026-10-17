@@ -193,6 +193,140 @@ test('ordered mutation records cover older engines and same-task close/reopen wi
   assert.equal(observer.disconnected, true);
 });
 
+function observedSurface(beforeAttach = () => {}) {
+  const h = surface();
+  beforeAttach(h);
+  let observer,
+    scans = 0;
+  const query = h.doc.querySelectorAll.bind(h.doc);
+  h.doc.querySelectorAll = (selector) => {
+    if (selector === 'dialog[open]') scans++;
+    return query(selector);
+  };
+  h.doc.defaultView.MutationObserver = class {
+    pending = [];
+    constructor(callback) {
+      observer = this;
+      this.callback = callback;
+    }
+    observe(target, options) {
+      assert.equal(target, h.doc);
+      this.options = options;
+    }
+    takeRecords() {
+      return this.pending.splice(0);
+    }
+    disconnect() {
+      this.disconnected = true;
+    }
+  };
+  const stack = attachModalNavigation({ document: h.doc });
+  return { ...h, stack, observer, scans: () => scans };
+}
+const openWithoutEvents = (dialog) => {
+  dialog.open = true;
+  dialog.hidden = false;
+  dialog.setAttribute('open', '');
+};
+
+test('modal empty discovery is cached across unchanged polls and unrelated DOM updates', () => {
+  const h = observedSurface();
+  assert.equal(h.observer.options.childList, true);
+  for (let i = 0; i < 120; i++) assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.scans(), 1);
+  const hud = h.add('div', 'hud');
+  h.add('span', 'clock', hud);
+  h.observer.pending.push({ type: 'childList', addedNodes: [hud], removedNodes: [] });
+  assert.equal(h.stack.topDialog(), null);
+  h.observer.callback([{ target: hud, attributeName: 'open', oldValue: null }]);
+  assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.scans(), 1, 'Unrelated content must not invalidate known empty modal state');
+  h.stack.destroy();
+});
+
+test('modal empty discovery observes queued open attributes before their callback', () => {
+  const h = observedSurface(),
+    [earlier, later] = h.dialogs;
+  assert.equal(h.stack.topDialog(), null);
+  openWithoutEvents(later);
+  openWithoutEvents(earlier);
+  h.observer.pending.push(
+    ...[later, earlier].map((target) => ({ target, attributeName: 'open', oldValue: null })),
+  );
+  assert.equal(h.stack.topDialog(), earlier, 'Queued mutation order remains top-layer order');
+  earlier.open = false;
+  earlier.removeAttribute('open');
+  h.observer.pending.push({ target: earlier, attributeName: 'open', oldValue: '' });
+  assert.equal(h.stack.topDialog(), later);
+  later.open = false;
+  later.removeAttribute('open');
+  h.observer.pending.push({ target: later, attributeName: 'open', oldValue: '' });
+  assert.equal(h.stack.topDialog(), null);
+  for (let i = 0; i < 120; i++) assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.scans(), 2);
+  h.stack.destroy();
+});
+
+for (const nested of [false, true])
+  test(`modal empty discovery finds an already-open inserted ${nested ? 'subtree' : 'dialog'}`, () => {
+    const h = observedSurface();
+    assert.equal(h.stack.topDialog(), null);
+    const dialog = h.doc.createElement('dialog');
+    openWithoutEvents(dialog);
+    const added = nested ? h.doc.createElement('section') : dialog;
+    if (nested) added.append(dialog);
+    h.doc.body.append(added);
+    h.observer.pending.push({ type: 'childList', addedNodes: [added], removedNodes: [] });
+    assert.equal(h.stack.topDialog(), dialog);
+    assert.equal(h.scans(), 2);
+    added.remove();
+    h.observer.callback([{ type: 'childList', addedNodes: [], removedNodes: [added] }]);
+    assert.equal(h.stack.topDialog(), null);
+    assert.equal(h.scans(), 3);
+    h.stack.destroy();
+  });
+
+test('modal empty discovery preserves ambiguous pre-existing opens and removal recovery', () => {
+  const h = observedSurface(({ dialogs }) => dialogs.forEach(openWithoutEvents));
+  assert.equal(h.stack.topDialog(), null, 'DOM order cannot establish two pre-existing openings');
+  const wrapper = h.add('section', 'wrapper');
+  wrapper.append(h.dialogs[0]);
+  wrapper.remove();
+  h.observer.pending.push({ type: 'childList', addedNodes: [], removedNodes: [wrapper] });
+  assert.equal(h.stack.topDialog(), h.dialogs[1]);
+  h.stack.destroy();
+  h.observer.callback([{ target: h.dialogs[0], attributeName: 'open', oldValue: null }]);
+  assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.observer.disconnected, true);
+});
+
+test('modal empty discovery adopts a single pre-existing open without focus or events', () => {
+  const h = observedSurface(({ dialogs }) => openWithoutEvents(dialogs[0]));
+  assert.equal(h.doc.activeElement, h.opener);
+  assert.equal(h.stack.topDialog(), h.dialogs[0]);
+  assert.equal(h.scans(), 1);
+  h.stack.destroy();
+});
+
+test('modal empty discovery retains polling when observation is unavailable', () => {
+  const h = surface();
+  const stack = attachModalNavigation({ document: h.doc });
+  let scans = 0;
+  const query = h.doc.querySelectorAll.bind(h.doc);
+  h.doc.querySelectorAll = (selector) => {
+    if (selector === 'dialog[open]') scans++;
+    return query(selector);
+  };
+  for (let i = 0; i < 3; i++) assert.equal(stack.topDialog(), null);
+  assert.equal(scans, 3);
+  openWithoutEvents(h.dialogs[0]);
+  assert.equal(stack.topDialog(), h.dialogs[0]);
+  assert.equal(scans, 4);
+  stack.destroy();
+  assert.equal(stack.topDialog(), null);
+  assert.equal(scans, 4);
+});
+
 for (const inactive of ['hidden', 'blur'])
   for (const when of ['at-close', 'after-close'])
     test(`modal close keeps stack cleanup but does not restore focus ${inactive}/${when}`, async () => {

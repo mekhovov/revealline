@@ -5,9 +5,14 @@ export function attachModalNavigation({
 } = {}) {
   let stack = [],
     destroyed = false,
+    emptyKnown = false,
     previousFocus = doc.activeElement;
   const isDialog = (node) => node?.tagName === 'DIALOG';
   const isOpen = (node) => isDialog(node) && node.isConnected && node.open;
+  const containsDialog = (nodes) => {
+    for (const node of nodes) if (isDialog(node) || node.querySelector?.('dialog')) return true;
+    return false;
+  };
   const focusedDialog = () => doc.activeElement?.closest?.('dialog[open]') ?? null;
   const remove = (dialog) => {
     const entry = stack.find((item) => item.dialog === dialog);
@@ -15,6 +20,7 @@ export function attachModalNavigation({
     return entry;
   };
   const opened = (dialog, origin = previousFocus, keepOrigin = false) => {
+    emptyKnown = false;
     const old = remove(dialog);
     stack.push({
       dialog,
@@ -24,7 +30,19 @@ export function attachModalNavigation({
   const records = (changes) => {
     if (destroyed) return;
     for (const change of changes) {
+      if (change.type === 'childList') {
+        // An already-open dialog can arrive inside an inserted subtree without
+        // an observed open attribute change. Removal can also leave one of
+        // several pre-existing dialogs as the only unambiguous fallback.
+        if (
+          emptyKnown &&
+          (containsDialog(change.addedNodes) || containsDialog(change.removedNodes))
+        )
+          emptyKnown = false;
+        continue;
+      }
       if (!isDialog(change.target) || change.attributeName !== 'open') continue;
+      emptyKnown = false;
       // takeRecords preserves mutation order even if several dialogs opened in one task.
       if (change.oldValue === null && isOpen(change.target)) {
         opened(change.target, previousFocus, true);
@@ -35,6 +53,7 @@ export function attachModalNavigation({
   const observer = typeof Observer === 'function' ? new Observer(records) : null;
   observer?.observe(doc, {
     subtree: true,
+    childList: true,
     attributes: true,
     attributeFilter: ['open'],
     attributeOldValue: true,
@@ -45,8 +64,11 @@ export function attachModalNavigation({
     stack = stack.filter((entry) => isOpen(entry.dialog));
     const focused = focusedDialog();
     if (isOpen(focused) && !stack.some((entry) => entry.dialog === focused)) opened(focused, null);
-    if (!stack.length) {
+    if (!stack.length && (!emptyKnown || !observer)) {
       const open = [...doc.querySelectorAll('dialog[open]')].filter(isOpen);
+      // Only cache absence when observation can invalidate it synchronously
+      // through takeRecords. Unsupported hosts retain the polling fallback.
+      emptyKnown = open.length === 0;
       // Only a single pre-existing dialog is unambiguous without an observed open.
       if (open.length === 1) opened(open[0], null);
     }
@@ -77,6 +99,7 @@ export function attachModalNavigation({
   };
   const close = (event) => {
     if (!isDialog(event.target) || event.target.open) return;
+    emptyKnown = false;
     const wasTop = stack.at(-1)?.dialog === event.target;
     const entry = remove(event.target);
     if (!wasTop || !entry?.origin || doc.hidden || doc.hasFocus?.() === false) return;
