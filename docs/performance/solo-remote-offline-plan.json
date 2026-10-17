@@ -96,10 +96,10 @@
   },
   "format": "SoloHostedOfflinePairPlan.v1",
   "status": "pinned-for-execution",
-  "cohort": "linux-offline-3adcd537-installed-starter-owner-pair03",
+  "cohort": "linux-offline-3adcd537-starter-admission-witness-pair04",
   "profileEvidenceBytes": 1082130432,
   "rowEvidenceBytes": 33554432,
-  "scope": "Independent Linux offline persistence diagnostic, then public installed current Starter capture/Next and two same-engine strict replay checks ONLY after exact successful offline launch. This separately declared successor uses corrected direct-child process attribution after pair02 stopped before browser observation. Prior failures remain retained. No b5 runtime, default-mission, physical-PWA, thermal or performance qualification.",
+  "scope": "Independent3ad/b117 Linux offline persistence and installed Starter diagnostic with the existing post-navigation access/online/controller witness retained before its unchanged assertion. Pair04 corrects an evidence omission observed in pair03; all source, recipe, owner, resource and timeout gates remain unchanged. No b5 or final-runtime qualification.",
   "rows": [
     {
       "id": "offline-baseline-p1",
@@ -165,8 +165,8 @@
     },
     {
       "path": "scripts/solo-offline-gameplay.mjs",
-      "bytes": 10290,
-      "sha256": "b257eb60c503278394994334bdd83017e909c7a986b8009b1212fb1bbf879f87"
+      "bytes": 10298,
+      "sha256": "72793defaa387d94350637e3cf2c1328dd6ffd046cb48081bfed94acecea9f19"
     }
   ],
   "acceptance": {
@@ -195,7 +195,7 @@
     "firstEightAllCorrectnessPassed": false,
     "successorQualificationReleased": false,
     "performanceQualificationReleased": false,
-    "reason": "Run38991754614 passed exact artifact/source/CSP and display checks, then stopped before either browser observation when the short browser-version process exited between process-stat and environment reads. The reviewed common owner now captures the directly spawned child birth synchronously before yielding, checks parent/detached group/preexisting identity, and retains same-birth checks before signaling. Pair03 independently observes the unchanged3ad/b117 packages and installed Starter recipe. No retry of the prior declaration, ownership bypass, resource or timeout changes.",
+    "reason": "Pair03 run38992974772 passed exact baseline launcher/cache restart and installed Starter boot, then failed the unchanged unlocked/remembered/offline/controller assertion before Start. The observer assigned the four-field snapshot after that assertion, losing the actual failing field. This separately declared pair04 moves the same bounded snapshot assignment before the assertion; it changes no acceptance condition, cache behavior, input, retry count or timeout. All original evidence remains retained.",
     "priorEvidence": {
       "run": 38985941469,
       "url": "https://github.com/mekhovov/revealline/actions/runs/38985941469",
@@ -209,7 +209,7 @@
       "allObservedCommandOwnersClosed": true,
       "fullArtifactProofMustRepeatInThisJob": true
     },
-    "outcomePolicy": "Preserve the original failed macOS attempt, failed Linux Opening recipe, and pair02 setup failure. Pair03 is a new declared installed-Starter comparison with a corrected common owner, not a retry or repair of those observations. Positive restart is distinct from gameplay success. No cache writes by observer, arbitrary flush delay, gate or timeout relaxation, first-eight waiver, b5/final-runtime qualification, physical-PWA claim or aggregate offline qualification pass.",
+    "outcomePolicy": "Preserve original macOS failure and all prior Linux failures. Pair04 is a new evidence-completeness diagnostic, not a retry/repair or a performance/final-runtime qualification. No observer cache writes, arbitrary flush delay, gate relaxation, automatic retry, first-eight waiver or aggregate offline success.",
     "priorOfflineEvidence": {
       "run": 38989601110,
       "url": "https://github.com/mekhovov/revealline/actions/runs/38989601110",
@@ -256,11 +256,42 @@
     },
     "ownerCorrection": {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 51780,
-      "sha256": "ea1400a0d1f3bd8b2072e4304bdcb4b451b29acb24d691509a453197a413157a",
+      "bytes": 52211,
+      "sha256": "42750c0bb862b5ca28dfb8394b6381694418b0ed9240a70f006652fcfde28235",
       "admission": "Existing required pre-observation wrapper tests verify these exact bytes, direct-spawn identity rejection, reused-PID rejection and Linux owned-child cleanup. The common runner retains the complete source in evidence.",
       "scope": "Initial direct child birth only; fresh identity before signals, unknown-browser rejection, bounded cleanup and failed cleanup status remain unchanged."
     },
-    "onceOnlyBefore": "aeadf7f43a8c1aba3af78d6cc8713666b4af49f1"
+    "onceOnlyBefore": "bffcbd838a7bb925da8aaf030695773f893d8bda",
+    "priorGameplayAdmissionEvidence": {
+      "run": 38992974772,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38992974772",
+      "conclusion": "failure",
+      "toolingRevision": "bffcbd838a7bb925da8aaf030695773f893d8bda",
+      "commonRunner": {
+        "bytes": 51780,
+        "sha256": "ea1400a0d1f3bd8b2072e4304bdcb4b451b29acb24d691509a453197a413157a"
+      },
+      "artifact": 12085822976,
+      "outer": {
+        "bytes": 122879662,
+        "sha256": "dc8c2067fc569282465bf7d3c2f9148a6ed01cf06130027fa5bef2e4e6c3fa59"
+      },
+      "members": 77,
+      "logicalBytes": 245493898,
+      "fullReadback": "passed",
+      "baselineLauncher": "passed-instrumented-restart-cache-proof",
+      "baselineGameplay": "failed-before-Start-post-navigation-four-field-assertion",
+      "failedField": "unobserved-snapshot-assigned-after-assertion",
+      "candidate": "not-observed-baseline-gate",
+      "ownedClosureEstablished": true,
+      "profile": {
+        "path": "members/solo-linux-offline/profile-evidence/offline-baseline-p1/profile.tar",
+        "bytes": 241315840,
+        "sha256": "eddff8b5bdc12b212e26a72a8d84c7a7cb207c5a5ec071bf8e97b343d78c666f",
+        "members": 4500,
+        "sourceBytes": 235142977,
+        "fullReadback": "passed"
+      }
+    }
   }
 }

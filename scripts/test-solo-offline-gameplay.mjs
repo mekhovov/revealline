@@ -222,7 +222,7 @@ test('the successor diagnostic retains one push admission, exclusions and fixed 
   );
   assert.match(
     workflow,
-    /^    if: github\.event\.pull_request\.number == 1544 && github\.event\.pull_request\.head\.repo\.full_name == github\.repository && github\.event\.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'$/m,
+    /^    if: github\.event\.pull_request\.number == 1544 && github\.event\.pull_request\.head\.repo\.full_name == github\.repository && github\.event\.before == 'bffcbd838a7bb925da8aaf030695773f893d8bda'$/m,
   );
   const plan = JSON.parse(
     await readFile(
@@ -239,8 +239,8 @@ test('the successor diagnostic retains one push admission, exclusions and fixed 
   assert.equal(plan.diagnosticRelease.successorQualificationReleased, false);
   assert.equal(plan.diagnosticRelease.performanceQualificationReleased, false);
   assert.equal(plan.diagnosticRelease.priorEvidence.conclusion, 'failure');
-  assert.equal(plan.cohort, 'linux-offline-3adcd537-installed-starter-owner-pair03');
-  assert.equal(plan.diagnosticRelease.onceOnlyBefore, 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1');
+  assert.equal(plan.cohort, 'linux-offline-3adcd537-starter-admission-witness-pair04');
+  assert.equal(plan.diagnosticRelease.onceOnlyBefore, 'bffcbd838a7bb925da8aaf030695773f893d8bda');
   const prior = plan.diagnosticRelease.priorSetupEvidence;
   assert.equal(prior.run, 38991754614);
   assert.equal(prior.conclusion, 'failure');
@@ -248,6 +248,12 @@ test('the successor diagnostic retains one push admission, exclusions and fixed 
   assert.equal(prior.candidate, 'not-run');
   assert.equal(prior.profilesCreated, 0);
   assert.equal(prior.ownedClosureEstablished, false);
+  const admission = plan.diagnosticRelease.priorGameplayAdmissionEvidence;
+  assert.equal(admission.run, 38992974772);
+  assert.equal(admission.conclusion, 'failure');
+  assert.equal(admission.failedField, 'unobserved-snapshot-assigned-after-assertion');
+  assert.equal(admission.candidate, 'not-observed-baseline-gate');
+  assert.equal(admission.ownedClosureEstablished, true);
   const owner = plan.diagnosticRelease.ownerCorrection;
   assert.equal(owner.path, 'scripts/run-solo-remote-correctness.mjs');
   const ownerBytes = await readFile(new URL(`../${owner.path}`, import.meta.url));
@@ -323,6 +329,72 @@ test('the installed Starter uses actual bootstrap root readiness before any publ
         ? ['navigation', 'new-document-readiness', 'post-ready-access-snapshot']
         : ['navigation', 'new-document-readiness'],
     );
+    assert.equal(value.gameplay.status, 'failed');
+    assert.equal(value.gameplay.exports.length, 0);
+  }
+});
+
+test('every failed offline restart field is retained before rejection without a public Start', async () => {
+  const valid = {
+    unlocked: true,
+    remembered: true,
+    online: false,
+    controller: 'https://test.invalid/service-worker.js',
+  };
+  for (const changed of [
+    { unlocked: false },
+    { remembered: false },
+    { online: true },
+    { controller: null },
+  ]) {
+    const value = report(),
+      restart = { ...valid, ...changed },
+      bytes = Buffer.from('exact selected HTML'),
+      pending = [];
+    let snapshotCount = 0;
+    const page = {
+      async goto() {
+        return {
+          status: () => 200,
+          fromServiceWorker: () => true,
+          body: async () => bytes,
+          headers: () => ({ 'content-security-policy': 'test-policy' }),
+        };
+      },
+      async waitForFunction(predicate) {
+        assert.equal(
+          runInNewContext(`(${predicate.toString()})()`, {
+            document: { documentElement: { dataset: { bootState: 'ready' } } },
+          }),
+          true,
+        );
+      },
+      evaluate() {
+        snapshotCount++;
+        return restart;
+      },
+      locator() {
+        assert.fail('A failed restart field must prevent every public Start interaction');
+      },
+    };
+    await assert.rejects(
+      playOfflineStarter({
+        page,
+        report: value,
+        address: 'https://test.invalid/game/?journey=whole-spatial-v25',
+        entryHTMLSha256: createHash('sha256').update(bytes).digest('hex'),
+        csp: 'test-policy',
+        accessKey: 'public-access',
+        ensureOwner() {},
+        isServerStopped: () => true,
+        step() {},
+        pending,
+      }),
+      { code: 'ERR_ASSERTION' },
+    );
+    await Promise.allSettled(pending);
+    assert.equal(snapshotCount, 1);
+    assert.deepEqual(value.gameplay.offlineRestart, restart);
     assert.equal(value.gameplay.status, 'failed');
     assert.equal(value.gameplay.exports.length, 0);
   }

@@ -28,9 +28,9 @@ concurrency:
 
 jobs:
   correctness:
-    # Admit only the next reviewed push after the pair02 setup failure. Pair03
-    # retains exact artifacts/recipe and corrects only common owner attribution.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'
+    # Admit one reviewed pair04 to retain the four-field admission witness.
+    # Sources, recipe, ownership, budgets and all assertion conditions stay fixed.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.before == 'bffcbd838a7bb925da8aaf030695773f893d8bda'
     runs-on: ubuntu-24.04
     timeout-minutes: 165
     env:
