@@ -11,6 +11,7 @@ import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { emptyLibrary, updatePreferences, exportLibrary, loadLibrary } from '../library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { validateEnemyStatsSession } from '../enemy-stats.mjs';
 
 const presets = JSON.parse(
   await readFile(new URL('../../authoring/motion-lab/presets.json', import.meta.url), 'utf8'),
@@ -206,6 +207,12 @@ test('custom FPV class mapping and unknown explicit appearance keep existing hos
 test('actual Couch recommendation switches both independent painters without touching match physics or profile', async (t) => {
   const storage = memoryStorage(),
     f = await couchPage(t, { storage });
+  const initialWrites = structuredClone(storage.writes);
+  assert.deepEqual(
+    initialWrites.map(([key]) => key),
+    ['revealline-enemy-stats.v1:writer'],
+  );
+  const initialProfile = storage.getItem(profileKey);
   const look = BoardPainter.prototype.setLook,
     looks = [];
   BoardPainter.prototype.setLook = function (theme, bodyId, overrides) {
@@ -224,6 +231,7 @@ test('actual Couch recommendation switches both independent painters without tou
       assert.equal(f.renders[0].level.id, f.renders[1].level.id);
       assert.equal(f.renders[0].tick, 0);
     }
+    assert.deepEqual(storage.writes, initialWrites, 'appearance selection writes no state');
     await activateHostAction(f.$('race-start'));
     f.frame();
     f.key('KeyD');
@@ -234,7 +242,18 @@ test('actual Couch recommendation switches both independent painters without tou
     const held = f.checkpoint();
     f.frames(3, 100);
     assert.deepEqual(f.checkpoint(), held);
-    assert.equal(storage.writes.length, 0);
+    assert.equal(
+      storage.getItem(profileKey),
+      initialProfile,
+      'match physics never writes appearance preferences',
+    );
+    assert.deepEqual(
+      storage.writes.map(([key]) => key),
+      ['revealline-enemy-stats.v1:writer', 'revealline-enemy-stats-session.v1:host:versus'],
+    );
+    const cursors = JSON.parse(storage.writes[1][1]);
+    assert.equal(Object.keys(cursors).length, 1);
+    assert.equal(validateEnemyStatsSession(Object.values(cursors)[0]).gameType, 'versus');
   } finally {
     BoardPainter.prototype.setLook = look;
   }

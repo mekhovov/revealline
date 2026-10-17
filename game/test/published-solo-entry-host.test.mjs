@@ -218,6 +218,14 @@ test('published Solo boots the starter and starts an unprepared chapter online w
   assert.equal(h.$('journey-cards').children.length, 240);
   assert.equal(h.runtimeReads.length, 2, 'Browsing does not load every chapter.');
   await activateMissionCard(card);
+  h.frame(0);
+  assert.equal(h.page.rendered.run.levelId, mission.id);
+  assert.equal(h.page.rendered.run.tick, 0);
+  assert.equal(h.page.rendered.paused, true);
+  assert.equal(h.$('game-overlay').hidden, false);
+  assert.equal(h.$('game-overlay').dataset.kind, 'ready');
+  // Choosing a chapter adopts its briefing; the visible Start owns departure.
+  await activateHostAction(h.$('start-button'));
   await waitFor(() => {
     h.frame(0);
     return (
@@ -238,7 +246,11 @@ test('published Solo boots the starter and starts an unprepared chapter online w
   assert.equal(h.$('game-overlay').hidden, true);
   assert.equal(h.page.rendered.paused, false);
   assert.equal(h.doc.body.dataset.flightState, 'running');
-  assert.equal(h.page.rendered.run, accepted, 'The card activation starts the exact mission.');
+  assert.equal(
+    h.page.rendered.run,
+    accepted,
+    'Start departs with the exact mission chosen by the card.',
+  );
   assert.equal(h.page.rendered.run.levelId, mission.id);
   assert.deepEqual(h.runtimeReads.slice(2), [chapter.path]);
   assert.equal(h.$('install-offline-dialog')?.open ?? false, false);

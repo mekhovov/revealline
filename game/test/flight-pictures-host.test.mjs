@@ -183,7 +183,7 @@ for (const policy of ['immediate', 'grid-center'])
     assert.equal(p.rendered.backdrop.pin.sha256, f.a.asset.sha256);
     let image = p.rendered.backdrop.image;
     await f.replace();
-    p.$('library-button').click();
+    await activateHostAction(p.$('library-button'));
     p.$('save-json').value = JSON.stringify(saved);
     await activateHostAction(p.$('import-save'));
     assert.equal(p.$('library-dialog').open, false);
@@ -498,7 +498,7 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   delete old.presentationPins;
   delete old.visualThemePin;
   delete old.actorAppearancePin;
-  p.$('library-button').click();
+  await activateHostAction(p.$('library-button'));
   p.$('save-json').value = JSON.stringify(old);
   p.$('import-save').click();
   await settle(() => !p.$('library-dialog').open);
@@ -585,7 +585,7 @@ test('a missing saved original cannot adopt a different picture or overwrite the
     tx.onabort = () => reject(tx.error);
   });
   db.close();
-  p.$('library-button').click();
+  await activateHostAction(p.$('library-button'));
   const beforeImport = p.storage.getItem(sessionKey);
   p.$('save-json').value = JSON.stringify(savedA);
   p.$('import-save').click();
@@ -641,7 +641,7 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.frame(0);
   const raw = JSON.parse(p.storage.getItem(sessionKey)),
     checkpoint = authoritativeCheckpoint(p.rendered.run);
-  p.$('library-button').click();
+  await activateHostAction(p.$('library-button'));
   p.$('export-session').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const exported = JSON.parse(p.$('save-json').value);
@@ -673,7 +673,7 @@ test('raw installed campaign plus retained normalized owner can export a complet
   ticks(p, 13);
   p.key('ArrowDown', false);
   p.$('pause-button').click();
-  p.$('library-button').click();
+  await activateHostAction(p.$('library-button'));
   p.$('export-backup').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const backup = JSON.parse(p.$('save-json').value);

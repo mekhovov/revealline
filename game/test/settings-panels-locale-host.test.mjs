@@ -41,7 +41,16 @@ function ticks(page, count) {
 }
 function assertSelection(page, selected) {
   boundedIdentity(page.doc.activeElement, page.$(`settings-tab-${selected}`));
-  for (const name of ['controls', 'audio', 'display', 'data']) {
+  for (const name of [
+    'gameplay',
+    'controls',
+    'audio',
+    'display',
+    'accessibility',
+    'data',
+    'content',
+    'extras',
+  ]) {
     const tab = page.$(`settings-tab-${name}`),
       panel = page.$(`settings-panel-${name}`),
       active = name === selected;
@@ -148,8 +157,8 @@ test('cold Ukrainian Solo: Settings Home/End preserve the paused cut across lang
     keyboard(page, 'Enter');
     assertSelection(page, 'audio');
     for (const [key, destination] of [
-      ['Home', 'controls'],
-      ['End', 'data'],
+      ['Home', 'gameplay'],
+      ['End', 'extras'],
     ]) {
       assert.equal(keyboard(page, key).defaultPrevented, true);
       assertSelection(page, destination);

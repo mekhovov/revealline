@@ -1,3 +1,4 @@
+import { activateHostAction } from './helpers/host-action.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -147,7 +148,7 @@ for (const format of ['xonix-session.v4', 'xonix-session.v2'])
     delete restored.actorAppearancePin;
     if (format === 'xonix-session.v2') delete restored.presentationPins;
     assert.deepEqual(snapshotSession(restored), restored, 'The imported legacy envelope is valid.');
-    p.$('library-button').click();
+    await activateHostAction(p.$('library-button'));
     p.$('save-json').value = JSON.stringify(restored);
     p.$('import-save').click();
     await settle(() => !p.$('library-dialog').open);

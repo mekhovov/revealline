@@ -12,8 +12,21 @@ import { AUTHORED_JOURNEY_ROUTE_IDS } from '../content-design/mode-href.mjs';
 // Historical JSON bytes observed at pre-change commit 7ea5f399; explicit v5
 // addition is independently compared with canonical composition in snapshot tests.
 // Includes all source content, route metadata, save/profile keys and order.
+// The five mode-route additions also match the original mainline tree
+// 20459d449713ffc4d20143e39a8ea0cd0be90bb2, loaded independently from Git.
 const golden = {
+  'duel-expedition-v1': [
+    173007,
+    '1a6ee0231ed1a7315cffb7d11cd3c702d952dfd9f750732b059a44f77af14197',
+  ],
   opening: [20768, '0dd34097ba74c64cca71139f0656846fab3214fac925abb195acc734c73b1cf9'],
+  'humanoid-hunt-v1': [17261, '4547578205ad7d5a8453e48de49e210ab40d422b44734f1eb4d6b7ff3e662f58'],
+  'pursuit-pilots-v1': [2945, '3bb301f6d116494485fb34ddfa5d36b7bb4cf18698b759a4855d56a7155afc21'],
+  'pursuit-campaigns-v1': [
+    53254,
+    'da8b04ff9300be7b049cf2eecc7ae32dee3a0bb3acfa22cef5afc2801ba1b599',
+  ],
+  'snake-hunt-v1': [161756, 'cf003da9595352d4a98ff3edb50fc67b8ee371f4152b4203593fbc4684b3c040'],
   authored: [37368, '5ae1f23d12e71adf4dc7c6bdfd6e01fe7dea760b1d75a5b74308984a7be38e63'],
   'whole-originals': [223521, 'feb4b013a8a816e0bc0364fa9dd769a51ea7c92604275657bb418e868f7a0df8'],
   'whole-originals-v2': [

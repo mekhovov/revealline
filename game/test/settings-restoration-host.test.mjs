@@ -210,12 +210,22 @@ for (const mode of ['Solo', 'Versus', 'Team']) {
 
   test(`${mode} a newer explicit setting before deferred restoration keeps its current authority`, async (t) => {
     const f = await host(t, mode),
-      latest = { ...stale, volume: 0.22, ornaments: 'subtle' };
+      latest = {
+        ...saved,
+        volume: 0.22,
+        face: stale.face,
+        size: stale.size,
+        reduced: stale.reduced,
+      };
     f.win.emit('pageshow', { persisted: true });
     // Team's lifecycle guard first samples released controls. A synchronous
     // frame does not run the deferred pageshow task that this action supersedes.
     f.neutralInput();
-    for (const [key, value] of Object.entries(latest)) f.change(key, value);
+    // Palette/ornament aliases remain restoration witnesses, but the current
+    // theme UI deliberately hides them. Exercise only visible public settings.
+    for (const key of ['volume', 'face', 'size', 'reduced']) f.change(key, latest[key]);
+    for (const key of ['palette', 'ornaments'])
+      assert.equal(f.controls[key].closest('label').hidden, true);
     const writes = [...f.storage.writes],
       records = [...f.storage.map],
       focus = f.doc.activeElement,
@@ -247,7 +257,19 @@ for (const mode of ['Solo', 'Versus', 'Team']) {
     f.win.emit('pageshow', { persisted: true });
     await nextTask(0);
     assert.deepEqual(f.read(), stale);
-    assert.deepEqual(f.storage.writes, writes);
+    // Terminal Team/Versus disposal flushes its existing enemy-session receipt
+    // asynchronously. It may repeat that exact value, never alter preferences
+    // or publish new session data after retirement.
+    assert.deepEqual(f.storage.writes.slice(0, writes.length), writes);
+    const extra = f.storage.writes.slice(writes.length);
+    assert.ok(extra.length <= (mode === 'Solo' ? 0 : 1));
+    for (const [key, value] of extra) {
+      assert.equal(
+        key,
+        `revealline-enemy-stats-session.v1:host:${mode === 'Team' ? 'team' : 'versus'}`,
+      );
+      assert.equal(value, new Map(records).get(key));
+    }
     assert.deepEqual([...f.storage.map], records);
     f.unchanged({ advanceFrame: false, expectedFocus: focus });
     assert.deepEqual(f.effects(), effects);
