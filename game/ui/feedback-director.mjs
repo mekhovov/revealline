@@ -98,6 +98,7 @@ export class FeedbackDirector {
     this.decodedBytes = 0;
     this.buffers = new Map();
     this.pending = new Map();
+    this.pendingRequests = new Map();
     this.retryAfter = new Map();
     this.now = now;
     this.boards = new Map();
@@ -127,7 +128,14 @@ export class FeedbackDirector {
   }
   load(name, { priority = 'demand' } = {}) {
     if (this.closed || this.buffers.has(name)) return;
-    if (this.pending.has(name)) return this.pending.get(name);
+    if (this.pending.has(name)) {
+      const request = this.pendingRequests.get(name);
+      if (request?.priority === 'background' && priority === 'demand') {
+        request.priority = 'demand';
+        this.preparation.promote?.(request.controller.signal, 'demand');
+      }
+      return this.pending.get(name);
+    }
     if (this.now() < (this.retryAfter.get(name) ?? -Infinity)) return;
     const entry = EFFECT_BANK[name];
     if (!entry) return;
@@ -139,7 +147,9 @@ export class FeedbackDirector {
       !this.sound.audioMaster?.muted &&
       this.sound.audioMaster?.volume !== 0 &&
       this.sound.settings?.master !== 0;
+    const request = { priority, controller };
     const options = { priority, signal: controller.signal, eligible };
+    this.pendingRequests.set(name, request);
     this.controllers.add(controller);
     const timer = setTimeout(() => controller.abort(), 10000);
     let cancelled = false;
@@ -161,6 +171,7 @@ export class FeedbackDirector {
       const reservation = effectDecodeReservation(bytes, context.sampleRate);
       const buffer = await this.preparation.run('decode', () => context.decodeAudioData(bytes), {
         ...options,
+        priority: request.priority,
         bytes: reservation,
       });
       if (!eligible() || controller.signal.aborted) return;
@@ -182,6 +193,7 @@ export class FeedbackDirector {
         clearTimeout(timer);
         this.controllers.delete(controller);
         this.pending.delete(name);
+        this.pendingRequests.delete(name);
         if (!this.closed && !cancelled && !this.buffers.has(name))
           this.retryAfter.set(name, this.now() + 5000);
         else this.retryAfter.delete(name);
