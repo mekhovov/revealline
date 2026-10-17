@@ -144,7 +144,10 @@ test('Demo and stable cheap title cadence cannot contribute title-stall adaptati
   assert.equal(snapshot().quality.tier, 'full');
   assert.equal(scene.dataset.motion, 'on');
   await page.open();
+  assert.throws(snapshot, /Pause gameplay before exporting diagnostics/);
   for (let i = 0; i < 8; i++) page.frame(600);
+  assert.equal(page.demoFrame.options.quality, 'full');
+  page.$('demo-interrupt').click();
   assert.equal(snapshot().quality.tier, 'full');
   assert.deepEqual(page.errors, []);
 });
