@@ -30,6 +30,12 @@ Each profile uses one rate algorithm for all three axes, with separate roll, pit
 
 The editor displays each algorithm's own units. Changing algorithms retains the values entered for each algorithm during the current edit instead of interpreting the old numbers as another model. Optional linked roll/pitch editing leaves yaw independent. Numeric entries are normalized to the firmware's supported increments when committed: for example, an Actual maximum of 895°/s becomes 900°/s. Saving, exporting and testing also commit pending entries. Empty or out-of-range entries require correction before those actions.
 
+Unfinished numeric entries also survive profile/algorithm navigation, closing and
+reopening the editor, and language changes. They remain visibly invalid until
+corrected; the graph continues to use the last valid value. Explicit revert,
+revision restore or import replacement replaces that draft. These unsaved drafts
+last for the current SIM session, not a browser reload.
+
 Each axis also has a commanded-rate limit. The new rate profiles support limits up to 1,998 degrees per second; Legacy feel retains its original range. The curve shows the requested rotation. The aircraft's response, self-level assistance and available motor authority determine the achieved rotation.
 
 Throttle has midpoint, expo and Off/Scale/Clip limiting. The **Betaflight 2025.12 / 2026.6** throttle model also exposes a hover point. The older **Betaflight 4.5** curve and the newer curve are different models, so changing versions can change flight feel even when their numeric controls look alike.

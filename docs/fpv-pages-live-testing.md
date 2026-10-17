@@ -30,7 +30,24 @@ node scripts/game-cli.mjs build --out NEW_SITE --publication-profile main-pages
 node scripts/smoke-fpv-pages.mjs NEW_SITE PLAYWRIGHT_MODULE REPORT.json
 ```
 
-The [current fifth-review check](fpv-pages-fifth-review-live-testing-evidence.json)
+The [current sixth-review check](fpv-pages-sixth-review-live-testing-evidence.json)
+passes against the normal production build at
+`/private/tmp/fpv-rates-sixth-review-20261017-pages`, version `0.151.1`, after the
+rebase onto `b133a5ec8` and the incomplete-numeric-draft correction. Academy and
+World pass online and in isolated offline contexts, including saved rates,
+keyboard installer activation, Advanced start/restart/export and worker disposal.
+All 3,433 manifest entries and the archive checksum verify, and the changed tuning
+module matches the checkout. Served bytes and the test runner remain unchanged.
+
+The publication contains 3,435 files / 963,654,909 bytes. Its conservative archive
+forecast is 972,277,248 bytes, leaving 7,722,752 bytes below the unchanged cap.
+The distribution ZIP digest is
+`8d5b156be7634546cc452880c39d21858f51e17057e7a046bb09e23c16ca11d7`.
+This remains a local working-tree build (`sourceRevision: null`), ready for normal
+reviewed integration. Public HTTPS, the real password form and existing-install
+update checks remain separate; this review does not publish Pages.
+
+The [historical fifth-review check](fpv-pages-fifth-review-live-testing-evidence.json)
 passes against the normal production build at
 `/private/tmp/fpv-rates-fifth-review-20261016-pages`, version `0.151.1`, after the
 rebase onto `0597edff7` and the firmware-header/pending-save corrections. Academy

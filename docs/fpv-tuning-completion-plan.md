@@ -1,12 +1,13 @@
 # FPV tuning: reviewed completion plan
 
-Reviewed 16 October 2026 against the original phased plan and current upstream
+Reviewed 17 October 2026 against the original phased plan and current upstream
 documentation. The first review used implementation `8202201b7` on `741948b14`;
 the second review rebased the accumulated work onto `3585f2c32` before edits.
 The third review rebased onto `20768f599` before its corrections. The fourth
 review rebased onto `1cdf442dc` before edits; earlier source-bound reports retain
 their original hashes.
 The fifth review rebased onto `0597edff7` before its corrections.
+The sixth review rebased onto `b133a5ec8` before its correction.
 This document supplements the original plan; the
 [implementation status](fpv-tuning-implementation-status.md) retains earlier
 results and limitations.
@@ -439,3 +440,65 @@ The available software scope is complete. The original qualification gates remai
 explicitly open, including unavailable radio/pilot sessions, real-aircraft data,
 wider platforms and public rollout. The tested commit is ready for normal Pages
 integration; local build success does not publish or promote Advanced.
+
+## Sixth review — preserve incomplete numeric drafts
+
+Reviewed 17 October and rebased all six feature commits onto current `main` at
+`b133a5ec8`. Main adds bounded Pages stack measurements and source-policy
+admission; simulator runtime and package limits are unchanged. These diagnostics
+do not replace the normal reviewed publication process.
+
+Fresh primary examples provide the following acceptance checks:
+
+| Reference | Finding and implementation decision |
+| --- | --- |
+| [Keymap PROPWASH browser simulator](https://keymap.io/fpv-simulator/) | Documents per-axis classic Betaflight curves, CLI copying, local rates/camera and a fixed simulation frequency. Retain portable rate-only transfer and independent calibration/camera settings. Its advertised preset defaults and fidelity are not firmware or numerical verification authorities. |
+| [TRYP official announcements](https://steamcommunity.com/app/1881200/announcements/) | June 2026 notes fix new-drone profiles using incorrect configurations; earlier notes disclose incompatible physics profiles. Exercise independent setup/profile drafts and preserve historical simulation identities. |
+| [DRL official announcements](https://steamcommunity.com/app/641780/announcements/) | The 4.0 announcement changes throttle caps, battery resistance and replay compatibility. Keep performance restrictions in comparison classes and old recordings bound to their original configuration/verifier. |
+| [Orqa calibration FAQ](https://cdn.akamai.steamstatic.com/steam/apps/1278060/manuals/FPV.SkyDive_Calibration_FAQ__4_2022_.pdf?t=1686666004) | Distinguishes radio/gamepad calibration and conflicting connected devices. Retain active-device diagnostics and calibration-only imports; the FAQ is dated April 2022 and supplies no new physical-device qualification. |
+
+These are documented examples, not independent measurements of competing flight
+models. The existing five algorithms, versioned throttle, import, drone setup and
+comparison requirements already cover them; no extra firmware support or physics
+effects are added.
+
+The code audit reproduced one remaining editor defect: incomplete numeric text
+was replaced with the last valid value when switching algorithms/profiles,
+reopening the editor or changing language. Saving afterward could therefore
+store an older value despite the player's unfinished edit.
+
+1. Preserve unresolved numeric text by profile, algorithm and stable field name.
+   Independent valid drafts remain usable. Repainting or changing throttle
+   models must not silently accept or discard an invalid value.
+2. Require valid active fields before saving, flying or exporting that draft.
+   Keep existing visible native-step normalization when an edit is committed.
+   Explicit revert, revision restore and import replacement may replace a draft.
+3. Verify empty/out-of-range inputs, linked axes, algorithm/profile navigation,
+   language refresh and reopen with focused regressions and actual three-engine
+   editor interaction. Run full practice checks and production build/offline
+   checks for the changed delivered module.
+
+The independent Advanced audit found no new defect. Its controller/worker/Regional
+tests and a 45-case state-continuation sweep cover five algorithms, three
+templates and three frequencies with filtering/noise enabled. This is additional
+software correctness coverage, not a new timing benchmark or aircraft validation.
+Unchanged source-bound numerical evidence may be retained after hash checks.
+
+The original phase disposition above remains authoritative. Available software
+can be completed without radio/pilot sessions, but measurements, wider physical
+platforms and public rollout retain their gates. Advanced remains optional,
+unscored and ineligible as the default. Finish the reproduced correction and
+commit the verified result for normal Pages integration.
+
+### Sixth-review completion
+
+The numeric-draft correction and ten regressions are implemented and independently
+reviewed. All 683 practice tests, 75 native tests, 120 current-main publication
+integration tests, six editor-browser cases, release validation and three-module
+lint/formatting pass. The production build, manifest/archive integrity and actual
+Academy/World online/offline checks pass within unchanged limits. The
+[combined receipt](fpv-tuning-sixth-review-verification.json) binds the evidence.
+
+No further actionable software defect emerged from this bounded review. All
+available software items are complete; the original measurement, device and
+public-rollout gates remain explicitly open. Advanced promotion is still gated.
