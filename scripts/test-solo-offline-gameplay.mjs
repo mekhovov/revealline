@@ -1,10 +1,16 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import test from 'node:test';
 import { runInNewContext } from 'node:vm';
 import {
   OFFLINE_GAMEPLAY,
+  OFFLINE_FAILURE_WITNESS_POLICY,
+  OFFLINE_FAILURE_WITNESS_TIMEOUT_MS,
+  captureOfflineFailureState,
+  retainOfflineReplayExport,
   offlineGameplayAssessment,
   offlineLaunchAllowsGameplay,
   playOfflineStarter,
@@ -734,4 +740,161 @@ test('late native command settlement cannot overwrite a failed witness or start 
   assert.equal(nativeOfflineStateApplied(witness, expectedURL), false);
   await assert.rejects(restoreNativeOfflineState({ witness }), /cannot be reused/);
   assert.deepEqual(witness, failed);
+});
+
+test('failure DOM witness reads once only after failure and preserves the original failure', async () => {
+  const value = { status: 'failed', failure: 'Original Next timeout', deadlineReached: true },
+    pending = [];
+  let reads = 0,
+    rectangles = 0;
+  const element = {
+    tagName: 'BUTTON',
+    id: 'next-button',
+    hidden: false,
+    disabled: false,
+    textContent: 'x'.repeat(2000),
+    dataset: { kind: 'won' },
+    getAttribute: () => null,
+    getBoundingClientRect: () => {
+      rectangles++;
+      return { x: 10, y: 20, width: 30, height: 40 };
+    },
+  };
+  const page = {
+    evaluate: async (fn) => {
+      reads++;
+      return runInNewContext(`(${fn.toString()})()`, {
+        location: { href: 'http://offline/game/' },
+        navigator: {
+          onLine: false,
+          serviceWorker: { controller: { scriptURL: 'http://offline/service-worker.js' } },
+        },
+        document: {
+          visibilityState: 'visible',
+          hasFocus: () => true,
+          documentElement: { dataset: { bootState: 'ready' } },
+          body: { dataset: { flightState: 'won' } },
+          activeElement: element,
+          querySelector: () => element,
+        },
+      });
+    },
+  };
+  const options = { page, value, pending, ensureOwner() {}, isServerStopped: () => true };
+  const witness = await captureOfflineFailureState(options);
+  assert.equal(reads, 1);
+  assert.equal(rectangles, 1);
+  assert.equal(pending.length, 1);
+  assert.equal(witness.status, 'captured');
+  assert.equal(witness.policy, OFFLINE_FAILURE_WITNESS_POLICY);
+  assert.equal(witness.snapshot.preparation.text.length, 512);
+  assert.equal(witness.snapshot.flight, 'won');
+  assert.equal(witness.snapshot.online, false);
+  assert.equal(value.failure, 'Original Next timeout');
+  assert.equal(value.status, 'failed');
+  for (const unfailed of [{ status: 'running' }, { status: 'failed' }])
+    await assert.rejects(captureOfflineFailureState({ ...options, value: unfailed }));
+  assert.equal(reads, 1, 'No active-play evidence reads');
+});
+
+test('failure witness owns only two seconds of cleanup and ignores late snapshot settlement', async () => {
+  assert.equal(OFFLINE_GAMEPLAY.playTimeoutMs, 120000);
+  assert.equal(OFFLINE_FAILURE_WITNESS_TIMEOUT_MS, 2000);
+  let finish;
+  const read = new Promise((resolve) => {
+    finish = resolve;
+  });
+  const value = { status: 'failed', failure: 'Original timeout', deadlineReached: true },
+    pending = [];
+  await captureOfflineFailureState({
+    page: { evaluate: () => read },
+    value,
+    pending,
+    ensureOwner() {},
+    isServerStopped: () => true,
+  });
+  assert.equal(value.failureState.status, 'unavailable');
+  assert.match(value.failureState.failure, /deadline/);
+  const retained = clone(value);
+  finish({ flight: 'running' });
+  await Promise.all(pending);
+  assert.deepEqual(value, retained);
+});
+
+test('failure witness cannot admit owner loss, server restart, a closed page or oversized evidence', async () => {
+  for (const change of [
+    {
+      ensureOwner() {
+        throw Error('Owner lost');
+      },
+    },
+    { isServerStopped: () => false },
+    {
+      page: {
+        evaluate: async () => {
+          throw Error('Page closed');
+        },
+      },
+    },
+    { page: { evaluate: async () => ({ text: 'x'.repeat(16385) }) } },
+  ]) {
+    const value = { status: 'failed', failure: 'Original failure' };
+    const witness = await captureOfflineFailureState({
+      page: { evaluate: async () => ({ flight: 'paused' }) },
+      value,
+      pending: [],
+      ensureOwner() {},
+      isServerStopped: () => true,
+      ...change,
+    });
+    assert.equal(witness.status, 'unavailable');
+    assert.equal(witness.snapshot, undefined);
+    assert.equal(value.failure, 'Original failure');
+    assert.equal(value.status, 'failed');
+  }
+});
+
+test('independent partial replay retention preserves exact bytes separately from strict verification', async (t) => {
+  const output = await mkdtemp(join(tmpdir(), 'solo-offline-export-'));
+  t.after(() => rm(output, { recursive: true, force: true }));
+  const text = JSON.stringify({
+    replay: { level: { id: 'first-return' }, segments: [{ ticks: 10 }], checkpoint: {} },
+  });
+  const item = {
+    text,
+    entry: {
+      label: 'offline-first-earned-capture',
+      levelId: 'first-return',
+      bytes: Buffer.byteLength(text),
+      sha256: createHash('sha256').update(text).digest('hex'),
+    },
+  };
+  const options = { output, item, ensureOwner() {}, isServerStopped: () => true };
+  const retained = await retainOfflineReplayExport(options);
+  assert.equal(await readFile(retained.path, 'utf8'), text);
+  assert.equal(retained.retention, 'raw-unverified-recording');
+  assert.equal(retained.nativeReplay.status, 'not-run');
+  await assert.rejects(retainOfflineReplayExport(options), { code: 'EEXIST' });
+  assert.equal(
+    await readFile(retained.path, 'utf8'),
+    text,
+    'No overwrite after failed duplicate retention',
+  );
+  for (const change of [
+    { entry: { ...item.entry, label: '../../escape' } },
+    { entry: { ...item.entry, bytes: item.entry.bytes + 1 } },
+    { entry: { ...item.entry, sha256: '0'.repeat(64) } },
+    { text: 'x'.repeat(OFFLINE_GAMEPLAY.maximumExportBytes + 1) },
+  ])
+    await assert.rejects(retainOfflineReplayExport({ ...options, item: { ...item, ...change } }));
+  for (const override of [
+    {
+      ensureOwner() {
+        throw Error('Owner cancelled');
+      },
+    },
+    { isServerStopped: () => false },
+    { output: join(output, 'absent') },
+  ])
+    await assert.rejects(retainOfflineReplayExport({ ...options, ...override }));
 });

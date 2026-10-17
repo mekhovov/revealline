@@ -1,9 +1,11 @@
 // Adapter only. The common runner retains artifact, process, resource and finalization ownership.
 import assert from 'node:assert/strict';
+import { isDeepStrictEqual } from 'node:util';
 import { readFile, writeFile, lstat, realpath, open } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import {
   offlineGameplayAssessment,
+  OFFLINE_FAILURE_WITNESS_POLICY,
   NATIVE_OFFLINE_STATE_POLICY,
   nativeOfflineStateApplied,
   validateOfflineGameplayPlan,
@@ -12,7 +14,14 @@ import {
 const BASE = 'b11745223861c3973ad4bf440cc536198b8e0371';
 const CANDIDATE = '3adcd53792043ef02459e86168c6b33a66d6ef00';
 const CURRENT_FORMAT = 'SoloHostedOfflineCurrentPairPlan.v2';
+export const INDEPENDENT_OFFLINE_FORMAT = 'SoloHostedOfflineCandidatePlan.v1';
+export const INDEPENDENT_OFFLINE_RUNTIME = '32abd322afd8243e4537ce4784e2f78ee45ecbec';
+const nativeFormat = (format) => [CURRENT_FORMAT, INDEPENDENT_OFFLINE_FORMAT].includes(format);
 const PAIR_SOURCES = Object.freeze({
+  [INDEPENDENT_OFFLINE_FORMAT]: Object.freeze({
+    baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+    candidate: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
+  }),
   'SoloHostedOfflinePairPlan.v1': Object.freeze({ baseline: BASE, candidate: CANDIDATE }),
   [CURRENT_FORMAT]: Object.freeze({
     baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
@@ -22,6 +31,27 @@ const PAIR_SOURCES = Object.freeze({
 export function offlinePairSources(format = 'SoloHostedOfflinePairPlan.v1') {
   assert(Object.hasOwn(PAIR_SOURCES, format), 'Unknown offline pair format');
   return PAIR_SOURCES[format];
+}
+// Historical failed-pair evidence is rationale, never a comparison pass or
+// authority over this new job's processes. Every new owner is admitted afresh.
+export const INDEPENDENT_OFFLINE_ADMISSION = Object.freeze({
+  format: 'SoloIndependentOfflineCandidateAdmissionV1',
+  comparison: 'not-attempted',
+  priorRun: 39008793888,
+  priorTooling: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
+  priorConclusion: 'failure',
+  priorBaselineRevision: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  priorCandidateObservation: 'not-run',
+  baselineGameplay: 'failed-next-deadline',
+  baselineOwner: 'closed-without-forced-cleanup-or-uncertainty',
+  baselineReportSHA256: 'bb858c82b76ee6699b5a1f4c49caf1c7c642fe6795447f443a8576e4fbd23fd9',
+  baselineCommandSHA256: 'fba4086c34bc205885ce7524130305d3cbd79987388517075c17dbafd3543819',
+  baselinePreservationSHA256: 'd06fece88cf2970d0b5090dd89395c5e78d5ec4b0628ff756635a2711d62d2a6',
+  performanceQualification: false,
+  physicalQualification: false,
+});
+export function validateIndependentOfflineAdmission(value) {
+  assert.deepEqual(value, INDEPENDENT_OFFLINE_ADMISSION);
 }
 const MiB = 1024 ** 2;
 const read = async (path) => JSON.parse(await readFile(path, 'utf8'));
@@ -58,10 +88,15 @@ export function validateOfflinePlan(plan) {
   const sources = offlinePairSources(plan.format);
   assert.equal(plan.status, 'pinned-for-execution');
   assert.equal(plan.performanceExclusion, true);
-  if (plan.format === CURRENT_FORMAT) {
+  if (nativeFormat(plan.format)) {
     assert(plan.offline.gameplay, 'Current pair requires the unchanged installed Starter recipe');
     assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
-    assert.equal(plan.candidate.tree, 'fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508');
+    assert.equal(
+      plan.candidate.tree,
+      plan.format === CURRENT_FORMAT
+        ? 'fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508'
+        : '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
+    );
     assert.equal(plan.baseline.reusableArtifact.format, 'SoloHostedNormalBaselineReuseV2');
     assert.equal(plan.baseline.reusableArtifact.sourceRevision, sources.baseline);
     assert.equal(plan.baseline.reusableArtifact.sourceTree, plan.baseline.tree);
@@ -69,7 +104,12 @@ export function validateOfflinePlan(plan) {
     assert.equal(plan.playwright, '1.62.1');
     assert.equal(plan.offline.expectedBrowserVersion, '151.0.7922.34');
     const release = plan.diagnosticRelease;
-    assert.equal(release.format, 'SoloNativeOfflineStateDiagnosticReleaseV1');
+    assert.equal(
+      release.format,
+      plan.format === CURRENT_FORMAT
+        ? 'SoloNativeOfflineStateDiagnosticReleaseV1'
+        : 'SoloIndependentOfflineCandidateReleaseV1',
+    );
     assert.equal(release.status, 'reviewed-for-cause-analysis');
     assert.equal(release.candidateRevision, sources.candidate);
     assert.equal(release.baselineRevision, sources.baseline);
@@ -86,6 +126,11 @@ export function validateOfflinePlan(plan) {
     assert.equal(release.nativeStateEvidence.browserVersion, plan.offline.expectedBrowserVersion);
     assert.equal(release.nativeStateEvidence.conclusion, 'failure');
     assert.equal(release.nativeStateEvidence.qualificationEligible, false);
+    if (plan.format === INDEPENDENT_OFFLINE_FORMAT) {
+      validateIndependentOfflineAdmission(release.independentAdmission);
+      assert.equal(plan.bindingScope?.runtimeRevision, INDEPENDENT_OFFLINE_RUNTIME);
+      assert.equal(plan.offline.failureWitnessPolicy, OFFLINE_FAILURE_WITNESS_POLICY);
+    }
   }
   if (plan.offline.gameplay) {
     validateOfflineGameplayPlan(plan.offline.gameplay);
@@ -111,24 +156,16 @@ export function validateOfflinePlan(plan) {
       timeoutMs,
       performanceExclusion,
     })),
-    [
-      {
-        id: 'offline-baseline-p1',
-        source: 'baseline',
+    (plan.format === INDEPENDENT_OFFLINE_FORMAT ? ['candidate'] : ['baseline', 'candidate']).map(
+      (source) => ({
+        id: `offline-${source}-p1`,
+        source,
         kind: 'offline-persistence',
         engine: 'chromium',
         timeoutMs: plan.offline.gameplay ? 1200000 : 900000,
         performanceExclusion: true,
-      },
-      {
-        id: 'offline-candidate-p1',
-        source: 'candidate',
-        kind: 'offline-persistence',
-        engine: 'chromium',
-        timeoutMs: plan.offline.gameplay ? 1200000 : 900000,
-        performanceExclusion: true,
-      },
-    ],
+      }),
+    ),
   );
   assert.equal(plan.helperTimeoutMs, plan.offline.gameplay ? 6000000 : 4500000);
   assert.equal(plan.evidenceBytes, 256 * MiB);
@@ -177,7 +214,7 @@ export function offlineExecutionValid(
   const before = raw?.workerSnapshots?.find((row) => row.stage === 'ready-before-close');
   return Boolean(
     Object.hasOwn(PAIR_SOURCES, pairFormat) &&
-      (pairFormat !== CURRENT_FORMAT ||
+      (!nativeFormat(pairFormat) ||
         (raw?.pairFormat === pairFormat &&
           raw.nativeOfflineStatePolicy === NATIVE_OFFLINE_STATE_POLICY &&
           source === PAIR_SOURCES[pairFormat][raw.sourceRole] &&
@@ -187,6 +224,10 @@ export function offlineExecutionValid(
               raw.offlineNavigation?.nativeState,
               raw.offlineNavigation?.selectedGame?.url,
             )))) &&
+      (pairFormat !== INDEPENDENT_OFFLINE_FORMAT ||
+        (raw?.offlineFailureWitnessPolicy === OFFLINE_FAILURE_WITNESS_POLICY &&
+          raw.runtimeRevision === INDEPENDENT_OFFLINE_RUNTIME &&
+          isDeepStrictEqual(raw.admission?.independentCandidate, INDEPENDENT_OFFLINE_ADMISSION))) &&
       command?.status === 'closed' &&
       command.exitCode === 0 &&
       command.completedAt &&
@@ -372,7 +413,7 @@ export async function prepareOfflineMode(ctx) {
   assert(Buffer.byteLength(versionText) < 4096);
   const versions = [...new Set(versionText.match(/\b\d+\.\d+\.\d+\.\d+\b/g))];
   assert.equal(versions.length, 1, 'Exactly one actual browser version is required');
-  if (plan.format === CURRENT_FORMAT)
+  if (nativeFormat(plan.format))
     assert.equal(
       versions[0],
       plan.offline.expectedBrowserVersion,
@@ -548,13 +589,23 @@ export async function bindOfflineCase(ctx, row, dir, tmp) {
       'Distinct Linux passive offline-persistence diagnostic; authentication access fixture only. No repair/retry/cache or readiness injection. Prior Mac failures unchanged. Restart diagnostic alone gives no gameplay qualification; optional installed Starter play/replay is separately labeled. No physical PWA or performance qualification.',
     gameplay: plan.offline.gameplay ?? null,
     openingRecipe: plan.offline.openingRecipe ?? null,
+    ...(plan.format === INDEPENDENT_OFFLINE_FORMAT
+      ? {
+          independentAdmission: plan.diagnosticRelease.independentAdmission,
+          runtimeRevision: plan.bindingScope.runtimeRevision,
+          failureWitnessPolicy: plan.offline.failureWitnessPolicy,
+        }
+      : {}),
     firstArmReport: null,
     firstArmClosure: null,
     firstArmArgv: null,
     firstArmPlanSHA256: null,
     firstArmInvocation: null,
   };
-  if (row.source === 'candidate') {
+  if (plan.format === INDEPENDENT_OFFLINE_FORMAT) {
+    assert.equal(row.source, 'candidate');
+    validateIndependentOfflineAdmission(casePlan.independentAdmission);
+  } else if (row.source === 'candidate') {
     const prior = mode.baseline;
     assert(baselineAllowsCandidate(prior, plan.baseline.revision, plan.format));
     casePlan.firstArmReport = await ref(prior.rawReport.path);

@@ -8,6 +8,10 @@ import { tmpdir } from 'node:os';
 import test from 'node:test';
 import {
   assertPairedBaselineArtifact,
+  INDEPENDENT_OFFLINE_FORMAT,
+  INDEPENDENT_OFFLINE_RUNTIME,
+  INDEPENDENT_OFFLINE_ADMISSION,
+  validateIndependentOfflineAdmission,
   baselineAllowsCandidate,
   offlineExecutionValid,
   offlinePairSources,
@@ -15,7 +19,11 @@ import {
   starterSelection,
   validateOfflinePlan,
 } from './solo-remote-offline.mjs';
-import { OFFLINE_GAMEPLAY, NATIVE_OFFLINE_STATE_POLICY } from './solo-offline-gameplay.mjs';
+import {
+  OFFLINE_GAMEPLAY,
+  NATIVE_OFFLINE_STATE_POLICY,
+  OFFLINE_FAILURE_WITNESS_POLICY,
+} from './solo-offline-gameplay.mjs';
 
 const BASE = 'b11745223861c3973ad4bf440cc536198b8e0371';
 const CANDIDATE = '3adcd53792043ef02459e86168c6b33a66d6ef00';
@@ -375,16 +383,39 @@ test('first executable current pair binds the verified package and unchanged own
     declaration.diagnosticRelease.nativeStateEvidence.sourceRevision,
     declaration.candidate.revision,
   );
-  for (const ref of [
-    ...declaration.adapterInputs,
-    declaration.offline.driver,
-    declaration.offline.openingRecipe,
-    declaration.diagnosticRelease.ownerCorrection,
-  ]) {
+  const witnessBytes = await source(
+    'docs/performance/fixtures/solo-remote-offline/current-pair-a6-source.json',
+  );
+  const verifyHistorical = (bytes, value) => {
+    assert.equal(digest(bytes), '3d0e3270b5356b07a8e868914b9d886580550445539528d48df0b6c3e33038d7');
+    const witness = JSON.parse(bytes);
+    assert.equal(witness.run, 39008793888);
+    assert.equal(witness.conclusion, 'failure');
+    assert.equal(witness.sourceRevision, 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4');
+    assert.equal(witness.sourceTree, '6b13627e324f695b6ee8d9f2dee2eeeb7217c332');
+    assert.deepEqual(
+      [
+        ...value.adapterInputs,
+        value.offline.driver,
+        value.offline.openingRecipe,
+        value.diagnosticRelease.ownerCorrection,
+      ].map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 })),
+      witness.refs,
+    );
+    return witness;
+  };
+  const witness = verifyHistorical(witnessBytes, declaration);
+  for (const ref of [witness.declaration, witness.workflow]) {
     const bytes = await source(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(digest(bytes), ref.sha256, ref.path);
+    assert.equal(bytes.length, ref.bytes);
+    assert.equal(digest(bytes), ref.sha256, 'Executed V2 authority remains immutable');
   }
+  const changed = structuredClone(declaration);
+  changed.adapterInputs[0].sha256 = 'f'.repeat(64);
+  assert.throws(() => verifyHistorical(witnessBytes, changed));
+  const changedWitness = JSON.parse(witnessBytes);
+  changedWitness.refs[0].bytes++;
+  assert.throws(() => verifyHistorical(Buffer.from(JSON.stringify(changedWitness)), declaration));
   for (const [path, expected] of [
     [
       'docs/performance/solo-remote-offline-plan.json',
@@ -710,4 +741,169 @@ test('current negative outcomes remain negative and cannot bypass pair identity 
     mutate(changed);
     assert.equal(baselineAllowsCandidate(changed, sources.baseline, CURRENT_FORMAT), false);
   }
+});
+
+const independentPlan = () => {
+  const value = currentPlan(),
+    sources = offlinePairSources(INDEPENDENT_OFFLINE_FORMAT);
+  value.format = INDEPENDENT_OFFLINE_FORMAT;
+  value.bindingScope = { runtimeRevision: INDEPENDENT_OFFLINE_RUNTIME };
+  value.candidate = {
+    revision: sources.candidate,
+    tree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
+  };
+  value.rows = value.rows.filter((row) => row.source === 'candidate');
+  Object.assign(value.diagnosticRelease, {
+    format: 'SoloIndependentOfflineCandidateReleaseV1',
+    candidateRevision: sources.candidate,
+    onceOnlyBefore: sources.candidate,
+    independentAdmission: structuredClone(INDEPENDENT_OFFLINE_ADMISSION),
+  });
+  value.offline.failureWitnessPolicy = OFFLINE_FAILURE_WITNESS_POLICY;
+  return value;
+};
+
+test('independent offline format admits exact final-source candidate only without promoting the failed comparison', () => {
+  const value = independentPlan();
+  validateOfflinePlan(value);
+  assert.equal(value.rows.length, 1);
+  assert.equal(value.rows[0].source, 'candidate');
+  assert.equal(value.diagnosticRelease.independentAdmission.priorConclusion, 'failure');
+  assert.equal(value.diagnosticRelease.independentAdmission.comparison, 'not-attempted');
+  // Adapter fixture has no real artifact identity and cannot launch the common owner.
+  assert.equal(value.candidate.artifact, undefined);
+  validateOfflinePlan(currentPlan());
+  validateOfflinePlan(plan());
+  for (const mutate of [
+    (p) => {
+      p.rows.unshift({ ...p.rows[0], id: 'offline-baseline-p1', source: 'baseline' });
+    },
+    (p) => {
+      p.candidate.revision = offlinePairSources(CURRENT_FORMAT).candidate;
+    },
+    (p) => {
+      p.candidate.tree = 'a'.repeat(40);
+    },
+    (p) => {
+      delete p.bindingScope.runtimeRevision;
+    },
+    (p) => {
+      p.bindingScope.runtimeRevision = 'a'.repeat(40);
+    },
+    (p) => {
+      p.offline.failureWitnessPolicy = undefined;
+    },
+    (p) => {
+      p.offline.nativeStatePolicy = undefined;
+    },
+    (p) => {
+      p.offline.expectedBrowserVersion = '152.0.0.1';
+    },
+    (p) => {
+      p.offline.gameplay.playTimeoutMs++;
+    },
+    (p) => {
+      p.rows[0].timeoutMs++;
+    },
+    (p) => {
+      p.resources.automaticRetries++;
+    },
+    (p) => {
+      p.diagnosticRelease.independentAdmission.priorConclusion = 'success';
+    },
+    (p) => {
+      p.diagnosticRelease.independentAdmission.baselineOwner = 'unknown';
+    },
+    (p) => {
+      p.diagnosticRelease.independentAdmission.baselineCommandSHA256 = 'f'.repeat(64);
+    },
+    (p) => {
+      p.diagnosticRelease.independentAdmission.comparison = 'passed';
+    },
+    (p) => {
+      p.diagnosticRelease.performanceQualificationReleased = true;
+    },
+  ]) {
+    const changed = structuredClone(value);
+    mutate(changed);
+    assert.throws(() => validateOfflinePlan(changed));
+  }
+  assert.throws(() =>
+    validateIndependentOfflineAdmission({ ...INDEPENDENT_OFFLINE_ADMISSION, extra: true }),
+  );
+});
+
+test('independent report still fails on missing native state, owner uncertainty or promoted historical evidence', () => {
+  const source = offlinePairSources(INDEPENDENT_OFFLINE_FORMAT).candidate;
+  const observation = {
+    ...raw(),
+    pairFormat: INDEPENDENT_OFFLINE_FORMAT,
+    sourceRole: 'candidate',
+    artifact: { sourceRevision: source },
+    nativeOfflineStatePolicy: NATIVE_OFFLINE_STATE_POLICY,
+    offlineFailureWitnessPolicy: OFFLINE_FAILURE_WITNESS_POLICY,
+    runtimeRevision: INDEPENDENT_OFFLINE_RUNTIME,
+    admission: { independentCandidate: structuredClone(INDEPENDENT_OFFLINE_ADMISSION) },
+    browserVersion: '151.0.7922.34',
+    gameplayRequested: true,
+    gameplay: { status: 'not-run-launch-unqualified' },
+    replays: [],
+  };
+  const evaluate = (r, c = command()) =>
+    offlineExecutionValid(r, c, source, '151.0.7922.34', INDEPENDENT_OFFLINE_FORMAT);
+  assert.equal(
+    evaluate(observation),
+    true,
+    'A completed negative diagnosis is not gameplay qualification',
+  );
+  assert.equal(observation.gameplay.status, 'not-run-launch-unqualified');
+  for (const mutate of [
+    (r) => {
+      delete r.admission.independentCandidate;
+    },
+    (r) => {
+      r.admission.independentCandidate.priorConclusion = 'success';
+    },
+    (r) => {
+      delete r.runtimeRevision;
+    },
+    (r) => {
+      r.runtimeRevision = 'a'.repeat(40);
+    },
+    (r) => {
+      r.offlineFailureWitnessPolicy = undefined;
+    },
+    (r) => {
+      r.nativeOfflineStatePolicy = undefined;
+    },
+    (r) => {
+      r.sourceRole = 'baseline';
+    },
+    (r) => {
+      r.artifact.sourceRevision = CURRENT_HEAD;
+    },
+    (r) => {
+      r.offlineNavigation.publicBootReady = true;
+    },
+    (r) => {
+      r.gameplay = { status: 'failed', failure: 'Next timeout' };
+    },
+  ]) {
+    const changed = structuredClone(observation);
+    mutate(changed);
+    assert.equal(evaluate(changed), false);
+  }
+  for (const change of [
+    { forcedCleanup: true },
+    { survivors: [123] },
+    { ambiguous: [123] },
+    { exitCode: 1 },
+    { violation: 'rss' },
+  ])
+    assert.equal(evaluate(observation, { ...command(), ...change }), false);
+  assert.equal(evaluate(observation, command()), true);
+  assert.equal(
+    offlineExecutionValid(observation, command(), source, '151.0.7922.34', CURRENT_FORMAT),
+    false,
+  );
 });
