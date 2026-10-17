@@ -907,6 +907,10 @@ export const FIRST_VICTORY_CPU_FIXTURE = Object.freeze({
   bytes: 3527,
   sha256: '561510be9786c949f65e6fcf0c0352e7e892c710ec80958e7139040e3911caa1',
 });
+export const FIRST_VICTORY_239_CPU_FIXTURE = Object.freeze({
+  bytes: 3524,
+  sha256: '328ae1964a398623c9dd1b71ff14c91e3dbb4156670558bcf381306334e9cf4c',
+});
 export function qualificationNextRouteOptions(flags, scenario, bytes) {
   const selected = flags.filter((value) => value.startsWith('--authored-next-route'));
   const declared =
@@ -922,18 +926,22 @@ export function qualificationNextRouteOptions(flags, scenario, bytes) {
   assert.deepEqual(selected, [`--authored-next-route=${NEXT_ROUTE_PROTOCOL}`]);
   assert.equal(scenario.nativeRouteProtocol, NEXT_ROUTE_PROTOCOL);
   if (scenario.nativeRouteCpuProfile !== undefined) {
-    assert.equal(scenario.nativeRouteCpuProfile, 'first-victory-e1cc-v1');
+    const current = scenario.nativeRouteCpuProfile === 'first-victory-239-v1';
+    assert(
+      ['first-victory-e1cc-v1', 'first-victory-239-v1'].includes(scenario.nativeRouteCpuProfile),
+    );
+    const profileSource = current
+      ? '239c574ecddd5bb6d5896e621d9edc53e7f6a313'
+      : NEXT_ROUTE_FINAL_SOURCE;
+    const profileFixture = current ? FIRST_VICTORY_239_CPU_FIXTURE : FIRST_VICTORY_CPU_FIXTURE;
     assert.equal(scenario.kind, 'performance');
     assert.equal(scenario.timeoutMs, 240000);
     assert.equal(scenario.requiredProfile, 'cpu');
-    assert.equal(bytes.length, FIRST_VICTORY_CPU_FIXTURE.bytes);
-    assert.equal(
-      createHash('sha256').update(bytes).digest('hex'),
-      FIRST_VICTORY_CPU_FIXTURE.sha256,
-    );
+    assert.equal(bytes.length, profileFixture.bytes);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), profileFixture.sha256);
     assert.deepEqual(scenario, JSON.parse(bytes), 'Profile recipe differs from admitted bytes');
     for (const [name, value] of [
-      ['source-revision', NEXT_ROUTE_FINAL_SOURCE],
+      ['source-revision', profileSource],
       ['cpu', '2.42'],
       ['browser', 'chromium'],
       ['cadence', 'settled120'],
@@ -960,7 +968,7 @@ export function qualificationNextRouteOptions(flags, scenario, bytes) {
       actions.map((action) => validateNextRouteAction(action).mission),
       ['first-return'],
     );
-    return { protocol: NEXT_ROUTE_PROTOCOL, sourceRevision: NEXT_ROUTE_FINAL_SOURCE };
+    return { protocol: NEXT_ROUTE_PROTOCOL, sourceRevision: profileSource };
   }
   assert.equal(scenario.kind, 'lifecycle');
   assert.equal(scenario.timeoutMs, 1200000);

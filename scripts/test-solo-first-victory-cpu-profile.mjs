@@ -37,6 +37,29 @@ const args = () =>
     '/owned',
   ).slice(4);
 const sha = (b) => createHash('sha256').update(b).digest('hex');
+const executionWitnessPath =
+  'docs/performance/fixtures/solo-first-victory-cpu/239-execution-source.json';
+function checkedExecutionWitness(bytes, declarationBytes, workflowBytes) {
+  assert.equal(sha(bytes), 'abdffab58897cc915a95880a5ac96439afa5d25bb50148f268edba1eba3a0ad1');
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.format, 'SoloFirstVictoryCpu239ExecutionSourceV1');
+  assert.equal(witness.head, '239c574ecddd5bb6d5896e621d9edc53e7f6a313');
+  assert.equal(witness.tree, '1ac7f17971498d2a8be19085f00a9f732db42798');
+  assert.equal(witness.run, 39049194706);
+  assert.equal(witness.nativeObservations, 0);
+  const refs = new Map(witness.records.map((ref) => [ref.path, ref]));
+  assert.equal(refs.size, witness.records.length);
+  for (const [path, content] of [
+    ['docs/performance/solo-first-victory-cpu-e1cc-plan.json', declarationBytes],
+    ['.github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml', workflowBytes],
+  ]) {
+    const ref = refs.get(path);
+    assert(ref, path);
+    assert.equal(content.length, ref.bytes, path);
+    assert.equal(sha(content), ref.sha256, path);
+  }
+  return refs;
+}
 const closed = {
   status: 'closed',
   exitCode: 0,
@@ -311,7 +334,7 @@ test('standalone adapter binds only one exact profile with no payload or browser
   assert.equal(bound.releaseTrigger.status, 'reviewed-one-shot');
 });
 
-test('one-shot workflow freezes every current helper and preserves the existing source/owner envelope', async () => {
+test('executed one-shot workflow freezes exact239 helper bytes and preserves the source/owner envelope', async () => {
   const workflow = await read('.github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml');
   const text = workflow.toString();
   const conditions = [
@@ -331,10 +354,16 @@ test('one-shot workflow freezes every current helper and preserves the existing 
     ...text.slice(text.indexOf('          path: tools')).matchAll(/^            \/([^\n]+)$/gm),
   ].map((x) => x[1]);
   assert.equal(new Set(sparse).size, sparse.length);
+  const historical = checkedExecutionWitness(
+    await read(executionWitnessPath),
+    await read('docs/performance/solo-first-victory-cpu-e1cc-plan.json'),
+    workflow,
+  );
   for (const ref of [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools]) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(sha(b), ref.sha256, ref.path);
+    const original = historical.get(ref.path);
+    assert(original, ref.path);
+    assert.equal(original.bytes, ref.bytes, ref.path);
+    assert.equal(original.sha256, ref.sha256, ref.path);
     assert(sparse.includes(ref.path), ref.path);
   }
   for (const expected of [
@@ -360,9 +389,17 @@ test('actual preparer verifies current closure and copies the exact profile rout
     const b = await readFile(p);
     return { bytes: b.length, sha256: sha(b) };
   };
+  // This separately exercises the current preparer; the executed declaration is
+  // checked against its immutable source witness above, never rewritten.
+  const currentPlan = plan();
+  for (const ref of [...currentPlan.adapterInputs, ...currentPlan.frozenTools]) {
+    const current = await read(ref.path);
+    ref.bytes = current.length;
+    ref.sha256 = sha(current);
+  }
   const report = {};
   const state = await prepareCpuProfileMode({
-    plan: plan(),
+    plan: currentPlan,
     repository: await realpath(root),
     work: join(dir, 'work'),
     evidence: join(dir, 'evidence'),
@@ -375,4 +412,17 @@ test('actual preparer verifies current closure and copies the exact profile rout
   });
   assert.deepEqual(await readFile(state.recipePath), bytes);
   assert.equal(report.performanceQualification, 'excluded-cpu-profiling');
+});
+
+test('executed first-victory source rejects altered witness, declaration and workflow', async () => {
+  const w = await read(executionWitnessPath),
+    m = await read('docs/performance/solo-first-victory-cpu-e1cc-plan.json'),
+    f = await read('.github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml');
+  checkedExecutionWitness(w, m, f);
+  for (const args of [
+    [Buffer.concat([w, Buffer.from(' ')]), m, f],
+    [w, Buffer.concat([m, Buffer.from(' ')]), f],
+    [w, m, Buffer.concat([f, Buffer.from(' ')])],
+  ])
+    assert.throws(() => checkedExecutionWitness(...args));
 });

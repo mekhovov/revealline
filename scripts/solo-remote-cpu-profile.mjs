@@ -16,17 +16,41 @@ export const LONG_RAIL_CPU_RECIPE =
 export const FIRST_VICTORY_CPU_SOURCE = 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17';
 export const FIRST_VICTORY_CPU_RECIPE =
   '561510be9786c949f65e6fcf0c0352e7e892c710ec80958e7139040e3911caa1';
+export const FIRST_VICTORY_239_CPU_SOURCE = '239c574ecddd5bb6d5896e621d9edc53e7f6a313';
+// Exact independently verified successful producer metadata; full remote admission remains required.
+const FIRST_VICTORY_239_CPU_CANDIDATE = Object.freeze({
+  revision: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
+  tree: '1ac7f17971498d2a8be19085f00a9f732db42798',
+  run: 39049194998,
+  artifact: 12107584924,
+  outer: {
+    bytes: 1091981388,
+    sha256: 'de57853058db05207dd93f0fd2cb38dd57589485dc0a5cfcc81221d1d1710aec',
+  },
+  inner: {
+    bytes: 1073799309,
+    sha256: '0a0f4273b3ac6cc906b6625063d52229a39c92b108d1dba296b7bd5628028f17',
+  },
+  manifestSHA256: 'abe173d91aece2ba590c0c2442d48f151b13e23a88fa0ead7b6690f4f95b9d36',
+});
+const firstVictory239 = (plan) =>
+  plan?.phase === 'first-victory-cpu-profile' &&
+  plan?.sourceCohort === 'first-victory-239-main8b-v1';
 const firstVictory = (plan) => plan?.phase === 'first-victory-cpu-profile';
 const longRail = (plan) => plan?.phase === 'long-rail-cpu-profile';
 const source = (plan) =>
   firstVictory(plan)
-    ? FIRST_VICTORY_CPU_SOURCE
+    ? firstVictory239(plan)
+      ? FIRST_VICTORY_239_CPU_SOURCE
+      : FIRST_VICTORY_CPU_SOURCE
     : longRail(plan)
       ? LONG_RAIL_CPU_SOURCE
       : CPU_PROFILE_SOURCE;
 const recipeHash = (plan) =>
   firstVictory(plan)
-    ? FIRST_VICTORY_CPU_RECIPE
+    ? firstVictory239(plan)
+      ? '328ae1964a398623c9dd1b71ff14c91e3dbb4156670558bcf381306334e9cf4c'
+      : FIRST_VICTORY_CPU_RECIPE
     : longRail(plan)
       ? LONG_RAIL_CPU_RECIPE
       : CPU_PROFILE_RECIPE;
@@ -108,23 +132,29 @@ export function validateCpuProfilePlan(plan) {
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.candidate.revision, source(plan));
   if (victory) {
-    assert.equal(plan.sourceCohort, 'first-victory-e1cc-main8b-v1');
-    assert.equal(plan.candidate.tree, '58f19392e25384620d896098fce8616b538e318d');
-    assert.equal(plan.runtimeRevision, FIRST_VICTORY_CPU_SOURCE);
-    assert.equal(plan.candidate.run, 39037874955);
-    assert.equal(plan.candidate.artifact, 12104590541);
-    assert.deepEqual(plan.candidate.outer, {
-      bytes: 1091965213,
-      sha256: 'fb85094a61cdc329ccf8a1488b6e3ca1043ef5f249a6b33729bb04141336af1e',
-    });
-    assert.deepEqual(plan.candidate.inner, {
-      bytes: 1073790972,
-      sha256: '6c8bbb6aafe3f9d55e2fb445d5846a5e9d02ebd648c4e630889743bf76ec421e',
-    });
-    assert.equal(
-      plan.candidate.manifestSHA256,
-      '23f555db20036838cc1601f2cebf8f1a75eb62fb0c6cf36f1e1988035b3e1b64',
-    );
+    if (firstVictory239(plan)) {
+      for (const key of ['revision', 'tree', 'run', 'artifact', 'outer', 'inner', 'manifestSHA256'])
+        assert.deepEqual(plan.candidate[key], FIRST_VICTORY_239_CPU_CANDIDATE[key], key);
+      assert.equal(plan.runtimeRevision, FIRST_VICTORY_239_CPU_SOURCE);
+    } else {
+      assert.equal(plan.sourceCohort, 'first-victory-e1cc-main8b-v1');
+      assert.equal(plan.candidate.tree, '58f19392e25384620d896098fce8616b538e318d');
+      assert.equal(plan.runtimeRevision, FIRST_VICTORY_CPU_SOURCE);
+      assert.equal(plan.candidate.run, 39037874955);
+      assert.equal(plan.candidate.artifact, 12104590541);
+      assert.deepEqual(plan.candidate.outer, {
+        bytes: 1091965213,
+        sha256: 'fb85094a61cdc329ccf8a1488b6e3ca1043ef5f249a6b33729bb04141336af1e',
+      });
+      assert.deepEqual(plan.candidate.inner, {
+        bytes: 1073790972,
+        sha256: '6c8bbb6aafe3f9d55e2fb445d5846a5e9d02ebd648c4e630889743bf76ec421e',
+      });
+      assert.equal(
+        plan.candidate.manifestSHA256,
+        '23f555db20036838cc1601f2cebf8f1a75eb62fb0c6cf36f1e1988035b3e1b64',
+      );
+    }
     assert.equal(plan.baseline.revision, '8b01991942dc764b8aa4726851699ce1985e53ae');
     assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
     for (const key of ['artifact', 'reusableArtifact', 'publisher', 'buildCommand'])
@@ -176,11 +206,14 @@ export function validateCpuProfilePlan(plan) {
   assert.equal(plan.rowEvidenceBytes, 128 * MiB);
   assert.deepEqual(plan.rows, [rowDefinition(plan)]);
   assert.equal(plan.recipe.sha256, recipeHash(plan));
-  if (current) assert.equal(plan.recipe.bytes, victory ? 3527 : 4562);
+  if (current)
+    assert.equal(plan.recipe.bytes, victory ? (firstVictory239(plan) ? 3524 : 3527) : 4562);
   assert.equal(
     plan.recipe.path,
     victory
-      ? 'docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-e1cc.qualification.fixture'
+      ? firstVictory239(plan)
+        ? 'docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-239.qualification.fixture'
+        : 'docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-e1cc.qualification.fixture'
       : current
         ? 'docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture'
         : 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
@@ -205,7 +238,26 @@ export function validateCpuProfilePlan(plan) {
     assert.equal(plan.release.noUnclosedOwners, true);
     assert.equal(plan.release.ownerClosureScope, 'specific-next-chromium-r2-command-only');
     assert.equal(plan.release.allPriorPlannedJobsClosed, undefined);
-    assert.equal(plan.release.onceOnlyBefore, '7c7cc2648331870683ac7b76850bbeff859f802e');
+    assert.equal(
+      plan.release.onceOnlyBefore,
+      firstVictory239(plan)
+        ? FIRST_VICTORY_239_CPU_SOURCE
+        : '7c7cc2648331870683ac7b76850bbeff859f802e',
+    );
+    if (firstVictory239(plan))
+      assert.deepEqual(plan.release.priorProfileAttempt, {
+        run: 39049194706,
+        job: 117444171935,
+        tooling: FIRST_VICTORY_239_CPU_SOURCE,
+        candidate: FIRST_VICTORY_CPU_SOURCE,
+        conclusion: 'failure',
+        stage: 'candidate-source-fetch',
+        nativeObservations: 0,
+        sourceCheckoutMinutes: 3,
+        boundsChanged: false,
+        inference: 'inconclusive-external-setup-timeout',
+      });
+    else assert.equal(plan.release.priorProfileAttempt, undefined);
     assert.deepEqual(plan.stressOrigin, firstVictoryProfileOrigin());
   } else if (current) {
     assert.equal(plan.release.predecessorRun, 39015298582);
