@@ -18,6 +18,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import {
   assertPairedBaselineArtifact,
   assertStarterGameplaySelection,
+  offlinePairSources,
 } from './solo-remote-offline.mjs';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import { startProductionPreview } from './serve-production-preview.mjs';
@@ -44,6 +45,8 @@ const plan = JSON.parse(bytes),
   output = resolve(outputArgument);
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 assert.equal(plan.format, 'SoloHostedOfflinePersistencePairCasePlanV1');
+const pairFormat = plan.pairFormat ?? 'SoloHostedOfflinePairPlan.v1';
+const pairSources = offlinePairSources(pairFormat);
 assert.equal(
   plan.interfaceStatus,
   'peer-reviewed-bound',
@@ -140,11 +143,11 @@ assert(['baseline', 'candidate'].includes(plan.sourceRole));
 assert.match(plan.expectedBrowserVersion, /^\d+\.\d+\.\d+\.\d+$/);
 if (plan.sourceRole === 'candidate') {
   const prior = await checkedJSON(plan.firstArmReport, 2 * 1024 ** 2);
-  assertPairedBaselineArtifact(prior, verified.artifacts.baseline);
+  assertPairedBaselineArtifact(prior, verified.artifacts.baseline, pairFormat);
   assert.equal(prior.format, 'SoloHostedOfflinePersistencePairCaseV1');
   assert.equal(prior.status, 'completed-diagnostic');
   assert.equal(prior.sourceRole, 'baseline');
-  assert.equal(prior.artifact.sourceRevision, 'b11745223861c3973ad4bf440cc536198b8e0371');
+  assert.equal(prior.artifact.sourceRevision, pairSources.baseline);
   assert.equal(prior.observationSettled, true);
   assert.equal(prior.offlineNavigation?.responseWaitSettled, true);
   for (const key of [
@@ -193,12 +196,7 @@ if (plan.sourceRole === 'candidate') {
   assert.equal(plan.firstArmReport, null);
   assert.equal(plan.firstArmClosure, null);
 }
-assert.equal(
-  plan.artifact.sourceRevision,
-  plan.sourceRole === 'baseline'
-    ? 'b11745223861c3973ad4bf440cc536198b8e0371'
-    : '3adcd53792043ef02459e86168c6b33a66d6ef00',
-);
+assert.equal(plan.artifact.sourceRevision, pairSources[plan.sourceRole]);
 const selectedRoot = selected.payloadRealpath;
 assert(selectedRoot.startsWith(runnerTemp + '/'), 'Only common admitted job-local payloads');
 assert.equal(plan.artifact.payloadRealpath, selectedRoot);
@@ -225,6 +223,7 @@ try {
 await mkdir(output, { recursive: false });
 const report = {
   format: 'SoloHostedOfflinePersistencePairCaseV1',
+  pairFormat,
   sourceRole: plan.sourceRole,
   status: 'running',
   startedAt: new Date().toISOString(),

@@ -462,7 +462,8 @@ async function main() {
   await mkdir(work);
   const plan = await json(planPath);
   const extension =
-    plan.format === 'SoloHostedOfflinePairPlan.v1'
+    plan.format === 'SoloHostedOfflinePairPlan.v1' ||
+    plan.format === 'SoloHostedOfflineCurrentPairPlan.v2'
       ? 'offline'
       : ['SoloHostedSustainedPlanV1', 'SoloHostedTimingPlanV1'].includes(plan.format)
         ? 'sustained'
@@ -520,7 +521,9 @@ async function main() {
   const report = {
     format:
       extension === 'offline'
-        ? 'SoloHostedOfflinePair.v1'
+        ? plan.format === 'SoloHostedOfflineCurrentPairPlan.v2'
+          ? 'SoloHostedOfflineCurrentPair.v2'
+          : 'SoloHostedOfflinePair.v1'
         : extension === 'sustained'
           ? 'SoloHostedSustained.v1'
           : extension === 'auxiliary'

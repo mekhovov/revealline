@@ -4,11 +4,25 @@ import { readFile, writeFile, lstat, realpath, open } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import {
   offlineGameplayAssessment,
+  NATIVE_OFFLINE_STATE_POLICY,
+  nativeOfflineStateApplied,
   validateOfflineGameplayPlan,
 } from './solo-offline-gameplay.mjs';
 
 const BASE = 'b11745223861c3973ad4bf440cc536198b8e0371';
 const CANDIDATE = '3adcd53792043ef02459e86168c6b33a66d6ef00';
+const CURRENT_FORMAT = 'SoloHostedOfflineCurrentPairPlan.v2';
+const PAIR_SOURCES = Object.freeze({
+  'SoloHostedOfflinePairPlan.v1': Object.freeze({ baseline: BASE, candidate: CANDIDATE }),
+  [CURRENT_FORMAT]: Object.freeze({
+    baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+    candidate: 'cce49c81d82b79aefc24898f32eeebc609e569fb',
+  }),
+});
+export function offlinePairSources(format = 'SoloHostedOfflinePairPlan.v1') {
+  assert(Object.hasOwn(PAIR_SOURCES, format), 'Unknown offline pair format');
+  return PAIR_SOURCES[format];
+}
 const MiB = 1024 ** 2;
 const read = async (path) => JSON.parse(await readFile(path, 'utf8'));
 const save = (path, value) =>
@@ -40,9 +54,35 @@ export async function readBoundedJSON(path, maximumBytes = 2 * MiB) {
 }
 
 export function validateOfflinePlan(plan) {
-  assert.equal(plan.format, 'SoloHostedOfflinePairPlan.v1');
+  assert(Object.hasOwn(PAIR_SOURCES, plan.format), 'Unknown offline pair format');
+  const sources = offlinePairSources(plan.format);
   assert.equal(plan.status, 'pinned-for-execution');
   assert.equal(plan.performanceExclusion, true);
+  if (plan.format === CURRENT_FORMAT) {
+    assert(plan.offline.gameplay, 'Current pair requires the unchanged installed Starter recipe');
+    assert.equal(plan.baseline.tree, '9373b6a74aea8fa1ef47aa17ace140b4cf714609');
+    assert.equal(plan.candidate.tree, '71f7e4cb3b0a39c1d281635774371a693794dd22');
+    assert.equal(plan.baseline.reusableArtifact.format, 'SoloHostedNormalBaselineReuseV2');
+    assert.equal(plan.baseline.reusableArtifact.sourceRevision, sources.baseline);
+    assert.equal(plan.baseline.reusableArtifact.sourceTree, plan.baseline.tree);
+    assert.equal(plan.offline.nativeStatePolicy, NATIVE_OFFLINE_STATE_POLICY);
+    assert.equal(plan.playwright, '1.62.1');
+    assert.equal(plan.offline.expectedBrowserVersion, '151.0.7922.34');
+    const release = plan.diagnosticRelease;
+    assert.equal(release.format, 'SoloNativeOfflineStateDiagnosticReleaseV1');
+    assert.equal(release.status, 'reviewed-for-cause-analysis');
+    assert.equal(release.candidateRevision, sources.candidate);
+    assert.equal(release.baselineRevision, sources.baseline);
+    assert.equal(release.firstEightAllCorrectnessPassed, false);
+    assert.equal(release.successorQualificationReleased, false);
+    assert.equal(release.performanceQualificationReleased, false);
+    assert.equal(release.onceOnlyBefore, sources.candidate);
+    assert.equal(release.nativeStateEvidence.run, 39001646012);
+    assert.equal(release.nativeStateEvidence.sourceRevision, sources.candidate);
+    assert.equal(release.nativeStateEvidence.browserVersion, plan.offline.expectedBrowserVersion);
+    assert.equal(release.nativeStateEvidence.conclusion, 'failure');
+    assert.equal(release.nativeStateEvidence.qualificationEligible, false);
+  }
   if (plan.offline.gameplay) {
     validateOfflineGameplayPlan(plan.offline.gameplay);
     assert.equal(plan.setupTimeoutMs, 2400000);
@@ -56,8 +96,8 @@ export function validateOfflinePlan(plan) {
     );
     assert.equal(plan.offline.openingRecipe.bytes, 5811);
   }
-  assert.equal(plan.baseline.revision, BASE);
-  assert.equal(plan.candidate.revision, CANDIDATE);
+  assert.equal(plan.baseline.revision, sources.baseline);
+  assert.equal(plan.candidate.revision, sources.candidate);
   assert.deepEqual(
     plan.rows.map(({ id, source, kind, engine, timeoutMs, performanceExclusion }) => ({
       id,
@@ -103,8 +143,18 @@ export function validateOfflinePlan(plan) {
   assert.match(plan.offline.driver.sha256, /^[a-f0-9]{64}$/);
 }
 
-export function assertPairedBaselineArtifact(prior, paired) {
-  assert(paired && paired.sourceRole === 'baseline' && paired.sourceRevision === BASE);
+export function assertPairedBaselineArtifact(
+  prior,
+  paired,
+  format = 'SoloHostedOfflinePairPlan.v1',
+) {
+  const sources = offlinePairSources(format);
+  assert(paired && paired.sourceRole === 'baseline' && paired.sourceRevision === sources.baseline);
+  if (format === CURRENT_FORMAT) {
+    assert.equal(prior.pairFormat, format);
+    assert.equal(prior.nativeOfflineStatePolicy, NATIVE_OFFLINE_STATE_POLICY);
+    assert.equal(prior.artifact.sourceRevision, sources.baseline);
+  }
   assert.deepEqual(prior.admission.selected, paired, 'Baseline is from another artifact admission');
   assert.equal(prior.artifact.sourceTree, paired.sourceTree);
   assert.deepEqual(prior.artifact.archiveIdentity, paired.archiveIdentity);
@@ -113,10 +163,27 @@ export function assertPairedBaselineArtifact(prior, paired) {
   assert.deepEqual(prior.securityPolicies.sourceProof, paired.sourceProof);
 }
 
-export function offlineExecutionValid(raw, command, source, browserVersion) {
+export function offlineExecutionValid(
+  raw,
+  command,
+  source,
+  browserVersion,
+  pairFormat = 'SoloHostedOfflinePairPlan.v1',
+) {
   const before = raw?.workerSnapshots?.find((row) => row.stage === 'ready-before-close');
   return Boolean(
-    command?.status === 'closed' &&
+    Object.hasOwn(PAIR_SOURCES, pairFormat) &&
+      (pairFormat !== CURRENT_FORMAT ||
+        (raw?.pairFormat === pairFormat &&
+          raw.nativeOfflineStatePolicy === NATIVE_OFFLINE_STATE_POLICY &&
+          source === PAIR_SOURCES[pairFormat][raw.sourceRole] &&
+          ((raw.offlineNavigation?.publicBootReady !== true &&
+            raw.offlineNavigation?.nativeState === undefined) ||
+            nativeOfflineStateApplied(
+              raw.offlineNavigation?.nativeState,
+              raw.offlineNavigation?.selectedGame?.url,
+            )))) &&
+      command?.status === 'closed' &&
       command.exitCode === 0 &&
       command.completedAt &&
       !command.violation &&
@@ -154,13 +221,17 @@ export function offlineExecutionValid(raw, command, source, browserVersion) {
   );
 }
 
-export function baselineAllowsCandidate(row, source = BASE) {
+export function baselineAllowsCandidate(
+  row,
+  source = BASE,
+  pairFormat = 'SoloHostedOfflinePairPlan.v1',
+) {
   return (
     row?.source === 'baseline' &&
     row?.status === 'completed-diagnostic' &&
     row?.preservation?.status === 'passed' &&
     row?.retirement?.status === 'passed' &&
-    offlineExecutionValid(row.rawOffline, row.command, source, row.browserVersion)
+    offlineExecutionValid(row.rawOffline, row.command, source, row.browserVersion, pairFormat)
   );
 }
 
@@ -297,6 +368,12 @@ export async function prepareOfflineMode(ctx) {
   assert(Buffer.byteLength(versionText) < 4096);
   const versions = [...new Set(versionText.match(/\b\d+\.\d+\.\d+\.\d+\b/g))];
   assert.equal(versions.length, 1, 'Exactly one actual browser version is required');
+  if (plan.format === CURRENT_FORMAT)
+    assert.equal(
+      versions[0],
+      plan.offline.expectedBrowserVersion,
+      'Native correction browser stratum',
+    );
   const driver = join(repository, plan.offline.driver.path);
   assert.deepEqual(await digest(driver), {
     bytes: plan.offline.driver.bytes,
@@ -411,6 +488,7 @@ export async function bindOfflineCase(ctx, row, dir, tmp) {
   const ref = async (path) => ({ path, ...(await digest(path)) });
   const casePlan = {
     format: 'SoloHostedOfflinePersistencePairCasePlanV1',
+    pairFormat: plan.format,
     interfaceStatus: 'peer-reviewed-bound',
     status: 'pinned-for-execution',
     engine: 'chromium',
@@ -474,7 +552,7 @@ export async function bindOfflineCase(ctx, row, dir, tmp) {
   };
   if (row.source === 'candidate') {
     const prior = mode.baseline;
-    assert(baselineAllowsCandidate(prior));
+    assert(baselineAllowsCandidate(prior, plan.baseline.revision, plan.format));
     casePlan.firstArmReport = await ref(prior.rawReport.path);
     casePlan.firstArmClosure = await ref(prior.commandReceipt.path);
     casePlan.firstArmArgv = prior.command.argv;
@@ -530,6 +608,7 @@ export async function runOfflineRow(ctx, row, dir, tmp) {
     command,
     plan[row.source].revision,
     mode.browserVersion,
+    plan.format,
   );
   assert.equal(command.status, 'closed', 'Do not preserve or retire an uncertain native owner');
   const profile = raw.profileRetained,
