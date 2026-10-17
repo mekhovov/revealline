@@ -60,6 +60,37 @@ These checks used an existing authenticated browser session, not a new password 
 The recording correction above and the archive/challenge additions are a separate
 follow-up release; this first-release receipt does not establish their publication.
 
+## Public archive and challenge acceptance
+
+The follow-up GitHub Pages deployment of
+`afac5e3ca403a74e6f60b5867a6c54d4dd8a4a0a` passed build, deployment and
+exact-source verification on 17 October 2026. The public player retained all twelve
+presets and the existing Meteor75 and X650 setups. Battery depletion remained off.
+An X650 Regional flight completed its explicitly selected 30-second challenge and
+continued to 41.22 seconds; its finished local archive then independently verified
+both complete-session physics from reset and the challenge outcome in the replay
+worker. The result remains unscored.
+
+A second public Regional session retained 0–69.88 seconds across the 60-second
+segment boundary, with a durable recovery checkpoint at 65 seconds. Its finished
+archive independently verified complete-session physics and the challenge result.
+The updated Academy host also exposed the shared archives, optional challenges and
+recovery controls, with unlimited practice selected by default.
+
+The local browser check also flew to 12:39.98, retained the recent
+10:27.90–12:39.98 clip, and restored the durable 12:35 checkpoint. Verification
+correctly identified that restored archive as a checkpoint-origin clip, rather
+than claiming to verify the earlier flight. This long-flight receipt is local;
+the public receipt above covers the deployed archive and challenge path.
+
+The public flight also exposed a Regional presentation gap: a boundary stop showed
+only “Paused,” with an enabled Resume action that could not arm the aircraft.
+The follow-up correction exposes boundary, worker and terrain errors in both the
+flight display and pause menu, disables unavailable Resume explicitly, and keeps
+Retry reachable. Ordinary pauses remain resumable. Local browser testing reached
+the Canyon altitude boundary, displayed its reason, and successfully restarted and
+re-armed at launch. This correction does not change physics or recording identities.
+
 ## What numerical qualification establishes
 
 The source-pinned [numerical](fpv-aircraft-numerical-qualification.json) and
