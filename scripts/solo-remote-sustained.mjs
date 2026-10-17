@@ -34,6 +34,84 @@ const finalTimingSource = {
   candidateTree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
   runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
 };
+const setupSuccessors = {
+  'cold-first30': {
+    priorRun: 39012635535,
+    priorConclusion: 'failure',
+    originalDeclaration: {
+      path: 'docs/performance/solo-final-timing-cold-first30-plan.json',
+      bytes: 15177,
+      sha256: 'fe87b494680a8c0503ccb6809d7377cf4d9d9788bc42fcfad61d2cb3ba7dd6be',
+    },
+  },
+  'warm-first30': {
+    priorRun: 39012635503,
+    priorConclusion: 'failure',
+    originalDeclaration: {
+      path: 'docs/performance/solo-final-timing-warm-first30-plan.json',
+      bytes: 15180,
+      sha256: '4941bd8a1fb185ce9252c60260a0b2f5a97453d63a66a085c9f55f54d6201b54',
+    },
+  },
+  sentry: {
+    priorRun: 39012635473,
+    priorConclusion: 'failure',
+    originalDeclaration: {
+      path: 'docs/performance/solo-final-timing-sentry-plan.json',
+      bytes: 15156,
+      sha256: '20375ccdbbca9d14a483971bbd5111a9823a6c99a90af24a3150f5335593e0db',
+    },
+  },
+  'long-rail': {
+    priorRun: 39012635488,
+    priorConclusion: 'failure',
+    originalDeclaration: {
+      path: 'docs/performance/solo-final-timing-long-rail-plan.json',
+      bytes: 15162,
+      sha256: '3cf600c4dae17cf2821696cd37bab7dd43e437bfc4b65cfe5e29a27959ca6744',
+    },
+  },
+  soak: {
+    priorRun: 39012635593,
+    priorConclusion: 'cancelled',
+    originalDeclaration: {
+      path: 'docs/performance/solo-final-soak-plan.json',
+      bytes: 16659,
+      sha256: '073a62f519daa8d5f57904faeb2ca41c93568b9a6ff5063df6bc3321edcd9d0c',
+    },
+  },
+};
+export const COMPARISON_SETUP_DYNAMIC_ROOTS = Object.freeze([
+  'scripts/soundtrack-distribution.mjs',
+  'scripts/optional-distribution.mjs',
+  'scripts/external-distribution.mjs',
+  'scripts/optional-artwork.mjs',
+]);
+export function comparisonSetupSuccessor(phase) {
+  assert(Object.hasOwn(setupSuccessors, phase), 'No failed setup declaration for this phase');
+  return {
+    format: 'SoloVerifierClosureSuccessorV1',
+    ...structuredClone(setupSuccessors[phase]),
+    priorNativeObservations: 0,
+    reason: 'missing-dynamic-source-verifier-dependencies',
+    runtimeChanged: false,
+    scenarioChanged: false,
+    gateChanged: false,
+    automaticRetries: 0,
+  };
+}
+function validateSetupSuccessor(plan, selected) {
+  if (plan.setupSuccessor === undefined) return;
+  assert.equal(selected, finalTimingSource, 'Only the exact final-source setup is admitted');
+  assert.equal(plan.release.status, 'reviewed-diagnostic-only');
+  assert.deepEqual(plan.setupSuccessor, comparisonSetupSuccessor(plan.phase));
+  assert.equal(plan.release.onceOnlyBefore, 'a7e0219818842f02399317ca6d2a14bdd506da3d');
+  for (const path of COMPARISON_SETUP_DYNAMIC_ROOTS)
+    assert(
+      plan.frozenTools.some((ref) => ref.path === path),
+      `Missing verifier dependency ${path}`,
+    );
+}
 const finalSoakCohort = 'soak-main8b-candidatea6e';
 const anchoredSoakHash = '079d4dd76fbd914ddd4da7311f8e6cee4a0ff4fc3bc951842b2921c94c53b8ff';
 const finalLifecycle = Object.freeze({
@@ -505,6 +583,7 @@ export function validateTimingPlan(plan) {
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
   const selected = validateSourceCohort(plan, selectedTimingSource(plan));
+  validateSetupSuccessor(plan, selected);
   const expectedSource = selected ?? source;
   validateTimingHitchJournalAdmission(plan, selected);
   assert.equal(plan.baseline.revision, expectedSource.baseline);
@@ -701,6 +780,7 @@ export function validateSustainedPlan(plan) {
   if (timingPlan(plan)) return validateTimingPlan(plan);
   assert.equal(plan.format, 'SoloHostedSustainedPlanV1');
   const selected = validateSourceCohort(plan, selectedSustainedSource(plan));
+  validateSetupSuccessor(plan, selected);
   if (selected) {
     assert.equal(plan.latestSourceRevision, selected.candidate);
     assert.equal(plan.hitchJournal, 'bounded-v1');
