@@ -1,0 +1,28 @@
+{
+  "capturedAt": "2026-10-16T01:17:04.175071+00:00",
+  "sourceRevision": "bc9bc71f192729f0661a0483d7d64609c1973343",
+  "sourceTree": "87e0187a89ef9ba3462fe7b547ba601d0b7fc7c7",
+  "cloudRun": 38832221920,
+  "artifactId": 12018000809,
+  "packageRevision": "c4f5766f9d8801aaf319f9101dd90ac848f52eb5e5838c979e5602f46c580995",
+  "runtimeArchiveSHA256": "90d2cabcebd8c4647f6abced993dfb5c40f4a19bd5829a0e15c0b5bfc321f692",
+  "githubArtifactSHA256": "da9e43d1ead9d4acff4074180f59c7109c55acafb6674314bc5207298505d9b1",
+  "topLevelChecksums": 15,
+  "allArchiveReceipt": "all-package-members-receipt.json",
+  "importClosureReceipt": "archive-import-closure-receipt.json",
+  "packagedListingAndCapacityChecks": {
+    "passed": true,
+    "cases": 14,
+    "listingTestSHA256": "c05a03bdf18ba79991cff597472d14f3c62b04ef71d09326d7500c07775a0a0b",
+    "capacitySourceTestSHA256": "2a79b21a3db83e2fccfc46d169ae16d27fd29a3cf017b4c9f180e96c42ed64c5",
+    "capacityAdaptedTestSHA256": "aadabf40d0bf9fb669c6134785f7255d13ea54b9bfc9a78b22be74e861728b0e",
+    "onlyImportAdaptation": "Canonical worldImportErrorCopy imports its shipped generated runtime export; other test source stays exact",
+    "runtimeBytesUnchanged": true
+  },
+  "regionalRetainedLimitBytes": 536870912,
+  "worldpackDefaultLimitBytes": 268435456,
+  "retainedRevisionLimit": 256,
+  "nativeAccepted": false,
+  "publicAccepted": false,
+  "scope": "Exact optional cloud package; each row still cloned and cursor adds deliveries; no native heap/time or public closing/zero-saved cause/fix claim; all six source/runtime archive member hashes/budgets and three import closures checked. Fourteen actual shipped listing/capacity cases with isolated fake IndexedDB/test DOM, modeled retained-byte totals and tiny sentinels. No native quota, player data, migration, browser/device/offline/public acceptance."
+}

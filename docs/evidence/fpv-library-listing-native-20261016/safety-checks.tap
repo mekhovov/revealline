@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: construction is inert; explicit seed/list/abort preserve content, generation and transaction boundaries
+ok 1 - construction is inert; explicit seed/list/abort preserve content, generation and transaction boundaries
+  ---
+  duration_ms: 72.014666
+  ...
+# Subtest: a later explicit visit reuses the same intact fixture without reseeding
+ok 2 - a later explicit visit reuses the same intact fixture without reseeding
+  ---
+  duration_ms: 37.207084
+  ...
+# Subtest: unknown nonempty fixture refuses seeding and preserves its sentinel
+ok 3 - unknown nonempty fixture refuses seeding and preserves its sentinel
+  ---
+  duration_ms: 12.668083
+  ...
+# Subtest: diagnostic history is capped without collecting asset content
+ok 4 - diagnostic history is capped without collecting asset content
+  ---
+  duration_ms: 0.872792
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 438.046084

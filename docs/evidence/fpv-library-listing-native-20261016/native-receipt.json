@@ -1,0 +1,81 @@
+{
+  "reviewedAt": "2026-10-16T02:07:46.906198+00:00",
+  "pr": 1537,
+  "head": "bc9bc71f192729f0661a0483d7d64609c1973343",
+  "sourceReview": "accepted separately",
+  "nativeComponent": "accepted",
+  "url": "http://127.0.0.1:9212/",
+  "tabIds": [
+    "55",
+    "56"
+  ],
+  "agent": "Codex IAB via CUA",
+  "reportedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "testDatabase": "codex-authoring-native-library-listing-bc9-20261016-contract-v1",
+  "moduleSha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+  "fixture": {
+    "retainedRows": 32,
+    "retainedBlobReferences": 2016,
+    "activeShadowBlobReferences": 32,
+    "totalPersistedBlobReferences": 2048,
+    "uniqueOneByteBlobValues": 32,
+    "generation": 7
+  },
+  "firstVisit": {
+    "initialOpens": 0,
+    "seedReused": false,
+    "actions": [
+      "seed PASS",
+      "list PASS",
+      "intentional readonly abort PASS",
+      "list after abort PASS"
+    ]
+  },
+  "normalTabReopen": {
+    "initialOpens": 0,
+    "seedReused": true,
+    "actions": [
+      "seed reuse PASS",
+      "list PASS"
+    ]
+  },
+  "contentFingerprint": "09cfa923824af62692dc1cc6b3747a1331fbc11d1782823b91a4fe4dc340087a",
+  "generation": 7,
+  "counts": {
+    "projects": 1,
+    "assets": 32,
+    "revisions": 32,
+    "meta": 2
+  },
+  "files": {
+    "native-listing-first-report.json": {
+      "bytes": 4128,
+      "sha256": "1d723917ef607b1ebafb50fe3cdfccd0ce78154a67f9fd831de82327784cc2ca"
+    },
+    "native-listing-first.png": {
+      "bytes": 103124,
+      "sha256": "0efe656bb3774c51e0dadf0a65e8bb39fe987870d4e52b1de8503f2451e579f4"
+    },
+    "native-listing-reopen-console.json": {
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "native-listing-reopen-report.json": {
+      "bytes": 2286,
+      "sha256": "5d4dcded619d01c109834dda375e6f5287da9af7eb2cbd0a4fe15e2c22ecaf80"
+    },
+    "native-listing-reopen.png": {
+      "bytes": 103124,
+      "sha256": "0efe656bb3774c51e0dadf0a65e8bb39fe987870d4e52b1de8503f2451e579f4"
+    }
+  },
+  "remaining": [
+    "Normal full-player UI/download/Fly and actual public integration",
+    "Native heap/time or input-to-photon measurement",
+    "Original public closing-connection and zero-visible-saved-data cause",
+    "All24 native coexistence above256MiB",
+    "Full application process restart, network offline, quota/eviction, endurance and physical devices"
+  ],
+  "scope": "Exact packaged component through a disclosed supplied-factory facade and native requests/transactions. Tiny synthetic test DB only; no existing/default player databases, no renderer, global prototype replacement or hidden storage evaluation. Data and both exported originals remain preserved. Fresh local-context reopen cannot close original public persistence issue.",
+  "cleanup": "Both created tabs closed normally; no viewport override, active renderer or elapsed run."
+}

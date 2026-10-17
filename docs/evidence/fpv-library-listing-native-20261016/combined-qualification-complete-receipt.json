@@ -1,0 +1,135 @@
+{
+  "schema": "fpv-library-metadata-combined-software-package-qualification-v1",
+  "capturedAt": "2026-10-16T01:43:00.773585+00:00",
+  "sourceRevision": "bc9bc71f192729f0661a0483d7d64609c1973343",
+  "sourceTree": "87e0187a89ef9ba3462fe7b547ba601d0b7fc7c7",
+  "pr": "https://github.com/mekhovov/revealline/pull/1537",
+  "sourceReview": "Coordinator independently accepted source and reran all five new cases; separate review boundary",
+  "optional": {
+    "capturedAt": "2026-10-16T01:17:04.175071+00:00",
+    "sourceRevision": "bc9bc71f192729f0661a0483d7d64609c1973343",
+    "sourceTree": "87e0187a89ef9ba3462fe7b547ba601d0b7fc7c7",
+    "cloudRun": 38832221920,
+    "artifactId": 12018000809,
+    "packageRevision": "c4f5766f9d8801aaf319f9101dd90ac848f52eb5e5838c979e5602f46c580995",
+    "runtimeArchiveSHA256": "90d2cabcebd8c4647f6abced993dfb5c40f4a19bd5829a0e15c0b5bfc321f692",
+    "githubArtifactSHA256": "da9e43d1ead9d4acff4074180f59c7109c55acafb6674314bc5207298505d9b1",
+    "topLevelChecksums": 15,
+    "allArchiveReceipt": "all-package-members-receipt.json",
+    "importClosureReceipt": "archive-import-closure-receipt.json",
+    "packagedListingAndCapacityChecks": {
+      "passed": true,
+      "cases": 14,
+      "listingTestSHA256": "c05a03bdf18ba79991cff597472d14f3c62b04ef71d09326d7500c07775a0a0b",
+      "capacitySourceTestSHA256": "2a79b21a3db83e2fccfc46d169ae16d27fd29a3cf017b4c9f180e96c42ed64c5",
+      "capacityAdaptedTestSHA256": "aadabf40d0bf9fb669c6134785f7255d13ea54b9bfc9a78b22be74e861728b0e",
+      "onlyImportAdaptation": "Canonical worldImportErrorCopy imports its shipped generated runtime export; other test source stays exact",
+      "runtimeBytesUnchanged": true
+    },
+    "regionalRetainedLimitBytes": 536870912,
+    "worldpackDefaultLimitBytes": 268435456,
+    "retainedRevisionLimit": 256,
+    "nativeAccepted": false,
+    "publicAccepted": false,
+    "scope": "Exact optional cloud package; each row still cloned and cursor adds deliveries; no native heap/time or public closing/zero-saved cause/fix claim; all six source/runtime archive member hashes/budgets and three import closures checked. Fourteen actual shipped listing/capacity cases with isolated fake IndexedDB/test DOM, modeled retained-byte totals and tiny sentinels. No native quota, player data, migration, browser/device/offline/public acceptance."
+  },
+  "company": {
+    "capturedAt": "2026-10-16T01:41:38.737060+00:00",
+    "sourceRevision": "bc9bc71f192729f0661a0483d7d64609c1973343",
+    "sourceTree": "87e0187a89ef9ba3462fe7b547ba601d0b7fc7c7",
+    "run": 38833782613,
+    "artifactId": 12019460975,
+    "githubArtifactSHA256": "58af168c77f3052be69e56e9871a1434649f3ef29d0f0472ca8937a109d917c7",
+    "topLevelChecksums": 7,
+    "allMemberHashes": true,
+    "archives": [
+      {
+        "role": "runtime",
+        "files": 1140,
+        "contentBytesIncludingMetadata": 41248443,
+        "archiveBytes": 41419969,
+        "archiveSHA256": "618d5b2d258bc607eedd0d27fad7266a14b5dfcac71a7c357418625ab036cfeb"
+      },
+      {
+        "role": "source",
+        "files": 1140,
+        "contentBytesIncludingMetadata": 65343658,
+        "archiveBytes": 65516902,
+        "archiveSHA256": "c56293cf307d09f6c38f64ac388797707aa0b9f467bbbac5a183e4204537a652"
+      }
+    ],
+    "existingCompanyRuntimeLimits": {
+      "files": 2000,
+      "bytes": 83886080,
+      "sourceSHA256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e"
+    },
+    "runtimeAlsoUnder72MiB": true,
+    "companyBudgetPolicyByteIdenticalToPriorFac28Qualification": true,
+    "cloudReproducibleBuilds": 2,
+    "publicEligible": false,
+    "scope": "Unchanged library metadata candidate only; no browser heap/time or public closing/zero-saved cause or fix claim. Every exact downloaded original Company top-level checksum and runtime/source ZIP member length/hash checked externally. Existing Company policy is unchanged; source inventory is separately hashed, not assigned runtime limits. Actual runtime also remains below72MiB. Optional package qualification has its own receipt. No native/player data, offline/restart, original-public-profile persistence, or publication acceptance."
+  },
+  "softwareEvidence": {
+    "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-metadata-listing-20261016/software-review-receipt.json",
+    "bytes": 4886,
+    "sha256": "90376b5d7991801e138d5499efb9b0ce195dc0e7ee5df35f5c3d9d103f8d482e"
+  },
+  "receipts": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/qualification-receipt.json",
+      "bytes": 1849,
+      "sha256": "716120a74c6bc4c9cdae06f08a4549d2757ba7dde64127ad10b4d2c0878c0a5c"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/all-package-members-receipt.json",
+      "bytes": 2260,
+      "sha256": "29f9d6ab7034b745c428f9add401e66aa4e5465ca6daab0a77061dd16b7de8c7"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/archive-import-closure-receipt.json",
+      "bytes": 424,
+      "sha256": "fc46844afceba7f0014aa8ba4f616b146e503c8bea0ae62264c38574a878c313"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/packaged-listing-capacity-checks.tap",
+      "bytes": 3530,
+      "sha256": "405588711fb6dfe5047d3f7b1805b08f1bc1de9045f86b73c4e1ac00c27d5454"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/company-original-members-receipt.json",
+      "bytes": 1737,
+      "sha256": "c6bf26b619e66f489da6d7596b79b4f2bccf828b3f553ba537f2d0a306b81b7b"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/all-pr-checks-final-state.json",
+      "bytes": 6290,
+      "sha256": "28006c4d347d14ff02841c15d4715bcab57b77adee6e19e46904990d509a6a32"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/pr-ci-final-state.json",
+      "bytes": 9801,
+      "sha256": "26938010d62b34daf02968e791febe9ac27e5b864fe88ecc6386a95175a64f42"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/selected-company-cloud-final-state.json",
+      "bytes": 9801,
+      "sha256": "1398114fa99b4eef26e663da29a6d3d3793dc55d8a2486fbba9989902e7c46b0"
+    }
+  ],
+  "policySkippedPRJobs": [
+    "test",
+    "build"
+  ],
+  "nativeAccepted": false,
+  "publicAccepted": false,
+  "scope": [
+    "Exact unchanged candidate; all downloads/checks external with TMPDIR external",
+    "Three optional runtime/source pairs and selected Company fpv-learning runtime/source originals only",
+    "Package listing guard measures request payload fan-out, not native heap, GC, latency or FPS",
+    "Candidate base is 2490636a before R6 Library admission; no combined post-merge R6 integration claim",
+    "No native/browser/player storage, actual quota/coexistence, restart/offline, original public persistence or elapsed endurance acceptance",
+    "Public closing-connection and zero-visible-saves failures remain unresolved; no causal repair claim",
+    "Source full test/build jobs that policy skips are not counted as passed",
+    "Draft held for coordinator native gate and normal repository protections"
+  ]
+}

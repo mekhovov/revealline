@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Native Library listing — tiny isolated contract</title>
+<link rel="stylesheet" href="style.css">
+<main><h1>Native Library listing contract</h1>
+<p>This authoring check uses one tiny, clearly named test database. It never opens player databases. Nothing is created until you click Seed.</p>
+<p><strong>Test database:</strong> <code id="database"></code></p>
+<p>32 retained rows; 2,016 retained Blob references plus 32 active shadow references = 2,048 total. The references share 32 one-byte synthetic values. This is not a large-data or performance benchmark.</p>
+<p>The exact qualified WorldStore module is unchanged. Only its explicitly supplied test factory has diagnostic facades; native transactions, requests and results are real. No native/global prototypes are changed.</p>
+<div class="actions"><button data-action="seed">Seed tiny test database</button><button data-action="list" disabled>List metadata</button><button data-action="abort" disabled>Abort read</button><button id="export">Export report</button></div>
+<p id="status" role="status">Ready. No database has been opened by this page.</p>
+<details open><summary>Bounded scope and remaining gates</summary><p>List checks active-first and retained-key order, one-row payload delivery, clone isolation, content and generation. Abort intentionally stops only this fixture's readonly listing after requests are queued and before delivery; it is not the reported public connection failure. Fixture data remains after the tab closes.</p><p>No normal-player integration, public persistence recovery, heap/time/FPS, whole-network offline, restart, quota or endurance acceptance is claimed.</p></details>
+<pre id="report" tabindex="0" aria-label="Native contract report"></pre></main>
+<script type="module" src="harness.mjs"></script></html>

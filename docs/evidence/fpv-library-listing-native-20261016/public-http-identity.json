@@ -1,0 +1,34 @@
+{
+  "schema": "fpv-library-listing-public-http-identity-v1",
+  "checkedAt": "2026-10-16T02:24:44.089350+00:00",
+  "sourceRevision": "741948b14a09a816e49054c443511186bb99eb41",
+  "run": 38838919718,
+  "workflowConclusion": "success",
+  "publicMarkerExact": true,
+  "worldStoreBytesEqualOriginalQualifiedPackage": true,
+  "qualifiedCandidateSource": "bc9bc71f192729f0661a0483d7d64609c1973343",
+  "checks": [
+    {
+      "role": "marker",
+      "url": "https://mekhovov.github.io/revealline/main-deployment.json?qualified-source=741948b14a09a816e49054c443511186bb99eb41",
+      "HTTP": 200,
+      "bytes": 308,
+      "sha256": "d96ff5b67e77c4dbfc71ca24786118edf77e695e9afb7b19a598bde24195882b",
+      "etag": "\"6ad18a5d-134\"",
+      "lastModified": "Fri, 16 Oct 2026 02:22:21 GMT"
+    },
+    {
+      "role": "world-store",
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/world-store.mjs?qualified-source=741948b14a09a816e49054c443511186bb99eb41",
+      "HTTP": 200,
+      "bytes": 17516,
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+      "etag": "\"6ad18a5d-446c\"",
+      "lastModified": "Fri, 16 Oct 2026 02:22:21 GMT"
+    }
+  ],
+  "browserOpened": false,
+  "normalPlayerAccepted": false,
+  "publicPersistenceAccepted": false,
+  "scope": "Read-only HTTP/source identity after actual deployment success. Does not exercise Library refresh/download/Fly, repair public closing/zero-visible-saved failures, measure heap/time or qualify player storage, all24, offline/restart/endurance/devices."
+}

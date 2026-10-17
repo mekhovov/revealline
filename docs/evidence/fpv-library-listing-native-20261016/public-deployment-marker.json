@@ -1,0 +1,9 @@
+{
+  "format": "revealline-main-deployment.v1",
+  "channel": "main",
+  "sourceRevision": "741948b14a09a816e49054c443511186bb99eb41",
+  "sourceCommittedAt": "2026-10-16T04:08:51+02:00",
+  "buildVersion": "main-741948b14a09",
+  "play": "game/",
+  "releases": "https://github.com/mekhovov/revealline/releases"
+}

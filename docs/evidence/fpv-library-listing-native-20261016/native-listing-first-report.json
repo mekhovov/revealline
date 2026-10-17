@@ -1,0 +1,149 @@
+{
+  "format": "codex-native-library-listing-contract-v1",
+  "databaseName": "codex-authoring-native-library-listing-bc9-20261016-contract-v1",
+  "sourceHead": "bc9bc71f192729f0661a0483d7d64609c1973343",
+  "packagedModuleSha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+  "fixture": {
+    "retainedRows": 32,
+    "retainedBlobReferences": 2016,
+    "activeShadowBlobReferences": 32,
+    "totalPersistedBlobReferences": 2048,
+    "uniqueOneByteBlobValues": 32,
+    "generation": 7
+  },
+  "scope": "Explicit tiny synthetic component test; supplied factory facades change object identity. Native requests, results and transactions are real. No player database, renderer, heap/time/FPS, restart, offline, quota or public-persistence acceptance.",
+  "actions": [
+    {
+      "action": "seed",
+      "accepted": true,
+      "reused": false,
+      "content": {
+        "sha256": "09cfa923824af62692dc1cc6b3747a1331fbc11d1782823b91a4fe4dc340087a",
+        "generation": 7,
+        "counts": {
+          "projects": 1,
+          "assets": 32,
+          "revisions": 32,
+          "meta": 2
+        }
+      },
+      "databaseVersion": 2
+    },
+    {
+      "action": "list-metadata",
+      "accepted": true,
+      "metadataRows": 32,
+      "activeFirst": true,
+      "retainedPrimaryKeyOrder": true,
+      "assetsOmitted": true,
+      "returnedCloneIsolation": true,
+      "observation": {
+        "label": "list",
+        "transactions": 1,
+        "modes": [
+          "readonly"
+        ],
+        "stores": [
+          [
+            "projects",
+            "revisions"
+          ]
+        ],
+        "revisionRequests": 1,
+        "deliveredAssetRows": 32,
+        "deliveredMapEntries": 2016,
+        "maxRowsPerDelivery": 1
+      },
+      "contentUnchanged": true,
+      "content": {
+        "sha256": "09cfa923824af62692dc1cc6b3747a1331fbc11d1782823b91a4fe4dc340087a",
+        "generation": 7,
+        "counts": {
+          "projects": 1,
+          "assets": 32,
+          "revisions": 32,
+          "meta": 2
+        }
+      }
+    },
+    {
+      "action": "abort-read",
+      "accepted": true,
+      "abortPoint": "after requests queued, before first native delivery",
+      "rejected": true,
+      "rejectionName": "AbortError",
+      "partialSuccessReturned": false,
+      "observation": {
+        "label": "abort",
+        "transactions": 1,
+        "modes": [
+          "readonly"
+        ],
+        "stores": [
+          [
+            "projects",
+            "revisions"
+          ]
+        ],
+        "revisionRequests": 1,
+        "deliveredAssetRows": 0,
+        "deliveredMapEntries": 0,
+        "maxRowsPerDelivery": 0
+      },
+      "contentUnchanged": true,
+      "connectionStillUsable": true,
+      "content": {
+        "sha256": "09cfa923824af62692dc1cc6b3747a1331fbc11d1782823b91a4fe4dc340087a",
+        "generation": 7,
+        "counts": {
+          "projects": 1,
+          "assets": 32,
+          "revisions": 32,
+          "meta": 2
+        }
+      }
+    },
+    {
+      "action": "list-metadata",
+      "accepted": true,
+      "metadataRows": 32,
+      "activeFirst": true,
+      "retainedPrimaryKeyOrder": true,
+      "assetsOmitted": true,
+      "returnedCloneIsolation": true,
+      "observation": {
+        "label": "list",
+        "transactions": 1,
+        "modes": [
+          "readonly"
+        ],
+        "stores": [
+          [
+            "projects",
+            "revisions"
+          ]
+        ],
+        "revisionRequests": 1,
+        "deliveredAssetRows": 32,
+        "deliveredMapEntries": 2016,
+        "maxRowsPerDelivery": 1
+      },
+      "contentUnchanged": true,
+      "content": {
+        "sha256": "09cfa923824af62692dc1cc6b3747a1331fbc11d1782823b91a4fe4dc340087a",
+        "generation": 7,
+        "counts": {
+          "projects": 1,
+          "assets": 32,
+          "revisions": 32,
+          "meta": 2
+        }
+      }
+    }
+  ],
+  "droppedActions": 0,
+  "ready": true,
+  "opens": 1,
+  "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "origin": "http://127.0.0.1:9212"
+}

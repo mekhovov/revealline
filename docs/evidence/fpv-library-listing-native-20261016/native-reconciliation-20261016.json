@@ -1,0 +1,14 @@
+{
+  "schema": "fpv-native-listing-independent-receipt-reconciliation-v1",
+  "checkedAt": "2026-10-16T02:12:30.105407+00:00",
+  "receiptSha256": "175b89ed7ac8d38a3aec4095d334337ce5947c9a149779a447a630ab779e53ef",
+  "allFiveDeclaredFilesMatch": true,
+  "actualExportActionsAccepted": 6,
+  "contentGenerationCountsMatch": true,
+  "nativeListingMaxRowsPerDelivery": 1,
+  "durableReviewComment": "https://github.com/mekhovov/revealline/pull/1537#issuecomment-6206432325",
+  "screenshotsByteIdentical": true,
+  "screenshotScope": "Two preserved names have identical bytes; do not use them as independent per-visit images. Distinct original native JSON exports support first/reopen reports.",
+  "fullPlayerAccepted": false,
+  "publicPersistenceAccepted": false
+}
