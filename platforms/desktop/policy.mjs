@@ -149,6 +149,7 @@ export function desktopDirectories({ appPath, appData, siteOverride, userDataOve
 }
 
 export const MAX_DOWNLOAD_BYTES = 128 * 1024 * 1024;
+export const MAX_TEXT_DOWNLOAD_BYTES = 1024 * 1024;
 export function downloadDecision({
   url,
   pageURL,
@@ -180,14 +181,21 @@ export function downloadDecision({
   if (
     !(
       (extension === '.json' && ['application/json', 'text/json'].includes(mime)) ||
-      (extension === '.zip' && ['application/zip', 'application/x-zip-compressed'].includes(mime))
+      (extension === '.zip' &&
+        ['application/zip', 'application/x-zip-compressed'].includes(mime)) ||
+      (extension === '.txt' && mime === 'text/plain')
     )
   )
     return {
       allowed: false,
-      reason: 'Only JSON backups, packs and replays, or ZIP archives, may be exported.',
+      reason:
+        'Only JSON backups, packs and replays, ZIP archives, or plain-text settings may be exported.',
     };
-  if (!Number.isSafeInteger(bytes) || bytes < 0 || bytes > MAX_DOWNLOAD_BYTES)
-    return { allowed: false, reason: 'The export exceeds the 128 MiB desktop download limit.' };
-  return { allowed: true, extension: extension.slice(1), filename };
+  const maxBytes = extension === '.txt' ? MAX_TEXT_DOWNLOAD_BYTES : MAX_DOWNLOAD_BYTES;
+  if (!Number.isSafeInteger(bytes) || bytes < 0 || bytes > maxBytes)
+    return {
+      allowed: false,
+      reason: `The export exceeds the ${maxBytes / 1024 / 1024} MiB desktop download limit.`,
+    };
+  return { allowed: true, extension: extension.slice(1), filename, maxBytes };
 }

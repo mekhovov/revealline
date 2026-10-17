@@ -4,6 +4,7 @@ import {
   adoptVerifiedFrame,
   readFramePose,
   prepareVerifiedFrame,
+  verifiedCollisionFrame,
 } from "./frame-transaction.mjs";
 /** Exact-source terrain preparation coordinator. Detached authoring resources, never live flight. */
 import {
@@ -185,12 +186,21 @@ export function createVerifiedTerrainWindow(
         surfaceStyle,
         surfaceQuality,
       });
+      const nextProvenance = {
+        regionId: manifest.id,
+        revision: manifest.revision,
+        positionMm: { ...point },
+        originMm: { ...plan.origin },
+        compiler: "FPV regional terrain compiler v1",
+        chunks: receipts,
+      };
       preparing = staged;
       current(token);
       if (frameTransaction?.prepare)
-        await prepareVerifiedFrame(frameTransaction, staged.group, () =>
-          current(token),
-        );
+        await prepareVerifiedFrame(frameTransaction, staged.group, () => current(token), () => {
+          current(token);
+          return verifiedCollisionFrame(nextProvenance, staged.collisionMeshes());
+        });
       supportPose = readFramePose(frameTransaction, supportPose, planner);
       current(token);
       if (supportPose) {
@@ -205,14 +215,6 @@ export function createVerifiedTerrainWindow(
           "Staged terrain cannot support the required body pose",
         );
       }
-      const nextProvenance = {
-        regionId: manifest.id,
-        revision: manifest.revision,
-        positionMm: { ...point },
-        originMm: { ...plan.origin },
-        compiler: "FPV regional terrain compiler v1",
-        chunks: receipts,
-      };
       adoptVerifiedFrame(
         frameTransaction,
         { group: staged.group, provenance: structuredClone(nextProvenance) },
@@ -242,6 +244,10 @@ export function createVerifiedTerrainWindow(
   }
   return Object.freeze({
     snapshot,
+    collisionFrame() {
+      fail(queryReady(), 'Verified collision geometry is unavailable');
+      return verifiedCollisionFrame(provenance, committed.collisionMeshes());
+    },
     collisionSnapshot: () =>
       regionalCollisionCounts(
         committed,
@@ -304,6 +310,12 @@ export function createVerifiedTerrainWindow(
       if (disposed) throw new Error("Verified geometry is disposed");
       return queryReady()
         ? committed.flightSupport(...args)
+        : { status: "not-ready" };
+    },
+    motionCoverage(...args) {
+      if (disposed) throw new Error("Verified geometry is disposed");
+      return queryReady()
+        ? committed.motionCoverage(...args)
         : { status: "not-ready" };
     },
     castMotion(...args) {

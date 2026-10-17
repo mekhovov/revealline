@@ -1,0 +1,780 @@
+TAP version 13
+# Subtest: offline actions serialize button intent and retain the invoking dialog owner
+ok 1 - offline actions serialize button intent and retain the invoking dialog owner
+  ---
+  duration_ms: 8.6195
+  ...
+# Subtest: native offload uses only the runtime remover and retains world and proof data
+ok 2 - native offload uses only the runtime remover and retains world and proof data
+  ---
+  duration_ms: 7.134917
+  ...
+# Subtest: unavailable workers disable both native controls without invoking operations
+ok 3 - unavailable workers disable both native controls without invoking operations
+  ---
+  duration_ms: 0.722
+  ...
+# Subtest: disposal aborts the download and a late success cannot repaint the removed host
+ok 4 - disposal aborts the download and a late success cannot repaint the removed host
+  ---
+  duration_ms: 0.420666
+  ...
+# Subtest: pagehide cancels preparation, reports cancellation and releases busy ownership
+ok 5 - pagehide cancels preparation, reports cancellation and releases busy ownership
+  ---
+  duration_ms: 6.031792
+  ...
+# Subtest: failed removal remains retryable and never reports a removed installation
+ok 6 - failed removal remains retryable and never reports a removed installation
+  ---
+  duration_ms: 5.609125
+  ...
+# Subtest: FPV offline entry navigation retains language and game return while using its pinned document
+ok 7 - FPV offline entry navigation retains language and game return while using its pinned document
+  ---
+  duration_ms: 20.284167
+  ...
+# Subtest: entry navigation never substitutes an unadmitted document
+ok 8 - entry navigation never substitutes an unadmitted document
+  ---
+  duration_ms: 0.11175
+  ...
+# Subtest: Survivor built-in battlefields retain the accepted V3 world progression and opening
+ok 9 - Survivor built-in battlefields retain the accepted V3 world progression and opening
+  ---
+  duration_ms: 456.00075
+  ...
+# Subtest: Survivor legacy and explicit authored progression survive compile/import and upgraded copies
+ok 10 - Survivor legacy and explicit authored progression survive compile/import and upgraded copies
+  ---
+  duration_ms: 25.067541
+  ...
+# Subtest: Survivor revised thresholds partition durable V4 records without changing visual identity
+ok 11 - Survivor revised thresholds partition durable V4 records without changing visual identity
+  ---
+  duration_ms: 13.996584
+  ...
+# Subtest: Riy built-in battlefields retain the accepted V3 world progression and opening
+ok 12 - Riy built-in battlefields retain the accepted V3 world progression and opening
+  ---
+  duration_ms: 506.302708
+  ...
+# Subtest: Riy legacy and explicit authored progression survive compile/import and upgraded copies
+ok 13 - Riy legacy and explicit authored progression survive compile/import and upgraded copies
+  ---
+  duration_ms: 150.46075
+  ...
+# Subtest: Riy revised thresholds partition durable V4 records without changing visual identity
+ok 14 - Riy revised thresholds partition durable V4 records without changing visual identity
+  ---
+  duration_ms: 14.790375
+  ...
+# Subtest: actual Raid bodies use finite velocity and contact semantics in warning escape
+ok 15 - actual Raid bodies use finite velocity and contact semantics in warning escape
+  ---
+  duration_ms: 48.170958
+  ...
+# Subtest: committed motion prediction stops at the end of a leg
+ok 16 - committed motion prediction stops at the end of a leg
+  ---
+  duration_ms: 0.218333
+  ...
+# Subtest: split groups preserve different approach lanes at equal speed and legacy rules stay straight
+ok 17 - split groups preserve different approach lanes at equal speed and legacy rules stay straight
+  ---
+  duration_ms: 157.657
+  ...
+# Subtest: crosscut announces its snapshot then commits without tracking later player movement
+ok 18 - crosscut announces its snapshot then commits without tracking later player movement
+  ---
+  duration_ms: 73.256583
+  ...
+# Subtest: standoff relocation moves laterally and halts during a real attack warning
+ok 19 - standoff relocation moves laterally and halts during a real attack warning
+  ---
+  duration_ms: 46.725
+  ...
+# Subtest: a new committed leg cannot take the final warned exit
+ok 20 - a new committed leg cannot take the final warned exit
+  ---
+  duration_ms: 29.426667
+  ...
+# Subtest: actual burst speed cannot close a warned exit on entry or between steering decisions
+ok 21 - actual burst speed cannot close a warned exit on entry or between steering decisions
+  ---
+  duration_ms: 33.041292
+  ...
+# Subtest: Raid convoy reaches a firing stop, warns, recovers and leaves for another stop
+ok 22 - Raid convoy reaches a firing stop, warns, recovers and leaves for another stop
+  ---
+  duration_ms: 233.582834
+  ...
+# Subtest: same coordinated inputs preserve deterministic trajectories without consuming gameplay RNG
+ok 23 - same coordinated inputs preserve deterministic trajectories without consuming gameplay RNG
+  ---
+  duration_ms: 121.278125
+  ...
+# Subtest: a timed bent escape is admitted around cover when straight rays are body-blocked
+ok 24 - a timed bent escape is admitted around cover when straight rays are body-blocked
+  ---
+  duration_ms: 15.223458
+  ...
+# Subtest: a shield cannot turn its protected half into the only live warned exit
+ok 25 - a shield cannot turn its protected half into the only live warned exit
+  ---
+  duration_ms: 22.817042
+  ...
+# Subtest: resting against cover still admits an outward escape with the physical hull
+ok 26 - resting against cover still admits an outward escape with the physical hull
+  ---
+  duration_ms: 7.441625
+  ...
+# Subtest: a finite eight-member Raid split pack sends its two coordinated members to opposite sides
+ok 27 - a finite eight-member Raid split pack sends its two coordinated members to opposite sides
+  ---
+  duration_ms: 54.225875
+  ...
+# Subtest: explicit start, fixed ticks, paused upgrades, and confirm/boost release
+ok 28 - explicit start, fixed ticks, paused upgrades, and confirm/boost release
+  ---
+  duration_ms: 16.852584
+  ...
+# Subtest: approved primary payload keeps release distance, delay, radius and damage
+ok 29 - approved primary payload keeps release distance, delay, radius and damage
+  ---
+  duration_ms: 82.932667
+  ...
+# Subtest: movement normalizes diagonals, retains heading and uses approved boost values
+ok 30 - movement normalizes diagonals, retains heading and uses approved boost values
+  ---
+  duration_ms: 36.629583
+  ...
+# Subtest: dense area damage visits all 2500 candidates, rewards once and merges overflow XP
+ok 31 - dense area damage visits all 2500 candidates, rewards once and merges overflow XP
+  ---
+  duration_ms: 166.54625
+  ...
+# Subtest: area grid boundaries agree with brute-force circle oracle including oversized bodies
+ok 32 - area grid boundaries agree with brute-force circle oracle including oversized bodies
+  ---
+  duration_ms: 14.733917
+  ...
+# Subtest: three combat slots, one support, admitted modules and guaranteed evolution
+ok 33 - three combat slots, one support, admitted modules and guaranteed evolution
+  ---
+  duration_ms: 0.734458
+  ...
+# Subtest: queued choices stop at ten, rerolls stop at two, draft RNG does not change encounter RNG
+ok 34 - queued choices stop at ten, rerolls stop at two, draft RNG does not change encounter RNG
+  ---
+  duration_ms: 25.070458
+  ...
+# Subtest: arrival warning prevents contact and attack damage, contact is 20 with .75s protection
+ok 35 - arrival warning prevents contact and attack damage, contact is 20 with .75s protection
+  ---
+  duration_ms: 47.389791
+  ...
+# Subtest: priority attacks have at least one second warning, cap at two, cancel when owner dies
+ok 36 - priority attacks have at least one second warning, cap at two, cancel when owner dies
+  ---
+  duration_ms: 28.583125
+  ...
+# Subtest: sprinter telegraphs for one second, locks its burst heading, and preserves four-second travel
+ok 37 - sprinter telegraphs for one second, locks its burst heading, and preserves four-second travel
+  ---
+  duration_ms: 40.630666
+  ...
+# Subtest: courier and refuge rewards remain optional, exact-once and conserved through pickup overflow
+ok 38 - courier and refuge rewards remain optional, exact-once and conserved through pickup overflow
+  ---
+  duration_ms: 22.165875
+  ...
+# Subtest: radar support is bounded to eight sources, non-stacking, and cancels immediately on death
+ok 39 - radar support is bounded to eight sources, non-stacking, and cancels immediately on death
+  ---
+  duration_ms: 9.767958
+  ...
+# Subtest: relay rally has a full warning, a bounded flank bias, and cancels on death without an extra attack
+ok 40 - relay rally has a full warning, a bounded flank bias, and cancels on death without an extra attack
+  ---
+  duration_ms: 15.930459
+  ...
+# Subtest: family behavior phases are deterministic and do not consume encounter or draft randomness
+ok 41 - family behavior phases are deterministic and do not consume encounter or draft randomness
+  ---
+  duration_ms: 281.133709
+  ...
+# Subtest: relay and radar within attack range never create aimed threats
+ok 42 - relay and radar within attack range never create aimed threats
+  ---
+  duration_ms: 108.893916
+  ...
+# Subtest: three-airframe replacement preserves build, world, XP and cooldown with safe protection
+ok 43 - three-airframe replacement preserves build, world, XP and cooldown with safe protection
+  ---
+  duration_ms: 23.358458
+  ...
+# Subtest: regular spawn expiry continues play and final death wins before hostile damage in the same tick
+ok 44 - regular spawn expiry continues play and final death wins before hostile damage in the same tick
+  ---
+  duration_ms: 54.273958
+  ...
+# Subtest: ordinary pursuit decisions stagger at 10Hz while every actor moves each fixed tick
+ok 45 - ordinary pursuit decisions stagger at 10Hz while every actor moves each fixed tick
+  ---
+  duration_ms: 5.229791
+  ...
+# Subtest: nonpiercing shots hit first collision surface rather than nearest center
+ok 46 - nonpiercing shots hit first collision surface rather than nearest center
+  ---
+  duration_ms: 5.115167
+  ...
+# Subtest: piercing shots hit all crossed bodies once and projectile pool exhaustion defers launch
+ok 47 - piercing shots hit all crossed bodies once and projectile pool exhaustion defers launch
+  ---
+  duration_ms: 32.7525
+  ...
+# Subtest: identical seeds, decisions and inputs produce identical simulation and summary
+ok 48 - identical seeds, decisions and inputs produce identical simulation and summary
+  ---
+  duration_ms: 472.844875
+  ...
+# Subtest: reference fixture simulates every actor for 1000 ticks with stable alive/visible counts
+ok 49 - reference fixture simulates every actor for 1000 ticks with stable alive/visible counts
+  ---
+  duration_ms: 1158.100208
+  ...
+# Subtest: stress fixture simulates every actor for 1000 ticks with stable alive/visible counts
+ok 50 - stress fixture simulates every actor for 1000 ticks with stable alive/visible counts
+  ---
+  duration_ms: 1931.50075
+  ...
+# Subtest: stationary slow fields persist at departure and reduce ordinary travel
+ok 51 - stationary slow fields persist at departure and reduce ordinary travel
+  ---
+  duration_ms: 9.186959
+  ...
+# Subtest: return pulse is a delayed second opportunity at the first pulse location
+ok 52 - return pulse is a delayed second opportunity at the first pulse location
+  ---
+  duration_ms: 16.661
+  ...
+# Subtest: pulse charge comes from admitted flight, is consumed, and cannot refill against arena bounds or on upgrade
+ok 53 - pulse charge comes from admitted flight, is consumed, and cannot refill against arena bounds or on upgrade
+  ---
+  duration_ms: 41.212375
+  ...
+# Subtest: first pulse remains chip damage even at full flight charge, and every nearby enemy is affected
+ok 54 - first pulse remains chip damage even at full flight charge, and every nearby enemy is affected
+  ---
+  duration_ms: 15.130167
+  ...
+# Subtest: overlapping slow fields share one damage cadence and never multiply the slow
+ok 55 - overlapping slow fields share one damage cadence and never multiply the slow
+  ---
+  duration_ms: 6.397833
+  ...
+# Subtest: earning two or three pulse ranks cannot sustain stationary survival through the opening encounters
+ok 56 - earning two or three pulse ranks cannot sustain stationary survival through the opening encounters
+  ---
+  duration_ms: 2167.902083
+  ...
+# Subtest: scanner prioritizes machinery, increases marked damage and caps chain to three targets
+ok 57 - scanner prioritizes machinery, increases marked damage and caps chain to three targets
+  ---
+  duration_ms: 4.462667
+  ...
+# Subtest: evolved shield uses boost departure pulse and recharges after absorbing one hit
+ok 58 - evolved shield uses boost departure pulse and recharges after absorbing one hit
+  ---
+  duration_ms: 51.968542
+  ...
+# Subtest: fixture defeat recycling waits for the next movement/grid phase
+ok 59 - fixture defeat recycling waits for the next movement/grid phase
+  ---
+  duration_ms: 22.447542
+  ...
+# Subtest: reference fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+ok 60 - reference fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+  ---
+  duration_ms: 68087.141542
+  ...
+# Subtest: stress fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+ok 61 - stress fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+  ---
+  duration_ms: 118026.968458
+  ...
+# Subtest: local crowd force crosses grid boundaries continuously and uses neighboring cells
+ok 62 - local crowd force crosses grid boundaries continuously and uses neighboring cells
+  ---
+  duration_ms: 1.165583
+  ...
+# Subtest: coincident bodies receive finite opposite separation and distant bodies have no force
+ok 63 - coincident bodies receive finite opposite separation and distant bodies have no force
+  ---
+  duration_ms: 0.150583
+  ...
+# Subtest: Survival authors local separation explicitly without rewriting earlier content or records
+ok 64 - Survival authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 90.311709
+  ...
+# Subtest: Riy authors local separation explicitly without rewriting earlier content or records
+ok 65 - Riy authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 127.397917
+  ...
+# Subtest: the native simulation uses authored local spacing and preserves complete area damage
+ok 66 - the native simulation uses authored local spacing and preserves complete area damage
+  ---
+  duration_ms: 62.292625
+  ...
+# Subtest: same and new-seed sorties preserve explicitly authored local crowd rules
+ok 67 - same and new-seed sorties preserve explicitly authored local crowd rules
+  ---
+  duration_ms: 6.466125
+  ...
+# Subtest: Raid does not advertise or silently accept the Survivor-only movement experiment
+ok 68 - Raid does not advertise or silently accept the Survivor-only movement experiment
+  ---
+  duration_ms: 3.164333
+  ...
+# Subtest: local broad phase matches every nearby body across rebuilds, radii and arena edges
+ok 69 - local broad phase matches every nearby body across rebuilds, radii and arena edges
+  ---
+  duration_ms: 31.787416
+  ...
+# Subtest: local spacing freezes coordinates before its first query and allocates its fine index only on demand
+ok 70 - local spacing freezes coordinates before its first query and allocates its fine index only on demand
+  ---
+  duration_ms: 0.24525
+  ...
+# Subtest: diagnostic fixtures explicitly select local spacing without enabling it in ordinary play or Raid
+ok 71 - diagnostic fixtures explicitly select local spacing without enabling it in ordinary play or Raid
+  ---
+  duration_ms: 0.369208
+  ...
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 72 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 1.372
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 73 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 143.717667
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 74 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 205.480708
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 75 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 71.445917
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 76 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 856.094625
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 77 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.61375
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 78 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.080708
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 79 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.125666
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 80 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.164083
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 81 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 2.29725
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 82 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 0.607333
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 83 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.251667
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 84 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.214416
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 85 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 15.359334
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 86 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 4.208458
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 87 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 1.16825
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 88 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.283833
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 89 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 1.251208
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 90 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.345125
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 91 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.953458
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 92 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.361875
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 93 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.104125
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 94 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 1.05475
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 95 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 2.546333
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 96 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 12.856208
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 97 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.118084
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 98 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.118541
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 99 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 51.179042
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 100 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.189083
+  ...
+# Subtest: opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+ok 101 - opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+  ---
+  duration_ms: 125.589917
+  ...
+# Subtest: finished review download captures terminal state instead of an older inspector snapshot
+ok 102 - finished review download captures terminal state instead of an older inspector snapshot
+  ---
+  duration_ms: 8.659958
+  ...
+# Subtest: rules 3 sweeper selects a clear follow target instead of firing into cover
+ok 103 - rules 3 sweeper selects a clear follow target instead of firing into cover
+  ---
+  duration_ms: 23.207417
+  ...
+# Subtest: rules 3 breaker selects a clear follow target instead of firing into cover
+ok 104 - rules 3 breaker selects a clear follow target instead of firing into cover
+  ---
+  duration_ms: 34.570042
+  ...
+# Subtest: rules 4 sweeper selects a clear follow target instead of firing into cover
+ok 105 - rules 4 sweeper selects a clear follow target instead of firing into cover
+  ---
+  duration_ms: 56.7475
+  ...
+# Subtest: rules 4 breaker selects a clear follow target instead of firing into cover
+ok 106 - rules 4 breaker selects a clear follow target instead of firing into cover
+  ---
+  duration_ms: 25.033666
+  ...
+# Subtest: blocked follow attack preserves its weapon cycle until a clear shot exists
+ok 107 - blocked follow attack preserves its weapon cycle until a clear shot exists
+  ---
+  duration_ms: 24.108542
+  ...
+# Subtest: a covered chain victim cannot take a damage share or bridge to another victim behind the wall
+ok 108 - a covered chain victim cannot take a damage share or bridge to another victim behind the wall
+  ---
+  duration_ms: 33.78825
+  ...
+# Subtest: chain divides the unchanged damage budget only among reachable link victims
+ok 109 - chain divides the unchanged damage budget only among reachable link victims
+  ---
+  duration_ms: 32.400958
+  ...
+# Subtest: chain can turn around a corner when every individual link has clear line of fire
+ok 110 - chain can turn around a corner when every individual link has clear line of fire
+  ---
+  duration_ms: 11.682708
+  ...
+# Subtest: a burst second hit respects newly obstructed contact without drawing a false beam
+ok 111 - a burst second hit respects newly obstructed contact without drawing a false beam
+  ---
+  duration_ms: 30.290625
+  ...
+# Subtest: Focus can approach a covered target while blocked weapons wait for line of fire
+ok 112 - Focus can approach a covered target while blocked weapons wait for line of fire
+  ---
+  duration_ms: 21.338
+  ...
+# Subtest: Riy compiles shared Survivor rules and resources with distinct authored identity
+ok 113 - Riy compiles shared Survivor rules and resources with distinct authored identity
+  ---
+  duration_ms: 54.039416
+  ...
+# Subtest: Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters
+ok 114 - Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters
+  ---
+  duration_ms: 26.366208
+  ...
+# Subtest: Riy package fresh-library round trip preserves source and native compiled identity
+ok 115 - Riy package fresh-library round trip preserves source and native compiled identity
+  ---
+  duration_ms: 92.890125
+  ...
+# Subtest: updating a legacy Riy copy preserves escort authoring without rewriting source
+ok 116 - updating a legacy Riy copy preserves escort authoring without rewriting source
+  ---
+  duration_ms: 3.403333
+  ...
+# Subtest: shared Studio escort controls edit the same validated config used by native play
+ok 117 - shared Studio escort controls edit the same validated config used by native play
+  ---
+  duration_ms: 2.65125
+  ...
+# Subtest: Riy rules 3 exposes current escort ranges, arcs and introduction controls
+ok 118 - Riy rules 3 exposes current escort ranges, arcs and introduction controls
+  ---
+  duration_ms: 7.137416
+  ...
+# Subtest: Riy rules 4 exposes current escort ranges, arcs and introduction controls
+ok 119 - Riy rules 4 exposes current escort ranges, arcs and introduction controls
+  ---
+  duration_ms: 9.665834
+  ...
+# Subtest: legacy Riy editor retains shared ranges without adding modern fields
+ok 120 - legacy Riy editor retains shared ranges without adding modern fields
+  ---
+  duration_ms: 4.911667
+  ...
+# Subtest: Riy V2 round trip preserves directional settings and explicit copies leave V1 immutable
+ok 121 - Riy V2 round trip preserves directional settings and explicit copies leave V1 immutable
+  ---
+  duration_ms: 86.471042
+  ...
+# Subtest: new authoring fields preview the exact per-role range and arc
+ok 122 - new authoring fields preview the exact per-role range and arc
+  ---
+  duration_ms: 46.112084
+  ...
+# Subtest: follow arcs retain flight heading: Sweeper covers rear and Breaker reaches forward at 180
+ok 123 - follow arcs retain flight heading: Sweeper covers rear and Breaker reaches forward at 180
+  ---
+  duration_ms: 33.055833
+  ...
+# Subtest: squad drafting owns both combat slots, locks branches and keeps ten legal choices
+ok 124 - squad drafting owns both combat slots, locks branches and keeps ten legal choices
+  ---
+  duration_ms: 14.347125
+  ...
+# Subtest: chain shares one damage budget among at most three unique overlapping bodies
+ok 125 - chain shares one damage budget among at most three unique overlapping bodies
+  ---
+  duration_ms: 11.750291
+  ...
+# Subtest: burst commits its second hit to the same guarded target, without retargeting a death
+ok 126 - burst commits its second hit to the same guarded target, without retargeting a death
+  ---
+  duration_ms: 5.643583
+  ...
+# Subtest: trail branch reduces impact and leaves harmless bounded slowing fields
+ok 127 - trail branch reduces impact and leaves harmless bounded slowing fields
+  ---
+  duration_ms: 4.516334
+  ...
+# Subtest: Focus begins its three seconds on arrival, never resets fire cadence, and cancels an unreachable approach
+ok 128 - Focus begins its three seconds on arrival, never resets fire cadence, and cancels an unreachable approach
+  ---
+  duration_ms: 83.650334
+  ...
+# Subtest: Focus spends nothing without targets, respects death/leash, and freezes with all other gameplay clocks
+ok 129 - Focus spends nothing without targets, respects death/leash, and freezes with all other gameplay clocks
+  ---
+  duration_ms: 27.43825
+  ...
+# Subtest: Focus ends on target death without selecting another priority target or renewing cooldown
+ok 130 - Focus ends on target death without selecting another priority target or renewing cooldown
+  ---
+  duration_ms: 14.545333
+  ...
+# Subtest: rapid authored trail fire stays within its fixed pool and branch upgrades do not reset cooldowns
+ok 131 - rapid authored trail fire stays within its fixed pool and branch upgrades do not reset cooldowns
+  ---
+  duration_ms: 233.632166
+  ...
+# Subtest: a long authored legacy Focus upgrades to a bounded nonoverlapping command without changing the source
+ok 132 - a long authored legacy Focus upgrades to a bounded nonoverlapping command without changing the source
+  ---
+  duration_ms: 9.015417
+  ...
+# Subtest: drafts teach a primary branch before escorts and keep its evolution reachable within five choices
+ok 133 - drafts teach a primary branch before escorts and keep its evolution reachable within five choices
+  ---
+  duration_ms: 25.9185
+  ...
+# Subtest: two authored introduction packs show rear then front arrivals and never refill cleared bodies
+ok 134 - two authored introduction packs show rear then front arrivals and never refill cleared bodies
+  ---
+  duration_ms: 376.436
+  ...
+# Subtest: blocked V3 priority admissions retry at ten Hz while committed simulation keeps stepping
+ok 135 - blocked V3 priority admissions retry at ten Hz while committed simulation keeps stepping
+  ---
+  duration_ms: 8.684708
+  ...
+# Subtest: V2 squad flight and Focus are deterministic for repeated ordinary inputs
+ok 136 - V2 squad flight and Focus are deterministic for repeated ordinary inputs
+  ---
+  duration_ms: 311.502333
+  ...
+# Subtest: V3 review pilot is read-only and deterministic while avoiding a committed lane
+ok 137 - V3 review pilot is read-only and deterministic while avoiding a committed lane
+  ---
+  duration_ms: 46.717333
+  ...
+# Subtest: V3 review pilot is read-only and deterministic while avoiding a committed fan
+ok 138 - V3 review pilot is read-only and deterministic while avoiding a committed fan
+  ---
+  duration_ms: 40.451042
+  ...
+# Subtest: V3 review pilot is read-only and deterministic while avoiding a committed ground
+ok 139 - V3 review pilot is read-only and deterministic while avoiding a committed ground
+  ---
+  duration_ms: 34.450959
+  ...
+# Subtest: squad rerolls replace escort fork cards while preserving the next primary or evolution opportunity
+ok 140 - squad rerolls replace escort fork cards while preserving the next primary or evolution opportunity
+  ---
+  duration_ms: 13.034042
+  ...
+# Subtest: Raid review approach flanks a visible protected escort without changing simulation state
+ok 141 - Raid review approach flanks a visible protected escort without changing simulation state
+  ---
+  duration_ms: 39.858
+  ...
+# Subtest: V2 adds explicit editable combat while V1 preserves original durability and capabilities
+ok 142 - V2 adds explicit editable combat while V1 preserves original durability and capabilities
+  ---
+  duration_ms: 53.478625
+  ...
+# Subtest: shield facing, blocked overflow and internal blasts create reliable different approaches
+ok 143 - shield facing, blocked overflow and internal blasts create reliable different approaches
+  ---
+  duration_ms: 21.84025
+  ...
+# Subtest: each tank plate break opens recovery without adding durability or replaying rewards
+ok 144 - each tank plate break opens recovery without adding durability or replaying rewards
+  ---
+  duration_ms: 6.767209
+  ...
+# Subtest: defensive drafts and application reject shield/plating stacks in both modes
+ok 145 - defensive drafts and application reject shield/plating stacks in both modes
+  ---
+  duration_ms: 1.493667
+  ...
+# Subtest: seeded formation decks vary, never repeat, and author bounded relief
+ok 146 - seeded formation decks vary, never repeat, and author bounded relief
+  ---
+  duration_ms: 0.464959
+  ...
+# Subtest: relief waits for committed warnings then provides its full interval without new commitments
+ok 147 - relief waits for committed warnings then provides its full interval without new commitments
+  ---
+  duration_ms: 165.866917
+  ...
+# Subtest: fan gaps and temporal warning combinations retain a baseline escape at arena edges
+ok 148 - fan gaps and temporal warning combinations retain a baseline escape at arena edges
+  ---
+  duration_ms: 5.8745
+  ...
+# Subtest: mass clearing earns bounded relief without suppressing every subsequent pressure window
+ok 149 - mass clearing earns bounded relief without suppressing every subsequent pressure window
+  ---
+  duration_ms: 946.125708
+  ...
+# Subtest: cache groups stay finite, coexist, and require a deliberate physical reward entry
+ok 150 - cache groups stay finite, coexist, and require a deliberate physical reward entry
+  ---
+  duration_ms: 9.475334
+  ...
+# Subtest: Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+ok 151 - Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+  ---
+  duration_ms: 55.400125
+  ...
+# Subtest: a full guard pool defers the objective until a genuine kill frees a slot
+ok 152 - a full guard pool defers the objective until a genuine kill frees a slot
+  ---
+  duration_ms: 7.326042
+  ...
+# Subtest: V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+ok 153 - V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+  ---
+  duration_ms: 47.724375
+  ...
+# Subtest: current caches queue the second guard encounter without losing either reward opportunity
+ok 154 - current caches queue the second guard encounter without losing either reward opportunity
+  ---
+  duration_ms: 6.755583
+  ...
+1..154
+# tests 154
+# suites 0
+# pass 154
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 193660.522625

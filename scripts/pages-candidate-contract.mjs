@@ -38,8 +38,11 @@ export function parseCandidateInput(input) {
 }
 
 /** Accept GitHub REST PR data, returning a detached canonical snapshot. */
-export function validateCandidateSnapshot(pr, rawInput) {
+export function validateCandidateSnapshot(pr, rawInput, options = {}) {
   const input = parseCandidateInput(rawInput);
+  const { reportedBaseSha = input.mainSha, baseIsAncestorOfMain = false } = options;
+  sha(reportedBaseSha);
+  assert.equal(typeof baseIsAncestorOfMain, 'boolean', 'Invalid base ancestry proof');
   assert.ok(object(pr), 'Missing PR snapshot');
   assert.equal(pr.number, input.prNumber, 'PR number differs');
   assert.ok(pr.state === 'open' || pr.state === 'OPEN', 'PR is not open');
@@ -51,7 +54,11 @@ export function validateCandidateSnapshot(pr, rawInput) {
     'Foreign or missing head repository',
   );
   assert.equal(pr.base.ref, 'main', 'Stacked or foreign base is unsupported');
-  assert.equal(sha(pr.base.sha), input.mainSha, 'Stale base SHA');
+  assert.equal(sha(pr.base.sha), reportedBaseSha, 'Stale reported base SHA');
+  assert.ok(
+    reportedBaseSha === input.mainSha || baseIsAncestorOfMain === true,
+    'Reported base ancestry of frozen main is not verified',
+  );
   assert.equal(sha(pr.head.sha), input.headSha, 'Stale head SHA');
   return {
     prNumber: input.prNumber,
@@ -59,7 +66,9 @@ export function validateCandidateSnapshot(pr, rawInput) {
     state: 'OPEN',
     draft: pr.draft,
     baseRef: 'main',
-    baseSha: input.mainSha,
+    mainSha: input.mainSha,
+    baseSha: reportedBaseSha,
+    baseAncestorOfMain: true,
     headSha: input.headSha,
     headRepository: CANDIDATE_REPOSITORY,
   };
@@ -143,16 +152,22 @@ export function assessCandidateFreshness(frozen, current, { expectedMainSha, cur
   sha(expectedMainSha);
   sha(currentMainSha);
   assert.ok(object(frozen), 'Missing frozen snapshot');
-  assert.equal(frozen.baseSha, expectedMainSha, 'Frozen main differs');
+  assert.equal(frozen.mainSha, expectedMainSha, 'Frozen main differs');
+  sha(frozen.baseSha);
+  assert.equal(frozen.baseAncestorOfMain, true, 'Missing frozen base ancestry proof');
   const reasons = [];
   if (currentMainSha !== expectedMainSha) reasons.push('main-changed');
   let canonical;
   try {
-    canonical = validateCandidateSnapshot(current, {
-      prNumber: frozen.prNumber,
-      mainSha: currentMainSha,
-      headSha: current?.head?.sha,
-    });
+    canonical = validateCandidateSnapshot(
+      current,
+      {
+        prNumber: frozen.prNumber,
+        mainSha: expectedMainSha,
+        headSha: current?.head?.sha,
+      },
+      { reportedBaseSha: frozen.baseSha, baseIsAncestorOfMain: frozen.baseAncestorOfMain },
+    );
   } catch {
     reasons.push('current-snapshot-invalid-or-closed');
   }
@@ -163,7 +178,9 @@ export function assessCandidateFreshness(frozen, current, { expectedMainSha, cur
       'state',
       'draft',
       'baseRef',
+      'mainSha',
       'baseSha',
+      'baseAncestorOfMain',
       'headSha',
       'headRepository',
     ])

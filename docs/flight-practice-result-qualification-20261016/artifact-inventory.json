@@ -1,0 +1,106 @@
+{
+  "format": "FlightPracticeResultEvidenceInventory.v1",
+  "scope": "Original receipts and complete capture archives; excludes this inventory. These are development observations, not publishing approvals.",
+  "files": [
+    {
+      "path": "academy-completed.png",
+      "bytes": 535879,
+      "sha256": "aeeaae6ca04c42976b2d38a649864e60cf24d5a8f50755a6233bb7c046011339"
+    },
+    {
+      "path": "build.log",
+      "bytes": 455,
+      "sha256": "5d2e4d37e62844dbf740a6b20b69502cc628f28cb99c4ddec5a443e7ae2ae9f6"
+    },
+    {
+      "path": "candidate-envelope.json",
+      "bytes": 2636,
+      "sha256": "78354d4bfac0346877863c443de4abb1fa8292e4fea71e6b5473e766bd0830b8"
+    },
+    {
+      "path": "candidate-verification.json",
+      "bytes": 1144,
+      "sha256": "86df0800c27c7a445215380f3589578a6b80deb694c22b276d272a072afe7860"
+    },
+    {
+      "path": "component-after.json",
+      "bytes": 13631,
+      "sha256": "c528fc6e7391ea59ea11ecfd3be9e72b4899839e59870a3fccfd6f7bc27e9740"
+    },
+    {
+      "path": "component-after.tar.gz",
+      "bytes": 235685,
+      "sha256": "8f0f66b029d0ee779181a2b4f7a498b8c32b6fa49420b684f335e179dcb84247"
+    },
+    {
+      "path": "component-before.json",
+      "bytes": 12473,
+      "sha256": "92ba1aab44955682de07d0fa08e308e986d83a9cad1924325331c292f96d330d"
+    },
+    {
+      "path": "component-before.tar.gz",
+      "bytes": 230758,
+      "sha256": "2ae6975272b9aedeae4f70f16adf464ab1d49129302e638e6b8c1ec61f08c6a2"
+    },
+    {
+      "path": "host-tests.log",
+      "bytes": 27922,
+      "sha256": "85396f4b8362d50a198402cbfa892beb934572036c92975f60b318c6a0183fc8"
+    },
+    {
+      "path": "keyboard-probe.json",
+      "bytes": 178864,
+      "sha256": "ea7282fdff7b1052b7c239a27ca1cca8b2eed6e831d570393291e73326dd283f"
+    },
+    {
+      "path": "keyboard-probe.tar.gz",
+      "bytes": 638826,
+      "sha256": "ff5ffa30a2c42f57904938e5245e36a9e83dc08ec8ce039b7b0af5bceef91798"
+    },
+    {
+      "path": "matrix-failed.json",
+      "bytes": 591489,
+      "sha256": "269d4bda00bae304c6a58712f1d42e1bf26247eb5a6e5560fcf274e17aad9228"
+    },
+    {
+      "path": "matrix-failed.tar.gz",
+      "bytes": 4978077,
+      "sha256": "488c9461f35aca9da8ad0dc2fef42be59e270e5023a5907bd791968c15799ee2"
+    },
+    {
+      "path": "matrix-passed.json",
+      "bytes": 1123597,
+      "sha256": "8097b4b14a3889567cdcabb82372fbe7350f9d30ab8bbb843133a523cfe91965"
+    },
+    {
+      "path": "matrix-passed.tar.gz",
+      "bytes": 4560313,
+      "sha256": "c2c1a0c0eb03b2579bbfcd875a1bee0f0906e508024786264fbf7a34e5f82773"
+    },
+    {
+      "path": "observer-tests.log",
+      "bytes": 22791,
+      "sha256": "0df4261042019edeca8ceb9ea004a9bb9958bf3906c790915aecc1ccf05e45ab"
+    },
+    {
+      "path": "practice-tests.log",
+      "bytes": 82376,
+      "sha256": "12ba798d0984301a9fe47ff3ade90aa3b0ee1c45b994fb4f8bc808d2badca593"
+    },
+    {
+      "path": "worlds-completed.png",
+      "bytes": 544088,
+      "sha256": "8f19d0170611614bfc6c0e45dcbb3edefa5e8524dfc1f8c9b4fc975368ace579"
+    },
+    {
+      "path": "worlds-throttle-after.log",
+      "bytes": 3154,
+      "sha256": "f5cc5964bde6efe33193965fa446701fcd4fb89560b39c8d2b4e45e01a55099c"
+    },
+    {
+      "path": "worlds-throttle-before.log",
+      "bytes": 4781,
+      "sha256": "f326a54fad331802394fbb618b5d0efa489a8084b0784229f72abcdb10cd94e8"
+    }
+  ]
+}
