@@ -840,3 +840,90 @@ test('regional corner opens settings menu without arming from ready or paused fl
   assert.equal(h.calls.at(-1), 'resume');
   h.shell.dispose();
 });
+
+test('an explicitly unavailable pause explains the stop and focuses Restart without accepting Resume', () => {
+  const h = fixture({ initial: 'play' });
+  h.shell.update({
+    phase: 'paused',
+    pauseOpensMenu: true,
+    canResume: false,
+    pauseResumeDisabled: true,
+    resumeUnavailableReason: {
+      en: 'Region boundary reached. Restart to return to the launch point.',
+      uk: 'Межу регіону досягнуто. Перезапустіть, щоб повернутися до старту.',
+    },
+  });
+  const { 'pause-resume': resume, 'pause-restart': restart } = h.shell.elements.buttons;
+  const notice = h.shell.elements.dialogs.pause.querySelector('[role="status"]');
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.shell.elements.dialogs.pause.open, true);
+  assert.equal(h.document.activeElement, restart);
+  assert.equal(resume.disabled, true);
+  assert.equal(notice.hidden, false);
+  assert.match(notice.textContent, /Region boundary reached/);
+  assert.equal(resume.getAttribute('aria-describedby'), notice.id);
+  resume.click();
+  resume.emit('click');
+  assert.equal(h.shell.activate('resume'), false);
+  assert.equal(h.shell.activate('continue'), false);
+  assert.equal(h.shell.elements.dialogs.pause.open, true);
+  assert.deepEqual(h.calls, []);
+  h.shell.setLocale('uk');
+  assert.match(notice.textContent, /Межу регіону досягнуто/);
+  h.shell.open('settings');
+  h.shell.back();
+  assert.equal(resume.disabled, true);
+  assert.equal(h.shell.elements.dialogs.pause.open, true);
+  restart.click();
+  assert.deepEqual(h.calls, ['retry']);
+  assert.equal(h.shell.blocksPlay(), false);
+  h.shell.update({ phase: 'paused', pauseResumeDisabled: false, canResume: true });
+  h.shell.open('pause');
+  assert.equal(resume.disabled, false);
+  assert.equal(notice.hidden, true);
+  assert.equal(resume.getAttribute('aria-describedby'), null);
+  assert.equal(h.document.activeElement, resume);
+  resume.click();
+  assert.deepEqual(h.calls, ['retry', 'resume']);
+  h.shell.dispose();
+});
+
+test('home canResume false does not block an ordinary tick-zero pause', () => {
+  for (const pauseResumeDisabled of [undefined, false]) {
+    const h = fixture({ initial: 'play' });
+    h.shell.update({ phase: 'paused', canResume: false, pauseResumeDisabled });
+    h.shell.open('pause');
+    const resume = h.shell.elements.buttons['pause-resume'];
+    assert.equal(resume.disabled, false);
+    assert.equal(h.document.activeElement, resume);
+    resume.click();
+    assert.deepEqual(h.calls, ['resume']);
+    assert.equal(h.shell.blocksPlay(), false);
+    h.shell.dispose();
+  }
+});
+
+test('a blocked pause focuses the visible host Retry instead of a CSS-hidden duplicate', () => {
+  let preferred;
+  const h = fixture({ initial: 'play', actions: { pauseFocus: () => preferred } });
+  const { 'pause-restart': duplicate, 'pause-choose': choose } = h.shell.elements.buttons;
+  duplicate.style.display = 'none';
+  preferred = h.document.createElement('button');
+  preferred.textContent = 'Retry';
+  h.shell.elements.content.pause.append(preferred);
+  h.shell.update({ phase: 'paused', pauseResumeDisabled: true });
+  h.shell.open('pause');
+  assert.equal(h.document.activeElement, preferred);
+  preferred.hidden = true;
+  h.shell.open('pause');
+  assert.equal(
+    h.document.activeElement,
+    choose,
+    'A hidden host action and hidden duplicate are skipped',
+  );
+  preferred.hidden = false;
+  preferred.disabled = true;
+  h.shell.open('pause');
+  assert.equal(h.document.activeElement, choose);
+  h.shell.dispose();
+});
