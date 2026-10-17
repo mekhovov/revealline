@@ -219,6 +219,32 @@ export function applyJourneyEvent(source, event) {
     return mergeJourneyBackup(source, event.backup);
   }
   const profile = validateJourneyProfile(source);
+  return transitionJourneyProfile(profile, event) ? validateJourneyProfile(profile) : profile;
+}
+
+// Only the store/backend's already validated profile reaches this private path.
+// Copy the transition's writable containers; final validation still owns the
+// complete result and enforces the original byte/node/depth/array budgets.
+function applyOwnedJourneyEvent(source, event) {
+  if (event?.type === 'restore') return applyJourneyEvent(source, event);
+  const mode = event?.mode;
+  const profile = {
+    ...source,
+    cursors: { ...source.cursors },
+    skipped: { ...source.skipped },
+    clears: { ...source.clears },
+  };
+  if (JOURNEY_MODES.includes(mode)) {
+    profile.skipped[mode] = [...source.skipped[mode]];
+    profile.clears[mode] = { ...source.clears[mode] };
+  }
+  transitionJourneyProfile(profile, event);
+  return validateJourneyProfile(profile);
+}
+
+// Mutates only its owned writable containers. False is the historical
+// idempotent completion, for which the public entry returns its input copy.
+function transitionJourneyProfile(profile, event) {
   if (
     !event ||
     !JOURNEY_MODES.includes(event.mode) ||
@@ -243,7 +269,7 @@ export function applyJourneyEvent(source, event) {
       if (old.runId === event.runId) {
         if (old.gameplayId !== event.gameplayId || old.difficulty !== event.difficulty)
           throw new TypeError(t('errors:journey.completionIdentityChanged'));
-        return profile;
+        return false;
       }
     }
     Object.defineProperty(profile.clears[mode], missionId, {
@@ -255,7 +281,7 @@ export function applyJourneyEvent(source, event) {
     profile.skipped[mode] = profile.skipped[mode].filter((id) => id !== missionId);
   }
   profile.generation++;
-  return validateJourneyProfile(profile);
+  return true;
 }
 
 /** Each read/modify/write is one IndexedDB transaction, including across tabs. */
@@ -447,7 +473,7 @@ function applyStateEvent(state, event, editionId = null) {
     return { ...state, performance };
   }
   const { pictures, starResults: _starResults, ...profileEvent } = event;
-  const profile = applyJourneyEvent(state.profile, profileEvent);
+  const profile = applyOwnedJourneyEvent(state.profile, profileEvent);
   if (event.type === 'restore' && pictures !== undefined)
     validateJourneyPictureCompletions(profile, pictures, { editionId });
   return {
