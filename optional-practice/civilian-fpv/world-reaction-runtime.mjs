@@ -24,7 +24,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'78b0412a2a70d0d84e502d5240132c3b6324e80c9ae185121aeee353978f4d8a',
+'7dcb854205a15408c7dca3aca2a96cfa249e32fbab9c54bb8a1ae763c822af77',
 'game/ui/hunt-feedback-layout.mjs':
 '697525f452578880c62102b984da3ff51ec794913c3a2708187c62815c816de5',
 'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
@@ -7477,7 +7477,7 @@ actorPortrait.width=actorPortrait.height=56;
 actorPortrait.style.cssText=portrait.style.cssText;
 actorPortrait.hidden=true;
 caption.style.cssText=
-'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;min-width:0;';
+'font-family:var(--fk-font-ui,system-ui,sans-serif);line-height:1.45;overflow-wrap:anywhere;min-width:0;';
 panel.append(portrait,actorPortrait,caption);
 container.append(panel);
 const releaseFeedbackLayout=attachHuntFeedbackLayout({container,window:target});
@@ -7583,8 +7583,10 @@ if(status){
 status.textContent=state.durable?'':tr('unavailable');
 status.hidden=state.durable;
 }
-panel.style.background=state.background?'var(--panel-bg, #172126)':'transparent';
-panel.style.color='var(--text-color, #fff)';
+panel.style.background=state.background
+?'var(--fk-panel-raised, var(--panel-bg, #172126))'
+:'transparent';
+panel.style.color='var(--fk-text, var(--text-color, #fff))';
 caption.style.fontSize=`${state.scale}rem`;
 if(current){
 const localized=

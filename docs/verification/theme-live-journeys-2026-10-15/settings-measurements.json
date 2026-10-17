@@ -1,0 +1,629 @@
+[
+  {
+    "label": "Flight Deck desktop",
+    "dialog": {
+      "clientWidth": 1076,
+      "scrollWidth": 1076,
+      "width": 1080
+    },
+    "fields": [
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "LanguageEnglishУкраїнська",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Enemy appearance presetOriginal level artworkMilitary Field · soldiers and vehicles",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Covered ground · Solo, Duel and TeamOriginal groundFPV · Field CrossingFPV · Freight DepotFPV · Relay RuinsFPV · River PortFPV · Chalk QuarryFPV · Orchard Strongpoint",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Mission visualsFollow themeOriginal mission visuals",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Decorative detailTheme defaultOffSubtleDetailed",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Terrain detail\n            Balanced detail\n            Small pixel tiles\n            Larger landmarks",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Roster for the next attemptOriginal runnersVaried prey",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Character appearanceAs designedField kitWorn field kitWinter kit",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Direction UpRightDownLeft",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Pose IdleRunningNoticeWarningRecoveryCaught",
+        "target": "44px"
+      }
+    ],
+    "focus": "Display & Language",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  {
+    "label": "Ember Foundry desktop",
+    "dialog": {
+      "clientWidth": 1076,
+      "scrollWidth": 1076,
+      "width": 1080
+    },
+    "fields": [
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "LanguageEnglishУкраїнська",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Enemy appearance presetOriginal level artworkMilitary Field · soldiers and vehicles",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Covered ground · Solo, Duel and TeamOriginal groundFPV · Field CrossingFPV · Freight DepotFPV · Relay RuinsFPV · River PortFPV · Chalk QuarryFPV · Orchard Strongpoint",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Mission visualsFollow themeOriginal mission visuals",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Decorative detailTheme defaultOffSubtleDetailed",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Terrain detail\n            Balanced detail\n            Small pixel tiles\n            Larger landmarks",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Roster for the next attemptOriginal runnersVaried prey",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Character appearanceAs designedField kitWorn field kitWinter kit",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Direction UpRightDownLeft",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Pose IdleRunningNoticeWarningRecoveryCaught",
+        "target": "44px"
+      }
+    ],
+    "focus": "Ember FoundryMissionLaunchHoverPressedFocusDetailBalanced✓Show telemetryA furnace-side control room in forged steel, war",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  {
+    "label": "Polar Relay desktop",
+    "dialog": {
+      "clientWidth": 1076,
+      "scrollWidth": 1076,
+      "width": 1080
+    },
+    "fields": [
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "LanguageEnglishУкраїнська",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Enemy appearance presetOriginal level artworkMilitary Field · soldiers and vehicles",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Covered ground · Solo, Duel and TeamOriginal groundFPV · Field CrossingFPV · Freight DepotFPV · Relay RuinsFPV · River PortFPV · Chalk QuarryFPV · Orchard Strongpoint",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Mission visualsFollow themeOriginal mission visuals",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Decorative detailTheme defaultOffSubtleDetailed",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Terrain detail\n            Balanced detail\n            Small pixel tiles\n            Larger landmarks",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Roster for the next attemptOriginal runnersVaried prey",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Character appearanceAs designedField kitWorn field kitWinter kit",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Direction UpRightDownLeft",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Pose IdleRunningNoticeWarningRecoveryCaught",
+        "target": "44px"
+      }
+    ],
+    "focus": "Polar RelayMissionLaunchHoverPressedFocusDetailBalanced✓Show telemetryAn arctic radio station with blue steel, pale enam",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  {
+    "label": "Desktop 98 desktop",
+    "dialog": {
+      "clientWidth": 1076,
+      "scrollWidth": 1076,
+      "width": 1080
+    },
+    "fields": [
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "LanguageEnglishУкраїнська",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Enemy appearance presetOriginal level artworkMilitary Field · soldiers and vehicles",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Covered ground · Solo, Duel and TeamOriginal groundFPV · Field CrossingFPV · Freight DepotFPV · Relay RuinsFPV · River PortFPV · Chalk QuarryFPV · Orchard Strongpoint",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Mission visualsFollow themeOriginal mission visuals",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Decorative detailTheme defaultOffSubtleDetailed",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Terrain detail\n            Balanced detail\n            Small pixel tiles\n            Larger landmarks",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Roster for the next attemptOriginal runnersVaried prey",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Character appearanceAs designedField kitWorn field kitWinter kit",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Direction UpRightDownLeft",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Pose IdleRunningNoticeWarningRecoveryCaught",
+        "target": "44px"
+      }
+    ],
+    "focus": "Desktop 98MissionLaunchHoverPressedFocusDetailBalanced✓Show telemetryA late-1990s desktop with silver bevels and a famil",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  {
+    "label": "DOS Navigator desktop",
+    "dialog": {
+      "clientWidth": 1076,
+      "scrollWidth": 1076,
+      "width": 1080
+    },
+    "fields": [
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "LanguageEnglishУкраїнська",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Enemy appearance presetOriginal level artworkMilitary Field · soldiers and vehicles",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Covered ground · Solo, Duel and TeamOriginal groundFPV · Field CrossingFPV · Freight DepotFPV · Relay RuinsFPV · River PortFPV · Chalk QuarryFPV · Orchard Strongpoint",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Mission visualsFollow themeOriginal mission visuals",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Decorative detailTheme defaultOffSubtleDetailed",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Terrain detail\n            Balanced detail\n            Small pixel tiles\n            Larger landmarks",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Roster for the next attemptOriginal runnersVaried prey",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Character appearanceAs designedField kitWorn field kitWinter kit",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Direction UpRightDownLeft",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Pose IdleRunningNoticeWarningRecoveryCaught",
+        "target": "44px"
+      }
+    ],
+    "focus": "DOS NavigatorMissionLaunchHoverPressedFocusDetailBalanced✓Show telemetryA text-mode explorer with midnight-blue panels a",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  {
+    "label": "Orchard Workshop desktop",
+    "dialog": {
+      "clientWidth": 1076,
+      "scrollWidth": 1076,
+      "width": 1080
+    },
+    "fields": [
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "LanguageEnglishУкраїнська",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Enemy appearance presetOriginal level artworkMilitary Field · soldiers and vehicles",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Covered ground · Solo, Duel and TeamOriginal groundFPV · Field CrossingFPV · Freight DepotFPV · Relay RuinsFPV · River PortFPV · Chalk QuarryFPV · Orchard Strongpoint",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Mission visualsFollow themeOriginal mission visuals",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Decorative detailTheme defaultOffSubtleDetailed",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Terrain detail\n            Balanced detail\n            Small pixel tiles\n            Larger landmarks",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Roster for the next attemptOriginal runnersVaried prey",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Character appearanceAs designedField kitWorn field kitWinter kit",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Direction UpRightDownLeft",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Pose IdleRunningNoticeWarningRecoveryCaught",
+        "target": "44px"
+      }
+    ],
+    "focus": "Orchard WorkshopMissionLaunchHoverPressedFocusDetailBalanced✓Show telemetryA quiet orchard workshop in warm paper, timbe",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  {
+    "label": "Vyshyvanka desktop",
+    "dialog": {
+      "clientWidth": 1076,
+      "scrollWidth": 1076,
+      "width": 1080
+    },
+    "fields": [
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "LanguageEnglishУкраїнська",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Enemy appearance presetOriginal level artworkMilitary Field · soldiers and vehicles",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Covered ground · Solo, Duel and TeamOriginal groundFPV · Field CrossingFPV · Freight DepotFPV · Relay RuinsFPV · River PortFPV · Chalk QuarryFPV · Orchard Strongpoint",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Mission visualsFollow themeOriginal mission visuals",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Decorative detailTheme defaultOffSubtleDetailed",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Terrain detail\n            Balanced detail\n            Small pixel tiles\n            Larger landmarks",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Roster for the next attemptOriginal runnersVaried prey",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Character appearanceAs designedField kitWorn field kitWinter kit",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Direction UpRightDownLeft",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Pose IdleRunningNoticeWarningRecoveryCaught",
+        "target": "44px"
+      }
+    ],
+    "focus": "VyshyvankaMissionLaunchHoverPressedFocusDetailBalanced✓Show telemetryUkrainian embroidery in scarlet thread, black linen",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  {
+    "label": "Flight Deck 390px",
+    "dialog": {
+      "clientWidth": 370,
+      "scrollWidth": 370,
+      "width": 374
+    },
+    "fields": [
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "LanguageEnglishУкраїнська",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Enemy appearance presetOriginal level artworkMilitary Field · soldiers and vehicles",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Covered ground · Solo, Duel and TeamOriginal groundFPV · Field CrossingFPV · Freight DepotFPV · Relay RuinsFPV · River PortFPV · Chalk QuarryFPV · Orchard Strongpoint",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Mission visualsFollow themeOriginal mission visuals",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Decorative detailTheme defaultOffSubtleDetailed",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Terrain detail\n            Balanced detail\n            Small pixel tiles\n            Larger landmarks",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Roster for the next attemptOriginal runnersVaried prey",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Character appearanceAs designedField kitWorn field kitWinter kit",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Direction UpRightDownLeft",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Pose IdleRunningNoticeWarningRecoveryCaught",
+        "target": "44px"
+      }
+    ],
+    "focus": "Flight DeckMissionLaunchHoverPressedFocusDetailBalanced✓Show telemetryThe game's signature flight console: machined grap",
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  {
+    "label": "Flight Deck 390px Plain Large reduced",
+    "dialog": {
+      "clientWidth": 370,
+      "scrollWidth": 370,
+      "width": 374
+    },
+    "fields": [
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Text style\n            Theme font\n            Plain",
+        "target": "44px"
+      },
+      {
+        "appearance": "none",
+        "height": 44,
+        "label": "Text size\n            Standard\n            Large",
+        "target": "44px"
+      }
+    ],
+    "focus": "",
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  }
+]

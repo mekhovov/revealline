@@ -4115,8 +4115,14 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   line-height: 1.35;
   white-space: normal;
   overflow-wrap: anywhere;
-  color: #f3f5ef;
-  background: var(--native-panel, #15172d);
+}
+
+/* Layout owns geometry; shared material states own paint, including selection.
+   Keep this fallback below the theme painter's specificity so light themes and
+   textured frames do not inherit a fixed dark-mode label or lose their finish. */
+:where(.mode-settings-view .field-kit-settings-tabs > [role='tab']) {
+  color: var(--fk-text, #f3f5ef);
+  background: var(--fk-panel-raised, var(--native-panel, #15172d));
   border: 1px solid transparent;
   border-image: none;
 }
@@ -4134,9 +4140,9 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   mask-repeat: no-repeat;
 }
 
-.mode-settings-view .field-kit-settings-tabs > [aria-selected='true'] {
-  border-color: #ffda68;
-  box-shadow: inset 3px 0 #ffda68;
+:where(.mode-settings-view .field-kit-settings-tabs > [aria-selected='true']) {
+  border-color: var(--fk-focus, #ffda68);
+  box-shadow: inset 3px 0 var(--fk-focus, #ffda68);
 }
 
 .mode-settings-view .field-kit-settings-panel {
@@ -4182,7 +4188,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 }
 
 .mode-settings-view :is(button, select, input, summary, a):focus-visible {
-  outline: 3px solid var(--field-kit-focus, #a8eaf0);
+  outline: 3px solid var(--fk-focus, var(--field-kit-focus, #a8eaf0));
   outline-offset: 2px;
 }
 
