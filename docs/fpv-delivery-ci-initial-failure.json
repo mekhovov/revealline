@@ -1,0 +1,54 @@
+{
+  "format": "FPVDeliveryCIFailure.v1",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/1561",
+  "headRevision": "79a9201266daa34e773136521a02a068c557893c",
+  "runId": 38993627702,
+  "jobId": 117281177140,
+  "job": "Company edition candidates / optional-practice",
+  "logSha256": "122fa6ae351c953620c032163f5e6b261cc90696165d6b9dd820078a7b746e96",
+  "failure": "MODULE_NOT_FOUND: fake-indexeddb from authoring/fpv-worlds/package.json in game/test/fpv-world-appearance-ui.test.mjs",
+  "cause": "The optional-practice job installed only root dependencies before running practice:test, which includes a persistence test using the pinned authoring development dependency.",
+  "correction": "Install authoring/fpv-worlds lockfile dependencies, including dev dependencies and ignoring lifecycle scripts, before the unchanged optional test suites.",
+  "testsDisabled": false,
+  "passingRerunRequired": true,
+  "roomsFailure": {
+    "runId": 38993627751,
+    "jobId": 117281177170,
+    "artifactId": 12085887875,
+    "artifactSha256": "8b2d1670408fbf6ac3cb1377d734c907d346991dc6a863fedc6a5129acbd54e4",
+    "tapSha256": "90b25d7b52a916a740d48fc7a30b5998ad0c6a4c0d1e57a3f2a6cf185fb986dd",
+    "tests": 80,
+    "passed": 67,
+    "failed": 13,
+    "failure": "ENOENT native/bridge.mjs during roomEngineIdentity source dependency traversal",
+    "cause": "The shared platform adapter now exposes a literal lazy iOS bridge import. The bridge is generated only by iOS staging, but the Node room source scanner attempted to read it as repository engine source.",
+    "correction": "Restore the original canonical iOS URL import in game/platform.mjs, recognized by existing Room source and Company build boundaries. The optional builder now recognizes only that exact AST shape from the declared platform capability; other computed imports remain rejected. No room dependency exclusion was added."
+  },
+  "relatedBridgeFailures": {
+    "company": {
+      "jobId": 117281176868,
+      "logSha256": "89e1bc1c8f6ce452bb894277c23a83bf5eaa277302e498349a16e5127e692a98",
+      "cause": "Shared platform canonical native import boundary replaced by literal import; existing source/Company closure incorrectly follows absent generated bridge."
+    },
+    "preview": {
+      "jobId": 117281176774,
+      "logSha256": "8f115d02e0d0dba33b65e92aed69c6c32390d8f0a49f6d8475fa0054dbb165d8",
+      "cause": "Shared platform canonical native import boundary replaced by literal import; existing source/Company closure incorrectly follows absent generated bridge."
+    }
+  },
+  "additionalHarnessCorrections": [
+    {
+      "jobId": 117281176774,
+      "test": "scripts/test-world-texture-acceptance.mjs",
+      "cause": "Expected179 file envelope was stale after the World same-scope worker raised the reviewed policy to180.",
+      "correction": "Assert180 and continue verifying exact policy agreement, bytes, contents and source pins; policy unchanged."
+    },
+    {
+      "jobId": 117281177195,
+      "artifactId": 12086441543,
+      "test": "World tuning uses saved rates and camera only in a new flight",
+      "cause": "One hundred setImmediate turns expired before actual recording export finished in the hosted concurrent suite.",
+      "correction": "Use the existing five-second monotonic waitFor helper with the same observable export predicate; no runtime or assertion removed."
+    }
+  ]
+}

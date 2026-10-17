@@ -1,0 +1,31 @@
+{
+  "format": "AdvancedRegionalQualificationGolden.v1",
+  "backend": "civilian-quad-advanced-regional.v1",
+  "identity": "651a260d9d340cee",
+  "simulationIdentity": "8516d26f918fa307",
+  "terrainIdentity": "005b1259b23db5cb",
+  "initialHash": "6f6adbfb",
+  "hashes": [
+    [10, "dbd785b4"],
+    [20, "cdb850fb"],
+    [30, "dbbbd47b"],
+    [40, "b06a04ad"],
+    [50, "60c61cdf"],
+    [60, "53f6247a"],
+    [70, "bacd6a31"],
+    [80, "c1c10751"],
+    [90, "0bb41b28"],
+    [100, "257d1d48"],
+    [110, "2c6be3ee"],
+    [120, "cb5cc0d7"],
+    [130, "deb5ba0d"],
+    [140, "4c4db1b4"],
+    [150, "6da056c5"],
+    [160, "51b59673"],
+    [170, "1c9ef247"],
+    [180, "1cded548"],
+    [190, "f161c2fb"],
+    [200, "84c23438"]
+  ],
+  "finalHash": "9d00dd70"
+}
