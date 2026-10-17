@@ -24,11 +24,12 @@ export const emptyJourneyPerformance = () => ({
   records: [],
 });
 export const performanceRecordKey = (record) => `${record.missionId}/${record.runId}`;
+// Internal owner boundary; a copy is not an inspected or verified record.
+export function snapshotPerformanceRecordSource(input) {
+  return boundedJSON(input, { ...limits, maxBytes: JOURNEY_PERFORMANCE_LIMITS.recordBytes });
+}
 export function inspectPerformanceRecord(input) {
-  const record = boundedJSON(input, {
-    ...limits,
-    maxBytes: JOURNEY_PERFORMANCE_LIMITS.recordBytes,
-  });
+  const record = snapshotPerformanceRecordSource(input);
   exactKeys(
     record,
     ['mode', 'missionId', 'runId', 'gameplayId', 'difficulty', 'replay'],
@@ -76,6 +77,34 @@ export function inspectJourneyPerformance(input) {
   });
   return value;
 }
+async function admitRecordWork(work, { signal, scheduleChunk }) {
+  let value,
+    called = false,
+    retired = false,
+    failure;
+  try {
+    await scheduleChunk(
+      () => {
+        try {
+          required(!called && !retired, 'Performance record work must run exactly once.');
+          called = true;
+          signal?.throwIfAborted();
+          value = work();
+        } catch (error) {
+          failure = error;
+          throw error;
+        }
+      },
+      { signal },
+    );
+    if (failure) throw failure;
+    required(called, 'Performance record admission did not run work.');
+    signal?.throwIfAborted();
+  } finally {
+    retired = true;
+  }
+  return value;
+}
 export async function verifyPerformanceRecord(
   input,
   { acceptBinding, signal, profile, scheduleChunk } = {},
@@ -85,7 +114,14 @@ export async function verifyPerformanceRecord(
     'Solo Journey performance verification is unavailable.',
   );
   signal?.throwIfAborted();
-  const record = inspectPerformanceRecord(input);
+  let record;
+  if (scheduleChunk) {
+    const source = snapshotPerformanceRecordSource(input);
+    record = await admitRecordWork(() => inspectPerformanceRecord(source), {
+      signal,
+      scheduleChunk,
+    });
+  } else record = inspectPerformanceRecord(input);
   required(
     profile?.clears?.solo?.[record.missionId],
     'Performance evidence needs an accepted Journey mission.',
@@ -107,7 +143,20 @@ export async function verifyPerformanceRecord(
     'Performance replay is not part of this selected Journey.',
   );
   signal?.throwIfAborted();
-  const summary = result.actual.summary;
+  if (!scheduleChunk) return finishPerformanceRecord(record, result.actual.summary);
+  // Binding can await retained presentation I/O. Own its inputs before another
+  // admission wait; a binding callback cannot change later published bytes.
+  const retained = snapshotPerformanceRecordSource(record);
+  const summary = boundedJSON(result.actual.summary, {
+    ...limits,
+    maxBytes: JOURNEY_PERFORMANCE_LIMITS.recordBytes,
+  });
+  return admitRecordWork(() => finishPerformanceRecord(retained, summary), {
+    signal,
+    scheduleChunk,
+  });
+}
+function finishPerformanceRecord(record, summary) {
   const comparisonId = dataIdentity({
     mode: 'solo',
     missionId: record.missionId,
