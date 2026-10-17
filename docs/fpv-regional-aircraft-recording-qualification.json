@@ -1,0 +1,717 @@
+{
+  "format": "RegionalAircraftRecordingQualification.v1",
+  "measuredAt": "2026-10-17T19:18:07.053Z",
+  "runtime": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "processor": "Apple M4 Pro"
+  },
+  "sources": {
+    "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs": "89e9818c274139127badce59338526b2cb00e5090b2a659703920428b9cf1749",
+    "optional-practice/civilian-fpv/aircraft-recording.mjs": "79bf6f61f982c1c45186e494f64a0ee0a55d07dbf6e405f121f2d8ec0b665cce",
+    "optional-practice/civilian-fpv/advanced-regional.mjs": "a5d460cb2ae21cbce7e0978af75f74f391e417e83ee505b0bf925d0ab5029966",
+    "optional-practice/civilian-fpv/regional-session.mjs": "8241c9f04e98a14ddf6c75b882f75d2d169f003517753928680054f8b512d9cd",
+    "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs": "18573585c1b1f59fe62a9eaefe62275135716291cea072d4acdd3e5a361ecbb2",
+    "optional-practice/civilian-fpv/aircraft-physics.mjs": "fd57449fff0978379bcd85b4061aeb7cf39baa476eaf4bce26f2791a7d2844c7",
+    "optional-practice/civilian-fpv/aircraft-presets.mjs": "b60704922da70a32bd249ac60e0371a31ecbb396c20305040fd544218f10dffd"
+  },
+  "fixture": {
+    "path": "authoring/fpv-worlds/regions/canyon-badlands/delivery-rounded-r1",
+    "pins": {
+      "delivery.json": {
+        "bytes": 6790,
+        "sha256": "5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0"
+      },
+      "terrain/region.json": {
+        "bytes": 5876,
+        "sha256": "9fad494a6dc1e974695e9fa218b99e74f1676d2589303c7ececea8728b106239"
+      },
+      "scenery/region.json": {
+        "bytes": 5732,
+        "sha256": "a72ba600c11eba60486b645ca40967802498deb28e46dece02b10b3f04e0c30f"
+      }
+    }
+  },
+  "aircraft": "meteor75-analog-2022",
+  "mode": "acro",
+  "input": {
+    "roll": 0,
+    "pitch": 0,
+    "yaw": 0,
+    "throttle": 0
+  },
+  "missionHz": 50,
+  "physicsHz": 500,
+  "physicalHashesMatch": true,
+  "passed": true,
+  "limitations": [
+    "In-process client uses production Regional preparation, terrain admission, physics, and recorder; excludes browser rendering, worker transport, and IndexedDB.",
+    "Neutral input at the Canyon spawn exercises loaded terrain and the first 60-second recording rollover, not streaming across the full region.",
+    "Performance is a single-machine observation, not a platform qualification."
+  ],
+  "runs": [
+    {
+      "recording": true,
+      "preparationSeconds": 0.20282712500000002,
+      "checkpointBytes": 1794160,
+      "elapsedSeconds": 24.442670042000003,
+      "simulatedSeconds": 65,
+      "realTimeCapacity": 2.6592839443608276,
+      "finalStateHash": "0d999057",
+      "finalPosition": {
+        "x": -0.005259606055915356,
+        "y": -2.9825003147125244,
+        "z": -0.000016641823094687425
+      },
+      "statuses": [
+        {
+          "tick": 2999,
+          "wallSeconds": 22.564852167,
+          "format": "AircraftRecordingStatus.v1",
+          "state": "recording",
+          "retainedFromSeconds": 0,
+          "retainedThroughSeconds": 59.98,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 59.98,
+          "retainedSegments": 1,
+          "retainedBytes": 448950,
+          "error": null
+        },
+        {
+          "tick": 3000,
+          "wallSeconds": 22.622631667,
+          "format": "AircraftRecordingStatus.v1",
+          "state": "recording",
+          "retainedFromSeconds": 0,
+          "retainedThroughSeconds": 60,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 60,
+          "retainedSegments": 2,
+          "retainedBytes": 2267125,
+          "error": null
+        },
+        {
+          "tick": 3001,
+          "wallSeconds": 22.631218959,
+          "format": "AircraftRecordingStatus.v1",
+          "state": "recording",
+          "retainedFromSeconds": 0,
+          "retainedThroughSeconds": 60.02,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 60.02,
+          "retainedSegments": 2,
+          "retainedBytes": 2267163,
+          "error": null
+        },
+        {
+          "tick": 3250,
+          "wallSeconds": 24.442630959000002,
+          "format": "AircraftRecordingStatus.v1",
+          "state": "recording",
+          "retainedFromSeconds": 0,
+          "retainedThroughSeconds": 65,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 65,
+          "retainedSegments": 2,
+          "retainedBytes": 2276715,
+          "error": null
+        }
+      ],
+      "physicalHashes": [
+        [
+          50,
+          "cfa05b7f"
+        ],
+        [
+          100,
+          "7262edc7"
+        ],
+        [
+          150,
+          "978e15ca"
+        ],
+        [
+          200,
+          "5d3072f8"
+        ],
+        [
+          250,
+          "2ca58cac"
+        ],
+        [
+          300,
+          "2bb846db"
+        ],
+        [
+          350,
+          "43eac707"
+        ],
+        [
+          400,
+          "691e464f"
+        ],
+        [
+          450,
+          "a55f7923"
+        ],
+        [
+          500,
+          "e186d18f"
+        ],
+        [
+          550,
+          "6bb8759b"
+        ],
+        [
+          600,
+          "6d9be74c"
+        ],
+        [
+          650,
+          "047e6e7f"
+        ],
+        [
+          700,
+          "c46d0fcc"
+        ],
+        [
+          750,
+          "37eb2802"
+        ],
+        [
+          800,
+          "59363501"
+        ],
+        [
+          850,
+          "25cd5edd"
+        ],
+        [
+          900,
+          "9c07f13e"
+        ],
+        [
+          950,
+          "60ec44f9"
+        ],
+        [
+          1000,
+          "ad149770"
+        ],
+        [
+          1050,
+          "ca8afea4"
+        ],
+        [
+          1100,
+          "6fe67d1a"
+        ],
+        [
+          1150,
+          "6494fa76"
+        ],
+        [
+          1200,
+          "da51001b"
+        ],
+        [
+          1250,
+          "b6cc16f1"
+        ],
+        [
+          1300,
+          "409c30f8"
+        ],
+        [
+          1350,
+          "a3c7ef2b"
+        ],
+        [
+          1400,
+          "31ea5898"
+        ],
+        [
+          1450,
+          "51c1c152"
+        ],
+        [
+          1500,
+          "91177d62"
+        ],
+        [
+          1550,
+          "1b8f4cb6"
+        ],
+        [
+          1600,
+          "782dc462"
+        ],
+        [
+          1650,
+          "630d2dcd"
+        ],
+        [
+          1700,
+          "486999bd"
+        ],
+        [
+          1750,
+          "b5ca5ecc"
+        ],
+        [
+          1800,
+          "ae38727a"
+        ],
+        [
+          1850,
+          "20e6c8d5"
+        ],
+        [
+          1900,
+          "5ce46998"
+        ],
+        [
+          1950,
+          "f6311b61"
+        ],
+        [
+          2000,
+          "b62a2c58"
+        ],
+        [
+          2050,
+          "b7a87275"
+        ],
+        [
+          2100,
+          "0e57f425"
+        ],
+        [
+          2150,
+          "11eaf44a"
+        ],
+        [
+          2200,
+          "c50b88df"
+        ],
+        [
+          2250,
+          "21b857ba"
+        ],
+        [
+          2300,
+          "5ee5ee48"
+        ],
+        [
+          2350,
+          "f679787a"
+        ],
+        [
+          2400,
+          "306c31f6"
+        ],
+        [
+          2450,
+          "936fac4b"
+        ],
+        [
+          2500,
+          "bcad35b3"
+        ],
+        [
+          2550,
+          "bef305b2"
+        ],
+        [
+          2600,
+          "021decee"
+        ],
+        [
+          2650,
+          "90525c8f"
+        ],
+        [
+          2700,
+          "19178093"
+        ],
+        [
+          2750,
+          "6cf13ad3"
+        ],
+        [
+          2800,
+          "3df5145d"
+        ],
+        [
+          2850,
+          "5a5ecbbc"
+        ],
+        [
+          2900,
+          "4cdf7b5a"
+        ],
+        [
+          2950,
+          "43da7d75"
+        ],
+        [
+          3000,
+          "d9c733cf"
+        ],
+        [
+          3050,
+          "8dbb9931"
+        ],
+        [
+          3100,
+          "6d741f97"
+        ],
+        [
+          3150,
+          "c0ea6c5f"
+        ],
+        [
+          3200,
+          "9c7dff98"
+        ],
+        [
+          3250,
+          "0d999057"
+        ]
+      ],
+      "serializedRecordingBytes": 2279924
+    },
+    {
+      "recording": false,
+      "preparationSeconds": 0.10178304200000275,
+      "checkpointBytes": 1794160,
+      "elapsedSeconds": 24.132306708,
+      "simulatedSeconds": 65,
+      "realTimeCapacity": 2.6934847458428877,
+      "finalStateHash": "0d999057",
+      "finalPosition": {
+        "x": -0.005259606055915356,
+        "y": -2.9825003147125244,
+        "z": -0.000016641823094687425
+      },
+      "statuses": [
+        {
+          "tick": 2999,
+          "wallSeconds": 22.282772249999997,
+          "format": "AircraftRecordingStatus.v1",
+          "state": "disabled",
+          "retainedFromSeconds": null,
+          "retainedThroughSeconds": null,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 59.98,
+          "retainedSegments": 0,
+          "retainedBytes": 0,
+          "error": null
+        },
+        {
+          "tick": 3000,
+          "wallSeconds": 22.295689500000005,
+          "format": "AircraftRecordingStatus.v1",
+          "state": "disabled",
+          "retainedFromSeconds": null,
+          "retainedThroughSeconds": null,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 60,
+          "retainedSegments": 0,
+          "retainedBytes": 0,
+          "error": null
+        },
+        {
+          "tick": 3001,
+          "wallSeconds": 22.303228583,
+          "format": "AircraftRecordingStatus.v1",
+          "state": "disabled",
+          "retainedFromSeconds": null,
+          "retainedThroughSeconds": null,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 60.02,
+          "retainedSegments": 0,
+          "retainedBytes": 0,
+          "error": null
+        },
+        {
+          "tick": 3250,
+          "wallSeconds": 24.132247832999997,
+          "format": "AircraftRecordingStatus.v1",
+          "state": "disabled",
+          "retainedFromSeconds": null,
+          "retainedThroughSeconds": null,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 65,
+          "retainedSegments": 0,
+          "retainedBytes": 0,
+          "error": null
+        }
+      ],
+      "physicalHashes": [
+        [
+          50,
+          "cfa05b7f"
+        ],
+        [
+          100,
+          "7262edc7"
+        ],
+        [
+          150,
+          "978e15ca"
+        ],
+        [
+          200,
+          "5d3072f8"
+        ],
+        [
+          250,
+          "2ca58cac"
+        ],
+        [
+          300,
+          "2bb846db"
+        ],
+        [
+          350,
+          "43eac707"
+        ],
+        [
+          400,
+          "691e464f"
+        ],
+        [
+          450,
+          "a55f7923"
+        ],
+        [
+          500,
+          "e186d18f"
+        ],
+        [
+          550,
+          "6bb8759b"
+        ],
+        [
+          600,
+          "6d9be74c"
+        ],
+        [
+          650,
+          "047e6e7f"
+        ],
+        [
+          700,
+          "c46d0fcc"
+        ],
+        [
+          750,
+          "37eb2802"
+        ],
+        [
+          800,
+          "59363501"
+        ],
+        [
+          850,
+          "25cd5edd"
+        ],
+        [
+          900,
+          "9c07f13e"
+        ],
+        [
+          950,
+          "60ec44f9"
+        ],
+        [
+          1000,
+          "ad149770"
+        ],
+        [
+          1050,
+          "ca8afea4"
+        ],
+        [
+          1100,
+          "6fe67d1a"
+        ],
+        [
+          1150,
+          "6494fa76"
+        ],
+        [
+          1200,
+          "da51001b"
+        ],
+        [
+          1250,
+          "b6cc16f1"
+        ],
+        [
+          1300,
+          "409c30f8"
+        ],
+        [
+          1350,
+          "a3c7ef2b"
+        ],
+        [
+          1400,
+          "31ea5898"
+        ],
+        [
+          1450,
+          "51c1c152"
+        ],
+        [
+          1500,
+          "91177d62"
+        ],
+        [
+          1550,
+          "1b8f4cb6"
+        ],
+        [
+          1600,
+          "782dc462"
+        ],
+        [
+          1650,
+          "630d2dcd"
+        ],
+        [
+          1700,
+          "486999bd"
+        ],
+        [
+          1750,
+          "b5ca5ecc"
+        ],
+        [
+          1800,
+          "ae38727a"
+        ],
+        [
+          1850,
+          "20e6c8d5"
+        ],
+        [
+          1900,
+          "5ce46998"
+        ],
+        [
+          1950,
+          "f6311b61"
+        ],
+        [
+          2000,
+          "b62a2c58"
+        ],
+        [
+          2050,
+          "b7a87275"
+        ],
+        [
+          2100,
+          "0e57f425"
+        ],
+        [
+          2150,
+          "11eaf44a"
+        ],
+        [
+          2200,
+          "c50b88df"
+        ],
+        [
+          2250,
+          "21b857ba"
+        ],
+        [
+          2300,
+          "5ee5ee48"
+        ],
+        [
+          2350,
+          "f679787a"
+        ],
+        [
+          2400,
+          "306c31f6"
+        ],
+        [
+          2450,
+          "936fac4b"
+        ],
+        [
+          2500,
+          "bcad35b3"
+        ],
+        [
+          2550,
+          "bef305b2"
+        ],
+        [
+          2600,
+          "021decee"
+        ],
+        [
+          2650,
+          "90525c8f"
+        ],
+        [
+          2700,
+          "19178093"
+        ],
+        [
+          2750,
+          "6cf13ad3"
+        ],
+        [
+          2800,
+          "3df5145d"
+        ],
+        [
+          2850,
+          "5a5ecbbc"
+        ],
+        [
+          2900,
+          "4cdf7b5a"
+        ],
+        [
+          2950,
+          "43da7d75"
+        ],
+        [
+          3000,
+          "d9c733cf"
+        ],
+        [
+          3050,
+          "8dbb9931"
+        ],
+        [
+          3100,
+          "6d741f97"
+        ],
+        [
+          3150,
+          "c0ea6c5f"
+        ],
+        [
+          3200,
+          "9c7dff98"
+        ],
+        [
+          3250,
+          "0d999057"
+        ]
+      ],
+      "serializedRecordingBytes": 0
+    }
+  ]
+}
