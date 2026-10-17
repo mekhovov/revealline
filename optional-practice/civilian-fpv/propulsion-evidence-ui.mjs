@@ -196,6 +196,13 @@ export function mountPropulsionEvidencePanel({
       return;
     }
     const { thrust, voltage } = point.values;
+    if (voltage < aircraft.battery.emptyVoltage || voltage > aircraft.battery.fullVoltage) {
+      comparison.textContent = t(
+        `Comparison unavailable: ${number(voltage)} V is outside this aircraft’s configured battery range (${number(aircraft.battery.emptyVoltage)}–${number(aircraft.battery.fullVoltage)} V). Bench data remains available for inspection.`,
+        `Порівняння недоступне: ${number(voltage)} В поза налаштованим діапазоном батареї цього дрона (${number(aircraft.battery.emptyVoltage)}–${number(aircraft.battery.fullVoltage)} В). Стендові дані залишаються доступними для перегляду.`,
+      );
+      return;
+    }
     const maximum = aircraftMotorPoint(aircraft, aircraft.motorOutputLimit, voltage).thrust;
     if (thrust > maximum) {
       comparison.textContent = t(
