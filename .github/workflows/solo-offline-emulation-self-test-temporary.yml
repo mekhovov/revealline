@@ -20,7 +20,8 @@ jobs:
     # This is one browser-setup experiment, without a game build or gameplay credit.
     if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c9e637ad81fadf49caec884155d1bd0c2496c59c'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    # Fifteen minutes of declared step bounds plus two for job/post-job closure.
+    timeout-minutes: 17
     env:
       SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
     steps:

@@ -273,6 +273,12 @@ test('the one-shot diagnostic keeps native controls bounded and cannot enter gam
   assert.match(workflow, /if: always\(\)/);
   assert.match(workflow, /--navigation-controls/);
   assert.match(workflow, /name: solo-offline-navigation-emulation-/);
+  const stepMinutes = [...workflow.matchAll(/\n(?:      - |        )timeout-minutes: (\d+)/g)].map(
+    (match) => Number(match[1]),
+  );
+  assert.deepEqual(stepMinutes, [2, 1, 2, 5, 4, 1]);
+  assert.equal(Number(workflow.match(/\n    timeout-minutes: (\d+)/)?.[1]), 17);
+  assert.equal(17 - stepMinutes.reduce((sum, minutes) => sum + minutes, 0), 2);
   assert.doesNotMatch(workflow, /continue-on-error|workflow_dispatch|build-b117|distribution.zip/);
   const source = await readFile(
     new URL('./solo-offline-emulation-self-test.mjs', import.meta.url),
