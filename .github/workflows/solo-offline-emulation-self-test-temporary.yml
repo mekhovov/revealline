@@ -18,7 +18,7 @@ concurrency:
 jobs:
   diagnostic:
     # This is one browser-setup experiment, without a game build or gameplay credit.
-    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c9e637ad81fadf49caec884155d1bd0c2496c59c'
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'cce49c81d82b79aefc24898f32eeebc609e569fb'
     runs-on: ubuntu-24.04
     # Fifteen minutes of declared step bounds plus two for job/post-job closure.
     timeout-minutes: 17

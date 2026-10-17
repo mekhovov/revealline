@@ -367,7 +367,7 @@ test('the one-shot diagnostic keeps native controls bounded and cannot enter gam
     new URL('../.github/workflows/solo-offline-emulation-self-test-temporary.yml', import.meta.url),
     'utf8',
   );
-  assert.match(workflow, /github.event.before == 'c9e637ad81fadf49caec884155d1bd0c2496c59c'/);
+  assert.match(workflow, /github.event.before == 'cce49c81d82b79aefc24898f32eeebc609e569fb'/);
   assert.match(workflow, /github.event.pull_request.number == 1544/);
   assert.match(workflow, /github.event.action == 'synchronize'/);
   assert.match(workflow, /playwright@1\.62\.1/);
