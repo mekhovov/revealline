@@ -1,6 +1,17 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtemp, mkdir, readFile, realpath, rm, writeFile, symlink } from 'node:fs/promises';
+import {
+  mkdtemp,
+  mkdir,
+  readFile,
+  realpath,
+  rm,
+  writeFile,
+  symlink,
+  lstat,
+  readdir,
+  rename,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,6 +19,7 @@ import test from 'node:test';
 import {
   admitDefaultBaselineReuse,
   digest,
+  evidenceSize,
   functionalResult,
   isOwnedProcess,
   ownedCommand,
@@ -335,4 +347,96 @@ test('default reuse rejects missing/changed helper, publication conflict, aliase
   await writeFile(join(dir, 'actual.mjs'), 'exact helper bytes\n');
   await symlink(join(dir, 'actual.mjs'), helper);
   await assert.rejects(admitDefaultBaselineReuse(plan, dir, join(dir, 'evidence')), /alias/);
+});
+
+test('live evidence sizing preserves atomic partial-report rename without waiving settled readback', async (t) => {
+  const dir = await temporary(t),
+    partial = join(dir, 'report.json.partial'),
+    final = join(dir, 'report.json');
+  await writeFile(partial, 'retained report');
+  let moved = false;
+  const filesystem = {
+    readdir,
+    async lstat(path) {
+      if (path === partial && !moved) {
+        moved = true;
+        await rename(partial, final);
+      }
+      return lstat(path);
+    },
+  };
+  assert.equal(await evidenceSize(dir, { transient: true, filesystem }), 0);
+  assert.equal(await evidenceSize(dir), Buffer.byteLength('retained report'));
+  assert.equal(await readFile(final, 'utf8'), 'retained report');
+  await rename(final, partial);
+  moved = false;
+  await assert.rejects(evidenceSize(dir, { filesystem }), { code: 'ENOENT' });
+  await rm(final);
+  assert.equal(await evidenceSize(dir, { transient: true }), 0);
+  await assert.rejects(readFile(final), { code: 'ENOENT' });
+});
+
+test('live evidence sizing tolerates only disappearing enumerated descendants', async (t) => {
+  const dir = await temporary(t),
+    child = join(dir, 'temporary');
+  await mkdir(child);
+  await writeFile(join(child, 'file'), 'temporary');
+  const filesystem = {
+    lstat,
+    async readdir(path) {
+      if (path === child) await rm(child, { recursive: true });
+      return readdir(path);
+    },
+  };
+  assert.equal(await evidenceSize(dir, { transient: true, filesystem }), 0);
+  await assert.rejects(evidenceSize(join(dir, 'missing'), { transient: true }), { code: 'ENOENT' });
+  await writeFile(join(dir, 'file'), 'data');
+  const denied = {
+    readdir,
+    lstat(path) {
+      if (path !== dir) throw Object.assign(new Error('denied'), { code: 'EACCES' });
+      return lstat(path);
+    },
+  };
+  await assert.rejects(evidenceSize(dir, { transient: true, filesystem: denied }), {
+    code: 'EACCES',
+  });
+  await symlink(join(dir, 'missing'), join(dir, 'link'));
+  await assert.rejects(evidenceSize(dir, { transient: true }), /Evidence symlink/);
+});
+
+test('evidence root disappearance and replacement remain failures during live sizing', async (t) => {
+  for (const replace of [false, true]) {
+    const dir = await temporary(t);
+    let enumerated = false;
+    const filesystem = {
+      lstat,
+      async readdir(path) {
+        const names = await readdir(path);
+        if (!enumerated) {
+          enumerated = true;
+          await rename(dir, dir + '-old');
+          t.after(() => rm(dir + '-old', { recursive: true, force: true }));
+          if (replace) await mkdir(dir);
+        }
+        return names;
+      },
+    };
+    await assert.rejects(
+      evidenceSize(dir, { transient: true, filesystem }),
+      replace ? /Evidence root identity changed/ : { code: 'ENOENT' },
+    );
+  }
+});
+
+test('disappearing evidence names still consume the existing file-count cap', async (t) => {
+  const dir = await temporary(t);
+  const filesystem = {
+    lstat,
+    readdir: async () => Array.from({ length: 2001 }, (_, i) => `gone-${i}`),
+  };
+  await assert.rejects(
+    evidenceSize(dir, { transient: true, filesystem }),
+    /Evidence file-count cap/,
+  );
 });
