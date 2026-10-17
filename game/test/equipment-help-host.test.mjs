@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 function observePictureReady(page, packId) {
   const state = page.doc.body.dataset,
@@ -102,7 +103,11 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
         buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
       };
       const source = structuredClone(campaign);
-      if (mode === 'tactical-no-hangar') source.levels[0].hangars = [];
+      if (mode === 'tactical-no-hangar') {
+        // This authored variant must not claim the installed base artwork.
+        source.id = 'equipment-help-no-hangar';
+        source.levels[0].hangars = [];
+      }
       const imageSizes = new Map(
         r5.levelVisuals.map(({ visualOverrides }) => {
           const data = visualOverrides.background.dataUrl;
@@ -145,8 +150,8 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
             pack.campaigns[0].classIds.push('bomber');
           }
         }
-        page.$('library-button').click();
-        page.doc.querySelector('[data-library-panel="packs"]').click();
+        await activateHostAction(page.$('library-button'));
+        await activateHostAction(page.doc.querySelector('[data-library-panel="packs"]'));
         assert.equal(page.$('library-packs').hidden, false);
         page.$('pack-json').value = JSON.stringify(pack);
         await page.$('install-pack').onclick();

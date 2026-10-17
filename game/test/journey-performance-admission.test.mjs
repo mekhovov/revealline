@@ -4,6 +4,7 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import {
   createRecorder,
+  createOwnedRecorder,
   recordInput,
   exportReplay,
   exportReplayAsync,
@@ -348,7 +349,7 @@ test('profile forwards admission and Main Solo bootstrap indirection has no earl
   assert.equal(calls, 2);
   const profileSource = await readFile(new URL('../journey/profile.mjs', import.meta.url), 'utf8');
   assert.match(profileSource, /scheduleChunk: schedulePerformanceChunk/);
-  assert.match(source, /createDemoLibrary\(\{ scheduleChunk: scheduleOptionalReplayChunk \}\)/);
+  assert.match(source, /createDemoLibrary\(\{\s*scheduleChunk: scheduleOptionalReplayChunk,/);
   assert.match(source, /createMasteryAwards\(\{\s*scheduleChunk: scheduleOptionalReplayChunk,/);
 });
 
@@ -1130,7 +1131,7 @@ test('actual optional Journey caller rejects only the existing array overflow be
     `return (${source.slice(start + 'const optionalReplay ='.length, end)});`,
   );
   const run = createRun(level),
-    recorder = createRecorder(level);
+    recorder = createOwnedRecorder(level);
   const limit = JOURNEY_PERFORMANCE_LIMITS.arrayItems;
   assert.equal(limit, 4096, 'The existing inspector limit must not change.');
   for (let tick = 0; tick <= limit; tick++) {
@@ -1148,7 +1149,7 @@ test('actual optional Journey caller rejects only the existing array overflow be
     gameplayId: '0123456789abcdef',
   };
   const expected = exportReplay(recorder, run);
-  assert.equal(recorder.segments.length, limit);
+  assert.equal(recorder.segmentCount, limit);
   assert.deepEqual(inspectPerformanceRecord({ ...context, replay: expected }).replay, expected);
   assert.deepEqual(
     await prepare(recorder, run, (work) => work(), exportReplayAsync, JOURNEY_PERFORMANCE_LIMITS),
@@ -1158,7 +1159,7 @@ test('actual optional Journey caller rejects only the existing array overflow be
   stepRun(run, command, FIXED_DT);
   recordInput(recorder, command);
   const full = exportReplay(recorder, run);
-  assert.equal(recorder.segments.length, limit + 1);
+  assert.equal(recorder.segmentCount, limit + 1);
   assert.equal(
     verifyReplay(full).match,
     true,
