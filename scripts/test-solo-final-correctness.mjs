@@ -1,5 +1,5 @@
+import { assertFinalWaveBindings } from './solo-final-wave-witness.mjs';
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { validateBaselineReuse } from './solo-remote-baseline.mjs';
@@ -13,7 +13,6 @@ const guard =
   "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '" +
   source +
   "'";
-const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 function assertActualBinding(value) {
   assert.equal(value.format, 'SoloHostedCorrectnessPlan.v1');
   assert.equal(value.status, 'reviewed-correctness-only');
@@ -98,14 +97,14 @@ test('final correctness preserves all eight original rows, recipe, limits and fa
   assert.equal(plan.probe, undefined);
 });
 
-test('final correctness verifies every current tool and scenario byte independently of historical witnesses', async () => {
+test('final correctness preserves exact dispatched tools and scenario bytes', async () => {
   const refs = [...plan.adapterInputs, ...plan.frozenTools, plan.fixture];
   assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
-  for (const ref of refs) {
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(sha(bytes), ref.sha256, ref.path);
-  }
+  await assertFinalWaveBindings(
+    'docs/performance/solo-remote-final-correctness-plan.json',
+    refs,
+    '.github/workflows/solo-remote-final-correctness-temporary.yml',
+  );
   assert.equal(plan.adapterInputs.length + plan.frozenTools.length, 32);
 });
 

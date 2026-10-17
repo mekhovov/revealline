@@ -1,5 +1,5 @@
+import { assertFinalWaveBindings } from './solo-final-wave-witness.mjs';
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { bindRasterJob, EARNED_RASTER_CASES } from './solo-remote-raster.mjs';
@@ -11,7 +11,6 @@ const guard =
   "github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '" +
   source +
   "'";
-const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 test('final earned raster binds the exact successful package while preserving candidate-only diagnostic scope', () => {
   assert.equal(plan.candidate.revision, source);
   assert.equal(plan.candidate.run, 39008793814);
@@ -45,14 +44,14 @@ test('final earned raster binds the exact successful package while preserving ca
     assert.equal(bound.raster.conditionalLocalization, false);
   }
 });
-test('final earned raster verifies all current tools and the unchanged legal route fixture', async () => {
+test('final earned raster preserves dispatched tools and the unchanged legal route fixture', async () => {
   const refs = [...plan.adapterInputs, ...plan.frozenTools, plan.raster.fixture];
   assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
-  for (const ref of refs) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(sha(b), ref.sha256, ref.path);
-  }
+  await assertFinalWaveBindings(
+    'docs/performance/solo-remote-final-earned-raster-plan.json',
+    refs,
+    '.github/workflows/solo-remote-final-earned-raster-temporary.yml',
+  );
   assert.equal(plan.adapterInputs.length + plan.frozenTools.length, 21);
 });
 test('final earned raster preserves its one-shot edge and 125-minute envelope with sparse tooling only', async () => {

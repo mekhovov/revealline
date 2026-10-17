@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { timingMatrix, sustainedMatrix } from './solo-remote-sustained.mjs';
 import { validateBaselineReuse } from './solo-remote-baseline.mjs';
+import { assertFinalWaveBindings } from './solo-final-wave-witness.mjs';
 
 const root = new URL('../', import.meta.url);
 const load = (path) => readFile(new URL(path, root));
@@ -117,18 +117,15 @@ test('five concrete final-package releases retain exact sources, diagnostics, or
   }
 });
 
-test('every final release freezes exact current tool and recipe bytes', async () => {
+test('dispatched final releases retain exact a7e tool and recipe provenance as current tooling evolves', async () => {
   for (const phase of phases) {
-    const manifest = JSON.parse(await load(paths(phase).manifest));
-    for (const ref of [
-      ...manifest.frozenTools,
-      ...manifest.adapterInputs,
-      ...Object.values(manifest.recipes),
-    ]) {
-      const bytes = await load(ref.path);
-      assert.equal(bytes.length, ref.bytes, ref.path);
-      assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
-    }
+    const files = paths(phase);
+    const manifest = JSON.parse(await load(files.manifest));
+    await assertFinalWaveBindings(
+      files.manifest,
+      [...manifest.frozenTools, ...manifest.adapterInputs, ...Object.values(manifest.recipes)],
+      files.workflow,
+    );
   }
 });
 
