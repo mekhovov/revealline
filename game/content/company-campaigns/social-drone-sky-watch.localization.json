@@ -1,28 +1,28 @@
 {
   "campaignId": "social-drone-sky-watch",
-  "campaignRevision": "2",
+  "campaignRevision": "3",
   "format": "revealline-campaign-localization.v1",
   "records": [
     {
       "fields": { "name": { "en": "Sky Watch", "uk": "Небесна варта" } },
       "id": "social-drone-sky-watch",
-      "identity": "abb3b889466fbe93",
+      "identity": "b46ae1894b636f44",
       "kind": "campaign"
     },
     {
       "fields": {
         "design.lesson": {
-          "en": "Build two deliberate captures through the watch corridors, then enjoy the original video.",
+          "en": "Read the overlapping patrols, use the refuges, and make several deliberate captures to complete the picture.",
           "uk": "Відкрийте зображення з повітря, а потім перегляньте оригінальне відео."
         },
         "design.routeDecision": {
-          "en": "Use the center refuge for a shorter second cut, or circle a side corridor away from the keepers.",
+          "en": "Choose a side corridor to avoid a keeper, then use the central refuge to reset before the final capture.",
           "uk": "Скористайтеся центральним укриттям для коротшого другого проходу або обійдіть бічним коридором подалі від вартових."
         },
         "name": { "en": "Sky Watch", "uk": "Небесна варта" }
       },
       "id": "social-drone-sky-watch-01",
-      "identity": "5e6fb2a099ee1654",
+      "identity": "e0a4a93566db8a7d",
       "kind": "mission"
     }
   ],

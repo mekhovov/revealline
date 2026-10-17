@@ -360,8 +360,14 @@ export async function mountEditionRewards({
       receipts: state.receipts,
       progress,
     });
-    if (!exhibits.some((item) => item.campaign.id === shelfCampaign))
-      shelfCampaign = exhibits[0]?.campaign.id ?? null;
+    if (!exhibits.some((item) => item.campaign.id === shelfCampaign)) {
+      // Open the Collection on an earned campaign first. A freshly unlocked
+      // video should never be hidden behind an unrelated campaign picker.
+      shelfCampaign =
+        exhibits.find((item) => item.rows.some((row) => row.receipt))?.campaign.id ??
+        exhibits[0]?.campaign.id ??
+        null;
+    }
     const exhibit = exhibits.find((item) => item.campaign.id === shelfCampaign);
     const contentKey = JSON.stringify([
       shelfCampaign,
@@ -595,6 +601,8 @@ export async function mountEditionRewards({
     }
     if (won) {
       actions.append(exploreButton(receipt, 'result'));
+      if (receipt.definition.payloads.some((item) => item.type === 'video'))
+        actions.append(exploreButton(receipt, 'result-video', 'playVideo'));
       const saved = store.status();
       if (!saved.durable) {
         const compact = node(

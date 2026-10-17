@@ -147,7 +147,7 @@ async function fixture(type = 'video') {
       }),
   };
 }
-function harness(f, { facts = {}, playFailure = false } = {}) {
+function harness(f, { facts = {}, playFailure = false, blobDecodeFailure = false } = {}) {
   const document = new Document(),
     window = new Events(),
     container = document.createElement('section'),
@@ -192,7 +192,12 @@ function harness(f, { facts = {}, playFailure = false } = {}) {
     }
     load() {
       this.loads++;
-      if (this.src) queueMicrotask(() => this.emit('loadedmetadata'));
+      if (this.src)
+        queueMicrotask(() =>
+          blobDecodeFailure && this.src.startsWith('blob:')
+            ? this.emit('error')
+            : this.emit('loadedmetadata'),
+        );
     }
     pause() {
       this.paused = true;
@@ -425,6 +430,20 @@ test('caption failure before metadata or during playback releases its decoder an
   }
 });
 
+test('video retries its verified same-origin source when an iPhone decoder rejects the Blob URL', async () => {
+  const f = await fixture(),
+    h = harness(f, { blobDecodeFailure: true }),
+    viewer = mountRewardMedia(h.options);
+  await viewer.start();
+  const media = h.videos[0];
+  assert.equal(media.loads, 2);
+  assert.match(media.src, /^https:\/\/fixture\.invalid\/game\/editions\/assets\/sample\/recording\.mp4$/);
+  assert.equal(media.paused, false);
+  assert.equal(h.urls.has(media.src), false, 'The native range source is never treated as a revocable Blob.');
+  viewer.dispose();
+  assert.deepEqual(h.counts(), { gains: 0, subscribers: 0, urls: 0 });
+});
+
 test('invalid native facts, missing exact bytes, delayed completion and autoplay rejection leave useful fallback', async () => {
   const f = await fixture();
   for (const facts of [
@@ -645,7 +664,7 @@ test('cinematic reduced motion and autoplay rejection preserve an explicit playb
   const viewer = mountRewardMedia({ ...h.options, cinematic: true, reducedMotion: true });
   await viewer.start();
   assert.equal(h.container.querySelector('img').hidden, false);
-  assert.equal(h.videos[0].hidden, true);
+  assert.equal(h.videos[0].hidden, false);
   assert(h.container.querySelector('[data-reward-media-action="play"]'));
   h.videos[0].animate = () => assert.fail('Reduced motion must not animate');
   h.videos[0].emit('playing');
