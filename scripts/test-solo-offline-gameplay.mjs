@@ -222,7 +222,7 @@ test('the successor diagnostic retains one push admission, exclusions and fixed 
   );
   assert.match(
     workflow,
-    /^    if: github\.event\.pull_request\.number == 1544 && github\.event\.pull_request\.head\.repo\.full_name == github\.repository && github\.event\.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'$/m,
+    /^    if: github\.event\.pull_request\.number == 1544 && github\.event\.pull_request\.head\.repo\.full_name == github\.repository && github\.event\.before == 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1'$/m,
   );
   const plan = JSON.parse(
     await readFile(
@@ -239,6 +239,20 @@ test('the successor diagnostic retains one push admission, exclusions and fixed 
   assert.equal(plan.diagnosticRelease.successorQualificationReleased, false);
   assert.equal(plan.diagnosticRelease.performanceQualificationReleased, false);
   assert.equal(plan.diagnosticRelease.priorEvidence.conclusion, 'failure');
+  assert.equal(plan.cohort, 'linux-offline-3adcd537-installed-starter-owner-pair03');
+  assert.equal(plan.diagnosticRelease.onceOnlyBefore, 'aeadf7f43a8c1aba3af78d6cc8713666b4af49f1');
+  const prior = plan.diagnosticRelease.priorSetupEvidence;
+  assert.equal(prior.run, 38991754614);
+  assert.equal(prior.conclusion, 'failure');
+  assert.equal(prior.baseline, 'not-run');
+  assert.equal(prior.candidate, 'not-run');
+  assert.equal(prior.profilesCreated, 0);
+  assert.equal(prior.ownedClosureEstablished, false);
+  const owner = plan.diagnosticRelease.ownerCorrection;
+  assert.equal(owner.path, 'scripts/run-solo-remote-correctness.mjs');
+  const ownerBytes = await readFile(new URL(`../${owner.path}`, import.meta.url));
+  assert.equal(ownerBytes.length, owner.bytes);
+  assert.equal(createHash('sha256').update(ownerBytes).digest('hex'), owner.sha256);
   assert.match(workflow, /timeout-minutes: 165/);
   assert.match(workflow, /timeout-minutes: 104/);
   assert.match(workflow, /30s 103m node/);
