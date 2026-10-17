@@ -46,8 +46,8 @@ The first complete eight-file check is retained in
 passed and 21 failed, including parent failures after failed nested tests. Two
 continuous-route failures exposed the asynchronous opening predicate corrected
 above. Other failures included old saved-session envelope assumptions, progress
-identity expectations, and capitalized difficulty labels; those are being
-compared against unchanged source rather than treated as effects of this removal.
+identity expectations, and capitalized difficulty labels. The matched unchanged-source
+comparison below classifies these separately from the removal.
 
 After correcting only the lifetime predicates, the complete candidate comparison
 of `candidate-solo-host`, `journey-actor-host`, `whole-spatial-host` and
@@ -58,14 +58,24 @@ and 16 spatial failures (label assertions plus dependent reload/parent failures)
 The 75,361-byte result `legacy-chooser-candidate-complete-final.tap` has SHA-256
 `9ebaf964dbba1adcd4d8b925e9ae74ddda3b7ce7e1a15e2798640bd279d61fc3`.
 
-At this commit, the matching four-file unchanged-source control is still running
-within its declared 600-second process limit. It loads the app and all four test
-modules directly from exact `cce49c81` Git bytes, records each module identity,
-and uses the same existing CI readiness settings as the candidate comparison.
-Its complete opening campaign route has passed; the authored route is still in
-progress. The remaining failure inventory has not yet been declared equivalent.
-No failed regression is counted as a pass, and no comparison timing is native
-browser performance evidence.
+The matching four-file unchanged-source control completed within its declared
+600-second process limit: 42 tests, 23 passed, 19 failed, exit 1, 461.768 seconds.
+It loaded the app and all four test modules directly from exact `cce49c81` Git
+bytes, recorded each module identity, and used the same existing CI readiness
+settings as the candidate comparison. Its 83,724-byte raw TAP,
+`legacy-chooser-cce-complete-control.tap`, has SHA-256
+`d7a0021967700ad0cf3fc7781ee2994b85bcdb9e5f71794950dd667c8640e6ad`.
+
+Every test outcome and every failure type, code and assertion source location
+matches between these two final controls. Both complete campaign routes pass.
+The 19 failures remain failures: two saved-session envelope assertions, one Custom
+cursor assertion, and 16 spatial failures comprising capitalized-label roots and
+dependent reload/parent failures. They were not waived or changed in this commit.
+The retained comparison receipt is
+`.cache/solo-followup/eager-graph-cce/legacy-chooser-final-evidence.json`, 22,719
+bytes, SHA-256 `4182beed6fbe4dbab4e113151a59e8f992636ad96ca7bc7bce25ab148116768b`.
+It also binds the earlier red runs, schema exploration and source identities.
+These execution times describe modeled host tests, not native browser performance.
 
 A separate unchanged-application control reproduced the saved-theme assertion
 failure: the actual durable object is a
