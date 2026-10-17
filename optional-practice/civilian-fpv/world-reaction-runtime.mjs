@@ -47,8 +47,8 @@ const sourceHashes={
 'game/ui/art/reactions/sentinel-react.svg':
 '34900da2d7a4782f0ee0d0da4eb483dc29724f757bdc73bac50e135422405e6d',
 'game/journey/reaction-voice-cache.mjs':
-'dc5b229a4460123e23fce927876c2b3874016ad380cefb60a465eb99132502f5',
-'game/ui/media-preparation.mjs':'70cb3507090962cac6e8e97e86f65f43565f2273e436e31cf2832c2a2e6395c7',
+'efd1d95cc6e80a11f39e6a1f1489d213eefb647d2de906d39a7240fbcc2c88f5',
+'game/ui/media-preparation.mjs':'9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
 'game/journey/reactions.mjs':'5a467624ad95e59b30f6a339bfa7f66f82a3060356925adb5c85f9c7db7c459d',
@@ -4322,7 +4322,8 @@ const priorities={required:0,demand:1,background:2};
 function createMediaPreparation({fetches=2,decodes=1,decodeBytes=16*1024*1024}={}){
 const limits={fetch:fetches,decode:decodes,inspect:1,main:1};
 const active={fetch:0,decode:0,inspect:0,main:0};
-const queue=[];
+const queue=[],
+unsettled=new Set();
 let phase='menu',
 closed=false,
 reservedBytes=0,
@@ -4409,18 +4410,39 @@ priority,
 signal,
 bytes,
 eligible,
-resolve,
-reject,
+resolve(value){
+unsettled.delete(task);
+resolve(value);
+},
+reject(error){
+unsettled.delete(task);
+reject(error);
+},
 sequence:sequence++,
 };
 task.cancel=()=>{
 remove(task,aborted());
 drain();
 };
+unsettled.add(task);
 queue.push(task);
 signal?.addEventListener('abort',task.cancel,{once:true});
 drain();
 });
+},
+// Upgrade existing work only. Removed/cancelled tasks cannot be revived.
+promote(signal,priority='demand'){
+if(!signal||typeof signal.aborted!=='boolean'|| !(priority in priorities))
+throw new TypeError('Invalid media preparation promotion.');
+if(closed||signal.aborted)return 0;
+let promoted=0;
+for(const task of unsettled)
+if(task.signal===signal&&priorities[priority]<priorities[task.priority]&&task.eligible()){
+task.priority=priority;
+promoted++;
+}
+if(promoted)drain();
+return promoted;
 },
 setPhase(value){
 if(!phases.has(value))throw new TypeError('Invalid media preparation phase.');
@@ -4750,11 +4772,18 @@ const key=keyFor(lineId,locale),
 revision=generation,
 audioContext=context;
 if(buffers.has(key))return true;
-if(pending.has(key))return pending.get(key).promise;
+if(pending.has(key)){
+const request=pending.get(key);
+if(request.priority==='background'&&priority==='demand'){
+request.priority='demand';
+preparation.promote?.(request.abort.signal,'demand');
+}
+return request.promise;
+}
 if(pending.size>=REACTION_VOICE_LIMITS.loads||now()<(failures.get(key)??0))return false;
 const abort=new AbortController(),
 timeout=setTimeout(()=>abort.abort(),10000),
-request={abort,promise:null};
+request={abort,promise:null,priority};
 let cancelled=false;
 const eligible=()=>
 !closed&&
@@ -4762,7 +4791,8 @@ revision===generation&&
 audioContext===sound.context&&
 !sound.audioMaster?.muted&&
 sound.audioMaster?.volume!==0&&
-(priority!=='background'|| !['playing','suspended'].includes(preparation.snapshot().phase));
+(request.priority!=='background'||
+!['playing','suspended'].includes(preparation.snapshot().phase));
 const admission={signal:abort.signal,priority,eligible};
 request.promise=(async()=>{
 try{
@@ -4785,7 +4815,7 @@ const reservedBytes=admitReactionDecode(metadata,audioContext.sampleRate);
 const buffer=await preparation.run(
 'decode',
 ()=>audioContext.decodeAudioData(recording.bytes.slice(0)),
-{...admission,bytes:reservedBytes},
+{...admission,priority:request.priority,bytes:reservedBytes},
 );
 if(closed||abort.signal.aborted||revision!==generation||audioContext!==sound.context)
 return false;
