@@ -45,6 +45,7 @@ on:
       - 'game/ui/soundtrack-player.mjs'
       - 'game/ui/demo-audio.mjs'
       - 'game/ui/demo-host.mjs'
+      - 'game/ui/title-character.mjs'
       - 'game/ui/soundtrack-panel.mjs'
       - 'game/ui/enemy-guide.mjs'
       - 'game/ui/enemy-body-assets.mjs'
@@ -139,6 +140,7 @@ on:
       - 'game/test/demo-audio-host.test.mjs'
       - 'game/test/demo-context-recovery-host.test.mjs'
       - 'game/test/demo-visual-quality-host.test.mjs'
+      - 'game/test/title-character.test.mjs'
       - 'game/test/demo-clock.test.mjs'
       - 'game/test/demo-host.test.mjs'
       - 'game/test/demo-retained-presentation-host.test.mjs'
@@ -283,6 +285,7 @@ jobs:
         game/test/demo-audio-host.test.mjs
         game/test/demo-context-recovery-host.test.mjs
         game/test/demo-visual-quality-host.test.mjs
+        game/test/title-character.test.mjs
         game/test/demo-clock.test.mjs
         game/test/demo-host.test.mjs
         game/test/demo-retained-presentation-host.test.mjs
