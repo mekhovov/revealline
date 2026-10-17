@@ -12854,6 +12854,7 @@ try {
       this.displayCSSHeight = this.game.canvas.clientHeight;
       this.revision = 0;
       this.preparedState = null;
+      this.failedPreparationRun = null;
       this.lastPaint = null;
       this.displayedBoardValid = false;
       this.renderSuppressed = false;
@@ -12883,6 +12884,7 @@ try {
         this.game.events.off(Phaser.Core.Events.PRE_STEP, preStep);
         this.game.events.off(Phaser.Core.Events.POST_RENDER, postRender);
         this.preparedCancel?.();
+        this.failedPreparationRun = null;
         this.cadence.cancel();
         this.framePending = this.pendingSubmission = false;
       };
@@ -12974,7 +12976,9 @@ try {
       // scene/camera/object addition automatically restores ordinary rendering.
       // A covering Demo can defer an invalidated board until it is visible again.
       if (
-        ((!this.displayedBoardValid || !this.lastPaint) && !demoHost?.active) ||
+        ((!this.displayedBoardValid || !this.lastPaint) &&
+          !demoHost?.active &&
+          this.failedPreparationRun !== run) ||
         this.preparedFrame ||
         this.pendingSubmission ||
         rendererLost.size ||
@@ -13225,20 +13229,30 @@ try {
         // The next game POST_RENDER confirms Phaser submitted the prepared board
         // to its visible canvas while paused. This does not claim display scanout.
         await new Promise((resolve, reject) => {
-          const cancel = () => {
-            if (this.preparedFrame === finish) this.preparedFrame = null;
-            if (this.preparedCancel === cancel) this.preparedCancel = null;
-            signal.removeEventListener('abort', cancel);
-            reject(signal.reason ?? new DOMException('Preparation cancelled.', 'AbortError'));
+          const cancel = (
+            reason = signal.reason ?? new DOMException('Preparation cancelled.', 'AbortError'),
+          ) => {
+            if (this.preparedFrame !== finish || this.preparedCancel !== cancel) return false;
+            this.preparedFrame = this.preparedCancel = this.preparedFailure = null;
+            signal.removeEventListener('abort', onAbort);
+            reject(reason);
+            return true;
           };
+          // Abort listeners receive an Event, not the promise rejection reason.
+          const onAbort = () => cancel();
+          const fail = (error) => !signal.aborted && paused && current() && cancel(error);
           const finish = () => {
-            signal.removeEventListener('abort', cancel);
-            if (this.preparedCancel === cancel) this.preparedCancel = null;
+            signal.removeEventListener('abort', onAbort);
+            if (this.preparedCancel === cancel) this.preparedCancel = this.preparedFailure = null;
             resolve();
           };
-          signal.addEventListener('abort', cancel, { once: true });
+          signal.addEventListener('abort', onAbort, { once: true });
           this.preparedCancel = cancel;
+          this.preparedFailure = fail;
           this.preparedFrame = finish;
+          // Only a fresh explicit preparation may retry a failed submission.
+          // Keep the display held throughout its asynchronous painter work.
+          this.failedPreparationRun = null;
           if (signal.aborted) cancel();
         });
         signal.throwIfAborted();
@@ -13263,9 +13277,14 @@ try {
       if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
         return;
       const workStart = performance.now();
+      if (this.failedPreparationRun !== run || !paused) this.failedPreparationRun = null;
+      const preparationRun = run,
+        preparationTicket = pictureResume,
+        preparationFailure = paused && pictureResume !== null ? this.preparedFailure : null;
       hudWorkMs = simulationWorkMs = 0;
       let updateMs = 0,
-        drawMs = 0;
+        drawMs = 0,
+        preparingDraw = false;
       const foreground = !document.hidden && document.hasFocus();
       const demoPractice = demoHost?.qualityPracticeOwner ?? null;
       const titleOwner = this.titleQualityOwner();
@@ -13321,6 +13340,12 @@ try {
           visible: controllerDialog() === $('shell-home'),
           reduced: qualityPolicy.snapshot().reduced,
         });
+        if (this.failedPreparationRun === run && paused) {
+          // A persistent renderer fault must not restart itself on the next RAF.
+          // Poll input/UI above, retaining this single Canvas until explicit Retry.
+          this.retainUnchangedDisplay();
+          return;
+        }
         const size = boardPaintSizeForRun(run);
         if (size.width !== this.boardSize.width || size.height !== this.boardSize.height)
           this.resizeBoard();
@@ -13339,8 +13364,11 @@ try {
           prior.actors !== flightActorLease ||
           prior.quality !== qualityPolicy.snapshot().tier
         ) {
-          const drawStart = performance.now();
-          painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), this.drawOptions());
+          const drawStart = performance.now(),
+            options = this.drawOptions();
+          preparingDraw = true;
+          painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), options);
+          preparingDraw = false;
           drawMs = performance.now() - drawStart;
           // Reuse this record rather than allocating presentation bookkeeping each frame.
           this.lastPaint ??= {};
@@ -13363,7 +13391,22 @@ try {
         this.pendingSubmission = false;
         performanceSession?.reportFailure(`Scene: ${error.message ?? String(error)}`);
         performanceSession?.setPhase('error');
-        if (!practiceRenderFailure.fail(error)) throw error;
+        const rejectedPreparation =
+          preparingDraw &&
+          preparationFailure &&
+          this.preparedFailure === preparationFailure &&
+          run === preparationRun &&
+          paused &&
+          pictureResume === preparationTicket &&
+          preparationFailure(error);
+        if (rejectedPreparation) {
+          this.preparedState = this.lastPaint = null;
+          this.failedPreparationRun = run;
+          this.retainUnchangedDisplay();
+        }
+        // Phaser schedules its next RAF only after this callback returns. Keep
+        // that loop alive for the owned paused recovery; ordinary errors throw.
+        if (!practiceRenderFailure.fail(error) && !rejectedPreparation) throw error;
       } finally {
         this.framePending = true;
         this.frameNow = now;
