@@ -4,7 +4,12 @@ import { dataIdentity } from '../../game/data-json.mjs';
 import { createRateProfile, validateRateProfile } from './rates.mjs';
 import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
 import { createAdvancedTerrainFrame } from './advanced-terrain.mjs';
-import { validateAdvancedAircraft, createAdvancedAircraftTune } from './advanced-simulation.mjs';
+import {
+  ADVANCED_MAX_SECONDS,
+  ADVANCED_MISSION_HZ,
+  validateAdvancedAircraft,
+  createAdvancedAircraftTune,
+} from './advanced-simulation.mjs';
 import { validateAdvancedTune } from './advanced-controller.mjs';
 import { validateRegionManifest, createRegionPlanner } from './regional/region-manifest.mjs';
 import { createVerifiedFlightGeometry } from './regional/verified-flight-geometry.mjs';
@@ -104,7 +109,8 @@ export function createAdvancedRegionalSession(
     sequence = 0;
   let status = 'paused',
     reason = 'terrain-required',
-    failure = null;
+    failure = null,
+    flightStopReason = null;
   let origin = zero(),
     recentres = 0,
     generation = 0;
@@ -206,6 +212,23 @@ export function createAdvancedRegionalSession(
     streamingJob.controller.abort();
     streamingJob = null;
     terrain.cancel();
+  }
+  function stopAtFlightLimit(error) {
+    // Only the worker's explicit rolled-back quota contract is recoverable.
+    // Similar-looking freeform messages and unknown codes remain failures.
+    const limitReason =
+      error.code === 'ADVANCED_DURATION_LIMIT'
+        ? 'duration-limit'
+        : error.code === 'ADVANCED_RECORDING_LIMIT'
+          ? 'recording-limit'
+          : null;
+    if (!limitReason) return false;
+    flightStopReason = limitReason;
+    status = 'paused';
+    reason = limitReason;
+    failure = error.message;
+    stopStreaming();
+    return true;
   }
   function workerFrame(verified) {
     requireValue(
@@ -346,6 +369,7 @@ export function createAdvancedRegionalSession(
     job.promise = transition(target, { signal: job.controller.signal, current })
       .catch((error) => {
         if (!disposed && streamingJob === job && token === generation) {
+          if (stopAtFlightLimit(error)) return;
           streamingFailure = error.message;
           retryAfterTick = telemetry.missionTick + 100;
         }
@@ -368,6 +392,7 @@ export function createAdvancedRegionalSession(
     live();
     pause();
     preparingController?.abort();
+    if (flightStopReason) return snapshot();
     const token = generation,
       controller = new AbortController();
     preparingController = controller;
@@ -382,6 +407,7 @@ export function createAdvancedRegionalSession(
         await recoveryJob?.catch(() => {});
         await frameJob?.catch(() => {});
         current();
+        if (flightStopReason) return snapshot();
         if (!initialized) {
           client ??= createClient();
           telemetry = (await client.initialize(clone(options))).telemetry;
@@ -398,7 +424,8 @@ export function createAdvancedRegionalSession(
         reason = 'prepared';
         return snapshot();
       } catch (error) {
-        if (!disposed && token === generation && reason !== 'worker-error') {
+        if (!disposed && token === generation && stopAtFlightLimit(error)) return snapshot();
+        if (!disposed && token === generation && !flightStopReason && reason !== 'worker-error') {
           reason = 'terrain-error';
           failure = error.message;
         }
@@ -493,6 +520,7 @@ export function createAdvancedRegionalSession(
         return snapshot();
       } catch (error) {
         if (!disposed) {
+          if (stopAtFlightLimit(error)) return snapshot();
           status = 'paused';
           reason = 'worker-error';
           failure = error.message;
@@ -517,6 +545,7 @@ export function createAdvancedRegionalSession(
       live();
       if (
         !initialized ||
+        flightStopReason ||
         reason !== 'prepared' ||
         sourceFrameIdentity !== telemetry.terrain?.frameIdentity ||
         stepJob ||
@@ -542,6 +571,7 @@ export function createAdvancedRegionalSession(
       const verificationOnly = recovering && preparingController === recoveryVerification;
       pause();
       preparingController?.abort();
+      if (flightStopReason) return;
       if (!verificationOnly) terrain.cancel();
       // A detached verifier has not changed the admitted live terrain/flight.
       // Its finally path marks terrain-required if publication did begin.
@@ -620,7 +650,11 @@ export function createAdvancedRegionalSession(
           telemetry = adopted ?? restored;
           sequence = saved.simulation.state.acceptedSequence + 1;
           pendingTarget = null;
-          reason = 'prepared';
+          flightStopReason =
+            telemetry.missionTick >= ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ
+              ? 'duration-limit'
+              : null;
+          reason = flightStopReason ?? 'prepared';
           failure = null;
           previous.dispose();
           return snapshot();
@@ -630,6 +664,7 @@ export function createAdvancedRegionalSession(
           candidate?.dispose();
           if (
             !disposed &&
+            !flightStopReason &&
             reason !== 'worker-error' &&
             sourceFrameIdentity !== telemetry.terrain?.frameIdentity
           ) {
