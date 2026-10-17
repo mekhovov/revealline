@@ -21,12 +21,15 @@ review and product-release policies still apply.
 
 [PR #1565](https://github.com/mekhovov/revealline/pull/1565) preserves Advanced
 practice when the selected radio is unavailable. It also restricts new startup
-request/capture error metadata to fixed categories. Local acceptance passes 741 practice
-tests, English/Ukrainian real browser-worker checks, actual Electron export and
-resume, and release validation. Ordinary publication is in progress; the public
-site is not yet claimed to contain this correction.
+request/capture error metadata to fixed categories. The correction is live at
+`3e744a5ef7bede48eafcb79a8377bb46fb37d76f` after 741 practice tests, EN/UK browser recovery,
+actual Electron export/resume, release validation and all 12 product checks.
+The normal [Pages publication](https://github.com/mekhovov/revealline/actions/runs/39045107325) and fresh password/offline/replay acceptance
+pass for both SIMs. Deployed UI checks also pass recording retention after missing
+radio input and explicit keyboard resume on each route. The [delivery receipt](fpv-input-recovery-delivery-verification.json)
+retains exact sources and evidence.
 
-After that publication, the manual check requires no physical radio:
+The manual recovery check requires no physical radio:
 
 1. Open either SIM route, unlock normally, then open Settings → Controls →
    Rates & throttle → Advanced reference quad.
