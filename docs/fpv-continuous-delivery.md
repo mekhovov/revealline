@@ -1,12 +1,44 @@
 # FPV continuous feature delivery
 
-Updated 2026-10-05. The owner requests a verified PR after each completed feature,
+## Current review — 16 October 2026
+
+Use the [current reviewed priorities](fpv-plan-review-20261016.md) and
+[large-worlds plan](fpv-large-worlds-delivery-plan.md). Older “current” headings,
+queue rows and estimates below are preserved historical checkpoints.
+
+The docs-only research review is based on main `aac03bf0`: R6 Library #1535 has
+merged after exact optional/Company original archive and bounded local native
+qualification. Public Pages `aac03bf0`, all 24 catalogue offers, capability and
+R6 descriptor now pass the independent HTTP/source gate (run 38830488894; receipt
+`ead3757b811f32ce2448006877ad45de27dc7ca000efe54fe716bd31720f7118`). Actual
+public R6 UI flight remains open; the frozen public ledger remains 13/23 regional
+launches, all ten families, 14 built-ins and 20 Worldpacks with one course sampled each. Capacity
+#1531 is merged and its 512 MiB regional limit publicly byte-verified. Actual
+all-24/native-above-256-MiB retention remains unqualified.
+
+Prioritize P0 storage-visibility/closing-connection diagnosis and public delivery,
+P1 measured performance, Library/setup simplicity and School/HUD coverage, then
+P2 Reservoir's representative standard → Festival → Harbor → Canals and optional
+repeatable activities. Later authored regions follow; integrated reliability/D6
+continues in parallel. Official-reference research and per-item rationale/exit
+gates are in the linked review. These are planning refinements, not newly shipped
+runtime features or a competitor performance comparison.
+
+Preserve both public storage failures and every endurance negative. No two-hour,
+physical-device, full offline/restart/eviction, final-art or all-plan pass exists.
+Internal storage is below the stable 3 GiB floor; heavy work stays external/cloud.
+Core 72 MiB, regional 512 MiB, Worldpacks 256 MiB and all other ceilings remain
+unchanged. The player-data problem is not inferred to be caused by low disk or
+solved by capacity expansion.
+
+Historical opening, 2026-10-05. The owner requests a verified PR after each
+completed feature,
 with the next independent item developed while source gates and deployment run.
 Additional unit coverage belongs in the final phase. Build, browser, replay,
 import/export and publication verification remain part of every applicable item.
 
-**Current scoped checkpoint:** see “5 October — Stick geometry observation qualified; publication held” at the end of this log, the active parallel delivery plan and the coordinator’s central checkpoint. Earlier tables and heads are history.
-**Current checkpoint:** see “5 October — Public21826 and imported catalogue truthfulness”
+**Historical scoped checkpoint:** see “5 October — Stick geometry observation qualified; publication held” at the end of this log, the active parallel delivery plan and the coordinator’s central checkpoint. Earlier tables and heads are history.
+**Historical checkpoint:** see “5 October — Public21826 and imported catalogue truthfulness”
 at the end of this log and the active parallel delivery
 plan. Earlier tables and heads are history.
 
@@ -5322,3 +5354,23 @@ collision/attachment/route/tier qualification and later native comparison. Earli
 missing-field/attachment candidates remain preserved unaccepted. Physical-device,
 public, final-art, full offline/restart/eviction and broader D6 remain open. No
 root renderer or active observation remains; heavy work stays external/cloud.
+
+## 16 October — actual public map audit; preserve storage blockers
+
+The [per-item public report](fpv-public-map-availability-20261016.md) records actual GitHub Pages launch checks for14builtins,20Worldpacks(onecourseeach) and13/23regionaleditions/all10families. All23descriptors/11492supportingfiles and20packpins/41coursedefinitions pass independent HTTP integrity/production validation. Main game More→SIM and one full Acro tilt demo completed in the public browser. #1528 is deployed atb1174522 with exact reviewed canonical bytes; normal close/reopen retains13regionaleditions+20Worldpacks and consistent names.
+
+The ten older regional native checks remain open after the Alpine r2 preserved install negative: source accounting reconstructs500465bytes over the existing256MiB per-regional-database cap. The owner explicitly approved regional-only512MiB; implementation/early capacity error/package/native/public rollout is separate. No saved content was removed; Worldpack/core budgets unchanged. A later public School mode/input transition also exposes the raw closing-database error with flight paused/Arm available. Exact connection owner/cause remains unknown; [negative receipt](fpv-public-school-storage-negative-20261016.json) is preserved. No all-reliability pass.
+
+All178bundled proofs pass the separate software replay audit; all58Schoolexamples callable, but86ordinaryentries lack bundled demos. Native178playback is not claimed. R6 source1521 and immutable1532 are merged; Library admission1535, later regions/finalart, real two-hour endurance, physical devices, full offline/restart/eviction and broaderD6 remain open. Existing failed reports and player storage are unchanged. Heavy work stays external/cloud; internal free space remains below stable3GiBfloor. Completed temporary build copies were preserved externally with verified perfilearchive/readback hashes and originalpathsymlinks; no source/commits/player data lost.
+
+### Later public saved-map visibility negative — 16 October checkpoint
+
+After the public School closing-connection failure and normal reopen, the Library lists zero saved regional rows and no installed Worldpack cards. Refresh saved regions completes but the rows remain absent. No removal/reset/import/restore action occurred. Database identity and actual stored contents remain unobserved; do not assert data loss, a scope change or eviction. Earlier13+20 retention samples remain historical, and persistence is explicitly unqualified. The shared Records shortcut opens Progress & Collection but shows no record entries. [Visibility receipt](fpv-public-library-visibility-negative-20261016.json). Capacity512 approval/change does not claim to repair this separate failure.
+
+### Regional-only capacity: exact package and bounded native accepted
+
+Owner-approved512MiB source1531 remains exactfac28c1d; defaultWorldpack256MiB/core72MiB and256retainedrevisionlimit stayunchanged. Exact optional/Company original archives, budgets,3closures and9packagedcases pass. All23currentoffers account404703892bytes, leaving132167020bytes oflogicalheadroom. Fresh9210normalr5/r4/r2downloads survive2close/reopens; all3cachedReady114mdisarmed+explicitArm/Pause, r2cameras, safeAcromode andTouchselection pass. Actualreadonlyobservation confirmsregionv2projects1/revisions3/assets723. [Native receipt](fpv-regional-capacity-native-20261016.json) and [package receipt](fpv-regional-capacity-package-20261016.json). Nativeonly~64MiB, notmorethan256/all23/public/physical/offline/endurance acceptance. Separatepublicclosing/zeroSaved failuresremainunresolved. Source/currentCI/protectedmerge/deploystillseparategates. R6source1521andimmutable1532merged; additive24thLibraryDraft1535preservesall23oldrows butawaitscapacityintegration/exactcombinedpackage/native/publicgate.
+
+### Regional capacity merged; public and retained-library gates remain open
+
+Focused capacity1531 merged normally as3e43dc1d at2026-10-15T23:45:15Z after required checks; Pages38825450255 is publishing. No served512MiB claim until actual public bytes match. R6 Library1535 combined39a80bdd includes that ancestor and awaits exact cloud/native/public gates. All23 original offer rows remain intact in source. Public saved-map visibility and closing-connection failures remain open, independent of capacity. Verified external preservation of completed build payloads retains all original paths; observed internal free space still falls below the3GiB heavy-work floor. No player storage was removed or reset.

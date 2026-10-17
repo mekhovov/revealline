@@ -1,0 +1,5201 @@
+{
+  "format": "PracticeFPVExerciseObservation.v1",
+  "plan": {
+    "format": "revealline-practice-fpv-exercise-probe-plan.v1",
+    "protocol": "practice-exercise-public-ui.fpv-probe.v1",
+    "caseId": "native-fpv-keyboard-export-20261016",
+    "deviceLabel": "macOS desktop, headless installed Chrome, isolated EN Academy Self-level keyboard export probe",
+    "quietWindow": "One owned browser; 10 GiB free local disk before run; no parallel heavy root test. This is scripted public UI evidence, not physical input or human learning.",
+    "cases": [
+      "en-academy-self-level-lift-and-land"
+    ],
+    "bundle": "/Volumes/alex/CodexMigrationStaging/flight-practice-hud-guides-all-three-20261016-candidate",
+    "envelopeSha256": "f59ed9eb8d6b934edf1256efdbf849e1270a2d6a2119b9437306176acc9dd6d9",
+    "sourceRevision": "80a32d6a9014cd78f326b2d7685fbbbdf2b6b06c",
+    "sourceTree": "b4de309b044638ecb7460f8f8cb69b25af970301",
+    "packageRevision": "a997fb0f386f2f6bc45db39ee907e08339b9b9457fab978c79cc7b40262174e9"
+  },
+  "protocol": {
+    "id": "practice-exercise-public-ui.fpv-probe.v1",
+    "caseMs": 90000,
+    "overallMs": 600000,
+    "actionMs": 8000,
+    "motionMs": 12000,
+    "heightIncreaseMetres": 0.2,
+    "pauseSamples": 4,
+    "pauseSampleIntervalMs": 200,
+    "resetToleranceMetres": 0.1,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  "createdAt": "2026-10-16T03:07:30.497Z",
+  "completed": true,
+  "qualified": false,
+  "procedureComplete": true,
+  "cases": [
+    {
+      "id": "en-academy-self-level-lift-and-land",
+      "package": "civilian-fpv",
+      "shell": "academy-shell",
+      "mode": "self-level",
+      "viewport": "#viewport",
+      "throttle": "w",
+      "locale": "en",
+      "exercise": {
+        "protocol": "practice-fpv-exercise-public-ui.prototype.v3",
+        "packageId": "civilian-fpv",
+        "locale": "en",
+        "mode": "self-level",
+        "exercise": "flight-01",
+        "nativeCompleted": true,
+        "qualified": false,
+        "independentReplayVerified": false,
+        "gainsNativeTested": false,
+        "startedAt": 1792120068010,
+        "timeoutMs": 90000,
+        "samples": [
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": false
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.034999999999999976,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 106,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": false
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.06999999999999995,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 208,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": false
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.11199999999999999,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 314,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": false
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.14699999999999996,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 417,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.182,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 519,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.21699999999999997,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 620,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.252,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 723,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.287,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 825,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.32899999999999996,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 931,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.364,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1033,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.399,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1136,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.434,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1238,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.469,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1341,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.504,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1446,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.546,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1549,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.554,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1652,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.5640000000000001,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1754,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.5740000000000001,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1857,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.584,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 1959,
+            "feedback": {
+              "desiredThrottle": 0.6,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.596,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2065,
+            "feedback": {
+              "desiredThrottle": 0.5249443099273607,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.2421307506053269,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.561,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2169,
+            "feedback": {
+              "desiredThrottle": 0.49616867469879516,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.48192771084337355,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.526,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2271,
+            "feedback": {
+              "desiredThrottle": 0.4960289855072464,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.48309178743961356,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.3,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.516,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2374,
+            "feedback": {
+              "desiredThrottle": 0.46725301204819275,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.7228915662650602,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.4,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.504,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2481,
+            "feedback": {
+              "desiredThrottle": 0.46746153846153843,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.7211538461538463,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.5,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2584,
+            "feedback": {
+              "desiredThrottle": 0.46725301204819275,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.7228915662650602,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.5,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.484,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2685,
+            "feedback": {
+              "desiredThrottle": 0.46704347826086956,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.7246376811594203,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.6,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.474,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2787,
+            "feedback": {
+              "desiredThrottle": 0.46683292978208235,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.7263922518159807,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.6,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.474,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 2892,
+            "feedback": {
+              "desiredThrottle": 0.4956058394160584,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.48661800486617995,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.7,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.484,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3006,
+            "feedback": {
+              "desiredThrottle": 0.4971279620853081,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.4739336492890994,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.7,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3108,
+            "feedback": {
+              "desiredThrottle": 0.49726241134751775,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.4728132387706855,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.8,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3213,
+            "feedback": {
+              "desiredThrottle": 0.49766197183098587,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.46948356807511754,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.8,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3316,
+            "feedback": {
+              "desiredThrottle": 0.49739622641509434,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.47169811320754734,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.9,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3418,
+            "feedback": {
+              "desiredThrottle": 0.49574757281553394,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.48543689320388367,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.9,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3519,
+            "feedback": {
+              "desiredThrottle": 0.49560583941605835,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.48661800486618023,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.9,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3622,
+            "feedback": {
+              "desiredThrottle": 0.5246601466992665,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.24449877750611243,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.504,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3726,
+            "feedback": {
+              "desiredThrottle": 0.49546341463414634,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.4878048780487804,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 1,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.504,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3833,
+            "feedback": {
+              "desiredThrottle": 0.5250843373493976,
+              "desiredVelocity": 0.45,
+              "velocity": {
+                "value": 0.24096385542168672,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.1,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.514,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 3937,
+            "feedback": {
+              "desiredThrottle": 0.49298373205741625,
+              "desiredVelocity": 0.42,
+              "velocity": {
+                "value": 0.47846889952153127,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 1.1,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.504,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4041,
+            "feedback": {
+              "desiredThrottle": 0.49312076372315033,
+              "desiredVelocity": 0.42,
+              "velocity": {
+                "value": 0.4773269689737472,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 1.1,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4146,
+            "feedback": {
+              "desiredThrottle": 0.5218285714285714,
+              "desiredVelocity": 0.42,
+              "velocity": {
+                "value": 0.2380952380952383,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.2,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.504,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4250,
+            "feedback": {
+              "desiredThrottle": 0.48564604316546767,
+              "desiredVelocity": 0.36000000000000004,
+              "velocity": {
+                "value": 0.47961630695443636,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 1.2,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4352,
+            "feedback": {
+              "desiredThrottle": 0.5142843373493976,
+              "desiredVelocity": 0.36000000000000004,
+              "velocity": {
+                "value": 0.24096385542168644,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.2,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.504,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4455,
+            "feedback": {
+              "desiredThrottle": 0.5142144927536232,
+              "desiredVelocity": 0.36000000000000004,
+              "velocity": {
+                "value": 0.24154589371980645,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.3,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.514,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4557,
+            "feedback": {
+              "desiredThrottle": 0.4776058394160584,
+              "desiredVelocity": 0.3,
+              "velocity": {
+                "value": 0.48661800486617995,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 1.3,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.502,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4664,
+            "feedback": {
+              "desiredThrottle": 0.5070144927536232,
+              "desiredVelocity": 0.3,
+              "velocity": {
+                "value": 0.241545893719807,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 1.3,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.502,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4767,
+            "feedback": {
+              "desiredThrottle": 0.5070843373493976,
+              "desiredVelocity": 0.3,
+              "velocity": {
+                "value": 0.24096385542168697,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 1.3,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.502,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4870,
+            "feedback": {
+              "desiredThrottle": 0.5070843373493976,
+              "desiredVelocity": 0.3,
+              "velocity": {
+                "value": 0.24096385542168697,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 1.4,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.502,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 4972,
+            "feedback": {
+              "desiredThrottle": 0.49988433734939763,
+              "desiredVelocity": 0.24000000000000007,
+              "velocity": {
+                "value": 0.24096385542168644,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 1.4,
+            "checkpoint": 0,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.502,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 5075,
+            "feedback": {
+              "desiredThrottle": 0.4996029197080292,
+              "desiredVelocity": 0.24000000000000007,
+              "velocity": {
+                "value": 0.24330900243308973,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 1.4,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.502,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 5183,
+            "feedback": {
+              "desiredThrottle": 0.4351538461538462,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": 0.24038461538461509,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 1.5,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.46699999999999997,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 5286,
+            "feedback": {
+              "desiredThrottle": 0.4063076923076923,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": 0.48076923076923067,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 1.5,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.432,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 5389,
+            "feedback": {
+              "desiredThrottle": 0.4352230215827338,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": 0.23980815347721846,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 1.5,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.432,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 5500,
+            "feedback": {
+              "desiredThrottle": 0.43576470588235294,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": 0.23529411764705904,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 1.5,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.432,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 5601,
+            "feedback": {
+              "desiredThrottle": 0.4352918660287081,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": 0.23923444976076577,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 1.5,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.432,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 5703,
+            "feedback": {
+              "desiredThrottle": 0.464,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.4,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.442,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 5807,
+            "feedback": {
+              "desiredThrottle": 0.4927081339712919,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.23923444976076577,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.4,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.454,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 5912,
+            "feedback": {
+              "desiredThrottle": 0.493126213592233,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.24271844660194197,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.3,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.46399999999999997,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6015,
+            "feedback": {
+              "desiredThrottle": 0.5219710144927536,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.48309178743961345,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.3,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.474,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6118,
+            "feedback": {
+              "desiredThrottle": 0.5218313253012048,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.48192771084337344,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.2,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.484,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6220,
+            "feedback": {
+              "desiredThrottle": 0.5221113801452785,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.48426150121065364,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.494,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6322,
+            "feedback": {
+              "desiredThrottle": 0.5518048780487804,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.7317073170731704,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.504,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6424,
+            "feedback": {
+              "desiredThrottle": 0.522679706601467,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.48899755501222486,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.516,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6532,
+            "feedback": {
+              "desiredThrottle": 0.5509565217391305,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.7246376811594204,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.9,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.526,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6633,
+            "feedback": {
+              "desiredThrottle": 0.5511670702179177,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.7263922518159805,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.9,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.536,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6736,
+            "feedback": {
+              "desiredThrottle": 0.5219710144927536,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.48309178743961373,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.9,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.526,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6840,
+            "feedback": {
+              "desiredThrottle": 0.5216923076923077,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.48076923076923095,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.8,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.526,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 6945,
+            "feedback": {
+              "desiredThrottle": 0.5221113801452785,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.48426150121065364,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.8,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.526,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 7060,
+            "feedback": {
+              "desiredThrottle": 0.4921030444964871,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.23419203747072595,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.8,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.516,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 7174,
+            "feedback": {
+              "desiredThrottle": 0.4913972602739726,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.22831050228310498,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.7,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.504,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 7287,
+            "feedback": {
+              "desiredThrottle": 0.5176912751677852,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.4474272930648771,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.7,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.516,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 7398,
+            "feedback": {
+              "desiredThrottle": 0.4904900662251656,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.22075055187637987,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.7,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.506,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 7504,
+            "feedback": {
+              "desiredThrottle": 0.49102702702702705,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.22522522522522542,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.7,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.496,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 7608,
+            "feedback": {
+              "desiredThrottle": 0.49164976958525347,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.230414746543779,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.7,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.496,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 7715,
+            "feedback": {
+              "desiredThrottle": 0.464,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.7,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.486,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 7818,
+            "feedback": {
+              "desiredThrottle": 0.464,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.7,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.476,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 7921,
+            "feedback": {
+              "desiredThrottle": 0.464,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.6,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.46599999999999997,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8024,
+            "feedback": {
+              "desiredThrottle": 0.4928461538461538,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.24038461538461534,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.6,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.478,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8128,
+            "feedback": {
+              "desiredThrottle": 0.4930556900726392,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.24213075060532682,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.6,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.488,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8231,
+            "feedback": {
+              "desiredThrottle": 0.4930556900726392,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.24213075060532682,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.5,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.488,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8334,
+            "feedback": {
+              "desiredThrottle": 0.5221113801452785,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.48426150121065364,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.5,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.498,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8438,
+            "feedback": {
+              "desiredThrottle": 0.4929855072463768,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.24154589371980673,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.5,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.498,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8540,
+            "feedback": {
+              "desiredThrottle": 0.493126213592233,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.2427184466019417,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.5,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.498,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8645,
+            "feedback": {
+              "desiredThrottle": 0.4929855072463768,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.24154589371980673,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.4,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.498,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8747,
+            "feedback": {
+              "desiredThrottle": 0.4930556900726392,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.24213075060532682,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.4,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.498,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8849,
+            "feedback": {
+              "desiredThrottle": 0.4931970802919708,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.24330900243308998,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.4,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.498,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 8951,
+            "feedback": {
+              "desiredThrottle": 0.4931970802919708,
+              "desiredVelocity": -0.3,
+              "velocity": {
+                "value": -0.24330900243308998,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.3,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.498,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9053,
+            "feedback": {
+              "desiredThrottle": 0.5408235294117647,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.4901960784313726,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.3,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.508,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9157,
+            "feedback": {
+              "desiredThrottle": 0.5112682926829268,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.24390243902439035,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.3,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.508,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9263,
+            "feedback": {
+              "desiredThrottle": 0.5109855072463768,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.24154589371980686,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.508,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9365,
+            "feedback": {
+              "desiredThrottle": 0.5399710144927536,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.48309178743961356,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.518,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9469,
+            "feedback": {
+              "desiredThrottle": 0.5108461538461538,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.24038461538461534,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.518,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9572,
+            "feedback": {
+              "desiredThrottle": 0.5109156626506024,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.24096385542168672,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.518,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9674,
+            "feedback": {
+              "desiredThrottle": 0.5111970802919708,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.24330900243308998,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.518,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9776,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.508,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9882,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.498,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 9985,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.2,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.488,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 10087,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.488,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 10190,
+            "feedback": {
+              "desiredThrottle": 0.5109855072463768,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.24154589371980678,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.5,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 10297,
+            "feedback": {
+              "desiredThrottle": 0.5109156626506024,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.24096385542168677,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.51,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 10402,
+            "feedback": {
+              "desiredThrottle": 0.5107769784172662,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.23980815347721826,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.51,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 10508,
+            "feedback": {
+              "desiredThrottle": 0.5105035629453681,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.23752969121140144,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.51,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 10613,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.5,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 10717,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.49,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 10820,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.49,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 10926,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.49,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11031,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.49,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11133,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.49,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11236,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0.1,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.49,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11339,
+            "feedback": {
+              "desiredThrottle": 0.482,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": 0,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.49,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11441,
+            "feedback": {
+              "desiredThrottle": 0.5112682926829268,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.24390243902439027,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.5,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11550,
+            "feedback": {
+              "desiredThrottle": 0.5107769784172662,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.23980815347721826,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": [
+                "ShiftLeft",
+                "w"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.51,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11652,
+            "feedback": {
+              "desiredThrottle": 0.5108461538461538,
+              "desiredVelocity": -0.15,
+              "velocity": {
+                "value": -0.24038461538461542,
+                "ready": true
+              },
+              "settledGround": false,
+              "keys": []
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.51,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.51,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11761,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.475,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.475,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11870,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.44,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.44,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 11975,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.39799999999999996,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.398,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 12081,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.363,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.363,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 12183,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.32799999999999996,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.32799999999999996,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 12285,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.293,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.29300000000000004,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 12388,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.258,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.258,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 12490,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.223,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.22299999999999998,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 12593,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.18100000000000002,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.181,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 12697,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.146,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.14599999999999996,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 12800,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.111,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.11099999999999999,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 12902,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": null,
+            "checkpoint": 1,
+            "groundedWitness": true,
+            "gaugeThrottle": 0.10099999999999999,
+            "measurementSource": "visible throttle gauge + native Lower throttle fully soft-touchdown action",
+            "throttle": 0.10099999999999998,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 13006,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": null,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.09099999999999997,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 13108,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": 0,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.07899999999999996,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 13213,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": 0,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": [
+                "ShiftLeft",
+                "s"
+              ]
+            }
+          },
+          {
+            "height": 0,
+            "checkpoint": 1,
+            "groundedWitness": false,
+            "measurementSource": "visible Detailed HUD height",
+            "throttle": 0.06899999999999995,
+            "complete": false,
+            "phase": "active",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 13315,
+            "feedback": {
+              "desiredThrottle": 0.06,
+              "desiredVelocity": 0,
+              "velocity": {
+                "value": 0,
+                "ready": false
+              },
+              "settledGround": true,
+              "keys": []
+            }
+          },
+          {
+            "height": null,
+            "throttle": null,
+            "checkpoint": 2,
+            "complete": true,
+            "phase": "complete",
+            "title": "Lift and land",
+            "identitySource": "native DOM identity metadata; not controller measurements; requires final proof binding",
+            "at": 13436
+          }
+        ],
+        "actions": [
+          {
+            "at": 3,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 1549,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 2066,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 2066,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 2067,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 2272,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 2788,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 2788,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 2898,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 2899,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 3108,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 3109,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 3623,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 3623,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 3726,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 3731,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 3834,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 3835,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 3937,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 3938,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 4147,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 4147,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 4250,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 4251,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 4353,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 4353,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 4558,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 4558,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 4664,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 4665,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 5184,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 5390,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 5704,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 5705,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 6737,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 6737,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 6841,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 6841,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 7068,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 7072,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 7291,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 7292,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 7399,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 7401,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 7610,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 7613,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 7716,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 7716,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 8024,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 8025,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 8231,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 8232,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 8335,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 8335,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 8438,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 8439,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 9054,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 9054,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 9157,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 9158,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 9366,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 9366,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 9469,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 9469,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 9779,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 9780,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 10087,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 10087,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 10191,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 10191,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 10404,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 10406,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 10614,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 10615,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 10821,
+            "key": "s",
+            "action": "up"
+          },
+          {
+            "at": 10823,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 11446,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 11447,
+            "key": "w",
+            "action": "down"
+          },
+          {
+            "at": 11652,
+            "key": "w",
+            "action": "up"
+          },
+          {
+            "at": 11653,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 11768,
+            "key": "s",
+            "action": "down"
+          },
+          {
+            "at": 12903,
+            "key": "ShiftLeft",
+            "action": "down"
+          },
+          {
+            "at": 13316,
+            "key": "ShiftLeft",
+            "action": "up"
+          },
+          {
+            "at": 13317,
+            "key": "s",
+            "action": "up"
+          }
+        ],
+        "cleanup": {
+          "keysReleased": true,
+          "errors": []
+        },
+        "limitations": [
+          "Untuned public-UI prototype; no browser acceptance evidence.",
+          "Native completion is not proof admission or independent replay; caller owns those checks.",
+          "Releasing keys retains throttle; caller must close or safely pause its isolated browser on failure."
+        ],
+        "finishedAt": 1792120081589
+      },
+      "actions": [
+        {
+          "selector": "#academy-shell-action-settings",
+          "action": "public-control Enter",
+          "at": 1792120067751
+        },
+        {
+          "selector": "#academy-settings-tab-gameplay",
+          "action": "public-control Enter",
+          "at": 1792120067776
+        },
+        {
+          "selector": "#mode",
+          "action": "public gameplay mode selection",
+          "value": "self-level",
+          "at": 1792120067848
+        },
+        {
+          "selector": "#academy-shell-action-settings-back",
+          "action": "public-control Enter",
+          "at": 1792120067859
+        },
+        {
+          "selector": "#academy-shell-action-settings",
+          "action": "public-control Enter",
+          "at": 1792120067877
+        },
+        {
+          "selector": "#academy-settings-tab-accessibility",
+          "action": "public-control Enter",
+          "at": 1792120067885
+        },
+        {
+          "selector": "#academy-settings-panel-accessibility [data-hud-preference=\"mode\"]",
+          "action": "public Accessibility Detailed HUD selection",
+          "at": 1792120067919
+        },
+        {
+          "selector": "#academy-shell-action-settings-back",
+          "action": "public-control Enter",
+          "at": 1792120067929
+        },
+        {
+          "selector": "#academy-shell-action-primary",
+          "action": "public-control Enter",
+          "at": 1792120067945
+        }
+      ],
+      "errors": [],
+      "passed": true,
+      "launcher": "http://127.0.0.1:51279/revealline/practice/civilian-fpv/app/?action=play&lang=en",
+      "expectedEntry": "http://127.0.0.1:51279/revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/index.html",
+      "unlocked": true,
+      "entry": "http://127.0.0.1:51279/revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/index.html?lang=en",
+      "localeWitness": {
+        "documentLanguage": "en",
+        "settingsLabel": "Settings"
+      },
+      "startPhase": "active",
+      "independentReplayVerified": true,
+      "screenshot": {
+        "path": "en-academy-self-level-lift-and-land-completed.png",
+        "bytes": 535888,
+        "sha256": "fb57b5bff9f22d07dfd91c6c7782a4aa622ddf7ffbd62587dbb3dcd3471844ba"
+      },
+      "completionScreenshot": {
+        "path": "en-academy-self-level-lift-and-land-completed.png",
+        "bytes": 535888,
+        "sha256": "fb57b5bff9f22d07dfd91c6c7782a4aa622ddf7ffbd62587dbb3dcd3471844ba"
+      },
+      "export": {
+        "source": "Native Notebook export textarea",
+        "exportedAt": "2026-10-16T03:08:01.700Z",
+        "file": {
+          "path": "en-academy-self-level-lift-and-land-actual-export.json",
+          "bytes": 8555,
+          "sha256": "88592bf8988fe671f6adf10e9a14994d4d93fb3bb6f807d04ca230cbe9b91858"
+        },
+        "independentReplayVerified": true
+      },
+      "independentReplay": {
+        "verified": true,
+        "qualified": false,
+        "packageId": "civilian-fpv",
+        "mode": "self-level",
+        "method": "Independent off-browser replay of the actual native UI proof export",
+        "isolation": "Fresh bounded Node child; exact admitted/current executable closure; JSON-only locales; env {}",
+        "exportSha256": "88592bf8988fe671f6adf10e9a14994d4d93fb3bb6f807d04ca230cbe9b91858",
+        "inputs": [
+          {
+            "path": "game/data-json.mjs",
+            "bytes": 5594,
+            "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+          },
+          {
+            "path": "game/i18n/bootstrap.mjs",
+            "bytes": 13117,
+            "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+          },
+          {
+            "path": "game/i18n/catalogs.mjs",
+            "bytes": 39870,
+            "sha256": "96294afb4beb1bb234104e50090628f63b095d3a8d4790ced0f3bd99a7368b7e"
+          },
+          {
+            "path": "game/i18n/index.mjs",
+            "bytes": 417,
+            "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+          },
+          {
+            "path": "game/overflight/terrain.mjs",
+            "bytes": 16421,
+            "sha256": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146"
+          },
+          {
+            "path": "game/overflight/world-layout-presentation.mjs",
+            "bytes": 11298,
+            "sha256": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3"
+          },
+          {
+            "path": "game/overflight/worlds.mjs",
+            "bytes": 18852,
+            "sha256": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c"
+          },
+          {
+            "path": "game/presentation/industrial-environments-data.mjs",
+            "bytes": 422824,
+            "sha256": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8"
+          },
+          {
+            "path": "game/presentation/industrial-environments.mjs",
+            "bytes": 9240,
+            "sha256": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87"
+          },
+          {
+            "path": "game/presentation/industrial-materials.mjs",
+            "bytes": 7229,
+            "sha256": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd"
+          },
+          {
+            "path": "game/presentation/overflight-world-art-v2.mjs",
+            "bytes": 19404,
+            "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+          },
+          {
+            "path": "game/presentation/overflight-world-art.mjs",
+            "bytes": 7822,
+            "sha256": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a"
+          },
+          {
+            "path": "game/presentation/overflight-world-slots.mjs",
+            "bytes": 2754,
+            "sha256": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94"
+          },
+          {
+            "path": "game/presentation/theme-system.mjs",
+            "bytes": 65878,
+            "sha256": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0"
+          },
+          {
+            "path": "game/snake/classic-structure-art.mjs",
+            "bytes": 20243,
+            "sha256": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5"
+          },
+          {
+            "path": "game/vendor/i18next-26.4.2.min.js",
+            "bytes": 43702,
+            "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+          },
+          {
+            "path": "optional-practice/civilian-fpv/battlefield-ground.mjs",
+            "bytes": 4594,
+            "sha256": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993"
+          },
+          {
+            "path": "optional-practice/civilian-fpv/catalogue.mjs",
+            "bytes": 10565,
+            "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+          },
+          {
+            "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+            "bytes": 2673,
+            "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+          },
+          {
+            "path": "optional-practice/civilian-fpv/math.mjs",
+            "bytes": 3062,
+            "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+          },
+          {
+            "path": "optional-practice/civilian-fpv/model.mjs",
+            "bytes": 20087,
+            "sha256": "0015640581f58a2fb86dca985cda5b9e519b78962c6a1ee816741d3ad21fb52c"
+          },
+          {
+            "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+            "bytes": 18265,
+            "sha256": "5edfc0ff6a04119758537f887f35b4d61da4f617c45abe032a0161ed91df9b44"
+          },
+          {
+            "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+            "bytes": 7509,
+            "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-themes.mjs",
+            "bytes": 24025,
+            "sha256": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597"
+          }
+        ],
+        "format": "FlightProofBackup.v2",
+        "identity": {
+          "model": "civilian-quad-fixed.v1",
+          "course": "flight-01",
+          "courseIdentity": "573db8b71fe99103",
+          "mode": "self-level",
+          "responseIdentity": "73833493634ba989"
+        },
+        "state": {
+          "ticks": 672,
+          "status": "complete",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "orientation": [
+            0,
+            0,
+            0,
+            1000000
+          ],
+          "angular": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+          },
+          "step": 2,
+          "hold": 0,
+          "contacts": 0,
+          "landingSpeed": 132,
+          "landingTilt": 0,
+          "lastInput": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 69
+          },
+          "heightRange": {
+            "min": 0,
+            "max": 1497
+          },
+          "total": 2,
+          "target": null,
+          "attitude": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "up": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          }
+        },
+        "sectors": [
+          {
+            "index": 0,
+            "ticks": 260,
+            "endTick": 260
+          },
+          {
+            "index": 1,
+            "ticks": 412,
+            "endTick": 672
+          }
+        ],
+        "frames": 672
+      }
+    }
+  ],
+  "authority": [
+    {
+      "path": "scripts/observe-practice-first-flight.mjs",
+      "bytes": 45975,
+      "sha256": "b57994e3d64ff6d80c2350d843959de29f4f15915e0d58b343026774db995883"
+    },
+    {
+      "path": "scripts/observe-practice-pointer.mjs",
+      "bytes": 22620,
+      "sha256": "2206c7205f49de9f6d8bc3f6b269c86bfdf2353d4c854388cbacc074ed235e6b"
+    },
+    {
+      "path": "scripts/fpv-observation-artifact.mjs",
+      "bytes": 13472,
+      "sha256": "1eced7aaba27d87c65b5b5bc4fc8708041845abffafab6116b6dce481211166b"
+    },
+    {
+      "path": "scripts/optional-installation-observer-helpers.mjs",
+      "bytes": 9497,
+      "sha256": "0401f406bf2fbdcb4b832893f1d4e10855dd003f5e06bc4ea3ddd507ab5295fc"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 90051,
+      "sha256": "5abec72ed2f0fc1e0004808905d9a824729cfec065515bbca4f5020fa720ae43"
+    },
+    {
+      "path": "publishing/optional-package-admission.mjs",
+      "bytes": 20114,
+      "sha256": "285da418b5e9370fb81a9cee4759ccae8800ff18bc32be6bb3c18575b10f7012"
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "bytes": 27532,
+      "sha256": "bf07c6cc53ca4c53e170f320822e2a62db038f6835f89a9be967e1b2ff2417bc"
+    },
+    {
+      "path": "publishing/edition-zip.mjs",
+      "bytes": 6736,
+      "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+    },
+    {
+      "path": "scripts/practice-fpv-exercise-ui.mjs",
+      "bytes": 17830,
+      "sha256": "fb3aa71c584ead5edf84cbb33be4453ed43f54625604192f63b37352d0c634e6"
+    },
+    {
+      "path": "scripts/practice-fpv-exercise-export.mjs",
+      "bytes": 3419,
+      "sha256": "24edcaf833ae5048dde162d27cdf6da00022bd5b67704bcb3db8acc58c7f7253"
+    },
+    {
+      "path": "scripts/practice-fpv-exercise-replay.mjs",
+      "bytes": 10121,
+      "sha256": "2267105ce137f2758d2df8a8da62c31e8ba2636cde26917e5e8d70403ba76ffd"
+    }
+  ],
+  "resourceAcquisitions": [
+    {
+      "name": "server",
+      "pending": false,
+      "timedOut": false,
+      "lateClosed": false
+    },
+    {
+      "name": "browser",
+      "pending": false,
+      "timedOut": false,
+      "lateClosed": false
+    },
+    {
+      "name": "en-academy-self-level-lift-and-land-context",
+      "pending": false,
+      "timedOut": false,
+      "lateClosed": false
+    },
+    {
+      "name": "en-academy-self-level-lift-and-land-page",
+      "pending": false,
+      "timedOut": false,
+      "lateClosed": false
+    }
+  ],
+  "limitations": [
+    "Automated native flight-01 exercise through visible maintained Detailed HUD and W/S/Shift keys; DOM course/mode identity metadata is not a visible measurement. Final actual UI export and independent replay bind the course and mode.",
+    "Prototype feedback gains, not physical controller, human learning, rotational Acro proficiency, accessibility or campaign-win qualification.",
+    "Only native completion with no helper error, successful owned-key cleanup, completion screenshot, actual UI backup export and successful exact-package off-browser replay can pass a case. No injected commands, demonstrations or runtime hooks.",
+    "Starts from stable launchers and locally staged admitted bytes/current.json fixtures; no main-game directory, installation/offline or hosting acceptance.",
+    "Single EN Academy Self-level probe, not the complete eight-case FPV matrix."
+  ],
+  "artifact": {
+    "sourceRevision": "80a32d6a9014cd78f326b2d7685fbbbdf2b6b06c",
+    "sourceTree": "b4de309b044638ecb7460f8f8cb69b25af970301",
+    "version": "v0.151.1",
+    "envelope": {
+      "path": "optional-packages.json",
+      "bytes": 2636,
+      "sha256": "f59ed9eb8d6b934edf1256efdbf849e1270a2d6a2119b9437306176acc9dd6d9"
+    },
+    "package": {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 6783676,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "72564f67d3dfd6ce342fbeef08e8b8a9f1f3c3afebf3fa6f073662d82eb485ef"
+      },
+      "entry": "optional-practice/civilian-fpv/index.html",
+      "id": "civilian-fpv",
+      "manifest": {
+        "bytes": 18095,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "6c1a8a0137354f96ddb6ca3095e5da21faf9e9240085e6fe6fc0137150cfb979"
+      },
+      "revision": "a997fb0f386f2f6bc45db39ee907e08339b9b9457fab978c79cc7b40262174e9",
+      "sourceArchive": {
+        "bytes": 6820141,
+        "path": "source-optional-civilian-fpv.zip",
+        "sha256": "7a1f7ec46c3ba1c9fa611ec45e00495d678c6bfebe34cb5e83ae26fc1049bc44"
+      },
+      "sourceInventory": {
+        "bytes": 30036,
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "sha256": "6255c9086602480326988a820f7fc41820bbba9ef0a430afe6d6ffd21cb03d05"
+      }
+    },
+    "members": [
+      {
+        "path": "game/access-gate.css",
+        "bytes": 2233,
+        "sha256": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd"
+      },
+      {
+        "path": "game/access-gate.mjs",
+        "bytes": 6833,
+        "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+      },
+      {
+        "path": "game/audio/human-reactions/portable.mjs",
+        "bytes": 52575,
+        "sha256": "2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696"
+      },
+      {
+        "path": "game/data-json.mjs",
+        "bytes": 5594,
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+      },
+      {
+        "path": "game/fpv-entry.mjs",
+        "bytes": 8132,
+        "sha256": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2"
+      },
+      {
+        "path": "game/hunt/actor-catalog.mjs",
+        "bytes": 17530,
+        "sha256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d"
+      },
+      {
+        "path": "game/hunt/copy.mjs",
+        "bytes": 4717,
+        "sha256": "9e57f007948c134ca3a18f6c672f9d30d073839c5596f930ff78896b23189011"
+      },
+      {
+        "path": "game/hunt/industrial-soldier-kit.mjs",
+        "bytes": 3713,
+        "sha256": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524"
+      },
+      {
+        "path": "game/hunt/preferences.mjs",
+        "bytes": 7098,
+        "sha256": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a"
+      },
+      {
+        "path": "game/i18n/bootstrap.mjs",
+        "bytes": 13117,
+        "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+      },
+      {
+        "path": "game/i18n/catalogs.mjs",
+        "bytes": 39870,
+        "sha256": "96294afb4beb1bb234104e50090628f63b095d3a8d4790ced0f3bd99a7368b7e"
+      },
+      {
+        "path": "game/i18n/index.mjs",
+        "bytes": 417,
+        "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+      },
+      {
+        "path": "game/key-bindings.mjs",
+        "bytes": 13649,
+        "sha256": "9f0ccc8a21fb88618f93ca12742bf908e027ab4f05ae69f98fff05a92bef30a2"
+      },
+      {
+        "path": "game/overflight/terrain.mjs",
+        "bytes": 16421,
+        "sha256": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146"
+      },
+      {
+        "path": "game/overflight/world-layout-presentation.mjs",
+        "bytes": 11298,
+        "sha256": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3"
+      },
+      {
+        "path": "game/overflight/worlds.mjs",
+        "bytes": 18852,
+        "sha256": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c"
+      },
+      {
+        "path": "game/presentation/industrial-environments-data.mjs",
+        "bytes": 422824,
+        "sha256": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8"
+      },
+      {
+        "path": "game/presentation/industrial-environments.mjs",
+        "bytes": 9240,
+        "sha256": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87"
+      },
+      {
+        "path": "game/presentation/industrial-machinery.mjs",
+        "bytes": 13604,
+        "sha256": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151"
+      },
+      {
+        "path": "game/presentation/industrial-materials.mjs",
+        "bytes": 7229,
+        "sha256": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd"
+      },
+      {
+        "path": "game/presentation/overflight-world-art-v2.mjs",
+        "bytes": 19404,
+        "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+      },
+      {
+        "path": "game/presentation/overflight-world-art.mjs",
+        "bytes": 7822,
+        "sha256": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a"
+      },
+      {
+        "path": "game/presentation/overflight-world-slots.mjs",
+        "bytes": 2754,
+        "sha256": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94"
+      },
+      {
+        "path": "game/presentation/theme-system.mjs",
+        "bytes": 65878,
+        "sha256": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0"
+      },
+      {
+        "path": "game/profile-database.mjs",
+        "bytes": 152,
+        "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+      },
+      {
+        "path": "game/profile-storage.mjs",
+        "bytes": 6205,
+        "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+      },
+      {
+        "path": "game/rewards/audio-groups.mjs",
+        "bytes": 2937,
+        "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b"
+      },
+      {
+        "path": "game/rewards/exploration.mjs",
+        "bytes": 9341,
+        "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd"
+      },
+      {
+        "path": "game/rewards/learning-profiles.mjs",
+        "bytes": 1519,
+        "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d"
+      },
+      {
+        "path": "game/rewards/model.mjs",
+        "bytes": 34442,
+        "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92"
+      },
+      {
+        "path": "game/rewards/store.mjs",
+        "bytes": 17038,
+        "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f"
+      },
+      {
+        "path": "game/snake/classic-structure-art.mjs",
+        "bytes": 20243,
+        "sha256": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5"
+      },
+      {
+        "path": "game/ui/art-review-navigation.mjs",
+        "bytes": 2392,
+        "sha256": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2"
+      },
+      {
+        "path": "game/ui/art/identity/fpv-line/wordmark.png",
+        "bytes": 485216,
+        "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298"
+      },
+      {
+        "path": "game/ui/art/menu-scenes/fpv.webp",
+        "bytes": 514190,
+        "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+      },
+      {
+        "path": "game/ui/defeat-sound-controls.mjs",
+        "bytes": 2773,
+        "sha256": "b99f97c97e46fd82cd93338e4448c707bf650e6ffb0d5813d2ec68879b56451e"
+      },
+      {
+        "path": "game/ui/destruction-audio.mjs",
+        "bytes": 3628,
+        "sha256": "b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b"
+      },
+      {
+        "path": "game/ui/destruction-level.mjs",
+        "bytes": 2221,
+        "sha256": "ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61"
+      },
+      {
+        "path": "game/ui/enemy-appearance-controls.mjs",
+        "bytes": 8141,
+        "sha256": "f34c869b039cfd23841a5c8886e7509d2e5f88bc4ecbe0ae56e5fc0f59e1d165"
+      },
+      {
+        "path": "game/ui/human-reaction-policy.mjs",
+        "bytes": 1974,
+        "sha256": "dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731"
+      },
+      {
+        "path": "game/ui/menu-navigation-groups.mjs",
+        "bytes": 3942,
+        "sha256": "1ffb27c5e397d3898a07dead6daccb441323bef01aea1ca1760932f90b21342b"
+      },
+      {
+        "path": "game/ui/native-menu-icons.mjs",
+        "bytes": 2645,
+        "sha256": "efe5de5b8ae9ecaccd393315294ebdbf6fe8c1d8cf29a6db284efe6f2d4e5351"
+      },
+      {
+        "path": "game/ui/reward-knowledge.mjs",
+        "bytes": 2251,
+        "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b"
+      },
+      {
+        "path": "game/vendor/I18NEXT-LICENSE.txt",
+        "bytes": 1082,
+        "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a"
+      },
+      {
+        "path": "game/vendor/i18next-26.4.2.min.js",
+        "bytes": 43702,
+        "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+      },
+      {
+        "path": "launcher/access-gate.css",
+        "bytes": 2233,
+        "sha256": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd"
+      },
+      {
+        "path": "launcher/access-gate.mjs",
+        "bytes": 6833,
+        "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+      },
+      {
+        "path": "launcher/app.mjs",
+        "bytes": 19105,
+        "sha256": "34802ed5980a3a2adfa725c112e7a2f882ef25ac7fb0bea7cf387b9bab4ad993"
+      },
+      {
+        "path": "launcher/app.webmanifest",
+        "bytes": 663,
+        "sha256": "a085bd485d285612da413d81db1c8c032bcc1560b511569adf292b26729cd759"
+      },
+      {
+        "path": "launcher/context.mjs",
+        "bytes": 20527,
+        "sha256": "bae814b206dc1ccf39b5f5b55391e9aae3d38760c07fcdf6cfeb7abea2419acf"
+      },
+      {
+        "path": "launcher/icons/icon-192.png",
+        "bytes": 33508,
+        "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+      },
+      {
+        "path": "launcher/icons/icon-512.png",
+        "bytes": 82577,
+        "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+      },
+      {
+        "path": "launcher/index.html",
+        "bytes": 2192,
+        "sha256": "131db2a28346ac26af125f36d309d178b607a235a3a3d6f2f6e60a95f76c42af"
+      },
+      {
+        "path": "launcher/navigation.mjs",
+        "bytes": 2719,
+        "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+      },
+      {
+        "path": "launcher/worker.js",
+        "bytes": 8310,
+        "sha256": "f6a20488bb7105baf36c96be0d950cd7e1c6dcf9d7b31c798f0cab3506a7f996"
+      },
+      {
+        "path": "optional-package.json",
+        "bytes": 18095,
+        "sha256": "6c1a8a0137354f96ddb6ca3095e5da21faf9e9240085e6fe6fc0137150cfb979"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/README.md",
+        "bytes": 25804,
+        "sha256": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "bytes": 91200,
+        "sha256": "14d093ef41ecd88f45ac047c96d77fa451ae42c5933fb977cb33fe9bd0cb5b60"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/app.webmanifest",
+        "bytes": 663,
+        "sha256": "a085bd485d285612da413d81db1c8c032bcc1560b511569adf292b26729cd759"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/attempts.mjs",
+        "bytes": 13389,
+        "sha256": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/battlefield-ground.mjs",
+        "bytes": 4594,
+        "sha256": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/catalogue.mjs",
+        "bytes": 10565,
+        "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/copy.mjs",
+        "bytes": 14421,
+        "sha256": "075ee9dbcf7de69e7f5c9a22e80a42de7cc49b4b2f2d06e9245c2034914b3e89"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+        "bytes": 221646,
+        "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-contact.mjs",
+        "bytes": 2482,
+        "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "bytes": 322553,
+        "sha256": "c695f64fe937f6a104b81cb8e008e872045bd82e7412f4c2a02c7d8a91787a24"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+        "bytes": 2673,
+        "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-support.mjs",
+        "bytes": 1815,
+        "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/guide.html",
+        "bytes": 24362,
+        "sha256": "a769c73b3df992f7310a6f18db8dbefa47b59ca9139dff2528cc5a39a6434af3"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/icons/icon-192.png",
+        "bytes": 33508,
+        "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/icons/icon-512.png",
+        "bytes": 82577,
+        "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/index.html",
+        "bytes": 16274,
+        "sha256": "38787d8aab03281e7e92c9262ceb720e2609dee115498b6bc5e15e2e13662c62"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/industrial-soldiers.mjs",
+        "bytes": 18718,
+        "sha256": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/industrial-vehicles.mjs",
+        "bytes": 10613,
+        "sha256": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/input.mjs",
+        "bytes": 38417,
+        "sha256": "fa05c07d694b96042ad4285294b1b676c60ef85b5122175a0d7b0b0268a1e8d6"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/math.mjs",
+        "bytes": 3062,
+        "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/model.mjs",
+        "bytes": 20087,
+        "sha256": "0015640581f58a2fb86dca985cda5b9e519b78962c6a1ee816741d3ad21fb52c"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/notebook.mjs",
+        "bytes": 18432,
+        "sha256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/offline.mjs",
+        "bytes": 2887,
+        "sha256": "d6abd2e8142f13aa7d3cf85a3df1491fcbaba78e3ee76eec7835d188131a0d71"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/package-info.json",
+        "bytes": 1722,
+        "sha256": "8ffc75a58ac9a66142c8e1ba71a65eba28de68e8e7f5d754a692ad4a04be2158"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/preview.png",
+        "bytes": 211231,
+        "sha256": "31d4f28a15a75721dfeaf8d57ffd0559ef6540bd45ab528840d5f57f84ea6e2a"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/radio-controls.mjs",
+        "bytes": 5726,
+        "sha256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/radio-guide.mjs",
+        "bytes": 37426,
+        "sha256": "eb42fe3cdbab36e35624a4942e1fee2192fe650cc5b149b3a53f967b9e58549a"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+        "bytes": 18265,
+        "sha256": "5edfc0ff6a04119758537f887f35b4d61da4f617c45abe032a0161ed91df9b44"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/radio-runtime.mjs",
+        "bytes": 8654,
+        "sha256": "87cf8f50b378d6b3a8aaddbb12fba749cd3b8238efb4dfe3fc55d2695a71e710"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/radio-session.mjs",
+        "bytes": 3780,
+        "sha256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/radio-setup.mjs",
+        "bytes": 45919,
+        "sha256": "fa5cd45c95e83d63468743d275bae818a88ab6749430883dee69cef0bc089901"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/renderer.mjs",
+        "bytes": 157444,
+        "sha256": "f6e6fd9eaeb094e1bd2544dda9b15abc3ebee384cc9192fa2e9062d9dac0acba"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+        "bytes": 7509,
+        "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+        "bytes": 650712,
+        "sha256": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/studio.mjs",
+        "bytes": 17754,
+        "sha256": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/style.css",
+        "bytes": 175643,
+        "sha256": "caf333f5853e0805126789f96e5013878461f725cd8354c9239be84e5aab81ce"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/vendor/LICENSE.txt",
+        "bytes": 1081,
+        "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+        "bytes": 1458113,
+        "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+        "bytes": 662772,
+        "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/worker.js",
+        "bytes": 19945,
+        "sha256": "d6e044acfa61003e6d6ecb5b5bfe1dbdf7b7ad8ce79a7f9845341d4f558cfe89"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-themes.mjs",
+        "bytes": 24025,
+        "sha256": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+        "bytes": 122616,
+        "sha256": "7bbf3b12ba925f72209a3a2f6022e732545b5100e1b28718777d18fb78cef2aa"
+      },
+      {
+        "path": "optional-practice/guide.mjs",
+        "bytes": 733,
+        "sha256": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203"
+      },
+      {
+        "path": "optional-practice/install-context.mjs",
+        "bytes": 20527,
+        "sha256": "bae814b206dc1ccf39b5f5b55391e9aae3d38760c07fcdf6cfeb7abea2419acf"
+      },
+      {
+        "path": "optional-practice/navigation.mjs",
+        "bytes": 2719,
+        "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+      }
+    ]
+  },
+  "admission": {
+    "format": "revealline-optional-package-admission.v1",
+    "version": "v0.151.1",
+    "sourceRevision": "80a32d6a9014cd78f326b2d7685fbbbdf2b6b06c",
+    "sourceTree": "b4de309b044638ecb7460f8f8cb69b25af970301",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "fc7326d33a5ab843376dc0687c2c9e7bcefe8c2daca69ba9d1003334aff98e9b",
+        "files": 94,
+        "bytes": 3750940
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "a997fb0f386f2f6bc45db39ee907e08339b9b9457fab978c79cc7b40262174e9",
+        "files": 101,
+        "bytes": 6768658
+      },
+      {
+        "id": "fpv-worlds",
+        "revision": "43e1d4299e60b76dfe0bf62be29d0391dd73f79319208801d358694a5e50fcf3",
+        "files": 162,
+        "bytes": 17558933
+      }
+    ],
+    "zipMembersVerified": true,
+    "publicEligible": false
+  },
+  "packages": [
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 3764624,
+        "path": "distribution-optional-civilian-flight.zip",
+        "sha256": "9f7121d6bde3e9497ac46f83a0cc38e386241a06581355eb984c5968bed27c0f"
+      },
+      "entry": "optional-practice/civilian-flight/index.html",
+      "id": "civilian-flight",
+      "manifest": {
+        "bytes": 16741,
+        "path": "manifest-optional-civilian-flight.json",
+        "sha256": "2ac0c0c3d3dc9da85c2ff93ab4922b98c40fd89f54c3996f4595269df518d900"
+      },
+      "revision": "fc7326d33a5ab843376dc0687c2c9e7bcefe8c2daca69ba9d1003334aff98e9b",
+      "sourceArchive": {
+        "bytes": 3799688,
+        "path": "source-optional-civilian-flight.zip",
+        "sha256": "08b67cb8a48eb20264714192a1548ea9d4b270ffac342187dc9815011a23d4bb"
+      },
+      "sourceInventory": {
+        "bytes": 27442,
+        "path": "source-inventory-optional-civilian-flight.json",
+        "sha256": "df7afe32d903aa409f6c89958e7b83a2e29d0b5068da0799bd28100173dcc833"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 6783676,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "72564f67d3dfd6ce342fbeef08e8b8a9f1f3c3afebf3fa6f073662d82eb485ef"
+      },
+      "entry": "optional-practice/civilian-fpv/index.html",
+      "id": "civilian-fpv",
+      "manifest": {
+        "bytes": 18095,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "6c1a8a0137354f96ddb6ca3095e5da21faf9e9240085e6fe6fc0137150cfb979"
+      },
+      "revision": "a997fb0f386f2f6bc45db39ee907e08339b9b9457fab978c79cc7b40262174e9",
+      "sourceArchive": {
+        "bytes": 6820141,
+        "path": "source-optional-civilian-fpv.zip",
+        "sha256": "7a1f7ec46c3ba1c9fa611ec45e00495d678c6bfebe34cb5e83ae26fc1049bc44"
+      },
+      "sourceInventory": {
+        "bytes": 30036,
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "sha256": "6255c9086602480326988a820f7fc41820bbba9ef0a430afe6d6ffd21cb03d05"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 17585361,
+        "path": "distribution-optional-fpv-worlds.zip",
+        "sha256": "1f7dced1c8ed155231324461cb58781feb8a0ba93f0a0702d6713cba18c24bac"
+      },
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "id": "fpv-worlds",
+      "manifest": {
+        "bytes": 29757,
+        "path": "manifest-optional-fpv-worlds.json",
+        "sha256": "8f2f1036f8a411a5fe54ec51c869d501745e970bddaf81db60bd16fc0b621496"
+      },
+      "revision": "43e1d4299e60b76dfe0bf62be29d0391dd73f79319208801d358694a5e50fcf3",
+      "sourceArchive": {
+        "bytes": 17630374,
+        "path": "source-optional-fpv-worlds.zip",
+        "sha256": "1e29989950223196cd80d5730cc9c7ab9e832b47bbd73484eff5d4b0ff2d3b52"
+      },
+      "sourceInventory": {
+        "bytes": 50238,
+        "path": "source-inventory-optional-fpv-worlds.json",
+        "sha256": "165cdd16b4fc935a6309ff0880823a91f5af20b4edf859c06dfe23fa02ad3079"
+      }
+    }
+  ],
+  "staged": [
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/access-gate.css",
+      "bytes": 2233,
+      "sha256": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/access-gate.mjs",
+      "bytes": 6833,
+      "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/audio/human-reactions/portable.mjs",
+      "bytes": 52575,
+      "sha256": "2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/fpv-entry.mjs",
+      "bytes": 8132,
+      "sha256": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/hunt/actor-catalog.mjs",
+      "bytes": 17530,
+      "sha256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/hunt/copy.mjs",
+      "bytes": 4717,
+      "sha256": "9e57f007948c134ca3a18f6c672f9d30d073839c5596f930ff78896b23189011"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/hunt/industrial-soldier-kit.mjs",
+      "bytes": 3713,
+      "sha256": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/hunt/preferences.mjs",
+      "bytes": 7098,
+      "sha256": "b28b212ff99bd56fa41e80a897ad05748d7c83d89087487bb6af9889cf43f53a"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/i18n/bootstrap.mjs",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/i18n/catalogs.mjs",
+      "bytes": 39870,
+      "sha256": "96294afb4beb1bb234104e50090628f63b095d3a8d4790ced0f3bd99a7368b7e"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/key-bindings.mjs",
+      "bytes": 13649,
+      "sha256": "9f0ccc8a21fb88618f93ca12742bf908e027ab4f05ae69f98fff05a92bef30a2"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/overflight/terrain.mjs",
+      "bytes": 16421,
+      "sha256": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/overflight/world-layout-presentation.mjs",
+      "bytes": 11298,
+      "sha256": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/overflight/worlds.mjs",
+      "bytes": 18852,
+      "sha256": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/presentation/industrial-environments-data.mjs",
+      "bytes": 422824,
+      "sha256": "2ee755f7e296cffefcf8b3b016572c98ba6a0dd338b4798092912f2fd3d4d0c8"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/presentation/industrial-environments.mjs",
+      "bytes": 9240,
+      "sha256": "78f3159366dd92bcb58035eb40eae89b9b6c498ecb287ca07f37f0888348cf87"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/presentation/industrial-machinery.mjs",
+      "bytes": 13604,
+      "sha256": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/presentation/industrial-materials.mjs",
+      "bytes": 7229,
+      "sha256": "0dd948dd6ed8cd787e6588e98a75f35e9e41d06bfb248f761fdb3ccb1866adbd"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/presentation/overflight-world-art-v2.mjs",
+      "bytes": 19404,
+      "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/presentation/overflight-world-art.mjs",
+      "bytes": 7822,
+      "sha256": "8efea74d7cf51517be240972dc19750ccbda8c280794081821c875d2d041576a"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/presentation/overflight-world-slots.mjs",
+      "bytes": 2754,
+      "sha256": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/presentation/theme-system.mjs",
+      "bytes": 65878,
+      "sha256": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/profile-database.mjs",
+      "bytes": 152,
+      "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/profile-storage.mjs",
+      "bytes": 6205,
+      "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/rewards/audio-groups.mjs",
+      "bytes": 2937,
+      "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/rewards/exploration.mjs",
+      "bytes": 9341,
+      "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/rewards/learning-profiles.mjs",
+      "bytes": 1519,
+      "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/rewards/model.mjs",
+      "bytes": 34442,
+      "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/rewards/store.mjs",
+      "bytes": 17038,
+      "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/snake/classic-structure-art.mjs",
+      "bytes": 20243,
+      "sha256": "8420ce6c1e1b58200493131cdcf9047c44b9bcc5ae9bab90a9e75bca51befad5"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/art-review-navigation.mjs",
+      "bytes": 2392,
+      "sha256": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/art/identity/fpv-line/wordmark.png",
+      "bytes": 485216,
+      "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/art/menu-scenes/fpv.webp",
+      "bytes": 514190,
+      "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/defeat-sound-controls.mjs",
+      "bytes": 2773,
+      "sha256": "b99f97c97e46fd82cd93338e4448c707bf650e6ffb0d5813d2ec68879b56451e"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/destruction-audio.mjs",
+      "bytes": 3628,
+      "sha256": "b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/destruction-level.mjs",
+      "bytes": 2221,
+      "sha256": "ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/enemy-appearance-controls.mjs",
+      "bytes": 8141,
+      "sha256": "f34c869b039cfd23841a5c8886e7509d2e5f88bc4ecbe0ae56e5fc0f59e1d165"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/human-reaction-policy.mjs",
+      "bytes": 1974,
+      "sha256": "dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/menu-navigation-groups.mjs",
+      "bytes": 3942,
+      "sha256": "1ffb27c5e397d3898a07dead6daccb441323bef01aea1ca1760932f90b21342b"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/native-menu-icons.mjs",
+      "bytes": 2645,
+      "sha256": "efe5de5b8ae9ecaccd393315294ebdbf6fe8c1d8cf29a6db284efe6f2d4e5351"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/ui/reward-knowledge.mjs",
+      "bytes": 2251,
+      "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/vendor/I18NEXT-LICENSE.txt",
+      "bytes": 1082,
+      "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/access-gate.css",
+      "bytes": 2233,
+      "sha256": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/access-gate.css",
+      "bytes": 2233,
+      "sha256": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/access-gate.mjs",
+      "bytes": 6833,
+      "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/access-gate.mjs",
+      "bytes": 6833,
+      "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/app.mjs",
+      "bytes": 19105,
+      "sha256": "34802ed5980a3a2adfa725c112e7a2f882ef25ac7fb0bea7cf387b9bab4ad993"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/app.mjs",
+      "bytes": 19105,
+      "sha256": "34802ed5980a3a2adfa725c112e7a2f882ef25ac7fb0bea7cf387b9bab4ad993"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/app.webmanifest",
+      "bytes": 663,
+      "sha256": "a085bd485d285612da413d81db1c8c032bcc1560b511569adf292b26729cd759"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/app.webmanifest",
+      "bytes": 663,
+      "sha256": "a085bd485d285612da413d81db1c8c032bcc1560b511569adf292b26729cd759"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/context.mjs",
+      "bytes": 20527,
+      "sha256": "bae814b206dc1ccf39b5f5b55391e9aae3d38760c07fcdf6cfeb7abea2419acf"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/context.mjs",
+      "bytes": 20527,
+      "sha256": "bae814b206dc1ccf39b5f5b55391e9aae3d38760c07fcdf6cfeb7abea2419acf"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/icons/icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/icons/icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/icons/icon-512.png",
+      "bytes": 82577,
+      "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/icons/icon-512.png",
+      "bytes": 82577,
+      "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/index.html",
+      "bytes": 2192,
+      "sha256": "131db2a28346ac26af125f36d309d178b607a235a3a3d6f2f6e60a95f76c42af"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/index.html",
+      "bytes": 2192,
+      "sha256": "131db2a28346ac26af125f36d309d178b607a235a3a3d6f2f6e60a95f76c42af"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/navigation.mjs",
+      "bytes": 2719,
+      "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/navigation.mjs",
+      "bytes": 2719,
+      "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/launcher/worker.js",
+      "bytes": 8310,
+      "sha256": "f6a20488bb7105baf36c96be0d950cd7e1c6dcf9d7b31c798f0cab3506a7f996"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/app/worker.js",
+      "bytes": 8310,
+      "sha256": "f6a20488bb7105baf36c96be0d950cd7e1c6dcf9d7b31c798f0cab3506a7f996"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-package.json",
+      "bytes": 18095,
+      "sha256": "6c1a8a0137354f96ddb6ca3095e5da21faf9e9240085e6fe6fc0137150cfb979"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/README.md",
+      "bytes": 25804,
+      "sha256": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/app.mjs",
+      "bytes": 91200,
+      "sha256": "14d093ef41ecd88f45ac047c96d77fa451ae42c5933fb977cb33fe9bd0cb5b60"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/app.webmanifest",
+      "bytes": 663,
+      "sha256": "a085bd485d285612da413d81db1c8c032bcc1560b511569adf292b26729cd759"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/attempts.mjs",
+      "bytes": 13389,
+      "sha256": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/battlefield-ground.mjs",
+      "bytes": 4594,
+      "sha256": "13ec27b19ba4d91715dd80ee1f04dd8265d97591171a6142e168d89ade798993"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/catalogue.mjs",
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/copy.mjs",
+      "bytes": 14421,
+      "sha256": "075ee9dbcf7de69e7f5c9a22e80a42de7cc49b4b2f2d06e9245c2034914b3e89"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/demonstrations.mjs",
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/flight-contact.mjs",
+      "bytes": 2482,
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "bytes": 322553,
+      "sha256": "c695f64fe937f6a104b81cb8e008e872045bd82e7412f4c2a02c7d8a91787a24"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/flight-sectors.mjs",
+      "bytes": 2673,
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/flight-support.mjs",
+      "bytes": 1815,
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/guide.html",
+      "bytes": 24362,
+      "sha256": "a769c73b3df992f7310a6f18db8dbefa47b59ca9139dff2528cc5a39a6434af3"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/icons/icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/icons/icon-512.png",
+      "bytes": 82577,
+      "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/index.html",
+      "bytes": 16274,
+      "sha256": "38787d8aab03281e7e92c9262ceb720e2609dee115498b6bc5e15e2e13662c62"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "bytes": 18718,
+      "sha256": "469e98e0a7d322e26b16afd96d7fc4f10282289c95a5289c999094c86ef3d90b"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "bytes": 10613,
+      "sha256": "10abf3263171ee0acc4177c822d8416b8da465403415db1500f74da5a98fba46"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/input.mjs",
+      "bytes": 38417,
+      "sha256": "fa05c07d694b96042ad4285294b1b676c60ef85b5122175a0d7b0b0268a1e8d6"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/math.mjs",
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/model.mjs",
+      "bytes": 20087,
+      "sha256": "0015640581f58a2fb86dca985cda5b9e519b78962c6a1ee816741d3ad21fb52c"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/notebook.mjs",
+      "bytes": 18432,
+      "sha256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/offline.mjs",
+      "bytes": 2887,
+      "sha256": "d6abd2e8142f13aa7d3cf85a3df1491fcbaba78e3ee76eec7835d188131a0d71"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/package-info.json",
+      "bytes": 1722,
+      "sha256": "8ffc75a58ac9a66142c8e1ba71a65eba28de68e8e7f5d754a692ad4a04be2158"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/preview.png",
+      "bytes": 211231,
+      "sha256": "31d4f28a15a75721dfeaf8d57ffd0559ef6540bd45ab528840d5f57f84ea6e2a"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/radio-controls.mjs",
+      "bytes": 5726,
+      "sha256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/radio-guide.mjs",
+      "bytes": 37426,
+      "sha256": "eb42fe3cdbab36e35624a4942e1fee2192fe650cc5b149b3a53f967b9e58549a"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/radio-profile.mjs",
+      "bytes": 18265,
+      "sha256": "5edfc0ff6a04119758537f887f35b4d61da4f617c45abe032a0161ed91df9b44"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/radio-runtime.mjs",
+      "bytes": 8654,
+      "sha256": "87cf8f50b378d6b3a8aaddbb12fba749cd3b8238efb4dfe3fc55d2695a71e710"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/radio-session.mjs",
+      "bytes": 3780,
+      "sha256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/radio-setup.mjs",
+      "bytes": 45919,
+      "sha256": "fa5cd45c95e83d63468743d275bae818a88ab6749430883dee69cef0bc089901"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 157444,
+      "sha256": "f6e6fd9eaeb094e1bd2544dda9b15abc3ebee384cc9192fa2e9062d9dac0acba"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/rotation-table.mjs",
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/sim-presentation.mjs",
+      "bytes": 650712,
+      "sha256": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/studio.mjs",
+      "bytes": 17754,
+      "sha256": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/style.css",
+      "bytes": 175643,
+      "sha256": "caf333f5853e0805126789f96e5013878461f725cd8354c9239be84e5aab81ce"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/vendor/three.core.js",
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/vendor/three.module.js",
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/worker.js",
+      "bytes": 19945,
+      "sha256": "d6e044acfa61003e6d6ecb5b5bfe1dbdf7b7ad8ce79a7f9845341d4f558cfe89"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/world-themes.mjs",
+      "bytes": 24025,
+      "sha256": "916b9dfcc960bb266db1f3721547ca6aeae8dd70848eb0b75e0d4db42d95d597"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/civilian-fpv/world-visuals.mjs",
+      "bytes": 122616,
+      "sha256": "7bbf3b12ba925f72209a3a2f6022e732545b5100e1b28718777d18fb78cef2aa"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/guide.mjs",
+      "bytes": 733,
+      "sha256": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/install-context.mjs",
+      "bytes": 20527,
+      "sha256": "bae814b206dc1ccf39b5f5b55391e9aae3d38760c07fcdf6cfeb7abea2419acf"
+    },
+    {
+      "path": "revealline/practice/civilian-fpv/releases/v0.151.1/site/optional-practice/navigation.mjs",
+      "bytes": 2719,
+      "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+    }
+  ],
+  "localSelectors": [
+    {
+      "path": "revealline/practice/civilian-fpv/app/current.json",
+      "bytes": 131,
+      "sha256": "30008301faae0f70e7cf706bbc10737ed3f599baee67fd43b07e11122a744fe4"
+    }
+  ],
+  "browser": "155.0.8059.80",
+  "cleanup": {
+    "completed": true,
+    "operations": [
+      {
+        "name": "browser",
+        "closed": true
+      },
+      {
+        "name": "server",
+        "closed": true
+      },
+      {
+        "name": "temporary-site",
+        "closed": true
+      }
+    ]
+  }
+}

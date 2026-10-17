@@ -2,10 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { dataIdentity } from '../data-json.mjs';
 import { OVERFLIGHT_BATTLEFIELDS } from '../overflight/battlefields.mjs';
-import {
-  createOverflightProject,
-  compileOverflightProject,
-} from '../overflight/project.mjs';
+import { createOverflightProject, compileOverflightProject } from '../overflight/project.mjs';
 import { upgradeOverflightProjectCopy } from '../overflight/project-upgrade.mjs';
 import {
   createOverflightRiyProject,
@@ -20,38 +17,26 @@ import {
 
 const oldThresholds = [12, 45, 100, 180, 300, 480, 750, 1150, 1750, 2400];
 const worldThresholds = [12, 45, 100, 180, 300, 480, 700, 1000, 1400, 1900];
+const battlefieldThresholds = [...worldThresholds.slice(0, 8), 1250, 1550];
 const modes = [
-  [
-    'Survivor',
-    createOverflightProject,
-    compileOverflightProject,
-    upgradeOverflightProjectCopy,
-  ],
-  [
-    'Riy',
-    createOverflightRiyProject,
-    compileOverflightRiyProject,
-    upgradeOverflightRiyProjectCopy,
-  ],
+  ['Survivor', createOverflightProject, compileOverflightProject, upgradeOverflightProjectCopy],
+  ['Riy', createOverflightRiyProject, compileOverflightRiyProject, upgradeOverflightRiyProjectCopy],
 ];
 
 for (const [name, create, compile, upgrade] of modes) {
-  test(`${name} built-in battlefields retain the accepted V3 world progression and opening`, () => {
+  test(`${name} built-in battlefields retain the opening and shorten only the last two choices`, () => {
     for (const { id: layout, world } of OVERFLIGHT_BATTLEFIELDS) {
       const intended = create({ rulesVersion: 3, world });
       assert.deepEqual(intended.upgrades.thresholds, worldThresholds);
       for (const difficulty of ['relaxed', 'standard', 'veteran']) {
         const project = create({ rulesVersion: 4, layout, difficulty });
         const compiled = compile(project);
+        assert.deepEqual(compiled.upgrades.thresholds, battlefieldThresholds, layout);
         assert.deepEqual(
-          compiled.upgrades.thresholds,
-          intended.upgrades.thresholds,
-          layout,
+          compiled.upgrades.thresholds.slice(0, 8),
+          intended.upgrades.thresholds.slice(0, 8),
         );
-        assert.deepEqual(
-          compiled.upgrades.thresholds.slice(0, 6),
-          oldThresholds.slice(0, 6),
-        );
+        assert.deepEqual(compiled.upgrades.thresholds.slice(0, 6), oldThresholds.slice(0, 6));
       }
     }
   });
@@ -59,10 +44,7 @@ for (const [name, create, compile, upgrade] of modes) {
   test(`${name} legacy and explicit authored progression survive compile/import and upgraded copies`, () => {
     for (const rulesVersion of [1, 2, 3])
       assert.deepEqual(create({ rulesVersion }).upgrades.thresholds, oldThresholds);
-    for (const thresholds of [
-      oldThresholds,
-      [9, 40, 90, 170, 290, 470, 720, 1100, 1700, 2300],
-    ]) {
+    for (const thresholds of [oldThresholds, [9, 40, 90, 170, 290, 470, 720, 1100, 1700, 2300]]) {
       for (const rulesVersion of [3, 4]) {
         const project = create({ rulesVersion });
         project.upgrades.thresholds = [...thresholds];
@@ -73,11 +55,7 @@ for (const [name, create, compile, upgrade] of modes) {
         assert.equal(imported.projectIdentity, compiled.projectIdentity);
         const copy = upgrade(project, { rulesVersion: 4 });
         assert.deepEqual(compile(copy).upgrades.thresholds, thresholds);
-        assert.equal(
-          JSON.stringify(project),
-          before,
-          'Authoring source must remain unchanged.',
-        );
+        assert.equal(JSON.stringify(project), before, 'Authoring source must remain unchanged.');
       }
     }
   });

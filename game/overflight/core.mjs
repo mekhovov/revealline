@@ -26,6 +26,7 @@ import {
 import {
   createOverflightGrid,
   overflightGridCell,
+  overflightCrowdSeparation,
   rebuildOverflightGrid,
   visitOverflightGrid,
 } from './grid.mjs';
@@ -369,6 +370,7 @@ export function createOverflightRun(
     _maxEnemyRadius: 28,
     // The authored specialist limit bounds each steering decision to eight sources.
     _supportSources: new Array(8).fill(null),
+    _separationScratch: { x: 0, y: 0 },
     _grid: createOverflightGrid(compiled.arena.width, compiled.arena.height, enemyCapacity),
     _spawnCredit: 0,
     _boostStartedTick: -1000,
@@ -1401,11 +1403,25 @@ function moveEnemies(run) {
       dx = enemy._burstX;
       dy = enemy._burstY;
     }
-    // Cell-centroid separation is intentionally approximate steering. It never
-    // limits the independent exact collision/damage queries.
+    // Legacy authored projects retain centroid steering. New local steering
+    // crosses cell boundaries smoothly without changing exact damage queries.
     const cell = overflightGridCell(run._grid, enemy.x, enemy.y);
     const count = run._grid.counts[cell];
-    if (count > 3 && !bursting && !standoff) {
+    if (run.compiled.combat?.crowdSeparation === 'local-v1' && !bursting && !standoff) {
+      const separation = overflightCrowdSeparation(
+        run._grid,
+        enemy._slot,
+        run._grid.maxRadius,
+        run._separationScratch,
+      );
+      dx += separation.x;
+      dy += separation.y;
+    } else if (
+      run.compiled.combat?.crowdSeparation !== 'local-v1' &&
+      count > 3 &&
+      !bursting &&
+      !standoff
+    ) {
       let sx = enemy.x - run._grid.sumX[cell] / count;
       let sy = enemy.y - run._grid.sumY[cell] / count;
       let length = Math.hypot(sx, sy);

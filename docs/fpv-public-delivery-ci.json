@@ -1,0 +1,197 @@
+{
+  "format": "fpv-delivery-ci-checks.v1",
+  "capturedAt": "2026-10-17T03:09:37.934Z",
+  "expectedHead": "eaecd60562917b7cf47d4995af00d561b154debd",
+  "headRefOid": "eaecd60562917b7cf47d4995af00d561b154debd",
+  "isDraft": true,
+  "number": 1561,
+  "state": "OPEN",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T03:01:23Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073060/job/117288811192",
+      "name": "preview",
+      "startedAt": "2026-10-17T02:44:01Z",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:48:42Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073097/job/117288811305",
+      "name": "optional-practice",
+      "startedAt": "2026-10-17T02:44:01Z",
+      "status": "COMPLETED",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:44:14Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073052/job/117288829124",
+      "name": "reconcile",
+      "startedAt": "2026-10-17T02:44:07Z",
+      "status": "COMPLETED",
+      "workflowName": "Fastline exact-head auto-merge"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:48:36Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073024/job/117288811005",
+      "name": "feature (gameplay)",
+      "startedAt": "2026-10-17T02:44:01Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:44:15Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073094/job/117288811280",
+      "name": "preflight",
+      "startedAt": "2026-10-17T02:44:01Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:48:36Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073024/job/117288811217",
+      "name": "feature (creator)",
+      "startedAt": "2026-10-17T02:44:01Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:47:49Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073024/job/117288811214",
+      "name": "feature (presentation)",
+      "startedAt": "2026-10-17T02:44:01Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:50:25Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073024/job/117288811207",
+      "name": "feature (recordings)",
+      "startedAt": "2026-10-17T02:47:50Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:50:50Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073024/job/117288811246",
+      "name": "feature (rooms)",
+      "startedAt": "2026-10-17T02:48:38Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:55:50Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073024/job/117288811229",
+      "name": "feature (local-ux)",
+      "startedAt": "2026-10-17T02:48:38Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T03:08:00Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073097/job/117288811494",
+      "name": "candidate",
+      "startedAt": "2026-10-17T02:44:01Z",
+      "status": "COMPLETED",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:54:57Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073094/job/117288859944",
+      "name": "focused",
+      "startedAt": "2026-10-17T02:44:17Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:44:15Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073094/job/117288860966",
+      "name": "test",
+      "startedAt": "2026-10-17T02:44:15Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:44:15Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073094/job/117288861143",
+      "name": "build",
+      "startedAt": "2026-10-17T02:44:15Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:55:02Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073094/job/117290925170",
+      "name": "release-ready",
+      "startedAt": "2026-10-17T02:54:59Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    }
+  ],
+  "url": "https://github.com/mekhovov/revealline/pull/1561",
+  "allNonSkippedProductChecksPassed": true,
+  "productSummary": {
+    "passed": 12,
+    "skipped": 2,
+    "failed": [],
+    "pending": [],
+    "requiredNonSkippedNames": [
+      "preview",
+      "optional-practice",
+      "candidate",
+      "preflight",
+      "focused",
+      "release-ready",
+      "feature (gameplay)",
+      "feature (recordings)",
+      "feature (presentation)",
+      "feature (creator)",
+      "feature (local-ux)",
+      "feature (rooms)"
+    ],
+    "missingSuccess": []
+  },
+  "controllerChecks": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-17T02:44:14Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38996073052/job/117288829124",
+      "name": "reconcile",
+      "startedAt": "2026-10-17T02:44:07Z",
+      "status": "COMPLETED",
+      "workflowName": "Fastline exact-head auto-merge"
+    }
+  ],
+  "scope": "Pre-merge hosted checks for this exact PR head. Skipped checks are not passes; auto-merge controller status is reported separately. This snapshot is not a public deployment verification."
+}

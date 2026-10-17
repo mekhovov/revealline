@@ -1,0 +1,194 @@
+name: Measure bounded parent-first Pages stack (diagnostic only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      main_sha:
+        description: Exact current main and workflow-controller SHA
+        required: true
+        type: string
+      stack_prs:
+        description: JSON array of 2-3 ordered objects with prNumber and exact headSha
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: pages-candidate-diagnostic
+  cancel-in-progress: false
+
+env:
+  MAX_PUBLISHED_BYTES: 980000000
+
+jobs:
+  preflight:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      preflight_sha256: ${{ steps.freeze.outputs.preflight_sha256 }}
+      source_sha: ${{ steps.freeze.outputs.source_sha }}
+      artifact_id: ${{ steps.packet.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts
+      - name: Freeze exact parent-first sources, dependencies and external bytes
+        id: freeze
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_MAIN: ${{ inputs.main_sha }}
+          STACK_PRS: ${{ inputs.stack_prs }}
+        run: node scripts/pages-stack-measurement.mjs prepare
+      - name: Preserve trusted preflight separately from candidate output
+        id: packet
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: stack-preflight-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/candidate-preflight
+          include-hidden-files: true
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 7
+
+  candidate:
+    needs: preflight
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    outputs:
+      artifact_id: ${{ steps.archive.outputs.artifact_id }}
+      receipt_id: ${{ steps.receipts.outputs.artifact-id }}
+    env:
+      PREFLIGHT_SHA256: ${{ needs.preflight.outputs.preflight_sha256 }}
+      SOURCE_SHA: ${{ needs.preflight.outputs.source_sha }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          path: controller
+          persist-credentials: false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          path: candidate
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          package-manager-cache: false
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          artifact-ids: ${{ needs.preflight.outputs.artifact_id }}
+          merge-multiple: true
+          path: ${{ runner.temp }}/candidate-preflight
+      - name: Install trusted helper dependencies without lifecycle scripts
+        working-directory: controller
+        run: npm ci --ignore-scripts
+      - name: Reconstruct every exact synthetic object without API credentials
+        run: node controller/scripts/pages-stack-measurement.mjs reconstruct
+      - name: Install locked candidate dependencies without API credentials
+        working-directory: candidate
+        run: npm ci --prefer-offline
+      - name: Build complete production profile from final synthetic source
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          node scripts/check-source-identity.mjs --root .
+          game_version="$(node -e "const c=require('./game/build-config.json'); if(!/^(0|[1-9][0-9]{0,4})\\.(0|[1-9][0-9]{0,4})\\.(0|[1-9][0-9]{0,4})$/.test(c.version)) process.exit(1); process.stdout.write(c.version)")"
+          node scripts/game-cli.mjs build --out "$RUNNER_TEMP/main-pages" --version "$game_version" --revision "$SOURCE_SHA" --publication-profile main-pages
+          rm "$RUNNER_TEMP/main-pages/distribution.zip" "$RUNNER_TEMP/main-pages/distribution.zip.sha256"
+      - name: Apply frozen overlay and trusted source-bound metadata
+        run: node controller/scripts/pages-stack-measurement.mjs stage
+      - name: Inventory complete staging with unchanged capacity guard
+        id: inventory
+        run: python3 controller/scripts/pages-capacity-evidence.py
+      - name: Verify tracked source after build
+        working-directory: candidate
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          node scripts/check-source-identity.mjs --root .
+      - name: Upload diagnostic archive, never a deployment artifact
+        id: archive
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          name: stack-pages-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/main-pages
+          include-hidden-files: true
+          retention-days: 7
+      - name: Verify actual pinned-action archive on candidate runner
+        env:
+          PAGES_ARTIFACT_ID: ${{ steps.archive.outputs.artifact_id }}
+        run: python3 controller/scripts/pages-archive-evidence.py
+      - name: Preserve receipts after acceptance or rejection
+        id: receipts
+        if: ${{ !cancelled() && (steps.inventory.outcome == 'success' || steps.inventory.outcome == 'failure') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: stack-receipts-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/main-pages-inventory.json
+            ${{ runner.temp }}/main-pages-receipt.json
+            ${{ runner.temp }}/main-pages-archive-receipt.json
+          if-no-files-found: error
+          retention-days: 7
+
+  verify:
+    needs: [preflight, candidate]
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && needs.preflight.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PREFLIGHT_SHA256: ${{ needs.preflight.outputs.preflight_sha256 }}
+      PREFLIGHT_ARTIFACT_ID: ${{ needs.preflight.outputs.artifact_id }}
+      CANDIDATE_ARTIFACT_ID: ${{ needs.candidate.outputs.artifact_id }}
+      RECEIPT_ARTIFACT_ID: ${{ needs.candidate.outputs.receipt_id }}
+      CANDIDATE_RESULT: ${{ needs.candidate.result }}
+    steps:
+      - name: Fresh trusted verifier; never check out candidate source here
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts
+      - name: Bind each ZIP digest and isolate allowed artifact members before assembly
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/pages-stack-measurement.mjs download
+      - name: Independently verify complete bytes, provenance and all frozen inputs
+        if: needs.candidate.result == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/pages-stack-measurement.mjs verify
+      - name: Record incomplete build without an accepted measurement
+        if: needs.candidate.result != 'success'
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { stackFailure } from './scripts/pages-stack-packet.mjs';
+          fs.writeFileSync(process.env.RUNNER_TEMP + '/stack-measurement.json', JSON.stringify(stackFailure('build-incomplete'), null, 2) + '\n', {flag: 'wx'});
+          NODE
+      - name: Preserve diagnostic result, never merge or deployment admission
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: stack-measurement-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/stack-measurement.json
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,118 @@
+{
+  "format": "FpvUrbanStreamingVerification.v1",
+  "generatedAt": "2026-10-17T02:28:45.278891+00:00",
+  "passed": true,
+  "runtimeChange": {
+    "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+    "collidersBefore": 64,
+    "collidersAfter": 128,
+    "backendIdentitiesUnchanged": true,
+    "frequencyHz": 250,
+    "recordedColliderDefinitionsBefore": 32768,
+    "recordedColliderDefinitionsAfter": 65536,
+    "recordedColliderDefinitionsDerivation": "frame count limit (512) × per-frame collider limit",
+    "geometryByteFrameAndEventLimitsUnchanged": true
+  },
+  "measuredSourceBinding": {
+    "sourcePins": 92,
+    "allMatchDeliveredCheckout": true,
+    "measurementEnvironment": "Isolated copy at /private/tmp/fpv-urban-candidate128-m_6hno8x; only production candidate change was the collider ceiling. Every measured source now matches delivered checkout."
+  },
+  "candidateRegressions": {
+    "tests": 28,
+    "passed": 28,
+    "failed": 0,
+    "node": "22.22.2",
+    "logSHA256": "ba000f04f0ceff327866a41765a07223d70a0ee1edea43532e4b1e02ea3c8290",
+    "scope": [
+      "published arena v2 and Regional v1 golden fixtures",
+      "controller/replay/rollback qualification",
+      "128-collider boundary and atomic 129th rejection",
+      "existing 720-second / 43,200-input storage fixture"
+    ],
+    "storage": {
+      "recordingBytes": 4983692,
+      "recoveryBytes": 5061598,
+      "colliderDefinitions": 65,
+      "frameDefinitions": 64,
+      "frameEvents": 360,
+      "inputs": 43200,
+      "checkpoints": 24,
+      "maximumSeconds": 720
+    }
+  },
+  "integratedTerrainTests": {
+    "tests": 10,
+    "passed": 10,
+    "failed": 0,
+    "logSHA256": "2e751f5829e09a4fedc707a29d995e35afc811d7e14a966d7c891cef36841c22"
+  },
+  "lint": {
+    "passed": true,
+    "modules": [
+      "scripts/fpv-regional-streaming-capacity.mjs",
+      "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "game/test/fpv-advanced-terrain.test.mjs"
+    ]
+  },
+  "sources": [
+    {
+      "path": "scripts/fpv-regional-streaming-capacity.mjs",
+      "sha256": "e838bbaed952f0d8e711e53f1f8656629f88039236504f7728b48effeedb71eb"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "sha256": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95"
+    },
+    {
+      "path": "game/test/fpv-advanced-terrain.test.mjs",
+      "sha256": "0a8a812cfae11ae04b4cf2a007dc994ca96f3c7a19cdaba41819225fb4075a0a"
+    },
+    {
+      "path": "docs/fpv-regional-urban-streaming-qualification.md",
+      "sha256": "f0adc1ceb71b042414c703f4030b362faa537be6a038b4a75af41df21ac849e3"
+    }
+  ],
+  "reports": [
+    {
+      "path": "docs/fpv-regional-urban-streaming-correctness.json",
+      "sha256": "387ec422a30ca2db936367887e584b229b8c2ca9a80bac6a4c711a10620faf46",
+      "historical": false
+    },
+    {
+      "path": "docs/fpv-regional-urban-streaming-capacity.json",
+      "sha256": "673eafcc2e067cee4abf1031ad0452223d5f6c7491f552c945bafd1ab09c5a29",
+      "historical": false
+    },
+    {
+      "path": "docs/fpv-regional-urban-64-admission-evidence.json",
+      "sha256": "4e428563b900011085d133c4376870f7331a5d9c08902f699e16a9ddac990b3d",
+      "historical": true
+    },
+    {
+      "path": "docs/fpv-regional-urban-candidate128-correctness.json",
+      "sha256": "6f84d4d8f5f6b14acec9e929d6348faad471ce0b3c2fc27988aa9fc98a1ed046",
+      "historical": true
+    },
+    {
+      "path": "docs/fpv-regional-urban-candidate128-initial-failure.json",
+      "sha256": "86bc6efb735a59b90a5db8ff81fc5fdf422186b0a0ab34dae7ce947a753c86ed",
+      "historical": true
+    },
+    {
+      "path": "docs/fpv-regional-urban-candidate128-unpaced-failure.json",
+      "sha256": "ce0981d4da522d38a030bc182767d8a83f2839a3326a7ccfba82d38c9cb3a228",
+      "historical": true
+    }
+  ],
+  "advanced": {
+    "experimental": true,
+    "scored": false,
+    "defaultEligible": false
+  },
+  "limits": [
+    "One physical Apple host with Node workers; no GPU rendering or hardware qualification.",
+    "Two-minute authored dense-scene capacity; maximum-duration storage evidence uses its separate synthetic fixture.",
+    "No broader platform, measured-aircraft, pilot or public-rollout gate is closed."
+  ]
+}
