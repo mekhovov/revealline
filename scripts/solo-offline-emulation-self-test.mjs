@@ -22,6 +22,52 @@ export const OFFLINE_SELF_TEST = Object.freeze({
   maximumScratchBytes: 256 * 1024 * 1024,
   minimumFreeBytes: 512 * 1024 * 1024,
 });
+export const OFFLINE_NAVIGATION_SELF_TEST = Object.freeze({
+  ...OFFLINE_SELF_TEST,
+  format: 'SoloOfflineNavigationEmulationSelfTestV2',
+  branches: Object.freeze([
+    'no-auxiliary-navigation',
+    'combined-before-navigation',
+    'owned-session-after-navigation',
+  ]),
+});
+const navigationURLs = Object.freeze([
+  'data:text/html,offline-navigation-probe-one',
+  'data:text/html,offline-navigation-probe-two',
+]);
+const navigationStages = Object.freeze({
+  'no-auxiliary-navigation': [
+    'persistent-offline-launch',
+    'first-data-navigation-complete',
+    'second-data-navigation-complete',
+  ],
+  'combined-before-navigation': [
+    'persistent-offline-launch',
+    'auxiliary-session-attached',
+    'worker-observation-enabled',
+    'network-enabled',
+    'native-state-overridden-before-navigation',
+    'first-data-navigation-complete',
+    'second-data-navigation-complete',
+    'auxiliary-session-detached',
+  ],
+  'owned-session-after-navigation': [
+    'persistent-offline-launch',
+    'auxiliary-session-attached',
+    'worker-observation-enabled',
+    'first-data-navigation-complete',
+    'native-state-overridden-after-first-navigation',
+    'second-data-navigation-complete',
+    'native-state-overridden-after-second-navigation',
+    'auxiliary-session-detached',
+  ],
+});
+const navigationURL = (id, index) => {
+  if (id === 'no-auxiliary-navigation') return index ? navigationURLs[index - 1] : 'about:blank';
+  const first = id === 'combined-before-navigation' ? 5 : 3;
+  const second = id === 'combined-before-navigation' ? 6 : 5;
+  return index < first ? 'about:blank' : navigationURLs[index < second ? 0 : 1];
+};
 const here = dirname(fileURLToPath(import.meta.url));
 const hash = (value) => createHash('sha256').update(value).digest('hex');
 const save = async (path, value) => {
@@ -30,20 +76,29 @@ const save = async (path, value) => {
   await writeFile(path, bytes);
 };
 export function selfTestComplete(report, command) {
+  const navigation = report?.format === OFFLINE_NAVIGATION_SELF_TEST.format;
+  const plan = navigation ? OFFLINE_NAVIGATION_SELF_TEST : OFFLINE_SELF_TEST;
   return (
-    report?.format === OFFLINE_SELF_TEST.format &&
+    report?.format === plan.format &&
     report?.status === 'completed-diagnostic' &&
     report?.qualificationEligible === false &&
-    report?.browserVersion === OFFLINE_SELF_TEST.browserVersion &&
-    report?.playwrightVersion === OFFLINE_SELF_TEST.playwright &&
-    report?.branches?.length === OFFLINE_SELF_TEST.branches.length &&
+    report?.browserVersion === plan.browserVersion &&
+    report?.playwrightVersion === plan.playwright &&
+    report?.branches?.length === plan.branches.length &&
     report.branches.every(
       (branch, index) =>
-        branch.id === OFFLINE_SELF_TEST.branches[index] &&
+        branch.id === plan.branches[index] &&
         branch.status === 'observed' &&
         branch.browserClosed === true &&
-        branch.stages.length === (index === 0 ? 5 : 6) &&
-        branch.stages.every((stage) => typeof stage.online === 'boolean'),
+        branch.stages.length ===
+          (navigation ? navigationStages[branch.id].length : index === 0 ? 5 : 6) &&
+        branch.stages.every(
+          (stage, stageIndex) =>
+            typeof stage.online === 'boolean' &&
+            (!navigation ||
+              (stage.stage === navigationStages[branch.id][stageIndex] &&
+                stage.url === navigationURL(branch.id, stageIndex))),
+        ),
     ) &&
     command?.status === 'closed' &&
     command.exitCode === 0 &&
@@ -136,6 +191,92 @@ export async function observeOfflineBranch({ id, launch, record, bounded }) {
   return branch;
 }
 
+// A second declared experiment separates navigation from auxiliary ownership.
+// All mutations target the same explicitly retained native CDP session.
+export async function observeOfflineNavigationBranch({ id, launch, record, bounded }) {
+  assert(OFFLINE_NAVIGATION_SELF_TEST.branches.includes(id));
+  const branch = { id, status: 'running', stages: [], browserClosed: false };
+  let context, session;
+  const sample = async (stage, page) => {
+    const value = await bounded(stage, () =>
+      page.evaluate(() => ({ online: navigator.onLine, url: globalThis.location.href })),
+    );
+    assert.equal(typeof value.online, 'boolean');
+    assert(['about:blank', ...navigationURLs].includes(value.url));
+    branch.stages.push({ stage, ...value });
+    await record(branch);
+  };
+  const override = (label) =>
+    bounded(label, () =>
+      session.send('Network.overrideNetworkState', {
+        offline: true,
+        latency: 0,
+        downloadThroughput: -1,
+        uploadThroughput: -1,
+      }),
+    );
+  try {
+    context = await launch();
+    assert.equal(context.browser().version(), OFFLINE_NAVIGATION_SELF_TEST.browserVersion);
+    const page =
+      context.pages()[0] ?? (await bounded('create-blank-page', () => context.newPage()));
+    await sample('persistent-offline-launch', page);
+    if (id !== 'no-auxiliary-navigation') {
+      session = await bounded('attach-auxiliary-session', () => context.newCDPSession(page));
+      await sample('auxiliary-session-attached', page);
+      await bounded('enable-worker-observation', () => session.send('ServiceWorker.enable'));
+      await sample('worker-observation-enabled', page);
+      if (id === 'combined-before-navigation') {
+        await bounded('enable-network-control', () => session.send('Network.enable'));
+        await sample('network-enabled', page);
+        await override('override-before-navigation');
+        await sample('native-state-overridden-before-navigation', page);
+      }
+    }
+    for (const [index, label] of ['first', 'second'].entries()) {
+      await bounded(`navigate-${label}-data-document`, () =>
+        page.goto(navigationURLs[index], {
+          waitUntil: 'load',
+          timeout: OFFLINE_NAVIGATION_SELF_TEST.operationTimeoutMs,
+        }),
+      );
+      await sample(`${label}-data-navigation-complete`, page);
+      if (id === 'owned-session-after-navigation') {
+        await override(`override-after-${label}-navigation`);
+        await sample(`native-state-overridden-after-${label}-navigation`, page);
+      }
+    }
+    if (session) {
+      await bounded('detach-auxiliary-session', () => session.detach());
+      session = null;
+      await sample('auxiliary-session-detached', page);
+    }
+    branch.status = 'observed';
+  } catch (error) {
+    branch.status = 'failed';
+    branch.failure = String(error).slice(0, 4096);
+    throw error;
+  } finally {
+    if (session)
+      await bounded('close-auxiliary-session', () => session.detach()).catch((error) => {
+        branch.cleanupFailure = String(error).slice(0, 4096);
+      });
+    if (context)
+      try {
+        const browser = context.browser();
+        await bounded('close-persistent-context', () => context.close());
+        assert.equal(browser.isConnected(), false);
+        branch.browserClosed = true;
+      } catch (error) {
+        branch.status = 'failed';
+        branch.cleanupFailure = String(error).slice(0, 4096);
+      }
+    await record(branch);
+  }
+  assert.equal(branch.status, 'observed', 'Native branch cleanup failed');
+  return branch;
+}
+
 const bounded = async (_label, operation, ms = OFFLINE_SELF_TEST.operationTimeoutMs) => {
   let timer;
   try {
@@ -149,14 +290,15 @@ const bounded = async (_label, operation, ms = OFFLINE_SELF_TEST.operationTimeou
     clearTimeout(timer);
   }
 };
-async function child(output, scratch) {
+async function child(output, scratch, navigation = false) {
+  const plan = navigation ? OFFLINE_NAVIGATION_SELF_TEST : OFFLINE_SELF_TEST;
   const modulePath = process.env.SOLO_PLAYWRIGHT_MODULE;
   assert(modulePath && resolve(modulePath) === modulePath);
   const { chromium } = await import(pathToFileURL(modulePath).href);
   const packageInfo = JSON.parse(await readFile(join(dirname(modulePath), 'package.json'), 'utf8'));
   assert.equal(packageInfo.version, OFFLINE_SELF_TEST.playwright);
   const report = {
-    ...OFFLINE_SELF_TEST,
+    ...plan,
     sourceRevision: process.env.SOLO_TOOLING_REVISION,
     status: 'running',
     qualificationEligible: false,
@@ -171,10 +313,10 @@ async function child(output, scratch) {
   };
   const path = join(output, 'report.json');
   try {
-    for (const id of OFFLINE_SELF_TEST.branches) {
+    for (const id of plan.branches) {
       const profile = await mkdtemp(join(scratch, 'p-'));
       const identity = await lstat(profile);
-      await observeOfflineBranch({
+      await (navigation ? observeOfflineNavigationBranch : observeOfflineBranch)({
         id,
         launch: () =>
           bounded(
@@ -214,7 +356,8 @@ async function child(output, scratch) {
     await save(path, report);
   }
 }
-async function parent(output) {
+async function parent(output, navigation = false) {
+  const plan = navigation ? OFFLINE_NAVIGATION_SELF_TEST : OFFLINE_SELF_TEST;
   assert.equal(process.platform, 'linux');
   const source = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
   assert.equal(source, process.env.SOLO_TOOLING_REVISION);
@@ -258,12 +401,21 @@ async function parent(output) {
   await save(join(output, 'admission.json'), {
     sourceRevision: source,
     sources,
-    plan: OFFLINE_SELF_TEST,
+    plan,
     scratch: { path: scratch, dev: identity.dev, ino: identity.ino },
     automaticRetries: 0,
   });
   const command = await ownedCommand(
-    ['xvfb-run', '-a', process.execPath, fileURLToPath(import.meta.url), 'child', output, scratch],
+    [
+      'xvfb-run',
+      '-a',
+      process.execPath,
+      fileURLToPath(import.meta.url),
+      'child',
+      output,
+      scratch,
+      ...(navigation ? ['--navigation-controls'] : []),
+    ],
     {
       cwd: resolve(here, '..'),
       env: { ...process.env, TMPDIR: scratch },
@@ -283,9 +435,12 @@ async function parent(output) {
   } catch (error) {
     report = { status: 'unreadable', failure: String(error).slice(0, 4096) };
   }
-  const complete = report.sourceRevision === source && selfTestComplete(report, command);
+  const complete =
+    report.sourceRevision === source &&
+    report.format === plan.format &&
+    selfTestComplete(report, command);
   await save(join(output, 'summary.json'), {
-    format: OFFLINE_SELF_TEST.format,
+    format: plan.format,
     sourceRevision: source,
     status: complete ? 'completed-diagnostic' : 'failed',
     qualificationEligible: false,
@@ -298,9 +453,18 @@ async function parent(output) {
   if (!complete) process.exitCode = 1;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  if (process.argv[2] === 'child') await child(resolve(process.argv[3]), resolve(process.argv[4]));
-  else {
+  if (process.argv[2] === 'child') {
+    assert(
+      process.argv.length === 5 ||
+        (process.argv.length === 6 && process.argv[5] === '--navigation-controls'),
+    );
+    await child(resolve(process.argv[3]), resolve(process.argv[4]), process.argv.length === 6);
+  } else {
     assert.equal(process.argv[2], 'run');
-    await parent(resolve(process.argv[3]));
+    assert(
+      process.argv.length === 4 ||
+        (process.argv.length === 5 && process.argv[4] === '--navigation-controls'),
+    );
+    await parent(resolve(process.argv[3]), process.argv.length === 5);
   }
 }
