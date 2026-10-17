@@ -4,7 +4,10 @@ import { lstat, mkdir, readFile, realpath, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
-import { evaluateQualificationBudgets } from './solo-qualification.mjs';
+import {
+  evaluateQualificationBudgets,
+  qualificationSnapshotStorage,
+} from './solo-qualification.mjs';
 import {
   aggregateQualificationGates,
   externalQualificationBudgets,
@@ -463,6 +466,21 @@ export async function prepareCalibrationScratch(report) {
   return record;
 }
 
+export function sustainedSnapshotStorage(plan, recipe) {
+  const options = qualificationSnapshotStorage(
+    recipe.evidenceStorage === undefined ? [] : ['--snapshot-chunks'],
+    recipe,
+  );
+  if (options)
+    assert(
+      [...plan.frozenTools, ...plan.adapterInputs].some(
+        (ref) => ref.path === 'scripts/solo-qualification-snapshot-store.mjs',
+      ),
+      'Chunked lifecycle evidence requires a frozen snapshot-store helper',
+    );
+  return options;
+}
+
 export async function prepareSustainedMode(ctx) {
   validateSustainedPlan(ctx.plan);
   await verifyInputs(ctx);
@@ -488,6 +506,8 @@ export async function prepareSustainedMode(ctx) {
       assert.deepEqual(await ctx.digest(target), { bytes: ref.bytes, sha256: ref.sha256 });
     }
     mode.recipePath = join(inputs, 'scenario.qualification.json');
+    const recipe = await checkedJSON(mode.recipePath, MiB);
+    mode.snapshotStorage = sustainedSnapshotStorage(ctx.plan, recipe);
   }
   if (ctx.plan.engine === 'chromium') {
     const path = join(ctx.evidence, 'fresh-mid-calibration.json');
@@ -554,6 +574,7 @@ export function sustainedArguments(ctx, row, url, dir) {
     ...base,
     '--work-probe',
     '--cadence=settled120',
+    ...(ctx.modeState.snapshotStorage ? ['--snapshot-chunks'] : []),
     ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
     ...(row.engine === 'webkit' ? ['--context=persistent'] : []),
     ...(timingPlan(ctx.plan) && row.engine === 'webkit'
@@ -866,7 +887,11 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
         diagnosticsAssessment(raw, manifest, row, command, ctx.modeState.browserVersion),
       );
     } else {
-      const raw = await checkedJSON(join(dir, 'report.json'), ctx.plan.rowEvidenceBytes);
+      const raw = ctx.modeState.snapshotStorage
+        ? await (
+            await import('./solo-qualification-snapshot-store.mjs')
+          ).readQualificationSnapshotReport(join(dir, 'report.json'), ctx.modeState.snapshotStorage)
+        : await checkedJSON(join(dir, 'report.json'), ctx.plan.rowEvidenceBytes);
       assert.equal(raw.environment?.cpuThrottle, ctx.modeState.cpu);
       Object.assign(
         row,
