@@ -8,7 +8,7 @@ import { sampledHeight } from './relief.mjs';
 const root = resolve(process.argv[2]),
   previous = resolve(process.argv[3]);
 const manifest = JSON.parse(await readFile(resolve(root, 'scenery/region.json')));
-assert.equal(manifest.revision, 'composition-r2');
+assert(['composition-r2', 'composition-r3'].includes(manifest.revision));
 const solids = new Map();
 for (const asset of manifest.assets.filter((a) => a.kind === 'collision')) {
   const bytes = await readFile(resolve(root, 'scenery', asset.path));
@@ -91,7 +91,7 @@ console.log(
       piers,
       receiverStruts: 3,
       terrainFilesIdentical: terrain.assets.length,
-      sourceRevision: 'composition-r2',
+      sourceRevision: manifest.revision,
       nativeAccepted: false,
     },
     null,

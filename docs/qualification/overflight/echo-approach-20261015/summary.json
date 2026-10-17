@@ -1,0 +1,101 @@
+{
+  "kind": "Fixed legal earned-build diagnostics, not human difficulty or balance acceptance",
+  "cases": [
+    {
+      "route": "figure-eight",
+      "sweeper": "trail",
+      "outcome": "lost",
+      "time": 336.2,
+      "choices": 9,
+      "firstEvolution": 113.18333333333334,
+      "longestFinishedDraftGap": 62.883333333333326,
+      "unfinishedGap": 86.94999999999999,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "finalTankLastObserved": {
+        "distance": 1618.7209369684792,
+        "armor": 1500,
+        "hp": 3500,
+        "x": 961.5865810963461,
+        "y": 81.86962304319908,
+        "speed": 35,
+        "heading": 0.8671096940678865,
+        "exposureRemaining": 0
+      },
+      "closestSampledTankDistance": 381.9788287926129,
+      "uncollectedAtLoss": 1296,
+      "collectedAtLoss": 1621,
+      "earnedAtLoss": 2917,
+      "sourceStable": true,
+      "raw": "echo-original.json.gz"
+    },
+    {
+      "route": "tight",
+      "sweeper": "trail",
+      "outcome": "lost",
+      "time": 312.45,
+      "choices": 9,
+      "firstEvolution": 108.73333333333333,
+      "longestFinishedDraftGap": 67.98333333333332,
+      "unfinishedGap": 61.5,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "finalTankLastObserved": {
+        "distance": 694.928034196226,
+        "armor": 1160,
+        "hp": 3500,
+        "x": 1201.3235136889375,
+        "y": 895.5281282748688,
+        "speed": 35,
+        "heading": 3.0116922709059972,
+        "exposureRemaining": 0
+      },
+      "closestSampledTankDistance": 56.68728650899162,
+      "uncollectedAtLoss": 553,
+      "collectedAtLoss": 1735,
+      "earnedAtLoss": 2288,
+      "sourceStable": true,
+      "raw": "echo-comparisons.json.gz"
+    },
+    {
+      "route": "figure-eight",
+      "sweeper": "broad",
+      "outcome": "lost",
+      "time": 328.23333333333335,
+      "choices": 10,
+      "firstEvolution": 97.18333333333334,
+      "longestFinishedDraftGap": 82.13333333333333,
+      "unfinishedGap": 39.56666666666666,
+      "damageCauses": {
+        "contact": 300,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "finalTankLastObserved": {
+        "distance": 178.34052219947245,
+        "armor": 621.2750000000002,
+        "hp": 3500,
+        "x": 227.57349374554684,
+        "y": 126.16220112975753,
+        "speed": 35,
+        "heading": 2.791776425613761,
+        "exposureRemaining": 0
+      },
+      "closestSampledTankDistance": 85.265375039725,
+      "uncollectedAtLoss": 829,
+      "collectedAtLoss": 2181,
+      "earnedAtLoss": 3010,
+      "sourceStable": true,
+      "raw": "echo-comparisons.json.gz"
+    }
+  ]
+}

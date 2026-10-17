@@ -1,0 +1,50 @@
+{
+  "head": "e5ac39905998266f18dfc9b27bd1271ab0270e2a",
+  "runtime": "v20.19.5",
+  "platform": "darwin",
+  "arch": "arm64",
+  "scope": "Grid rebuild and local steering only; no simulation, renderer, audio or frame pacing. Concurrent workstation load retained.",
+  "checksum": 2.375877272697835e-14,
+  "results": [
+    {
+      "capacity": 1500,
+      "scene": "distributed 37x31 lattice",
+      "samples": 120,
+      "average": 0.1657579333333338,
+      "p50": 0.0960409999999996,
+      "p95": 0.31620800000000315,
+      "p99": 0.401291999999998,
+      "worst": 2.719791999999998
+    },
+    {
+      "capacity": 1500,
+      "scene": "packed 4-unit lattice",
+      "samples": 120,
+      "average": 3.0852413416666686,
+      "p50": 2.343832999999961,
+      "p95": 6.946042000000034,
+      "p99": 9.049249999999972,
+      "worst": 9.323833999999977
+    },
+    {
+      "capacity": 2500,
+      "scene": "distributed 37x31 lattice",
+      "samples": 120,
+      "average": 0.17750068333333027,
+      "p50": 0.16208300000005238,
+      "p95": 0.2642909999999574,
+      "p99": 0.2986670000000231,
+      "worst": 0.4054999999999609
+    },
+    {
+      "capacity": 2500,
+      "scene": "packed 4-unit lattice",
+      "samples": 120,
+      "average": 5.502754533333327,
+      "p50": 4.207042000000001,
+      "p95": 11.479458999999906,
+      "p99": 20.759917000000087,
+      "worst": 28.93229200000019
+    }
+  ]
+}

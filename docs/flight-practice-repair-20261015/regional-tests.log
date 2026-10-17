@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: concurrent saved-place edits accept one reviewed generation without losing the winner
+ok 1 - concurrent saved-place edits accept one reviewed generation without losing the winner
+  ---
+  duration_ms: 6.407
+  ...
+# Subtest: an edit to another revision invalidates stale removal while retaining both places
+ok 2 - an edit to another revision invalidates stale removal while retaining both places
+  ---
+  duration_ms: 2.868708
+  ...
+# Subtest: a place ID cannot remove a place owned by another region, revision or exact hash
+ok 3 - a place ID cannot remove a place owned by another region, revision or exact hash
+  ---
+  duration_ms: 1.438375
+  ...
+# Subtest: mutating returned add/list snapshots cannot change stored position, heading or identity
+ok 4 - mutating returned add/list snapshots cannot change stored position, heading or identity
+  ---
+  duration_ms: 1.269584
+  ...
+# Subtest: per-revision capacity refuses a new place atomically and another revision remains usable
+ok 5 - per-revision capacity refuses a new place atomically and another revision remains usable
+  ---
+  duration_ms: 7.907959
+  ...
+# Subtest: duplicate generated place IDs roll back without replacing the existing place
+ok 6 - duplicate generated place IDs roll back without replacing the existing place
+  ---
+  duration_ms: 0.636167
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 83.5695

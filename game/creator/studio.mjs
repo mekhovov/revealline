@@ -1,4 +1,8 @@
-import { CREATOR_TEMPLATES, generateCreatorProject } from './templates.mjs';
+import {
+  CREATOR_TEMPLATES,
+  generateCreatorProject,
+  selectCreatorBatchTemplate,
+} from './templates.mjs';
 import { prepareCreatorImage } from './image.mjs';
 import {
   prepareCreatorBundle,
@@ -39,6 +43,7 @@ import { focusCreatorInstalledPlay } from './player-menu-focus.mjs';
 import { runCreatorOperation } from './operation.mjs';
 import { attachCreatorReviewReading } from './review-reading.mjs';
 import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
+import { mountCreatorStorageRetention } from './storage-retention.mjs';
 import {
   formatNumber,
   localizedAttribute,
@@ -52,6 +57,7 @@ const $ = (id) => document.getElementById(id),
   store = createCreatorStore(),
   backend = createCreatorDraftBackend(store),
   batchBackend = createCreatorBatchDraftBackend(store);
+mountCreatorStorageRetention({ document, window });
 const status = (message, error = false) => {
   localizedText($('status'), message);
   $('status').classList.toggle('error', error);
@@ -195,15 +201,12 @@ const batch = createBatchCreatorController({
       { signal: context.signal },
     );
     const seed = (batchSeed + context.index + context.generation * 65537) >>> 0;
-    const families = CREATOR_TEMPLATES.map(({ id: templateId }) => templateId);
-    const templateId =
-      context.settings.pacing === 'gentle-first' && context.index < Math.ceil(context.total / 3)
-        ? families[0]
-        : context.settings.pacing === 'steady'
-          ? families[2]
-          : context.settings.pacing === 'balanced'
-            ? families[(seed + context.index) % families.length]
-            : undefined;
+    const templateId = selectCreatorBatchTemplate({
+      seed,
+      index: context.index,
+      total: context.total,
+      pacing: context.settings.pacing,
+    });
     const generated = generateCreatorProject({
       id: `${id}-${item.id}`,
       name: context.settings.collectionName,

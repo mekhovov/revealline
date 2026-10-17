@@ -1,0 +1,64 @@
+
+> revealline@0.151.1 practice:pointer:test
+> node --test scripts/test-observe-practice-pointer.mjs
+
+TAP version 13
+# Subtest: pointer plan requires exact binding, bounded labels and an explicit locale matrix
+ok 1 - pointer plan requires exact binding, bounded labels and an explicit locale matrix
+  ---
+  duration_ms: 1.359333
+  ...
+# Subtest: matrix isolates every target, modality, visit and locale; single locale is explicitly narrower
+ok 2 - matrix isolates every target, modality, visit and locale; single locale is explicitly narrower
+  ---
+  duration_ms: 0.209084
+  ...
+# Subtest: pointer emits exactly one ordinary press at one coordinate without focus or retry
+ok 3 - pointer emits exactly one ordinary press at one coordinate without focus or retry
+  ---
+  duration_ms: 0.299834
+  ...
+# Subtest: keyboard reaches target with Tab then Enter, independently of mouse and with bounded traversal
+ok 4 - keyboard reaches target with Tab then Enter, independently of mouse and with bounded traversal
+  ---
+  duration_ms: 1.009166
+  ...
+# Subtest: passive witness records down/up target geometry and focus without altering input
+ok 5 - passive witness records down/up target geometry and focus without altering input
+  ---
+  duration_ms: 0.93775
+  ...
+# Subtest: exports require bounded real profile or pristine notebook backup formats, not attempt downloads
+ok 6 - exports require bounded real profile or pristine notebook backup formats, not attempt downloads
+  ---
+  duration_ms: 1.505
+  ...
+# Subtest: failed admission is retained before browser import; existing evidence is never overwritten
+ok 7 - failed admission is retained before browser import; existing evidence is never overwritten
+  ---
+  duration_ms: 15.199333
+  ...
+# Subtest: timed-out browser allocation retains pending ownership and closes a late resource
+ok 8 - timed-out browser allocation retains pending ownership and closes a late resource
+  ---
+  duration_ms: 6.4125
+  ...
+# Subtest: observer serves original entry and uses ordinary notebook controls without simulator hooks
+ok 9 - observer serves original entry and uses ordinary notebook controls without simulator hooks
+  ---
+  duration_ms: 0.634083
+  ...
+# Subtest: failed late resource closure remains unverified even after allocation settles
+ok 10 - failed late resource closure remains unverified even after allocation settles
+  ---
+  duration_ms: 6.497916
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 316.166833
