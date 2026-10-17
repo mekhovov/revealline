@@ -114,12 +114,14 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page.goto(url);
             await page.waitForFunction(() => window.qualificationReady);
             const button = (name) => page.getByRole('button', { name, exact: true });
-            if (touch) await button('Rates & throttle').tap();
+            if (touch) await button('Aircraft, rates & throttle').tap();
             else {
-              await button('Rates & throttle').focus();
+              await button('Aircraft, rates & throttle').focus();
               await page.keyboard.press('Enter');
             }
-            await page.getByRole('dialog', { name: 'Rates & throttle', exact: true }).waitFor();
+            await page
+              .getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true })
+              .waitFor();
             check(
               await page.locator('h2').evaluate((node) => node === document.activeElement),
               'Heading did not receive keyboard focus',
@@ -232,7 +234,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page.getByLabel('Rate profile', { exact: true }).selectOption(unfinishedProfile);
             await checkUnfinishedRate('Profile navigation');
             await button('Close').click();
-            await button('Rates & throttle').click();
+            await button('Aircraft, rates & throttle').click();
             await checkUnfinishedRate('Editor reopening');
             await page.evaluate(() => {
               window.qualificationLocale = 'uk';
@@ -339,7 +341,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               'Changing profiles coerced a blank camera draft',
             );
             await button('Close').click();
-            await button('Rates & throttle').click();
+            await button('Aircraft, rates & throttle').click();
             check((await cameraTilt.inputValue()) === '', 'Reopening coerced a blank camera draft');
             await cameraTilt.pressSequentially('35.25');
             await cameraFov.fill('999');
@@ -807,7 +809,9 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             const other = await context.newPage();
             await other.goto(url);
             await other.waitForFunction(() => window.qualificationReady);
-            await other.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
+            await other
+              .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
+              .click();
             await other.getByRole('button', { name: 'New Actual profile', exact: true }).click();
             await page.getByRole('status').filter({ hasText: 'Another tab changed' }).waitFor();
             await page.getByLabel('Drone setup', { exact: true }).selectOption(secondSetup);
@@ -825,7 +829,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await other.close();
             await page.reload();
             await page.waitForFunction(() => window.qualificationReady);
-            await button('Rates & throttle').click();
+            await button('Aircraft, rates & throttle').click();
             check(
               await page.evaluate((id) => {
                 const config = window.qualificationStore.effective();
@@ -853,7 +857,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               window.qualificationLocale = 'uk';
               window.qualificationUI.refresh();
             });
-            await page.getByRole('dialog', { name: 'Рейти й газ', exact: true }).waitFor();
+            await page.getByRole('dialog', { name: 'Дрон, рейти й газ', exact: true }).waitFor();
             await page.getByLabel('Алгоритм рейтів', { exact: true }).waitFor();
             const size = await page.locator('dialog').evaluate((node) => ({
               clientWidth: node.clientWidth,

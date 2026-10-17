@@ -8,6 +8,14 @@ import {
   rateProfileIdentity,
 } from './rates.mjs';
 import { profileUsers, TUNING_LIBRARY_BYTES } from './tuning-library.mjs';
+import {
+  listAircraftPresets,
+  getAircraftPreset,
+  createPresetConfiguration,
+  createPresetComponents,
+  applyAircraftComponents,
+} from './aircraft-presets.mjs';
+import { aircraftPerformance } from './aircraft-physics.mjs';
 import { exportJSONFile, exportTextFile } from '../../game/platform.mjs';
 import {
   previewBetaflightImport,
@@ -56,7 +64,7 @@ export function mountFlightTuning({
   };
   const root = doc.createElement('dialog');
   root.className = 'fpv-tuning';
-  translatedAttribute(root, 'aria-label', t('Rates & throttle', 'Рейти й газ'));
+  translatedAttribute(root, 'aria-label', t('Aircraft, rates & throttle', 'Дрон, рейти й газ'));
   const removers = [],
     buttons = [],
     drafts = new Map(),
@@ -65,6 +73,7 @@ export function mountFlightTuning({
     selected,
     draft,
     camera,
+    componentInventory = null,
     editRevision,
     algorithmDrafts = {},
     numericDrafts = {},
@@ -146,7 +155,7 @@ export function mountFlightTuning({
     }
     return input;
   };
-  const heading = el('h2', t('Rates & throttle', 'Рейти й газ'));
+  const heading = el('h2', t('Aircraft, rates & throttle', 'Дрон, рейти й газ'));
   heading.tabIndex = -1;
   el(
     'p',
@@ -171,6 +180,165 @@ export function mountFlightTuning({
       );
     }
   }
+  const aircraftPanel = el('section');
+  aircraftPanel.className = 'tuning-aircraft';
+  el('h3', t('Built-in aircraft', 'Вбудовані дрони'), aircraftPanel);
+  el(
+    'p',
+    t(
+      'Choose an aircraft for practice in every environment. Each preset includes its battery, independent SIM controller, camera and editable starter rates. Your saved setups keep their changes.',
+      'Виберіть дрон для практики в будь-якому середовищі. Кожен пресет містить батарею, незалежний контролер SIM, камеру й редаговані початкові рейти. Збережені налаштування зберігають ваші зміни.',
+    ),
+    aircraftPanel,
+  );
+  const aircraftSelect = select(
+    t('Aircraft preset', 'Пресет дрона'),
+    listAircraftPresets().map((p) => [p.id, `${p.name} · ${p.variant}`]),
+    aircraftPanel,
+  );
+  aircraftSelect.value = listAircraftPresets()[0].id;
+  const rateChoice = select(
+    t('Rates when selecting an aircraft', 'Рейти під час вибору дрона'),
+    [
+      ['defaults', t('Use aircraft defaults', 'Використати типові рейти дрона')],
+      ['keep', t('Keep my current rates', 'Залишити мої поточні рейти')],
+    ],
+    aircraftPanel,
+  );
+  rateChoice.value = 'defaults';
+  const aircraftSummary = el('p', undefined, aircraftPanel);
+  const aircraftEvidence = el('details', undefined, aircraftPanel);
+  el(
+    'summary',
+    t('Specifications and model evidence', 'Характеристики й дані моделі'),
+    aircraftEvidence,
+  );
+  const aircraftDetails = el('div', undefined, aircraftEvidence);
+  function paintAircraft() {
+    const preset = getAircraftPreset(aircraftSelect.value);
+    aircraftSummary.textContent = `${preset.flyingMassGrams} ${t('g flying weight', 'г польотної маси')} · ${preset.propellerDiameterMm} ${t('mm propellers', 'мм пропелери')} · ${preset.wheelbaseMm} ${t('mm wheelbase', 'мм база')} · ${preset.battery.name}`;
+    releaseChildren(aircraftDetails);
+    aircraftDetails.replaceChildren();
+    el(
+      'p',
+      t(
+        'Specification-based estimate. Not flight-validated.',
+        'Оцінка за характеристиками. Не перевірено реальними польотами.',
+      ),
+      aircraftDetails,
+    );
+    el('p', `${preset.motor} · ${preset.propeller}`, aircraftDetails, false);
+    const performance = aircraftPerformance(createPresetConfiguration(preset.id).aircraft);
+    el(
+      'p',
+      `${t('Simulated fresh-pack performance', 'Розрахункові показники зі свіжою батареєю')}: ${t('hover throttle', 'газ зависання')} ${performance.hoverThrottle === null ? '—' : `${(performance.hoverThrottle * 100).toFixed(1)}%`} · ${t('thrust / weight', 'тяга / вага')} ${performance.thrustToWeight.toFixed(2)} · ${performance.fullThrottleVoltage.toFixed(1)} V ${t('under full load', 'під повним навантаженням')}`,
+      aircraftDetails,
+      false,
+    );
+    el(
+      'p',
+      `${t('Installed mass', 'Маса встановлених компонентів')}: ${preset.components.map((component) => `${component.massGrams} g`).join(' + ')} = ${preset.flyingMassGrams} g`,
+      aircraftDetails,
+      false,
+    );
+    el(
+      'p',
+      t(
+        'Motors, props and installed equipment are already included in the assembled mass. The selected battery is added once.',
+        'Двигуни, пропелери й установлене обладнання вже входять до маси зібраного дрона. Вибрана батарея додається один раз.',
+      ),
+      aircraftDetails,
+    );
+    el(
+      'p',
+      `${t('SIM starter rates', 'Початкові рейти SIM')}: Actual · 100°/s ${t('center', 'у центрі')} · ${preset.starterMaximumRate}°/s ${t('maximum', 'максимум')} · 25% expo`,
+      aircraftDetails,
+      false,
+    );
+    const kinds = {
+      manufacturer: t('Manufacturer specification', 'Характеристика виробника'),
+      calculated: t('Calculated', 'Розраховано'),
+      estimated: t('Estimated', 'Оцінка'),
+    };
+    const fields = {
+      assembledMass: t('Assembled mass', 'Маса зібраного дрона'),
+      batteryMass: t('Battery mass', 'Маса батареї'),
+      inertia: t('Inertia', 'Інерція'),
+      propulsion: t('Propulsion', 'Тяга й двигуни'),
+      drag: t('Aerodynamic drag', 'Аеродинамічний опір'),
+    };
+    for (const [field, label] of Object.entries(fields))
+      el('p', `${label}: ${kinds[preset.evidence[field].kind]}`, aircraftDetails, false);
+    if (preset.evidence.batteryMass.kind === 'estimated')
+      el(
+        'p',
+        t(
+          'Reference battery mass is estimated; the source specifies capacity without a particular pack.',
+          'Маса еталонної батареї оцінена: джерело вказує ємність без конкретної моделі.',
+        ),
+        aircraftDetails,
+      );
+    for (const item of preset.sources) {
+      const link = el('a', item.title, aircraftDetails, false);
+      link.href = item.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    }
+    el(
+      'p',
+      t(
+        'The controller and aerodynamic coefficients are SIM estimates. Built-in presets start with battery depletion off; battery mass, power limits and voltage sag still affect flight.',
+        'Контролер і аеродинамічні коефіцієнти є оцінками SIM. У вбудованих пресетах розряджання батареї спочатку вимкнено; її маса, обмеження потужності й просідання напруги впливають на політ.',
+      ),
+      aircraftDetails,
+    );
+  }
+  listen(aircraftSelect, 'change', paintAircraft);
+  async function useAircraft({ reset = false } = {}) {
+    if (rateChoice.value === 'keep') commitNumericInputs();
+    remember();
+    const setup = library.setups.find((item) => item.id === library.selectedSetupId);
+    if (reset && !setup.preset)
+      throw new Error(
+        t(
+          'This setup has no built-in preset to restore.',
+          'Ці налаштування не мають вбудованого пресету для відновлення.',
+        ),
+      );
+    const profileId = id();
+    await mutate(() =>
+      store.createPresetSetup(
+        {
+          presetId: reset ? setup.preset.id : aircraftSelect.value,
+          setupId: reset ? setup.id : id(),
+          profileId,
+          rates: rateChoice.value,
+          ...(reset ? { replace: true } : {}),
+          ...(rateChoice.value === 'keep'
+            ? {
+                response: clone(draft),
+                ...(currentReceipt() ? { provenance: clone(currentReceipt()) } : {}),
+              }
+            : {}),
+        },
+        library.revision,
+      ),
+    );
+    if (reset) setupDrafts.delete(setup.id);
+    load(profileId);
+    onSaved(store.effective());
+    status.textContent = t(
+      'Aircraft saved for the next flight. Choose Apply & restart to fly it now.',
+      'Дрон збережено для наступного польоту. Виберіть «Застосувати й перезапустити», щоб полетіти зараз.',
+    );
+  }
+  action(t('Use this aircraft', 'Використати цей дрон'), () => useAircraft(), aircraftPanel);
+  action(
+    t('Reset saved aircraft to its preset', 'Скинути збережений дрон до його пресету'),
+    () => useAircraft({ reset: true }),
+    aircraftPanel,
+  );
+  paintAircraft();
   const toolbar = el('div');
   toolbar.className = 'tuning-toolbar';
   const setupSelect = select(t('Drone setup', 'Налаштування дрона'), [], toolbar);
@@ -350,6 +518,161 @@ export function mountFlightTuning({
   const setupName = field(t('Drone name', 'Назва дрона'), 'text', setupPanel);
   setupName.maxLength = 120;
   const assignment = select(t('Rates used by this drone', 'Рейти для цього дрона'), [], setupPanel);
+  const componentPanel = el('fieldset', undefined, setupPanel);
+  el('legend', t('Battery & physical camera', 'Акумулятор і фізична камера'), componentPanel);
+  const batteryChoice = select(
+    t('Battery', 'Акумулятор'),
+    [
+      ['reference', t('Reference battery', 'Еталонний акумулятор')],
+      [
+        'custom',
+        t(
+          'Custom battery · same cells and chemistry',
+          'Власний акумулятор · ті самі елементи й хімія',
+        ),
+      ],
+    ],
+    componentPanel,
+  );
+  const batteryCapacity = field(
+    t('Battery capacity (mAh)', 'Ємність акумулятора (мА·год)'),
+    'number',
+    componentPanel,
+  );
+  const batteryMass = field(
+    t('Battery mass (g)', 'Маса акумулятора (г)'),
+    'number',
+    componentPanel,
+  );
+  const payloadChoice = select(
+    t('Physical camera payload', 'Фізичне навантаження камери'),
+    [
+      ['none', t('No additional camera', 'Без додаткової камери')],
+      ['custom', t('Additional central camera payload', 'Додаткова камера по центру')],
+    ],
+    componentPanel,
+  );
+  const payloadMass = field(
+    t('Additional camera mass (g)', 'Маса додаткової камери (г)'),
+    'number',
+    componentPanel,
+  );
+  const componentSummary = el('p', undefined, componentPanel);
+  el(
+    'p',
+    t(
+      'Any video system supplied with the reference aircraft is already counted; this adds a separate payload. Custom components use estimated positions and dimensions inside the central body. Check real pack fit separately. Capacity affects endurance only when battery depletion is enabled; mass always affects handling. Existing motor, electrical, drag and controller adjustments are retained.',
+      'Відеосистема еталонної комплектації, якщо вона є, уже врахована; тут додається окреме навантаження. Для власних компонентів використано оцінені положення й розміри всередині корпусу. Фактичну сумісність акумулятора перевіряйте окремо. Ємність впливає на тривалість лише з увімкненим розряджанням; маса завжди впливає на керованість. Наявні налаштування моторів, електрики, опору та контролера зберігаються.',
+    ),
+    componentPanel,
+  );
+  for (const input of [batteryCapacity, batteryMass, payloadMass]) input.step = 'any';
+  function componentText() {
+    return {
+      batteryChoice: batteryChoice.value,
+      capacity: batteryCapacity.value,
+      mass: batteryMass.value,
+      payloadChoice: payloadChoice.value,
+      payloadMass: payloadMass.value,
+    };
+  }
+  function readComponents(commit = true) {
+    if (!componentInventory) return null;
+    const reference = componentInventory.reference;
+    const battery =
+      batteryChoice.value === 'reference'
+        ? { massGrams: reference.batteryMassGrams, capacityMah: reference.capacityMah }
+        : {
+            massGrams: cameraValue(batteryMass, commit),
+            capacityMah: cameraValue(batteryCapacity, commit),
+          };
+    const cameraPayload = {
+      massGrams: payloadChoice.value === 'none' ? 0 : cameraValue(payloadMass, commit),
+    };
+    if (Object.values(battery).includes(null) || cameraPayload.massGrams === null) return null;
+    const setup = library.setups.find((item) => item.id === library.selectedSetupId);
+    return applyAircraftComponents(setup.advanced.aircraft, componentInventory, {
+      battery,
+      cameraPayload,
+    });
+  }
+  function paintComponents() {
+    componentPanel.hidden = !componentInventory;
+    if (!componentInventory) return;
+    batteryCapacity.disabled = batteryMass.disabled = batteryChoice.value === 'reference';
+    payloadMass.disabled = payloadChoice.value === 'none';
+    try {
+      const result = readComponents(false);
+      const performance = result && aircraftPerformance(result.aircraft);
+      const hover =
+        performance?.hoverThrottle === null
+          ? t('Insufficient thrust', 'Недостатньо тяги')
+          : `${((performance?.hoverThrottle ?? 0) * 100).toFixed(1)}%`;
+      componentSummary.textContent = result
+        ? `${t('Estimated installed mass', 'Оцінена встановлена маса')}: ${(result.aircraft.mass * 1000).toFixed(2)} g · ${t('COM height', 'Висота центра мас')}: ${(result.aircraft.geometry.centerOfMass.y * 1000).toFixed(2)} mm · ${t('Added camera', 'Додаткова камера')}: ${result.components.cameraPayload.massGrams} g · ${t('Hover', 'Зависання')}: ${hover} · ${t('Thrust/weight', 'Тяга/вага')}: ${performance.thrustToWeight.toFixed(2)}`
+        : t(
+            'Complete valid component values to preview the aircraft.',
+            'Введіть коректні значення компонентів для попереднього перегляду.',
+          );
+    } catch (error) {
+      componentSummary.textContent = error.message;
+    }
+  }
+  for (const input of [batteryChoice, batteryCapacity, batteryMass, payloadChoice, payloadMass])
+    for (const event of ['input', 'change']) listen(input, event, paintComponents);
+  action(
+    t('Save battery & physical camera', 'Зберегти акумулятор і фізичну камеру'),
+    async () => {
+      const setup = readSetup();
+      await mutate(() => store.saveSetup(setup, editRevision));
+      setupDrafts.delete(setup.id);
+      load(selected);
+      onSaved(store.effective());
+      status.textContent = t(
+        'Components saved for the next flight. Use Apply & restart to fly them now.',
+        'Компоненти збережено для наступного польоту. Натисніть «Застосувати й перезапустити», щоб випробувати їх зараз.',
+      );
+    },
+    componentPanel,
+  );
+  const batteryPracticePanel = el('fieldset', undefined, setupPanel);
+  el(
+    'legend',
+    t('Optional battery endurance', 'Необов’язкова автономність батареї'),
+    batteryPracticePanel,
+  );
+  const batteryDepletion = field(
+    t('Battery depletion (optional)', 'Розряджання батареї (необов’язково)'),
+    'checkbox',
+    batteryPracticePanel,
+  );
+  el(
+    'p',
+    t(
+      'Enabled: using charge gradually reduces available motor power. Disabled: charge stays full while battery mass, power limits and voltage sag still affect handling. Ordinary practice has no time limit.',
+      'Увімкнено: витрата заряду поступово зменшує доступну потужність моторів. Вимкнено: заряд залишається повним, а маса батареї, обмеження потужності й просідання напруги впливають на керованість. Звичайна практика не має обмеження часу.',
+    ),
+    batteryPracticePanel,
+  );
+  el(
+    'p',
+    t(
+      'Save for next flight keeps the current flight unchanged. A fresh-battery restart saves this draft and starts a new flight from the launch point with full charge. Pause, resume and checkpoint recovery preserve the flight’s remaining charge and original conditions. Use the same course, mode and setup for repeatable tests.',
+      'Збереження для наступного польоту не змінює поточний. Перезапуск зі свіжою батареєю зберігає чернетку й починає новий політ із точки старту з повним зарядом. Пауза, продовження й відновлення з контрольної точки зберігають залишок заряду та початкові умови польоту. Для повторюваних тестів використовуйте ті самі трасу, режим і налаштування.',
+    ),
+    batteryPracticePanel,
+  );
+  action(
+    t('Fresh battery & restart flight', 'Свіжа батарея й перезапуск польоту'),
+    () => {
+      if (
+        library.setups.find((setup) => setup.id === library.selectedSetupId)?.advanced?.aircraft
+          .format === 'AdvancedAircraft.v2'
+      )
+        return applyAndRestart();
+    },
+    batteryPracticePanel,
+  );
   const tilt = field(t('Camera tilt (degrees)', 'Нахил камери (градуси)'), 'number', setupPanel);
   Object.assign(tilt, { min: '0', max: '60', step: 'any' });
   const fov = field(
@@ -400,8 +723,8 @@ export function mountFlightTuning({
   el(
     'p',
     t(
-      'Camera settings belong to the drone and are excluded from portable rate exports. Skins do not select a drone setup.',
-      'Камера зберігається для дрона й не входить до експорту рейтів. Вигляд дрона не змінює його налаштувань.',
+      'Camera tilt and vertical FOV change the view, not aircraft mass. They belong to the drone and are excluded from portable rate exports. Skins do not select a drone setup.',
+      'Нахил камери й вертикальне поле зору змінюють огляд, а не масу дрона. Вони зберігаються для дрона й не входять до експорту рейтів. Вигляд дрона не змінює його налаштувань.',
     ),
     setupPanel,
   );
@@ -919,19 +1242,16 @@ export function mountFlightTuning({
     );
   }
   action(t('Save for next flight', 'Зберегти для наступного польоту'), save, actions);
-  action(
-    t('Apply & restart', 'Застосувати й перезапустити'),
-    async () => {
-      const epoch = openEpoch;
-      assignment.value = selected;
-      await save();
-      if (disposed || epoch !== openEpoch || !root.open) return;
-      endDraftTest();
-      close();
-      onApply(store.effective());
-    },
-    actions,
-  );
+  async function applyAndRestart() {
+    const epoch = openEpoch;
+    assignment.value = selected;
+    await save();
+    if (disposed || epoch !== openEpoch || !root.open) return;
+    endDraftTest();
+    close();
+    onApply(store.effective());
+  }
+  action(t('Apply & restart', 'Застосувати й перезапустити'), applyAndRestart, actions);
   action(
     t('Test draft · unscored', 'Перевірити чернетку · без заліку'),
     () => {
@@ -945,6 +1265,7 @@ export function mountFlightTuning({
         ...store.effective(),
         response: clone(draft),
         camera: setup.camera,
+        ...(setup.advanced ? { advanced: clone(setup.advanced) } : {}),
       };
       delete configuration.simulationIdentity;
       close();
@@ -976,14 +1297,17 @@ export function mountFlightTuning({
     action(
       t('Advanced reference quad · experimental', 'Еталонний дрон Advanced · експериментальний'),
       () => {
-        portable();
         const setup = readSetup();
+        if (setup.advanced?.aircraft.format === 'AdvancedAircraft.v2') commitNumericInputs();
+        else portable();
         remember();
         close();
         return onAdvanced({
           ...store.effective(),
           response: clone(draft),
           camera: setup.camera,
+          ...(setup.advanced ? { advanced: clone(setup.advanced) } : {}),
+          ...(setup.components ? { components: clone(setup.components) } : {}),
         });
       },
       actions,
@@ -1027,6 +1351,8 @@ export function mountFlightTuning({
         // A draft may be incomplete. Keep its text rather than coercing an
         // empty camera field to zero or discarding it during navigation.
         cameraText: { tilt: tilt.value, verticalFov: fov.value },
+        componentsText: componentInventory ? componentText() : null,
+        batteryDepletion: batteryDepletion.checked,
         baseRevision: editRevision,
       });
     }
@@ -1080,6 +1406,49 @@ export function mountFlightTuning({
       String(saved.history.at(-1)?.revision ?? ''),
     );
     setupName.value = pendingSetup?.name ?? setup.name;
+    batteryPracticePanel.hidden = setup.advanced?.aircraft.format !== 'AdvancedAircraft.v2';
+    batteryDepletion.checked =
+      pendingSetup?.batteryDepletion ?? setup.advanced?.aircraft.battery.depletion ?? false;
+    if (setup.preset && listAircraftPresets().some((item) => item.id === setup.preset.id)) {
+      aircraftSelect.value = setup.preset.id;
+      paintAircraft();
+    }
+    componentInventory = setup.components ? clone(setup.components) : null;
+    if (
+      !componentInventory &&
+      setup.preset &&
+      setup.advanced?.aircraft.format === 'AdvancedAircraft.v2' &&
+      listAircraftPresets().some((item) => item.id === setup.preset.id)
+    )
+      componentInventory = createPresetComponents(setup.preset.id, setup.advanced.aircraft);
+    if (componentInventory) {
+      const { reference, battery, cameraPayload } = componentInventory;
+      const pending = pendingSetup?.componentsText;
+      const capacity = setup.advanced.aircraft.battery.capacityAh * 1000;
+      Object.assign(batteryMass, {
+        min: String(reference.batteryMassGrams * 0.5),
+        max: String(reference.batteryMassGrams * 2),
+        value: pending?.mass ?? String(battery.massGrams),
+      });
+      Object.assign(batteryCapacity, {
+        min: String(reference.capacityMah * 0.5),
+        max: String(reference.capacityMah * 2),
+        value: pending?.capacity ?? String(capacity),
+      });
+      Object.assign(payloadMass, {
+        min: '0',
+        max: String(reference.maxPayloadGrams),
+        value: pending?.payloadMass ?? String(cameraPayload.massGrams),
+      });
+      batteryChoice.value =
+        pending?.batteryChoice ??
+        (battery.massGrams === reference.batteryMassGrams && capacity === reference.capacityMah
+          ? 'reference'
+          : 'custom');
+      payloadChoice.value =
+        pending?.payloadChoice ?? (cameraPayload.massGrams === 0 ? 'none' : 'custom');
+    }
+    paintComponents();
     camera = clone(pendingSetup?.cameraText ?? setup.camera);
     tilt.value = String(camera.tilt);
     fov.value = String(camera.verticalFov);
@@ -1110,21 +1479,43 @@ export function mountFlightTuning({
     }${library.defaultProfileId === selected ? t(' · player default', ' · типовий профіль гравця') : ''}`;
   }
   function readSetup() {
-    return {
+    const setup = {
       ...clone(library.setups.find((setup) => setup.id === library.selectedSetupId)),
       id: library.selectedSetupId,
       name: setupName.value,
       profileId: assignment.value || null,
       camera: { tilt: cameraValue(tilt), verticalFov: cameraValue(fov) },
     };
+    const components = readComponents();
+    if (components) {
+      setup.advanced.aircraft = components.aircraft;
+      setup.components = components.components;
+    }
+    if (setup.advanced?.aircraft.format === 'AdvancedAircraft.v2')
+      setup.advanced.aircraft.battery.depletion = batteryDepletion.checked;
+    return setup;
   }
-  function acceptOwnSave(previousRevision) {
+  function acceptOwnSave(previousRevision, { reloadAircraft = false } = {}) {
     library = store.snapshot();
     if (editRevision === previousRevision) editRevision = library.revision;
     for (const cached of drafts.values())
       if (cached.baseRevision === previousRevision) cached.baseRevision = library.revision;
     for (const cached of setupDrafts.values())
       if (cached.baseRevision === previousRevision) cached.baseRevision = library.revision;
+    if (reloadAircraft) {
+      const setup = library.setups.find((item) => item.id === library.selectedSetupId);
+      drafts.delete(selected);
+      drafts.delete(setup.profileId ?? library.defaultProfileId);
+      // Advanced saves the complete response, camera and component inventory.
+      // Returning to older live inputs would apply the same payload twice or
+      // overwrite an explicitly selected aircraft. Its pending name is separate.
+      setupDrafts.set(setup.id, {
+        name: setupName.value,
+        profileId: setup.profileId,
+        baseRevision: library.revision,
+      });
+      load();
+    }
   }
   async function mutate(fn) {
     if (busy || disposed)
@@ -1609,7 +2000,7 @@ export function mountFlightTuning({
       // Safari does not focus buttons on pointer activation. Keep the actual
       // trigger so closing the modal restores keyboard navigation to it.
       const node = action(
-        t('Rates & throttle', 'Рейти й газ'),
+        t('Aircraft, rates & throttle', 'Дрон, рейти й газ'),
         () => open({ openerElement: node }),
         parent ?? null,
       );
@@ -1636,6 +2027,8 @@ export function mountFlightTuning({
         paintAssignment();
         assignment.value = pendingAssignment;
         paintFields();
+        paintAircraft();
+        paintComponents();
       }
     },
     dispose() {

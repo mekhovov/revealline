@@ -12,6 +12,14 @@ import { rateProfileIdentity } from './rates.mjs';
 import { validateRateImportReceipt } from './betaflight-import.mjs';
 import { validateAdvancedAircraft } from './advanced-simulation.mjs';
 import { validateAdvancedTune } from './advanced-controller.mjs';
+import {
+  createPresetConfiguration,
+  createPresetComponents,
+  applyAircraftComponents,
+  getAircraftPreset,
+  validateAircraftComponents,
+} from './aircraft-presets.mjs';
+import { validateAircraftControllerTune } from './aircraft-physics.mjs';
 
 export const TUNING_LIBRARY_FORMAT = 'FpvTuningLibrary.v1';
 export const TUNING_LIBRARY_KEY = 'revealline.fpv.tuning.v1';
@@ -111,7 +119,11 @@ export function validateTuningLibrary(input) {
     'The player default must reference a saved profile',
   );
   for (const setup of value.setups) {
-    exactKeys(setup, ['id', 'name', 'profileId', 'camera', 'advanced'], 'drone setup');
+    exactKeys(
+      setup,
+      ['id', 'name', 'profileId', 'camera', 'advanced', 'preset', 'components'],
+      'drone setup',
+    );
     required(
       stableId(setup.id) && !setups.has(setup.id) && name(setup.name),
       'Invalid or duplicate drone setup',
@@ -119,6 +131,14 @@ export function validateTuningLibrary(input) {
     setups.add(setup.id);
     required(setup.profileId === null || profiles.has(setup.profileId), 'Drone profile is missing');
     setup.camera = validateDroneCamera(setup.camera);
+    if (setup.preset !== undefined) {
+      exactKeys(setup.preset, ['id', 'revision'], 'aircraft preset provenance');
+      required(
+        stableId(setup.preset.id) && revision(setup.preset.revision) && setup.preset.revision > 0,
+        'Invalid aircraft preset provenance',
+      );
+      required(setup.advanced, 'An aircraft preset needs a saved physical configuration');
+    }
     if (setup.advanced !== undefined) {
       exactKeys(setup.advanced, ['aircraft', 'controller'], 'Advanced drone configuration');
       required(
@@ -127,8 +147,20 @@ export function validateTuningLibrary(input) {
       );
       setup.advanced = {
         aircraft: validateAdvancedAircraft(setup.advanced.aircraft),
-        controller: validateAdvancedTune(setup.advanced.controller),
+        controller:
+          setup.advanced.aircraft.format === 'AdvancedAircraft.v2'
+            ? validateAircraftControllerTune(setup.advanced.controller)
+            : validateAdvancedTune(setup.advanced.controller),
       };
+    }
+    if (setup.components !== undefined) {
+      setup.components = validateAircraftComponents(setup.components);
+      required(
+        setup.advanced?.aircraft.format === 'AdvancedAircraft.v2' &&
+          setup.preset?.id === setup.components.presetId &&
+          setup.advanced.aircraft.id === setup.components.presetId,
+        'Component inventory must describe this aircraft setup',
+      );
     }
   }
   required(setups.has(value.selectedSetupId), 'Selected drone setup is missing');
@@ -368,6 +400,153 @@ export function createTuningLibraryStore({
       return transaction(expected, (value) => {
         value.setups.push(drone);
         value.selectedSetupId = drone.id;
+      });
+    },
+    createPresetSetup: async (input, expected = current.revision) => {
+      const request = submitted(input);
+      exactKeys(
+        request,
+        ['presetId', 'setupId', 'profileId', 'rates', 'response', 'provenance', 'replace'],
+        'aircraft preset selection',
+      );
+      const preset = getAircraftPreset(request.presetId),
+        configuration = createPresetConfiguration(preset.id);
+      required(
+        ['defaults', 'keep'].includes(request.rates),
+        'Choose aircraft defaults or keep current rates',
+      );
+      required(
+        request.replace === undefined || typeof request.replace === 'boolean',
+        'Invalid preset reset',
+      );
+      required(
+        request.rates === 'keep' ||
+          (request.response === undefined && request.provenance === undefined),
+        'Aircraft defaults cannot contain replacement rates',
+      );
+      return transaction(expected, (value) => {
+        const existing = value.setups.find((item) => item.id === request.setupId);
+        required(
+          request.replace ? existing?.preset?.id === preset.id : !existing,
+          'Choose a new setup ID or reset its own preset',
+        );
+        const active = value.setups.find((item) => item.id === value.selectedSetupId),
+          currentProfile = find(value, active.profileId ?? value.defaultProfileId);
+        const response =
+          request.rates === 'keep'
+            ? validateFlightResponse(request.response ?? currentProfile.response)
+            : configuration.response;
+        const provenance =
+          request.rates === 'keep'
+            ? (request.provenance ??
+              (request.response === undefined ? currentProfile.provenance : undefined))
+            : undefined;
+        value.profiles.push({
+          id: request.profileId,
+          name: `${preset.name} · ${request.rates === 'keep' ? 'copied rates' : 'SIM starter rates'}`,
+          revision: 0,
+          response,
+          history: [],
+          ...(provenance ? { provenance } : {}),
+        });
+        const setup = {
+          id: request.setupId,
+          name: existing?.name ?? preset.name,
+          profileId: request.profileId,
+          camera: configuration.camera,
+          advanced: { aircraft: configuration.aircraft, controller: configuration.controller },
+          preset: configuration.preset,
+          components: configuration.components,
+        };
+        if (request.replace) value.setups[value.setups.indexOf(existing)] = setup;
+        else value.setups.push(setup);
+        value.selectedSetupId = setup.id;
+      });
+    },
+    saveAircraftConfiguration: async (input, expected = current.revision) => {
+      const request = submitted(input);
+      exactKeys(
+        request,
+        ['setupId', 'newProfileId', 'advanced', 'response', 'camera', 'preset', 'components'],
+        'aircraft configuration edit',
+      );
+      required(request.advanced, 'An aircraft configuration is required');
+      return transaction(expected, (value) => {
+        const setup = value.setups.find((item) => item.id === request.setupId);
+        required(setup, 'Unknown drone setup');
+        const currentProfile = find(value, setup.profileId ?? value.defaultProfileId);
+        const response =
+          request.response === undefined
+            ? currentProfile.response
+            : validateFlightResponse(request.response);
+        // Physical/camera-only saves do not spend a profile slot. A changed
+        // response gets an independent profile rather than editing shared users.
+        if (canonicalJSON(response) !== canonicalJSON(currentProfile.response)) {
+          value.profiles.push({
+            id: request.newProfileId,
+            name: `${setup.name} · rates`.slice(0, 120),
+            revision: 0,
+            response,
+            history: [],
+          });
+          setup.profileId = request.newProfileId;
+        }
+        if (Object.hasOwn(request, 'preset')) {
+          if (request.preset === null) delete setup.preset;
+          else {
+            required(
+              request.preset?.id === request.advanced.aircraft?.id,
+              'Preset provenance must match the aircraft',
+            );
+            setup.preset = request.preset;
+            // Explicit selection is a fresh built-in baseline even when its ID
+            // matches. Ordinary coefficient edits omit preset and retain the
+            // installed battery/payload inventory instead.
+            delete setup.components;
+          }
+        } else if (setup.advanced?.aircraft.id !== request.advanced.aircraft?.id)
+          delete setup.preset;
+        if (Object.hasOwn(request, 'components')) {
+          if (request.components === null) delete setup.components;
+          else {
+            const components = validateAircraftComponents(request.components);
+            required(
+              components.presetId === setup.preset?.id &&
+                components.presetId === request.advanced.aircraft?.id,
+              'Component inventory must describe this aircraft setup',
+            );
+            setup.components = components;
+          }
+        }
+        if (setup.components?.presetId !== setup.preset?.id) delete setup.components;
+        if (setup.preset && !setup.components) {
+          try {
+            setup.components = createPresetComponents(setup.preset.id, request.advanced.aircraft);
+          } catch {
+            // Unknown future catalog revisions retain numerical physics without
+            // inventing a component inventory for them.
+          }
+        }
+        setup.advanced = request.advanced;
+        if (request.camera !== undefined) setup.camera = validateDroneCamera(request.camera);
+      });
+    },
+    saveAircraftComponents: async (input, expected = current.revision) => {
+      const request = submitted(input);
+      exactKeys(request, ['setupId', 'battery', 'cameraPayload'], 'component edit');
+      return transaction(expected, (value) => {
+        const setup = value.setups.find((item) => item.id === request.setupId);
+        required(
+          setup?.preset && setup.advanced?.aircraft.format === 'AdvancedAircraft.v2',
+          'Select a built-in aircraft setup before editing components',
+        );
+        const result = applyAircraftComponents(
+          setup.advanced.aircraft,
+          setup.components ?? createPresetComponents(setup.preset.id, setup.advanced.aircraft),
+          { battery: request.battery, cameraPayload: request.cameraPayload },
+        );
+        setup.advanced.aircraft = result.aircraft;
+        setup.components = result.components;
       });
     },
     selectSetup: (id, expected = current.revision) =>
