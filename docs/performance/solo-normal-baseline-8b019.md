@@ -6,7 +6,7 @@ This prospective lane produces the normal distribution from main revision
 merged performance candidate. Those identities are fixed for this cohort even
 if upstream main advances again. The historical `b117` packages, raw reports,
 V1 ready/reuse records and completed workflows retain their original meanings.
-No new package or comparison result exists until the remote producer completes.
+The producer has now completed as recorded below. It establishes a package prerequisite, not a comparison or browser result.
 
 The independent workflow `solo-remote-baseline-temporary.yml` has one PR 1544
 synchronization edge from `1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f`, with no
@@ -81,3 +81,33 @@ new baseline and the actual merged candidate package, with fresh equivalent
 measurements and unchanged gates. Old `3ad`/`b117` diagnostics remain historical;
 no old result is relabeled as latest-main evidence. Synthetic tests of this lane
 use tiny local files; no local large archive, build or native browser is run.
+
+## Completed producer
+
+[Run 38998342742](https://github.com/mekhovov/revealline/actions/runs/38998342742)
+completes successfully with tooling `c9e637ad81fadf49caec884155d1bd0c2496c59c`.
+All 32 contract tests pass. The three owned build/archive/source commands close
+without forced cleanup, ambiguity, survivors or violations. Source verification
+compares 1,610 runtime files, 3,496 manifest entries, 52 generated route descriptors
+and the static-worker/offline closure. Both publication and the separate upload
+admission validate the exact source-bound V2 readiness record.
+
+| Identity                | Value                                                                                            |
+| ----------------------- | ------------------------------------------------------------------------------------------------ |
+| Package artifact        | `12088541389` / `solo-normal-baseline-8b019919-38998342742-1`                                    |
+| Outer archive           | 1,073,805,912 bytes / `63545549d9d087e96dcade7e549369a3e2cc00eaa8ae292c314686d0b0563230`         |
+| Inner archive           | 1,073,243,091 bytes / `8f8808fe79390429308cb4637c66ea34aeb5043947616a14b9cffcacf044dc1e`         |
+| Manifest SHA-256        | `3b448d181f75bf54aa1f2929e30f8b6a3fbc39a8b4eeb58914f5b29a704a85e8`                               |
+| V2 ready marker         | 1,599 bytes / `22b6a3cfdba87f242daa41309611ba2671dac18bcf6455cd7ebb68cb6b741d88`                 |
+| Small evidence artifact | `12088362328`, 20,369 bytes / `ee0a21ebd382f357117a31b06ea92244e05694d76894c2e9919564c440e69119` |
+
+Local retention verifies the entire small evidence ZIP, all 15 members, hashes,
+CRC and readback. No large distribution was downloaded locally. The retained
+analysis is 3,055 bytes, SHA-256
+`6930274d88a822377aa055981c70aa2e9285384368fdb1a9a55522dcc19cfa95`,
+under `.cache/solo-followup/remote-normal-baseline-38998342742/`.
+
+Archive/source validation binds generated security-policy bytes but does not
+observe served HTTP headers. Each browser consumer must still independently
+download and verify the complete outer/inner archive, exact source and actual
+served CSP before its row. No old observation is promoted by this producer.
